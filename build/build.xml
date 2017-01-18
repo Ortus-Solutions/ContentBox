@@ -9,10 +9,15 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="3.0.0"/>
- 	<property name="contentbox.stableversion" 	value="2.1.0" />
+ 	<property name="contentbox.version"			value="3.1.0"/>
+ 	<property name="contentbox.stableversion" 	value="3.0.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
+	<!-- Travis -->
+	<condition property="isTravis" else="false">
+    	<isset property="isTravis"/>
+    </condition>
+
  	<!-- Build Labels -->
 	<tstamp prefix="start"/>
  	<!-- Load Contrib Tasks -->
@@ -47,29 +52,37 @@
 
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
+		<delete dir="${dir.forgeboxbuild}"/>
 		<delete verbose="true" failonerror="false">
 			<fileset dir="${dir.contentbox.exports}" />
 		</delete>
 		<mkdir dir="${dir.build}"/>
+		<mkdir dir="${dir.forgeboxbuild}"/>
 		<mkdir dir="${be.exports}"/>
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
+		<chmod file="${dir.forgeboxbuild}/**" perm="g+wxrs" type="both" />
 		
 		<!-- Build Number -->
 		<if>
 			<not><available file="${be.exports}/build.number" /></not>
 			<then><touch file="${be.exports}/build.number" /></then>
 		</if>
-		<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
-			<entry key="build.number" 
-					type="int" 
-			     	operation="+"
-					pattern="00000"
-			     	default="00210" />
-		</propertyfile>
-		<property file="${be.exports}/build.number"/>
+		<if>
+			<not><isset property="build.number" /></not>
+			<then>
+				<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
+					<entry key="build.number" 
+							type="int" 
+					     	operation="+"
+							pattern="00000"
+					     	default="00210" />
+				</propertyfile>
+				<property file="${be.exports}/build.number"/>
+			</then>
+		</if>
 
 		<!-- Build ID -->
-		<property name="build.label" value="contentbox-${contentbox.version}.${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
+		<property name="build.label" value="contentbox-${contentbox.version}+${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
 		
 		<!-- Permissions -->
 		<antcall target="update.permissions" />
@@ -125,6 +138,23 @@
       		</fileset>
         </copy>
 
+        <!-- Copy ForgeBox Build Sources -->
+        <copy todir="${dir.forgeboxbuild}" encoding="UTF-8">
+			<fileset dir="${basedir}/build/forgebox" />
+        </copy>
+        <copy todir="${dir.forgeboxbuild}/be" encoding="UTF-8">
+			<fileset file="${basedir}/readme.md" />
+			<fileset file="${basedir}/box.json" />
+        </copy>
+
+        <!-- Replace Build Number to BE Snapshot -->
+		<replaceregexp match='\+@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.forgeboxbuild}/be" />
+		</replaceregexp>
+		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.forgeboxbuild}/be" />
+		</replaceregexp>
+
 		<!-- Cleanup Dependencies -->
 		<delete dir="${dir.build}/coldbox" />
         <!-- Install Dependencies -->
@@ -138,12 +168,18 @@
 				<include name="**/ModuleConfig.cfc" />
 			</fileset>
 			<fileset file="${dir.build}/box.json" />
+			<!-- ForgeBox Entries -->
+			<fileset dir="${dir.forgeboxbuild}" />
 		</replaceregexp>
 		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
 			<fileset dir="${dir.build}/modules/">
 				<include name="**/ModuleConfig.cfc" />
 			</fileset>
 			<fileset file="${dir.build}/box.json" />
+			<!-- ForgeBox Entries -->
+			<fileset dir="build/forgebox" />
+			<!-- ForgeBox Entries -->
+			<fileset dir="${dir.forgeboxbuild}" />
 		</replaceregexp>
 		
 		<!-- Activate DSN Creator link -->
@@ -227,7 +263,14 @@
  		<!-- Create Patch directory-->
  		<mkdir dir="${dir.build}/WEB-INF/lib/lucee-server/patches"/>
  		<!-- Deliver Patch -->
- 		<copy file="${dir.dependencies}/lucee-${lucee.patch}.lco" toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/${lucee.patch}.lco" encoding="UTF-8" />
+ 		<if>
+ 			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
+ 			<then>
+	 			<copy 	file="${dir.dependencies}/lucee-${lucee.patch}.lco" 
+	 					toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/${lucee.patch}.lco" 
+	 					encoding="UTF-8" />
+ 			</then>
+ 		</if>
  		
  		<!-- Copy Tuckey -->
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
@@ -355,7 +398,13 @@
 				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nocoldbox"/>
 		
 		<!-- Cleanup -->
-		<delete dir="${dir.build}" />
+		<if>
+			<equals arg1="$isTravis" arg2="false" />
+			<then>
+				<delete dir="${dir.build}" />
+				<delete dir="${dir.forgeboxbuild}" />
+			</then>
+		</if>
     </target>
  	
  	<!-- Build Patches -->
@@ -386,11 +435,16 @@
  						version="${express.server.version}"
  						destination="${dir.dependencies}"/>
 		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="lucee" 
- 						artifactID="lucee"
- 						version="${lucee.patch}"
- 						extension="lco"
- 						destination="${dir.dependencies}"/>
+		<if>
+ 			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
+ 			<then>
+	 			<box-dependency groupID="lucee" 
+		 						artifactID="lucee"
+		 						version="${lucee.patch}"
+		 						extension="lco"
+		 						destination="${dir.dependencies}"/>
+ 			</then>
+ 		</if>
  		<!-- Download Dependency via box task-->
  		<box-dependency groupID="oracle" 
  						artifactID="jre"

@@ -9,7 +9,7 @@
 	
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
 	<property name="groupID"			value="ortussolutions" />
-	<property name="contentbox.version"	value="3.0.0"/>
+	<property name="contentbox.version"	value="3.1.0"/>
  	<property name="contentbox.slug"	value="contentbox"/>		
 	
 	<!-- Build Labels -->
@@ -90,8 +90,10 @@
 		<!--Unzip Patch To remove excludes -->
 		<unzip src="${dir.patches}/${contentbox.version}/patch.zip" dest="${dir.patches}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
+				<exclude name=".travis.yml"/>
 				<exclude name=".htaccess"/>
 				<exclude name=".jshintrc"/>
+				<exclude name="server-*.json"/>
 				<exclude name="Application.cfc"/>
 				<exclude name="box.json"/>
 				<exclude name="build.number"/>
@@ -103,6 +105,7 @@
 				<exclude name="index.cfm"/>
 				<exclude name="layouts/**"/>
 				<exclude name="license.txt"/>
+				<exclude name="logs/**"/>
 				<exclude name="models/**" />
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>

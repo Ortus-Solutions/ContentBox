@@ -1,37 +1,15 @@
 <cfoutput>
-<title>
-<!--- Site Title --->	
-<cfif cb.isEntryView()>
-	<!--- Do we have the SEO Title? --->
-	<cfif len( cb.getCurrentEntry().getHTMLTitle() )>
-		#cb.getCurrentEntry().getHTMLTitle()#
-	<cfelse>
-		#cb.getCurrentEntry().getTitle()#
-	</cfif>
-<cfelse>
-	#cb.siteName()# - #cb.siteTagLine()#
-</cfif>
-</title>
+<title>#cb.getContentTitle()#</title>
 
 <!--- ********************************************************************************* --->
 <!--- 					META TAGS														--->
 <!--- ********************************************************************************* --->
+<meta charset="utf-8" /> 
 <meta name="generator" 	 	content="ContentBox powered by ColdBox" />
 <meta name="robots" 	 	content="index,follow" />
 <meta name="viewport" 		content="width=device-width, initial-scale=1">
-<meta charset="utf-8" /> 
-
-<!--- Meta per page or index --->
-<cfif cb.isEntryView() AND len( cb.getCurrentEntry().getHTMLDescription() )>
-	<meta name="description" content="#cb.getCurrentEntry().getHTMLDescription()#" />
-<cfelse>
-	<meta name="description" content="#HTMLEditFormat( cb.siteDescription() )#" />
-</cfif>
-<cfif cb.isEntryView() AND len(cb.getCurrentEntry().getHTMLKeywords())>
-	<meta name="keywords" 	 content="#cb.getCurrentEntry().getHTMLKeywords()#" />
-<cfelse>
-	<meta name="keywords" 	 content="#cb.siteKeywords()#" />
-</cfif>
+<meta name="description" 	content="#cb.getContentDescription()#" />
+<meta name="keywords" 	 	content="#cb.getContentKeywords()#" />
 
 <!--- Base HREF for SES enabled URLs --->
 <base href="#cb.siteBaseURL()#" />
@@ -62,6 +40,12 @@
 <!-- injector:css -->
 <link rel="stylesheet" href="#cb.themeRoot()#/includes/css/218c7e65.theme.min.css">
 <!-- endinjector -->
+
+<cfif len( cb.themeSetting( 'cssStyleOverrides' ) )>
+<style>
+	#cb.themeSetting( 'cssStyleOverrides' )#
+</style>	
+</cfif>
 
 <!--- ********************************************************************************* --->
 <!--- 					JAVASCRIPT														--->

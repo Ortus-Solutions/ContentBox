@@ -12,7 +12,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "ContentBox Administration Module";
-	this.version			= "@version.number@+@build.number@";
+	this.version			= "3.1.0+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
@@ -115,7 +115,9 @@ component {
 				// Menu events
 				"cbadmin_preMenuSave","cbadmin_postMenuSave","cbadmin_preMenuRemove","cbadmin_postMenuRemove",
 				// Global Search
-				"onGlobalSearchRequest", "onGlobalSearchDisplay"
+				"onGlobalSearchRequest", "onGlobalSearchDisplay",
+				// Static Site Exporters,
+				"cbadmin_preStaticSiteExport", "cbadmin_postStaticSiteExport"
 			])
 		};
 

@@ -42,7 +42,7 @@
                         <thead>
                             <tr>
                                 <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table2.head1@admin" )#</th>
-                                <th width="40" class="text-center">#$r( "dashboard.latestSnapshot.topHitsAndComments.table.head2@admin" )#</th>
+                                <th width="40" class="text-center">#$r( "dashboard.latestSnapshot.topHitsAndComments.table2.head2@admin" )#</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -1,3 +1,5 @@
+<cfsetting requesttimeout="600">
+
 <cfparam name="url.version" default="0">
 <cfparam name="url.path" 	default="#expandPath( "./ContentBox-APIDocs" )#">
 <cfscript>

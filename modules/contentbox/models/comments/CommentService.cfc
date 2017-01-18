@@ -93,8 +93,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Save a comment according to our rules and process it. Returns a structure of information
 	* results = [moderated:boolean,messages:array]
 	* @comment The comment to try to save
+	* @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
 	*/
-	struct function saveComment( required comment ){
+	struct function saveComment( required comment, required loggedInUser ){
 		
 		transaction{
 			// Comment reference
@@ -106,16 +107,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 			// Log the IP Address
 			inComment.setAuthorIP( loginTrackerService.getRealIP() );
-			// Default moderation
-			inComment.setIsApproved( false );
+			// Default moderation unless user is logged in
+			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 
 			// Check if activating URL's on Comment Content
 			if( inSettings.cb_comments_urltranslations ){
 				inComment.setContent( activateURLs( inComment.getContent() ) );
 			}
 
-			// Run moderation rules
-			if( runModerationRules( inComment, inSettings ) ){
+			// Run moderation rules if not logged in.
+			if( arguments.loggedInUser.isLoggedIn()
+				OR 
+				runModerationRules( comment=inComment, settings=inSettings ) 
+			){
 				// send for saving, finally phew!
 				save( inComment );
 				// Send Notification or Moderation Email?

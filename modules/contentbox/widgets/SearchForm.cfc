@@ -6,7 +6,7 @@
 * This widget creates a simple ContentBox search form
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
-
+	
 	SearchForm function init(){
 		// Widget Properties
 		setName( "SearchForm" );
@@ -45,7 +45,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 
 		// Check type
 		if( !reFindNoCase( "^(content|blog)$", arguments.type ) ){
-			throw( message="Invalid type for search form", detail="Valid types are: content or blog", type="InvalidSearchType" );
+			throw( 
+				message = "Invalid type for search form", 
+				detail 	= "Valid types are: content or blog", 
+				type 	= "InvalidSearchType"
+			);
 		}
 		// Action
 		var action = cb.linkContentSearch();
@@ -59,13 +63,17 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		saveContent variable="rString"{
 			writeOutput('
 			#html.startForm( name="searchForm", action=action, class=arguments.formcss )#
-				#html.textField( name="q", label=arguments.label, placeholder=arguments.placeholder, value=local.q, class=arguments.querycss )#
-				#html.submitButton( name="searchSubmitButton", value="Search", class=arguments.buttoncss )#
+			    <div class="input-group">
+					#html.textField( name="q", placeholder="Search", value=local.q, class="form-control")#
+			      	<span class="input-group-btn">
+			        	<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+			      	</span>
+			    </div>
 			#html.endForm()#
 			');
 		}
 
 		return rString;
 	}
-
+	
 }

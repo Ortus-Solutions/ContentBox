@@ -1,0 +1,14 @@
+{
+    "app":{
+        "cfengine":"adobe@11"
+    },
+    "name":"cbcms-adobe11",
+    "JVM":{
+        "heapSize":"512"
+    },
+    "web":{
+        "rewrites":{
+            "enable":"true"
+        }
+    }
+}

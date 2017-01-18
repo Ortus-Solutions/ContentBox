@@ -117,5 +117,6 @@
 #FileBrowser .folders.selected, #FileBrowser .files.selected{ background-color: #B3C6F9}
 #FileBrowser .divider{ align: center;}
 #FileBrowser .listTypeOn{ padding: 2px; background-color: orange;}
-#FileBrowser .fbItemBoxPreview{margin: 10px auto auto 0px;text-align: center; cursor: pointer}
-#FileBrowser .fbItemBox{float:left; margin:5px; width: 150px; height: 150px; border: 1px solid #ccc}
+#FileBrowser .fbItemBoxPreview{margin: 0px auto auto auto;text-align: center; cursor: pointer}
+#FileBrowser .fbItemBox{float:left; margin:5px; width: 152px; height: 152px; border: 1px solid #ccc}
+#FileBrowser .fbItemBox .files, #FileBrowser .fbItemBox .folders{ margin:0px; padding:5px; min-height:150px;}

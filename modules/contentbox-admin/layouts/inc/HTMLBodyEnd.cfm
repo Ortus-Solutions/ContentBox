@@ -4,18 +4,18 @@
     <!---                           Post-Libs                                   --->
     <!--- ********************************************************************* --->
     <cfif getSetting( "environment" ) eq "development">
-        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-post.js"></script>
+        <script src="#prc.cbroot#/includes/js/contentbox-post.js"></script>
     <cfelse>
-        <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-post.min.js"></script>
+        <script src="#prc.cbroot#/includes/js/contentbox-post.min.js"></script>
     </cfif>
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->
     <cfloop list="#event.getValue( "jsAppendList", "", true )#" index="js">
-        <script type="application/javascript" src="#prc.cbroot#/includes/js/#js#.js"></script>
+        <script src="#prc.cbroot#/includes/js/#js#.js"></script>
     </cfloop>
     <cfloop list="#event.getValue( "jsFullAppendList", "", true )#" index="js">
-        <script type="application/javascript" src="#prc.cbroot#/includes/js/#js#.js"></script>
+        <script src="#js#"></script>
     </cfloop>
     <!--- ********************************************************************* --->
     <!---        Fonts - Brought in last to prevent blocking issues             --->

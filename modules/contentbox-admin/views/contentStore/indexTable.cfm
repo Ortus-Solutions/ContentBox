@@ -32,9 +32,9 @@
 			<cfif content.isExpired()>
 				class="danger"
 			<cfelseif content.isPublishedInFuture()>
-				class="futurePublished"
+				class="success"
 			<cfelseif !content.isContentPublished()>
-				class="selected"
+				class="warning"
 			<cfelseif content.getNumberOfActiveVersions() eq 0 >
 				class="danger" title="No active content versions found, please publish one."
 			</cfif>

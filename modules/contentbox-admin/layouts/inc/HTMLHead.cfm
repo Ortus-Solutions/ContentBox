@@ -41,7 +41,7 @@
         <cfset addAsset( "#prc.cbroot#/includes/css/#css#.css" )>
     </cfloop>
     <cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
-        <cfset addAsset( "#css#.css" )>
+        <cfset addAsset( "#css#" )>
     </cfloop>
     <!--- ********************************************************************* --->
     <!---                           IE SUPPORT                                  --->

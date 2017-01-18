@@ -210,7 +210,11 @@ function fbDelete(){
 function fbDownload(){
 	var sPath = $selectedItem.val();
 	var sType = $selectedItemType.val();
-	if( !sPath.length || sType == "dir" ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length ){ 
+		alert( '#$r( "jsmessages.select@fb" )#' ); return; 
+	} else if ( sType == "dir" ){ 
+		alert( '#$r( "jsmessages.downloadFolder@fb" )#' ); return; 
+	}
 	// Trigger the download
 	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ escape(sPath) );
 }
@@ -300,10 +304,10 @@ $(document).ready(function() {
 					alert( '#$r( "jsmessages.browsernotsupported@fb" )#' );
 					break;
 				case 'TooManyFiles':
-					alert( '#$r( "jsmessages.toomanyfiles@fb" )#' );
+					alert( '#$r( resource="jsmessages.toomanyfiles@fb", values=prc.fbSettings.html5uploads.maxfiles )#' );
 					break;
 				case 'FileTooLarge':
-					alert( file.name + ' #$r( "jsmessages.toolarge@fb" )#');
+					alert( file.name + ' #$r( resource="jsmessages.toolarge@fb", values=prc.fbSettings.html5uploads.maxfilesize )#');
 					break;
 				case 'FileTypeNotAllowed':
 					alert( file.type + ' #$r( resource="jsmessages.invalidtype@fb", values=prc.fbSettings.acceptMimeTypes )#' );

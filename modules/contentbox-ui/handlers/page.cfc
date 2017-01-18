@@ -43,7 +43,7 @@ component extends="content"{
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
-		prc.page.addNewContentVersion( content=URLDecode( rc.content ), author=prc.author )
+		prc.page.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
 			.setActiveContent( prc.page.getContentVersions() );
 		// Do we have a parent?
 		if( len( rc.parentPage ) && isNumeric( rc.parentPage ) ){
@@ -92,9 +92,8 @@ component extends="content"{
 			incomingURL = replacenocase( incomingURL, prc.cbEntryPoint & "/", "" );
 		}
 		// get the author and do publish unpublished tests
-		var author = securityService.getAuthorSession();
 		var showUnpublished = false;
-		if( author.isLoaded() AND author.isLoggedIn() ){
+		if( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ){
 			var showUnpublished = true;
 		}
 		// Try to get the page using the incoming URI
@@ -208,11 +207,13 @@ component extends="content"{
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
 		// If null, kick them out
-		if( isNull( page ) ){ setNextEvent( prc.cbEntryPoint ); }
+		if( isNull( page ) ){ 
+			setNextEvent( prc.cbEntryPoint ); 
+		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );
 		// Valid commenting, so go and save
-		saveComment( page, rc.subscribe );
+		saveComment( thisContent=page, subscribe=rc.subscribe, prc=prc );
 	}
 
 	/************************************** PRIVATE *********************************************/

@@ -635,16 +635,11 @@ Modification History:
 
 	<!--- ************************************************************* --->
 
-	<cffunction name="PathFormat" access="private" output="no" returntype="string" hint="Convert path into Windows or Unix format.">
+	<cffunction name="pathFormat" access="private" output="no" returntype="string" hint="Convert path into Windows or Unix format.">
 		<!--- ************************************************************* --->
 		<cfargument name="path" required="yes" type="string" hint="The path to convert.">
 		<!--- ************************************************************* --->
-		<cfif FindNoCase( "Windows", instance.os)>
-			<cfset arguments.path = Replace(arguments.path, "/", "\", "ALL" )>
-		<cfelse>
-			<cfset arguments.path = Replace(arguments.path, "\", "/", "ALL" )>
-		</cfif>
-		<cfreturn arguments.path>
+		<cfreturn replace( arguments.path, "\", "/", "all" )>
 	</cffunction>
 	<!--- ************************************************************* --->
 

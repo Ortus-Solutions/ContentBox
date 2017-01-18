@@ -1,12 +1,13 @@
 {
     "name":"ContentBox Modular CMS",
     "version":"@version.number@+@build.number@",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
-    "homepage":"http://www.ortussolutions.com/products/contentbox",
-    "documentation":"http://contentbox.ortusbooks.com",
+    "homepage":"https://www.contentboxcms.org",
+    "documentation":"https://contentbox.ortusbooks.com",
     "repository":{
         "type":"git",
         "url":"https://github.com/Ortus-Solutions/ContentBox"
@@ -14,16 +15,6 @@
     "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
     "shortDescription":"A Modular Content Management System",
     "createPackageDirectory":false,
-    "engines":[
-        {
-            "type":"lucee",
-            "version":">4.5"
-        },
-        {
-            "type":"adobe",
-            "version":">10"
-        }
-    ],
     "license":[
         {
             "type":"Apache2",
@@ -43,13 +34,13 @@
         ]
     },
     "dependencies":{
-        "coldbox":"^4.2.0+00002",
-        "cborm":"^1.2.1+00004",
+        "coldbox":"^4.3.0",
+        "cborm":"^1.3.0",
         "cbjavaloader":"^1.3.0+00007",
         "cbmailservices":"^1.2.0+00028",
         "cbsecurity":"^1.3.0+00003",
-        "cbstorages":"^1.1.0+00002",
-        "cbfeeds":"^1.0.1",
+        "cbstorages":"^1.3.0",
+        "cbfeeds":"^1.1.0",
         "cbmessagebox":"^2.1.0+00027",
         "cbantisamy":"^1.3.0+00033",
         "bcrypt":"https://github.com/coldbox-modules/cbox-bcrypt/archive/v2.1.0.zip",
@@ -58,7 +49,6 @@
     },
     "installPaths":{
         "coldbox":"coldbox",
-        "testbox":"testbox",
         "cborm":"coldbox/system/modules/cborm",
         "cbjavaloader":"coldbox/system/modules/cbjavaloader",
         "cbmailservices":"coldbox/system/modules/cbmailservices",
@@ -69,9 +59,10 @@
         "cbantisamy":"coldbox/system/modules/cbantisamy",
         "bcrypt":"coldbox/system/modules/BCrypt",
         "cbmarkdown":"coldbox/system/modules/cbmarkdown",
-        "forgeboxsdk":"coldbox/system/modules/forgeboxsdk"
+        "forgeboxsdk":"coldbox/system/modules/forgeboxsdk",
+        "testbox":"testbox"
     },
     "devDependencies":{
-        "testbox":"2.3.0+00044"
+        "testbox":"^2.4.0+80"
     }
 }

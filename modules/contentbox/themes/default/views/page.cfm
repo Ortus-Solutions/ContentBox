@@ -5,18 +5,26 @@
 
 <!--- If homepage, present homepage jumbotron --->
 <cfif cb.isHomePage()>
+	<cfset styleHTML = "">
 	<cfif cb.themeSetting( 'hpHeaderImgBg' ) is not "">
-		<cfset imgBackground = 'style="background-image: url(' & cb.themeSetting( 'hpHeaderImgBg' ) & ')"'>
-	<cfelse>
-		<cfset imgBackground = "">
+		<cfset styleHTML = styleHTML & 'background-image: url(' & cb.themeSetting( 'hpHeaderImgBg' ) & ');'>
 	</cfif>
-	<div class="body-header-jumbotron jumbotron #cb.themeSetting( 'hpHeaderBg' )#-bg" #imgBackground#>
+	<cfif cb.themeSetting( 'hpHeaderBgPos' ) is not "">
+		<cfset styleHTML = styleHTML & 'background-position: ' & cb.themeSetting( 'hpHeaderBgPos' ) & ';'>
+	</cfif>
+	<cfif cb.themeSetting( 'hpHeaderBgPaddingTop' ) is not "">
+		<cfset styleHTML = styleHTML & 'padding-top: ' & cb.themeSetting( 'hpHeaderBgPaddingTop' ) & ';'>
+	</cfif>
+	<cfif cb.themeSetting( 'hpHeaderBgPaddingBottom' ) is not "">
+		<cfset styleHTML = styleHTML & 'padding-bottom: ' & cb.themeSetting( 'hpHeaderBgPaddingBottom' ) & ';'>
+	</cfif>
+	<div class="body-header-jumbotron jumbotron #cb.themeSetting( 'hpHeaderBg' )#-bg" style="#styleHTML#">
 		<div class="container">
 			<h1>#cb.themeSetting( 'hpHeaderTitle' )#</h1>
 			<p>#cb.themeSetting( 'hpHeaderText' )#</p>
 			<cfif cb.themeSetting( 'hpHeaderBtnText' ) neq "">
 			<p>
-				<a class="btn btn-primary btn-lg" href="#cb.themeSetting( 'hpHeaderLink' )#" role="button">
+				<a class="btn btn-#cb.themeSetting( 'hpHeaderBtnStyle' )# btn-lg" href="#cb.themeSetting( 'hpHeaderLink' )#" role="button">
 					#cb.themeSetting( 'hpHeaderBtnText' )#
 				</a>
 			</p>
@@ -24,11 +32,22 @@
 		</div>
 	</div>
 <cfelse>
-	<div id="body-header">
+	<cfset bodyHeaderStyle = "">
+	<cfset bodyHeaderH1Style = "">
+	<cfif cb.themeSetting( 'overrideHeaderColors' )>
+		<cfif len( cb.themeSetting( 'overrideHeaderBGColor' ) )>
+			<cfset bodyHeaderStyle = bodyHeaderStyle & 'background-color: ' & cb.themeSetting( 'overrideHeaderBGColor' ) & ';'>
+		</cfif>
+		
+		<cfif len( cb.themeSetting( 'overrideHeaderTextColor' ) )>
+			<cfset bodyHeaderH1Style = bodyHeaderH1Style & 'color: ' & cb.themeSetting( 'overrideHeaderTextColor' ) & ';'>
+		</cfif>
+	</cfif>	
+	<div id="body-header" style="#bodyHeaderStyle#">
 		<div class="container">
 			<!--- Title --->
 			<div class="underlined-title">
-				<h1>#prc.page.getTitle()#</h1>
+				<h1 style="#bodyHeaderH1Style#">#prc.page.getTitle()#</h1>
 				<div class="text-divider5">
 					<span></span>
 				</div>

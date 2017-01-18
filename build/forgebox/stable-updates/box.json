@@ -1,0 +1,30 @@
+{
+    "name":"ContentBox Modular CMS Stable Update Channel",
+    "version":"3.1.0",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/3.1.0/contentbox-patch-3.1.0.zip",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "slug":"contentbox-stable-updates",
+    "type":"cms",
+    "keywords":"cms,content management,modular cms",
+    "homepage":"https://www.contentboxcms.org",
+    "documentation":"https://contentbox.ortusbooks.com",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/Ortus-Solutions/ContentBox"
+    },
+    "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+    "shortDescription":"The stable update channel for ContentBox Modular CMS",
+    "createPackageDirectory":false,
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "dependencies":{
+    },
+    "installPaths":{
+    },
+    "devDependencies":{
+    }
+}

@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- Location Bar --->
-<cfif structKeyExists(rc, "parent" ) AND len( rc.parent )>
+<cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
 	  	<a href="javascript:contentDrilldown()"><i class="fa fa-home"></i></a> 
 	  	#getModel( "PageBreadcrumbVisitor@contentbox-admin" ).visit( prc.page )#
@@ -8,14 +8,14 @@
 </cfif>
 
 <!--- Hidden Elements --->
-#html.hiddenField(name="parent", value=event.getValue( "parent","" ))#
+#html.hiddenField( name="parent", value=event.getValue( "parent","" ) )#
 
 <!--- pages --->
 <table id="pages" name="pages" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-            	<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
+            	<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
             </th>
 			<th>
 				Name

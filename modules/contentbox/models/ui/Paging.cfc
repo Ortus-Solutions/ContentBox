@@ -115,6 +115,10 @@ link = The link to use for paging, including a placeholder for the page @page@
 			<!--- Calculate Total Pages --->
 			<cfset totalPages = Ceiling( arguments.FoundRows / maxRows )>
 			
+			<cfif currentPage gt totalPages>
+				<cflocation url="#replace(theLink,"@page@",totalPages)#" addtoken="false">
+			</cfif>	
+			
 			<!--- ***************************************************************** --->
 			<!--- Paging Tabs 														--->
 			<!--- ***************************************************************** --->
@@ -122,8 +126,8 @@ link = The link to use for paging, including a placeholder for the page @page@
 			<cfoutput>
 			<div class="row">
 				<div class="col-xs-6">
-					<cfset start = ((currentPage*bandGap)-bandGap)+1>
-					<cfset end = currentPage*bandGap GT foundRows ? foundRows : currentPage*bandGap>
+					<cfset start = ((currentPage*maxRows)-maxRows)+1>
+					<cfset end = currentPage*maxRows GT foundRows ? foundRows : currentPage*maxRows>
 					<div class="dataTables_info" role="alert" aria-live="polite" aria-relevant="all">Showing #start# to #end# of #arguments.FoundRows# entries (#totalPages# pages)
 					</div>
 				</div>
@@ -144,7 +148,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 							<cfset pageFrom=currentPage-bandgap>
 							<cfif arguments.asList><li class="paginate_button" aria-controls="pages" tabindex="0"></cfif>
 							<a href="#replace(theLink,"@page@",1)#">1</a>
-							<a href="javascript:null">...</a>
+							<a href="javascript:void(0)">...</a>
 							<cfif arguments.asList></li></cfif>
 						</cfif>
 						
@@ -163,7 +167,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 						<!--- End Token --->
 						<cfif (currentPage+bandgap) lt totalPages>
 							<cfif arguments.asList><li class="paginate_button" aria-controls="pages" tabindex="0"></cfif>
-							<a href="javascript:null">...</a>
+							<a href="javascript:void(0)">...</a>
 							<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
 							<cfif arguments.asList></li></cfif>
 						</cfif>
@@ -215,7 +219,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 						<cfset pageFrom=currentPage-bandgap>
 						<cfif arguments.asList><li></cfif>
 						<a href="#replace(theLink,"@page@",1)#">1</a>
-						<a href="javascript:null">...</a>
+						<a href="javascript:void(0)">...</a>
 						<cfif arguments.asList></li></cfif>
 					</cfif>
 					
@@ -234,7 +238,7 @@ link = The link to use for paging, including a placeholder for the page @page@
 					<!--- End Token --->
 					<cfif (currentPage+bandgap) lt totalPages>
 						<cfif arguments.asList><li></cfif>
-						<a href="javascript:null">...</a>
+						<a href="javascript:void(0)">...</a>
 						<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
 						<cfif arguments.asList></li></cfif>
 					</cfif>

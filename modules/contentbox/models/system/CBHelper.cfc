@@ -24,6 +24,7 @@ component accessors="true" singleton threadSafe{
 	property name="wirebox"				inject="wirebox";
 	property name="controller"			inject="coldbox";
 	property name="resourceService"		inject="resourceService@cbi18n";
+	property name="securityService"		inject="securityService@cb";
 	
 	/**
 	* Constructor 
@@ -295,7 +296,8 @@ component accessors="true" singleton threadSafe{
 
 	// Determine if you are in printing or exporting format
 	boolean function isPrintFormat(){
-		return ( getRequestContext().getValue( "format","contentbox" ) eq "contentbox" ? false : true );
+		var currentFormat = getRequestContext().getValue( "format", "contentbox" );
+		return ( listFindNoCase( "contentbox,html", currentFormat ) ? false : true );
 	}
 
 	// get comment errors array, usually when the form elements did not validate
@@ -310,12 +312,26 @@ component accessors="true" singleton threadSafe{
 	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	* ajax or module extensions
 	* @layout An optional layout to set for you in the request. 
+	* @title Optional request page metadata title
+	* @description Optional request page metadata description
+	* @keywords Optional request page metadata keywords
 	*/
-	CBHelper function prepareUIRequest( string layout ){
+	CBHelper function prepareUIRequest( string layout, string title, string description, string keywords ){
 		var event 	= getRequestContext();
 		var prc 	= getRequestCollection( private=true );
 		var rc		= getRequestCollection();
 		
+		// Request Metadata
+		if( structKeyExists( arguments, "title") ){
+			setMetaTitle( arguments.title );
+		}
+		if( structKeyExists( arguments, "description") ){
+			setMetaDescription( arguments.description );
+		}
+		if( structKeyExists( arguments, "keywords") ){
+			setMetaKeywords( arguments.keywords );
+		}
+
 		// store UI module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
 		// store module entry point
@@ -334,6 +350,8 @@ component accessors="true" singleton threadSafe{
 		prc.cbthemeRoot = prc.cbRoot & "/themes/" & prc.cbTheme;
 		// Place widgets root location
 		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
+		// Place current logged in Author if any
+		prc.oCurrentAuthor = securityService.getAuthorSession();
 		// announce event
 		this.event( "cbui_preRequest" );
 
@@ -400,20 +418,34 @@ component accessors="true" singleton threadSafe{
 	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
-		return ( event.getCurrentEvent() eq "contentbox-ui:blog.entry" );
+		return ( 
+			// If in static export, then mark as yes
+			event.getPrivateValue( "staticExport", false )
+			OR
+			// In executing view
+			event.getCurrentEvent() eq "contentbox-ui:blog.entry" 
+		);
 	}
 	/**
 	* Determine if you are in the page view
 	* @page Optional page slug to determine if you are in that page or not.
 	*/
-	boolean function isPageView(page="" ){
+	boolean function isPageView( page="" ){
 		var event = getRequestContext();
-		if( findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND event.valueExists( "page", true ) ){
+		if( 
+			// If in static export, then mark as yes
+			event.getPrivateValue( "staticExport", false ) OR
+			(
+				// Check if in page event
+				findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND 
+				// And page Exists
+				event.valueExists( "page", true ) 
+			)
+		){
 			// slug check
 			if( len( arguments.page ) AND getCurrentPage().getSlug() eq arguments.page ){
 				return true;
-			}
-			else if( !len( arguments.page ) ){
+			} else if( !len( arguments.page ) ){
 				return true;
 			}
 			return false;
@@ -547,6 +579,190 @@ component accessors="true" singleton threadSafe{
 		);
 	}
 
+	/************************************** SEO Metadata *********************************************/
+
+	/**
+	* Check the Meta struct exists in the PRC
+	*/
+	function checkMetaStruct(){
+		var prc = getPrivateRequestCollection();
+		if( !structKeyExists( prc, "meta" ) ){
+			prc.meta = {};
+		}	
+	}
+	
+	/**
+	* Set the Meta Title for the request
+	* @title - The new title 
+	*/
+	function setMetaTitle( required string title ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.title = arguments.title;
+	}
+	
+	/**
+	* Get the Meta Title for the request
+	*/
+	function getMetaTitle(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "title" ) ){
+			return prc.meta.title;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	* Set the Meta Description for the request
+	* @description - The new Description 
+	*/
+	function setMetaDescription( required string description ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.description = arguments.description;
+	}
+	
+	/**
+	* Get the Meta description for the request
+	*/
+	function getMetaDescription(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "description" ) ){
+			return prc.meta.description;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	* Set the Meta Keywords for the request
+	* @keywords - The new Keywords 
+	*/
+	function setMetaKeywords( required string keywords ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.keywords = arguments.keywords;
+	}
+	
+	/**
+	* Get the Meta keywords for the request
+	*/
+	function getMetaKeywords(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "keywords" ) ){
+			return prc.meta.keywords;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	 * Get the current content metadata title according to SEO Discovery Rules
+	 */
+	function getContentTitle(){
+		var oCurrentContent = "";
+
+		// If Meta Title is set Manually, return it
+		if( len( getMetaTitle() ) ){
+			return getMetaTitle();
+		}
+		
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) ){
+			// Do we have current page SEO title set?
+			if( len( oCurrentContent.getHTMLTitle() ) ){
+				return oCurrentContent.getHTMLTitle();
+			} 
+			// Get current page slug title
+			return oCurrentContent.getTitle();
+		}
+
+		// Return global site title + tagline
+		return siteName() & " - " & siteTagLine();
+	}
+
+	/**
+	 * Get the current content metadata description according to SEO discovery rules
+	 */
+	function getContentDescription(){
+		var oCurrentContent = "";
+
+		// If Meta Description is set Manually, return it
+		if( len( getMetaDescription() ) ){
+			return getMetaDescription();
+		}
+		
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) ){
+			// Do we have current page SEO description set?
+			if( len( oCurrentContent.getHTMLDescription() ) ){
+				return oCurrentContent.getHTMLDescription();
+			} 
+			
+			// Default description from content in non HTML mode
+			return HTMLEditFormat(
+				REReplaceNoCase( 
+					left( oCurrentContent.getContent(), 160 ), 
+					"<[^>]*>", 
+					"", 
+					"ALL" 
+				)
+			);
+		}
+
+		// Return global site description
+		return HTMLEditFormat( siteDescription() );
+	}
+
+	/**
+	 * Get the current content metadata keywords according to SEO discovery rules
+	 */
+	function getContentKeywords(){
+		var oCurrentContent = "";
+
+		// If Meta Keywords is set Manually, return it
+		if( len( getMetaKeywords() ) ){
+			return getMetaKeywords();
+		}
+		
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) AND len( oCurrentContent.getHTMLKeywords() ) ){
+			return oCurrentContent.getHTMLKeywords();
+		}
+
+		// Return global site description
+		return siteKeywords();
+	}
+
+
+
+
+
 	/************************************** search *********************************************/
 
 	// Determine if you are in the search view
@@ -631,11 +847,12 @@ component accessors="true" singleton threadSafe{
 		required string module, 
 		required string linkTo, 
 		queryString="", 
-		boolean ssl=false
+		boolean ssl=getRequestContext().isSSL()
 	){
 		return getRequestContext().buildLink(
 			linkto 		= adminRoot() & ".module.#arguments.module#.#arguments.linkTo#",
-			queryString	= arguments.queryString,ssl=arguments.ssl
+			queryString	= arguments.queryString,
+			ssl 		= arguments.ssl
 		);
 	}
 
@@ -678,7 +895,7 @@ component accessors="true" singleton threadSafe{
 	* @event An optional event to link to
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkAdmin( event="", boolean ssl=false ){
+	function linkAdmin( event="", boolean ssl=getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( linkto=adminRoot() & ".#arguments.event#", ssl=arguments.ssl );
 	}
 
@@ -686,7 +903,7 @@ component accessors="true" singleton threadSafe{
 	* Link to the admin logout
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkAdminLogout( boolean ssl=false ){
+	function linkAdminLogout( boolean ssl=getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( linkto=adminRoot() & "/security/doLogout", ssl=arguments.ssl );
 	}
 
@@ -694,7 +911,7 @@ component accessors="true" singleton threadSafe{
 	* Link to the admin login
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkAdminLogin( boolean ssl=false ){
+	function linkAdminLogin( boolean ssl=getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( linkto=adminRoot() & "/security/login", ssl=arguments.ssl );
 	}
 
@@ -702,7 +919,7 @@ component accessors="true" singleton threadSafe{
 	* Create a link to your site root or home page entry point for your blog.
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkHome( boolean ssl=false ){
+	function linkHome( boolean ssl=getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( linkto=siteRoot(), ssl=arguments.ssl );
 	}
 
@@ -710,7 +927,7 @@ component accessors="true" singleton threadSafe{
 	* Create a link to your site blog
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkBlog( boolean ssl=false ){
+	function linkBlog( boolean ssl=getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( linkto="#siteRoot()##sep()##getBlogEntryPoint()#", ssl=arguments.ssl );
 	}
 
@@ -736,7 +953,7 @@ component accessors="true" singleton threadSafe{
 	* @entry You can optionally pass the entry to filter the comment's RSS feed
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkRSS(category,comments=false,entry, boolean ssl=false){
+	function linkRSS( category, comments=false, entry, boolean ssl=getRequestContext().isSSL() ){
 		var xehRSS = siteRoot() & sep() & "#getBlogEntryPoint()#.rss";
 
 		// do we have a category?
@@ -766,7 +983,7 @@ component accessors="true" singleton threadSafe{
 	* @slug The content slug to filter on when using comments
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkSiteRSS(any category, boolean comments=false, string slug, boolean ssl=false){
+	function linkSiteRSS( any category, boolean comments=false, string slug, boolean ssl=getRequestContext().isSSL() ){
 		var xehRSS = siteRoot() & sep() & "__rss";
 
 		// do we have a category?
@@ -803,7 +1020,7 @@ component accessors="true" singleton threadSafe{
 	* @page The page you want to filter on
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkPageRSS(any category, boolean comments=false, page, boolean ssl=false){
+	function linkPageRSS( any category, boolean comments=false, page, boolean ssl=getRequestContext().isSSL() ){
 		var xehRSS = siteRoot() & sep() & "__rss/pages";
 
 		// do we have a category?
@@ -838,7 +1055,7 @@ component accessors="true" singleton threadSafe{
 	* @category The category object or slug to link to
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkCategory( required any category, boolean ssl=false ){
+	function linkCategory( required any category, boolean ssl=getRequestContext().isSSL() ){
 		var categorySlug = '';
 		if( isSimpleValue( arguments.category ) ) {
 			categorySlug = arguments.category;
@@ -854,7 +1071,7 @@ component accessors="true" singleton threadSafe{
 	* @categorySlug The category slug as a string to link to
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkCategoryWithSlug( required string categorySlug, boolean ssl=false ){
+	function linkCategoryWithSlug( required string categorySlug, boolean ssl=getRequestContext().isSSL() ){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
@@ -866,7 +1083,7 @@ component accessors="true" singleton threadSafe{
 	* @day The day of the archive
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkArchive(year, month, day, boolean ssl=false){
+	function linkArchive( year, month, day, boolean ssl=getRequestContext().isSSL() ){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
 		if( structKeyExists(arguments,"year" ) ){ xeh &= "/#arguments.year#"; }
 		if( structKeyExists(arguments,"month" ) ){ xeh &= "/#arguments.month#"; }
@@ -878,7 +1095,7 @@ component accessors="true" singleton threadSafe{
 	* Link to the search route for this blog
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkSearch(boolean ssl=false){
+	function linkSearch( boolean ssl=getRequestContext().isSSL() ){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.search";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
@@ -887,7 +1104,7 @@ component accessors="true" singleton threadSafe{
 	* Link to the content search route
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkContentSearch(boolean ssl=false){
+	function linkContentSearch( boolean ssl=getRequestContext().isSSL() ){
 		var xeh = siteRoot() & sep() & "__search";
 		return getRequestContext().buildLink(linkto=xeh, ssl=arguments.ssl);
 	}
@@ -896,7 +1113,7 @@ component accessors="true" singleton threadSafe{
 	* Link to the content subscription route
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkContentSubscription( boolean ssl=false ){
+	function linkContentSubscription( boolean ssl=getRequestContext().isSSL() ){
 		var xeh = siteRoot() & sep() & "__subscribe";
 		return getRequestContext().buildLink( linkto=xeh, ssl=arguments.ssl );
 	}
@@ -905,7 +1122,7 @@ component accessors="true" singleton threadSafe{
 	* Link to the ContentBox Content Subscription unsubscribe URL
 	* @token The token to use for unsubscribing
 	*/
-	function linkContentUnsubscribe( required string token, boolean ssl=false ){
+	function linkContentUnsubscribe( required string token, boolean ssl=getRequestContext().isSSL() ){
 		var xehUnsubscribe = siteRoot() & sep() & "__unsubscribe/#arguments.token#";
 		return getRequestContext().buildLink( linkto=xehUnsubscribe, ssl=arguments.ssl );
 	}
@@ -916,7 +1133,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl	Use SSL or not, defaults to false.
 	* @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntry(required entry, boolean ssl=false, format="html" ){
+	function linkEntry(required entry, boolean ssl=getRequestContext().isSSL(), format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		if( isSimpleValue(arguments.entry) ){
@@ -932,7 +1149,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl	Use SSL or not, defaults to false.
 	* @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkEntryWithSlug(required slug, boolean ssl=false, format="html" ){
+	function linkEntryWithSlug( required slug, boolean ssl=getRequestContext().isSSL(), format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
@@ -946,7 +1163,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl	Use SSL or not, defaults to false.
 	* @format The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkContent(required content, boolean ssl=false, format="html" ){
+	function linkContent( required content, boolean ssl=getRequestContext().isSSL(), format="html" ){
 		if( arguments.content.getContentType() eq "entry" ){ return linkEntry( arguments.content, arguments.ssl, arguments.format ); }
 		if( arguments.content.getContentType() eq "page" ){ return linkPage( arguments.content, arguments.ssl, arguments.format ); }
 	}
@@ -957,7 +1174,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl	Use SSL or not, defaults to false.
 	* @format The format output of the content default is HTML but you can pass pdf,print or doc.
 	*/
-	function linkPage(required page, boolean ssl=false, format="html" ){
+	function linkPage( required page, boolean ssl=getRequestContext().isSSL(), format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		// link directly or with slug
@@ -974,7 +1191,7 @@ component accessors="true" singleton threadSafe{
 	* @ssl	Use SSL or not, defaults to false.
 	* @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	*/
-	function linkPageWithSlug(required slug, boolean ssl=false, format="html" ){
+	function linkPageWithSlug( required slug, boolean ssl=getRequestContext().isSSL(), format="html" ){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
@@ -987,7 +1204,7 @@ component accessors="true" singleton threadSafe{
 	* @comment The comment to link to
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkComment(required comment, boolean ssl=false){
+	function linkComment( required comment, boolean ssl=getRequestContext().isSSL() ){
 		var xeh = "";
 		if( arguments.comment.getRelatedContent().getContentType() eq 'page' ){
 			xeh = linkPage( arguments.comment.getRelatedContent(), arguments.ssl );
@@ -1004,7 +1221,7 @@ component accessors="true" singleton threadSafe{
 	* @content The entry or page to link to its comments
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkComments(required content, boolean ssl=false){
+	function linkComments( required content, boolean ssl=getRequestContext().isSSL() ){
 		var xeh = "";
 		if( arguments.content.getContentType() eq "page" ){
 			xeh = linkPage( arguments.content, arguments.ssl );
@@ -1021,7 +1238,7 @@ component accessors="true" singleton threadSafe{
 	* @content The entry or page to link to its comments
 	* @ssl	Use SSL or not, defaults to false.
 	*/
-	function linkCommentPost(required content, boolean ssl=false){
+	function linkCommentPost( required content, boolean ssl=getRequestContext().isSSL() ){
 
 		if( arguments.content.getContentType() eq "page" ){
 			var xeh = siteRoot() & sep() & "__pageCommentPost";
@@ -1029,6 +1246,16 @@ component accessors="true" singleton threadSafe{
 		}
 
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
+	}
+
+	/**
+	 * Easy function to render out a ContentBox Captcha Image.
+	 * This function returns the <img> HTML
+	 * @return html
+	 */
+	function renderCaptcha(){
+		var event = getRequestContext();
+		return "<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha' )#'>";
 	}
 
 	/************************************** widget functions *********************************************/

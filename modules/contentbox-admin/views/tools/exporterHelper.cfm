@@ -1,10 +1,6 @@
 <cfoutput>
-<style>
-.checkbox-spacer {margin-top:5px;}
-.btn-toggle.radio {padding-left:30px;}
-</style>
 <script>
-$(document).ready(function() {
+$( document ).ready( function(){
     // toggle all a-la-carte options based on parent selection
     $( 'input[data-togglegroup]' ).change(function(){
         var checked = this.checked;
@@ -58,8 +54,9 @@ $(document).ready(function() {
     } );
 } );
 function doExport(){
-    if( confirm( 'Are you sure you want to begin the export?' ) ){
-        activateLoaders();
+    if( confirm( 'Are you sure you want to begin the export, this might take a while?' ) ){
+        $( "##uploadBar" ).slideToggle();
+        $( "##uploadBarLoader" ).slideToggle();
         $( "##exporterForm" ).submit();
     }
 }
@@ -74,9 +71,12 @@ function previewExport() {
         } 
     );
 }
-function activateLoaders(){
-    $( "##uploadBar" ).slideToggle();
-    $( "##uploadBarLoader" ).slideToggle();
+function doSiteExport(){
+    if( confirm( 'Are you sure you want to begin the export, this might take a while?' ) ){
+        $( "##siteGeneratorLoader" ).slideToggle();
+        $( "##siteGeneratorBar" ).slideToggle();
+        $( "##siteGeneratorForm" ).submit();
+    }
 }
 </script>
 </cfoutput>
