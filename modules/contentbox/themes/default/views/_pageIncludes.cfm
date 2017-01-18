@@ -11,6 +11,8 @@
 <meta name="description" 	content="#cb.getContentDescription()#" />
 <meta name="keywords" 	 	content="#cb.getContentKeywords()#" />
 
+#cb.getOpenGraphMeta()#
+
 <!--- Base HREF for SES enabled URLs --->
 <base href="#cb.siteBaseURL()#" />
 
