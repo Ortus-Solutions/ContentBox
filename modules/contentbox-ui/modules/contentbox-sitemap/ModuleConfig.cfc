@@ -11,7 +11,7 @@ component{
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "Generates XML and HTML Sitemaps for your website";
-	this.version			= "1.0";
+	this.version			= "3.1.0+@build.number@";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -21,28 +21,8 @@ component{
 
 	function configure(){
 
-		// parent settings
-		parentSettings = {
-
-		};
-
 		// module settings - stored in modules.name.settings
 		settings = {
-
-		};
-
-		// Layout Settings
-		layoutSettings = {
-			defaultLayout = ""
-		};
-
-		// datasources
-		datasources = {
-
-		};
-
-		// web services
-		webservices = {
 
 		};
 
