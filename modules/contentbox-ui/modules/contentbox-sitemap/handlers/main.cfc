@@ -43,9 +43,20 @@ component {
 		}
 		 
 		if( rc.format == 'xml' ){
-			return renderView( view="sitemap_xml", module="contentbox-sitemap" );
+			event.renderData(
+				data = renderView( view="sitemap_xml", module="contentbox-sitemap" ),
+				contentType = "application/xml"
+			);	
+		} else if( rc.format == 'json' ){
+			event.renderData(
+  				data = renderView( view="sitemap_json", module="contentbox-sitemap" ),
+  				contentType = "application/json"
+			);
 		} else if( rc.format == 'txt' ){
-			return renderView( view="sitemap_txt", module="contentbox-sitemap" );
+			event.renderData(
+  				data = renderView( view="sitemap_txt", module="contentbox-sitemap" ),
+  				contentType = "text/plain"
+			);
 		} else {
 			CBHelper.prepareUIRequest( 'pages' );
 			event.setView( "sitemap_html" );
