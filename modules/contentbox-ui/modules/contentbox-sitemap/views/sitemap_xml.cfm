@@ -1,6 +1,6 @@
-<cfoutput>
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<cfoutput><?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+		xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 	<url>
 		<loc>#prc.linkHome#</loc>
 	</url>  
@@ -16,7 +16,9 @@
 	</url>
 	</cfloop>
 	<cfif !prc.disableBlog>				
-		<!---<li><a href="#cb.linkBlog()#">#prc.cbSettings.cb_site_blog_entrypoint#</a></li>--->
+		<url>
+			<loc>#prc.siteBaseURL##prc.blogEntryPoint#</loc>
+		</url>	
 		<cfloop array="#prc.entryResults.entries#" index="content">
 	   		<url>
 	      		<loc>#prc.siteBaseURL##prc.blogEntryPoint##content.getslug()#</loc>
