@@ -14,6 +14,7 @@ component accessors="true" singleton threadSafe{
 	property name="pageService"			inject="id:pageService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="commentService"		inject="id:commentService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
@@ -1552,6 +1553,98 @@ component accessors="true" singleton threadSafe{
 			}
 		}
 	}
+	
+	public any function bootstrapMenuHTML( required string slug ){
+		var menuData = menu( arguments.slug, 'data' );
+		var navBarID = 'navbar_#getTickCount()#';
+		var returnHTML = "";
+		returnHTML &= '<div class="navbar-header">';
+        returnHTML &= '<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="###navBarID#" aria-expanded="false" aria-controls="navbar">';
+        returnHTML &= '<span class="sr-only">Toggle navigation</span>';
+        returnHTML &= '<span class="icon-bar"></span>';
+        returnHTML &= '<span class="icon-bar"></span>';
+		returnHTML &= '<span class="icon-bar"></span>';
+		returnHTML &= '</button>';
+        returnHTML &= '</div>';
+        returnHTML &= '<div id="#navBarID#" class="navbar-collapse collapse">';
+        returnHTML &= '<ul class="nav navbar-nav #menuData.MenuClass#">';
+        for( menuItem in menuData.menuItems ){
+        	if( menuItem.menuType == 'Content' ){
+        		returnHTML &= buildMenuItemFromMementoContent( menuItem, menuData.listClass );
+        	} else if ( menuItem.menuType == 'Free' ){
+        		returnHTML &= buildMenuItemFromMementoFree( menuItem, menuData.listClass );
+        	} else if( menuItem.menuType == 'JS' ){
+        		returnHTML &= buildMenuItemFromMementoJS( menuItem, menuData.listClass );
+        	} else if( menuItem.menuType == 'Media' ){
+        		returnHTML &= buildMenuItemFromMementoMedia( menuItem, menuData.listClass );
+        	} else if( menuItem.menuType == 'Submenu' ){
+        		returnHTML &= buildMenuItemFromMementoSubmenu( menuItem, menuData.listClass );
+        	} else if( menuItem.menuType == 'URL' ){
+        		returnHTML &= buildMenuItemFromMementoURL( menuItem, menuData.listClass );
+        	}
+        }
+        returnHTML &= '</ul>';
+        returnHTML &= '</div>';
+		return returnHTML;
+	}
+	
+	public string function buildMenuItemFromMementoContent( menuItem, ListClass ){
+		return '<li class="#arguments.ListClass#"><a href="#linkContent( contentService.findBySlug( arguments.menuItem.ContentSlug ) )#" target="#arguments.menuItem.target#" class="#arguments.menuItem.URLClass#">#arguments.menuItem.label#</a></li>';
+	}
+	
+	public string function buildMenuItemFromMementoFree( menuItem, ListClass ){
+		return '<li class="#arguments.ListClass#"><a>#arguments.menuItem.label#</a></li>';
+	}
+	
+	public string function buildMenuItemFromMementoJS( menuItem, ListClass ){
+		var udfName = "udf#arguments.menuItem.MenuItemID#_#getTickCount()#";
+    	var html = '<script>';
+        html &= 'function #udfName#Callback() {';
+        html &= '(#arguments.menuItem.JS()#).call();';
+        html &= '}';
+    	html &= '</script>';
+    	html &= '<li  class="#arguments.ListClass#"><a onclick="#udfName#Callback()" class="#arguments.menuItem.URLClass#">#arguments.menuItem.Label#</a></li>';
+		
+		
+		return html;
+	}
+	
+	public string function buildMenuItemFromMementoMedia( menuItem, ListClass ){
+		return '<li class="#arguments.ListClass#"><a href="#arguments.menuItem.MediaPath#" target="#arguments.menuItem.Target#" class="#arguments.menuItem.URLClass#">#arguments.menuItem.Label#</a></li>';
+	}
+	
+	public string function buildMenuItemFromMementoURL( menuItem, ListClass ){
+		return '<li class="#arguments.ListClass#"><a href="#arguments.menuItem.url#" target="#arguments.menuItem.target#" class="#arguments.menuItem.urlclass#">#arguments.menuItem.label#</a></li>';
+	}
+	
+	public string function buildMenuItemFromMementoSubmenu( menuItem, ListClass ){
+		var menuData = menu( arguments.menuItem.menuSlug, 'data' );
+		//writeDump( menuData );abort;
+		var returnHTML = "";
+		returnHTML &= '<li class="dropdown #arguments.ListClass#">';
+		returnHTML &= '<a href="##" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">#arguments.menuItem.label# <span class="caret"></span></a>';
+		returnHTML &= '<ul class="dropdown-menu">';
+        for( childItem in menuData.menuItems ){
+        	if( childItem.menuType == 'Content' ){
+        		returnHTML &= buildMenuItemFromMementoContent( childItem, menuData.listClass );
+        	} else if( childItem.menuType == 'Free' ){
+        		returnHTML &= buildMenuItemFromMementoFree( childItem, menuData.listClass );
+        	} else if( childItem.menuType == 'JS' ){
+        		returnHTML &= buildMenuItemFromMementoJS( childItem, menuData.listClass );
+        	} else if( childItem.menuType == 'Media' ){
+        		returnHTML &= buildMenuItemFromMementoMedia( childItem, menuData.listClass );
+        	} else if( childItem.menuType == 'Submenu' ){
+        		returnHTML &= buildMenuItemFromMementoSubmenu( childItem, menuData.listClass );
+        	} else if( childItem.menuType == 'URL' ){
+        		returnHTML &= buildMenuItemFromMementoURL( childItem, menuData.listClass );
+        	}
+        }         
+        returnHTML &= '</ul>';
+		returnHTML &= '</li>';
+		return returnHTML;
+	}
+	
+
 
 	/**
 	 * Builds out a custom menu
