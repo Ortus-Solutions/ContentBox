@@ -57,6 +57,7 @@
 * - label : The HTML label of the control (defaults to name)
 * - title : The HTML title of the control (defaults to empty string)
 * - options : The select box options. Can be a list or array of values or an array of name-value pair structures
+* - optionsUDF : The select box options. This points to a UDF that returns a list or array of values or an array of name-value pair structures. Example: getColors not getColors()
 * - group : lets you group inputs under a Group name - settings should be in order for groupings to work as expected
 * - groupIntro : Lets you add a description for a group of fields
 * - fieldDescription : Lets you add a description for an individual field
