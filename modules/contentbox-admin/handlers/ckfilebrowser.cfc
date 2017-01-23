@@ -10,7 +10,7 @@ component extends="baseHandler"{
 	// pre handler
 	function preHandler( event, rc, prc, action, eventArguments ){
 		// event to run
-		prc.cbCKfileBrowserDefaultEvent = "contentbox-filebrowser:home.index";
+		prc.cbCKfileBrowserDefaultEvent = event.getPrivateValue( "cbCKfileBrowserDefaultEvent", "contentbox-filebrowser:home.index" );
 		// CKEditor callback, use if incoming, else default it
 		if( !structKeyExists( rc, "callback" ) ){
 			rc.callback = "fbCKSelect";
