@@ -9,8 +9,8 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="3.1.0"/>
- 	<property name="contentbox.stableversion" 	value="3.0.0" />
+ 	<property name="contentbox.version"			value="3.2.0"/>
+ 	<property name="contentbox.stableversion" 	value="3.1.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
 	<!-- Travis -->

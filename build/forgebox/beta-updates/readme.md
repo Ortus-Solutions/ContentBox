@@ -1,6 +1,6 @@
 <img src="https://www.contentboxcms.org/__media/ContentBox_300.png" class="img-thumbnail"/>
 
-## Current Beta Version: 3.1.0
+## Current Beta Version: 3.2.0
 
 This package will deliver beta updates to your ContentBox Modular CMS installations. We always recommend that you restart your servers after performing any automated patching.
 
