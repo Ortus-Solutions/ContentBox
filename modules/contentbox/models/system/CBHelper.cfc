@@ -201,7 +201,7 @@ component accessors="true" singleton threadSafe{
 	function siteBaseURL(){
 		return replacenocase( 
 			getRequestContext().buildLink( linkTo='', ssl=getRequestContext().isSSL() ), 
-			"index.cfm", 
+			"index.cfm/", 
 			"" 
 		);
 	}
@@ -760,7 +760,169 @@ component accessors="true" singleton threadSafe{
 	}
 
 
+	/**
+	* Set the Meta Canonical URL for the request
+	* @url - The new url 
+	*/
+	function setMetaURL( required string url ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.url = arguments.url;
+	}
+	
+	/**
+	* Get the Meta Canonical URL for the request
+	*/
+	function getMetaURL(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "url" ) ){
+			return prc.meta.url;
+		} else {
+			return '';
+		}
+	}
+	
 
+	/**
+	* Get the Canonical URL based on content type
+	*/
+	function getContentURL(){
+		var oCurrentContent = "";
+		var oCurrentEntryPoint = "";
+		
+		if( len( getMetaURL() ) ){
+			return getMetaURL();
+		}
+		
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+			oCurrentEntryPoint = "";
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+			oCurrentEntryPoint = setting( 'cb_site_blog_entrypoint' ) & "/";
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) AND len( oCurrentContent.getslug() ) ){
+			return siteBaseURL() & oCurrentEntryPoint & oCurrentContent.getslug();
+		}
+	}
+	
+	/**
+	* Set the Meta ImageURL for the request
+	* @ImageURL - The new ImageURL 
+	*/
+	function setMetaImageURL( required string ImageURL ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.ImageURL = arguments.ImageURL;
+	}
+	
+	/**
+	* Get the Meta ImageURL for the request
+	*/
+	function getMetaImageURL(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "ImageURL" ) ){
+			return prc.meta.ImageURL;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	* Get the Content Image URL based on content type
+	*/
+	function getContentImageURL(){
+		var oCurrentContent = "";
+		
+		if( len( getMetaImageURL() ) ){
+			return getMetaImageURL();
+		}
+		
+		// Check if in page view or entry view
+		if( isPageView() ){
+			oCurrentContent = getCurrentPage();
+		} else if( isEntryView() ){
+			oCurrentContent = getCurrentEntry();
+		}
+
+		// in context view or global
+		if( isObject( oCurrentContent ) AND len( oCurrentContent.getFeaturedImageURL() ) ){
+			return siteBaseURL() & oCurrentContent.getFeaturedImageURL();
+		}
+	}
+	
+	/**
+	* Set the Meta OGType for the request
+	* @OGType - The new OGType 
+	*/
+	function setMetaOGType( required string OGType ){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		prc.meta.OGType = arguments.OGType;
+	}
+	
+	/**
+	* Get the Meta OGType for the request
+	*/
+	function getMetaOGType(){
+		var prc = getPrivateRequestCollection();
+		checkMetaStruct();
+		if( structKeyExists( prc.meta, "OGType" ) ){
+			return prc.meta.OGType;
+		} else {
+			return '';
+		}
+	}
+	
+	/**
+	* Get the Content Open Graph Type based on content type 
+	*/
+	function getContentOGType(){
+		if( len( getMetaOGType() ) ){
+			return getMetaOGType();
+		}
+		
+		// Check if in page view or entry view
+		if( isPageView() ){
+			return 'website';
+		} else if( isEntryView() ){
+			return 'article';
+		}
+		
+		return 'website';
+	}
+	
+	
+
+	/**
+	* getOpenGraphMeta - return Open Graph Facebook friendly meta data
+	* More information: https://developers.facebook.com/docs/reference/opengraph
+	* Best Practices: https://developers.facebook.com/docs/sharing/best-practices
+	*/
+	function getOpenGraphMeta(){
+		
+		var content = "";
+		savecontent variable="content"{
+			writeOutput( '<meta property="og:title"              content="#getContentTitle()#" />#chr(10)#' );
+			writeOutput( '<meta property="og:type"               content="#getContentOGType()#" />#chr(10)#' );
+			if( len( getContentURL() ) ){
+				writeOutput( '<meta property="og:url"                content="#getContentURL()#" />#chr(10)#' );
+			}	
+			if( len( getContentURL() ) ){
+				writeOutput( '<meta property="og:description"        content="#getContentDescription()#" />#chr(10)#' );
+			}	
+			if( len( getContentImageURL() ) ){
+				writeOutput( '<meta property="og:image"              content="#getContentImageURL()#" />#chr(10)#' );	
+			}
+		}	
+		
+		return content;
+	}
 
 
 	/************************************** search *********************************************/
