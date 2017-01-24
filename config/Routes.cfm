@@ -34,17 +34,13 @@ limitations under the License.
 	// setThrowOnInvalidExtension(true);
 
 	// TO ENABLE FULL REWRITES REMOVE THE "INDEX.CFM" FROM THE LINES BELOW
-	if( len( getSetting( 'rewrites', false, '' ) ) && getSetting( 'rewrites', false, '' ) == true ){
-		rewriteURL = "";
-	} else {
-		rewriteURL = "index.cfm";
-	}
+
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#rewriteURL#");
+		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/index.cfm");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/#rewriteURL#");
+		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/index.cfm");
 	}
 	
 	// Your Application Routes
