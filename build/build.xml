@@ -120,6 +120,7 @@
       			<exclude name="artifacts/**" />
       			<exclude name=".idea/**" />
       			<exclude name=".DS_Store" />
+      			<exclude name=".engines/**" />
       			<exclude name=".git/**" />
       			<exclude name=".gitignore" />
       			<exclude name=".jshintrc" />

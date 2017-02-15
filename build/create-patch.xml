@@ -93,6 +93,7 @@
 				<exclude name=".travis.yml"/>
 				<exclude name=".htaccess"/>
 				<exclude name=".jshintrc"/>
+				<exclude name=".engines/**" />
 				<exclude name="server-*.json"/>
 				<exclude name="Application.cfc"/>
 				<exclude name="box.json"/>
