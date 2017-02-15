@@ -1,0 +1,12 @@
+<wddxPacket version='1.0'>
+	<header/>
+	<data>
+		<array length='2'>
+			<string></string>
+			<struct type="coldfusion.server.ConfigMap">
+			</struct>
+		</array>
+	</data>
+</wddxPacket>
+
+

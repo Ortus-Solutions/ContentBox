@@ -1,0 +1,163 @@
+<wddxPacket version='1.0'>
+	<header/>
+	<data>
+		<struct type='coldfusion.server.ConfigMap'>
+			<var name='solrhome'>
+				<string>ColdFusionSolr/multicore</string>
+			</var>
+			<var name='solrwebapp'>
+				<string>solr</string>
+			</var>
+			<var name='solrhost'>
+				<string>localhost</string>
+			</var>
+			<var name='solrport'>
+				<number>8987.0</number>
+			</var>
+			<var name='solrbuffersize'>
+				<number>40.0</number>
+			</var>
+			<var name='languages'>
+			<array length='16'>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Danish</string>
+					</var>
+					<var name='suffix'>
+						<string>dk</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Dutch</string>
+					</var>
+					<var name='suffix'>
+						<string>nl</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Finnish</string>
+					</var>
+					<var name='suffix'>
+						<string>fi</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>French</string>
+					</var>
+					<var name='suffix'>
+						<string>fr</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>German</string>
+					</var>
+					<var name='suffix'>
+						<string>de</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Italian</string>
+					</var>
+					<var name='suffix'>
+						<string>it</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Norwegian</string>
+					</var>
+					<var name='suffix'>
+						<string>no</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Spanish</string>
+					</var>
+					<var name='suffix'>
+						<string>es</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Portuguese</string>
+					</var>
+					<var name='suffix'>
+						<string>pt</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Russian</string>
+					</var>
+					<var name='suffix'>
+						<string>ru</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Swedish</string>
+					</var>
+					<var name='suffix'>
+						<string>sv</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Chinese</string>
+					</var>
+					<var name='suffix'>
+						<string>zh</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Japanese</string>
+					</var>
+					<var name='suffix'>
+						<string>ja</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Korean</string>
+					</var>
+					<var name='suffix'>
+						<string>ko</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Czech</string>
+					</var>
+					<var name='suffix'>
+						<string>cz</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Greek</string>
+					</var>
+					<var name='suffix'>
+						<string>el</string>
+					</var>
+				</struct>
+				<struct type='coldfusion.server.ConfigMap'>
+					<var name='name'>
+						<string>Thai</string>
+					</var>
+					<var name='suffix'>
+						<string>th</string>
+					</var>
+				</struct>
+			</array>
+
+			</var>
+		</struct>
+	</data>
+</wddxPacket>

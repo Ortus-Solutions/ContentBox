@@ -1,0 +1,16 @@
+<wddxPacket version='1.0'>
+	<header/>
+	<data>
+		<struct type='coldfusion.server.ConfigMap'>
+			<var name='watch.interval'>
+				<number>120.0</number>
+			</var>
+			<var name='watch.extensions'>
+				<string>xml,properties</string>
+			</var>
+			<var name='watch.watchEnabled'>
+				<boolean value='false'/>
+			</var>
+		</struct>
+	</data>
+</wddxPacket>

@@ -1,0 +1,261 @@
+<wddxPacket version='1.0'>
+	<header/>
+	<data>
+		<array length='2'>
+			<struct type='coldfusion.server.ConfigMap'>
+				<var name='topslowqueriescount'>
+					<number>20.0</number>
+				</var>
+				<var name='hitthreadcount'>
+					<number>20.0</number>
+				</var>
+				<var name='includemonitortemplatepaths'>
+					<string></string>
+				</var>
+				<var name='excludemonitortemplatepaths'>
+					<string></string>
+				</var>
+				<var name='includecfadmin'>
+					<boolean value='false'/>
+				</var>
+				<var name='includeprofilingtemplatepaths'>
+					<string></string>
+				</var>
+				<var name='topmemoryusedqueriesthreshold'>
+					<number>20480.0</number>
+				</var>
+				<var name='notifyalertemailid'>
+					<string></string>
+				</var>
+				<var name='notifyalertfromemailid'>
+					<string></string>
+				</var>
+				<var name='topaverageslowqueriescount'>
+					<number>20.0</number>
+				</var>
+				<var name='topmemoryusedsessionscount'>
+					<number>20.0</number>
+				</var>
+				<var name='requestloadavgperiod'>
+					<number>60.0</number>
+				</var>
+				<var name='slowthreadthreshold'>
+					<number>20000.0</number>
+				</var>
+				<var name='slowrequestthreshold'>
+					<number>20000.0</number>
+				</var>
+				<var name='avgslowrequestthreshold'>
+					<number>20000.0</number>
+				</var>
+				<var name='avgslowrequestcount'>
+					<number>20.0</number>
+				</var>
+				<var name='slowrequestcount'>
+					<number>20.0</number>
+				</var>
+				<var name='maxservertimethreadcount'>
+					<number>20.0</number>
+				</var>
+				<var name='maxservertimerequestcount'>
+					<number>20.0</number>
+				</var>
+				<var name='mailserverpassword'>
+					<string></string>
+				</var>
+				<var name='topmemoryusedrequeststhreshold'>
+					<number>40960.0</number>
+				</var>
+				<var name='mailserveruserid'>
+					<string></string>
+				</var>
+				<var name='monitoringenabled'>
+					<boolean value='false'/>
+				</var>
+				<var name='aliassetting'>
+					<array length='0'></array>
+				</var>
+				<var name='hitcountcount'>
+					<number>20.0</number>
+				</var>
+				<var name='topfrequentlyrunqueriescount'>
+					<number>20.0</number>
+				</var>
+				<var name='excludeprofilingtemplatepaths'>
+					<string></string>
+				</var>
+				<var name='memorymonitoringenabled'>
+					<boolean value='false'/>
+				</var>
+				<var name='topmemoryusedthreadscount'>
+					<number>20.0</number>
+				</var>
+				<var name='slowthreadcount'>
+					<number>20.0</number>
+				</var>
+				<var name='topmemoryusedrequestscount'>
+					<number>20.0</number>
+				</var>
+				<var name='topaverageslowqueriesthreshold'>
+					<number>10000.0</number>
+				</var>
+				<var name='topmemoryusedsessionsthreshold'>
+					<number>4096.0</number>
+				</var>
+				<var name='topmemoryusedthreadsthreshold'>
+					<number>40960.0</number>
+				</var>
+				<var name='profilingenabled'>
+					<boolean value='false'/>
+				</var>
+				<var name='topslowqueriesthreshold'>
+					<number>20000.0</number>
+				</var>
+				<var name='topmemoryusedqueriescount'>
+					<number>20.0</number>
+				</var>
+				<var name='ismonitoringserverenabled'>
+					<boolean value='false'/>
+				</var>
+				<var name='webserverurl'>
+					<string></string>
+				</var>
+			</struct>
+			<struct type='coldfusion.server.ConfigMap'>
+				<var name='slowserveralert'>
+					<struct type='coldfusion.server.ConfigMap'>
+						<var name='responsetimethreshold'>
+							<number>20000.0</number>
+						</var>
+						<var name='notifyonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyclientonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='killthreadthreshold'>
+							<number>60000.0</number>
+						</var>
+						<var name='rejectrequestsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='enabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='dumpsnapshot'>
+							<boolean value='false'/>
+						</var>
+						<var name='killthreadsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='alert_processing_cfc'>
+							<string></string>
+						</var>
+					</struct>
+				</var>
+				<var name='jvmmemoryalert'>
+					<struct type='coldfusion.server.ConfigMap'>
+						<var name='killthreadthreshold'>
+							<number>60000.0</number>
+						</var>
+						<var name='enabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='killthreadsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='alert_processing_cfc'>
+							<string></string>
+						</var>
+						<var name='jvmmemorythreshold'>
+							<number>450.0</number>
+						</var>
+						<var name='rejectrequestsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyclientonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='dumpsnapshot'>
+							<boolean value='false'/>
+						</var>
+						<var name='garbagecollectionenabled'>
+							<boolean value='false'/>
+						</var>
+					</struct>
+				</var>
+				<var name='unresponsiveserveralert'>
+					<struct type='coldfusion.server.ConfigMap'>
+						<var name='killthreadthreshold'>
+							<number>60000.0</number>
+						</var>
+						<var name='busytimethreshold'>
+							<number>60000.0</number>
+						</var>
+						<var name='hungthreadcount'>
+							<number>8.0</number>
+						</var>
+						<var name='alert_processing_cfc'>
+							<string></string>
+						</var>
+						<var name='enabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='rejectrequestsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='killthreadsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyclientonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='dumpsnapshot'>
+							<boolean value='false'/>
+						</var>
+					</struct>
+				</var>
+				<var name='timeoutsalert'>
+					<struct type='coldfusion.server.ConfigMap'>
+						<var name='timeoutsinterval'>
+							<number>60000.0</number>
+						</var>
+						<var name='killthreadthreshold'>
+							<number>60000.0</number>
+						</var>
+						<var name='killthreadsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='notifyclientonalert'>
+							<boolean value='false'/>
+						</var>
+						<var name='alert_processing_cfc'>
+							<string></string>
+						</var>
+						<var name='enabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='rejectrequestsenabled'>
+							<boolean value='false'/>
+						</var>
+						<var name='dumpsnapshot'>
+							<boolean value='false'/>
+						</var>
+						<var name='timeoutscount'>
+							<number>10.0</number>
+						</var>
+					</struct>
+				</var>
+			</struct>
+		</array>
+	</data>
+</wddxPacket>

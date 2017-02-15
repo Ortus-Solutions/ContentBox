@@ -1,6 +1,7 @@
 {
     "app":{
-        "cfengine":"lucee@5"
+        "cfengine":"lucee@5",
+        "serverHomeDirectory":".engines/lucee5"
     },
     "name":"cbcms-lucee5",
     "JVM":{

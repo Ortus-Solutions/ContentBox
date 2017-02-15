@@ -1,6 +1,7 @@
 {
     "app":{
-        "cfengine":"adobe@10"
+        "cfengine":"adobe@10",
+        "serverHomeDirectory":".engines/acf10"
     },
     "name":"cbcms-adobe10",
     "JVM":{

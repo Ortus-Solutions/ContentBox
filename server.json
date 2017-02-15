@@ -1,5 +1,8 @@
 {
     "force":true,
+    "app":{
+        "serverHomeDirectory":".engines/lucee4"
+    },
     "web":{
         "rewrites":{
             "enable":"true"

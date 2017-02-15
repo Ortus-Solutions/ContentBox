@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wddxPacket version="1.0">
+    <header/>
+    <data>
+        <struct type="coldfusion.server.ConfigMap">
+            <var name="port">
+                <string>6085</string>
+            </var>
+            <var name="dotnetport">
+                <string>6086</string>
+            </var>
+            <var name="protocol">
+                <string>tcp</string>
+            </var>
+            <var name="install_dir">
+                <string>C:\Work\CF\depot\ColdFusion\cf_main\cfusion\jnbridge</string>
+            </var>
+        </struct>
+    </data>
+</wddxPacket>

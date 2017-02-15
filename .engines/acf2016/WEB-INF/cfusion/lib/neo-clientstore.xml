@@ -1,0 +1,62 @@
+<!-- edited with XML Spy v4.3 U (http://www.xmlspy.com) by s gong (macromedia) -->
+<wddxPacket version="1.0">
+	<header/>
+	<data>
+		<array length="2">
+			<struct type="coldfusion.server.ConfigMap">
+				<var name="Cookie">
+					<struct type="coldfusion.server.ConfigMap">
+						<var name="type">
+							<string>COOKIE</string>
+						</var>
+						<var name="name">
+							<string>Cookie</string>
+						</var>
+						<var name="description">
+							<string>Client based text file.</string>
+						</var>
+						<var name="timeout">
+							<number>10.0</number>
+						</var>
+						<var name="disable_globals">
+							<boolean value="false"/>
+						</var>
+						<var name="purge">
+							<boolean value="true"/>
+						</var>
+					</struct>
+				</var>
+				<var name="Registry">
+					<struct type="coldfusion.server.ConfigMap">
+						<var name="type">
+							<string>REGISTRY</string>
+						</var>
+						<var name="name">
+							<string>Registry</string>
+						</var>
+						<var name="description">
+							<string>System registry.</string>
+						</var>
+						<var name="timeout">
+							<number>90</number>
+						</var>
+						<var name="disable_globals">
+							<boolean value="false"/>
+						</var>
+						<var name="purge">
+							<boolean value="true"/>
+						</var>
+					</struct>
+				</var>
+			</struct>
+			<struct type="coldfusion.server.ConfigMap">
+				<var name="uuidToken">
+					<boolean value="true"/>
+				</var>
+				<var name="default">
+					<string>Cookie</string>
+				</var>
+			</struct>
+		</array>
+	</data>
+</wddxPacket>

@@ -1,0 +1,1 @@
+<wddxPacket version='1.0'><header/><data><struct><var name='config'><struct><var name='emailFrom'><string>ColdFusionProbe@localhost</string></var><var name='probeUsername'><string></string></var><var name='probeURL'><string></string></var><var name='emailTo'><string></string></var></struct></var><var name='probes'><struct></struct></var></struct></data></wddxPacket>
