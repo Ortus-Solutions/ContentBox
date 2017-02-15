@@ -130,7 +130,6 @@ component extends="baseHandler"{
 		
 		// tab
 		prc.tabTools_export = true;
-		prc.emailTemplates 	= templateService.getTemplates();
 		prc.modules 		= moduleService.findModules().modules;
 		prc.themes 			= themeService.getThemes();
 		prc.widgets 		= widgetService.getWidgets();
