@@ -57,7 +57,7 @@
 			</div>
 		</div>
 		<!--- Entries --->
-		<cfloop array="#prc.entries.results#" item="thisEntry">
+		<cfloop array="#prc.entries.results#" index="thisEntry">
 		<div class="forgeBox-entrybox clearfix" id="entry_#thisEntry.entryID#">
 
 			<!--- Ratings --->

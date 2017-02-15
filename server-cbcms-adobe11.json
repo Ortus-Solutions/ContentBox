@@ -10,6 +10,9 @@
     "web":{
         "rewrites":{
             "enable":"true"
+        },
+        "http":{
+            "port":"8591"
         }
     }
 }
