@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><!-- 
 Path placeholders: 
-	{lucee-server}: path to the lucee server directory typical where the lucee.jar is located
+	{lucee-server}: path to the Lucee server directory typical where the Lucee.jar is located
 	{lucee-config}: same as {lucee-server} in server context and same as {lucee-web} in web context}
 	{temp-directory}: path to the temp directory of the current user of the system
 	{home-directory}: path to the home directory of the current user of the system
@@ -8,7 +8,7 @@ Path placeholders:
 	{system-directory}: path to thesystem directory
 	{web-context-hash}: hash of the web context
 
---><cfLuceeConfiguration hspw="aa2ac3964b84296a679c5b6a366df3647dd5ad5cfe2c8faf0562b0e8acba28b8" salt="061BCCD2-319B-475A-828A2B0C62560E26" version="4.5"><cfabort/>
+--><cfLuceeConfiguration salt="CFD673DA-03B5-4C69-9953DE51CC36A1D0" version="5.1">
 
 	<!--
 	system:
@@ -35,7 +35,7 @@ Path placeholders:
 <!--	 - http://sourceforge.net 																		-->
 <!--	or ask your database distributor 																-->
 	<data-sources psq="false">
-	<data-source allow="511" blob="false" class="org.gjt.mm.mysql.Driver" clob="false" connectionLimit="-1" connectionTimeout="1" custom="useUnicode=true&amp;characterEncoding=UTF-8&amp;useLegacyDatetimeCode=true" database="contentbox" dbdriver="MySQL" dsn="jdbc:mysql://{host}:{port}/{database}" host="localhost" metaCacheTimeout="60000" name="contentbox" password="encrypted:d23342dab0f3621f3a12c10d6d67118521092d7e85d4e3e0" port="3306" storage="false" username="root" validate="false"/></data-sources>
+	</data-sources>
 
 	<!--
 		deploy-directory - directory where java classes will be deployed
@@ -124,7 +124,7 @@ Path placeholders:
 		lock-timeout   - 	define how long a request wait for a lock
 		case-sensitive	-	is http handled case-sensitive or not
 	 	-->
-    	<resource-provider arguments="lock-timeout:10000;" class="lucee.commons.io.res.type.s3.S3ResourceProvider" scheme="s3"/>
+    	
     		
     	<!--
     	this providers uses the jcifs library. see http://jcifs.samba.org/
@@ -138,7 +138,7 @@ Path placeholders:
     		class="lucee.commons.io.res.type.smb.SMBResourceProvider"
     		arguments=""/>
     	-->
-    </resources>
+    <resource-provider arguments="lock-timeout:10000" bundle-name="s3.extension" bundle-version="0.9.4.105" class="org.lucee.extension.resource.s3.S3ResourceProvider" scheme="s3"/></resources>
 	
 
 	<!--
@@ -194,7 +194,7 @@ Path placeholders:
 		<mapping archive="" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-server}/context/" primary="physical" readonly="yes" virtual="/lucee-server/"/>
 		<mapping archive="{lucee-config}/context/lucee-context.lar" inspect-template="once" listener-mode="modern" listener-type="curr2root" physical="{lucee-config}/context/" primary="physical" readonly="yes" virtual="/lucee/"/>
 
-	</mappings>	
+	<mapping archive="{lucee-config}/context/lucee-admin.lar" inspect-template="once" physical="{lucee-config}/context/admin" primary="physical" readonly="true" toplevel="true" virtual="/lucee/admin"/><mapping archive="{lucee-config}/context/lucee-doc.lar" inspect-template="once" primary="archive" readonly="true" toplevel="true" virtual="/lucee/doc"/></mappings>	
 	
 	<custom-tag>
 		<mapping inspect-template="never" physical="{lucee-config}/customtags/"/>
@@ -212,9 +212,23 @@ Path placeholders:
 		data-member-default-access: remote|public|package|private
 			access type of component data member (variables in this scope)
 	-->
-	<component base="/lucee/Component.cfc" data-member-default-access="public" dump-template="/lucee/component-dump.cfm">
+	<component base-cfml="/lucee/Component.cfc" base-lucee="/lucee/Component.lucee" data-member-default-access="public" dump-template="/lucee/component-dump.cfm">
   		<mapping inspect-template="never" physical="{lucee-web}/components/" primary="physical" virtual="/default"/>
 	</component>
+	
+	<!--
+	cache handlers:
+		
+		base: 
+			path to base component for every component that have no base component defined 
+		data-member-default-access: remote|public|package|private
+			access type of component data member (variables in this scope)
+	-->
+	<cache-handlers>
+  		<cache-handler class="lucee.runtime.cache.tag.request.RequestCacheHandler" id="request"/>
+  		<cache-handler class="lucee.runtime.cache.tag.timespan.TimespanCacheHandler" id="timespan"/>
+	</cache-handlers>
+	
 	
 	<!--
 	regional configuration:
@@ -241,7 +255,7 @@ Path placeholders:
 		timeserver: [example: swisstime.ethz.ch] default:local time
 			dns of a ntp time server
 	-->
-	<orm engine-class="lucee.runtime.orm.hibernate.HibernateORMEngine"/>
+	<orm engine-bundle-name="hibernate.extension" engine-bundle-version="3.5.5.63" engine-class="org.lucee.extension.orm.hibernate.HibernateORMEngine"/>
 	
 	<!--
 		enable and disable debugging
@@ -265,21 +279,7 @@ Path placeholders:
 	-->
 	<application listener-mode="curr2root" listener-type="mixed"/>
 	
-	<update location="http://stable.lucee.org" type="manual"/>
-	<!--
-	flex:
-		
-		configuration: xml|manual (default: xml)
-			xml:		deploy default configuration for the MessageBrokerServlet as xml to th WEB-INF directory
-			manual:		the configuration is up to the user, lucee does nothing
-			
-		caster-class: shortcut (modern,classic) or AMFCaster class.
-		- classic (default): Build in AMFCaster follows the implementation of other engines.
-		- modern: Build in AMFCaster based on classic AMFCaster improved in functionality.  
-		- <class-name>: full class path of class implemeting interface AMFCaster (http://www.lucee.org/javadoc/lucee/runtime/net/amf/AMFCaster.html)
-		caster-class-arguments: init arguments provided to the AMFCaster init method, use "CSS" syntax.
-	-->
-	<flex configuration="manual"/>
+	<update location="http://release.lucee.org" type="manual"/>
 		
 <!--
 LOGGING
@@ -343,10 +343,10 @@ for every argument defined lucee tries to call a matching setter method
 		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/exception.log" layout="classic" name="exception"/>
 		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/trace.log" layout="classic" name="trace"/>
 		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/thread.log" layout="classic" name="thread"/>
-		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/deploy.log" layout="classic" name="deploy"/>
+		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/deploy.log" layout="classic" level="info" name="deploy"/>
 		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/requesttimeout.log" layout="classic" name="requesttimeout"/>
 		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/memory.log" layout="classic" name="memory"/>
 		<logger appender="resource" appender-arguments="path:{lucee-config}/logs/datasource.log" layout="classic" name="datasource"/>
 	</logging>
 	
-<datasource/></cfLuceeConfiguration>
+<datasource/><extensions><rhextension file-name="8w9kvhnl8vzz.lex" id="87FE44E5-179C-43A3-A87B3D38BEF4652E" name="EHCache" version="2.10.0.20"/><rhextension file-name="pu12gc9qilnj.lex" id="FAD1E8CB-4F45-4184-86359145767C29DE" name="Hibernate ORM Engine" version="3.5.5.63"/><rhextension file-name="vj1qa9ky3foc.lex" id="2BCD080F-4E1E-48F5-BEFE794232A21AF6" name="jTDS (MSSQL,Sybase)" version="1.3.1"/><rhextension file-name="cfszch6atrqd.lex" id="66E312DD-D083-27C0-64189D16753FD6F0" name="PDF Extension" version="1.0.0.54"/><rhextension file-name="m5119yr1r0zy.lex" id="671B01B8-B3B3-42B9-AC055A356BED5281" name="PostgreSQL" version="8.3.0.jdbc4"/><rhextension file-name="wnakxokve7b0.lex" id="CED6227E-0F49-6367-A68D21AACA6B07E8" name="Lucee Administrator" version="1.0.0.3"/><rhextension file-name="18buz1m6kzx2m.lex" id="D46D49C3-EB85-8D97-30BEC2F38561E985" name="Lucee Documentation" version="1.0.0.2"/><rhextension file-name="131z38v1k79ij.lex" id="17AB52DE-B300-A94B-E058BD978511E39E" name="S3 Resource Extension" version="0.9.4.105"/><rhextension file-name="siwbg4rbbbfd.lex" id="D46B46A9-A0E3-44E1-D972A04AC3A8DC10" name="Chart Extension" version="1.0.19.23"/></extensions><caches><cache bundle-name="ehcache.extension" bundle-version="2.10.0.20" class="org.lucee.extension.cache.eh.EHCache"/></caches><jdbc><driver bundle-name="jtds" bundle-version="1.3.1" class="net.sourceforge.jtds.jdbc.Driver" label="jTDS (MSSQL,Sybase)"/><driver bundle-name="org.lucee.postgresql" bundle-version="8.3.0.jdbc4" class="org.postgresql.Driver" label="PostgreSQL"/></jdbc></cfLuceeConfiguration>
