@@ -12,7 +12,7 @@
             "enable":"true"
         },
         "http":{
-            "port":"8591"
+            "port":"8592"
         }
     }
 }
