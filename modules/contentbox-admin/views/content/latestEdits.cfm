@@ -66,7 +66,7 @@
 						<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkEntry( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
 					</cfif>
 				<cfelse>
-					<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page"><i class="fa fa-edit fa-lg"></i></a>
+					<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page"><i class="fa fa-edit fa-lg"></i></a>
 				</cfif>
 		    </div>
 		</td>
