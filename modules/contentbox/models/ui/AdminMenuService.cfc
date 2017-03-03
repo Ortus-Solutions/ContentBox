@@ -175,7 +175,7 @@ component accessors="true" threadSafe singleton{
 		var xehDoLogout			= "#this.ADMIN_ENTRYPOINT#.security.doLogout";
 		var xehAutoUpdates		= "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		var xehAbout			= "#this.ADMIN_ENTRYPOINT#.dashboard.about";
-		var xehAdminAction		= "/#this.ADMIN_ENTRYPOINT#/dashboard/reload";
+        var xehAdminAction        = "#application.wirebox.getInstance( 'interceptor-ses' ).getBaseURL()#/#this.ADMIN_ENTRYPOINT#/dashboard/reload";
 
 		// Register About Menu
 		addHeaderMenu( 
