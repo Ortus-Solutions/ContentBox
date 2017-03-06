@@ -1,5 +1,5 @@
 *
-!.gitignore
+!/.gitignore
 
 !/lucee4/WEB-INF/lucee-server/context/lucee-server.xml
 !/lucee4/WEB-INF/lucee-web/lucee-web.xml.cfm
