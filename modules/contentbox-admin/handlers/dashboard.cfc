@@ -87,7 +87,12 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.latestDraftsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { max = 10, author = prc.oAuthor, isPublished = false }
+			eventArguments 	= { 
+				max 		= 10,
+				author 		= prc.oAuthor, 
+				isPublished = false,
+				showHits 	= false
+			}
 		);
 		event.setView( view="dashboard/latestUserDrafts", layout="ajax" );
 	}
@@ -100,7 +105,10 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.latestEditsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { max=10 }
+			eventArguments 	= { 
+				max 		= 10,
+				showHits 	= true 
+			}
 		);
 		event.setView( view="dashboard/latestSystemEdits", layout="ajax" );
 	}

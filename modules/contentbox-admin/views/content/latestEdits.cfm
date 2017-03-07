@@ -1,11 +1,23 @@
 <cfoutput>
 <!--- latest edits --->
-<table name="latestEditsTable" id="latestEditsTable" class="table table-hover table-condensed table-striped" width="100%">
+<table 
+	name="latestEditsTable" 
+	id="latestEditsTable" 
+	class="table table-hover table-condensed table-striped" 
+	width="100%"
+>
 	<thead>
 		<tr>
 			<th>Title</th>
 			<th width="175">Date</th>
-			<th width="50" class="text-center"><i class="fa fa-globe fa-lg" title="Published"></i></th>
+			<th width="50" class="text-center">
+				<i class="fa fa-globe fa-lg" title="Published"></i>
+			</th>
+			<cfif args.showHits>
+			<th width="40" class="text-center">
+				<i class="fa fa-signal fa-lg" title="Hits"></i>
+			</th>
+			</cfif>
 			<th width="100" class="text-center">Actions</th>
 		</tr>
 	</thead>
@@ -18,7 +30,8 @@
 				class="success"
 			<cfelseif !thisContent.isContentPublished()>
 				class="warning"
-			</cfif>>
+			</cfif>
+		>
 			<td>
 				<!--- Editor --->
 	    		<cfif thisContent.getContentType() eq "page">
@@ -55,21 +68,28 @@
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
+			
+			<cfif args.showHits>
 			<td class="text-center">
-			<!--- Content Actions --->
-			<div class="btn-group btn-xs">
-				<!--- View in Site --->
-				<cfif listFindNoCase( "page,entry", thisContent.getContentType() )>
-					<cfif thisContent.getContentType() eq "page">
-						<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkPage( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
+				<span class="badge badge-info">#thisContent.getNumberOfHits()#</span>
+			</td>
+			</cfif>
+
+			<td class="text-center">
+				<!--- Content Actions --->
+				<div class="btn-group btn-xs">
+					<!--- View in Site --->
+					<cfif listFindNoCase( "page,entry", thisContent.getContentType() )>
+						<cfif thisContent.getContentType() eq "page">
+							<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkPage( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
+						<cfelse>
+							<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkEntry( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
+						</cfif>
 					<cfelse>
-						<a class="btn btn-primary btn-sm" href="#prc.CBHelper.linkEntry( thisContent )#" target="_blank" title="View in Site"><i class="fa fa-eye fa-lg"></i></a>
+						<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page"><i class="fa fa-edit fa-lg"></i></a>
 					</cfif>
-				<cfelse>
-					<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page"><i class="fa fa-edit fa-lg"></i></a>
-				</cfif>
-		    </div>
-		</td>
+			    </div>
+			</td>
 		</tr>
 		</cfloop>
 	</tbody>

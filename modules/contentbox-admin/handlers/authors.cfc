@@ -142,12 +142,19 @@ component extends="baseHandler"{
 			// Latest Edits
 			prc.latestEditsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
-				eventArguments 	= { author = prc.author }
+				eventArguments 	= { 
+					author 		= prc.author,
+					showHits 	= true
+				}
 			);
 			// Latest Drafts
 			prc.latestDraftsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
-				eventArguments 	= { author = prc.author, isPublished = false }
+				eventArguments 	= { 
+					author 		= prc.author, 
+					isPublished = false,
+					showHits 	= false
+				}
 			);
 		}
 		// view

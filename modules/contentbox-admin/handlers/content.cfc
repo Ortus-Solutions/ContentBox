@@ -217,6 +217,7 @@ component extends="baseHandler"{
 	* @author.generic contentbox.models.security.Author
 	* @isPublished 	Boolean indicator if you need to search on all published states, only published, or only draft
 	* @max 			The maximum number of records, capped at 25 by default
+	* @showHits 	Show hit count on content item, defaults to true
 	* 
 	* @return html
 	*/
@@ -226,12 +227,14 @@ component extends="baseHandler"{
 		prc,
 		any author,
 		boolean isPublished,
-		numeric max = 25
+		numeric max = 25,
+		boolean showHits=true
 	){
 		// Setup args
 		var args = { max = arguments.max };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
 		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
+		
 		// Get latest content edits with criteria
 		var latestEdits = contentService.getLatestEdits( argumentCollection = args );
 
@@ -239,7 +242,10 @@ component extends="baseHandler"{
 		return renderView( 
 			view 	= "content/latestEdits", 
 			module 	= "contentbox-admin",
-			args 	= { latestEdits = latestEdits }
+			args 	= { 
+				latestEdits = latestEdits,
+				showHits 	= arguments.showHits
+			}
 		);
 	}
 
