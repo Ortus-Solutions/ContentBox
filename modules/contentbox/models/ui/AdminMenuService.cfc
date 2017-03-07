@@ -269,32 +269,32 @@ component accessors="true" threadSafe singleton{
 		.addHeaderSubMenu( 
 			name="rsscache", 
 			label="Clear RSS Caches", 
-			href="javascript:adminAction( 'rss-purge', '#xehAdminAction#' )" 
+			href="javascript:adminAction( 'rss-purge', '#event.buildLink(xehAdminAction)#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="contentpurge", 
 			label="Clear Content Caches", 
-			href="javascript:adminAction( 'content-purge', '#xehAdminAction#' )" 
+			href="javascript:adminAction( 'content-purge', '#event.buildLink(xehAdminAction)#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="app", 
 			label="Reload Application", 
-			href="javascript:adminAction( 'app', '#xehAdminAction#' )" 
+			href="javascript:adminAction( 'app', '#event.buildLink(xehAdminAction)#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="orm", 
 			label="Reload ORM", 
-			href="javascript:adminAction( 'orm', '#xehAdminAction#' )" 
+			href="javascript:adminAction( 'orm', '#event.buildLink(xehAdminAction)#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="contentboxadmin", 
 			label="Reload Admin Module", 
-			href="javascript:adminAction( 'contentbox-admin', '#xehAdminAction#' )" 
+			href="javascript:adminAction( 'contentbox-admin', '#event.buildLink(xehAdminAction)#' )" 
 		)
 		.addHeaderSubMenu( 
 			name="contentboxui", 
 			label="Reload Site Module", 
-			href="javascript:adminAction( 'contentbox-ui', '#xehAdminAction#' )" 
+			href="javascript:adminAction( 'contentbox-ui', '#event.buildLink(xehAdminAction)#' )" 
 		);
 		return this;
 	}
