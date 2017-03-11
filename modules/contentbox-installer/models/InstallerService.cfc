@@ -433,7 +433,7 @@ component accessors="true"{
 "/",
 { "name": "styles",      "items" : [ "Styles","Format" ] },
 { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
-{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
+{ "name": "insert",      "items" : [ "Image","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
 { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]',
 			"cb_editors_ckeditor_excerpt_toolbar" 	= '

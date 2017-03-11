@@ -131,6 +131,7 @@ module.exports = function(grunt) {
 						,"bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
+						,"bower_components/lodash/dist/lodash.min.js"
 						// Vendor Libraries
 						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"devincludes/vendor/js/modernizr.min.js"
@@ -262,7 +263,7 @@ module.exports = function(grunt) {
 						src 	: [
 							'ckeditor/plugins/**',
 							'ckeditor/adapters/**',
-							'ckeditor/skins/moono/**',
+							'ckeditor/skins/moono-lisa/**',
 							'ckeditor/lang/**',
 							'ckeditor/ckeditor.js',
 							'ckeditor/styles.js',
