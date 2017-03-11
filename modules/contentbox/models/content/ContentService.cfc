@@ -238,7 +238,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				arguments.content.removeAllLinkedContent();
 			}
 			if( arguments.content.hasChild() ){
+				var aItemsToDelete = [];
 				for( var thisChild in arguments.content.getChildren() ){
+					arrayAppend( aItemsToDelete, thisChild );
+				}
+				for( var thisChild in aItemsToDelete ){
 					deleteContent( thisChild );
 				}
 			}
