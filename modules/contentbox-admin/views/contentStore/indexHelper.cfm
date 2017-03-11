@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- Load Content List Viewer UI --->
-#renderView(view="_tags/contentListViewer", prePostExempt=true)#
+#renderView( view="_tags/contentListViewer", prePostExempt=true )#
 <!--- page JS --->
 <script>
 $(document).ready(function() {
@@ -11,7 +11,7 @@ $(document).ready(function() {
 		searchField 	: $( "##contentSearch" ),
 		searchName		: 'searchContent',
 		contentForm 	: $( "##contentForm" ),
-		bulkStatusURL 	: '#event.buildlink(linkTo=prc.xehContentBulkStatus)#',
+		bulkStatusURL 	: '#event.buildlink( prc.xehContentBulkStatus )#',
 		importDialog 	: $( "##importDialog" ),
 		cloneDialog		: $( "##cloneDialog" )
 	} );

@@ -73,7 +73,7 @@ component extends="ContentService" singleton{
 		string isPublished="any",
 		string author="all",
 		string creator="all",
-		string parent="",
+		string parent,
 		string category="all",
 		numeric max=0,
 		numeric offset=0,
@@ -115,22 +115,24 @@ component extends="ContentService" singleton{
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
-				c.or( c.restrictions.like( "title","%#arguments.search#%" ),
-					  c.restrictions.like( "slug","%#arguments.search#%" ),
-					  c.restrictions.like( "description","%#arguments.search#%" ),
-					  c.restrictions.like( "ac.content", "%#arguments.search#%" )
-					 );
-			}
-			else{
-				c.or( c.restrictions.like( "title","%#arguments.search#%" ),
-					  c.restrictions.like( "slug","%#arguments.search#%" ),
-					  c.restrictions.like( "description","%#arguments.search#%" ) );
+				c.or( 
+					c.restrictions.like( "title","%#arguments.search#%" ),
+					c.restrictions.like( "slug","%#arguments.search#%" ),
+					c.restrictions.like( "description","%#arguments.search#%" ),
+					c.restrictions.like( "ac.content", "%#arguments.search#%" )
+				);
+			} else {
+				c.or( 
+					c.restrictions.like( "title","%#arguments.search#%" ),
+					c.restrictions.like( "slug","%#arguments.search#%" ),
+					c.restrictions.like( "description","%#arguments.search#%" ) 
+				);
 			}
 		}
 		// parent filter
-		if( structKeyExists(arguments,"parent" ) ){
+		if( structKeyExists( arguments, "parent" ) ){
 			if( len( trim( arguments.parent ) ) ){
-				c.eq( "parent.contentID", javaCast( "int",arguments.parent) );
+				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
 			} else {
 				c.isNull( "parent" );
 			}

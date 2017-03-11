@@ -60,7 +60,7 @@
 				#content.getDescription()#
 			</td>
 			<td>
-				#content.getSlug()#
+				<div class="label label-info">#content.getSlug()#</div>
 				<br/><small><i class="fa fa-tag"></i> #content.getCategoriesList()#</small>
 			</td>
 			<td class="text-center">

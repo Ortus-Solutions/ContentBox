@@ -76,9 +76,9 @@ component extends="baseContentHandler"{
 			prc.isFiltering = true;
 		}
 
-		// Doing a page search or filtering?
+		// Doing a search or filtering?
 		if( len( rc.searchContent ) OR prc.isFiltering ){
-			// remove parent for searches, we go site wide
+			// remove parent for searches, we go hierarchy wide
 			structDelete( rc, "parent" );
 		}
 

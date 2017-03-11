@@ -14,11 +14,11 @@ function setupContentView( settings ){
 	$cloneDialog	= settings.cloneDialog;
 	
 	// quick search binding
-	$searchField.keyup(function(){
-		var $this = $(this);
+	$searchField.keyup( function(){
+		var $this = $( this );
 		var clearIt = ( $this.val().length > 0 ? false : true );
 		// ajax search
-		contentLoad( { search: $this.val() } );
+		contentLoad( { search : $this.val() } );
 	} );
 }
 // Content filters
@@ -82,7 +82,7 @@ function contentPaginate(page){
 	} );
 }
 // Content load
-function contentLoad(criteria){
+function contentLoad( criteria ){
 	// default checks
 	if( criteria == undefined ){ criteria = {}; }
 	// default criteria matches
@@ -97,20 +97,20 @@ function contentLoad(criteria){
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
 	var args = {  
-		page: criteria.page, 
-		parent: criteria.parent,
-		fAuthors : criteria.fAuthors,
-		fCategories : criteria.fCategories,
-		fStatus : criteria.fStatus,
-		showAll : criteria.showAll,
-		fCreators : criteria.fCreators,
+		page			: criteria.page, 
+		parent			: criteria.parent,
+		fAuthors 		: criteria.fAuthors,
+		fCategories 	: criteria.fCategories,
+		fStatus 		: criteria.fStatus,
+		showAll 		: criteria.showAll,
+		fCreators 		: criteria.fCreators,
 	};
 	// Add dynamic search key name
 	args[ $searchName ] = criteria.search;
 	// load content
 	$tableContainer.load( $tableURL, args, function(){
 			$tableContainer.css( 'opacity', 1 );
-			$(this).fadeIn( 'fast' );
+			$( this ).fadeIn( 'fast' );
 	} );
 }
 // Get info panel contents
