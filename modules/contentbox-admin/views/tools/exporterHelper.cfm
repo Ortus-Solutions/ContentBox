@@ -58,6 +58,10 @@ function doExport(){
         $( "##uploadBar" ).slideToggle();
         $( "##uploadBarLoader" ).slideToggle();
         $( "##exporterForm" ).submit();
+        //Wait for the export to start, and the new window to pop, then update the UI
+        $( "##uploadBar" ).delay( 3000 ).slideToggle();
+        $( "##uploadBarLoader" ).delay( 3000 ).slideToggle();
+        
     }
 }
 function previewExport() {
