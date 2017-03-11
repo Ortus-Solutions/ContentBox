@@ -114,8 +114,7 @@ function testWidgetCode( name, type ){
         widgetName  : name,
         widgetType  : type
     };
-    openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes );
-    return false;
+    return openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes );
 }
 </cfif>
 </script>
