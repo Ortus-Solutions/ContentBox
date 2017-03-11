@@ -14,7 +14,7 @@
 <div class="row">
 	<div class="col-md-12">
 		
-		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate" )#  
+		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate", target="_blank" )#  
 			<div class="panel panel-default">
 				
 				<div class="panel-heading">
