@@ -25,6 +25,8 @@
                 </cfif>
             </cfloop>
         </ul>
+        <!--- Array to hold all the error messages when generating widgets,output at the bottom of the list, not in the middle --->
+        <cfset aWidgetErrors = []>
         
         <!--- ContentBars --->
         <div class="tab-content">
@@ -50,7 +52,8 @@
                                 p = prc.widgetService.getWidget( name=widgetName, type=prc.widgets.widgetType );
                             } catch( Any e ){
                                 log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
-                                writeOutput( "<div class='alert alert-danger'>Error building '#prc.widgets.name#' widget: #e.message# #e.detail#</div>" );
+                                arrayAppend( aWidgetErrors, "<div class='alert alert-danger margin10'>Error building '#prc.widgets.name#' widget: #e.message# <p><a data-toggle='collapse' data-target='##Widget_Error_#prc.widgets.name#'>Toggle Full Error</a></p><div id='Widget_Error_#prc.widgets.name#' class='collapse'>#e.detail#</div></div>" );
+                                
                                 continue;
                             }
                             iconName = prc.widgets.icon;
@@ -122,7 +125,15 @@
                             </div> <!--- end widget-content --->
                         </div>
                     </cfloop>
+                    
                 </div>
+                
+                <div class="row">
+                <cfloop array="#aWidgetErrors#" index="widgetError" >
+                	#widgetError#
+                </cfloop>	
+                </div>
+                    
                 <div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
             </div>
         </div>
