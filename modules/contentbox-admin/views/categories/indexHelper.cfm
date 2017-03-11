@@ -12,9 +12,14 @@ $(document).ready(function() {
 		$categoryEditor.find( "##categoryID" ).val( '' );
 	} );
 	//
-	$( "##categorySearch" ).keyup(function(){
-		$.uiTableFilter( $( "##categories" ), this.value );
-	} );
+	$( "##categorySearch" ).keyup(
+		_.debounce(
+			function(){
+				$.uiTableFilter( $( "##categories" ), this.value );
+			},
+			300
+		)
+	);
 	// Data tables
 	$('##categories').dataTable( {
 		"paging" : false,

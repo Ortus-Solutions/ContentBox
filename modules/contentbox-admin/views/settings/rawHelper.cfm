@@ -17,9 +17,14 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	} );
-	$( "##eventFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##eventsList" ), this.value );
-	} );
+	$( "##eventFilter" ).keyup(
+		_.debounce(
+            function(){
+                $.uiTableFilter( $( "##eventsList" ), this.value );
+            },
+            300
+        )
+	);
 	// singletons sorting + filter
 	$( "##singletons" ).dataTable( {
 		"paging": false,
@@ -45,12 +50,17 @@ $(document).ready(function() {
 		$settingEditor.find( "##btnReset" ).val( "Reset" );
 	} );
 	// keyup quick search
-	$( "##settingSearch" ).keyup(function(){
-		var $this = $(this);
-		var clearIt = ( $this.val().length > 0 ? false : true );
-		// ajax search
-		settingsLoad( $this.val() );
-	} );
+	$( "##settingSearch" ).keyup(
+		_.debounce(
+            function(){
+                var $this = $(this);
+				var clearIt = ( $this.val().length > 0 ? false : true );
+				// ajax search
+				settingsLoad( $this.val() );
+            },
+            300
+        )
+	);
 	// Load settings
 	settingsLoad( $( "##settingSearch" ).val() );
 } );

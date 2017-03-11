@@ -3,9 +3,14 @@
 <script>
 $(document).ready(function() {
 	$commentForm = $( "##commentForm" );
-	$( "##commentSearch" ).keyup(function(){
-		$.uiTableFilter( $( "##comments" ), this.value );
-	} );
+	$( "##commentSearch" ).keyup(
+		_.debounce(
+			function(){
+				$.uiTableFilter( $( "##comments" ), this.value );
+			},
+			300
+		)
+	);
 	// comment quick look
 	$commentForm.find( "##comments" ).find( "tr" ).bind( "contextmenu",function(e) {
 	    if (e.which === 3) {

@@ -18,9 +18,14 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	} );
-	$( "##themeFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##themes" ), this.value );
-	} );
+	$( "##themeFilter" ).keyup(
+		_.debounce(
+            function(){
+                $.uiTableFilter( $( "##themes" ), this.value );
+            },
+            300
+        )
+	);
 	// form validator
 	$uploadForm.validate( {
         success:function(e,els){ activateLoaders(); }

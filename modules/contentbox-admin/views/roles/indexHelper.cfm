@@ -25,9 +25,14 @@ $(document).ready(function() {
 	} );
 	</cfif>
 	// table sorting + filtering
-	$( "##roleFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##roles" ), this.value );
-	} );
+	$( "##roleFilter" ).keyup(
+		_.debounce(
+            function(){
+                $.uiTableFilter( $( "##roles" ), this.value );
+            },
+            300
+        )
+	);
 } );
 <cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
 function edit(roleID,role,description){

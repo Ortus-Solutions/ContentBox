@@ -9,17 +9,21 @@ $(document).ready(function() {
 	$pageEditorSelectorLoader 	= $pageEditorSelectorForm.find( "##pageLoader" );
 	// Search
 	// keyup quick search
-	$( "##pageSearch" ).keyup(function(){
-		var $this = $(this);
-		var clearIt = ( $this.val().length > 0 ? false : true );
-		// ajax search
-		$('##pagesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
-			{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
-			function(){
-				$pageEditorSelectorLoader.fadeOut();
-		} );
-		
-	} );
+	$( "##pageSearch" ).keyup(
+		_.debounce(
+            function(){
+                var $this = $(this);
+				var clearIt = ( $this.val().length > 0 ? false : true );
+				// ajax search
+				$('##pagesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
+					{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
+					function(){
+						$pageEditorSelectorLoader.fadeOut();
+				} );
+            },
+            300
+        )
+	);
 	<cfif len( rc.search )>
 	$( "##pageSearch" ).focus();
 	</cfif>

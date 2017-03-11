@@ -16,9 +16,14 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	} );
-	$( "##permissionFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##permissions" ), this.value );
-	} );
+	$( "##permissionFilter" ).keyup(
+		_.debounce(
+            function(){
+                $.uiTableFilter( $( "##permissions" ), this.value );
+            },
+            300
+        )
+	);
 	<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 	// form id
 	$permissionEditor = $( "##permissionEditor" );

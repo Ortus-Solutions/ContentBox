@@ -17,9 +17,14 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	} );
-	$( "##moduleFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##modules" ), this.value );
-	} );
+	$( "##moduleFilter" ).keyup(
+		_.debounce(
+            function(){
+                $.uiTableFilter( $( "##modules" ), this.value );
+            },
+            300
+        )
+	);
 	// form validator
 	$uploadForm.validate( {success:function(e,els){ activateLoaders(); }} );
 } );

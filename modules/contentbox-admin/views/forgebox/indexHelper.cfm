@@ -5,9 +5,14 @@ $(document).ready(function() {
 	$forgeBoxInstall = $( "##forgeBoxInstall" ); 
 	$downloadURL = $forgeBoxInstall.find( "##downloadURL" );
 	// Div Filter
-	$( "##entryFilter" ).keyup(function(){
-		$.uiDivFilter( $( ".forgeBox-entrybox" ), this.value );
-	} )
+	$( "##entryFilter" ).keyup(
+		_.debounce(
+            function(){
+              	$.uiDivFilter( $( ".forgeBox-entrybox" ), this.value );
+            },
+            300
+        )
+	)
 	// tool tips
 	activateTooltips();
 } );

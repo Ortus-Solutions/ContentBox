@@ -30,15 +30,21 @@
         $relatedContentSelectorForm    = $( "##relatedContentSelectorForm" );
         $relatedContentSelectorLoader  = $relatedContentSelectorForm.find( "##contentLoader" );
         // keyup quick search
-        $( "##contentSearch" ).keyup(function(){
-            var $this = $( this );
-            var clearIt = ( $this.val().length > 0 ? false : true );
-            // ajax search
-            var params = { search: $this.val(), clear: clearIt };
-            loadContentTypeTab( 'Page', params );
-            loadContentTypeTab( 'Entry', params );
-            loadContentTypeTab( 'ContentStore', params );
-        } );
+        $( "##contentSearch" ).keyup(
+            _.debounce(
+                function(){
+                    var $this = $( this );
+                    var clearIt = ( $this.val().length > 0 ? false : true );
+                    // ajax search
+                    var params = { search: $this.val(), clear: clearIt };
+                    loadContentTypeTab( 'Page', params );
+                    loadContentTypeTab( 'Entry', params );
+                    loadContentTypeTab( 'ContentStore', params );
+                },
+                300
+            )
+        );
+
         // prevent enter submisson
         $( "##contentSearch" ).keydown(function( e ){
             if( e.keyCode == 13 ) {

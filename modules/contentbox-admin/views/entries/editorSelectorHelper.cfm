@@ -8,17 +8,21 @@ $(document).ready(function() {
 	$entryEditorSelectorForm 	= $( "##entryEditorSelectorForm" );
 	$entryEditorSelectorLoader 	= $entryEditorSelectorForm.find( "##entryLoader" );
 	// keyup quick search
-	$( "##entrySearch" ).keyup(function(){
-		var $this = $(this);
-		var clearIt = ( $this.val().length > 0 ? false : true );
-		// ajax search
-		$('##entriesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
-			{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
-			function(){
-				$entryEditorSelectorLoader.fadeOut();
-		} );
-		
-	} );
+	$( "##entrySearch" ).keyup(
+		_.debounce(
+            function(){
+              	var $this = $(this);
+				var clearIt = ( $this.val().length > 0 ? false : true );
+				// ajax search
+				$('##entriesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
+					{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
+					function(){
+						$entryEditorSelectorLoader.fadeOut();
+				} );
+            },
+            300
+        )
+	);
 	<cfif len( rc.search )>
 	$( "##entrySearch" ).focus();
 	</cfif>

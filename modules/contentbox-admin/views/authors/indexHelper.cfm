@@ -36,12 +36,17 @@ function setupView( settings ){
 	$filters 		= settings.filters;
 	
 	// quick search binding
-	$searchField.keyup(function(){
-		var $this = $(this);
-		var clearIt = ( $this.val().length > 0 ? false : true );
-		// ajax search
-		contentLoad( { search: $this.val() } );
-	} );
+	$searchField.keyup( 
+		_.debounce(
+			function(){
+				var $this = $(this);
+				var clearIt = ( $this.val().length > 0 ? false : true );
+				// ajax search
+				contentLoad( { search: $this.val() } );
+			},
+			300
+		)
+	);
 }
 // show all content
 function contentShowAll(){

@@ -16,9 +16,14 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	} );
-	$ruleForm.find( "##ruleFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##rules" ), this.value );
-	} );
+	$ruleForm.find( "##ruleFilter" ).keyup(
+		_.debounce(
+            function(){
+                $.uiTableFilter( $( "##rules" ), this.value );
+            },
+            300
+        )
+	);
 	<cfif prc.oAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 	$ruleForm.find( "##rules" ).tableDnD( {
 		onDragClass: "selected",
