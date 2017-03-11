@@ -253,7 +253,7 @@
                         <!---End Linked Content--->
 
                         <!---Begin Modifiers--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" ) AND prc.content.isLoaded()>
+                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
