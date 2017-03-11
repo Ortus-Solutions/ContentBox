@@ -411,7 +411,10 @@ component extends="baseContentHandler"{
 		setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
 	}
 
-	// change order for all pages
+	/**
+	 * Change order of pages
+	 * @return json
+	 */
 	function changeOrder( event, rc, prc ){
 		// param values
 		event.paramValue( "tableID", "pages" )

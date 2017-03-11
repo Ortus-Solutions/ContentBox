@@ -163,7 +163,12 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false );
+							.list( 
+								offset 		= arguments.offset,
+								max 		= arguments.max,
+								sortOrder 	= arguments.sortOrder,
+								asQuery 	= false 
+							);
 		return results;
 	}
 
@@ -231,10 +236,12 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset,
-								   max=arguments.max,
-								   sortOrder=arguments.sortOrder,
-								   asQuery=arguments.asQuery );
+							.list( 
+								offset 		= arguments.offset,
+								max 		= arguments.max,
+								sortOrder 	= arguments.sortOrder,
+								asQuery 	= arguments.asQuery 
+							);
 
 		return results;
 	}

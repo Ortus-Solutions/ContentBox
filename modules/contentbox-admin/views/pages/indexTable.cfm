@@ -168,7 +168,7 @@
 							</cfif>
 							<!--- History Command --->
 							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
-							<!-- Reset hits --->
+							<!--- Reset hits --->
 							<li><a href="javascript:resetHits( '#page.getContentID()#' )"><i class="fa fa-refresh fa-lg"></i> Reset Hits</a></li>
 							<!--- View in Site --->
 							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye fa-lg"></i> Open In Site</a></li>

@@ -298,6 +298,24 @@
                                             </select>
                                         </div>
                                     </cfif>
+
+                                    <!--- Retrieval Order --->
+                                    <div class="form-group">
+                                        <i class="fa fa-sort fa-lg"></i>
+                                        <!--- menu order --->
+                                        #html.inputfield(
+                                            type        = "number",
+                                            label       = "Retrieval Order: (0-99)",
+                                            name        = "order",
+                                            bind        = prc.content,
+                                            title       = "The ordering index used when retrieving content store items",
+                                            class       = "form-control",
+                                            size        = "5",
+                                            maxlength   = "2",
+                                            min         = "0",
+                                            max         = "99"
+                                        )#
+                                    </div>
                                 </div>
                             </div>
                         </div>

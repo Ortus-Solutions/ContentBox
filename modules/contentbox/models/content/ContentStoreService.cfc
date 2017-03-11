@@ -164,8 +164,12 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=false );
-
+							.list( 
+								offset 		= arguments.offset,
+								max 		= arguments.max,
+								sortOrder 	= arguments.sortOrder,
+								asQuery 	= false 
+							);
 		return results;
 	}
 
@@ -220,15 +224,19 @@ component extends="ContentService" singleton{
 			} else {
 				c.isNull( "parent" );
 			}
+			// change sort by parent
+			arguments.sortOrder = "order asc";
 		}
 
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset,
-								   max=arguments.max,
-								   sortOrder=arguments.sortOrder,
-								   asQuery=arguments.asQuery );
+							.list( 
+								offset 		= arguments.offset,
+								max 		= arguments.max,
+								sortOrder 	= arguments.sortOrder,
+								asQuery 	= arguments.asQuery 
+							);
 
 		return results;
 	}

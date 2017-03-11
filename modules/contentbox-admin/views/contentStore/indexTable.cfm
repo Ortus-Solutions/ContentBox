@@ -18,7 +18,7 @@
 			<th>Name</th>
 			<th>Slug/Categories</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
-			<th width="75" class="text-center {sorter:false}">Actions</th>
+			<th width="115" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 
@@ -124,6 +124,16 @@
 						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
 			    	</ul>
 			    </div>
+
+			    <!--- Drag Handle --->
+				<a 	href="##" 
+					onclick="return false;" 
+					class="dragHandle btn btn-default btn-sm" 
+					title="Click and drag to change retrieval order" 
+					style="padding:5px 15px"
+				>
+					<i class="fa fa-arrows-v"></i> 
+				</a>
 
 			</td>
 		</tr>

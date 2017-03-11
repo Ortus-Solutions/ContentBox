@@ -90,7 +90,7 @@ component extends="baseContentHandler"{
 			author		= rc.fAuthors,
 			creator		= rc.fCreators,
 			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-			sortOrder	= "createdDate desc" 
+			sortOrder	= "order asc, createdDate desc" 
 		);
 		prc.content 	 = contentResults.content;
 		prc.contentCount = contentResults.count;
@@ -101,13 +101,48 @@ component extends="baseContentHandler"{
 		}
 
 		// exit handlers
-		prc.xehContentSearch 	 	= "#prc.cbAdminEntryPoint#.contentStore";
-		prc.xehContentHistory  		= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehContentExport 		= "#prc.cbAdminEntryPoint#.contentStore.export";
-		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
+		prc.xehContentSearch 	= "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehContentExport	= "#prc.cbAdminEntryPoint#.contentStore.export";
+		prc.xehContentClone		= "#prc.cbAdminEntryPoint#.contentStore.clone";
+		prc.xehContentOrder		= "#prc.cbAdminEntryPoint#.contentStore.changeOrder";
 
 		// view
 		event.setView( view="contentStore/indexTable", layout="ajax" );
+	}
+
+	/**
+	 * Change order of content items
+	 * @return json
+	 */
+	function changeOrder( event, rc, prc ){
+		// param values
+		event.paramValue( "tableID", "content" )
+			.paramValue( "newRulesOrder", "" );
+
+		// decode + cleanup incoming rules data
+		rc.newRulesOrder = URLDecode( rc.newRulesOrder );
+		rc.newRulesOrder = listToArray( REReplaceNoCase( rc.newRulesOrder, "&?#rc.tableID#\[\]\=", ",", "all" ) );
+
+		// iterate and perform ordering
+		var index 			= 1;
+		var aContentItems 	= [];
+		for( var thisContentID in rc.newRulesOrder ){
+			var oContent = contentStoreService.get( thisContentID );
+			if( !isNull( oContent ) ){
+				arrayAppend( aContentItems, oContent );
+				// Update order
+				oContent.setOrder( index++ );
+			}
+		}
+
+		// save them
+		if( arrayLen( aContentItems ) ){
+			contentStoreService.saveAll( aContentItems );
+		}
+
+		// render data back
+		event.renderData( type="json", data='true' );
 	}
 
 	// Bulk Status Change
