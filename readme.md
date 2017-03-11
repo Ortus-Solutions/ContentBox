@@ -54,6 +54,8 @@ Blog
 - Lucee 4.5+
 - ColdFusion 10+
 
+Default password for engines spun up by commandbox: `coldfusion`
+
 # ContentBox Installation
 
 You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running via the following commands:
