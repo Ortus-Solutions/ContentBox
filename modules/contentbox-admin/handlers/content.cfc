@@ -15,7 +15,7 @@ component extends="baseHandler"{
 	property name="CBHelper"			inject="id:CBHelper@cb";
 
 	/**
-	* Content Preview from editors
+	* Quick Content Preview from editors
 	* @return html
 	*/
 	function preview( event, rc, prc ){
@@ -53,7 +53,7 @@ component extends="baseHandler"{
 	}
 	
 	/**
-	* Global Admin search
+	* Global Content Search
 	* @return html
 	*/
 	function search( event, rc, prc ){
@@ -227,7 +227,7 @@ component extends="baseHandler"{
 		prc,
 		any author,
 		boolean isPublished,
-		numeric max = 25,
+		numeric max=25,
 		boolean showHits=true
 	){
 		// Setup args so we can use them in the viewlet
@@ -236,15 +236,62 @@ component extends="baseHandler"{
 		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
 		
 		// Get latest content edits with criteria
-		var latestEdits = contentService.getLatestEdits( argumentCollection = args );
+		var aLatestEdits = contentService.getLatestEdits( argumentCollection = args );
 
 		// view pager
 		return renderView( 
-			view 	= "content/latestEdits", 
+			view 	= "content/contentViewlet", 
 			module 	= "contentbox-admin",
 			args 	= { 
 				viewletID 	= createUUID(),
-				latestEdits = latestEdits,
+				aContent 	= aLatestEdits,
+				showHits 	= arguments.showHits
+			}
+		);
+	}
+
+	/**
+	* This viewlet shows future or expired content using filters. By default it shows future published content
+	* @author 		The optional author to look for latest edits only
+	* @author.generic contentbox.models.security.Author
+	* @showExpired 	Show expired content, defaults to false (future published content)
+	* @offset 		The offset when doing pagination
+	* @max 			The maximum number of records, capped at 25 by default
+	* @showHits 	Show hit count on content item, defaults to true
+	* 
+	* @return html
+	*/
+	function contentByPublishedStatus( 
+		event, 
+		rc, 
+		prc,
+		boolean showExpired=false,
+		any author,
+		boolean offset=0,
+		numeric max=25,
+		boolean showHits=true
+	){
+		// Setup args so we can use them in the viewlet
+		var args = { max = arguments.max, offset = arguments.offset };
+		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
+		
+		// Expired Content		
+		var aContent = "";
+		if( arguments.showExpired ){
+			aContent = contentService.findExpiredContent( argumentCollection = args );
+		} 
+		// Future Published Content
+		else {
+			aContent = contentService.findFuturePublishedContent( argumentCollection = args );
+		}
+
+		// view pager
+		return renderView( 
+			view 	= "content/contentViewlet", 
+			module 	= "contentbox-admin",
+			args 	= { 
+				viewletID 	= createUUID(),
+				aContent 	= aContent,
 				showHits 	= arguments.showHits
 			}
 		);

@@ -6,96 +6,105 @@
         </h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-8">
-        <div class="panel panel-default">
-		    <div class="panel-body">
-		    	<!--- Dashboard welcome body --->
-				<p class="lead">#prc.cbSettings.cb_dashboard_welcome_body#</p>
+    	<!--- Dashboard welcome body --->
+		<p class="lead">#prc.cbSettings.cb_dashboard_welcome_body#</p>
 
-				<!--- Messagebox --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
-				
-				<!--- Event --->
-				#announceInterception( "cbadmin_preDashboardContent" )#
-				
-				<!--- Installer Checks --->
-				<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
-				<cfif prc.installerCheck.installer>
-					<div class="alert alert-danger" id="installerCheck">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						<i class="fa fa-exclamation-triangle fa-2x"></i>
-						#$r( "dashboard.index.installer.notice@admin" )#
-						<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">#$r( "dashboard.index.installer.delete@admin" )#</button>
-					</div>
+		<!--- Messagebox --->
+		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		
+		<!--- Event --->
+		#announceInterception( "cbadmin_preDashboardContent" )#
+		
+		<!--- Installer Checks --->
+		<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
+		<cfif prc.installerCheck.installer>
+			<div class="alert alert-danger" id="installerCheck">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<i class="fa fa-exclamation-triangle fa-2x"></i>
+				#$r( "dashboard.index.installer.notice@admin" )#
+				<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">#$r( "dashboard.index.installer.delete@admin" )#</button>
+			</div>
+		</cfif>
+		<cfif prc.installerCheck.dsncreator>
+			<div class="alert alert-danger" id="dsnCreatorCheck">
+				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<i class="fa fa-exclamation-triangle fa-2x"></i>
+				#$r( "dashboard.index.creator.notice@admin" )#
+				<button class="btn btn-danger btn-sm" onclick="deleteDSNCreator()">#$r( "dashboard.index.creator.delete@admin" )#</button>
+			</div>
+		</cfif>
+		</cfif>
+		
+		<div class="tab-wrapper tab-primary">
+			<ul class="nav nav-tabs" id="dashboardTabs">
+				<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+					<li>
+						<a href="##contentReports" data-toggle="tab">
+							<i class="fa fa-dashboard"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+						</a>
+					</li>
 				</cfif>
-				<cfif prc.installerCheck.dsncreator>
-					<div class="alert alert-danger" id="dsnCreatorCheck">
-						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-						<i class="fa fa-exclamation-triangle fa-2x"></i>
-						#$r( "dashboard.index.creator.notice@admin" )#
-						<button class="btn btn-danger btn-sm" onclick="deleteDSNCreator()">#$r( "dashboard.index.creator.delete@admin" )#</button>
-					</div>
+				<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+					<li>
+						<a href="##latestComments" data-toggle="tab">
+							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
+						</a>
+					</li>
 				</cfif>
-				</cfif>
-				
-				<div class="tab-wrapper tab-primary">
-					<ul class="nav nav-tabs" id="dashboardTabs">
-						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-							<li>
-								<a href="##recentContentTab" data-toggle="tab"><i class="fa fa-pencil"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span></a>
-							</li>
-						</cfif>
-						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
-							<li>
-								<a href="##latestComments" data-toggle="tab"><i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span></a>
-							</li>
-						</cfif>
-						<li>
-							<a href="##latestNews" data-toggle="tab"><i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span></a>
-						</li>
-						<!--- cbadmin Event --->
-						#announceInterception( "cbadmin_onDashboardTabNav" )#
-					</ul>
-					<div class="tab-content">
-						<!--- cbadmin Event --->
-						#announceInterception( "cbadmin_preDashboardTabContent" )#
-						<!--- ****************************************************************************************** --->
-						<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
-						<!--- ****************************************************************************************** --->
-						<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-							<div class="tab-pane" id="recentContentTab">
-								<div class="" id="latestSystemEdits">
-									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-								</div>
-								<div class="" id="latestUserDrafts">
-									<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-								</div>
-							</div>
-						</cfif>
-						<!--- ****************************************************************************************** --->
-						<!--- LATEST COMMENTS --->
-						<!--- ****************************************************************************************** --->
-						<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
-							<div class="tab-pane" id="latestComments">
-								<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-							</div>
-						</cfif>
-						<!--- ****************************************************************************************** --->
-						<!--- LATEST NEWS TAB --->
-						<!--- ****************************************************************************************** --->
-						<div class="tab-pane" id="latestNews">
+				<li>
+					<a href="##latestNews" data-toggle="tab">
+						<i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span>
+					</a>
+				</li>
+				<!--- cbadmin Event --->
+				#announceInterception( "cbadmin_onDashboardTabNav" )#
+			</ul>
+			<div class="tab-content">
+				<!--- cbadmin Event --->
+				#announceInterception( "cbadmin_preDashboardTabContent" )#
+				<!--- ****************************************************************************************** --->
+				<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
+				<!--- ****************************************************************************************** --->
+				<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+					<div class="tab-pane" id="contentReports">
+						<div class="" id="latestSystemEdits">
 							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 						</div>
-						<!--- cbadmin Event --->
-						#announceInterception( "cbadmin_postDashboardTabContent" )#
+						<div class="" id="futurePublished">
+							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						</div>
+						<div class="" id="expiredContent">
+							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						</div>
+						<div class="" id="latestUserDrafts">
+							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						</div>
 					</div>
+				</cfif>
+				<!--- ****************************************************************************************** --->
+				<!--- LATEST COMMENTS --->
+				<!--- ****************************************************************************************** --->
+				<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+					<div class="tab-pane" id="latestComments">
+						<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+					</div>
+				</cfif>
+				<!--- ****************************************************************************************** --->
+				<!--- LATEST NEWS TAB --->
+				<!--- ****************************************************************************************** --->
+				<div class="tab-pane" id="latestNews">
+					<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 				</div>
-				
-				<!--- Event --->
-				#announceInterception( "cbadmin_postDashboardContent" )#
-		    </div>
+				<!--- cbadmin Event --->
+				#announceInterception( "cbadmin_postDashboardTabContent" )#
+			</div>
 		</div>
+		
+		<!--- Event --->
+		#announceInterception( "cbadmin_postDashboardContent" )#
     </div>
     <div class="col-md-4">
         <!--- Event --->

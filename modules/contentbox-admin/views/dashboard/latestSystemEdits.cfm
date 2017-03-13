@@ -1,5 +1,13 @@
 <cfoutput>
-#html.anchor( name="latestSystemEdits" )#
-<h3><i class="fa fa-clock-o"></i> Latest System Edits</h3>			
-#prc.latestEditsViewlet#	
+#html.anchor( name="latestEdits" )#
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">
+			<i class="fa fa-clock-o"></i> Latest Edits
+		</h3>
+	</div>
+	<div class="panel-body">
+		#prc.latestEditsViewlet#
+	</div>
+</div>
 </cfoutput>

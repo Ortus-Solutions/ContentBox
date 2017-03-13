@@ -33,6 +33,8 @@ component extends="baseHandler"{
 		// Ajax Loaded handlers
 		prc.xehLatestSystemEdits	= "#prc.cbAdminEntryPoint#.dashboard.latestSystemEdits";
 		prc.xehLatestUserDrafts		= "#prc.cbAdminEntryPoint#.dashboard.latestUserDrafts";
+		prc.xehPublishedContent		= "#prc.cbAdminEntryPoint#.dashboard.futurePublishedContent";
+		prc.xehExpiredContent		= "#prc.cbAdminEntryPoint#.dashboard.expiredContent";
 		prc.xehLatestComments		= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
 		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
@@ -112,6 +114,39 @@ component extends="baseHandler"{
 		);
 		event.setView( view="dashboard/latestSystemEdits", layout="ajax" );
 	}
+
+	/**
+	* Produce the publish in the future content
+	* @return html
+	*/
+	function futurePublishedContent( event, rc, prc ){
+		// Latest Edits
+		prc.futurePublishedContent = runEvent(
+			event 			= "contentbox-admin:content.contentByPublishedStatus",
+			eventArguments 	= { 
+				max 		= 10,
+				showHits 	= false
+			}
+		);
+		event.setView( view="dashboard/futurePublishedContent", layout="ajax" );
+	}
+
+	/**
+	* Produce the expired content report
+	* @return html
+	*/
+	function expiredContent( event, rc, prc ){
+		// Latest Edits
+		prc.expiredContent = runEvent(
+			event 			= "contentbox-admin:content.contentByPublishedStatus",
+			eventArguments 	= { 
+				max 		= 10,
+				showHits 	= true,
+				showExpired = true
+			}
+		);
+		event.setView( view="dashboard/expiredContent", layout="ajax" );
+	}
 	
 	/**
 	* Produce the latest system comments
@@ -185,7 +220,7 @@ component extends="baseHandler"{
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
 		}
 		
-		event.renderData(data=results, type="json" );
+		event.renderData( data=results, type="json" );
 	}
 	
 	/**

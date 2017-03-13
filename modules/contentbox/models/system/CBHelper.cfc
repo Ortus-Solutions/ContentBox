@@ -1920,7 +1920,7 @@ component accessors="true" singleton threadSafe{
 	* utility to strip HTML
 	*/
 	function stripHTML( required stringTarget ){
-		return HTMLEditFormat( REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
+		return EncodeForHTML( REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
 	}
 
 	/************************************** PRIVATE *********************************************/

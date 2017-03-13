@@ -1,8 +1,8 @@
 <cfoutput>
 <!--- latest edits --->
 <table 
-	name="latestEditsTable" 
-	id="latestEditsTable-#args.viewletID#" 
+	name="contentTable-#args.viewletID#" 
+	id="contentTable-#args.viewletID#" 
 	class="table table-hover table-condensed table-striped" 
 	width="100%"
 >
@@ -22,7 +22,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<cfloop array="#args.latestEdits#" index="thisContent">
+		<cfloop array="#args.aContent#" index="thisContent">
 		<tr id="contentID-#thisContent.getContentID()#" data-contentID="#thisContent.getContentID()#"
 			<cfif thisContent.isExpired()>
 				class="danger"
@@ -94,7 +94,7 @@
 		</cfloop>
 	</tbody>
 </table>
-<cfif !arrayLen( args.latestEdits )>
+<cfif !arrayLen( args.aContent )>
 	<div class="alert alert-info">
 	No Records Found
 	</div>											

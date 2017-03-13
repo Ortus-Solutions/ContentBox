@@ -349,6 +349,67 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
+	* Get all the expired content in the system by filters
+	* @author 		The author filtering if passed.
+	* @max 			The maximum number of records to return
+	* @offset 		The pagination offset
+	*/
+	array function findExpiredContent( 
+		any author, 
+		numeric max=0,
+		numeric offset=0,
+	){
+		var c = newCriteria().createAlias( "activeContent", "ac" );
+
+		// only future published pages
+		c.isTrue( "isPublished" )
+			.isLT( "publishedDate", now() )
+			.isLT( "expireDate", now() );
+		
+		// author filter
+		if( structKeyExists( arguments, "author") ){
+			c.isEq( "ac.author", arguments.author );
+		}
+			
+		return c.list( 
+			max 		= arguments.max, 
+			offset 		= arguments.offset,
+			sortOrder 	= "expireDate desc",
+			asQuery 	= false 
+		);
+	}
+
+	/**
+	* Get all the future published content in the system by filters
+	* @author 		The author filtering if passed.
+	* @max 			The maximum number of records to return
+	* @offset 		The pagination offset
+	*/
+	array function findFuturePublishedContent( 
+		any author, 
+		numeric max=0,
+		numeric offset=0,
+	){
+		var c = newCriteria().createAlias( "activeContent", "ac" );
+
+		// Only non-expired future publishing pages
+		c.isTrue( "isPublished" )
+			.isGT( "publishedDate", now() );
+		
+		// author filter
+		if( structKeyExists( arguments, "author") ){
+			c.isEq( "ac.author", arguments.author );
+		}
+			
+		return c.list( 
+			max 		= arguments.max, 
+			offset 		= arguments.offset,
+			sortOrder 	= "publishedDate desc", 
+			asQuery 	= false 
+		);
+	}
+
+	/**
 	* Get latest edits according to criteria
 	* @author 		The author object to use for retrieval
 	* @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
@@ -361,6 +422,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( structKeyExists( arguments, "isPublished") ){
 			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
+
 		// author filter
 		if( structKeyExists( arguments, "author") ){
 			c.isEq( "ac.author", arguments.author );

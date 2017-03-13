@@ -5,7 +5,11 @@ $(document).ready(function() {
 	<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
  	// Load My Latest Drafts
 	$( "##latestSystemEdits" ).load( '#event.buildLink( prc.xehLatestSystemEdits )#' );
-	// Load latest System Edits
+	// Load Future Published Content
+ 	$( "##futurePublished" ).load( '#event.buildLink( prc.xehPublishedContent )#' );
+ 	// Load expired content
+ 	$( "##expiredContent" ).load( '#event.buildLink( prc.xehExpiredContent )#' );
+ 	// Load latest System Edits
  	$( "##latestUserDrafts" ).load( '#event.buildLink( prc.xehLatestUserDrafts )#' );
  	</cfif>
 	// Load news
@@ -28,17 +32,16 @@ $(document).ready(function() {
 <!--- If Admin, show Module Cleanups --->
 <cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
 function deleteInstaller(){
-	deleteModule( '#event.buildLink(prc.xehDeleteInstaller)#', "installerCheck" );
+	deleteModule( '#event.buildLink( prc.xehDeleteInstaller )#', "installerCheck" );
 }
 function deleteDSNCreator(){
-	deleteModule( '#event.buildLink(prc.xehDeleteDSNCreator)#', "dsnCreatorCheck" );
+	deleteModule( '#event.buildLink( prc.xehDeleteDSNCreator )#', "dsnCreatorCheck" );
 }
 function deleteModule(link, id){
-	$.post( link, {}, function(data){
+	$.post( link, {}, function( data ){
 		if( data.ERROR ){
 			alert( data.MESSAGE );
-		} 
-		else{
+		} else {
 			$( "##" + id ).html( data.MESSAGE ).delay( 2000 ).fadeOut();
 		}
 	},
