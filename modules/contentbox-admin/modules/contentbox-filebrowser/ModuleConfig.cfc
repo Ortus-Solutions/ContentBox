@@ -140,7 +140,9 @@ component{
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-
+		// Reset the media root setting to the one loaded in ContentBox Settings.
+		var mediaService = wirebox.getInstance( "MediaService@cb" );
+		settings.directoryRoot = mediaService.getCoreMediaRoot( absolute=true );
 	}
 
 	/**

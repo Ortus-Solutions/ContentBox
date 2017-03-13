@@ -1,25 +1,8 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 * Manage's the system's media files
 */
 component accessors="true" singleton{
@@ -29,16 +12,18 @@ component accessors="true" singleton{
 	property name="log"					inject="logbox:logger:{this}";
 	property name="settingService"		inject="settingservice@cb";
 	
-	// properties
-	property name="providers";
+	/**
+	 * ContentBox Providers Map
+	 */
+	property name="providers" type="struct";
 	
 	/**
 	* Constructor
 	* @wirebox.inject wirebox
 	*/
-	MediaService function init(required wirebox){
+	MediaService function init( required wirebox ){
 		// The system media providers
-		providers = {};
+		variables.providers = {};
 		
 		// store factory
 		variables.wirebox = arguments.wirebox;
@@ -55,7 +40,7 @@ component accessors="true" singleton{
 	* Get the default system media provider name
 	*/
 	function getDefaultProviderName(){
-		return settingService.getSetting( "cb_media_provider" );
+		return variables.settingService.getSetting( "cb_media_provider" );
 	}
 	
 	/**
@@ -69,14 +54,14 @@ component accessors="true" singleton{
 	* Get a named provider object
 	*/
 	function getProvider(required name){
-		return providers[ arguments.name ];
+		return variables.providers[ arguments.name ];
 	}
 	
 	/**
 	* Register a new media provider in ContentBox
 	*/
-	MediaService function registerProvider(required contentbox.models.media.IMediaProvider provider){
-		providers[ arguments.provider.getName() ] = arguments.provider;	
+	MediaService function registerProvider( required contentbox.models.media.IMediaProvider provider ){
+		variables.providers[ arguments.provider.getName() ] = arguments.provider;	
 		return this;
 	}
 	
@@ -84,7 +69,7 @@ component accessors="true" singleton{
 	* UnRegister a provider in ContentBox
 	*/
 	MediaService function unRegisterProvider(required name){
-		structDelete( providers, arguments.name );	
+		structDelete( variables.providers, arguments.name );	
 		return this;
 	}
 	
@@ -92,32 +77,37 @@ component accessors="true" singleton{
 	* Get an array of registered providers in alphabetical order
 	*/
 	array function getRegisteredProviders(){
-		return listToArray( listSort( structKeyList( providers ), "textnocase" ) );
+		return listToArray( listSort( structKeyList( variables.providers ), "textnocase" ) );
 	}
 	
 	/**
 	* Get an array of registered provider names in alphabetical order with their display names
 	*/
 	array function getRegisteredProvidersMap(){
-		var aProviders = getRegisteredProviders();
-		var result = [];
+		var aProviders 	= getRegisteredProviders();
+		var result 		= [];
+
 		for( var thisProvider in aProviders ){
-			arrayAppend( result, { name=thisProvider, 
-								   displayName=providers[ thisProvider ].getDisplayName(), 
-								   description=providers[ thisProvider ].getDescription() } );
+			arrayAppend( 
+				result, 
+				{ 
+					name 		= thisProvider, 
+					displayName = variables.providers[ thisProvider ].getDisplayName(), 
+					description = variables.providers[ thisProvider ].getDescription() 
+				} 
+			);
 		}
+
 		return result;
 	}
 	
 	/**
 	* Get the path to the core media root
-	* @absolutePath.hint Return the absolute path or relative
+	* @absolute Return the absolute path or relative, if absolute then it expands the path.
 	*/
-	function getCoreMediaRoot(required boolean absolute=false){
+	function getCoreMediaRoot( required boolean absolute=false ){
 		var mRoot = settingService.getSetting( "cb_media_directoryRoot" );
 		return ( arguments.absolute ? expandPath( mRoot ) : mRoot );
 	}
-	
-
 	
 }
