@@ -54,8 +54,6 @@ Blog
 - Lucee 4.5+
 - ColdFusion 10+
 
-Default password for engines spun up by commandbox: `coldfusion`
-
 # ContentBox Installation
 
 You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running via the following commands:
@@ -80,7 +78,19 @@ box server start --rewritesEnable
 
 ## Collaboration
 
-If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start --rewritesEnable` and start hacking around and contributing.  
+If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  
+
+You can hack and test in the following engines by using the alias shown below when calling `box server start name={enginename}`:
+
+* Lucee 4.5 (Default)
+* Lucee 5.X - `cbcms-lucee5`
+* Adobe 10 - `cbcms-adobe10`
+* Adobe 11 - `cbcms-adobe11`
+* Adobe 2016 - `cbcms-adobe2016`
+
+### Engine Notes
+* The default passwords for the engines spun up by commandbox: `coldfusion`
+* All engines are stored under the `.engine` folders
 
 ### Test Suites
 For running our test suites you will need 2 more steps, so please refer to the [Readme](tests/readme.md) in the tests folder.
