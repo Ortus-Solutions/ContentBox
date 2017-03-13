@@ -230,7 +230,7 @@ component extends="baseHandler"{
 		numeric max = 25,
 		boolean showHits=true
 	){
-		// Setup args
+		// Setup args so we can use them in the viewlet
 		var args = { max = arguments.max };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
 		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
@@ -243,6 +243,7 @@ component extends="baseHandler"{
 			view 	= "content/latestEdits", 
 			module 	= "contentbox-admin",
 			args 	= { 
+				viewletID 	= createUUID(),
 				latestEdits = latestEdits,
 				showHits 	= arguments.showHits
 			}

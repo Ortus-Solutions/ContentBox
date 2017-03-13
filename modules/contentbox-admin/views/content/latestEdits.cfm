@@ -2,7 +2,7 @@
 <!--- latest edits --->
 <table 
 	name="latestEditsTable" 
-	id="latestEditsTable" 
+	id="latestEditsTable-#args.viewletID#" 
 	class="table table-hover table-condensed table-striped" 
 	width="100%"
 >
