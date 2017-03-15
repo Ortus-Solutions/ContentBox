@@ -116,7 +116,7 @@
 	</target>
 
 	<!-- Build module distro -->
-	<target name="build.module" description="Build a new ContentBox module source release" depends="init" unless="src.isBuilt">
+	<target name="build.module" description="Build a new ContentBox module source release" depends="init">
 		<!-- Create module Build dir -->
 		<mkdir dir="${dir.build}/module"/>
 		
@@ -164,7 +164,7 @@
 	</target>
 
 	<!-- Build installer distro -->
-	<target name="build.installer" description="Build a new ContentBox installer release" depends="build.module" unless="src.isBuilt">
+	<target name="build.installer" description="Build a new ContentBox installer release" depends="build.module">
 		<!-- Create site Build dir -->
 		<mkdir dir="${dir.build}/installer"/>
 		
@@ -192,6 +192,13 @@
       			<exclude name="modules/contentbox/**" />
       		</fileset>
         </copy>
+		
+		<!-- Activate DSN Creator link -->
+		<replace file="${dir.build}/installer/Application.cfc" 
+				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 summary="true" 
+				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 encoding="UTF-8"/>
 
         <!-- Create site box.json -->
         <copy file="box-site.json" toFile="${dir.build}/installer/box.json" overwrite="true"  encoding="UTF-8"/>
@@ -257,6 +264,13 @@
       		</fileset>
         </copy>
 
+        <!-- Deactivate DSN Creator link -->
+		<replace file="${dir.build}/site/Application.cfc" 
+				 value='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 summary="true" 
+				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+				 encoding="UTF-8"/>
+
         <!-- replace slugs -->
         <replaceregexp match='\-installer' replace="-site" flags="ig" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/site/box.json" />
@@ -275,113 +289,8 @@
 		<copy file="${dir.build}/site/box.json" toFile="${dir.contentbox.exports}/box-site.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
 	
- 	<!-- Build source distro -->
-	<target name="build.source" description="Build a new ContentBox source release" depends="init" unless="src.isBuilt">
-		<!-- Copy build ID -->
-		<concat destfile="${dir.build}/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
-		
-		<!-- Copy Source -->	
-      	<copy todir="${dir.build}" encoding="UTF-8">
-      		<fileset dir=".">
-      			<exclude name="artifacts/**" />
-      			<exclude name=".idea/**" />
-      			<exclude name=".DS_Store" />
-      			<exclude name=".engines/**" />
-      			<exclude name=".git/**" />
-      			<exclude name=".gitignore" />
-      			<exclude name=".jshintrc" />
-      			<exclude name=".project" />
-  				<exclude name=".settings/**" />
-  				<exclude name="build/**" />
-      			<exclude name="logs/**" />
-      			<exclude name="settings.xml" />
-      			<exclude name="server.json" />
-      			<exclude name="tests/**" />
-      			<exclude name="testbox/**" />
-      			<exclude name="workbench/**" />
-      			<exclude name="**/bower_components/**" />
-      			<exclude name="**/node_modules/**" />
-      			<exclude name="WEB-INF/**" />
-      		</fileset>
-        </copy>
-
-        <!-- Copy ForgeBox Build Sources -->
-        <copy todir="${dir.forgeboxbuild}" encoding="UTF-8">
-			<fileset dir="${basedir}/build/forgebox" />
-        </copy>
-        <copy todir="${dir.forgeboxbuild}/be" encoding="UTF-8">
-			<fileset file="${basedir}/readme.md" />
-			<fileset file="${basedir}/box.json" />
-        </copy>
-
-        <!-- Replace Build Number to BE Snapshot -->
-		<replaceregexp match='\+@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.forgeboxbuild}/be" />
-		</replaceregexp>
-		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.forgeboxbuild}/be" />
-		</replaceregexp>
-
-		<!-- Cleanup Dependencies -->
-		<delete dir="${dir.build}/coldbox" />
-        <!-- Install Dependencies -->
-		<exec executable="box" dir="${dir.build}">
-			<arg line="install production=true" />
-		</exec>
-        
-		<!-- Replace Build Numbers -->
-		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.build}/modules/">
-				<include name="**/ModuleConfig.cfc" />
-			</fileset>
-			<fileset file="${dir.build}/box.json" />
-			<!-- ForgeBox Entries -->
-			<fileset dir="${dir.forgeboxbuild}" />
-		</replaceregexp>
-		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.build}/modules/">
-				<include name="**/ModuleConfig.cfc" />
-			</fileset>
-			<fileset file="${dir.build}/box.json" />
-			<!-- ForgeBox Entries -->
-			<fileset dir="build/forgebox" />
-			<!-- ForgeBox Entries -->
-			<fileset dir="${dir.forgeboxbuild}" />
-		</replaceregexp>
-		
-		<!-- Activate DSN Creator link -->
-		<replace file="${dir.build}/Application.cfc" 
-				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
-				 summary="true" 
-				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
-				 encoding="UTF-8"/>
-		
-		<!-- Zip Source Release -->
-		<zip 	destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 
-				basedir="${dir.build}" 
-				excludes="**/apidocs/**" 
-		/>
-		<!-- Build Checksum -->
-		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
-		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
-		
-		<!-- Refactor indexes from Source For Express Edition: only use if derby else leave as is
-		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
-		  <fileset dir="${dir.build}/modules/contentbox/model">
-		  	<include name="**/*.cfc" />
-		  </fileset>
-		</replaceregexp>
-		-->
-		
-		<!-- copy box.json -->
-		<copy file="${dir.build}/box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
-		
-		<!-- Mark as Built -->
-		<property name="src.isBuilt" value="true" />
-	</target>
- 	
  	<!-- Build API Docs -->
- 	<target name="build.apidocs" description="Builds the api docs" depends="init">
+ 	<target name="build.apidocs" description="Builds the api docs" depends="init" unless="src.isInit">
  		<!-- Create API apidocs dir -->
  		<mkdir dir="${dir.api}"/>
  		<!-- Install dependencies for docs -->
@@ -469,7 +378,7 @@
  		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  	</target>
  	
- 	<!-- Build Express -->
+ 	<!-- Build Express Edition -->
  	<target name="build.express" description="Build an express server" depends="build.war">
  		<!-- Unzip tomcat -->
  		<unzip dest="${dir.build}" src="${dir.dependencies}/apache-tomcat-${express.server.version}.zip"/>
@@ -484,8 +393,10 @@
  		<mkdir dir="${dir.build}/express/webapps/ROOT" />
  		
  		<!-- unzip ContentBox war into it -->
- 		<unzip src="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" dest="${dir.build}/war" overwrite="true" />
- 		<unzip src="${dir.build}/war/contentbox-${contentbox.version}.war" dest="${dir.build}/express/webapps/ROOT" overwrite="true" />
+ 		<unzip 	src="${dir.build}/war/contentbox-${contentbox.version}.war" 
+ 				dest="${dir.build}/express/webapps/ROOT" 
+ 				overwrite="true" 
+ 		/>
  		
  		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
@@ -493,6 +404,7 @@
 				 summary="true" 
 				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
 				 encoding="UTF-8"/>
+
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
  		
@@ -554,9 +466,6 @@
 				<include name="contentbox-express-*.zip" />
 			</fileset>
 		</checksum>
-
- 		<!-- cleanup -->
- 		<delete dir="${dir.build}/express" />
  	</target>
  	
 	<!-- Build all releases-->
