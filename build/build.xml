@@ -392,11 +392,10 @@
  		<!-- create root app -->
  		<mkdir dir="${dir.build}/express/webapps/ROOT" />
  		
- 		<!-- unzip ContentBox war into it -->
- 		<unzip 	src="${dir.build}/war/contentbox-${contentbox.version}.war" 
- 				dest="${dir.build}/express/webapps/ROOT" 
- 				overwrite="true" 
- 		/>
+ 		<!-- Copy ContentBox war into it -->
+ 		<copy toDir="${dir.build}/express/webapps/ROOT" overwrite="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/war" />
+ 		</copy>
  		
  		<!-- Remove DSN creator link For Express Edition -->
 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
@@ -499,7 +498,9 @@
     <target name="build.patch">
         <subant target="build">
           	<fileset dir="build" includes="create-patch.xml"/>
-    		<property name="environment" value="${environment}" />
+    		<property name="environment" 	value="${environment}" />
+    		<property name="isTravis"		value="${isTravis}" />
+    		<property name="build.branch"	value="${build.branch}" />
         </subant>
     </target>
  	
