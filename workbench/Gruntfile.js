@@ -73,7 +73,7 @@ module.exports = function(grunt) {
 			**/
 			distTheme: {
 			    files : {
-					'../modules/contentbox-admin/includes/css/theme.css' : 'devincludes/scss/theme.scss'
+					'../modules/contentbox/modules/contentbox-admin/includes/css/theme.css' : 'devincludes/scss/theme.scss'
 				}
 			 }
 		},
@@ -88,9 +88,9 @@ module.exports = function(grunt) {
 			},
 			target : {
 				files : {
-					'../modules/contentbox-admin/includes/css/contentbox.min.css' : [ 
+					'../modules/contentbox/modules/contentbox-admin/includes/css/contentbox.min.css' : [ 
 						// THEME
-						'../modules/contentbox-admin/includes/css/theme.css'
+						'../modules/contentbox/modules/contentbox-admin/includes/css/theme.css'
 						// BOWER COMPONENTS
 						,'bower_components/animate.css/animate.css'
 						,'bower_components/switchery/dist/switchery.min.css'
@@ -113,8 +113,8 @@ module.exports = function(grunt) {
 			// ContentBox App Libraries
 			appjs : {
 				files : {
-					'../modules/contentbox-admin/includes/js/contentbox-app.js' : [ "devincludes/js/*.js" ],
-					'../modules/contentbox-admin/includes/js/contentbox-editors.js' : [ 
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-app.js' : [ "devincludes/js/*.js" ],
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-editors.js' : [ 
 						"devincludes/js/editors/editors.js",
 						"devincludes/js/editors/autosave.js" 
 					]
@@ -136,7 +136,7 @@ module.exports = function(grunt) {
 						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"devincludes/vendor/js/modernizr.min.js"
 	            ],
-	            dest : '../modules/contentbox-admin/includes/js/contentbox-pre.js'
+	            dest : '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js'
 	        },
 
 	        // Post Lib: Libraries which are brought in before the </body> end
@@ -163,7 +163,7 @@ module.exports = function(grunt) {
 					,"devincludes/vendor/js/jquery.uidivfilter.js"
 					,"devincludes/vendor/js/jquery.uitablefilter.js"
 	        	],
-	        	dest : '../modules/contentbox-admin/includes/js/contentbox-post.js'
+	        	dest : '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.js'
 	        }
 		},
 
@@ -183,16 +183,16 @@ module.exports = function(grunt) {
 			// ContentBox App
 			appjs : {
 				files : {
-					'../modules/contentbox-admin/includes/js/contentbox-app.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-app.js" ],
-					'../modules/contentbox-admin/includes/js/contentbox-editors.min.js' : [ "../modules/contentbox-admin/includes/js/contentbox-editors.js" ]
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-app.min.js' : [ "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-app.js" ],
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-editors.min.js' : [ "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-editors.js" ]
 				}
 			},
 
 			// JS Libraries
 			libraries :{
 				files : {
-					'../modules/contentbox-admin/includes/js/contentbox-pre.min.js' 	: [ "../modules/contentbox-admin/includes/js/contentbox-pre.js" ],
-					'../modules/contentbox-admin/includes/js/contentbox-post.min.js' 	: [ "../modules/contentbox-admin/includes/js/contentbox-post.js" ]
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.min.js' 	: [ "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js" ],
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.min.js' 	: [ "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.js" ]
 				}
 			},
 		},
@@ -209,14 +209,14 @@ module.exports = function(grunt) {
 						flatten : true,
 						src 	: 'bower_components/font-awesome-sass/assets/fonts/font-awesome/**',
 						filter 	: 'isFile',
-						dest 	: '../modules/contentbox-admin/includes/fonts/font-awesome'
+						dest 	: '../modules/contentbox/modules/contentbox-admin/includes/fonts/font-awesome'
 					},
 					{ 
 						expand 	: true, 
 						flatten : true,
 						src 	: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/**',
 						filter 	: 'isFile',
-						dest 	: '../modules/contentbox-admin/includes/fonts/bootstrap'
+						dest 	: '../modules/contentbox/modules/contentbox-admin/includes/fonts/bootstrap'
 					}
 			  	]
 		  	},
@@ -235,7 +235,7 @@ module.exports = function(grunt) {
 							"respond/dest/respond.min.js",
 							"html5shiv/dist/html5shiv.min.js"
 				  		],
-				  		dest 	: '../modules/contentbox-admin/includes/js/'	
+				  		dest 	: '../modules/contentbox/modules/contentbox-admin/includes/js/'	
 				  	},
 				  	// Extra version of jQuery for CB FileBrowser
 				  	{
@@ -245,7 +245,7 @@ module.exports = function(grunt) {
 				  		src 	: [ 
 							"jquery/dist/jquery.min.js"
 				  		],
-				  		dest 	: '../modules/contentbox-admin/includes/js/'	
+				  		dest 	: '../modules/contentbox/modules/contentbox-admin/includes/js/'	
 				  	}
 				]
 			},
@@ -269,7 +269,7 @@ module.exports = function(grunt) {
 							'ckeditor/styles.js',
 							'ckeditor/*.css',
 						], 
-						dest 	: '../modules/contentbox-admin/modules/contentbox-ckeditor/includes/',
+						dest 	: '../modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes/',
 					},
 					// ContentBox CKEditor Config + Plugins
 					{
@@ -278,7 +278,7 @@ module.exports = function(grunt) {
 						src 	: [
 							'**'
 						], 
-						dest 	: '../modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor',
+						dest 	: '../modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor',
 					},
 					// AutoSave
 					{
@@ -287,7 +287,7 @@ module.exports = function(grunt) {
 						src 	: [
 							'**'
 						], 
-						dest 	: '../modules/contentbox-admin/includes/plugins/autosave',
+						dest 	: '../modules/contentbox/modules/contentbox-admin/includes/plugins/autosave',
 					},
 					// Simple MDE Editor
 					{
@@ -296,7 +296,7 @@ module.exports = function(grunt) {
 						src 	: [
 							'**'
 						], 
-						dest 	: '../modules/contentbox-admin/modules/contentbox-markdowneditor/includes/simplemde',
+						dest 	: '../modules/contentbox/modules/contentbox-admin/modules/contentbox-markdowneditor/includes/simplemde',
 					},
 				],
 			}, // end plugins
@@ -311,17 +311,17 @@ module.exports = function(grunt) {
 		      force : true
 		    },
 		    targetIncludes : [ 
-				'../modules/contentbox-admin/includes/plugins',
-				'../modules/contentbox-admin/includes/fonts',
-				'../modules/contentbox-admin/includes/css',
-				'../modules/contentbox-admin/includes/js',
-				'../modules/contentbox-admin/modules/contentbox-ckeditor/includes',
-				'../modules/contentbox-admin/modules/contentbox-markdowneditor/includes'
+				'../modules/contentbox/modules/contentbox-admin/includes/plugins',
+				'../modules/contentbox/modules/contentbox-admin/includes/fonts',
+				'../modules/contentbox/modules/contentbox-admin/includes/css',
+				'../modules/contentbox/modules/contentbox-admin/includes/js',
+				'../modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes',
+				'../modules/contentbox/modules/contentbox-admin/modules/contentbox-markdowneditor/includes'
 			],
-			css 		: [ '../modules/contentbox-admin/includes/css' ],
-			themecss	: [ "../modules/contentbox-admin/includes/css/theme.css" ],
-			js 			: [ '../modules/contentbox-admin/includes/js' ],
-			plugins		: [ '../modules/contentbox-admin/includes/plugins' ]
+			css 		: [ '../modules/contentbox/modules/contentbox-admin/includes/css' ],
+			themecss	: [ "../modules/contentbox/modules/contentbox-admin/includes/css/theme.css" ],
+			js 			: [ '../modules/contentbox/modules/contentbox-admin/includes/js' ],
+			plugins		: [ '../modules/contentbox/modules/contentbox-admin/includes/plugins' ]
 		} 
 
 	});
