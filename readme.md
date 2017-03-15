@@ -56,41 +56,26 @@ Blog
 
 # ContentBox Installation
 
-You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running via the following commands:
+You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running with ContentBox.  You can install it in three different formats:
 
-**Stable Release**
+1. ContentBox Installer : Install a new site with our DSN Creator, Installer and ContentBox Modules
+1. ContentBox Modules: Install ContentBox as a module into an existing ColdBox application (Requires ORM configuration)
+1. ContentBox Site: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers) 
 
-```bash
-mkdir mysite && cd mysite
-# Install latest release
-box install contentbox
-box server start --rewritesEnable
 ```
+# Install New Site with DSN Creator, Installer and ContentBox modules
+install contentbox-installer
 
-**Bleeding Edge Release**
+# Install ContentBox Modules Only into an existing ColdBox App
+install contentbox
 
-```bash
-mkdir mysite && cd mysite
-# Install latest release
-box install contentbox-be
-box server start --rewritesEnable
+# Install New Site with ContentBox Modules but no DSN Creator and Installer, great for Containers
+install contentbox-site
 ```
 
 ## Collaboration
 
-If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  
-
-You can hack and test in the following engines by using the alias shown below when calling `box server start name={enginename}`:
-
-* Lucee 4.5 (Default)
-* Lucee 5.X - `cbcms-lucee5`
-* Adobe 10 - `cbcms-adobe10`
-* Adobe 11 - `cbcms-adobe11`
-* Adobe 2016 - `cbcms-adobe2016`
-
-### Engine Notes
-* The default passwords for the engines spun up by commandbox: `coldfusion`
-* All engines are stored under the `.engine` folders
+If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start --rewritesEnable` and start hacking around and contributing.  
 
 ### Test Suites
 For running our test suites you will need 2 more steps, so please refer to the [Readme](tests/readme.md) in the tests folder.

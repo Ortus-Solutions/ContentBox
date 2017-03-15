@@ -1,9 +1,9 @@
 {
     "name":"ContentBox Modular CMS",
     "version":"@version.number@+@build.number@",
-    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-installer-@version.number@.zip",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
-    "slug":"contentbox-installer",
+    "slug":"contentbox-site",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
     "homepage":"https://www.contentboxcms.org",
@@ -35,5 +35,9 @@
     },
     "devDependencies":{
         "testbox":"^2.4.0+80"
-    }
+    },
+    "ignores":[
+        "modules/contentbox-dsncreator/**",
+        "modules/contentbox-installer/**"
+    ]
 }
