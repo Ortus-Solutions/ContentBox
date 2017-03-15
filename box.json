@@ -1,9 +1,7 @@
 {
-    "name":"ContentBox Modular CMS",
-    "version":"@version.number@+@build.number@",
-    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-installer-@version.number@.zip",
+    "name":"ContentBox Tester Site",
     "author":"Ortus Solutions <info@ortussolutions.com>",
-    "slug":"contentbox-installer",
+    "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
     "homepage":"https://www.contentboxcms.org",
@@ -13,8 +11,6 @@
         "url":"https://github.com/Ortus-Solutions/ContentBox"
     },
     "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
-    "shortDescription":"A Modular Content Management System",
-    "createPackageDirectory":false,
     "license":[
         {
             "type":"Apache2",
@@ -35,5 +31,7 @@
     },
     "devDependencies":{
         "testbox":"^2.4.0+80"
-    }
+    },
+    "ignores":[
+    ]
 }

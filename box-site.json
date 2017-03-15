@@ -1,9 +1,10 @@
 {
-    "name":"ContentBox Modular CMS",
+    "name":"ContentBox Modular CMS Site",
     "version":"@version.number@+@build.number@",
     "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox-site",
+    "shortDescription":"A ColdBox site configured for ContentBox CMS",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
     "homepage":"https://www.contentboxcms.org",
@@ -13,7 +14,6 @@
         "url":"https://github.com/Ortus-Solutions/ContentBox"
     },
     "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
-    "shortDescription":"A Modular Content Management System",
     "createPackageDirectory":false,
     "license":[
         {
@@ -27,7 +27,8 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^4.3.0"
+        "coldbox":"^4.3.0",
+        "contentbox":"^@version.number@+@build.number@"
     },
     "installPaths":{
         "coldbox":"coldbox",
@@ -37,7 +38,5 @@
         "testbox":"^2.4.0+80"
     },
     "ignores":[
-        "modules/contentbox-dsncreator/**",
-        "modules/contentbox-installer/**"
     ]
 }

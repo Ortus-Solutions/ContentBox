@@ -9,7 +9,7 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="3.2.0"/>
+ 	<property name="contentbox.version"			value="3.5.0"/>
  	<property name="contentbox.stableversion" 	value="3.1.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
@@ -17,15 +17,21 @@
 	<condition property="isTravis" else="false">
     	<isset property="isTravis"/>
     </condition>
+	<!-- Branch Building -->
+    <condition property="build.branch" else="development">
+    	<isset property="build.branch"/>
+    </condition>
 
  	<!-- Build Labels -->
 	<tstamp prefix="start"/>
+
  	<!-- Load Contrib Tasks -->
 	<path id="cp">
 		<fileset dir="build/lib">
 			<include name="**/*.jar" />
 		</fileset>
 	</path>
+
 	<!-- Define Tasks -->
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
  	<!-- Import Box-Repo Tasks -->
@@ -107,6 +113,166 @@
 			<else>
 			</else>
 		</if>
+	</target>
+
+	<!-- Build module distro -->
+	<target name="build.module" description="Build a new ContentBox module source release" depends="init" unless="src.isBuilt">
+		<!-- Create module Build dir -->
+		<mkdir dir="${dir.build}/module"/>
+		
+		<!-- Copy build ID -->
+		<concat destfile="${dir.build}/module/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
+		
+		<!-- Copy Source -->	
+      	<copy todir="${dir.build}/module" encoding="UTF-8">
+      		<fileset dir="modules/contentbox">
+      			<exclude name="modules/contentbox-deps/modules/**" />
+      			<exclude name="**/bower_components/**" />
+      			<exclude name="**/node_modules/**" />
+      		</fileset>
+        </copy>
+
+        <!-- Replace Version + Build Numbers -->
+        <replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/module" />
+		</replaceregexp>
+        <!-- Determine snapshot vs master artifact -->
+		<if>
+			<equals arg1="${build.branch}" arg2="development" />
+			<then>
+				<replaceregexp match='\+@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
+				  <fileset dir="${dir.build}/module" />
+				</replaceregexp>
+			</then>
+			<else>
+				<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
+				  <fileset dir="${dir.build}/module" />
+				</replaceregexp>
+			</else>
+		</if>
+
+		<!-- Zip Module Release with no dependencies -->
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 
+				basedir="${dir.build}/module" 
+		/>
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
+		
+		<!-- copy box.json to root of exports -->
+		<copy file="${dir.build}/module/box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
+	</target>
+
+	<!-- Build installer distro -->
+	<target name="build.installer" description="Build a new ContentBox installer release" depends="build.module" unless="src.isBuilt">
+		<!-- Create site Build dir -->
+		<mkdir dir="${dir.build}/installer"/>
+		
+		<!-- Copy build ID -->
+		<concat destfile="${dir.build}/installer/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
+
+		<!-- Copy Source -->	
+      	<copy todir="${dir.build}/installer" encoding="UTF-8">
+      		<fileset dir=".">
+      			<exclude name=".*/**" />
+      			<exclude name="artifacts/**" />
+      			<exclude name="build/**" />
+      			<exclude name="box*.json" />
+      			<exclude name="coldbox/**" />
+      			<exclude name="logs/**" />
+      			<exclude name="settings.xml" />
+      			<exclude name="server.json" />
+      			<exclude name="server-*.json" />
+      			<exclude name="tests/**" />
+      			<exclude name="testbox/**" />
+      			<exclude name="workbench/**" />
+      			<exclude name="**/bower_components/**" />
+      			<exclude name="**/node_modules/**" />
+      			<!-- Remove Dependencies -->
+      			<exclude name="modules/contentbox/**" />
+      		</fileset>
+        </copy>
+
+        <!-- Create site box.json -->
+        <copy file="box-site.json" toFile="${dir.build}/installer/box.json" overwrite="true"  encoding="UTF-8"/>
+        
+        <!-- replace slugs -->
+        <replaceregexp match='\-site' replace="-installer" flags="ig" byline="true" encoding="UTF-8">
+			<fileset file="${dir.build}/installer/box.json" />
+		</replaceregexp>
+		<replaceregexp match='Site' replace="Installer" flags="ig" byline="true" encoding="UTF-8">
+			<fileset file="${dir.build}/installer/box.json" />
+		</replaceregexp>
+
+        <!-- Replace Version + Build Numbers -->
+        <replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/installer" />
+		</replaceregexp>
+        <!-- Determine snapshot vs master artifact -->
+		<if>
+			<equals arg1="${build.branch}" arg2="development" />
+			<then>
+				<replaceregexp match='\+@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
+				  <fileset dir="${dir.build}/installer" />
+				</replaceregexp>
+			</then>
+			<else>
+				<!-- Don't put a build number for the dependency -->
+				<replaceregexp match='\+@build.number@' replace="" flags="ig" byline="true" encoding="UTF-8">
+				  <fileset file="${dir.build}/installer/box.json" />
+				</replaceregexp>
+				<!-- Regular build numbers -->
+				<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
+				  <fileset dir="${dir.build}/installer" />
+				</replaceregexp>
+			</else>
+		</if>
+
+		<!-- Zip Module Release with no dependencies -->
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" 
+				basedir="${dir.build}/installer" 
+		/>
+
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" />
+		
+		<!-- copy box.json to root of exports -->
+		<copy file="${dir.build}/installer/box.json" toFile="${dir.contentbox.exports}/box-installer.json" overwrite="true"  encoding="UTF-8"/>
+	</target>
+	
+	<!-- Build site distro -->
+	<target name="build.site" description="Build a new ContentBox site release" depends="build.installer">
+		<!-- Create site Build dir -->
+		<mkdir dir="${dir.build}/site"/>
+		
+		<!-- Copy build ID -->
+		<concat destfile="${dir.build}/site/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
+
+		<!-- Copy Source -->	
+      	<copy todir="${dir.build}/site" encoding="UTF-8">
+      		<fileset dir="${dir.build}/installer">
+      			<!-- Remove Dependencies -->
+      			<exclude name="modules/**" />
+      		</fileset>
+        </copy>
+
+        <!-- replace slugs -->
+        <replaceregexp match='\-installer' replace="-site" flags="ig" byline="true" encoding="UTF-8">
+			<fileset file="${dir.build}/site/box.json" />
+		</replaceregexp>
+
+		<!-- Zip Module Release with no dependencies -->
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" 
+				basedir="${dir.build}/site" 
+		/>
+
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" />
+		
+		<!-- copy box.json to root of exports -->
+		<copy file="${dir.build}/site/box.json" toFile="${dir.contentbox.exports}/box-site.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
 	
  	<!-- Build source distro -->
@@ -245,9 +411,9 @@
  	</target>
  	
  	<!-- Build war -->
- 	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.source">
+ 	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.site">
  		<!-- Unzip War -->
- 		<unzip dest="${dir.build}" src="${dir.dependencies}/lucee-${lucee.version}.war" overwrite="true">
+ 		<unzip dest="${dir.build}/war" src="${dir.dependencies}/lucee-${lucee.version}.war" overwrite="true">
 			<patternset>
 		        <exclude name="Application.cfc"/>
 				<exclude name="index.cfm"/>
@@ -259,11 +425,12 @@
  		</unzip>
  		
  		<!-- Replace web.xml -->
- 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
+ 		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/war/WEB-INF" overwrite="true" encoding="UTF-8"/>
  		
  		<!-- Create Patch directory-->
- 		<mkdir dir="${dir.build}/WEB-INF/lib/lucee-server/patches"/>
- 		<!-- Deliver Patch -->
+ 		<mkdir dir="${dir.build}/war/WEB-INF/lib/lucee-server/patches"/>
+
+ 		<!-- Deliver Patch if Available -->
  		<if>
  			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
  			<then>
@@ -274,21 +441,32 @@
  		</if>
  		
  		<!-- Copy Tuckey -->
- 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/WEB-INF" overwrite="true" encoding="UTF-8"/>
- 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
+ 		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/war/WEB-INF" overwrite="true" encoding="UTF-8"/>
+ 		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/war/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
+
+ 		<!-- Copy ContentBox Installer -->
+ 		<copy toDir="${dir.build}/war" overwrite="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/installer" />
+ 		</copy>
+ 		<!-- Copy ContentBox Module -->
+ 		<copy toDir="${dir.build}/war/modules/contentbox" overwrite="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/module" />
+ 		</copy>
+ 		<!-- Install ContentBox dependencies -->
+		<exec executable="box" dir="${dir.build}/war/modules/contentbox">
+			<arg line="install production=true" />
+		</exec>
 		
  		<!-- Create War -->
-		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}" />
+		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}/war" />
  		<zip destfile="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip">
-			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />		
+			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />	
  		</zip>
  		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
  		
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
- 		<!-- Cleanup INF like a ninja -->
- 		<delete dir="${dir.build}/WEB-INF" />
  	</target>
  	
  	<!-- Build Express -->
