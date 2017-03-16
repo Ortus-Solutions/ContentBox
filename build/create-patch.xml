@@ -9,11 +9,20 @@
 	
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
 	<property name="groupID"			value="ortussolutions" />
-	<property name="contentbox.version"	value="3.2.0"/>
  	<property name="contentbox.slug"	value="contentbox"/>		
 	
+	<!-- Travis -->
+	<condition property="isTravis" else="false">
+    	<isset property="isTravis"/>
+    </condition>
+	<!-- Branch Building -->
+    <condition property="build.branch" else="development">
+    	<isset property="build.branch"/>
+    </condition>
+
 	<!-- Build Labels -->
 	<tstamp prefix="start"/>
+
 	<!-- Load Contrib Tasks -->
 	<path id="cp">
 		<fileset dir="build/lib">
@@ -24,7 +33,7 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
 	
 	<!-- Init -->
-	<target name="init" description="Init">
+	<target name="init" description="Init Build">
 		<!-- Default environment check, if not passed via -Denvironment -->
 		<condition property="environment" value="local">
 			<not><isset property="environment" /></not>
@@ -37,6 +46,7 @@
 				<loadproperties srcFile="build/build-${environment}.properties"/>
 			</then>
 		</if>
+
 		<!-- Load root properties -->
 		<echo>Loading base properties</echo>
 		<loadproperties srcFile="build/build.properties"/>
@@ -58,11 +68,6 @@
 			<arg value="1" />
 			<arg value='--pretty=format:%H' />
 		</exec>
-
-		<!-- Install Dependencies -->
-		<exec executable="box" dir="${basedir}">
-			<arg line="install production=true" />
-		</exec>
 	</target>
 	
 	<!--Build-->
@@ -73,7 +78,10 @@
 		<delete file="${dir.patches}/${contentbox.version}/deletes.txt"/>
 		
 		<!-- Copy Update Template, just in case -->
-		<copy file="${dir.resources}/Update.cfc" tofile="${dir.patches}/${contentbox.version}/Update.cfc" overwrite="false" encoding="UTF-8"/>
+		<copy 	file="${dir.resources}/Update.cfc" 
+				tofile="${dir.patches}/${contentbox.version}/Update.cfc" 
+				overwrite="false" 
+				encoding="UTF-8"/>
 		
 		<!-- ****************************************************************************************************** -->
 		<!--  										BUILD PATCH 													-->
@@ -90,65 +98,86 @@
 		<!--Unzip Patch To remove excludes -->
 		<unzip src="${dir.patches}/${contentbox.version}/patch.zip" dest="${dir.patches}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
-				<exclude name=".travis.yml"/>
-				<exclude name=".htaccess"/>
-				<exclude name=".jshintrc"/>
-				<exclude name=".engines/**" />
-				<exclude name="server-*.json"/>
-				<exclude name="Application.cfc"/>
-				<exclude name="box.json"/>
-				<exclude name="build.number"/>
+				<exclude name=".*/**" />
+				<exclude name="build/**" />
+				<exclude name="box*.json" />
+				<exclude name="coldbox/**" />
 				<exclude name="config/"/>
+      			<exclude name="logs/**" />
+      			<exclude name="settings.xml" />
+      			<exclude name="server.json" />
+      			<exclude name="server-*.json" />
+      			<exclude name="tests/**" />
+      			<exclude name="testbox/**" />
+      			<exclude name="workbench/**" />
+      			<exclude name="**/apidocs/**"/>
+      			<exclude name="**/bower_components/**" />
+      			<exclude name="**/node_modules/**" />
+
+				<!-- Root App -->
+				<exclude name="Application.cfc"/>
 				<exclude name="favicon.ico"/>
-				<exclude name="build/**"/>
 				<exclude name="handlers/**"/>
 				<exclude name="includes/**"/>
 				<exclude name="index.cfm"/>
 				<exclude name="layouts/**"/>
 				<exclude name="license.txt"/>
-				<exclude name="logs/**"/>
 				<exclude name="models/**" />
 				<exclude name="modules/contentbox-dsncreator/**"/>
 				<exclude name="modules/contentbox-installer/**"/>
-				<exclude name="readme.txt"/>
 				<exclude name="readme.md"/>
-				<exclude name="server.json"/>
-				<exclude name="tests/"/>
 				<exclude name="views/**"/>
-		        <exclude name="workbench/**"/>
-		        <exclude name="**/apidocs/**"/>
+
+				<!--Additional properties -->
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
 		
-		<!-- Replace Build Numbers For Patch -->
+		<!-- Replace Build Number -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.patches}/${contentbox.version}/patch">
-				<include name="**/ModuleConfig.cfc" />
-			</fileset>
+			<fileset dir="${dir.patches}/${contentbox.version}/patch" />
 		</replaceregexp>
-		<!-- Replace Build Numbers -->
+		<!-- Replace Version Number -->
 		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.patches}/${contentbox.version}/patch">
-				<include name="**/ModuleConfig.cfc" />
-			</fileset>
+			<fileset dir="${dir.patches}/${contentbox.version}/patch" />
 		</replaceregexp>
 		
 		<!-- Delete original patch for cleanup -->
 		<delete file="${dir.patches}/${contentbox.version}/patch.zip" />
 		
-		<!-- Incorporate Dependencies -->
+		<!-- ****************************************************************************************************** -->
+		<!--  										 DEPENDENCIES													-->
+		<!-- ****************************************************************************************************** -->
+		
+		<!-- Install ROOT Dependencies -->
+		<exec executable="box" dir="${basedir}">
+			<arg line="install production=true" />
+		</exec>
+		<!-- copy over for coldbox patch version -->
 		<copy todir="${dir.patches}/${contentbox.version}/patch/coldbox" encoding="UTF-8" overwrite="true">
 			<fileset dir="coldbox">
 				<exclude name="**/apidocs/**" />
 				<exclude name="testbox/**" />
 			</fileset>
 		</copy>
+
+		<!-- Install Module Dependencies -->
+		<copy todir="${dir.patches}/${contentbox.version}/deps" file="modules/contentbox/box.json" overwrite="true" />
+		<exec executable="box" dir="${dir.patches}/${contentbox.version}/deps">
+			<arg line="install production=true" />
+		</exec>
+		<copy todir="${dir.patches}/${contentbox.version}/patch/modules/contentbox/modules/contentbox-deps/modules" encoding="UTF-8" overwrite="true">
+			<fileset dir="${dir.patches}/${contentbox.version}/deps/modules/contentbox-deps/modules">
+				<exclude name="**/apidocs/**" />
+			</fileset>
+		</copy>
+		<!-- Cleanup -->
+		<delete dir="${dir.patches}/${contentbox.version}/deps" includeemptydirs="true"/>
 		
 		<!-- Zip now as excludes removed. -->
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
 		
-		<!-- Zip Bundle with DB updates plus file deletes+additions -->
+		<!-- Zip Bundle -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-patch-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
 			<patternset>
 		        <exclude name="patch/**"/>
@@ -165,11 +194,12 @@
 		</zip>
 
 		<!-- ****************************************************************************************************** -->
-		<!--  										NO COLDBOX PATCH 												-->
+		<!--  										NO DEPENDENCIES PATCH 											-->
 		<!-- ****************************************************************************************************** -->
 		
-		<!-- Remove coldbox entries for non-coldbox patch -->
+		<!-- Remove coldbox entries for non-deps patch -->
 		<delete dir="${dir.patches}/${contentbox.version}/patch/coldbox" includeemptydirs="true"/>
+		<delete dir="${dir.patches}/${contentbox.version}/patch/modules/contentbox/modules/contentbox-deps/modules" includeemptydirs="true"/>
 		<delete file="${dir.patches}/${contentbox.version}/patch.zip" />
 		<!-- Zip patch.zip -->
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
@@ -177,9 +207,9 @@
 		<delete dir="${dir.patches}/${contentbox.version}/patch" />
 		<!-- Delete original deletes.txt to one without coldbox patch -->
 		<delete file="${dir.patches}/${contentbox.version}/deletes.txt"/>
-		<move file="${dir.patches}/${contentbox.version}/deletes-nocoldbox.txt" tofile="${dir.patches}/${contentbox.version}/deletes.txt"/>
+		<move file="${dir.patches}/${contentbox.version}/deletes-nodeps.txt" tofile="${dir.patches}/${contentbox.version}/deletes.txt"/>
 		<!-- Zip Bundle with DB updates plus file deletes+additions -->
-		<zip destfile="${dir.contentbox.exports}/contentbox-patch-nocoldbox-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
+		<zip destfile="${dir.contentbox.exports}/contentbox-patch-nodeps-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
 		
 		<!-- ****************************************************************************************************** -->
 		<!--  										BUILD CHECKSUMS 												-->

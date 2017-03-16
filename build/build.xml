@@ -9,8 +9,6 @@
 	
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
- 	<property name="contentbox.version"			value="3.5.0"/>
- 	<property name="contentbox.stableversion" 	value="3.1.0" />
  	<property name="contentbox.slug"			value="contentbox"/>
 	
 	<!-- Travis -->
@@ -479,7 +477,7 @@
 				  buildID="${build.number}"
 				  latest="${contentbox.version}"
 				  stableVersion="${contentbox.stableversion}"
-				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nocoldbox"/>
+				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nodeps"/>
 		
 		<!-- Cleanup -->
 		<if>
