@@ -27,7 +27,7 @@ before_install:
 
 install:
   # Install Commandbox
-  - sudo apt-get update && sudo apt-get --assume-yes install haveged commandbox
+  - sudo apt-get update && sudo apt-get --assume-yes install haveged commandbox jq
   # Install dependencies
   - box version && box install
   # Store the Ortus API Key for forgebox publishing in `master`
@@ -44,34 +44,67 @@ before_script:
 script:
   # Execute build via ANT
   - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -f build/build.xml
-  # Spit out log just in case we need to debug
+  # Get ContentBox Version for rest of build process
+  - PROJECT_VERSION="$(cat build/build-contentbox/module/box.json | jq -r '.version')"
+  # Spit out debugging info
+  - cat build/build-contentbox/module/box.json
   - box server log
   - cat `box system-log`
 
 deploy:
-  on:
-    branch: 
-      - development
-      - master
-  skip_cleanup: true
-  provider: s3
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_ACCESS_SECRET
-  bucket: "downloads.ortussolutions.com"
-  local-dir: artifacts
-  upload-dir: ortussolutions
-  acl: public_read
+  # Upload binaries
+  - provider: s3
+    on:
+      branch: 
+        - development
+        - master
+      condition: "$TRAVIS_PULL_REQUEST" == "false""
+    skip_cleanup: true
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_ACCESS_SECRET
+    bucket: "downloads.ortussolutions.com"
+    local-dir: artifacts
+    upload-dir: ortussolutions
+    acl: public_read
+  # Upload api docs
+  - provider: s3
+    on:
+      branch: 
+        - development
+        - master
+      condition: "$TRAVIS_PULL_REQUEST" == "false""
+    skip_cleanup: true
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_ACCESS_SECRET
+    bucket: "apidocs.ortussolutions.com"
+    local-dir: build/build-contentbox/apidocs
+    upload-dir: contentbox/$PROJECT_VERSION
+    acl: public_read
 
+# Now publish assets to ForgeBox
 after_deploy:
   >
-  cd $TRAVIS_BUILD_DIR/build/build-forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
-  echo `pwd`;
-  cd $TRAVIS_BUILD_DIR/build/build-forgebox/be && box forgebox publish && cd $TRAVIS_BUILD_DIR;
-  echo `pwd`;
+  if [ $TRAVIS_PULL_REQUEST == true ]
+    exit 0;
+  fi
+
+  echo Publishing Module - $TRAVIS_BRANCH
+  cd $TRAVIS_BUILD_DIR/build/build-contentbox/module && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+  
+  echo Publishing Site - $TRAVIS_BRANCH
+  cd $TRAVIS_BUILD_DIR/build/build-contentbox/site && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+  
+  echo Publishing Installer - $TRAVIS_BRANCH
+  cd $TRAVIS_BUILD_DIR/build/build-contentbox/installer && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+  
+  if [ $TRAVIS_BRANCH == 'development' ]; then
+    echo Publishing Beta Updates Channel
+    cd $TRAVIS_BUILD_DIR/build/build-contentbox/forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+  fi
+
   if [ $TRAVIS_BRANCH == 'master' ]; then
-    cd $TRAVIS_BUILD_DIR/build/build-contentbox && box forgebox publish && cd $TRAVIS_BUILD_DIR;
-    echo `pwd`;
-    cd $TRAVIS_BUILD_DIR/build/forgebox/stable-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+    echo Publishing Stable Updates Channel
+    cd $TRAVIS_BUILD_DIR/build/build-contentbox/forgebox/stable-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   fi
 
 # Slack Notifications

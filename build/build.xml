@@ -285,12 +285,12 @@
 	</target>
 	
  	<!-- Build API Docs -->
- 	<target name="build.apidocs" description="Builds the api docs" depends="init" unless="src.isInit">
+ 	<target name="build.apidocs" description="Builds the api docs" depends="init">
  		<!-- Create API apidocs dir -->
  		<mkdir dir="${dir.api}"/>
  		<!-- Install dependencies for docs -->
 		<exec executable="box" dir="${dir.apidocs}">
-			<arg line="install" />
+			<arg line="install production=true" />
 		</exec>
 		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
 		<exec executable="box" dir="${dir.apidocs}">
