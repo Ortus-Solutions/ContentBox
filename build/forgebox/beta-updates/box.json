@@ -1,7 +1,7 @@
 {
     "name":"ContentBox Modular CMS Beta Update Channel",
-    "version":"3.2.0",
-    "location":"https://integration.stg.ortussolutions.com/artifacts/ortussolutions/contentbox/contentbox-patch-be.zip",
+    "version":"@version.number@",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/contentbox-patch-be.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox-beta-updates",
     "type":"cms",

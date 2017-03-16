@@ -58,15 +58,12 @@
 
 		<!-- Cleanup + Init -->
 		<delete dir="${dir.build}" />
-		<delete dir="${dir.forgeboxbuild}"/>
 		<delete verbose="true" failonerror="false">
 			<fileset dir="${dir.contentbox.exports}" />
 		</delete>
 		<mkdir dir="${dir.build}"/>
-		<mkdir dir="${dir.forgeboxbuild}"/>
 		<mkdir dir="${be.exports}"/>
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
-		<chmod file="${dir.forgeboxbuild}/**" perm="g+wxrs" type="both" />
 		
 		<!-- Build Number -->
 		<if>
@@ -468,7 +465,7 @@
  	</target>
  	
 	<!-- Build all releases-->
-	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.patch">
+	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.forgebox,build.patch">
 		<!-- Copy as BE to root -->
 		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8" verbose="true">
 			<fileset dir="${dir.contentbox.exports}" />
@@ -493,6 +490,22 @@
 			</then>
 		</if>
     </target>
+
+    <!-- Build ForgeBox package Submissions -->
+	<target name="build.forgebox" description="Build ForgeBox package submissions" depends="init">
+		<!-- Create module Build dir -->
+		<mkdir dir="${dir.build}/forgebox"/>
+		
+		<!-- Copy Source -->	
+      	<copy todir="${dir.build}/forgebox" encoding="UTF-8">
+      		<fileset dir="build/forgebox" />
+        </copy>
+
+        <!-- Replace Version + Build Numbers -->
+        <replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
+			<fileset dir="${dir.build}/forgebox" />
+		</replaceregexp>
+	</target>
  	
  	<!-- Build Patches -->
     <target name="build.patch">
