@@ -12,15 +12,20 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "This is the core module used to power the admin, RESTful and UI modules";
-	this.version			= "3.1.0+@build.number@";
+	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbcore";
 	this.modelNamespace 	= "cb";
-	this.dependencies 		= [ "cborm", "cbmailservices", "cbstorages", "cbantisamy", "cbfeeds", "cbmessagebox", "cbsecurity", "bcrypt", "cbmarkdown" ];
 	this.cfmapping 			= "contentbox";
-
+	// Load ContentBox Dependencies First.
+	this.dependencies 		= [	"contentbox-deps" ];
+	
+	/**
+	* Configure Module
+	*/
 	function configure(){
+
 		// contentbox settings
 		settings = {
 			codename 			= "Psalm 144:1",
@@ -28,7 +33,7 @@ component {
 			// Auto Updates
 			updateSlug_stable 	= "contentbox-stable-updates",
 			updateSlug_beta 	= "contentbox-beta-updates",
-			updatesURL			= "http://www.coldbox.org/api/forgebox",
+			updatesURL			= "https://www.coldbox.org/api/forgebox",
 			// Officially supported languages for modules
 			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
@@ -61,10 +66,10 @@ component {
 		// interceptor settings
 		interceptorSettings = {
 			// ContentBox Custom Events
-			customInterceptionPoints = arrayToList([
+			customInterceptionPoints = arrayToList( [
 				// Code Rendering
 				"cb_onContentRendering", "cb_onContentStoreRendering"
-			])
+			] )
 		};
 
 		// interceptors

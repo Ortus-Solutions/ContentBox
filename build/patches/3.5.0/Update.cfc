@@ -4,11 +4,11 @@
 * Copyright 2012 by Luis Majano and Ortus Solutions, Corp
 * www.ortussolutions.com
 * ---
-* Updater for 3.0.0 RC
+* Updater for 3.5.0
 * 
 * DB Structure Changes Comment Below
 * 
-* Remove Interface for conversion from 3.0.0,3.1.0 -> 3.2.0
+* Remove Interface for conversion from 3.0.0,3.1.0 -> 3.5.0
 *
 * ---
 * Start Commit Hash: 9bc15e16b76557af87c39b618fa331ceb0ef9372
@@ -43,10 +43,12 @@ component {
 	*/
 	function onDIComplete(){
 		// setup update variables that are used globally
-		variables.version 			= "3.2.0";
-		variables.currentVersion 	= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
-		variables.thisPath			= getDirectoryFromPath( getMetadata( this ).path );
-		variables.contentBoxPath 	= coldbox.getSetting( "modules" )[ "contentbox" ].path;
+		variables.version 				= "3.5.0";
+		variables.currentVersion 		= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
+		variables.thisPath				= getDirectoryFromPath( getMetadata( this ).path );
+		variables.contentBoxPath 		= coldbox.getSetting( "modules" )[ "contentbox" ].path;
+		variables.contentBoxAdmimPath 	= coldbox.getSetting( "modules" )[ "contentbox-admin" ].path;
+		variables.contentBoxUIPath 		= coldbox.getSetting( "modules" )[ "contentbox-ui" ].path;
 	}
 
 	/**
@@ -56,11 +58,21 @@ component {
 	function preInstallation( required log ){
 		try{
 
-			arguments.log.append("About to begin #version# patching");
+			arguments.log.append( "About to begin #version# patching" );
+
+			/****************************** MOVE ADMIN/UI INTO CONTENTBOX MODULES ******************************/
+
+			// This is our new layout of modules
+
+			if( !directoryExists( contentBoxPath & "/modules/contentbox-admin" ) ){
+				directoryRename( contentBoxAdmimPath , contentBoxPath & "/modules/contentbox-admin" );
+			}	
+			if( !directoryExists( contentBoxPath & "/modules/contentbox-ui" ) ){
+				directoryRename( contentBoxUIPath , contentBoxPath & "/modules/contentbox-ui" );
+			}
 
 			arguments.log.append( "Finalized #version# preInstallation patching" );
-		}
-		catch(Any e){
+		} catch( Any e ) {
 			ORMClearSession();
 			arguments.log.append( "Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
 			rethrow;
@@ -85,11 +97,20 @@ component {
 			updateAdmin();
 			updateEditor();
 
-			// stop application
-			applicationstop();
 			// Log setup in flash + messagebox
 			flash.put( "updateLog", arguments.log );
-			cbMessagebox.info( "Update Applied!" );
+			cbMessagebox.info( "Update Applied! Please remove the folder /coldbox/system/modules_bak" );
+
+			// stop application
+			applicationstop();
+
+			// Move modules to backup for new dependency approach
+			var modulesPath 	= expandPath( "/coldbox/system/modules" );
+			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak"; 
+			if( directoryExists( expandPath( "/coldbox/system/modules" ) ) ){
+				directoryRename( modulesPath ,  );
+			}	
+			
 			// Hard Redirect
 			coldbox.setNextEvent( "cbadmin.autoupdates" );
 			
@@ -207,61 +228,6 @@ component {
 		}
 
 		return this;
-	}
-
-	private function updateTimestampFields(){
-		
-		var tables = [
-			"cb_author",
-			"cb_category",
-			"cb_comment",
-			"cb_content",
-			"cb_contentVersion",
-			"cb_customfield",
-			"cb_loginAttempts",
-			"cb_menu",
-			"cb_menuItem",
-			"cb_module",
-			"cb_permission",
-			"cb_role",
-			"cb_securityRule",
-			"cb_setting",
-			"cb_stats",
-			"cb_subscribers",
-			"cb_subscriptions"
-		];
-
-		for( var thisTable in tables ){
-			var q = new Query( sql = "update #thisTable# set modifiedDate = :modifiedDate" );
-			q.addParam( name="modifiedDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
-			var results = q.execute().getResult();
-			log.info( "Update #thisTable# modified date", results );	
-		}
-		
-		// Creation tables now
-		tables = [
-			"cb_category",
-			"cb_customfield",
-			"cb_menu",
-			"cb_menuItem",
-			"cb_module",
-			"cb_permission",
-			"cb_role",
-			"cb_securityRule",
-			"cb_setting",
-			"cb_stats",
-			"cb_subscribers"
-		];
-		for( var thisTable in tables ){
-			var q = new Query( sql = "update #thisTable# set createdDate = :createdDate" );
-			q.addParam( name="createdDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
-			var results = q.execute().getResult();
-			log.info( "Update #thisTable# created date", results );	
-		}
-			
-	}
-
-	private function updateCKEditorPlugins(){
 	}
 
 	/************************************** DB MIGRATION OPERATIONS *********************************************/

@@ -1,53 +1,49 @@
-﻿<!-----------------------------------------------------------------------
-/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+﻿/**
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
+* Tests Bootstrap
 */
------------------------------------------------------------------------>
-<cfcomponent output="false">
-	<!--- APPLICATION CFC PROPERTIES --->
-	<cfset this.name = "ContentBoxTestingSuite" & hash(getCurrentTemplatePath())>
-	<cfset this.sessionManagement = true>
-	<cfset this.sessionTimeout = createTimeSpan(0,0,0,30)>
-	<cfset this.setClientCookies = true>
+component{
+	this.name				= "ContentBoxTestingSuite" & hash( getCurrentTemplatePath() );
+	this.sessionManagement	= true;
+	this.sessionTimeout		= createTimeSpan( 0, 0, 0, 30 );
+	this.setClientCookies	= true;
 
-	<cfscript>
+	/**************************************
+	LUCEE Specific Settings
+	**************************************/
+	// buffer the output of a tag/function body to output in case of a exception
+	this.bufferOutput 					= true;
+	// Activate Gzip Compression
+	this.compression 					= false;
+	// Turn on/off white space managemetn
+	this.whiteSpaceManagement 			= "smart";
+	// Turn on/off remote cfc content whitespace
+	this.suppressRemoteComponentContent = false;
+
 	// ORM Settings
 	this.ormEnabled = true;
 	// FILL OUT: THE DATASOURCE OF CONTENTBOX
 	this.datasource = "contentbox";
-	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
-	rootPath = replacenocase(replacenocase(getDirectoryFromPath(getCurrentTemplatePath()),"test\",""),"test/","");
 
-	this.mappings["/root"]   = rootPath;
-	this.mappings["/contentbox-test"] 	= getDirectoryFromPath(getCurrentTemplatePath());
-	this.mappings["/contentbox"] 		= rootPath & "/modules/contentbox" ;
-	this.mappings["/contentbox-ui"] 	= rootPath & "modules/contentbox-ui";
-	this.mappings["/contentbox-admin"] 	= rootPath & "modules/contentbox-admin";
-	this.mappings["/contentbox-modules"] = rootPath & "modules/contentbox-modules";
-	this.mappings["/coldbox"] 			= rootPath & "/coldbox" ;
+	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
+	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
+										
+	this.mappings[ "/root" ]   				= rootPath;
+	this.mappings[ "/tests" ] 				= getDirectoryFromPath( getCurrentTemplatePath() );
+	this.mappings[ "/coldbox" ] 			= rootPath & "/coldbox" ;
+	this.mappings[ "/testbox" ] 			= rootPath & "/testbox" ;
+	this.mappings[ "/contentbox" ] 			= rootPath & "/modules/contentbox" ;
+	this.mappings[ "/contentbox-deps" ]		= rootPath & "/modules/contentbox/modules/contentbox-deps";
+	this.mappings[ "/contentbox-ui" ] 		= rootPath & "/modules/contentbox/modules/contentbox-ui";
+	this.mappings[ "/contentbox-admin" ] 	= rootPath & "/modules/contentbox/modules/contentbox-admin";
+	// Modular ORM Dependencies
+	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox-deps" ] & "modules/cborm";
 
 	this.ormSettings = {
-		cfclocation=[ "../modules" ],
+		cfclocation=[ rootPath & "/modules" ],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
@@ -58,10 +54,12 @@ limitations under the License.
 	};
 
 	public boolean function onRequestStart(String targetPage){
-		// ORM Reload
+
+		//Set a high timeout for long running tests
+		setting requestTimeout="9999";
+
+		// ORM Reload for fresh results
 		ormReload();
 
 		return true;
 	}
-	</cfscript>
-</cfcomponent>

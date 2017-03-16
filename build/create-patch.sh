@@ -49,7 +49,7 @@ cd $REPO_ROOT
 git diff-tree -r --name-only --no-commit-id --diff-filter=ACMRT $1 $2 | zip $REPO_ROOT/build/patches/$3/patch.zip -@
 
 # create delete filelisting patch
-git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 | grep -E -v '^(config|build|handlers|layouts|logs|models?|testbox|tests|views|workbench)' > $REPO_ROOT/build/patches/$3/deletes.txt
+git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 | grep -E -v '^(.engines|build|config|handlers|layouts|logs|models?|testbox|tests|views|workbench)' > $REPO_ROOT/build/patches/$3/deletes.txt
 
 # create delete filelisting patch with no coldbox
-git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 | grep -E -v '^(config|build|coldbox|handlers|layouts|logs|models?|testbox|tests|views|workbench)' > $REPO_ROOT/build/patches/$3/deletes-nocoldbox.txt
+git diff-tree -r --name-only --no-commit-id --diff-filter=D $1 $2 | grep -E -v '^(.engines|build|coldbox|config|handlers|layouts|logs|models?|testbox|tests|views|workbench)' > $REPO_ROOT/build/patches/$3/deletes-nodeps.txt

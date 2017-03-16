@@ -1,7 +1,10 @@
 {
-    "name":"ContentBox Tester Site",
+    "name":"ContentBox Modular CMS Site",
+    "version":"@version.number@+@build.number@",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
-    "shortDescription":"A tester site for developing the ContentBox Modular CMS",
+    "slug":"contentbox-site",
+    "shortDescription":"A ColdBox site configured for ContentBox CMS",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
     "homepage":"https://www.contentboxcms.org",
@@ -11,6 +14,7 @@
         "url":"https://github.com/Ortus-Solutions/ContentBox"
     },
     "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+    "createPackageDirectory":false,
     "license":[
         {
             "type":"Apache2",
@@ -23,7 +27,8 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^4.3.0"
+        "coldbox":"^4.3.0",
+        "contentbox":"^@version.number@+@build.number@"
     },
     "installPaths":{
         "coldbox":"coldbox",
@@ -33,6 +38,5 @@
         "testbox":"^2.4.0+80"
     },
     "ignores":[
-        
     ]
 }
