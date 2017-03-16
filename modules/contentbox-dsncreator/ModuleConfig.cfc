@@ -12,7 +12,7 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "http://www.ortussolutions.com";
 	this.description 		= "The ContentBox DSN Creator module";
-	this.version			= "3.1.0+@build.number@";
+	this.version			= "@version.number@+@build.number@";
 	this.autoMapModels 		= false;
 	
 	function configure(){
