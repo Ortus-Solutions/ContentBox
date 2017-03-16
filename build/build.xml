@@ -125,6 +125,7 @@
       			<exclude name="**/bower_components/**" />
       			<exclude name="**/node_modules/**" />
       		</fileset>
+      		<fileset file="readme.md" />
         </copy>
 
         <!-- Replace Version + Build Numbers -->
