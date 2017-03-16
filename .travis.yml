@@ -58,7 +58,6 @@ deploy:
       branch: 
         - development
         - master
-      condition: "$TRAVIS_PULL_REQUEST" == "false""
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET
@@ -72,7 +71,6 @@ deploy:
       branch: 
         - development
         - master
-      condition: "$TRAVIS_PULL_REQUEST" == "false""
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET
