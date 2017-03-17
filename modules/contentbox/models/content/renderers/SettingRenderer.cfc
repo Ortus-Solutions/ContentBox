@@ -13,6 +13,7 @@ component accessors="true" extends="BaseRenderer"{
 	
 	// DI
 	property name="settingService" 	inject="settingService@cb";
+	property name="resourceService"	inject="resourceService@cbi18n";
 	
 	/**
 	* Execute on content translations for pages and blog entries
@@ -53,18 +54,34 @@ component accessors="true" extends="BaseRenderer"{
 			try{
 				// get the setting defined in ${}
 				thisSetting = mid( targets[ x ], 3, len( targets[ x ] ) - 3 );
+				
 				// Do we have rc or prc prefix?
 				if( reFindNoCase( "^p?rc\:", thisSetting ) ){
-
 					thisValue = event.getValue( 
 						name 	= listLast( thisSetting, ":" ), 
 						private = ( listFirst( thisSetting, ":" ) eq "rc" ? false : true )
 					);
-
+				}
+				// Do we have i18n?
+				else if( reFindNoCase( "^i18n\:", thisSetting ) ){
+					var resource 	= listLast( thisSetting, ":" );
+					var bundle 		= "default";
+					// check for resource@bundle convention:
+					if( find( "@", resource ) ){
+						bundle 		= listLast( resource, "@" );
+						resource 	= listFirst( resource, "@" );
+					}
+					thisValue = resourceService.getResource(
+						resource 	= resource,
+						bundle 		= bundle
+					);
 				} 
 				// Normal Setting
 				else {
-					thisValue = settingService.getSetting( name=thisSetting, defaultValue="${Setting: #thisSetting# not found}" );
+					thisValue = settingService.getSetting( 
+						name 			= thisSetting, 
+						defaultValue 	= "${Setting: #thisSetting# not found}" 
+					);
 				}
 				
 			} catch( Any e ) {
