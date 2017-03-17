@@ -130,30 +130,44 @@ component extends="baseHandler"{
 		prc.xehEntriesManager  		= "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
+
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
 		prc.roles = roleService.list( sortOrder="role", asQuery=false );
+		
 		// viewlets only if editing a user
 		if( prc.author.isLoaded() ){
 			// Preferences Viewlet
-			var args = { authorID=rc.authorID, sorting=false, max=5, pagination=false, latest=true };
+			var args = { 
+				authorID	= rc.authorID, 
+				sorting		= false, 
+				max			= 5, 
+				pagination	= false, 
+				latest		= true 
+			};
 			prc.preferencesViewlet 	= listPreferences(  event, rc, prc  );
+			
 			// Latest Edits
 			prc.latestEditsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
 				eventArguments 	= { 
 					author 		= prc.author,
-					showHits 	= true
+					showHits 	= true,
+					showAuthor 	= false
 				}
 			);
+
 			// Latest Drafts
 			prc.latestDraftsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
 				eventArguments 	= { 
-					author 		= prc.author, 
-					isPublished = false,
-					showHits 	= false
+					author 				= prc.author, 
+					isPublished			= false,
+					showHits 			= false,
+					colorCodings		= false,
+					showPublishedStatus	= false,
+					showAuthor			= false
 				}
 			);
 		}
