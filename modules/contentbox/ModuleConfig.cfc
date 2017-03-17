@@ -123,6 +123,8 @@ component {
 	function onLoad(){
 		// Loadup Config Overrides
 		loadConfigOverrides();
+		// Load Environment Overrides Now, they take precedence
+		loadEnvironmentOverrides();
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@cb" ).startup();
 		// Startup localization settings
@@ -169,10 +171,30 @@ component {
 	}
 
 	/**
-	 *
+	 * Load up java environment overrides for ContentBox settings
+	 * The pattern to look is `contentbox.{site}.{setting}`
+	 * Example: contentbox.default.cb_media_directoryRoot
 	 */
-	private function getSystemSettings(){
+	private function loadEnvironmentOverrides(){
+		var oSystem 			= createObject( "java", "java.lang.System" );
+		var environmentSettings = oSystem.getEnv();
+		var overrides 			= {};
+		
+		// iterate and override
+		for( var thisKey in environmentSettings ){
+			if( REFindNoCase( "^contentbox\.", thisKey ) ){
+				// No multi-site yet, so get the last part as the setting.
+				overrides[ listLast( thisKey, "." ) ] = environmentSettings[  thisKey ];
+			}
+		}
+		// If empty, exit out.
+		if( structIsEmpty( overrides ) ){ return; }
 
+		// Append and override
+		var allSettings = settingService.getAllSettings( asStruct = true );
+		structAppend( allSettings, overrides, true );
+		// Store them
+		settingService.storeSettings( allSettings );
 	}
 
 }
