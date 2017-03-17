@@ -33,7 +33,7 @@
 						<i class="fa fa-cogs fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li><a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Rule?"><i class="fa fa-trash-o fa-lg" id="delete_#rule.getRuleID()#"></i> Delete</a></li>
 							<!--- Edit Command --->

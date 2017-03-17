@@ -132,7 +132,7 @@ component extends="baseHandler"{
 			oVersion.getRelatedContent().addNewContentVersion(
 				content 	= oVersion.getContent(),
 				changelog 	= "Reverting to version #oVersion.getVersion()#",
-				author 	 	= prc.oAuthor
+				author 	 	= prc.oCurrentAuthor
 			);
 			// save
 			contentVersionService.save( oVersion );

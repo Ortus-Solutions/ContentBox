@@ -36,13 +36,13 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
 								    	<a class="btn dropdown-toggle btn-info" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
+								    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
 												data-title="<i class='fa fa-trash-o'></i> Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
@@ -58,13 +58,13 @@
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import
 													</a>
 												</li>
 												</cfif>
-												<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
+												<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink(linkto=prc.xehEntryExportAll)#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON
 													</a>
@@ -170,7 +170,7 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
+<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Entry Cloning",
@@ -184,7 +184,7 @@
 	</cfscript>
 	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
 </cfif>
-<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Blog Entries",

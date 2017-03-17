@@ -119,7 +119,7 @@ function contentLoad( criteria ){
 		$( this ).fadeIn( 'fast' );
 	} );
 }
-<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 function removeAuthor(authorID){
 	$( "##delete_"+ authorID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
 	checkAll( false, '##authorID' );

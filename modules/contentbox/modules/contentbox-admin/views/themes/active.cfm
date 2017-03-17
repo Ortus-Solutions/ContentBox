@@ -4,7 +4,7 @@
 		
 		<div class="pull-right">
 	    	<button class="btn btn-success btn-sm" 
-	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#prc.activeTheme.name#/h/#hash( prc.oAuthor.getAuthorID() )#');return false;">
+	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#prc.activeTheme.name#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
 				<i class="fa fa-eye"></i> Preview
 			</button>
 		</div>

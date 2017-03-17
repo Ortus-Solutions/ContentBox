@@ -25,7 +25,7 @@ component extends="baseHandler"{
 			arguments.event.paramValue( "authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
-			if(  !prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) AND oAuthor.getAuthorID() NEQ prc.oAuthor.getAuthorID() ){
+			if(  !prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) AND oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID() ){
 				// relocate
 				cbMessagebox.error( "You do not have permissions to do this!" );
 				setNextEvent(event=prc.xehAuthors);
@@ -166,7 +166,7 @@ component extends="baseHandler"{
 	* @return html
 	*/
 	function myprofile( event, rc, prc ){
-		rc.authorID = prc.oAuthor.getAuthorID();
+		rc.authorID = prc.oCurrentAuthor.getAuthorID();
 		editor( argumentCollection=arguments );
 	}
 	
@@ -177,9 +177,9 @@ component extends="baseHandler"{
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
 			// store the new author preference	
-			prc.oAuthor.setPreference(name="editor", value=rc.editor);
+			prc.oCurrentAuthor.setPreference(name="editor", value=rc.editor);
 			// save Author preference
-			authorService.saveAuthor( prc.oAuthor );
+			authorService.saveAuthor( prc.oCurrentAuthor );
 			results[ "MESSAGES" ] = "Editor changed to #rc.editor#";
 		}
 		catch(Any e){
@@ -202,9 +202,9 @@ component extends="baseHandler"{
 		// Check preference value
 		if( len( rc.preference ) ){
 			// store the new author preference	
-			prc.oAuthor.setPreference( name=rc.preference, value=rc.value );
+			prc.oCurrentAuthor.setPreference( name=rc.preference, value=rc.value );
 			// save Author preference
-			authorService.saveAuthor( prc.oAuthor );
+			authorService.saveAuthor( prc.oCurrentAuthor );
 			results[ "MESSAGES" ] = "Preference saved";
 		} else {
 			results[ "ERROR" ] 		= true;
@@ -283,7 +283,7 @@ component extends="baseHandler"{
 		var newAuthor = (NOT oAuthor.isLoaded());
 
     	// role assignment if permission allows it
-    	if( prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) ){
+    	if( prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) ){
     		oAuthor.setRole( roleService.get( rc.roleID ) );
     	}
 

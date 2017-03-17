@@ -40,7 +40,7 @@
                             </a>
                         </li>
 
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                             <li role="presentation">
                                 <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
                                     <i class="fa fa-truck"></i> Custom Fields
@@ -212,7 +212,7 @@
                         <!---End content Info--->
                         
                         <!---Begin Related Content--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -233,7 +233,7 @@
                         </cfif>
 
                         <!---Begin Linked Content--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -253,7 +253,7 @@
                         <!---End Linked Content--->
 
                         <!---Begin Modifiers--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -287,7 +287,7 @@
 	         						</div>
 
                                     <!--- Creator --->
-                                    <cfif prc.content.isLoaded() and prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+                                    <cfif prc.content.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
                                         <div class="form-group">
                                             <i class="fa fa-user fa-lg"></i>
                                             #html.label(field="creatorID",content="Creator:",class="inline" )#
@@ -325,7 +325,7 @@
                         <!---End Modfiers--->
                             
                         <!---Begin Cache Settings--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_CACHING" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -381,7 +381,7 @@
                         <!---End Cache Settings--->
                             
                         <!---Begin Categories--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_CATEGORIES" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">

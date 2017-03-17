@@ -193,13 +193,13 @@ component extends="baseContentHandler"{
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
-		prc.defaultEditor = getUserDefaultEditor( prc.oAuthor );
+		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get User's default markup
-		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
+		prc.defaultMarkup = prc.oCurrentAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName" );
 		// get related content
@@ -245,14 +245,14 @@ component extends="baseContentHandler"{
 		}
 		// get a clone
 		var clone = contentStoreService.new( { title=rc.title, slug=variables.HTMLHelper.slugify( rc.title ) } );
-		clone.setCreator( prc.oAuthor );
+		clone.setCreator( prc.oCurrentAuthor );
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );
 			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
 		// prepare for cloning
-		clone.prepareForClone(author=prc.oAuthor,
+		clone.prepareForClone(author=prc.oCurrentAuthor,
 							  original=original,
 							  originalService=contentStoreService,
 							  publish=rc.contentStatus,
@@ -301,7 +301,7 @@ component extends="baseContentHandler"{
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 
 		// Verify permission for publishing, else save as draft
-		if( !prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) ){
+		if( !prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) ){
 			rc.isPublished = "false";
 		}
 
@@ -323,15 +323,15 @@ component extends="baseContentHandler"{
 		}
 
 		// Attach creator if new page
-		if( isNew ){ content.setCreator( prc.oAuthor ); }
+		if( isNew ){ content.setCreator( prc.oCurrentAuthor ); }
 
 		// Override creator?
-		if( !isNew and prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) and len( rc.creatorID ) and content.getCreator().getAuthorID() NEQ rc.creatorID ){
+		if( !isNew and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) and len( rc.creatorID ) and content.getCreator().getAuthorID() NEQ rc.creatorID ){
 			content.setCreator( authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
-		content.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
+		content.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oCurrentAuthor);
 
 		// attach a parent page if it exists and not the same
 		if( isNumeric(rc.parentContent) AND content.getContentID() NEQ rc.parentContent ){

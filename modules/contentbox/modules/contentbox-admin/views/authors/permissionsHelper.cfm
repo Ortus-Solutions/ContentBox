@@ -4,7 +4,7 @@
 $(document).ready(function() {
 	$permissionForm = $( "##permissionForm" );
 } );
-<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 function addPermission(){
 	// loader
 	$( "##permissionLoader" ).slideDown();

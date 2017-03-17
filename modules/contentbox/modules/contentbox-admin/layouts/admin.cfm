@@ -15,7 +15,7 @@
 	<!---                               BODY START					                                      --->
 	<!--- ************************************************************************************************--->
 	<body 	class="off-canvas" 
-			data-showsidebar="#lcase( yesNoFormat( prc.oAuthor.getPreference( "sidebarState", true ) ) )#"
+			data-showsidebar="#lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) )#"
 			data-preferenceURL="#event.buildLink( prc.xehSavePreference )#"
 	>
 
@@ -47,7 +47,7 @@
 				</div>
 
 				<!---Search --->
-				<cfif prc.oAuthor.checkPermission( "GLOBAL_SEARCH" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
 				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
@@ -67,48 +67,48 @@
 							</a>
 						</li>
 						<!--- New Quick Links --->
-						<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
 						<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
 							<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
 								<i class="fa fa-plus"></i>
 							</button>
 							<ul class="dropdown-menu">
-								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
 											<i class="fa fa-file-o"></i> New Page
 										</a>
 									</li>
 								</cfif>
-								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+b">
 											<i class="fa fa-quote-left"></i> New Entry
 										</a>
 									</li>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
 											<i class="fa fa-hdd-o"></i> New Content Store
 										</a>
 									</li>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									<li>
 										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+a">
 											<i class="fa fa-user"></i> New User
 										</a>
 									</li>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
 									<li>
 										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
 											<i class="fa fa-picture-o"></i> New Media
 										</a>
 									</li>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
 									<li>
 										<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
 											<i class="fa fa-list"></i> New Menu
@@ -136,7 +136,7 @@
 						
 						<!--- Profile --->
 						<li class="profile-photo hidden-xs">
-							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oAuthor.getEmail(), size="35", class="img-circle" )#
+							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="35", class="img-circle" )#
 						</li>
 						#prc.adminMenuService.generateProfileMenu()#
 						
@@ -206,7 +206,7 @@
 				<div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
 					<div class="sidebar-title">system</div>
 					<div class="list-contacts">
-						<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.installer>
+						<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.installer>
 							<div class="list-item">
 								<div class="list-item-image">
 									<i class="fa fa-warning img-circle"></i>
@@ -229,7 +229,7 @@
 								</div>
 							</div>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.dsncreator>
+						<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.dsncreator>
 							<div class="list-item">
 								<div class="list-item-image">
 									<i class="fa fa-warning img-circle"></i>

@@ -49,7 +49,7 @@ component extends="coldbox.system.Interceptor"{
 		// store filebrowser entry point
 		prc.cbFileBrowserEntryPoint = getModuleConfig( "contentbox-filebrowser" ).entryPoint;
 		// Place user in prc
-		prc.oAuthor = securityService.getAuthorSession();
+		prc.oCurrentAuthor = securityService.getAuthorSession();
 		// Place global cb options on scope
 		prc.cbSettings = settingService.getAllSettings(asStruct=true);
 		// Place widgets root location
@@ -59,7 +59,7 @@ component extends="coldbox.system.Interceptor"{
 		// Sidemenu collapsed
 		prc.sideMenuClass = "";
 		// Is sidemenu collapsed for user?
-		if( prc.oAuthor.getPreference( "sidemenuCollapse", false ) == "true" ){
+		if( prc.oCurrentAuthor.getPreference( "sidemenuCollapse", false ) == "true" ){
 			prc.sideMenuClass = "sidebar-mini";
 		}
 		

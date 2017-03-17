@@ -44,7 +44,7 @@
                             </a>
                         </li>
 
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                             <li role="presentation">
                                 <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
                                     <i class="fa fa-truck"></i> Custom Fields
@@ -52,7 +52,7 @@
                             </li>
                         </cfif>
 
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>
                             <li role="presentation">
                                 <a href="##seo" aria-controls="seo" role="tab" data-toggle="tab">
                                     <i class="fa fa-cloud"></i> SEO
@@ -278,7 +278,7 @@
                         <!---End Page Info--->
 
                         <!---Begin Related Content--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -301,7 +301,7 @@
                         <!---End Related Content--->
 
                         <!---Begin Linked Content--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -322,7 +322,7 @@
                         <!---End Linked Content--->
 
                         <!---Begin Modifiers--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_MODIFIERS" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -334,7 +334,7 @@
                             <div id="modifiers" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <!--- Creator --->
-                                    <cfif prc.entry.isLoaded() and prc.oAuthor.checkPermission( "ENTRIES_ADMIN" )>
+                                    <cfif prc.entry.isLoaded() and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                         <div class="form-group">
                                             <i class="fa fa-user fa-lg"></i>
                                             #html.label(
@@ -397,7 +397,7 @@
                         <!---End Modfiers--->
                             
                         <!---Begin Cache Settings--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_CACHING" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -453,7 +453,7 @@
                         <!---End Cache Settings--->
                             
                         <!---Begin Categories--->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_CATEGORIES" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -493,7 +493,7 @@
                         <!---End Categories--->
                             
                         <!---Begin Featured Image --->
-                        <cfif prc.oAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
+                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">

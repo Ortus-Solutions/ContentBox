@@ -35,7 +35,7 @@ $(document).ready(function() {
 	    "order": []
 	} );
 } );
-<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 function changeStatus(status,recordID){
 	$commentForm.attr( "action","#event.buildlink(linkTo=prc.xehCommentstatus)#" );
 	$commentForm.find( "##commentStatus" ).val(status);

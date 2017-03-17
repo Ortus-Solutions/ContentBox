@@ -35,21 +35,21 @@
                         </div>
                         <div class="col-md-6">
                             <div class="pull-right">
-                                <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+                                <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
                                     <div class="btn-group btn-group-sm">
                                         <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
                                             Bulk Actions <span class="caret"></span>
                                         </a>
                                         <ul class="dropdown-menu">
-                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN" )>
+                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
                                                 <li>
                                                     <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
-                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
+                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
                                                 <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
                                             </cfif>
-                                            <cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
+                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li><a href="#event.buildLink (linkto=prc.xehMenuExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
 												<li><a href="#event.buildLink( linkto=prc.xehMenuExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
@@ -72,7 +72,7 @@
         #html.endForm()#
     </div>
 </div>
-<cfif prc.oAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
     <cfscript>
         dialogArgs = {
             title = "Import Menus",

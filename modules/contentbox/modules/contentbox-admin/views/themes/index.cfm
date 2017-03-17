@@ -33,7 +33,7 @@
 						</li>
 
 						<!--- Install Themes --->
-						<cfif prc.oAuthor.checkPermission( "FORGEBOX_ADMIN" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "FORGEBOX_ADMIN" )>
 							<li title="Install New Themes" class="navbar">
 								<a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
 							</li>
@@ -49,7 +49,7 @@
 								<!--- Content Bar --->
 								<div class="well well-sm">
 									<!--- Rebuild Registry Button --->
-									<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" )>
+									<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
 										<div class="btn-group btn-sm pull-right">
 											<button class="btn btn-sm btn-primary" onclick="return toggleUploader()" ><i class="fa fa-upload"></i> Upload Theme</button>
 											<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan Themes directory and rebuild registry"><i class="fa fa-refresh"></i> Rebuild Registry</button>
@@ -122,8 +122,8 @@
 
 													<!--- Button Bar --->
 													<div class="btn-group">
-														<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ prc.themes.name>
-															<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.themes.name#/h/#hash(prc.oAuthor.getAuthorID())#');return false;">
+														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ prc.themes.name>
+															<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.themes.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
 																<i class="fa fa-eye"></i> Preview
 															</button>
 															<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#prc.themes.name#')">
@@ -132,7 +132,7 @@
 														</cfif>	
 
 														<!--- Delete Command --->
-														<cfif prc.oAuthor.checkPermission( "THEME_ADMIN" ) AND prc.themes.name neq prc.activeTheme.name>
+														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.themes.name neq prc.activeTheme.name>
 															<a href="javascript:remove('#JSStringFormat(prc.themes.name)#')" 
 															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
 															   <i class="fa fa-trash-o fa-lg"></i> Remove

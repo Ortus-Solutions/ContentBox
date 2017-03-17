@@ -24,7 +24,7 @@ $(document).ready(function() {
             300
         )
 	);
-	<cfif prc.oAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 	$ruleForm.find( "##rules" ).tableDnD( {
 		onDragClass: "selected",
 		onDragStart : function(table,row){
@@ -47,7 +47,7 @@ $(document).ready(function() {
 	} );
 	</cfif>
 } );
-<cfif prc.oAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 function remove(recordID){
 	if( recordID != null ){
 		$( "##delete_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );

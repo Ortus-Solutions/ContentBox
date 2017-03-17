@@ -14,7 +14,7 @@ $(document).ready(function() {
 	    ],
 	    "order": []
 	} );
-	<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
 	$importDialog = $( "##importDialog" );
 	$roleEditor = $( "##roleEditor" );
 	// form validator
@@ -34,7 +34,7 @@ $(document).ready(function() {
         )
 	);
 } );
-<cfif prc.oAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
 function edit(roleID,role,description){
 	openModal( $( "##roleEditorContainer" ), 500, 200 );
 	$roleEditor.find( "##roleID" ).val( roleID );

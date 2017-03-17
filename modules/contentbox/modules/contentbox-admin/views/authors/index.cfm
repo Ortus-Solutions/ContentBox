@@ -28,16 +28,16 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
 												<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
@@ -45,7 +45,7 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
 								</cfif>
 							</div>
@@ -98,7 +98,7 @@
 	</div>
 </div>
 
-<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title 		= "Import Users",

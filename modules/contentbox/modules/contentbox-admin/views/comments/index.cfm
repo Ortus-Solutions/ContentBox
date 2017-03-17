@@ -38,7 +38,7 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+							<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 								<div class="pull-right">
 									<div class="btn-group btn-sm">
 								    	<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
@@ -103,7 +103,7 @@
 									#comment.getDisplayCreatedDate()#
 								</td>
 								<td class="text-center">
-									<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+									<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
 											<a class="btn btn-sm btn-danger" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>

@@ -78,10 +78,10 @@
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
                                                     <li><a href="javascript:flushSettingsCache()"><i class="fa fa-refresh"></i> Flush Settings Cache</a></li>
-                                                    <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
+                                                    <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
                                                     <li><a href="javascript:importSettings()"><i class="fa fa-upload"></i> Import Settings</a></li>
                                                     </cfif>
-                                                    <cfif prc.oAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+                                                    <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
 														<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 													</cfif>

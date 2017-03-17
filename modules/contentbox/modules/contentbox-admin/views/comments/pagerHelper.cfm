@@ -12,7 +12,7 @@ $(document).ready(function() {
 	    }
 	} );
 } );
-<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 function commentPagerChangeStatus(status,recordID){
 	// update icon
 	$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );

@@ -20,7 +20,7 @@
                     #announceInterception( "cbadmin_onAuthorEditorActions" )#
 					<!--- Back button --->
 					<p class="text-center">
-						<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehAuthors )#')"><i class="fa fa-reply"></i> Back To Listing</button>
 						<cfelse>
 							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehDashboard )#')"><i class="fa fa-reply"></i> Back To Dashboard</button>
@@ -45,7 +45,7 @@
 							<li>
 								<a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="fa fa-lock"></i> Permissions</a>
 							</li>
-							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<li>
 								<a href="##latestEdits" data-toggle="tab"><i class="fa fa-clock-o"></i> Latest Edits</a>
 							</li>
@@ -130,7 +130,7 @@
 								</cfif>
 
 								<!--- Active --->
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									#html.select(
 										label="Active User:",
 										name="isActive",
@@ -175,7 +175,7 @@
 								#html.endFieldSet()#
 								
 								<!--- Action Bar --->
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
@@ -196,7 +196,7 @@
 								#html.endFieldSet()#
 								
 								<!--- Action Bar --->
-								<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Change Password" class="btn btn-danger">
 								</div>
@@ -211,7 +211,7 @@
 							<div class="tab-pane" id="permissionsTab"></div>
 
 							<!--- Latest Edits --->
-							<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 								<div class="tab-pane" id="latestEdits">
 									#html.startFieldSet( legend="Latest Edits" )#
 									#prc.latestEditsViewlet#

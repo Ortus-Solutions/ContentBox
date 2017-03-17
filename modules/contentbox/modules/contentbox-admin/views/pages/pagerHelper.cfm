@@ -14,7 +14,7 @@ $(document).ready(function() {
 		}
 	} );
 	<!---If admin and also if sorting is enabled --->
-	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" ) AND prc.pagePager_sorting>
+	<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) AND prc.pagePager_sorting>
 	$( "##pages_pager" ).tableDnD( {
 		onDragClass: "selected",
 		onDragStart : function(table,row){
@@ -47,7 +47,7 @@ function pagerLink(page){
 			activateTooltips();
 	} );
 }
-<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
+<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 function changeOrder(contentID,order,direction){
 	// img change
 	$('##order'+direction+'_'+contentID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );

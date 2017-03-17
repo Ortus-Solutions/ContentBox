@@ -37,13 +37,13 @@
 						</div>
 						<div class="col-md-6">
 							<div class="pull-right">
-								<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
+								    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 								    			<li>
 								    				<a href="javascript:bulkRemove()" 
 								    					class="confirmIt"
@@ -63,12 +63,12 @@
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 								    			<li>
 								    				<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a>
 								    			</li>
 											</cfif>
-											<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li><a href="#event.buildLink (linkto=prc.xehPageExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
 												<li><a href="#event.buildLink( linkto=prc.xehPageExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
@@ -173,7 +173,7 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Page Cloning",
@@ -187,7 +187,7 @@
 	</cfscript>
 	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
 </cfif>
-<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {
 			title = "Import Pages",

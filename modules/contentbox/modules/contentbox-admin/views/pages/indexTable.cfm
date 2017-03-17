@@ -61,7 +61,7 @@
 						<i class="fa fa-circle-thin"></i>
 					</cfif>
 					<!--- Title --->
-					<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+					<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 						<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>
 					<cfelse>
 						#page.getTitle()#
@@ -148,12 +148,12 @@
 							<i class="fa fa-cogs fa fa-large"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
-				    		<cfif prc.oAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+				    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 							<!--- Clone Command --->
 							<li><a href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"><i class="fa fa-copy fa fa-large"></i> Clone</a></li>
 							<!--- Create Child --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fa fa-sitemap fa fa-large"></i> Create Child</a></li>
-							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
+							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Delete Command --->
 							<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
 							  data-title="<i class='fa fa-trash-o'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o fa-lg"></i> Delete</a></li>
@@ -161,7 +161,7 @@
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 							</cfif>
-							<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 							<!--- Export --->
 							<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
 							<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>

@@ -25,7 +25,7 @@ $(document).ready(function() {
 	// Popovers
 	activateInfoPanels();
 
-	<cfif prc.oAuthor.checkPermission( "PAGES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 	// Drag and drop hierarchies
 	$pages.tableDnD( {
 		dragHandle : ".dragHandle",

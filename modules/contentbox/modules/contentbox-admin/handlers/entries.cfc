@@ -150,14 +150,14 @@ component extends="baseContentHandler"{
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
-		prc.defaultEditor = getUserDefaultEditor( prc.oAuthor );
+		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
 
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get User's default markup
-		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
+		prc.defaultMarkup = prc.oCurrentAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
 
 		// get all authors
 		prc.authors = authorService.getAll(sortOrder="lastName" );
@@ -196,9 +196,9 @@ component extends="baseContentHandler"{
 		}
 		// get a clone
 		var clone = entryService.new( { title=rc.title, slug=variables.HTMLHelper.slugify( rc.title ) } );
-		clone.setCreator( prc.oAuthor );
+		clone.setCreator( prc.oCurrentAuthor );
 		// prepare for clone
-		clone.prepareForClone(author=prc.oAuthor,
+		clone.prepareForClone(author=prc.oCurrentAuthor,
 							  original=original,
 							  originalService=entryService,
 							  publish=rc.entryStatus,
@@ -246,7 +246,7 @@ component extends="baseContentHandler"{
 		rc.slug = variables.HTMLHelper.slugify( rc.slug );
 
 		// Verify permission for publishing, else save as draft
-		if( !prc.oAuthor.checkPermission( "ENTRIES_ADMIN" ) ){
+		if( !prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" ) ){
 			rc.isPublished = "false";
 		}
 
@@ -270,15 +270,15 @@ component extends="baseContentHandler"{
 		}
 
 		// Attach creator if new page
-		if( isNew ){ entry.setCreator( prc.oAuthor ); }
+		if( isNew ){ entry.setCreator( prc.oCurrentAuthor ); }
 
 		// Override creator?
-		if( !isNew and prc.oAuthor.checkPermission( "ENTRIES_ADMIN" ) and len( rc.creatorID ) and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
+		if( !isNew and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" ) and len( rc.creatorID ) and entry.getCreator().getAuthorID() NEQ rc.creatorID ){
 			entry.setCreator( authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
-		entry.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
+		entry.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oCurrentAuthor);
 
 		// Create new categories?
 		var categories = [];

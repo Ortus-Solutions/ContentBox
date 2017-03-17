@@ -1,7 +1,7 @@
 <cfoutput>
     <div id="contentToolBar">
         <!--- editor selector --->
-        <cfif prc.oAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
+        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
             <div class="btn-group btn-group-sm">
                 <a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
                     <i class="fa fa-keyboard-o"></i>

@@ -24,12 +24,12 @@
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
 			<td>
-				<cfif prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+				<cfif prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 					<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
 				</cfif>
 				#getModel( "Avatar@cb" ).renderAvatar( email=author.getEmail(), size="30" )#
 				<!--- Display Link if Admin Or yourself --->
-				<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+				<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 					<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
 				<cfelse>
 					#author.getName()#
@@ -45,9 +45,9 @@
 						<i class="fa fa-cogs fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oAuthor.getAuthorID() eq author.getAuthorID()>
+						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 							<!--- Delete Command --->
-							<cfif prc.oAuthor.getAuthorID() neq author.getAuthorID()>
+							<cfif prc.oCurrentAuthor.getAuthorID() neq author.getAuthorID()>
 								<li><a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Author?"><i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Delete</a></li>
 							<cfelse>
 								<li><a title="Can't Delete Yourself" href="javascript:alert('Can\'t delete yourself buddy!')" class="textRed"><i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Can't Delete</a></li>
@@ -56,7 +56,7 @@
 							<li><a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 					
 							<!--- Export --->
-							<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
 							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 							</cfif>

@@ -27,7 +27,7 @@
 	<p>&nbsp;</p>
 	
 	<!--- Add Permission Form--->
-	<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 	#html.startForm(name="permissionForm",class="form-vertical" )#
 		#html.startFieldset(legend="Assign A-la-Carte Permissions" )#
 			#html.hiddenField(name="authorID",bind=prc.author)#
@@ -83,7 +83,7 @@
 		<div>
 			<!--- Assigned --->
 			<i class="fa fa-check fa-lg textGreen"></i>
-			<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" )>
+			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 				<!--- Remove --->
 				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times fa-lg textRed"></i></a>
 			</cfif>

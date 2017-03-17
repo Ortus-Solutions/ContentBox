@@ -6,7 +6,7 @@
 		</h1>
 		<span class="label label-warning">#rc.library#</span>
 
-		<cfif prc.oAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
+		<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
 			<div class="pull-right">
 				<div class="btn-group btn-group-sm">
 				    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">

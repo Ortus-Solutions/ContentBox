@@ -87,7 +87,7 @@
 		#announceInterception( "cbadmin_UserPreferencePanel" )#
 		
 		<!--- Action Bar --->
-		<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 			<div>
 				<input type="submit" value="Save Preferences" class="btn btn-danger">
 			</div>
@@ -115,7 +115,7 @@
 		)#
 
 		<!--- Action Bar --->
-		<cfif prc.oAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oAuthor.getAuthorID()>
+		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 			<div>
 				<input type="submit" value="Save" class="btn btn-danger">
 			</div>

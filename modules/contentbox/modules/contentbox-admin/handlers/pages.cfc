@@ -130,13 +130,13 @@ component extends="baseContentHandler"{
 		// Get All registered editors so we can display them
 		prc.editors = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
-		prc.defaultEditor = getUserDefaultEditor( prc.oAuthor );
+		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get User's default markup
-		prc.defaultMarkup = prc.oAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
+		prc.defaultMarkup = prc.oCurrentAuthor.getPreference( "markup", editorService.getDefaultMarkup() );
 		// get all categories for display purposes
 		prc.categories = categoryService.getAll(sortOrder="category" );
 		// get new page or persisted
@@ -208,7 +208,7 @@ component extends="baseContentHandler"{
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 
 		// Verify permission for publishing, else save as draft
-		if( !prc.oAuthor.checkPermission( "PAGES_ADMIN" ) ){
+		if( !prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) ){
 			rc.isPublished 	= "false";
 		}
 
@@ -232,13 +232,13 @@ component extends="baseContentHandler"{
 		}
 
 		// Attach creator if new page
-		if( isNew ){ page.setCreator( prc.oAuthor ); }
+		if( isNew ){ page.setCreator( prc.oCurrentAuthor ); }
 		// Override creator?
-		else if( !isNew and prc.oAuthor.checkPermission( "PAGES_ADMIN" ) and len( rc.creatorID ) and page.getCreator().getAuthorID() NEQ rc.creatorID ){
+		else if( !isNew and prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) and len( rc.creatorID ) and page.getCreator().getAuthorID() NEQ rc.creatorID ){
 			page.setCreator( authorService.get( rc.creatorID ) );
 		}
 		// Register a new content in the page, versionized!
-		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oAuthor);
+		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oCurrentAuthor);
 
 		// attach a parent page if it exists and not the same
 		if( isNumeric(rc.parentPage) AND page.getContentID() NEQ rc.parentPage ){
@@ -316,14 +316,14 @@ component extends="baseContentHandler"{
 		}
 		// get a clone
 		var clone = pageService.new( {title=rc.title,slug=variables.HTMLHelper.slugify( rc.title )} );
-		clone.setCreator( prc.oAuthor );
+		clone.setCreator( prc.oCurrentAuthor );
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );
 			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
 		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(author=prc.oAuthor,
+		clone.prepareForClone(author=prc.oCurrentAuthor,
 							  original=original,
 							  originalService=pageService,
 							  publish=rc.pageStatus,

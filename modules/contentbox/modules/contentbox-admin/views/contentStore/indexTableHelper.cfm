@@ -23,7 +23,7 @@ $(document).ready(function() {
 	// Popovers
 	activateInfoPanels();
 
-	<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 	// Drag and drop hierarchies
 	$content.tableDnD( {
 		dragHandle  : ".dragHandle",

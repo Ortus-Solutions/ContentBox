@@ -47,7 +47,7 @@ component extends="baseHandler"{
 			}
 		}
 		// author security hash
-		prc.h = hash( prc.oAuthor.getAuthorID() );
+		prc.h = hash( prc.oCurrentAuthor.getAuthorID() );
 		// full preview view
 		event.setView( view="content/preview", layout="ajax" );
 	}

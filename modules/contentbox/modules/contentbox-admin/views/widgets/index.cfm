@@ -28,7 +28,7 @@
 		            		<a href="##managePane" data-toggle="tab"><i class="fa fa-cog fa-lg"></i>  Manage</a>
 		            	</li>
 						<!--- Install --->
-						<cfif prc.oAuthor.checkPermission( "FORGEBOX_ADMIN" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "FORGEBOX_ADMIN" )>
 							<li title="Install New Widgets">
 								<a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
 							</li>
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 	<div class="col-md-3">
-		<cfif prc.oAuthor.checkPermission( "WIDGET_ADMIN" )>
+		<cfif prc.oCurrentAuthor.checkPermission( "WIDGET_ADMIN" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
 			        <h3 class="panel-title"><i class="fa fa-upload"></i> Widget Uploader</h3>

@@ -48,7 +48,7 @@
 			</td>
 			<td class="text-center">
 				<div class="btn-group btn-xs">
-					<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+					<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 						<!--- Approve/Unapprove --->
 						<cfif !comment.getIsApproved()>
 							<a class="btn btn-xs btn-info" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg" ></i></a>

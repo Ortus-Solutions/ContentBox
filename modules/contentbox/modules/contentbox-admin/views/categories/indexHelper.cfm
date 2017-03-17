@@ -34,7 +34,7 @@ $(document).ready(function() {
   		"order": []
 	} );
 } );
-<cfif prc.oAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 function bulkRemove(){
 	$categoryForm.submit();
 }

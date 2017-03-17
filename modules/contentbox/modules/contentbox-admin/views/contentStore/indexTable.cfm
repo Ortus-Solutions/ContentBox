@@ -51,7 +51,7 @@
 					<i class="fa fa-circle-thin"></i>
 				</cfif>
 				<!--- Title --->
-				<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 					<a href="#event.buildLink(prc.xehContentStoreEditor)#/contentID/#content.getContentID()#" title="Edit content">#content.getTitle()#</a>
 				<cfelse>
 					#content.getTitle()#
@@ -101,12 +101,12 @@
 						<i class="fa fa-cogs fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Clone Command --->
 						<li><a href="javascript:openCloneDialog('#content.getContentID()#','#URLEncodedFormat(content.getTitle())#')"><i class="fa fa-copy fa-lg"></i> Clone</a></li>
 						<!--- Create Child --->
 						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap fa-lg"></i> Create Child</a></li>
-						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
 							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Content?"><i id="delete_#content.getContentID()#" class="fa fa-trash-o fa-lg" ></i> Delete</a>
@@ -115,7 +115,7 @@
 						<!--- Edit Command --->
 						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 						</cfif>
-						<cfif prc.oAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 						<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
 						<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>

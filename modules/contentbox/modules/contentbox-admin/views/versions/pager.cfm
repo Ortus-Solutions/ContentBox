@@ -72,14 +72,14 @@
 					</cfif>
 
 					<cfif not thisVersion.getIsActive()>
-						<cfif prc.oAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
 						<!--- ROLLBACK BUTTON --->
 						<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 						   class="confirmIt"
 						   data-message="Do you really want to rollback to this version?"><i class="fa fa-refresh fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 
-						<cfif prc.oAuthor.checkPermission( "VERSIONS_DELETE" )>
+						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>
 						<!--- DELETE VERSION --->
 						<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
 						   data-title="<i class='fa fa-trash-o'></i> Remove Content Version"

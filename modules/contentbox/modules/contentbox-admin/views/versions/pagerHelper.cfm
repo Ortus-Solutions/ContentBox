@@ -20,7 +20,7 @@ function versionsPagerDiff(){
 	openRemoteModal( '#event.buildLink( prc.xehVersionDiff )#', { oldVersion : oldVersion, version : cVersion }, '95%' );
 	return false;
 }
-<cfif prc.oAuthor.checkPermission( "VERSIONS_DELETE" )>
+<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>
 function versionsPagerRemove( versionID ){
 	$( '##version_delete_' + versionID ).removeClass( "fa fa-minus-circle" ).addClass( "fa-spin fa-spinner" );
 	// ajax remove change
@@ -41,7 +41,7 @@ function versionsPagerRemove( versionID ){
 	);	
 }
 </cfif>
-<cfif prc.oAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
+<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
 function versionsPagerRollback( versionID ){
 	$( '##version_rollback_' + versionID ).addClass( "fa-spin" );
 	// ajax rollback change

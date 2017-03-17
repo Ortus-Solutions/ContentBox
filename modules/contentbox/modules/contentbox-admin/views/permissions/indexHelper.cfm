@@ -24,7 +24,7 @@ $(document).ready(function() {
             300
         )
 	);
-	<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 	// form id
 	$permissionEditor = $( "##permissionEditor" );
 	// form validator
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	} );
 	</cfif>
 } );
-<cfif prc.oAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 function edit(permissionID,permission,description){
 	openModal( $( "##permissionEditorContainer" ), 500, 200 );
 	$permissionEditor.find( "##permissionID" ).val( permissionID );

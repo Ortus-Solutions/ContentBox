@@ -19,7 +19,7 @@
 		#announceInterception( "cbadmin_preDashboardContent" )#
 		
 		<!--- Installer Checks --->
-		<cfif prc.oAuthor.checkPermission( "SYSTEM_TAB" )>
+		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" )>
 		<cfif prc.installerCheck.installer>
 			<div class="alert alert-danger" id="installerCheck">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -40,14 +40,14 @@
 		
 		<div class="tab-wrapper tab-primary">
 			<ul class="nav nav-tabs" id="dashboardTabs">
-				<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<li>
 						<a href="##contentReports" data-toggle="tab">
 							<i class="fa fa-dashboard"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 						</a>
 					</li>
 				</cfif>
-				<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<li>
 						<a href="##latestComments" data-toggle="tab">
 							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
@@ -68,7 +68,7 @@
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
 				<!--- ****************************************************************************************** --->
-				<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<div class="tab-pane" id="contentReports">
 						<div class="" id="latestSystemEdits">
 							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
@@ -87,7 +87,7 @@
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST COMMENTS --->
 				<!--- ****************************************************************************************** --->
-				<cfif prc.oAuthor.checkPermission( "COMMENTS_ADMIN" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<div class="tab-pane" id="latestComments">
 						<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 					</div>
@@ -111,14 +111,14 @@
 		#announceInterception( "cbadmin_preDashboardSideBar" )#
 		
 		<!---Latest Snapshot --->
-		<cfif prc.oAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
+		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
 				<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 			</div>	
 		</cfif>
 
 		<!--- Latest Logins --->
-		<cfif prc.oAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
+		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
 			        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> #$r( "dashboard.index.latestLogins@admin" )#</h3>
