@@ -178,7 +178,7 @@ component{
 			}
 			
 			// Incorporate internal hash + rc distinct hash + formats
-			cacheKey &= hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
+			cacheKey &= hash( ".#getFWLocale()#.#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
 			
 			// get content data from cache
 			var data = cache.get( cacheKey );
