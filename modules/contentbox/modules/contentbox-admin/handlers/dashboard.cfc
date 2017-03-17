@@ -90,10 +90,13 @@ component extends="baseHandler"{
 		prc.latestDraftsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
 			eventArguments 	= { 
-				max 		= 10,
-				author 		= prc.oAuthor, 
-				isPublished = false,
-				showHits 	= false
+				max 				= 10,
+				author 				= prc.oAuthor, 
+				isPublished 		= false,
+				showHits 			= false,
+				colorCodings 		= false,
+				showPublishedStatus = false,
+				showAuthor			= false
 			}
 		);
 		event.setView( view="dashboard/latestUserDrafts", layout="ajax" );
@@ -124,8 +127,9 @@ component extends="baseHandler"{
 		prc.futurePublishedContent = runEvent(
 			event 			= "contentbox-admin:content.contentByPublishedStatus",
 			eventArguments 	= { 
-				max 		= 10,
-				showHits 	= false
+				max 			= 10,
+				showHits 		= false,
+				colorCodings 	= false
 			}
 		);
 		event.setView( view="dashboard/futurePublishedContent", layout="ajax" );
@@ -140,9 +144,10 @@ component extends="baseHandler"{
 		prc.expiredContent = runEvent(
 			event 			= "contentbox-admin:content.contentByPublishedStatus",
 			eventArguments 	= { 
-				max 		= 10,
-				showHits 	= true,
-				showExpired = true
+				max 				= 10,
+				showHits 			= true,
+				showExpired 		= true,
+				colorCodings 		= false
 			}
 		);
 		event.setView( view="dashboard/expiredContent", layout="ajax" );

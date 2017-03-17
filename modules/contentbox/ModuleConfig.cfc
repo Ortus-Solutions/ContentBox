@@ -168,4 +168,11 @@ component {
 		}
 	}
 
+	/**
+	 *
+	 */
+	private function getSystemSettings(){
+
+	}
+
 }
