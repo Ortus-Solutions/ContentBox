@@ -108,6 +108,17 @@ component{
 			{ class="coldbox.system.interceptors.SES" }
 		];
 
+		// ContentBox Runtime Overrides
+		contentbox = {
+			// Runtime Settings Override by site slug
+		  	settings = {
+		  		// Default site
+		  		default = {
+		  			//"cb_media_directoryRoot" 	= "/docker/mount"
+		  		}
+		  	}
+		}
+
 	}
 
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED

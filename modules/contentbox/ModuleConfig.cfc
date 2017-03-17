@@ -121,6 +121,8 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Loadup Config Overrides
+		loadConfigOverrides();
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@cb" ).startup();
 		// Startup localization settings
@@ -141,5 +143,29 @@ component {
 	}
 
 	/************************************** PRIVATE *********************************************/
+
+	/**
+	* Load up config overrides
+	*/
+	private function loadConfigOverrides(){
+		var settingService 	= wirebox.getInstance( "SettingService@cb" );
+		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
+		var configStruct 	= controller.getConfigSettings();
+		var contentboxDSL 	= oConfig.getPropertyMixin( "contentbox", "variables", structnew() );
+
+		// Verify if we have settings on the default site for now.
+		if( 
+			structKeyExists( contentboxDSL, "settings" ) 
+			&&
+			structKeyExists( contentboxDSL.settings, "default" )
+		){
+			var overrides 	= contentboxDSL.settings.default;
+			var allSettings = settingService.getAllSettings( asStruct = true );
+			// Append and override
+			structAppend( allSettings, overrides, true );
+			// Store them
+			settingService.storeSettings( allSettings );
+		}
+	}
 
 }
