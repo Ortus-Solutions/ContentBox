@@ -82,10 +82,6 @@ deploy:
 # Now publish assets to ForgeBox
 after_deploy:
   >
-  if [ $TRAVIS_PULL_REQUEST == true ]
-    exit 0;
-  fi
-
   echo Publishing Module - $TRAVIS_BRANCH
   cd $TRAVIS_BUILD_DIR/build/build-contentbox/module && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   
