@@ -1,25 +1,25 @@
 <cfoutput>[
 	{"loc": "#prc.linkHome#" }
-	<cfloop array="#prc.pageResults.pages#" index="content">
+	<cfloop array="#prc.aPages#" index="content">
 	,{ 
-		"loc": "#prc.siteBaseURL##content.getslug()#",
-		"lastmod": "#dateFormat( content.getModifiedDate(), "yyyy-mm-dd" )#"
-		<cfif len( content.getFeaturedImageURL() )>
+		"loc": "#prc.siteBaseURL##content[ 'slug' ]#",
+		"lastmod": "#dateFormat( content[ 'modifiedDate' ], "yyyy-mm-dd" )#"
+		<cfif len( content.get( "featuredImageURL" ) )>
 		,"image": {
-			"loc": "#prc.siteBaseURL##content.getFeaturedImageURL()#"
+			"loc": "#prc.siteBaseURL##content.get( "featuredImageURL" )#"
 		}
-		</cfif>	
+		</cfif> 
 	}
 	</cfloop>
 	<cfif !prc.disableBlog>				
 		,{ "loc": "#prc.siteBaseURL##prc.blogEntryPoint#" }
-		<cfloop array="#prc.entryResults.entries#" index="content">
+		<cfloop array="#prc.aEntries#" index="content">
 	   		,{ 
-	   			"loc": "#prc.siteBaseURL##prc.blogEntryPoint##content.getslug()#",
-	   			"lastmod": "#dateFormat( content.getModifiedDate(), "yyyy-mm-dd" )#"
-		      	<cfif len( content.getFeaturedImageURL() )>
+	   			"loc": "#prc.siteBaseURL##prc.blogEntryPoint##content[ 'slug' ]#",
+	   			"lastmod": "#dateFormat( content[ 'modifiedDate' ], "yyyy-mm-dd" )#"
+		      	<cfif len( content.get( "featuredImageURL" ) )>
 		      		, "image": {
-		      			"loc": "#prc.siteBaseURL##content.getFeaturedImageURL()#"	
+		      			"loc": "#prc.siteBaseURL##content.get( "featuredImageURL" )#"	
 		      		}
 		      	</cfif>
 	   		}

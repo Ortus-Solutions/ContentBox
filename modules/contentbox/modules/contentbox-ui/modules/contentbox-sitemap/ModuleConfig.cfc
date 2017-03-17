@@ -9,14 +9,14 @@ component{
 	// Module Properties
 	this.title 				= "ContentBox Sitemap Generator";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
-	this.description 		= "Generates XML and HTML Sitemaps for your website";
+	this.webURL 			= "https://www.ortussolutions.com";
+	this.description 		= "Generates XML, TXT, JSON and HTML Sitemaps for your website";
 	this.version			= "@version.number@+@build.number@";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
-	// Module Entry Point
+	// Module Entry Point: /sitemap.(json,html,txt)
 	this.entryPoint			= "sitemap";
 
 	function configure(){
@@ -29,9 +29,9 @@ component{
 		// SES Routes
 		routes = [
 			// Module Entry Point
-			{pattern="/", handler="main",action="index"},
+			{ pattern="/", handler="main", action="index" },
 			// Convention Route
-			{pattern="/:handler/:action?"}
+			{ pattern="/:handler/:action?" }
 		];
 
 		// Custom Declared Points
@@ -43,9 +43,6 @@ component{
 		interceptors = [
 		];
 
-		// Binder Mappings
-		// binder.map( "Alias" ).to( "#moduleMapping#.model.MyService" );
-
 	}
 
 	/**
@@ -55,21 +52,9 @@ component{
 	}
 
 	/**
-	* Fired when the module is activated by ContentBox
-	*/
-	function onActivate(){
-	}
-
-	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-	}
-
-	/**
-	* Fired when the module is deactivated by ContentBox
-	*/
-	function onDeactivate(){
 	}
 
 }

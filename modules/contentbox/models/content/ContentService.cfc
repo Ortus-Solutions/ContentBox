@@ -809,14 +809,35 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Returns an array of [contentID, title, slug] structures of all the content in the system
+	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	* @sortOrder 	The sort ordering of the results
+	* @isPublished	Show all content or true/false published content
 	*/
-	array function getAllFlatContent(){
+	array function getAllFlatContent( 
+		sortOrder="title asc",
+		boolean isPublished
+	){
 		var c = newCriteria();
 
-		return c.withProjections( property="contentID,title,slug" )
+		// only published content
+		if( 
+			structKeyExists( arguments, "isPublished") 
+			&& 
+			isBoolean( arguments.isPublished ) 
+		){
+			// Published bit
+			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
+			// Published eq true evaluate other params
+			if( arguments.isPublished ){
+				c.isLt( "publishedDate", now() )
+				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
+				.isEq( "passwordProtection","" );
+			}
+		}
+
+		return c.withProjections( property="contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder="slug asc" );
+			.list( sortOrder=arguments.sortOrder );
 	}
 
 /********************************************* PRIVATE *********************************************/

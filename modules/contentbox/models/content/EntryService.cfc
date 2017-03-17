@@ -252,14 +252,12 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Returns an array of [contentID, title, slug] structures of all the entries in the system
+	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	* @sortOrder 	The sort ordering of the results
+	* @isPublished	Show all content or true/false published content
 	*/
-	array function getAllFlatEntries(){
-		var c = newCriteria();
-
-		return c.withProjections( property="contentID,title,slug" )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder="title asc" );
+	array function getAllFlatEntries( sortOrder="title asc", boolean isPublished ){
+		return super.getAllFlatContent( argumentCollection=arguments );
 	}
 
 	/**

@@ -1,12 +1,12 @@
 <cfoutput>
-#prc.linkHome##chr(10)#
-<cfloop array="#prc.pageResults.pages#" index="content">
-#prc.siteBaseURL##content.getslug()#
+#prc.linkHome##chr( 10 )#
+<cfloop array="#prc.aPages#" index="content">
+#prc.siteBaseURL##content[ 'slug' ]#
 </cfloop>
 <cfif !prc.disableBlog>				
 #prc.siteBaseURL##prc.blogEntryPoint#
-<cfloop array="#prc.entryResults.entries#" index="content">
-#prc.siteBaseURL##prc.blogEntryPoint##content.getslug()#
+<cfloop array="#prc.aEntries#" index="content">
+#prc.siteBaseURL##prc.blogEntryPoint##content[ 'slug' ]#
 </cfloop>
 </cfif>
 </cfoutput>
