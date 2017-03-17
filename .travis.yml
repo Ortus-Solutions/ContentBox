@@ -83,12 +83,15 @@ deploy:
 after_deploy:
   >
   echo Publishing Module - $TRAVIS_BRANCH
+  cat $TRAVIS_BUILD_DIR/build/build-contentbox/module/box.json
   cd $TRAVIS_BUILD_DIR/build/build-contentbox/module && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   
   echo Publishing Site - $TRAVIS_BRANCH
+  cat $TRAVIS_BUILD_DIR/build/build-contentbox/site/box.json
   cd $TRAVIS_BUILD_DIR/build/build-contentbox/site && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   
   echo Publishing Installer - $TRAVIS_BRANCH
+  cat $TRAVIS_BUILD_DIR/build/build-contentbox/installer/box.json
   cd $TRAVIS_BUILD_DIR/build/build-contentbox/installer && box forgebox publish && cd $TRAVIS_BUILD_DIR;
   
   if [ $TRAVIS_BRANCH == 'development' ]; then
