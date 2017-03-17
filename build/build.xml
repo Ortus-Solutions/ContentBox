@@ -271,6 +271,9 @@
         <replaceregexp match='\-installer' replace="-site" flags="ig" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/site/box.json" />
 		</replaceregexp>
+		<replaceregexp match='Installer' replace="Site" flags="ig" byline="true" encoding="UTF-8">
+			<fileset file="${dir.build}/installer/box.json" />
+		</replaceregexp>
 
 		<!-- Zip Module Release with no dependencies -->
 		<zip 	destfile="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" 
