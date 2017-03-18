@@ -15,16 +15,73 @@ component {
 	property name="settingService"		inject="id:settingService@cb";
 	
 	/**
-	* Single entry point, outputs the sitemap according to the incoming `rc.format`
+	* Sitemap Wrapper
 	*/
-	function index(){
+	function index( event, rc, prc ){
 		// params
-		param name="rc.format" default="";
-		
+		param name="rc.format" default="html";
+		// Prepare UI Request
+		CBHelper.prepareUIRequest( 'pages' );
+
+		// Caching Enabled? Then test if data is in cache.
+		var cacheEnabled = ( 
+			!event.valueExists( "cbCache" )
+		);
+
+		if( cacheEnabled ){
+			// Get appropriate cache provider from settings
+			var cache 		= cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
+			var cacheKey 	= "cb-sitemap-#cgi.http_host#" &
+				hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
+			
+			// get content data from cache
+			var results = cache.get( cacheKey );
+			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
+			if( !isNull( results ) ){
+				// Set cache headers if allowed
+				if( prc.cbSettings.cb_content_cachingHeader ){
+					event.setHTTPHeader( name="x-contentbox-cached-content", value="true" );
+				}
+				// return cache content to be displayed
+				event.renderData(
+					data 		= results.data,
+					contentType = results.contentType,
+					statusCode 	= prc.cbSettings.cb_content_cachingHeader ? 203 : 200
+				);
+				return;
+			}
+		}
+
+		// Execute sitemap
+		var results = _index( argumentCollection=arguments );
+
+		// verify if caching is possible by testing the content parameters
+		if( cacheEnabled ){
+			// Cache data
+			cache.set(
+				cachekey,
+				results,
+				( prc.cbSettings.cb_content_cachingTimeout ),
+				( prc.cbSettings.cb_content_cachingTimeoutIdle )  
+			);
+		}
+
+		// Render it out
+		event.renderData(
+			data		= results.data,
+			contentType	= results.contentType
+		);
+	}
+
+	/**
+	* Single entry point, outputs the sitemap according to the incoming `rc.format`
+	* @return { data, contentType }
+	*/
+	private struct function _index( event, rc, prc ){
 		// store UI module root
-		prc.cbRoot = getContextRoot() & event.getModuleRoot( 'contentbox' );
+		prc.cbRoot 			= getContextRoot() & event.getModuleRoot( 'contentbox' );
 		// store module entry point
-		prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
+		prc.cbEntryPoint	= getModuleConfig( "contentbox-ui" ).entryPoint;
 		
 		// Several Link Defs
 		prc.linkHome 	= CBHelper.linkHome();
@@ -50,25 +107,36 @@ component {
 			);
 		}
 		
-		// Output Formats
-		if( rc.format == 'xml' ){
-			event.renderData(
-				data 		= renderView( view="sitemap_xml", module="contentbox-sitemap" ),
-				contentType = "application/xml"
-			);	
-		} else if( rc.format == 'json' ){
-			event.renderData(
-  				data 		= renderView( view="sitemap_json", module="contentbox-sitemap" ),
-  				contentType = "application/json"
-			);
-		} else if( rc.format == 'txt' ){
-			event.renderData(
-  				data 		= renderView( view="sitemap_txt", module="contentbox-sitemap" ),
-  				contentType = "text/plain"
-			);
-		} else {
-			CBHelper.prepareUIRequest( 'pages' );
-			event.setView( "sitemap_html" );
+		// Render it out in specific format
+		switch( rc.format ){
+			case "xml" : {
+				return {
+					data 		= renderView( view="sitemap_xml", module="contentbox-sitemap" ),
+					contentType = "application/xml"
+				};
+			}
+			case "json" : {
+				return {
+	  				data 		= renderView( view="sitemap_json", module="contentbox-sitemap" ),
+	  				contentType = "application/json"
+				};
+			}
+			case "txt" : {
+				return {
+	  				data 		= renderView( view="sitemap_txt", module="contentbox-sitemap" ),
+	  				contentType = "text/plain"
+				};
+			}
+			default : {
+				event.setView( "sitemap_html" );
+				return {
+	  				data = renderLayout( 
+	  					module		= event.getCurrentLayoutModule(), 
+	  					viewModule	= event.getCurrentViewModule()
+	  				),
+	  				contentType = "text/html"
+				};
+			}
 		}
 	}
 	
