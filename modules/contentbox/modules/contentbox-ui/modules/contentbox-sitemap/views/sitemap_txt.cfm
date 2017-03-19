@@ -4,8 +4,8 @@
 --->#prc.siteBaseURL##content[ 'slug' ]#
 </cfloop><!---
 ---><cfif !prc.disableBlog><!---
---->#prc.siteBaseURL##prc.blogEntryPoint#<!---
----><cfloop array="#prc.aEntries#" index="content"><!---
+--->#prc.siteBaseURL##prc.blogEntryPoint#
+<cfloop array="#prc.aEntries#" index="content"><!---
 --->#prc.siteBaseURL##prc.blogEntryPoint##content[ 'slug' ]#
 </cfloop><!---
 ---></cfif>

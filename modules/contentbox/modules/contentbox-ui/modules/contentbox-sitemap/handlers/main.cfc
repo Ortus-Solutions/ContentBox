@@ -101,8 +101,9 @@ component {
 		
 		// Get Content Data
 		prc.aPages = pageService.getAllFlatPages( 
-			sortOrder	= "order asc",
-			isPublished = true
+			sortOrder		= "order asc",
+			isPublished 	= true,
+			showInSearch 	= true
 		);
 
 		// Blog data if enabled
@@ -113,8 +114,9 @@ component {
 			}
 			// Entry Content
 			prc.aEntries = entryService.getAllFlatEntries( 
-				sortOrder	= "createdDate asc",
-				isPublished = true
+				sortOrder		= "createdDate asc",
+				isPublished 	= true,
+				showInSearch 	= true
 			);
 		}
 		

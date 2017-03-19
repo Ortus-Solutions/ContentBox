@@ -255,8 +255,13 @@ component extends="ContentService" singleton{
 	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
 	* @sortOrder 	The sort ordering of the results
 	* @isPublished	Show all content or true/false published content
+	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatEntries( sortOrder="title asc", boolean isPublished ){
+	array function getAllFlatEntries( 
+		sortOrder="title asc", 
+		boolean isPublished,
+		boolean showInSearch
+	){
 		return super.getAllFlatContent( argumentCollection=arguments );
 	}
 

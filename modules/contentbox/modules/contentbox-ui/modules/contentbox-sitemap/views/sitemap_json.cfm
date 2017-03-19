@@ -6,7 +6,7 @@
 		"lastmod": "#dateFormat( content[ 'modifiedDate' ], "yyyy-mm-dd" )#"
 		<cfif len( content.get( "featuredImageURL" ) )>
 		,"image": {
-			"loc": "#prc.siteBaseURL##content.get( "featuredImageURL" )#"
+			"loc": "#prc.siteBaseURL & reReplace( content.get( "featuredImageURL" ), "^/", "" )#"
 		}
 		</cfif> 
 	}
@@ -19,7 +19,7 @@
 	   			"lastmod": "#dateFormat( content[ 'modifiedDate' ], "yyyy-mm-dd" )#"
 		      	<cfif len( content.get( "featuredImageURL" ) )>
 		      		, "image": {
-		      			"loc": "#prc.siteBaseURL##content.get( "featuredImageURL" )#"	
+		      			"loc": "#prc.siteBaseURL & reReplace( content.get( "featuredImageURL" ), "^/", "" )#"	
 		      		}
 		      	</cfif>
 	   		}

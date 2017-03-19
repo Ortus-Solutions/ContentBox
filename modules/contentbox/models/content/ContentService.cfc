@@ -824,10 +824,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
 	* @sortOrder 	The sort ordering of the results
 	* @isPublished	Show all content or true/false published content
+	* @showInSearch Show all content or true/false showInSearch flag
 	*/
 	array function getAllFlatContent( 
 		sortOrder="title asc",
-		boolean isPublished
+		boolean isPublished,
+		boolean showInSearch
 	){
 		var c = newCriteria();
 
@@ -845,6 +847,16 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 				.isEq( "passwordProtection","" );
 			}
+		}
+
+		// Show in Search
+		if( 
+			structKeyExists( arguments, "showInSearch") 
+			&& 
+			isBoolean( arguments.showInSearch ) 
+		){
+			// showInSearch bit
+			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );
 		}
 
 		return c.withProjections( property="contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
