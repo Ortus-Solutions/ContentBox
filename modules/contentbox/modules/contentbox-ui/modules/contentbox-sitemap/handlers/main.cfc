@@ -42,7 +42,7 @@ component {
 		if( cacheEnabled ){
 			// Get appropriate cache provider from settings
 			var cache 		= cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-			var cacheKey 	= "cb-sitemap-#cgi.http_host#" &
+			var cacheKey 	= "cb-content-sitemap-#cgi.http_host#" &
 				hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
 			
 			// get content data from cache

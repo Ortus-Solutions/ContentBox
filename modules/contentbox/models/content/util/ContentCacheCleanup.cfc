@@ -7,6 +7,7 @@ component extends="coldbox.system.Interceptor"{
 	property name="cachebox" 			inject="cachebox";
 	property name="settingService"		inject="id:settingService@cb";
 	property name="commentService"		inject="id:commentService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 
 	// Listen when comments are posted.
 	function cbui_onCommentPost( event, interceptData ){
@@ -29,18 +30,28 @@ component extends="coldbox.system.Interceptor"{
 	function cbadmin_postEntrySave( event, interceptData ){
 		var entry 	 = arguments.interceptData.entry;
 		doCacheCleanup( entry.buildContentCacheKey() , entry);
+		// Rebuild Sitemap caches if entry was published
+		if( entry.isContentPublished() ){
+			contentService.clearAllSitemapCaches( async=true );
+		}
 	}
 
 	// Listen when pages are saved
 	function cbadmin_postPageSave( event, interceptData ){
 		var page 	 = arguments.interceptData.page;
 		doCacheCleanup( page.buildContentCacheKey(), page);
+		// Rebuild Sitemap caches if entry was published
+		if( page.isContentPublished() ){
+			contentService.clearAllSitemapCaches( async=true );
+		}
 	}
 
 	// Listen when pages are removed
 	function cbadmin_prePageRemove( event, interceptData ){
 		var page 	 = arguments.interceptData.page;
 		doCacheCleanup( page.buildContentCacheKey(), page);
+		// Rebuild Sitemap caches
+		contentService.clearAllSitemapCaches( async=true );
 	}
 
 	// Listen when custom HTML is saved
@@ -49,17 +60,24 @@ component extends="coldbox.system.Interceptor"{
 		doCacheCleanup( content.buildContentCacheKey(), content );
 	}
 
+	/*********************************************************************************************************/
+	/* 										PRIVATE 														 */
+	/*********************************************************************************************************/
+
 	// clear according to cache settings
 	private function doCacheCleanup(required string cacheKey, any content){
 		// Get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
 		// clear internal caches
-		cache.clearByKeySnippet(keySnippet=arguments.cacheKey, async=true);
+		cache.clearByKeySnippet( keySnippet=arguments.cacheKey, async=true );
 		// clear ancestry caches
 		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
-		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#cgi.http_host#-#blogPrefix##replacenocase(arguments.content.getSlug(), "/" & listLast(arguments.content.getSlug(),"/" ),"" )#", async=true);
+		cache.clearByKeySnippet(
+			keySnippet 	= "cb-content-wrapper-#cgi.http_host#-#blogPrefix##replacenocase( arguments.content.getSlug(), "/" & listLast( arguments.content.getSlug(), "/" ), "" )#", 
+			async 		= true
+		);
 		// log
 		if( log.canInfo() ){
 			log.info( "Sent clear command using the following content key: #arguments.cacheKey# from provider: #settings.cb_content_cacheName#" );

@@ -42,10 +42,22 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllCaches( boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content",async=arguments.async);
+		cache.clearByKeySnippet( keySnippet="cb-content", async=arguments.async );
+		return this;
+	}
+
+	/**
+	* Clear all sitemap caches
+	* @async Run it asynchronously or not, defaults to false
+	*/
+	function clearAllSitemapCaches( boolean async=false ){
+		var settings = settingService.getAllSettings( asStruct=true );
+		// Get appropriate cache provider
+		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		cache.clearByKeySnippet( keySnippet="cb-content-sitemap", async=arguments.async );
 		return this;
 	}
 
@@ -54,10 +66,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllPageWrapperCaches( boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-wrapper",async=arguments.async);
+		cache.clearByKeySnippet( keySnippet="cb-content-wrapper", async=arguments.async );
 		return this;
 	}
 
@@ -67,10 +79,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapperCaches( required any slug, boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#",async=arguments.async);
+		cache.clearByKeySnippet( keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#", async=arguments.async );
 		return this;
 	}
 
@@ -80,7 +92,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapper( required any slug, boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clear( "cb-content-wrapper-#cgi.http_host#-#arguments.slug#/" );
