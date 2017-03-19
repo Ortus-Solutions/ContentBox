@@ -185,7 +185,7 @@ component {
 
 	private function updateSettings(){
 		// Add new settings
-		//addSetting( "cb_site_settings_cache", "Template" );
+		addSetting( "cb_site_sitemap", "true" );
 		
 		// Update ckeditor plugins
 		var pluginList = listToArray( "justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe" );
@@ -215,13 +215,15 @@ component {
 		}
 	}
 
-	private function addSetting( name, value ){
-		var setting = settingService.findWhere( { name = arguments.name } );
-		if( isNull( setting ) ){
-			setting = settingService.new();
-			setting.setValue( trim( arguments.value ) );
-			setting.setName( arguments.name );
-			settingService.save( entity=setting );
+	private function addSetting( name, value, isCore=true ){
+		var oSetting = settingService.findWhere( { name = arguments.name } );
+		if( isNull( oSetting ) ){
+			oSetting = settingService.new( {
+				name 	= arguments.name,
+				value 	= trim( arguments.value ),
+				isCore 	= arguments.isCore
+			} );
+			settingService.save( entity=oSetting );
 			log.info( "Added #arguments.name# setting" );
 		} else {
 			log.info( "Skipped #arguments.name# setting, already there" );

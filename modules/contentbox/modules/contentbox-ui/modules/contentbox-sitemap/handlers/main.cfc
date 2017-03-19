@@ -15,14 +15,25 @@ component {
 	property name="settingService"		inject="id:settingService@cb";
 	
 	/**
-	* Sitemap Wrapper
+	* Executes before all handler actions
 	*/
-	function index( event, rc, prc ){
+	any function preHandler( event, rc, prc, action, eventArguments ){
 		// params
 		param name="rc.format" default="html";
 		// Prepare UI Request
 		CBHelper.prepareUIRequest( 'pages' );
+		// Verify if sitemap is enabled, else, proxy into the page event
+		if( !prc.cbSettings.cb_site_sitemap ){
+			// proxy
+			event.overrideEvent( "contentbox-ui:page.index" );
+			return;
+		} 
+	}
 
+	/**
+	* Sitemap Wrapper
+	*/
+	function index( event, rc, prc ){
 		// Caching Enabled? Then test if data is in cache.
 		var cacheEnabled = ( 
 			!event.valueExists( "cbCache" )

@@ -282,6 +282,7 @@ component accessors="true"{
 			"cb_site_ssl" 							= "false",
 			"cb_site_poweredby" 					= "true",
 			"cb_site_settings_cache"				= "Template",
+			"cb_site_sitemap"						= "true",
 
 			// Security Settings
 			"cb_security_login_blocker" 			= "true",
