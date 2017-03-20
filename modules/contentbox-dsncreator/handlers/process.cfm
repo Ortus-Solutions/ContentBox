@@ -4,7 +4,7 @@
 
 <cfscript>
 	// Asset root
-	assetRoot = "../contentbox-admin";
+	assetRoot = "../contentbox/modules/contentbox-admin";
 
 	// Create or Use
 	if( action eq "process" ){
