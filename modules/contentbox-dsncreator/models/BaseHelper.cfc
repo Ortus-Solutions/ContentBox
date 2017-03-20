@@ -63,15 +63,8 @@ limitations under the License.
 			// Update relocations
 			c = replacenocase( c, 'include "modules/contentbox-installer/includes/dsn_relocation.cfm";','' );
 
-			// CF9 stupid cached dsn
-			if( listFirst( server.coldfusion.productVersion ) eq 9 ){
-				var cf9OnErrorPath = getDirectoryFromPath( getMetadata( this ).path ) & "cf9-OnError.txt";
-				c = replacenocase( c, '//@cf9-onError@', fileRead( cf9OnErrorPath ) );
-			}
-
 			// Write out new Application.cfc
 			fileWrite( appCFCPath, c );
-
     	</cfscript>
     </cffunction>
 
