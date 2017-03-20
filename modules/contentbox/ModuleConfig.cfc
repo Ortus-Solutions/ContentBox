@@ -182,9 +182,9 @@ component {
 		
 		// iterate and override
 		for( var thisKey in environmentSettings ){
-			if( REFindNoCase( "^contentbox\.", thisKey ) ){
+			if( REFindNoCase( "^contentbox\_default\_", thisKey ) ){
 				// No multi-site yet, so get the last part as the setting.
-				overrides[ listLast( thisKey, "." ) ] = environmentSettings[  thisKey ];
+				overrides[ reReplaceNoCase( thisKey, "^contentbox\_default\_", "" ) ] = environmentSettings[  thisKey ];
 			}
 		}
 		// If empty, exit out.
