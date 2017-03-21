@@ -32,3 +32,7 @@ modules/contentbox/themes/default/node_modules
 
 # ContentBox Modules
 modules/contentbox/modules/contentbox-deps/modules/*
+
+# Testing
+/tests/logs/*
+/tests/test-results/*
