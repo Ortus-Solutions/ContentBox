@@ -108,7 +108,7 @@ component {
 			var modulesPath 	= expandPath( "/coldbox/system/modules" );
 			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak"; 
 			if( directoryExists( expandPath( "/coldbox/system/modules" ) ) ){
-				directoryRename( modulesPath ,  );
+				directoryRename( modulesPath , modulesBakPath );
 			}	
 			
 			// Hard Redirect
