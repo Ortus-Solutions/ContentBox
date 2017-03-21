@@ -8,7 +8,8 @@
 component{
 	this.name				= "ContentBoxTestingSuite" & hash( getCurrentTemplatePath() );
 	this.sessionManagement	= true;
-	this.sessionTimeout		= createTimeSpan( 0, 0, 0, 30 );
+	this.sessionTimeout 	= createTimeSpan(0,0,10,0);
+	this.applicationTimeout = createTimeSpan(0,0,10,0);
 	this.setClientCookies	= true;
 
 	/**************************************
@@ -23,32 +24,39 @@ component{
 	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
 
-	// ORM Settings
-	this.ormEnabled = true;
-	// FILL OUT: THE DATASOURCE OF CONTENTBOX
-	this.datasource = "contentbox";
+	// Datasource definitions For Standalone mode/travis mode.
+	if( directoryExists( "/home/travis" ) ){
+		this.datasources[ "contentbox" ] = {
+			  class 			: 'org.gjt.mm.mysql.Driver',
+			  connectionString	: 'jdbc:mysql://localhost:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true',
+			  username 			: 'root'
+		};
+	}
 
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
 	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
 										
 	this.mappings[ "/root" ]   				= rootPath;
 	this.mappings[ "/tests" ] 				= getDirectoryFromPath( getCurrentTemplatePath() );
-	this.mappings[ "/coldbox" ] 			= rootPath & "/coldbox" ;
-	this.mappings[ "/testbox" ] 			= rootPath & "/testbox" ;
-	this.mappings[ "/contentbox" ] 			= rootPath & "/modules/contentbox" ;
-	this.mappings[ "/contentbox-deps" ]		= rootPath & "/modules/contentbox/modules/contentbox-deps";
-	this.mappings[ "/contentbox-ui" ] 		= rootPath & "/modules/contentbox/modules/contentbox-ui";
-	this.mappings[ "/contentbox-admin" ] 	= rootPath & "/modules/contentbox/modules/contentbox-admin";
+	this.mappings[ "/coldbox" ] 			= rootPath & "coldbox" ;
+	this.mappings[ "/testbox" ] 			= rootPath & "testbox" ;
+	this.mappings[ "/contentbox" ] 			= rootPath & "modules/contentbox" ;
+	this.mappings[ "/contentbox-deps" ]		= rootPath & "modules/contentbox/modules/contentbox-deps";
+	this.mappings[ "/contentbox-ui" ] 		= rootPath & "modules/contentbox/modules/contentbox-ui";
+	this.mappings[ "/contentbox-admin" ] 	= rootPath & "modules/contentbox/modules/contentbox-admin";
 	// Modular ORM Dependencies
-	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox-deps" ] & "modules/cborm";
+	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox-deps" ] & "/modules/cborm";
 
+	// ORM Settings
+	this.ormEnabled = true;
+	this.datasource = "contentbox";
 	this.ormSettings = {
 		cfclocation=[ rootPath & "/modules" ],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		eventHandling 		= true,
-		//eventHandler		= "coldbox.system.orm.hibernate.WBEventHandler",
+		eventHandler		= "cborm.models.EventHandler",
 		skipCFCWithError	= true,
 		secondarycacheenabled = false
 	};
@@ -63,3 +71,5 @@ component{
 
 		return true;
 	}
+
+}
