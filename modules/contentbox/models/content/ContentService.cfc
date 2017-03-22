@@ -110,7 +110,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @searchActiveContent Search only content titles or both title and active content. Defaults to both.
 	* @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
 	* @excludeIDs List of IDs to exclude from search
-	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
 	*/
 	function searchContent(
 		any searchTerm="",
@@ -122,7 +122,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		boolean searchActiveContent=true,
 		string contentTypes="",
 		any excludeIDs="",
-		boolean showInSearch=false
+		boolean showInSearch
 	){
 
 		var results = {};
@@ -141,8 +141,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// only search shownInSearch bits
-		if( arguments.showInSearch ){
-			c.isTrue( "showInSearch" );
+		if( structKeyExists( arguments, "showInSearch") ){
+			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );
 		}
 
 		// Search Criteria

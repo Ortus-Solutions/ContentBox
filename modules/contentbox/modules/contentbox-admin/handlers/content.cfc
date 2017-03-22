@@ -59,19 +59,45 @@ component extends="baseHandler"{
 	function search( event, rc, prc ){
 		// Params
 		event.paramValue( "search", "" );
-		// Search for content
-		prc.results = contentService.searchContent( 
-			searchTerm			= rc.search, 
-			max					= prc.cbSettings.cb_admin_quicksearch_max, 
-			sortOrder			= "title", 
-			isPublished			= "all",
-			searchActiveContent	= false 
-		);
-		prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
+
+		// Determine Context via `:` Search string
+		prc.context 		= "";
+		prc.contentTypes 	= "page,entry,contentstore";
+		if( find( ":", rc.search ) ){
+			prc.context = listFirst( rc.search, ":" );
+			rc.search 	= listLast( rc.search, ":" );
+		}
+
+		// Determine search via context or none at all
+		if( !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context ) ){
+			// Search for content
+			prc.results = contentService.searchContent( 
+				searchTerm			= rc.search, 
+				max					= prc.cbSettings.cb_admin_quicksearch_max, 
+				sortOrder			= "title", 
+				isPublished			= "all",
+				searchActiveContent	= false,
+				contentTypes 		= prc.context
+			);
+			prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
+		} else {
+			prc.results = { count=0, content=[] };
+			prc.minContentCount = 0;
+		}
+
 		
 		// Search for Authors
-		prc.authors = authorService.search(searchTerm=rc.search, max=prc.cbSettings.cb_admin_quicksearch_max);
-		prc.minAuthorCount = ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
+		if( !len( prc.context ) || listFindNoCase( "author", prc.context ) ){
+			prc.authors = authorService.search(
+				searchTerm 	= rc.search, 
+				max 		= prc.cbSettings.cb_admin_quicksearch_max
+			);
+			prc.minAuthorCount 	= ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
+		} else {
+			prc.authors = { count=0, authors=[] };
+			prc.minAuthorCount = 0;
+		}
+
 		// cb helper on scope
 		prc.cb = variables.CBHelper;
 		// announce event

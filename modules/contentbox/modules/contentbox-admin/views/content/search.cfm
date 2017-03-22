@@ -6,10 +6,10 @@
 	</button>
 </span>
 
+<cfif !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context )>
 <h2>
 	<i class="fa fa-newspaper-o"></i> Content ( #prc.minContentCount# of #prc.results.count# )
 <h2>
-
 <ul class="list-group">
 <cfloop array="#prc.results.content#" index="thisContent">
 	<li class="list-group-item">
@@ -52,8 +52,10 @@
 	<li class="list-group-item list-group-item-warning"><em>No Results</em></li>
 </cfif>
 </ul>
+</cfif>
 
 <!--- Users --->
+<cfif !len( prc.context ) || listFindNoCase( "author", prc.context )>
 <h2>
 	<i class="fa fa-user"></i> Users ( #prc.minAuthorCount# of #prc.authors.count# )
 <h2>
@@ -77,6 +79,7 @@
 	<li class="list-group-item list-group-item-warning"><em>No Results</em></li>
 </cfif>
 </ul>
+</cfif>
 
 <!--- Custom Content --->
 #announceInterception( "onGlobalSearchDisplay" )#
