@@ -54,11 +54,12 @@ component {
 	/**
 	* pre installation:
 	* This happens before file removals and file updates. Last chance before code changes.
+	* @log java.lang.StringBuilder
 	*/
 	function preInstallation( required log ){
 		try{
 
-			arguments.log.append( "About to begin #version# patching" );
+			arguments.log.append( "About to begin #variables.version# patching" );
 
 			/****************************** MOVE ADMIN/UI INTO CONTENTBOX MODULES ******************************/
 
@@ -71,10 +72,10 @@ component {
 				directoryRename( contentBoxUIPath , contentBoxPath & "/modules/contentbox-ui" );
 			}
 
-			arguments.log.append( "Finalized #version# preInstallation patching" );
+			arguments.log.append( "Finalized #variables.version# preInstallation patching" );
 		} catch( Any e ) {
 			ORMClearSession();
-			arguments.log.append( "Error doing #version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
+			arguments.log.append( "Error doing #variables.version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
 			rethrow;
 		}
 
@@ -82,6 +83,7 @@ component {
 
 	/**
 	* post installation
+	* @log java.lang.StringBuilder
 	*/
 	function postInstallation( required log ){
 		try{
@@ -116,7 +118,9 @@ component {
 			
 		} catch( Any e ) {
 			ORMClearSession();
-			arguments.log.append( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
+			arguments.log.append( "Error doing #variables.version# patch postInstallation. Details: #e.message# #e.detail# #chr( 13 )#" );
+			arguments.log.append( "Stacktrace: #e.stacktrace# #chr( 13 )#" );
+			arguments.log.append( "TagContext: #e.tagContext.toString()# #chr( 13 )#" );
 			rethrow;
 		}
 	}
