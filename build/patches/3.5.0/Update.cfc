@@ -101,7 +101,6 @@ component {
 
 			// Log setup in flash + messagebox
 			flash.put( "updateLog", arguments.log );
-			cbMessagebox.info( "Update Applied! Please remove the folder /coldbox/system/modules_bak" );
 
 			// stop application
 			applicationstop();
@@ -110,7 +109,13 @@ component {
 			var modulesPath 	= expandPath( "/coldbox/system/modules" );
 			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak"; 
 			if( directoryExists( expandPath( "/coldbox/system/modules" ) ) ){
-				directoryRename( modulesPath , modulesBakPath );
+				try{
+					directoryRename( modulesPath , modulesBakPath );
+					cbMessagebox.info( "Update Applied! Please remove the folder /coldbox/system/modules_bak" );
+				} catch( any e ){
+					// If we failed, it might be a file lock nothing we can do here but stop the engine.
+					cbMessagebox.info( "Update Applied! Please stop the engine, remove the folder <code>/coldbox/system/modules</code> and start up the application server again." );
+				}
 			}	
 			
 			// Hard Redirect
