@@ -1,10 +1,10 @@
 *
 !/.gitignore
 
-!/lucee4/WEB-INF/lucee-server/context/lucee-server.xml
+#!/lucee4/WEB-INF/lucee-server/context/lucee-server.xml
 !/lucee4/WEB-INF/lucee-web/lucee-web.xml.cfm
 
-!/lucee5/WEB-INF/lucee-server/context/lucee-server.xml
+#!/lucee5/WEB-INF/lucee-server/context/lucee-server.xml
 !/lucee5/WEB-INF/lucee-web/lucee-web.xml.cfm
 
 !/acf11/WEB-INF/cfusion/lib/neo-*.xml
