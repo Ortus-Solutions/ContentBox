@@ -224,6 +224,7 @@ component accessors="true" threadSafe singleton{
 					settingService.save( settingService.new( properties=args ) );
 				}
 			}
+			settingService.flushSettingsCache();
 		}
 
 		return this;
