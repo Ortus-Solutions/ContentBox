@@ -106,7 +106,7 @@ component accessors="true" singleton{
 	* @absolute Return the absolute path or relative, if absolute then it expands the path.
 	*/
 	function getCoreMediaRoot( required boolean absolute=false ){
-		var mRoot = settingService.getSetting( "cb_media_directoryRoot" );
+		var mRoot = settingService.getSetting( "cb_media_directoryRoot", "/contentbox/content" );
 		return ( arguments.absolute ? expandPath( mRoot ) : mRoot );
 	}
 	
