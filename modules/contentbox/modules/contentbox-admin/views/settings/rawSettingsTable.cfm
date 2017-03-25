@@ -26,7 +26,8 @@
 					#html.textarea(
 						value 	= setting.getValue(), 
 						rows 	= "5",
-						class 	= "form-control"
+						class 	= "form-control",
+						disabled = "true"
 					)#
 				<cfelse>
 					#encodeForHTML( setting.getValue() )#
