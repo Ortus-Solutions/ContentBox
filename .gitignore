@@ -36,3 +36,6 @@ modules/contentbox/modules/contentbox-deps/modules/*
 # Testing
 /tests/logs/*
 /tests/test-results/*
+config/Routes.cfm
+modules/contentbox/modules/contentbox-deps/box.json
+server-ContentBox.json
