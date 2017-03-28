@@ -465,7 +465,3 @@ function fbUpload(){
 </script>
 </cfif>
 </cfoutput>
-
-        <div class="progress progress-striped active">
-            <div class="progress-bar progress-bar-info" style="width: 0%;"></div>
-        </div>
