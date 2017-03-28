@@ -1,6 +1,6 @@
 {
   "name": "contentbox-filebrowser",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "ContentBox FileBrowser",
   "main": "Gruntfile.js",
   "private": "true",
@@ -14,7 +14,6 @@
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-uglify": "~0.9.2",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-injector": "^0.6.0",
     "grunt-injector": "^0.6.1",
     "grunt-rev": "^0.1.0",
     "grunt-sass": "~1.1.0-beta",
