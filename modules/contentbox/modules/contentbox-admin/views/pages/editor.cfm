@@ -1,4 +1,4 @@
-﻿<cfoutput>
+<cfoutput>
 <div class="btn-group btn-group-xs">
     <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.parentcontentID#';return false;">
         <i class="fa fa-reply"></i> Back
@@ -32,7 +32,7 @@
             #html.hiddenField(name="contentID",bind=prc.page)#
             #html.hiddenField(name="contentType",bind=prc.page)#
 
-            <div class="panel panel-default">
+            <div class="panel panel-body">
                 <!-- Nav tabs -->
                 <div class="tab-wrapper margin0">
                     <ul class="nav nav-tabs" role="tablist">
@@ -74,124 +74,126 @@
                             </li>
                         </cfif>
                     </ul>
-                </div>
 
-                <div class="panel-body tab-content">
-                    
-                    <!--- Editor --->
-                    <div role="tabpanel" class="tab-pane active" id="editor">
-                        <!--- title --->
-                        #html.textfield(
-                            label="Title:",
-                            name="title",
-                            bind=prc.page,
-                            maxlength="100",
-                            required="required",
-                            title="The title for this page",
-                            class="form-control",
-                            wrapper="div class=controls",
-                            labelClass="control-label",
-                            groupWrapper="div class=form-group"
-                        )#
-                        <!--- slug --->
-                        <div class="form-group">
-                            <label for="slug" class="control-label">Permalink:
-                                <i class="fa fa-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
-                                <small> #prc.CBHelper.linkPageWithSlug('')#</small>
-                                <cfif prc.page.hasParent()>
-                                    <small>#prc.page.getParent().getSlug()#/</small>
-                                </cfif>
-                            </label>
-                            <div class="controls">
-                                <div id='slugCheckErrors'></div>
-                                <div class="input-group">
-                                    #html.textfield(
-                                        name="slug", 
-                                        bind=prc.page, 
-                                        maxlength="100", 
-                                        class="form-control", 
-                                        title="The URL permalink for this page", 
-                                        disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#"
-                                    )#
-                                    
-                                    <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
-                                        <i id="togglePermalink" class="fa fa-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
-                                    </a>
+                    <div class="panel-body tab-content">
+                        
+                        <!--- Editor --->
+                        <div role="tabpanel" class="tab-pane active" id="editor">
+                            <!--- title --->
+                            #html.textfield(
+                                label="Title:",
+                                name="title",
+                                bind=prc.page,
+                                maxlength="100",
+                                required="required",
+                                title="The title for this page",
+                                class="form-control",
+                                wrapper="div class=controls",
+                                labelClass="control-label",
+                                groupWrapper="div class=form-group"
+                            )#
+                            <!--- slug --->
+                            <div class="form-group">
+                                <label for="slug" class="control-label">Permalink:
+                                    <i class="fa fa-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
+                                    <small> #prc.CBHelper.linkPageWithSlug('')#</small>
+                                    <cfif prc.page.hasParent()>
+                                        <small>#prc.page.getParent().getSlug()#/</small>
+                                    </cfif>
+                                </label>
+                                <div class="controls">
+                                    <div id='slugCheckErrors'></div>
+                                    <div class="input-group">
+                                        #html.textfield(
+                                            name="slug", 
+                                            bind=prc.page, 
+                                            maxlength="100", 
+                                            class="form-control", 
+                                            title="The URL permalink for this page", 
+                                            disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#"
+                                        )#
+                                        
+                                        <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
+                                            <i id="togglePermalink" class="fa fa-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!---ContentToolBar --->
-                        #renderView( view="_tags/content/markup", args={ content = prc.page } )#
-                        
-                        <!--- content --->
-                        #html.textarea(
-                            name="content", 
-                            value=htmlEditFormat( prc.page.getContent() ), 
-                            rows="25", 
-                            class="form-control"
-                        )#
-                        <cfif prc.cbSettings.cb_page_excerpts>
-                            <!--- excerpt --->
+                            <!---ContentToolBar --->
+                            #renderView( view="_tags/content/markup", args={ content = prc.page } )#
+                            
+                            <!--- content --->
                             #html.textarea(
-                                label="Excerpt:", 
-                                name="excerpt", 
-                                bind=prc.page, 
-                                rows="10", 
+                                name="content", 
+                                value=htmlEditFormat( prc.page.getContent() ), 
+                                rows="25", 
                                 class="form-control"
                             )#
-                        </cfif>
-                    </div>
-                    
-                    <!--- Custom Fields --->
-                     <div role="tabpanel" class="tab-pane" id="custom_fields">
-                         #renderView( view="_tags/customFields", args={ fieldType="Page", customFields=prc.page.getCustomFields() } )#
-                    </div>
-
-                    <!--- SEO --->
-                    <div role="tabpanel" class="tab-pane" id="seo">
-                        <div class="form-group">
-                            #html.textfield(
-                                name="htmlTitle",
-                                label="Title: (Leave blank to use the page name)", 
-                                bind=prc.page,
-                                class="form-control",
-                                maxlength="255"
-                            )#
-                        </div>
-                        <div class="form-group">
-                            #html.textArea(
-                                name="htmlKeywords",
-                                label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
-                                bind=prc.page,
-                                class="form-control",
-                                maxlength="160",
-                                rows="5"
-                            )#
-                        </div>
-                        <div class="form-group">
-                            #html.textArea(
-                                name="htmlDescription",
-                                label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
-                                bind=prc.page,
-                                class="form-control",
-                                maxlength="160",
-                                rows="5"
-                            )#
-                        </div>
-                    </div>
-                    
-                    <cfif prc.page.isLoaded()>
-                        <!--- History --->
-                        <div role="tabpanel" class="tab-pane" id="history">
-                            #prc.versionsViewlet#
+                            <cfif prc.cbSettings.cb_page_excerpts>
+                                <!--- excerpt --->
+                                #html.textarea(
+                                    label="Excerpt:", 
+                                    name="excerpt", 
+                                    bind=prc.page, 
+                                    rows="10", 
+                                    class="form-control"
+                                )#
+                            </cfif>
                         </div>
                         
-                        <!--- Comments --->
-                        <div role="tabpanel" class="tab-pane" id="comments">
-                            #prc.commentsViewlet#
+                        <!--- Custom Fields --->
+                         <div role="tabpanel" class="tab-pane" id="custom_fields">
+                             #renderView( view="_tags/customFields", args={ fieldType="Page", customFields=prc.page.getCustomFields() } )#
                         </div>
-                    </cfif>
+
+                        <!--- SEO --->
+                        <div role="tabpanel" class="tab-pane" id="seo">
+                            <div class="form-group">
+                                #html.textfield(
+                                    name="htmlTitle",
+                                    label="Title: (Leave blank to use the page name)", 
+                                    bind=prc.page,
+                                    class="form-control",
+                                    maxlength="255"
+                                )#
+                            </div>
+                            <div class="form-group">
+                                #html.textArea(
+                                    name="htmlKeywords",
+                                    label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
+                                    bind=prc.page,
+                                    class="form-control",
+                                    maxlength="160",
+                                    rows="5"
+                                )#
+                            </div>
+                            <div class="form-group">
+                                #html.textArea(
+                                    name="htmlDescription",
+                                    label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
+                                    bind=prc.page,
+                                    class="form-control",
+                                    maxlength="160",
+                                    rows="5"
+                                )#
+                            </div>
+                        </div>
+                        
+                        <cfif prc.page.isLoaded()>
+                            <!--- History --->
+                            <div role="tabpanel" class="tab-pane" id="history">
+                                #prc.versionsViewlet#
+                            </div>
+                            
+                            <!--- Comments --->
+                            <div role="tabpanel" class="tab-pane" id="comments">
+                                #prc.commentsViewlet#
+                            </div>
+                        </cfif>
+                    </div>                
+
                 </div>
+
                 <!--- Event --->
                 #announceInterception( "cbadmin_pageEditorInBody" )#
             </div>
