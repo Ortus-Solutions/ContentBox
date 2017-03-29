@@ -251,10 +251,12 @@
 						<div class="row">
 							<div class="col-md-3">
 								<h4><i class="fa fa-bolt fa-lg"></i> Modules</h4>
-								<label class="checkbox" for="toggle_modules">
-									#html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"} )# Toggle All
-								</label>
-								<small class="muted clearfix">Export modules, all or a-la-carte</small>
+								<div class="checkbox">
+									<label class="checkbox" for="toggle_modules">
+										#html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"} )# Toggle All
+									</label>
+									<small class="muted clearfix">Export modules, all or a-la-carte</small>
+								</div>								
 							</div>
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
@@ -283,14 +285,16 @@
 						<div class="row">
 							<div class="col-md-3">
 								<h4><i class="fa fa-photo fa-lg"></i> Themes</h4>
-								<label class="checkbox" for="toggle_layouts">
-									#html.checkbox(
-										name 	= "toggle_layouts",
-										checked = true,
-										data 	= { togglegroup="export_layouts" } 
-									)# Toggle All
-								</label>
-								<small class="muted clearfix">Export layouts, all or a-la-carte</small>
+								<div class="checkbox">
+									<label class="checkbox" for="toggle_layouts">
+										#html.checkbox(
+											name 	= "toggle_layouts",
+											checked = true,
+											data 	= { togglegroup="export_layouts" } 
+										)# Toggle All
+									</label>
+									<small class="muted clearfix">Export layouts, all or a-la-carte</small>
+								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
@@ -323,10 +327,12 @@
 						<div class="row">
 							<div class="col-md-3">
 								<h4><i class="fa fa-magic fa-lg"></i> Widgets</h4>
-								<label class="checkbox" for="toggle_widgets">
-									#html.checkbox( name="toggle_widgets", checked=true, data={togglegroup="export_widgets"} )# Toggle All
-								</label>
-								<small class="muted clearfix">Export core widgets, all or a-la-carte. For layout or module widgets, please export the necessary layout and/or modules.</small>
+								<div class="checkbox">
+									<label class="checkbox" for="toggle_widgets">
+										#html.checkbox( name="toggle_widgets", checked=true, data={togglegroup="export_widgets"} )# Toggle All
+									</label>
+									<small class="muted clearfix">Export core widgets, all or a-la-carte. For layout or module widgets, please export the necessary layout and/or modules.</small>
+								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
