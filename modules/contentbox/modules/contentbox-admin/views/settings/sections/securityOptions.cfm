@@ -17,7 +17,7 @@
         <label class="control-label" for="cb_security_max_attempts">Max Invalid Attempts To Block:</label>
         <div class="controls">
             <small>The number of invalid login attempts before a user is blocked.</small><br/>
-			<select name="cb_security_max_attempts" id="cb_security_max_attempts">
+			<select name="cb_security_max_attempts" class="form-control" id="cb_security_max_attempts">
 				<cfloop from="5" to="50" step="5" index="i">
 					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_attempts>selected="selected"</cfif>>#i#</option>
 				</cfloop>
@@ -30,7 +30,7 @@
         <label class="control-label" for="cb_security_blocktime">Minutes To Block:</label>
         <div class="controls">
             <small>The number of minutes a user will be blocked if max attempts is triggered.</small><br/>
-			<select name="cb_security_blocktime" id="cb_security_blocktime">
+			<select name="cb_security_blocktime" class="form-control" id="cb_security_blocktime">
 				<cfloop from="5" to="60" step="5" index="i">
 					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_blocktime>selected="selected"</cfif>>#i#</option>
 				</cfloop>
@@ -43,7 +43,7 @@
         <label class="control-label" for="cb_security_max_auth_logs">Max Auth Logs:</label>
         <div class="controls">
             <small>The number of log entries to keep before rotating logs.</small><br/>
-			<select name="cb_security_max_auth_logs" id="cb_security_max_auth_logs">
+			<select name="cb_security_max_auth_logs" class="form-control" id="cb_security_max_auth_logs">
 				<cfloop from="100" to="2000" step="100" index="i">
 					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_auth_logs>selected="selected"</cfif>>#i#</option>
 				</cfloop>
@@ -81,7 +81,7 @@
         <label class="control-label" for="cb_security_rate_limiter_count">Limiter Count:</label>
         <div class="controls">
             <small>Throttle requests made more than this count in the duration specified.</small><br/>
-			<select name="cb_security_rate_limiter_count" id="cb_security_rate_limiter_count">
+			<select name="cb_security_rate_limiter_count" class="form-control" id="cb_security_rate_limiter_count">
 				<cfloop from="1" to="25" step="1" index="i">
 					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_count>selected="selected"</cfif>>#i#</option>
 				</cfloop>
@@ -94,7 +94,7 @@
         <label class="control-label" for="cb_security_rate_limiter_duration">Limiter Duration (Seconds):</label>
         <div class="controls">
             <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
-			<select name="cb_security_rate_limiter_duration" id="cb_security_rate_limiter_duration">
+			<select name="cb_security_rate_limiter_duration" class="form-control" id="cb_security_rate_limiter_duration">
 				<cfloop from="1" to="25" step="1" index="i">
 					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_duration>selected="selected"</cfif>>#i#</option>
 				</cfloop>
