@@ -16,6 +16,9 @@ component accessors="true" singleton{
 	 * ContentBox Providers Map
 	 */
 	property name="providers" type="struct";
+
+	// Static default media root, just in case it is not loaded.
+	variables.DEFAULT_MEDIA_ROOT = "/contentbox/content";
 	
 	/**
 	* Constructor
@@ -106,7 +109,7 @@ component accessors="true" singleton{
 	* @absolute Return the absolute path or relative, if absolute then it expands the path.
 	*/
 	function getCoreMediaRoot( required boolean absolute=false ){
-		var mRoot = settingService.getSetting( "cb_media_directoryRoot", "/contentbox/content" );
+		var mRoot = settingService.getSetting( "cb_media_directoryRoot", variables.DEFAULT_MEDIA_ROOT );
 		return ( arguments.absolute ? expandPath( mRoot ) : mRoot );
 	}
 	
