@@ -104,6 +104,10 @@ img.img-screenshot{ height: 200px; }
 .panel-heading{ min-height: 48px;}
 .dropdown-menu > li > a > i{ color: #797979 !important;}
 .panel-default .actions i{ color: #fff; }
+.panel-default .actions i:hover {
+    cursor:pointer;
+    color:#fff;
+}
 .actions{ top: 10px!important; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
