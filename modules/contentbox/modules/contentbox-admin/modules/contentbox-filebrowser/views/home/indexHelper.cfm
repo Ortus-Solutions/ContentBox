@@ -56,6 +56,8 @@ function $getURLMediaPath( required fbDirRoot, required filePath ){
 <!--- *************************************** DYNAMIC JS ******************************--->
 <script language="javascript">
 $( document ).ready( function() {
+	// reinitialize tooltip after refresh
+	$('[data-toggle="tooltip"]').tooltip();
 	$fileBrowser 		= $( "##FileBrowser" );
 	$fileLoaderBar 		= $fileBrowser.find( "##loaderBar" );
 	$fileUploaderMessage = $fileBrowser.find( "##fileUploaderMessage" );
@@ -166,6 +168,7 @@ function fbListTypeChange( listType ){
 	fbRefresh();
 }
 function fbRefresh(){
+	$('.tooltip').remove();
 	$fileLoaderBar.slideDown();
 	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#',
 		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
@@ -174,6 +177,7 @@ function fbRefresh(){
 		} );
 }
 function fbDrilldown( inPath ){
+	$('.tooltip').remove();
 	if( inPath == null ){ inPath = ""; }
 	$fileLoaderBar.slideDown();
 	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#', { path : inPath },function(){
@@ -204,17 +208,21 @@ function fbRename(){
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
 	// prompt for new name
-	bootbox.prompt( '#$r( "jsmessages.newname@fb" )#', function(result){
-		// do renaming if prompt not empty
-		if( result != null){
-			$fileLoaderBar.slideDown();
-			$.post( '#event.buildLink( prc.xehFBRename )#', 
-				    { name : result, path : target.attr( "data-fullURL" ) },
-				    function( data ){
-						if( data.errors ){ alert( data.messages ); }
-						fbRefresh();
-			}, "json" );
-		}
+	bootbox.prompt( { 	title: '#$r( "jsmessages.newname@fb" )#', 
+						inputType: "text", 
+						value: target.attr( "data-name" ), 
+						callback: function(result){
+							// do renaming if prompt not empty
+							if( result != null){
+								$fileLoaderBar.slideDown();
+								$.post( '#event.buildLink( prc.xehFBRename )#', 
+									    { name : result, path : target.attr( "data-fullURL" ) },
+									    function( data ){
+											if( data.errors ){ alert( data.messages ); }
+											fbRefresh();
+								}, "json" );
+							}
+						}
 	});
 
 }
@@ -255,9 +263,9 @@ function fbInfo(){
 	var target 		= $( "##"+thisID);
 	// Show info
 	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.info' )#",{
-		imageName:target.attr( "data-name" ), 
-		imageSrc:target.attr( "data-relUrl" ), 
-		imagePath:target.attr( "data-fullUrl" )
+		fileName:target.attr( "data-name" ), 
+		fileSrc:target.attr( "data-relUrl" ), 
+		filePath:target.attr( "data-fullUrl" )
 	}, $( window ).width() - 200, $( window ).height() - 200 );
 }
 <!--- Create Folders --->
@@ -349,7 +357,7 @@ $(document).ready(function() {
 		var form = $( '##upload-form' );
 		var field = $( '##filewrapper' );
 		var wrapper = $( '##manual_upload_wrapper' );
-		wrapper.append( '<p id="upload_message">Uploading your file...</p>' );
+		wrapper.append( '<p id="upload_message"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> Uploading your file...</p>' );
 		// move to target form
 		field.appendTo( form );
 		field.hide();

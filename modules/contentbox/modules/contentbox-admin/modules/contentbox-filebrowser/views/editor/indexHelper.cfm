@@ -29,6 +29,8 @@
 		var imgWidth 	= jQuery('input[name=w]');
 		var imgLoc 		= jQuery('input[name=imageFile]');
 		var saveAs 		= jQuery('input[name=saveAs]');
+		var imgFile 	= jQuery("##croppedImage img").attr("src");
+		var imgEdited	= jQuery('##imgEdited');
 
 		// get the current image source in the main view
 		var currentImage = jQuery("##croppedImage img").attr('src');
@@ -49,7 +51,7 @@
 			  type: "POST",
 			  url: '#event.buildLink( 'cbFileBrowser.editor.imageSave' )#',
 			  data: {
-			  	imgLoc:$("##croppedImage").find('img')[0].src,
+			  	imgLoc	: getImg(),
 			  	imgPath : imgPath.val(),
 			  	imgName : imgName.val(),
 			  	saveAs  : saveAs.val(),
@@ -64,25 +66,26 @@
 		});
 
 		jQuery("##scale_btn").click(function(){	
-			// check if cropping is saved
-			if( !$("##croppedImage").find('img').hasClass("img-scaled") ){
-				return confirm("There are unsaved changes. Do you want continue?");
-			}			
+
 			// organise data into a readable string
 			var data = 'height=' + $("##height").val() + '&width=' + $("##width").val() +
-					'&imgLoc=' + encodeURIComponent(imgLoc.val());
+					'&imgPath=' + getImg() + '&imgEdited=' + isEdited() +'&imgName=' + imgName.val();
 			// show loading message
 		    var $btn = $(this);
 		    $btn.button('loading');
 
 			jQuery('##croppedImage').load('#event.buildLink( 'cbFileBrowser.editor.imageScale' )#', data, function(){
 		        $btn.button('reset');
+		        imgEdited.prop('checked', true)
+				jQuery("##croppedImage img").attr('id', 'cropbox');
+			    destroyJcrop();
+				buildJCrop();
 			} );
 			
 			// disable the image crop button and
 			// enable the revert button
 			jQuery('##imageCrop_btn').attr('disabled', 'disabled');
-			jQuery('.revert_btn').removeAttr('disabled');
+			jQuery('##revert_btn').removeAttr('disabled');
 			// enable the save button
 			jQuery('##imagesave').removeAttr('disabled');
 
@@ -93,7 +96,7 @@
 		jQuery(".transform").click(function(){	
 	
 			// organise data into a readable string
-			var data = 'imgLoc=' + encodeURIComponent(imgLoc.val()) + '&val=' + $(this).val();
+			var data = 'imgPath=' + getImg() + '&imgEdited=' + isEdited() +'&imgName=' + imgName.val() + '&val=' + $(this).val();
 
 			// show loading message
 		    var $btn = $(this);
@@ -101,11 +104,15 @@
 
 			jQuery('##croppedImage').load('#event.buildLink( 'cbFileBrowser.editor.imageTransform' )#', data, function(){
 		        $btn.button('reset');
+		        imgEdited.prop('checked', true)
+				jQuery("##croppedImage img").attr('id', 'cropbox');
+		    	destroyJcrop();
+				buildJCrop();
 			} );
 			
 			// disable the image crop button and
 			// enable the revert button
-			jQuery('.revert_btn').removeAttr('disabled');
+			jQuery('##revert_btn').removeAttr('disabled');
 
 			// enable the save button
 			jQuery('##imagesave').removeAttr('disabled');
@@ -116,11 +123,11 @@
 
 		// selecting revert will create the img html tag complete with
 		// image source attribute, read from the imageFile form field
-		jQuery(".revert_btn").click(function() {					
+		jQuery("##revert_btn").click(function() {					
 			var htmlImg = '<img src="' + jQuery('input[name=imageFile]').val() 
 					+ '" id="cropbox" class="img-scaled" />';
 			jQuery('##croppedImage').html(htmlImg,{}, function(){
-
+		        imgEdited.prop('checked', false)
 			});
 			// instantiate the jcrop plugin
 			setTimeout(buildJCrop, 500);
@@ -133,6 +140,7 @@
 			jQuery('##transformers').find('.transform').each(function(){
 			   $(this).removeAttr('disabled')
 			})
+			imgEdited.prop('checked', false);
 
 		});
 		
@@ -150,13 +158,17 @@
 			// organise data into a readable string
 			var data = 'imgX=' + imgX.val() + '&imgY=' + imgY.val() + 
 					'&height=' + imgHeight.val() + '&width=' + imgWidth.val() + 
-					'&imgLoc=' + encodeURIComponent(imgLoc.val());
+					'&imgPath=' + getImg() + '&imgEdited=' + isEdited() +'&imgName=' + imgName.val() + '&imgLoc=' + imgLoc.val();
 
 		    var $btn = $(this);
 		    $btn.button('loading');					
 			// 
 			jQuery('##croppedImage').load('#event.buildLink( 'cbFileBrowser.editor.crop' )#',data, function(){
 		        $btn.button('reset');
+		        imgEdited.prop('checked', true);
+				jQuery("##croppedImage img").attr('id', 'cropbox');
+		    	destroyJcrop();
+				buildJCrop();
 		        setTimeout(function(){
 					jQuery('##imageCrop_btn').attr('disabled', 'disabled');
 		        },100)
@@ -177,12 +189,12 @@
 		// which we will need to call more than once
 		function buildJCrop() {
 			jQuery('##cropbox').Jcrop({
-				aspectRatio: 0,  //If you want to keep aspectRatio
+				aspectRatio: 0,  //If you don't want to keep aspectRatio
 				boxWidth: 800,   //Maximum width you want for your bigger images
 				boxHeight: 600,  //Maximum Height for your bigger images
 				bgColor: '##ccc',
 				bgOpacity: '0.5',
-				onRelease: function(){console.log(123)},
+				onRelease: resetCoords,
 				onChange: showCoords,
 				onSelect: showCoords
 			},function(){
@@ -190,7 +202,7 @@
 			});
 			// disable the revert button
 			jQuery('##imageCrop_btn').attr('disabled', 'disabled');
-			jQuery('##revert_btn').attr('disabled', 'disabled');
+			imgEdited.is(':checked') ? jQuery('##revert_btn').removeAttr('disabled') : jQuery('##revert_btn').attr('disabled', 'disabled');
 			jQuery('##imageDeselect_btn').attr('disabled', 'disabled');
 		}
 
@@ -209,8 +221,30 @@
 		function setImageFileValue(imageSource) {
 			imgLoc.val(imageSource);
 		}
+
+		function getImg(){
+			return jQuery("##croppedImage img").attr("src");
+		}
+		
+		function isEdited(){
+			return imgEdited.is(':checked');
+		}
+
+		function getSize(){
+			var img = document.getElementById('cropbox'); 
+			//or however you get a handle to the IMG
+			var width = img.clientWidth;
+			var height = img.clientHeight;		
+		}
 		
 	});
+
+	function resetCoords() {
+	    jQuery('##x').val("0");
+	    jQuery('##y').val("0");
+	    jQuery('##w').val("0");
+	    jQuery('##h').val("0");
+	};
 
 	// Our simple event handler, called from onChange and onSelect
 	// event handlers, as per the Jcrop invocation above
@@ -236,15 +270,20 @@
 
 		/*if(!isNaN(parseFloat(newH)) && isFinite(newH)){
 			h.parent(".form-group").addClass("has-error has-danger");
-			h.next().append("sdsdasdd dasda");
+			h.next().append("Please insert number");
 		}*/
 
-		if(!isNaN(parseFloat(newW)) && isFinite(newW) || !isNaN(parseFloat(newH)) && isFinite(newH)){
+		if( isNaN(parseFloat(newW)) || isNaN(parseFloat(newH)) ){
 			h.parent(".form-group").addClass("has-error has-danger");
-			h.next().text("sdsdasdd dasda");
+			h.next().text("Please insert number");
 			w.parent(".form-group").addClass("has-error has-danger");
-			w.next().text("sdsdasdd dasda");
+			w.next().text("Please insert number");
 			return;
+		}else{
+			h.parent(".form-group").removeClass("has-error has-danger");
+			w.parent(".form-group").removeClass("has-error has-danger");
+			h.next().text("");
+			w.next().text("");
 		}
 
         if (what == 0) {

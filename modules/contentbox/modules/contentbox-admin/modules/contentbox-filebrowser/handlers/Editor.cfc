@@ -18,6 +18,7 @@ component extends="coldbox.system.EventHandler"{
 		rc.height = info.height;
 		rc.imageRelPath = rc.imageSrc;
 		rc.imageSrc = #event.buildLink( '' )# & rc.imageSrc;
+		rc.fileType = listLast( rc.imageName, "." );
 
 		if( event.isAjax() ) {
 			event.renderData( data=renderView( view="editor/index", layout="ajax" ) );
@@ -31,17 +32,22 @@ component extends="coldbox.system.EventHandler"{
 	* Info
 	*/
 	any function info( event, rc, prc ){
-		event.paramValue( "imagePath","" );
-		event.paramValue( "imageSrc","" );
-		event.paramValue( "imageName","" );
+		event.paramValue( "filePath","" );
+		event.paramValue( "fileSrc","" );
+		event.paramValue( "fileName","" );
 
-		var info=ImageInfo(rc.imagePath);
-		rc.width = info.width;
-		rc.height = info.height;
-		rc.imageRelPath = rc.imageSrc;
-		rc.imageSrc = #event.buildLink( '' )# & rc.imageSrc;
-		
-		prc.imgInfo = ImageInfo( rc.imageSrc );
+		if( ! IsImageFile( rc.filePath ) ){
+
+			prc.fileInfo 	= GetFileInfo( rc.filePath );
+
+		}else{
+
+			prc.fileInfo 	= GetFileInfo( rc.filePath );
+			prc.imgInfo 	= ImageInfo( rc.filePath );
+			rc.fileRelPath 	= rc.fileSrc;
+			rc.fileSrc 		= #event.buildLink( '' )# & rc.fileSrc;
+
+		}
 
 		if( event.isAjax() ) {
 			event.renderData( data=renderView( view="editor/info", layout="ajax" ) );
@@ -60,12 +66,20 @@ component extends="coldbox.system.EventHandler"{
 		event.paramValue( "imgY","" );
 		event.paramValue( "width","" );
 		event.paramValue( "height","" );
-		event.paramValue( "imgLoc","" );
+		event.paramValue( "imgPath", "" );
+		event.paramValue( "imgName", "" );
+		event.paramValue( "imgEdited", false );
 
 		if ( len(rc.imgLoc) ){
 
-		    // read the image and create a ColdFusion image object --->
-		    var sourceImage = ImageNew( imgLoc );
+			if( rc.imgEdited ){
+				// read from in memory
+		    	var sourceImage = ImageRead( rc.imgPath & "&type=" & rc.type );
+			}else{
+			    // read the image and create a ColdFusion image object --->
+			    var sourceImage = ImageNew( sanitizeUrl( rc.imgName, rc.imgPath ) );
+
+			}
 
 		    <!--- crop the image using the supplied coords
 		              from the url request --->
@@ -93,12 +107,21 @@ component extends="coldbox.system.EventHandler"{
 		// params
 		event.paramValue( "width","" );
 		event.paramValue( "height","" );
-		event.paramValue( "imgLoc","" );
+		event.paramValue( "imgPath","" );
+		event.paramValue( "imgName","" );
+		event.paramValue( "imgEdited", false );
 
-		if ( len(rc.imgLoc) ){
+		if ( len( rc.imgPath ) ){
 
-		    // read the image and create a ColdFusion image object --->
-		    var sourceImage = ImageNew( rc.imgLoc );
+			if( rc.imgEdited ){
+				// read from in memory
+		    	var sourceImage = ImageRead( rc.imgPath & "&type=" & rc.type );
+			}else{
+			    // read the image and create a ColdFusion image object 
+			    // read the image and create a ColdFusion image object --->
+			    var sourceImage = ImageNew( sanitizeUrl( rc.imgName, rc.imgPath ) );
+
+			}
 
 		    // crop the image using the supplied coords from the url request 
 		    ImageResize(	sourceImage,
@@ -117,17 +140,24 @@ component extends="coldbox.system.EventHandler"{
 	}
 	
 	/**
-	* Scale image
+	* Flip/rotate image
 	*/
 	any function imageTransform( event, rc, prc ){
 		// params
-		event.paramValue( "imgLoc","" );
+		event.paramValue( "imgPath","" );
+		event.paramValue( "imgName","" );
+		event.paramValue( "imgEdited", false );
 
-		if ( len(rc.imgLoc) ){
+		if ( len( rc.imgPath ) ){
 
-		    // read the image and create a ColdFusion image object --->
-		    var sourceImage = ImageNew( rc.imgLoc );
+			if( rc.imgEdited ){
+				// read from in memory
+		    	var sourceImage = ImageRead( rc.imgPath & "&type=" & rc.type );
+			}else{
+			    // read the image and create a ColdFusion image object --->
+			    var sourceImage = ImageNew( sanitizeUrl( rc.imgName, rc.imgPath ) );
 
+			}
 		    ImageSetAntialiasing( sourceImage, true );
 
 		    // crop the image using the supplied coords from the url request 
@@ -156,21 +186,26 @@ component extends="coldbox.system.EventHandler"{
 
 		var ext = "." & ListLast( rc.imgPath, "." );
 
-		if ( len(rc.imgLoc) ){
+		if ( len( rc.imgLoc ) ){
 
 		    var sourceImage = ImageRead( rc.imgLoc );
 			var path = rc.filebrowser.settings.directoryRoot & imgName;
 
-			if( rc.overwrite AND !len(rc.saveAs) ){
+			if( rc.overwrite AND !len( rc.saveAs ) ){
 				imageWrite( sourceImage, rc.imgPath, 1, rc.overwrite );
 			}elseif( len(rc.saveAs) ){
-				imageWrite( sourceImage, getDirectoryFromPath(rc.imgPath) & rc.saveAs & ext, 1, rc.overwrite );
+				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & rc.saveAs & ext, 1, rc.overwrite );
 			}else{
-				imageWrite( sourceImage, getDirectoryFromPath(rc.imgPath) & "_edited_" & rc.imgName, 1 );				
+				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName, 1 );				
 			}
 
 		}
 		event.noRender();
 	}
 	
+	private function sanitizeUrl( required string imgName, required string imgPath ){
+		// strip out image name and re-add encoded
+		return replace( arguments.imgPath, arguments.imgName, urlEncode( arguments.imgName ) );
+	}
+
 }

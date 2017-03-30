@@ -9,44 +9,44 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 	<!--- Panel Heading: Tool Bar --->
 	<div class="panel-heading" id="FileBrowser-heading">
-	#html.startForm( name="filebrowser", class="form-inline", onkeypress="return event.keyCode != 13;" )#
+	#html.startForm( name="filebrowser", class="form-inline", onkeypress="return event.keyCode != 13;", onsubmit="event.preventDefault();" )#
 		#announceInterception( "fb_preTitleBar" )#
 
 		<div class="btn-group btn-group-sm" role="group">
-		  <a href="javascript:fbRefresh()" class="btn btn-info" title="#$r( "refresh@fb" )#">
+		  <a href="javascript:fbRefresh()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "refresh@fb" )#">
 		  	<i class="fa fa-refresh"></i>
 		  </a>
-		  <a href="javascript:fbDrilldown()" class="btn btn-info" title="#$r( "home@fb" )#">
+		  <a href="javascript:fbDrilldown()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "home@fb" )#">
 		  	<i class="fa fa-home"></i>
 		  </a>
 		</div>
 
 		<div class="btn-group btn-group-sm" role="group">
-		  <a href="javascript:fbNewFolder()" class="btn btn-info" title="#$r( "newFolder@fb" )#">
+		  <a onclick="javascript:fbNewFolder();" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "newFolder@fb" )#">
 		  	<i class="fa fa-folder-open-o"></i>
 		  </a>
-		  <a href="javascript:fbRename()" class="btn btn-info" title="#$r( "rename@fb" )#">
+		  <a onclick="javascript:fbRename()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "rename@fb" )#">
 		  	<i class="fa fa-terminal"></i>
 		  </a>
-		  <a href="javascript:fbDelete()" class="btn btn-info" title="#$r( "delete@fb" )#">
+		  <a onclick="javascript:fbDelete()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "delete@fb" )#">
 		  	<i class="fa fa-times"></i>
 		  </a>
-		  <a href="javascript:fbUpload()" class="btn btn-info" title="#$r( "upload@fb" )#">
+		  <a onclick="javascript:fbUpload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "upload@fb" )#">
 		  	<i class="fa fa-upload"></i>
 		  </a>
-		  <a href="javascript:fbDownload()" class="btn btn-info" title="#$r( "download@fb" )#">
+		  <a onclick="javascript:fbDownload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "download@fb" )#">
 		  	<i class="fa fa-download"></i>
 		  </a>
-		  <a href="javascript:fbQuickView()" class="btn btn-info" title="#$r( "quickview@fb" )#">
+		  <a onclick="javascript:fbQuickView()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "quickview@fb" )#">
 		  	<i class="fa fa-camera"></i>
 		  </a>
 		</div>
 
 		<div class="btn-group btn-group-sm" role="group">
-		  <a href="javascript:fbListTypeChange('listing')" class="btn btn-info" title="#$r( "filelisting@fb" )#">
+		  <a href="javascript:fbListTypeChange('listing')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "filelisting@fb" )#">
 		  	<i class="fa fa-list-ul"></i>
 		  </a>
-		  <a href="javascript:fbListTypeChange('grid')" class="btn btn-info" title="#$r( "gridlisting@fb" )#">
+		  <a href="javascript:fbListTypeChange('grid')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "gridlisting@fb" )#">
 		  	<i class="fa fa-th"></i>
 		  </a>
 		</div>
@@ -78,7 +78,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<div class="row">
 				<div class="form-group col-md-6">
-					<div class="controls">
+					<div class="controls" id="manual_upload_wrapper">
 		                <div class="fileinput fileinput-new input-group" data-provides="fileinput" id="filewrapper">
 		                    <div class="form-control" data-trigger="fileinput">
 		                        <i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span>

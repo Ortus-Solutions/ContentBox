@@ -16,6 +16,23 @@
 
                         <div class="tab-wrapper margin0">
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="height">URL</label>
+                                        <input value="#rc.imageSrc#" 
+                                                type="text"
+                                                readonly="readonly" 
+                                                class="form-control input-sm">
+                                    </div> 
+                                    <ul>
+                                        <li>File name: #rc.imageName#</li>
+                                        <li>File type: #rc.fileType#</li>
+                                        <li>Dimensions: #rc.width# x #rc.height#</li>
+                                    </ul>   
+                                </div>
+                            </div>
+
                             <ul class="nav nav-tabs" role="tablist">
                              
                                     <li role="presentation" class="active">
@@ -75,6 +92,8 @@
                                                     id="imageName" value="#rc.imageName#" />
                                             <input type="hidden" name="imageFile"
                                                     id="imageFile" value="" />
+                                            <input type="checkbox" class="hidden" name="imgEdited"
+                                                    id="imgEdited" />
                                             <input type="hidden" name="imagePath"
                                                     id="imagePath" value="#rc.imagePath#" />
                                             <button type="button" class="btn btn-primary" disabled="disabled"
@@ -199,8 +218,8 @@
             <div class="modal-footer">
                 <div class="widget-footer-right">
                         <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
-                        <button type="button" class="btn btn-primary revert_btn" disabled="disabled"
-                                                    id="revert_scale" value="Undo"><i class="fa fa-reply"></i> Undo</button>
+                        <button type="button" class="btn btn-primary" disabled="disabled"
+                                                    id="revert_btn" value="Undo"><i class="fa fa-reply"></i> Undo</button>
                         <button class="btn btn-info" disabled="disabled" id="imagesave">Save image</button>
                 </div>
             </div>
