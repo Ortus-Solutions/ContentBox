@@ -89,19 +89,19 @@
                                         <cfif args.mode eq "edit">
                                             <div class="btn-group btn-group-sm actions">
                                                 <!---read docs--->
-                                                <a data-toggle="tooltip" data-placement="left" title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
+                                                <a data-toggle="tooltip" data-container="body" data-placement="left" title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
                                                     <i class="fa fa-book fa-lg"></i> 
                                                 </a>
                                                 <cfif prc.oCurrentAuthor.checkPermission( "WIDGET_ADMIN" )>
                                                     <!--- Test --->
-                                                    <a title="Test Widget" class="btn btn-sm btn-info" 
+                                                    <a title="Test Widget" data-container="body" class="btn btn-sm btn-info" 
                                                         href="javascript:testWidgetCode( '#widgetName#', '#prc.widgets.widgetType#' )">
                                                         <i class="fa fa-bolt fa-lg"></i> 
                                                     </a>
                                                     <!---only allow deletion of core widgets--->
                                                     <cfif prc.widgets.widgettype eq "core">
                                                         <!--- Delete Command --->
-                                                        <a title="Delete Widget" href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
+                                                        <a title="Delete Widget" data-container="body"  href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
                                                             <i class="fa fa-trash-o fa-lg"></i> 
                                                         </a>
                                                     </cfif>
