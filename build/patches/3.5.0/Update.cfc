@@ -195,6 +195,13 @@ component {
 	private function updateSettings(){
 		// Add new settings
 		addSetting( "cb_site_sitemap", "true" );
+
+		// Update dashboard settings
+		var oSetting = settingService.findWhere( { name="cb_dashboard_welcome_title" } );
+		if( !isNull( oSetting ) ){
+			oSetting.setValue( "Dashboard" );
+			settingService.save( entity=oSetting );
+		}
 		
 		// Update ckeditor plugins
 		var pluginList = listToArray( "justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe" );

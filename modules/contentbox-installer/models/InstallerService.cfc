@@ -318,7 +318,7 @@ component accessors="true"{
 			"cb_dashboard_recentcontentstore" 		= "5",
 			"cb_dashboard_newsfeed" 				= "http://www.ortussolutions.com/blog/rss",
 			"cb_dashboard_newsfeed_count" 			= "5",
-			"cb_dashboard_welcome_title" 			= "Welcome To Your ContentBox Dashboard",
+			"cb_dashboard_welcome_title" 			= "Dashboard",
 			"cb_dashboard_welcome_body" 			= "",
 
 			// Comment Settings
