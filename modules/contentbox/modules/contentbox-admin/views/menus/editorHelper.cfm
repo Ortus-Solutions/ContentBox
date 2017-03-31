@@ -203,28 +203,22 @@
                 nestable = $( '##nestable' );
             // transform fields
             transformFieldNames();
-            // if valid, preview
-            if( $( '##menuForm' ).valid() ) {
-                toggleErrors( 'off' );
-                // prepare data
-                $( '##nestable li' ).each(function() {
-                    processItem( $( this ) );
-                } );
-                // get serialized data
-                $( '##menuItems' ).val( JSON.stringify( nestable.nestable( 'serialize' ) ) );
-                $.ajax( {
-                    url: '#event.buildLink( linkTo=prc.xehMenuPreview )#',
-                    type: 'POST',
-                    data: form.serialize(),
-                    success: function( data, textStatus, jqXHR ){
-                        var $panel = $( '##preview-panel' );
-                            $panel.html( data );
-                    }
-                } );
-            }
-            else {
-                toggleErrors( 'on' );
-            }
+            toggleErrors( 'off' );
+            // prepare data
+            $( '##nestable li' ).each(function() {
+                processItem( $( this ) );
+            } );
+            // get serialized data
+            $( '##menuItems' ).val( JSON.stringify( nestable.nestable( 'serialize' ) ) );
+            $.ajax( {
+                url: '#event.buildLink( linkTo=prc.xehMenuPreview )#',
+                type: 'POST',
+                data: form.serialize(),
+                success: function( data, textStatus, jqXHR ){
+                    var $panel = $( '##preview-panel' );
+                        $panel.html( data );
+                }
+            } );
         }
 
         $( document ).ready(function() {
