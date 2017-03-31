@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-dashboard fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fa fa-signal fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>
@@ -43,7 +43,7 @@
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<li>
 						<a href="##contentReports" data-toggle="tab">
-							<i class="fa fa-dashboard"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+							<i class="fa fa-signal"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 						</a>
 					</li>
 				</cfif>

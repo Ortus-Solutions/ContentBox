@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-wrench fa-lg"></i>
+            <i class="fa fa-sliders fa-lg"></i>
             ContentBox Settings
         </h1>
     </div>

@@ -1,7 +1,7 @@
 <cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-exchange fa-lg"></i> Export Tools</h1>
+		<h1 class="h1"><i class="fa fa-download fa-lg"></i> Export Tools</h1>
 	</div>
 </div>
 

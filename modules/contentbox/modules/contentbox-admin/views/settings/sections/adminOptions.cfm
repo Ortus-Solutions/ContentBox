@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-dashboard fa-lg"></i>  Dashboard Options</legend>
+    <legend><i class="fa fa-signal fa-lg"></i>  Dashboard Options</legend>
     
     <!--- Tag Line --->
     #html.textField( 
