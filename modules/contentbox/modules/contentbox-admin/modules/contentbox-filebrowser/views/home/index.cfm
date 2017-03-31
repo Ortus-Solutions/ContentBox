@@ -172,7 +172,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 									 data-name="#prc.fbqListing.Name#"
 									 data-fullURL="#plainURL#"
 									 data-relURL="#relURL#"
-									 data-lastModified="#prc.fbqListing.dateLastModified#"
+									 data-lastModified="#dateFormat( prc.fbqListing.dateLastModified, "medium" )# #timeFormat( prc.fbqListing.dateLastModified, "medium" )#"
 									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 									 data-quickview="false"
 									 onDblclick="fbDrilldown('#JSStringFormat( plainURL )#')">
@@ -188,7 +188,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 									 data-name="#prc.fbqListing.Name#"
 									 data-fullURL="#plainURL#"
 									 data-relURL="#mediaURL#"
-									 data-lastModified="#prc.fbqListing.dateLastModified#"
+									 data-lastModified="#dateFormat( prc.fbqListing.dateLastModified, "medium" )# #timeFormat( prc.fbqListing.dateLastModified, "medium" )#"
 									 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 									 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
 									 onClick="javascript:return false;"
@@ -218,7 +218,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-name="#prc.fbqListing.Name#"
 							 data-fullURL="#plainURL#"
 							 data-relURL="#relURL#"
-							 data-lastModified="#prc.fbqListing.dateLastModified#"
+							 data-lastModified="#dateFormat( prc.fbqListing.dateLastModified, "medium" )# #timeFormat( prc.fbqListing.dateLastModified, "medium" )#"
 							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 							 data-quickview="false"
 							 onDblclick="fbDrilldown('#JSStringFormat( plainURL )#')">
@@ -233,7 +233,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							 data-name="#prc.fbqListing.Name#"
 							 data-fullURL="#plainURL#"
 							 data-relURL="#mediaURL#"
-							 data-lastModified="#prc.fbqListing.dateLastModified#"
+							 data-lastModified="#dateFormat( prc.fbqListing.dateLastModified, "medium" )# #timeFormat( prc.fbqListing.dateLastModified, "medium" )#"
 							 data-size="#numberFormat( prc.fbqListing.size / 1024 )#"
 							 data-quickview="#validQuickView( listLast( prc.fbQListing.name, "." ) )#"
 							 <cfif len( rc.callback )>

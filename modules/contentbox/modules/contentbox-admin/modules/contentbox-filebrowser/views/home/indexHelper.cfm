@@ -56,8 +56,10 @@ function $getURLMediaPath( required fbDirRoot, required filePath ){
 <!--- *************************************** DYNAMIC JS ******************************--->
 <script language="javascript">
 $( document ).ready( function() {
-	// reinitialize tooltip after refresh
-	$('[data-toggle="tooltip"]').tooltip();
+	// reinitialize tooltip after refresh, do a try in case we are in Popup mode.
+	try{
+		$('[data-toggle="tooltip"]').tooltip();
+	} catch( e ){}
 	$fileBrowser 		= $( "##FileBrowser" );
 	$fileLoaderBar 		= $fileBrowser.find( "##loaderBar" );
 	$fileUploaderMessage = $fileBrowser.find( "##fileUploaderMessage" );
