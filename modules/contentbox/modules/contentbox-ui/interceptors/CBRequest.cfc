@@ -7,8 +7,10 @@
 */
 component extends="coldbox.system.Interceptor"{
 
+	// DI
 	property name="settingService"  inject="id:settingService@cb";
 	property name="CBHelper"  		inject="id:CBHelper@cb";
+	property name="html"  			inject="HTMLHelper@coldbox";
 
 	/**
 	* Configure CB Request
@@ -18,7 +20,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess( event, interceptData, buffer ) eventPattern="^contentbox-ui"{
+	function preProcess( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
 			setNextEvent( "cbInstaller" );
@@ -29,9 +31,44 @@ component extends="coldbox.system.Interceptor"{
 	}
 
 	/**
+	* Fired on post rendering
+	*/
+	function postRender( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
+		// Verify if we are logged in and in an export format
+		if( 
+			!prc.oCurrentAuthor.isLoggedIn()
+			||
+			!prc.oCurrentAuthor.checkPermission( "CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR" )
+			||
+			( structKeyExists( rc, "format" ) && rc.format != "html" )
+		){
+			return;
+		}
+
+		var linkEdit = "";
+		if( structKeyExists( prc, "entry" ) ){
+			var oContent = prc.entry;
+			linkEdit = "#CBHelper.linkAdmin()#entries/editor/contentID/#oContent.getContentID()#";
+		} else if ( structKeyExists( prc, "page" ) ){
+			var oContent = prc.page;
+			linkEdit = "#CBHelper.linkAdmin()#pages/editor/contentID/#oContent.getContentID()#";
+		}
+
+		var adminBar = renderView( 
+			view 	= "adminbar/index", 
+			module 	= "contentbox-ui",
+			args 	= {
+				oContent = oContent ?: javaCast( "null", "" ),
+				linkEdit = linkEdit
+			}
+		);
+		html.$htmlhead( adminBar );
+	}
+
+	/**
 	* Fired on contentbox requests
 	*/
-	function postProcess(  event, interceptData, buffer ) eventPattern="^contentbox-ui"{
+	function postProcess( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 		// announce event
 		announceInterception( "cbui_postRequest" );
 	}
