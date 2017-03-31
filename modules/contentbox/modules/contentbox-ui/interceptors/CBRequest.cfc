@@ -34,13 +34,15 @@ component extends="coldbox.system.Interceptor"{
 	* Fired on post rendering
 	*/
 	function postRender( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
-		// Verify if we are logged in and in an export format
+		// Rules to turn off the admin sidebar
 		if( 
 			!prc.oCurrentAuthor.isLoggedIn()
 			||
 			!prc.oCurrentAuthor.checkPermission( "CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR" )
 			||
 			( structKeyExists( rc, "format" ) && rc.format != "html" )
+			|| 
+			!prc.cbSettings.cb_site_adminbar
 		){
 			return;
 		}
@@ -58,8 +60,9 @@ component extends="coldbox.system.Interceptor"{
 			view 	= "adminbar/index", 
 			module 	= "contentbox-ui",
 			args 	= {
-				oContent = oContent ?: javaCast( "null", "" ),
-				linkEdit = linkEdit
+				oContent 		= oContent ?: javaCast( "null", "" ),
+				linkEdit 		= linkEdit,
+				oCurrentAuthor 	= prc.oCurrentAuthor
 			}
 		);
 		html.$htmlhead( adminBar );

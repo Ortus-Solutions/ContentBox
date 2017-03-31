@@ -48,23 +48,28 @@
 			<a href="#args.linkEdit###history" class="button" target="_blank">
 				History
 			</a>
+
+			<a href="#event.buildLink( event.getCurrentRoutedURL() )#?cbCache=true" class="button button-admin">
+				Clear Cache
+			</a>
 		</cfif>
 
-		<a href="#cb.linkAdmin()#" class="button" target="_blank">
+		<a href="#cb.linkAdmin()#" class="button button-admin" target="_blank">
 			Admin
 		</a>
+
 
 	</span>
 
 	<h4>
 		#getModel( "Avatar@cb" )
-		.renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="30" )#
+			.renderAvatar( email=args.oCurrentAuthor.getEmail(), size="30", title="Hola" )#
 		ContentBox Admin Bar
 	</h4>
 
 	<cfif !isNull( args.oContent )>
 	<p>
-		By #args.oContent.getAuthorName()# on 
+		#args.oContent.getAuthorName()# published on 
 				#args.oContent.getActiveContent().getDisplayCreatedDate()#
 	</p>
 	</cfif>
@@ -109,14 +114,14 @@ function insertAdminBar(){
 	padding: 3px;
 	margin-right: 5px;
 	border: 2px solid;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 ##cb-admin-bar .admin-bar-label{
 	background-color: ##3598db;
 	padding: 3px;
 	margin-right: 5px;
 	border: 2px solid;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 ##cb-admin-bar a.button {
     background-color: ##4CAF50;
@@ -126,11 +131,17 @@ function insertAdminBar(){
     font-size: 12px;
     border: none;
     cursor: pointer;
-    border-radius: 20px;
+    border-radius: 10px;
 }
 ##cb-admin-bar a.button:hover, ##cb-admin-bar a.button:focus {
     background-color: ##3e8e41;
     text-decoration: none;
+}
+##cb-admin-bar a.button-admin {
+    background-color: ##eb6154;
+}
+##cb-admin-bar a.button-admin:hover, ##cb-admin-bar a.button-admin:focus {
+    background-color: ##f28379;
 }
 </style>
 </cfoutput>
