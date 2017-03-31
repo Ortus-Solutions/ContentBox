@@ -8,9 +8,15 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <cfdump var="#prc.fileInfo#">
+                        <h1>File Info</h1>
+                        <ul>
+                        <cfloop collection="#prc.fileInfo#" item="myKey">
+                            <li><b>#myKey#</b>: #prc.fileInfo[myKey]#</li>
+                        </cfloop>                        
+                        </ul>
+                        <h1>Image Info</h1>
                         <cfif structKeyExists( prc, "imgInfo" )>
-                            <cfdump var="#prc.imgInfo#">
+                        #parseStruct(prc.ImgInfo)#                     
                         </cfif>
                     </div>
                 </div>
@@ -23,3 +29,26 @@
         </div>
     </div>
 </cfoutput>
+<cfscript>
+function parseStruct( data ){
+    if( isSimpleValue( arguments.data ) ){
+        return arguments.data;
+    }
+    if( isDate( arguments.data ) ){
+        return dateFormat( arguments.data );
+    }
+    if( isArray( arguments.data) ){
+        return arrayToList( arguments.data );
+    }
+    if( isStruct( arguments.data) ){
+        
+        var newList = "<ul>";
+
+        for( k in arguments.data ){
+            newList &= "<li><b>" & k & "</b>: " & parseStruct( arguments.data[k] ) & "</li>";
+        }
+        return newList &= "</ul>";
+    }
+
+}
+</cfscript>

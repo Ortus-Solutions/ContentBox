@@ -146,37 +146,31 @@
                                 </div>
 
                                 <div class="widget-arguments tab-pane" role="tabpanel" id="transform">
-                                    <div class="row" id="transformers">
+                                    <div class="btn-group-vertical" id="transformers">
 
-                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary transform"
                                                         id="rotate_right" value="90"><i class="fa fa-repeat"></i> Rotate right</button>
-                                            </div>
+                                            
 
-                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary transform"
                                                         id="rotate_left" value="270"><i class="fa fa-undo"></i> Rotate left</button>
-                                            </div>
+                                            
 
-                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary transform"
                                                         id="flip_left" value="vertical"><i class="fa fa-arrows-v"></i> Flip vertical</button>
-                                            </div>
+                                            
 
-                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary transform"
                                                         id="flip_right" value="horizontal"><i class="fa fa-arrows-h"></i> Flip horizontal</button>
-                                            </div>
+                                            
 
-                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary transform"
                                                         id="flip_diagonal" value="diagonal"><i class="fa fa-arrows-alt"></i> Flip diagonal</button>
-                                            </div>
+                                            
 
-                                            <div class="col-md-12">
                                                 <button type="button" class="btn btn-primary transform"
                                                         id="flip_antidiagonal" value="antidiagonal"><i class="fa fa-arrows-alt"></i> Flip antidiagonal</button>
-                                            </div>
+                                            
 
                                     </div>
                                 </div>
@@ -198,7 +192,14 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label for="saveAs">Save as</label>
+                                        <label for="newname">
+                                        <input type="checkbox" id="newname" name="newname"> Save as</label>
+                                    </div>    
+                                </div>
+
+                                <div id="saver" class="col-md-12 hidden">
+                                    <div class="form-group">
+                                        <label for="saveAs">New name</label>
                                         <input value="" 
                                                 type="text" 
                                                 class="form-control input-sm" 

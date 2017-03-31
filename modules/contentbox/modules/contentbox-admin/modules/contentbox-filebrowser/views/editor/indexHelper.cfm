@@ -236,6 +236,11 @@
 			var width = img.clientWidth;
 			var height = img.clientHeight;		
 		}
+
+	    jQuery('##newname').click(function(){
+	        jQuery("##saveAs").val("");
+	        jQuery("##saver").toggleClass("hidden");
+	    });
 		
 	});
 

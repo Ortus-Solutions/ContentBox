@@ -235,7 +235,12 @@ function fbUrl(){
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
 	// prompt the URL
-	bootbox.alert( "URL: #event.buildLink( '' )#" + target.attr( "data-relurl" ) );
+	bootbox.prompt( { 	title: 'URL:', 
+						inputType: "text", 
+						value: "#event.buildLink( '' )#" + target.attr( "data-relurl" ).substring(1), 
+						callback: function(result){}
+	});
+
 }
 function fbEdit(){
 	if(noMultiSelectAction()){return;};
