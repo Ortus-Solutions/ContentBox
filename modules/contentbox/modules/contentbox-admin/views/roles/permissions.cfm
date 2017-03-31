@@ -57,7 +57,7 @@
 					<cfloop array="#prc.role.getPermissions()#" index="perm">
 					<div>
 						<!--- Remove --->
-						<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-times fa-lg textRed"></i></a>
+						<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-circle-o fa-lg textRed"></i></a>
 						<!--- Name --->
 						&nbsp; 
 						<strong>#perm.getPermission()#</strong>

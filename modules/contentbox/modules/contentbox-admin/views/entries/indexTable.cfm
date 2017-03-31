@@ -6,6 +6,7 @@
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
 			<th>Name</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
+			<th width="40" class="text-center"><i class="fa fa-search fa-lg" title="Show in Search"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-comments fa-lg" title="Comments"></i></th>
 			<th width="75" class="text-center {sorter:false}">Actions</th>
@@ -49,11 +50,18 @@
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif entry.isContentPublished()>
-					<i class="fa fa-check fa-lg textGreen" title="Entry Published!"></i>
+					<i class="fa fa-circle-o fa-lg textGreen" title="Entry Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-times fa-lg textRed" title="Entry Draft!"></i>
+					<i class="fa fa-circle-o fa-lg textRed" title="Entry Draft!"></i>
 					<span class="hidden">draft</span>
+				</cfif>
+			</td>
+			<td class="text-center">
+				<cfif entry.getShowInSearch()>
+					<i class="fa fa-circle-o fa-lg textGreen" title="Searchable!"></i>
+				<cfelse>
+					<i class="fa fa-circle-o fa-lg textRed" title="Excluded!"></i>
 				</cfif>
 			</td>
 			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfHits()#</span></td>

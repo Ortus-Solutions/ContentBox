@@ -35,9 +35,9 @@
 			</td>
 			<td class="text-center">
 				<cfif setting.getIsCore()>
-					<i class="fa fa-check-circle text-success"></i>
+					<i class="fa fa-circle-o text-success" title="Core Setting"></i>
 				<cfelse>
-					<i class="fa fa-times-circle text-danger"></i>
+					<i class="fa fa-circle-o text-danger"></i>
 				</cfif>
 			</td>
 			<td class="text-center">

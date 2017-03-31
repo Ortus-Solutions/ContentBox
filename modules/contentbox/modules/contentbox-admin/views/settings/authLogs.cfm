@@ -63,9 +63,9 @@
 								</td>
 								<td class="text-center">
 									<cfif thisLog.getIsBlocked()>
-										<i class="fa fa-times fa-lg textRed" data-original-title="Blocked"></i>
+										<i class="fa fa-circle-o fa-lg textRed" data-original-title="Blocked"></i>
 									<cfelse>
-										<i class="fa fa-check fa-lg textGreen" data-original-title="All Ok"></i>
+										<i class="fa fa-circle-o fa-lg textGreen" data-original-title="All Ok"></i>
 									</cfif>
 								</td>
 							</tr>

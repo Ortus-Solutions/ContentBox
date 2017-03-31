@@ -39,7 +39,7 @@
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="fa fa-check fa-lg textGreen" title="Content Published!"></i>
+					<i class="fa fa-circle-o fa-lg textGreen" title="Content Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
 					<i class="fa fa-check fa-lg textRed" title="Content Draft!"></i>

@@ -71,10 +71,10 @@
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future (#content.getDisplayPublishedDate()#)"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="fa fa-check fa-lg textGreen" title="Content Published!"></i>
+					<i class="fa fa-circle-o fa-lg textGreen" title="Content Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-times fa-lg textRed" title="Content Draft!"></i>
+					<i class="fa fa-circle-o fa-lg textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
