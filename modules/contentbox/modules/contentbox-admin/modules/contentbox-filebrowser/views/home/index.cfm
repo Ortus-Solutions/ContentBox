@@ -5,6 +5,9 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 ----------------------------------------------------------------------->
 <cfoutput>
+<cfif prc.widget>
+	<h3>ContentBox Media Manager</h3>
+</cfif>
 <div class="panel panel-default" id="FileBrowser" >
 
 	<!--- Panel Heading: Tool Bar --->

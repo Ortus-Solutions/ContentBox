@@ -1,17 +1,18 @@
 /**
-* My Event Handler Hint
+* Image Editor
 */
 component extends="coldbox.system.EventHandler"{
 
+	// DI
 	property name="FileUtils" inject="coldbox.system.core.util.FileUtils";
 
 	/**
 	* Index
 	*/
 	any function index( event, rc, prc ){
-		event.paramValue( "imagePath","" );
-		event.paramValue( "imageSrc","" );
-		event.paramValue( "imageName","" );
+		event.paramValue( "imagePath", "" );
+		event.paramValue( "imageSrc", "" );
+		event.paramValue( "imageName", "" );
 
 		var info=ImageInfo(rc.imagePath);
 		rc.width = info.width;

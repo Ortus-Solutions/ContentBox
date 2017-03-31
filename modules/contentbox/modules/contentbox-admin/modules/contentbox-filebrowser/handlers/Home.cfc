@@ -59,7 +59,7 @@ component hint="Main filebrowser module handler"{
 		prc.xehFBRename		= "#prc.fbModEntryPoint#/rename";
 
 		// Detect Widget Mode.
-		if(arguments.widget) {
+		if( arguments.widget ){
 			// merge the settings structs if defined
 			if( !structIsEmpty( arguments.settings ) ){
 				mergeSettings( prc.fbSettings, arguments.settings );
@@ -117,11 +117,11 @@ component hint="Main filebrowser module handler"{
 		announceInterception( "fb_postDirectoryRead",iData);
 
 		// set view or render widget?
+		prc.widget = arguments.widget;
 		if( arguments.widget ){
-			return renderView(view="home/index",module=prc.fbModuleName);
-		}
-		else{
-			event.setView(view="home/index",noLayout=event.isAjax());
+			return renderView( view="home/index", module=prc.fbModuleName );
+		} else {
+			event.setView( view="home/index", noLayout=event.isAjax() );
 		}
 	}
 
@@ -475,7 +475,13 @@ component hint="Main filebrowser module handler"{
 	* @force Force the loading of assets on demand
 	* @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
-	private function loadAssets( event, rc, prc, boolean force=false, struct settings={} ){
+	private function loadAssets( 
+		event, 
+		rc, 
+		prc, 
+		boolean force=false, 
+		struct settings={} 
+	){
 		
 		// merge the settings structs if passed
 		if( !structIsEmpty( arguments.settings ) ){
@@ -489,7 +495,9 @@ component hint="Main filebrowser module handler"{
 				// Add Main Styles
 				var adminRoot = event.getModuleRoot( 'contentbox-admin' );
 				addAsset( "#adminRoot#/includes/css/contentbox.min.css" );
-				addAsset( "#adminRoot#/includes/js/jquery.min.js" );
+				addAsset( "#adminRoot#/includes/js/contentbox-pre.min.js" );
+				addAsset( "#adminRoot#/includes/js/contentbox-app.min.js" );
+				addAsset( "#adminRoot#/includes/js/contentbox-post.min.js" );
 			}
 
 			// LOAD Assets
