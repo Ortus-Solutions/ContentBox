@@ -234,22 +234,15 @@ component extends="baseHandler"{
 	*/
 	function savePreferences( event, rc, prc ){
 		var oAuthor 		= authorService.get(id=rc.authorID);
-		var allPreferences 	= {};
-		
-		// iterate rc keys that start with "preference."
-		for(var key in rc){
-			if( listFirst( key, "." ) eq "preference" ){
-				allPreferences[ listLast( key, "." ) ] = rc[ key ];
-			}
-		}
+
 		// Store Preferences
-		oAuthor.setPreferences( allPreferences );
+		oAuthor.setPreferences( rc.preference );
 		// announce event
-		announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
+		announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=rc.preference} );
 		// save Author
 		authorService.saveAuthor( oAuthor );
 		// announce event
-		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
+		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=rc.preference} );
 		// message
 		cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 		// relocate
