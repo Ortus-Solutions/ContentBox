@@ -41,8 +41,7 @@ component{
 	this.mappings[ "/cbapp" ] 				= COLDBOX_APP_ROOT_PATH;
 	this.mappings[ "/coldbox" ] 			= COLDBOX_APP_ROOT_PATH & "coldbox";
 	this.mappings[ "/contentbox" ] 			= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
-	this.mappings[ "/contentbox-deps" ] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox/modules/contentbox-deps";
-	this.mappings[ "/cborm" ] 	 			= this.mappings[ "/contentbox-deps" ] & "/modules/cborm";
+	this.mappings[ "/cborm" ] 	 			= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
 	// THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";

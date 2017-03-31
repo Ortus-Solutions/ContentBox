@@ -46,6 +46,7 @@ component {
 		variables.version 				= "3.5.0";
 		variables.currentVersion 		= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath				= getDirectoryFromPath( getMetadata( this ).path );
+		variables.appPath 				= coldbox.getSetting( "ApplicationPath" );
 		variables.contentBoxPath 		= coldbox.getSetting( "modules" )[ "contentbox" ].path;
 		variables.contentBoxAdmimPath 	= coldbox.getSetting( "modules" )[ "contentbox-admin" ].path;
 		variables.contentBoxUIPath 		= coldbox.getSetting( "modules" )[ "contentbox-ui" ].path;
@@ -115,13 +116,29 @@ component {
 							Remove the following folders if still on disk: <code>/modules/contentbox-admin, /modules/contentbox-ui</code>. 
 							These have now been migrated into the core folder: <code>/modules/contentbox/modules</code>
 						</li>
-						<li>Open your <code>Application.cfc</code> and look for the <code>this.mappings[ 'cborm' ]</code> definition and change the location to the code shown below:
-						<br>
-						<code>this.mappings[ '/cborm' ] = this.mappings[ '/contentbox-deps' ] & '/modules/cborm';</code>
+						<li>
+							Open your <code>Application.cfc</code> and look for the <code>this.mappings[ 'cborm' ]</code> definition and change the location to the code shown below:
+							<br>
+							<code>this.mappings[ '/cborm' ] = this.mappings[ '/contentbox-deps' ] & '/modules/cborm';</code>
+						</li>
 						<li>Start your CFML Engine</li>
 						<li>Enjoy your update!</li>
 					</ul>
 				" );
+			}
+
+			// Update Application.cfc for ORM base
+			try{
+				var appCFC 			= fileRead( variables.appPath & "Application.cfc" );
+				var ORMTarget 		= 'this.mappings[ "/coldbox" ] & "/system/modules/cborm";';
+				var ORMNewTarget	= 'this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";';
+				appCFC 				= replaceNoCase( 
+					appCFC, 
+					ORMTarget,
+					ORMTarget
+				);
+			} catch( Any e ) {
+				arguments.log.append( "Error auto-updating Application.cfc mappings, you will have to update it manually. #chr( 13 )#" );
 			}
 
 			// Move modules to backup for new dependency approach
