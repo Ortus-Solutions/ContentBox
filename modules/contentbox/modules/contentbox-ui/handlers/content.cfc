@@ -181,30 +181,32 @@ component{
 			cacheKey &= hash( ".#getFWLocale()#.#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
 			
 			// get content data from cache
-			var data = cache.get( cacheKey );
+			prc.contentCacheData = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
-			if( !isNull( data ) ){
+			if( !isNull( prc.contentCacheData ) ){
 				// Set cache headers if allowed
 				if( prc.cbSettings.cb_content_cachingHeader ){
 					event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" )
 						.setHTTPHeader( name="x-contentbox-cached-content", value="true" );
 				}
 				// Store hits
-				contentService.updateHits( data.contentID );
+				contentService.updateHits( prc.contentCacheData.contentID );
 				// return cache content to be displayed
 				event.renderData(
-					data 		= data.content,
-					contentType = data.contentType,
-					isBinary 	= data.isBinary
+					data 		= prc.contentCacheData.content,
+					contentType = prc.contentCacheData.contentType,
+					isBinary 	= prc.contentCacheData.isBinary
 				);
+				// Breakout, cached output is done my young padawan learner!
+				return;
 			}
 		}
 		
 		// Prepare data packet for rendering and caching and more
 		var data = { 
-			contentID = "", 
-			contentType="text/html", 
-			isBinary=false 
+			contentID  	= "", 
+			contentType = "text/html", 
+			isBinary 	= false 
 		};
 		// Prepare args for action execution
 		var args = {

@@ -261,6 +261,7 @@ component extends="content"{
 		);
 
 		// Render out the feed xml
+		rc.format = "rss";
 		event.renderData( type="plain", data=feed, contentType="text/xml" );
 	}
 

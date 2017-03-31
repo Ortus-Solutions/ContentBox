@@ -49,9 +49,12 @@
 				History
 			</a>
 
+			<!--- Only show if we are on a cached page --->
+			<cfif structKeyExists( prc, "contentCacheData" )>
 			<a href="#event.buildLink( event.getCurrentRoutedURL() )#?cbCache=true" class="button button-admin">
 				Clear Cache
 			</a>
+			</cfif>
 		</cfif>
 
 		<a href="#cb.linkAdmin()#" class="button button-admin" target="_blank">
@@ -79,7 +82,7 @@
 <script>
 setTimeout( insertAdminBar, 500 );
 function insertAdminBar(){
-	document.body.insertBefore( \
+	document.body.insertBefore(
 		document.getElementById( 'cb-admin-bar' ),
 		document.body.firstChild 
 	);
