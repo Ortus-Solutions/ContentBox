@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div id="croppedImage">
-                            <img class="img-scaled" src="#rc.imageSrc#?nocahe=#Rand()#" id="cropbox">
+                            <img class="img-scaled" src="#prc.imageSrc#?nocahe=#Rand()#" id="cropbox">
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -20,15 +20,15 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="height">URL</label>
-                                        <input value="#rc.imageSrc#" 
+                                        <input value="#prc.imageSrc#" 
                                                 type="text"
                                                 readonly="readonly" 
                                                 class="form-control input-sm">
                                     </div> 
                                     <ul>
                                         <li>File name: #rc.imageName#</li>
-                                        <li>File type: #rc.fileType#</li>
-                                        <li>Dimensions: #rc.width# x #rc.height#</li>
+                                        <li>File type: #prc.fileType#</li>
+                                        <li>Dimensions: #prc.width# x #prc.height#</li>
                                     </ul>   
                                 </div>
                             </div>
@@ -113,8 +113,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="width">Width</label>
-                                                        <input value="#rc.width#" 
-                                                                data-width="#rc.width#" 
+                                                        <input value="#prc.width#" 
+                                                                data-width="#prc.width#" 
                                                                 type="text" 
                                                                 class="form-control" 
                                                                 id="width" 
@@ -127,8 +127,8 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="height">Height</label>
-                                                        <input value="#rc.height#" 
-                                                                data-height="#rc.height#" 
+                                                        <input value="#prc.height#" 
+                                                                data-height="#prc.height#" 
                                                                 type="text" 
                                                                 class="form-control input-sm" 
                                                                 id="height" 
