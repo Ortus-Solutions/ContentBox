@@ -113,6 +113,29 @@
 			</div>
 		</div>
 
+		<!--- Site Admin Bar --->
+		<div class="form-group">
+			#html.label(
+				class   = "control-label",
+				field   = "cb_site_adminbar",
+				content = "Enable Site Admin Bar:"
+			)#
+
+			<div class="controls">
+				<small>If enabled, logged in and with the right permissions, you will see a ContentBox Floating Admin Bar in your site to help you edit and manage content from the UI.</small><br/>
+				#html.radioButton(
+					name    = "cb_site_adminbar",
+					checked = prc.cbSettings.cb_site_adminbar,
+					value   = true
+				)# Yes
+				#html.radioButton(
+					name    = "cb_site_adminbar",
+					checked = not prc.cbSettings.cb_site_adminbar,
+					value   = false
+				)# No
+			</div>
+		</div>
+
 		<!--- Caching of Settings --->
 		<div class="form-group">
 			<label class="control-label" for="cb_site_settings_cache">Settings Cache Provider:</label>

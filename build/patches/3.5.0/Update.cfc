@@ -105,16 +105,35 @@ component {
 			// stop application
 			applicationstop();
 
+			savecontent variable="local.updateMessage"{
+				writeOutput( "
+					Update Applied Correctly! Please do the following manual actions:
+					<ul>	
+						<li>Stop your CFML Engine</li>
+						<li>Remove the folder or archive it: <code>/coldbox/system/modules_bak</code></li>
+						<li>
+							Remove the following folders if still on disk: <code>/modules/contentbox-admin, /modules/contentbox-ui</code>. 
+							These have now been migrated into the core folder: <code>/modules/contentbox/modules</code>
+						</li>
+						<li>Open your <code>Application.cfc</code> and look for the <code>this.mappings[ 'cborm' ]</code> definition and change the location to the code shown below:
+						<br>
+						<code>this.mappings[ '/cborm' ] = this.mappings[ '/contentbox-deps' ] & '/modules/cborm';</code>
+						<li>Start your CFML Engine</li>
+						<li>Enjoy your update!</li>
+					</ul>
+				" );
+			}
+
 			// Move modules to backup for new dependency approach
 			var modulesPath 	= expandPath( "/coldbox/system/modules" );
 			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak"; 
 			if( directoryExists( expandPath( "/coldbox/system/modules" ) ) ){
 				try{
 					directoryRename( modulesPath , modulesBakPath );
-					cbMessagebox.info( "Update Applied! Please remove the folder /coldbox/system/modules_bak" );
+					cbMessagebox.info( local.updateMessage );
 				} catch( any e ){
 					// If we failed, it might be a file lock nothing we can do here but stop the engine.
-					cbMessagebox.info( "Update Applied! Please stop the engine, remove the folder <code>/coldbox/system/modules</code> and start up the application server again." );
+					cbMessagebox.info( local.updateMessage );
 				}
 			}	
 			
@@ -195,6 +214,7 @@ component {
 	private function updateSettings(){
 		// Add new settings
 		addSetting( "cb_site_sitemap", "true" );
+		addSetting( "cb_site_adminbar", "true" );
 
 		// Update dashboard settings
 		var oSetting = settingService.findWhere( { name="cb_dashboard_welcome_title" } );
