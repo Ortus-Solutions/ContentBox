@@ -25,10 +25,14 @@ component extends="baseHandler"{
 			arguments.event.paramValue( "authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
-			if(  !prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) AND oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID() ){
+			if( 
+				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) 
+				AND 
+				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID() 
+			){
 				// relocate
 				cbMessagebox.error( "You do not have permissions to do this!" );
-				setNextEvent(event=prc.xehAuthors);
+				setNextEvent( event=prc.xehAuthors );
 				return;
 			}
 		}
@@ -233,27 +237,30 @@ component extends="baseHandler"{
 	* Save user preferences
 	*/
 	function savePreferences( event, rc, prc ){
-		var oAuthor 		= authorService.get(id=rc.authorID);
+		var oAuthor 		= authorService.get( id=rc.authorID );
 		var allPreferences 	= {};
 		
 		// iterate rc keys that start with "preference."
-		for(var key in rc){
-			if( listFirst( key, "." ) eq "preference" ){
+		for( var key in rc ){
+			if( reFindNoCase( "^preference\.", key ) ){
 				allPreferences[ listLast( key, "." ) ] = rc[ key ];
 			}
 		}
 		// Store Preferences
 		oAuthor.setPreferences( allPreferences );
 		// announce event
-		announceInterception( "cbadmin_preAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
+		announceInterception( "cbadmin_preAuthorPreferencesSave", { author=oAuthor, preferences=allPreferences } );
 		// save Author
 		authorService.saveAuthor( oAuthor );
 		// announce event
-		announceInterception( "cbadmin_postAuthorPreferencesSave",{author=oAuthor, preferences=allPreferences} );
+		announceInterception( "cbadmin_postAuthorPreferencesSave", { author=oAuthor, preferences=allPreferences } );
 		// message
 		cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 		// relocate
-		setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
+		setNextEvent( 
+			event		= prc.xehAuthorEditor,
+			queryString	= "authorID=#oAuthor.getAuthorID()###preferences" 
+		);
 	}
 	
 	/**

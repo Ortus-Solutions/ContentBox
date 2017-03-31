@@ -1,62 +1,67 @@
 <cfoutput>
 <!--- authorPreferencesForm --->
-#html.startForm( name="authorPreferencesForm", action=prc.xehAuthorPreferences, novalidate="novalidate", class="form-vertical" )#
-	#html.startFieldset(legend="User Preferences" )#
+#html.startForm( 
+	name		= "authorPreferencesForm", 
+	action		= prc.xehAuthorPreferences, 
+	novalidate	= "novalidate", 
+	class		= "form-vertical" 
+)#
+	#html.startFieldset( legend="User Preferences" )#
 		#html.hiddenField( name="authorID", bind=prc.author )#
 		
 		<!---Editor of Choice --->
 		#html.select( 
-			name="preference.editor", 
-			label="Favorite Editor", 
-			options=prc.editors, 
-			class="form-control input-sm", 
-			selectedValue=prc.author.getPreference( "editor", "" ),
-			wrapper="div class=controls",
-			labelClass="control-label",
-			groupWrapper="div class=form-group" 
+			name			= "preference.editor", 
+			label			= "Favorite Editor", 
+			options 		= prc.editors, 
+			class			= "form-control input-sm", 
+			selectedValue 	= prc.author.getPreference( "editor", "" ),
+			wrapper			= "div class=controls",
+			labelClass		= "control-label",
+			groupWrapper	= "div class=form-group" 
 		)#
 		
 		<!---Markup of Choice --->
 		#html.select( 
-			name="preference.markup", 
-			label="Favorite Markup", 
-			options=prc.markups, 
-			class="form-control input-sm", 
-			selectedValue=prc.author.getPreference( "markup", "" ),
-			wrapper="div class=controls",
-			labelClass="control-label",
-			groupWrapper="div class=form-group" 
+			name			= "preference.markup", 
+			label			= "Favorite Markup", 
+			options 		= prc.markups, 
+			class			= "form-control input-sm", 
+			selectedValue 	= prc.author.getPreference( "markup", "" ),
+			wrapper			= "div class=controls",
+			labelClass		= "control-label",
+			groupWrapper	= "div class=form-group" 
 		)#
 		
 		<!---Social Preferences --->
 		#html.textfield( 
-			name="preference.twitter",
-			label="Twitter Profile",
-			class="form-control",
-			value=prc.author.getPreference( "twitter", "" ),
-			wrapper="div class=controls",
-			labelClass="control-label",
-			groupWrapper="div class=form-group" 
+			name			= "preference.twitter",
+			label			= "Twitter Profile",
+			class			= "form-control",
+			value 			= prc.author.getPreference( "twitter", "" ),
+			wrapper			= "div class=controls",
+			labelClass		= "control-label",
+			groupWrapper	= "div class=form-group" 
 		)#
 
 		#html.textfield( 
-			name="preference.facebook",
-			label="Facebook Profile",
-			class="form-control",
-			value=prc.author.getPreference( "facebook","" ),
-			wrapper="div class=controls",
-			labelClass="control-label",
-			groupWrapper="div class=form-group" 
+			name			= "preference.facebook",
+			label			= "Facebook Profile",
+			class			= "form-control",
+			value			= prc.author.getPreference( "facebook","" ),
+			wrapper			= "div class=controls",
+			labelClass		= "control-label",
+			groupWrapper	= "div class=form-group" 
 		)#
 
 		#html.textfield( 
-			name="preference.google",
-			label="Google+ Profile",
-			class="form-control",
-			value=prc.author.getPreference( "google", "" ),
-			wrapper="div class=controls",
-			labelClass="control-label",
-			groupWrapper="div class=form-group" 
+			name			= "preference.google",
+			label			= "Google+ Profile",
+			class			= "form-control",
+			value			= prc.author.getPreference( "google", "" ),
+			wrapper			= "div class=controls",
+			labelClass 		= "control-label",
+			groupWrapper 	= "div class=form-group" 
 		)#
 		
 		<!--- Nav Bar Collapse --->
@@ -96,21 +101,27 @@
 #html.endForm()#
 
 <!--- authorRawPreferencesForm --->
-#html.startForm( name="authorRawPreferencesForm", action=prc.xehAuthorRawPreferences, novalidate="novalidate", class="form-vertical" )#
+#html.startForm( 
+	name 		= "authorRawPreferencesForm", 
+	action 		= prc.xehAuthorRawPreferences, 
+	novalidate 	= "novalidate", 
+	class 		= "form-vertical" 
+)#
 	#html.startFieldset( legend="Raw Preferences (<a href='javascript:toggleRawPreferences()'>Show/Hide</a>)" )#
 	#html.hiddenField( name="authorID", bind=prc.author )#
 	
 	<div id="rawPreferences" style="display:none">
+		
 		<!--- Raw Preferences --->
 		#html.textarea( 
-			name="preferences",
-			label="The raw user preferences are stored in JSON notation,which you can modify below:",
-			bind=prc.author,
-			rows="5",
-			required="required",
-			class="form-control",
-			wrapper="div class=controls",
-			labelClass="control-label",
+			name		="preferences",
+			label		="The raw user preferences are stored in JSON notation,which you can modify below:",
+			bind		=prc.author,
+			rows		="5",
+			required	="required",
+			class		="form-control",
+			wrapper		="div class=controls",
+			labelClass 	="control-label",
 			groupWrapper="div class=form-group" 
 		)#
 
@@ -120,6 +131,7 @@
 				<input type="submit" value="Save" class="btn btn-danger">
 			</div>
 		</cfif>
+
 	</div>
 	#html.endFieldSet()#
 #html.endForm()#	
