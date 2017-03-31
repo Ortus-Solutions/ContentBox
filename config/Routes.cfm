@@ -37,10 +37,10 @@ limitations under the License.
 
 	// Base URL
 	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/");
+		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/index.cfm");
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/");
+		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/index.cfm");
 	}
 	
 	// Your Application Routes
