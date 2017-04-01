@@ -18,7 +18,7 @@ component extends="coldbox.system.EventHandler"{
 		prc.width		= info.width;
 		prc.height		= info.height;
 		prc.imageRelPath= rc.imageSrc;
-		prc.imageSrc	= event.buildLink( '' ) & rc.imageSrc;
+		prc.imageSrc	= reReplace( event.buildLink( '' ), "\/$" , "" ) & rc.imageSrc;
 		prc.fileType	= listLast( rc.imageName, "." );
 
 		if( event.isAjax() ) {
