@@ -503,10 +503,10 @@ component hint="Main filebrowser module handler"{
 			// LOAD Assets
 
 			//injector:css//
-			addAsset( "#prc.fbModRoot#/includes/css/83764842.fb.min.css ");
+			addAsset( "#prc.fbModRoot#/includes/css/f00ee02d.fb.min.css ");
 			//endinjector//
 			//injector:js//
-			addAsset( "#prc.fbModRoot#/includes/js/1ad68ce4.fb.min.js ");
+			addAsset( "#prc.fbModRoot#/includes/js/92610417.fb.min.js ");
 			//endinjector//
 		}
 	}
