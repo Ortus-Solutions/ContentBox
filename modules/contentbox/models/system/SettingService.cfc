@@ -226,7 +226,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		// Base MediaPath
 		var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
 		if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
-			mediaPath = "index.cfm" & mediaPath;;
+			mediaPath = "index.cfm" & mediaPath;
 		}
 		
 		// add the entry point
