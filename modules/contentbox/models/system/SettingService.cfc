@@ -224,10 +224,11 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		};
 		
 		// Base MediaPath
-		var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
-		if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
-			mediaPath = "index.cfm" & mediaPath;
-		}
+		// I don't think this is needed anymore. As we use build link for everything.
+		//var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
+		//if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
+			//mediaPath = "index.cfm" & mediaPath;
+		//}
 		
 		// add the entry point
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
