@@ -140,7 +140,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#$r( "back@fb" )#">..</a><br>
 				</cfif>
 			</cfif>
-
+			
+			<!--- Keep count of the excluded items from the display, so we can adjust the item count in the status bar --->
+			<cfset excludeCounter = 0>
+ 
 			<!--- Display directories --->
 			<cfif prc.fbqListing.recordcount>
 			<cfloop query="prc.fbqListing">
@@ -152,7 +155,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 						<cfset skipExcludes = true><cfbreak>
 					</cfif>
 				</cfloop>
-				<cfif skipExcludes><cfcontinue></cfif>
+				<cfif skipExcludes>
+					<cfset excludeCounter++>
+					<cfcontinue>
+				</cfif>
 
 				<!--- Include Filters --->
 				<cfif NOT reFindNoCase( prc.fbNameFilter, prc.fbqListing.name )><cfcontinue></cfif>
@@ -265,8 +271,19 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!--- Location Bar --->
 		<div id="locationBar">
 			#announceInterception( "fb_preLocationBar" )#
-			#replace( prc.fbCurrentRoot, "/", '&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;', "all" )#
-			(#prc.fbqListing.recordCount# #$r( "items@fb" )#)
+			<cfset crumbDir = "">
+			<cfloop list="#prc.fbCurrentRoot#" delimiters="/" index="crumb">
+				<cfif crumbDir neq "">
+					&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;
+				</cfif>	
+				<cfset crumbDir = crumbDir & crumb & "/">
+				<cfif ( !prc.fbSettings.traversalSecurity OR findNoCase(prc.fbSettings.directoryRoot, crumbDir ) )>
+					<a href="javascript:fbDrilldown('#JSStringFormat( crumbDir )#')">#crumb#</a>
+				<cfelse>
+					#crumb#
+				</cfif>		
+			</cfloop>
+			(#prc.fbqListing.recordCount-excludeCounter# #$r( "items@fb" )#)
 			#announceInterception( "fb_postLocationBar" )#
 		</div>
 
