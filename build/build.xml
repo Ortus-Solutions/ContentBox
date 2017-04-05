@@ -203,7 +203,7 @@
         <replaceregexp match='\-site' replace="-installer" flags="ig" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/installer/box.json" />
 		</replaceregexp>
-		<replaceregexp match='Site' replace="Installer" flags="ig" byline="true" encoding="UTF-8">
+		<replaceregexp match='Site' replace="Installer" flags="g" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/installer/box.json" />
 		</replaceregexp>
 
@@ -271,7 +271,7 @@
         <replaceregexp match='\-installer' replace="-site" flags="ig" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/site/box.json" />
 		</replaceregexp>
-		<replaceregexp match=' Installer' replace=" Site" flags="ig" byline="true" encoding="UTF-8">
+		<replaceregexp match='Installer' replace="Site" flags="g" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/installer/box.json" />
 		</replaceregexp>
 
