@@ -10,7 +10,7 @@ dist: trusty
 sudo: required
 
 git:
-  depth: 100
+  depth: 500
   
 addons:
   apt:
