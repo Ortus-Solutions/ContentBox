@@ -71,6 +71,9 @@
 .input-group .form-control{
 	z-index:0;
 }
+.tab-content{
+	background: white;
+}
 .tab-pane .row.well.well-sm {
   margin: 0 1px 10px;
 }
@@ -84,6 +87,7 @@ a.btn.btn-danger:visited {
 }
 .nav-tabs > li > a:hover{
 	background-color: #eaeaea;
+	border: 1px solid transparent;
 }
 
 
@@ -100,6 +104,10 @@ img.img-screenshot{ height: 200px; }
 .panel-heading{ min-height: 48px;}
 .dropdown-menu > li > a > i{ color: #797979 !important;}
 .panel-default .actions i{ color: #fff; }
+.panel-default .actions i:hover {
+    cursor:pointer;
+    color:#fff;
+}
 .actions{ top: 10px!important; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}

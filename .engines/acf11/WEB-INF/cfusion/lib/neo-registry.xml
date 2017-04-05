@@ -1,0 +1,12 @@
+<wddxPacket version="1.0">
+	<header/>
+	<data>
+		<array length="1">
+			<struct type="coldfusion.server.ConfigMap">
+				<var name="time_delay">
+					<string>60000</string>
+				</var>
+			</struct>
+		</array>
+	</data>
+</wddxPacket>

@@ -20,7 +20,7 @@ component   persistent="true"
 	property name="menuItemService" inject="menuItemService@cb" persistent="false";
 
 	/* *********************************************************************
-	**							PROPERTIES due to CF9 Bug									
+	**							PROPERTIES due to ACF Bug									
 	********************************************************************* */
 
 	property 	name="createdDate" 	

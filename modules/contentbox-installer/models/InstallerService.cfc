@@ -282,6 +282,8 @@ component accessors="true"{
 			"cb_site_ssl" 							= "false",
 			"cb_site_poweredby" 					= "true",
 			"cb_site_settings_cache"				= "Template",
+			"cb_site_sitemap"						= "true",
+			"cb_site_adminbar"						= "true",
 
 			// Security Settings
 			"cb_security_login_blocker" 			= "true",
@@ -317,7 +319,7 @@ component accessors="true"{
 			"cb_dashboard_recentcontentstore" 		= "5",
 			"cb_dashboard_newsfeed" 				= "http://www.ortussolutions.com/blog/rss",
 			"cb_dashboard_newsfeed_count" 			= "5",
-			"cb_dashboard_welcome_title" 			= "Welcome To Your ContentBox Dashboard",
+			"cb_dashboard_welcome_title" 			= "Dashboard",
 			"cb_dashboard_welcome_body" 			= "",
 
 			// Comment Settings
@@ -433,7 +435,7 @@ component accessors="true"{
 "/",
 { "name": "styles",      "items" : [ "Styles","Format" ] },
 { "name": "colors",      "items" : [ "TextColor","BGColor" ] },
-{ "name": "insert",      "items" : [ "Image","Flash","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
+{ "name": "insert",      "items" : [ "Image","Table","HorizontalRule","Smiley","SpecialChar","Iframe","InsertPre"] },
 { "name": "contentbox",  "items" : [ "MediaEmbed","cbIpsumLorem","cbWidgets","cbContentStore","cbLinks","cbEntryLinks" ] }
 ]',
 			"cb_editors_ckeditor_excerpt_toolbar" 	= '
@@ -564,7 +566,7 @@ component accessors="true"{
 		contentStore.setCreator( author );
 		contentStore.addNewContentVersion(
 			content 	= '<p style="text-align: center;">
-	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="__media/ContentBox_300.png" /></a></p>
+	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="/index.cfm/__media/ContentBox_300.png" /></a></p>
 <p style="text-align: center;">
 	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
 			changelog 	= "First creation",

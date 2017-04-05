@@ -1,6 +1,6 @@
-﻿User-agent: *
+User-agent: *
 Disallow: 
-Crawl-delay: 60
+Allow: /modules/contentbox/themes/
 Disallow: /coldbox/
 Disallow: /config/
 Disallow: /handlers/

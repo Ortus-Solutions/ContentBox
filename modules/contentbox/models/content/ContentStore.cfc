@@ -24,11 +24,18 @@ component 	persistent="true"
 			 length="500" 
 			 default="";
 
+	property 	name="order"			
+				notnull="false" 	
+				ormtype="integer" 
+				default="0"
+				dbdefault="0";
+
 	/* *********************************************************************
 	**							CONSTRAINTS									
 	********************************************************************* */
 
 	this.constraints[ "title" ]	= { required = false, size = "1..500" };
+	this.constraints[ "order" ]	= { required = false, type="numeric" };
 	
 	/* *********************************************************************
 	**							CONSTRUCTOR									
@@ -47,6 +54,7 @@ component 	persistent="true"
 		description		= "";
 		createdDate		= now();
 		contentType		= "ContentStore";
+		order 			= 0;
 		
 		return this;
 	}
@@ -109,7 +117,7 @@ component 	persistent="true"
 		boolean showRelatedContent=true,
 		boolean showStats=true
 	){
-		arguments.properties = listToArray( "description" );
+		arguments.properties = listToArray( "description,order" );
 		var result 	= super.getMemento( argumentCollection=arguments );
 		
 		return result;

@@ -137,12 +137,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		if( isNull( settings ) ){
 			// not found, so query db
 			var settings = list( sortOrder="name" );
-			// cache them for 2 hours
-			cache.set( cacheKey, settings, 90 );
+			// cache them for 5 days, usually app timeout
+			cache.set( cacheKey, settings, 7200 );
 		}
 
-		// convert to struct
-		if( arguments.asStruct ){
+		// convert to struct if a query, else return it.
+		if( arguments.asStruct and isQuery( settings ) ){
 			var s = {};
 			for( var x=1; x lte settings.recordcount; x++ ){
 				s[ settings.name[ x ] ] = settings.value[ x ];
@@ -151,6 +151,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		}
 
 		return settings;
+	}
+
+	/**
+	* This will store the incoming structure as the settings in cache.
+	* Usually this method is used for major overrides.
+	*/
+	SettingService function storeSettings( struct settings ){
+		// cache them for 5 days, usually app timeout
+		getSettingsCacheProvider()
+			.set( getSettingsCacheKey(), arguments.settings, 7200 );
+		return this;
 	}
 
 	/**
@@ -213,10 +224,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		};
 		
 		// Base MediaPath
-		var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
-		if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
-			mediaPath = "index.cfm" & mediaPath;;
-		}
+		var mediaPath = "";
+		// I don't think this is needed anymore. As we use build link for everything.
+		//var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
+		//if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
+			//mediaPath = "index.cfm" & mediaPath;
+		//}
 		
 		// add the entry point
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;

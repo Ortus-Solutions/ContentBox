@@ -1,0 +1,36 @@
+<wddxPacket version='1.0'>
+<header/>
+<data>
+	<struct type='coldfusion.server.ConfigMap'>
+		<var name='spooldir'>
+			<string>{neo.rootdir}/Mail/Spool</string>
+		</var>
+		<var name='port'>
+			<number>25.0</number>
+		</var>
+		<var name='schedule'>
+			<number>15.0</number>
+		</var>
+		<var name='mailsentloggingenable'>
+			<boolean value='false'/>
+		</var>
+		<var name='timeout'>
+			<number>60.0</number>
+		</var>
+		<var name='severity'>
+			<string>warning</string>
+		</var>
+		<var name='server'>
+			<string></string>
+		</var>
+		<var name='undeliverdir'>
+			<string>{neo.rootdir}/Mail/Undelivr</string>
+		</var>
+        <!-- need to be revisited for CF9.
+        <var name='tempdir'>
+			<string>{neo.rootdir}/Mail/Temp</string>
+		</var>
+		-->
+	</struct>
+</data>
+</wddxPacket>

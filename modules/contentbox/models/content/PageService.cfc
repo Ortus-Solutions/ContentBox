@@ -115,16 +115,20 @@ component extends="ContentService" singleton{
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
-				c.or( c.restrictions.like( "title", "%#arguments.search#%" ),
-					  c.restrictions.like( "slug", "%#arguments.search#%" ),
-					  c.restrictions.like( "ac.content", "%#arguments.search#%" ) );
+				c.or( 
+					c.restrictions.like( "title", "%#arguments.search#%" ),
+					c.restrictions.like( "slug", "%#arguments.search#%" ),
+					c.restrictions.like( "ac.content", "%#arguments.search#%" ) 
+				);
 			} else {
-				c.or( c.restrictions.like( "title","%#arguments.search#%" ),
-					  c.restrictions.like( "slug","%#arguments.search#%" ) );
+				c.or( 
+					c.restrictions.like( "title","%#arguments.search#%" ),
+					c.restrictions.like( "slug","%#arguments.search#%" ) 
+				);
 			}
 		}
 		// parent filter
-		if( structKeyExists(arguments,"parent" ) ){
+		if( structKeyExists( arguments, "parent" ) ){
 			if( len( trim( arguments.parent ) ) ){
 				c.eq( "parent.contentID", javaCast( "int",arguments.parent) );
 			} else {
@@ -159,7 +163,12 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false );
+							.list( 
+								offset 		= arguments.offset,
+								max 		= arguments.max,
+								sortOrder 	= arguments.sortOrder,
+								asQuery 	= false 
+							);
 		return results;
 	}
 
@@ -227,23 +236,28 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset,
-								   max=arguments.max,
-								   sortOrder=arguments.sortOrder,
-								   asQuery=arguments.asQuery );
+							.list( 
+								offset 		= arguments.offset,
+								max 		= arguments.max,
+								sortOrder 	= arguments.sortOrder,
+								asQuery 	= arguments.asQuery 
+							);
 
 		return results;
 	}
 
 	/**
-	* Returns an array of [contentID, title, slug] structures of all the pages in the system
+	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	* @sortOrder 	The sort ordering of the results
+	* @isPublished	Show all content or true/false published content
+	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatPages( sortOrder="title asc" ){
-		var c = newCriteria();
-
-		return c.withProjections( property="contentID,title,slug" )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder=arguments.sortOrder );
+	array function getAllFlatPages( 
+		sortOrder="title asc", 
+		boolean isPublished,
+		boolean showInSearch
+	){
+		return super.getAllFlatContent( argumentCollection=arguments );
 	}
 
 	/**

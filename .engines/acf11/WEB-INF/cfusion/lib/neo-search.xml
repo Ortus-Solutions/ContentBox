@@ -1,0 +1,28 @@
+<wddxPacket version='1.0'>
+    <header/>
+    <data>
+        <struct type='coldfusion.server.ConfigMap'>
+            <var name='k2adminport'>
+                <number>9953.0</number>
+            </var>
+            <var name='verityhost'>
+                <string>localhost</string>
+            </var>
+            <var name='k2serveralias'>
+                <string>ColdFusionK2_server1</string>
+            </var>
+            <var name='k2serverport'>
+                <number>9923.0</number>
+            </var>
+            <var name='k2indexport'>
+                <number>9963.0</number>
+            </var>
+            <var name='k2indexalias'>
+                <string>ColdFusionK2_indexserver1</string>
+            </var>
+            <var name='k2adminalias'>
+                <string>ColdFusionK2</string>
+            </var>
+        </struct>
+    </data>
+</wddxPacket>

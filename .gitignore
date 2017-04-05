@@ -11,6 +11,7 @@ web.config
 "Icon\r"
 WEB-INF/**
 artifacts/**
+
 # Build Dependencies
 build/build.number
 build/apidocs/docbox
@@ -18,14 +19,23 @@ build/resources/WEB-INF/*
 build/build-contentbox/**
 build/build-forgebox/**
 build/dependencies
-# Workbench Dependencies
-workbench/node_modules
-workbench/bower_components
+
 # Global Dependencies
 coldbox/*
 testbox/*
+**/node_modules/**
+**/bower_components/**
+
 # Module Dependencies
 modules/contentbox/themes/default/bower_components
 modules/contentbox/themes/default/node_modules
-modules/contentbox-admin/modules/contentbox-filebrowser/node_modules
-modules/contentbox-admin/modules/contentbox-filebrowser/bower_components
+
+# ContentBox Modules
+modules/contentbox/modules/contentbox-deps/modules/*
+
+# Testing
+/tests/logs/*
+/tests/test-results/*
+config/Routes.cfm
+modules/contentbox/modules/contentbox-deps/box.json
+server-ContentBox.json

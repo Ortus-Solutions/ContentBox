@@ -1,0 +1,15 @@
+<wddxPacket version="1.0">
+	<header/>
+	<data>
+        <struct type="coldfusion.server.ConfigMap">
+            <var name="archives">
+                <struct type="coldfusion.server.ConfigMap">
+                </struct>
+            </var>
+            <var name="variables">
+                <struct type="coldfusion.server.ConfigMap">
+                </struct>
+            </var>
+		</struct>
+	</data>
+</wddxPacket>

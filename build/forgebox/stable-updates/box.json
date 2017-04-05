@@ -1,7 +1,7 @@
 {
     "name":"ContentBox Modular CMS Stable Update Channel",
-    "version":"3.1.0",
-    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/3.1.0/contentbox-patch-3.1.0.zip",
+    "version":"@version.number@",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-patch-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox-stable-updates",
     "type":"cms",

@@ -1,0 +1,1 @@
+<wddxPacket version='1.0'><header/><data><array length='2'><struct type='coldfusion.server.ConfigMap'></struct><struct type='coldfusion.server.ConfigMap'><var name='maxcachecount'><number>100.0</number></var></struct></array></data></wddxPacket>

@@ -178,7 +178,7 @@ component accessors=true {
      */
     public ContentBoxExporter function setup( required struct targets ) {
         // loop over targets and build up exporters
-        for( var key in targets ) {
+        for( var key in arguments.targets ) {
             // find config for the given key
             var config = findConfig( key );
             // if config was found

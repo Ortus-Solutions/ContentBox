@@ -4,7 +4,7 @@
 	<cfloop array="#local.thisMenu#" index="local.topMenu">
 		
 		<!--- Check Permissions --->
-		<cfif !len( local.topMenu.permissions ) OR prc.oAuthor.checkPermission( local.topMenu.permissions )>
+		<cfif !len( local.topMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.topMenu.permissions )>
 		<!--- LI --->
 		<li class="nav-dropdown<cfif event.getPrivateValue( name='tab#local.topMenu.name#', defaultValue=false )> active open</cfif>#local.topMenu.class#" 
 			data-name="#local.topMenu.name#"
@@ -25,7 +25,7 @@
 				<ul class="nav-sub">
 				<cfloop array="#local.topMenu.submenu#" index="local.thisSubMenu">
 					<!--- Security --->
-					<cfif !len( local.thisSubMenu.permissions ) OR prc.oAuthor.checkPermission( local.thisSubMenu.permissions )>
+					<cfif !len( local.thisSubMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.thisSubMenu.permissions )>
 					<li class="<cfif event.getPrivateValue( name="tab#local.topMenu.name#_#local.thisSubMenu.name#", defaultValue=false )>active</cfif>#local.thisSubMenu.class#" 
 						data-name="#local.thisSubMenu.name#"
 					>

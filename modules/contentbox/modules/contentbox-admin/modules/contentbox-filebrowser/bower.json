@@ -1,0 +1,19 @@
+{
+  "name": "contentbox-filebrowser",
+  "version": "0.0.0",
+  "private": true,
+  "description": "ContentBox FileBrowser",
+  "main": "Gruntfile.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "includes/lib",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery-filedrop": "~0.1.0",
+    "jQuery-contextMenu": "^2.2.0",
+    "Jcrop": "^2.0.4"
+  }
+}

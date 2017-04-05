@@ -65,8 +65,8 @@ component accessors="true" singleton threadSafe{
 		var widgets = directoryList( widgetsPath, false, "query", "*.cfc", "name asc" );
 		// get module widgets
 		var moduleWidgets = moduleService.getModuleWidgetCache();
-		// get layout widgets
-		var layoutWidgets = themeService.getWidgetCache();
+		// get theme widgets
+		var themeWidgets = themeService.getWidgetCache();
 
 		// Add custom columns
 		QueryAddColumn( widgets, "filename", [] );
@@ -121,23 +121,23 @@ component accessors="true" singleton threadSafe{
 			}
 		}
 
-		// add layout widgets
-		for( var widget in layoutWidgets ) {
+		// add theme widgets
+		for( var widget in themeWidgets ) {
 			queryAddRow( widgets );
 			querySetCell( widgets, "filename", widget );
 			querySetCell( widgets, "name", widget );
-			querySetCell( widgets, "widgettype", "Layout" );
+			querySetCell( widgets, "widgettype", "Theme" );
 
 			try{
-				//var lplugin = getWidget( name=widget, type="layout" );
-				var category = getWidgetCategory( name=widget, type="layout" );
-				var icon = getWidgetIcon( name=widget, type="layout" );
+				//var lplugin = getWidget( name=widget, type="theme" );
+				var category = getWidgetCategory( name=widget, type="theme" );
+				var icon = getWidgetIcon( name=widget, type="theme" );
 				//querySetCell( widgets, "plugin", lplugin );
 				querySetCell( widgets, "category", category );
 				querySetCell( widgets, "icon", icon );
 			}
 			catch(any e){
-				log.error( "Error creating layout widget plugin: #widget#",e);
+				log.error( "Error creating theme widget plugin: #widget#",e);
 			}
 		}
 		return widgets;
@@ -146,12 +146,12 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Get a widget by name
 	* @name
-	* @type This can be one of the following: core, layout, module
+	* @type This can be one of the following: core, theme, module
 	*/
 	any function getWidget( required name, required string type="core" ){
 		var path = "";
 		switch( type ) {
-			case "layout":
+			case "theme":
 				var path = themeService.getThemeWidgetPath( arguments.name );
 				break;
 			case "module":
@@ -173,14 +173,14 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Get a widget icon representation
 	* @name The name of the widget
-	* @type This can be one of the following: core, layout, module
+	* @type This can be one of the following: core, theme, module
 	*/
 	string function getWidgetIcon( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var icon = widget.getIcon();
 		if( isNull( icon ) || icon == "" ) {
 			switch( type ) {
-				case "layout":
+				case "theme":
 					icon = "th-large";
 					break;
 				case "module":
@@ -197,15 +197,15 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Get a widget category
 	* @name The name of the widget
-	* @type This can be one of the following: core, layout, module
+	* @type This can be one of the following: core, theme, module
 	*/
 	string function getWidgetCategory( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var category = widget.getCategory();
 		if( isNull( category ) || category == "" ) {
 			switch( type ) {
-				case "layout":
-					category = "Layout";
+				case "theme":
+					category = "Theme";
 					break;
 				case "module":
 					category="Module";
@@ -225,11 +225,11 @@ component accessors="true" singleton threadSafe{
 	 */
 	function getWidgetFilePath( required string name, required string type ) {
 		var widgetPath = "";
-		// switch on widget type (core, layout, module )
+		// switch on widget type (core, theme, module )
 		switch( type ) {
-			case "layout":
-				var layout = themeService.getActiveTheme();
-				widgetPath = "#layout.directory#/#layout.name#/widgets/#replaceNoCase( arguments.name, '~', '', 'one' )#.cfc";
+			case "theme":
+				var theme = themeService.getActiveTheme();
+				widgetPath = "#theme.directory#/#theme.name#/widgets/#replaceNoCase( arguments.name, '~', '', 'one' )#.cfc";
 				break;
 			case "module":
 				var widgetname = listGetAt( arguments.name, 1, '@' );

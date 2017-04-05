@@ -4,7 +4,7 @@
     "slug":"contentbox-apidocs",
     "private":true,
     "dependencies":{
-        "docbox":"2.0.7+00005"
+        "docbox":"^2.0.7+00005"
     },
     "devDependencies":{
         

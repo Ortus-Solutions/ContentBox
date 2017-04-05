@@ -300,18 +300,27 @@ function activateContentSearch(){
         );
     } );
     // keyup quick search
-    $nav_search.keyup(function(){
-        var $this = $(this);
-        // Only send requests if more than 2 characters
-        if( $this.val().length > 1 ){
-            $nav_search_results.load( $( "#nav-search-url" ).val(), { search: $this.val() }, function(data){
-                if( $nav_search_results.css( "display" ) === "none" ){
-                    $nav_search_results.fadeIn().slideDown();
+    $nav_search.keyup(
+        _.debounce(
+            function(){
+                var $this = $( this );
+                // Only send requests if more than 2 characters
+                if( $this.val().length > 1 ){
+                    $nav_search_results.load( 
+                        $( "#nav-search-url" ).val(), 
+                        { search : $this.val() }, 
+                        function( data ){
+                            if( $nav_search_results.css( "display" ) === "none" ){
+                                $nav_search_results.fadeIn().slideDown();
+                            }
+                        }
+                    );
                 }
-            } );
-        }
-        
-    } );
+            }
+            ,
+            300
+        )
+    );
     // add click listener to body to hide quick search panel
     $( 'body' ).click( function( e ){
        var target = $( e.target ),

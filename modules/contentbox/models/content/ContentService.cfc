@@ -42,10 +42,22 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllCaches( boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content",async=arguments.async);
+		cache.clearByKeySnippet( keySnippet="cb-content", async=arguments.async );
+		return this;
+	}
+
+	/**
+	* Clear all sitemap caches
+	* @async Run it asynchronously or not, defaults to false
+	*/
+	function clearAllSitemapCaches( boolean async=false ){
+		var settings = settingService.getAllSettings( asStruct=true );
+		// Get appropriate cache provider
+		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		cache.clearByKeySnippet( keySnippet="cb-content-sitemap", async=arguments.async );
 		return this;
 	}
 
@@ -54,10 +66,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllPageWrapperCaches( boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-wrapper",async=arguments.async);
+		cache.clearByKeySnippet( keySnippet="cb-content-wrapper", async=arguments.async );
 		return this;
 	}
 
@@ -67,10 +79,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapperCaches( required any slug, boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#",async=arguments.async);
+		cache.clearByKeySnippet( keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#", async=arguments.async );
 		return this;
 	}
 
@@ -80,7 +92,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapper( required any slug, boolean async=false ){
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings( asStruct=true );
 		// Get appropriate cache provider
 		var cache = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clear( "cb-content-wrapper-#cgi.http_host#-#arguments.slug#/" );
@@ -98,7 +110,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @searchActiveContent Search only content titles or both title and active content. Defaults to both.
 	* @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
 	* @excludeIDs List of IDs to exclude from search
-	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
 	*/
 	function searchContent(
 		any searchTerm="",
@@ -110,7 +122,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		boolean searchActiveContent=true,
 		string contentTypes="",
 		any excludeIDs="",
-		boolean showInSearch=false
+		boolean showInSearch
 	){
 
 		var results = {};
@@ -129,8 +141,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// only search shownInSearch bits
-		if( arguments.showInSearch ){
-			c.isTrue( "showInSearch" );
+		if( structKeyExists( arguments, "showInSearch") ){
+			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );
 		}
 
 		// Search Criteria
@@ -238,7 +250,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				arguments.content.removeAllLinkedContent();
 			}
 			if( arguments.content.hasChild() ){
+				var aItemsToDelete = [];
 				for( var thisChild in arguments.content.getChildren() ){
+					arrayAppend( aItemsToDelete, thisChild );
+				}
+				for( var thisChild in aItemsToDelete ){
 					deleteContent( thisChild );
 				}
 			}
@@ -345,6 +361,67 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
+	* Get all the expired content in the system by filters
+	* @author 		The author filtering if passed.
+	* @max 			The maximum number of records to return
+	* @offset 		The pagination offset
+	*/
+	array function findExpiredContent( 
+		any author, 
+		numeric max=0,
+		numeric offset=0,
+	){
+		var c = newCriteria().createAlias( "activeContent", "ac" );
+
+		// only future published pages
+		c.isTrue( "isPublished" )
+			.isLT( "publishedDate", now() )
+			.isLT( "expireDate", now() );
+		
+		// author filter
+		if( structKeyExists( arguments, "author") ){
+			c.isEq( "ac.author", arguments.author );
+		}
+			
+		return c.list( 
+			max 		= arguments.max, 
+			offset 		= arguments.offset,
+			sortOrder 	= "expireDate desc",
+			asQuery 	= false 
+		);
+	}
+
+	/**
+	* Get all the future published content in the system by filters
+	* @author 		The author filtering if passed.
+	* @max 			The maximum number of records to return
+	* @offset 		The pagination offset
+	*/
+	array function findFuturePublishedContent( 
+		any author, 
+		numeric max=0,
+		numeric offset=0,
+	){
+		var c = newCriteria().createAlias( "activeContent", "ac" );
+
+		// Only non-expired future publishing pages
+		c.isTrue( "isPublished" )
+			.isGT( "publishedDate", now() );
+		
+		// author filter
+		if( structKeyExists( arguments, "author") ){
+			c.isEq( "ac.author", arguments.author );
+		}
+			
+		return c.list( 
+			max 		= arguments.max, 
+			offset 		= arguments.offset,
+			sortOrder 	= "publishedDate desc", 
+			asQuery 	= false 
+		);
+	}
+
+	/**
 	* Get latest edits according to criteria
 	* @author 		The author object to use for retrieval
 	* @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
@@ -357,6 +434,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( structKeyExists( arguments, "isPublished") ){
 			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
+
 		// author filter
 		if( structKeyExists( arguments, "author") ){
 			c.isEq( "ac.author", arguments.author );
@@ -743,14 +821,47 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Returns an array of [contentID, title, slug] structures of all the content in the system
+	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	* @sortOrder 	The sort ordering of the results
+	* @isPublished	Show all content or true/false published content
+	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatContent(){
+	array function getAllFlatContent( 
+		sortOrder="title asc",
+		boolean isPublished,
+		boolean showInSearch
+	){
 		var c = newCriteria();
 
-		return c.withProjections( property="contentID,title,slug" )
+		// only published content
+		if( 
+			structKeyExists( arguments, "isPublished") 
+			&& 
+			isBoolean( arguments.isPublished ) 
+		){
+			// Published bit
+			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
+			// Published eq true evaluate other params
+			if( arguments.isPublished ){
+				c.isLt( "publishedDate", now() )
+				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
+				.isEq( "passwordProtection","" );
+			}
+		}
+
+		// Show in Search
+		if( 
+			structKeyExists( arguments, "showInSearch") 
+			&& 
+			isBoolean( arguments.showInSearch ) 
+		){
+			// showInSearch bit
+			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );
+		}
+
+		return c.withProjections( property="contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder="slug asc" );
+			.list( sortOrder=arguments.sortOrder );
 	}
 
 /********************************************* PRIVATE *********************************************/

@@ -38,11 +38,10 @@ component{
 	COLDBOX_APP_KEY 		= "";
 
 	// LOCATION MAPPINGS
-	this.mappings[ "/cbapp" ] 		= COLDBOX_APP_ROOT_PATH;
-	this.mappings[ "/contentbox" ] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
-	// THE LOCATION OF EMBEDDED COLDBOX & MODULES
-	this.mappings[ "/coldbox" ] 	= COLDBOX_APP_ROOT_PATH & "coldbox";
-	this.mappings[ "/cborm" ] 	 	= this.mappings[ "/coldbox" ] & "/system/modules/cborm";
+	this.mappings[ "/cbapp" ] 				= COLDBOX_APP_ROOT_PATH;
+	this.mappings[ "/coldbox" ] 			= COLDBOX_APP_ROOT_PATH & "coldbox";
+	this.mappings[ "/contentbox" ] 			= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
+	this.mappings[ "/cborm" ] 	 			= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
 	// THE DATASOURCE FOR CONTENTBOX MANDATORY
 	this.datasource = "contentbox";
@@ -50,7 +49,7 @@ component{
 	this.ormEnabled = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=[ "models", "modules" ],
+		cfclocation=[ "models", "modules", "modules_app" ],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
 		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
@@ -73,6 +72,8 @@ component{
 
 	// application start
 	public boolean function onApplicationStart(){
+		//Set a high timeout for any orm updates
+		setting requestTimeout="180";
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 		application.cbBootstrap.loadColdbox();
 		return true;
@@ -80,20 +81,25 @@ component{
 
 	// request start
 	public boolean function onRequestStart( string targetPage ){
-		// Just in case bootstrap is missing, let's restart it manually
-		if( !structKeyExists( application, "cbBootstrap") ){
-			onApplicationStart();
+		// In case bootstrap or controller are missing, perform a manual restart
+		if( 
+			!structKeyExists( application, "cbBootstrap" ) 
+			||
+			!structKeyExists( application, "cbController" )
+		){
+			reinitApplication();
 		}
 		
-		// Local Logging
-		if( structKeyExists( application, "cbController") AND 
+		// Development Reinit + ORM Reloads
+		if( 
+			structKeyExists( application, "cbController")
+			&& 
 			application.cbController.getSetting( "environment" ) == "development" 
+			&&
+			application.cbBootstrap.isFWReinit()
 		){
-			if( application.cbBootstrap.isFWReinit() ){
-				if( structKeyExists( server, "lucee" ) ){ pagePoolClear(); }
-				ORMREload();
-			}
-			this.ormsettings.logSQL = true;
+			if( structKeyExists( server, "lucee" ) ){ pagePoolClear(); }
+			ORMREload();
 		}
 
 		// Process ColdBox Request
@@ -114,6 +120,14 @@ component{
 
 	public boolean function onMissingTemplate(template){
 		return application.cbBootstrap.onMissingTemplate( argumentCollection=arguments );
+	}
+
+	/**
+	* Application Reinitialization
+	**/
+	private void function reinitApplication(){
+		//Run onAppStart
+		onApplicationStart();
 	}
 
 	//@cf9-onError@
