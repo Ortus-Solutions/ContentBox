@@ -43,7 +43,7 @@ before_script:
 
 script:
   # Execute build via ANT
-  - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -f build/build.xml
+  - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
   # Get ContentBox Version for rest of build process
   - PROJECT_VERSION="$(cat build/build-contentbox/module/box.json | jq -r '.version')"
   # Spit out debugging info
