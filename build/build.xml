@@ -364,6 +364,9 @@
 		<exec executable="box" dir="${dir.build}/war/modules/contentbox">
 			<arg line="install production=true" />
 		</exec>
+		<exec executable="box" dir="${dir.build}/war">
+			<arg line="install coldbox@4.3.0 production=true" />
+		</exec>
 		
  		<!-- Create War -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}/war" />
