@@ -103,9 +103,6 @@ component {
 			// Log setup in flash + messagebox
 			flash.put( "updateLog", arguments.log );
 
-			// stop application
-			applicationstop();
-
 			savecontent variable="local.updateMessage"{
 				writeOutput( "
 					Update Applied Correctly! Please do the following manual actions:
@@ -154,6 +151,9 @@ component {
 				}
 			}	
 			
+			// stop application
+			applicationstop();
+
 			// Hard Redirect
 			coldbox.setNextEvent( "cbadmin.autoupdates" );
 			
