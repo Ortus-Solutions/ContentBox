@@ -53,7 +53,7 @@ component accessors="true" extends="BaseRenderer"{
 				widgetType 		= attributes.widgettype;
 				widgetUDF 		= structKeyExists( attributes, "widgetUDF" ) ? attributes.widgetUDF : "renderIt";
 				isModuleWidget 	= widgetType == "Module";
-				isLayoutWidget 	= widgetType == "Layout";
+				isThemeWidget 	= widgetType == "Theme";
 				
 				// Detect direct method call
 				if( find( ".", widgetName) ){
@@ -63,9 +63,9 @@ component accessors="true" extends="BaseRenderer"{
 						// Render out the module widget
 						widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="module" ).#widgetUDF#( argumentCollection=attributes )' );
 					} else {
-						if( isLayoutWidget ) {
-							// Render out the layout widget
-							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetUDF#( argumentCollection=attributes )' );
+						if( isThemeWidget ) {
+							// Render out the theme widget
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="theme" ).#widgetUDF#( argumentCollection=attributes )' );
 						} else {
 							// Render out the core widget
 							widgetContent = evaluate( 'widgetService.getWidget( widgetName ).#widgetUDF#( argumentCollection=attributes )' );
@@ -133,7 +133,7 @@ component accessors="true" extends="BaseRenderer"{
 				tagString 		= replace( tagString, "',", "' ", "all" );
 				tagString 		= replace( tagString, '",',  '" ', "all" );
 				isModuleWidget 	= findNoCase( "@", tagString ) ? true : false;
-				isLayoutWidget 	= findNoCase( "~", tagString ) ? true : false;
+				isThemeWidget 	= findNoCase( "~", tagString ) ? true : false;
 				
 				if( isModuleWidget ) {
 					var startPos 	= find( "@", tagString ) + 1;
@@ -150,7 +150,7 @@ component accessors="true" extends="BaseRenderer"{
 					tagString = replacenocase( tagString, "@#moduleName#", "", "one" );
 				}
 				
-				if( isLayoutWidget ) {
+				if( isThemeWidget ) {
 					tagString = reReplace( tagString, "~", "", "one" );
 				}
 
@@ -178,9 +178,9 @@ component accessors="true" extends="BaseRenderer"{
 						// Render out the module widget
 						widgetContent = evaluate( 'widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" ).#widgetArgs.widgetUDF#( argumentCollection=widgetArgs )' );
 					} else {
-						if( isLayoutWidget ) {
-							// Render out the layout widget
-							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="layout" ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
+						if( isThemeWidget ) {
+							// Render out the theme widget
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="theme" ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
 						} else {
 							// Render out the core widget
 							widgetContent = evaluate( 'widgetService.getWidget( widgetName ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
