@@ -78,6 +78,7 @@
 	</cfif>
 	
 </div>
+<div id="cb-admin-bar-spacer">&nbsp;</div>
 
 <script>
 setTimeout( insertAdminBar, 500 );
@@ -99,6 +100,10 @@ function insertAdminBar(){
 	background: black; 
 	color: white;
 	text-align: center;
+	position: fixed;
+}
+##cb-admin-bar-spacer{
+	height:55px;
 }
 ##cb-admin-bar-actions{
 	float: right;
@@ -106,6 +111,7 @@ function insertAdminBar(){
 	font-size: 12px;
 }
 ##cb-admin-bar h4{
+	color: white;
 	float: left;
 }
 ##cb-admin-bar p{

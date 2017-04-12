@@ -63,6 +63,9 @@ component{
 		// Param incoming data
 		event.paramValue( "l", "" )
 			.paramValue( "h", "" );
+
+		// xss headers
+		event.setHTTPHeader( name="X-XSS-Protection", value=0 );
 		
 		// valid Author?
 		if( prc.oCurrentAuthor.isLoaded() AND 
@@ -303,6 +306,7 @@ component{
 
 		// Get all categories
 		prc.categories = categoryService.list( sortOrder="category", asQuery=false );
+		
 		// valid Author?
 		if( !prc.oCurrentAuthor.isLoaded() OR 
 			!prc.oCurrentAuthor.isLoggedIn() OR 
@@ -311,6 +315,9 @@ component{
 			// Not an author, kick them out.
 			setNextEvent( URL=CBHelper.linkHome() );
 		}
+
+		// xss headers
+		event.setHTTPHeader( name="X-XSS-Protection", value=0 );
 	}
 	
 	/**
