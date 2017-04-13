@@ -52,12 +52,6 @@ $( document ).ready( function(){
 		'#cb.r( "validation.passwordcheck@installer" )#' 
 	);
 	
-	// toggle checkboxes
-	$( '.tab-content' ).find( 'input[data-toggle="toggle"]' ).change( function() {
-		var inputMatch = $( this ).data( 'match' );
-		$( "##" + inputMatch ).val( $( this ).prop( 'checked' ) );
-	});
-
 } );
 
 function nextStep(){
