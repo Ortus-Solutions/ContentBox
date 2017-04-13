@@ -6,9 +6,16 @@
 	<div class="form-group">
         #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:" )#
         <div class="controls">
-            <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/>
-			#html.radioButton(name="cb_security_login_blocker",checked=prc.cbSettings.cb_security_login_blocker,value=true)# Yes
-			#html.radioButton(name="cb_security_login_blocker",checked=not prc.cbSettings.cb_security_login_blocker,value=false)# No
+            <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/><br />
+            #html.checkbox(
+				name    = "cb_security_login_blocker_toggle",
+				data	= { toggle: 'toggle', match: 'cb_security_login_blocker' },
+				checked	= prc.cbSettings.cb_security_login_blocker
+			)#
+			#html.hiddenField(
+				name	= "cb_security_login_blocker",
+				value	= prc.cbSettings.cb_security_login_blocker
+			)#
         </div>
     </div>
 
@@ -60,9 +67,16 @@
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter", content="Enable Rate Limiter:" )#
         <div class="controls">
-            <small>When enabled, it will keep track of requests and apply rate limiting according to count and duration settings according to client IP Address.</small><br/>
-			#html.radioButton( name="cb_security_rate_limiter", checked=prc.cbSettings.cb_security_rate_limiter, value=true )# Yes
-			#html.radioButton( name="cb_security_rate_limiter", checked=not prc.cbSettings.cb_security_rate_limiter, value=false )# No
+            <small>When enabled, it will keep track of requests and apply rate limiting according to count and duration settings according to client IP Address.</small><br/><br />
+            #html.checkbox(
+				name    = "cb_security_rate_limiter_toggle",
+				data	= { toggle: 'toggle', match: 'cb_security_rate_limiter' },
+				checked	= prc.cbSettings.cb_security_rate_limiter
+			)#
+			#html.hiddenField(
+				name	= "cb_security_rate_limiter",
+				value	= prc.cbSettings.cb_security_rate_limiter
+			)#
         </div>
     </div>
 
@@ -70,9 +84,16 @@
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter_bots_only", content="Enable For Automated Requests Only:" )#
         <div class="controls">
-            <small>When enabled, it will apply rate limiting only for cookie-less requests. If disabled, it will limit ALL requests, including "legit" user requests. Usually, automated scripts and DOS attacks have no cookies enabled.</small><br/>
-			#html.radioButton( name="cb_security_rate_limiter_bots_only", checked=prc.cbSettings.cb_security_rate_limiter_bots_only, value=true )# Yes
-			#html.radioButton( name="cb_security_rate_limiter_bots_only", checked=not prc.cbSettings.cb_security_rate_limiter_bots_only, value=false )# No
+            <small>When enabled, it will apply rate limiting only for cookie-less requests. If disabled, it will limit ALL requests, including "legit" user requests. Usually, automated scripts and DOS attacks have no cookies enabled.</small><br/><br />
+            #html.checkbox(
+				name    = "cb_security_rate_limiter_bots_only_toggle",
+				data	= { toggle: 'toggle', match: 'cb_security_rate_limiter_bots_only' },
+				checked	= prc.cbSettings.cb_security_rate_limiter_bots_only
+			)#
+			#html.hiddenField(
+				name	= "cb_security_rate_limiter_bots_only",
+				value	= prc.cbSettings.cb_security_rate_limiter_bots_only
+			)#
         </div>
     </div>
 
@@ -127,17 +148,16 @@
             content="Admin Force SSL (Secure Sockets Layer):"
         )#
         <div class="controls">
-            <small>You can enable SSL encryption for the administrator module.</small><br/>
-            #html.radioButton(
-                name="cb_admin_ssl",
-                checked=prc.cbSettings.cb_admin_ssl,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_admin_ssl",
-                checked=not prc.cbSettings.cb_admin_ssl,
-                value=false
-            )# No
+            <small>You can enable SSL encryption for the administrator module.</small><br /><br />
+            #html.checkbox(
+				name    = "cb_admin_ssl_toggle",
+				data	= { toggle: 'toggle', match: 'cb_admin_ssl' },
+				checked	= prc.cbSettings.cb_admin_ssl
+			)#
+			#html.hiddenField(
+				name	= "cb_admin_ssl",
+				value	= prc.cbSettings.cb_admin_ssl
+			)#
         </div>
     </div>
 
@@ -149,17 +169,16 @@
             content="Site Force SSL (Secure Sockets Layer):"
         )#
         <div class="controls">
-            <small>You can enable SSL encryption for the entire site.</small><br/>
-            #html.radioButton(
-                name="cb_site_ssl",
-                checked=prc.cbSettings.cb_site_ssl,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_site_ssl",
-                checked=not prc.cbSettings.cb_site_ssl,
-                value=false
-            )# No
+            <small>You can enable SSL encryption for the entire site.</small><br /><br />
+            #html.checkbox(
+				name    = "cb_site_ssl_toggle",
+				data	= { toggle: 'toggle', match: 'cb_site_ssl' },
+				checked	= prc.cbSettings.cb_site_ssl
+			)#
+			#html.hiddenField(
+				name	= "cb_site_ssl",
+				value	= prc.cbSettings.cb_site_ssl
+			)#
         </div>
     </div>  
 </fieldset>

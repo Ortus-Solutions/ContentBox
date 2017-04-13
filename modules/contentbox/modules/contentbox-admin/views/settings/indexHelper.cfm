@@ -3,6 +3,11 @@
 $(document).ready(function() {
 	// form validators
 	$( "##settingsForm" ).validate();
+	// toggle checkboxes
+	$( '.tab-content' ).find( 'input[data-toggle="toggle"]' ).change( function() {
+		var inputMatch = $( this ).data( 'match' );
+		$( "##" + inputMatch ).val( $( this ).prop( 'checked' ) );
+	});
 } );
 function emailTest(){
 	$( "##emailTestDiv" ).html( "" );

@@ -14,6 +14,11 @@ $(document).ready(function() {
             cb_comments_moderation_expiration: 'Please enter a vaild integer greater than or equal to 0'
         }
     } );
+    // toggle checkboxes
+	$( '.tab-content' ).find( 'input[data-toggle="toggle"]' ).change( function() {
+		var inputMatch = $( this ).data( 'match' );
+		$( "##" + inputMatch ).val( $( this ).prop( 'checked' ) );
+	});
 } );
 </script>
 </cfoutput>
