@@ -11,16 +11,15 @@
             content="Show Avatars:"
         )#
         <div class="controls">
-            #html.radioButton(
-                name="cb_gravatar_display",
-                checked=prc.cbSettings.cb_comments_urltranslations,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_gravatar_display",
-                checked=not prc.cbSettings.cb_comments_urltranslations,
-                value=false
-            )# No
+        	#html.checkbox(
+				name    = "cb_gravatar_display_toggle",
+				data	= { toggle: 'toggle', match: 'cb_gravatar_display' },
+				checked	= prc.cbSettings.cb_gravatar_display
+			)#
+			#html.hiddenField(
+				name	= "cb_gravatar_display",
+				value	= prc.cbSettings.cb_gravatar_display
+			)#
         </div>
     </div>
     <!--- Avatar Rating --->

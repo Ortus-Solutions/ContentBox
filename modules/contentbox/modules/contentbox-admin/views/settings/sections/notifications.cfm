@@ -46,16 +46,15 @@
             content="<i class='fa fa-user'></i> Send a notification when a user has been created or removed:"
         )#
         <div class="controls">
-            #html.radioButton( 
-                name="cb_notify_author",
-                checked=prc.cbSettings.cb_notify_author,
-                value=true
-            )# Yes
-            #html.radioButton( 
-                name="cb_notify_author",
-                checked=not prc.cbSettings.cb_notify_author,
-                value=false
-            )# No
+        	#html.checkbox(
+				name    = "cb_notify_author_toggle",
+				data	= { toggle: 'toggle', match: 'cb_notify_author' },
+				checked	= prc.cbSettings.cb_notify_author
+			)#
+			#html.hiddenField(
+				name	= "cb_notify_author",
+				value	= prc.cbSettings.cb_notify_author
+			)#
         </div>
     </div>    
     <!--- Notification on Entry Create --->
@@ -66,16 +65,15 @@
             content="<i class='fa fa-quote-left'></i> Send a notification when a blog entry has been created or removed:"
         )#
         <div class="controls">
-            #html.radioButton( 
-                name="cb_notify_entry",
-                checked=prc.cbSettings.cb_notify_entry,
-                value=true
-            )# Yes
-            #html.radioButton( 
-                name="cb_notify_entry",
-                checked=not prc.cbSettings.cb_notify_entry,
-                value=false
-            )# No
+        	#html.checkbox(
+				name    = "cb_notify_entry_toggle",
+				data	= { toggle: 'toggle', match: 'cb_notify_entry' },
+				checked	= prc.cbSettings.cb_notify_entry
+			)#
+			#html.hiddenField(
+				name	= "cb_notify_entry",
+				value	= prc.cbSettings.cb_notify_entry
+			)#
         </div>
     </div>
     <!--- Notification on Page Create --->
@@ -86,16 +84,15 @@
             content="<i class='fa fa-file'></i> Send a notification when a page has been created or removed:"
         )#
         <div class="controls">
-            #html.radioButton( 
-                name="cb_notify_page",
-                checked=prc.cbSettings.cb_notify_page,
-                value=true
-            )# Yes
-            #html.radioButton( 
-                name="cb_notify_page",
-                checked=not prc.cbSettings.cb_notify_page,
-                value=false
-            )# No
+        	#html.checkbox(
+				name    = "cb_notify_page_toggle",
+				data	= { toggle: 'toggle', match: 'cb_notify_page' },
+				checked	= prc.cbSettings.cb_notify_page
+			)#
+			#html.hiddenField(
+				name	= "cb_notify_page",
+				value	= prc.cbSettings.cb_notify_page
+			)#
         </div>
     </div>
     <!--- Notification on ContentStore Create --->
@@ -106,16 +103,15 @@
             content="<i class='fa fa-hdd-o'></i> Send a notification when a content store object has been created or removed:"
         )#
         <div class="controls">
-            #html.radioButton( 
-                name="cb_notify_contentstore",
-                checked=prc.cbSettings.cb_notify_contentstore,
-                value=true 
-            )# Yes
-            #html.radioButton( 
-                name="cb_notify_contentstore",
-                checked=not prc.cbSettings.cb_notify_contentstore,
-                value=false 
-            )# No
+        	#html.checkbox(
+				name    = "cb_notify_contentstore_toggle",
+				data	= { toggle: 'toggle', match: 'cb_notify_contentstore' },
+				checked	= prc.cbSettings.cb_notify_contentstore
+			)#
+			#html.hiddenField(
+				name	= "cb_notify_contentstore",
+				value	= prc.cbSettings.cb_notify_contentstore
+			)#
         </div>
     </div>
 </fieldset>

@@ -80,16 +80,14 @@
             content=cb.r( "tab.email.tls@installer" ) 
         )#
         <div class="controls">
-            <small>#cb.r( "tab.email.tls.help@installer" )#</small><br/>
-            #html.radioButton( 
-                name="cb_site_mail_tls",
-                value=true 
-            )# #cb.r( "common.yes@installer" )#  
-            #html.radioButton( 
-                name="cb_site_mail_tls",
-                checked="true",
-                value=false 
-            )# #cb.r( "common.no@installer" )# 
+            <small>#cb.r( "tab.email.tls.help@installer" )#</small><br />
+            #html.checkbox(
+				name    = "cb_site_mail_tls_toggle",
+				data	= { toggle: 'toggle', match: 'cb_site_mail_tls' }
+			)#
+			#html.hiddenField(
+				name	= "cb_site_mail_tls"
+			)#
         </div>
     </div>
     <!--- SSL --->
@@ -100,16 +98,14 @@
             content=cb.r( "tab.email.ssl@installer" ) 
         )#
         <div class="controls">
-            <small>#cb.r( "tab.email.ssl.help@installer" )#</small><br/>
-            #html.radioButton( 
-                name="cb_site_mail_ssl",
-                value=true 
-            )# #cb.r( "common.yes@installer" )#  
-            #html.radioButton( 
-                name="cb_site_mail_ssl",
-                checked=true,
-                value=false 
-            )# #cb.r( "common.no@installer" )# 
+            <small>#cb.r( "tab.email.ssl.help@installer" )#</small><br />
+            #html.checkbox(
+				name    = "cb_site_mail_ssl_toggle",
+				data	= { toggle: 'toggle', match: 'cb_site_mail_ssl' }
+			)#
+			#html.hiddenField(
+				name	= "cb_site_mail_ssl"
+			)#
         </div>
     </div>
 #html.endFieldSet()#

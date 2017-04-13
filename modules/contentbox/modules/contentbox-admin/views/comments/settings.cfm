@@ -46,16 +46,15 @@
                                                 class="control-label"
                                             )#
                                             <div class="controls">
-                                                #html.radioButton(
-                                                    name="cb_comments_enabled",
-                                                    checked=prc.cbSettings.cb_comments_enabled,
-                                                    value=true
-                                                )# Yes    
-                                                #html.radioButton(
-                                                    name="cb_comments_enabled",
-                                                    checked=not prc.cbSettings.cb_comments_enabled,
-                                                    value=false
-                                                )# No   
+                                            	#html.checkbox(
+													name    = "cb_comments_enabled_toggle",
+													data	= { toggle: 'toggle', match: 'cb_comments_enabled' },
+													checked	= prc.cbSettings.cb_comments_enabled
+												)#
+												#html.hiddenField(
+													name	= "cb_comments_enabled",
+													value	= prc.cbSettings.cb_comments_enabled
+												)# 
                                             </div>
                                         </div>
                                            
@@ -67,16 +66,15 @@
                                                 class="control-label"
                                             )#
                                             <div class="controls">
-                                                #html.radioButton(
-                                                    name="cb_comments_urltranslations",
-                                                    checked=prc.cbSettings.cb_comments_urltranslations,
-                                                    value=true
-                                                )# Yes    
-                                                #html.radioButton(
-                                                    name="cb_comments_urltranslations",
-                                                    checked=not prc.cbSettings.cb_comments_urltranslations,
-                                                    value=false
-                                                )# No    
+                                            	#html.checkbox(
+													name    = "cb_comments_urltranslations_toggle",
+													data	= { toggle: 'toggle', match: 'cb_comments_urltranslations' },
+													checked	= prc.cbSettings.cb_comments_urltranslations
+												)#
+												#html.hiddenField(
+													name	= "cb_comments_urltranslations",
+													value	= prc.cbSettings.cb_comments_urltranslations
+												)#
                                             </div>
                                         </div>
                                         
@@ -88,16 +86,15 @@
                                                 class="control-label"
                                             )#
                                             <div class="controls">
-                                                #html.radioButton(
-                                                    name="cb_comments_captcha",
-                                                    checked=prc.cbSettings.cb_comments_captcha,
-                                                    value=true
-                                                )# Yes    
-                                                #html.radioButton(
-                                                    name="cb_comments_captcha",
-                                                    checked=not prc.cbSettings.cb_comments_captcha,
-                                                    value=false
-                                                )# No 
+                                            	#html.checkbox(
+													name    = "cb_comments_captcha_toggle",
+													data	= { toggle: 'toggle', match: 'cb_comments_captcha' },
+													checked	= prc.cbSettings.cb_comments_captcha
+												)#
+												#html.hiddenField(
+													name	= "cb_comments_captcha",
+													value	= prc.cbSettings.cb_comments_captcha
+												)#
                                             </div>
                                         </div>
                                                                     
@@ -125,17 +122,16 @@
                                             content="An administrator must moderate the comment:"
                                         )#
                                         <div class="controls">
-                                            <small>All comments will be moderated according to our moderation rules</small><br/>
-                                            #html.radioButton(
-                                                name="cb_comments_moderation",
-                                                checked=prc.cbSettings.cb_comments_moderation,
-                                                value=true
-                                            )# Yes  
-                                            #html.radioButton(
-                                                name="cb_comments_moderation",
-                                                checked=not prc.cbSettings.cb_comments_moderation,
-                                                value=false
-                                            )# No  
+                                            <small>All comments will be moderated according to our moderation rules</small><br /><br />
+                                            #html.checkbox(
+												name    = "cb_comments_moderation_toggle",
+												data	= { toggle: 'toggle', match: 'cb_comments_moderation' },
+												checked	= prc.cbSettings.cb_comments_moderation
+											)#
+											#html.hiddenField(
+												name	= "cb_comments_moderation",
+												value	= prc.cbSettings.cb_comments_moderation
+											)#
                                         </div>
                                     </div>
 
@@ -146,17 +142,16 @@
                                             content="Comment author must have a previously approved comment:"
                                         )#
                                         <div class="controls">
-                                            <small>If an approved comment is found for the submitting email address, the comment is automatically approved and not moderated.</small><br/>
-                                            #html.radioButton(
-                                                name="cb_comments_moderation_whitelist",
-                                                checked=prc.cbSettings.cb_comments_moderation_whitelist,
-                                                value=true
-                                            )# Yes  
-                                            #html.radioButton(
-                                                name="cb_comments_moderation_whitelist",
-                                                checked=not prc.cbSettings.cb_comments_moderation_whitelist,
-                                                value=false
-                                            )# No
+                                            <small>If an approved comment is found for the submitting email address, the comment is automatically approved and not moderated.</small><br /><br />
+                                            #html.checkbox(
+												name    = "cb_comments_moderation_whitelist_toggle",
+												data	= { toggle: 'toggle', match: 'cb_comments_moderation_whitelist' },
+												checked	= prc.cbSettings.cb_comments_moderation_whitelist
+											)#
+											#html.hiddenField(
+												name	= "cb_comments_moderation_whitelist",
+												value	= prc.cbSettings.cb_comments_moderation_whitelist
+											)#
                                         </div>
                                     </div>  
                                     
@@ -240,14 +235,15 @@
                                     <div class="form-group">
                                         #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:" )#
                                         <div class="controls">
-                                            #html.radioButton(
-                                                name="cb_comments_notify",
-                                                checked=prc.cbSettings.cb_comments_notify,value=true
-                                            )# Yes  
-                                            #html.radioButton(
-                                                name="cb_comments_notify",
-                                                checked=not prc.cbSettings.cb_comments_notify,value=false
-                                            )# No  
+                                        	#html.checkbox(
+												name    = "cb_comments_notify_toggle",
+												data	= { toggle: 'toggle', match: 'cb_comments_notify' },
+												checked	= prc.cbSettings.cb_comments_notify
+											)#
+											#html.hiddenField(
+												name	= "cb_comments_notify",
+												value	= prc.cbSettings.cb_comments_notify
+											)#
                                         </div>
                                     </div>
                                     
@@ -258,16 +254,15 @@
                                             content="Send a notification when a comment needs moderation:"
                                         )#    
                                         <div class="controls">
-                                            #html.radioButton(
-                                                name="cb_comments_moderation_notify",
-                                                checked=prc.cbSettings.cb_comments_moderation_notify,
-                                                value=true
-                                            )# Yes    
-                                            #html.radioButton(
-                                                name="cb_comments_moderation_notify",
-                                                checked=not prc.cbSettings.cb_comments_moderation_notify,
-                                                value=false
-                                            )# No    
+                                        	#html.checkbox(
+												name    = "cb_comments_moderation_notify_toggle",
+												data	= { toggle: 'toggle', match: 'cb_comments_moderation_notify' },
+												checked	= prc.cbSettings.cb_comments_moderation_notify
+											)#
+											#html.hiddenField(
+												name	= "cb_comments_moderation_notify",
+												value	= prc.cbSettings.cb_comments_moderation_notify
+											)#
                                         </div>
                                     </div>                              
                                 </fieldset>                     

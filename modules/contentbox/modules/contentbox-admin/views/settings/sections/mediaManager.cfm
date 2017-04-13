@@ -55,17 +55,16 @@
             <div class="controls">
                 <small>If enabled,
  the media provider system will issue caching headers for all assets. 
-                You can use the <em>cbcache=true</em> URL param to issue no caching headers on any asset.</small><br/>
-                #html.radioButton(
-                    name="cb_media_provider_caching",
-                    checked=prc.cbSettings.cb_media_provider_caching,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_media_provider_caching",
-                    checked=not prc.cbSettings.cb_media_provider_caching,
-                    value=false
-                )# No
+                You can use the <em>cbcache=true</em> URL param to issue no caching headers on any asset.</small><br /><br />
+                #html.checkbox(
+					name    = "cb_media_provider_caching_toggle",
+					data	= { toggle: 'toggle', match: 'cb_media_provider_caching' },
+					checked	= prc.cbSettings.cb_media_provider_caching
+				)#
+				#html.hiddenField(
+					name	= "cb_media_provider_caching",
+					value	= prc.cbSettings.cb_media_provider_caching
+				)#
             </div>
         </div>
     </fieldset>
@@ -80,16 +79,15 @@
                 content="Allow Creation of Folders:"
             )#
             <div class="controls">
-                #html.radioButton(
-                    name="cb_media_createFolders",
-                    checked=prc.cbSettings.cb_media_createFolders,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_media_createFolders",
-                    checked=not prc.cbSettings.cb_media_createFolders,
-                    value=false
-                )# No
+            	#html.checkbox(
+					name    = "cb_media_createFolders_toggle",
+					data	= { toggle: 'toggle', match: 'cb_media_createFolders' },
+					checked	= prc.cbSettings.cb_media_createFolders
+				)#
+				#html.hiddenField(
+					name	= "cb_media_createFolders",
+					value	= prc.cbSettings.cb_media_createFolders
+				)#
             </div>
         </div>
         <!--- Delete --->
@@ -100,16 +98,15 @@
                 content="Allow Deletes:"
             )#
             <div class="controls">
-                #html.radioButton(
-                    name="cb_media_allowDelete",
-                    checked=prc.cbSettings.cb_media_allowDelete,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_media_allowDelete",
-                    checked=not prc.cbSettings.cb_media_allowDelete,
-                    value=false
-                )# No
+            	#html.checkbox(
+					name    = "cb_media_allowDelete_toggle",
+					data	= { toggle: 'toggle', match: 'cb_media_allowDelete' },
+					checked	= prc.cbSettings.cb_media_allowDelete
+				)#
+				#html.hiddenField(
+					name	= "cb_media_allowDelete",
+					value	= prc.cbSettings.cb_media_allowDelete
+				)#
             </div>
         </div>
         <!--- Downloads --->
@@ -120,16 +117,15 @@
                 content="Allow Downloads:"
             )#
             <div class="controls">
-                #html.radioButton(
-                    name="cb_media_allowDownloads",
-                    checked=prc.cbSettings.cb_media_allowDownloads,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_media_allowDownloads",
-                    checked=not prc.cbSettings.cb_media_allowDownloads,
-                    value=false
-                )# No
+            	#html.checkbox(
+					name    = "cb_media_allowDownloads_toggle",
+					data	= { toggle: 'toggle', match: 'cb_media_allowDownloads' },
+					checked	= prc.cbSettings.cb_media_allowDownloads
+				)#
+				#html.hiddenField(
+					name	= "cb_media_allowDownloads",
+					value	= prc.cbSettings.cb_media_allowDownloads
+				)#
             </div>
         </div>
         <!--- Uploads --->
@@ -140,16 +136,15 @@
                 content="Allow Uploads:"
             )#
             <div class="controls">
-                #html.radioButton(
-                    name="cb_media_allowUploads",
-                    checked=prc.cbSettings.cb_media_allowUploads,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_media_allowUploads",
-                    checked=not prc.cbSettings.cb_media_allowUploads,
-                    value=false
-                )# No
+            	#html.checkbox(
+					name    = "cb_media_allowUploads_toggle",
+					data	= { toggle: 'toggle', match: 'cb_media_allowUploads' },
+					checked	= prc.cbSettings.cb_media_allowUploads
+				)#
+				#html.hiddenField(
+					name	= "cb_media_allowUploads",
+					value	= prc.cbSettings.cb_media_allowUploads
+				)#
             </div>
         </div>
         <!--- Mime Types --->

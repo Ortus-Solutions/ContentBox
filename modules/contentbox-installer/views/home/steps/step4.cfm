@@ -23,26 +23,19 @@
 	)#
 	<div class="controls">
 		<label>
-			#html.radioButton( 
-				name 	= "fullrewrite",
-				value 	= true 
-			)# 
-			#cb.r( "common.yes@installer" )#
+			#html.checkbox(
+				name    = "fullrewrite_toggle",
+				data	= { toggle: 'toggle', match: 'fullrewrite' }
+			)#
+			#html.hiddenField(
+				name	= "fullrewrite"
+			)#
 		</label>
 		#html.select( 
 			options = "commandbox,contentbox_express,mod_rewrite,iis7",
 			name    = "rewrite_engine",
 			class   = "input-sm"
 		)#
-		<br/>
-		<label>
-			#html.radioButton( 
-				name 	= "fullrewrite",
-				checked = true,
-				value 	= false 
-			)# 
-			#cb.r( "common.no@installer" )#     
-		</label>
 	</div>
 </div>
 #html.endFieldSet()#

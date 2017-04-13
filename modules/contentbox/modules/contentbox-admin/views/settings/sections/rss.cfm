@@ -88,16 +88,15 @@
             content="Activate RSS feed caching:"
         )#
         <div class="controls">
-            #html.radioButton(
-                name="cb_rss_caching",
-                checked=prc.cbSettings.cb_rss_caching,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_rss_caching",
-                checked=not prc.cbSettings.cb_rss_caching,
-                value=false
-            )# No
+        	#html.checkbox(
+				name    = "cb_rss_caching_toggle",
+				data	= { toggle: 'toggle', match: 'cb_rss_caching' },
+				checked	= prc.cbSettings.cb_rss_caching
+			)#
+			#html.hiddenField(
+				name	= "cb_rss_caching",
+				value	= prc.cbSettings.cb_rss_caching
+			)#
         </div>
     </div>
     <!--- RSS Cache Name --->

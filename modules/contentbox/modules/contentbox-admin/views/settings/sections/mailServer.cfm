@@ -83,17 +83,16 @@
             content="Use TLS:"
         )#
         <div class="controls">
-            <small>Whether to use TLS when sending mail or not.</small><br/>
-            #html.radioButton(
-                name="cb_site_mail_tls",
-                checked=prc.cbSettings.cb_site_mail_tls,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_site_mail_tls",
-                checked=not prc.cbSettings.cb_site_mail_tls,
-                value=false
-            )# No
+            <small>Whether to use TLS when sending mail or not.</small><br /><br />
+            #html.checkbox(
+				name    = "cb_site_mail_tls_toggle",
+				data	= { toggle: 'toggle', match: 'cb_site_mail_tls' },
+				checked	= prc.cbSettings.cb_site_mail_tls
+			)#
+			#html.hiddenField(
+				name	= "cb_site_mail_tls",
+				value	= prc.cbSettings.cb_site_mail_tls
+			)#
         </div>
     </div>
     <!--- SSL --->
@@ -104,17 +103,16 @@
             content="Use SSL:"
         )#
         <div class="controls">
-            <small>Whether to use SSL when sending mail or not.</small><br/>
-            #html.radioButton(
-                name="cb_site_mail_ssl",
-                checked=prc.cbSettings.cb_site_mail_ssl,
-                value=true
-            )# Yes
-            #html.radioButton(
-                name="cb_site_mail_ssl",
-                checked=not prc.cbSettings.cb_site_mail_ssl,
-                value=false
-            )# No
+            <small>Whether to use SSL when sending mail or not.</small><br /><br />
+            #html.checkbox(
+				name    = "cb_site_mail_ssl_toggle",
+				data	= { toggle: 'toggle', match: 'cb_site_mail_ssl' },
+				checked	= prc.cbSettings.cb_site_mail_ssl
+			)#
+			#html.hiddenField(
+				name	= "cb_site_mail_ssl",
+				value	= prc.cbSettings.cb_site_mail_ssl
+			)#
         </div>
     </div>
     <!--- Test Connection --->

@@ -51,7 +51,7 @@ $( document ).ready( function(){
 		}, 
 		'#cb.r( "validation.passwordcheck@installer" )#' 
 	);
-
+	
 } );
 
 function nextStep(){
