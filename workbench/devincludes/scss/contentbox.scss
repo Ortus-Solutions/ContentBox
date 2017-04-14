@@ -26,7 +26,11 @@
 #header a.btn-default{
 	vertical-align: middle;
 }
-
+/* Overrides due to toggles conflict */
+#header .btn-default{
+	min-height: 35px;
+	min-width: 35px;
+}
 /* close gap between li's */
 #header .user-nav ul li{
 	margin: 0px 5px;
