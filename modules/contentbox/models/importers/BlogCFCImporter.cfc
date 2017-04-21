@@ -27,6 +27,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
+	property name="statsService"		inject="id:statsService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="roleService"			inject="id:roleService@cb";
 	property name="commentService"		inject="id:commentService@cb";
@@ -161,6 +162,9 @@ component implements="contentbox.models.importers.ICBImporter" {
 							};
 
 				var entry = entryService.new(properties = props);
+				var oStat = statsService.new( { hits = props.hits } );
+				oStat.setRelatedContent( entry );
+				entry.setStats( oStat );
 				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[ x ]] ));
 				entry.setCreator( authorService.get( authorMap[q.username[ x ]] ) );
 				
