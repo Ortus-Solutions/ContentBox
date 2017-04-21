@@ -101,6 +101,8 @@ component extends="baseHandler"{
 		event.paramValue( "tableprefix","" );
 		event.paramValue( "roleID","" );
 		
+		setting requesttimeout="18000";
+
 		// validate
 		if( !len( rc.dsn ) or !len( rc.defaultPassword ) ){
 			cbMessagebox.warn( "Please fill out all required fields." );
