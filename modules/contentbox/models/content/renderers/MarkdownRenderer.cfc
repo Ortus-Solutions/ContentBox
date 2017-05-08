@@ -26,7 +26,7 @@ component extends="coldbox.system.Interceptor"{
 		var thisMarkup = arguments.interceptData.content.getMarkup() ;
 
 		// Markdown 
-		if( thisMarkup eq MARKDOWN_EDITOR ){
+		if( !isNull(thisMarkup) and thisMarkup eq MARKDOWN_EDITOR ){
 			// convert markup to HTML
 			var results = variables.markdown.toHTML( arguments.interceptData.builder.toString() );
 			// Replace builder with new content
