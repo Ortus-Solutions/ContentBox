@@ -176,6 +176,7 @@ component {
 	 * Example: contentbox.default.cb_media_directoryRoot
 	 */
 	private function loadEnvironmentOverrides(){
+		var settingService      	= wirebox.getInstance( "SettingService@cb" );
 		var oSystem 			= createObject( "java", "java.lang.System" );
 		var environmentSettings = oSystem.getEnv();
 		var overrides 			= {};
