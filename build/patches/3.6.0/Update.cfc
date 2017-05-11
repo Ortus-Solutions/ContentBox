@@ -76,7 +76,7 @@ component {
 			arguments.log.append( "Finalized #variables.version# preInstallation patching" );
 		} catch( Any e ) {
 			ORMClearSession();
-			arguments.log.append( "Error doing #variables.version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#", e );
+			arguments.log.append( "Error doing #variables.version# patch preInstallation. #e.message# #e.detail# #e.stacktrace#" );
 			rethrow;
 		}
 
