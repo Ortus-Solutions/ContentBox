@@ -1,0 +1,36 @@
+{
+    "name":"ContentBox Installer Module",
+    "version":"@version.number@+@build.number@",
+    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-installer-module-@version.number@.zip",
+    "author":"Ortus Solutions <info@ortussolutions.com>",
+    "slug":"contentbox-installer-module",
+    "shortDescription":"The ContentBox installer module for new sites",
+    "type":"cms",
+    "keywords":"cms,content management,modular cms",
+    "homepage":"https://www.contentboxcms.org",
+    "documentation":"https://contentbox.ortusbooks.com",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/Ortus-Solutions/ContentBox"
+    },
+    "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
+        "Joel Watson <existdissolve@gmail.com>",
+        "Brad Wood <bdw429s@gmail.com>",
+        "Curt Gratz <gratz@computerknowhow.com>"
+    ],
+    "dependencies":{
+    },
+    "installPaths":{
+    },
+    "devDependencies":{
+    },
+    "ignores":[
+    ]
+}

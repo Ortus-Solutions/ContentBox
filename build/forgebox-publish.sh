@@ -14,6 +14,10 @@ if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
 	cat $TRAVIS_BUILD_DIR/build/build-contentbox/installer/box.json;
 	cd $TRAVIS_BUILD_DIR/build/build-contentbox/installer && box forgebox publish && cd $TRAVIS_BUILD_DIR;
 
+	echo Publishing Installer Module - $TRAVIS_BRANCH;
+	cat $TRAVIS_BUILD_DIR/build/build-contentbox/installer-module/box.json;
+	cd $TRAVIS_BUILD_DIR/build/build-contentbox/installer-module && box forgebox publish && cd $TRAVIS_BUILD_DIR;
+
 	if [ $TRAVIS_BRANCH == 'development' ]; then
 		echo Publishing Beta Updates Channel;
 		cd $TRAVIS_BUILD_DIR/build/build-contentbox/forgebox/beta-updates && box forgebox publish && cd $TRAVIS_BUILD_DIR;
