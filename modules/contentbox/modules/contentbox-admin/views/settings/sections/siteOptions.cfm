@@ -195,9 +195,9 @@
 		<!--- Site maintenance --->
 		<div class="form-group">
 			#html.label(
-				class="control-label",
-				field="cb_site_maintenance",
-				content="Site Maintenance:"
+				class 	= "control-label",
+				field 	= "cb_site_maintenance",
+				content = "Site Maintenance:"
 			)#
 			<div class="controls">
 				#html.checkbox(
