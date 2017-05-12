@@ -1343,6 +1343,9 @@ component accessors="true" singleton threadSafe{
 		if( isSimpleValue( arguments.page ) ){
 			return linkPageWithSlug( arguments.page, arguments.ssl, arguments.format );
 		}
+		if( arguments.page.getSlug() eq getHomePage() ){
+			return getRequestContext().buildLink(linkTo=siteRoot(), ssl=arguments.ssl);
+		}		
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
@@ -1357,6 +1360,9 @@ component accessors="true" singleton threadSafe{
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
+		if( arguments.slug eq getHomePage() ){
+			return getRequestContext().buildLink(linkTo=siteRoot(), ssl=arguments.ssl);
+		}
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
