@@ -97,7 +97,7 @@ function insertAdminBar(){
     height: 55px;
     top: 0;
     left: 0;
-    background: #333;
+    background: ##333;
     color: white;
     text-align: center;
     position: fixed;
