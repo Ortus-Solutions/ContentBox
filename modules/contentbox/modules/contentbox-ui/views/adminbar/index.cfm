@@ -115,10 +115,15 @@ function insertAdminBar(){
 ##cb-admin-bar h4{
 	color: white;
 	float: left;
+	margin-top: 6px;
+}
+##cb-admin-bar h4 img{
+	vertical-align: middle;
+	margin-right: 5px;
 }
 ##cb-admin-bar p{
 	font-size: 12px;
-	margin-top: 18px;
+	margin-top: 11px;
 }
 ##cb-admin-bar .admin-bar-label-red{
 	background-color: red;
