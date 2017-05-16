@@ -24,6 +24,7 @@ component 	persistent="true"
 	property 	name="categoryService" 	 		inject="categoryService@cb" 		persistent="false";
 	property 	name="contentService"			inject="contentService@cb"			persistent="false";
 	property 	name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
+	property 	name="i18n" 					inject="i18n@cbi18n"				persistent="false";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES									
@@ -1235,7 +1236,7 @@ component 	persistent="true"
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
-		return "cb-content-#cgi.http_host#-#getContentType()#-#getContentID()#";
+		return "cb-content-#cgi.http_host#-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#";
 	}
 
 	/**
