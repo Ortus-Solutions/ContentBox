@@ -1421,7 +1421,7 @@ component accessors="true" singleton threadSafe{
 	 * @lang The iso language code
 	 */
 	function linkLanguageChange( string lang = "en_US" ) {
-		return getRequestContext().buildLink('__changeLang/' & arguments.lang);
+		return getRequestContext().buildLink( '__changeLang/' & arguments.lang );
 	}
 
 	/**
