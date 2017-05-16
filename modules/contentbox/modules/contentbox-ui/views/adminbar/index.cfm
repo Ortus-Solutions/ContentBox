@@ -103,7 +103,6 @@ function insertAdminBar(){
     position: fixed;
     z-index: 9999;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-	z-index: 9999;
 }
 ##cb-admin-bar-spacer{
 	height:55px;
