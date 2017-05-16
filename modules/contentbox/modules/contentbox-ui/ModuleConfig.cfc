@@ -51,6 +51,8 @@ component {
 			{ pattern="/__removesubscriptions/", handler="subscription", action="removeSubscriptions" },
 			// unsubscribe link for single subscription
 			{ pattern="/__unsubscribe/:subscriptionToken", handler="subscription", action="unsubscribe" },
+			// change language
+			{ pattern="/__changeLang/:lang", handler="content", action="changeLang" },
 
 			/************************************** RSS ROUTES *********************************************/
 

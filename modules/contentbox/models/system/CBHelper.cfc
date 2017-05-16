@@ -1417,6 +1417,14 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
+	 * Link to the __changeLang route, this is where the fwLocale is changed
+	 * @lang The iso language code
+	 */
+	function linkLanguageChange( string lang = "en_US" ) {
+		return getRequestContext().buildLink( '__changeLang/' & arguments.lang );
+	}
+
+	/**
 	 * Easy function to render out a ContentBox Captcha Image.
 	 * This function returns the <img> HTML
 	 * @return html

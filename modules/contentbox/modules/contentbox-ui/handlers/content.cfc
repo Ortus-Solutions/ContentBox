@@ -55,6 +55,15 @@ component{
 			rc.format = "html";
 		}
 	}
+
+	/**
+	* Change the fwLocale
+	*/
+	function changeLang( event, rc, prc ){
+		event.paramValue( "lang", "en_US" );
+		setFWLocale( rc.lang );
+		setNextEvent( url="/" );
+	}
 	
 	/**
 	* Preview the site
