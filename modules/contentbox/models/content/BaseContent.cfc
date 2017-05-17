@@ -1236,7 +1236,7 @@ component 	persistent="true"
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
-		return "cb-content-#cgi.http_host#-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#";
+		return "cb-content-#cgi.http_host#-#cgi.query_string#-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#";
 	}
 
 	/**
