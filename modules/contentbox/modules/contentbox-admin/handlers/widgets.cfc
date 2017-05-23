@@ -35,7 +35,7 @@ component extends="baseHandler"{
 		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug 		= "contentbox-widgets";
-		prc.forgeBoxInstallDir 	= URLEncodedFormat( widgetService.getWidgetsPath() );
+		prc.forgeBoxInstallDir 	= "widgets";
 		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink(prc.xehWidgets) );
 
 		// view
