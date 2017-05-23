@@ -72,8 +72,7 @@ component singleton{
 				overwriteFiles	= "true" 
 			);
 
-			var cleanDestination = replaceNoCase( destination, REReplace( expandPath( "/" ), "\\", "/", "all" ), "" );
-			log.append( "Archive uncompressed and installed at #cleanDestination#. Performing cleanup.<br />" );
+			log.append( "Archive uncompressed and installed. Performing cleanup.<br />" );
 
 			fileDelete( variables.tmpDir & "/" & filename );
 		}  else {
@@ -81,7 +80,7 @@ component singleton{
 			fileDelete( variables.tmpDir & "/" & fileName );
 		}
 		
-		log.append( "Entry: #filename# successfully installed at #cleanDestination#.<br />" );
+		log.append( "Entry: #filename# successfully installed.<br />" );
 		results = { error=false, logInfo=log.toString() };
 		
 		return results;
