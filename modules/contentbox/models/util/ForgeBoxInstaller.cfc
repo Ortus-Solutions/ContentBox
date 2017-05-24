@@ -72,7 +72,7 @@ component singleton{
 				overwriteFiles	= "true" 
 			);
 
-			log.append( "Archive uncompressed and installed at #destination#. Performing cleanup.<br />" );
+			log.append( "Archive uncompressed and installed. Performing cleanup.<br />" );
 
 			fileDelete( variables.tmpDir & "/" & filename );
 		}  else {
@@ -80,7 +80,7 @@ component singleton{
 			fileDelete( variables.tmpDir & "/" & fileName );
 		}
 		
-		log.append( "Entry: #filename# successfully installed at #destination#.<br />" );
+		log.append( "Entry: #filename# successfully installed.<br />" );
 		results = { error=false, logInfo=log.toString() };
 		
 		return results;

@@ -55,7 +55,7 @@ component extends="baseHandler"{
 		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug 		= "contentbox-themes";
-		prc.forgeBoxInstallDir 	= URLEncodedFormat( themeService.getThemesPath() );
+		prc.forgeBoxInstallDir 	= "themes";
 		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink( linkto=prc.xehThemes, querystring="rescan=true##managePane" ) );
 
 		// Tab
