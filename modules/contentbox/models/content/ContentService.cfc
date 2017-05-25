@@ -400,7 +400,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function findFuturePublishedContent( 
 		any author, 
 		numeric max=0,
-		numeric offset=0,
+		numeric offset=0
 	){
 		var c = newCriteria().createAlias( "activeContent", "ac" );
 

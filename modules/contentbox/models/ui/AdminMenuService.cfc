@@ -139,7 +139,7 @@ component accessors="true" threadSafe singleton{
 
     	if( arguments.menu.itemType=="a" ) {
     		if( isCustomFunction( arguments.menu.href ) || isClosure( arguments.menu.href ) ){
-    			attributes[ "href" ] = arguments.menu.href( arguments.menu, arguments.event )
+    			attributes[ "href" ] = arguments.menu.href( arguments.menu, arguments.event );
     		} else {
     			attributes[ "href" ] = arguments.menu.href;
     		}
@@ -147,7 +147,7 @@ component accessors="true" threadSafe singleton{
 
     	if( arguments.menu.itemType=="button" ) {
     		if( isCustomFunction( arguments.menu.href ) || isClosure( arguments.menu.href ) ){
-    			attributes[ "onclick" ] = arguments.menu.href( arguments.menu, arguments.event )
+    			attributes[ "onclick" ] = arguments.menu.href( arguments.menu, arguments.event );
     		} else {
     			attributes[ "onclick" ] = arguments.menu.href;
     		}
