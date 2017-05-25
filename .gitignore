@@ -26,6 +26,9 @@ testbox/*
 **/node_modules/**
 **/bower_components/**
 
+# Engines
+.engines
+
 # Module Dependencies
 modules/contentbox/themes/default/bower_components
 modules/contentbox/themes/default/node_modules
@@ -36,6 +39,3 @@ modules/contentbox/modules/contentbox-deps/modules/*
 # Testing
 /tests/logs/*
 /tests/test-results/*
-config/Routes.cfm
-modules/contentbox/modules/contentbox-deps/box.json
-server-ContentBox.json
