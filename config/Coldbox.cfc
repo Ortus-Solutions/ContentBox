@@ -109,7 +109,7 @@ component{
 		];
 
 		// ContentBox Runtime Overrides
-		contentbox = {
+		"contentbox" = {
 			// Runtime Settings Override by site slug
 		  	"settings" = {
 		  		// Default site
@@ -117,7 +117,7 @@ component{
 		  			//"cb_media_directoryRoot" 	= "/docker/mount"
 		  		}
 		  	}
-		}
+		};
 
 	}
 
