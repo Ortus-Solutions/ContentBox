@@ -29,7 +29,7 @@ component{
 	function preHandler( event, rc, prc ,action,eventArguments){
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
-			if( prc.oCurrentAuthor.getAuthorID() && prc.oCurrentAuthor.checkPermission( "MAINTENANCE_MODE_VIEWER" )  ){
+			if( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.checkPermission( "MAINTENANCE_MODE_VIEWER" )  ){
 				addAsset( "#prc.cbRoot#/includes/js/maintenance.js" );	
 			} else {
 				event.overrideEvent( "contentbox-ui:page.maintenance" );
