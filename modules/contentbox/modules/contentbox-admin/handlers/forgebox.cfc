@@ -45,8 +45,18 @@ component extends="baseHandler"{
 	*/
 	function install( event, rc, prc ){
 		rc.downloadURL 	= urldecode( rc.downloadURL );
-		rc.installDir  	= urldecode( rc.installDir );
 		rc.returnURL 	= urldecode( rc.returnURL );
+		switch ( rc.installDir ) {
+			case "modules":
+				rc.installDir = getInstance( "moduleService@cb" ).getModulesPath();
+				break;
+			case "themes":
+				rc.installDir = getInstance( "themeService@cb" ).getThemesPath();
+				break;
+			case "widgets":
+				rc.installDir = getInstance( "widgetService@cb" ).getWidgetsPath();
+				break;
+		}
 
 		// get entries
 		var results = forgeboxInstaller.install( rc.downloadURL, rc.installDir );

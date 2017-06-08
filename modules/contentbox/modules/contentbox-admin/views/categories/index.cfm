@@ -4,6 +4,7 @@
 		<h1 class="h1"><i class="fa fa-tag"></i> Content Categories</h1>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
 		<!--- MessageBox --->
@@ -14,22 +15,28 @@
 		</cfif>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
+		
 		#html.startForm( name="categoryForm", action=prc.xehCategoryRemove )#
 		#html.hiddenField( name="categoryID", value="" )#
+		
 		<div class="panel panel-default">
 			<div class="panel-heading">
+				
 				<div class="row">
+				
 					<div class="col-md-6">
 						<div class="form-group form-inline no-margin">
 							#html.textField( 
-								name="categorySearch",
-								class="form-control",
-								placeholder="Quick Search"
+								name		= "categorySearch",
+								class		= "form-control",
+								placeholder	= "Quick Search"
 							)#
 						</div>
 					</div>
+				
 					<div class="col-md-6">
 						<div class="pull-right">
 							<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
@@ -70,6 +77,7 @@
 							<th>Slug</th>		
 							<th width="75" class="text-center">Pages</th>
 							<th width="75" class="text-center">Entries</th>	
+							<th width="75" class="text-center">ContentStore</th>	
 							<th width="100" class="text-center {sorter:false}">Actions</th>
 						</tr>
 					</thead>
@@ -80,12 +88,22 @@
 							<td class="text-center">
 								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
 							</td>
-							<td><a href="javascript:edit('#category.getCategoryID()#',
-								   						 '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-								   						 '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#">#category.getCategory()#</a></td>
+							<td>
+								<a href="javascript:edit( '#category.getCategoryID()#',
+								   						  '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+								   						  '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" 
+								   	title="Edit #category.getCategory()#">#category.getCategory()#</a>
+							</td>
 							<td>#category.getSlug()#</td>
-							<td class="text-center"><span class="badge badge-info">#category.getNumberOfPages()#</span></td>
-							<td class="text-center"><span class="badge badge-info">#category.getnumberOfEntries()#</span></td>
+							<td class="text-center">
+								<span class="badge badge-info">#category.getNumberOfPages()#</span>
+							</td>
+							<td class="text-center">
+								<span class="badge badge-info">#category.getnumberOfEntries()#</span>
+							</td>
+							<td class="text-center">
+								<span class="badge badge-info">#category.getNumberOfContentStore()#</span>
+							</td>
 							<td class="text-center">
 								<div class="btn-group">
 									<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
@@ -120,36 +138,47 @@
 	                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-tag"></i> Category Editor</h4>
 			    </div>
 				<!--- Create/Edit form --->
-				#html.startForm(action=prc.xehCategoriesSave,name="categoryEditor",novalidate="novalidate",class="form-vertical",role="form" )#
+				#html.startForm(
+					action 			= prc.xehCategoriesSave,
+					name 			= "categoryEditor",
+					novalidate 		= "novalidate",
+					class 			= "form-vertical",
+					role 			= "form" 
+				)#
 				<div class="modal-body">
-					#html.hiddenField(name="categoryID",value="" )#
+					#html.hiddenField( name="categoryID", value="" )#
 					#html.textField(
-						name="category",
-						label="Category:",
-						required="required",
-						maxlength="100",
-						size="30",
-						placeholder="Enter Category",
-						class="form-control",
-						wrapper="div class=controls",
-						labelClass="control-label",
-						groupWrapper="div class=form-group"
+						name		 	= "category",
+						label		 	= "Category:",
+						required	 	= "required",
+						maxlength	 	= "100",
+						size		 	= "30",
+						placeholder	 	= "Enter Category",
+						class		 	= "form-control",
+						wrapper		 	= "div class=controls",
+						labelClass 		= "control-label",
+						groupWrapper 	= "div class=form-group"
 					)#
 					#html.textField(
-						name="slug",
-						label="Slug (blank to generate it):",
-						maxlength="100",
-						size="30",
-						class="form-control",
-						wrapper="div class=controls",
-						labelClass="control-label",
-						groupWrapper="div class=form-group"
+						name		 = "slug",
+						label		 = "Slug (blank to generate it):",
+						maxlength	 = "100",
+						size		 = "30",
+						class		 = "form-control",
+						wrapper 	 = "div class=controls",
+						labelClass 	 = "control-label",
+						groupWrapper = "div class=form-group"
 					)#
 				</div>
 				<!--- Footer --->
 				<div class="modal-footer">
-					#html.resetButton(name="btnReset",value="Cancel",class="btn", onclick="closeModal( $('##categoryEditorContainer') )" )#
-					#html.submitButton(name="btnSave",value="Save Category",class="btn btn-danger" )#
+					#html.resetButton(
+						name	= "btnReset",
+						value	= "Cancel",
+						class	= "btn",
+						onclick	= "closeModal( $( '##categoryEditorContainer' ) )" 
+					)#
+					#html.submitButton( name="btnSave", value="Save Category", class="btn btn-danger" )#
 				</div>
 				#html.endForm()#
 			</div>

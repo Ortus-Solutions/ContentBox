@@ -631,7 +631,7 @@ component accessors="true" singleton threadSafe{
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if( structKeyExists( prc.meta, "description" ) ){
-			return prc.meta.description;
+			return stripWhitespace(prc.meta.description);
 		} else {
 			return '';
 		}
@@ -654,7 +654,7 @@ component accessors="true" singleton threadSafe{
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if( structKeyExists( prc.meta, "keywords" ) ){
-			return prc.meta.keywords;
+			return stripWhitespace(prc.meta.keywords);
 		} else {
 			return '';
 		}
@@ -700,7 +700,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Description is set Manually, return it
 		if( len( getMetaDescription() ) ){
-			return getMetaDescription();
+			return stripWhitespace(getMetaDescription());
 		}
 		
 		// Check if in page view or entry view
@@ -720,7 +720,7 @@ component accessors="true" singleton threadSafe{
 			// Default description from content in non HTML mode
 			return HTMLEditFormat(
 				REReplaceNoCase( 
-					left( oCurrentContent.getContent(), 160 ), 
+					left( stripWhitespace(oCurrentContent.getContent()), 160 ), 
 					"<[^>]*>", 
 					"", 
 					"ALL" 
@@ -740,7 +740,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Keywords is set Manually, return it
 		if( len( getMetaKeywords() ) ){
-			return getMetaKeywords();
+			return stripWhitespace(getMetaKeywords());
 		}
 		
 		// Check if in page view or entry view
@@ -752,7 +752,7 @@ component accessors="true" singleton threadSafe{
 
 		// in context view or global
 		if( isObject( oCurrentContent ) AND len( oCurrentContent.getHTMLKeywords() ) ){
-			return oCurrentContent.getHTMLKeywords();
+			return stripWhitespace(oCurrentContent.getHTMLKeywords());
 		}
 
 		// Return global site description
@@ -1343,6 +1343,9 @@ component accessors="true" singleton threadSafe{
 		if( isSimpleValue( arguments.page ) ){
 			return linkPageWithSlug( arguments.page, arguments.ssl, arguments.format );
 		}
+		if( arguments.page.getSlug() eq getHomePage() ){
+			return linkHome();
+		}		
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
@@ -1357,6 +1360,9 @@ component accessors="true" singleton threadSafe{
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		arguments.slug = reReplace( arguments.slug, "^/","" );
+		if( arguments.slug eq getHomePage() ){
+			return linkHome();
+		}
 		var xeh = siteRoot() & sep() & "#arguments.slug#";
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
@@ -1408,6 +1414,14 @@ component accessors="true" singleton threadSafe{
 		}
 
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
+	}
+
+	/**
+	 * Link to the __changeLang route, this is where the fwLocale is changed
+	 * @lang The iso language code
+	 */
+	function linkLanguageChange( string lang = "en_US" ) {
+		return getRequestContext().buildLink( '__changeLang/' & arguments.lang );
 	}
 
 	/**
@@ -1923,6 +1937,14 @@ component accessors="true" singleton threadSafe{
 		return EncodeForHTML( REReplaceNoCase( arguments.stringTarget, "<[^>]*>", "", "ALL" ) );
 	}
 
+	/**
+	* removes CR LF TAB double spaces from string
+	*/
+	function stripWhitespace( required stringTarget ){
+		arguments.stringTarget = REReplace( arguments.stringTarget, "\s", " ", "ALL" );
+		return REReplace( arguments.stringTarget, "\s{2,}", " ", "ALL" );
+	}
+
 	/************************************** PRIVATE *********************************************/
 
 	private function buildMenu(
@@ -2091,3 +2113,4 @@ component accessors="true" singleton threadSafe{
 	}
 	
 }
+

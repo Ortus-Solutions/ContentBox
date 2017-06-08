@@ -42,21 +42,68 @@ component 	persistent="true"
 	**							CALCULATED FIELDS									
 	********************************************************************* */
 
+	property 	name="numberOfContentStore" 
+				formula="select count(*) 
+						from cb_contentCategories as contentCategories, cb_contentStore as contentStore, cb_content as content
+						where contentCategories.FK_categoryID=categoryID
+							and contentCategories.FK_contentID = contentStore.contentID
+						   	and contentStore.contentID = content.contentID" ;
+
+	property 	name="numberOfPublishedContentStore" 
+				formula="select count(*) 
+						from cb_contentCategories as contentCategories, cb_contentStore as contentStore, cb_content as content
+						where contentCategories.FK_categoryID=categoryID
+							and contentCategories.FK_contentID = contentStore.contentID
+						   	and contentStore.contentID = content.contentID
+						  	and content.isPublished = 1
+						  	and content.publishedDate <= CURRENT_TIMESTAMP()
+						  	and content.passwordProtection = ''
+						  	and ( 
+								content.expireDate is null or
+								content.expireDate >= CURRENT_TIMESTAMP()
+						  	)" ;
+
 	property 	name="numberOfEntries" 
 				formula="select count(*) 
 						from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
 						where contentCategories.FK_categoryID=categoryID
 							and contentCategories.FK_contentID = entry.contentID
+						   	and entry.contentID = content.contentID" ;
+
+	property 	name="numberOfPublishedEntries" 
+				formula="select count(*) 
+						from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
+						where contentCategories.FK_categoryID=categoryID
+							and contentCategories.FK_contentID = entry.contentID
 						   	and entry.contentID = content.contentID
-						  	and content.isPublished = 1" ;
+						  	and content.isPublished = 1
+						  	and content.publishedDate <= CURRENT_TIMESTAMP()
+						  	and content.passwordProtection = ''
+						  	and ( 
+								content.expireDate is null or
+								content.expireDate >= CURRENT_TIMESTAMP()
+						  	)" ;
 
 	property 	name="numberOfPages" 	
 				formula="select count(*) 
 						from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
 						where contentCategories.FK_categoryID=categoryID
 							and contentCategories.FK_contentID = page.contentID
+							and page.contentID = content.contentID" ;
+
+	property 	name="numberOfPublishedPages" 	
+				formula="select count(*) 
+						from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
+						where contentCategories.FK_categoryID=categoryID
+							and contentCategories.FK_contentID = page.contentID
 							and page.contentID = content.contentID
-							and content.isPublished = 1" ;
+							and content.isPublished = 1
+						  	and content.publishedDate <= CURRENT_TIMESTAMP()
+						  	and content.passwordProtection = ''
+						  	and ( 
+								content.expireDate is null or
+								content.expireDate >= CURRENT_TIMESTAMP()
+						  	)" ;
 
 	/* *********************************************************************
 	**							PK + CONSTRAINTS									

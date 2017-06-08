@@ -272,7 +272,9 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div id="locationBar">
 			#announceInterception( "fb_preLocationBar" )#
 			<cfset crumbDir = "">
-			<cfloop list="#prc.fbCurrentRoot#" delimiters="/" index="crumb">
+			<cfset rootPath = replaceNoCase(prc.fbCurrentRoot, prc.fbSettings.directoryRoot, "")>
+			/&nbsp;<cfif rootPath neq "">&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;</cfif>
+			<cfloop list="#rootPath#" delimiters="/" index="crumb">
 				<cfif crumbDir neq "">
 					&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;
 				</cfif>	

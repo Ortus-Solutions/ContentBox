@@ -98,7 +98,7 @@ component extends="baseHandler"{
 		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
 		// ForgeBox Stuff
 		prc.forgeBoxSlug = "contentbox-modules";
-		prc.forgeBoxInstallDir = URLEncodedFormat( moduleService.getModulesPath() );
+		prc.forgeBoxInstallDir = "modules";
 		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink( linkto=prc.xehModules, querystring="rescan=true" ) );
 
 		// view

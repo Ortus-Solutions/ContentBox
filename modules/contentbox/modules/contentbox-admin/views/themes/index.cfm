@@ -28,13 +28,13 @@
 		            <!-- Tabs -->
 		            <ul class="nav nav-tabs">
 						<!--- Manage Themes --->
-						<li class="active navbar" title="Manage Themes">
+						<li class="active" title="Manage Themes">
 							<a href="##managePane" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Manage</a>
 						</li>
 
 						<!--- Install Themes --->
 						<cfif prc.oCurrentAuthor.checkPermission( "FORGEBOX_ADMIN" )>
-							<li title="Install New Themes" class="navbar">
+							<li title="Install New Themes" class="">
 								<a href="##forgeboxPane"  data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
 							</li>
 						</cfif>

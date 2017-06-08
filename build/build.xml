@@ -163,9 +163,11 @@
 	<target name="build.installer" description="Build a new ContentBox installer release" depends="build.module">
 		<!-- Create site Build dir -->
 		<mkdir dir="${dir.build}/installer"/>
+		<mkdir dir="${dir.build}/installer-module"/>
 		
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/installer/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
+		<concat destfile="${dir.build}/installer-module/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 
 		<!-- Copy Source -->	
       	<copy todir="${dir.build}/installer" encoding="UTF-8">
@@ -187,6 +189,15 @@
       			<!-- Remove Dependencies -->
       			<exclude name="modules/contentbox/**" />
       		</fileset>
+        </copy>
+
+        <!-- Copy installer module source -->	
+      	<copy todir="${dir.build}/installer-module" encoding="UTF-8">
+      		<fileset dir="modules/contentbox-installer">
+      			<exclude name="**/bower_components/**" />
+      			<exclude name="**/node_modules/**" />
+      		</fileset>
+      		<fileset file="readme.md" />
         </copy>
 		
 		<!-- Activate DSN Creator link -->
@@ -210,6 +221,7 @@
         <!-- Replace Version + Build Numbers -->
         <replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
 			<fileset dir="${dir.build}/installer" />
+			<fileset dir="${dir.build}/installer-module" />
 		</replaceregexp>
         <!-- Determine snapshot vs master artifact -->
 		<if>
@@ -217,16 +229,19 @@
 			<then>
 				<replaceregexp match='\+@build.number@' replace="-snapshot" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset dir="${dir.build}/installer" />
+				  <fileset dir="${dir.build}/installer-module" />
 				</replaceregexp>
 			</then>
 			<else>
 				<!-- Don't put a build number for the dependency -->
 				<replaceregexp match='\+@build.number@' replace="" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset file="${dir.build}/installer/box.json" />
+				  <fileset file="${dir.build}/installer-module/box.json" />
 				</replaceregexp>
 				<!-- Regular build numbers -->
 				<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 				  <fileset dir="${dir.build}/installer" />
+				  <fileset dir="${dir.build}/installer-module" />
 				</replaceregexp>
 			</else>
 		</if>
@@ -235,13 +250,19 @@
 		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" 
 				basedir="${dir.build}/installer" 
 		/>
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip" 
+				basedir="${dir.build}/installer-module" 
+		/>
 
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip" />
 		
 		<!-- copy box.json to root of exports -->
 		<copy file="${dir.build}/installer/box.json" toFile="${dir.contentbox.exports}/box-installer.json" overwrite="true"  encoding="UTF-8"/>
+		<copy file="${dir.build}/installer-module/box.json" toFile="${dir.contentbox.exports}/box-installer-module.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
 	
 	<!-- Build site distro -->

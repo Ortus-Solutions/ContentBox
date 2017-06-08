@@ -58,9 +58,9 @@ Blog
 
 You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running with ContentBox.  You can install it in three different formats:
 
-1. ContentBox Installer : Install a new site with our DSN Creator, Installer and ContentBox Modules
-1. ContentBox Modules: Install ContentBox as a module into an existing ColdBox application (Requires ORM configuration)
-1. ContentBox Site: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers) 
+1. **ContentBox Installer** : Install a new site with our DSN Creator, Installer and ContentBox Modules
+1. **ContentBox Modules**: Install ContentBox as a module into an existing ColdBox application (Requires ORM configuration)
+1. **ContentBox Site**: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers) 
 
 ```
 # Install New Site with DSN Creator, Installer and ContentBox modules
@@ -75,7 +75,14 @@ install contentbox-site
 
 ## Collaboration
 
-If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox) first.  Then in the root of this project, type `box install`.  This will download the necessary dependencies to develop and test ContentBox.  You can then go ahead and start an embedded server `box server start --rewritesEnable` and start hacking around and contributing.  
+If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.  
+
+You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  Please note that the default CFML engine is a Lucee 4.5 engine.  You can start any of the following engines:
+
+* `cbcms-adobe10` - ACF 10
+* `cbcms-adobe11` - ACF 11
+* `cbcms-adobe2016` - ACF 2016
+* `cbcms-lucee5` - Lucee 5
 
 ### Test Suites
 For running our test suites you will need 2 more steps, so please refer to the [Readme](tests/readme.md) in the tests folder.

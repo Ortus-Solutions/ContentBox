@@ -98,6 +98,7 @@ module.exports = function(grunt) {
 						,'bower_components/datatables/media/css/dataTables.bootstrap.css'
 						,'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css'
 						,'bower_components/clockpicker/dist/bootstrap-clockpicker.css'
+						,'bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css'
 						// VENDOR CSS
 						,'devincludes/vendor/css/*.css'
 					]
@@ -132,6 +133,7 @@ module.exports = function(grunt) {
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
 						,"bower_components/lodash/dist/lodash.min.js"
+						,"bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"
 						// Vendor Libraries
 						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"devincludes/vendor/js/modernizr.min.js"

@@ -30,6 +30,8 @@ $( document ).ready(function() {
     activateTooltips();
     // activate navbar state
     activateNavbarState();
+    // activate fancy toggles
+    activateToggleCheckboxes();
 
     // global Validaiton settings
     $.validator.setDefaults( {
@@ -503,12 +505,26 @@ function attachModalListeners(){
         resetContainerForms( modal );
     } );
 }
+
+/**
+ * Activate fancy toggle checkboxes
+ */
+function activateToggleCheckboxes(){
+    // toggle checkboxes
+    $( '.tab-content' ).find( 'input[data-toggle="toggle"]' ).change( function() {
+        var inputMatch = $( this ).data( 'match' );
+        $( "#" + inputMatch ).val( $( this ).prop( 'checked' ) );
+        //console.log( $( this ).prop( 'checked' ) + " input match :" + inputMatch );
+    });
+}
+
 /**
  * Close confirmation modal
  */
 function closeConfirmations(){
     $confirmIt.modal( 'hide' );
 }
+
 /**
  * Activate modal confirmation windows
  */

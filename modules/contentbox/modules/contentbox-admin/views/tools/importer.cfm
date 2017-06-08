@@ -30,7 +30,7 @@
 						<br /><br />
 						<label class="btn btn-success btn-toggle radio" for="import-contentbox">
 							#html.radioButton(
-								name    =" importtype",
+								name    = "importtype",
 								id      = "import-contentbox",
 								checked = true,
 								value   = "contentbox"

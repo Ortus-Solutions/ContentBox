@@ -92,15 +92,17 @@ function insertAdminBar(){
 
 <style>
 ##cb-admin-bar{
-	padding: 5px; 
-	width:100%;
-	height: 55px;
-	top: 0; 
-	left:0; 
-	background: black; 
-	color: white;
-	text-align: center;
-	position: fixed;
+	padding: 7px 20px;
+    width: 100%;
+    height: 55px;
+    top: 0;
+    left: 0;
+    background: ##333;
+    color: white;
+    text-align: center;
+    position: fixed;
+    z-index: 9999;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 ##cb-admin-bar-spacer{
 	height:55px;
@@ -113,10 +115,15 @@ function insertAdminBar(){
 ##cb-admin-bar h4{
 	color: white;
 	float: left;
+	margin-top: 6px;
+}
+##cb-admin-bar h4 img{
+	vertical-align: middle;
+	margin-right: 5px;
 }
 ##cb-admin-bar p{
 	font-size: 12px;
-	margin-top: 18px;
+	margin-top: 11px;
 }
 ##cb-admin-bar .admin-bar-label-red{
 	background-color: red;

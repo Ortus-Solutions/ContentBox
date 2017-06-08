@@ -76,17 +76,16 @@
 			)#
 
 			<div class="controls">
-				<small>ContentBox will emit an indentiy header <code>x-powered-by:contentbox</code> if enabled.</small><br/>
-				#html.radioButton(
-					name    = "cb_site_poweredby",
-					checked = prc.cbSettings.cb_site_poweredby,
-					value   = true
-				)# Yes
-				#html.radioButton(
-					name    = "cb_site_poweredby",
-					checked = not prc.cbSettings.cb_site_poweredby,
-					value   = false
-				)# No
+				<small>ContentBox will emit an indentiy header <code>x-powered-by:contentbox</code> if enabled.</small><br/><br/>
+				#html.checkbox(
+					name    = "cb_site_poweredby_toggle",
+					data	= { toggle: 'toggle', match: 'cb_site_poweredby' },
+					checked	= prc.cbSettings.cb_site_poweredby
+				)#
+				#html.hiddenField(
+					name	= "cb_site_poweredby",
+					value	= prc.cbSettings.cb_site_poweredby
+				)#
 			</div>
 		</div>
 
@@ -97,19 +96,18 @@
 				field   = "cb_site_sitemap",
 				content = "Enable Sitemap Features:"
 			)#
-
+			
 			<div class="controls">
-				<small>If enabled, you will be able to access the site map via <code>/sitemap</code> and can even add format extensions, e.g: <code>sitemap.json, sitemap.xml, sitemap.txt</code></small><br/>
-				#html.radioButton(
-					name    = "cb_site_sitemap",
-					checked = prc.cbSettings.cb_site_sitemap,
-					value   = true
-				)# Yes
-				#html.radioButton(
-					name    = "cb_site_sitemap",
-					checked = not prc.cbSettings.cb_site_sitemap,
-					value   = false
-				)# No
+				<small>If enabled, you will be able to access the site map via <code>/sitemap</code> and can even add format extensions, e.g: <code>sitemap.json, sitemap.xml, sitemap.txt</code></small><br/><br/>			
+				#html.checkbox(
+					name    = "cb_site_sitemap_toggle",
+					data	= { toggle: 'toggle', match: 'cb_site_sitemap' },
+					checked	= prc.cbSettings.cb_site_sitemap
+				)#
+				#html.hiddenField(
+					name	= "cb_site_sitemap",
+					value	= prc.cbSettings.cb_site_sitemap
+				)#
 			</div>
 		</div>
 
@@ -122,17 +120,16 @@
 			)#
 
 			<div class="controls">
-				<small>If enabled, logged in and with the right permissions, you will see a ContentBox Floating Admin Bar in your site to help you edit and manage content from the UI.</small><br/>
-				#html.radioButton(
-					name    = "cb_site_adminbar",
-					checked = prc.cbSettings.cb_site_adminbar,
-					value   = true
-				)# Yes
-				#html.radioButton(
-					name    = "cb_site_adminbar",
-					checked = not prc.cbSettings.cb_site_adminbar,
-					value   = false
-				)# No
+				<small>If enabled, logged in and with the right permissions, you will see a ContentBox Floating Admin Bar in your site to help you edit and manage content from the UI.</small><br/><br/>
+				#html.checkbox(
+					name    = "cb_site_adminbar_toggle",
+					data	= { toggle: 'toggle', match: 'cb_site_adminbar' },
+					checked	= prc.cbSettings.cb_site_adminbar
+				)#
+				#html.hiddenField(
+					name	= "cb_site_adminbar",
+					value	= prc.cbSettings.cb_site_adminbar
+				)#
 			</div>
 		</div>
 
@@ -164,17 +161,16 @@
 			)#
 			<div class="controls">
 				<small>You can disable the Blog in this entire ContentBox. This does not delete data, it just disables blog features. Also
-				remember to change the <strong>Home Page</strong> above to a real page and not the blog.</small><br/>
-				#html.radioButton(
-					name="cb_site_disable_blog",
-					checked=prc.cbSettings.cb_site_disable_blog,
-					value=true
-				)# Yes
-				#html.radioButton(
-					name="cb_site_disable_blog",
-					checked=not prc.cbSettings.cb_site_disable_blog,
-					value=false
-				)# No
+				remember to change the <strong>Home Page</strong> above to a real page and not the blog.</small><br/><br/>
+				#html.checkbox(
+					name    = "cb_site_disable_blog_toggle",
+					data	= { toggle: 'toggle', match: 'cb_site_disable_blog' },
+					checked	= prc.cbSettings.cb_site_disable_blog
+				)#
+				#html.hiddenField(
+					name	= "cb_site_disable_blog",
+					value	= prc.cbSettings.cb_site_disable_blog
+				)#
 			</div>
 		</div>  
 		<!--- Entry Point --->
@@ -199,20 +195,20 @@
 		<!--- Site maintenance --->
 		<div class="form-group">
 			#html.label(
-				class="control-label",
-				field="cb_site_maintenance",
-				content="Site Maintenance:"
+				class 	= "control-label",
+				field 	= "cb_site_maintenance",
+				content = "Site Maintenance:"
 			)#
 			<div class="controls">
-				#html.radioButton(
-					name="cb_site_maintenance",
-					checked=prc.cbSettings.cb_site_maintenance,value=true
-				)# Yes
-				#html.radioButton(
-					name="cb_site_maintenance",
-					checked=not prc.cbSettings.cb_site_maintenance,
-					value=false
-				)# No
+				#html.checkbox(
+					name    = "cb_site_maintenance_toggle",
+					data	= { toggle: 'toggle', match: 'cb_site_maintenance' },
+					checked	= prc.cbSettings.cb_site_maintenance
+				)#
+				#html.hiddenField(
+					name	= "cb_site_maintenance",
+					value	= prc.cbSettings.cb_site_maintenance
+				)#
 			</div>
 		</div>
 		<!--- Maintenance Message --->

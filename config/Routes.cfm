@@ -29,21 +29,21 @@ limitations under the License.
 	// Sets automatic route extension detection and places the extension in the rc.format variable
 	// setExtensionDetection(true);
 	// The valid extensions this interceptor will detect
-	setValidExtensions('xml,json,jsont,rss,html,htm,cfm,print,pdf,doc,txt');
+	setValidExtensions( 'xml,json,jsont,rss,html,htm,cfm,print,pdf,doc,txt' );
 	// If enabled, the interceptor will throw a 406 exception that an invalid format was detected or just ignore it
 	// setThrowOnInvalidExtension(true);
 
 	// TO ENABLE FULL REWRITES REMOVE THE "INDEX.CFM" FROM THE LINES BELOW
 
 	// Base URL
-	if( len(getSetting('AppMapping') ) lte 1){
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/index.cfm");
+	if( len( getSetting( 'AppMapping' ) ) lte 1 ){
+		setBaseURL( "http://#cgi.HTTP_HOST##getContextRoot()#/index.cfm" );
 	}
 	else{
-		setBaseURL("http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/index.cfm");
+		setBaseURL( "http://#cgi.HTTP_HOST##getContextRoot()#/#getSetting('AppMapping')#/index.cfm" );
 	}
 	
 	// Your Application Routes
-	addRoute(pattern=":handler/:action?");
+	addRoute( pattern=":handler/:action?" );
 
 </cfscript>

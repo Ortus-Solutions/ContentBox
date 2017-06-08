@@ -11,18 +11,13 @@
         class="control-label" 
     )#
     <div class="controls">
-        #html.radioButton( 
-            name="populatedata", 
-            checked=true, 
-            value=true,
-            autocomplete=false 
-        )# #cb.r( "common.yes@installer" )#  
-
-        #html.radioButton( 
-            name="populatedata", 
-            value=false, 
-            autocomplete=false 
-        )# #cb.r( "common.no@installer" )#  
+    	#html.checkbox(
+			name    = "populatedata_toggle",
+			data	= { toggle: 'toggle', match: 'populatedata' }
+		)#
+		#html.hiddenField(
+			name	= "populatedata"
+		)#
     </div>
 </div>
 <!--- Site Name  --->

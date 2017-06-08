@@ -23,17 +23,16 @@
                 content="Mandatory commit changelog:"
             )#
             <div class="controls">
-                <small>When enabled a commit changelog will have to be entered before any content revision is saved.</small><br/>
-                #html.radioButton(
-                    name="cb_versions_commit_mandatory",
-                    checked=prc.cbSettings.cb_versions_commit_mandatory,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_versions_commit_mandatory",
-                    checked=not prc.cbSettings.cb_versions_commit_mandatory,
-                    value=false
-                )# No
+                <small>When enabled a commit changelog will have to be entered before any content revision is saved.</small><br /><br />
+                #html.checkbox(
+					name    = "cb_versions_commit_mandatory_toggle",
+					data	= { toggle: 'toggle', match: 'cb_versions_commit_mandatory' },
+					checked	= prc.cbSettings.cb_versions_commit_mandatory
+				)#
+				#html.hiddenField(
+					name	= "cb_versions_commit_mandatory",
+					value	= prc.cbSettings.cb_versions_commit_mandatory
+				)#
             </div>
         </div>
         <!--- Page Excerpts --->
@@ -44,17 +43,16 @@
                 content="Allow Page Excerpts:"
             )#
             <div class="controls">
-                <small>Enable/Disabled page excerpt summaries.</small><br/>
-                #html.radioButton(
-                    name="cb_page_excerpts",
-                    checked=prc.cbSettings.cb_page_excerpts,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_page_excerpts",
-                    checked=not prc.cbSettings.cb_page_excerpts,
-                    value=false
-                )# No
+                <small>Enable/Disabled page excerpt summaries.</small><br /><br />
+                #html.checkbox(
+					name    = "cb_page_excerpts_toggle",
+					data	= { toggle: 'toggle', match: 'cb_page_excerpts' },
+					checked	= prc.cbSettings.cb_page_excerpts
+				)#
+				#html.hiddenField(
+					name	= "cb_page_excerpts",
+					value	= prc.cbSettings.cb_page_excerpts
+				)#
             </div>
         </div>
         <!--- UI Exports --->
@@ -65,17 +63,16 @@
                 content = "Allow UI content export formats:"
             )#
             <div class="controls">
-                <small>Enable/Disabled the ability to export pages/blog/etc from the UI module via format extensions like pdf,doc,print,json, and xml.</small><br/>
-                #html.radioButton(
-                    name    = "cb_content_uiexport",
-                    checked = prc.cbSettings.cb_content_uiexport,
-                    value   = true
-                )# Yes
-                #html.radioButton(
-                    name    = "cb_content_uiexport",
-                    checked = not prc.cbSettings.cb_content_uiexport,
-                    value   = false
-                )# No
+                <small>Enable/Disabled the ability to export pages/blog/etc from the UI module via format extensions like pdf,doc,print,json, and xml.</small><br /><br />
+                #html.checkbox(
+					name    = "cb_content_uiexport_toggle",
+					data	= { toggle: 'toggle', match: 'cb_content_uiexport' },
+					checked	= prc.cbSettings.cb_content_uiexport
+				)#
+				#html.hiddenField(
+					name	= "cb_content_uiexport",
+					value	= prc.cbSettings.cb_content_uiexport
+				)#
             </div>
         </div>
     </fieldset>
@@ -91,17 +88,16 @@
             	content="Content Hit Count Tracking:"
             )#
             <div class="controls">
-                <small>Enable/Disable content hit count tracking</small><br/>
-                #html.radioButton(
-                	name="cb_content_hit_count",
-                	checked=prc.cbSettings.cb_content_hit_count,
-                	value=true
-                )# Yes
-                #html.radioButton(
-                	name="cb_content_hit_count",
-                	checked=not prc.cbSettings.cb_content_hit_count,
-                	value=false
-                )# No
+                <small>Enable/Disable content hit count tracking</small><br /><br />
+                #html.checkbox(
+					name    = "cb_content_hit_count_toggle",
+					data	= { toggle: 'toggle', match: 'cb_content_hit_count' },
+					checked	= prc.cbSettings.cb_content_hit_count
+				)#
+				#html.hiddenField(
+					name	= "cb_content_hit_count",
+					value	= prc.cbSettings.cb_content_hit_count
+				)#
             </div>
         </div>
         
@@ -113,17 +109,16 @@
             	content="Ignore Bots Regex Matching:"
             )#
             <div class="controls">
-                <small>If enabled, the bot regex matching is ignored and hit tracking for bots is allowed </small><br/>
-                #html.radioButton(
-                	name="cb_content_hit_ignore_bots",
-                	checked=prc.cbSettings.cb_content_hit_ignore_bots,
-                	value=true
-                )# Yes
-                #html.radioButton(
-                	name="cb_content_hit_ignore_bots",
-                	checked=not prc.cbSettings.cb_content_hit_ignore_bots,
-                	value=false
-                )# No
+                <small>If enabled, the bot regex matching is ignored and hit tracking for bots is allowed </small><br /><br />
+                #html.checkbox(
+					name    = "cb_content_hit_ignore_bots_toggle",
+					data	= { toggle: 'toggle', match: 'cb_content_hit_ignore_bots' },
+					checked	= prc.cbSettings.cb_content_hit_ignore_bots
+				)#
+				#html.hiddenField(
+					name	= "cb_content_hit_ignore_bots",
+					value	= prc.cbSettings.cb_content_hit_ignore_bots
+				)#
             </div>
         </div>
         
@@ -154,17 +149,16 @@
                 content="Activate Page rendered content caching:"
             )#
             <div class="controls">
-                <small>Page content will be cached once it has been translated and rendered</small><br/>
-                #html.radioButton(
-                    name="cb_content_caching",
-                    checked=prc.cbSettings.cb_content_caching,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_content_caching",
-                    checked=not prc.cbSettings.cb_content_caching,
-                    value=false
-                )# No
+                <small>Page content will be cached once it has been translated and rendered</small><br /><br />
+                #html.checkbox(
+					name    = "cb_content_caching_toggle",
+					data	= { toggle: 'toggle', match: 'cb_content_caching' },
+					checked	= prc.cbSettings.cb_content_caching
+				)#
+				#html.hiddenField(
+					name	= "cb_content_caching",
+					value	= prc.cbSettings.cb_content_caching
+				)#
             </div>
         </div>
         <!--- Entry Caching --->
@@ -175,17 +169,16 @@
                 content="Activate Blog Entry rendered content caching:"
             )#
             <div class="controls">
-                <small>Blog entry content will be cached once it has been translated and rendered</small><br/>
-                #html.radioButton(
-                    name="cb_entry_caching",
-                    checked=prc.cbSettings.cb_entry_caching,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_entry_caching",
-                    checked=not prc.cbSettings.cb_entry_caching,
-                    value=false
-                )# No
+                <small>Blog entry content will be cached once it has been translated and rendered</small><br /><br />
+                #html.checkbox(
+					name    = "cb_entry_caching_toggle",
+					data	= { toggle: 'toggle', match: 'cb_entry_caching' },
+					checked	= prc.cbSettings.cb_entry_caching
+				)#
+				#html.hiddenField(
+					name	= "cb_entry_caching",
+					value	= prc.cbSettings.cb_entry_caching
+				)#
             </div>
         </div>
         <!--- Custom HTML Caching --->
@@ -196,17 +189,16 @@
                 content="Activate ContentStore rendered content caching:"
             )#
             <div class="controls">
-                <small>ContentStore content will be cached once it has been translated and rendered</small><br/>
-                #html.radioButton(
-                    name="cb_contentstore_caching",
-                    checked=prc.cbSettings.cb_contentstore_caching,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_contentstore_caching",
-                    checked=not prc.cbSettings.cb_contentstore_caching,
-                    value=false
-                )# No
+                <small>ContentStore content will be cached once it has been translated and rendered</small><br /><br />
+                #html.checkbox(
+					name    = "cb_contentstore_caching_toggle",
+					data	= { toggle: 'toggle', match: 'cb_contentstore_caching' },
+					checked	= prc.cbSettings.cb_contentstore_caching
+				)#
+				#html.hiddenField(
+					name	= "cb_contentstore_caching",
+					value	= prc.cbSettings.cb_contentstore_caching
+				)#
             </div>
         </div>
 
@@ -218,17 +210,16 @@
                 content="Send 203 Caching Header:"
             )#
             <div class="controls">
-                <small>ContentBox will emit a 203 cache header to indicate that a page is resolved with caching.</small><br/>
-                #html.radioButton(
-                    name="cb_content_cachingHeader",
-                    checked=prc.cbSettings.cb_content_cachingHeader,
-                    value=true
-                )# Yes
-                #html.radioButton(
-                    name="cb_content_cachingHeader",
-                    checked=not prc.cbSettings.cb_content_cachingHeader,
-                    value=false
-                )# No
+                <small>ContentBox will emit a 203 cache header to indicate that a page is resolved with caching.</small><br /><br />
+                #html.checkbox(
+					name    = "cb_content_cachingHeader_toggle",
+					data	= { toggle: 'toggle', match: 'cb_content_cachingHeader' },
+					checked	= prc.cbSettings.cb_content_cachingHeader
+				)#
+				#html.hiddenField(
+					name	= "cb_content_cachingHeader",
+					value	= prc.cbSettings.cb_content_cachingHeader
+				)#
             </div>
         </div>
 

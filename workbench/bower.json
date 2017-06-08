@@ -35,7 +35,8 @@
     "datatables": "^1.10.12",
     "simplemde": "^1.11.2",
     "jq-fullscreen": "^0.6.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "bootstrap-toggle": "^2.2.2"
   },
   "resolutions": {
     "jquery": "2.2.3",

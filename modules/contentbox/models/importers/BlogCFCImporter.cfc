@@ -27,6 +27,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
 	property name="pageService"			inject="id:pageService@cb";
+	property name="statsService"		inject="id:statsService@cb";
 	property name="authorService"		inject="id:authorService@cb";
 	property name="roleService"			inject="id:roleService@cb";
 	property name="commentService"		inject="id:commentService@cb";
@@ -101,30 +102,34 @@ component implements="contentbox.models.importers.ICBImporter" {
 
 			log.info( "Starting to import Pages...." );
 
-			var qPages = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
+			try{
+				var qPages = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     password=arguments.dsnPassword,
 						     sql="select id, blog, title, alias, body from tblblogpages" ).execute().getResult();
 
-			for(var x = 1; x lte qPages.recordcount; x++) {
-				var props = {
-					title = qPages.title[ x ],
-					slug = qPages.alias[ x ],
-					content = qPages.body[ x ],
-					publishedDate = now(),
-					createdDate = now(),
-					isPublished = true,
-					allowComments = false,
-					layout="pages"
-				};
-				var page = pageService.new(properties = props);
-
-				// blogCFC has no concept of authored pages, so we grab the first author we find from blogCFC
-				// This may need revising later.
-				page.addNewContentVersion(content = props.content, changelog = "Imported content", author = defaultAuthor);
-				page.setCreator( defaultAuthor );
-				entitySave( page );
+				for(var x = 1; x lte qPages.recordcount; x++) {
+					var props = {
+						title = qPages.title[ x ],
+						slug = qPages.alias[ x ],
+						content = qPages.body[ x ],
+						publishedDate = now(),
+						createdDate = now(),
+						isPublished = true,
+						allowComments = false,
+						layout="pages"
+					};
+					var page = pageService.new(properties = props);
+	
+					// blogCFC has no concept of authored pages, so we grab the first author we find from blogCFC
+					// This may need revising later.
+					page.addNewContentVersion(content = props.content, changelog = "Imported content", author = defaultAuthor);
+					page.setCreator( defaultAuthor );
+					entitySave( page );
+				}
+				log.info( "Pages imported" );	
+			} catch( any e ){
+				log.info( "Error Importing Pages - Version might support Pages" );
 			}
-			log.info( "Pages imported" );
 
 			log.info( "Starting to import Entries...." );
 			// Import Entries
@@ -157,6 +162,9 @@ component implements="contentbox.models.importers.ICBImporter" {
 							};
 
 				var entry = entryService.new(properties = props);
+				var oStat = statsService.new( { hits = props.hits } );
+				oStat.setRelatedContent( entry );
+				entry.setStats( oStat );
 				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[ x ]] ));
 				entry.setCreator( authorService.get( authorMap[q.username[ x ]] ) );
 				
