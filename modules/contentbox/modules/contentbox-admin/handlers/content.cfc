@@ -151,7 +151,7 @@ component extends="baseHandler"{
 			searchTerm			= rc.search,
 			offset				= prc.paging.startRow-1,
 			max					= prc.cbSettings.cb_paging_maxrows,
-			sortOrder			= "slug asc",
+			sortOrder			= ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
 			searchActiveContent	= false,
 			contentTypes		= rc.contentType,
 			excludeIDs			= rc.excludeIDs 
