@@ -3,6 +3,7 @@
     "app":{
         "serverHomeDirectory":".engines/lucee4"
     },
+    "name":"cbcms-lucee",
     "web":{
         "rewrites":{
             "enable":"true"

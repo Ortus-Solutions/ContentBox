@@ -52,7 +52,7 @@ component {
 			// unsubscribe link for single subscription
 			{ pattern="/__unsubscribe/:subscriptionToken", handler="subscription", action="unsubscribe" },
 			// change language
-			{ pattern="/__changeLang/:lang", handler="content", action="changeLang" },
+			{ pattern="/__changeLang/:lang{5}", handler="content", action="changeLang" },
 
 			/************************************** RSS ROUTES *********************************************/
 
