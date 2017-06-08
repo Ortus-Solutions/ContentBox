@@ -72,19 +72,19 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			excerptToolbar 	= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) )
 		};
 		// Announce the editor toolbar is about to be processed
-		interceptorService.processState( "cbadmin_ckeditorToolbar", iData);
+		interceptorService.processState( "cbadmin_ckeditorToolbar", iData );
 		// Load extra plugins according to our version
 		var iData2 = { extraPlugins = listToArray( settingService.getSetting( "cb_editors_ckeditor_extraplugins" ) ) };
 		// Announce extra plugins to see if user implements more.
-		interceptorService.processState( "cbadmin_ckeditorExtraPlugins", iData2);
+		interceptorService.processState( "cbadmin_ckeditorExtraPlugins", iData2 );
 		// Load extra configuration
 		var iData3 = { extraConfig = "" };
 		// Announce extra configuration
-		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3);
+		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3 );
 		// Load contentsCss configuration
 		var iData4 = { contentsCss = [] };
 		// Announce extra configuration
-		interceptorService.processState( "cbadmin_ckeditorContentsCss", iData4);
+		interceptorService.processState( "cbadmin_ckeditorContentsCss", iData4 );
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
 		return compileJS( iData, iData2, iData3, iData4 );
 	}
@@ -181,21 +181,21 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			$content.ckeditor( function(){}, {
 					#extraPlugins#
 					#extraConfig#
-					contentsCss: ['#arrayToList(arguments.iData4.contentsCss, "','")#'],
+					contentsCss: [ '#arrayToList( arguments.iData4.contentsCss, "', '" )#' ],
 					toolbar: ckToolbar,
 					toolbarCanCollapse: true,
-					height:400,
-					filebrowserBrowseUrl : '#event.buildLink( xehCKFileBrowserURL )#',
-					filebrowserImageBrowseUrl : '#event.buildLink( xehCKFileBrowserURLIMage )#',
-					filebrowserFlashBrowseUrl : '#event.buildLink( xehCKFileBrowserURLFlash )#',
-					baseHref : '#HTML_BASE_URL#/'
+					height: 400,
+					filebrowserBrowseUrl: '#event.buildLink( xehCKFileBrowserURL )#',
+					filebrowserImageBrowseUrl: '#event.buildLink( xehCKFileBrowserURLIMage )#',
+					filebrowserFlashBrowseUrl: '#event.buildLink( xehCKFileBrowserURLFlash )#',
+					baseHref: '#HTML_BASE_URL#/'
 				} );
 				
 			// Active Excerpts
 			if( $withExcerpt ){
-				$excerpt.ckeditor(function(){}, {
+				$excerpt.ckeditor( function(){}, {
 					#extraConfig#
-					contentsCss: ['#arrayToList(arguments.iData4.contentsCss, "','")#'],
+					contentsCss: [ '#arrayToList( arguments.iData4.contentsCss, "', '" )#' ],
 					toolbar: ckExcerptToolbar,
 					toolbarCanCollapse: true,
 					height: 200,
