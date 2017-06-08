@@ -34,7 +34,8 @@ component {
 			customInterceptionPoints = [ 
 				"cbadmin_ckeditorToolbar",
 				"cbadmin_ckeditorExtraPlugins",
-				"cbadmin_ckeditorExtraConfig" 
+				"cbadmin_ckeditorExtraConfig",
+				"cbadmin_ckeditorContentsCss"
 			]
 		};
 		

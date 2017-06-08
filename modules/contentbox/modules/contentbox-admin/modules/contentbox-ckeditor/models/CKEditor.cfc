@@ -81,8 +81,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var iData3 = { extraConfig = "" };
 		// Announce extra configuration
 		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3);
+		// Load contentsCss configuration
+		var iData4 = { contentsCss = [] };
+		// Announce extra configuration
+		interceptorService.processState( "cbadmin_ckeditorContentsCss", iData4);
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
-		return compileJS( iData, iData2, iData3 );
+		return compileJS( iData, iData2, iData3, iData4 );
 	}
 	
 	/**
@@ -139,7 +143,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	/**
 	* Compile the needed JS to display into the screen
 	*/
-	private function compileJS( required iData, required iData2, required iData3 ){
+	private function compileJS( required iData, required iData2, required iData3, required iData4 ){
 		var js 					= "";
 		var event 				= requestService.getContext();
 		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
@@ -154,7 +158,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		if( arrayLen( arguments.iData2.extraPlugins ) ){
 			extraPlugins = "extraPlugins : '#arrayToList( arguments.iData2.extraPlugins )#',";
 		}
-		// Determin Extra Configuration
+		// Determine Extra Configuration
 		var extraConfig = "";
 		if( len( arguments.iData3.extraConfig ) ){
 			extraConfig = "#arguments.iData3.extraConfig#,";
@@ -177,6 +181,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			$content.ckeditor( function(){}, {
 					#extraPlugins#
 					#extraConfig#
+					contentsCss: ['#arrayToList(arguments.iData4.contentsCss, "','")#'],
 					toolbar: ckToolbar,
 					toolbarCanCollapse: true,
 					height:400,
@@ -190,6 +195,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			if( $withExcerpt ){
 				$excerpt.ckeditor(function(){}, {
 					#extraConfig#
+					contentsCss: ['#arrayToList(arguments.iData4.contentsCss, "','")#'],
 					toolbar: ckExcerptToolbar,
 					toolbarCanCollapse: true,
 					height: 200,
