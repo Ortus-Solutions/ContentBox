@@ -5,7 +5,7 @@
 		
 		<cfif !isNull( args.oContent )>
 			
-			<cfif args.oContent.getContentType() == "Page">
+			<cfif args.oContent.getContentType() eq "Page">
 			<span class="admin-bar-label">
 				Layout: #args.oContent.getLayout()#
 			</span>
