@@ -9,7 +9,8 @@ component extends="baseHandler"{
 
 	// DI 
 	property name="moduleSettings"	inject="coldbox:moduleSettings:contentbox";
-
+	property name="markdown"	inject="Processor@cbmarkdown";
+	
 	/**
 	* Show Auto Updates screen
 	*/
@@ -58,6 +59,8 @@ component extends="baseHandler"{
 		// Get Extension Version
 		prc.contentboxVersion = getModuleConfig( 'contentbox' ).version;
 		prc.updateFound = false;
+
+		prc.markdown 		  = variables.markdown;
 
 		// Check for forgebox item
 		var forgeboxsdk 	= getModel( "ForgeBox@forgeboxsdk" );
