@@ -20,7 +20,7 @@ component {
 	this.cfmapping 			= "contentbox";
 	// Load ContentBox Dependencies First.
 	this.dependencies 		= [	"contentbox-deps" ];
-	
+
 	/**
 	* Configure Module
 	*/
@@ -37,7 +37,7 @@ component {
 			// Officially supported languages for modules
 			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
-		
+
 		// i18n
 		i18n = {
 			resourceBundles = {
@@ -96,9 +96,9 @@ component {
 		binder.map( "ColdBoxRenderer" ).toDSL( "coldbox:Renderer" );
 		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
 		binder.map( "FileUtils@cb" ).to( "coldbox.system.core.util.FileUtils" );
-		
+
 	}
-	
+
 	/**
 	* Development tier
 	*/
@@ -156,8 +156,8 @@ component {
 		var contentboxDSL 	= oConfig.getPropertyMixin( "contentbox", "variables", structnew() );
 
 		// Verify if we have settings on the default site for now.
-		if( 
-			structKeyExists( contentboxDSL, "settings" ) 
+		if(
+			structKeyExists( contentboxDSL, "settings" )
 			&&
 			structKeyExists( contentboxDSL.settings, "default" )
 		){
@@ -180,7 +180,7 @@ component {
 		var oSystem 			= createObject( "java", "java.lang.System" );
 		var environmentSettings = oSystem.getEnv();
 		var overrides 			= {};
-		
+
 		// iterate and override
 		for( var thisKey in environmentSettings ){
 			if( REFindNoCase( "^contentbox\_default\_", thisKey ) ){

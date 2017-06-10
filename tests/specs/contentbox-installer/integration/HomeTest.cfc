@@ -1,5 +1,5 @@
 component extends="coldbox.system.testing.BaseTestCase" appMapping="/"{
-	
+
 /*********************************** LIFE CYCLE Methods ***********************************/
 
 	// executes before all suites+specs in the run() method
@@ -32,6 +32,6 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/"{
 
 		});
 	}
-	
+
 }
 

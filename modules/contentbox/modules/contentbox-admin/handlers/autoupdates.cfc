@@ -7,7 +7,7 @@
 */
 component extends="baseHandler"{
 
-	// DI 
+	// DI
 	property name="moduleSettings"	inject="coldbox:moduleSettings:contentbox";
 
 	/**

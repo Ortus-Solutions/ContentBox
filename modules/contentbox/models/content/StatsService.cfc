@@ -46,8 +46,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var aBotRegex 	= ListToArray( settingService.getSetting( 'cb_content_bot_regex' ), chr(13) );
 		// iterate and try to match
 		for( var thisBot in aBotRegex ){
-			if( arrayLen( reMatch( thisBot, userAgent ) ) gt 0 ){ 
-				return true; 
+			if( arrayLen( reMatch( thisBot, userAgent ) ) gt 0 ){
+				return true;
 			}
 		}
 
@@ -64,17 +64,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			try {
 				// try to match a bot? or ignored bots?
 				if( settingService.getSetting( 'cb_content_hit_ignore_bots' ) OR !isUserAgentABot() ){
-					var q = new Query( 
-						sql="UPDATE cb_stats 
+					var q = new Query(
+						sql="UPDATE cb_stats
 							SET hits = hits + 1,
 							modifiedDate = #createODBCDateTime( now() )#
-							WHERE FK_contentID = #arguments.contentID#" 
+							WHERE FK_contentID = #arguments.contentID#"
 					).execute();
 					// if no record, means, new record, so insert
 					if( q.getPrefix().RECORDCOUNT eq 0 ){
-						var q = new Query( 
-							sql="INSERT INTO cb_stats ( hits, FK_contentID, createdDate, modifiedDate ) 
-								VALUES ( 1, #arguments.contentID#, #createODBCDateTime( now() )#, #createODBCDateTime( now() )# )" 
+						var q = new Query(
+							sql="INSERT INTO cb_stats ( hits, FK_contentID, createdDate, modifiedDate )
+								VALUES ( 1, #arguments.contentID#, #createODBCDateTime( now() )#, #createODBCDateTime( now() )# )"
 						).execute();
 					}
 				}

@@ -6,7 +6,7 @@
 * Menu cleanup thread
 */
 component extends="coldbox.system.Interceptor"{
-	
+
     // DI
     property name="menuItemService" inject="id:menuItemService@cb";
 
@@ -124,5 +124,5 @@ component extends="coldbox.system.Interceptor"{
             menuItem.setActive( false );
             menuItemService.save( entity=menuItem );
         }
-    }    
+    }
 }

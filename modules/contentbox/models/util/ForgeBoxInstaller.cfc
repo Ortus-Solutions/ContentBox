@@ -22,7 +22,7 @@ component singleton{
 	* Install ForgeBox entries
 	* @downloadURL The download URL
 	* @destinationDir The destination for installation
-	* 
+	*
 	* @results struct = { error:boolean, logInfo }
 	*/
 	function install( required downloadURL, required destinationDir ){
@@ -30,14 +30,14 @@ component singleton{
 		var destination  	= arguments.destinationDir;
 		var fileName		= getFileFromPath( arguments.downloadURL );
 		var results 		= { error=true, logInfo="" };
-		
+
 		// Append zip, if not found
 		if( listLast( filename, "." ) neq "zip" ){
 			filename &= ".zip";
 		}
-		
+
 		try{
-			var oHTTP = new HTTP( 
+			var oHTTP = new HTTP(
 				url 			= arguments.downloadURL,
 				method 			= "GET",
 				file 			= fileName,
@@ -50,26 +50,26 @@ component singleton{
 			results.logInfo = log.toString();
 			return results;
 		}
-		
+
 		// has file size?
-		if( getFileInfo( variables.tmpDir & "/" & fileName ).size LTE 0 ){	
+		if( getFileInfo( variables.tmpDir & "/" & fileName ).size LTE 0 ){
 			log.append( "<strong>Cannot install file as it has a file size of 0.</strong>" );
 			results.logInfo = log.toString();
 			fileDelete( variables.tmpDir & "/" & fileName );
 			return results;
 		}
-		
+
 		log.append( "File #fileName# downloaded successfully, checking type for extraction.<br />" );
-		
+
 		// Unzip it
 		if( listLast( filename, "." ) eq "zip" ){
 			log.append( "Zip archive detected, beginning to uncompress.<br />" );
 
 			// extract it
 			zipUtil.extract(
-				zipFilePath		= variables.tmpDir & "/" & fileName, 
-				extractPath		= destination, 
-				overwriteFiles	= "true" 
+				zipFilePath		= variables.tmpDir & "/" & fileName,
+				extractPath		= destination,
+				overwriteFiles	= "true"
 			);
 
 			log.append( "Archive uncompressed and installed at #destination#. Performing cleanup.<br />" );
@@ -79,10 +79,10 @@ component singleton{
 			log.append( "File is not a zip, skipping and removing<br/>" );
 			fileDelete( variables.tmpDir & "/" & fileName );
 		}
-		
+
 		log.append( "Entry: #filename# successfully installed at #destination#.<br />" );
 		results = { error=false, logInfo=log.toString() };
-		
+
 		return results;
 	}
 

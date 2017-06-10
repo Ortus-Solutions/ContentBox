@@ -19,7 +19,7 @@
 		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="fa fa-clock-o"></i> Full History</button>
 		</cfif>
 	</div>
-	
+
 	#html.startForm(name="versionsPagerForm" )#
 
 	<table id="versionsHistoryTable" width="100%" class="table table-hover table-condensed table-striped" border="0">

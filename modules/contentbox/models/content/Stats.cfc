@@ -5,44 +5,44 @@
 * ---
 * A class to track stats for content
 */
-component 	persistent="true" 
-			entityname="cbStats" 
-			table="cb_stats" 
-			batchsize="25" 
+component 	persistent="true"
+			entityname="cbStats"
+			table="cb_stats"
+			batchsize="25"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbStats" 
+			cachename="cbStats"
 			cacheuse="read-write" {
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="statsID" 
-				fieldtype="id" 
-				generator="native" 
+	property 	name="statsID"
+				fieldtype="id"
+				generator="native"
 				setter="false"
 				params="{ allocationSize = 1, sequence = 'statsID_seq' }";
-	
-	property 	name="hits" 
-				notnull="false" 
-				ormtype="long" 
+
+	property 	name="hits"
+				notnull="false"
+				ormtype="long"
 				default="0";
-	
+
 	/* *********************************************************************
-	**							RELATIONSHIPS									
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// O2O -> Content
-	property 	name="relatedContent" 
-				notnull="true" 
-				cfc="contentbox.models.content.BaseContent" 
-				fieldtype="one-to-one" 
-				fkcolumn="FK_contentID" 
-				lazy="true" 
+	property 	name="relatedContent"
+				notnull="true"
+				cfc="contentbox.models.content.BaseContent"
+				fieldtype="one-to-one"
+				fkcolumn="FK_contentID"
+				lazy="true"
 				fetch="join";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "statsID";
@@ -52,7 +52,7 @@ component 	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							CONSTRUCTOR									
+	**							CONSTRUCTOR
 	********************************************************************* */
 
 	/**
@@ -64,7 +64,7 @@ component 	persistent="true"
 	}
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -73,7 +73,7 @@ component 	persistent="true"
 	function getMemento( excludes="" ){
 		var pList 	= listToArray( "hits" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		return result;
 	}
 

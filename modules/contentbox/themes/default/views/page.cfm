@@ -38,11 +38,11 @@
 		<cfif len( cb.themeSetting( 'overrideHeaderBGColor' ) )>
 			<cfset bodyHeaderStyle = bodyHeaderStyle & 'background-color: ' & cb.themeSetting( 'overrideHeaderBGColor' ) & ';'>
 		</cfif>
-		
+
 		<cfif len( cb.themeSetting( 'overrideHeaderTextColor' ) )>
 			<cfset bodyHeaderH1Style = bodyHeaderH1Style & 'color: ' & cb.themeSetting( 'overrideHeaderTextColor' ) & ';'>
 		</cfif>
-	</cfif>	
+	</cfif>
 	<div id="body-header" style="#bodyHeaderStyle#">
 		<div class="container">
 			<!--- Title --->
@@ -89,7 +89,7 @@
 			<cfset variables.span = 9>
 		</cfif>
 		<div class="col-sm-#variables.span#">
-			
+
 			<!--- Render Content --->
 			#prc.page.renderContent()#
 
@@ -100,7 +100,7 @@
 				<div class="post-comments">
 					<div class="infoBar">
 						<p>
-							<button class="button2" onclick="toggleCommentForm()"> <i class="icon-comments"></i> Add Comment (#prc.page.getNumberOfApprovedComments()#)</button>						
+							<button class="button2" onclick="toggleCommentForm()"> <i class="icon-comments"></i> Add Comment (#prc.page.getNumberOfApprovedComments()#)</button>
 						</p>
 					</div>
 					<br/>

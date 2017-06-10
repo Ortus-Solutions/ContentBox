@@ -5,160 +5,160 @@
 * ---
 * I am a ContentBox User/Author entity
 */
-component 	persistent="true" 
-			entityname="cbAuthor" 
-			table="cb_author" 
-			batchsize="25" 
+component 	persistent="true"
+			entityname="cbAuthor"
+			table="cb_author"
+			batchsize="25"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbAuthor" 
+			cachename="cbAuthor"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
-	**							DI									
+	**							DI
 	********************************************************************* */
 
 	property name="authorService"		inject="authorService@cb" persistent="false";
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="authorID" 	
-				fieldtype="id" 
-				generator="native" 
-				setter="false" 
+	property 	name="authorID"
+				fieldtype="id"
+				generator="native"
+				setter="false"
 				params="{ allocationSize = 1, sequence = 'authorID_seq' }";
 
-	property 	name="firstName"	
-				length="100" 
+	property 	name="firstName"
+				length="100"
 				notnull="true"
 				default="";
 
-	property 	name="lastName"	
-				length="100" 
+	property 	name="lastName"
+				length="100"
 				notnull="true"
 				default="";
 
-	property 	name="email"		
-				length="255" 
-				notnull="true" 
+	property 	name="email"
+				length="255"
+				notnull="true"
 				index="idx_email"
 				default="";
 
-	property 	name="username"	
-				length="100" 
-				notnull="true" 
-				index="idx_login" 
+	property 	name="username"
+				length="100"
+				notnull="true"
+				index="idx_login"
 				unique="true"
 				default="";
 
-	property 	name="password"	
-				length="100" 
-				notnull="true" 
+	property 	name="password"
+				length="100"
+				notnull="true"
 				index="idx_login"
 				default="";
 
-	property 	name="isActive" 	
-				ormtype="boolean" 
-				notnull="true" 
-				default="false" 
+	property 	name="isActive"
+				ormtype="boolean"
+				notnull="true"
+				default="false"
 				index="idx_login,idx_activeAuthor";
 
-	property 	name="lastLogin" 	
-				ormtype="timestamp" 
+	property 	name="lastLogin"
+				ormtype="timestamp"
 				notnull="false";
 
-	property 	name="biography"   
-				ormtype="text" 		
-				notnull="false" 
+	property 	name="biography"
+				ormtype="text"
+				notnull="false"
 				length="8000"
 				default="";
 
-	property 	name="preferences" 
-				ormtype="text" 		
-				notnull="false" 
-				length="8000" 
+	property 	name="preferences"
+				ormtype="text"
+				notnull="false"
+				length="8000"
 				default="";
-	
+
 	/* *********************************************************************
-	**							RELATIONSHIPS									
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// O2M -> Entries
-	property 	name="entries" 
-				singularName="entry" 
+	property 	name="entries"
+				singularName="entry"
 				type="array"
 				fieldtype="one-to-many"
 				cfc="contentbox.models.content.Entry"
-			 	fkcolumn="FK_authorID" 
-			 	inverse="true" 
-			 	lazy="extra" 
-			 	cascade="save-update" 
-			 	batchsize="10" 
+			 	fkcolumn="FK_authorID"
+			 	inverse="true"
+			 	lazy="extra"
+			 	cascade="save-update"
+			 	batchsize="10"
 			 	orderby="publishedDate DESC";
 
 	// O2M -> Pages
-	property 	name="pages" 
-				singularName="page" 
-				type="array" 
-				fieldtype="one-to-many" 
+	property 	name="pages"
+				singularName="page"
+				type="array"
+				fieldtype="one-to-many"
 				cfc="contentbox.models.content.Page"
-				fkcolumn="FK_authorID" 
-				inverse="true" 
-				lazy="extra" 
-				cascade="save-update" 
-				batchsize="10" 
+				fkcolumn="FK_authorID"
+				inverse="true"
+				lazy="extra"
+				cascade="save-update"
+				batchsize="10"
 				orderby="publishedDate DESC";
 
 	// M20 -> Role
-	property 	name="role" 
-				notnull="true" 
-				fieldtype="many-to-one" 
-				cfc="contentbox.models.security.Role" 
-				fkcolumn="FK_roleID" 
+	property 	name="role"
+				notnull="true"
+				fieldtype="many-to-one"
+				cfc="contentbox.models.security.Role"
+				fkcolumn="FK_roleID"
 				lazy="true";
 
 	// M2M -> A-la-carte Author Permissions
-	property 	name="permissions" 
-				singularName="permission" 
-				fieldtype="many-to-many" 
-				type="array" 
+	property 	name="permissions"
+				singularName="permission"
+				fieldtype="many-to-many"
+				type="array"
 				lazy="extra"
-			 	cfc="contentbox.models.security.Permission" 
+			 	cfc="contentbox.models.security.Permission"
 			 	cascade="all"
-			 	fkcolumn="FK_authorID" 
-			 	linktable="cb_authorPermissions" 
-			 	inversejoincolumn="FK_permissionID" 
+			 	fkcolumn="FK_authorID"
+			 	linktable="cb_authorPermissions"
+			 	inversejoincolumn="FK_permissionID"
 			 	orderby="permission";
 
 	/* *********************************************************************
-	**							CALCULATED FIELDS									
+	**							CALCULATED FIELDS
 	********************************************************************* */
 
 	// Calculated properties
-	property 	name="numberOfEntries" 
-				formula="select count(*) from cb_content as content 
+	property 	name="numberOfEntries"
+				formula="select count(*) from cb_content as content
 						where content.FK_authorID=authorID and content.contentType='entry'" ;
 
-	property 	name="numberOfPages" 	
-				formula="select count(*) from cb_content as content 
+	property 	name="numberOfPages"
+				formula="select count(*) from cb_content as content
 						where content.FK_authorID=authorID and content.contentType='page'" ;
 
 	/* *********************************************************************
-	**							NON PERSISTED PROPERTIES									
+	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
 	// Non-persisted properties
-	property 	name="loggedIn"		
-				persistent="false" 
-				default="false" 
+	property 	name="loggedIn"
+				persistent="false"
+				default="false"
 				type="boolean";
-	
-	property 	name="permissionList" 	
+
+	property 	name="permissionList"
 				persistent="false";
-	
+
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "authorID";
@@ -172,7 +172,7 @@ component 	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -184,7 +184,7 @@ component 	persistent="true"
 		variables.isActive 			= true;
 		// Setup empty preferences
 		setPreferences( {} );
-		
+
 		super.init();
 
 		return this;
@@ -207,24 +207,24 @@ component 	persistent="true"
 
 		return false;
 	}
-	
+
 	/**
-	* Verify that a passed in list of perms the user can use 
+	* Verify that a passed in list of perms the user can use
 	*/
 	public function inPermissionList( required list ){
 		var aList = listToArray( arguments.list );
 		var isFound = false;
-		
+
 		for( var thisPerm in aList ){
 			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
 				isFound = true;
 				break;
 			}
 		}
-		
+
 		return isFound;
 	}
-	
+
 	/**
 	* Clear all permissions
 	*/
@@ -232,7 +232,7 @@ component 	persistent="true"
 		permissions = [];
 		return this;
 	}
-	
+
 	/**
 	* Override the setPermissions
 	*/
@@ -280,7 +280,7 @@ component 	persistent="true"
 	* @showRole Show Roles
 	* @showPermissions Show permissions
 	*/
-	function getMemento( 
+	function getMemento(
 		excludes="pages,entries",
 		boolean showRole=true,
 		boolean showPermissions=true
@@ -288,12 +288,12 @@ component 	persistent="true"
 		// Do this to convert native Array to CF Array for content properties
 		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		// Do Role Relationship
 		if( arguments.showRole && hasRole() ){
 			result[ "role" ] = getRole().getMemento();
 		}
-		
+
 		// Permissions
 		if( arguments.showPermissions && hasPermission() ){
 			result[ "permissions" ] = [];
@@ -306,9 +306,9 @@ component 	persistent="true"
 
 		return result;
 	}
-	
+
 	/************************************** PREFERENCE FUNCTIONS *********************************************/
-	
+
 	/**
 	* Store a preferences structure or JSON data in the user prefernces
 	* @preferences.hint A struct of data or a JSON packet to store
@@ -323,7 +323,7 @@ component 	persistent="true"
 		}
 		return this;
 	}
-	
+
 	/**
 	* Get all user preferences in inflated format
 	*/
@@ -332,7 +332,7 @@ component 	persistent="true"
 			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structnew() );
 		}
 	}
-	
+
 	/**
 	* Get a preference, you can pass a default value if preference does not exist
 	*/
@@ -353,7 +353,7 @@ component 	persistent="true"
 			  type="User.PreferenceNotFound",
 			  detail="Valid preferences are #structKeyList( allPreferences )#" );
 	}
-	
+
 	/**
 	* Set a preference in the user preferences
 	*/
@@ -363,5 +363,5 @@ component 	persistent="true"
 		// store in lock mode
 		return setPreferences( allPreferences );
 	}
-	
+
 }

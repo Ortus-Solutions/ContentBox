@@ -10,7 +10,7 @@
     <base href="#cb.siteBaseURL()#" />
     <!--- Title --->
     <cfif structKeyExists( prc, 'cb_site_name' )>
-        <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>        
+        <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>
     </cfif>
     <!--- Description --->
     <meta name="description" content="ContentBox Modular CMS - Admin">

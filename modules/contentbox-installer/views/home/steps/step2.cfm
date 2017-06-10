@@ -5,10 +5,10 @@
 
 <!--- Populate With Sample Data --->
 <div class="form-group">
-    #html.label( 
-        field="populatedata", 
-        content=cb.r( "tab.site.sampledata@installer" ), 
-        class="control-label" 
+    #html.label(
+        field="populatedata",
+        content=cb.r( "tab.site.sampledata@installer" ),
+        class="control-label"
     )#
     <div class="controls">
     	#html.checkbox(
@@ -21,7 +21,7 @@
     </div>
 </div>
 <!--- Site Name  --->
-#html.textField( 
+#html.textField(
     name="siteName",
     label=cb.r( "tab.site.sitename@installer" ),
     class="form-control",
@@ -33,7 +33,7 @@
     groupWrapper="div class=form-group"
 )#
 <!--- Site Email --->
-#html.inputField( 
+#html.inputField(
     name="siteEmail",
     type="email",
     label=cb.r( "tab.site.admin@installer" ),
@@ -46,7 +46,7 @@
     groupWrapper="div class=form-group"
 )#
 <!--- Outgoing Email --->
-#html.inputField( 
+#html.inputField(
     name="siteOutgoingEmail",
     type="email",
     label=cb.r( "tab.site.outgoing@installer" ),
@@ -59,7 +59,7 @@
     groupWrapper="div class=form-group"
 )#
 <!--- Tag Line --->
-#html.textField( 
+#html.textField(
     name="siteTagLine",
     label=cb.r( "tab.site.tagline@installer" ),
     class="form-control",
@@ -71,7 +71,7 @@
     groupWrapper="div class=form-group"
 )#
 <!--- Description --->
-#html.textarea( 
+#html.textarea(
     name="siteDescription",
     label=cb.r( "tab.site.description@installer" ),
     rows="3",
@@ -80,9 +80,9 @@
     wrapper="div class=controls",
     labelClass="control-label",
     groupWrapper="div class=form-group"
-)#        
+)#
 <!--- Keywords --->
-#html.textarea( 
+#html.textarea(
     name="siteKeywords",
     label=cb.r( "tab.site.keywords@installer" ),
     rows="3",
@@ -91,7 +91,7 @@
     wrapper="div class=controls",
     labelClass="control-label",
     groupWrapper="div class=form-group"
-)#     
+)#
 #html.endFieldSet()#
 
 <!---Toolbar --->

@@ -18,25 +18,25 @@ $( document ).ready( function(){
         	}
         }
 	} );
-	
+
 	// password validator
-	$.validator.addMethod( 
-		'passwordmatch', 
+	$.validator.addMethod(
+		'passwordmatch',
 		function( value, element ){
         	return ( value == $( "[name=password]" ).val() ) ? true : false;
-    	}, 
-    	'#cb.r( "validation.passwordmatch@installer" )#' 
+    	},
+    	'#cb.r( "validation.passwordmatch@installer" )#'
     );
-    
+
 	$.validator.addMethod(
-		"pwcheck", 
+		"pwcheck",
 		function( value ){
 			var LOWER = /[a-z]/,
 			    UPPER = /[A-Z]/,
 			    DIGIT = /[0-9]/,
 			    DIGITS = /[0-9].*[0-9]/,
 			    SPECIAL = /[^a-zA-Z0-9]/;
-			
+
 			var lower = LOWER.test(value),
 			    upper = UPPER.test(value),
 			    digit = DIGIT.test(value),
@@ -48,10 +48,10 @@ $( document ).ready( function(){
 			   && digit // has at least one digit
 			   && special // has special chars
 		       && value.length > 7 // at least 8 chars
-		}, 
-		'#cb.r( "validation.passwordcheck@installer" )#' 
+		},
+		'#cb.r( "validation.passwordcheck@installer" )#'
 	);
-	
+
 } );
 
 function nextStep(){

@@ -1,9 +1,9 @@
 <cfoutput>
 <fieldset>
     <legend><i class="fa fa-signal fa-lg"></i>  Dashboard Options</legend>
-    
+
     <!--- Tag Line --->
-    #html.textField( 
+    #html.textField(
         name="cb_dashboard_welcome_title",
         label="Welcome Title:",
         value=prc.cbSettings.cb_dashboard_welcome_title,
@@ -23,7 +23,7 @@
         labelClass="control-label",
         groupWrapper="div class=form-group"
     )#
-    
+
     <!--- Dashboard Feed --->
     <div class="form-group">
         <label class="control-label" for="cb_dashboard_newsfeed">News Feed</label>
@@ -58,7 +58,7 @@
                 </cfloop>
             </select>
         </div>
-    </div>    
+    </div>
     <!--- Recent Pages --->
     <div class="form-group">
         <label class="control-label" for="cb_dashboard_recentPages">Recent Pages Count</label>
@@ -80,7 +80,7 @@
                 </cfloop>
             </select>
         </div>
-    </div>  
+    </div>
     <!--- Recent Comments--->
     <div class="form-group">
         <label class="control-label" for="cb_dashboard_recentComments">Recent Comments Count</label>

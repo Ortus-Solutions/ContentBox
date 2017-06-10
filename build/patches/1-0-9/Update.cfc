@@ -52,12 +52,12 @@ component implements="contentbox.model.updates.IUpdate"{
 			transaction{
 
 				log.info("About to beggin #version# patching");
-				
+
 				// update settings
 				updatePermissions();
 				// update AdminR Role
 				updateAdmin();
-				
+
 				log.info("Finalized #version# patching");
 			}
 		}
@@ -84,7 +84,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			rethrow;
 		}
 	}
-	
+
 	function updateAdmin(){
 		var oRole = roleService.findWhere({role="Administrator"});
 		// Add in new permissions
@@ -94,7 +94,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	function updatePermissions(){
 		var perms = {
 			"FORGEBOX_ADMIN" = "Ability to manage ForgeBox installations and connectivity."

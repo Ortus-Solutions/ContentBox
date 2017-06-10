@@ -18,8 +18,8 @@
 <div class="row">
     <div class="col-md-12">
     	#html.startForm(
-            name="roleForm", 
-            action=prc.xehRoleRemove, 
+            name="roleForm",
+            action=prc.xehRoleRemove,
             class="form-vertical"
         )#
         	#html.hiddenField(name="roleID",value="" )#
@@ -72,12 +72,12 @@
 						<thead>
 							<tr>
 								<th>Role</th>
-								<th>Description</th>		
+								<th>Description</th>
 								<th width="95" class="text-center">Permissions</th>
 								<th width="95" class="text-center">Authors</th>
 								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
-						</thead>				
+						</thead>
 						<tbody>
 							<cfloop array="#prc.roles#" index="role">
 							<tr>
@@ -85,7 +85,7 @@
 									<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
 									<a href="javascript:edit('#role.getRoleID()#',
 									   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
-									   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')" 
+									   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"
 									   title="Edit #role.getRole()#">#role.getRole()#</a>
 									<cfelse>
 										#role.getRole()#
@@ -99,7 +99,7 @@
 
 									<!--- permissions --->
 									<a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="fa fa-lock fa-lg"></i></a>
-									<!--- Actions --->	
+									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
 											<i class="fa fa-cogs fa-lg"></i>
@@ -114,7 +114,7 @@
 												<li><a href="javascript:edit('#role.getRoleID()#',
 											   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
 											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
-											
+
 												<!--- Export --->
 												<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 													<li><a href="#event.buildLink(linkto=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
@@ -129,7 +129,7 @@
 						</tbody>
 					</table>
 				</div>
-			</div>	
+			</div>
         #html.endForm()#
     </div>
 </div>
@@ -138,7 +138,7 @@
 	<div id="roleEditorContainer" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document" >
 			<div class="modal-content">
-		
+
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4><i class="fa fa-group"></i> Role Editor</h4>
@@ -181,7 +181,7 @@
 					#html.resetButton(
 						name="btnReset",
 						value="Cancel",
-						class="btn", 
+						class="btn",
 						onclick="closeModal( $('##roleEditorContainer') )"
 					)#
 					#html.submitButton(

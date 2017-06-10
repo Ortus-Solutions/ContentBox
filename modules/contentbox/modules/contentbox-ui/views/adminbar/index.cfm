@@ -1,10 +1,10 @@
 <cfoutput>
 <div id="cb-admin-bar">
-	
+
 	<span id="cb-admin-bar-actions">
-		
+
 		<cfif !isNull( args.oContent )>
-			
+
 			<cfif args.oContent.getContentType() == "Page">
 			<span class="admin-bar-label">
 				Layout: #args.oContent.getLayout()#
@@ -72,11 +72,11 @@
 
 	<cfif !isNull( args.oContent )>
 	<p>
-		#args.oContent.getAuthorName()# published on 
+		#args.oContent.getAuthorName()# published on
 				#args.oContent.getActiveContent().getDisplayCreatedDate()#
 	</p>
 	</cfif>
-	
+
 </div>
 <div id="cb-admin-bar-spacer">&nbsp;</div>
 
@@ -85,7 +85,7 @@ setTimeout( insertAdminBar, 500 );
 function insertAdminBar(){
 	document.body.insertBefore(
 		document.getElementById( 'cb-admin-bar' ),
-		document.body.firstChild 
+		document.body.firstChild
 	);
 }
 </script>

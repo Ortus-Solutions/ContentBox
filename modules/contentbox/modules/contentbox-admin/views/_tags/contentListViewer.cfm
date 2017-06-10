@@ -12,18 +12,18 @@ function setupContentView( settings ){
 	$bulkStatusURL  = settings.bulkStatusURL;
 	$importDialog	= settings.importDialog;
 	$cloneDialog	= settings.cloneDialog;
-	
+
 	// quick search binding
-	$searchField.keyup( 
-		_.debounce( 
+	$searchField.keyup(
+		_.debounce(
 			function(){
 				var $this = $( this );
 				var clearIt = ( $this.val().length > 0 ? false : true );
 				// ajax search
 				contentLoad( { search : $this.val() } );
-			}, 
-			300 
-		) 
+			},
+			300
+		)
 	);
 }
 // Content filters
@@ -101,8 +101,8 @@ function contentLoad( criteria ){
 	if( !( "showAll" in criteria) ){ criteria.showAll = false; }
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
-	var args = {  
-		page			: criteria.page, 
+	var args = {
+		page			: criteria.page,
 		parent			: criteria.parent,
 		fAuthors 		: criteria.fAuthors,
 		fCategories 	: criteria.fCategories,
@@ -135,7 +135,7 @@ function activateInfoPanels(){
 		delay : { show: 200, hide: 500 }
 	} );
 }
-// Activate quick looks 
+// Activate quick looks
 function activateQuickLook( $table, quickLookURL ){
 	$table.find( "tr" ).bind( "contextmenu",function(e) {
 	    if (e.which === 3) {
@@ -152,7 +152,7 @@ function remove( contentID, id ){
 	checkAll( false, id );
 	if( contentID != null ){
 		$( "##delete_"+ contentID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
-		checkByValue( id, contentID );		
+		checkByValue( id, contentID );
 	}
 	$contentForm.submit();
 }
@@ -168,7 +168,7 @@ function bulkChangeStatus(status, contentID){
 	// only submit if something selected
 	if( contentID != null ){
 		$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
-		checkByValue('contentID',contentID);	
+		checkByValue('contentID',contentID);
 	}
 	$contentForm.submit();
 }
@@ -178,7 +178,7 @@ function importContent(){
 	// open modal for cloning options
 	openModal( $importDialog, 500 );
 	// form validator and data
-	$importForm.validate( { 
+	$importForm.validate( {
 		submitHandler: function(form){
            	$importDialog.find( "##importButtonBar" ).slideUp();
 			$importDialog.find( "##importBarLoader" ).slideDown();
@@ -197,7 +197,7 @@ function openCloneDialog(contentID, title){
 	// open modal for cloning options
 	openModal( $cloneDialog, 500 );
 	// form validator and data
-	$cloneForm.validate( { 
+	$cloneForm.validate( {
 		submitHandler: function(form){
            	$cloneDialog.find( "##cloneButtonBar" ).slideUp();
 			$cloneDialog.find( "##clonerBarLoader" ).slideDown();
@@ -211,13 +211,13 @@ function openCloneDialog(contentID, title){
 	$cloneDialog.find( "##cloneButton" ).click(function(e){
 		$cloneForm.submit();
 	} );
-	
+
 }
 // Reset Hits
 function resetHits( contentID ){
 	if( !contentID.length ){ return; }
 	// Post it
-	$.post( 
+	$.post(
 		'#event.buildLink( prc.xehResetHits )#',
 		{ contentID: contentID }
 	).done( function( data ){

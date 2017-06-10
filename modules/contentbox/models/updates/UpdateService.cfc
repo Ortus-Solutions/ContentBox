@@ -42,7 +42,7 @@ component accessors="true" threadSafe{
 	/**
 	* Apply updates from a download URL, return results struct: [error,logInfo]
 	* @downloadURL The download URL for the update
-	* 
+	*
 	* @return results struct : { error:boolean, logInfo:string }
 	*/
 	struct function applyUpdateFromURL( required string downloadURL ){
@@ -68,7 +68,7 @@ component accessors="true" threadSafe{
 	/**
 	* Apply updates from an upload, return results struct: [error,logInfo]
 	* @fileField The file field form name
-	* 
+	*
 	* @return results struct : { error:boolean, logInfo:string }
 	*/
 	struct function applyUpdateFromUpload( required fileField ){
@@ -77,7 +77,7 @@ component accessors="true" threadSafe{
 
 		try{
 			setting requestTimeout="999999";
-			
+
 			// upload patch
 			log.append( "Starting upload of patch.<br/>" );
 			var uploadResults = uploadUpdate( arguments.fileField );
@@ -159,9 +159,9 @@ component accessors="true" threadSafe{
 		arguments.log.append( "Patch Zip archive detected, beginning to expand update: #arguments.path#<br />" );
 		// extract it
 		zipUtil.extract(
-			zipFilePath		= arguments.path, 
-			extractPath		= appPath, 
-			overwriteFiles	= "true" 
+			zipFilePath		= arguments.path,
+			extractPath		= appPath,
+			overwriteFiles	= "true"
 		);
 		// more logging
 		arguments.log.append( "Patch Updates uncompressed.<br />" );
@@ -288,7 +288,7 @@ component accessors="true" threadSafe{
 	/**
 	* Parse the semantic version
 	* @version The version string
-	* 
+	*
 	* @return struct:{major,minor,revision,beid,buildid}
 	*/
 	private struct function parseSemanticVersion( required string version ){
@@ -341,11 +341,11 @@ component accessors="true" threadSafe{
 	* @fileField The file field on the form
 	*/
 	struct function uploadUpdate( required fileField ){
-		return fileUpload( 
-			getPatchesLocation(), 
-			arguments.fileField, 
-			"application/zip,application/x-zip-compressed,application/octet-stream", 
-			"overwrite" 
+		return fileUpload(
+			getPatchesLocation(),
+			arguments.fileField,
+			"application/zip,application/x-zip-compressed,application/octet-stream",
+			"overwrite"
 		);
 	}
 

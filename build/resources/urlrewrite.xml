@@ -16,7 +16,7 @@
         <from>/test/status/</from>
         <to type="redirect">%{context-path}/rewrite-status</to>
     </rule>
-	
+
 	<rule>
         <note>Media URLs</note>
         <condition type="request-uri" operator="equal">^/__media/.*$</condition>
@@ -44,7 +44,7 @@
         <from>/rewrite-status</from>
         <to>/test/status/</to>
     </outbound-rule>
-	
+
     <!--
 
     INSTALLATION

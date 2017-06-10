@@ -31,11 +31,11 @@ Blog
 
 
 ## Release Notes - ContentBox Modular CMS - Version 3.1.0
-            
+
 <h2>        Bug
 </h2>
 <ul>
-<li>[<a href='https://ortussolutions.atlassian.net/browse/CONTENTBOX-762'>CONTENTBOX-762</a>] -         If admin is in SSL mode, then previews should trigger ssl as well 
+<li>[<a href='https://ortussolutions.atlassian.net/browse/CONTENTBOX-762'>CONTENTBOX-762</a>] -         If admin is in SSL mode, then previews should trigger ssl as well
 </li>
 <li>[<a href='https://ortussolutions.atlassian.net/browse/CONTENTBOX-766'>CONTENTBOX-766</a>] -         BaseWidget not providing a default logging class &#39;log&#39; as it did in ContentBox 2
 </li>
@@ -68,7 +68,7 @@ Blog
 <li>[<a href='https://ortussolutions.atlassian.net/browse/CONTENTBOX-818'>CONTENTBOX-818</a>] -         Blog Pagination - If you hit a page over total it shows up blank
 </li>
 </ul>
-            
+
 <h2>        New Feature
 </h2>
 <ul>
@@ -95,7 +95,7 @@ Blog
 <li>[<a href='https://ortussolutions.atlassian.net/browse/CONTENTBOX-807'>CONTENTBOX-807</a>] -         new cbhelper seo method: getContentKeywords() that retrieves the metadata according to discover rules
 </li>
 </ul>
-        
+
 <h2>        Improvement
 </h2>
 <ul>
@@ -142,9 +142,9 @@ Blog
 <li>[<a href='https://ortussolutions.atlassian.net/browse/CONTENTBOX-828'>CONTENTBOX-828</a>] -         Widgets - Widgets loaded from Themes are still marked as Layouts
 </li>
 </ul>
-                                        
+
 
 ---
- 
+
 ###THE DAILY BREAD
  > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12

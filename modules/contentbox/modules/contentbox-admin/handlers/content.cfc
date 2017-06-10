@@ -27,19 +27,19 @@ component extends="baseHandler"{
 			.paramValue( "slug","" )
 			.paramValue( "markup","HTML" )
 			.paramValue( "parentPage", "" );
-		
+
 		// Determine Type
 		switch( rc.contentType ){
-			case "Page" 	: { 
-				prc.xehPreview = CBHelper.linkPage( "__page_preview" ); 
-				break; 
+			case "Page" 	: {
+				prc.xehPreview = CBHelper.linkPage( "__page_preview" );
+				break;
 			}
-			case "Entry" : { 
-				prc.xehPreview = CBHelper.linkPage( "__entry_preview" ); 
+			case "Entry" : {
+				prc.xehPreview = CBHelper.linkPage( "__entry_preview" );
 				rc.layout = "blog";
-				break; 
+				break;
 			}
-			case "ContentStore" : { 
+			case "ContentStore" : {
 				var oContent = contentStoreService.new();
 				prc.preview  = oContent.renderContentSilent( rc.content );
 				event.setView( view="content/simplePreview", layout="ajax" );
@@ -51,7 +51,7 @@ component extends="baseHandler"{
 		// full preview view
 		event.setView( view="content/preview", layout="ajax" );
 	}
-	
+
 	/**
 	* Global Content Search
 	* @return html
@@ -71,10 +71,10 @@ component extends="baseHandler"{
 		// Determine search via context or none at all
 		if( !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context ) ){
 			// Search for content
-			prc.results = contentService.searchContent( 
-				searchTerm			= rc.search, 
-				max					= prc.cbSettings.cb_admin_quicksearch_max, 
-				sortOrder			= "title", 
+			prc.results = contentService.searchContent(
+				searchTerm			= rc.search,
+				max					= prc.cbSettings.cb_admin_quicksearch_max,
+				sortOrder			= "title",
 				isPublished			= "all",
 				searchActiveContent	= false,
 				contentTypes 		= prc.context
@@ -85,11 +85,11 @@ component extends="baseHandler"{
 			prc.minContentCount = 0;
 		}
 
-		
+
 		// Search for Authors
 		if( !len( prc.context ) || listFindNoCase( "author", prc.context ) ){
 			prc.authors = authorService.search(
-				searchTerm 	= rc.search, 
+				searchTerm 	= rc.search,
 				max 		= prc.cbSettings.cb_admin_quicksearch_max
 			);
 			prc.minAuthorCount 	= ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
@@ -118,11 +118,11 @@ component extends="baseHandler"{
 		var data = {
 			"UNIQUE" = false
 		};
-		
+
 		if( len( rc.slug ) ){
 			data[ "UNIQUE" ] = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
 		}
-		
+
 		event.renderData( data=data, type="json" );
 	}
 
@@ -147,14 +147,14 @@ component extends="baseHandler"{
 		prc.pagingLink 	= "javascript:pagerLink( @page@, '#rc.contentType#' )";
 
 		// search entries with filters and all
-		var contentResults = contentService.searchContent( 
+		var contentResults = contentService.searchContent(
 			searchTerm			= rc.search,
 			offset				= prc.paging.startRow-1,
 			max					= prc.cbSettings.cb_paging_maxrows,
 			sortOrder			= "slug asc",
 			searchActiveContent	= false,
 			contentTypes		= rc.contentType,
-			excludeIDs			= rc.excludeIDs 
+			excludeIDs			= rc.excludeIDs
 		);
 		// setup data for display
 		prc.content 		= contentResults.content;
@@ -204,10 +204,10 @@ component extends="baseHandler"{
 	*/
 	any function resetHits( event, rc, prc ){
 		event.paramValue( "contentID", 0 );
-		var response = { 
+		var response = {
 			"data" 			= { "data" = "", "error" = false, "messages" = [] },
-			"statusCode" 	= "200", 
-			"statusText" 	= "Ok" 
+			"statusCode" 	= "200",
+			"statusText" 	= "Ok"
 		};
 		// build to array and iterate
 		rc.contentID = listToArray( rc.contentID );
@@ -229,11 +229,11 @@ component extends="baseHandler"{
 			}
 		}
 		// Render it out
-		event.renderData( 
-			data		= response.data, 
-			type		= "json", 
-			statusCode	= response.statusCode, 
-			statusText	= ( arrayLen( response.data.messages ) ? 'Error processing request please look at data messages' : 'Ok' ) 
+		event.renderData(
+			data		= response.data,
+			type		= "json",
+			statusCode	= response.statusCode,
+			statusText	= ( arrayLen( response.data.messages ) ? 'Error processing request please look at data messages' : 'Ok' )
 		);
 	}
 
@@ -247,12 +247,12 @@ component extends="baseHandler"{
 	* @colorCodings 		Show content row color codings
 	* @showPublishedStatus 	Show published status columns
 	* @showAuthor 			Show the author in the table
-	* 
+	*
 	* @return html
 	*/
-	function latestContentEdits( 
-		event, 
-		rc, 
+	function latestContentEdits(
+		event,
+		rc,
 		prc,
 		any author,
 		boolean isPublished,
@@ -266,13 +266,13 @@ component extends="baseHandler"{
 		var args = { max = arguments.max };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
 		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
-		
+
 		// Get latest content edits with criteria
 		var aLatestEdits = contentService.getLatestEdits( argumentCollection = args );
 
 		// view pager
-		return renderView( 
-			view 	= "content/contentViewlet", 
+		return renderView(
+			view 	= "content/contentViewlet",
 			module 	= "contentbox-admin",
 			args 	= {
 				viewletID 			= createUUID(),
@@ -296,12 +296,12 @@ component extends="baseHandler"{
 	* @colorCodings 		Show content row color codings
 	* @showPublishedStatus 	Show published status columns
 	* @showAuthor 			Show the author in the table
-	* 
+	*
 	* @return html
 	*/
-	function contentByPublishedStatus( 
-		event, 
-		rc, 
+	function contentByPublishedStatus(
+		event,
+		rc,
 		prc,
 		boolean showExpired=false,
 		any author,
@@ -315,22 +315,22 @@ component extends="baseHandler"{
 		// Setup args so we can use them in the viewlet
 		var args = { max = arguments.max, offset = arguments.offset };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
-		
-		// Expired Content		
+
+		// Expired Content
 		var aContent = "";
 		if( arguments.showExpired ){
 			aContent = contentService.findExpiredContent( argumentCollection = args );
-		} 
+		}
 		// Future Published Content
 		else {
 			aContent = contentService.findFuturePublishedContent( argumentCollection = args );
 		}
 
 		// view pager
-		return renderView( 
-			view 	= "content/contentViewlet", 
+		return renderView(
+			view 	= "content/contentViewlet",
 			module 	= "contentbox-admin",
-			args 	= { 
+			args 	= {
 				viewletID 			= createUUID(),
 				aContent 			= aContent,
 				showHits 			= arguments.showHits,

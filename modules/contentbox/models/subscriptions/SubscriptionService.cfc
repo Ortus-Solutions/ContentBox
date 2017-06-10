@@ -33,5 +33,5 @@ component extends="cborm.models.VirtualEntityService" singleton {
         super.init( entityName=arguments.entityName, useQueryCaching=true );
 
         return this;
-    }    
+    }
 }

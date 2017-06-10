@@ -78,7 +78,7 @@
                 </div>
 
                 <div class="panel-body tab-content">
-                    
+
                     <!--- Editor --->
                     <div role="tabpanel" class="tab-pane active" id="editor">
                         <!--- title --->
@@ -94,7 +94,7 @@
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
                         )#
-                        
+
                         <!--- slug --->
                         <div class="form-group">
                             <label for="slug" class="control-label">Permalink:
@@ -105,11 +105,11 @@
                                 <div id='slugCheckErrors'></div>
                                 <div class="input-group">
                                     #html.textfield(
-                                        name="slug", 
-                                        bind=prc.entry, 
-                                        maxlength="100", 
-                                        class="form-control", 
-                                        title="The URL permalink for this entry", 
+                                        name="slug",
+                                        bind=prc.entry,
+                                        maxlength="100",
+                                        class="form-control",
+                                        title="The URL permalink for this entry",
                                         disabled="#prc.entry.isLoaded() && prc.entry.getIsPublished() ? 'true' : 'false'#"
                                     )#
                                     <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
@@ -120,24 +120,24 @@
                         </div>
                         <!---ContentToolBar --->
                         #renderView(view="_tags/content/markup",args={ content=prc.entry })#
-                        
+
                         <!--- content --->
                         #html.textarea(
-                            name="content", 
-                            value=htmlEditFormat( prc.entry.getContent() ), 
-                            rows="25", 
+                            name="content",
+                            value=htmlEditFormat( prc.entry.getContent() ),
+                            rows="25",
                             class="form-control"
                         )#
                         <!--- excerpt --->
                         #html.textarea(
-                            label="Excerpt:", 
-                            name="excerpt", 
-                            bind=prc.entry, 
-                            rows="10", 
+                            label="Excerpt:",
+                            name="excerpt",
+                            bind=prc.entry,
+                            rows="10",
                             class="form-control"
                         )#
                     </div>
-                    
+
                     <!--- Custom Fields --->
                     <div role="tabpanel" class="tab-pane" id="custom_fields">
                         #renderView( view="_tags/customFields", args={ fieldType="Entry", customFields=prc.entry.getCustomFields() } )#
@@ -148,7 +148,7 @@
                         <div class="form-group">
                             #html.textfield(
                                 name="htmlTitle",
-                                label="Title: (Leave blank to use blog entry title)", 
+                                label="Title: (Leave blank to use blog entry title)",
                                 bind=prc.entry,
                                 class="form-control",
                                 maxlength="255"
@@ -157,7 +157,7 @@
                         <div class="form-group">
                             #html.textArea(
                                 name="htmlKeywords",
-                                label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
+                                label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)",
                                 bind=prc.entry,
                                 class="form-control",
                                 maxlength="160",
@@ -167,7 +167,7 @@
                         <div class="form-group">
                             #html.textArea(
                                 name="htmlDescription",
-                                label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
+                                label="Description: (<span id='html_description_count'>0</span>/160 characters left)",
                                 bind=prc.entry,
                                 class="form-control",
                                 maxlength="160",
@@ -182,7 +182,7 @@
                         <div role="tabpanel" class="tab-pane" id="history">
                             #prc.versionsViewlet#
                         </div>
-                        
+
                          <!--- Comments --->
                         <div role="tabpanel" class="tab-pane" id="comments">
                             #prc.commentsViewlet#
@@ -207,9 +207,9 @@
 
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="entry-sidebar">
-                        
+
                         <!---Begin Page Info--->
-                        <cfif prc.entry.isLoaded()> 
+                        <cfif prc.entry.isLoaded()>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
@@ -283,7 +283,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content
                                     </a>
 
                                 </h4>
@@ -306,7 +306,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content
                                     </a>
 
                                 </h4>
@@ -349,11 +349,11 @@
                                             </select>
                                         </div>
                                     </cfif>
-                                    
+
                                     <!--- Allow Comments --->
                                     <cfif prc.cbSettings.cb_comments_enabled>
                                         <div class="form-group">
-                                            <i class="fa fa-comments fa-lg"></i> 
+                                            <i class="fa fa-comments fa-lg"></i>
                                             #html.label(
                                                 field="allowComments",
                                                 content="Allow Comments:",
@@ -362,7 +362,7 @@
                                             #html.select(
                                                 name="allowComments",
                                                 options="Yes,No",
-                                                selectedValue=yesNoFormat( prc.entry.getAllowComments() ), 
+                                                selectedValue=yesNoFormat( prc.entry.getAllowComments() ),
                                                 class="form-control input-sm"
                                             )#
                                         </div>
@@ -378,15 +378,15 @@
                                             selectedValue=yesNoFormat( prc.entry.getShowInSearch() )
                                         )#
                                     </div>
-                
+
                                     <!--- Password Protection --->
                                     <div class="form-group">
                                         <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
                                         #html.textfield(
                                             name="passwordProtection",
                                             bind=prc.entry,
-                                            title="Password protect your entry, leave empty for none", 
-                                            class="form-control", 
+                                            title="Password protect your entry, leave empty for none",
+                                            class="form-control",
                                             maxlength="100"
                                         )#
                                     </div>
@@ -395,7 +395,7 @@
                         </div>
                         </cfif>
                         <!---End Modfiers--->
-                            
+
                         <!---Begin Cache Settings--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
@@ -418,7 +418,7 @@
                                         #html.select(
                                             name="cache",
                                             options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.entry.getCache()), 
+                                            selectedValue=yesNoFormat(prc.entry.getCache()),
                                             class="form-control input-sm"
                                         )#
                                     </div>
@@ -451,7 +451,7 @@
                         </div>
                         </cfif>
                         <!---End Cache Settings--->
-                            
+
                         <!---Begin Categories--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
@@ -491,7 +491,7 @@
                         </div>
                         </cfif>
                         <!---End Categories--->
-                            
+
                         <!---Begin Featured Image --->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
                         <div class="panel panel-default">
@@ -532,21 +532,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         </cfif>
-                        <!---End Featured Image--->  
-                        
+                        <!---End Featured Image--->
+
                         <!--- Event --->
-                        #announceInterception( "cbadmin_entryEditorSidebarAccordion" )#           
-                    </div>  
+                        #announceInterception( "cbadmin_entryEditorSidebarAccordion" )#
+                    </div>
                     <!--- End Accordion --->
-        
+
                     <!--- Event --->
                     #announceInterception( "cbadmin_entryEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception( "cbadmin_entryEditorSidebarFooter" )#   
+            #announceInterception( "cbadmin_entryEditorSidebarFooter" )#
         </div>
     </div>
 #html.endForm()#

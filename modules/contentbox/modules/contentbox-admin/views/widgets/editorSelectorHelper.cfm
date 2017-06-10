@@ -56,7 +56,7 @@ function switchWidgetFormMode( mode ) {
         case 'list':
             findSelectedWidget().removeClass( 'selected' );
             detail.fadeOut( 300, function() {
-                list.fadeIn( 300 )  
+                list.fadeIn( 300 )
                 filter.show();
                 backBtn.hide();
                 insertBtn.hide();

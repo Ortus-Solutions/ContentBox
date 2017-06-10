@@ -10,7 +10,7 @@ Because of God's grace, this project exists. If you don't like this, then don't 
 By whom also we have access by faith into this grace wherein we stand, and rejoice in hope of the glory of God.
 And not only so, but we glory in tribulations also: knowing that tribulation worketh patience;
 And patience, experience; and experience, hope:
-And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the 
+And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the
 Holy Ghost which is given unto us. ." Romans 5:5
 
 ----
@@ -60,7 +60,7 @@ You can follow in-depth installation instructions here: https://contentbox.ortus
 
 1. **ContentBox Installer** : Install a new site with our DSN Creator, Installer and ContentBox Modules
 1. **ContentBox Modules**: Install ContentBox as a module into an existing ColdBox application (Requires ORM configuration)
-1. **ContentBox Site**: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers) 
+1. **ContentBox Site**: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers)
 
 ```
 # Install New Site with DSN Creator, Installer and ContentBox modules
@@ -75,7 +75,7 @@ install contentbox-site
 
 ## Collaboration
 
-If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.  
+If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.
 
 You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  Please note that the default CFML engine is a Lucee 4.5 engine.  You can start any of the following engines:
 
@@ -91,6 +91,6 @@ For running our test suites you will need 2 more steps, so please refer to the [
 If developing CSS and Javascript assets, please refer to the [Developer Guide](workbench/Developer.md) in the `workbench/Developer.md` folder.
 
 ---
- 
+
 ###THE DAILY BREAD
  > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12

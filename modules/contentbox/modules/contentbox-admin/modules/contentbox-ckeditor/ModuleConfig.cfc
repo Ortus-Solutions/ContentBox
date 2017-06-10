@@ -27,17 +27,17 @@ component {
 		routes = [
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints = [ 
+			customInterceptionPoints = [
 				"cbadmin_ckeditorToolbar",
 				"cbadmin_ckeditorExtraPlugins",
-				"cbadmin_ckeditorExtraConfig" 
+				"cbadmin_ckeditorExtraConfig"
 			]
 		};
-		
+
 		// interceptors
 		interceptors = [ ];
 	}

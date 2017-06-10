@@ -2,33 +2,33 @@
 <!--- Mail Server Settings --->
 #html.startFieldset(legend=cb.r( "tab.email@installer" ) )#
     #cb.r( "tab.email.instructions@installer" )#
-    
+
     <!--- Mail Server --->
     <div class="form-group">
-        #html.label( 
+        #html.label(
             class="control-label",
             field="cb_site_mail_server",
-            content=cb.r( "tab.email.server.label@installer" ) 
+            content=cb.r( "tab.email.server.label@installer" )
         )#
         <div class="controls">
             <small>#cb.r( "tab.email.server.help@installer" )#</small><br/>
-            #html.textField( 
+            #html.textField(
                 name="cb_site_mail_server",
                 class="form-control",
-                title=cb.r( "tab.email.server.title@installer" ) 
+                title=cb.r( "tab.email.server.title@installer" )
             )#
         </div>
     </div>
     <!--- Mail Username --->
     <div class="form-group">
-        #html.label( 
+        #html.label(
             class="control-label",
             field="cb_site_mail_username",
-            content=cb.r( "tab.email.username.label@installer" ) 
+            content=cb.r( "tab.email.username.label@installer" )
         )#
         <div class="controls">
             <small>#cb.r( "tab.email.username.help@installer" )#</small><br/>
-            #html.textField( 
+            #html.textField(
                 name="cb_site_mail_username",
                 class="form-control",
                 title=cb.r( "tab.email.username.title@installer" )
@@ -37,47 +37,47 @@
     </div>
     <!--- Mail Password --->
     <div class="form-group">
-        #html.label( 
+        #html.label(
             class="control-label",
             field="cb_site_mail_password",
-            content=cb.r( "tab.email.password.label@installer" ) 
+            content=cb.r( "tab.email.password.label@installer" )
         )#
         <div class="controls">
             <small>#cb.r( "tab.email.password.help@installer" )#</small><br/>
-            #html.passwordField( 
+            #html.passwordField(
                 name="cb_site_mail_password",
                 class="form-control",
-                title=cb.r( "tab.email.password.title@installer" ) 
+                title=cb.r( "tab.email.password.title@installer" )
             )#
         </div>
     </div>
     <!--- SMTP Port --->
     <div class="form-group">
-        #html.label( 
+        #html.label(
             class="control-label",
             field="cb_site_mail_smtp",
-            content=cb.r( "tab.email.port@installer" ) 
+            content=cb.r( "tab.email.port@installer" )
         )#
         <div class="controls">
             <small>#cb.r( "tab.email.port.help@installer" )#</small><br/>
-            #html.inputfield( 
+            #html.inputfield(
                 type="numeric",
                 value="25",
                 name="cb_site_mail_smtp",
                 class="form-control",
                 size="5",
-                title=cb.r( "tab.email.port.title@installer" ) 
+                title=cb.r( "tab.email.port.title@installer" )
             )#
         </div>
     </div>
-    
-    
+
+
     <!--- TLS --->
     <div class="form-group">
-        #html.label( 
-            class="control-label", 
-            field="cb_site_mail_tls", 
-            content=cb.r( "tab.email.tls@installer" ) 
+        #html.label(
+            class="control-label",
+            field="cb_site_mail_tls",
+            content=cb.r( "tab.email.tls@installer" )
         )#
         <div class="controls">
             <small>#cb.r( "tab.email.tls.help@installer" )#</small><br />
@@ -92,10 +92,10 @@
     </div>
     <!--- SSL --->
     <div class="form-group">
-        #html.label( 
+        #html.label(
             class="control-label",
             field="cb_site_mail_ssl",
-            content=cb.r( "tab.email.ssl@installer" ) 
+            content=cb.r( "tab.email.ssl@installer" )
         )#
         <div class="controls">
             <small>#cb.r( "tab.email.ssl.help@installer" )#</small><br />

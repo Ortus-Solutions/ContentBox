@@ -4,7 +4,7 @@
 <!--- ********************************************************************************* --->
 <!--- 					META TAGS														--->
 <!--- ********************************************************************************* --->
-<meta charset="utf-8" /> 
+<meta charset="utf-8" />
 <meta name="generator" 	 	content="ContentBox powered by ColdBox" />
 <meta name="robots" 	 	content="index,follow" />
 <meta name="viewport" 		content="width=device-width, initial-scale=1">
@@ -21,7 +21,7 @@
 <!--- ********************************************************************************* --->
 <cfif cb.themeSetting( "rssDiscovery", true )>
 	<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="#cb.linkPageRSS()#" />
-	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />	
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />
 	<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="#cb.linkSiteRSS()#" />
 	<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="#cb.linkSiteRSS(comments=true)#" />
 	<!--- RSS Discovery If In View Mode --->
@@ -45,7 +45,7 @@
 <cfif len( cb.themeSetting( 'cssStyleOverrides' ) )>
 <style>
 	#cb.themeSetting( 'cssStyleOverrides' )#
-</style>	
+</style>
 </cfif>
 
 <!--- ********************************************************************************* --->

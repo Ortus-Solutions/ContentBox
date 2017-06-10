@@ -9,7 +9,7 @@ component extends="content"{
 
 	// DI
 	property name="entryService" inject="id:entryService@cb";
-	
+
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
 
@@ -38,7 +38,7 @@ component extends="content"{
 		event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
 			.setView( view="#prc.cbTheme#/views/notfound", module="contentbox" );
 	}
-	
+
 	/**
 	* Preview a blog entry
 	*/
@@ -46,7 +46,7 @@ component extends="content"{
 		// Run parent preview
 		super.preview( argumentCollection=arguments );
 		// Concrete Overrides Below
-		
+
 		// Construct the preview entry according to passed arguments
 		prc.entry = entryService.new();
 		prc.entry.setTitle( rc.title );
@@ -74,7 +74,7 @@ component extends="content"{
 			.paramValue( "category", "" )
 			.paramValue( "q", "" )
 			.paramValue( "format", "html" );
-		
+
 		// Page numeric check
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
@@ -107,11 +107,11 @@ component extends="content"{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception( 
+		announceInterception(
 			"cbui_onIndex", {
 			entries 	= prc.entries,
 			entriesCount= prc.entriesCount
-			} 
+			}
 		);
 
 		// Export Formats?
@@ -142,7 +142,7 @@ component extends="content"{
 			.paramValue( "month", 0 )
 			.paramValue( "day", 0 )
 			.paramValue( "format", "html" );
-		
+
 		// Page numeric check
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
@@ -150,7 +150,7 @@ component extends="content"{
 		prc.oPaging 			= getModel( "Paging@cb" );
 		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
 		prc.pagingLink 			= event.getCurrentRoutedURL() & "?page=@page@";
-		
+
 		// get published entries
 		var entryResults = entryService.findPublishedEntriesByDate(
 			year 	= rc.year,
@@ -163,12 +163,12 @@ component extends="content"{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception( 
-			"cbui_onArchives", 
+		announceInterception(
+			"cbui_onArchives",
 			{
 				entries 	= prc.entries,
-				entriesCount= prc.entriesCount 
-			} 
+				entriesCount= prc.entriesCount
+			}
 		);
 
 		// Export Formats?
@@ -193,7 +193,7 @@ component extends="content"{
 	* Around entry page advice that provides caching and multi-output format
 	*/
 	function aroundEntry( event, rc, prc , eventArguments ){
-		
+
 		// setup wrap arguments
 		arguments.contentCaching 	= prc.cbSettings.cb_entry_caching;
 		arguments.action 			= variables.entry;
@@ -257,7 +257,7 @@ component extends="content"{
 			comments	= rc.commentRSS,
 			category	= rc.category,
 			slug		= rc.entrySlug,
-			contentType	= "Entry" 
+			contentType	= "Entry"
 		);
 
 		// Render out the feed xml
@@ -274,8 +274,8 @@ component extends="content"{
 		// Try to retrieve entry by slug
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
 		// If null, kick them out
-		if( isNull( thisEntry ) ){ 
-			setNextEvent( prc.cbEntryPoint ); 
+		if( isNull( thisEntry ) ){
+			setNextEvent( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, thisEntry );

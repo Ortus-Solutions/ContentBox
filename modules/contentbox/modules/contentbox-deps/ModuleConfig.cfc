@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* ContentBox Dependencies Module.  This controls the loading/unloading of all the 
+* ContentBox Dependencies Module.  This controls the loading/unloading of all the
 * dependencies required in ContentBox, via the `this.dependencies` property.
 */
 component {
@@ -42,5 +42,5 @@ component {
 	*/
 	function onLoad(){
 	}
-	
+
 }

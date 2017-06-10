@@ -100,11 +100,11 @@ component accessors=true {
         var descriptorContents = "";
         if( hasFile( "descriptor.json" ) ) {
             // if we have a descriptor, extract it
-            zipUtil.extract( 
-                zipFilePath=getContentBoxPackagePath(), 
-                extractPath=getTempDirectory(), 
-                extractFiles="descriptor.json", 
-                overwriteFiles=true 
+            zipUtil.extract(
+                zipFilePath=getContentBoxPackagePath(),
+                extractPath=getTempDirectory(),
+                extractFiles="descriptor.json",
+                overwriteFiles=true
             );
             descriptorContents = fileRead( getTempDirectory() & "descriptor.json" );
         }
@@ -140,10 +140,10 @@ component accessors=true {
     public string function execute( required boolean overrideContent=false ) {
         var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting ContentBox package import with override = #arguments.overrideContent#...<br>" );
         // first, unzip entire package
-        zipUtil.extract( 
-            zipFilePath=getContentBoxPackagePath(), 
+        zipUtil.extract(
+            zipFilePath=getContentBoxPackagePath(),
             extractPath=getTempDirectory(),
-            overwriteFiles=true 
+            overwriteFiles=true
         );
         // get all content
         var descriptorContents = getDescriptorContents( true );
@@ -163,10 +163,10 @@ component accessors=true {
             if( content.format == "zip" ) {
                 importLog.append( "<br>Extracting #content.name#...<br>" );
                 var path = filePathMappings[ content.name ];
-                zipUtil.extract( 
-                    zipFilePath=filePath, 
+                zipUtil.extract(
+                    zipFilePath=filePath,
                     extractPath=path,
-                    overwriteFiles=true 
+                    overwriteFiles=true
                 );
                 importLog.append( "Finished extracting #content.name#...<br>" );
             }

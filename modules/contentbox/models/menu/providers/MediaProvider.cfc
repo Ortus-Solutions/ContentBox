@@ -5,20 +5,20 @@
 * ---
  * Provider for Media-type menu items
  */
-component   implements="contentbox.models.menu.providers.IMenuItemProvider" 
-			extends="contentbox.models.menu.providers.BaseProvider" 
+component   implements="contentbox.models.menu.providers.IMenuItemProvider"
+			extends="contentbox.models.menu.providers.BaseProvider"
 			accessors=true{
-	
+
 	/* *********************************************************************
-	**                      DI                          
+	**                      DI
 	********************************************************************* */
 
 	property name="requestService"  inject="coldbox:requestService";
 
 	/* *********************************************************************
-	**                      PUBLIC FUNCTIONS                                
+	**                      PUBLIC FUNCTIONS
 	********************************************************************* */
-	
+
 	/**
 	 * Constructor
 	 */
@@ -34,14 +34,14 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * Retrieves template for use in admin screens for this type of menu item provider
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
-	 */ 
+	 */
 	public string function getAdminTemplate( required any menuItem, required struct options={} ) {
-		var viewArgs = { 
+		var viewArgs = {
 			menuItem=arguments.menuItem,
 			xehMediaSelector= "#requestService.getContext().buildLink( linkTo='cbadmin.menus.filebrowser' )#"
 		};
-		return renderer.get().renderView( 
-			view="menus/providers/media/admin", 
+		return renderer.get().renderView(
+			view="menus/providers/media/admin",
 			module="contentbox-admin",
 			args = viewArgs
 		);
@@ -50,12 +50,12 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * Retrieves template for use in rendering menu item on the site
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
-	 */ 
+	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options={} ) {
 		var viewArgs = {
 			menuItem=arguments.menuItem
 		};
-		return renderer.get().renderExternalView( 
+		return renderer.get().renderExternalView(
 			view="/contentbox/models/menu/views/media/display",
 			module="contentbox",
 			args = viewArgs

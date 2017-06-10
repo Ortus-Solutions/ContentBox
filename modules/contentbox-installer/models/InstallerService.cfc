@@ -231,9 +231,9 @@ component accessors="true"{
 		roleService.save( entity=oRole, transactional=false );
 
 		// Create Admin
-		var oRole = roleService.new( properties={ 
-			role 		= "Administrator", 
-			description = "A ContentBox Administrator" 
+		var oRole = roleService.new( properties={
+			role 		= "Administrator",
+			description = "A ContentBox Administrator"
 		} );
 		// Add All Permissions To Admin
 		for( var key in permissions ){
@@ -381,7 +381,7 @@ component accessors="true"{
 			// Content Hit Tracking
 			"cb_content_hit_count" 					= "true",
 			"cb_content_hit_ignore_bots" 			= "false",
-			"cb_content_bot_regex" 					= "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",			
+			"cb_content_bot_regex" 					= "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",
 
 			// Global HTML
 			"cb_html_beforeHeadEnd" 				= "",

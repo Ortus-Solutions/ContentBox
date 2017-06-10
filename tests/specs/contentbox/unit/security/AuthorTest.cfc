@@ -7,17 +7,17 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	void function setup(){
 		super.setup();
-		
+
 		// init the model object
 		model.init( );
 	}
-	
+
 	function testIsLoaded(){
 		assertFalse( model.isLoaded() );
 		testUser = entityLoad("cbAuthor")[1];
 		assertTrue( testUser.isLoaded() );
 	}
-	
+
 	function testGetDisplayCreateDate(){
 		d = model.getDisplayCreatedDate();
 		assertEquals( "", d );
@@ -25,7 +25,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		d = testUser.getDisplayCreatedDate();
 		assertTrue( len(d) );
 	}
-	
+
 	function testgetDisplayLastLogin(){
 		d = model.getDisplayLastLogin();
 		assertEquals( "Never", d );
@@ -33,7 +33,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		d = testUser.getDisplayLastLogin();
 		assertNotEquals( "Never", d );
 	}
-	
+
 	function testGetSetAllPreferences(){
 		assertEquals( {}, model.getAllPreferences() );
 		var pref = {
@@ -43,7 +43,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		assertTrue( isJSON( model.getPreferences() ) , "JSON Preferences Failed");
 		assertEquals( pref, model.getAllPreferences() , "JSON Inflation of Preferences Failed");
 	}
-	
+
 	function testGetPreference(){
 		// with default
 		v = model.getPreference("invalid", "test");
@@ -58,12 +58,12 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		expectException("User.PreferenceNotFound");
 		model.getPreference("invalid");
 	}
-	
+
 	function testSetPreference(){
 		// with default
 		model.setPreference("UnitTest", "Hello");
 		assertEquals( "Hello", model.getPreference("UnitTest") );
-		
+
 	}
 
 }

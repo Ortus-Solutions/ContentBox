@@ -1,27 +1,27 @@
 ﻿<!-----------------------------------------------------------------------
 Author 	 :	Tony Garcia
 Date     :
-Description : 			
- Displays a CAPTCHA image for form validation using ColdFusion 8 cfimage tag. 
- The display() method displays the captcha image. If the user is returning to the form from a failed captcha validation (using 
+Description :
+ Displays a CAPTCHA image for form validation using ColdFusion 8 cfimage tag.
+ The display() method displays the captcha image. If the user is returning to the form from a failed captcha validation (using
 validate method), an error message also appears under the image, which can be customized by the 'message' argument.
- The validate() method is used in the event that handles the form and takes as an argument the form field value from the 
+ The validate() method is used in the event that handles the form and takes as an argument the form field value from the
  request collection in which the user entered the CAPTCHA code. It returns true if there is a match and false if not (and also
  sets a flag in the session scope to tell the object to display the error message if the user is redirected back to the form.)
 
-This object is free to use and modify and is provided with NO WARRANTY of merchantability or fitness for a particular purpose. 
+This object is free to use and modify and is provided with NO WARRANTY of merchantability or fitness for a particular purpose.
 
 Updates
 11/16/2008 - Luis Majano - Cleanup
 ----------------------------------------------------------------------->
-<cfcomponent name="Captcha" 
-			 hint="Create captchas" 
+<cfcomponent name="Captcha"
+			 hint="Create captchas"
 			 output="false"
 			 accessors="true"
 			 singleton>
 
-<!------------------------------------------- CONSTRUCTOR ------------------------------------------->	
-   
+<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
+
     <cffunction name="init" access="public" returntype="any" output="false">
     	<cfargument name="sessionStorage" inject="sessionStorage@cbStorages">
 		<cfscript>
@@ -32,7 +32,7 @@ Updates
 	</cffunction>
 
 <!------------------------------------------- PUBLIC ------------------------------------------->
-	
+
 	<cffunction name="display" access="public" returntype="any" output="false" hint="I display the captcha and an error message, if appropriate">
 		<cfargument name="length" type="numeric" default="4" />
 		<cfargument name="text" type="string" default="#makeRandomString(arguments.length)#" />
@@ -41,12 +41,12 @@ Updates
 		<cfargument name="fonts" type="string" default="verdana,arial,times new roman,courier" hint="fonts to use for characters in captcha image" />
 		<cfargument name="message" type="string" default="Please enter the correct code shown in the graphic." hint="Message to display below captcha if validate method failed.">
 		<cfset var ret = "" />
-		
+
 		<cfset setCaptchaCode(arguments.text) />
 		<cfsavecontent variable="ret">
-			<cfimage action="captcha" 
+			<cfimage action="captcha"
 					 text="#arguments.text#"
-					 width="#arguments.width#" 
+					 width="#arguments.width#"
 					 height="#arguments.height#" />
 			<cfif not isValidated()>
 			<br /><span class="cb_captchamessage"><cfoutput>#arguments.message#</cfoutput></span>
@@ -57,10 +57,10 @@ Updates
 		<cfset setValidated(true) />
 		<cfreturn ret />
 	</cffunction>
-	
+
 	<cffunction name="validate" access="public" returntype="boolean" output="false" hint="I validate the passed in string against the captcha code">
 		<cfargument name="code" type="string" required="true" />
-		
+
 		<cfif hash(lcase(arguments.code),'SHA') eq getCaptchaCode()>
 			<cfset clearCaptcha() /><!--- delete the captcha struct --->
 			<cfreturn true />
@@ -77,28 +77,28 @@ Updates
 		<cfif not variables.sessionStorage.exists( "cb_captcha" )>
 			<cfset variables.sessionStorage.setVar( "cb_captcha",captcha)>
 		</cfif>
-		
+
 		<cfreturn variables.sessionStorage.getVar( "cb_captcha" )>
 	</cffunction>
-	
+
 	<cffunction name="setCaptchaCode" access="public" returntype="void" output="false">
     	<cfargument name="captchastring" type="string" required="true" />
 		<cfset getCaptchaStorage().captchaCode = hash( lcase( arguments.captchastring ), 'SHA') />
 	</cffunction>
-	
+
 	<cffunction name="getCaptchaCode" access="public" returntype="string" output="false">
 		<cfreturn getCaptchaStorage().captchaCode />
 	</cffunction>
-	
+
 	<cffunction name="setValidated" access="private" returntype="void" output="false">
 		<cfargument name="validated" type="boolean" required="true" />
 		<cfset getCaptchaStorage().validated = arguments.validated />
 	</cffunction>
-	
+
 	<cffunction name="isValidated" access="private" returntype="boolean" output="false">
 		<cfreturn getCaptchaStorage().validated />
 	</cffunction>
-	
+
 	<cffunction name="clearCaptcha" access="private" returntype="void" output="false">
 		<cfset variables.sessionStorage.deleteVar( "cb_captcha" )>
 	</cffunction>
@@ -107,23 +107,23 @@ Updates
 		<cfargument name="length" type="numeric" default="4" />
 		<cfset var min = arguments.length - 1 />
 		<cfset var max = arguments.length + 1 />
-		<!--- Function ripped of from Raymond Camden 
-		(http://www.coldfusionjedi.com/index.cfm/2008/3/29/Quick-and-Dirty-ColdFusion-8-CAPTCHA-Guide) 
+		<!--- Function ripped of from Raymond Camden
+		(http://www.coldfusionjedi.com/index.cfm/2008/3/29/Quick-and-Dirty-ColdFusion-8-CAPTCHA-Guide)
 		--->
 	   <cfset var chars = "23456789ABCDEFGHJKMNPQRSabcdefghjkmnpqrs">
 	   <cfset var captchalength = randRange(min,max)>
 	   <cfset var result = "">
 	   <cfset var i = "">
 	   <cfset var char = "">
-	   
+
 	   <cfscript>
 	   for(i=1; i <= captchalength; i++) {
 	      char = mid(chars, randRange(1, len(chars)),1);
 	      result&=char;
 	   }
 	   </cfscript>
-	      
+
 	   <cfreturn result>
 	</cffunction>
-	
+
 </cfcomponent>

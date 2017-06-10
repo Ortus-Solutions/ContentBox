@@ -54,7 +54,7 @@
 							</cfif>
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
-					
+
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>

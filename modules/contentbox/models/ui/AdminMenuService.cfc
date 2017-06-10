@@ -35,12 +35,12 @@ component accessors="true" threadSafe singleton{
 	* This is a reference map of the headerMenu array
 	*/
 	property name="headerMenuMap"	type="struct";
-	
+
 	/**
 	* Injected Avatar
 	*/
 	property name="avatar"			type="any" inject="Avatar@cb";
-	 
+
 	// Top Menu Slugs
 	this.DASHBOARD 			= "dashboard";
 	this.CONTENT 			= "content";
@@ -97,7 +97,7 @@ component accessors="true" threadSafe singleton{
 
 	/**
 	 * Build LI attributes
-	 * @event The event context 
+	 * @event The event context
 	 * @menu The menu struct
 	 */
 	function buildLIAttributes( required any event, required any menu ) {
@@ -116,7 +116,7 @@ component accessors="true" threadSafe singleton{
 
     /**
      * Build Item Attributes
-     * @event The event context 
+     * @event The event context
 	 * @menu The menu struct
 	 * @structDefaults The struct defaults for the item
      */
@@ -124,18 +124,18 @@ component accessors="true" threadSafe singleton{
     	var attributes = {
     		"class" = structKeyExists( structDefaults, "class" ) ? structDefaults.class : ""
     	};
-    	
+
     	if( len( arguments.menu.itemClass ) ) {
     		attributes.class &= " #arguments.menu.itemClass#";
     	}
-    	
+
     	if( len( arguments.menu.itemId ) ) {
     		attributes[ "id" ] = arguments.menu.itemId;
     	}
-    	
+
     	if( structKeyExists( menu, "subMenu" ) && arrayLen( arguments.menu.subMenu ) ) {
     		attributes[ "data-toggle" ] = "dropdown";
-    	}	
+    	}
 
     	if( arguments.menu.itemType=="a" ) {
     		if( isCustomFunction( arguments.menu.href ) || isClosure( arguments.menu.href ) ){
@@ -190,7 +190,7 @@ component accessors="true" threadSafe singleton{
 	*/
 	AdminMenuService function createHeaderMenu(){
 		var event = requestService.getContext();
-		
+
 		// Exit Handlers
 		var xehMyProfile		= "#this.ADMIN_ENTRYPOINT#.authors.myprofile";
 		var xehDoLogout			= "#this.ADMIN_ENTRYPOINT#.security.doLogout";
@@ -199,133 +199,133 @@ component accessors="true" threadSafe singleton{
 		var xehAdminAction		= "#this.ADMIN_ENTRYPOINT#.dashboard.reload";
 
 		// Register About Menu
-		addHeaderMenu( 
-			name 		= "about", 
-			label 		= '<i class="fa fa-info"></i>', 
-			permissions = "SYSTEM_TAB", 
-			class		= "dropdown settings", 
-			itemType	= "button", 
-			itemClass	= "btn btn-default options toggle", 
+		addHeaderMenu(
+			name 		= "about",
+			label 		= '<i class="fa fa-info"></i>',
+			permissions = "SYSTEM_TAB",
+			class		= "dropdown settings",
+			itemType	= "button",
+			itemClass	= "btn btn-default options toggle",
 			href		= "javascript:void(0)",
 			data 		= { placement = "right" },
 			title		="About ContentBox"
 		)
-			.addHeaderSubMenu( 
-				name 	= "support", 
-				label 	= '<i class="fa fa-ambulance"></i> Professional Support', 
-				href 	= "http://www.ortussolutions.com/services/support", 
-				target 	= "_blank" 
+			.addHeaderSubMenu(
+				name 	= "support",
+				label 	= '<i class="fa fa-ambulance"></i> Professional Support',
+				href 	= "http://www.ortussolutions.com/services/support",
+				target 	= "_blank"
 			)
-			.addHeaderSubMenu( 
-				name	= "docs", 
-				label	= '<i class="fa fa-book"></i> Documentation', 
-				href	= "http://contentbox.ortusbooks.com", 
-				target	= "_blank" 
+			.addHeaderSubMenu(
+				name	= "docs",
+				label	= '<i class="fa fa-book"></i> Documentation',
+				href	= "http://contentbox.ortusbooks.com",
+				target	= "_blank"
 			)
-			.addHeaderSubMenu( 
-				name 	= "forums", 
-				label 	= '<i class="fa fa-envelope"></i> Support Forums', 
-				href 	= "https://groups.google.com/forum/?fromgroups##!forum/contentbox", 
-				target 	= "_blank" 
+			.addHeaderSubMenu(
+				name 	= "forums",
+				label 	= '<i class="fa fa-envelope"></i> Support Forums',
+				href 	= "https://groups.google.com/forum/?fromgroups##!forum/contentbox",
+				target 	= "_blank"
 			)
-			.addHeaderSubMenu( 
-				name 	= "twitter", 
-				label 	= '<i class="fa fa-twitter"></i> Twitter', 
-				href 	= "https://www.twitter.com/gocontentbox", 
-				target 	= "_blank" 
+			.addHeaderSubMenu(
+				name 	= "twitter",
+				label 	= '<i class="fa fa-twitter"></i> Twitter',
+				href 	= "https://www.twitter.com/gocontentbox",
+				target 	= "_blank"
 			)
-			.addHeaderSubMenu( 
-				name 	= "facebook", 
-				label 	= '<i class="fa fa-facebook"></i> Facebook', 
-				href 	= "https://www.facebook.com/gocontentbox", 
-				target 	= "_blank" 
+			.addHeaderSubMenu(
+				name 	= "facebook",
+				label 	= '<i class="fa fa-facebook"></i> Facebook',
+				href 	= "https://www.facebook.com/gocontentbox",
+				target 	= "_blank"
 			)
-			.addHeaderSubMenu( 
-				name 	= "updates", 
-				label 	= '<i class="fa fa-download"></i> Check for Updates', 
+			.addHeaderSubMenu(
+				name 	= "updates",
+				label 	= '<i class="fa fa-download"></i> Check for Updates',
 				href 	= variables.buildLink,
 				href_to = xehAutoUpdates
 			)
-			.addHeaderSubMenu( 
-				name 	= "buildid", 
-				label 	= 'ContentBox v.#variables.moduleConfig.version# <br /><span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>', 
+			.addHeaderSubMenu(
+				name 	= "buildid",
+				label 	= 'ContentBox v.#variables.moduleConfig.version# <br /><span class="label label-warning">(Codename: #variables.moduleConfig.settings.codename#)</span>',
 				href 	= variables.buildLink,
 				href_to = xehAbout,
 				class 	= "last"
 			);
 
 		// Register Profile Menu
-		addHeaderMenu( 
-			name 	= "profile", 
-			label 	= variables.buildProfileLabel, 
-			class 	= "dropdown settings" 
+		addHeaderMenu(
+			name 	= "profile",
+			label 	= variables.buildProfileLabel,
+			class 	= "dropdown settings"
 		)
-			.addHeaderSubMenu( 
-				name 	= "myprofile", 
-				title 	= "ctrl+shift+A", 
-				label 	= "<i class='fa fa-camera'></i> My Profile", 
+			.addHeaderSubMenu(
+				name 	= "myprofile",
+				title 	= "ctrl+shift+A",
+				label 	= "<i class='fa fa-camera'></i> My Profile",
 				href 	= variables.buildLink,
 				href_to = xehMyProfile,
-				data 	= { keybinding = "ctrl+shift+a" } 
+				data 	= { keybinding = "ctrl+shift+a" }
 			)
-			.addHeaderSubMenu( 
-				name 	= "logout", 
-				title 	= "ctrl+shift+L", 
-				label 	= "<i class='fa fa-power-off'></i> Logout", 
+			.addHeaderSubMenu(
+				name 	= "logout",
+				title 	= "ctrl+shift+L",
+				label 	= "<i class='fa fa-power-off'></i> Logout",
 				href	= variables.buildLink,
 				href_to	= xehDoLogout,
-				data	= { keybinding = "ctrl+shift+l" } 
+				data	= { keybinding = "ctrl+shift+l" }
 			);
-		
+
 		// Register modules reload menu
-		addHeaderMenu( 
-			name 		= "utils", 
-			label 		= '<i class="fa fa-cog"></i>', 
-			class 		= "dropdown settings", 
-			itemType 	= "button", 
-			itemClass 	= "btn btn-default options toggle", 
+		addHeaderMenu(
+			name 		= "utils",
+			label 		= '<i class="fa fa-cog"></i>',
+			class 		= "dropdown settings",
+			itemType 	= "button",
+			itemClass 	= "btn btn-default options toggle",
 			permissions = "RELOAD_MODULES",
 			data 		= { placement = "right" },
 			title 		= "Admin Actions"
 		)
-			.addHeaderSubMenu( 
-				name	= "rsscache", 
-				label	= "Clear RSS Caches", 
+			.addHeaderSubMenu(
+				name	= "rsscache",
+				label	= "Clear RSS Caches",
 				href 	= function( required menu, required event ){
 					return "javascript:adminAction( 'rss-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
-			.addHeaderSubMenu( 
-				name	= "contentpurge", 
-				label	= "Clear Content Caches", 
+			.addHeaderSubMenu(
+				name	= "contentpurge",
+				label	= "Clear Content Caches",
 				href 	= function( required menu, required event ){
 					return "javascript:adminAction( 'content-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
-			.addHeaderSubMenu( 
-				name	= "app", 
-				label	= "Reload Application", 
+			.addHeaderSubMenu(
+				name	= "app",
+				label	= "Reload Application",
 				href 	= function( required menu, required event ){
 					return "javascript:adminAction( 'app', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
-			.addHeaderSubMenu( 
-				name	= "orm", 
-				label	= "Reload ORM", 
+			.addHeaderSubMenu(
+				name	= "orm",
+				label	= "Reload ORM",
 				href 	= function( required menu, required event ){
 					return "javascript:adminAction( 'orm', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
-			.addHeaderSubMenu( 
-				name	= "contentboxadmin", 
-				label	= "Reload Admin Module", 
+			.addHeaderSubMenu(
+				name	= "contentboxadmin",
+				label	= "Reload Admin Module",
 				href 	= function( required menu, required event ){
 					return "javascript:adminAction( 'contentbox-admin', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
-			.addHeaderSubMenu( 
-				name		= "contentboxui", 
-				label		= "Reload Site Module", 
+			.addHeaderSubMenu(
+				name		= "contentboxui",
+				label		= "Reload Site Module",
 				href 		= function( required menu, required event ){
 					return "javascript:adminAction( 'contentbox-ui', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
@@ -345,7 +345,7 @@ component accessors="true" threadSafe singleton{
 			return arguments.event.buildLink( arguments.menu.href_to );
 		}
 
-		// Default 
+		// Default
 		return 'NO_HREF_TO_OR_JS';
 	}
 
@@ -355,7 +355,7 @@ component accessors="true" threadSafe singleton{
 	function buildProfileLabel(){
 		var event 	= requestService.getContext();
 		var prc		= event.getCollection( private=true );
-		
+
 		savecontent variable="profileLabel" {
 			writeOutput( '#prc.oCurrentAuthor.getName()# <b class="caret"></b>' );
 		}
@@ -415,7 +415,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehRawSettings		= "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehAuthLogs			= "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
 		prc.xehAutoUpdater	    = "#this.ADMIN_ENTRYPOINT#.autoupdates";
-		
+
 		// Stats
 		prc.xehSubscribers		= "#this.ADMIN_ENTRYPOINT#.subscribers";
 
@@ -467,7 +467,7 @@ component accessors="true" threadSafe singleton{
 			.addSubMenu( name="Settings", label="Settings", href=variables.buildLink, href_to=prc.xehSettings, data={ "keybinding"="ctrl+shift+c" }, title="ctrl+shift+C" )
 			.addSubMenu( name="SecurityRules", label="Security Rules", href=variables.buildLink, href_to=prc.xehSecurityRules, permissions="SECURITYRULES_ADMIN" )
 			.addSubMenu( name="updates", label="Updates", href=variables.buildLink, href_to=prc.xehAutoUpdater, permissions="SYSTEM_UPDATES" );
-		
+
 		// STATS
 		addTopMenu( name=this.STATS, label="<i class='fa fa-bar-chart-o'></i> Stats" )
 			.addSubMenu( name="Subscribers", label="Subscribers", href=variables.buildLink, href_to=prc.xehSubscribers, title="View Subscribers" );
@@ -484,10 +484,10 @@ component accessors="true" threadSafe singleton{
 	*/
 	function buildModuleLink( required string module, required string linkTo, queryString="", boolean ssl=false ){
 		var event = requestService.getContext();
-		return event.buildLink( 
+		return event.buildLink(
 			linkto		= "#this.ADMIN_ENTRYPOINT#.module.#arguments.module#.#arguments.linkTo#",
 			queryString	= arguments.queryString,
-			ssl			= arguments.ssl 
+			ssl			= arguments.ssl
 		);
 	}
 
@@ -523,19 +523,19 @@ component accessors="true" threadSafe singleton{
 	* @itemClass.hint A CSS class list to append to the element
 	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addTopMenu( 
-		required name, 
-		required label, 
-		title="", 
-		href="##", 
-		target="", 
-		permissions="", 
-		data=structNew(), 
-		class="", 
-		id="", 
-		itemType="a", 
-		itemClass="", 
-		itemId=""  
+	AdminMenuService function addTopMenu(
+		required name,
+		required label,
+		title="",
+		href="##",
+		target="",
+		permissions="",
+		data=structNew(),
+		class="",
+		id="",
+		itemType="a",
+		itemClass="",
+		itemId=""
 	){
 		// stash pointer
 		variables.thisTopMenu = arguments.name;
@@ -563,19 +563,19 @@ component accessors="true" threadSafe singleton{
 	* @itemClass.hint A CSS class list to append to the element
 	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addHeaderMenu( 
-		required name, 
-		required label, 
-		title="", 
-		href="javascript:void( null )", 
-		target="", 
-		permissions="", 
-		data=structNew(), 
-		class="", 
-		id="", 
-		itemType="a", 
-		itemClass="", 
-		itemId="" 
+	AdminMenuService function addHeaderMenu(
+		required name,
+		required label,
+		title="",
+		href="javascript:void( null )",
+		target="",
+		permissions="",
+		data=structNew(),
+		class="",
+		id="",
+		itemType="a",
+		itemClass="",
+		itemId=""
 	){
 		// stash pointer
 		variables.thisHeaderMenu = arguments.name;
@@ -606,27 +606,27 @@ component accessors="true" threadSafe singleton{
 	* @itemId.hint An id to apply to the item element
 	*/
 	AdminMenuService function addSubMenu(
-		topMenu, 
-		required name, 
-		required label, 
-		title="", 
-		href="##", 
-		target="", 
-		permissions="", 
-		data=structNew(), 
-		class="", 
-		id="", 
-		itemType="a", 
-		itemClass="", 
-		itemId="" 
+		topMenu,
+		required name,
+		required label,
+		title="",
+		href="##",
+		target="",
+		permissions="",
+		data=structNew(),
+		class="",
+		id="",
+		itemType="a",
+		itemClass="",
+		itemId=""
 	){
 		// Check if thisTopMenu set?
-		if( !len( thisTopMenu ) AND !structKeyExists( arguments, "topMenu" ) ){ 
-			throw( "No top menu passed or concatenated with" ); 
+		if( !len( thisTopMenu ) AND !structKeyExists( arguments, "topMenu" ) ){
+			throw( "No top menu passed or concatenated with" );
 		}
 		// check this pointer
-		if( len( thisTopMenu ) AND !structKeyExists( arguments, "topMenu" )){ 
-			arguments.topmenu = thisTopMenu; 
+		if( len( thisTopMenu ) AND !structKeyExists( arguments, "topMenu" )){
+			arguments.topmenu = thisTopMenu;
 		}
 		// store in top menu
 		arrayAppend( topMenuMap[ arguments.topMenu ].submenu, arguments );
@@ -650,28 +650,28 @@ component accessors="true" threadSafe singleton{
 	* @itemClass.hint A CSS class list to append to the element
 	* @itemId.hint An id to apply to the item element
 	*/
-	AdminMenuService function addHeaderSubMenu( 
-		headerMenu, 
-		required name, 
-		required label, 
-		title="", 
-		href="##", 
-		target="", 
-		permissions="", 
-		data=structNew(), 
-		class="", 
-		iid="", 
-		itemType="a", 
-		itemClass="", 
-		itemId="" 
+	AdminMenuService function addHeaderSubMenu(
+		headerMenu,
+		required name,
+		required label,
+		title="",
+		href="##",
+		target="",
+		permissions="",
+		data=structNew(),
+		class="",
+		iid="",
+		itemType="a",
+		itemClass="",
+		itemId=""
 	){
 		// Check if thisTopMenu set?
-		if( !len( thisHeaderMenu ) AND !structKeyExists( arguments, "headerMenu" ) ){ 
-			throw( "No header menu passed or concatenated with" ); 
+		if( !len( thisHeaderMenu ) AND !structKeyExists( arguments, "headerMenu" ) ){
+			throw( "No header menu passed or concatenated with" );
 		}
 		// check this pointer
-		if( len( thisHeaderMenu ) AND !structKeyExists( arguments, "headerMenu" )){ 
-			arguments.headerMenu = thisHeaderMenu; 
+		if( len( thisHeaderMenu ) AND !structKeyExists( arguments, "headerMenu" )){
+			arguments.headerMenu = thisHeaderMenu;
 		}
 		// store in top menu
 		arrayAppend( headerMenuMap[ arguments.headerMenu ].submenu, arguments );

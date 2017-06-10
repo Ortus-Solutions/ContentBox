@@ -1,7 +1,7 @@
 ﻿<!--- Container ID: remoteModelContent --->
 <cfoutput>
 <div>
-	
+
 	<!--- Show/Remove Form--->
 	#html.startForm(name="permissionRolesForm",class="form-vertical" )#
 	#html.startFieldset(legend="Active User Role Permissions" )#
@@ -9,35 +9,35 @@
 			<small>No permissions assigned!</small>
 		<cfelse>
 			<p>Below are the currently inherited permissions from the user's role: <strong>#prc.author.getRole().getRole()#</strong>.
-		</cfif>			
-		
+		</cfif>
+
 		<cfloop array="#prc.author.getRole().getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
 			<i class="fa fa-circle-o fa-lg textGreen"></i>
 			<!--- Name --->
-			&nbsp; 
+			&nbsp;
 			<strong>#perm.getPermission()#</strong>
 		</div>
-		</cfloop>		
-		
+		</cfloop>
+
 	#html.endFieldSet()#
 	#html.endForm()#
 
 	<p>&nbsp;</p>
-	
+
 	<!--- Add Permission Form--->
 	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 	#html.startForm(name="permissionForm",class="form-vertical" )#
 		#html.startFieldset(legend="Assign A-la-Carte Permissions" )#
 			#html.hiddenField(name="authorID",bind=prc.author)#
-			
+
 			<!--- Loader --->
 			<div class="loaders floatRight" id="permissionLoader">
 				<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
 				<div class="text-center"><small>Please Wait...</small></div>
 			</div>
-			
+
 			<!--- Permissions --->
 			<p>You can also add a-la-carte permissions to the user by adding from the selection below:</p>
 			<div class="form-group">
@@ -69,7 +69,7 @@
 	</cfif>
 
 	<p>&nbsp;</p>
-	
+
 	<!--- Show/Remove Form--->
 	#html.startForm( name="alacartePermissions", class="form-vertical" )#
 	#html.startFieldset( legend="Active A-la-carte Permissions" )#
@@ -77,8 +77,8 @@
 			<small>No permissions assigned!</small>
 		<cfelse>
 			<p>Below are the currently assigned a-la-carte permissions. You can optionally remove permissions by clicking on the remove button (<i class="fa fa-circle-o fa-lg textRed"></i>).</p>
-		</cfif>			
-		
+		</cfif>
+
 		<cfloop array="#prc.author.getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
@@ -88,13 +88,13 @@
 				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-circle-o fa-lg textRed"></i></a>
 			</cfif>
 			<!--- Name --->
-			&nbsp; 
+			&nbsp;
 			<strong>#perm.getPermission()#</strong>
 		</div>
 		</cfloop>
-		
+
 	#html.endFieldSet()#
 	#html.endForm()#
-	
+
 </div>
 </cfoutput>

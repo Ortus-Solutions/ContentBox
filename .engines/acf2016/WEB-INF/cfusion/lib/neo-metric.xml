@@ -35,7 +35,7 @@
 		<var name='cfmetrics.pullfreq'>
 			<number>60.0</number>
 		</var>
-		
+
 	      </struct>
 	 </data>
 </wddxPacket>

@@ -2,15 +2,15 @@
 <ul class="nav nav-pills nav-stacked">
 	<!--- Loop over Top Menus --->
 	<cfloop array="#local.thisMenu#" index="local.topMenu">
-		
+
 		<!--- Check Permissions --->
 		<cfif !len( local.topMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.topMenu.permissions )>
 		<!--- LI --->
-		<li class="nav-dropdown<cfif event.getPrivateValue( name='tab#local.topMenu.name#', defaultValue=false )> active open</cfif>#local.topMenu.class#" 
+		<li class="nav-dropdown<cfif event.getPrivateValue( name='tab#local.topMenu.name#', defaultValue=false )> active open</cfif>#local.topMenu.class#"
 			data-name="#local.topMenu.name#"
 		>
-			
-			<a 	href="#( isCustomFunction( local.topMenu.href ) ? local.topMenu.href( local.topMenu, event ) : local.topMenu.href )#" 
+
+			<a 	href="#( isCustomFunction( local.topMenu.href ) ? local.topMenu.href( local.topMenu, event ) : local.topMenu.href )#"
 				class="dropdown-toggle"
 				<cfif arrayLen( local.topMenu.subMenu )>data-toggle="dropdown"</cfif>
 				<cfif len( local.topMenu.title )> title="#local.topMenu.title#"</cfif>
@@ -26,7 +26,7 @@
 				<cfloop array="#local.topMenu.submenu#" index="local.thisSubMenu">
 					<!--- Security --->
 					<cfif !len( local.thisSubMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.thisSubMenu.permissions )>
-					<li class="<cfif event.getPrivateValue( name="tab#local.topMenu.name#_#local.thisSubMenu.name#", defaultValue=false )>active</cfif>#local.thisSubMenu.class#" 
+					<li class="<cfif event.getPrivateValue( name="tab#local.topMenu.name#_#local.thisSubMenu.name#", defaultValue=false )>active</cfif>#local.thisSubMenu.class#"
 						data-name="#local.thisSubMenu.name#"
 					>
 
@@ -37,7 +37,7 @@
 						>
 							#( isCustomFunction( local.thisSubMenu.label ) ? local.thisSubMenu.label() : local.thisSubMenu.label )#
 						</a>
-					
+
 					</li>
 					</cfif>
 				</cfloop>

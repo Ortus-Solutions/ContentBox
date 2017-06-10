@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
-<!-- ====================================================================== 
-     ContentBox Modular CMS Build (www.gocontentbox.org)                                                               
+<!-- ======================================================================
+     ContentBox Modular CMS Build (www.gocontentbox.org)
      ====================================================================== -->
 <project name="contentbox.create-patch" default="build" basedir="../">
 	<description>
     	Build a new patch of ContentBox Modular CMS
     </description>
-	
+
 	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
 	<property name="groupID"			value="ortussolutions" />
- 	<property name="contentbox.slug"	value="contentbox"/>		
-	
+ 	<property name="contentbox.slug"	value="contentbox"/>
+
 	<!-- Travis -->
 	<condition property="isTravis" else="false">
     	<isset property="isTravis"/>
@@ -31,7 +31,7 @@
 	</path>
 	<!-- Define Tasks -->
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
-	
+
 	<!-- Init -->
 	<target name="init" description="Init Build">
 		<!-- Default environment check, if not passed via -Denvironment -->
@@ -50,17 +50,17 @@
 		<!-- Load root properties -->
 		<echo>Loading base properties</echo>
 		<loadproperties srcFile="build/build.properties"/>
-		
+
 		<!-- build number for patch, use what normal build uses -->
 		<property file="${be.exports}/build.number"/>
-		
+
 		<!-- Cleanup patches -->
 		<delete>
 			<fileset dir="${dir.contentbox.exports}">
 				<include name="contentbox-patch*" />
 			</fileset>
 		</delete>
-		
+
 		<!-- Get latest commit hash from repo and load it -->
 		<exec executable="${git.executable}" outputproperty="patch.endgit">
 			<arg value="log" />
@@ -69,20 +69,20 @@
 			<arg value='--pretty=format:%H' />
 		</exec>
 	</target>
-	
+
 	<!--Build-->
 	<target name="build" description="Build a new ContentBox patch release" depends="init">
       	<!-- Create patch structure according to version -->
 		<mkdir dir="${dir.patches}/${contentbox.version}/patch"/>
 		<delete file="${dir.patches}/${contentbox.version}/patch.zip"/>
 		<delete file="${dir.patches}/${contentbox.version}/deletes.txt"/>
-		
+
 		<!-- Copy Update Template, just in case -->
-		<copy 	file="${dir.resources}/Update.cfc" 
-				tofile="${dir.patches}/${contentbox.version}/Update.cfc" 
-				overwrite="false" 
+		<copy 	file="${dir.resources}/Update.cfc"
+				tofile="${dir.patches}/${contentbox.version}/Update.cfc"
+				overwrite="false"
 				encoding="UTF-8"/>
-		
+
 		<!-- ****************************************************************************************************** -->
 		<!--  										BUILD PATCH 													-->
 		<!-- ****************************************************************************************************** -->
@@ -94,7 +94,7 @@
 	   	 	<arg value="${contentbox.version}"/>
 			<arg value="${basedir}"/>
 	  	</exec>
-		
+
 		<!--Unzip Patch To remove excludes -->
 		<unzip src="${dir.patches}/${contentbox.version}/patch.zip" dest="${dir.patches}/${contentbox.version}/patch" overwrite="true">
 			<patternset>
@@ -132,7 +132,7 @@
 				<exclude name="${patch.excludes}"/>
 		    </patternset>
 		</unzip>
-		
+
 		<!-- Replace Build Number -->
 		<replaceregexp match='@build.number@' replace="${build.number}" flags="ig" byline="true" encoding="UTF-8">
 			<fileset dir="${dir.patches}/${contentbox.version}/patch" />
@@ -141,14 +141,14 @@
 		<replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
 			<fileset dir="${dir.patches}/${contentbox.version}/patch" />
 		</replaceregexp>
-		
+
 		<!-- Delete original patch for cleanup -->
 		<delete file="${dir.patches}/${contentbox.version}/patch.zip" />
-		
+
 		<!-- ****************************************************************************************************** -->
 		<!--  										 DEPENDENCIES													-->
 		<!-- ****************************************************************************************************** -->
-		
+
 		<!-- Install ROOT Dependencies -->
 		<exec executable="box" dir="${basedir}">
 			<arg line="install production=true" />
@@ -173,10 +173,10 @@
 		</copy>
 		<!-- Cleanup -->
 		<delete dir="${dir.patches}/${contentbox.version}/deps" includeemptydirs="true"/>
-		
+
 		<!-- Zip now as excludes removed. -->
 		<zip basedir="${dir.patches}/${contentbox.version}/patch" destfile="${dir.patches}/${contentbox.version}/patch.zip"/>
-		
+
 		<!-- Zip Bundle -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-patch-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}">
 			<patternset>
@@ -196,7 +196,7 @@
 		<!-- ****************************************************************************************************** -->
 		<!--  										NO DEPENDENCIES PATCH 											-->
 		<!-- ****************************************************************************************************** -->
-		
+
 		<!-- Remove coldbox entries for non-deps patch -->
 		<delete dir="${dir.patches}/${contentbox.version}/patch/coldbox" includeemptydirs="true"/>
 		<delete dir="${dir.patches}/${contentbox.version}/patch/modules/contentbox/modules/contentbox-deps/modules" includeemptydirs="true"/>
@@ -210,7 +210,7 @@
 		<move file="${dir.patches}/${contentbox.version}/deletes-nodeps.txt" tofile="${dir.patches}/${contentbox.version}/deletes.txt"/>
 		<!-- Zip Bundle with DB updates plus file deletes+additions -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-patch-nodeps-${contentbox.version}.zip" basedir="${dir.patches}/${contentbox.version}"></zip>
-		
+
 		<!-- ****************************************************************************************************** -->
 		<!--  										BUILD CHECKSUMS 												-->
 		<!-- ****************************************************************************************************** -->
@@ -226,7 +226,7 @@
 				<include name="contentbox-patch-*.zip" />
 			</fileset>
 		</checksum>
-		
+
     </target>
-	
+
 </project>

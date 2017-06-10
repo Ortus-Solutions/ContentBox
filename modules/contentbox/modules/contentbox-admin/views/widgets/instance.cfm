@@ -17,12 +17,12 @@
                         <select name="renderMethodSelect" id="renderMethodSelect" class="renderMethodSelect form-control input-sm">
                             <cfloop array="#prc.metadata#" index="method">
                                 <option value="#method.name#" <cfif prc.widget.udf eq method.name>selected=true</cfif>>#method.name#()</option>
-                            </cfloop> 
+                            </cfloop>
                         </select>
                     </fieldset>
                     #html.startFieldSet( legend="Widget Arguments" )#
                     <!--- instructions --->
-                    <cfif arrayLen( prc.md.parameters )> 
+                    <cfif arrayLen( prc.md.parameters )>
                         <p>Please fill out the arguments for this widget:</p>
                     <cfelse>
                         <p>There are no arguments for this widget!</p>
@@ -55,103 +55,103 @@
                         <!--- control group --->
                         <div class="form-group">
                             <!--- label --->
-                            #html.label( 
-                                field   = thisArg.name, 
-                                content = "#thisArg.label# (#thisArg.type#) #requiredText#", 
-                                class   = "control-label" 
+                            #html.label(
+                                field   = thisArg.name,
+                                content = "#thisArg.label# (#thisArg.type#) #requiredText#",
+                                class   = "control-label"
                             )#
                             <div class="controls">
                                 <!--- argument hint --->
                                 <cfif len( thisArg.hint )><small>#thisArg.hint#</small><br/></cfif>
-                                
+
                                 <!--- HTML Control --->
 
                                 <!---Boolean?--->
                                 <cfif thisArg.type eq "boolean">
-                                    #html.select( 
-                                        name=thisArg.name, 
-                                        options="true,false", 
-                                        selectedValue=thisArg.value, 
-                                        class="form-control input-sm" 
+                                    #html.select(
+                                        name=thisArg.name,
+                                        options="true,false",
+                                        selectedValue=thisArg.value,
+                                        class="form-control input-sm"
                                     )#
                                 <!--- Options --->
                                 <cfelseif listLen( thisArg.options )>
-                                    #html.select( 
-                                        name=thisArg.name, 
-                                        options=thisArg.options, 
-                                        selectedValue=thisArg.value, 
-                                        class="form-control input-sm" 
+                                    #html.select(
+                                        name=thisArg.name,
+                                        options=thisArg.options,
+                                        selectedValue=thisArg.value,
+                                        class="form-control input-sm"
                                     )#
                                 <!--- OptionsUDF --->
                                 <cfelseif listLen( thisArg.optionsUDF )>
                                     <cfset options = evaluate( "prc.widget.widget.#thisArg.optionsUDF#()" )>
-                                    #html.select( 
-                                        name=thisArg.name, 
-                                        options=options, 
-                                        selectedValue=thisArg.value, 
-                                        class="form-control input-sm" 
+                                    #html.select(
+                                        name=thisArg.name,
+                                        options=options,
+                                        selectedValue=thisArg.value,
+                                        class="form-control input-sm"
                                     )#
                                 <!--- Options --->
                                 <cfelseif listLen( thisArg.multiOptions )>
-                                    #html.select( 
-                                        name=thisArg.name, 
-                                        options=thisArg.multiOptions, 
-                                        selectedValue=thisArg.value, 
-                                        class="form-control input-sm", 
-                                        multiple="true", 
-                                        size="5" 
+                                    #html.select(
+                                        name=thisArg.name,
+                                        options=thisArg.multiOptions,
+                                        selectedValue=thisArg.value,
+                                        class="form-control input-sm",
+                                        multiple="true",
+                                        size="5"
                                     )#
                                 <!--- MultiOptionsUDF --->
                                 <cfelseif listLen( thisArg.multiOptionsUDF )>
                                     <cfset options = evaluate( "prc.widget.widget.#thisArg.multiOptionsUDF#()" )>
-                                    #html.select( 
-                                        name=thisArg.name, 
-                                        options=options, 
-                                        selectedValue=thisArg.value, 
-                                        class="form-control input-sm", 
-                                        multiple="true", 
-                                        size="5" 
+                                    #html.select(
+                                        name=thisArg.name,
+                                        options=options,
+                                        selectedValue=thisArg.value,
+                                        class="form-control input-sm",
+                                        multiple="true",
+                                        size="5"
                                     )#
                                 <!--- Default --->
                                 <cfelse>
-                                    #html.textfield( 
-                                        name=thisArg.name, size="35", 
-                                        class="form-control", 
-                                        required=requiredValidator, 
-                                        title=thisArg.hint, 
-                                        value=thisArg.value 
+                                    #html.textfield(
+                                        name=thisArg.name, size="35",
+                                        class="form-control",
+                                        required=requiredValidator,
+                                        title=thisArg.hint,
+                                        value=thisArg.value
                                     )#
                                 </cfif>
                             </div>
                         </div>
                     </cfloop>
                     <!--- hidden usage fields --->
-                    #html.hiddenfield( 
-                        name    = "widgetName", 
-                        id      = "widgetName", 
-                        value   = prc.widget.name 
+                    #html.hiddenfield(
+                        name    = "widgetName",
+                        id      = "widgetName",
+                        value   = prc.widget.name
                     )#
-                    #html.hiddenfield( 
-                        name    = "widgetIcon", 
-                        id      = "widgetIcon", 
-                        value   = prc.widget.icon 
+                    #html.hiddenfield(
+                        name    = "widgetIcon",
+                        id      = "widgetIcon",
+                        value   = prc.widget.icon
                     )#
-                    #html.hiddenfield( 
-                        name    = "widgetDisplayName", 
-                        id      = "widgetDisplayName", 
-                        value   = prc.widget.widget.getName() 
+                    #html.hiddenfield(
+                        name    = "widgetDisplayName",
+                        id      = "widgetDisplayName",
+                        value   = prc.widget.widget.getName()
                     )#
-                    #html.hiddenfield( 
-                        name    = "widgetType", 
-                        value   = prc.widget.widgetType 
+                    #html.hiddenfield(
+                        name    = "widgetType",
+                        value   = prc.widget.widgetType
                     )#
-                    #html.hiddenfield( 
-                        name    = "widgetUDF", 
-                        value   = prc.widget.udf 
+                    #html.hiddenfield(
+                        name    = "widgetUDF",
+                        value   = prc.widget.udf
                     )#
                     #html.endFieldSet()#
                 #html.endForm()#
-            </div>    
+            </div>
             <div class="widget-preview col-md-9">
                 <div class="well well-sm">
                     <h4>Widget Preview</h4>

@@ -5,47 +5,47 @@
 * ---
 * Base entity for all subclasses of Menu Items
 */
-component   persistent="true" 
-			entityName="cbMenuItem" 
-			table="cb_menuItem" 
+component   persistent="true"
+			entityName="cbMenuItem"
+			table="cb_menuItem"
 			extends="contentbox.models.BaseEntityMethods"
-			cachename="cbMenuItem" 
-			cacheuse="read-write" 
+			cachename="cbMenuItem"
+			cacheuse="read-write"
 			discriminatorColumn="menuType"{
-	
+
 	/* *********************************************************************
-	**                          DI                                  
+	**                          DI
 	********************************************************************* */
 
 	property name="menuItemService" inject="menuItemService@cb" persistent="false";
 
 	/* *********************************************************************
-	**							PROPERTIES due to ACF Bug									
+	**							PROPERTIES due to ACF Bug
 	********************************************************************* */
 
-	property 	name="createdDate" 	
+	property 	name="createdDate"
 				type="date"
 				ormtype="timestamp"
 				notnull="true"
 				update="false"
 				index="idx_createDate";
 
-	property 	name="modifiedDate"	
+	property 	name="modifiedDate"
 				type="date"
 				ormtype="timestamp"
 				notnull="true"
 				index="idx_modifiedDate";
 
-	property 	name="isDeleted"		
+	property 	name="isDeleted"
 				ormtype="boolean"
-				sqltype="bit" 	
-				notnull="true" 
-				default="false" 
-				dbdefault="0" 
+				sqltype="bit"
+				notnull="true"
+				default="false"
+				dbdefault="0"
 				index="idx_deleted";
-	
+
 	/* *********************************************************************
-	**                          PROPERTIES                                  
+	**                          PROPERTIES
 	********************************************************************* */
 
 	property    name="menuItemID"
@@ -54,72 +54,72 @@ component   persistent="true"
 				setter="false"
 				params="{ allocationSize = 1, sequence = 'menuItemID_seq' }";
 
-	property    name="title"   
-				notnull="true"  
-				ormtype="string" 
-				length="200" 
-				default="" 
+	property    name="title"
+				notnull="true"
+				ormtype="string"
+				length="200"
+				default=""
 				index="idx_menuitemtitle";
 
-	property    name="label"   
-				notnull="false" 
-				ormtype="string" 
-				length="200" 
+	property    name="label"
+				notnull="false"
+				ormtype="string"
+				length="200"
 				default="";
 
-	property    name="itemClass"     
-				notnull="false" 
-				ormtype="string" 
-				length="200" 
-				default="";
-	
-	property    name="data"    
-				notnull="false" 
-				ormtype="string" 
+	property    name="itemClass"
+				notnull="false"
+				ormtype="string"
+				length="200"
 				default="";
 
-	property    name="active"  
-				ormtype="boolean" 
+	property    name="data"
+				notnull="false"
+				ormtype="string"
+				default="";
+
+	property    name="active"
+				ormtype="boolean"
 				default="true";
 
-	property    name="menuType" 
-				insert="false" 
+	property    name="menuType"
+				insert="false"
 				update="false";
-	
+
 	/* *********************************************************************
-	**                          RELATIONSHIPS                                  
+	**                          RELATIONSHIPS
 	********************************************************************* */
 
 	// M20 - Owning menu
-	property    name="menu" 
-				cfc="contentbox.models.menu.Menu" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_menuID" 
-				lazy="true" 
-				fetch="join" 
+	property    name="menu"
+				cfc="contentbox.models.menu.Menu"
+				fieldtype="many-to-one"
+				fkcolumn="FK_menuID"
+				lazy="true"
+				fetch="join"
 				notnull="true";
-		
+
 	// M20 - Parent Menu item
-	property    name="parent" 
-				cfc="BaseMenuItem" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_parentID" 
+	property    name="parent"
+				cfc="BaseMenuItem"
+				fieldtype="many-to-one"
+				fkcolumn="FK_parentID"
 				lazy="true";
-	
+
 	// O2M - Child Menu Item
-	property    name="children" 
-				singularName="child" 
-				fieldtype="one-to-many" 
-				type="array" 
-				lazy="extra" 
-				batchsize="25" 
-				cfc="BaseMenuItem" 
-				fkcolumn="FK_parentID" 
-				inverse="true" 
+	property    name="children"
+				singularName="child"
+				fieldtype="one-to-many"
+				type="array"
+				lazy="extra"
+				batchsize="25"
+				cfc="BaseMenuItem"
+				fkcolumn="FK_parentID"
+				inverse="true"
 				cascade="all-delete-orphan";
-	
+
 	/* *********************************************************************
-	**                          PK + CONSTRAINTS                                  
+	**                          PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "menuItemID";
@@ -132,7 +132,7 @@ component   persistent="true"
 	};
 
 	/* *********************************************************************
-	**                          CONSTRUCTOR                                  
+	**                          CONSTRUCTOR
 	********************************************************************* */
 
 	/**
@@ -143,12 +143,12 @@ component   persistent="true"
 		variables.children 	= [];
 
 		super.init();
-		
+
 		return this;
 	}
 
 	/* *********************************************************************
-	**                          PUBLIC FUNCTIONS                                  
+	**                          PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -158,7 +158,7 @@ component   persistent="true"
 	public struct function getMemento( excludes="" ){
 		var pList = listToArray( arrayToList( menuItemService.getPropertyNames() ) );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		// add contentType
 		result[ "menuType" ] = getMenuType();
 		// set empty children
@@ -169,7 +169,7 @@ component   persistent="true"
 		if( hasChild() ){
 			result[ "children" ] = [];
 			for( var thisChild in variables.children ){
-				arrayAppend( result[ "children" ], thisChild.getMemento() );    
+				arrayAppend( result[ "children" ], thisChild.getMemento() );
 			}
 		}
 		return result;

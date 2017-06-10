@@ -38,8 +38,8 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
         // handle related content
         saveContent variable="content"{
             // title
-            if( len( arguments.title ) ){ 
-                writeoutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); 
+            if( len( arguments.title ) ){
+                writeoutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" );
             }
             if( arrayLen( relatedContent ) ) {
                 // build type
@@ -69,8 +69,8 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
             for( var x=1; x lte arrayLen( arguments.relatedContent ); x++ ){
                 // only show links for published content!
                 if( relatedContent[ x ].isContentPublished() ){
-                    writeoutput( 
-                        '<option value="#cb.linkContent( arguments.relatedContent[ x ])#">#arguments.relatedContent[ x ].getTitle()#' 
+                    writeoutput(
+                        '<option value="#cb.linkContent( arguments.relatedContent[ x ])#">#arguments.relatedContent[ x ].getTitle()#'
                     );
                     writeoutput('</option>');
                 }

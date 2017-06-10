@@ -5,19 +5,19 @@
 * ---
 * Provider for SubMenu-type menu items
 */
-component   implements="contentbox.models.menu.providers.IMenuItemProvider" 
-			extends="contentbox.models.menu.providers.BaseProvider" 
+component   implements="contentbox.models.menu.providers.IMenuItemProvider"
+			extends="contentbox.models.menu.providers.BaseProvider"
 			accessors=true{
 
 	/* *********************************************************************
-	**                      DI                                
+	**                      DI
 	********************************************************************* */
 
 	property name="menuService"         inject="id:menuService@cb";
 	property name="requestService"      inject="coldbox:requestService";
 
 	/* *********************************************************************
-	**                      PUBLIC FUNCTIONS                                
+	**                      PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -35,7 +35,7 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * Retrieves template for use in admin screens for this type of menu item provider
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
-	 */ 
+	 */
 	public string function getAdminTemplate( required any menuItem, required struct options={} ) {
 		var rc = requestService.getContext().getCollection();
 		var criteria = menuService.newCriteria();
@@ -51,8 +51,8 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 			menus = menus,
 			existingSlug = existingSlug
 		};
-		return renderer.get().renderView( 
-			view="menus/providers/submenu/admin", 
+		return renderer.get().renderView(
+			view="menus/providers/submenu/admin",
 			module="contentbox-admin",
 			args = viewArgs
 		);
@@ -61,14 +61,14 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * Retrieves template for use in rendering menu item on the site
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
-	 */ 
+	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options={} ) {
 		var viewArgs = {
 			menuItem=arguments.menuItem,
 			data = arguments.menuItem.getMemento(),
 			slugCache = arguments.options.slugCache
 		};
-		return renderer.get().renderExternalView( 
+		return renderer.get().renderExternalView(
 			view="/contentbox/models/menu/views/submenu/display",
 			module="contentbox",
 			args = viewArgs

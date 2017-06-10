@@ -6,7 +6,7 @@
 * The admin cb handler base
 */
 component{
-	
+
 	// Global Used DI
 	property name="settingService"	inject="id:settingService@cb";
 	property name="cbMessagebox" 	inject="id:messagebox@cbmessagebox";

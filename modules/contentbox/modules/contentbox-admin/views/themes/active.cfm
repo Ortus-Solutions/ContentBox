@@ -1,9 +1,9 @@
 <cfoutput>
 <div class="row">
     <div class="col-md-12">
-		
+
 		<div class="pull-right">
-	    	<button class="btn btn-success btn-sm" 
+	    	<button class="btn btn-success btn-sm"
 	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#prc.activeTheme.name#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
 				<i class="fa fa-eye"></i> Preview
 			</button>
@@ -20,7 +20,7 @@
 
 		    	<!--- MessageBox --->
 				#getModel( "messagebox@cbMessagebox" ).renderit()#
-		            
+
 				<!---screenshot --->
 				<div id="theme-screenshot" class="pull-right">
 					<cfif len( prc.activeTheme.screenShotURL )>
@@ -30,7 +30,7 @@
 						<br/>
 					</cfif>
 				</div>
-				
+
 				<!---Description --->
 				<blockquote id="theme-description">#prc.activeTheme.description#</blockquote>
 				<!---Author --->
@@ -57,7 +57,7 @@
 				<!---Interceptions --->
 				<div id="theme-interceptions">
 					<i class="fa fa-bullhorn"></i>
-					<strong>Registered Interceptions: </strong> 
+					<strong>Registered Interceptions: </strong>
 					<cfif len( prc.activeTheme.customInterceptionPoints )>
 						#prc.activeTheme.customInterceptionPoints#
 					<cfelse>
@@ -67,7 +67,7 @@
 				<!---Widgets --->
 				<div id="theme-widgets">
 					<i class="fa fa-magic"></i>
-					<strong>Theme Widgets: </strong> 
+					<strong>Theme Widgets: </strong>
 					<cfif len( prc.activeTheme.widgets )>
 						#prc.activeTheme.widgets#
 					<cfelse>
@@ -77,7 +77,7 @@
 				<!---Modules --->
 				<div id="theme-modules">
 					<i class="fa fa-bolt"></i>
-					<strong>Theme Modules: </strong> 
+					<strong>Theme Modules: </strong>
 					<cfif len( prc.activeTheme.modules )>
 						#prc.activeTheme.modules#
 					<cfelse>
@@ -91,12 +91,12 @@
                 <!---Theme Settings --->
 				<cfif len( prc.activeTheme.settings )>
 					<h1>Theme Settings:</h1>
-					#html.startForm( action=prc.xehSaveSettings, name="layoutSettingsForm" )#	
+					#html.startForm( action=prc.xehSaveSettings, name="layoutSettingsForm" )#
 						#html.hiddenField( name="themeName", value=prc.activeTheme.name )#
-						
+
 						<!--- Build out theme settings --->
 						#prc.themeService.buildSettingsForm( prc.activeTheme )#
-						
+
 						<!--- Announce display Event --->
 						#announceInterception( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
 
@@ -106,7 +106,7 @@
 
                     #html.endForm()#
 				</cfif>
-		               
+
 		    </div>
 		</div>
 	</div>

@@ -5,9 +5,9 @@
 * www.ortussolutions.com
 * ---
 * Updater for 3.0.0 RC
-* 
+*
 * DB Structure Changes Comment Below
-* 
+*
 * Remove Interface for conversion from 2.1 to 3.0.0 RC
 *
 * ---
@@ -62,17 +62,17 @@ component {
 			/****************************** RENAME LAYOUTS TO THEMES ******************************/
 
 			if( !directoryExists( contentBoxPath & "/themes" ) && directoryExists( contentBoxPath & "/layouts" ) ){
-				directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );	
-			}			
+				directoryRename( contentBoxPath & "/layouts" , contentBoxPath & "/themes" );
+			}
 
 			/****************************** RENAME MODULES ******************************/
-			
+
 			if( !directoryExists( contentBoxPath & "/modules_user" ) && directoryExists( contentBoxPath & "/modules" ) ){
 				directoryRename( contentBoxPath & "/modules" , contentBoxPath & "/modules_user" );
 			}
 
 			/****************************** UPDATE SECURITY RULES ******************************/
-			
+
 			var aRules = securityRuleService.getAll();
 			for( var oRule in aRules ){
 				if( findNoCase( "LAYOUT_ADMIN", oRule.getPermissions() ) ){
@@ -265,7 +265,7 @@ component {
 	}
 
 	private function updateTimestampFields(){
-		
+
 		var tables = [
 			"cb_author",
 			"cb_category",
@@ -290,9 +290,9 @@ component {
 			var q = new Query( sql = "update #thisTable# set modifiedDate = :modifiedDate" );
 			q.addParam( name="modifiedDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
 			var results = q.execute().getResult();
-			log.info( "Update #thisTable# modified date", results );	
+			log.info( "Update #thisTable# modified date", results );
 		}
-		
+
 		// Creation tables now
 		tables = [
 			"cb_category",
@@ -311,9 +311,9 @@ component {
 			var q = new Query( sql = "update #thisTable# set createdDate = :createdDate" );
 			q.addParam( name="createdDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
 			var results = q.execute().getResult();
-			log.info( "Update #thisTable# created date", results );	
+			log.info( "Update #thisTable# created date", results );
 		}
-			
+
 	}
 
 	private function updateCKEditorPlugins(){
@@ -482,7 +482,7 @@ component {
 		} catch( any e ){
 			return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 		}
-		
+
 	}
 
 }

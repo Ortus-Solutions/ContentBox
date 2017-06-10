@@ -7,10 +7,10 @@
         </div>
         <div class="modal-body">
             <div class="widget-detail" id="widget-detail" style="display:none;"></div>
-            #renderView( 
-                view    = "widgets/widgetlist", 
-                module  = "contentbox-admin", 
-                args    = { mode = "insert", cols = 3 } 
+            #renderView(
+                view    = "widgets/widgetlist",
+                module  = "contentbox-admin",
+                args    = { mode = "insert", cols = 3 }
             )#
         </div>
         <div class="modal-footer">

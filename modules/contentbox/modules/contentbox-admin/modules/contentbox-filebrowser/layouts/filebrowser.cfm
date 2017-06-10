@@ -9,7 +9,7 @@
 	<!--- SES --->
 	<base href="#getSetting('htmlBaseURL')#" />
 	<!--- Title --->
-    <title>#prc.fbSettings.title#</title> 
+    <title>#prc.fbSettings.title#</title>
 	<!--- JQuery --->
 	<cfset addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" )>
 </head>

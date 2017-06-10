@@ -85,14 +85,14 @@ component extends="baseContentHandler"{
 		}
 
 		// search entries with filters and all
-		var pageResults = pageService.search( 
+		var pageResults = pageService.search(
 			search		= rc.searchPages,
 			isPublished	= rc.fStatus,
 			category	= rc.fCategories,
 			author		= rc.fAuthors,
 			creator		= rc.fCreators,
 			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-			sortOrder	= "order asc" 
+			sortOrder	= "order asc"
 		);
 		prc.pages 		= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
@@ -109,7 +109,7 @@ component extends="baseContentHandler"{
 		prc.xehPageHistory 		= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
-		
+
 		// view
 		event.setView( view="pages/indexTable", layout="ajax" );
 	}
@@ -203,7 +203,7 @@ component extends="baseContentHandler"{
 		if( NOT len( rc.publishedDate ) ){
 			rc.publishedDate = dateFormat( now() );
 		}
-		
+
 		// slugify the incoming title or slug
 		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
 

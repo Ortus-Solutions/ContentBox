@@ -10,7 +10,7 @@ component extends="baseHandler"{
     // Dependencies
     property name="commentSubscriptionService"      inject="id:commentSubscriptionService@cb";
     property name="subscriberService"               inject="id:subscriberService@cb";
-    
+
     // pre handler
     function preHandler( event, action, eventArguments, rc, prc ){
         // Tab control

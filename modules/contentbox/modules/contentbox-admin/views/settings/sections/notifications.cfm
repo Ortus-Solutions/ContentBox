@@ -56,7 +56,7 @@
 				value	= prc.cbSettings.cb_notify_author
 			)#
         </div>
-    </div>    
+    </div>
     <!--- Notification on Entry Create --->
     <div class="form-group">
         #html.label(

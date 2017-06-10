@@ -8,13 +8,13 @@
 */
 component mappedsuperclass="true"{
 
-	// PK Pointer			
+	// PK Pointer
 	this.pk = "PLEASE_SELECT_ONE";
 	// Constraints Default
 	this.constraints = {};
 
 	/* *********************************************************************
-	**						PUBLIC FUNCTIONS								
+	**						PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -31,9 +31,9 @@ component mappedsuperclass="true"{
 	void function preInsert(){
 		var now = now();
 		setCreatedDate( now );
-		setModifiedDate( now );	
+		setModifiedDate( now );
 	}
-	
+
 	/*
 	* pre update procedures
 	*/
@@ -49,7 +49,7 @@ component mappedsuperclass="true"{
 		if( isNull( createdDate ) ){ return ""; }
 		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(createdDate, "hh:mm tt" );
 	}
-	
+
 	/**
 	* Get formatted modified date
 	*/
@@ -74,11 +74,11 @@ component mappedsuperclass="true"{
 	*/
 	private struct function getBaseMemento( required array properties, excludes="" ){
 		var result 	= {};
-		var pList 	= [ 
+		var pList 	= [
 			this.pk,
-			"createdDate", 
-			"modifiedDate", 
-			"isDeleted" 
+			"createdDate",
+			"modifiedDate",
+			"isDeleted"
 		];
 
 		// add in base properties
@@ -87,7 +87,7 @@ component mappedsuperclass="true"{
 		// properties
 		for( var thisProp in arguments.properties ){
 			// If property exists and not excluded and a simple value
-			if( structKeyExists( variables, thisProp ) && 
+			if( structKeyExists( variables, thisProp ) &&
 				!listFindNoCase( arguments.excludes, thisProp ) &&
 				isSimpleValue( variables[ thisProp ] )
 			){
@@ -95,9 +95,9 @@ component mappedsuperclass="true"{
 				if( isDate( variables[ thisProp ] ) ){
 					result[ thisProp ] = dateFormat( variables[ thisProp ], "medium" ) & " " & timeFormat( variables[ thisProp ], "full" );
 				} else {
-					result[ thisProp ] = variables[ thisProp ];	
+					result[ thisProp ] = variables[ thisProp ];
 				}
-			} 
+			}
 			// Else default it
 			else if( !listFindNoCase( arguments.excludes, thisProp ) ){
 				result[ thisProp ] = "";
@@ -106,5 +106,5 @@ component mappedsuperclass="true"{
 
 		return result;
 	}
-	
+
 }

@@ -18,7 +18,7 @@ That's all. "InsertPre" button will appear on the editor toolbar and will be rea
         CKEDITOR.config.insertpre_class = 'prettyprint';
 
    As well as specify how the &lt;pre&gt; tag should be rendered inside CKEditor:
-   
+
 		CKEDITOR.config.insertpre_style = 'background-color:#F8F8F8;border:1px solid #DDD;padding:10px;';
 
 License

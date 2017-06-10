@@ -5,11 +5,11 @@
 	<cfif len( cb.themeSetting( 'overrideHeaderBGColor' ) )>
 		<cfset bodyHeaderStyle = bodyHeaderStyle & 'background-color: ' & cb.themeSetting( 'overrideHeaderBGColor' ) & ';'>
 	</cfif>
-	
+
 	<cfif len( cb.themeSetting( 'overrideHeaderTextColor' ) )>
 		<cfset bodyHeaderH1Style = bodyHeaderH1Style & 'color: ' & cb.themeSetting( 'overrideHeaderTextColor' ) & ';'>
 	</cfif>
-</cfif>		
+</cfif>
 <div id="body-header" style="#bodyHeaderStyle#">
 	<div class="container">
 		<!--- Title --->
@@ -21,7 +21,7 @@
 
 <!--- Body Main --->
 <section id="body-main">
-	<div class="container">	
+	<div class="container">
 		<div class="row">
 			<!--- Content --->
 			<div class="col-sm-9">
@@ -36,7 +36,7 @@
 				<cfif rc.year NEQ 0>
 					<div class="alert alert-info">
 						<a class="pull-right btn btn-primary btn-sm" href="#cb.linkBlog()#" title="Remove filter and view all entries">Remove Filter</a>
-						
+
 						Year: '#rc.year#'
 						<cfif rc.month NEQ 0>- Month: '#rc.month#'</cfif>
 						<cfif rc.day NEQ 0>- Day: '#rc.day#'</cfif>
@@ -71,5 +71,5 @@
 
 </div>
 	</div>
-</section>		
+</section>
 </cfoutput>

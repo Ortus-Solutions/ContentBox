@@ -10,12 +10,12 @@ function selectCBContent(slug,title,type){
 		return false;
 	}
 
-	// CKEDITOR Specific 
+	// CKEDITOR Specific
 	var editor = $( "###rc.editorName#" ).ckeditorGet();
 	var link = editor.document.createElement( 'a' );
 	link.setAttribute( 'href', type+':['+slug+']');
 	link.setAttribute( 'title', title );
-	
+
 	// get selected text
 	var mySelection = editor.getSelection();
 	var selectedText = "";
@@ -39,8 +39,8 @@ function selectCBContent(slug,title,type){
 	}
 	editor.insertElement( link );
 	closeRemoteModal();
-	
+
 	return false;
 }
-</script>	
+</script>
 </cfoutput>

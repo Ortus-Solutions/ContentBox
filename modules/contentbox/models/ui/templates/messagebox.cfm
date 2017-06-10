@@ -4,12 +4,12 @@
 			local.cssType = " alert-info";
 			local.iconType = "fa fa-info-circle";
 			break;
-		}	
+		}
 		case "error" : {
 			local.cssType = " alert-danger";
 			local.iconType = "fa fa-frown-o";
 			break;
-		}	
+		}
 		default : {
 			local.cssType = " alert-warning";
 			local.iconType = "fa fa-exclamation-triangle";

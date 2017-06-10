@@ -21,7 +21,7 @@
         </cfif>
         <!--- markup --->
         #html.hiddenField(
-            name="markup", 
+            name="markup",
             value=args.content.isLoaded() ? args.content.getMarkup() : prc.defaultMarkup
         )#
         <div class="btn-group btn-group-sm">

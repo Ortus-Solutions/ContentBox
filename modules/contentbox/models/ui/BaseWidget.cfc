@@ -6,7 +6,7 @@
 * This is the base class for contentbox widgets which gives them access to ContentBox and ColdBox.
 */
 component accessors="true" extends="coldbox.system.FrameworkSupertype"{
-	
+
 	// Shared DI all widgets receive
 	property name="categoryService"			inject="id:categoryService@cb";
 	property name="entryService"			inject="id:entryService@cb";
@@ -22,7 +22,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 	property name="html"					inject="HTMLHelper@coldbox";
 	property name="controller"				inject="coldbox";
 	property name="log"						inject="logbox:logger:{this}";
-	
+
 	// Local Properties
 	property name="name"					type="string" default="";
 	property name="version"					type="string" default="";
@@ -63,7 +63,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 		var publicMethods 	= [];
 		var meta 			= getMetadata( this );
 		var method 			= "";
-		
+
 		for( var i=1; i <= arrayLen( meta.functions ); i++ ){
 			method = meta.functions[ i ];
 			// ignores?

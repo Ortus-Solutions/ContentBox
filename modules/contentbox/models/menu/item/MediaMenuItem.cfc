@@ -5,46 +5,46 @@
 * ---
 * A Media-based Menu Item
 */
-component 	persistent="true" 
-			entityName="cbMediaMenuItem" 
-			table="cb_menuItem" 
-			extends="contentbox.models.menu.item.BaseMenuItem" 
+component 	persistent="true"
+			entityName="cbMediaMenuItem"
+			table="cb_menuItem"
+			extends="contentbox.models.menu.item.BaseMenuItem"
 			discriminatorValue="Media"{
-	
+
 	/* *********************************************************************
-	**                          DI                                  
+	**                          DI
 	********************************************************************* */
 	property name="provider" persistent="false" inject="contentbox.models.menu.providers.MediaProvider";
-	
+
 	/* *********************************************************************
-	**                          PROPERTIES                                  
+	**                          PROPERTIES
 	********************************************************************* */
-	
-	property    name="mediaPath" 
-				notnull="false" 
-				ormtype="string" 
+
+	property    name="mediaPath"
+				notnull="false"
+				ormtype="string"
 				default="";
 
-	property    name="target" 
-				notnull="false" 
-				ormtype="string" 
+	property    name="target"
+				notnull="false"
+				ormtype="string"
 				default="";
 
-	property    name="urlClass" 
-				notnull="false" 
-				ormtype="string" 
+	property    name="urlClass"
+				notnull="false"
+				ormtype="string"
 				default="";
 
 	/* *********************************************************************
-	**                          PK + CONSTRAINTS                                  
+	**                          PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.constraints[ "mediaPath" ] 	= { required = false, size = "1..255" };
 	this.constraints[ "target" ]	 	= { required = false, size = "1..255" };
 	this.constraints[ "urlClass" ]		= { required = false, size = "1..255" };
-	
+
 	/* *********************************************************************
-	**                          PUBLIC FUNCTIONS                                  
+	**                          PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -52,7 +52,7 @@ component 	persistent="true"
 	 */
 	public struct function getMemento(){
 		var result = super.getMemento();
-		
+
 		// add our subclasses's properties
 		result[ "mediaPath" ] 	= getMediaPath();
 		result[ "urlClass" ] 	= getURLClass();

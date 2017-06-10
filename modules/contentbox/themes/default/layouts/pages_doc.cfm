@@ -20,12 +20,12 @@
 
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_afterContent" )#
-	
+
 	<!--- Footer --->
 	#cb.quickView( view='_footer' )#
 
 	<!--- ContentBoxEvent --->
-	#cb.event( "cbui_beforeBodyEnd" )#	
+	#cb.event( "cbui_beforeBodyEnd" )#
 </body>
 </html>
 </cfoutput>

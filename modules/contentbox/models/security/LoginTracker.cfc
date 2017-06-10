@@ -72,10 +72,10 @@ component extends="coldbox.system.Interceptor"{
 			// Log it
 			log.warn( "Request blocked (#realIP#;#realUsername#) via login tracker" );
 			// Relocate
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );			
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
-	
+
 	/**
 	* Listen to successful logins
 	*/
@@ -120,8 +120,8 @@ component extends="coldbox.system.Interceptor"{
 		var prc 			= event.getCollection( private = true );
 		var realIP 			= loginTrackerService.getRealIP();
 		var realUsername 	= event.getValue( 'username', '' );
-		
-		// make or update entry for IP 
+
+		// make or update entry for IP
 		if( !isNull( prc.oBlockByIP ) ){
 			prc.oBlockByIP.setAttempts( prc.oBlockByIP.getAttempts() + 1 );
 		} else {
@@ -134,7 +134,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.oBlockByIP.setCreatedDate( now() );
 		loginTrackerService.save( prc.oBlockByIP );
 
-		// make or update entry for username 
+		// make or update entry for username
 		if( !isNull( prc.oBlockByUsername ) ){
 			prc.oBlockByUsername.setAttempts( prc.oBlockByUsername.getAttempts() + 1 );
 		}else{
@@ -145,7 +145,7 @@ component extends="coldbox.system.Interceptor"{
 		}
 		// Update date + Log it by ip
 		prc.oBlockByUsername.setCreatedDate( now() );
-		loginTrackerService.save( prc.oBlockByUsername );		
-	}	
-	
+		loginTrackerService.save( prc.oBlockByUsername );
+	}
+
 }

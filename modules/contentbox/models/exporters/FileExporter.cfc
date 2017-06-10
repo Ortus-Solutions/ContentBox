@@ -39,7 +39,7 @@ component implements="contentbox.models.exporters.ICBExporter" accessors=true {
 
     /**
      * Gets "total" based on content type
-     */ 
+     */
     public numeric function getTotal() {
         var total = 0;
         if( getIncludeFiles() == "*" ) {

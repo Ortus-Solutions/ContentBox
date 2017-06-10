@@ -63,7 +63,7 @@ component extends="baseHandler"{
 		// view
 		event.setView( "themes/index" );
 	}
-	
+
 	/**
 	* Save theme settings
 	*/
@@ -78,7 +78,7 @@ component extends="baseHandler"{
 
 		// Announce event
 		announceInterception( "cbadmin_preThemeSettingsSave", { name=rc.themeName } );
-		
+
 		// Results validated, save settings
 		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
 		settingservice.flushSettingsCache();
