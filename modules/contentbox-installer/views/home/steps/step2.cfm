@@ -16,7 +16,8 @@
 			data	= { toggle: 'toggle', match: 'populatedata' }
 		)#
 		#html.hiddenField(
-			name	= "populatedata"
+			name	= "populatedata",
+            value   = false
 		)#
     </div>
 </div>
