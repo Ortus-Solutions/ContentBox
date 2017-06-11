@@ -28,7 +28,8 @@
 				data	= { toggle: 'toggle', match: 'fullrewrite' }
 			)#
 			#html.hiddenField(
-				name	= "fullrewrite"
+				name	= "fullrewrite",
+				value	= false
 			)#
 		</label>
 		#html.select( 
