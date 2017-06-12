@@ -60,7 +60,7 @@ component 	persistent="true"
 			  	inversejoincolumn="FK_permissionID"; 
 	
 	/* *********************************************************************
-	**							CALUCLATED FIELDS									
+	**							CALCULATED FIELDS									
 	********************************************************************* */
 
 	property 	name="numberOfPermissions" 

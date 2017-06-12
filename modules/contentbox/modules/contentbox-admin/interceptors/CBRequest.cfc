@@ -106,6 +106,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehAuthors			= "#prc.cbAdminEntryPoint#.authors";
 		prc.xehAuthorEditor		= "#prc.cbAdminEntryPoint#.authors.editor";
 		prc.xehPermissions		= "#prc.cbAdminEntryPoint#.permissions";
+		prc.xehPermissionGroups	= "#prc.cbAdminEntryPoint#.permissionGroups";
 		prc.xehRoles			= "#prc.cbAdminEntryPoint#.roles";
 		prc.xehSavePreference 	= "#prc.cbAdminEntryPoint#.authors.saveSinglePreference";
 

@@ -93,8 +93,10 @@ component {
 				"cbadmin_onCommentSettingsNav","cbadmin_onCommentSettingsContent",
 				// Permission events
 				"cbadmin_prePermissionSave", "cbadmin_postPermissionSave", "cbadmin_prePermissionRemove" , "cbadmin_postPermissionRemove" ,
+				// PermissionGroup events
+				"cbadmin_prePermissionGroupSave", "cbadmin_postPermissionGroupSave", "cbadmin_prePermissionGroupRemove" , "cbadmin_postPermissionGroupRemove",
 				// Roles events
-				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove" ,
+				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove",
 				// Dashboard events
 				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar",
 				"cbadmin_onDashboardTabNav", "cbadmin_preDashboardTabContent", "cbadmin_postDashboardTabContent",

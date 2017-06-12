@@ -3,7 +3,7 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* Roles service for contentbox
+* Permission Group Service for contentbox
 */
 component extends="cborm.models.VirtualEntityService" singleton{
 	
@@ -15,9 +15,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	/**
 	* Constructor
 	*/
-	RoleService function init(){
+	PermissionGroupService function init(){
 		// init it
-		super.init(entityName="cbRole" );
+		super.init( entityName="cbPermissionGroup" );
 		
 		return this;
 	}
@@ -26,8 +26,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get all data prepared for export
 	*/
 	array function getAllForExport(){
-		var result = [];
-		var data = getAll();
+		var result 	= [];
+		var data 	= getAll();
 		
 		for( var thisItem in data ){
 			arrayAppend( result, thisItem.getMemento() );	
@@ -39,12 +39,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
-	string function importFromFile(required importFile, boolean override=false){
+	string function importFromFile( required importFile, boolean override=false ){
 		var data 		= fileRead( arguments.importFile );
 		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
+			throw( message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -54,8 +54,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	/**
 	* Import data from an array of structures of roles or just one structure of roles 
 	*/
-	string function importFromData(required importData, boolean override=false, importLog){
-		var allRoles = [];
+	string function importFromData(required importData, boolean override=false, importLog ){
+		var allGroups = [];
 		
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
@@ -63,27 +63,32 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 		
 		// iterate and import
-		for( var thisRole in arguments.importData ){
+		for( var thisGroup in arguments.importData ){
 			// Get new or persisted
-			var oRole = this.findByRole( thisRole.role );
-			oRole = ( isNull( oRole ) ? new() : oRole );
+			var oGroup = this.findByName( thisGroup.name );
+			oGroup = ( isNull( oGroup ) ? new() : oGroup );
 			
 			// date cleanups, just in case.
 			var badDateRegex  	= " -\d{4}$";
-			thisRole.createdDate 	= reReplace( thisRole.createdDate, badDateRegex, "" );
-			thisRole.modifiedDate 	= reReplace( thisRole.modifiedDate, badDateRegex, "" );
+			thisGroup.createdDate 	= reReplace( thisGroup.createdDate, badDateRegex, "" );
+			thisGroup.modifiedDate 	= reReplace( thisGroup.modifiedDate, badDateRegex, "" );
 			// Epoch to Local
-			thisRole.createdDate 	= dateUtil.epochToLocal( thisRole.createdDate );
-			thisRole.modifiedDate 	= dateUtil.epochToLocal( thisRole.modifiedDate );
+			thisGroup.createdDate 	= dateUtil.epochToLocal( thisGroup.createdDate );
+			thisGroup.modifiedDate 	= dateUtil.epochToLocal( thisGroup.modifiedDate );
 
 			// populate content from data
-			populator.populateFromStruct( target=oRole, memento=thisRole, exclude="roleID", composeRelationships=false );
+			populator.populateFromStruct( 
+				target				 = oGroup, 
+				memento				 = thisGroup, 
+				exclude				 = "permissionGroupID", 
+				composeRelationships = false 
+			);
 			
 			// PERMISSIONS
-			if( arrayLen( thisRole.permissions ) ){
+			if( arrayLen( thisGroup.permissions ) ){
 				// Create permissions that don't exist first
 				var allPermissions = [];
-				for( var thisPermission in thisRole.permissions ){
+				for( var thisPermission in thisGroup.permissions ){
 					var oPerm = permissionService.findByPermission( thisPermission.permission );
 					oPerm = ( isNull( oPerm ) ? populator.populateFromStruct( target=permissionService.new(), memento=thisPermission, exclude="permissionID" ) : oPerm );	
 					// save oPerm if new only
@@ -92,30 +97,30 @@ component extends="cborm.models.VirtualEntityService" singleton{
 					arrayAppend( allPermissions, oPerm );
 				}
 				// detach permissions and re-attach
-				oRole.setPermissions( allPermissions );
+				oGroup.setPermissions( allPermissions );
 			}
 			
 			// if new or persisted with override then save.
-			if( !oRole.isLoaded() ){
-				arguments.importLog.append( "New role imported: #thisRole.role#<br>" );
-				arrayAppend( allRoles, oRole );
+			if( !oGroup.isLoaded() ){
+				arguments.importLog.append( "New permission group imported: #thisGroup.name#<br>" );
+				arrayAppend( allGroups, oGroup );
 			}
-			else if( oRole.isLoaded() and arguments.override ){
-				arguments.importLog.append( "Persisted role overriden: #thisRole.role#<br>" );
-				arrayAppend( allRoles, oRole );
+			else if( oGroup.isLoaded() and arguments.override ){
+				arguments.importLog.append( "Persisted permission group overriden: #thisGroup.name#<br>" );
+				arrayAppend( allGroups, oGroup );
 			}
 			else{
-				arguments.importLog.append( "Skipping persisted role: #thisRole.role#<br>" );
+				arguments.importLog.append( "Skipping permission group: #thisGroup.name#<br>" );
 			}
 		} // end import loop
 
 		// Save them?
-		if( arrayLen( allRoles ) ){
-			saveAll( allRoles );
-			arguments.importLog.append( "Saved all imported and overriden roles!" );
+		if( arrayLen( allGroups ) ){
+			saveAll( allGroups );
+			arguments.importLog.append( "Saved all imported and overriden permission groups!" );
 		}
 		else{
-			arguments.importLog.append( "No roles imported as none where found or able to be overriden from the import file." );
+			arguments.importLog.append( "No permission groups imported as none where found or able to be overriden from the import file." );
 		}
 		
 		return arguments.importLog.toString(); 

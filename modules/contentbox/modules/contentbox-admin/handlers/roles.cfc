@@ -8,15 +8,11 @@ component extends="baseHandler"{
 	property name="permissionService"	inject="id:permissionService@cb";
 	
 	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
-		// Tab control
-		prc.tabUsers = true;
+	function preHandler( event, action, eventArguments, rc, prc ){
 	}
 	
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehRoleRemove 		= "#prc.cbAdminEntryPoint#.roles.remove";
 		prc.xehRoleSave 		= "#prc.cbAdminEntryPoint#.roles.save";
@@ -34,7 +30,7 @@ component extends="baseHandler"{
 	}
 	
 	// save
-	function save(event,rc,prc){
+	function save( event, rc, prc ){
 		// populate and get
 		var orole = populateModel( roleService.get(id=rc.roleID) );
     	// announce event
@@ -50,7 +46,7 @@ component extends="baseHandler"{
 	}
 	
 	// remove
-	function remove(event,rc,prc){
+	function remove( event, rc, prc ){
 		// announce event
 		announceInterception( "cbadmin_preRoleRemove",{roleID=rc.roleID} );
 		// Get requested role and remove permissions
@@ -66,7 +62,7 @@ component extends="baseHandler"{
 	}
 	
 	// permissions
-	function permissions(event,rc,prc){
+	function permissions( event, rc, prc ){
 		// exit Handlers
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.roles.removePermission";
 		prc.xehPermissionSave 	= "#prc.cbAdminEntryPoint#.roles.savePermission";
@@ -80,7 +76,7 @@ component extends="baseHandler"{
 	}
 	
 	// Save permission to a role and gracefully end.
-	function savePermission(event,rc,prc){
+	function savePermission( event, rc, prc ){
 		
 		var oRole 		= roleService.get( rc.roleID );
 		var oPermission = permissionService.get( rc.permissionID );
@@ -96,7 +92,7 @@ component extends="baseHandler"{
 	}
 	
 	// remove permission to a role and gracefully end.
-	function removePermission(event,rc,prc){
+	function removePermission( event, rc, prc ){
 		
 		var oRole 		= roleService.get( rc.roleID );
 		var oPermission = permissionService.get( rc.permissionID );
@@ -110,7 +106,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export Entry
-	function export(event,rc,prc){
+	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get role
 		prc.role  = roleService.get( event.getValue( "roleID",0) );
@@ -135,7 +131,7 @@ component extends="baseHandler"{
 	}
 	
 	// Export All Entries
-	function exportAll(event,rc,prc){
+	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = roleService.getAllForExport();
@@ -154,7 +150,7 @@ component extends="baseHandler"{
 	}
 	
 	// import entries
-	function importAll(event,rc,prc){
+	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try{
@@ -162,9 +158,8 @@ component extends="baseHandler"{
 				var importLog = roleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
 				cbMessagebox.info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
-			}
-			else{
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+			} else {
+				cbMessagebox.error( "The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import" );
 			}
 		}
 		catch(any e){
