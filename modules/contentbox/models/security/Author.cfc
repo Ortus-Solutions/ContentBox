@@ -131,6 +131,19 @@ component 	persistent="true"
 			 	inversejoincolumn="FK_permissionID" 
 			 	orderby="permission";
 
+	// M2M -> A-la-carte Author Permission Groups
+	property 	name="permissionGroups" 
+				singularName="permissionGroup" 
+				fieldtype="many-to-many" 
+				type="array" 
+				lazy="extra"
+			 	cfc="contentbox.models.security.PermissionGroup" 
+			 	cascade="all"
+			 	fkcolumn="FK_authorID" 
+			 	linktable="cb_authorPermissionGroups" 
+			 	inversejoincolumn="FK_permissionGroupID" 
+			 	orderby="permission";
+
 	/* *********************************************************************
 	**							CALCULATED FIELDS									
 	********************************************************************* */
@@ -182,6 +195,8 @@ component 	persistent="true"
 		variables.permissionList 	= "";
 		variables.loggedIn 			= false;
 		variables.isActive 			= true;
+		variables.permissionGroups 	= [];
+		
 		// Setup empty preferences
 		setPreferences( {} );
 		
@@ -192,20 +207,44 @@ component 	persistent="true"
 
 	/**
 	* Check for permission
-	* @slug.hint The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
+	* @slug The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
 	*/
-	boolean function checkPermission(required slug){
-		// cache list
+	boolean function checkPermission( required slug ){
+		// cache permission list
 		if( !len( permissionList ) AND hasPermission() ){
 			var q = entityToQuery( getPermissions() );
 			permissionList = valueList( q.permission );
 		}
-		// checks via role and local
-		if( getRole().checkPermission( arguments.slug ) OR inPermissionList( arguments.slug ) ){
+
+		// checks via role, then group permissions and then local permissions
+		if( 
+			getRole().checkPermission( arguments.slug )
+			OR
+			checkGroupPermissions( arguments.slug )
+			OR
+			inPermissionList( arguments.slug )
+		){
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	* This utility function checks if a slug is in any permission group this user belongs to.
+	* @slug The slug to check
+	*/
+	boolean function checkGroupPermissions( required slug ){
+		// If no groups, just return false
+		if( !hasGroupPermission() ){
+			return false;
+		}
+		// iterate and check, break if found, short-circuit approach.
+		for( var thisGroup in variables.groupPermissions ){
+			if( thisGroup.checkPermission( arguments.slug ) ){
+				return true;
+			}
+		}
 	}
 	
 	/**
@@ -235,13 +274,13 @@ component 	persistent="true"
 	
 	/**
 	* Override the setPermissions
+	* @permissions The permissions array to override
 	*/
-	Author function setPermissions(required array permissions){
+	Author function setPermissions( required array permissions ){
 		if( hasPermission() ){
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
-		}
-		else{
+		} else {
 			variables.permissions = arguments.permissions;
 		}
 		return this;
