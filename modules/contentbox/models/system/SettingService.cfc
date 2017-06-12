@@ -26,9 +26,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	SettingService function init(){
 		// init it
 		super.init( entityName="cbSetting" );
-		// load cache provider 
+		// load cache provider
 		loadCacheProviderName();
-		
+
 		return this;
 	}
 
@@ -38,26 +38,26 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	string function getSettingsCacheKey(){
 		return "cb-settings-#cgi.http_host#";
 	}
-	
+
 	/**
 	* Check if the installer and dsn creator modules are present
 	*/
 	struct function isInstallationPresent(){
 		var results = { installer = false, dsncreator = false };
-		
+
 		if( structKeyExists( moduleSettings, "contentbox-installer" ) AND
 		    directoryExists( moduleSettings[ "contentbox-installer" ].path ) ){
 			results.installer = true;
 		}
-		
+
 		if( structKeyExists( moduleSettings, "contentbox-dsncreator" ) AND
 		    directoryExists( moduleSettings[ "contentbox-dsncreator" ].path ) ){
 			results.dsncreator = true;
 		}
-		
+
 		return results;
 	}
-	
+
 	/**
 	* Delete the installer module
 	*/
@@ -69,7 +69,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		}
 		return false;
 	}
-	
+
 	/**
 	* Delete the dsn creator module
 	*/
@@ -117,14 +117,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		throw(
 			message = "Setting #arguments.name# not found in settings collection",
 			detail 	= "Registered settings are: #structKeyList(s)#",
-			type 	= "contentbox.SettingService.SettingNotFound" 
+			type 	= "contentbox.SettingService.SettingNotFound"
 		);
 	}
 
 	/**
 	* Get all settings
 	* @asStruct Indicator if we should return structs or array of objects
-	* 
+	*
 	* @return struct or array of objects
 	*/
 	function getAllSettings( boolean asStruct=false ){
@@ -222,7 +222,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 				maxFiles	= cbSettings.cb_media_html5uploads_maxFiles
 			}
 		};
-		
+
 		// Base MediaPath
 		var mediaPath = "";
 		// I don't think this is needed anymore. As we use build link for everything.
@@ -230,17 +230,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		//if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
 			//mediaPath = "index.cfm" & mediaPath;
 		//}
-		
+
 		// add the entry point
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
 		mediaPath &= ( len( entryPoint ) ? "#entryPoint#/" : "" ) & "__media";
 		// Store it
 		mediaPath = ( left( mediaPath,1 ) == '/' ? mediaPath : "/" & mediaPath );
 		settings.mediaPath =mediaPath;
-		
+
 		return settings;
 	}
-	
+
 	/**
 	* setting search returns struct with keys [settings,count]
 	*/
@@ -248,7 +248,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		var results = {};
 		// criteria queries
 		var c = newCriteria();
-		// Search Criteria	
+		// Search Criteria
 		if( len(arguments.search) ){
 			c.like( "name","%#arguments.search#%" );
 		}
@@ -258,41 +258,41 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 								.list(offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=false);
 		return results;
 	}
-	
+
 	/**
 	* Get all data prepared for export
 	*/
 	array function getAllForExport(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="settingID,name,value,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="name" );
-			 
+
 	}
-	
+
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
 		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
-		
+
 		if( !isJSON( data ) ){
 			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
-		
+
 		// deserialize packet: Should be array of { settingID, name, value }
 		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
-		
+
 	}
-	
+
 	/**
-	* Import data from an array of structures of settings 
+	* Import data from an array of structures of settings
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allSettings = [];
-		
+
 		// iterate and import
 		for( var thisSetting in arguments.importData ){
 			var args = { name = thisSetting.name };
@@ -308,8 +308,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 
 			// if null, then create it
 			if( isNull( oSetting ) ){
-				var args = { 
-					name 			= thisSetting.name, 
+				var args = {
+					name 			= thisSetting.name,
 					value 			= javaCast( "string", thisSetting.value ),
 					createdDate 	= thisSetting.createdDate,
 					modifiedDate 	= thisSetting.modifiedDate,
@@ -329,7 +329,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 				importLog.append( "Skipping setting: #thisSetting.name#<br>" );
 			}
 		}
-		
+
 		// Save them?
 		if( arrayLen( allSettings ) ){
 			saveAll( allSettings );
@@ -337,8 +337,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		} else {
 			importLog.append( "No settings imported as none where found or able to be overriden from the import file." );
 		}
-		
-		return importLog.toString(); 
+
+		return importLog.toString();
 	}
 
 	/**

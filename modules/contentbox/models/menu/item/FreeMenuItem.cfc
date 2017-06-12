@@ -5,24 +5,24 @@
 * ---
 * A Heading-based Menu Item
 */
-component 	persistent="true" 
-			entityName="cbFreeMenuItem" 
-			table="cb_menuItem" 
-			extends="contentbox.models.menu.item.BaseMenuItem" 
+component 	persistent="true"
+			entityName="cbFreeMenuItem"
+			table="cb_menuItem"
+			extends="contentbox.models.menu.item.BaseMenuItem"
 			discriminatorValue="Free"{
 
     /* *********************************************************************
-	**                          DI                                  
+	**                          DI
 	********************************************************************* */
-	
+
 	property name="provider" persistent="false" inject="contentbox.models.menu.providers.FreeProvider";
-	
+
 	/* *********************************************************************
-	**                          PROPERTIES                                  
+	**                          PROPERTIES
 	********************************************************************* */
-	
+
 	/* *********************************************************************
-	**                          PUBLIC FUNCTIONS                                  
+	**                          PUBLIC FUNCTIONS
 	********************************************************************* */
 
     /**

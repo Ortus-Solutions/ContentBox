@@ -21,7 +21,7 @@ To start Grunt compilation, run `Grunt` from the workbench directory.  Directori
 
 ## CSS/SCSS
 
-The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
+The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.
 
 ### Bower CSS
 All needed CSS from bower libraries are added via the `cssmin` task.
@@ -63,7 +63,7 @@ The `Full` lists are absolute or http locations, while the normal append lists a
 
 ```
 // relative
-prc.cssAppendList = "../plugins/morris/css/morris";       
+prc.cssAppendList = "../plugins/morris/css/morris";
 prc.jsAppendList  = "../plugins/morris/js/raphael-min,../plugins/morris/js/morris.min";
 
 // full

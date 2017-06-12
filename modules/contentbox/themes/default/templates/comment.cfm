@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <div id="comment_#comment.getCommentID()#" class="media comment">
-	
+
 	<!--- Anchor --->
 	<a name="comment_#comment.getCommentID()#"></a>
 

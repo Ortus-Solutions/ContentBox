@@ -7,10 +7,10 @@
 */
 component extends="baseHandler"{
 
-	// DI 
+	// DI
 	property name="moduleSettings"	inject="coldbox:moduleSettings:contentbox";
 	property name="markdown"	inject="Processor@cbmarkdown";
-	
+
 	/**
 	* Show Auto Updates screen
 	*/

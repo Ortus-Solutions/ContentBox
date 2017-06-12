@@ -10,7 +10,7 @@
     <div class="col-md-12">
         <!--- MessageBox --->
         #getModel( "messagebox@cbMessagebox" ).renderit()#
-        
+
         <!---Import Log --->
         <cfif flash.exists( "importLog" )>
             <div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-inline no-margin">
-                                #html.textField( 
+                                #html.textField(
                                     name="menuSearch",
                                     class="form-control",
                                     placeholder="Quick Search"

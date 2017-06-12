@@ -6,7 +6,7 @@
 * Export ContentBox data based on user selection. This is a transient object
 */
 component accessors=true {
-    
+
     /**
     * The exporters to use
     */
@@ -56,7 +56,7 @@ component accessors=true {
         descriptor 			= {};
         dataServiceMappings = {};
         filePathMappings 	= {};
-        
+
         return this;
     }
 
@@ -66,69 +66,69 @@ component accessors=true {
     function onDIComplete(){
         var contentBoxPath = moduleSettings[ "contentbox" ].path;
         dataServiceMappings = {
-            "authors" = { 
+            "authors" = {
                 fileName="authors",
                 service="authorService",
                 displayName="Authors",
-                priority=3 
+                priority=3
             },
-            "categories" = { 
+            "categories" = {
                 fileName="categories",
                 service="categoryService",
                 displayName="Categories",
-                priority=1 
+                priority=1
             },
-            "contentstore" = { 
+            "contentstore" = {
                 fileName="contentstore",
                 service="contentStoreService",
                 displayName="Content Store",
                 priority=4
             },
-            "menus" = { 
+            "menus" = {
                 fileName="menus",
                 service="menuService",
                 displayName="Menus",
                 priority=5
             },
-            "permissions" = { 
+            "permissions" = {
                 fileName="permissions",
                 service="permissionService",
                 displayName="Permissions",
-                priority=1 
+                priority=1
             },
-            "roles" = { 
+            "roles" = {
                 fileName="roles",
                 service="roleService",
                 displayName="Roles",
-                priority=2 
+                priority=2
             },
             "securityrules" = {
                 fileName="securityrules",
                 service="securityRuleService",
                 displayName="Security Rules",
-                priority=1 
+                priority=1
             },
-            "settings" = { 
+            "settings" = {
                 fileName="settings",
                 service="settingService",
                 displayName="Settings",
-                priority=1 
+                priority=1
             },
-            "entries" = { 
+            "entries" = {
                 fileName="entries",
                 service="entryService",
                 displayName="Entries",
-                priority=4 
+                priority=4
             },
-            "pages" = { 
+            "pages" = {
                 fileName="pages",
                 service="pageService",
                 displayName="Pages",
-                priority=4 
+                priority=4
             }
         };
         filePathMappings = {
-            "emailtemplates" = { 
+            "emailtemplates" = {
                 fileName="emailtemplates",
                 displayName="Email Templates",
                 directory = contentBoxPath & "/email_templates",
@@ -270,7 +270,7 @@ component accessors=true {
                         for( var folder in folders ) {
                             // copy folder to tmp directory
                             directoryCopy( folder, tmppath & "/" & listLast( folder, "/" ), true );
-                        } 
+                        }
                         // now add tmp to zip file
                         zipUtil.addFiles( zipFilePath=fileName, directory=tmppath, recurse=true );
                         // finally, we can delete that now
@@ -287,21 +287,21 @@ component accessors=true {
         // add descriptor file
         fileWrite( tmpDirectory & "/descriptor.json", serializeJSON( getDescriptor() ) );
         exportLog.append( "Package descriptor complete!<br />" );
-        
+
         // done! now we just need to compress the whole thing
         exportLog.append( "Generating ContentBox package export<br />" );
-        
+
         var exportFile = tmpDirectory & "/" & HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) ) & ".cbox";
-        zipUtil.addFiles( 
-            zipFilePath=exportFile, 
-            directory=tmpDirectory, 
-            recurse=true 
+        zipUtil.addFiles(
+            zipFilePath=exportFile,
+            directory=tmpDirectory,
+            recurse=true
         );
         exportLog.append( "ContentBox package export complete!<br />" );
-        
+
         var flattendExportLog = exportLog.toString();
         log.info( flattendExportLog );
-        
+
         return { "exportfile" = exportFile, exportlog = flattendExportLog };
     }
 
@@ -347,7 +347,7 @@ component accessors=true {
                 "filename" = exporter.getFileName() & "." & exporter.getFormat(),
                 "priority" = exporter.getPriority()
             };
-        }  
-        setDescriptor( content );      
+        }
+        setDescriptor( content );
     }
 }

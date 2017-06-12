@@ -51,18 +51,18 @@ component implements="contentbox.model.updates.IUpdate"{
 			transaction{
 				/**
 				Migrate Database FIRST
-		
+
 				// User Preferences
 				ALTER TABLE cb_author ADD COLUMN preferences longtext NULL;
 				*/
 				log.info("About to beggin 1.0.7 patching");
-				
+
 				// Update User Preferences
 				updateUserPreferences();
-				
+
 				// update settings
 				updateSettings();
-				
+
 				log.info("Finalized 1.0.7 patching");
 			}
 		}
@@ -89,7 +89,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			rethrow;
 		}
 	}
-	
+
 	private function updateUserPreferences(){
 		// Ensure column exists?
 		var colFound = false;
@@ -103,14 +103,14 @@ component implements="contentbox.model.updates.IUpdate"{
 			var q = new Query(datasource=getDatasource());
 			q.setSQL( "ALTER TABLE cb_author ADD preferences #getLongTextColumn()# NULL;" );
 			q.execute();
-			
+
 			log.info("Added column for user preferences");
 		}
 		else{
 			log.info("Column for user preferences already in DB, skipping.");
 		}
 	}
-	
+
 	private function updateSettings(){
 		// Create New setting
 		var blogSetting = settingService.findWhere({name="cb_site_blog_entrypoint"});
@@ -125,10 +125,10 @@ component implements="contentbox.model.updates.IUpdate"{
 			log.info("Skipped blog entry point setting, already there");
 		}
 	}
-	
+
 	private function getLongTextColumn(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "text";
@@ -151,7 +151,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	private function getDatabaseType(){
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
-	
+
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 	}

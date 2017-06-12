@@ -12,7 +12,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	property name="populator"  		inject="wirebox:populator";
 	property name="contentService"	inject="contentService@cb";
 	property name="dateUtil"		inject="DateUtil@cb";
-	
+
 	/**
 	* Constructor
 	*/
@@ -57,9 +57,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Inflate categories from a collection via 'category_X' pattern and returns an array of category objects 
+	* Inflate categories from a collection via 'category_X' pattern and returns an array of category objects
 	* as its representation
-	* 
+	*
 	* @return array of categories
 	*/
 	array function inflateCategories( struct memento ){
@@ -82,7 +82,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @category.hint The category object to remove from the system
 	*/
 	boolean function deleteCategory( required category ){
-		
+
 		transaction{
 			// Remove content relationships
 			var aRelatedContent = removeAllRelatedContent( arguments.category );
@@ -95,7 +95,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			// evict queries
 			ORMEvictQueries( getQueryCacheRegion() );
 		}
-		
+
 		// return results
 		return true;
 	}
@@ -123,11 +123,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	array function getAllForExport(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="categoryID,category,slug,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list(sortOrder="category" );
-			 
+
 	}
 
 	/**
@@ -135,44 +135,44 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	array function getAllNames(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="category" )
 			//.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="category" );
 	}
-	
+
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
 		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
-		
+
 		if( !isJSON( data ) ){
 			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
-		
+
 		// deserialize packet: Should be array of { settingID, name, value }
 		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
 	}
-	
+
 	/**
-	* Import data from an array of structures of categories or just one structure of categories 
+	* Import data from an array of structures of categories or just one structure of categories
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allCategories = [];
-		
+
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
 			arguments.importData = [ arguments.importData ];
 		}
-		
+
 		// iterate and import
 		for( var thisCategory in arguments.importData ){
 			// Get new or persisted
 			var oCategory = this.findBySlug( slug=thisCategory.slug);
 			oCategory = ( isNull( oCategory) ? new() : oCategory );
-			
+
 			// date cleanups, just in case.
 			var badDateRegex  	= " -\d{4}$";
 			thisCategory.createdDate 	= reReplace( thisCategory.createdDate, badDateRegex, "" );
@@ -183,7 +183,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 			// populate content from data
 			populator.populateFromStruct( target=oCategory, memento=thisCategory, exclude="categoryID", composeRelationships=false );
-			
+
 			// if new or persisted with override then save.
 			if( !oCategory.isLoaded() ){
 				arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
@@ -206,8 +206,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		else{
 			arguments.importLog.append( "No categories imported as none where found or able to be overriden from the import file." );
 		}
-		
-		return arguments.importLog.toString(); 
+
+		return arguments.importLog.toString();
 	}
 
 }

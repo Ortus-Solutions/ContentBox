@@ -5,85 +5,85 @@
 * ---
 * A cool SecurityRule entity
 */
-component 	persistent="true" 
-			table="cb_securityRule" 
-			entityName="cbSecurityRule" 
+component 	persistent="true"
+			table="cb_securityRule"
+			entityName="cbSecurityRule"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbSecurityRule" 
+			cachename="cbSecurityRule"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="ruleID" 
-				fieldtype="id" 
-				column="ruleID" 
-				generator="native" 
-				setter="false" 
+	property 	name="ruleID"
+				fieldtype="id"
+				column="ruleID"
+				generator="native"
+				setter="false"
 				params="{ allocationSize = 1, sequence = 'ruleID_seq' }";
 
-	property 	name="whitelist" 	
-				ormtype="string"  	
-				notnull="false" 	
-				default="" 
+	property 	name="whitelist"
+				ormtype="string"
+				notnull="false"
+				default=""
 				length="255";
 
-	property 	name="securelist" 	
-				ormtype="string"  	
-				notnull="true" 		
-				default="" 
+	property 	name="securelist"
+				ormtype="string"
+				notnull="true"
+				default=""
 				length="255";
 
-	property 	name="roles" 		
-				ormtype="string"  	
-				notnull="false"  	
-				default="" 
+	property 	name="roles"
+				ormtype="string"
+				notnull="false"
+				default=""
 				length="255";
 
-	property 	name="permissions" 	
-				ormtype="string"  	
-				notnull="false"  	
-				default="" 
+	property 	name="permissions"
+				ormtype="string"
+				notnull="false"
+				default=""
 				length="500";
 
-	property 	name="redirect"		
-				ormtype="string"  	
-				notnull="true"  	
-				default="" 
+	property 	name="redirect"
+				ormtype="string"
+				notnull="true"
+				default=""
 				length="500";
 
-	property 	name="useSSL"		
-				ormtype="boolean" 	
-				notnull="false" 	
+	property 	name="useSSL"
+				ormtype="boolean"
+				notnull="false"
 				default="false";
 
-	property 	name="order"		
-				ormtype="integer" 	
-				notnull="true" 		
+	property 	name="order"
+				ormtype="integer"
+				notnull="true"
 				default="0";
 
-	property 	name="match"		
-				ormtype="string"  	
-				notnull="false" 	
-				default="" 
+	property 	name="match"
+				ormtype="string"
+				notnull="false"
+				default=""
 				length="50";
 
-	property 	name="message"		
-				ormtype="string"  	
-				notnull="false" 	
-				default="" 
+	property 	name="message"
+				ormtype="string"
+				notnull="false"
+				default=""
 				length="255";
 
-	property 	name="messageType"		
-				ormtype="string"  	
-				notnull="false" 	
+	property 	name="messageType"
+				ormtype="string"
+				notnull="false"
 				default="info"
 				dbdefault="'info'"
 				length="50";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "ruleID";
@@ -101,7 +101,7 @@ component 	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	// Constructor
@@ -115,7 +115,7 @@ component 	persistent="true"
 
 		return this;
 	}
-	
+
 	/**
 	* Overriden setter
 	*/
@@ -126,24 +126,24 @@ component 	persistent="true"
 		variables.match = arguments.match;
 		return this;
 	}
-	
+
 	/*
 	* Validate entry, returns an array of error or no messages
 	*/
 	array function validate(){
 		var errors = [];
-		
+
 		// limits
 		securelist		= left(securelist,255);
 		whitelist		= left(whitelist,255);
 		roles			= left(roles,500);
 		permissions		= left(permissions,500);
 		redirect		= left(redirect,255);
-		
+
 		// Required
 		if( !len(securelist) ){ arrayAppend(errors, "Securelist is required" ); }
 		if( !len(redirect) ){ arrayAppend(errors, "Redirect is required" ); }
-		
+
 		return errors;
 	}
 
@@ -153,8 +153,8 @@ component 	persistent="true"
 	function getMemento( excludes="" ){
 		var pList = listToArray( "whitelist,securelist,roles,permissions,redirect,useSSL,order,match,message,messageType" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		return result;
 	}
-	
+
 }

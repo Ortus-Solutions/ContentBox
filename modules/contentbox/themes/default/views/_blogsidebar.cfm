@@ -12,7 +12,7 @@
 	the default convention for the template is "category.cfm" you can change it via the quickCategories() 'template' argument.
 	--->
 	<ul>
-		#cb.quickCategories()#		
+		#cb.quickCategories()#
 	</ul>
 </div>
 </cfif>
@@ -62,7 +62,7 @@
 </cfif>
 
 <cfif cb.themeSetting( "showEntriesSearchBlogSide", true )>
-<div class="panel panel-default">	
+<div class="panel panel-default">
 	<div class="panel-heading">
 		<h4>Entries Search</h4>
 	</div>

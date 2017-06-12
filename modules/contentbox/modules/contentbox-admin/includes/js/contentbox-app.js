@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    
+
     // If the sidebar preference is off, toggle it
     if( $( "body" ).attr( "data-showsidebar" ) == "no" ){
         toggleSidebar();
@@ -12,16 +12,16 @@ $( document ).ready(function() {
     // setup global variables
     $confirmIt          = $( '#confirmIt' );
     $remoteModal        = $( "#modal" );
-    
+
     // Attach modal listeners
     attachModalListeners();
-    
+
     // Global Tool Tip Settings
     toolTipSettings = {
          animation  : 'slide',
          delay      : { show: 100, hide: 100 }
     };
-    
+
     // Search Capabilities
     activateContentSearch();
     // activate confirmations
@@ -70,7 +70,7 @@ $( document ).ready(function() {
         } );
         return this;
     };
-    // simple method to blank out all form fields 
+    // simple method to blank out all form fields
     $.fn.clearForm = function() {
         if( this.data( 'validator') === undefined ){ return; }
         // reset classes and what not
@@ -111,20 +111,20 @@ $( document ).ready(function() {
         var activeTab = $( '[href="' + location.hash + '"]' );
         if( activeTab ){ activeTab.tab( 'show' ); }
     } );
-    
+
     // Nav Search Shortcut
-    jwerty.key( 
-        "ctrl+shift+s/\\", 
-        function(){ 
-            $( "#nav-search" ).focus(); 
-            return false; 
-        } 
+    jwerty.key(
+        "ctrl+shift+s/\\",
+        function(){
+            $( "#nav-search" ).focus();
+            return false;
+        }
     );
-    
+
     // find all links with the key-binding data attribute
     $( '[data-keybinding]' ).each(function(){
         var boundItem = $( this );
-        jwerty.key( boundItem.data( 'keybinding' ), function(){ 
+        jwerty.key( boundItem.data( 'keybinding' ), function(){
             // give precedence to onclick
             if( boundItem.attr( 'onclick' ) ) {
                 // if onclick, call event
@@ -132,7 +132,7 @@ $( document ).ready(function() {
             } else {
                 // otherwise, follow link
                 to( boundItem.attr( 'href' ) );
-            } 
+            }
         } );
     } );
 
@@ -165,10 +165,10 @@ $( document ).ready(function() {
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
             $.cookie( data, active );
-        } );           
+        } );
     } );
 
-     
+
 } );
 
 /**
@@ -210,7 +210,7 @@ function toggleSidebar(){
     var sidebar         = $( "#main-content-sidebar" );
     var type            = sidebar.css( "display" );
     var sidebarState    = false;
-    
+
     // nosidebar exit
     if( type === undefined ){ return; }
 
@@ -276,7 +276,7 @@ function adminNotifier( type, message, delay ){
             toastr.info( message ); break;
         }
     }
-    
+
 }
 function activateContentSearch(){
     // local refs
@@ -289,15 +289,15 @@ function activateContentSearch(){
         //if( $nav_search.is( ":focus" ) ){ return; }
         $( this ).animate( {
                 opacity: 1.0
-            }, 
-            500, 
-            function(){} 
+            },
+            500,
+            function(){}
         );
     } ).blur( function(){
         $( this ).animate( {
                 opacity: 0.50
-            }, 
-            500, 
+            },
+            500,
             function(){}
         );
     } );
@@ -308,9 +308,9 @@ function activateContentSearch(){
                 var $this = $( this );
                 // Only send requests if more than 2 characters
                 if( $this.val().length > 1 ){
-                    $nav_search_results.load( 
-                        $( "#nav-search-url" ).val(), 
-                        { search : $this.val() }, 
+                    $nav_search_results.load(
+                        $( "#nav-search-url" ).val(),
+                        { search : $this.val() },
                         function( data ){
                             if( $nav_search_results.css( "display" ) === "none" ){
                                 $nav_search_results.fadeIn().slideDown();
@@ -344,7 +344,7 @@ function quickLinks( inURL ){
     }
 }
 function activateTooltips(){
-    //Tooltip 
+    //Tooltip
     $( '[title]' ).tooltip( toolTipSettings );
 }
 function hideAllTooltips(){
@@ -411,7 +411,7 @@ function openRemoteModal( url, params, w, h, delay ){
     var args = {};
     var maxHeight   = ( $( window ).height() - 200 );
     var maxWidth    = ( $( window ).width() * 0.85 );
-    
+
     // Set default values for modal data elements
     modal.data( 'url', url );
     modal.data( 'params', params );
@@ -429,7 +429,7 @@ function openRemoteModal( url, params, w, h, delay ){
         height = maxHeight;
     }
     modal.data( 'height', height );
-    
+
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes to load correctly)
     if( delay ) {
         modal.data( 'delay', true );
@@ -458,8 +458,8 @@ function setPreviewSize( activeBtn, w ){
         modalSize   = { 'width' : w };
 
     // width is bigger than original size, reset to original
-    if( !w || modalSize.width > orig.width ){ 
-        modalSize = { 'width' : orig.width }; 
+    if( !w || modalSize.width > orig.width ){
+        modalSize = { 'width' : orig.width };
     }
 
     // toggle "Quick Preview" on Mobile Views
@@ -494,7 +494,7 @@ function attachModalListeners(){
                     height    : modal.data( 'height' )
                 } );
             } );
-        }        
+        }
     } );
     // Remote hidden event: Reset loader
     $remoteModal.on( 'hidden.bs.modal', function() {
@@ -537,7 +537,7 @@ function activateConfirmations(){
             window.location =  $confirmIt.data( 'confirmSrc' );
         }
     } );
-    
+
     // Activate dynamic confirmations from <a> of class confirmIt
     $( ".confirmIt" ).click( function( e ){
         // Enable button
@@ -596,7 +596,7 @@ function checkByValue(id,recordID){
     $( "input[name='" + id + "']" ).each(function(){
         if( this.value === recordID ){ this.checked = true; }
         else{ this.checked = false; }
-    } );    
+    } );
 }
 /**
  * Get today's date in us or rest of the world format
@@ -608,7 +608,7 @@ function getToday( us ){
     if( us ){
         return moment().format( "YYYY-MM-DD" );
     } else {
-        return moment().format( "DD-MM-YYYY" ); 
+        return moment().format( "DD-MM-YYYY" );
     }
 }
 
@@ -637,22 +637,22 @@ function importContent(){
     var $importForm = $( "#importForm" );
     // open modal for cloning options
     openModal( $importDialog, 500, 350 );
-    
+
     // form validator button bar loader
-    $importForm.validate( { 
+    $importForm.validate( {
         submitHandler: function(form){
             $importForm.find( "#importButtonBar" ).slideUp();
             $importForm.find( "#importBarLoader" ).slideDown();
             form.submit();
         }
     } );
-    
+
     // close button
     $importForm.find( "#closeButton" ).click( function( e ){
-        closeModal( $importDialog ); 
+        closeModal( $importDialog );
         return false;
     } );
-    
+
     // clone button
     $importForm.find( "#importButton" ).click( function( e ){
         $importForm.submit();
@@ -685,7 +685,7 @@ var app = function() {
 
     var toggleMenuLeft = function() {
         $('#toggle-left').bind('click', function(e) {
-           $('body').removeClass('off-canvas-open')    
+           $('body').removeClass('off-canvas-open')
             var bodyEl = $('#container');
             ($(window).width() > 767) ? $(bodyEl).toggleClass('sidebar-mini'): $(bodyEl).toggleClass('sidebar-opened');
         });
@@ -731,7 +731,7 @@ var app = function() {
     };
 
 
-    //Vector Maps 
+    //Vector Maps
     var map = function() {
         $('#map').vectorMap({
             map: 'world_mill_en',

@@ -12,10 +12,10 @@
 			<th width="75" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<cfloop array="#prc.entries#" index="entry">
-		<tr data-contentID="#entry.getContentID()#" 
+		<tr data-contentID="#entry.getContentID()#"
 			<cfif entry.isExpired()>
 				class="danger"
 			<cfelseif entry.isPublishedInFuture()>
@@ -68,19 +68,19 @@
 			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
 			<td class="text-center">
 				<!---Info Panel --->
-				<a 	class="btn btn-sm btn-info popovers" 
+				<a 	class="btn btn-sm btn-info popovers"
 					data-contentID="#entry.getContentID()#"
 					data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
 				<!---Info Panel --->
 				<div id="infoPanel_#entry.getContentID()#" class="hide">
 					<!---Creator --->
 					<i class="fa fa-user"></i>
-					Created by <a href="mailto:#entry.getCreatorEmail()#">#entry.getCreatorName()#</a> on 
+					Created by <a href="mailto:#entry.getCreatorEmail()#">#entry.getCreatorName()#</a> on
 					#entry.getDisplayCreatedDate()#
 					</br>
 					<!--- Last Edit --->
-					<i class="fa fa-calendar"></i> 
-					Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on 
+					<i class="fa fa-calendar"></i>
+					Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on
 					#entry.getActiveContent().getDisplayCreatedDate()#
 					</br>
 					<!--- comments icon --->
@@ -90,7 +90,7 @@
 						<i class="fa fa-warning-sign"></i> Closed Comments
 					</cfif>
 				</div>
-				
+
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
@@ -122,7 +122,7 @@
 						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="fa fa-eye fa-lg"></i> Open In Site</a></li>
 			    	</ul>
 			    </div>
-				
+
 			</td>
 		</tr>
 		</cfloop>

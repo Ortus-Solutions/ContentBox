@@ -163,9 +163,9 @@ component accessors="true" singleton threadSafe{
 		}
 		if( len( path ) ) {
 			// Init Arguments added for backwards compat
-			return wirebox.getInstance( 
-				name 			= path, 
-				initArguments	= { "controller" = variables.coldbox } 
+			return wirebox.getInstance(
+				name 			= path,
+				initArguments	= { "controller" = variables.coldbox }
 			);
 		}
 	}
@@ -256,7 +256,7 @@ component accessors="true" singleton threadSafe{
 	/**
 	* Upload Widget
 	* @fileField The form file field to use
-	* 
+	*
 	* @return The CFFile structure from the upload results
 	*/
 	struct function uploadWidget( required fileField ){
@@ -282,7 +282,7 @@ component accessors="true" singleton threadSafe{
 	* @udf The target UDF to render out arguments for
 	* @widget The widget name
 	* @type The widget type
-	* 
+	*
 	* @return The argument metadata structure
 	*/
 	function getWidgetRenderArgs( udf, widget, type ){

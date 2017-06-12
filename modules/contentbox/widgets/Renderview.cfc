@@ -31,7 +31,7 @@ component extends="contentbox.models.ui.BaseWidget"{
 	*/
 	any function renderIt(required string view,boolean cache=false, cacheTimeout, cacheLastAccessTimeout, cacheSuffix, module, string args="" ){
 		var viewArgs = {};
-		
+
 		// Inflate args
 		if( len( arguments.args ) ){
 			var aString = listToArray( arguments.args, "," );

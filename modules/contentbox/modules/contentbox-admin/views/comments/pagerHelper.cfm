@@ -19,7 +19,7 @@ function commentPagerChangeStatus(status,recordID){
 	// ajax status change
 	$.post( "#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",{commentStatus:status, commentID:recordID},function(data){
 		if( data.ERROR ){
-			adminNotifier( "error", data.MESSAGES, 3000 );	
+			adminNotifier( "error", data.MESSAGES, 3000 );
 		}
 		else{
 			adminNotifier( "info", data.MESSAGES );

@@ -12,15 +12,15 @@
 <div class="row">
 	<div class="col-md-12">
 		#html.startForm(
-			name        = "importerForm", 
-			action      = rc.xehDataImport, 
+			name        = "importerForm",
+			action      = rc.xehDataImport,
 			novalidate  = "novalidate",
 			multipart   = true
-		)#    
+		)#
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<p>Import content into your ContentBox site with only a few clicks!</p>
-				
+
 				<div class="row margin10">
 					<div class="col-md-6 well well-sm text-center">
 						<h2>ContentBox Package (.cbox)</h2>
@@ -48,8 +48,8 @@
 							#html.radioButton(
 								name 	= "importtype",
 								id 		= "import-database",
-								value 	= "database" 
-							)# 
+								value 	= "database"
+							)#
 							Import from Database
 						</label>
 					</div>
@@ -60,8 +60,8 @@
 				<!--- ************************************************************************************************--->
 				<div id="contentbox-import">
 					<p>
-						With this tool, you can import an existing ContentBox site (created by using the Export Tools). Yes, that's right: an entire ContentBox site! 
-						Simply upload a valid ContentBox export package file (<strong>.cbox</strong>). You'll be shown a handy preview of the import that will occur, and will also have the opportunity to specify whether or not you'd like to overwrite existing content. 
+						With this tool, you can import an existing ContentBox site (created by using the Export Tools). Yes, that's right: an entire ContentBox site!
+						Simply upload a valid ContentBox export package file (<strong>.cbox</strong>). You'll be shown a handy preview of the import that will occur, and will also have the opportunity to specify whether or not you'd like to overwrite existing content.
 						Easy, right? Well, what are you waiting for?
 					</p>
 					<fieldset>
@@ -74,12 +74,12 @@
 									#html.label(
 										field   = "CBUpload",
 										content = "Select ContentBox Package",
-										class   = "control-label" 
+										class   = "control-label"
 									)#
-									#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+									#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt(
 										name="CBUpload",
 										required=true
-									)# 
+									)#
 								</div>
 							</div>
 						</div>
@@ -91,11 +91,11 @@
 				<!--- ************************************************************************************************--->
 				<div id="database-import" style="display:none;">
 					<p>
-						From this import tool you can connect to other content datasources and import your data into ContentBox. 
+						From this import tool you can connect to other content datasources and import your data into ContentBox.
 						All importing messages are being logged,
 so please verify your application logs for information.
 					</p>
-					
+
 					<!--- dsn Info --->
 					<fieldset>
 					<legend><i class="fa fa-bolt fa-lg"></i> <strong>Datasource Options</strong></legend>
@@ -127,8 +127,8 @@ so please verify your application logs for information.
 							labelClass  = "control-label",
 							groupWrapper= "div class=form-group"
 						)#
-					</fieldset> 
-					
+					</fieldset>
+
 					<!--- importer --->
 					<fieldset>
 					<legend><i class="fa fa-cog fa-lg"></i> <strong>Source Content</strong></legend>
@@ -141,13 +141,13 @@ so please verify your application logs for information.
 							class       = "form-control input-sm",
 							groupWrapper= "div class=form-group"
 						)#
-						
+
 						<!--- Default Password --->
 						<div class="form-group">
 							#html.label(
 								field   = "tableprefix",
 								content = "Table Prefix:",
-								class   = "control-label" 
+								class   = "control-label"
 							)#
 							<div class="controls">
 								<small>The table prefix used by the source software.</small><br/>
@@ -160,12 +160,12 @@ so please verify your application logs for information.
 							#html.label(
 								field   = "defaultPassword",
 								content = "Default Author Password:",
-								class   = "control-label" 
+								class   = "control-label"
 							)#
 							<div class="controls">
 								<small>Since ContentBox uses its own encryption algorithm, you cannot port passwords. Use the following
 								default password for all authors and then do password change requests.</small><br/>
-								#html.textField( name="defaultPassword", class="form-control" )#   
+								#html.textField( name="defaultPassword", class="form-control" )#
 							</div>
 						</div>
 
@@ -181,7 +181,7 @@ so please verify your application logs for information.
 							labelClass  = "control-label",
 							groupWrapper= "div class=form-group"
 						)#
-					</fieldset> 
+					</fieldset>
 
 				</div>
 
@@ -194,7 +194,7 @@ so please verify your application logs for information.
 							class   = "btn btn-danger btn-lg"
 						)#
 					</div>
-					
+
 					<!--- Loader --->
 					<div class="loaders" id="uploadBarLoader">
 						<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>

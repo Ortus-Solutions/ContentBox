@@ -14,7 +14,7 @@
 				<em>/{installed_location}/modules/contentbox-dsncreator</em></strong>
 			</div>
 			<hr>
-						
+
 			<p class="text-center">
 				<a href="#event.buildLink(prc.xehSite)#" class="btn btn-primary btn-lg">#cb.r( "finished.visit_site@installer" )#</a>
 				<a href="#event.buildLink(prc.xehAdmin)#" class="btn btn-danger btn-lg">#cb.r( "finished.visit_admin@installer" )#</a>

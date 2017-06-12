@@ -11,7 +11,7 @@ component{
 
 	// API Root
 	API_ROOT = getDirectoryFromPath( getCurrentTemplatePath() );
-	
+
 	// Standlone mappings
 	this.mappings[ "/docbox" ]  	= API_ROOT & "docbox";
 	this.mappings[ "/coldbox" ]  	= expandPath( "../../coldbox" );

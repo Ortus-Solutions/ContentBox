@@ -21,7 +21,7 @@ component extends="SubscriptionService" singleton {
      * @max The max records to return
      */
     array function getGroupedSubscriptions( required numeric max=0 ){
-       
+
         if( !arguments.max ) {
             var sortOrder       = "title ASC";
             var groupProperty   = "content.title:title,relatedContent";
@@ -31,7 +31,7 @@ component extends="SubscriptionService" singleton {
             var groupProperty   = "content.title:label";
             var countAlias      = "value";
         }
-        
+
         var c = newCriteria();
         c.createAlias( "relatedContent", "content" )
              .withProjections( groupProperty=groupProperty, count="subscriber:#countAlias#" )

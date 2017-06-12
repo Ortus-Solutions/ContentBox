@@ -14,26 +14,26 @@ component accessors="true"{
 	property name="renderer" inject="provider:ColdBoxRenderer";
 
 	/* *********************************************************************
-	**                      PROPERTIES                                
+	**                      PROPERTIES
 	********************************************************************* */
 
-	property    name="name" 
+	property    name="name"
 				type="string";
 
-	property    name="entityName" 
+	property    name="entityName"
 				type="string";
 
-	property    name="type" 
+	property    name="type"
 				type="string";
 
-	property    name="iconClass" 
+	property    name="iconClass"
 				type="string";
 
-	property    name="description" 
+	property    name="description"
 				type="string";
 
 	/* *********************************************************************
-	**                      PUBLIC FUNCTIONS                                
+	**                      PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	 /**
@@ -42,7 +42,7 @@ component accessors="true"{
 	public string function getName() {
 	    return name;
 	}
-	
+
 	/**
 	 * Gets the entityName for the menu item provider
 	 */

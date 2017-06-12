@@ -3,7 +3,7 @@
 		var codeCSS = "";
 		var leftHash = "";
 		var rightHash = "";
-		
+
 		// if right is not defined, then it is removed content
 		if( !arrayIsDefined( left, index ) AND arrayIsDefined( right, index )){
 			codeCSS = " ins";
@@ -21,7 +21,7 @@
 		else if( !arrayIsDefined( right, index ) ){
 			codeCSS = " del";
 		}
-		
+
 		return codeCSS;
 	}
 </cfscript>

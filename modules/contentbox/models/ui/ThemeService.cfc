@@ -38,7 +38,7 @@ component accessors="true" threadSafe singleton{
 		// init properties
 		variables.themeRegistry 		= "";
 		variables.themeCFCRegistry 		= {};
-		variables.themesPath 			= "";		
+		variables.themesPath 			= "";
 		variables.themesIncludePath 	= "";
 		variables.themesInvocationPath 	= "";
 		variables.widgetCache 			= {};
@@ -57,28 +57,28 @@ component accessors="true" threadSafe singleton{
 		// Register all themes
 		buildThemeRegistry();
 	}
-	
+
 	/**
 	* Does theme have a maintenance view
 	*/
 	boolean function themeMaintenanceViewExists(){
 		return fileExists( expandPath( CBHelper.themeRoot() & "/views/maintenance.cfm" ) );
 	}
-	
+
 	/**
 	* Get the current theme's maintenance layout
 	*/
 	string function getThemeMaintenanceLayout(){
 		var layout = "pages";
-		
+
 		// verify existence of convention
 		if( fileExists( expandPath( CBHelper.themeRoot() & "/layouts/maintenance.cfm" ) ) ){
 			layout = "maintenance";
 		}
-		
+
 		return layout;
 	}
-	
+
 	/**
 	* Get the current theme's print layouts in ColdBox layout string format
 	* @format export format
@@ -91,21 +91,21 @@ component accessors="true" threadSafe singleton{
 		if( fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm" ) ) ){
 			return "#arguments.layout#_#arguments.format#";
 		}
-		
+
 		return "#arguments.layout#";
 	}
-	
+
 	/**
 	* Get the current theme's search layout
 	*/
 	string function getThemeSearchLayout(){
 		var layout = "pages";
-		
+
 		// verify existence of convention
 		if( fileExists( expandPath( CBHelper.themeRoot() & "/layouts/search.cfm" ) ) ){
 			layout = "search";
 		}
-		
+
 		return layout;
 	}
 
@@ -121,7 +121,7 @@ component accessors="true" threadSafe singleton{
 		if( structKeyExists( variables.widgetCache, parsedName ) ) {
 			path = variables.widgetCache[ parsedName ];
 		} else {
-			log.error( "Could not find '#parsedName#' widget in the currently active theme." );	
+			log.error( "Could not find '#parsedName#' widget in the currently active theme." );
 		}
 		return path;
 	}
@@ -134,7 +134,7 @@ component accessors="true" threadSafe singleton{
 		var thisTheme = settingService.findWhere( { name="cb_site_theme" } );
 		if( !isNull( thisTheme ) ){
 			// Get theme record
-			var themeName 	= thisTheme.getValue();	 
+			var themeName 	= thisTheme.getValue();
 			var themeRecord = getThemeRecord( themeName );
 			var oTheme 		= variables.themeCFCRegistry[ themeName ];
 
@@ -149,13 +149,13 @@ component accessors="true" threadSafe singleton{
 			if( structKeyExists( oTheme, "settings" ) ){
 				registerThemeSettings( name=themeName, settings=oTheme.settings );
 			}
-			
+
 			// Prepare theme activation event
 			var iData = {
 				themeName 		= themeName,
 				themeRecord 	= themeRecord
 			};
-			
+
 			// build widget cache for active theme
 			for( var i=1; i <= listLen( iData.themeRecord.widgets ); i++ ) {
 				var widgetName = replaceNoCase( listGetAt( iData.themeRecord.widgets, i ), ".cfc", "", "one" );
@@ -166,28 +166,28 @@ component accessors="true" threadSafe singleton{
 			// activate theme modules
 			var aModules = listToArray( iData.themeRecord.modules );
 			for( var thisModule in aModules ){
-				moduleService.registerAndActivateModule( 
-					moduleName 		= thisModule, 
-					invocationPath 	= "#variables.themesInvocationPath#.#themeName#.modules" 
+				moduleService.registerAndActivateModule(
+					moduleName 		= thisModule,
+					invocationPath 	= "#variables.themesInvocationPath#.#themeName#.modules"
 				);
 			}
 
 			// Announce theme activation
 			interceptorService.processState( "cbadmin_onThemeActivation", iData );
-			
+
 			// Call Theme Callbacks: onActivation
 			if( structKeyExists( oTheme, "onActivation" ) ){
 				oTheme.onActivation();
 			}
 		}
 	}
-	
+
 	/**
 	* Save theme settings as they are coming from form submissions as a struct with a common prefix
 	* cb_theme_{themeName}_{settingName}
 	* @name 		The theme name
 	* @settings 	The settings struct
-	* 
+	*
 	* @return ThemeService
 	*/
 	public function saveThemeSettings( required name, required struct settings ){
@@ -204,12 +204,12 @@ component accessors="true" threadSafe singleton{
 
 		return this;
 	}
-	
+
 	/**
 	* Register a theme's settings
 	* @name The theme name
 	* @settings The settings struct
-	* 
+	*
 	* @return ThemeService
 	*/
 	private any function registerThemeSettings( required name, required array settings ){
@@ -229,11 +229,11 @@ component accessors="true" threadSafe singleton{
 
 		return this;
 	}
-	
+
 	/**
 	* Unregister theme settings
 	* @settings The settings to unregister
-	* 
+	*
 	* @return ThemeService
 	*/
 	private function unregisterThemeSettings( required array settings ){
@@ -248,7 +248,7 @@ component accessors="true" threadSafe singleton{
 				}
 			}
 		}
-		
+
 		return this;
 	}
 
@@ -257,8 +257,8 @@ component accessors="true" threadSafe singleton{
 	*/
 	query function getActiveTheme(){
 		var activeTheme = settingService.getSetting( "cb_site_theme" );
-		return new Query( 
-				dbtype 			= "query", 
+		return new Query(
+				dbtype 			= "query",
 				sql 			= "SELECT * from themeRegistry WHERE name='#activeTheme#'",
 				themeRegistry 	= variables.themeRegistry
 			).execute().getResult();
@@ -320,7 +320,7 @@ component accessors="true" threadSafe singleton{
 			settingService.save( oTheme );
 			// Startup active theme
 			startupActiveTheme();
-			
+
 			// flush the settings
 			settingService.flushSettingsCache();
 		}
@@ -344,8 +344,8 @@ component accessors="true" threadSafe singleton{
 	query function buildThemeRegistry(){
 		var rawThemes 	= directoryList( variables.themesPath, false, "query" );
 		// filter theme folders only
-		var rawThemes 	= new Query( 
-				dbtype 		= "query", 
+		var rawThemes 	= new Query(
+				dbtype 		= "query",
 				sql 		= "SELECT directory,name from rawThemes WHERE type = 'Dir'",
 				rawThemes 	= rawThemes
 			).execute().getResult();
@@ -368,7 +368,7 @@ component accessors="true" threadSafe singleton{
 		// Register each theme CFC
 		for( var x=1; x lte rawThemes.recordCount; x++ ){
 			var themeName = rawThemes.name[ x ];
-			
+
 			// exclude .* files from layouts
 			if( left( themeName, 1 ) eq '.' )
 				continue;
@@ -434,18 +434,18 @@ component accessors="true" threadSafe singleton{
 			} else {
 				rawThemes.modules[ x ] = "";
 			}
-			
+
 			// Theme layouts
 			var thisLayouts = directoryList( variables.themesPath & "/#themeName#/layouts", false, "query", "*.cfm", "name asc" );
 			rawThemes.layouts[ x ] = replacenocase( valueList( thisLayouts.name ), ".cfm", "", "all" );
-			
-			// Store layout configuration CFC		
+
+			// Store layout configuration CFC
 			variables.themeCFCRegistry[ themeName ] = config;
 		}
 
 		var rawThemes 	= new Query(
 				dbtype		= "query",
-				sql			= "SELECT * from rawThemes WHERE isValid='true'", 
+				sql			= "SELECT * from rawThemes WHERE isValid='true'",
 				rawThemes	= rawThemes
 			).execute().getResult();
 		// store raw themes now
@@ -473,12 +473,12 @@ component accessors="true" threadSafe singleton{
 		structDelete( variables.themeCFCRegistry, arguments.themeName );
 		// verify location and remove it
 		var lPath = variables.themesPath & "/" & arguments.themeName;
-		if( directoryExists( lPath ) ){ 
+		if( directoryExists( lPath ) ){
 			// delete theme
 			directoryDelete( lPath, true );
 			// issue rebuild
 			buildThemeRegistry();
-			return true; 
+			return true;
 		}
 		// return
 		return false;
@@ -487,7 +487,7 @@ component accessors="true" threadSafe singleton{
 	/**
 	* Upload theme
 	* @fileField The file uploaded field
-	* 
+	*
 	* @return struct : { error:boolean, messages:string }
 	*/
 	struct function uploadTheme( required fileField ){
@@ -565,7 +565,7 @@ component accessors="true" threadSafe singleton{
 
 		return results;
 	}
-	
+
 	/**
 	* Get constraints for setting fields
 	* @themeName The name of the theme
@@ -575,21 +575,21 @@ component accessors="true" threadSafe singleton{
 		var oTheme = variables.themeCFCRegistry[ arguments.themeName ];
 		// Verify it has settings, else return empty struct
 		if( !structKeyExists( oTheme, "settings" ) OR !arrayLen( oTheme.settings ) ){ return {}; }
-		
+
 		// iterate and build
 		var constraints = {};
 		for( var thisSetting in oTheme.settings ){
 			// Check if required
-			if( structKeyExists( thisSetting, "required" ) and thisSetting.required ){ 
+			if( structKeyExists( thisSetting, "required" ) and thisSetting.required ){
 				constraints[ thisSetting.name ] = {
 					required = true
 				};
 			}
 		}
-		
+
 		return constraints;
 	}
-	
+
 	/**
 	* Build out the settings form HTML
 	* @activeTheme The active theme struct
@@ -598,7 +598,7 @@ component accessors="true" threadSafe singleton{
 		// Get theme CFC
 		var oTheme 		= variables.themeCFCRegistry[ arguments.activeTheme.name ];
 		var settingForm = "";
-		
+
 		// Build Form by iteration over items
 		if( !structKeyExists( oTheme, "settings" ) OR !arrayLen( oTheme.settings ) ){ return settingForm; }
 
@@ -614,12 +614,12 @@ component accessors="true" threadSafe singleton{
 				var thisSettingMD 		= oTheme.settings[ x ];
 				var requiredText 		= "";
 				var requiredValidator 	= "";
-				
+
 				// get actual setting value which should be guaranteed to exist
 				var settingName = "cb_theme_#arguments.activeTheme.name#_#thisSettingMD.name#";
 				var oSetting 	= settingService.findWhere( { name=settingName } );
 				thisSettingMD.defaultValue = oSetting.getValue();
-				
+
 				// Default values for settings
 				if( !structKeyExists( thisSettingMD, "required" ) ){ thisSettingMD.required = false; }
 				if( !structKeyExists( thisSettingMD, "label" ) ){ thisSettingMD.label = thisSettingMD.name; }
@@ -629,13 +629,13 @@ component accessors="true" threadSafe singleton{
 				if( !structKeyExists( thisSettingMD, "groupIntro" ) ){ thisSettingMD.groupIntro = ""; }
 				if( !structKeyExists( thisSettingMD, "fieldHelp" ) ){ thisSettingMD.fieldHelp = ""; }
 				if( !structKeyExists( thisSettingMD, "fieldDescription" ) ){ thisSettingMD.fieldDescription = ""; }
-				
+
 				// required static strings
 				if( thisSettingMD.required ){
 					requiredText 		= "<span class='text-danger'>*Required</span>";
 					requiredValidator 	= "required";
 				}
-				
+
 				// Starting a group panel?
 				if ( thisSettingMD.group != lastGroup ){
 
@@ -643,7 +643,7 @@ component accessors="true" threadSafe singleton{
 					if ( lastGroup != "NeverHadAGroup" ){
 						writeOutput( '</div></div></div>' );
 					}
-					
+
 					// Write out group panel header
 					writeOutput( '<div class="panel panel-primary">' );
   						if ( thisSettingMD.group != "" ){
@@ -651,18 +651,18 @@ component accessors="true" threadSafe singleton{
   								<div class="panel-heading">
   									<h4 class="panel-title">
 										<a 	class="accordion-toggle"
-											data-toggle="collapse" 
-											data-parent="##settings-accordion" 
+											data-toggle="collapse"
+											data-parent="##settings-accordion"
 											href="##settingtab-#hash( thisSettingMD.group )#"
 										>
 											#thisSettingMD.group#
 										</a>
   									</h4>
   								</div>
-  							');	
+  							');
   						}
-					
-					// Start group body panel 
+
+					// Start group body panel
 					writeOutput( '
 						<div id="settingtab-#hash( thisSettingMD.group )#" class="panel-collapse collapse #firstPanel ? 'in' : ''#" role="tabpanel">
 							<div class="panel-body">
@@ -671,41 +671,41 @@ component accessors="true" threadSafe singleton{
 					// Show group intro if there is one
 					if( len( thisSettingMD.groupIntro ) ){
 						writeOutput( '<div class="themeGroupInfo">' & thisSettingMD.groupIntro & '</div>' );
-					} 
-					
+					}
+
 					// Set this as the last group
 					lastGroup 	= thisSettingMD.group;
 					firstpanel 	= false;
 				}
-				
+
 				// writeout control wrapper
 				writeOutput( '<div class="form-group marginTop25">' );
-					
+
 					// write out label
 					writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
-					
+
 					// Generate question mark icon for field Help to open modal
 					if( len( thisSettingMD.fieldHelp ) ){
-						writeOutput( ' <a data-toggle="modal" data-target="##help_#settingName#"><i class="fa fa-question-circle"></i></a>' );	
+						writeOutput( ' <a data-toggle="modal" data-target="##help_#settingName#"><i class="fa fa-question-circle"></i></a>' );
 					}
-					
-					
+
+
 					// write out field description
 					if( len( thisSettingMD.fieldDescription ) ){
 						writeOutput( '<div class="paddingBottom5">' & thisSettingMD.fieldDescription & '</div>' );
-					} 
+					}
 
     				// write out control
     				switch( thisSettingMD.type ){
     					case "boolean" : {
-    						writeOutput( 
-    							html.select( 
+    						writeOutput(
+    							html.select(
 	    							name			= settingName,
 	    							options			= "true,false",
 	    							selectedValue	= thisSettingMD.defaultValue,
 	    							title			= thisSettingMD.title,
 	    							class 			= "form-control input-lg"
-	    						) 
+	    						)
     						);
     						break;
     					}
@@ -716,34 +716,34 @@ component accessors="true" threadSafe singleton{
     							options = evaluate( "oTheme.#thisSettingMD.optionsUDF#()" );
     						} else if( structKeyExists( thisSettingMD, "options" ) ){
     							options = thisSettingMD.options;
-    						} 
-    						writeOutput( 
-    							html.select( 
+    						}
+    						writeOutput(
+    							html.select(
     								name 			= settingName,
     								options			= options,
     								selectedValue	= thisSettingMD.defaultValue,
     								title			= thisSettingMD.title,
     								class 			= "form-control input-lg"
-    							) 
+    							)
     						);
     						break;
     					}
     					case "textarea" : {
-    						writeOutput( 
-    							html.textarea( 
+    						writeOutput(
+    							html.textarea(
     								name		= settingName,
     								required	= requiredValidator,
     								title		= thisSettingMD.title,
     								value		= thisSettingMD.defaultValue,
     								class 		= "form-control",
     								rows		= 5
-    							) 
+    							)
     						);
     						break;
     					}
     					case "color" : {
-    						writeOutput( 
-    							html.inputField( 
+    						writeOutput(
+    							html.inputField(
     								name		= settingName,
     								class		= "textfield",
     								required	= requiredValidator,
@@ -756,8 +756,8 @@ component accessors="true" threadSafe singleton{
     						break;
     					}
     					default:{
-    						writeOutput( 
-    							html.textfield( 
+    						writeOutput(
+    							html.textfield(
     								name		= settingName,
     								class		= "textfield",
     								required	= requiredValidator,
@@ -771,12 +771,12 @@ component accessors="true" threadSafe singleton{
 
     			// End form group
     			writeOutput( '</div>');
-				
+
 				// Generate modal for field Help
 				if( len( thisSettingMD.fieldHelp ) ){
 					writeOutput( generateModal( settingName, thisSettingMD ) );
 				}
-					
+
 			} // end looping over theme settings
 
 			// Finalize Group Panel: In case we only had one setting in this group.
@@ -787,10 +787,10 @@ component accessors="true" threadSafe singleton{
 			// Finalize Container
 			writeOutput( "</div>" );
 		}
-		
+
 		return settingForm;
 	}
-	
+
 	/**
 	* generateModal - Generate the modal for Theme Setting Help
 	* @settingName - The name of the setting the Theme Setting Help modal will be created for

@@ -10,7 +10,7 @@ Because of God's grace, this project exists. If you don't like this, then don't 
 By whom also we have access by faith into this grace wherein we stand, and rejoice in hope of the glory of God.
 And not only so, but we glory in tribulations also: knowing that tribulation worketh patience;
 And patience, experience; and experience, hope:
-And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the 
+And hope maketh not ashamed; because the love of God is shed abroad in our hearts by the
 Holy Ghost which is given unto us. ." Romans 5:5
 
 ----
@@ -26,7 +26,7 @@ We leverage **CommandBox** to build ColdBox and its libraries.  You can download
 Once CommandBox is install go into the root of the project and type: `box install`. This will download all required dependencies and test dependencies for you.
 
 ### Startup Test Server
-Startup the test server via the following command: `box server start`. This will startup a server that you can use for development, hacking and testing. 
+Startup the test server via the following command: `box server start`. This will startup a server that you can use for development, hacking and testing.
 
 > **Note:** The server will start in a specific port, make sure you take note of it.
 
@@ -35,7 +35,7 @@ Startup the test server via the following command: `box server start`. This will
 ColdBox requires a datasource connection in order to be able to provide testing capabilities for integration.  Please open the CFML administrator and create a datsource called **coolblog** and populate it with our SQL script that can be found here: `/coldbox/tests/resources/coolblog.sql`.
 
 ### Lucee Optional: `Default` Cache
-If you are in the Lucee CFML engine, then you will need to register a `default` cache in the administrator so CacheBox can be tested.  
+If you are in the Lucee CFML engine, then you will need to register a `default` cache in the administrator so CacheBox can be tested.
 
 ## Test Harness
 We also deliver a ColdBox application that is used for integration testing and so much more.

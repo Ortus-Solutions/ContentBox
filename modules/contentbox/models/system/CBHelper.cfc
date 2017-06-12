@@ -25,9 +25,9 @@ component accessors="true" singleton threadSafe{
 	property name="controller"			inject="coldbox";
 	property name="resourceService"		inject="resourceService@cbi18n";
 	property name="securityService"		inject="securityService@cb";
-	
+
 	/**
-	* Constructor 
+	* Constructor
 	*/
 	function init(){
 		return this;
@@ -75,7 +75,7 @@ component accessors="true" singleton threadSafe{
 		if( structKeyExists( mConfig, arguments.module ) ){
 			return mConfig[ arguments.module ];
 		}
-		throw( 
+		throw(
 			message = "The module you passed #arguments.module# is invalid.",
 			detail	= "The loaded modules are #structKeyList( mConfig )#",
 			type 	= "FrameworkSuperType.InvalidModuleException"
@@ -104,7 +104,7 @@ component accessors="true" singleton threadSafe{
 		throw(
 			message = "Setting requested: #arguments.key# not found",
 			detail	= "Settings keys are #structKeyList(prc.cbSettings)#",
-			type 	= "ContentBox.CBHelper.InvalidSetting" 
+			type 	= "ContentBox.CBHelper.InvalidSetting"
 		);
 	}
 
@@ -135,7 +135,7 @@ component accessors="true" singleton threadSafe{
 	function getBlogEntryPoint(){
 		return setting( "cb_site_blog_entrypoint", "blog" );
 	}
-	
+
 	/**
 	* Get the maintenance message from the ContentBox settings
 	*/
@@ -169,7 +169,7 @@ component accessors="true" singleton threadSafe{
 	function contentStoreObject(required slug){
 		return contentStoreService.findBySlug( slug=arguments.slug, showUnpublished=true );
 	}
-	
+
 	/************************************** root methods *********************************************/
 
 	/**
@@ -199,10 +199,10 @@ component accessors="true" singleton threadSafe{
 	* Get the site base SES URL
 	*/
 	function siteBaseURL(){
-		return replacenocase( 
-			getRequestContext().buildLink( linkTo='', ssl=getRequestContext().isSSL() ), 
-			"index.cfm/", 
-			"" 
+		return replacenocase(
+			getRequestContext().buildLink( linkTo='', ssl=getRequestContext().isSSL() ),
+			"index.cfm/",
+			""
 		);
 	}
 
@@ -244,7 +244,7 @@ component accessors="true" singleton threadSafe{
 		var prc = getRequestCollection(private=true);
 		return prc.cbWidgetRoot;
 	}
-	
+
 	/**
 	* Get a theme setting
 	* @key The name of the theme setting
@@ -311,7 +311,7 @@ component accessors="true" singleton threadSafe{
 	* Prepare a ContentBox UI request. This sets ups settings, theme, etc. This method is usualy called
 	* automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	* ajax or module extensions
-	* @layout An optional layout to set for you in the request. 
+	* @layout An optional layout to set for you in the request.
 	* @title Optional request page metadata title
 	* @description Optional request page metadata description
 	* @keywords Optional request page metadata keywords
@@ -320,7 +320,7 @@ component accessors="true" singleton threadSafe{
 		var event 	= getRequestContext();
 		var prc 	= getRequestCollection( private=true );
 		var rc		= getRequestCollection();
-		
+
 		// Request Metadata
 		if( structKeyExists( arguments, "title") ){
 			setMetaTitle( arguments.title );
@@ -359,9 +359,9 @@ component accessors="true" singleton threadSafe{
 		if( structKeyExists( arguments, "layout" ) ){
 			event.setLayout( name="#prc.cbTheme#/layouts/" & arguments.layout, module="contentbox" );
 		}
-		
+
 		/************************************** FORCE SITE WIDE SSL *********************************************/
-		
+
 		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
 			controller.setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
 		}
@@ -374,7 +374,7 @@ component accessors="true" singleton threadSafe{
 
 		return this;
 	}
-	
+
 	// Determine if you have a category filter
 	boolean function categoryFilterExists(){
 		var rc = getRequestCollection();
@@ -418,12 +418,12 @@ component accessors="true" singleton threadSafe{
 	// Determine if you are in the entry view
 	boolean function isEntryView(){
 		var event = getRequestContext();
-		return ( 
+		return (
 			// If in static export, then mark as yes
 			event.getPrivateValue( "staticExport", false )
 			OR
 			// In executing view
-			event.getCurrentEvent() eq "contentbox-ui:blog.entry" 
+			event.getCurrentEvent() eq "contentbox-ui:blog.entry"
 		);
 	}
 	/**
@@ -432,14 +432,14 @@ component accessors="true" singleton threadSafe{
 	*/
 	boolean function isPageView( page="" ){
 		var event = getRequestContext();
-		if( 
+		if(
 			// If in static export, then mark as yes
 			event.getPrivateValue( "staticExport", false ) OR
 			(
 				// Check if in page event
-				findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND 
+				findNoCase( "contentbox-ui:page", event.getCurrentEvent() ) AND
 				// And page Exists
-				event.valueExists( "page", true ) 
+				event.valueExists( "page", true )
 			)
 		){
 			// slug check
@@ -502,7 +502,7 @@ component accessors="true" singleton threadSafe{
 		if( structKeyExists(prc,"commentsCount" ) ){ return prc.commentsCount; }
 		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext" );
 	}
-	
+
 	/**
 	 * Get the missing page, if any, usually used in a page not found context
 	 */
@@ -510,7 +510,7 @@ component accessors="true" singleton threadSafe{
 		var event = getRequestContext();
 		return event.getValue( name="missingPage", private="true", defaultValue="" );
 	}
-	
+
 	/**
 	 * Get Home Page slug set up by the administrator settings
 	 */
@@ -541,7 +541,7 @@ component accessors="true" singleton threadSafe{
 		}
 		return relatedContent;
 	}
-	
+
 	/**
 	 * Get the current page's or blog entries custom fields as a struct
 	 */
@@ -575,7 +575,7 @@ component accessors="true" singleton threadSafe{
 		throw(
 			message = "No custom field with key: #arguments.key# found",
 			detail 	= "The keys are #structKeyList(fields)#",
-			type 	= "CBHelper.InvalidCustomField" 
+			type 	= "CBHelper.InvalidCustomField"
 		);
 	}
 
@@ -588,19 +588,19 @@ component accessors="true" singleton threadSafe{
 		var prc = getPrivateRequestCollection();
 		if( !structKeyExists( prc, "meta" ) ){
 			prc.meta = {};
-		}	
+		}
 	}
-	
+
 	/**
 	* Set the Meta Title for the request
-	* @title - The new title 
+	* @title - The new title
 	*/
 	function setMetaTitle( required string title ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.title = arguments.title;
 	}
-	
+
 	/**
 	* Get the Meta Title for the request
 	*/
@@ -613,17 +613,17 @@ component accessors="true" singleton threadSafe{
 			return '';
 		}
 	}
-	
+
 	/**
 	* Set the Meta Description for the request
-	* @description - The new Description 
+	* @description - The new Description
 	*/
 	function setMetaDescription( required string description ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.description = arguments.description;
 	}
-	
+
 	/**
 	* Get the Meta description for the request
 	*/
@@ -636,17 +636,17 @@ component accessors="true" singleton threadSafe{
 			return '';
 		}
 	}
-	
+
 	/**
 	* Set the Meta Keywords for the request
-	* @keywords - The new Keywords 
+	* @keywords - The new Keywords
 	*/
 	function setMetaKeywords( required string keywords ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.keywords = arguments.keywords;
 	}
-	
+
 	/**
 	* Get the Meta keywords for the request
 	*/
@@ -659,7 +659,7 @@ component accessors="true" singleton threadSafe{
 			return '';
 		}
 	}
-	
+
 	/**
 	 * Get the current content metadata title according to SEO Discovery Rules
 	 */
@@ -670,7 +670,7 @@ component accessors="true" singleton threadSafe{
 		if( len( getMetaTitle() ) ){
 			return getMetaTitle();
 		}
-		
+
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -683,7 +683,7 @@ component accessors="true" singleton threadSafe{
 			// Do we have current page SEO title set?
 			if( len( oCurrentContent.getHTMLTitle() ) ){
 				return oCurrentContent.getHTMLTitle();
-			} 
+			}
 			// Get current page slug title
 			return oCurrentContent.getTitle();
 		}
@@ -702,7 +702,7 @@ component accessors="true" singleton threadSafe{
 		if( len( getMetaDescription() ) ){
 			return stripWhitespace(getMetaDescription());
 		}
-		
+
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -715,15 +715,15 @@ component accessors="true" singleton threadSafe{
 			// Do we have current page SEO description set?
 			if( len( oCurrentContent.getHTMLDescription() ) ){
 				return oCurrentContent.getHTMLDescription();
-			} 
-			
+			}
+
 			// Default description from content in non HTML mode
 			return HTMLEditFormat(
-				REReplaceNoCase( 
-					left( stripWhitespace(oCurrentContent.getContent()), 160 ), 
-					"<[^>]*>", 
-					"", 
-					"ALL" 
+				REReplaceNoCase(
+					left( stripWhitespace(oCurrentContent.getContent()), 160 ),
+					"<[^>]*>",
+					"",
+					"ALL"
 				)
 			);
 		}
@@ -742,7 +742,7 @@ component accessors="true" singleton threadSafe{
 		if( len( getMetaKeywords() ) ){
 			return stripWhitespace(getMetaKeywords());
 		}
-		
+
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -762,14 +762,14 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	* Set the Meta Canonical URL for the request
-	* @url - The new url 
+	* @url - The new url
 	*/
 	function setMetaURL( required string url ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.url = arguments.url;
 	}
-	
+
 	/**
 	* Get the Meta Canonical URL for the request
 	*/
@@ -782,7 +782,7 @@ component accessors="true" singleton threadSafe{
 			return '';
 		}
 	}
-	
+
 
 	/**
 	* Get the Canonical URL based on content type
@@ -790,11 +790,11 @@ component accessors="true" singleton threadSafe{
 	function getContentURL(){
 		var oCurrentContent = "";
 		var oCurrentEntryPoint = "";
-		
+
 		if( len( getMetaURL() ) ){
 			return getMetaURL();
 		}
-		
+
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -809,17 +809,17 @@ component accessors="true" singleton threadSafe{
 			return siteBaseURL() & oCurrentEntryPoint & oCurrentContent.getslug();
 		}
 	}
-	
+
 	/**
 	* Set the Meta ImageURL for the request
-	* @ImageURL - The new ImageURL 
+	* @ImageURL - The new ImageURL
 	*/
 	function setMetaImageURL( required string ImageURL ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.ImageURL = arguments.ImageURL;
 	}
-	
+
 	/**
 	* Get the Meta ImageURL for the request
 	*/
@@ -832,17 +832,17 @@ component accessors="true" singleton threadSafe{
 			return '';
 		}
 	}
-	
+
 	/**
 	* Get the Content Image URL based on content type
 	*/
 	function getContentImageURL(){
 		var oCurrentContent = "";
-		
+
 		if( len( getMetaImageURL() ) ){
 			return getMetaImageURL();
 		}
-		
+
 		// Check if in page view or entry view
 		if( isPageView() ){
 			oCurrentContent = getCurrentPage();
@@ -855,17 +855,17 @@ component accessors="true" singleton threadSafe{
 			return siteBaseURL() & oCurrentContent.getFeaturedImageURL();
 		}
 	}
-	
+
 	/**
 	* Set the Meta OGType for the request
-	* @OGType - The new OGType 
+	* @OGType - The new OGType
 	*/
 	function setMetaOGType( required string OGType ){
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		prc.meta.OGType = arguments.OGType;
 	}
-	
+
 	/**
 	* Get the Meta OGType for the request
 	*/
@@ -878,26 +878,26 @@ component accessors="true" singleton threadSafe{
 			return '';
 		}
 	}
-	
+
 	/**
-	* Get the Content Open Graph Type based on content type 
+	* Get the Content Open Graph Type based on content type
 	*/
 	function getContentOGType(){
 		if( len( getMetaOGType() ) ){
 			return getMetaOGType();
 		}
-		
+
 		// Check if in page view or entry view
 		if( isPageView() ){
 			return 'website';
 		} else if( isEntryView() ){
 			return 'article';
 		}
-		
+
 		return 'website';
 	}
-	
-	
+
+
 
 	/**
 	* getOpenGraphMeta - return Open Graph Facebook friendly meta data
@@ -905,22 +905,22 @@ component accessors="true" singleton threadSafe{
 	* Best Practices: https://developers.facebook.com/docs/sharing/best-practices
 	*/
 	function getOpenGraphMeta(){
-		
+
 		var content = "";
 		savecontent variable="content"{
 			writeOutput( '<meta property="og:title"              content="#getContentTitle()#" />#chr(10)#' );
 			writeOutput( '<meta property="og:type"               content="#getContentOGType()#" />#chr(10)#' );
 			if( len( getContentURL() ) ){
 				writeOutput( '<meta property="og:url"                content="#getContentURL()#" />#chr(10)#' );
-			}	
+			}
 			if( len( getContentURL() ) ){
 				writeOutput( '<meta property="og:description"        content="#getContentDescription()#" />#chr(10)#' );
-			}	
-			if( len( getContentImageURL() ) ){
-				writeOutput( '<meta property="og:image"              content="#getContentImageURL()#" />#chr(10)#' );	
 			}
-		}	
-		
+			if( len( getContentImageURL() ) ){
+				writeOutput( '<meta property="og:image"              content="#getContentImageURL()#" />#chr(10)#' );
+			}
+		}
+
 		return content;
 	}
 
@@ -946,15 +946,15 @@ component accessors="true" singleton threadSafe{
 	function quickSearchPaging(){
 		var prc = getRequestCollection( private=true );
 		if( NOT structKeyExists( prc, "oPaging" ) ){
-			throw( 
+			throw(
 				message = "Paging object is not in the collection",
 				detail  = "This probably means you are trying to use the paging outside of the search results page and that is a No No",
 				type 	= "ContentBox.CBHelper.InvalidPagingContext"
 			);
 		}
 		return prc.oPaging.renderit(
-			foundRows		= getSearchResults().getTotal(), 
-			link			= prc.pagingLink, 
+			foundRows		= getSearchResults().getTotal(),
+			link			= prc.pagingLink,
 			pagingMaxRows	= setting( "cb_search_maxResults" )
 		);
 	}
@@ -984,7 +984,7 @@ component accessors="true" singleton threadSafe{
 		return ( structKeyExists( rc, "q" ) AND len( rc.q ) );
 	}
 
-	/** 
+	/**
 	* Get Search Term used
 	*/
 	function getSearchTerm(){
@@ -1006,9 +1006,9 @@ component accessors="true" singleton threadSafe{
 	* @ssl Create the link in SSL or not
 	*/
 	function buildModuleLink(
-		required string module, 
-		required string linkTo, 
-		queryString="", 
+		required string module,
+		required string linkTo,
+		queryString="",
 		boolean ssl=getRequestContext().isSSL()
 	){
 		return getRequestContext().buildLink(
@@ -1222,9 +1222,9 @@ component accessors="true" singleton threadSafe{
 		if( isSimpleValue( arguments.category ) ) {
 			categorySlug = arguments.category;
 		} else {
-			categorySlug = arguments.category.getSlug();			
+			categorySlug = arguments.category.getSlug();
 		}
-		
+
 		return linkCategoryWithSlug( categorySlug, arguments.ssl );
 	}
 
@@ -1345,7 +1345,7 @@ component accessors="true" singleton threadSafe{
 		}
 		if( arguments.page.getSlug() eq getHomePage() ){
 			return linkHome();
-		}		
+		}
 		var xeh = siteRoot() & sep() & arguments.page.getSlug();
 		return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl) & outputFormat;
 	}
@@ -1469,7 +1469,7 @@ component accessors="true" singleton threadSafe{
 				return wirebox.getInstance( cache[ arguments.name ] );
 			}
 		}
-		
+
 		// return core contentbox widget instead
 		return widgetService.getWidget( arguments.name );
 	}
@@ -1508,12 +1508,12 @@ component accessors="true" singleton threadSafe{
 			throw(
 				message = "Paging object is not in the collection",
 				detail	= "This probably means you are trying to use the paging outside of the main entries index page and that is a No No",
-				type 	= "ContentBox.CBHelper.InvalidPagingContext" 
+				type 	= "ContentBox.CBHelper.InvalidPagingContext"
 			);
 		}
 		return prc.oPaging.renderit(
-			foundRows		= prc.entriesCount, 
-			link			= prc.pagingLink, 
+			foundRows		= prc.entriesCount,
+			link			= prc.pagingLink,
 			pagingMaxRows	= setting( "cb_paging_maxentries" )
 		);
 	}
@@ -1574,11 +1574,11 @@ component accessors="true" singleton threadSafe{
 	*/
 	function quickRelatedContent( string template="relatedContent", string collectionAs="relatedContent", struct args=structnew() ){
 		var relatedContent = getCurrentRelatedContent();
-		return controller.getRenderer().renderView( 
-			view			= "#themeName()#/templates/#arguments.template#", 
+		return controller.getRenderer().renderView(
+			view			= "#themeName()#/templates/#arguments.template#",
 			collection		= relatedContent,
-			collectionAs	= arguments.collectionAs, 
-			args			= arguments.args 
+			collectionAs	= arguments.collectionAs,
+			args			= arguments.args
 		);
 	}
 
@@ -1714,7 +1714,7 @@ component accessors="true" singleton threadSafe{
 	* @slug The menu slug to build
 	* @type The type either 'html' or 'data'
 	* @slugCache The cache of menu slugs already used in this request
-	* 
+	*
 	* @return HTML of the menu or a struct representing the menu
 	*/
 	public any function menu( required string slug, required type="html", required array slugCache=[] ) {
@@ -1757,11 +1757,11 @@ component accessors="true" singleton threadSafe{
 	 * @listType The type of list to create (derived from owning menu)
 	 * @slugCache The cache of menu slugs already used in this request
 	 */
-	private string function buildProviderMenuLevel( 
-		required array items, 
-		required string listType="ul", 
+	private string function buildProviderMenuLevel(
+		required array items,
+		required string listType="ul",
 		required array slugCache=[],
-		string listClass="" 
+		string listClass=""
 	) {
 		var menuString = "";
 		// loop over items to build out level
@@ -1774,8 +1774,8 @@ component accessors="true" singleton threadSafe{
 				// if this menu item has children...
 				if( item.hasChild() ) {
 					// recurse, recurse, recurse!
-					menuString &= 	"<#arguments.listType# class='#arguments.listClass#'>" & 
-									buildProviderMenuLevel( items=item.getChildren(), listType=arguments.listType, slugCache=arguments.slugCache ) & 
+					menuString &= 	"<#arguments.listType# class='#arguments.listClass#'>" &
+									buildProviderMenuLevel( items=item.getChildren(), listType=arguments.listType, slugCache=arguments.slugCache ) &
 									"</#arguments.listType#>";
 				}
 				menuString &= "</li>";
@@ -1913,7 +1913,7 @@ component accessors="true" singleton threadSafe{
 	* @values An array, struct or simple string of value replacements to use on the resource string
 	* @bundle The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	*/
-	any function r( 
+	any function r(
 		required string resource,
 		string defaultValue,
 		string locale,
@@ -1958,7 +1958,7 @@ component accessors="true" singleton threadSafe{
 		numeric currentLevel="1",
 		elementClass="",
 		parentClass="parent",
-		activeClass="active", 
+		activeClass="active",
 		activeShowChildren=false
 	){
 
@@ -1986,7 +1986,7 @@ component accessors="true" singleton threadSafe{
 			while( locPage.hasParent() ) {
 				locPage = locPage.getParent();
 				pageAncestorContentIDs = ListAppend( pageAncestorContentIDs, locPage.getContentID() );
-			}	
+			}
 		}
 
 		// list start
@@ -2111,6 +2111,6 @@ component accessors="true" singleton threadSafe{
 		// return
 		return b.toString();
 	}
-	
+
 }
 

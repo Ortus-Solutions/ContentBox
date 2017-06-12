@@ -5,23 +5,23 @@
 * ---
 * Core Menu Entity
 */
-component   persistent="true" 
-            entityName="cbMenu" 
-            table="cb_menu" 
+component   persistent="true"
+            entityName="cbMenu"
+            table="cb_menu"
             extends="contentbox.models.BaseEntity"
-            cachename="cbMenu" 
+            cachename="cbMenu"
             cacheuse="read-write" {
-    
+
     /* *********************************************************************
-    **                          DI                                  
+    **                          DI
     ********************************************************************* */
 
     property name="menuService"         inject="menuService@cb"         persistent="false";
     property name="menuItemService"     inject="menuItemService@cb"     persistent="false";
     property name="ORMService"          inject="entityservice"          persistent="false";
-    
+
     /* *********************************************************************
-    **                          PROPERTIES                                  
+    **                          PROPERTIES
     ********************************************************************* */
 
     property    name="menuID"
@@ -61,7 +61,7 @@ component   persistent="true"
                 default="ul";
 
     /* *********************************************************************
-    **                          RELATIONSHIPS                                  
+    **                          RELATIONSHIPS
     ********************************************************************* */
 
     // O2M -> Comments
@@ -71,12 +71,12 @@ component   persistent="true"
              type="array"
              cfc="contentbox.models.menu.item.BaseMenuItem"
              fkcolumn="FK_menuID"
-             cascade="all-delete-orphan" 
-             inverse="true" 
-             lazy="extra"; 
+             cascade="all-delete-orphan"
+             inverse="true"
+             lazy="extra";
 
     /* *********************************************************************
-    **                          PK + CONSTRAINTS                                  
+    **                          PK + CONSTRAINTS
     ********************************************************************* */
 
     this.pk = "menuID";
@@ -90,7 +90,7 @@ component   persistent="true"
     };
 
     /* *********************************************************************
-    **                          CONSTRUCTOR                                  
+    **                          CONSTRUCTOR
     ********************************************************************* */
 
     /**
@@ -106,11 +106,11 @@ component   persistent="true"
     }
 
     /* *********************************************************************
-    **                          PUBLIC FUNCTIONS                                  
+    **                          PUBLIC FUNCTIONS
     ********************************************************************* */
-    
+
     /**
-    * @Override due to bi-directional relationships 
+    * @Override due to bi-directional relationships
     */
     Menu function addMenuItem( required menuItem ){
         // add them to the local array
@@ -146,7 +146,7 @@ component   persistent="true"
         }
         return this;
     }
-    
+
     /**
      * Retrieves root menu items (only items with no parents)
      */
@@ -170,7 +170,7 @@ component   persistent="true"
         var pList   = listToArray( arrayToList( menuService.getPropertyNames() ) );
         // Do this to convert native Array to CF Array for content properties
         var result  = getBaseMemento( properties=pList, excludes=arguments.excludes );
-        
+
         // menu items
         if( hasMenuItem() ){
             result[ "menuItems" ] = [];
@@ -178,17 +178,17 @@ component   persistent="true"
                 // only export top-level items (items themselves will take care of children)
                 if( !( thisMenuItem.hasParent() ) ) {
                     arrayAppend( result[ "menuItems" ], thisMenuItem.getMemento() );
-                }                  
+                }
             }
         } else {
             result[ "menuItems" ] = [];
         }
-        
+
         return result;
     }
 
     /* *********************************************************************
-    **                          PRIVATE FUNCTIONS                                  
+    **                          PRIVATE FUNCTIONS
     ********************************************************************* */
 
     /**
@@ -204,7 +204,7 @@ component   persistent="true"
             var newItem  = menuItemService.populate( target=entity, memento=data, exclude="children" );
                 newItem.setMenu( this );
                 newItem.setActive( true );
-            
+
             // populate the children
             if( structKeyExists( data, "children" ) && isArray( data.children ) ) {
                 var children = createMenuItems( data.children );

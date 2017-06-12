@@ -29,5 +29,5 @@ CKEDITOR.plugins.add( 'cbKeyBinding', {
 		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+72, 'cbContentStore' );
 		// add key stroke -- ctrl+shift+w
 		editor.setKeystroke( CKEDITOR.CTRL+CKEDITOR.SHIFT+87, 'cbWidgets' );
-	}	
+	}
 } );

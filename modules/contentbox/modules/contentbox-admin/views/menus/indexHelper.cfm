@@ -4,15 +4,15 @@
 <script>
 $(document).ready(function() {
     // Setup content view
-    setupView( { 
-        tableContainer  : $( "##menuTableContainer" ), 
+    setupView( {
+        tableContainer  : $( "##menuTableContainer" ),
         tableURL        : '#event.buildLink( prc.xehMenuTable )#',
         searchField     : $( "##menuSearch" ),
         searchName      : 'searchMenu',
         contentForm     : $( "##menuForm" ),
         importDialog    : $( "##importDialog" )
     } );
-    
+
     // load content on startup, using default parents if passed.
     contentLoad( {} );
 } );
@@ -30,7 +30,7 @@ function setupView( settings ){
 
     // setup filters
     $filters        = settings.filters;
-    
+
     // quick search binding
     $searchField.keyup(
         _.debounce(
@@ -99,8 +99,8 @@ function contentLoad( criteria ){
     // loading effect
     $tableContainer.css( 'opacity', .60 );
     // setup ajax arguments
-    var args = {  
-        page: criteria.page, 
+    var args = {
+        page: criteria.page,
         showAll : criteria.showAll
     };
     // do we have filters, if so apply them to arguments
@@ -121,7 +121,7 @@ function remove( menuID, id ){
     checkAll( false, id );
     if( menuID != null ){
         $( "##delete_" + menuID ).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
-        checkByValue( id, menuID );      
+        checkByValue( id, menuID );
     }
     $contentForm.submit();
 }
@@ -135,7 +135,7 @@ function importContent(){
     // open modal for cloning options
     openModal( $importDialog, 500, 350 );
     // form validator and data
-    $importForm.validate( { 
+    $importForm.validate( {
         submitHandler: function(form){
             $importForm.find( "##importButtonBar" ).slideUp();
             $importForm.find( "##importBarLoader" ).slideDown();

@@ -420,11 +420,11 @@ component hint="Main filebrowser module handler"{
 			};
 			announceInterception( "fb_preFileUpload", iData );
 
-			iData.results = fileUtils.uploadFile( 
+			iData.results = fileUtils.uploadFile(
 				fileField		= "FILEDATA",
 				destination		= rc.path,
 				nameConflict	= "Overwrite",
-				accept			= prc.fbSettings.acceptMimeTypes 
+				accept			= prc.fbSettings.acceptMimeTypes
 			);
 			// debug log file
 			if( log.canDebug() ){
@@ -475,14 +475,14 @@ component hint="Main filebrowser module handler"{
 	* @force Force the loading of assets on demand
 	* @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
-	private function loadAssets( 
-		event, 
-		rc, 
-		prc, 
-		boolean force=false, 
-		struct settings={} 
+	private function loadAssets(
+		event,
+		rc,
+		prc,
+		boolean force=false,
+		struct settings={}
 	){
-		
+
 		// merge the settings structs if passed
 		if( !structIsEmpty( arguments.settings ) ){
 			mergeSettings( prc.fbSettings, arguments.settings );
@@ -597,11 +597,11 @@ component hint="Main filebrowser module handler"{
 		}
 
 		if( !flash.exists( "filebrowser" ) ){
-			var filebrowser = { 
-				callback		= rc.callback, 
-				cancelCallback	= rc.cancelCallback, 
-				filterType		= rc.filterType, 
-				settings		= prc.fbsettings 
+			var filebrowser = {
+				callback		= rc.callback,
+				cancelCallback	= rc.cancelCallback,
+				filterType		= rc.filterType,
+				settings		= prc.fbsettings
 			};
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}

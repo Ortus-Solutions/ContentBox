@@ -79,7 +79,7 @@
 
 	<fieldset>
     	<legend><i class="fa fa-bar-chart-o fa-lg"></i> Content Stats Tracking</legend>
-        
+
         <!--- Hit Count --->
         <div class="form-group">
             #html.label(
@@ -100,7 +100,7 @@
 				)#
             </div>
         </div>
-        
+
         <!--- Hit Count Ignore bots --->
         <div class="form-group">
             #html.label(
@@ -121,7 +121,7 @@
 				)#
             </div>
         </div>
-        
+
         <!--- Bot Regex Matching --->
         <div class="form-group">
 	        #html.label( field="cb_content_bot_regex", content="Bot Regex Matchers:" )#
@@ -133,9 +133,9 @@
 	            	rows="4",
 	            	class="form-control",
 	            	title="One regex per line please"
-	            )#     
+	            )#
 	        </div>
-        </div>  
+        </div>
     </fieldset>
 
     <fieldset>

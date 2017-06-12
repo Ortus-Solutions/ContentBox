@@ -52,16 +52,16 @@ component implements="contentbox.model.updates.IUpdate"{
 			transaction{
 
 				log.info("About to beggin #version# patching");
-				
+
 				updateSettings();
 				updatePermissions();
 				updateAdmin();
 				updateEditor();
-				
+
 				// Add Columns
 				addColumn(table="cb_content", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
 				addColumn(table="cb_customHTML", column="markup", type="varchar", limit="100", nullable=false, defaultValue="HTML");
-				
+
 				log.info("Finalized #version# patching");
 			}
 		}
@@ -88,9 +88,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			rethrow;
 		}
 	}
-	
+
 	/************************************** PRIVATE *********************************************/
-	
+
 	private function updateAdmin(){
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Add in new permissions
@@ -102,7 +102,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	private function updateEditor(){
 		var oRole = roleService.findWhere({role="Editor"});
 		// Add in new permissions
@@ -114,7 +114,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	private function updatePermissions(){
 		var perms = {
 			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
@@ -135,7 +135,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		permissionService.saveAll(entities=allPerms,transactional=false);
 	}
-	
+
 	private function updateSettings(){
 		// Create New settings
 		addSetting( "cb_admin_ssl", "false" );
@@ -172,7 +172,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 
 	}
-	
+
 	private function addSetting(name, value){
 		var setting = settingService.findWhere( { name = arguments.name } );
 		if( isNull( setting ) ){
@@ -186,9 +186,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			log.info("Skipped #arguments.name# setting, already there");
 		}
 	}
-	
+
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
-	
+
 	// Add a new column: type=[varchar, boolean, text]
 	private function addColumn(required table, required column, required type, required limit, boolean nullable=false, defaultValue){
 		if( !columnExists( arguments.table, arguments.column ) ){
@@ -211,7 +211,7 @@ component implements="contentbox.model.updates.IUpdate"{
 					sDefault = " DEFAULT '#ReplaceNoCase( arguments.defaultValue, "'", "''" )#'";
 				}
 			}
-			
+
 			// Build SQL
 			var q = new Query(datasource=getDatasource());
 			q.setSQL( "ALTER TABLE #arguments.table# ADD #arguments.column# #arguments.type#(#arguments.limit#) #sNullable##sDefault#;" );
@@ -222,7 +222,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			log.info("Skipping adding column: #arguments.column# to table: #arguments.table# as it already existed");
 		}
 	}
-	
+
 	// Verify if a column exists
 	private boolean function columnExists(required table, required column){
 		var colFound = false;
@@ -234,11 +234,11 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		return colFound;
 	}
-	
+
 	// Get a DB specific varchar type
 	private function getVarcharDBType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "varchar";
@@ -257,11 +257,11 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	// Get a DB specific long text type
 	private function getTextDBType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "text";
@@ -280,11 +280,11 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	// Get a DB specific boolean column
 	private function getBooleanDBType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "boolean";
@@ -303,12 +303,12 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	// Get the database type
 	private function getDatabaseType(){
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
-	
+
 	// Get the default datasource
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();

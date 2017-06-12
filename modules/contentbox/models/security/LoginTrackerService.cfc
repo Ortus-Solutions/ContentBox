@@ -11,7 +11,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	property name="settingService"		inject="id:settingService@cb";
 	property name="cb"					inject="cbhelper@cb";
 	property name="log"					inject="logbox:logger:{this}";
-	
+
 	/**
 	* Constructor
 	*/
@@ -44,16 +44,16 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	boolean function isblocked( LoginAttempt attempt ){
 		var max_attempts 	= settingService.getSetting( 'cb_security_max_attempts' );
-		var max_blockTime 	= settingService.getSetting( 'cb_security_blocktime' ); 
+		var max_blockTime 	= settingService.getSetting( 'cb_security_blocktime' );
 
-		if( arguments.attempt.getAttempts() gte max_attempts AND 
+		if( arguments.attempt.getAttempts() gte max_attempts AND
 			( datediff( 'n', arguments.attempt.getCreatedDate(), now() ) lte max_blockTime ) ){
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	* Retrieve all auth logs
 	* @sortOrder The sorting columns.
@@ -70,7 +70,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		return allEntries;
 	}
 
-	/**	
+	/**
 	* Get the last successful logins
 	* @max How many to retrieve
 	*/
@@ -142,6 +142,6 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		executeQuery( query=hql, params=params, asQuery=false );
 
 		return this;
-	}	
-	 
+	}
+
 }

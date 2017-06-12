@@ -37,7 +37,7 @@ jQuery.uiTableFilter = function(jq, phrase, column, ifHidden){
       }
     } );
     var iselector = "td:eq( " + index + " )";
-  
+
     var search_text = function( ){
       var elem = jQuery(this);
       jQuery.uiTableFilter.has_words( jQuery(elem.find(iselector)).text(), words ) ?

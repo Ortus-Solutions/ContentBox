@@ -33,7 +33,7 @@ function verifyData(){
 		alert( "Please enter a datsource name" );
 		return;
 	}
-	
+
 	var cfVerified = false;
 	// Verify CFML Password First
 	$.ajax( {
@@ -47,7 +47,7 @@ function verifyData(){
 			else{
 				cfVerified = true;
 			}
-			
+
 			if( cfVerified ){
 				// Verify DSN Does NOT exists
 				$.ajax( {
@@ -72,8 +72,8 @@ function verifyData(){
 		},
 		dataType:"json"
 	} );
-	
-	
+
+
 }
 </script>
 </cfoutput>

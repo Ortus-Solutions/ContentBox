@@ -44,7 +44,7 @@ $( document ).ready( function(){
         var fieldset = $( '##selective_controls' );
         if( this.id == 'export_selective' ) {
             fieldset.show( 'fast' );
-        }        
+        }
         else {
             fieldset.hide( 'fast' );
             fieldset.find( 'input[type=checkbox]' ).each(function(){
@@ -61,18 +61,18 @@ function doExport(){
         //Wait for the export to start, and the new window to pop, then update the UI
         $( "##uploadBar" ).delay( 3000 ).slideToggle();
         $( "##uploadBarLoader" ).delay( 3000 ).slideToggle();
-        
+
     }
 }
 function previewExport() {
-    $.post( 
-        '#event.buildLink( prc.xehPreviewExport )#', 
-        $( "##exporterForm" ).serialize(), 
+    $.post(
+        '#event.buildLink( prc.xehPreviewExport )#',
+        $( "##exporterForm" ).serialize(),
         function( data, textStatus, jqXHR ){
             var target = $( '##exportPreviewDialog' );
             $( '##previewBody' ).html( data );
             openModal( target );
-        } 
+        }
     );
 }
 function doSiteExport(){

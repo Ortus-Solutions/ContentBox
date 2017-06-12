@@ -14,13 +14,13 @@ component accessors="true" extends="BaseRenderer"{
 	* Execute on content translations for pages and blog entries
 	*/
 	void function cb_onContentRendering( event, struct interceptData ){
-		translateContent( 
-			builder	= arguments.interceptData.builder, 
-			content = arguments.interceptData.content, 
-			event	= arguments.event 
+		translateContent(
+			builder	= arguments.interceptData.builder,
+			content = arguments.interceptData.content,
+			event	= arguments.event
 		);
 	}
-	
+
 	/**
     * Executes custom parsing rules on content
     * @builder {java.lang.StringBuilder}
@@ -30,7 +30,7 @@ component accessors="true" extends="BaseRenderer"{
 		parseTagWidgets( argumentCollection=arguments );
 		parseTripleMustacheWidgets( argumentCollection=arguments );
 	}
-	
+
 	/**
     * Parses content to find <widget>...</widget> tags, and renders the associated widget
     * @builder {java.lang.StringBuilder}
@@ -48,13 +48,13 @@ component accessors="true" extends="BaseRenderer"{
 		for( var x=1; x lte targetLen; x++ ){
 			attributes = xmlParse( targets[ x ] ).widget.XmlAttributes;
 			try{
-				
+
 				widgetName 		= attributes.widgetname;
 				widgetType 		= attributes.widgettype;
 				widgetUDF 		= structKeyExists( attributes, "widgetUDF" ) ? attributes.widgetUDF : "renderIt";
 				isModuleWidget 	= widgetType == "Module";
 				isThemeWidget 	= widgetType == "Theme";
-				
+
 				// Detect direct method call
 				if( find( ".", widgetName) ){
 					widgetContent = evaluate( "widgetService.getWidget( '#getToken(widgetName,1,"." )#' ).#getToken(widgetName,2,"." )#(argumentCollection=attributes)" );
@@ -83,21 +83,21 @@ component accessors="true" extends="BaseRenderer"{
 			}
 
 			// PROCESS REPLACING
-			multiStringReplace( 
+			multiStringReplace(
 				builder 	= arguments.builder,
 				indexOf	 	= targets[ x ],
 				replaceWith = widgetContent
 			);
 		}
 	}
-	
+
 	/**
     * Parses content to find {{{...}}} syntax, and renders the associated widget
     * @builder {java.lang.StringBuilder}
     */
 	private void function parseTripleMustacheWidgets( required builder ){
 		// Escape values for non-rendering
-		multiStringReplace( 
+		multiStringReplace(
 			builder 	= arguments.builder,
 			indexOf	 	= "<escape>{{{",
 			replaceWith = "<escape>#encodeForHTML( '{{{' )#"
@@ -134,7 +134,7 @@ component accessors="true" extends="BaseRenderer"{
 				tagString 		= replace( tagString, '",',  '" ', "all" );
 				isModuleWidget 	= findNoCase( "@", tagString ) ? true : false;
 				isThemeWidget 	= findNoCase( "~", tagString ) ? true : false;
-				
+
 				if( isModuleWidget ) {
 					var startPos 	= find( "@", tagString ) + 1;
 					// default end is last character of closing tag.
@@ -149,7 +149,7 @@ component accessors="true" extends="BaseRenderer"{
 					// clean the tag
 					tagString = replacenocase( tagString, "@#moduleName#", "", "one" );
 				}
-				
+
 				if( isThemeWidget ) {
 					tagString = reReplace( tagString, "~", "", "one" );
 				}
@@ -158,7 +158,7 @@ component accessors="true" extends="BaseRenderer"{
 				var tagXML 		= xmlParse( tagString );
 				var widgetName 	= tagXML.XMLRoot.XMLName;
 				var widgetArgs  = {};
-				
+
 				// Create Arg Collection From Attributes, if any
 				if( structKeyExists( tagXML[ widgetName ], "XMLAttributes" ) ){
 					for(key in tagXML[ widgetName ].XMLAttributes){
@@ -196,7 +196,7 @@ component accessors="true" extends="BaseRenderer"{
 			if( isNull( widgetContent ) ){ widgetContent = "null!"; }
 
 			// PROCESS REPLACING
-			multiStringReplace( 
+			multiStringReplace(
 				builder 	= arguments.builder,
 				indexOf	 	= targets[ x ],
 				replaceWith = widgetContent

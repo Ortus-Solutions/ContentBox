@@ -9,9 +9,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 		"columnDefs": [
-    		{ 
-    			"orderable": false, 
-    			"targets": '{sorter:false}' 
+    		{
+    			"orderable": false,
+    			"targets": '{sorter:false}'
     		}
   		],
   		"order": []

@@ -13,10 +13,10 @@ component extends="content"{
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="themeService"		inject="id:themeService@cb";
-	
+
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
-	
+
 	/**
 	* Pre Handler
 	*/
@@ -30,7 +30,7 @@ component extends="content"{
 	function preview( event, rc, prc ){
 		// Run parent preview
 		super.preview( argumentCollection = arguments );
-		
+
 		// Construct the preview entry according to passed arguments
 		prc.page = pageService.new();
 		prc.page.setTitle( rc.title );
@@ -59,9 +59,9 @@ component extends="content"{
 				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
 					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
 			}
-		} 
+		}
 	}
-	
+
 	/**
 	* Around page advice that provides caching and multi-output format
 	*/
@@ -72,7 +72,7 @@ component extends="content"{
 
 		return wrapContentAdvice( argumentCollection = arguments );
 	}
-	
+
 	/**
 	* Present pages
 	*/
@@ -138,7 +138,7 @@ component extends="content"{
 			// set skin not found
 			event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
 				.setView( view="#prc.cbTheme#/views/notfound", module="contentbox" )
-				.setHTTPHeader( "404", "Page not found" );				
+				.setHTTPHeader( "404", "Page not found" );
 		}
 	}
 
@@ -162,21 +162,21 @@ component extends="content"{
 		// get search results
 		if( len( rc.q ) ){
 			var searchAdapter = searchService.getSearchAdapter();
-			prc.searchResults = searchAdapter.search( 
+			prc.searchResults = searchAdapter.search(
 				offset 		= prc.pagingBoundaries.startRow-1,
 				max 		= prc.cbSettings.cb_search_maxResults,
-				searchTerm	= rc.q 
+				searchTerm	= rc.q
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
 			prc.searchResults 			= getModel( "SearchResults@cb" );
 			prc.searchResultsContent 	= "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
-		
+
 		// set skin search
 		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module="contentbox" )
 			.setView( view="#prc.cbTheme#/views/search", module="contentbox" );
-			
+
 		// announce event
 		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
 	}
@@ -207,8 +207,8 @@ component extends="content"{
 		// Try to retrieve page by contentID
 		var page = pageService.get( rc.contentID );
 		// If null, kick them out
-		if( isNull( page ) ){ 
-			setNextEvent( prc.cbEntryPoint ); 
+		if( isNull( page ) ){
+			setNextEvent( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );
@@ -228,7 +228,7 @@ component extends="content"{
 		if( listFindNoCase( excluded, arguments.layout ) ){ return; }
 		// Verify layout
 		if( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
-			throw( 
+			throw(
 				message	= "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
 			    detail	= "Please verify your page layout settings",
 				type 	= "ContentBox.InvalidPageLayout"

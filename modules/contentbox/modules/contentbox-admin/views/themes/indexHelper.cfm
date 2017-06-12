@@ -11,9 +11,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -29,7 +29,7 @@ $(document).ready(function() {
 	// form validator
 	$uploadForm.validate( {
         success:function(e,els){ activateLoaders(); }
-    } );	
+    } );
 } );
 function activateLoaders(){
 	$( "##uploadBar" ).slideToggle();

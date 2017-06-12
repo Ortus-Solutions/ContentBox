@@ -5,8 +5,8 @@
 <script>
 $(document).ready(function() {
 	// Setup content view
-	setupContentView( { 
-		tableContainer	: $( "##entriesTableContainer" ), 
+	setupContentView( {
+		tableContainer	: $( "##entriesTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehEntryTable )#',
 		searchField 	: $( "##entrySearch" ),
 		searchName		: 'searchEntries',
@@ -15,10 +15,10 @@ $(document).ready(function() {
 		importDialog 	: $( "##importDialog" ),
 		cloneDialog		: $( "##cloneDialog" )
 	} );
-	
+
 	// load content on startup, using default parents if passed.
 	contentLoad( {} );
-	
+
 } );
 </script>
 </cfoutput>

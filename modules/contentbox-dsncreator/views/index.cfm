@@ -28,58 +28,58 @@
 			<fieldset>
 				<legend>Datasource Created?</legend>
 				<p>Do you have a datasource created already?</p>
-				
+
 				<div class="form-group">
 					<div class="controls">
 						<label class="inline control-label">
 							<input type="radio" name="dsnCreated" id="dsnCreated" value="true" onclick="showDSNPanel(true)" /> Yes
-						</label> 
+						</label>
 						<label class="inline control-label">
 							<input type="radio" name="dsnCreated" id="dsnCreated" value="false" onclick="showDSNPanel(false)"/> No
 						</label>
 					</div>
 				</div>
 			</fieldset>
-			
+
 			<!--- DSN Exists Panel --->
 			<fieldset id="dsnPanelExists" style="display: none">
 				<legend>Created Datasource Information:</legend>
 				<form name="dsnUseForm" id="dsnUseForm" action="index.cfm" method="post" novalidate="novalidate">
-					
+
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="true" />
-					
+
 					<div class="alert alert-info">
 					<p>Please fill in the name of the datasource connection setup in your CFML engine.</p>
 					</div>
-					
-					<label class="control-label">Datasource Name: 
+
+					<label class="control-label">Datasource Name:
 						<input type="text" name="dsnName" id="dsnName" class="form-control" size="40"/>
 					</label>
-					
+
 					<div class="actionBar">
 						<input name="verifyButton" id="verifyButton" type="button" class="btn btn-primary" value="Verify Datasource" onclick="verifyDSN()" />
 						<input name="createButton" id="createButton" type="submit" class="btn btn-danger" value="Continue Installation" style="display: none" />
 					</div>
 				</form>
 			</fieldset>
-			
+
 			<!--- DSN Creation Panel --->
 			<fieldset id="dsnPanelCreate" style="display: none">
 				<legend>Datasource Creation Information:</legend>
 				<form name="dsnForm" id="dsnForm" action="index.cfm" method="post" novalidate="novalidate">
-					
+
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="false" />
-					
+
 					<div class="alert alert-info">
 					<p>Please fill in all the required information so we can create the datasource connection for you.</p>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="cfpassword">CFML Admin Password or Web Context Password: </label>
-							<br /><small>Your CFML engine administrator password or the Lucee Web Context password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express Edition ONLY then use <code>contentbox</code> or 
+							<br /><small>Your CFML engine administrator password or the Lucee Web Context password. Contact your hosting provider or system administrator if you do not have one. (If you are using the Express Edition ONLY then use <code>contentbox</code> or
 							<cfif structKeyExists( server, "lucee" )>
 								<a href="/lucee/admin/web.cfm" target="_blank">click here</a>
 							<cfelse>
@@ -89,7 +89,7 @@
 							<input type="password" class="form-control" size="40" name="cfpassword" id="cfpassword" required="required" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dsnCreateName">Datasource Name:</label>
@@ -97,7 +97,7 @@
 							<input type="text" class="form-control" size="40" name="dsnCreateName" id="dsnCreateName" required="required" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbType">Database Type:</label>
@@ -114,7 +114,7 @@
 							</select>
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbServer">Database Server:</label>
@@ -122,7 +122,7 @@
 							<input type="text" class="form-control" size="40" name="dbServer" id="dbServer" required="required" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbName">Database Name:</label>
@@ -130,7 +130,7 @@
 							<input type="text" class="form-control" size="40" name="dbName" id="dbName" required="required" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbUsername">Database Username:</label>
@@ -138,7 +138,7 @@
 							<input type="text" class="form-control" size="40" name="dbUsername" id="dbUsername" />
 						</div>
 					</div>
-					
+
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbUsername">Database Password:</label>
@@ -147,7 +147,7 @@
 						</div>
 					</div>
 
-					<div class="actionBar">	
+					<div class="actionBar">
 						<input name="verifyDataButton" id="verifyDataButton" type="button" class="btn btn-primary" value="Verify Data" onclick="verifyData()" />
 						<input name="createDSNButton" id="createDSNButton" type="submit" class="btn btn-danger" value="Create Datasource" style="display: none" />
 						<div id="actionBarLoader" style="display:none"><i class="icon-spinner icon-spin fa-lg fa-2x"></i> Creating, Please Wait...</div>

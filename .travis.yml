@@ -11,7 +11,7 @@ sudo: required
 
 git:
   depth: 500
-  
+
 addons:
   apt:
     packages:
@@ -55,7 +55,7 @@ deploy:
   # Upload binaries
   - provider: s3
     on:
-      branch: 
+      branch:
         - development
         - master
     skip_cleanup: true
@@ -68,7 +68,7 @@ deploy:
   # Upload api docs
   - provider: s3
     on:
-      branch: 
+      branch:
         - development
         - master
     skip_cleanup: true

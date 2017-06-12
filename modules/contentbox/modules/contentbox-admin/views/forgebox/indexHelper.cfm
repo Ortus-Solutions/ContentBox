@@ -2,7 +2,7 @@
 <script>
 $(document).ready(function() {
 	// pointers
-	$forgeBoxInstall = $( "##forgeBoxInstall" ); 
+	$forgeBoxInstall = $( "##forgeBoxInstall" );
 	$downloadURL = $forgeBoxInstall.find( "##downloadURL" );
 	// Div Filter
 	$( "##entryFilter" ).keyup(

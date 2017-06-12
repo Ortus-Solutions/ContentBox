@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	metadata-complete="true"
 	version="2.5">
-	
+
 	<!-- Tuckey Rewrite -->
 	<filter>
        <filter-name>UrlRewriteFilter</filter-name>
@@ -24,11 +24,11 @@
        <dispatcher>REQUEST</dispatcher>
        <dispatcher>FORWARD</dispatcher>
     </filter-mapping>
-	  
+
 	<servlet>
 		<servlet-name>CFMLServlet</servlet-name>
 		<servlet-class>lucee.loader.servlet.CFMLServlet</servlet-class>
-		
+
 		<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		<!-- to specify the location of the Lucee Server config and libraries,   -->
 		<!-- uncomment the init-param below.  make sure that the param-value     -->
@@ -50,24 +50,24 @@
 		<!--
 		<init-param>
 		  <param-name>lucee-web-directory</param-name>
-		  <param-value>/var/Lucee/config/web/{web-context-label}/</param-value> 
+		  <param-value>/var/Lucee/config/web/{web-context-label}/</param-value>
 		  <description>Lucee Web Directory (for Website-specific configurations, settings, and libraries)</description>
 		</init-param>
 		!-->
 		<load-on-startup>1</load-on-startup>
-		
+
 		</servlet>
-		
-		
+
+
 		  <!-- ===================================================================== -->
 		  <!-- Lucee REST Servlet - handles Lucee's RESTful web services             -->
 		  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 		  <servlet>
-		<servlet-name>RESTServlet</servlet-name>    
+		<servlet-name>RESTServlet</servlet-name>
 		<servlet-class>lucee.loader.servlet.RestServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
-		  </servlet> 
-		
+		  </servlet>
+
 		  <!-- ===================================================================== -->
 		  <!-- Lucee MessageBroker Servlet - Flex Gateway                            -->
 		  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -92,23 +92,23 @@
 		    </init-param>
 		    <load-on-startup>3</load-on-startup>
 		  </servlet> -->
-		  
+
 		  <servlet-mapping>
 		<servlet-name>CFMLServlet</servlet-name>
 		<url-pattern>*.cfc</url-pattern>
 		<url-pattern>*.cfm</url-pattern>
-		<url-pattern>*.cfml</url-pattern>   
+		<url-pattern>*.cfml</url-pattern>
 		<url-pattern>/index.cfc/*</url-pattern>
 		<url-pattern>/index.cfm/*</url-pattern>
 		<url-pattern>/index.cfml/*</url-pattern>
-		
+
 		<!-- url-pattern>*.cfm/*</url-pattern !-->
 		<!-- url-pattern>*.cfml/*</url-pattern !-->
 		<!-- url-pattern>*.cfc/*</url-pattern !-->
 		<!-- url-pattern>*.htm</url-pattern !-->
 		<!-- url-pattern>*.jsp</url-pattern !-->
 		  </servlet-mapping>
-		  
+
 		  <servlet-mapping>
 		<servlet-name>RESTServlet</servlet-name>
 		<url-pattern>/rest/*</url-pattern>

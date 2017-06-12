@@ -52,12 +52,12 @@ component implements="contentbox.model.updates.IUpdate"{
 			transaction{
 				/**
 				Migrate Database FIRST
-		
+
 				// User Preferences
 				ALTER TABLE cb_author ADD COLUMN preferences longtext NULL;
 				*/
 				log.info("About to beggin 1.0.8 patching");
-				
+
 				log.info("Finalized 1.0.8 patching");
 			}
 		}

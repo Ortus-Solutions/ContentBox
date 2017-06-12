@@ -6,13 +6,13 @@
 * Service to handle menu operations.
 */
 component extends="cborm.models.VirtualEntityService" accessors="true" singleton {
-    
+
     // DI
     property name="populator"       inject="wirebox:populator";
     property name="renderer"        inject="provider:ColdBoxRenderer";
     property name="menuItemService" inject="id:menuItemService@cb";
     property name="dateUtil"        inject="DateUtil@cb";
-    
+
     /**
     * Constructor
     */
@@ -21,7 +21,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
         super.init( entityName="cbMenu" );
         return this;
     }
-    
+
     /**
     * Save a menu and do necessary updates
     * @menu.hint The menu to save or update
@@ -37,10 +37,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
             // Save the target menu
             save( entity=arguments.menu, transactional=false );
         }
-       
+
         return this;
     }
-    
+
     /**
     * Menu search by title or slug
     * @searchTerm.hint Search in firstname, lastname and email fields
@@ -51,25 +51,25 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     */
     function search(
         string searchTerm="",
-        numeric max=0, 
-        numeric offset=0, 
-        boolean asQuery=false, 
+        numeric max=0,
+        numeric offset=0,
+        boolean asQuery=false,
         string sortOrder="title"
     ){
         var results = {};
         var c = newCriteria();
         // Search
         if( len( arguments.searchTerm ) ){
-            c.$or( 
+            c.$or(
                 c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
-                c.restrictions.like( "slug", "%#arguments.searchTerm#%" ) 
+                c.restrictions.like( "slug", "%#arguments.searchTerm#%" )
             );
         }
         // run criteria query and projections count
         results.count = c.count( "menuID" );
         results.menus = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
             .list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery );
-    
+
         return results;
     }
 
@@ -90,14 +90,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     array function getAllForExport(){
         var result = [];
         var data   = getAll();
-        
+
         for( var menu in data ){
-            arrayAppend( result, menu.getMemento() );   
+            arrayAppend( result, menu.getMemento() );
         }
-        
+
         return result;
     }
-    
+
     /**
     * Returns an array of slugs of all the content objects in the system.
     */
@@ -113,20 +113,20 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     string function importFromFile( required importFile, boolean override=false ){
         var data        = fileRead( arguments.importFile );
         var importLog   = createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
-        
+
         if( !isJSON( data ) ){
             throw( message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
         }
         // deserialize packet: Should be array of { settingID, name, value }
         return  importFromData( deserializeJSON( data ), arguments.override, importLog );
     }
-    
+
     /**
-    * Import data from an array of structures of authors or just one structure of author 
+    * Import data from an array of structures of authors or just one structure of author
     */
     string function importFromData( required importData, boolean override=false, importLog ){
         var allMenus        = [];
-        
+
         // if struct, inflate into an array
         if( isStruct( arguments.importData ) ){
             arguments.importData = [ arguments.importData ];
@@ -136,7 +136,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
             // Get new or persisted
             var oMenu = this.findBySlug( menu.slug );
             oMenu = ( isNull( oMenu ) ? new() : oMenu );
-            
+
             // date cleanups, just in case.
             var badDateRegex    = " -\d{4}$";
             menu.createdDate    = reReplace( menu.createdDate, badDateRegex, "" );
@@ -173,7 +173,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
             arguments.importLog.append( "No menus imported as none where found or able to be overriden from the import file." );
         }
 
-        return arguments.importLog.toString(); 
+        return arguments.importLog.toString();
     }
 
     /**
@@ -187,21 +187,21 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
         for( var item in arguments.menu ) {
             var providerContent = "";
             var skipItem        = false;
-            
+
             // if item has a parent, and it's being evaluated on the same level as its parent, skip it
             if( item.hasParent() && !inChild ) {
                 skipItem = true;
             }
-            
+
             // build out the item
             if( !skipItem ) {
                 arguments.menuString &= '<li id="key_#item.getMenuItemID()#" class="dd-item dd3-item" data-id="#item.getMenuItemID()#">';
-                
+
                 // render default menu item
                 var args = { menuItem=item, provider=item.getProvider() };
                 savecontent variable="providerContent" {
-                    writeOutput( variables.renderer.get().renderView( 
-                        view   = "menus/provider", 
+                    writeOutput( variables.renderer.get().renderView(
+                        view   = "menus/provider",
                         module = "contentbox-admin",
                         args   = args
                     ));
@@ -215,7 +215,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
                     menuString &= '</ol>';
                 }
 
-                menuString &= '</li>';   
+                menuString &= '</li>';
             }
         }
 
@@ -230,7 +230,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     function isSlugUnique(required any slug, any menuID="" ){
         var c = newCriteria()
             .isEq( "slug", arguments.slug );
-        
+
         if( len( arguments.menuID ) ){
             c.ne( "menuID", javaCast( "int", arguments.menuID ) );
         }

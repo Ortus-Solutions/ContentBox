@@ -1,7 +1,7 @@
 require.config({
     /**
     *  All of the libraries in the paths below will be packaged by RJS Optimizer
-    *  in to the modules/includes/js directory 
+    *  in to the modules/includes/js directory
     *  Note: paths are relative to the compiling cwd - see Gruntfile.js
     **/
     paths:{
@@ -27,10 +27,10 @@ require.config({
         ,"jquery-metadata": "../../bower_components/jquery.metadata/jquery.metadata"
         ,"lz-string": "../../bower_components/lz-string/libs/lz-string.min"
         ,respond: "../../bower_components/respond/dest/respond.min"
-        ,raphael: "../../bower_components/raphael/raphael-min" 
+        ,raphael: "../../bower_components/raphael/raphael-min"
         ,i18n: "../../bower_components/jquery-i18n-properties/jquery.i18n.properties.min"
     }
-    
+
     /**
     * Shim config for window globals
     * Specify any upstream dependencies and the global variables exported
@@ -48,9 +48,9 @@ require.config({
         ,jwerty:{
             exports:"jwerty"
         }
-        ,bootstrap:{ 
-            exports:"Bootstrap", 
-            deps:[ "jquery" ] 
+        ,bootstrap:{
+            exports:"Bootstrap",
+            deps:[ "jquery" ]
         }
         ,html5shiv:{
             exports:"html5shiv"

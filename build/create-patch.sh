@@ -40,7 +40,7 @@ echo End Commit: $2
 echo Version: $3
 echo Repo Root: $4
 echo ****************************************************************************
-echo 
+echo
 
 # switch to repo root
 cd $REPO_ROOT

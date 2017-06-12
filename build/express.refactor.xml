@@ -3,12 +3,12 @@
     <description>
     	ContentBox Express Edition, removes indexes on db creation.
     </description>
-	
+
 	<!-- Properties -->
 	<property name="dir.userlocation"	value="/Users/lmajano" />
 	<property name="dir.exports"		value="${dir.userlocation}/exports" />
 	<property name="dir.build" 			value="${dir.exports}/contentbox" />
-	
+
 	<!-- Build it -->
 	<target name="build" description="build the code">
 		<!-- Build it from original build -->
@@ -22,16 +22,16 @@
 		<!-- Copy Rewrite Filter -->
 		<copy file="urlrewrite.xml" todir="${dir.exports}/www/ROOT/WEB-INF"/>
 	</target>
-	
+
 	<!-- Refactor -->
 	<target name="refactor" description="refactor the code for express edition usage." depends="build">
-		
+
 		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
 		  <fileset dir="${dir.exports}/www/ROOT/modules/contentbox/model">
 		  	<include name="**/*.cfc" />
 		  </fileset>
 		</replaceregexp>
-		
+
 	</target>
 
 </project>

@@ -19,12 +19,12 @@ component singleton{
 		// Param cache purge
 		event.paramValue( "cbcache", "false" );
 		if( !isBoolean( rc.cbcache ) ){ rc.cbcache = false; }
-		
+
 		// Get the requested media path
 		var replacePath = ( len( prc.cbEntryPoint ) ? "#prc.cbEntryPoint#/" : "" ) & event.getCurrentRoute();
 		prc.mediaPath = trim( replacenocase( URLDecode( event.getCurrentRoutedURL() ), replacePath, "" ) );
 		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
-		
+
 		// Determine if ColdBox is doing a format extension detection?
 		if( structKeyExists( rc, "format" ) && len( rc.format ) ){ prc.mediaPath &= ".#rc.format#"; }
 
@@ -35,11 +35,11 @@ component singleton{
 			// return invalid media
 			return invalidMedia( event, rc, prc );
 		}
-		
+
 		// Announce media delivery
 		var iData = { mediaPath = prc.mediaPath, mediaProvider = mediaProvider };
 		announceInterception( "cbui_onMediaRequest", iData );
-		
+
 		// Media Caching Headers
 		if( !rc.cbcache and settingService.getSetting( "cb_media_provider_caching" ) ){
 			// Set expiration for one year in advanced
@@ -52,11 +52,11 @@ component singleton{
 				.setHTTPHeader(  name="pragma", 		value="no-cache" )
 				.setHTTPHeader(  name="cache-control",  value="no-cache, no-store, must-revalidate" );
 		}
-				
+
 		// Deliver it baby!
 		mediaProvider.deliverMedia( prc.mediaPath );
 	}
-	
+
 	/**
 	* Deliver Captcha
 	*/
@@ -74,7 +74,7 @@ component singleton{
 		// abort so CF does not choke.
 		abort;
 	}
-	
+
 	/************************************** PRIVATE *********************************************/
 
 	// Invalid Media
@@ -84,8 +84,8 @@ component singleton{
 		announceInterception( "cbui_onInvalidMediaRequest", iData );
 		// Render invalid media
 		event.renderData(
-			data="<h1>404: Requested path not found</h1>", 
-			statusCode="404", 
+			data="<h1>404: Requested path not found</h1>",
+			statusCode="404",
 			statusText="Requested Path Not Found"
 		);
 	}

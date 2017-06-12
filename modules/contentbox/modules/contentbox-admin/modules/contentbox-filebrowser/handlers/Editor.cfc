@@ -22,17 +22,17 @@ component extends="coldbox.system.EventHandler"{
 		prc.fileType	= listLast( rc.imageName, "." );
 
 		if( event.isAjax() ) {
-			event.renderData( 
+			event.renderData(
 				data = renderView( view="editor/index", layout = "ajax" )
 			);
 		} else {
-			event.setView( 
-				view 	= "editor/index", 
-				layout 	= "ajax" 
+			event.setView(
+				view 	= "editor/index",
+				layout 	= "ajax"
 			);
-		}		
+		}
 	}
-	
+
 	/**
 	* Info
 	*/
@@ -53,14 +53,14 @@ component extends="coldbox.system.EventHandler"{
 		}
 
 		if( event.isAjax() ) {
-			event.renderData( 
+			event.renderData(
 				data = renderView( view="editor/info", layout = "ajax" )
 			);
 		} else {
 			event.setView( view="editor/info", layout="ajax" );
-		}		
+		}
 	}
-	
+
 	/**
 	* Crop image
 	*/
@@ -85,7 +85,7 @@ component extends="coldbox.system.EventHandler"{
 			}
 
 		    //crop the image using the supplied coords from the url request
-		    ImageCrop(	
+		    ImageCrop(
 		    	sourceImage,
 				rc.imgX,
 				rc.imgY,
@@ -103,7 +103,7 @@ component extends="coldbox.system.EventHandler"{
 		}
 
 	}
-	
+
 	/**
 	* Scale image
 	*/
@@ -121,13 +121,13 @@ component extends="coldbox.system.EventHandler"{
 				// read from in memory
 		    	var sourceImage = ImageRead( rc.imgPath & "&type=" & rc.type );
 			}else{
-			    // read the image and create a ColdFusion image object 
+			    // read the image and create a ColdFusion image object
 			    // read the image and create a ColdFusion image object --->
 			    var sourceImage = ImageNew( sanitizeUrl( rc.imgName, rc.imgPath ) );
 			}
 
-		    // crop the image using the supplied coords from the url request 
-		    ImageResize(	
+		    // crop the image using the supplied coords from the url request
+		    ImageResize(
 		    	sourceImage,
 				rc.width,
 				rc.height
@@ -142,7 +142,7 @@ component extends="coldbox.system.EventHandler"{
 
 		event.noRender();
 	}
-	
+
 	/**
 	* Flip/rotate image
 	*/
@@ -162,7 +162,7 @@ component extends="coldbox.system.EventHandler"{
 			}
 		    ImageSetAntialiasing( sourceImage, true );
 
-		    // crop the image using the supplied coords from the url request 
+		    // crop the image using the supplied coords from the url request
 		    ImageFlip( sourceImage, rc.val );
 
 		    cfimage (
@@ -174,7 +174,7 @@ component extends="coldbox.system.EventHandler"{
 
 		event.noRender();
 	}
-	
+
 	/**
 	* Save image
 	*/
@@ -198,13 +198,13 @@ component extends="coldbox.system.EventHandler"{
 			}elseif( len(rc.saveAs) ){
 				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & rc.saveAs & ext, 1, rc.overwrite );
 			}else{
-				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName, 1 );				
+				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName, 1 );
 			}
 
 		}
 		event.noRender();
 	}
-	
+
 	/**
 	* Sanitize incoming paramed URL arguments
 	*/

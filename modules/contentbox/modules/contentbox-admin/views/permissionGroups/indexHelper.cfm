@@ -7,9 +7,9 @@ $( document ).ready(function() {
 		"info"			: false,
 		"searching"		: false,
 	    "columnDefs"	: [
-	        { 
-	            "orderable"	: false, 
-	            "targets"	: '{sorter:false}' 
+	        {
+	            "orderable"	: false,
+	            "targets"	: '{sorter:false}'
 	        }
 	    ],
 	    "order" 		: []
@@ -18,16 +18,16 @@ $( document ).ready(function() {
 	<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 	$importDialog 	= $( "##importDialog" );
 	$groupEditor 	= $( "##groupEditor" );
-	
+
 	// form validator
 	$groupEditor.validate();
-	
+
 	// reset
 	$( '##btnReset' ).click( function(){
 		$groupEditor.find( "##permissionGroupID" ).val( '' );
 	} );
 	</cfif>
-	
+
 	// table sorting + filtering
 	$( "##groupFilter" ).keyup(
 		_.debounce(

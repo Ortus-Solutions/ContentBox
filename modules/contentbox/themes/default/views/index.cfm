@@ -5,11 +5,11 @@
 	<cfif len( cb.themeSetting( 'overrideHeaderBGColor' ) )>
 		<cfset bodyHeaderStyle = bodyHeaderStyle & 'background-color: ' & cb.themeSetting( 'overrideHeaderBGColor' ) & ';'>
 	</cfif>
-	
+
 	<cfif len( cb.themeSetting( 'overrideHeaderTextColor' ) )>
 		<cfset bodyHeaderH1Style = bodyHeaderH1Style & 'color: ' & cb.themeSetting( 'overrideHeaderTextColor' ) & ';'>
 	</cfif>
-</cfif>		
+</cfif>
 <div id="body-header" style="#bodyHeaderStyle#">
 	<div class="container">
 		<!--- Title --->
@@ -21,14 +21,14 @@
 
 <!--- Body Main --->
 <section id="body-main">
-	<div class="container">	
+	<div class="container">
 		<div class="row">
 			<!--- Content --->
 			<div class="col-sm-9">
-		
+
 				<!--- ContentBoxEvent --->
 				#cb.event( "cbui_preIndexDisplay" )#
-					
+
 				<!--- Are we filtering by category? --->
 				<cfif len( rc.category )>
 					<p class="infoBar">
@@ -39,7 +39,7 @@
 					</p>
 					<br/>
 				</cfif>
-		
+
 				<!--- Are we searching --->
 				<cfif len( rc.q )>
 					<p class="buttonBar">
@@ -50,29 +50,29 @@
 					</div>
 					<br/>
 				</cfif>
-		
+
 				<!--- Entries displayed here --->
 				#cb.quickEntries()#
-		
+
 				<!--- Pagination --->
 				<cfif prc.entriesCount>
 					<div class="contentBar">
 						#cb.quickPaging()#
 					</div>
 				</cfif>
-		
+
 				<!--- ContentBoxEvent --->
 				#cb.event( "cbui_postIndexDisplay" )#
 			</div>
-		
+
 			<!--- SideBar --->
 			<cfif args.sidebar>
 			<div class="col-sm-3" id="blog-sidenav">
 				#cb.quickView( view='_blogsidebar', args=args )#
 			</div>
 			</cfif>
-		
+
 		</div>
 	</div>
-</section>		
+</section>
 </cfoutput>

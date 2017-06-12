@@ -67,7 +67,7 @@
     -->
     <Connector port="8085" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="8443" 
+               redirectPort="8443"
 			   URIEncoding="UTF-8" />
     <!-- A "Connector" using the shared thread pool-->
     <!--

@@ -61,7 +61,7 @@ component extends="baseHandler"{
 
 		// tab
 		prc.tabComments_inbox = true;
-		
+
 		// display
 		event.setView( "comments/index" );
 	}
@@ -85,7 +85,7 @@ component extends="baseHandler"{
 			data.error = true;
 			cbMessagebox.warn( data.messages );
 		}
-		
+
 		// If ajax call, return as ajax
 		if( event.isAjax() ){
 			event.renderData( data=data, type="json" );
@@ -187,7 +187,7 @@ component extends="baseHandler"{
 				// announce event
 				announceInterception( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
 				// remove
-				commentService.delete( oComment ); 
+				commentService.delete( oComment );
 				arrayAppend( data.messages, "Comment #thisCommentID# removed" );
 				// announce event
 				announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID } );

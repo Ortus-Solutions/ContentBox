@@ -40,7 +40,7 @@
 							<li><a href="#event.buildLink(prc.xehEditorRule)#/ruleID/#rule.getRuleID()#" title="Edit Rule"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
 							<!--- Export --->
 							<li><a href="#event.buildLink(linkto=prc.xehExport)#/ruleID/#rule.getRuleID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-							<li><a href="#event.buildLink(linkto=prc.xehExport)#/ruleID/#rule.getRuleID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>	
+							<li><a href="#event.buildLink(linkto=prc.xehExport)#/ruleID/#rule.getRuleID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 						</cfif>
 			    	</ul>
 			    </div>

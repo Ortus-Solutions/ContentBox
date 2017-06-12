@@ -17,7 +17,7 @@ component extends="baseHandler"{
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
 
 	/**
-	* Pre handler 
+	* Pre handler
 	*/
 	function preHandler( event, action, eventArguments, rc, prc ){
 	}
@@ -39,7 +39,7 @@ component extends="baseHandler"{
 		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
 		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
 		prc.xehLatestLogins			= "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
-		
+
 		// Installer Check
 		prc.installerCheck = settingService.isInstallationPresent();
 		// announce event
@@ -47,7 +47,7 @@ component extends="baseHandler"{
 		// dashboard view
 		event.setView( "dashboard/index" );
 	}
-	
+
 	/**
 	* Produce the latest system snapshots
 	* @return html
@@ -60,7 +60,7 @@ component extends="baseHandler"{
 		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
 		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();
 		prc.categoriesCount 		= categoryService.count();
-		
+
 		// Few Reports
 		prc.topContent 		= contentService.getTopVisitedContent();
 		prc.topCommented 	= contentService.getTopCommentedContent();
@@ -89,9 +89,9 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.latestDraftsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { 
+			eventArguments 	= {
 				max 				= 10,
-				author 				= prc.oCurrentAuthor, 
+				author 				= prc.oCurrentAuthor,
 				isPublished 		= false,
 				showHits 			= false,
 				colorCodings 		= false,
@@ -110,9 +110,9 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.latestEditsViewlet = runEvent(
 			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= { 
+			eventArguments 	= {
 				max 		= 10,
-				showHits 	= true 
+				showHits 	= true
 			}
 		);
 		event.setView( view="dashboard/latestSystemEdits", layout="ajax" );
@@ -126,7 +126,7 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.futurePublishedContent = runEvent(
 			event 			= "contentbox-admin:content.contentByPublishedStatus",
-			eventArguments 	= { 
+			eventArguments 	= {
 				max 			= 10,
 				showHits 		= false,
 				colorCodings 	= false
@@ -143,7 +143,7 @@ component extends="baseHandler"{
 		// Latest Edits
 		prc.expiredContent = runEvent(
 			event 			= "contentbox-admin:content.contentByPublishedStatus",
-			eventArguments 	= { 
+			eventArguments 	= {
 				max 				= 10,
 				showHits 			= true,
 				showExpired 		= true,
@@ -152,7 +152,7 @@ component extends="baseHandler"{
 		);
 		event.setView( view="dashboard/expiredContent", layout="ajax" );
 	}
-	
+
 	/**
 	* Produce the latest system comments
 	* @return html
@@ -160,13 +160,13 @@ component extends="baseHandler"{
 	function latestComments( event, rc, prc ){
 		// Get Comments viewlet
 		var eArgs = { max=prc.cbSettings.cb_dashboard_recentComments,pagination=false };
-		prc.commentsViewlet = runEvent( 
-			event 			= "contentbox-admin:comments.pager", 
-			eventArguments 	= eArgs 
+		prc.commentsViewlet = runEvent(
+			event 			= "contentbox-admin:comments.pager",
+			eventArguments 	= eArgs
 		);
 		event.setView( view="dashboard/latestComments", layout="ajax" );
 	}
-	
+
 	/**
 	* Produce the latest system news
 	* @return html
@@ -175,9 +175,9 @@ component extends="baseHandler"{
 		// Get latest ContentBox news
 		try{
 			if( len( prc.cbsettings.cb_dashboard_newsfeed ) ){
-				prc.latestNews = feedReader.readFeed( 
-					feedURL 	= prc.cbsettings.cb_dashboard_newsfeed, 
-					itemsType 	= "query", 
+				prc.latestNews = feedReader.readFeed(
+					feedURL 	= prc.cbsettings.cb_dashboard_newsfeed,
+					itemsType 	= "query",
 					maxItems 	= prc.cbsettings.cb_dashboard_newsfeed_count
 				);
 			} else {
@@ -187,7 +187,7 @@ component extends="baseHandler"{
 			prc.latestNews = { items = queryNew( "" ) };
 			log.error( "Error retrieving news feed: #e.message# #e.detail#", e );
 		}
-		
+
 		event.setView( view="dashboard/latestNews", layout="ajax" );
 	}
 
@@ -207,7 +207,7 @@ component extends="baseHandler"{
 	function about( event, rc, prc ){
 		event.setView( "dashboard/about" );
 	}
-	
+
 	/*************************************** UTILITY ACTIONS *********************************/
 
 	/**
@@ -216,7 +216,7 @@ component extends="baseHandler"{
 	*/
 	function deleteInstaller(){
 		var results = { "ERROR" = false, "MESSAGE" = "" };
-		
+
 		try{
 			settingService.deleteInstaller();
 			results[ "MESSAGE" ] = "The installer module has been successfully deleted.";
@@ -224,17 +224,17 @@ component extends="baseHandler"{
 			results[ "ERROR" ] = true;
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
 		}
-		
+
 		event.renderData( data=results, type="json" );
 	}
-	
+
 	/**
 	* delete DSN Creator module
 	* @return JSON
 	*/
 	function deleteDSNCreator(){
 		var results = { "ERROR" = false, "MESSAGE" = "" };
-		
+
 		try{
 			settingService.deleteDSNCreator();
 			results[ "MESSAGE" ] = "The DSN Creator module has been successfully deleted.";
@@ -242,7 +242,7 @@ component extends="baseHandler"{
 			results[ "ERROR" ] = true;
 			results[ "MESSAGE" ] = "Error removing DSN Creator: #e.message#";
 		}
-		
+
 		event.renderData( data=results, type="json" );
 	}
 
@@ -277,10 +277,10 @@ component extends="baseHandler"{
 					setNextEvent( prc.xehDashboard );
 				}
 			}
-			
+
 			// flash info for UI purposes
 			flash.put( "moduleReloaded", rc.targetModule );
-			
+
 			// Ajax requests
 			if( event.isAjax() ){
 				event.renderData( type="json", data={ error = false, executed = true } );
@@ -302,7 +302,7 @@ component extends="baseHandler"{
 				setNextEvent( prc.xehDashboard );
 			}
 		}
-		
+
 	}
 
 }

@@ -5,76 +5,76 @@
 * ---
 * This entity groups permissions for logical groupings
 */
-component 	persistent="true" 
-			entityName="cbPermissionGroup" 
-			table="cb_permissionGroup" 
+component 	persistent="true"
+			entityName="cbPermissionGroup"
+			table="cb_permissionGroup"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbPermissionGroup" 
+			cachename="cbPermissionGroup"
 			cacheuse="read-write"{
-	
+
 	/* *********************************************************************
-	**							DI									
+	**							DI
 	********************************************************************* */
 
-	
-	
+
+
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="permissionGroupID" 
-				fieldtype="id" 
-				generator="native" 
-				setter="false" 
+	property 	name="permissionGroupID"
+				fieldtype="id"
+				generator="native"
+				setter="false"
 				params="{ allocationSize = 1, sequence = 'permissionGroupID_seq' }";
-	
-	property 	name="name" 
-				ormtype="string" 
-				notnull="true" 
-				length="255" 
+
+	property 	name="name"
+				ormtype="string"
+				notnull="true"
+				length="255"
 				unique="true"
 				default="";
-	
-	property 	name="description" 
-				ormtype="string" 
-				notnull="false" 
-				default="" 
+
+	property 	name="description"
+				ormtype="string"
+				notnull="false"
+				default=""
 				length="500";
-	
+
 	/* *********************************************************************
-	**							RELATIONSHIPS							
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// M2M -> Permissions
-	property	name="permissions" 
-				singularName="permission" 
-				fieldtype="many-to-many" 
-				type="array" 
-				lazy="extra" 
-				orderby="permission" 
-				cascade="all" 
-				cacheuse="read-write"  
-			  	cfc="contentbox.models.security.Permission" 
-			  	fkcolumn="FK_permissionGroupID" 
-			  	linktable="cb_groupPermissions" 
-			  	inversejoincolumn="FK_permissionID"; 
-	
+	property	name="permissions"
+				singularName="permission"
+				fieldtype="many-to-many"
+				type="array"
+				lazy="extra"
+				orderby="permission"
+				cascade="all"
+				cacheuse="read-write"
+			  	cfc="contentbox.models.security.Permission"
+			  	fkcolumn="FK_permissionGroupID"
+			  	linktable="cb_groupPermissions"
+			  	inversejoincolumn="FK_permissionID";
+
 	/* *********************************************************************
-	**							CALCULATED FIELDS									
+	**							CALCULATED FIELDS
 	********************************************************************* */
 
-	property 	name="numberOfPermissions" 
-				formula="select count(*) from cb_groupPermissions as groupPermissions 
+	property 	name="numberOfPermissions"
+				formula="select count(*) from cb_groupPermissions as groupPermissions
 						 where groupPermissions.FK_permissionGroupID = permissionGroupID";
-	
+
 	/* *********************************************************************
-	**							NON PERSISTED PROPERTIES									
+	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
 	property name="permissionList" 	persistent="false";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS							
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "permissionGroupID";
@@ -85,9 +85,9 @@ component 	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
-	
+
 	// Constructor
 	function init(){
 		permissions 	= [];
@@ -105,23 +105,23 @@ component 	persistent="true"
 		// cache list
 		if( !len( permissionList ) AND hasPermission() ){
 			var q = entityToQuery( getPermissions() );
-			permissionList = valueList( q.permission );	
+			permissionList = valueList( q.permission );
 		}
-		
+
 		// Do verification checks
 		var aList = listToArray( arguments.slug );
 		var isFound = false;
-		
+
 		for( var thisPerm in aList ){
 			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
 				isFound = true;
 				break;
 			}
 		}
-		
+
 		return isFound;
 	}
-	
+
 	/**
 	* Clear all permissions
 	*/
@@ -129,7 +129,7 @@ component 	persistent="true"
 		permissions = [];
 		return this;
 	}
-	
+
 	/**
 	* Override the setPermissions
 	*/
@@ -142,7 +142,7 @@ component 	persistent="true"
 		}
 		return this;
 	}
-	
+
 	/**
 	* Get memento representation
 	* @excludes Exclude properties
@@ -151,7 +151,7 @@ component 	persistent="true"
 	function getMemento( excludes="", boolean showPermissions=true ){
 		var pList = listToArray( "name,description" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		// Do Permissions
 		if( arguments.showPermissions && hasPermission() ){
 			result[ "permissions" ]= [];

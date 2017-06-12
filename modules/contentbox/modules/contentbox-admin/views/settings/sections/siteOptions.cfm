@@ -65,7 +65,7 @@
 					</cfloop>
 				</select>
 			</div>
-		</div>  
+		</div>
 
 		<!--- Powered by Header --->
 		<div class="form-group">
@@ -96,9 +96,9 @@
 				field   = "cb_site_sitemap",
 				content = "Enable Sitemap Features:"
 			)#
-			
+
 			<div class="controls">
-				<small>If enabled, you will be able to access the site map via <code>/sitemap</code> and can even add format extensions, e.g: <code>sitemap.json, sitemap.xml, sitemap.txt</code></small><br/><br/>			
+				<small>If enabled, you will be able to access the site map via <code>/sitemap</code> and can even add format extensions, e.g: <code>sitemap.json, sitemap.xml, sitemap.txt</code></small><br/><br/>
 				#html.checkbox(
 					name    = "cb_site_sitemap_toggle",
 					data	= { toggle: 'toggle', match: 'cb_site_sitemap' },
@@ -172,21 +172,21 @@
 					value	= prc.cbSettings.cb_site_disable_blog
 				)#
 			</div>
-		</div>  
+		</div>
 		<!--- Entry Point --->
 		<div class="form-group">
 			#html.label(class="control-label",field="cb_site_blog_entrypoint",content="Blog Entry Point:" )#
 			<div class="controls">
-				<small>Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is 
+				<small>Choose the entry point in the URL to trigger the blog engine. The usual defaul entry point pattern is
 				<strong>blog</strong>. Do not use symbols or slashes (/ \)<br/></small>
-				<code>#prc.cb.linkHome()#</code> 
+				<code>#prc.cb.linkHome()#</code>
 				#html.textField(
-					name="cb_site_blog_entrypoint", 
-					value=prc.cbSettings.cb_site_blog_entrypoint, 
+					name="cb_site_blog_entrypoint",
+					value=prc.cbSettings.cb_site_blog_entrypoint,
 					class="form-control"
 				)#
 			</div>
-		</div>  
+		</div>
 	</fieldset>
 	<!--- Site Maintenance --->
 	<fieldset>

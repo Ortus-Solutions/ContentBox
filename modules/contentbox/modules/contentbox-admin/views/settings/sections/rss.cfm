@@ -10,7 +10,7 @@
             #html.textField(name="cb_rss_title", required="required", value=prc.cbSettings.cb_rss_title, class="form-control input-sm width98",title="The title of the rss feed." )#
         </div>
     </div>
-     
+
     <!--- RSS feed generator --->
     <div class="form-group">
     	#html.label(class="control-label",field="",content="Feed Generator: " )#
@@ -19,7 +19,7 @@
              #html.textField(name="cb_rss_generator",required="required",value=prc.cbSettings.cb_rss_generator,class="form-control input-sm width98",title="The generator of the rss feed." )#
         </div>
     </div>
-     
+
     <!--- RSS feed copyright --->
     <div class="form-group">
         #html.label(class="control-label",field="",content="Feed Copyright: " )#
@@ -28,7 +28,7 @@
              #html.textField(name="cb_rss_copyright",required="required",value=prc.cbSettings.cb_rss_copyright,class="form-control input-sm width98",title="Copyright." )#
         </div>
     </div>
-     
+
     <!--- RSS feed description --->
     <div class="form-group">
         #html.label(class="control-label",field="",content="Feed Description: " )#
@@ -37,14 +37,14 @@
              #html.textField(name="cb_rss_description",required="required",value=prc.cbSettings.cb_rss_description,class="form-control input-sm width98",title="RSS feed description." )#
         </div>
     </div>
-     
+
 	<!--- RSS feed webmaster --->
 	<div class="form-group">
 	    #html.label(class="control-label",field="",content="Feed Webmaster: " )#
 	    <div class="controls">
 	        <small>RSS feed webmaster. Ex: myemail@mysite.com (Site Administrator)</small></br>
 	        #html.textField(
-	        	name="cb_rss_webmaster", 
+	        	name="cb_rss_webmaster",
 	        	value=prc.cbSettings.cb_rss_webmaster,
 	        	class="form-control input-sm width98",
 	        	title="RSS feed webmaster."
@@ -63,7 +63,7 @@
                 </cfloop>
             </select>
         </div>
-    </div>    
+    </div>
     <!--- Max RSS Comments --->
     <div class="form-group">
         <label class="control-label" for="cb_rss_maxComments">Max RSS Content Comments:</label>

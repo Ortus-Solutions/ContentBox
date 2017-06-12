@@ -117,7 +117,7 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 
 	// Register change event for auto saving
 	getContentEditor().on( 'change', startTimer );
-	
+
 	// Load Previous AutoLoad when selected from the Dropdown menu
 	$( '#' + ddMenuID ).on( 'click', 'li > a', function( evt ){
 		loadContent( $( evt.currentTarget ).data( 'id' ) );

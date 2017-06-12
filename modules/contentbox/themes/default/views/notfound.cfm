@@ -2,7 +2,7 @@
 <div class="body-header-jumbotron jumbotron #cb.themeSetting( 'hpHeaderBg' )#-bg">
 	<div class="container text-center">
 		<h1>
-			<i class="fa fa-ambulance"></i> 
+			<i class="fa fa-ambulance"></i>
 			Oopsy!
 		</h1>
 

@@ -20,7 +20,7 @@
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
-									name="userSearch", 
+									name="userSearch",
 									class="form-control",
 									placeholder="Quick Search"
 								)#

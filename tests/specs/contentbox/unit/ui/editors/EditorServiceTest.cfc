@@ -7,17 +7,17 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	function setup(){
 		super.setup();
-		
+
 		mockWireBox.$("getInstance", new MockEditor() );
-		
+
 		// init the model object
 		model.init( mockWireBox );
 	}
-	
+
 	function teardown(){
-		
+
 	}
-	
+
 	function testGetRegisteredEditors(){
 		model.getEditors()["test"] = this;
 		model.getEditors()["Awesome"] = this;
@@ -27,20 +27,20 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		assertEquals( "mock-editor", a[2] );
 		assertEquals( "test", a[3] );
 	}
-	
-	
+
+
 	function testregisterEditor(){
 		editor = getMockBox().prepareMock( new MockEditor() );
 		model.registerEditor( editor );
 		assertEquals( editor, model.getEditor("mock-editor") );
 	}
-	
+
 	function testUnregisterEditor(){
 		editor = getMockBox().prepareMock( new MockEditor() );
 		model.registerEditor( editor ).unRegisterEditor( "mock-editor" );
 		assertFalse( structKeyExists( model.getEditors(), "mock-editor") );
 	}
-	
+
 	function testGetRegisteredEditorsMap(){
 		model.getEditors()["test"] = getMockBox().createStub(implements="contentbox.models.ui.editors.IEditor");
 		model.getEditors()["Awesome"] = getMockBox().createStub(implements="contentbox.models.ui.editors.IEditor");

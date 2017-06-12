@@ -9,9 +9,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 		"columnDefs": [
-    		{ 
-    			"orderable": false, 
-    			"targets": '{sorter:false}' 
+    		{
+    			"orderable": false,
+    			"targets": '{sorter:false}'
     		}
   		],
   		"order": []
@@ -46,16 +46,16 @@ $(document).ready(function() {
 			var rows = table.tBodies[ 0 ].rows;
 			$( row ).css( "cursor", "progress" );
 			//console.log( "order" + newRulesOrder );
-			$.post( 
-				'#event.buildLink( prc.xehContentOrder )#', 
-				{ newRulesOrder:newRulesOrder }, 
+			$.post(
+				'#event.buildLink( prc.xehContentOrder )#',
+				{ newRulesOrder:newRulesOrder },
 				function(){
 					for( var i = 0; i < rows.length; i++ ) {
 						var oID = '##' + rows[ i ].id + '_order';
 						$( oID ).html( i + 1 );
 					}
 					$( row ).css( "cursor", "default" );
-				} 
+				}
 			);
 			//console.log( $( row ) );
 			$( row ).find( "a.dragHandle" )
