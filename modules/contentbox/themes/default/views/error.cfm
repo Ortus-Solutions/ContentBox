@@ -2,7 +2,7 @@
 <div class="body-header-jumbotron jumbotron">
 	<div class="container text-center">
 		<h1>
-			<i class="fa fa-exclamation-triangle"></i> 
+			<i class="fa fa-exclamation-triangle"></i>
 			Houston we have a problem!
 		</h1>
 
@@ -12,7 +12,7 @@
 
 		<!--- Dev Debugging --->
 		<cfif getSetting( "environment" ) eq "development">
-			
+
 			<div class="form-group">
 				<pre>
 				#prc.exception.message# #prc.exception.detail#
@@ -27,7 +27,7 @@
 			</div>
 
 		</cfif>
-		
+
 		<p>
 			<a class="btn btn-primary btn-lg" href="#cb.linkHome()#" role="button">Go Home</a>
 		</p>

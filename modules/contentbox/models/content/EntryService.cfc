@@ -22,7 +22,7 @@ component extends="ContentService" singleton{
 
 	/**
 	* Save an entry
-	* 
+	*
 	* @return EntryService
 	*/
 	function saveEntry( required any entry, boolean transactional=true ){
@@ -257,8 +257,8 @@ component extends="ContentService" singleton{
 	* @isPublished	Show all content or true/false published content
 	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatEntries( 
-		sortOrder="title asc", 
+	array function getAllFlatEntries(
+		sortOrder="title asc",
 		boolean isPublished,
 		boolean showInSearch
 	){

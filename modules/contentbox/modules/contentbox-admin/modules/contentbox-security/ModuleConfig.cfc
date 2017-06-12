@@ -22,7 +22,7 @@ component {
 
 		// Layout Settings
 		layoutSettings = { defaultLayout = "simple.cfm" };
-	
+
 		// i18n
 		i18n = {
 			resourceBundles = {
@@ -37,30 +37,30 @@ component {
 			{ pattern="/:action", handler="security" },
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
 			customInterceptionPoints = [
 				// Login Layout HTML points
-				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd", 
+				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd",
 				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent",
 				// Login Form
 				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm"
 			]
 		};
-		
+
 		// interceptors
 		interceptors = [
 			// ContentBox security via cbSecurity Module
-			{ 
+			{
 				class 		= "cbsecurity.interceptors.Security",
 			  	name 		= "security@cb",
 			  	properties 	= {
 			 		rulesSource 		= "model",
 			 		rulesModel			= "securityRuleService@cb",
 			 		rulesModelMethod 	= "getSecurityRules",
-			 		validatorModel 		= "securityService@cb" 
+			 		validatorModel 		= "securityService@cb"
 			 	}
 			}
 		];

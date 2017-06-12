@@ -35,7 +35,7 @@ component{
 
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
 	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
-										
+
 	this.mappings[ "/root" ]   				= rootPath;
 	this.mappings[ "/tests" ] 				= getDirectoryFromPath( getCurrentTemplatePath() );
 	this.mappings[ "/coldbox" ] 			= rootPath & "coldbox" ;

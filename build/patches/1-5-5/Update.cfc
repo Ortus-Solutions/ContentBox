@@ -48,7 +48,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="contentService" 			inject="contentService@cb";
 	property name="wirebox"					inject="wirebox";
 	property name="securityService" 		inject="id:securityService@cb";
-	
+
 	function init(){
 		version = "1.5.5";
 		return this;
@@ -61,32 +61,32 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		try{
 			var currentVersion = coldbox.getSetting( "modules" ).contentbox.version;
-			
+
 			log.info("About to begin #version# patching");
-			
+
 			// Check for System Salt, else create it
 			updateSalt();
-			
+
 			// Update security rules
 			if( replace( currentVersion, ".", "", "all" )  LTE 152 ){
-				securityRuleService.resetRules();	
+				securityRuleService.resetRules();
 			}
-			
+
 			// Update new settings
 			updateSettings();
-			
+
 			// create caching directory
 			var cacheDir = coldbox.getSetting("modules")["contentbox-admin"].path & "/includes/cache";
 			if( !directoryExists( cacheDir ) ){
 				directoryCreate( cacheDir );
 			}
-			
+
 			// Update Content Creators
 			updateContentCreators();
-			
+
 			// Clear singletons so they are rebuilt
 			coldbox.setColdboxInitiated( false );
-			
+
 			log.info("Finalized #version# patching");
 		}
 		catch(Any e){
@@ -104,7 +104,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		try{
 			// Make changes on disk take effect
 			ORMREload();
-			
+
 			// Update custom HTML creators
 			updateCustomHTML();
 		}
@@ -114,17 +114,17 @@ component implements="contentbox.model.updates.IUpdate"{
 			rethrow;
 		}
 	}
-	
+
 	/************************************** PRIVATE *********************************************/
-	
+
 	private function updateCustomHTML(){
 		var oAuthor = securityService.getAuthorSession();
-		
+
 		// Update all content now with published info
 		var qAllContent = new Query(sql="update cb_customHTML set publishedDate = :today" );
 		qAllContent.addParam(name="today", value=dateFormat( now(), "mm-dd-yyyy" ), cfsqltype=getDateTimeDBType());
 		qAllContent.execute();
-		
+
 		// Update all content now with logged in user
 		qAllContent = new Query(sql="select contentID, FK_authorID from cb_customHTML" ).execute().getResult();
 		for( var x=1; x lte qAllContent.recordCount; x++ ){
@@ -137,16 +137,16 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	private function updateContentCreators(){
 		// get all content versions
 		var qAllContent = new Query();
 		qAllContent.setSQL("select distinct FK_authorID, FK_contentID from cb_contentVersion where isActive = 1");
 		var qContent = qAllContent.execute().getResult();
-			
-		// Update creators	
+
+		// Update creators
 		for(var x=1; x lte qContent.recordcount; x++ ){
-			
+
 			// check uthor not empty
 			var authCheck = new Query(sql="SELECT FK_authorID FROM cb_content WHERE contentID = :contentID");
 			authCheck.addParam(name="contentID", value=qContent.FK_contentID[ x ], cfsqltype="numeric");
@@ -154,7 +154,7 @@ component implements="contentbox.model.updates.IUpdate"{
 				log.info("Skipping creator for content id #qContent.FK_contentID[ x ]# as it is already set.");
 				continue;
 			};
-			
+
 			var q = new Query();
 			q.setSQL( "UPDATE cb_content SET FK_authorID = :authorID WHERE contentID = :contentID" );
 			q.addParam(name="authorID", value=qContent.FK_authorID[ x ], cfsqltype="numeric");
@@ -163,7 +163,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			log.info("Updated creator for content id #qContent.FK_contentID[ x ]#");
 		}
 	}
-	
+
 	private function updateAdmin(){
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Add in new permissions
@@ -175,7 +175,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	private function updateEditor(){
 		var oRole = roleService.findWhere({role="Editor"});
 		// Add in new permissions
@@ -187,7 +187,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	private function updatePermissions(){
 		var perms = {
 			"EDITORS_EDITOR_SELECTOR" = "Ability to change the editor to another registered online editor"
@@ -208,12 +208,12 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		permissionService.saveAll(entities=allPerms,transactional=false);
 	}
-	
+
 	private function updateSalt(){
 		// Create New setting if does not exist.
 		addSetting( "cb_salt", hash( createUUID() & getTickCount() & now(), "SHA-512" ) );
 	}
-	
+
 	private function updateSettings(){
 		// Create New settings
 		addSetting( "cb_media_provider", "CFContentMediaProvider" );
@@ -224,7 +224,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		addSetting( "cb_media_html5uploads_maxFiles", "25" );
 		addSetting( "cb_page_excerpts", "false" );
 	}
-	
+
 	private function addSetting(name, value){
 		var setting = settingService.findWhere( { name = arguments.name } );
 		if( isNull( setting ) ){
@@ -238,9 +238,9 @@ component implements="contentbox.model.updates.IUpdate"{
 			log.info("Skipped #arguments.name# setting, already there");
 		}
 	}
-	
+
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
-	
+
 	// Add a new column: type=[varchar, boolean, text]
 	private function addColumn(required table, required column, required type, required limit, boolean nullable=false, defaultValue){
 		if( !columnExists( arguments.table, arguments.column ) ){
@@ -263,7 +263,7 @@ component implements="contentbox.model.updates.IUpdate"{
 					sDefault = " DEFAULT '#ReplaceNoCase( arguments.defaultValue, "'", "''" )#'";
 				}
 			}
-			
+
 			// Build SQL
 			var q = new Query(datasource=getDatasource());
 			q.setSQL( "ALTER TABLE #arguments.table# ADD #arguments.column# #arguments.type#(#arguments.limit#) #sNullable##sDefault#;" );
@@ -274,7 +274,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			log.info("Skipping adding column: #arguments.column# to table: #arguments.table# as it already existed");
 		}
 	}
-	
+
 	// Verify if a column exists
 	private boolean function columnExists(required table, required column){
 		var colFound = false;
@@ -286,11 +286,11 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		return colFound;
 	}
-	
+
 	// Get a DB specific varchar type
 	private function getVarcharDBType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "varchar";
@@ -336,7 +336,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	// Get a DB specific long text type
 	private function getTextDBType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "text";
@@ -355,11 +355,11 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	// Get a DB specific boolean column
 	private function getBooleanDBType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "boolean";
@@ -378,12 +378,12 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	// Get the database type
 	private function getDatabaseType(){
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
-	
+
 	// Get the default datasource
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();

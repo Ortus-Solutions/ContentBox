@@ -13,7 +13,7 @@ component {
 	property name="contentService"		inject="id:contentService@cb";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="settingService"		inject="id:settingService@cb";
-	
+
 	/**
 	* Executes before all handler actions
 	*/
@@ -27,7 +27,7 @@ component {
 			// proxy
 			event.overrideEvent( "contentbox-ui:page.index" );
 			return;
-		} 
+		}
 	}
 
 	/**
@@ -35,7 +35,7 @@ component {
 	*/
 	function index( event, rc, prc ){
 		// Caching Enabled? Then test if data is in cache.
-		var cacheEnabled = ( 
+		var cacheEnabled = (
 			!event.valueExists( "cbCache" )
 		);
 
@@ -44,7 +44,7 @@ component {
 			var cache 		= cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
 			var cacheKey 	= "cb-content-sitemap-#cgi.http_host#" &
 				hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
-			
+
 			// get content data from cache
 			var results = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
@@ -73,7 +73,7 @@ component {
 				cachekey,
 				results,
 				( prc.cbSettings.cb_content_cachingTimeout ),
-				( prc.cbSettings.cb_content_cachingTimeoutIdle )  
+				( prc.cbSettings.cb_content_cachingTimeoutIdle )
 			);
 		}
 
@@ -93,33 +93,33 @@ component {
 		prc.cbRoot 			= getContextRoot() & event.getModuleRoot( 'contentbox' );
 		// store module entry point
 		prc.cbEntryPoint	= getModuleConfig( "contentbox-ui" ).entryPoint;
-		
+
 		// Several Link Defs
 		prc.linkHome 	= CBHelper.linkHome();
 		prc.siteBaseURL = CBHelper.siteBaseURL();
 		prc.disableBlog = settingService.getSetting( 'cb_site_disable_blog' );
-		
+
 		// Get Content Data
-		prc.aPages = pageService.getAllFlatPages( 
+		prc.aPages = pageService.getAllFlatPages(
 			sortOrder		= "order asc",
 			isPublished 	= true,
 			showInSearch 	= true
 		);
 
 		// Blog data if enabled
-		if( prc.disableBlog == false ){ 
+		if( prc.disableBlog == false ){
 			prc.blogEntryPoint = settingService.getSetting( 'cb_site_blog_entrypoint' );
 			if( len( prc.blogEntryPoint ) && right( prc.blogEntryPoint, 1) != '/' ){
 				prc.blogEntryPoint = prc.blogEntryPoint & '/';
 			}
 			// Entry Content
-			prc.aEntries = entryService.getAllFlatEntries( 
+			prc.aEntries = entryService.getAllFlatEntries(
 				sortOrder		= "createdDate asc",
 				isPublished 	= true,
 				showInSearch 	= true
 			);
 		}
-		
+
 		// Render it out in specific format
 		switch( rc.format ){
 			case "xml" : {
@@ -143,8 +143,8 @@ component {
 			default : {
 				event.setView( "sitemap_html" );
 				return {
-	  				data = renderLayout( 
-	  					module		= event.getCurrentLayoutModule(), 
+	  				data = renderLayout(
+	  					module		= event.getCurrentLayoutModule(),
 	  					viewModule	= event.getCurrentViewModule()
 	  				),
 	  				contentType = "text/html"
@@ -152,5 +152,5 @@ component {
 			}
 		}
 	}
-	
+
 }

@@ -5,65 +5,65 @@
 * ---
 * I am a Comment Entity
 */
-component	persistent="true" 
-			entityname="cbComment" 
-			table="cb_comment" 
-			batchsize="25" 
+component	persistent="true"
+			entityname="cbComment"
+			table="cb_comment"
+			batchsize="25"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbComment" 
+			cachename="cbComment"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="commentID" 
-				fieldtype="id" 
-				generator="native" 
-				setter="false" 
+	property 	name="commentID"
+				fieldtype="id"
+				generator="native"
+				setter="false"
 				params="{ allocationSize = 1, sequence = 'commentID_seq' }";
 
-	property 	name="content" 		
-				ormtype="text" 	
+	property 	name="content"
+				ormtype="text"
 				notnull="true";
 
-	property 	name="author"			
-				length="100" 	
+	property 	name="author"
+				length="100"
 				notnull="true";
 
-	property 	name="authorIP"		
-				length="100" 	
+	property 	name="authorIP"
+				length="100"
 				notnull="true";
 
-	property 	name="authorEmail"		
-				length="255" 	
+	property 	name="authorEmail"
+				length="255"
 				notnull="true";
 
-	property 	name="authorURL"		
-				length="255" 	
+	property 	name="authorURL"
+				length="255"
 				notnull="false";
 
-	property 	name="isApproved" 		
-				notnull="true"  
-				ormtype="boolean" 	
-				default="false" 
+	property 	name="isApproved"
+				notnull="true"
+				ormtype="boolean"
+				default="false"
 				index="idx_contentComment,idx_approved";
 
 	/* *********************************************************************
-	**							RELATIONSHIPS									
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// M20 -> Content loaded as a proxy
-	property 	name="relatedContent" 
-				notnull="true" 
-				cfc="contentbox.models.content.BaseContent" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_contentID" 
-				lazy="true" 
+	property 	name="relatedContent"
+				notnull="true"
+				cfc="contentbox.models.content.BaseContent"
+				fieldtype="many-to-one"
+				fkcolumn="FK_contentID"
+				lazy="true"
 				index="idx_contentComment";
 
 	/* *********************************************************************
-	**							CONSTRAINTS + PK									
+	**							CONSTRAINTS + PK
 	********************************************************************* */
 
 	this.pk = "commentID";
@@ -72,7 +72,7 @@ component	persistent="true"
 		"content" 		= { required = true },
 		"author" 		= { required = true, size="1..100" },
 		"authorIP" 		= { required = true, size="1..100" },
-		"authorEmail" 	= { required = true, size="1..255", type="email" },	
+		"authorEmail" 	= { required = true, size="1..255", type="email" },
 		"authorURL" 	= { required = true, size="1..255", type="URL" }
 	};
 
@@ -98,10 +98,10 @@ component	persistent="true"
 	function getMemento( excludes="" ){
 		var pList 	= listToArray( "content,author,authorIP,authorEmail,authorURL,isApproved" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		return result;
 	}
-	
+
 	/**
 	* Get Display Content
 	*/

@@ -11,8 +11,8 @@
   padding: 5px 0px 0px 0px;
 }
 /** Header */
-#header .brand{ 
-	background-color: white!important; 
+#header .brand{
+	background-color: white!important;
 }
 #header .logo{
 	padding: 15px 0 0 0px !important;
@@ -116,7 +116,7 @@ img.img-screenshot{ height: 200px; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
 .checkbox-spacer {margin-top:5px;}
-.btn-toggle.radio {padding-left:30px;}  
+.btn-toggle.radio {padding-left:30px;}
 
 /**============================== WIDGETS ==============================**/
 
@@ -203,7 +203,7 @@ widgetinfobar::-moz-selection {
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
 
 #div-search { padding: 6px 14px 2px 14px; }
-#div-search input{ 
+#div-search input{
 	background-color: #fafafa;
 	border-radius: 3px;
 	box-shadow: none !important;
@@ -221,8 +221,8 @@ widgetinfobar::-moz-selection {
 	display: none;
 	top: 60px;
 	left: 312px;
-	background-color: #293949; 
-	padding: 5px 10px; 
+	background-color: #293949;
+	padding: 5px 10px;
 	width: 425px;
 	position: absolute;
 	min-height: 100px;
@@ -256,7 +256,7 @@ widgetinfobar::-moz-selection {
 
 /**============================== DIFF CSS ==============================**/
 /* LEGEND */
-#legend { 
+#legend {
 	font-size:9px;
 	line-height:1em;
 	margin:1em 0;
@@ -272,9 +272,9 @@ widgetinfobar::-moz-selection {
 	}
 }
 /* DIFF */
-table.diff { 
-	width: 100%; 
-	margin: 0px; 
+table.diff {
+	width: 100%;
+	margin: 0px;
 	padding: 0px;
 	tr{
 		margin: 0px; padding: 0px;
@@ -282,19 +282,19 @@ table.diff {
 	tr:hover, td:hover{
 		background: #d7eafe;
 	},
-	td { 
-		margin: 0px; 
-		padding: 3px; 
-		border-collapse: collapse; 
+	td {
+		margin: 0px;
+		padding: 3px;
+		border-collapse: collapse;
 		font-family: "Courier New";
 		font-size: 11px;
 		font-weight: bold;
 		line-height: normal;
-		vertical-align: top; 
+		vertical-align: top;
 	},
 	td.linenum {
 		background-color: #EFEFEF;
-		color: #666666; 
+		color: #666666;
 		text-align: right;
 	}
 }
@@ -363,8 +363,8 @@ table.diff {
 	}
 }
 @media only screen and (max-width: 853px) {
-	#header div.brand{ 
-		display: none; 
+	#header div.brand{
+		display: none;
 	}
 	.main-content-wrapper {
 		margin-left: 0;

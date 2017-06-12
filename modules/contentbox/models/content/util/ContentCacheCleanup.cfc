@@ -13,7 +13,7 @@ component extends="coldbox.system.Interceptor"{
 	function cbui_onCommentPost( event, interceptData ){
 		doCacheCleanup( arguments.interceptData.content.buildContentCacheKey() , arguments.interceptData.content );
 	}
-	
+
 	// Listen when comments are moderated
 	function cbadmin_onCommentStatusUpdate( event, interceptData ){
 		var oComment = commentService.get( arguments.interceptData.commentID );
@@ -25,7 +25,7 @@ component extends="coldbox.system.Interceptor"{
 		var oComment = commentService.get( arguments.interceptData.commentID );
 		doCacheCleanup( oComment.getRelatedContent().buildContentCacheKey() , oComment.getRelatedContent() );
 	}
-	
+
 	// Listen when entries are saved
 	function cbadmin_postEntrySave( event, interceptData ){
 		var entry 	 = arguments.interceptData.entry;
@@ -75,7 +75,7 @@ component extends="coldbox.system.Interceptor"{
 		// clear ancestry caches
 		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
 		cache.clearByKeySnippet(
-			keySnippet 	= "cb-content-wrapper-#cgi.http_host#-#blogPrefix##replacenocase( arguments.content.getSlug(), "/" & listLast( arguments.content.getSlug(), "/" ), "" )#", 
+			keySnippet 	= "cb-content-wrapper-#cgi.http_host#-#blogPrefix##replacenocase( arguments.content.getSlug(), "/" & listLast( arguments.content.getSlug(), "/" ), "" )#",
 			async 		= true
 		);
 		// log

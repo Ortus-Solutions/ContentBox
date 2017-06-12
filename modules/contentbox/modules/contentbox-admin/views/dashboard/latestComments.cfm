@@ -7,6 +7,6 @@
 		#$r( "dashboard.latestComments.alert@admin" )#
 	</div>
 </cfif>
-<!--- Render Viewlet --->	
+<!--- Render Viewlet --->
 #prc.commentsViewlet#
 </cfoutput>

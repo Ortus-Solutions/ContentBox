@@ -4,7 +4,7 @@
 * www.ortussolutions.com/products/contentbox
 * ---
 * A theme is composed of the following pieces
-* 
+*
 * /ThemeDirectory
 *  + Theme.cfc (The CFC that models your theme implementation)
 *  / layouts (The folder that contains layouts in your theme)
@@ -25,12 +25,12 @@
 * 	 + comment.cfm (The template used to display an iteration of entry or page comments using coldbox collection rendering)
 * 	 + entry.cfm (The template used to display an iteration of entries in the home page using coldbox collection rendering)
 * / widgets (A folder that can contain layout specific widgets which override core ContentBox widgets)
-* 
+*
 * Templates
 * Templates are a single cfm template that is used by ContentBox to iterate over a collection (usually entries or categories or comments) and
 * render out all of them in uniformity.  Please refer to ColdBox Collection Rendering for more information.  Each template recevies
 * the following:
-* 
+*
 * _counter (A variable created for you that tells you in which record we are currently looping on)
 * _items (A variable created for you that tells you how many records exist in the collection)
 * {templateName} The name of the object you will use to display: entry, comment, category
@@ -39,17 +39,17 @@
 * onActivation()
 * onDelete()
 * onDeactivation()
-* 
+*
 * Settings
 * You can declare settings for your layouts that ContentBox will manage for you.
-* 
+*
 * this.settings = [
 * 	{ name="Title", defaultValue="My Awesome Title", required="true", type="text", label="Title:" },
 * 	{ name="Colors", defaultValue="blue", required="false", type="select", label="Color:", options="red,blue,orange,gray" }
 * ];
-* 
+*
 * The value is an array of structures with the following keys:
-* 
+*
 * - name : The name of the setting (required), the setting is saved as cb_layoutname_settingName
 * - defaultValue : The default value of the setting (required)
 * - required : Whether the setting is required or not. Defaults to false
@@ -61,7 +61,7 @@
 * - group : lets you group inputs under a Group name - settings should be in order for groupings to work as expected
 * - groupIntro : Lets you add a description for a group of fields
 * - fieldDescription : Lets you add a description for an individual field
-* - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' ); 
+* - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' );
 */
 component{
 	// Layout Variables
@@ -107,12 +107,12 @@ component{
 	array function getSwatches(){
 		return listToArray( "cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" );
 	}
-	
+
 	/**
 	*
 	*/
 	array function getBackgroundPositions(){
-		return [ 
+		return [
 			"Top Left",
 			"Top Center",
 			"Top Right",
@@ -124,12 +124,12 @@ component{
 			"Bottom Right"
 		];
 	}
-	
+
 	/**
 	*
 	*/
 	array function getBootstrapButtonStyles(){
-		return [ 
+		return [
 			"default",
 			"primary",
 			"success",
@@ -138,7 +138,7 @@ component{
 			"danger"
 		];
 	}
-	
+
 	/**
 	* loadHelpFile - helper function for loading html help into a variable for modal
 	* @helpFileName - the name of the file to read and return

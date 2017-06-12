@@ -115,17 +115,17 @@ component extends="ContentService" singleton{
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
-				c.or( 
+				c.or(
 					c.restrictions.like( "title","%#arguments.search#%" ),
 					c.restrictions.like( "slug","%#arguments.search#%" ),
 					c.restrictions.like( "description","%#arguments.search#%" ),
 					c.restrictions.like( "ac.content", "%#arguments.search#%" )
 				);
 			} else {
-				c.or( 
+				c.or(
 					c.restrictions.like( "title","%#arguments.search#%" ),
 					c.restrictions.like( "slug","%#arguments.search#%" ),
-					c.restrictions.like( "description","%#arguments.search#%" ) 
+					c.restrictions.like( "description","%#arguments.search#%" )
 				);
 			}
 		}
@@ -164,11 +164,11 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( 
+							.list(
 								offset 		= arguments.offset,
 								max 		= arguments.max,
 								sortOrder 	= arguments.sortOrder,
-								asQuery 	= false 
+								asQuery 	= false
 							);
 		return results;
 	}
@@ -231,11 +231,11 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( 
+							.list(
 								offset 		= arguments.offset,
 								max 		= arguments.max,
 								sortOrder 	= arguments.sortOrder,
-								asQuery 	= arguments.asQuery 
+								asQuery 	= arguments.asQuery
 							);
 
 		return results;

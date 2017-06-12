@@ -10,7 +10,7 @@
                 <th width="100" class="text-center {sorter:false}">Actions</th>
             </tr>
         </thead>
-        
+
         <tbody>
             <cfloop array="#prc.menus#" index="menu">
             <tr id="contentID-#menu.getMenuID()#" data-contentID="#menu.getMenuID()#">

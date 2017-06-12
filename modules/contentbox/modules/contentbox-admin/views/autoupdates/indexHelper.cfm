@@ -15,14 +15,14 @@ function checkForUpdates(){
 	$btn.html( icon + originalValue );
 	var channel = $updateCheckForm.find( "input[name='channel']:checked" ).val();
 	// open update modal
-	openRemoteModal( 
+	openRemoteModal(
 		'#event.buildLink(prc.xehUpdateCheck)#',
 		{ channel:channel },
 		function( data ){
 			$btn.html( originalValue );
-		} 
+		}
 	);
-	
+
 	return false;
 }
 </script>

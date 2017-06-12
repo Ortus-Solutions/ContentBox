@@ -54,7 +54,7 @@
 										)#
 									</div>
 								</div>
-				
+
 								<!--- modules --->
 								<table name="modules" id="modules" class="table table-striped table-hover table-condensed" width="100%">
 									<thead>
@@ -143,14 +143,14 @@
 			    		multipart=true,
 			    		novalidate="novalidate"
 			    	)#
-						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt(
 							name="fileModule",
 							label="Upload Module:",
 							columnWidth=2,
 							useRemoveButton=false,
 							required=true
 						)#
-		
+
 						<div class="actionBar" id="uploadBar">
 							#html.submitButton( value="Upload & Install",class="btn btn-danger" )#
 						</div>

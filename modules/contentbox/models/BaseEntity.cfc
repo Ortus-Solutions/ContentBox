@@ -8,28 +8,28 @@
 component mappedsuperclass="true" accessors="true" extends="BaseEntityMethods"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="createdDate" 	
+	property 	name="createdDate"
 				type="date"
 				ormtype="timestamp"
 				notnull="true"
 				update="false"
 				index="idx_createDate";
 
-	property 	name="modifiedDate"	
+	property 	name="modifiedDate"
 				type="date"
 				ormtype="timestamp"
 				notnull="true"
 				index="idx_modifiedDate";
 
-	property 	name="isDeleted"		
+	property 	name="isDeleted"
 				ormtype="boolean"
-				sqltype="bit" 	
-				notnull="true" 
-				default="false" 
-				dbdefault="0" 
+				sqltype="bit"
+				notnull="true"
+				default="false"
+				dbdefault="0"
 				index="idx_deleted";
-	
+
 }

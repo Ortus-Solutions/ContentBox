@@ -40,7 +40,7 @@ $(document).ready(function() {
 function pagerLink(page){
 	$( "##pagePagerLoader" ).fadeIn( "fast" );
 	$('##pagerPages')
-		.load('#event.buildLink(prc.xehPagePager)#?pagePager_pagination=#prc.pagePager_pagination#&pager_authorID=#prc.pagePager_authorID#&pager_parentID=#prc.pagePager_parentID#&pagePager_sorting=#prc.pagePager_sorting#&page=' + page, 
+		.load('#event.buildLink(prc.xehPagePager)#?pagePager_pagination=#prc.pagePager_pagination#&pager_authorID=#prc.pagePager_authorID#&pager_parentID=#prc.pagePager_parentID#&pagePager_sorting=#prc.pagePager_sorting#&page=' + page,
 		function() {
 			$( "##pagePagerLoader" ).fadeOut();
 			hideAllTooltips();

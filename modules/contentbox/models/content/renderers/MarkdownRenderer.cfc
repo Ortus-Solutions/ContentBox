@@ -11,10 +11,10 @@ component extends="coldbox.system.Interceptor"{
 	// DI
 	property name="cb" 			inject="id:CBHelper@cb";
 	property name="markdown"	inject="Processor@cbmarkdown";
-	
+
 	// MARKUP EDITOR
 	MARKDOWN_EDITOR = "Markdown";
-	
+
 	/**
 	* Execute on content translations for pages and blog entries
 	*/
@@ -25,7 +25,7 @@ component extends="coldbox.system.Interceptor"{
 		}
 		var thisMarkup = arguments.interceptData.content.getMarkup() ;
 
-		// Markdown 
+		// Markdown
 		if( !isNull(thisMarkup) and thisMarkup eq MARKDOWN_EDITOR ){
 			// convert markup to HTML
 			var results = variables.markdown.toHTML( arguments.interceptData.builder.toString() );
@@ -35,5 +35,5 @@ component extends="coldbox.system.Interceptor"{
 			log.debug( "Skipping Markdown translation as content markup is #arguments.interceptData.content.getMarkup()#");
 		}
 	}
-	
+
 }

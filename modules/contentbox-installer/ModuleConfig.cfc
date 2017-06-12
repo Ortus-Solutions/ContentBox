@@ -6,7 +6,7 @@
 * ContentBox installer module
 */
 component {
-	
+
 	// Module Properties
 	this.title 				= "contentbox-installer";
 	this.author 			= "Ortus Solutions, Corp";
@@ -17,44 +17,44 @@ component {
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbinstaller";
 	this.modelNamespace 	= "cbi";
-	
+
 	function configure(){
-		
+
 		// layout settings
 		layoutSettings = {
 			defaultLayout = "simple.cfm"
 		};
-		
+
 		// i18n
 		i18n = {
 			resourceBundles = {
 		    	"installer" = "#moduleMapping#/includes/i18n/installer"
 		  	}
 		};
-		
+
 		// SES Routes
 		routes = [
 			{ pattern="/", 					handler="home", action="index" },
 			{ pattern="/language/:lang", 	handler="home", action="changelang" },
 			{ pattern="/install", 			handler="home", action="install" },
 			{ pattern="/finished", 			handler="home", action="finished" },
-			{ pattern="/:handler/:action?" }	
+			{ pattern="/:handler/:action?" }
 		];
-		
+
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		
+
 	}
-	
+
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		
+
 	}
-	
+
 }

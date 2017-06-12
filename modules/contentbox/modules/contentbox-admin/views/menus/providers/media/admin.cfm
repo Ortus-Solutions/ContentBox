@@ -19,7 +19,7 @@
                 label="URL Classes:",
                 name="urlClass",
                 id="",
-                bind=args.menuItem, 
+                bind=args.menuItem,
                 maxlength="100",
                 title="Extra CSS classes to add to this menu item",
                 class="form-control",
@@ -30,11 +30,11 @@
         </span>
         <span class="col-md-6">
             #html.select(
-                options="_blank,_self,_parent,_top", 
+                options="_blank,_self,_parent,_top",
                 name="target",
                 label="Target:",
                 id="",
-                bind=args.menuItem, 
+                bind=args.menuItem,
                 required="required",
                 title="Where URL should be opened",
                 class="form-control input-sm",

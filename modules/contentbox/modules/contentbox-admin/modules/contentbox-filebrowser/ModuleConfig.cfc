@@ -66,7 +66,7 @@ component{
 				// max file size in mbytes
 				maxfilesize = 100,
 				// max multiple upload files
-				maxfiles = 25	
+				maxfiles = 25
 			},
 			useMediaPath = false,
 			mediaPath = "__media"

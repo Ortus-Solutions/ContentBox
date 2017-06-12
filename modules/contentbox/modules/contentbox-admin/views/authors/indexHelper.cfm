@@ -2,8 +2,8 @@
 <script>
 $(document).ready(function() {
 	// Setup view
-	setupView( { 
-		tableContainer	: $( "##authorTableContainer" ), 
+	setupView( {
+		tableContainer	: $( "##authorTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehAuthorTable )#',
 		searchField 	: $( "##userSearch" ),
 		searchName		: 'searchAuthors',
@@ -34,9 +34,9 @@ function setupView( settings ){
 
 	// setup filters
 	$filters 		= settings.filters;
-	
+
 	// quick search binding
-	$searchField.keyup( 
+	$searchField.keyup(
 		_.debounce(
 			function(){
 				var $this = $(this);
@@ -103,8 +103,8 @@ function contentLoad( criteria ){
 	// loading effect
 	$tableContainer.css( 'opacity', .60 );
 	// setup ajax arguments
-	var args = {  
-		page: criteria.page, 
+	var args = {
+		page: criteria.page,
 		showAll : criteria.showAll
 	};
 	// do we have filters, if so apply them to arguments

@@ -14,7 +14,7 @@ component accessors="true"{
 	property name="error"			type="boolean"	hint="Mark if the search results produce an error or not";
 	property name="errorMessages" 	type="array" 	hint="An array of error messagse if any";
 	property name="metadata"		type="struct"	hint="Any metadata structure you wish to store";
-	
+
 	/**
 	* Constructor
 	*/
@@ -26,10 +26,10 @@ component accessors="true"{
 		variables.error 		= false;
 		variables.errorMessages = [];
 		variables.searchTerm 	= "";
-		
+
 		return this;
 	}
-	
+
 	/**
 	* Populate a memento
 	* @return SearchResults
@@ -42,7 +42,7 @@ component accessors="true"{
 		}
 		return this;
 	}
-	
+
 	/**
 	* Get the search memento
 	*/

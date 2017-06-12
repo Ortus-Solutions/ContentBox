@@ -8,7 +8,7 @@
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
 	/**
-	* Constructor 
+	* Constructor
 	*/
 	RSS function init(){
 		// Widget Properties
@@ -37,7 +37,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		boolean showBody=true,
 		string linkTarget="_blank",
 		string title="",
-		string titleLevel="2" 
+		string titleLevel="2"
 	){
 		// Detect Feed URL
 		if( !len( arguments.feedURL ) ){

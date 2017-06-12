@@ -18,7 +18,7 @@ component{
 	this.setDomainCookies 	= true;
 	this.scriptProtect		= false;
 	this.secureJSON 		= false;
-	
+
 	/**************************************
 	LUCEE Specific Settings
 	**************************************/
@@ -82,19 +82,19 @@ component{
 	// request start
 	public boolean function onRequestStart( string targetPage ){
 		// In case bootstrap or controller are missing, perform a manual restart
-		if( 
-			!structKeyExists( application, "cbBootstrap" ) 
+		if(
+			!structKeyExists( application, "cbBootstrap" )
 			||
 			!structKeyExists( application, "cbController" )
 		){
 			reinitApplication();
 		}
-		
+
 		// Development Reinit + ORM Reloads
-		if( 
+		if(
 			structKeyExists( application, "cbController")
-			&& 
-			application.cbController.getSetting( "environment" ) == "development" 
+			&&
+			application.cbController.getSetting( "environment" ) == "development"
 			&&
 			application.cbBootstrap.isFWReinit()
 		){

@@ -6,9 +6,9 @@
             Geek Panel
         </h1>
         <div class="label label-warning">Environment: #getSetting('Environment')#</div>
-        
 
-       
+
+
     </div>
     <div class="col-md-12">
 
@@ -87,7 +87,7 @@
 													</cfif>
                                                 </ul>
                                             </div>
-                                            
+
                                             <div class="btn-group btn-group-sm">
                                                 <a href="##" onclick="return createSetting();" class="btn btn-primary btn-sm">Create Setting</a>
                                                 <button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -117,9 +117,9 @@
                                         <div class="modal-body">
                                             <!--- Create/Edit form --->
                                             #html.startForm(
-                                                action      = prc.xehSettingsave, 
-                                                name        = "settingEditor", 
-                                                novalidate  = "novalidate", 
+                                                action      = prc.xehSettingsave,
+                                                name        = "settingEditor",
+                                                novalidate  = "novalidate",
                                                 class       = "vertical-form"
                                             )#
                                                 <input type="hidden" name="settingID" id="settingID" value="" />
@@ -146,7 +146,7 @@
                                             #html.resetButton(
                                                 name="btnReset",
                                                 value="Cancel",
-                                                class="btn", 
+                                                class="btn",
                                                 onclick="closeModal( $('##settingEditorContainer') )"
                                             )#
                                             #html.button(
@@ -193,7 +193,7 @@
                                             <th class="text-center {sorter:false}">Actions</th>
                                         </tr>
                                     </thead>
-            
+
                                     <tbody>
                                         <cfloop collection="#prc.singletons#" item="target">
                                         <tr>
@@ -221,8 +221,8 @@
                         <!--- ContentBox Events Docs --->
                         <div class="tab-pane" id="_events">
                             <br>
-                            <p>Here you can see all the registered interception events that ContentBox offers and you can implement in 
-                            your application, modules, layouts, etc. You can read more about writing 
+                            <p>Here you can see all the registered interception events that ContentBox offers and you can implement in
+                            your application, modules, layouts, etc. You can read more about writing
                             <a href="http://wiki.coldbox.org/wiki/Interceptors.cfm">interceptors</a> in our documentation.</p>
                             <div class="row well well-sm">
                                 <div class="col-md-6">
@@ -246,7 +246,7 @@
                                             <th width="30" class="{sorter:none}">No.</th>
                                             <th>Event</th>
                                             <th width="200">Module</th>
-                                            <th width="100">Listeners</th>                                  
+                                            <th width="100">Listeners</th>
                                         </tr>
                                     </thead>
                                     <tbody>

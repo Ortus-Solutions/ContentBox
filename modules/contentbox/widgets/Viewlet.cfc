@@ -16,7 +16,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setAuthorURL( "http://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
 		setIcon( 'file-text' );
-		
+
 		return this;
 	}
 
@@ -31,7 +31,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	any function renderIt(required string event,boolean private=false,string args="",string title="",string titleLevel="2" ){
 		var rString			= "";
 		var eventArguments 	= {};
-		
+
 		// Inflate args
 		if( len( arguments.args ) ){
 			var aString = listToArray( arguments.args, "," );
@@ -39,7 +39,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 				eventArguments[ listFirst( key, "=" ) ] = getToken( key, 2, "=" );
 			}
 		}
-		
+
 		// generate recent comments
 		saveContent variable="rString"{
 			// title

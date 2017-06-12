@@ -6,7 +6,7 @@
 * This is the main exporter for exporting content from ContentBox
 */
 interface{
-    
+
     /**
      * Gets the name of the exporter
      */
@@ -24,7 +24,7 @@ interface{
 
      /**
      * Gets "total" based on content type
-     */ 
+     */
     public numeric function getTotal();
-    
+
 }

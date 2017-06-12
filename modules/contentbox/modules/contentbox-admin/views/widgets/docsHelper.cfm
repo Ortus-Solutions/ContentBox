@@ -7,7 +7,7 @@
         var select = $( '##renderMethodSelect' );
         select.change( showRenderMethod );
     } );
-    
+
     function showRenderMethod() {
         var value = $( this ).val();
         $( '##widget-detail' ).find( '.rendermethod' ).hide()

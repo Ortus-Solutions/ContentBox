@@ -62,13 +62,13 @@ component extends="coldbox.system.Interceptor"{
 		if( prc.oCurrentAuthor.getPreference( "sidemenuCollapse", false ) == "true" ){
 			prc.sideMenuClass = "sidebar-mini";
 		}
-		
+
 		/************************************** FORCE SSL *********************************************/
-		
+
 		if( prc.cbSettings.cb_admin_ssl and !event.isSSL() ){
 			setNextEvent(event=event.getCurrentRoutedURL(), ssl=true);
 		}
-		
+
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 
 		// Global Admin Exit Handlers
@@ -128,10 +128,10 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCKFileBrowserURL			= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLImage	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
-		
+
 		// Search global
 		prc.xehSearchGlobal 	= "#prc.cbAdminEntryPoint#.content.search";
-		
+
 		// Prepare Admin Actions
 		prc.xehAdminActionData = [
 			{ name="Clear RSS Caches", value="rss-purge" },

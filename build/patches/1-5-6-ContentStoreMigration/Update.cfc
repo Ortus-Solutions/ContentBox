@@ -44,7 +44,7 @@ component implements="contentbox.model.updates.IUpdate"{
 	property name="contentService" 			inject="contentService@cb";
 	property name="wirebox"					inject="wirebox";
 	property name="securityService" 		inject="id:securityService@cb";
-	
+
 	function init(){
 		version = "1.5.6.ContentStoreMigration";
 		return this;
@@ -57,12 +57,12 @@ component implements="contentbox.model.updates.IUpdate"{
 		var thisPath = getDirectoryFromPath( getMetadata( this ).path );
 		try{
 			var currentVersion = replace( coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
-			
+
 			log.info("About to begin #version# patching");
-			
+
 			// Migrate Custom HTML to ContentStore
 			migrateCustomHTML();
-			
+
 			log.info("Finalized #version# patching");
 		}
 		catch(Any e){
@@ -77,11 +77,11 @@ component implements="contentbox.model.updates.IUpdate"{
 	* post installation
 	*/
 	function postInstallation(){
-		
+
 	}
-	
+
 	/************************************** PRIVATE *********************************************/
-	
+
 	private function migrateCustomHTML(){
 		// get author session
 		var oAuthor = securityService.getAuthorSession();
@@ -106,14 +106,14 @@ component implements="contentbox.model.updates.IUpdate"{
 			// get actual author
 			var thisAuthor = authorService.get( qAllContent.FK_authorid[ x ] );
 			if( isNull( thisAuthor ) ){ thisAuthor = oAuthor; }
-			
+
 			// verify slug and if migrated, just continue.
 			var thisContent = contentStoreService.findBySlug( qAllContent.slug[ x ], true );
 			if( thisContent.isLoaded() ){
 				log.info("Slug: #qAllContent.slug[ x ]# already migrated, skipping");
 				continue;
 			}
-			
+
 			// build contentStore
 			var oContentStore = contentStoreService.new( properties={
 				title = qAllContent.title[ x ],
@@ -130,14 +130,14 @@ component implements="contentbox.model.updates.IUpdate"{
 									  		   changelog="Migrated Content",
 									  		   author=thisAuthor);
 			contentStoreService.saveContent( oContentStore );
-			
+
 			log.info("Slug: #qAllContent.slug[ x ]# migrated and saved.");
 		}
 
 	}
-	
+
 	/************************************** DB MIGRATION OPERATIONS *********************************************/
-	
+
 	// get Columns
 	private function getTableColumns(required table){
 		if( structkeyexists( server, "railo") ){
@@ -145,7 +145,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		return new dbinfo(datasource=getDatasource(), table=arguments.table).columns();
 	}
-	
+
 	// Get the database type
 	private function getDatabaseType(){
 		if( structkeyexists( server, "railo") ){
@@ -153,7 +153,7 @@ component implements="contentbox.model.updates.IUpdate"{
 		}
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
-	
+
 	// Get the default datasource
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();

@@ -9,17 +9,17 @@ function addPermission(){
 	// loader
 	$( "##permissionLoader" ).slideDown();
 	// Assign it
-	$.post('#event.buildLink(prc.xehPermissionSave)#',{authorID:'#rc.authorID#',permissionID:$permissionForm.find( "##permissionID" ).val() },function(){ 
+	$.post('#event.buildLink(prc.xehPermissionSave)#',{authorID:'#rc.authorID#',permissionID:$permissionForm.find( "##permissionID" ).val() },function(){
 		$( "##permissionLoader" ).slideUp();
 		// load permissions via container
-		loadPermissions(); 
+		loadPermissions();
 	} );
 }
 function removePermission(permissionID){
 	// loader
 	$( "##permissionLoader" ).slideDown();
 	// Assign it
-	$.post('#event.buildLink(prc.xehPermissionRemove)#',{authorID:'#rc.authorID#',permissionID:permissionID },function(){ 
+	$.post('#event.buildLink(prc.xehPermissionRemove)#',{authorID:'#rc.authorID#',permissionID:permissionID },function(){
 		$( "##permissionLoader" ).slideUp();
 		// load permissions via container
 		loadPermissions();

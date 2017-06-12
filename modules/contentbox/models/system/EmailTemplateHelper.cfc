@@ -15,9 +15,9 @@ component singleton{
     */
     EmailTemplateHelper function init(){
         //Return instance
-        return this;        
+        return this;
     }
-    
+
     public string function author(
         required string email,
         required string content
@@ -30,7 +30,7 @@ component singleton{
                         <td width=30>#gravatar#</td>
                         <td>#arguments.content#</td>
                     </tr>
-                </table> 
+                </table>
             " ));
         }
         return authorContent;
@@ -73,7 +73,7 @@ component singleton{
                             </td>
                         </tr>
                     </tbody>
-                </table>    
+                </table>
             ');
         }
         return dividerContent;
@@ -86,11 +86,11 @@ component singleton{
      * @color.hint Text color
      * @fontSize.hint Heading font size
      */
-    public string function heading( 
-        required string content, 
-        required string level="h2", 
-        required string color="777", 
-        required numeric fontSize=20 
+    public string function heading(
+        required string content,
+        required string level="h2",
+        required string color="777",
+        required numeric fontSize=20
     ) {
         savecontent variable="headingContent" {
             writeoutput('
@@ -107,9 +107,9 @@ component singleton{
      * @content.hint Content for the text area
      * @callout.hint If true, will wrap content in a callout box
      */
-    public string function text( 
+    public string function text(
         required string content,
-        required boolean callout=false 
+        required boolean callout=false
     ) {
         savecontent variable="textContent" {
             writeoutput('
@@ -140,7 +140,7 @@ component singleton{
                         </tr>
                     </tbody>
                 </table>
-            ');            
+            ');
         }
         return textContent;
     }

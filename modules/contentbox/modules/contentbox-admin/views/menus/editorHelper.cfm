@@ -15,8 +15,8 @@
         function createSlug( linkToUse ){
             var linkToUse = ( typeof linkToUse === "undefined" ) ? $( "##title" ).val() : linkToUse,
                 $slug = $( '##slug' );
-            if( !linkToUse.length ){ 
-                return; 
+            if( !linkToUse.length ){
+                return;
             }
             toggleSlug()
             $.get( '#event.buildLink( prc.xehSlugify )#', { slug : linkToUse }, function( data ){
@@ -30,7 +30,7 @@
         function toggleSlug(){
             var toggle = $( '##toggleSlug' ),
                 $slug = $( '##slug' );
-            // Toggle lock icon on click..  
+            // Toggle lock icon on click..
             toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
             //disable input field
             $slug.prop( "disabled", !$slug.prop( 'disabled' ) );
@@ -57,9 +57,9 @@
         function slugUniqueCheck( linkToUse ){
             var $slug = $( '##slug' ),
                 linkToUse = ( typeof linkToUse === "undefined" ) ? $slug.val() : linkToUse;
-            linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness    
-            if( !linkToUse.length ){ 
-                return; 
+            linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness
+            if( !linkToUse.length ){
+                return;
             }
             // Verify unique
             $.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, menuID: $( '##menuID' ).val() }, function( data ){
@@ -79,7 +79,7 @@
             var me = $( el ),
                 titleDiv = me.closest( '.dd3-extracontent' ).prev( '.dd3-content' ),
                 value = me.val() != '' ? me.val() : '<i class="emptytext">Please enter a label</i>';
-            // toggle 
+            // toggle
             $( titleDiv ).html( value );
         }
         /**
@@ -154,7 +154,7 @@
                         $( this ).removeClass( 'btn-danger' ).addClass( 'btn-inverse' );
                     } );
                     $errors.hide();
-                    break; 
+                    break;
             }
         }
         function transformFieldNames() {
@@ -231,7 +231,7 @@
             $( document ).click( function() {
                 $contextMenu.hide();
             } );
-            // add contextmenu 
+            // add contextmenu
             $( '##nestable' ).on( 'contextmenu', ".dd3-content", function( e ) {
                 $menuItemClicked = $( this );
                 $contextMenu.css( {
@@ -281,7 +281,7 @@
                     li = me.closest( 'li' ),
                     prev = me.prev( '.dd3-extracontent' );
 
-                // toggle 
+                // toggle
                 prev.slideToggle( 200 );
             } );
             // add input listeners to update label field

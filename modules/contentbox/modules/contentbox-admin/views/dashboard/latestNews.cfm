@@ -8,7 +8,7 @@
 					<i class="fa fa-external-link"></i> #prc.latestNews.items.title#
 				</a>
 			</h4>
-			
+
 			<div>
 				<p class="label label-success"><strong>#dateFormat( prc.latestNews.items.datepublished, "full" )#</strong></p>
 			</div>

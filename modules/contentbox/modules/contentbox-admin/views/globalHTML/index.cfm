@@ -40,7 +40,7 @@
                         name="globalHTMLForm",
                         action=prc.xehSaveHTML,
                         class="form-vertical"
-                    )# 
+                    )#
                         <!-- End Tabs -->
                         <!-- Tab Content -->
                         <div class="tab-content">
@@ -246,7 +246,7 @@
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
                                     )#
-                                </fieldset>                     
+                                </fieldset>
                             </div>
                         </div>
                         <!-- End Tab Content -->

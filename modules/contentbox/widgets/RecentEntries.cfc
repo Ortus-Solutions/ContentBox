@@ -42,7 +42,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getValue( name="cbSettings", private=true );
-		
+
 		// Determine Sort Order
 		switch( arguments.sortOrder ){
 			case "Most Popular" 	: { arguments.sortOrder = "hits DESC";break; }

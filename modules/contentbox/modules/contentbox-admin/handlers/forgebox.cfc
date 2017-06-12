@@ -69,7 +69,7 @@ component extends="baseHandler"{
 
 		// flash results
 		flash.put( "forgeboxInstallLog", results.logInfo );
-		
+
 		// return to caller
 		setNextEvent( URL=rc.returnURL );
 	}

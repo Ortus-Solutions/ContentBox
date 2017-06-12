@@ -5,9 +5,9 @@
 * www.ortussolutions.com
 * ---
 * Updater for 3.0.0 RC
-* 
+*
 * DB Structure Changes Comment Below
-* 
+*
 * Remove Interface for conversion from 3.0.0 -> 3.1.0
 *
 * ---
@@ -92,7 +92,7 @@ component {
 			cbMessagebox.info( "Update Applied!" );
 			// Hard Redirect
 			coldbox.setNextEvent( "cbadmin.autoupdates" );
-			
+
 		} catch( Any e ) {
 			ORMClearSession();
 			arguments.log.append( "Error doing #version# patch postInstallation. #e.message# #e.detail#", e );
@@ -165,7 +165,7 @@ component {
 	private function updateSettings(){
 		// Add new settings
 		//addSetting( "cb_site_settings_cache", "Template" );
-		
+
 		// Update ckeditor plugins
 		var pluginList = listToArray( "justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe" );
 		var oldPluginsSetting = settingService.findWhere( { name="cb_editors_ckeditor_extraplugins" } );
@@ -210,7 +210,7 @@ component {
 	}
 
 	private function updateTimestampFields(){
-		
+
 		var tables = [
 			"cb_author",
 			"cb_category",
@@ -235,9 +235,9 @@ component {
 			var q = new Query( sql = "update #thisTable# set modifiedDate = :modifiedDate" );
 			q.addParam( name="modifiedDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
 			var results = q.execute().getResult();
-			log.info( "Update #thisTable# modified date", results );	
+			log.info( "Update #thisTable# modified date", results );
 		}
-		
+
 		// Creation tables now
 		tables = [
 			"cb_category",
@@ -256,9 +256,9 @@ component {
 			var q = new Query( sql = "update #thisTable# set createdDate = :createdDate" );
 			q.addParam( name="createdDate", value ="#createODBCDateTime( now() )#", cfsqltype="CF_SQL_TIMESTAMP" );
 			var results = q.execute().getResult();
-			log.info( "Update #thisTable# created date", results );	
+			log.info( "Update #thisTable# created date", results );
 		}
-			
+
 	}
 
 	private function updateCKEditorPlugins(){
@@ -427,7 +427,7 @@ component {
 		} catch( any e ){
 			return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 		}
-		
+
 	}
 
 }

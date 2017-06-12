@@ -15,7 +15,7 @@ component extends="baseHandler"{
 	property name="mediaService"		inject="id:mediaService@cb";
 	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
 	property name="mailService"			inject="id:mailservice@cbMailservices";
-	
+
 	/**
 	* Pre handler
 	*/
@@ -47,7 +47,7 @@ component extends="baseHandler"{
 		// view
 		event.setView( "settings/index" );
 	}
-	
+
 	/**
 	* Email Testing of settings
 	* @return json
@@ -67,8 +67,8 @@ component extends="baseHandler"{
 		);
 		// send it out
 		var results = mailService.send( mail );
-		
-		event.renderData( data=results, type="json" );		
+
+		event.renderData( data=results, type="json" );
 	}
 
 	/**
@@ -121,7 +121,7 @@ component extends="baseHandler"{
 		// view
 		event.setView( "settings/raw" );
 	}
-	
+
 	/**
 	* Present the raw settings table
 	* @return html
@@ -131,23 +131,23 @@ component extends="baseHandler"{
 		event.paramValue( "page", 1 );
 		event.paramValue( "search", "" );
 		event.paramValue( "viewAll", false );
-		
+
 		// prepare paging object
 		prc.oPaging = getModel( "Paging@cb" );
 		prc.paging 		= prc.oPaging.getBoundaries();
 		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 		prc.pagingLink 	= "javascript:settingsPaginate(@page@)";
-		
+
 		// View all?
 		var offset  = prc.paging.startRow-1;
 		var max		= prc.cbSettings.cb_paging_maxrows;
 		if( rc.viewAll ){ offset = max = 0; }
-		
+
 		// Get settings
 		var results = settingsService.search(search=rc.search, offset=offset, max=max);
 		prc.settings = results.settings;
 		prc.settingsCount = results.count;
-		
+
 		event.setView(view="settings/rawSettingsTable", layout="ajax" );
 	}
 
@@ -157,11 +157,11 @@ component extends="baseHandler"{
 	*/
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
-		
+
 		// get all prepared content objects
 		var data  		= settingsService.getAllForExport();
 		var filename 	= "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
-				
+
 		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
 			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 	}

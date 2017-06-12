@@ -14,10 +14,10 @@
 
 		<!--- Messagebox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
-		
+
 		<!--- Event --->
 		#announceInterception( "cbadmin_preDashboardContent" )#
-		
+
 		<!--- Installer Checks --->
 		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" )>
 		<cfif prc.installerCheck.installer>
@@ -37,7 +37,7 @@
 			</div>
 		</cfif>
 		</cfif>
-		
+
 		<div class="tab-wrapper tab-primary">
 			<ul class="nav nav-tabs" id="dashboardTabs">
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
@@ -102,19 +102,19 @@
 				#announceInterception( "cbadmin_postDashboardTabContent" )#
 			</div>
 		</div>
-		
+
 		<!--- Event --->
 		#announceInterception( "cbadmin_postDashboardContent" )#
     </div>
     <div class="col-md-4">
         <!--- Event --->
 		#announceInterception( "cbadmin_preDashboardSideBar" )#
-		
+
 		<!---Latest Snapshot --->
 		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
 				<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-			</div>	
+			</div>
 		</cfif>
 
 		<!--- Latest Logins --->
@@ -127,7 +127,7 @@
 			    	<div id="latestLogins"><i class="fa fa-spin fa-spinner fa-lg -2x"></i></div>
 			    </div>
 			</div>
-		</cfif> 
+		</cfif>
 
 		<!--- Info Box --->
 		<div class="panel panel-primary">

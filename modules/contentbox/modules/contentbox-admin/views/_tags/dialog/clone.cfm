@@ -15,10 +15,10 @@
                         <p>#args.infoMsg#</p>
                         #html.hiddenField(name="contentID" )#
                         #html.textfield(
-                            name="title", 
-                            label="#args.titleLabel#", 
-                            class="form-control", 
-                            required="required", 
+                            name="title",
+                            label="#args.titleLabel#",
+                            class="form-control",
+                            required="required",
                             size="50",
                             wrapper="div class=controls",
                             labelClass="control-label",
@@ -27,9 +27,9 @@
                         <label for="contentStatus">#args.publishLabel#</label>
                         <small>#args.publishInfo#</small><br>
                         #html.select(
-                            options="true,false", 
-                            name="#args.statusName#", 
-                            selectedValue="false", 
+                            options="true,false",
+                            name="#args.statusName#",
+                            selectedValue="false",
                             class="form-control input-sm valid",
                             wrapper="div class=controls",
                             labelClass="control-label",

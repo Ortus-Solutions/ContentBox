@@ -15,8 +15,8 @@ $(document).ready(function() {
                 var $this = $(this);
 				var clearIt = ( $this.val().length > 0 ? false : true );
 				// ajax search
-				$('##pagesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
-					{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
+				$('##pagesContainer').load( '#event.buildLink( prc.xehEditorSelector )#',
+					{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt },
 					function(){
 						$pageEditorSelectorLoader.fadeOut();
 				} );

@@ -27,9 +27,9 @@ $(document).ready(function() {
 	    "info": false,
 	    "searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -41,7 +41,7 @@ function changeStatus(status,recordID){
 	$commentForm.find( "##commentStatus" ).val(status);
 	if( recordID != null ){
 		$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
-		checkByValue('commentID',recordID);	
+		checkByValue('commentID',recordID);
 	}
 	$commentForm.submit();
 }
@@ -49,7 +49,7 @@ function remove(recordID){
 	checkAll( false, 'commentID' );
 	if( recordID != null ){
 		$( "##delete_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
-		checkByValue('commentID',recordID);		
+		checkByValue('commentID',recordID);
 	}
 	//Submit Form
 	$commentForm.submit();

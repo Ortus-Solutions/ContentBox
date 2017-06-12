@@ -6,7 +6,7 @@ $(document).ready(function() {
 	$tabs 			= $( "##import_tabs" );
 	$button 		= $( "##import_button" );
 	$validator 		= $importForm.validate();
-	
+
 	// form validation handler
 	$importForm.submit( function( e ){
 		var formvals 	= $importForm.collect();

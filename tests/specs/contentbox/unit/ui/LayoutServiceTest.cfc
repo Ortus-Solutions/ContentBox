@@ -7,7 +7,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	void function setup(){
 		super.setup();
-		
+
 		// init the model object
 		model.init();
 		mockCBHelper = getMockBox().createStub();
@@ -17,7 +17,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	function testOnDIComplete(){
 		moduleSettings = {
-			"contentbox" = { 
+			"contentbox" = {
 				path = expandPath( "/modules/contentbox" ),
 				mapping = "/modules/contentbox",
 				invocationPath = "modules.contentbox"
@@ -25,15 +25,15 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		};
 		model.$property("moduleSettings", "variables", moduleSettings)
 			.$("buildLayoutRegistry", queryNew(""));
-			
+
 		model.onDIComplete();
 		assertTrue( model.$once( "buildLayoutRegistry" ) );
 	}
-	
+
 	function testBuildLayoutRegistry(){
 		//mocks
 		moduleSettings = {
-			"contentbox" = { 
+			"contentbox" = {
 				path = expandPath( "/modules/contentbox" ),
 				mapping = "/modules/contentbox",
 				invocationPath = "modules.contentbox"
@@ -43,14 +43,14 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		model.onDICOmplete();
 		model.buildLayoutRegistry();
 	}
-	
+
 	function testRemoveLayout(){
 		// 1 No layout name
 		r = model.removeLayout( "" );
 		assertFalse( r );
-		
+
 		// 2 real layout test
-		
+
 		// mocks
 		mockLayout = getMockBox().createStub().$("onDelete");
 		mockLayout.settings = {};
@@ -58,7 +58,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		model.setLayoutsPath( expandPath( "/modules/contentbox/layouts" ) );
 		model.$("unregisterLayoutSettings")
 			.$("buildLayoutRegistry", queryNew("") );
-		
+
 		directoryCreate( model.getLayoutsPath() & "/unittest" );
 		r = model.removeLayout( "unittest" );
 		assertTrue( r );
@@ -67,39 +67,39 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		assertTrue( model.$once( "buildLayoutRegistry" ) );
 		assertFalse( structKeyExists( model.getLayoutCFCRegistry(), "unittest" ) );
 	}
-	
+
 	function testthemeMaintenanceViewExists(){
 		// No
 		mockCBHelper.$("layoutRoot", "/");
 		assertFalse( model.themeMaintenanceViewExists() );
-		
+
 		// No
 		mockCBHelper.$("layoutRoot", "/modules/contentbox/layouts/default");
 		assertTrue( model.themeMaintenanceViewExists() );
 	}
-	
+
 	function testgetThemeMaintenanceLayout(){
 		// default
 		mockCBHelper.$("layoutRoot", "/");
 		r = model.getThemeMaintenanceLayout();
 		assertEquals( "pages", r );
-		
+
 		// Valid
 		mockCBHelper.$("layoutRoot", "/modules/contentbox/layouts/default");
 		r = model.getThemeMaintenanceLayout();
 		assertEquals( "maintenance", r );
 	}
-	
+
 	function testgetThemeSearchLayout(){
 		// default
 		mockCBHelper.$("layoutRoot", "/");
 		r = model.getThemeSearchLayout();
 		assertEquals( "pages", r );
-		
+
 		// Valid
 		mockCBHelper.$("layoutRoot", "/modules/contentbox/layouts/default");
 		r = model.getThemeSearchLayout();
 		assertEquals( "search", r );
-		
+
 	}
 }

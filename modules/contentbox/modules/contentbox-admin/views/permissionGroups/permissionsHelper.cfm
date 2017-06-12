@@ -14,10 +14,10 @@ function addPermission(){
 			permissionGroupID	: '#prc.oGroup.getPermissionGroupID()#',
 			permissionID 		: $permissionForm.find( "##permissionID" ).val()
 		},
-		function(){ 
+		function(){
 			$( "##permissionLoader" ).slideUp();
-			reloadPerms(); 
-		} 
+			reloadPerms();
+		}
 	);
 }
 function removePermission( permissionID ){
@@ -28,12 +28,12 @@ function removePermission( permissionID ){
 		'#event.buildLink( prc.xehPermissionRemove )#',
 		{
 			permissionGroupID 	: '#prc.oGroup.getPermissionGroupID()#',
-			permissionID		: permissionID 
+			permissionID		: permissionID
 		},
-		function(){ 
+		function(){
 			$( "##permissionLoader" ).slideUp();
 			reloadPerms();
-		} 
+		}
 	);
 }
 function reloadPerms(){

@@ -42,7 +42,7 @@ component extends="content"{
 			category	= rc.category,
 			slug		= rc.slug,
 			comments	= rc.commentRSS,
-			contentType	= "Page" 
+			contentType	= "Page"
 		);
 
 		// Render out the feed xml

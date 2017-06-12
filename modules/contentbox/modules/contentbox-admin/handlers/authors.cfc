@@ -14,7 +14,7 @@ component extends="baseHandler"{
 	property name="roleService"			inject="id:roleService@cb";
 	property name="editorService"		inject="id:editorService@cb";
 	property name="paging"				inject="id:paging@cb";
-	
+
 	/**
 	* Pre handler
 	*/
@@ -25,10 +25,10 @@ component extends="baseHandler"{
 			arguments.event.paramValue( "authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
-			if( 
-				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) 
-				AND 
-				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID() 
+			if(
+				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )
+				AND
+				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
 			){
 				// relocate
 				cbMessagebox.error( "You do not have permissions to do this!" );
@@ -55,7 +55,7 @@ component extends="baseHandler"{
 
 		// Get Roles
 		prc.roles = roleService.getAll( sortOrder="role" );
-		
+
 		// View
 		event.setView( "authors/index" );
 	}
@@ -83,10 +83,10 @@ component extends="baseHandler"{
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
 
 		// is Filtering?
-		if( rc.fRole neq "all" OR rc.fStatus neq "any" or rc.showAll ){ 
+		if( rc.fRole neq "all" OR rc.fStatus neq "any" or rc.showAll ){
 			prc.isFiltering = true;
 		}
-		
+
 		// Get all authors or search
 		var results 		= authorService.search( searchTerm=rc.searchAuthors,
 													offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
@@ -139,23 +139,23 @@ component extends="baseHandler"{
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
 		prc.roles = roleService.list( sortOrder="role", asQuery=false );
-		
+
 		// viewlets only if editing a user
 		if( prc.author.isLoaded() ){
 			// Preferences Viewlet
-			var args = { 
-				authorID	= rc.authorID, 
-				sorting		= false, 
-				max			= 5, 
-				pagination	= false, 
-				latest		= true 
+			var args = {
+				authorID	= rc.authorID,
+				sorting		= false,
+				max			= 5,
+				pagination	= false,
+				latest		= true
 			};
 			prc.preferencesViewlet 	= listPreferences(  event, rc, prc  );
-			
+
 			// Latest Edits
 			prc.latestEditsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
-				eventArguments 	= { 
+				eventArguments 	= {
 					author 		= prc.author,
 					showHits 	= true,
 					showAuthor 	= false
@@ -165,8 +165,8 @@ component extends="baseHandler"{
 			// Latest Drafts
 			prc.latestDraftsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
-				eventArguments 	= { 
-					author 				= prc.author, 
+				eventArguments 	= {
+					author 				= prc.author,
 					isPublished			= false,
 					showHits 			= false,
 					colorCodings		= false,
@@ -187,14 +187,14 @@ component extends="baseHandler"{
 		rc.authorID = prc.oCurrentAuthor.getAuthorID();
 		editor( argumentCollection=arguments );
 	}
-	
+
 	/**
 	* change user editor preferences
 	*/
 	function changeEditor( event, rc, prc ){
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
-			// store the new author preference	
+			// store the new author preference
 			prc.oCurrentAuthor.setPreference(name="editor", value=rc.editor);
 			// save Author preference
 			authorService.saveAuthor( prc.oCurrentAuthor );
@@ -219,7 +219,7 @@ component extends="baseHandler"{
 
 		// Check preference value
 		if( len( rc.preference ) ){
-			// store the new author preference	
+			// store the new author preference
 			prc.oCurrentAuthor.setPreference( name=rc.preference, value=rc.value );
 			// save Author preference
 			authorService.saveAuthor( prc.oCurrentAuthor );
@@ -232,14 +232,14 @@ component extends="baseHandler"{
 		// return preference saved
 		event.renderData( type="json", data=results );
 	}
-	
+
 	/**
 	* Save user preferences
 	*/
 	function savePreferences( event, rc, prc ){
 		var oAuthor 		= authorService.get( id=rc.authorID );
 		var allPreferences 	= {};
-		
+
 		// iterate rc keys that start with "preference."
 		for( var key in rc ){
 			if( reFindNoCase( "^preference\.", key ) ){
@@ -257,12 +257,12 @@ component extends="baseHandler"{
 		// message
 		cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 		// relocate
-		setNextEvent( 
+		setNextEvent(
 			event		= prc.xehAuthorEditor,
-			queryString	= "authorID=#oAuthor.getAuthorID()###preferences" 
+			queryString	= "authorID=#oAuthor.getAuthorID()###preferences"
 		);
 	}
-	
+
 	/**
 	* Save raw preferences
 	*/
@@ -282,16 +282,16 @@ component extends="baseHandler"{
 			// message
 			cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 			// relocate
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );	
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 		}
 		else{
 			// message
 			cbMessagebox.error(messageArray=vResult.getAllErrors());
 			// relocate
 			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
-		}	
+		}
 	}
-	
+
 	/**
 	* Save user
 	*/
@@ -424,7 +424,7 @@ component extends="baseHandler"{
 		// Saved
 		event.renderData(data="true",type="json" );
 	}
-	
+
 	/**
 	* Export a user
 	*/
@@ -432,7 +432,7 @@ component extends="baseHandler"{
 		event.paramValue( "format", "json" );
 		// get user
 		prc.user  = authorService.get( event.getValue( "authorID",0) );
-		
+
 		// relocate if not existent
 		if( !prc.user.isLoaded() ){
 			cbMessagebox.warn( "authorID sent is not valid" );
@@ -443,7 +443,7 @@ component extends="baseHandler"{
 			case "xml" : case "json" : {
 				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=prc.user.getMemento(), type=rc.format, xmlRootName="user" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
@@ -451,7 +451,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	/**
 	* Export all users
 	*/
@@ -459,12 +459,12 @@ component extends="baseHandler"{
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = authorService.getAllForExport();
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Users." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=data, type=rc.format, xmlRootName="users" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
@@ -472,7 +472,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	/**
 	* Import all users
 	*/

@@ -5,12 +5,12 @@
 * ---
 * I am a versioned piece of content
 */
-component	persistent="true" 
-			entityname="cbContentVersion" 
-			table="cb_contentVersion" 
-			batchsize="25" 
+component	persistent="true"
+			entityname="cbContentVersion"
+			table="cb_contentVersion"
+			batchsize="25"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbContentVersion" 
+			cachename="cbContentVersion"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
@@ -20,71 +20,71 @@ component	persistent="true"
 	property name="interceptorService"		inject="coldbox:interceptorService"		persistent="false";
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="contentVersionID" 
-				fieldtype="id" 
-				generator="native" 
-				setter="false"  
+	property 	name="contentVersionID"
+				fieldtype="id"
+				generator="native"
+				setter="false"
 				params="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
 
-	property 	name="content"    		
-				notnull="true" 
-				ormtype="text" 
-				length="8000" 
+	property 	name="content"
+				notnull="true"
+				ormtype="text"
+				length="8000"
 				default="";
 
-	property 	name="changelog"  		
-				notnull="false" 
-				ormtype="text" 
-				length="8000" 
+	property 	name="changelog"
+				notnull="false"
+				ormtype="text"
+				length="8000"
 				default="";
 
-	property 	name="version"			
-				notnull="true" 
-				ormtype="integer"	
-				default="1" 
+	property 	name="version"
+				notnull="true"
+				ormtype="integer"
+				default="1"
 				index="idx_version";
 
-	property 	name="isActive" 		
-				notnull="true" 
-				ormtype="boolean"   	
-				default="false" 
+	property 	name="isActive"
+				notnull="true"
+				ormtype="boolean"
+				default="false"
 				index="idx_activeContentVersion,idx_contentVersions";
 
 	/* *********************************************************************
-	**							RELATIONSHIPS									
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// M20 -> Author loaded as a proxy and fetched immediately
-	property 	name="author" 
-				notnull="true" 
-				cfc="contentbox.models.security.Author" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_authorID" 
-				lazy="true" 
+	property 	name="author"
+				notnull="true"
+				cfc="contentbox.models.security.Author"
+				fieldtype="many-to-one"
+				fkcolumn="FK_authorID"
+				lazy="true"
 				fetch="join";
 
 	// M20 -> relatedContent
-	property 	name="relatedContent" 
-				notnull="true" 
-				cfc="contentbox.models.content.BaseContent" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_contentID" 
-				lazy="true" 
-				fetch="join" 
+	property 	name="relatedContent"
+				notnull="true"
+				cfc="contentbox.models.content.BaseContent"
+				fieldtype="many-to-one"
+				fkcolumn="FK_contentID"
+				lazy="true"
+				fetch="join"
 				index="idx_contentVersions";
 
 	/* *********************************************************************
-	**							NON PERSISTED PROPERTIES									
+	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
-	property 	name="renderedContent" 
+	property 	name="renderedContent"
 				persistent="false";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "contentVersionID";
@@ -95,7 +95,7 @@ component	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							CONSTRUCTOR									
+	**							CONSTRUCTOR
 	********************************************************************* */
 
 	/**
@@ -110,21 +110,21 @@ component	persistent="true"
 		variables.renderedContent 	= "";
 
 		super.init();
-		
+
 		return this;
 	}
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
-	
+
 	/**
 	* Get memento representation
 	*/
 	function getMemento( excludes="" ){
 		var pList 	= listToArray( "content,changelog,version,isActive" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		result[ "author" ] = {
 			"authorID" 	= getAuthor().getAuthorID(),
 			"firstname" = getAuthor().getFirstname(),
@@ -133,7 +133,7 @@ component	persistent="true"
 			"username" 	= getAuthor().getUsername(),
 			"role" 		= getAuthor().getRole().getRole()
 		};
-		
+
 		return result;
 	}
 	/**

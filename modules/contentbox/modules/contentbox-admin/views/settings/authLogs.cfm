@@ -36,7 +36,7 @@
 								<th width="200">Successfull IP</th>
 								<th width="100" class="textCenter">Status</th>
 							</tr>
-						</thead>				
+						</thead>
 						<tbody>
 							<cfloop array="#prc.logs#" index="thisLog">
 							<tr <cfif thisLog.getIsBlocked()>class="danger"</cfif>>
@@ -44,7 +44,7 @@
 									<strong>
 										<!--- if ip look up --->
 										<cfif listLen( thisLog.getValue(), "." ) eq 4 >
-											<a href="#prc.cbSettings.cb_comments_whoisURL#=#thisLog.getValue()#" title="Get IP Information" target="_blank">#thisLog.getValue()#</a>											
+											<a href="#prc.cbSettings.cb_comments_whoisURL#=#thisLog.getValue()#" title="Get IP Information" target="_blank">#thisLog.getValue()#</a>
 										<cfelse>
 											#thisLog.getvalue()#
 										</cfif>
@@ -56,7 +56,7 @@
 								<td>#thisLog.getDisplayCreatedDate()#</td>
 								<td>
 									<cfif len( thisLog.getLastLoginSuccessIP() )>
-										<a href="#prc.cbSettings.cb_comments_whoisURL#=#thisLog.getLastLoginSuccessIP()#" title="Get IP Information" target="_blank">#thisLog.getLastLoginSuccessIP()#</a>	
+										<a href="#prc.cbSettings.cb_comments_whoisURL#=#thisLog.getLastLoginSuccessIP()#" title="Get IP Information" target="_blank">#thisLog.getLastLoginSuccessIP()#</a>
 									<cfelse>
 										-
 									</cfif>

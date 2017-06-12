@@ -24,10 +24,10 @@ function fbCKSelect( sPath, sURL, sType ){
 		var match 	= window.location.search.match( reParam );
 		return ( match && match.length > 1 ) ? match[ 1 ] : '' ;
 	};
-	
-	if( !sPath.length || sType === "dir" ){ 
-        alert( "Please select a file first." ); 
-        return; 
+
+	if( !sPath.length || sType === "dir" ){
+        alert( "Please select a file first." );
+        return;
     }
 	var funcNum = getURLParam( 'CKEditorFuncNum' );
 	window.opener.CKEDITOR.tools.callFunction( funcNum, sURL );

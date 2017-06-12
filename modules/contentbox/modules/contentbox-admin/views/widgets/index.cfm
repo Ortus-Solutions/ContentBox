@@ -8,7 +8,7 @@
     <div class="col-md-12">
        	<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
-		
+
 		<!--- Logs --->
 		<cfif flash.exists( "forgeboxInstallLog" )>
 			<h3>Installation Log</h3>
@@ -41,7 +41,7 @@
 							<!--- CategoryForm --->
 							#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#
 								#html.hiddenField(name="widgetFile" )#
-				
+
 								<!--- widgets --->
 								#renderView(view="widgets/widgetList", module="contentbox-admin", args={ mode="edit", cols=2 } )#
 
@@ -75,19 +75,19 @@
 			    		multipart=true,
 			    		novalidate="novalidate"
 			    	)#
-					
-						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+
+						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt(
 			                name="fileWidget",
 			                label="Upload Widget:",
 			                columnWidth=2,
 			                useRemoveButton=false,
 			                required=true
-			            )#				
-	
+			            )#
+
 						<div class="actionBar" id="uploadBar">
 							#html.submitButton(value="Upload & Install", class="btn btn-danger" )#
 						</div>
-		
+
 						<!--- Loader --->
 						<div class="loaders" id="uploadBarLoader">
 							<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i> <br>

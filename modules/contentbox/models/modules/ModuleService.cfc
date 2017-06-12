@@ -82,7 +82,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		return results;
 	}
-	
+
 	/**
 	 * gets path for requested widget from modules' widget cache
 	 * @widgetName {String}
@@ -95,11 +95,11 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			path = moduleWidgetCache[ arguments.widgetName ];
 		}
 		else {
-			log.error( "Could not find #arguments.widgetname# widget in the module." );	
+			log.error( "Could not find #arguments.widgetname# widget in the module." );
 		}
 		return path;
 	}
-	
+
 	/**
 	* Register a new module and return the module representation, this does not activate, just registers
 	*/
@@ -141,7 +141,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		save( module );
 		//rebuild widgets cache
 		buildModuleWidgetsCache();
-		
+
 		return this;
 	}
 
@@ -190,7 +190,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		save( module );
 		//rebuild widgets cache
 		buildModuleWidgetsCache();
-		
+
 		return this;
 	}
 
@@ -200,14 +200,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	ModuleService function deleteModule(required name){
 		var args = {"name" = arguments.name};
 		var configPath = modulesInvocationPath & ".#name#.ModuleConfig";
-		
+
 		// Try to do an onDelete() callback.
 		var config = createObject( "component", configPath);
 		if( structKeyExists( config, "onDelete" ) ){
 			config.onDelete();
 		}
-		
-		// Now delete it		
+
+		// Now delete it
 		deleteWhere(argumentCollection=args);
 		if( directoryExists( modulesPath & "/#arguments.name#" ) ){
 			directoryDelete( modulesPath & "/#arguments.name#", true );
@@ -334,7 +334,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     					};
     					cache[ widgetName & "@" & module.getName() ] = widget.path;
     				}
-    				
+
     			}
 			}
 		}

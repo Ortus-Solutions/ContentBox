@@ -5,14 +5,14 @@
 * ---
  * Provider for JavaScript-type menu items
  */
-component   implements="contentbox.models.menu.providers.IMenuItemProvider" 
-			extends="contentbox.models.menu.providers.BaseProvider" 
+component   implements="contentbox.models.menu.providers.IMenuItemProvider"
+			extends="contentbox.models.menu.providers.BaseProvider"
 			accessors=true{
 
 	/* *********************************************************************
-	**                      PUBLIC FUNCTIONS                                
+	**                      PUBLIC FUNCTIONS
 	********************************************************************* */
-	
+
 	/**
 	 * Constructor
 	 */
@@ -28,11 +28,11 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * Retrieves template for use in admin screens for this type of menu item provider
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
-	 */ 
+	 */
 	public string function getAdminTemplate( required any menuItem, required struct options={} ) {
 		var viewArgs = { menuItem=arguments.menuItem };
-		return renderer.get().renderView( 
-			view="menus/providers/js/admin", 
+		return renderer.get().renderView(
+			view="menus/providers/js/admin",
 			module="contentbox-admin",
 			args = viewArgs
 		);
@@ -42,12 +42,12 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * Retrieves template for use in rendering menu item on the site
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
-	 */ 
+	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options={} ) {
 		var viewArgs = {
 			menuItem=arguments.menuItem
 		};
-		return renderer.get().renderExternalView( 
+		return renderer.get().renderExternalView(
 			view="/contentbox/models/menu/views/js/display",
 			module="contentbox",
 			args = viewArgs

@@ -13,7 +13,7 @@ component accessors="true" threadSafe singleton{
 	property name="markups"		type="struct";
 	// Setting Servie
 	property name="settingService" inject="settingService@cb";
-	
+
 	/**
 	* Constructor
 	* @wirebox.inject wirebox
@@ -22,27 +22,27 @@ component accessors="true" threadSafe singleton{
 		// init editors and markups
 		editors = {};
 		markups = [];
-		
+
 		// store factory
 		variables.wirebox = arguments.wirebox;
-		
+
 		// register core editors
 		registerEditor( arguments.wirebox.getInstance( "TextareaEditor@cb" ) );
-		
+
 		// register default markup
 		registerMarkup( "HTML" )
 			.registerMarkup( "Markdown" );
 
 		return this;
 	}
-	
+
 	/**
 	* Get the default system editor
 	*/
 	string function getDefaultEditor(){
 		return settingService.getSetting( "cb_editors_default" );
 	}
-	
+
 	/**
 	* Get the default system markup
 	*/
@@ -55,28 +55,28 @@ component accessors="true" threadSafe singleton{
 	* @editor.hint The editor instance to register
 	*/
 	EditorService function registerEditor( required contentbox.models.ui.editors.IEditor editor ){
-		editors[ arguments.editor.getName() ] = arguments.editor;	
+		editors[ arguments.editor.getName() ] = arguments.editor;
 		return this;
 	}
-	
+
 	/**
 	* Register a new markup in ContentBox
 	* @markup.hint The markup name to register
 	*/
 	EditorService function registerMarkup( required markup ){
-		arrayAppend( markups, arguments.markup );	
+		arrayAppend( markups, arguments.markup );
 		return this;
 	}
-	
+
 	/**
 	* UnRegister an editor in ContentBox
 	* @name.hint The name of the editor to unregister
 	*/
 	EditorService function unRegisterEditor( required name ){
-		structDelete( editors, arguments.name );	
+		structDelete( editors, arguments.name );
 		return this;
 	}
-	
+
 	/**
 	* UnRegister a markup in ContentBox
 	* @markup.hint The markup name to unregister
@@ -85,14 +85,14 @@ component accessors="true" threadSafe singleton{
 		arrayDeleteAt( markups, arrayFindNoCase( markups, arguments.markup ) );
 		return this;
 	}
-	
+
 	/**
 	* Get an array of registered editor names in alphabetical order
 	*/
 	array function getRegisteredEditors(){
 		return listToArray( listSort( structKeyList( editors ), "textnocase" ) );
 	}
-	
+
 	/**
 	* Get an array of registered markup names in alphabetical order
 	*/
@@ -100,7 +100,7 @@ component accessors="true" threadSafe singleton{
 		arraySort( markups, "textnocase" );
 		return markups;
 	}
-	
+
 	/**
 	* Get an array of registered editor names in alphabetical order with their display names
 	*/
@@ -112,7 +112,7 @@ component accessors="true" threadSafe singleton{
 		}
 		return result;
 	}
-	
+
 	/**
 	* Get a registered editor instance
 	* @name.hint The name of the editor

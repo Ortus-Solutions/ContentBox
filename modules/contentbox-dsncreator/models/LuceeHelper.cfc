@@ -110,7 +110,7 @@ limitations under the License.
 					<cfset local.dsnString = "jdbc:hsqldb:file:{database}">
 					<cfset local.dbPort = "">
 					<cfset local.className = "org.hsqldb.jdbcDriver">
-				</cfcase>				
+				</cfcase>
 			</cfswitch>
 
 			<!---Create Datasource --->

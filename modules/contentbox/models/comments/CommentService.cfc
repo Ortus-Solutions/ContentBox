@@ -96,7 +96,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
 	*/
 	struct function saveComment( required comment, required loggedInUser ){
-		
+
 		transaction{
 			// Comment reference
 			var inComment = arguments.comment;
@@ -117,18 +117,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 			// Run moderation rules if not logged in.
 			if( arguments.loggedInUser.isLoggedIn()
-				OR 
-				runModerationRules( comment=inComment, settings=inSettings ) 
+				OR
+				runModerationRules( comment=inComment, settings=inSettings )
 			){
 				// send for saving, finally phew!
 				save( inComment );
 				// Send Notification or Moderation Email?
 				sendNotificationEmails( inComment, inSettings );
 				// Return results
-				if( inComment.getIsApproved() ){ 
-					results.moderated = false; 
-				} else { 
-					arrayAppend( results.messages, "Comment was moderated! Please wait for the system administrator to approve it." ); 
+				if( inComment.getIsApproved() ){
+					results.moderated = false;
+				} else {
+					arrayAppend( results.messages, "Comment was moderated! Please wait for the system administrator to approve it." );
 				}
 			} else {
 				// Messages
@@ -162,7 +162,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
         // loop over subscribers
         for( var subscription in subscriptions ) {
         	var subscriber = subscription.getSubscriber();
-            // don't send email if the comment author is also subscribed... 
+            // don't send email if the comment author is also subscribed...
             if( subscriber.getSubscriberEmail() != commentAuthorEmail ) {
                 // get mail payload
                 bodyTokens[ "unsubscribeURL" ]= CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
@@ -180,17 +180,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 					useTLS		= settings.cb_site_mail_tls,
 					useSSL		= settings.cb_site_mail_ssl
 				);
-				
+
                 // generate content for email from template
-                mail.setBody( renderer.get().renderLayout( 
-                    view	= "/contentbox/email_templates/comment_notification", 
+                mail.setBody( renderer.get().renderLayout(
+                    view	= "/contentbox/email_templates/comment_notification",
                     layout	= "/contentbox/email_templates/layouts/email",
                     args 	=  { gravatarEmail = commentAuthorEmail }
                 ) );
                 // send it out
                 mailService.send( mail );
-            }            
-        } 
+            }
+        }
     }
 
 	/**
@@ -311,7 +311,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// Send it baby!
-		var mail = mailservice.newMail( 
+		var mail = mailservice.newMail(
 			to			= outEmails,
 			from		= settings.cb_site_outgoingEmail,
 			subject		= subject,
@@ -322,13 +322,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			password	= settings.cb_site_mail_password,
 			port		= settings.cb_site_mail_smtp,
 			useTLS		= settings.cb_site_mail_tls,
-			useSSL		= settings.cb_site_mail_ssl 
+			useSSL		= settings.cb_site_mail_ssl
 		);
-		
+
 		// generate content for email from template
-		mail.setBody( renderer.get().renderLayout( 
-			view 	= "/contentbox/email_templates/#template#", 
-			layout	= "/contentbox/email_templates/layouts/email", 
+		mail.setBody( renderer.get().renderLayout(
+			view 	= "/contentbox/email_templates/#template#",
+			layout	= "/contentbox/email_templates/layouts/email",
 			args  	= { gravatarEmail= inComment.getAuthorEmail() }
 		));
 
@@ -348,7 +348,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	struct function search(search="",isApproved,contentID,max=0,offset=0){
 		var results = {};
-		var criteria = newCriteria(); 
+		var criteria = newCriteria();
 
 		// isApproved filter
 		if( structKeyExists(arguments,"isApproved" ) AND arguments.isApproved NEQ "any" ){

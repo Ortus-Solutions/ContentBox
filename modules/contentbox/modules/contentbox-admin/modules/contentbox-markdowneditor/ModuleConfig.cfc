@@ -27,13 +27,13 @@ component {
 		routes = [
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
 			customInterceptionPoints = [ ]
 		};
-		
+
 		// interceptors
 		interceptors = [ ];
 	}

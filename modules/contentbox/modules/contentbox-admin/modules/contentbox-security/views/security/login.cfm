@@ -3,19 +3,19 @@
     <div class="col-md-4" id="login-wrapper">
         <div class="panel panel-primary animated fadeInDown">
             <div class="panel-heading">
-                <h3 class="panel-title">     
+                <h3 class="panel-title">
                    <i class="fa fa-key"></i> Login
-                </h3>      
+                </h3>
             </div>
             <div class="panel-body">
 	        	<!--- Render Messagebox. --->
 				#getModel( "messagebox@cbMessagebox" ).renderit()#
 
                 #html.startForm(
-                	action		= prc.xehDoLogin, 
+                	action		= prc.xehDoLogin,
                 	ssl 		= event.isSSL(),
-                	name		= "loginForm", 
-                	novalidate	= "novalidate", 
+                	name		= "loginForm",
+                	novalidate	= "novalidate",
                 	class		= "form-horizontal"
                 )#
 
@@ -23,15 +23,15 @@
 					#announceInterception( "cbadmin_beforeLoginForm" )#
 
 					#html.hiddenField( name="_securedURL", value=rc._securedURL )#
-	                
+
 	                <div class="form-group">
 	                    <div class="col-md-12 controls">
 	                        #html.textfield(
-	                        	name			= "username", 
-	                        	required		= "required", 
-	                        	class			= "form-control", 
-	                        	value			= prc.rememberMe, 
-	                        	placeholder		= cb.r( "common.username@security" ), 
+	                        	name			= "username",
+	                        	required		= "required",
+	                        	class			= "form-control",
+	                        	value			= prc.rememberMe,
+	                        	placeholder		= cb.r( "common.username@security" ),
 	                        	autocomplete	= "off"
 	                        )#
 	                        <i class="fa fa-user"></i>
@@ -40,18 +40,18 @@
 	                <div class="form-group">
 	                   <div class="col-md-12 controls">
 	                        #html.passwordField(
-	                        	name			= "password", 
-	                        	required		= "required", 
-	                        	class			= "form-control", 
-	                        	placeholder		= cb.r( "common.password@security" ), 
+	                        	name			= "password",
+	                        	required		= "required",
+	                        	class			= "form-control",
+	                        	placeholder		= cb.r( "common.password@security" ),
 	                        	autocomplete	= "off"
 	                        )#
 	                        <i class="fa fa-lock"></i>
-	                        
+
 	                    </div>
 	                    <div class="col-md-12">
 							<a href="#event.buildLink( prc.xehLostPassword )#" class="help-block">#cb.r( "lostpassword@security" )#?</a>
-						</div>		
+						</div>
 	                </div>
 	                <div class="form-group">
 	                	<div class="col-md-12">
@@ -67,7 +67,7 @@
 	                                        html.option( value="365", content=cb.r( "rememberme.year@security" ) )
 	                            )#
 							</label>
-						</div>		
+						</div>
 					</div>
 	                <div class="form-group">
 	                   <div class="col-md-12 text-center">

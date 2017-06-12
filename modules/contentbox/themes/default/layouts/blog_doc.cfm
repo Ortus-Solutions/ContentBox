@@ -30,7 +30,7 @@
 		</div>
 	</section>
 	#cb.quickView(view='_footer')#
-	
+
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_beforeBodyEnd" )#
 </body>

@@ -7,7 +7,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	void function setup(){
 		super.setup();
-		
+
 		mockInterceptorService = getMockBox().createEmptyMock("coldbox.system.web.services.InterceptorService")
 			.$("appendInterceptionPoints");
 		mockEvent = getMockRequestContext();
@@ -21,18 +21,18 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 			.$("getRequestService", mockRequestService)
 			.$("getSetting").$args("modules").$results( mockModuleSettings )
 			.$("getSetting").$args("htmlBaseURL").$results( "http://localhost/index.cfm" );
-		
+
 		// init the model object
 		model.init( mockColdBox );
 	}
-	
+
 	function testStartup(){
 		mockEvent.$("getValue", "cbadmin")
 			.$("buildLink", "http://localhost/cbadmin/ckeditor");
-		
+
 		t = model.startup();
-		
+
 		debug( t );
 	}
-	
+
 }

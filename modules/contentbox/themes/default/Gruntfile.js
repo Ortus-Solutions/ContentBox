@@ -16,7 +16,7 @@ module.exports = function( grunt ){
 		"sass:css",			//Bootswatch to sass
 		"clean:revcss", 		//clean old rev css
 		"bower_concat:css",		//bower concat
-		"concat:css", 			//concat css 
+		"concat:css", 			//concat css
 		"cssmin:css",			//min css
 		"clean:combinedcss",	//clean concat css
 		"rev:css",				//create cache buster
@@ -29,7 +29,7 @@ module.exports = function( grunt ){
 		"clean:revjs",			//clean old rev js
 		"bower_concat:js",		//bower concat
 		"jshint", 				//js lint
-		"concat:js", 			//concat js 
+		"concat:js", 			//concat js
 		"uglify:js",			//min js
 		"clean:combinedjs", 	//clean combined js
 		"rev:js",				//create cache buster
@@ -44,11 +44,11 @@ module.exports = function( grunt ){
 
 		// Bower Concat
 		bower_concat : {
-			css : { 
+			css : {
 				cssDest : 'includes/css/bower.css',
 				exclude : [ "bootstrap","bootswatch" ]
 			},
-		  	js 	: { 
+		  	js 	: {
 		  		dest  	: 'includes/js/bower.js',
 		  		exclude : [ "bootswatch" ]
 		  	}
@@ -56,18 +56,18 @@ module.exports = function( grunt ){
 
 		// Copy UI Fonts to destination
 		copy : {
-			
+
 			fonts : {
 				files : [
-					{ 
-						expand 	: true, 
+					{
+						expand 	: true,
 						src 	: 'bower_components/components-font-awesome/fonts/**',
 						dest 	: 'includes/fonts',
 						flatten : true,
 						filter 	: 'isFile'
 					},
-					{ 
-						expand 	: true, 
+					{
+						expand 	: true,
 						src 	: 'bower_components/bootstrap/fonts/**',
 						dest 	: 'includes/fonts',
 						flatten : true,
@@ -75,7 +75,7 @@ module.exports = function( grunt ){
 					}
 				]
 			},
-			
+
 			bootswatchSkinTemplate : {
 				files : [
 					{
@@ -176,7 +176,7 @@ module.exports = function( grunt ){
 					}
 				]
 			},
-			
+
 			bootswatch : {
 				files : [
 					{
@@ -187,7 +187,7 @@ module.exports = function( grunt ){
 					}
 				]
 			},
-			
+
 			bootswatchSkin : {
 				files : [
 					{
@@ -208,7 +208,7 @@ module.exports = function( grunt ){
 	            		"includes/css/bower.css",
 	            		"includes/css/src/theme-global.css"
 	            	]
-				} 
+				}
 			},
 			js : {
 	        	files : {
@@ -229,7 +229,7 @@ module.exports = function( grunt ){
 
 		// JS Min
 		uglify : {
-			options : { 
+			options : {
     			banner : "/* <%= pkg.name %> minified @ <%= grunt.template.today() %> */\n",
     			mangle : false
     		},
@@ -258,7 +258,7 @@ module.exports = function( grunt ){
 				})
 			}
 		},
-		
+
 		// Cleanup
 		clean : {
 			// css
@@ -282,7 +282,7 @@ module.exports = function( grunt ){
 				tasks : [ "scss", "css", "copy" ]
 			},
 			js : {
-				files : [ 
+				files : [
 					"includes/js/src/*.js"
 				],
 				tasks : [ "js" ]
@@ -300,17 +300,17 @@ module.exports = function( grunt ){
 					if( filepath.indexOf( ".js" ) !== -1 ){
 						return '<script src="#cb.themeRoot()#' + filepath + '"></script>';
 					}
-					return '<link rel="stylesheet" href="#cb.themeRoot()#' + filepath + '">';					
+					return '<link rel="stylesheet" href="#cb.themeRoot()#' + filepath + '">';
 				}
 			},
 			css : {
-				files : { 
+				files : {
 					"views/_pageIncludes.cfm" 	: [ "includes/css/*theme.min.css" ],
 					"views/_blogIncludes.cfm" 	: [ "includes/css/*theme.min.css" ]
 				}
 			},
 			js : {
-				files : { 
+				files : {
 					"views/_pageIncludes.cfm" 	: [ "includes/js/*theme.min.js" ],
 					"views/_blogIncludes.cfm" 	: [ "includes/js/*theme.min.js" ]
 				}
@@ -319,7 +319,7 @@ module.exports = function( grunt ){
 
 		// JS Hint
 		jshint : {
-			options : { 
+			options : {
 				curly 	: true,
 				eqeqeq  : true,
 				eqnull 	: true,
@@ -334,7 +334,7 @@ module.exports = function( grunt ){
 				},
 				ignores : [ "*.ba.min.js" ]
 			},
-			all : [ "Gruntfile.js", 'includes/js/src/**/*.js' ]			
+			all : [ "Gruntfile.js", 'includes/js/src/**/*.js' ]
 		},
 
 	} );

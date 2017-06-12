@@ -21,7 +21,7 @@
 	<div class="col-md-12">
 		<div class="panel panel-default">
 		    <div class="panel-body">
-		       
+
 		       <!-- Vertical Nav -->
 		        <div class="tab-wrapper tab-primary">
 
@@ -45,7 +45,7 @@
 		            <div class="tab-content">
 		            	<!---Management Pane --->
 						<div id="managePane" class="tab-pane active">
-							
+
 								<!--- Content Bar --->
 								<div class="well well-sm">
 									<!--- Rebuild Registry Button --->
@@ -77,7 +77,7 @@
 									)#
 										<fieldset>
 											<legend>Theme Uploader</legend>
-											#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+											#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt(
 												name="fileTheme",
 												label="Upload Theme (.zip):",
 												required=true
@@ -105,7 +105,7 @@
 												<th width="300">Theme Info</th>
 												<th>Description</th>
 											</tr>
-										</thead>				
+										</thead>
 										<tbody>
 											<cfloop query="prc.themes">
 											<tr>
@@ -114,10 +114,10 @@
 														<i class="fa fa-asterisk fa-lg text-warning" title="Active Theme"></i>
 													</cfif>
 													<strong>#prc.themes.themeName#</strong>
-													<br/>	
-													Version #prc.themes.version# by 
+													<br/>
+													Version #prc.themes.version# by
 													<a href="#prc.themes.authorURL#" title="#prc.themes.AuthorURL#" target="_blank">#prc.themes.Author#</a>
-													
+
 													<p>&nbsp;</p>
 
 													<!--- Button Bar --->
@@ -129,11 +129,11 @@
 															<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#prc.themes.name#')">
 																<i class="fa fa-bolt"></i> Activate
 															</button>
-														</cfif>	
+														</cfif>
 
 														<!--- Delete Command --->
 														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.themes.name neq prc.activeTheme.name>
-															<a href="javascript:remove('#JSStringFormat(prc.themes.name)#')" 
+															<a href="javascript:remove('#JSStringFormat(prc.themes.name)#')"
 															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
 															   <i class="fa fa-trash-o fa-lg"></i> Remove
 															</a>
@@ -161,7 +161,7 @@
 								#html.endForm()#
 						</div>
 						<!--- end managePane --->
-						
+
 		                <!--- ForgeBox Pane --->
 						<div id="forgeboxPane" class="tab-pane">
 							<div class="text-center">
@@ -184,7 +184,7 @@
 			<!---Tabs --->
 			<div class="panes tab-content"></div>
 			<!--- end panes div --->
-		</div>	
+		</div>
 		<!--- end div body --->
 	</div>
 	<!--- end div box --->

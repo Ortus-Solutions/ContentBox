@@ -5,21 +5,21 @@
 	<!--- Title --->
 	<div class="post-title">
 
-		<!--- content Author 
+		<!--- content Author
 		<div class="post-content-author">
 			#cb.quickAvatar(author=entry.getAuthorEmail(),size=30)# #entry.getAuthorName()#
-		</div>---> 
+		</div>--->
 
 		<!--- Title --->
 		<h2><a href="#cb.linkEntry(entry)#" rel="bookmark" title="#entry.getTitle()#">#entry.getTitle()#</a></h2>
-		
+
 		<!--- Post detail --->
 			<div class="row">
-				<div class="col-sm-7 pull-left"><span class="text-muted">Posted by</span> <i class="icon-user"></i> <a href="##">#entry.getAuthorName()#</a></div>  
+				<div class="col-sm-7 pull-left"><span class="text-muted">Posted by</span> <i class="icon-user"></i> <a href="##">#entry.getAuthorName()#</a></div>
 				<div class="col-sm-5 pull-right text-right"><i class="fa fa-calendar"></i> #entry.getDisplayPublishedDate()#</div>
 			</div>
-		
-		
+
+
 		<!--- content --->
 		<div class="post-content">
 			<!--- excerpt or content --->
@@ -42,7 +42,7 @@
 		</div>
 	</div>
 
-	<!--- Comments Bar 
+	<!--- Comments Bar
 	<div class="post-comments">
 		<!--- <div class="infoBar"> --->
 			<cfif NOT cb.isCommentsEnabled(entry)>

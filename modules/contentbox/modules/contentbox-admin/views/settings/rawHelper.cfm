@@ -10,9 +10,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -31,9 +31,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -78,15 +78,15 @@ function flushSettingsCache(){
 			$( "##specialActionsLoader" ).addClass( "hidden" );
 		}
 	} );
-	
+
 }
 function settingsLoad(search, viewAll, page){
 	if( search == undefined){ search = ""; }
 	if( viewAll == undefined){ viewAll = false; }
 	if( page == undefined){ page = 1; }
-	
-	$('##settingsTableContainer').load( '#event.buildLink( prc.xehRawSettingsTable )#', 
-		{ search: search, viewAll: viewAll, page: page }, 
+
+	$('##settingsTableContainer').load( '#event.buildLink( prc.xehRawSettingsTable )#',
+		{ search: search, viewAll: viewAll, page: page },
 		function(){
 			$(this).fadeIn();
 			activateConfirmations();

@@ -5,9 +5,9 @@
 * www.ortussolutions.com
 * ---
 * Updater for 3.6.0
-* 
+*
 * DB Structure Changes Comment Below
-* 
+*
 * Remove Interface for conversion from 3.0.0,3.1.0 -> 3.6.0
 *
 * ---
@@ -68,7 +68,7 @@ component {
 
 			if( !directoryExists( contentBoxPath & "/modules/contentbox-admin" ) ){
 				directoryRename( contentBoxAdmimPath , contentBoxPath & "/modules/contentbox-admin" );
-			}	
+			}
 			if( !directoryExists( contentBoxPath & "/modules/contentbox-ui" ) ){
 				directoryRename( contentBoxUIPath , contentBoxPath & "/modules/contentbox-ui" );
 			}
@@ -106,11 +106,11 @@ component {
 			savecontent variable="local.updateMessage"{
 				writeOutput( "
 					Update Applied Correctly! Please do the following manual actions:
-					<ul>	
+					<ul>
 						<li>Stop your CFML Engine</li>
 						<li>Remove the folder or archive it: <code>/coldbox/system/modules_bak</code></li>
 						<li>
-							Remove the following folders if still on disk: <code>/modules/contentbox-admin, /modules/contentbox-ui</code>. 
+							Remove the following folders if still on disk: <code>/modules/contentbox-admin, /modules/contentbox-ui</code>.
 							These have now been migrated into the core folder: <code>/modules/contentbox/modules</code>
 						</li>
 						<li>
@@ -129,8 +129,8 @@ component {
 				var appCFC 			= fileRead( variables.appPath & "Application.cfc" );
 				var ORMTarget 		= 'this.mappings[ "/coldbox" ] & "/system/modules/cborm";';
 				var ORMNewTarget	= 'this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";';
-				appCFC 				= replaceNoCase( 
-					appCFC, 
+				appCFC 				= replaceNoCase(
+					appCFC,
 					ORMTarget,
 					ORMTarget
 				);
@@ -140,7 +140,7 @@ component {
 
 			// Move modules to backup for new dependency approach
 			var modulesPath 	= expandPath( "/coldbox/system/modules" );
-			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak"; 
+			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak";
 			if( directoryExists( expandPath( "/coldbox/system/modules" ) ) ){
 				try{
 					directoryRename( modulesPath , modulesBakPath );
@@ -149,14 +149,14 @@ component {
 					// If we failed, it might be a file lock nothing we can do here but stop the engine.
 					cbMessagebox.info( local.updateMessage );
 				}
-			}	
-			
+			}
+
 			// stop application
 			applicationstop();
 
 			// Hard Redirect
 			coldbox.setNextEvent( "cbadmin.autoupdates" );
-			
+
 		} catch( Any e ) {
 			ORMClearSession();
 			arguments.log.append( "Error doing #variables.version# patch postInstallation. Details: #e.message# #e.detail# #chr( 13 )#" );
@@ -239,7 +239,7 @@ component {
 			oSetting.setValue( "Dashboard" );
 			settingService.save( entity=oSetting );
 		}
-		
+
 		// Update ckeditor plugins
 		var pluginList = listToArray( "justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe" );
 		var oldPluginsSetting = settingService.findWhere( { name="cb_editors_ckeditor_extraplugins" } );
@@ -448,7 +448,7 @@ component {
 		} catch( any e ){
 			return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 		}
-		
+
 	}
 
 }

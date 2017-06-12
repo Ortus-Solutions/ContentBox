@@ -10,7 +10,7 @@ component singleton{
 	/**
 	* Convert epoch milliseconds into local time object.
 	* @epoch The epoch time in milliseconds
-	* 
+	*
 	* @return ColdFusion date/time equivalent
 	*/
 	function epochToLocal( epoch ) {
@@ -18,6 +18,6 @@ component singleton{
 			return arguments.epoch;
 		}
 		return dateAdd( "l", arguments.epoch, dateConvert( "utc2Local", "January 1 1970 00:00" ) );
-	}	
-	
+	}
+
 }

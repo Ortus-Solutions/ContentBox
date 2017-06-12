@@ -4,7 +4,7 @@
 <p>
 	#cb.r( "tab.rewrites.intro@installer" )#
 	<a href="http://httpd.apache.org/docs/current/mod/mod_rewrite.html">Apache mod_rewrite</a>,
-	<a href="http://www.tuckey.org/urlrewrite/">Tuckey URL Rewrite</a> #cb.r( "common.or@installer" )# 
+	<a href="http://www.tuckey.org/urlrewrite/">Tuckey URL Rewrite</a> #cb.r( "common.or@installer" )#
 	<a href="http://www.iis.net/download/urlrewrite">IIS 7 Rewrite</a> #cb.r( "common.or@installer" )#
 	<a href="http://www.nginx.org">Nginx</a>.
 	#cb.r( "tab.rewrites.intro2@installer" )#
@@ -16,10 +16,10 @@
 
 <!--- Rewrites --->
 <div class="form-group">
-	#html.label( 
+	#html.label(
 		class   = "control-label",
 		field   = "fullrewrite",
-		content = cb.r( "tab.rewrites.enable@installer" ) 
+		content = cb.r( "tab.rewrites.enable@installer" )
 	)#
 	<div class="controls">
 		<label>
@@ -32,7 +32,7 @@
 				value	= false
 			)#
 		</label>
-		#html.select( 
+		#html.select(
 			options = "commandbox,contentbox_express,mod_rewrite,iis7",
 			name    = "rewrite_engine",
 			class   = "input-sm"
@@ -46,12 +46,12 @@
 	<a href="javascript:prevStep()" class="btn btn-primary">
 		<i class="fa fa-chevron-left"></i> #cb.r( "tab.previous@installer" )#
 	</a>
-	#html.button( 
+	#html.button(
 		type 	= "submit",
 		name 	= "submit",
 		value 	= "<i class='fa fa-check'></i> #cb.r( 'tab.start@installer' )#",
 		class 	= "btn btn-danger",
-		title 	= cb.r( 'tab.start.title@installer' ) 
+		title 	= cb.r( 'tab.start.title@installer' )
 	)#
 </div>
 </cfoutput>

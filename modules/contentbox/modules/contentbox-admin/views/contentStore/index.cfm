@@ -27,10 +27,10 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
-								#html.textField( 
+								#html.textField(
 									name="contentSearch",
 									class="form-control",
-									placeholder="Quick Search" 
+									placeholder="Quick Search"
 								)#
 							</div>
 						</div>
@@ -176,7 +176,7 @@
 			title = "Import Content",
 			contentArea = "content",
 			action = prc.xehContentImport,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> content store file to import. The creator of the content is matched via their <strong>username</strong> and 
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> content store file to import. The creator of the content is matched via their <strong>username</strong> and
                 contenet overrides are matched via their <strong>slug</strong>.
                 If the importer cannot find the username from the import file in your installation, then it will ignore the record."
 		};

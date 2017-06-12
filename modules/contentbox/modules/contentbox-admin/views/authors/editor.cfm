@@ -65,7 +65,7 @@
 							#html.startForm(
 								name="authorForm",
 								action=prc.xehAuthorsave,
-								novalidate="novalidate", 
+								novalidate="novalidate",
 								class="form-vertical"
 							)#
 								#html.startFieldset( legend="User Details" )#
@@ -160,7 +160,7 @@
 									<label>Active User: </label> <span class="textRed">#prc.author.getIsActive()#</span><br/>
 									<label>User Role: </label> <span class="textRed">#prc.author.getRole().getRole()#</span><br/>
 								</cfif>
-								
+
 								<!--- Biography --->
 								#html.textarea(name="biography",
 									label="Biography or Notes About The User:",
@@ -173,14 +173,14 @@
 								)#
 
 								#html.endFieldSet()#
-								
+
 								<!--- Action Bar --->
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
 								</cfif>
-								
+
 							#html.endForm()#
 						</div>
 
@@ -194,7 +194,7 @@
 								#html.passwordField(name="password",label="Password:",required="required",size="50",class="form-control pwcheck",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
 								#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="form-control pwcheck",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
 								#html.endFieldSet()#
-								
+
 								<!--- Action Bar --->
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 								<div class="form-actions">
@@ -203,7 +203,7 @@
 								</cfif>
 							#html.endForm()#
 							</div>
-							
+
 							<!--- Preferences --->
 							<div class="tab-pane" id="preferences">#prc.preferencesViewlet#</div>
 
@@ -249,7 +249,7 @@
 				<div class="margin10">
 					<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>
 				</div>
-				
+
 				<!--- Persisted Info --->
 				<table class="table table-condensed table-hover table-striped" width="100%">
 					<tr>
@@ -271,9 +271,9 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				<p></p>
-				
+
 				<!---Gravatar info --->
 				<cfif prc.cbSettings.cb_gravatar_display>
 				<div class="bg-helper bg-info clearfix">

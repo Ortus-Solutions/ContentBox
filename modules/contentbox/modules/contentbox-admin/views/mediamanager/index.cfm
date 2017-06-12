@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-picture-o"></i> Media Manager 
+			<i class="fa fa-picture-o"></i> Media Manager
 		</h1>
 		<span class="label label-warning">#rc.library#</span>
 
@@ -15,18 +15,18 @@
 				    </a>
 					<ul class="dropdown-menu pull-right">
 						<cfloop array="#prc.libraryOptions#" index="thisCollection">
-						<li><a href="javascript:switchLibrary( '#thisCollection.value#' )">#thisCollection.name#</a>	
+						<li><a href="javascript:switchLibrary( '#thisCollection.value#' )">#thisCollection.name#</a>
 						</cfloop>
 					</ul>
 			    </div>
 			</div>
 	    </cfif>
-	    
+
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-12">
-		    
+
     	<!--- messageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
 

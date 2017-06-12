@@ -30,10 +30,10 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
-								#html.textField( 
+								#html.textField(
 									name="commentSearch",
 									class="form-control",
-									placeholder="Quick Search" 
+									placeholder="Quick Search"
 								)#
 							</div>
 						</div>
@@ -64,11 +64,11 @@
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 								<th width="200">Author</th>
 								<th>Comment</th>
-								<th width="150" class="text-center">Date</th>			
+								<th width="150" class="text-center">Date</th>
 								<th width="75" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
-						
+
 						<tbody>
 							<cfloop array="#prc.comments#" index="comment">
 							<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
@@ -87,14 +87,14 @@
 										</a>
 										<br />
 									</cfif>
-									<i class="fa fa-laptop"></i> 
+									<i class="fa fa-laptop"></i>
 									<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 								</td>
 								<td>
 									<!--- Entry Or Page --->
 									<strong>
 										<a title="Open in Site" href="#prc.CBHelper.linkComment(comment)#">#comment.getParentTitle()#</a>
-									</strong> 
+									</strong>
 									<br/>
 									#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
 									<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
@@ -133,8 +133,8 @@
 					</table>
 					<!--- Paging --->
 					#prc.oPaging.renderit(
-						foundRows=prc.commentsCount, 
-						link=prc.pagingLink, 
+						foundRows=prc.commentsCount,
+						link=prc.pagingLink,
 						asList=true
 					)#
 				</div>
@@ -160,7 +160,7 @@
 						)#
 					</div>
 					<button type="submit" class="btn btn-danger">Search</button>
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>				
+					<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>
 				#html.endForm()#
 		    </div>
 		</div>
@@ -176,11 +176,11 @@
 						<select name="fStatus" id="fStatus" class="form-control input-sm">
 							<option value="any"   <cfif rc.fStatus eq "any">selected="selected"</cfif>>Any Status (#prc.countApproved + prc.countUnApproved#)</option>
 							<option value="true"  <cfif rc.fStatus eq "true">selected="selected"</cfif>>Approved (#prc.countApproved#)</option>
-							<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#prc.countUnApproved#)</option>				
+							<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#prc.countUnApproved#)</option>
 						</select>
 			    	</div>
 					<button type="submit" class="btn btn-danger">Apply Filters</button>
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>				
+					<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>
 				#html.endForm()#
 		    </div>
 		</div>

@@ -26,7 +26,7 @@ component extends="coldbox.system.Interceptor"{
 		if( !settingService.isCBReady() ){
 			setNextEvent( "cbInstaller" );
 		}
-		
+
 		// Prepare UI Request
 		CBHelper.prepareUIRequest();
 	}
@@ -36,10 +36,10 @@ component extends="coldbox.system.Interceptor"{
 	*/
 	function postRender( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui\:(page|blog)"{
 		// Rules to turn off the admin bar
-		if( 
+		if(
 			// Disabled SiteBar Setting
 			!prc.cbSettings.cb_site_adminbar
-			|| 
+			||
 			// Disabled SiteBar per request
 			structKeyExists( prc, "cbAdminBar" ) and !prc.cbAdminBar
 			||
@@ -90,8 +90,8 @@ component extends="coldbox.system.Interceptor"{
 		}
 
 		// Render the admin bar out
-		var adminBar = renderView( 
-			view 	= "adminbar/index", 
+		var adminBar = renderView(
+			view 	= "adminbar/index",
 			module 	= "contentbox-ui",
 			args 	= {
 				oContent 		= oContent ?: javaCast( "null", "" ),
@@ -122,9 +122,9 @@ component extends="coldbox.system.Interceptor"{
 			arguments.interceptData.target.$cbInject 	= variables.$cbInject;
 			arguments.interceptData.target.$cbInject();
 			// re-broadcast event
-			announceInterception( 
+			announceInterception(
 				"cbui_onRendererDecoration",
-				{ renderer=arguments.interceptData.target, CBHelper=arguments.interceptData.target.cb } 
+				{ renderer=arguments.interceptData.target, CBHelper=arguments.interceptData.target.cb }
 			);
 		}
 	}

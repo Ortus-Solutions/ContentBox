@@ -1,7 +1,7 @@
 <cfoutput>
 <fieldset>
 	<legend><i class="fa fa-paw fa-lg"></i> Login Tracker</legend>
-	
+
 	<!--- Login Blocker --->
 	<div class="form-group">
         #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:" )#
@@ -133,7 +133,7 @@
             	class 	= "form-control",
             	value 	= prc.cbSettings.cb_security_rate_limiter_message,
             	rows 	= "4"
-            )#     
+            )#
         </div>
     </div>
 </fieldset>
@@ -180,6 +180,6 @@
 				value	= prc.cbSettings.cb_site_ssl
 			)#
         </div>
-    </div>  
+    </div>
 </fieldset>
 </cfoutput>

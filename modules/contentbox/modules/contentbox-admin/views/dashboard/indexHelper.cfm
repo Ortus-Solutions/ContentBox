@@ -24,7 +24,7 @@ $(document).ready(function() {
 	</cfif>
 	<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
 	// Load latest logsin
-	$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );		
+	$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );
 	</cfif>
 	// Select first dashboard tab
 	$( "##dashboardTabs a:first" ).tab( 'show' )

@@ -1,6 +1,6 @@
 <cfoutput>
     <div class="#args.content.getIsPublished()?'':'selected'#">
-        <h4><i class="fa fa-calendar"></i> Publishing</h4>        
+        <h4><i class="fa fa-calendar"></i> Publishing</h4>
             <!--- Published? --->
         <cfif args.content.isLoaded()>
             <label class="inline">Status: </label>
@@ -26,7 +26,7 @@
                     <div class="input-group">
                         #html.inputField(
                             size="9", name="publishedDate",
-                            value=args.content.getPublishedDateForEditor(), 
+                            value=args.content.getPublishedDateForEditor(),
                             class="form-control datepicker"
                         )#
                         <span class="input-group-addon">
@@ -52,7 +52,7 @@
                     size=2,
                     maxlength="2",
                     min="0",
-                    max="60", 
+                    max="60",
                     title="Minute",
                     class="form-control editorTime"
                 )#--->
@@ -81,9 +81,9 @@
                 <div class="col-md-6">
                     <div class="input-group">
                         #html.inputField(
-                            size="9", 
+                            size="9",
                             name="expireDate",
-                            value=args.content.getExpireDateForEditor(), 
+                            value=args.content.getExpireDateForEditor(),
                             class="form-control datepicker"
                         )#
                         <span class="input-group-addon">
@@ -110,7 +110,7 @@
                     size=2,
                     maxlength="2",
                     min="0",
-                    max="60", 
+                    max="60",
                     title="Minute",
                     class="form-control editorTime"
                 )#
@@ -132,7 +132,7 @@
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
         <!--- Changelog --->
         #html.textField(
             name="changelog",

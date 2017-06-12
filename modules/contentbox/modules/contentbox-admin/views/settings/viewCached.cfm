@@ -30,7 +30,7 @@
             		</tr>
             	</tbody>
             </table>
-            
+
             <h2>Cached Data</h2>
             <!--- settings --->
             <table name="settings" id="settings" class="table table-hover table-condensed table-striped" width="98%">

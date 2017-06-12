@@ -15,7 +15,7 @@
 						<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
 						<div class="text-center"><small>Please Wait...</small></div>
 					</div>
-					
+
 					<!--- Permissions --->
 					<p>Choose a permission to add:</p>
 					<div class="btn-group">
@@ -39,11 +39,11 @@
 						<!--- Button --->
 						<button class="btn btn-danger btn-small" onclick="addPermission();return false;" <cfif noPerms>disabled="disabled"</cfif>>Add Permission</button>
 					</div>
-					
+
 				#html.endFieldSet()#
 			#html.endForm()#
-			
-			
+
+
 			<!--- Show/Remove Form--->
 			#html.startForm( name="permissionRemoveForm" )#
 				#html.startFieldset( legend="Active Role Permissions" )#
@@ -51,15 +51,15 @@
 						<small>No permissions assigned!</small>
 					<cfelse>
 						<p>Below are the currently assigned permissions. You can optionally remove permissions by clicking on the remove button (<i class="fa fa-minus-circle fa-lg textRed"></i>).</p>
-					</cfif>			
-				
-					
+					</cfif>
+
+
 					<cfloop array="#prc.role.getPermissions()#" index="perm">
 					<div>
 						<!--- Remove --->
 						<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-circle-o fa-lg textRed"></i></a>
 						<!--- Name --->
-						&nbsp; 
+						&nbsp;
 						<strong>#perm.getPermission()#</strong>
 					</div>
 					</cfloop>

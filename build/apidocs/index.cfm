@@ -9,7 +9,7 @@
 	docbox = new docbox.DocBox( properties = {
 		projectTitle 	= "ContentBox Modular CMS v#url.version#",
 		outputDir 		= url.path
-	} );	
+	} );
 	docbox.generate( source=base, mapping="contentbox" );
 </cfscript>
 
