@@ -132,7 +132,7 @@
 									
 									<!--- Actions --->	
 									<div class="btn-group">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
+								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
 											<i class="fa fa-cogs fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
