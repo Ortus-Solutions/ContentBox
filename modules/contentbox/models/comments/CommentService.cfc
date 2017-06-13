@@ -48,26 +48,37 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @offset.hint The offset in the paging, 0 means 0
 	* @sortOrder.hint Sort the comments asc or desc, by default it is desc
 	*/
-	function findApprovedComments(contentID,contentType,max=0,offset=0,sortOrder="desc" ){
+	function findApprovedComments( 
+		contentID,
+		contentType,
+		max=0,
+		offset=0,
+		sortOrder="desc" 
+	){
 		var results = {};
-		var c = newCriteria();
+		var c 		= newCriteria();
 
 		// only approved comments
 		c.isTrue( "isApproved" );
 
 		// By Content?
-		if( structKeyExists(arguments,"contentID" ) AND len(arguments.contentID) ){
-			c.eq( "relatedContent.contentID",javaCast( "int", arguments.contentID));
+		if( structKeyExists( arguments, "contentID" ) AND len( arguments.contentID ) ){
+			c.eq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
 		}
 		// By Content Type Discriminator: class is a special hibernate deal
-		if( structKeyExists(arguments,"contentType" ) AND len(arguments.contentType) ){
+		if( structKeyExists( arguments, "contentType" ) AND len( arguments.contentType ) ){
 			c.createCriteria( "relatedContent" )
 				.isEq( "class", arguments.contentType);
 		}
 
 		// run criteria query and projections count
 		results.count 	 = c.count();
-		results.comments = c.list(offset=arguments.offset,max=arguments.max,sortOrder="createdDate #arguments.sortOrder#",asQuery=false);
+		results.comments = c.list(
+			offset		= arguments.offset,
+			max			= arguments.max,
+			sortOrder	= "createdDate #arguments.sortOrder#",
+			asQuery		= false
+		);
 
 		return results;
 	}

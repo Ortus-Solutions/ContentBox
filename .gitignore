@@ -39,3 +39,4 @@ modules/contentbox/modules/contentbox-deps/modules/*
 # Testing
 /tests/logs/*
 /tests/test-results/*
+tests/specs/contentbox-installer/unit/logs

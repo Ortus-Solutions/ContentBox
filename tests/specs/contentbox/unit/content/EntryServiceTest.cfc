@@ -1,124 +1,115 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.content.EntryService"{
+component extends="coldbox.system.testing.BaseTestCase"{
 
-	function setup(){
-		super.setup();
-		model.init(eventHandling=false);
-		
-		model.$property("HQLHelper","variables", new modules.contentbox.models.util.HQLHelper() );
-	}
-	
-	function testgetArchivesReport(){
-		r = model.getArchiveReport();
-		assertTrue( arrayLen( r ) );
-	}
-	
-	function testGetIDBySlug(){
-		r = model.getIDBySlug('bogus');
-		debug( r );
-		assertEquals( '', r );
-		
-		r = model.getIDBySlug('my-first-entry');
-		debug( r );
-		assertEquals( 1, r );
-	}
-	
-	function testSearch(){
-		
-		r = model.search();
-		assertTrue( r.count gt 0 );
-		
-		r = model.search(isPublished=false);
-		assertTrue( r.count eq 0 );
-		r = model.search(isPublished=true);
-		assertTrue( r.count gt 0 );
-		
-		var entries = entityLoad("cbEntry");
-		var authorID = entries[1].getAuthor().getAuthorID();
-		r = model.search(author=authorID);
-		assertTrue( r.count gt 0 );
-		
-		// search
-		r = model.search(search="everybody");
-		assertTrue( r.count gt 0 );
-		
-		// no categories
-		r = model.search(category="none");
-		assertTrue( r.count gt 0 );
-		
-		// no categories
-		r = model.search(category="1");
-		assertTrue( r.count eq 0 );
-		
-	}
-	
-	function testFindPublishedEntriesByDate(){
-		var entry = entityLoad("cbEntry")[1];
-		
-		// nothing
-		r = model.findPublishedEntriesByDate(year=2000);
-		assertFalse( arrayLen(r.entries) );
-		assertEquals(0, r.count );
-		
-		// year
-		r = model.findPublishedEntriesByDate(year=dateformat( entry.getCreatedDate(), "yyyy"));
-		assertTrue( arrayLen(r.entries) eq 1 );
-		
-		// year + Month
-		r = model.findPublishedEntriesByDate(year=dateformat( entry.getCreatedDate(), "yyyy"),month=dateFormat(entry.getCreatedDate(), "mm") );
-		assertTrue( arrayLen(r.entries) eq 1 );
-		
-		// year + Month + day
-		r = model.findPublishedEntriesByDate(year=dateformat( entry.getCreatedDate(), "yyyy"),
-											 month=dateFormat(entry.getCreatedDate(), "mm"),
-											 day=dateFormat(entry.getCreatedDate(), "dd") );
-		assertTrue( arrayLen(r.entries) eq 1 );
-	}
-	
-	function testfindPublishedEntries(){
-		r = model.findPublishedEntries();
-		assertTrue( r.count gt 0 );
-		
-		// categories
-		r = model.findPublishedEntries(category="software");
-		assertTrue( r.count eq 0 );
-		
-		// search
-		r = model.findPublishedEntries(search="first");
-		assertTrue( r.count gt 0 );
-		
-	}
-	
-	function testFindBySlug(){
-		model.$("new", entityNew("cbEntry") );
-		r = model.findBySlug("bogus");
-		assertFalse( r.isLoaded() );
-		
-		r = model.findBySlug("my-first-entry");
-		assertTrue( r.isLoaded() );		
-	}
-	
+/*********************************** LIFE CYCLE Methods ***********************************/
 
-} 
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
+	}
+
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
+	}
+
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+		describe( "Entry Services", function(){
+			beforeEach(function( currentSpec ){
+				model = getInstance( "EntryService@cb" );
+			});
+
+			it( "can get archives report", function(){
+				var r = model.getArchiveReport();
+				expect(	arrayLen( r ) ).toBeGT( 0 );
+			});
+
+			it( "can get IDs by slug", function(){
+				var r = model.getIDBySlug( 'bogus' );
+				expect(	r ).toBe( '' );
+				
+				var r = model.getIDBySlug( 'this-is-just-awesome' );
+				debug( r );
+			});
+
+			it( "can search for entries", function(){
+				var r = model.search();
+				expect(	r.count ).toBeGT( 0 );
+				
+				var r = model.search( isPublished=false );
+				expect(	r.count ).toBe( 2 );
+				
+				var r = model.search(isPublished=true);
+				expect(	r.count ).toBeGT( 0 );
+				
+				var entries = entityLoad("cbEntry");
+				var authorID = entries[ 1 ].getAuthor().getAuthorID();
+				var r = model.search(author=authorID);
+				expect(	r.count ).toBeGT( 0 );
+				
+				// search
+				var r = model.search(search="everybody");
+				expect(	r.count ).toBeGT( 0 );
+				
+				// no categories
+				var r = model.search(category="none");
+				expect(	r.count ).toBeGT( 0 );
+				
+				// no categories
+				var r = model.search(category="1");
+				expect(	r.count ).toBe( 0 );
+			});
+
+			it( "can find published entries by published dates", function(){
+				var entry = entityLoad( "cbEntry" )[ 1 ];
+		
+				// nothing
+				var r = model.findPublishedEntriesByDate( year=2000 );
+				expect(	arrayLen( r.entries ) ).toBeFalse();
+				
+				// year
+				var r = model.findPublishedEntriesByDate( year = dateformat( entry.getPublishedDate(), "yyyy") );
+				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
+				
+				// year + Month
+				var r = model.findPublishedEntriesByDate(
+					year 	= dateformat( entry.getPublishedDate(), "yyyy"), 
+					month 	= dateFormat( entry.getPublishedDate(), "mm") 
+				);
+				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
+				
+				// year + Month + day
+				var r = model.findPublishedEntriesByDate(
+					year	= dateformat( entry.getPublishedDate(), "yyyy" ),
+					month	= dateFormat( entry.getPublishedDate(), "mm" ),
+					day 	= dateFormat( entry.getPublishedDate(), "dd" )
+				);
+				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
+			});
+
+			it( "can find published entries by criteria", function(){
+				var r = model.findPublishedEntries();
+				expect(	r.count ).toBeGT( 0 );
+				
+				// categories
+				var r = model.findPublishedEntries( category="software" );
+				expect(	r.count ).toBe( 0 );
+				var r = model.findPublishedEntries( category="ColdFusion" );
+				expect(	r.count ).toBeGTE( 1 );
+				
+				// search
+				var r = model.findPublishedEntries(search="first");
+				expect(	r.count ).toBeGT( 0 );
+			});
+
+		});
+	}
+
+}

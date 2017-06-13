@@ -150,7 +150,7 @@ component extends="ContentService" singleton{
 				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
 				  ORDER BY 2 DESC, 3 DESC";
 		var params = {};
-		params["now"] = now();
+		params[ "now" ] = now();
 		// run report
 		return executeQuery( query=hql, params=params, asQuery=false );
 	}
@@ -172,29 +172,43 @@ component extends="ContentService" singleton{
 				    AND passwordProtection = ''
 				    AND publishedDate <= :now";
 		var params = {};
-		params["now"] = now();
+		params[ "now" ] = now();
+		
 		// year lookup mandatory
 		if( arguments.year NEQ 0 ){
-			params["year"] = arguments.year;
-			hql &= " AND YEAR(publishedDate) = :year";
+			params[ "year" ] = arguments.year;
+			hql &= " AND YEAR( publishedDate ) = :year";
 		}
+		
 		// month lookup
 		if( arguments.month NEQ 0 ){
-			params["month"] = arguments.month;
-			hql &= " AND MONTH(publishedDate) = :month";
+			params[ "month" ] = arguments.month;
+			hql &= " AND MONTH( publishedDate ) = :month";
 		}
+		
 		// day lookup
 		if( arguments.day NEQ 0 ){
-			params["day"] = arguments.day;
-			hql &= " AND DAY(publishedDate) = :day";
+			params[ "day" ] = arguments.day;
+			hql &= " AND DAY( publishedDate ) = :day";
 		}
 
 		// Get Count
-		results.count 	= executeQuery(query="select count(*) #hql#",params=params,max=1,asQuery=false)[1];
+		results.count = executeQuery(
+			query	= "select count( * ) #hql#",
+			params	= params,
+			max		= 1,
+			asQuery	= false
+		)[1];
 		// Add Ordering
 		hql &= " ORDER BY publishedDate DESC";
 		// find entries
-		results.entries = executeQuery(query=hql,params=params,max=arguments.max,offset=arguments.offset,asQuery=arguments.asQuery);
+		results.entries = executeQuery(
+			query	= hql,
+			params	= params,
+			max		= arguments.max,
+			offset	= arguments.offset,
+			asQuery	= arguments.asQuery
+		);
 
 		return results;
 	}

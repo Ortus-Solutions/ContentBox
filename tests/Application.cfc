@@ -41,17 +41,15 @@ component{
 	this.mappings[ "/coldbox" ] 			= rootPath & "coldbox" ;
 	this.mappings[ "/testbox" ] 			= rootPath & "testbox" ;
 	this.mappings[ "/contentbox" ] 			= rootPath & "modules/contentbox" ;
-	this.mappings[ "/contentbox-deps" ]		= rootPath & "modules/contentbox/modules/contentbox-deps";
-	this.mappings[ "/contentbox-ui" ] 		= rootPath & "modules/contentbox/modules/contentbox-ui";
-	this.mappings[ "/contentbox-admin" ] 	= rootPath & "modules/contentbox/modules/contentbox-admin";
+
 	// Modular ORM Dependencies
-	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox-deps" ] & "/modules/cborm";
+	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
 	// ORM Settings
 	this.ormEnabled = true;
 	this.datasource = "contentbox";
 	this.ormSettings = {
-		cfclocation=[ rootPath & "/modules" ],
+		cfclocation			= [ rootPath & "/modules" ],
 		logSQL 				= true,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
@@ -67,7 +65,10 @@ component{
 		setting requestTimeout="9999";
 
 		// ORM Reload for fresh results
-		ormReload();
+		if( structKeyExists( url, "fwreinit" ) ){
+			pagePoolClear();
+			ormReload();
+		}
 
 		return true;
 	}

@@ -21,13 +21,20 @@ component extends="coldbox.system.testing.BaseTestCase"{
 /*********************************** BDD SUITES ***********************************/
 
 	function run( testResults, testBox ){
-		describe( "Content Version Service", function(){
+		describe( "Content Store Service", function(){
 			beforeEach(function( currentSpec ){
-				model = getInstance( "ContentVersionService@cb" );
+				model = getInstance( "ContentStoreService@cb" );
 			});
 
-			it( "can find related versions", function(){
-				var r = model.findRelatedVersions( contentID=142 );
+			it( "can search for content items", function(){
+				// test get all
+				var r = model.search();
+				expect(	r.count ).toBeGT( 0 );
+						
+				r = model.search( search="Most greatest news" );
+				expect(	r.count ).toBeGT( 0 );
+
+				r = model.search( search="sidebar" );
 				expect(	r.count ).toBeGT( 0 );
 			});
 		
