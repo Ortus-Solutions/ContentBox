@@ -3,34 +3,112 @@
 <div>
 	
 	<!--- Show/Remove Form--->
-	#html.startForm(name="permissionRolesForm",class="form-vertical" )#
-	#html.startFieldset(legend="Active User Role Permissions" )#
+	#html.startForm( name="permissionRolesForm", class="form-vertical" )#
+	#html.startFieldset( legend="Role Permissions" )#
 		<cfif !prc.author.getRole().hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
-			<p>Below are the currently inherited permissions from the user's role: <strong>#prc.author.getRole().getRole()#</strong>.
+			<p>Below are the currently inherited permissions from the user's role: <span class="label label-info">#prc.author.getRole().getRole()#</span>.
 		</cfif>			
 		
-		<cfloop array="#prc.author.getRole().getPermissions()#" index="perm">
-		<div>
-			<!--- Assigned --->
-			<i class="fa fa-circle-o fa-lg textGreen"></i>
-			<!--- Name --->
-			&nbsp; 
-			<strong>#perm.getPermission()#</strong>
+		<div class="well well-sm">
+			<cfloop array="#prc.author.getRole().getPermissions()#" index="perm">
+			<div>
+				<!--- Assigned --->
+				<i class="fa fa-circle-o fa-lg textGreen"></i>
+				<!--- Name --->
+				&nbsp; 
+				<strong>#perm.getPermission()#</strong>
+			</div>
+			</cfloop>		
 		</div>
-		</cfloop>		
 		
 	#html.endFieldSet()#
 	#html.endForm()#
 
 	<p>&nbsp;</p>
 	
+	<!--- Add Permission Groups Form--->
+	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+	#html.startForm( name="groupsForm", class="form-vertical" )#
+		#html.startFieldset( legend="Assign Permission Groups" )#
+			#html.hiddenField( name="authorID", bind=prc.author )#
+			
+			<!--- Loader --->
+			<div class="loaders floatRight" id="groupsLoader">
+				<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i><br/>
+				<div class="text-center"><small>Please Wait...</small></div>
+			</div>
+			
+			<!--- Permissions --->
+			<p>You can assign permission groups to this user:</p>
+			<div class="form-group">
+				<div class="input-group">
+					<!---Permission Groups List --->
+					<select name="permissionGroupID" id="permissionGroupID" class="form-control input-sm">
+						<cfset noGroups = true>
+						
+						<cfloop array="#prc.aPermissionGroups#" index="thisGroup">
+							<cfif !prc.author.hasPermissionGroup( thisGroup )>
+								<cfset noGroups = false>
+								<option value="#thisGroup.getPermissionGroupID()#">#thisGroup.getName()#</option>
+							</cfif>
+						</cfloop>
+
+						<cfif noGroups>
+							<option value="null">User has all permission groups assigned</option>
+						</cfif>
+					</select>
+
+					<span class="input-group-btn">
+						<cfif arrayLen( prc.aPermissionGroups ) GT 0 AND !noGroups>
+							<button type="button" class="btn btn-sm btn-danger" onclick="addPermissionGroup();return false;">Add Group</button>
+						<cfelse>
+							<button type="button" class="btn btn-sm btn-danger" onclick="alert( 'No Permission Groups Found, Cannot Add!' ); return false" disabled>Add Group</button>
+			            </cfif>
+		        	</span>
+				</div>
+			</div>
+		#html.endFieldSet()#
+	#html.endForm()#
+	</cfif>
+
+	<!--- Show/Remove Form--->
+	#html.startForm( name="alacartePermissionGroups", class="form-vertical" )#
+		<cfif !prc.author.hasPermissionGroup()>
+			<small>No permission groups assigned!</small>
+		<cfelse>
+			<p>Below are the currently assigned a-la-carte permission groups. You can optionally remove permission groups by clicking on the remove button (<i class="fa fa-circle-o fa-lg textRed"></i>).</p>
+		</cfif>			
+		
+		<cfloop array="#prc.author.getPermissionGroups()#" index="group">
+		<div>
+			<!--- Assigned --->
+			<i class="fa fa-circle-o fa-lg textGreen"></i>
+			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+				<!--- Remove --->
+				<a 	href="javascript:removePermissionGroup( '#group.getPermissionGroupID()#' )" 
+					onclick="return confirm( 'Are you sure?' )" 
+					title="Remove Permission Group">
+					<i class="fa fa-circle-o fa-lg textRed"></i>
+				</a>
+			</cfif>
+			<!--- Name --->
+			&nbsp; 
+			<strong>#group.getName()#</strong>
+		</div>
+		</cfloop>
+		
+	#html.endForm()#
+
+
+	<p>&nbsp;</p>
+	
 	<!--- Add Permission Form--->
 	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-	#html.startForm(name="permissionForm",class="form-vertical" )#
-		#html.startFieldset(legend="Assign A-la-Carte Permissions" )#
-			#html.hiddenField(name="authorID",bind=prc.author)#
+	#html.startForm( name="permissionForm", class="form-vertical" )#
+		#html.startFieldset( legend="Assign A-la-Carte Permissions" )#
+			#html.hiddenField( name="authorID", bind=prc.author )#
 			
 			<!--- Loader --->
 			<div class="loaders floatRight" id="permissionLoader">
@@ -45,21 +123,24 @@
 					<!---Permission list --->
 					<select name="permissionID" id="permissionID" class="form-control input-sm">
 						<cfset noPerms = true>
-						<cfloop array="#prc.permissions#" index="thisPerm">
-							<cfif !prc.author.hasPermission( thisPerm ) AND !prc.author.getRole().hasPermission( thisPerm )>
+						
+						<cfloop array="#prc.aPermissions#" index="thisPerm">
+							<cfif !prc.author.checkPermission( thisPerm.getPermission() )>
 								<cfset noperms = false>
 								<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
 							</cfif>
 						</cfloop>
+
 						<cfif noPerms>
 							<option value="null">Role has all permissions</option>
 						</cfif>
 					</select>
+
 					<span class="input-group-btn">
-						<cfif arrayLen( prc.permissions ) GT 0 AND !noPerms>
+						<cfif arrayLen( prc.aPermissions ) GT 0 AND !noPerms>
 							<button type="button" class="btn btn-sm btn-danger" onclick="addPermission();return false;">Add Permission</button>
 						<cfelse>
-							<button type="button" class="btn btn-sm btn-danger" onclick="alert('No Permissions Found, Cannot Add!'); return false" disabled>Add Permission</button>
+							<button type="button" class="btn btn-sm btn-danger" onclick="alert( 'No Permissions Found, Cannot Add!' ); return false" disabled>Add Permission</button>
 			            </cfif>
 		        	</span>
 				</div>
@@ -68,11 +149,8 @@
 	#html.endForm()#
 	</cfif>
 
-	<p>&nbsp;</p>
-	
 	<!--- Show/Remove Form--->
 	#html.startForm( name="alacartePermissions", class="form-vertical" )#
-	#html.startFieldset( legend="Active A-la-carte Permissions" )#
 		<cfif !prc.author.hasPermission()>
 			<small>No permissions assigned!</small>
 		<cfelse>
@@ -93,7 +171,6 @@
 		</div>
 		</cfloop>
 		
-	#html.endFieldSet()#
 	#html.endForm()#
 	
 </div>

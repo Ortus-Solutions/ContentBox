@@ -238,14 +238,18 @@
 
     <cfif prc.author.isLoaded()>
     <div class="col-md-4" id="main-content-sidebar">
+    	
     	<div class="panel panel-primary">
+		
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-eye"></i> Details</h3>
 			</div>
+
 			<div class="panel-body">
 				<div class="pull-left margin10">
 					#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="40" )#
 				</div>
+
 				<div class="margin10">
 					<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>
 				</div>
@@ -258,16 +262,25 @@
 							#prc.author.getDisplayLastLogin()#
 						</td>
 					</tr>
+
 					<tr>
 						<th width="105" class="textRight">Created Date</th>
 						<td>
 							#prc.author.getDisplayCreatedDate()#
 						</td>
 					</tr>
+
 					<tr>
 						<th width="105" class="textRight">Role</th>
 						<td>
 							#prc.author.getRole().getRole()#
+						</td>
+					</tr>
+
+					<tr>
+						<th width="105" class="textRight">Permission Groups</th>
+						<td>
+							#prc.author.getPermissionGroupsList()#
 						</td>
 					</tr>
 				</table>

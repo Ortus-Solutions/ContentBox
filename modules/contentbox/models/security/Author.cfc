@@ -142,7 +142,7 @@ component 	persistent="true"
 			 	fkcolumn="FK_authorID" 
 			 	linktable="cb_authorPermissionGroups" 
 			 	inversejoincolumn="FK_permissionGroupID" 
-			 	orderby="permission";
+			 	orderby="name";
 
 	/* *********************************************************************
 	**							CALCULATED FIELDS									
@@ -236,15 +236,18 @@ component 	persistent="true"
 	*/
 	boolean function checkGroupPermissions( required slug ){
 		// If no groups, just return false
-		if( !hasGroupPermission() ){
+		if( !hasPermissionGroup() ){
 			return false;
 		}
+		
 		// iterate and check, break if found, short-circuit approach.
-		for( var thisGroup in variables.groupPermissions ){
+		for( var thisGroup in variables.permissionGroups ){
 			if( thisGroup.checkPermission( arguments.slug ) ){
 				return true;
 			}
 		}
+		// nada found
+		return false;
 	}
 	
 	/**
@@ -285,6 +288,20 @@ component 	persistent="true"
 		}
 		return this;
 	}
+
+	/**
+	* Shortcut Utlity function to get a list of all the permission groups this user belongs to.
+	*/
+	string function getPermissionGroupsList( delimiter = "," ){
+		if( hasPermissionGroup() ){
+			var aGroups = [];
+			for( var thisGroup in variables.permissionGroups ){
+				arrayAppend( aGroups, thisGroup.getName() );
+			}
+			return arrayToList( aGroups, arguments.delimiter );
+		}
+		return "";
+	}	
 
 	/**
 	* Logged in

@@ -8,12 +8,13 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="authorService"		inject="id:authorService@cb";
-	property name="entryService"		inject="id:entryService@cb";
-	property name="permissionService"	inject="id:permissionService@cb";
-	property name="roleService"			inject="id:roleService@cb";
-	property name="editorService"		inject="id:editorService@cb";
-	property name="paging"				inject="id:paging@cb";
+	property name="authorService"			inject="id:authorService@cb";
+	property name="entryService"			inject="id:entryService@cb";
+	property name="permissionService"		inject="id:permissionService@cb";
+	property name="permissionGroupService"	inject="id:permissionGroupService@cb";
+	property name="roleService"				inject="id:roleService@cb";
+	property name="editorService"			inject="id:editorService@cb";
+	property name="paging"					inject="id:paging@cb";
 	
 	/**
 	* Pre handler
@@ -385,12 +386,18 @@ component extends="baseHandler"{
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.authors.removePermission";
 		prc.xehPermissionSave 	= "#prc.cbAdminEntryPoint#.authors.savePermission";
 		prc.xehRolePermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
+		prc.xehGroupRemove 		= "#prc.cbAdminEntryPoint#.authors.removePermissionGroup";
+		prc.xehGroupSave 		= "#prc.cbAdminEntryPoint#.authors.savePermissionGroup";
+
 		// Get all permissions
-		prc.permissions = permissionService.list(sortOrder="permission",asQuery=false);
+		prc.aPermissions 		= permissionService.list( sortOrder="permission", asQuery=false );
+		prc.aPermissionGroups	= permissionGroupService.list( sortOrder="name", asQuery=false );
+		
 		// Get author
 		prc.author = authorService.get( rc.authorID );
+		
 		// view
-		event.setView(view="authors/permissions",layout="ajax" );
+		event.setView( view="authors/permissions", layout="ajax" );
 	}
 
 	/**
@@ -423,6 +430,38 @@ component extends="baseHandler"{
 		authorService.saveAuthor( oAuthor );
 		// Saved
 		event.renderData(data="true",type="json" );
+	}
+
+	/**
+	* Save permission groups to the author and gracefully end.
+	*/
+	function savePermissionGroup( event, rc, prc ){
+		var oAuthor = authorService.get( rc.authorID );
+		var oGroup 	= permissionGroupService.get( rc.permissionGroupID );
+
+		// Assign it
+		if( !oAuthor.hasPermissionGroup( oGroup) ){
+			oAuthor.addPermissionGroup( oGroup );
+			// Save it
+			authorService.saveAuthor( oAuthor );
+		}
+		// Saved
+		event.renderData( data="true", type="json" );
+	}
+
+	/**
+	* Remove permission to a author and gracefully end.
+	*/
+	function removePermissionGroup( event, rc, prc ){
+		var oAuthor = authorService.get( rc.authorID );
+		var oGroup 	= permissionGroupService.get( rc.permissionGroupID );
+
+		// Remove it
+		oAuthor.removePermissionGroup( oGroup );
+		// Save it
+		authorService.saveAuthor( oAuthor );
+		// Saved
+		event.renderData( data="true", type="json" );
 	}
 	
 	/**
