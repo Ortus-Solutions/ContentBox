@@ -12,6 +12,7 @@
 				data	= { toggle: 'toggle', match: 'cb_security_login_blocker' },
 				checked	= prc.cbSettings.cb_security_login_blocker
 			)#
+
 			#html.hiddenField(
 				name	= "cb_security_login_blocker",
 				value	= prc.cbSettings.cb_security_login_blocker
@@ -80,6 +81,23 @@
         </div>
     </div>
 
+    <!--- Rate Limiter logging --->
+    <div class="form-group">
+        #html.label( class="control-label", field="cb_security_rate_limiter_logging", content="Enable Rate Limiter Logging:" )#
+        <div class="controls">
+            <small>When enabled, and if an IP is rate limited then ContentBox will log the blocked event using the system logs.</small><br/><br />
+            #html.checkbox(
+                name    = "cb_security_rate_limiter_logging_toggle",
+                data    = { toggle: 'toggle', match: 'cb_security_rate_limiter_logging' },
+                checked = prc.cbSettings.cb_security_rate_limiter_logging
+            )#
+            #html.hiddenField(
+                name    = "cb_security_rate_limiter_logging",
+                value   = prc.cbSettings.cb_security_rate_limiter_logging
+            )#
+        </div>
+    </div>
+
     <!--- Bot Limiter --->
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter_bots_only", content="Enable For Automated Requests Only:" )#
@@ -123,7 +141,7 @@
         </div>
 	</div>
 
-    <!--- Bot Regex Matching --->
+    <!--- Limiter Message --->
     <div class="form-group">
         #html.label( field="cb_security_rate_limiter_message", class="control-label", content="Limiter Message:" )#
         <div class="controls">
@@ -136,6 +154,19 @@
             )#     
         </div>
     </div>
+
+    <div class="form-group">
+        #html.label( field="cb_security_rate_limiter_redirectURL", class="control-label", content="Limiter Redirect URL:" )#
+        <div class="controls">
+            <small>If you fill out this URL, then instead of showing the above limiter message, we will redirect (302) the request to this URL.</small>
+            #html.URLField(
+                name    = "cb_security_rate_limiter_redirectURL",
+                class   = "form-control",
+                value   = prc.cbSettings.cb_security_rate_limiter_redirectURL
+            )#     
+        </div>
+    </div>
+
 </fieldset>
 
 <fieldset>

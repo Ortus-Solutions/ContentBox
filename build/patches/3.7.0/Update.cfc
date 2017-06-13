@@ -232,6 +232,8 @@ component {
 		// Add new settings
 		addSetting( "cb_site_sitemap", "true" );
 		addSetting( "cb_site_adminbar", "true" );
+		addSetting( "cb_security_rate_limiter_redirectURL", "" );
+		addSetting( "cb_security_rate_limiter_logging", "true" );
 
 		// Update dashboard settings
 		var oSetting = settingService.findWhere( { name="cb_dashboard_welcome_title" } );

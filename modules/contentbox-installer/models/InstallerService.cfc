@@ -292,10 +292,12 @@ component accessors="true"{
 			"cb_security_max_auth_logs"				= "500",
 			"cb_security_latest_logins"				= "10",
 			"cb_security_rate_limiter"				= "true",
+			"cb_security_rate_limiter_logging"		= "true",
 			"cb_security_rate_limiter_count"		= "4",
 			"cb_security_rate_limiter_duration"		= "1",
 			"cb_security_rate_limiter_bots_only"	= "true",
 			"cb_security_rate_limiter_message"		= "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
+			"cb_security_rate_limiter_redirectURL"	= "",
 
 			// Admin settings
 			"cb_admin_ssl" 							= "false",
