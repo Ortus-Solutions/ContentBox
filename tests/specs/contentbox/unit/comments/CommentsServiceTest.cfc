@@ -52,10 +52,10 @@ component extends="coldbox.system.testing.BaseTestCase"{
 					expect(	r.count ).toBeGT( 0 );
 				});
 				it( "can find by content types", function(){
-					var r = commentService.findApprovedComments(contentType="invalid");
+					var r = commentService.findApprovedComments(contentType="invalid" );
 					expect(	r.count ).toBe( 0 );
 					
-					var r = commentService.findApprovedComments(contentType="Entry");
+					var r = commentService.findApprovedComments(contentType="Entry" );
 					expect(	r.count ).toBeGT( 0 );
 				});
 			});

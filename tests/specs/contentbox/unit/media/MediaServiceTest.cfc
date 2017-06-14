@@ -8,11 +8,11 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	function setup(){
 		super.setup();
-		mockProvider = getMockBox().createMock("contentbox.models.media.CFContentMediaProvider").init();
+		mockProvider = getMockBox().createMock( "contentbox.models.media.CFContentMediaProvider" ).init();
 		mockWireBox.$( "getInstance", mockProvider );
 
 		model.init( mockWireBox );
-		mockSettings = getMockBox().createEmptyMock("contentbox.models.system.SettingService")
+		mockSettings = getMockBox().createEmptyMock( "contentbox.models.system.SettingService" )
 			.$( "getSetting", "CFContentMediaProvider" );
 		model.$property( "settingService", "variables", mockSettings );
 	}
@@ -49,7 +49,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 	function testGetRegisteredProviders() {
 		var providers = model.getRegisteredProviders();
-		assertTrue( arrayFind(providers,"CFContentMediaProvider") );
+		assertTrue( arrayFind(providers,"CFContentMediaProvider" ) );
 	}
 
 	function testGetRegisteredProvidersMap() {
@@ -63,6 +63,6 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 			.$( "getSetting", "/content" );
 		model.$property( "settingService", "variables", mockSettings );
 		var path = model.getCoreMediaRoot();
-		assertEquals("/content",path);
+		assertEquals( "/content",path);
 	}
 }

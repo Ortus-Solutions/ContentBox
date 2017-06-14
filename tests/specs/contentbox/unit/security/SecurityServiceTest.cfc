@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -27,18 +27,18 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		super.setup();
 		mockSettingService = getMockBox().createSTub();
 		mockCookieStorage = getMockBox().createSTub();
-		mockLogger = getMockBox().createSTub().$("debug").$("info").$("error");
+		mockLogger = getMockBox().createSTub().$( "debug" ).$( "info" ).$( "error" );
 		model.init();
 		
-		model.$property("settingService", "variables", mockSettingService );
-		model.$property("cookieStorage", "variables", mockCookieStorage );
-		model.$property("log", "variables", mockLogger );
+		model.$property( "settingService", "variables", mockSettingService );
+		model.$property( "cookieStorage", "variables", mockCookieStorage );
+		model.$property( "log", "variables", mockLogger );
 	}
 	
 	function testEncryptIt(){
 		mockSalt = left( replace( createUUID(), "-", "" ,"all" ) , 32 );
-		model.$("getEncryptionKey", mockSalt );
-		makePublic( model, "encryptIt");
+		model.$( "getEncryptionKey", mockSalt );
+		makePublic( model, "encryptIt" );
 		r = model.encryptIt( "test" );
 		debug( r );
 		assertTrue( len( r ) and r neq "test" );
@@ -50,8 +50,8 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	function testDecryptIt(){
 		// mocks
 		mockSalt = left( replace( createUUID(), "-", "" ,"all" ) , 32 );
-		model.$("getEncryptionKey", mockSalt );
-		makePublic( model, "decryptIt");
+		model.$( "getEncryptionKey", mockSalt );
+		makePublic( model, "decryptIt" );
 		
 		// no length
 		r = model.decryptIt( "" );
@@ -71,21 +71,21 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	
 	function testGetRememberMe(){
 		mockSalt = left( replace( createUUID(), "-", "" ,"all" ) , 32 );
-		model.$("getEncryptionKey", mockSalt );
+		model.$( "getEncryptionKey", mockSalt );
 		
 		// empty cookie
-		mockCookieStorage.$("getVar", "");
+		mockCookieStorage.$( "getVar", "" );
 		r = model.getRememberMe();
 		assertEquals( "", r );
 		
 		// With bad value
-		mockCookieStorage.$("getVar", "hello" );
+		mockCookieStorage.$( "getVar", "hello" );
 		r = model.getRememberMe();
 		assertEquals( "", r );
 		
 		// With good value
 		mockEncrypt = encrypt( "helloUnitTest", mockSalt, "BLOWFISH", "HEX" );
-		mockCookieStorage.$("getVar", mockEncrypt );
+		mockCookieStorage.$( "getVar", mockEncrypt );
 		r = model.getRememberMe();
 		assertEquals( "helloUnitTest", r );
 	}
@@ -93,16 +93,16 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	function testGetEncryptionKey(){
 		// no key first
 		mockSetting = entityNew( "cbSetting" );
-		mockSettingService.$("findWhere")
-			.$("new", mockSetting)
-			.$("save");
+		mockSettingService.$( "findWhere" )
+			.$( "new", mockSetting)
+			.$( "save" );
 		makepublic( model, "getEncryptionKey" );
 		r = model.getEncryptionKey();
 		assertEquals( 24, len( r ) );
 		
 		// with key
-		mockSetting = entityNew("cbSetting");
-		mockSettingService.$("findWhere", mockSetting);
+		mockSetting = entityNew( "cbSetting" );
+		mockSettingService.$( "findWhere", mockSetting);
 		mockKey = generateSecretKey( "BLOWFISH" );
 		mockSetting.setValue( mockKey );
 		r = model.getEncryptionKey();
@@ -111,9 +111,9 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	
 	function testSetRememberMe(){
 		// mocks
-		mockCookieStorage.$("setVar");
+		mockCookieStorage.$( "setVar" );
 		mockSalt = left( replace( createUUID(), "-", "" ,"all" ) , 32 );
-		model.$("getEncryptionKey", mockSalt );
+		model.$( "getEncryptionKey", mockSalt );
 		
 		//no value
 		model.setRememberMe( "" );

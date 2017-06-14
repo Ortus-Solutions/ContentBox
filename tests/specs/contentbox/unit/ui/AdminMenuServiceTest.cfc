@@ -8,7 +8,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	void function setup(){
 		super.setup();
 		mockContext = getMockRequestContext();
-		mockRequestService = getMockBox().createEmptyMock("coldbox.system.web.services.RequestService").$("getContext", mockContext);
+		mockRequestService = getMockBox().createEmptyMock( "coldbox.system.web.services.RequestService" ).$( "getContext", mockContext);
 		setupRequest( mockContext );
 
 		// init the model object
@@ -30,7 +30,7 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		};
 
 
-		prc.oAuthor = getMockBox().createMock("contentbox.models.security.Author").$("checkPermission",true);
+		prc.oAuthor = getMockBox().createMock( "contentbox.models.security.Author" ).$( "checkPermission",true);
 		prc.cbAdminEntryPoint = "cbadmin";
 
 		// Global Admin Exit Handlers

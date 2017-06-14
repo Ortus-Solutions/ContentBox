@@ -49,21 +49,21 @@ component extends="coldbox.system.testing.BaseTestCase"{
 				var r = model.search(isPublished=true);
 				expect(	r.count ).toBeGT( 0 );
 				
-				var entries = entityLoad("cbEntry");
+				var entries = entityLoad( "cbEntry" );
 				var authorID = entries[ 1 ].getAuthor().getAuthorID();
 				var r = model.search(author=authorID);
 				expect(	r.count ).toBeGT( 0 );
 				
 				// search
-				var r = model.search(search="everybody");
+				var r = model.search(search="everybody" );
 				expect(	r.count ).toBeGT( 0 );
 				
 				// no categories
-				var r = model.search(category="none");
+				var r = model.search(category="none" );
 				expect(	r.count ).toBeGT( 0 );
 				
 				// no categories
-				var r = model.search(category="1");
+				var r = model.search(category="1" );
 				expect(	r.count ).toBe( 0 );
 			});
 
@@ -75,13 +75,13 @@ component extends="coldbox.system.testing.BaseTestCase"{
 				expect(	arrayLen( r.entries ) ).toBeFalse();
 				
 				// year
-				var r = model.findPublishedEntriesByDate( year = dateformat( entry.getPublishedDate(), "yyyy") );
+				var r = model.findPublishedEntriesByDate( year = dateformat( entry.getPublishedDate(), "yyyy" ) );
 				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
 				
 				// year + Month
 				var r = model.findPublishedEntriesByDate(
-					year 	= dateformat( entry.getPublishedDate(), "yyyy"), 
-					month 	= dateFormat( entry.getPublishedDate(), "mm") 
+					year 	= dateformat( entry.getPublishedDate(), "yyyy" ), 
+					month 	= dateFormat( entry.getPublishedDate(), "mm" ) 
 				);
 				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
 				
@@ -105,7 +105,7 @@ component extends="coldbox.system.testing.BaseTestCase"{
 				expect(	r.count ).toBeGTE( 1 );
 				
 				// search
-				var r = model.findPublishedEntries(search="first");
+				var r = model.findPublishedEntries(search="first" );
 				expect(	r.count ).toBeGT( 0 );
 			});
 

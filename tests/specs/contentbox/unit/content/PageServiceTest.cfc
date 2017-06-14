@@ -35,7 +35,7 @@ component extends="coldbox.system.testing.BaseTestCase"{
 				var r = model.search(isPublished=true);
 				expect(	r.count ).toBeGT( 0 );
 				
-				var pages = entityLoad("cbPage");
+				var pages = entityLoad( "cbPage" );
 				var authorID = pages[1].getAuthor().getAuthorID();
 				var r = model.search(author=authorID);
 				expect(	r.count ).toBeGT( 0 );

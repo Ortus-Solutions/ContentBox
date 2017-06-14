@@ -8,27 +8,27 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	void function setup(){
 		super.setup();
 		
-		mockInterceptorService = getMockBox().createEmptyMock("coldbox.system.web.services.InterceptorService")
-			.$("appendInterceptionPoints");
+		mockInterceptorService = getMockBox().createEmptyMock( "coldbox.system.web.services.InterceptorService" )
+			.$( "appendInterceptionPoints" );
 		mockEvent = getMockRequestContext();
-		mockRequestService = getMockBox().createEmptyMock("coldbox.system.web.services.RequestService")
-			.$("getContext", mockEvent);
+		mockRequestService = getMockBox().createEmptyMock( "coldbox.system.web.services.RequestService" )
+			.$( "getContext", mockEvent);
 		mockModuleSettings = {
 			"contentbox-admin" = { entryPoint = "cbadmin" }
 		};
-		mockColdBox = getMockBox().createEmptyMock("coldbox.system.web.Controller")
-			.$("getInterceptorService", mockInterceptorService)
-			.$("getRequestService", mockRequestService)
-			.$("getSetting").$args("modules").$results( mockModuleSettings )
-			.$("getSetting").$args("htmlBaseURL").$results( "http://localhost/index.cfm" );
+		mockColdBox = getMockBox().createEmptyMock( "coldbox.system.web.Controller" )
+			.$( "getInterceptorService", mockInterceptorService)
+			.$( "getRequestService", mockRequestService)
+			.$( "getSetting" ).$args( "modules" ).$results( mockModuleSettings )
+			.$( "getSetting" ).$args( "htmlBaseURL" ).$results( "http://localhost/index.cfm" );
 		
 		// init the model object
 		model.init( mockColdBox );
 	}
 	
 	function testStartup(){
-		mockEvent.$("getValue", "cbadmin")
-			.$("buildLink", "http://localhost/cbadmin/ckeditor");
+		mockEvent.$( "getValue", "cbadmin" )
+			.$( "buildLink", "http://localhost/cbadmin/ckeditor" );
 		
 		t = model.startup();
 		

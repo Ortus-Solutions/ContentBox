@@ -8,7 +8,7 @@ Apache License, Version 2.0
 
 Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the Apache License, Version 2.0 (the "License" );
 you may not use this file except in compliance with the License. 
 You may obtain a copy of the License at 
 
@@ -25,11 +25,11 @@ component extends="coldbox.system.testing.BaseTestCase"{
 
 	function setup(){
 		super.setup();
-		mockSettingsService = getMockBox().prepareMock( getModel("SettingService@cb") );
-		mockCBHelper = getMockBox().prepareMock( getModel("CBHelper@cb") );
-		service = getMockBox().prepareMock( getModel("RSSService@cb") );
-		service.$property("settingService","variables",mockSettingsService );
-		service.$property("CBHelper","variables",mockCBHelper );
+		mockSettingsService = getMockBox().prepareMock( getModel( "SettingService@cb" ) );
+		mockCBHelper = getMockBox().prepareMock( getModel( "CBHelper@cb" ) );
+		service = getMockBox().prepareMock( getModel( "RSSService@cb" ) );
+		service.$property( "settingService","variables",mockSettingsService );
+		service.$property( "CBHelper","variables",mockCBHelper );
 	}
 	
 	function testGetRSS(){
@@ -37,36 +37,36 @@ component extends="coldbox.system.testing.BaseTestCase"{
 		mockSettings = {
 			cb_rss_caching = false
 		};
-		mockSettingsService.$("getAllSettings", mockSettings);
+		mockSettingsService.$( "getAllSettings", mockSettings);
 		mockFeed = {};
-		service.$("buildEntryFeed", mockFeed)
-			.$("buildCommentFeed", mockFeed)
-			.$("buildContentFeed", mockFeed)
-			.$("buildPageFeed", mockFeed);
+		service.$( "buildEntryFeed", mockFeed)
+			.$( "buildCommentFeed", mockFeed)
+			.$( "buildContentFeed", mockFeed)
+			.$( "buildPageFeed", mockFeed);
 	
 		// Get all entries RSS
 		service.getRSS();
-		assertTrue( service.$once("buildContentFeed") );
+		assertTrue( service.$once( "buildContentFeed" ) );
 		
 		// Comments
 		service.getRSS(comments=true);
-		assertTrue( service.$once("buildCommentFeed") );
+		assertTrue( service.$once( "buildCommentFeed" ) );
 		
 	} 
 	
 	function testBuildCommentFeed(){
 		// mock cb
-		mockCBHelper.$("siteName","Unit Test")
-			.$("siteDescription","Unit Test")
-			.$("linkHome","http://localhost")
-			.$("linkComment","http://localhost##comments");
+		mockCBHelper.$( "siteName","Unit Test" )
+			.$( "siteDescription","Unit Test" )
+			.$( "linkHome","http://localhost" )
+			.$( "linkComment","http://localhost##comments" );
 		// All Comments
 		makePublic( service, "buildCommentFeed" );
 		r = service.buildCommentFeed();
 		assertTrue( isXML(r) );
 		
 		// Slug
-		var b = entityLoad("cbEntry")[1];
+		var b = entityLoad( "cbEntry" )[1];
 		r = service.buildCommentFeed(slug=b.getSlug());
 		assertTrue( isXML( r ) );
 		
@@ -76,13 +76,13 @@ component extends="coldbox.system.testing.BaseTestCase"{
 	}
 	
 	function testBuildContentFeed(){
-		getRequestContext().setValue("CBENTRYPOINT","http://localhost",true);
+		getRequestContext().setValue( "CBENTRYPOINT","http://localhost",true);
 		// mock cb
-		mockCBHelper.$("siteName","Unit Test")
-			.$("siteDescription","Unit Test")
-			.$("linkHome","http://localhost")
-			.$("linkComments","http://localhost##comments")
-			.$("linkContent","http://localhost");
+		mockCBHelper.$( "siteName","Unit Test" )
+			.$( "siteDescription","Unit Test" )
+			.$( "linkHome","http://localhost" )
+			.$( "linkComments","http://localhost##comments" )
+			.$( "linkContent","http://localhost" );
 		// All Data
 		makePublic( service, "buildContentFeed" );
 		r = service.buildContentFeed();
@@ -95,13 +95,13 @@ component extends="coldbox.system.testing.BaseTestCase"{
 	}
 	
 	function testBuildEntryFeed(){
-		getRequestContext().setValue("CBENTRYPOINT","http://localhost",true);
+		getRequestContext().setValue( "CBENTRYPOINT","http://localhost",true);
 		// mock cb
-		mockCBHelper.$("siteName","Unit Test")
-			.$("siteDescription","Unit Test")
-			.$("linkHome","http://localhost")
-			.$("linkComments","http://localhost##comments")
-			.$("linkEntry","http://localhost");
+		mockCBHelper.$( "siteName","Unit Test" )
+			.$( "siteDescription","Unit Test" )
+			.$( "linkHome","http://localhost" )
+			.$( "linkComments","http://localhost##comments" )
+			.$( "linkEntry","http://localhost" );
 		// All Data
 		makePublic( service, "buildEntryFeed" );
 		r = service.buildEntryFeed();
@@ -113,13 +113,13 @@ component extends="coldbox.system.testing.BaseTestCase"{
 	}
 	
 	function testbuildPageFeed(){
-		getRequestContext().setValue("CBENTRYPOINT","http://localhost",true);
+		getRequestContext().setValue( "CBENTRYPOINT","http://localhost",true);
 		// mock cb
-		mockCBHelper.$("siteName","Unit Test")
-			.$("siteDescription","Unit Test")
-			.$("linkHome","http://localhost")
-			.$("linkComments","http://localhost##comments")
-			.$("linkPage","http://localhost");
+		mockCBHelper.$( "siteName","Unit Test" )
+			.$( "siteDescription","Unit Test" )
+			.$( "linkHome","http://localhost" )
+			.$( "linkComments","http://localhost##comments" )
+			.$( "linkPage","http://localhost" );
 		// All Data
 		makePublic( service, "buildPageFeed" );
 		r = service.buildPageFeed();

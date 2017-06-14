@@ -28,7 +28,7 @@ component extends="coldbox.system.testing.BaseTestCase"{
 			});
 
 			it( "can populate a module", function(){
-				var module = entityNew("cbModule");
+				var module = entityNew( "cbModule" );
 				var mock = getMockBox().createStub();
 				mock.title = mock.description = mock.author = mock.webURL = mock.forgeboxslug = mock.entryPoint = "unit";
 				mock.version = "1.0.0";

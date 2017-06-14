@@ -1,69 +1,90 @@
 /**
-* The base model test case will use the 'model' annotation as the instantiation path
-* and then create it, prepare it for mocking and then place it in the variables scope as 'model'. It is your
-* responsibility to update the model annotation instantiation path and init your model.
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.security.Author"{
+component extends="coldbox.system.testing.BaseTestCase"{
 
-	void function setup(){
-		super.setup();
-		
-		// init the model object
-		model.init( );
+/*********************************** LIFE CYCLE Methods ***********************************/
+
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
 	}
-	
-	function testIsLoaded(){
-		assertFalse( model.isLoaded() );
-		testUser = entityLoad("cbAuthor")[1];
-		assertTrue( testUser.isLoaded() );
+
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
 	}
-	
-	function testGetDisplayCreateDate(){
-		d = model.getDisplayCreatedDate();
-		assertEquals( "", d );
-		testUser = entityLoad("cbAuthor")[1];
-		d = testUser.getDisplayCreatedDate();
-		assertTrue( len(d) );
-	}
-	
-	function testgetDisplayLastLogin(){
-		d = model.getDisplayLastLogin();
-		assertEquals( "Never", d );
-		testUser = entityLoad("cbAuthor")[1];
-		d = testUser.getDisplayLastLogin();
-		assertNotEquals( "Never", d );
-	}
-	
-	function testGetSetAllPreferences(){
-		assertEquals( {}, model.getAllPreferences() );
-		var pref = {
-			editor = "textarea", test = "nada"
-		};
-		model.setPreferences( pref );
-		assertTrue( isJSON( model.getPreferences() ) , "JSON Preferences Failed");
-		assertEquals( pref, model.getAllPreferences() , "JSON Inflation of Preferences Failed");
-	}
-	
-	function testGetPreference(){
-		// with default
-		v = model.getPreference("invalid", "test");
-		assertEquals( "test", v , "Failed with default value" );
-		// existent
-		var pref = {
-			editor = "textarea", test = "nada"
-		};
-		model.setPreferences( pref );
-		assertEquals( "textarea", model.getPreference("editor"), "Failed existing preference" );
-		// invalid
-		expectException("User.PreferenceNotFound");
-		model.getPreference("invalid");
-	}
-	
-	function testSetPreference(){
-		// with default
-		model.setPreference("UnitTest", "Hello");
-		assertEquals( "Hello", model.getPreference("UnitTest") );
-		
+
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+		describe( "DB Search Adapter", function(){
+			beforeEach(function( currentSpec ){
+				model = entityNew( "cbAuthor" );
+			});
+
+			it( "can load properly", function(){
+				var testUser = entityLoad( "cbAuthor" )[ 1 ];
+				expect(	testUser.isLoaded() ).toBeTrue();
+			});
+
+			it( "can display created dates", function(){
+				var d = model.getDisplayCreatedDate();
+				assertEquals( "", d );
+				expect(	d ).toBeEmpty();
+
+				var testUser = entityLoad( "cbAuthor" )[ 1 ];
+				var d = testUser.getDisplayCreatedDate();
+				expect(	d.len() ).toBeGT( 0 );
+			});
+
+			it( "can display last login timestamps", function(){
+				var d = model.getDisplayLastLogin();
+				expect(	d ).toBe( "Never Logged In" );
+				
+				var testUser = entityLoad( "cbAuthor" )[ 1 ];
+				var d = testUser.getDisplayLastLogin();
+				expect(	d ).toBeDate();
+			});
+
+			it( "can get/set all preferences", function(){
+				expect(	model.getAllPreferences() ).toBeStruct();
+				var pref = {
+					editor = "textarea", test = "nada"
+				};
+				model.setPreferences( pref );
+
+				expect(	model.getPreferences() ).toBeJSON();
+				expect(	model.getAllPreferences() ).toBe( pref );
+			});
+
+			it( "can get and set preferences with marshalling", function(){
+				// with default
+				var v = model.getPreference( "invalid", "test" );
+				expect( v ).toBe( "test" );
+				
+				// existent
+				var pref = {
+					editor = "textarea", test = "nada"
+				};
+				model.setPreferences( pref );
+				expect(	model.getPreference( "editor" ) ).toBe( "textarea" );
+
+				// invalid
+				expect(	function(){
+					model.getPreference( "invalid" );	
+				} ).toThrow();
+
+				// with default
+				model.setPreference( "UnitTest", "Hello" );
+				expect( model.getPreference( "UnitTest" ) ).toBe( "Hello" );
+			});
+
+		});
+
 	}
 
 }
