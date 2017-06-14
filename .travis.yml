@@ -43,7 +43,7 @@ before_script:
 
 script:
   # Run tests
-  - box config set testbox.runner="http://localhost:8589/tests/runner.cfm"
+  - box package set testbox.runner="http://localhost:8589/tests/runner.cfm"
   - box testbox run
   # Execute build via ANT
   - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
