@@ -1,54 +1,56 @@
 /**
-* The base model test case will use the 'model' annotation as the instantiation path
-* and then create it, prepare it for mocking and then place it in the variables scope as 'model'. It is your
-* responsibility to update the model annotation instantiation path and init your model.
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.ui.editors.EditorService"{
+component extends="coldbox.system.testing.BaseTestCase"{
 
-	function setup(){
-		super.setup();
-		
-		mockWireBox.$( "getInstance", new MockEditor() );
-		
-		// init the model object
-		model.init( mockWireBox );
+/*********************************** LIFE CYCLE Methods ***********************************/
+
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
 	}
-	
-	function teardown(){
-		
+
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
 	}
-	
-	function testGetRegisteredEditors(){
-		model.getEditors()[ "test" ] = this;
-		model.getEditors()[ "Awesome" ] = this;
-		a = model.getRegisteredEditors();
-		//debug(a);
-		assertEquals( "Awesome", a[1] );
-		assertEquals( "mock-editor", a[2] );
-		assertEquals( "test", a[3] );
-	}
-	
-	
-	function testregisterEditor(){
-		editor = getMockBox().prepareMock( new MockEditor() );
-		model.registerEditor( editor );
-		assertEquals( editor, model.getEditor( "mock-editor" ) );
-	}
-	
-	function testUnregisterEditor(){
-		editor = getMockBox().prepareMock( new MockEditor() );
-		model.registerEditor( editor ).unRegisterEditor( "mock-editor" );
-		assertFalse( structKeyExists( model.getEditors(), "mock-editor" ) );
-	}
-	
-	function testGetRegisteredEditorsMap(){
-		model.getEditors()[ "test" ] = getMockBox().createStub(implements="contentbox.models.ui.editors.IEditor" );
-		model.getEditors()[ "Awesome" ] = getMockBox().createStub(implements="contentbox.models.ui.editors.IEditor" );
-		a = model.getRegisteredEditorsMap();
-		debug(a);
-		assertEquals( "Awesome", a[1].name );
-		assertEquals( "mock-editor", a[2].name );
-		assertEquals( "test", a[3].name );
+
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+		describe( "Editor Services", function(){
+			beforeEach(function( currentSpec ){
+				model = getInstance( "EditorService@cb" );
+			});
+
+			it( "can get registered editors", function(){
+				model.getEditors()[ "test" ] 	= this;
+				model.getEditors()[ "Awesome" ] = this;
+				var a = model.getRegisteredEditors();
+				
+				expect(	a ).toInclude( "Awesome" )
+					.toInclude( "ckeditor" )
+					.toInclude( "test" );
+				debug(a);
+			});
+
+			it( "can register a new editor", function(){
+				var editor = prepareMock( new MockEditor() );
+				model.registerEditor( editor );
+				assertEquals( editor, model.getEditor( "mock-editor" ) );		
+			});
+
+			it( "can unregister editors", function(){
+				var editor = prepareMock( new MockEditor() );
+				model.registerEditor( editor ).unRegisterEditor( "mock-editor" );
+				assertFalse( structKeyExists( model.getEditors(), "mock-editor" ) );
+			});
+
+		});
+
 	}
 
 }

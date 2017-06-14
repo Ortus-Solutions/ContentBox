@@ -1,32 +1,15 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
 component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.updates.UpdateService"{
 
 	function setup(){
 		super.setup();
-		mockZip = getMockBox().createMock( "coldbox.system.core.util.Zip" ).init();
-		wirebox = getMockBox().createEmptyMock( "coldbox.system.ioc.Injector" );
+		mockZip = createMock( "contentbox.models.util.ZipUtil" ).init();
+		wirebox = createEmptyMock( "coldbox.system.ioc.Injector" );
 
 		mockConfig = {
 			path = expandPath( "/contentbox" )
@@ -66,23 +49,25 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	}
 
 	function testdownloadPatch(){
-		model.setPatchesLocation( expandPath( "/tests/resources/patches/test" ) );
-		log = createObject( "java","java.lang.StringBuilder" ).init('');
-		mockZip.$( "extract",true);
+		var patchesPath = expandPath( "/tests/resources/patches/test" );
+
+		if( !directoryExists( patchesPath ) ){
+			directoryCreate( patchesPath );
+		}
+		model.setPatchesLocation( patchesPath );
+		var log = createObject( "java","java.lang.StringBuilder" ).init('');
+		mockZip.$( "extract", true );
 
 		// good patch
-		r = model.downloadPatch( "http://cf9contentbox.jfetmac/test/resources/patches/test.zip",log);
+		var r = model.downloadPatch( "http://localhost:8589/tests/resources/test.zip", log );
 		//debug( log.toString() );
 		assertTrue( fileExists( expandPath( "/tests/resources/patches/test/test.zip" ) ) );
 		fileDelete( expandPath( "/tests/resources/patches/test/test.zip" ) );
 
 		// Bad Patch
-		r = model.downloadPatch( "http://cf9contentbox.jfetmac/test/resources/patches/invalid.zip",log);
+		r = model.downloadPatch( "http://localhost:8589/tests/resources/invalid.zip", log );
 		//debug( log.toString() );
 		assertFalse( r );
-		assertFalse( fileExists( expandPath( "/tests/resources/patches/test/invalid.zip" ) ) );
-
-
 	}
 
 	function testProcessRemovals(){
@@ -99,15 +84,16 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		assertFalse( fileExists( dest ) );
 
 		// test with files
-		var source = expandPath( "/tests/resources/patches/archive/deletes.txt" );
-		var dest = expandPath( "/tests/resources/patches/deletes.txt" );
-		var log = createObject( "java","java.lang.StringBuilder" ).init('');
-		var destination = expandPath( "/tests/resources/patches/tmp/test.txt" );
+		var source		= expandPath( "/tests/resources/patches/archive/deletes.txt" );
+		var dest		= expandPath( "/tests/resources/patches/deletes.txt" );
+		var log			= createObject( "java","java.lang.StringBuilder" ).init('');
+		var destination	= expandPath( "/tests/resources/patches/tmp/test.txt" );
 
 		fileCopy( source, dest );
 		fileWrite( destination, "file" );
 
 		model.processRemovals( dest, log );
+		
 		assertFalse( fileExists( dest ) );
 		assertFalse( fileExists( destination ) );
 		debug( log.toString() );

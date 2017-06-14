@@ -312,15 +312,18 @@ component singleton{
 
 		// Attach permalinks
 		for(var i = 1; i lte contentResults.count; i++){
+			// Check for empty authors, just in case.
+			var authorEmail = len( contentResults.content[i].getAuthorEmail() ) ? contentResults.content[i].getAuthorEmail() : "nobody@nobody.com";
+			var authorName 	= len( contentResults.content[i].getAuthorName() ) ? contentResults.content[i].getAuthorName() : "nobody";
+
 			// build URL to entry
 			qContent.link[i] 			= CBHelper.linkContent( contentResults.content[i] );
-			qContent.author[i]			= "#contentResults.content[i].getAuthorEmail()# (#contentResults.content[i].getAuthorName()#)";
+			qContent.author[i]			= "#authorEmail# (#authorName#)";
 			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
 			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
 			qContent.content[i]			= cleanupContent( contentResults.content[i].renderContent() );
 			qContent.guid_permalink[i] 	= false;
 			qContent.guid_string[i] 	= CBHelper.linkContent( contentResults.content[i] );
-
 		}
 
 		// Generate feed items
