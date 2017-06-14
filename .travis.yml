@@ -31,7 +31,7 @@ install:
   # Install root dependencies
   - box version && box install
   # install contentbox dependencies
-  - cd modules/contentbox/modules/contentbox-deps/ && box install
+  - cd modules/contentbox && box install
   - cd $TRAVIS_BUILD_DIR
   # Store the Ortus API Key for forgebox publishing in `master`
   - box config set endpoints.forgebox.APIToken=$FORGEBOX_API_TOKEN > /dev/null
