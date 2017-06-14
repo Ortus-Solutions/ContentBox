@@ -21,12 +21,11 @@ component extends="coldbox.system.testing.BaseTestCase"{
 /*********************************** BDD SUITES ***********************************/
 
 	function run( testResults, testBox ){
-		describe( "DB Search Adapter", function(){
+		describe( "Settings Services", function(){
 			beforeEach(function( currentSpec ){
 				mockCache = createEmptyMock( "coldbox.system.cache.providers.CacheBoxColdBoxProvider" );
-		
 				model = prepareMock( getInstance( "SettingService@cb" ) );
-				model.$property( "cache", "variables", mockCache );
+				model.$( "getSettingsCacheProvider", mockCache );
 			});
 
 			it( "can flush settings", function(){
@@ -36,9 +35,10 @@ component extends="coldbox.system.testing.BaseTestCase"{
 			});
 
 			it( "can get all settings", function(){
-				mockCache.$( "get", [1,2,3] );
-				var r = model.getAllSettings();
-				expect(	r ).toBe( [ 1, 2, 3 ] );
+				mockCache.$( "get", { mysetting=true } );
+				var r = model.getAllSettings( asStruct=true );
+				expect(	r ).toBeStruct()
+					.notToBeEmpty();
 			});
 		});
 	}
