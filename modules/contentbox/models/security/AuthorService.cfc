@@ -8,11 +8,12 @@
 component extends="cborm.models.VirtualEntityService" accessors="true" singleton{
 	
 	// DI
-	property name="populator" 			inject="wirebox:populator";
-	property name="permissionService"	inject="permissionService@cb";
-	property name="roleService"			inject="roleService@cb";
-	property name="bCrypt"				inject="BCrypt@BCrypt";
-	property name="dateUtil"			inject="DateUtil@cb";
+	property name="populator" 				inject="wirebox:populator";
+	property name="permissionService"		inject="permissionService@cb";
+	property name="permissionGroupService"	inject="permissionGroupService@cb";
+	property name="roleService"				inject="roleService@cb";
+	property name="bCrypt"					inject="BCrypt@BCrypt";
+	property name="dateUtil"				inject="DateUtil@cb";
 	
 	/**
 	* Constructor
@@ -117,10 +118,11 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	string function importFromFile(required importFile, boolean override=false){
 		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
+		var importLog 	= createObject( "java", "java.lang.StringBuilder" )
+			.init( "Starting import with override = #arguments.override#...<br>" );
 		
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
+			throw( message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
 		
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -130,7 +132,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	/**
 	* Import data from an array of structures of authors or just one structure of author 
 	*/
-	string function importFromData(required importData, boolean override=false, importLog){
+	string function importFromData( required importData, boolean override=false, importLog ){
 		var allUsers 		= [];
 		
 		// if struct, inflate into an array
@@ -165,12 +167,32 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 					var oPerm = permissionService.findByPermission( thisPermission.permission );
 					oPerm = ( isNull( oPerm ) ? populator.populateFromStruct( target=permissionService.new(), memento=thisPermission, exclude="permissionID" ) : oPerm );	
 					// save oPerm if new only
-					if( !oPerm.isLoaded() ){ permissionService.save( entity=oPerm ); }
+					if( !oPerm.isLoaded() ){ 
+						permissionService.save( entity=oPerm ); 
+					}
 					// append to add.
 					arrayAppend( allPermissions, oPerm );
 				}
 				// detach permissions and re-attach
 				oUser.setPermissions( allPermissions );
+			}
+
+			// Group Permissions
+			if( arrayLen( thisUser.grouppermissions ) ){
+				// Create group permissions that don't exist first
+				var allGroups = [];
+				for( var thisGroup in thisUser.permissiongroups ){
+					var oGroup = permissionGroupService.findByName( thisGroup.name );
+					oGroup = ( isNull( oGroup ) ? populator.populateFromStruct( target=permissionGroupService.new(), memento=thisGroup, exclude="permissionGroupID,permissions" ) : oGroup );	
+					// save oGroup if new only
+					if( !oGroup.isLoaded() ){
+						permissionGroupService.save( entity=oGroup ); 
+					}
+					// append to add.
+					arrayAppend( allGroups, oPerm );
+				}
+				// attach the new permissions
+				oUser.setPermissionGroups( allGroups );
 			}
 			
 			// ROLE
