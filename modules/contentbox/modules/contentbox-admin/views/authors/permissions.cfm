@@ -2,7 +2,7 @@
 <cfoutput>
 <div>
 	
-	<!--- Show/Remove Form--->
+	<!--- Show/Remove Roles Form--->
 	#html.startForm( name="permissionRolesForm", class="form-vertical" )#
 	#html.startFieldset( legend="Role Permissions" )#
 		<cfif !prc.author.getRole().hasPermission()>
@@ -73,7 +73,7 @@
 	#html.endForm()#
 	</cfif>
 
-	<!--- Show/Remove Form--->
+	<!--- Show/Remove Permissions Groups Form--->
 	#html.startForm( name="alacartePermissionGroups", class="form-vertical" )#
 		<cfif !prc.author.hasPermissionGroup()>
 			<small>No permission groups assigned!</small>
@@ -83,19 +83,31 @@
 		
 		<cfloop array="#prc.author.getPermissionGroups()#" index="group">
 		<div>
-			<!--- Assigned --->
-			<i class="fa fa-circle-o fa-lg textGreen"></i>
+			<!--- Remove --->
 			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-				<!--- Remove --->
 				<a 	href="javascript:removePermissionGroup( '#group.getPermissionGroupID()#' )" 
 					onclick="return confirm( 'Are you sure?' )" 
 					title="Remove Permission Group">
 					<i class="fa fa-circle-o fa-lg textRed"></i>
 				</a>
 			</cfif>
+
 			<!--- Name --->
 			&nbsp; 
 			<strong>#group.getName()#</strong>
+
+			<!--- Permissions --->
+			<div class="well well-sm margin10">
+			<cfloop array="#group.getPermissions()#" index="perm">
+			<div>
+				<!--- Assigned --->
+				<i class="fa fa-circle-o fa-lg textGreen"></i>
+				<!--- Name --->
+				&nbsp; 
+				<strong>#perm.getPermission()#</strong>
+			</div>
+			</cfloop>		
+		</div>
 		</div>
 		</cfloop>
 		
@@ -160,7 +172,6 @@
 		<cfloop array="#prc.author.getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
-			<i class="fa fa-circle-o fa-lg textGreen"></i>
 			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 				<!--- Remove --->
 				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-circle-o fa-lg textRed"></i></a>
