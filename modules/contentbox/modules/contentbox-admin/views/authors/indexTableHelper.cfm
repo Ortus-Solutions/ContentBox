@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready( function(){
 	// tables references
 	$authors = $( "##authors" );
 	// datatable

@@ -43,13 +43,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	
 	/**
 	* Author search by name, email or username
-	* @searchTerm.hint Search in firstname, lastname and email fields
-	* @isActive.hint Search with active bit
-	* @role.hint Apply a role filter
-	* @max.hint The max returned objects
-	* @offset.hint The offset for pagination
-	* @asQuery.hint Query or objects
-	* @sortOrder.hint The sort order to apply
+	* @searchTerm		 	Search in firstname, lastname and email fields
+	* @isActive  		 	Search with active bit
+	* @role      		 	Apply a role filter
+	* @max       		 	The max returned objects
+	* @offset    		 	The offset for pagination
+	* @asQuery   		 	Query or objects
+	* @sortOrder 		 	The sort order to apply
+	* @permissionGroups 	Single or list of permissiong groups to search on
 	*/
 	function search(
 		string searchTerm="", 
@@ -58,16 +59,19 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		numeric max=0, 
 		numeric offset=0, 
 		boolean asQuery=false, 
-		string sortOrder="lastName"
+		string sortOrder="lastName",
+		string permissionGroups
 	){
 		var results = {};
 		var c = newCriteria();
 		
 		// Search
 		if( len( arguments.searchTerm ) ){
-			c.$or( c.restrictions.like( "firstName","%#arguments.searchTerm#%" ),
-				   c.restrictions.like( "lastName", "%#arguments.searchTerm#%" ),
-				   c.restrictions.like( "email", "%#arguments.searchTerm#%" ) );
+			c.$or( 
+				c.restrictions.like( "firstName","%#arguments.searchTerm#%" ),
+				c.restrictions.like( "lastName", "%#arguments.searchTerm#%" ),
+				c.restrictions.like( "email", "%#arguments.searchTerm#%" ) 
+			);
 		}
 
 		// isActive filter
@@ -81,10 +85,22 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				.isEq( "role.roleID", javaCast( "int", arguments.role ) );
 		}
 
+		// permission groups filter
+		if( structKeyExists( arguments, "permissionGroups" ) AND arguments.permissionGroups NEQ "any" ){
+			c.createAlias( "permissionGroups", "permissionGroups" )
+				.isIn( "permissionGroups.permissionGroupID", JavaCast( "java.lang.Integer[]", listToArray( arguments.permissionGroups ) ) );
+
+		}
+
 		// run criteria query and projections count
-		results.count = c.count( "authorID" );
+		results.count 	= c.count( "authorID" );
 		results.authors = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery );
+			.list( 
+				offset    	= arguments.offset, 
+				max       	= arguments.max, 
+				sortOrder 	= arguments.sortOrder, 
+				asQuery   	= arguments.asQuery 
+			);
 	
 		
 		

@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready( function(){
 	// Setup view
 	setupView( { 
 		tableContainer	: $( "##authorTableContainer" ), 
@@ -13,7 +13,8 @@ $(document).ready(function() {
 		filterBox		: $( "##filterBox" ),
 		filters 		: [
 			{ name : "fStatus", defaultValue : "any" },
-			{ name : "fRole", defaultValue : "any" }
+			{ name : "fRole", 	defaultValue : "any" },
+			{ name : "fGroups", defaultValue : "any" }
 		]
 	} );
 
@@ -42,7 +43,7 @@ function setupView( settings ){
 				var $this = $(this);
 				var clearIt = ( $this.val().length > 0 ? false : true );
 				// ajax search
-				contentLoad( { search: $this.val() } );
+				contentLoad( { search : $this.val() } );
 			},
 			300
 		)
@@ -104,7 +105,7 @@ function contentLoad( criteria ){
 	$tableContainer.css( 'opacity', .60 );
 	// setup ajax arguments
 	var args = {  
-		page: criteria.page, 
+		page 	: criteria.page, 
 		showAll : criteria.showAll
 	};
 	// do we have filters, if so apply them to arguments
@@ -120,8 +121,10 @@ function contentLoad( criteria ){
 	} );
 }
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-function removeAuthor(authorID){
-	$( "##delete_"+ authorID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
+function removeAuthor( authorID ){
+	$( "##delete_"+ authorID)
+		.removeClass( "fa fa-minus-circle" )
+		.addClass( "fa fa-spinner fa-spin" );
 	checkAll( false, '##authorID' );
 	$( "##authorID" ).val( authorID );
 	$( "##authorForm" ).submit();

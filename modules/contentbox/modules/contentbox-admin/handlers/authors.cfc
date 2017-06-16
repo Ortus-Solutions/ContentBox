@@ -55,7 +55,8 @@ component extends="baseHandler"{
 		prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
 
 		// Get Roles
-		prc.roles = roleService.getAll( sortOrder="role" );
+		prc.aRoles 				= roleService.getAll( sortOrder="role" );
+		prc.aPermissionGroups 	= permissionGroupService.getAll( sortOrder="name" );
 		
 		// View
 		event.setView( "authors/index" );
@@ -72,30 +73,33 @@ component extends="baseHandler"{
 			.paramValue( "searchAuthors", "" )
 			.paramValue( "isFiltering", false, true )
 			.paramValue( "fStatus", "any" )
-			.paramValue( "fRole", "any" );
+			.paramValue( "fRole", "any" )
+			.paramValue( "fGroups", "any" );
 
 		// prepare paging object
 		prc.oPaging 	= variables.paging;
 		prc.paging 		= prc.oPaging.getBoundaries();
-		prc.pagingLink 	= 'javascript:contentPaginate(@page@)';
+		prc.pagingLink 	= 'javascript:contentPaginate( @page@ )';
 
 		// exit Handlers
 		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
 
 		// is Filtering?
-		if( rc.fRole neq "all" OR rc.fStatus neq "any" or rc.showAll ){ 
+		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){ 
 			prc.isFiltering = true;
 		}
 		
 		// Get all authors or search
-		var results 		= authorService.search( searchTerm=rc.searchAuthors,
-													offset=( rc.showAll ? 0 : prc.paging.startRow-1 ),
-											   		max=( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-											   		sortOrder="lastName asc",
-											   		isActive=rc.fStatus,
-											   		role=rc.fRole
-											   	   );
+		var results = authorService.search( 
+			searchTerm= rc.searchAuthors,
+			offset    			= ( rc.showAll ? 0 : prc.paging.startRow-1 ),
+			max       			= ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+			sortOrder 			= "lastName asc",
+			isActive  			= rc.fStatus,
+			role      			= rc.fRole,
+			permissionGroups 	= rc.fGroups
+		);
 		prc.authors 		= results.authors;
 		prc.authorCount 	= results.count;
 

@@ -62,14 +62,19 @@
 			</div>
 		#html.endForm()#
 	</div>
+
+	<!--- Sidebar Filters --->
 	<div class="col-md-3">
+		
 		<div class="panel panel-primary">
+			
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
+			
 			<div class="panel-body">
 				<div id="filterBox">
-					#html.startForm(name="filterForm", action=prc.xehAuthorSearch, class="form-vertical",role="form" )#
+					#html.startForm( name="filterForm", action=prc.xehAuthorSearch, class="form-vertical",role="form" )#
 						<!---Status--->
 						<div class="form-group">
 							<label for="fStatus" class="control-label">Status: </label>
@@ -79,16 +84,29 @@
 								<option value="false">Deactivated</option>
 							</select>
 						</div>
+
 						<!--- Roles --->
 						<div class="form-group">
 							<label for="fRole" class="control-label">Roles: </label>
 							<select name="fRole" id="fRole" class="form-control input-sm">
 								<option value="any">All Roles</option>
-								<cfloop array="#prc.roles#" index="thisRole">
+								<cfloop array="#prc.aRoles#" index="thisRole">
 								<option value="#thisRole.getRoleID()#">#thisRole.getRole()#</option>
 								</cfloop>
 							</select>
 						</div>
+
+						<!--- Permission Groups --->
+						<div class="form-group">
+							<label for="fGroups" class="control-label">Permission Groups: </label>
+							<select name="fGroups" id="fGroups" class="form-control input-sm">
+								<option value="any">All Groups</option>
+								<cfloop array="#prc.aPermissionGroups#" index="thisGroup">
+								<option value="#thisGroup.getPermissionGroupID()#">#thisGroup.getName()#</option>
+								</cfloop>
+							</select>
+						</div>
+
 						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply Filters</a>
 						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
 					#html.endForm()#
