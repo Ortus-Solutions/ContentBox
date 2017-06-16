@@ -69,52 +69,57 @@
 								class="form-vertical"
 							)#
 								#html.startFieldset( legend="User Details" )#
-								#html.hiddenField( name="authorID",bind=prc.author )#
-								<!--- Fields --->
+								#html.hiddenField( name="authorID", bind=prc.author )#
+
 								#html.textField(
-									name="firstName",
-									bind=prc.author,
-									label="*First Name:",
-									required="required",
-									size="50",
-									class="form-control",
-									wrapper="div class=controls",
-									labelClass="control-label",
-									groupWrapper="div class=form-group"
+									name    		= "firstName",
+									bind    		= prc.author,
+									label   		= "*First Name:",
+									required		= "required",
+									size    		= "50",
+									class   		= "form-control",
+									wrapper 		= "div class=controls",
+									labelClass 		= "control-label",
+									groupWrapper 	= "div class=form-group"
 								)#
-								#html.textField(name="lastName",
-									bind=prc.author,
-									label="*Last Name:",
-									required="required",
-									size="50",
-									class="form-control",
-									wrapper="div class=controls",
-									labelClass="control-label",
-									groupWrapper="div class=form-group"
+
+								#html.textField(
+									name    		= "lastName",
+									bind    		= prc.author,
+									label   		= "*Last Name:",
+									required		= "required",
+									size    		= "50",
+									class   		= "form-control",
+									wrapper 		= "div class=controls",
+									labelClass 		= "control-label",
+									groupWrapper 	= "div class=form-group"
 								)#
+
 								#html.inputField(
-									name="email",
-									type="email",
-									bind=prc.author,
-									label="*Email:",
-									required="required",
-									size="50",
-									class="form-control",
-									wrapper="div class=controls",
-									labelClass="control-label",
-									groupWrapper="div class=form-group"
+									name    		= "email",
+									type    		= "email",
+									bind    		= prc.author,
+									label   		= "*Email:",
+									required		= "required",
+									size    		= "50",
+									class   		= "form-control",
+									wrapper 		= "div class=controls",
+									labelClass 		= "control-label",
+									groupWrapper 	= "div class=form-group"
 								)#
+
 								#html.textField(
-									name="username",
-									bind=prc.author,
-									label="*Username:",
-									required="required",
-									size="50",
-									class="form-control username",
-									wrapper="div class=controls",
-									labelClass="control-label",
-									groupWrapper="div class=form-group"
+									name    		= "username",
+									bind    		= prc.author,
+									label   		= "*Username:",
+									required		= "required",
+									size    		= "50",
+									class   		= "form-control username",
+									wrapper 		= "div class=controls",
+									labelClass		= "control-label",
+									groupWrapper	= "div class=form-group"
 								)#
+
 								<cfif NOT prc.author.isLoaded()>
 									#html.passwordField(
 										name="password",
@@ -131,30 +136,39 @@
 
 								<!--- Active --->
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									#html.select(
-										label="Active User:",
-										name="isActive",
-										options="yes,no",
-										style="width:200px",
-										bind=prc.author,
-										class="form-control input-sm",
-										wrapper="div class=controls",
-										labelClass="control-label",
-										groupWrapper="div class=form-group"
-									)#
+									<div class="form-group">
+										#html.label(
+											class   = "control-label",
+											field   = "isActive",
+											content = "Active User:"
+										)#
+										
+										<div class="controls">
+											#html.checkbox(
+												name    = "isActive_toggle",
+												data	= { toggle: 'toggle', match: 'isActive' },
+												checked = prc.author.getIsActive()
+											)#
+											#html.hiddenField(
+												name	= "isActive",
+												bind 	= prc.author
+											)#
+										</div>
+									</div>
+									
 									<!--- Roles --->
 									#html.select(
-										label="User Role:",
-										name="roleID",
-										options=prc.roles,
-										column="roleID",
-										nameColumn="role",
-										bind=prc.author.getRole(),
-										style="width:200px",
-										class="form-control input-sm",
-										wrapper="div class=controls",
-										labelClass="control-label",
-										groupWrapper="div class=form-group"
+										label     		= "User Role:",
+										name      		= "roleID",
+										options   		= prc.roles,
+										column    		= "roleID",
+										nameColumn		= "role",
+										bind      		= prc.author.getRole(),
+										style     		= "width:200px",
+										class     		= "form-control input-sm",
+										wrapper   		= "div class=controls",
+										labelClass		= "control-label",
+										groupWrapper 	= "div class=form-group"
 									)#
 								<cfelse>
 									<label>Active User: </label> <span class="textRed">#prc.author.getIsActive()#</span><br/>
@@ -162,14 +176,15 @@
 								</cfif>
 								
 								<!--- Biography --->
-								#html.textarea(name="biography",
-									label="Biography or Notes About The User:",
-									bind=prc.author,
-									rows="10",
-									class="form-control",
-									wrapper="div class=controls",
-									labelClass="control-label",
-									groupWrapper="div class=form-group"
+								#html.textarea(
+									name   			= "biography",
+									label  			= "Biography or Notes About The User:",
+									bind   			= prc.author,
+									rows   			= "10",
+									class  			= "form-control",
+									wrapper			= "div class=controls",
+									labelClass  	= "control-label",
+									groupWrapper	= "div class=form-group"
 								)#
 
 								#html.endFieldSet()#
@@ -242,10 +257,39 @@
     	<div class="panel panel-primary">
 		
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-eye"></i> Details</h3>
+				<h3 class="panel-title"><i class="fa fa-camera-retro"></i> Snapshot</h3>
 			</div>
 
 			<div class="panel-body">
+				
+				<div class="text-center" id="author_actions">
+					<div class="btn-group" role="group" aria-label="...">
+						<!--- <button type="button" class="btn btn-default">1</button> --->
+
+						<!--- Export But --->
+						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <i class="fa fa-download"></i> Export
+							  <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
+										<i class="fa fa-download"></i> Export as JSON
+									</a>
+								</li>
+								<li>
+									<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
+										<i class="fa fa-download"></i> Export as XML
+									</a>
+								</li>
+							</ul>
+						</div>
+						</cfif>
+					</div>
+				</div>
+
 				<div class="pull-left margin10">
 					#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="40" )#
 				</div>
@@ -257,30 +301,58 @@
 				<!--- Persisted Info --->
 				<table class="table table-condensed table-hover table-striped" width="100%">
 					<tr>
-						<th width="105" class="textRight">Last Login</th>
+						<th width="125" class="textRight">Last Login</th>
 						<td>
 							#prc.author.getDisplayLastLogin()#
 						</td>
 					</tr>
 
 					<tr>
-						<th width="105" class="textRight">Created Date</th>
+						<th class="textRight">Created On</th>
 						<td>
 							#prc.author.getDisplayCreatedDate()#
 						</td>
 					</tr>
 
 					<tr>
-						<th width="105" class="textRight">Role</th>
+						<th class="textRight">Last Update</th>
+						<td>
+							#prc.author.getDisplayModifiedDate()#
+						</td>
+					</tr>
+
+					<tr>
+						<th class="textRight">Role</th>
 						<td>
 							#prc.author.getRole().getRole()#
 						</td>
 					</tr>
 
 					<tr>
-						<th width="105" class="textRight">Permission Groups</th>
+						<th class="textRight">Permission Groups</th>
 						<td>
 							#prc.author.getPermissionGroupsList()#
+						</td>
+					</tr>
+
+					<tr>
+						<th class="textRight">Entries</th>
+						<td>
+							#prc.author.getNumberOfEntries()#
+						</td>
+					</tr>
+
+					<tr>
+						<th class="textRight">Pages</th>
+						<td>
+							#prc.author.getNumberOfPages()#
+						</td>
+					</tr>
+
+					<tr>
+						<th class="textRight">Content Store</th>
+						<td>
+							#prc.author.getNumberOfContentStore()#
 						</td>
 					</tr>
 				</table>

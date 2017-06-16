@@ -135,6 +135,7 @@ component extends="baseHandler"{
 		prc.xehEntriesManager  		= "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
+		prc.xehExport 				= "#prc.cbAdminEntryPoint#.authors.export";
 
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );

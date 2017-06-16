@@ -151,11 +151,15 @@ component 	persistent="true"
 	// Calculated properties
 	property 	name="numberOfEntries" 
 				formula="select count(*) from cb_content as content 
-						where content.FK_authorID=authorID and content.contentType='entry'" ;
+						where content.FK_authorID=authorID and content.contentType = 'Entry'" ;
 
 	property 	name="numberOfPages" 	
 				formula="select count(*) from cb_content as content 
-						where content.FK_authorID=authorID and content.contentType='page'" ;
+						where content.FK_authorID=authorID and content.contentType = 'Page'" ;
+
+	property 	name="numberOfContentStore" 	
+				formula="select count(*) from cb_content as content 
+						where content.FK_authorID=authorID and content.contentType = 'ContentStore'" ;
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES									
@@ -332,14 +336,16 @@ component 	persistent="true"
 
 	/**
 	* Get a flat representation of this entry
-	* @excludes Exclude properties, by default it does pages and entries
-	* @showRole Show Roles
-	* @showPermissions Show permissions
+	* @excludes 			Exclude properties, by default it does pages and entries
+	* @showRole 			Show Roles
+	* @showPermissions 		Show permissions
+	* @showPermissionGroups Show permission groups
 	*/
 	function getMemento( 
 		excludes="pages,entries",
 		boolean showRole=true,
-		boolean showPermissions=true
+		boolean showPermissions=true,
+		boolean showPermissionGroups=true
 	){
 		// Do this to convert native Array to CF Array for content properties
 		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
@@ -358,6 +364,16 @@ component 	persistent="true"
 			}
 		} else if( arguments.showPermissions ) {
 			result[ "permissions" ] = [];
+		}
+
+		// Permission Groups
+		if( arguments.showPermissionGroups && hasPermissionGroup() ){
+			result[ "permissiongroups" ] = [];
+			for( var thisGroup in variables.permissiongroups ){
+				arrayAppend( result[ "permissiongroups" ], thisGroup.getMemento() );
+			}
+		} else if( arguments.showPermissionGroups ) {
+			result[ "permissiongroups" ] = [];
 		}
 
 		return result;
