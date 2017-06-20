@@ -364,19 +364,20 @@ component extends="baseHandler"{
 	* Remove a user
 	*/
 	function remove( event, rc, prc ){
-		var oAuthor	= authorService.get( rc.authorID );
+		event.paramValue( "targetAuthorID", 0 );
 
-		if( isNull(oAuthor) ){
-			cbMessagebox.setMessage( "warning","Invalid Author detected!" );
+		var oAuthor	= authorService.get( rc.targetAuthorID );
+
+		if( isNull( oAuthor ) ){
+			cbMessagebox.setMessage( "warning","Invalid Author!" );
 			setNextEvent( prc.xehAuthors );
 		}
 		// announce event
-		announceInterception( "cbadmin_preAuthorRemove",{author=oAuthor,authorID=rc.authorID} );
+		announceInterception( "cbadmin_preAuthorRemove", { author=oAuthor,authorID = rc.targetAuthorID } );
 		// remove
-		oAuthor.clearPermissions();
-		authorService.delete( oAuthor );
+		authorService.deleteAuthor( oAuthor );
 		// announce event
-		announceInterception( "cbadmin_postAuthorRemove",{authorID=rc.authorID} );
+		announceInterception( "cbadmin_postAuthorRemove", { authorID = rc.targetAuthorID } );
 		// message
 		cbMessagebox.setMessage( "info","Author Removed!" );
 		// redirect

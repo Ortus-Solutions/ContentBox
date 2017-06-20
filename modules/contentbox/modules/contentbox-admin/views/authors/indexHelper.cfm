@@ -122,11 +122,11 @@ function contentLoad( criteria ){
 }
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 function removeAuthor( authorID ){
-	$( "##delete_"+ authorID)
-		.removeClass( "fa fa-minus-circle" )
+	$( "##delete_"+ authorID )
+		.removeClass( "fa fa-trash-o" )
 		.addClass( "fa fa-spinner fa-spin" );
 	checkAll( false, '##authorID' );
-	$( "##authorID" ).val( authorID );
+	$( "##targetAuthorID" ).val( authorID );
 	$( "##authorForm" ).submit();
 }
 </cfif>

@@ -48,17 +48,45 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 							<!--- Delete Command --->
 							<cfif prc.oCurrentAuthor.getAuthorID() neq author.getAuthorID()>
-								<li><a title="Delete Author" href="javascript:removeAuthor('#author.getAuthorID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Author?"><i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Delete</a></li>
+								<li>
+									<a 	title="Delete Author" 
+										href="javascript:removeAuthor( '#author.getAuthorID()#' )" 
+										class="confirmIt" 
+										data-title="<i class='fa fa-trash-o'></i> Delete Author?"
+									>
+										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Delete
+									</a>
+								</li>
 							<cfelse>
-								<li><a title="Can't Delete Yourself" href="javascript:alert('Can\'t delete yourself buddy!')" class="textRed"><i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Can't Delete</a></li>
+								<li>
+									<a 	title="Can't Delete Yourself" 
+										href="javascript:alert('Can\'t delete yourself buddy!')" 
+										class="textRed"
+									>
+										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Can't Delete
+									</a>
+								</li>
 							</cfif>
+
 							<!--- Edit Command --->
-							<li><a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+							<li>
+								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">
+									<i class="fa fa-edit fa-lg"></i> Edit
+								</a>
+							</li>
 					
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
-							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-							<li><a href="#event.buildLink(linkto=prc.xehExport)#/authorID/#author.getAuthorID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+							<li>
+								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
+									<i class="fa fa-download"></i> Export as JSON
+								</a>
+							</li>
+							<li>
+								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
+									<i class="fa fa-download"></i> Export as XML
+								</a>
+							</li>
 							</cfif>
 						<cfelse>
 							<li><a href="javascript:void(0)"><em>No available actions</em></a></li>

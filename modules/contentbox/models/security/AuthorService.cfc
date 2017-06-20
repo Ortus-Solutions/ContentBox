@@ -24,6 +24,18 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	    
 		return this;
 	}
+
+	/**
+	 * Delete an author from the system
+	 * @author 			The author object
+	 * @transactional 	Auto transactions
+	 */
+	function deleteAuthor( required author, boolean transactional=true ){
+		// Clear permissions, just in case
+		arguments.author.clearPermissions();
+		// send for deletion
+		delete( entity=arguments.author, transactional=arguments.transactional );
+	}
 	
 	/**
 	* Save an author with extra pizazz!
@@ -38,7 +50,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			arguments.author.setPassword( variables.bcrypt.hashPassword( arguments.author.getPassword() ) );
 		}
 		// save the author
-		save( entity=author, transactional=arguments.transactional );
+		save( entity=arguments.author, transactional=arguments.transactional );
 	}
 	
 	/**
