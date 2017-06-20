@@ -13,7 +13,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "1.0" );
 		setDescription( "A cool basic commenting form for ContentBox content objects." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "commenting" );
 		setCategory( "Miscellaneous" );
 		return this;
@@ -72,6 +72,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 					required 	= "required", 
 					value 		= event.getValue( "author", oCurrentAuthor.getName() ) 
 				)#
+
 				#html.inputField( 
 					name 		= "authorEmail", 
 					type 		= "email", 
@@ -82,6 +83,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 					required 	= "required", 
 					value 		= event.getValue( "authorEmail", oCurrentAuthor.getEmail() ) 
 				)#
+
 				#html.inputField( 
 					name 		= "authorURL", 
 					type 		= "url", 
@@ -89,7 +91,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 					size 		= "50", 
 					class 		= "form-control",
 					groupWrapper= "div class=form-group",
-					value 		= event.getValue( "authorURL","" ) 
+					value 		= event.getValue( "authorURL", "" ) 
 				)#
 
 				#html.textArea( 
@@ -97,18 +99,22 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 					label 		= "Comment:", 
 					class 		= "form-control",
 					required 	= "required", 
-					value 		= event.getValue( "content","" ) 
+					value 		= event.getValue( "content", "" ) 
 				)#
+
 				#html.checkBox( 
 					name 			= "subscribe", 
 					label 			= "Notify me of follow-up comments by email.",
-					groupwrapper 	= "div class=checkbox"
+					groupwrapper 	= "div class=checkbox",
+					checked 		= event.getValue( "subscribe", false )
 				)#
 				
+				<cfif len( captcha )>
 				<p>
 				#captcha#
 				</p>
-
+				</cfif>
+				
 				#cb.event( "cbui_postCommentForm" )#
 
 				<div class="buttons">
