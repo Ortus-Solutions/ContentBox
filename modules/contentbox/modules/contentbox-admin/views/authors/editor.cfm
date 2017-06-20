@@ -11,31 +11,46 @@
 
 <div class="row">
     <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>" id="main-content-slot">
+    	
     	#getModel( "messagebox@cbMessagebox" ).renderIt()#
+    	
     	<div class="panel panel-default">
+           
             <div class="panel-heading">
+
                 <h3 class="panel-title">&nbsp;</h3>
+
                 <div class="actions">
+                   
                     <!--- Back To Inbox --->
                     #announceInterception( "cbadmin_onAuthorEditorActions" )#
+					
 					<!--- Back button --->
 					<p class="text-center">
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehAuthors )#')"><i class="fa fa-reply"></i> Back To Listing</button>
+							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehAuthors )#')">
+								<i class="fa fa-reply"></i> Back To Listing
+							</button>
 						<cfelse>
-							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehDashboard )#')"><i class="fa fa-reply"></i> Back To Dashboard</button>
+							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehDashboard )#')">
+								<i class="fa fa-reply"></i> Back To Dashboard
+							</button>
 						</cfif>
 					</p>
                 </div>
             </div>
+
             <div class="panel-body">
             	<!--- Vertical Nav --->
                 <div class="tab-wrapper tab-left tab-primary">
+
                     <!--- Documentation Navigation Bar --->
                     <ul class="nav nav-tabs">
+                    	
                     	<li class="active">
                     		<a href="##userDetails" data-toggle="tab"><i class="fa fa-eye"></i> Details</a>
                     	</li>
+
 						<cfif prc.author.isLoaded()>
 							<li>
 								<a href="##password" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a>
@@ -57,16 +72,17 @@
 						<!--- cbadmin Event --->
     					#announceInterception( "cbadmin_onAuthorEditorNav" )#
                     </ul>
+
                     <!--- Tab Content --->
                     <div class="tab-content">
                     	<!--- Author Details --->
 						<div class="tab-pane active" id="userDetails">
 							<!--- AuthorForm --->
 							#html.startForm(
-								name="authorForm",
-								action=prc.xehAuthorsave,
-								novalidate="novalidate", 
-								class="form-vertical"
+								name 		= "authorForm",
+								action 		= prc.xehAuthorsave,
+								novalidate 	= "novalidate", 
+								class 		= "form-vertical"
 							)#
 								#html.startFieldset( legend="User Details" )#
 								#html.hiddenField( name="authorID", bind=prc.author )#

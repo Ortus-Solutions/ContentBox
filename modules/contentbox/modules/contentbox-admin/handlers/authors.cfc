@@ -125,6 +125,23 @@ component extends="baseHandler"{
 	}
 
 	/**
+	* System email checks
+	* @return json
+	*/
+	function emailCheck( event, rc, prc ){
+		var found = true;
+
+		event.paramValue( "email","" );
+
+		// only check if we have a email
+		if( len( email ) ){
+			found = authorService.emailFound( rc.email );
+		}
+
+		event.renderData( type="json", data=found );
+	}
+
+	/**
 	* Author editor panel
 	* @return html
 	*/
@@ -136,6 +153,7 @@ component extends="baseHandler"{
 		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#.authors.passwordChange";
 		prc.xehAuthorPermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
 		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#.authors.usernameCheck";
+		prc.xehEmailCheck	 		= "#prc.cbAdminEntryPoint#.authors.emailCheck";
 		prc.xehEntriesManager  		= "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";

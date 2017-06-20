@@ -25,6 +25,22 @@ $( document ).ready( function(){
     	"The username you entered already exists, try a new one!" 
     );
 
+    // Custom email unique validator
+    $.validator.addMethod( 
+    	'email', 
+    	function( value, element ) {
+			if( value.length && value == "#prc.author.getEmail()#" ){
+				return true;
+			}
+			// verify email
+			if( isEmailFound( value ) ){
+				return false;
+			}
+			return true;
+    	}, 
+    	"The email you entered already exists, try a new one!" 
+    );
+
     // Custom Password Validator
     $.validator.addMethod( 
     	"pwcheck", 
@@ -68,22 +84,35 @@ $( document ).ready( function(){
 	</cfif>
 	
 } );
-function isUsernameFound(username){
+function isUsernameFound( username ){
 	var usernameFound = false;
 	$.ajax( {
-		url:'#event.buildLink(prc.xehUsernameCheck)#',
-		data: {username: username},
-		async:false,
-		success: function(data){
+		url    		: '#event.buildLink( prc.xehUsernameCheck )#',
+		data   		: { username : username },
+		async  		: false,
+		success		: function( data ){
 			usernameFound = data;
 		},
-		dataType:"json"
+		dataType    : "json"
 	} );
 	return usernameFound;
 }
+function isEmailFound( email ){
+	var emailFound = false;
+	$.ajax( {
+		url    		: '#event.buildLink( prc.xehEmailCheck )#',
+		data   		: { email : email },
+		async  		: false,
+		success		: function( data ){
+			emailFound = data;
+		},
+		dataType    : "json"
+	} );
+	return emailFound;
+}
 <cfif prc.author.isLoaded()>
 function loadPermissions(){
-	$permissionsTab.load('#event.buildLink(prc.xehAuthorPermissions)#/authorID/'+#prc.author.getAuthorID()#);
+	$permissionsTab.load( '#event.buildLink( prc.xehAuthorPermissions )#/authorID/' + #prc.author.getAuthorID()# );
 }
 </cfif>
 </script>

@@ -122,9 +122,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	/**
 	* Username checks for authors
 	*/
-	boolean function usernameFound(required username){
-		var args = {"username" = arguments.username};
-		return ( countWhere(argumentCollection=args) GT 0 );
+	boolean function usernameFound( required username ){
+		var args = { "username" = arguments.username };
+		return ( countWhere( argumentCollection = args ) GT 0 );
+	}
+
+	/**
+	* Email checks for authors
+	*/
+	boolean function emailFound( required email ){
+		var args = { "email" = arguments.email };
+		return ( countWhere( argumentCollection = args ) GT 0 );
 	}
 	
 	/**
