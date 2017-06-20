@@ -1,5 +1,11 @@
 $( document ).ready(function() {
-    
+    // GLOBAL STATIC
+    REGEX_LOWER   = /[a-z]/,
+    REGEX_UPPER   = /[A-Z]/,
+    REGEX_DIGIT   = /[0-9]/,
+    REGEX_DIGITS  = /[0-9].*[0-9]/,
+    REGEX_SPECIAL = /[^a-zA-Z0-9]/;
+
     // If the sidebar preference is off, toggle it
     if( $( "body" ).attr( "data-showsidebar" ) == "no" ){
         toggleSidebar();
@@ -657,4 +663,58 @@ function importContent(){
     $importForm.find( "#importButton" ).click( function( e ){
         $importForm.submit();
     } );
+}
+
+/**
+ * Password meter event closure used to monitor password changes for the meter rules to activate.
+ * This expects the following ID's to be in DOM: pw_rule_lower, upper, digit, symbol and count.
+ */
+function passwordMeter( event ){
+    var value = $( this ).val();
+    //console.log( value );
+    // Counter bind
+    $( "#pw_rule_count" ).html( value.length );
+
+    // Rule Checks
+    var rules = {
+        lower   : REGEX_LOWER.test( value ),
+        upper   : REGEX_UPPER.test( value ),
+        digit   : REGEX_DIGIT.test( value ),
+        special : REGEX_SPECIAL.test( value )
+    };
+
+    // Counter
+    if( value.length > 7 ){
+        $( "#pw_rule_count" ).addClass( "badge-success" );
+    } else {
+        $( "#pw_rule_count" ).removeClass( "badge-success" );
+    }
+
+    // Iterate and test rules
+    for( var key in rules ){
+        if( rules[ key ] ){
+            $( "#pw_rule_" + key ).addClass( "badge-success" );       
+        } else {
+            $( "#pw_rule_" + key ).removeClass( "badge-success" );       
+        }
+    }
+}
+
+/**
+ * Used by our form validator to validate password fields according to default rules    
+ * @param  {any} value The password value
+ * @return {boolean} Password validates via our rules
+ */
+function passwordValidator( value ){
+    var lower   = REGEX_LOWER.test( value ),
+        upper   = REGEX_UPPER.test( value ),
+        digit   = REGEX_DIGIT.test( value ),
+        digits  = REGEX_DIGITS.test( value ),
+        special = REGEX_SPECIAL.test( value );
+
+    return lower // has a lowercase letter
+       && upper // has an uppercase letter
+       && digit // has at least one digit
+       && special // has special chars
+       && value.length > 7 // at least 8 chars
 }

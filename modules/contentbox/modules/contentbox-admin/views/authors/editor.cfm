@@ -53,7 +53,7 @@
 
 						<cfif prc.author.isLoaded()>
 							<li>
-								<a href="##password" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a>
+								<a href="##change_password" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a>
 							</li>
 							<li>
 								<a href="##preferences" data-toggle="tab"><i class="fa fa-briefcase"></i> Preferences</a></li>
@@ -138,16 +138,27 @@
 
 								<cfif NOT prc.author.isLoaded()>
 									#html.passwordField(
-										name="password",
-										bind=prc.author,
-										label="*Password:",
-										required="required",
-										size="50",
-										class="form-control pwcheck",
-										wrapper="div class=controls",
-										labelClass="control-label",
-										groupWrapper="div class=form-group"
+										name    		= "password",
+										bind    		= prc.author,
+										label   		= "*Password:",
+										required		= "required",
+										size    		= "50",
+										class   		= "form-control pwcheck",
+										wrapper 		= "div class=controls",
+										labelClass  	= "control-label",
+										groupWrapper	= "div class=form-group"
 									)#
+									
+									<!--- Show Rules --->
+									<div id="passwordRules" class="well well-sm">
+										<span class="badge" id="pw_rule_lower">abc</span>
+										<span class="badge" id="pw_rule_upper">ABC</span>
+										<span class="badge" id="pw_rule_digit">123</span>
+										<span class="badge" id="pw_rule_special">!@$</span>
+										<span class="badge" id="pw_rule_count">0</span>
+										<p class="help-block">At least 8 characters including upper and lower case letters, numbers, and symbols.</p>
+									</div>
+
 								</cfif>
 
 								<!--- Active --->
@@ -217,13 +228,49 @@
 
 						<cfif prc.author.isLoaded()>
 							<!--- Change Password --->
-							<div class="tab-pane" id="password">
-							#html.startForm(name="authorPasswordForm",action=prc.xehAuthorChangePassword,novalidate="novalidate",class="form-vertical" )#
-								#html.startFieldset(legend="Change Password" )#
-								#html.hiddenField(name="authorID",bind=prc.author)#
+							<div class="tab-pane" id="change_password">
+							#html.startForm(
+								name       = "authorPasswordForm",
+								action     = prc.xehAuthorChangePassword,
+								novalidate = "novalidate",
+								class      = "form-vertical" 
+							)#
+								#html.startFieldset( legend="Change Password" )#
+								#html.hiddenField( name="authorID", bind=prc.author )#
+								
 								<!--- Fields --->
-								#html.passwordField(name="password",label="Password:",required="required",size="50",class="form-control pwcheck",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
-								#html.passwordField(name="password_confirm",label="Confirm Password:",required="required",size="50",class="form-control pwcheck",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
+								#html.passwordField(
+									name    		= "password",
+									label   		= "Password:",
+									required		= "required",
+									size    		= "50",
+									class   		= "form-control pwcheck",
+									wrapper 		= "div class=controls",
+									labelClass 		= "control-label",
+									groupWrapper 	= "div class=form-group" 
+								)#
+
+								#html.passwordField(
+									name    		= "password_confirm",
+									label   		= "Confirm Password:",
+									required		= "required",
+									size    		= "50",
+									class   		= "form-control pwcheck",
+									wrapper 		= "div class=controls",
+									labelClass 		= "control-label",
+									groupWrapper 	= "div class=form-group" 
+								)#
+
+								<!--- Show Rules --->
+								<div id="passwordRules" class="well well-sm">
+									<span class="badge" id="pw_rule_lower">abc</span>
+									<span class="badge" id="pw_rule_upper">ABC</span>
+									<span class="badge" id="pw_rule_digit">123</span>
+									<span class="badge" id="pw_rule_special">!@$</span>
+									<span class="badge" id="pw_rule_count">0</span>
+									<p class="help-block">At least 8 characters including upper and lower case letters, numbers, and symbols.</p>
+								</div>
+								
 								#html.endFieldSet()#
 								
 								<!--- Action Bar --->

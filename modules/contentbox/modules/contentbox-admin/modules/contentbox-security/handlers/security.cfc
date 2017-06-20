@@ -166,6 +166,20 @@ component{
 	function verifyReset( event, rc, prc ){
 		arguments.event.paramValue( "token", "" );
 
+		// Validate Token
+		var isTokenValid = securityService.validateResetToken( trim( rc.token ) );
+		if( !isTokenValid ){
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			// messagebox
+			messagebox.error( cb.r( "messages.invalid_token@security" ) );
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			return;
+		} else {
+			
+		}
+
+
 		// Validate token
 		var results = securityService.resetUserPassword( trim( rc.token ) );
 		if( !results.error ){
@@ -180,7 +194,6 @@ component{
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
 		}
 
-		// Relcoate to login
 		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 
