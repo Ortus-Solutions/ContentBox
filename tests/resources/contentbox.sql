@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 127.0.0.1 (MySQL 5.7.14)
+# Host: Localhost (MySQL 5.7.14)
 # Database: contentbox
-# Generation Time: 2017-06-14 21:57:08 +0000
+# Generation Time: 2017-06-21 23:31:49 +0000
 # ************************************************************
 
 
@@ -41,6 +41,7 @@ CREATE TABLE `cb_author` (
   `FK_roleID` int(11) NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
+  `isPasswordReset` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`authorID`),
   UNIQUE KEY `username` (`username`),
   KEY `FK6847396B9724FA40` (`FK_roleID`),
@@ -51,17 +52,18 @@ CREATE TABLE `cb_author` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
+  KEY `idx_passwordReset` (`isPasswordReset`),
   CONSTRAINT `FK6847396B9724FA40` FOREIGN KEY (`FK_roleID`) REFERENCES `cb_role` (`roleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `cb_author` WRITE;
 /*!40000 ALTER TABLE `cb_author` DISABLE KEYS */;
 
-INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`)
+INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`)
 VALUES
-  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-06-13 17:07:55','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"simplemde\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"no\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-06-13 17:07:55',b'0'),
-  (2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2016-05-03 16:23:25',b'0'),
-  (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2014-01-30 11:18:53','2013-07-11 11:07:23','','{\"google\":\"\",\"editor\":\"ckeditor\",\"preference\":{\"google\":\"\",\"editor\":\"ckeditor\",\"facebook\":\"http:\\/\\/facebook.com\\/lmajano\",\"twitter\":\"http:\\/\\/twitter.com\\/lmajano\",\"markup\":\"HTML\"},\"facebook\":\"http:\\/\\/facebook.com\\/lmajano\",\"twitter\":\"http:\\/\\/twitter.com\\/lmajano\",\"markup\":\"HTML\"}',3,'2016-05-03 16:23:25',b'0');
+  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-06-21 18:03:03','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"simplemde\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"no\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-06-21 18:29:30',b'0',b'0'),
+  (2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',b'0',b'0'),
+  (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$WzD.PZHqpf5IAGvPkPwYqeFh5bCjiwNWQ/fIEEaETtHSS43e6rBkC',b'1','2017-06-21 17:40:38','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',3,'2017-06-21 18:16:47',b'0',b'1');
 
 /*!40000 ALTER TABLE `cb_author` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -658,7 +660,9 @@ INSERT INTO `cb_groupPermissions` (`FK_permissionGroupID`, `FK_permissionID`)
 VALUES
   (1,14),
   (1,28),
-  (1,25);
+  (1,25),
+  (2,29),
+  (2,3);
 
 /*!40000 ALTER TABLE `cb_groupPermissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -691,9 +695,9 @@ LOCK TABLES `cb_loginAttempts` WRITE;
 
 INSERT INTO `cb_loginAttempts` (`loginAttemptsID`, `value`, `attempts`, `createdDate`, `lastLoginSuccessIP`, `modifiedDate`, `isDeleted`)
 VALUES
-  (13,'hacker',0,'2016-05-18 15:21:36',NULL,'2016-05-18 15:21:36',b'0'),
   (15,'lmajano@ortussolutions.com',0,'2016-11-28 14:56:37',NULL,'2017-06-13 14:13:56',b'0'),
-  (16,'lmajano',0,'2016-11-28 14:56:43','127.0.0.1','2016-11-28 14:56:46',b'0');
+  (16,'lmajano',0,'2016-11-28 14:56:43','127.0.0.1','2016-11-28 14:56:46',b'0'),
+  (17,'testermajano',0,'2017-06-21 16:07:26','127.0.0.1','2017-06-21 17:37:42',b'0');
 
 /*!40000 ALTER TABLE `cb_loginAttempts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -940,7 +944,8 @@ VALUES
   (42,'EDITORS_LINKED_CONTENT','Ability to view the linked content panel','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (43,'MENUS_ADMIN','Ability to manage the menu builder','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (44,'SYSTEM_AUTH_LOGS','Access to the system auth logs','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (45,'EDITORS_FEATURED_IMAGE','Ability to view the featured image panel','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0');
+  (45,'EDITORS_FEATURED_IMAGE','Ability to view the featured image panel','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
+  (46,'EMAIL_TEMPLATE_ADMIN','Ability to admin and preview email templates','2017-06-20 16:13:01','2017-06-20 16:13:01',b'0');
 
 /*!40000 ALTER TABLE `cb_permission` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -970,7 +975,8 @@ LOCK TABLES `cb_permissionGroup` WRITE;
 
 INSERT INTO `cb_permissionGroup` (`permissionGroupID`, `createdDate`, `modifiedDate`, `isDeleted`, `name`, `description`)
 VALUES
-  (1,'2017-06-12 16:01:13','2017-06-12 20:31:52',b'0','Finance','Finance team permissions');
+  (1,'2017-06-12 16:01:13','2017-06-12 20:31:52',b'0','Finance','Finance team permissions'),
+  (2,'2017-06-16 13:02:12','2017-06-16 13:02:12',b'0','Security','');
 
 /*!40000 ALTER TABLE `cb_permissionGroup` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1084,28 +1090,6 @@ VALUES
   (3,32),
   (3,27),
   (3,3),
-  (1,14),
-  (1,18),
-  (1,13),
-  (1,10),
-  (1,37),
-  (1,28),
-  (1,24),
-  (1,39),
-  (1,19),
-  (1,2),
-  (1,20),
-  (1,42),
-  (1,25),
-  (1,41),
-  (1,31),
-  (1,5),
-  (1,40),
-  (1,23),
-  (1,16),
-  (1,43),
-  (1,6),
-  (1,27),
   (2,14),
   (2,18),
   (2,13),
@@ -1117,6 +1101,7 @@ VALUES
   (2,39),
   (2,19),
   (2,2),
+  (2,45),
   (2,20),
   (2,42),
   (2,25),
@@ -1147,7 +1132,30 @@ VALUES
   (2,32),
   (2,27),
   (2,3),
-  (2,45);
+  (2,46),
+  (1,14),
+  (1,18),
+  (1,13),
+  (1,10),
+  (1,37),
+  (1,28),
+  (1,24),
+  (1,39),
+  (1,19),
+  (1,2),
+  (1,20),
+  (1,42),
+  (1,25),
+  (1,41),
+  (1,31),
+  (1,5),
+  (1,40),
+  (1,16),
+  (1,43),
+  (1,6),
+  (1,23),
+  (1,27),
+  (1,46);
 
 /*!40000 ALTER TABLE `cb_rolePermissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1440,14 +1448,14 @@ VALUES
   (31,9,190,'2016-05-03 16:23:26','2016-12-02 19:42:07',b'0'),
   (32,2,191,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (33,4,189,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (35,83,147,'2016-05-03 16:23:26','2017-06-13 14:29:53',b'0'),
+  (35,90,147,'2016-05-03 16:23:26','2017-06-21 17:59:23',b'0'),
   (38,3,162,'2016-05-03 16:23:26','2016-12-02 19:42:05',b'0'),
   (39,1,160,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (43,3,207,'2016-05-18 11:35:32','2016-05-18 11:35:32',b'0'),
   (44,3,213,'2016-05-18 11:35:32','2016-05-18 11:35:32',b'0'),
   (45,1,192,'2016-05-18 11:48:04','2016-05-18 11:48:04',b'0'),
   (46,9,141,'2016-08-05 11:41:28','2016-08-05 11:52:22',b'0'),
-  (47,26,142,'2016-11-28 14:56:53','2016-11-28 15:46:46',b'0');
+  (47,29,142,'2016-11-28 14:56:53','2017-06-20 11:37:12',b'0');
 
 /*!40000 ALTER TABLE `cb_stats` ENABLE KEYS */;
 UNLOCK TABLES;
