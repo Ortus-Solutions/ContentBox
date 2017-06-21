@@ -13,6 +13,6 @@
         }
     },
     "JVM":{
-        "heapSize":"512"
+        "heapSize":"768"
     }
 }

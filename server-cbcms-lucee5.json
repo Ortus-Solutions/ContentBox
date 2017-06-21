@@ -5,7 +5,7 @@
     },
     "name":"cbcms-lucee5",
     "JVM":{
-        "heapSize":"512"
+        "heapSize":"768"
     },
     "web":{
         "rewrites":{
