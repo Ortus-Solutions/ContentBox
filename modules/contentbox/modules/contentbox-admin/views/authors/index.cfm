@@ -59,6 +59,16 @@
 														<i class="fa fa-download"></i> Export All as XML
 													</a>
 												</li>
+
+												<li>
+													<a 	href="#event.buildLink( linkto=prc.xehGlobalPasswordReset )#"
+														class="confirmIt" 
+														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
+														title="Users will be prompted to change their passwords upon login"
+													>
+														<i class="fa fa-lock"></i> Reset All Passwords
+													</a>
+												</li>
 											</cfif>
 
 											<li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>

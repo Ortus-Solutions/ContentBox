@@ -49,11 +49,12 @@ component extends="baseHandler"{
 		prc.tabUsers_manage = true;
 
 		// exit handlers
-		prc.xehAuthorTable	 	= "#prc.cbAdminEntryPoint#.authors.indexTable";
-		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.authors.importAll";
-		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.authors.exportAll";
-		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
-		prc.xehAuthorsearch 	= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorTable	 		= "#prc.cbAdminEntryPoint#.authors.indexTable";
+		prc.xehImportAll			= "#prc.cbAdminEntryPoint#.authors.importAll";
+		prc.xehExportAll 			= "#prc.cbAdminEntryPoint#.authors.exportAll";
+		prc.xehAuthorRemove 		= "#prc.cbAdminEntryPoint#.authors.remove";
+		prc.xehAuthorsearch 		= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehGlobalPasswordReset 	= "#prc.cbAdminEntryPoint#.authors.doGlobalPasswordReset";
 
 		// Get Roles
 		prc.aRoles 				= roleService.getAll( sortOrder="role" );
@@ -61,6 +62,31 @@ component extends="baseHandler"{
 		
 		// View
 		event.setView( "authors/index" );
+	}
+
+	/**
+	* Issue a global password reset for all users in the system.
+	*/
+	function doGlobalPasswordReset( event, rc, prc ){
+		// announce event
+		announceInterception( "cbadmin_onGlobalPasswordReset" );
+		// Get All Authors and reset the heck out of all of them.
+		var allAuthors = authorService.getAll();
+		
+		for( var thisAuthor in allAuthors ){
+			// Issue a password reset for a user
+			thisAuthor.setIsPasswordReset( true );
+			securityService.sendPasswordReminder( thisAuthor );
+			// announce individual event
+			announceInterception( "cbadmin_onPasswordReset", { author = thisAuthor } );
+		}
+
+		// Bulk Save
+		authorService.saveAll( allAuthors );
+		
+		// relocate
+		cbMessagebox.info( "Global password reset issued!" );
+		setNextEvent( prc.xehAuthors );
 	}
 
 	/**
