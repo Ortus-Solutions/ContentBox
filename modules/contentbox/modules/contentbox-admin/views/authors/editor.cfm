@@ -1,24 +1,16 @@
 ﻿<cfoutput>
-
-<div class="row">
-    <div class="col-md-12">
-        <h1 class="h1">
-        	<i class="fa fa-user fa-lg"></i>
-			<cfif prc.author.isLoaded()>Editing #prc.author.getName()#<cfelse>Create Author</cfif>
-        </h1>
-    </div>
-</div>
-
 <div class="row">
     <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>" id="main-content-slot">
     	
-    	#getModel( "messagebox@cbMessagebox" ).renderIt()#
     	
     	<div class="panel panel-default">
            
             <div class="panel-heading">
 
-                <h3 class="panel-title">&nbsp;</h3>
+                <h3 class="panel-title">
+                	#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="30" )#
+					<cfif prc.author.isLoaded()>#prc.author.getName()#<cfelse>Create Author</cfif>
+                </h3>
 
                 <div class="actions">
                    
@@ -41,6 +33,10 @@
             </div>
 
             <div class="panel-body">
+            	
+            	<!--- Messageboxes --->
+            	#getModel( "messagebox@cbMessagebox" ).renderIt()#
+
             	<!--- Vertical Nav --->
                 <div class="tab-wrapper tab-left tab-primary">
 
@@ -325,14 +321,29 @@
 
 			<div class="panel-body">
 				
-				<div class="text-center" id="author_actions">
+				<div class="text-center margin10" id="author_actions">
 					<div class="btn-group" role="group" aria-label="...">
 						<!--- <button type="button" class="btn btn-default">1</button> --->
 
 						<!--- Export But --->
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <i class="fa fa-gears"></i> Actions
+							  <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
+										title="Issue a password reset for the user upon next login.">
+										<i class="fa fa-lock"></i> Reset Password
+									</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="btn-group" role="group">
+							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							  <i class="fa fa-download"></i> Export
 							  <span class="caret"></span>
 							</button>
@@ -353,14 +364,6 @@
 					</div>
 				</div>
 
-				<div class="pull-left margin10">
-					#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="40" )#
-				</div>
-
-				<div class="margin10">
-					<a title="Email Me!" href="mailto:#prc.author.getEmail()#">#prc.author.getName()#</a>
-				</div>
-				
 				<!--- Persisted Info --->
 				<table class="table table-condensed table-hover table-striped" width="100%">
 					<tr>
@@ -421,10 +424,19 @@
 				</table>
 				
 				<p></p>
+
+				<!--- Password Reset --->
+				<cfif prc.author.getIsPasswordReset()>
+					<div class="alert alert-warning">
+						<i class="fa fa-exclamation-triangle fa-lg"></i>
+						This user has been marked for password reset upon login.
+					</div>
+				</cfif>
+
 				
 				<!---Gravatar info --->
 				<cfif prc.cbSettings.cb_gravatar_display>
-				<div class="bg-helper bg-info clearfix">
+				<div class="well well-sm">
 					<i class="fa fa-info-circle fa-lg"></i>
 					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncodedFormat( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
 					and follow the on-screen instructions to add a Gravatar for #prc.author.getEmail()#

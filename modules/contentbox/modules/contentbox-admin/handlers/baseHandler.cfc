@@ -10,8 +10,8 @@
 component extends="coldbox.system.EventHandler"{
 
 	// Global Used DI
-	property name="settingService"	inject="id:settingService@cb";
-	property name="cbMessagebox" 	inject="id:messagebox@cbmessagebox";
+	property name="settingService"	inject="settingService@cb";
+	property name="cbMessagebox" 	inject="messagebox@cbmessagebox";
 
 	// Pseudo "constants" used in API Response/Method parsing
 	property name="METHODS";
@@ -96,8 +96,7 @@ component extends="coldbox.system.EventHandler"{
 			
 			// Development additions
 			if( getSetting( "environment" ) eq "development" ){
-				prc.response.addMessage( "Detail: #e.detail#" )
-					.addMessage( "StackTrace: #e.stacktrace#" );
+				rethrow;
 			}
 		}
 		
@@ -119,7 +118,7 @@ component extends="coldbox.system.EventHandler"{
 		 
 		// Get response data
 		var responseData = prc.response.getDataPacket();
-		
+
 		// If we have an error flag, render our messages and omit any marshalled data
 		if( prc.response.getError() ){
 			responseData = prc.response.getDataPacket( reset=true );
@@ -156,8 +155,12 @@ component extends="coldbox.system.EventHandler"{
 	function onError( event, rc, prc, faultAction, exception, eventArguments ){
 		// Log Locally
 		log.error( "Error in base handler (#arguments.faultAction#): #arguments.exception.message# #arguments.exception.detail#", arguments.exception );
+		
 		// Verify response exists, else create one
-		if( !structKeyExists( prc, "response" ) ){ prc.response = getModel( "Response" ); }
+		if( !structKeyExists( prc, "response" ) ){ 
+			prc.response = getModel( "Response@cb" ); 
+		}
+		
 		// Setup General Error Response
 		prc.response
 			.setError( true )
@@ -166,21 +169,19 @@ component extends="coldbox.system.EventHandler"{
 			.setStatusText( "General application error" );
 		
 		// Development additions
-		if( getSetting( "environment" ) eq "development" ){
-			prc.response.addMessage( "Detail: #arguments.exception.detail#" )
-				.addMessage( "StackTrace: #arguments.exception.stacktrace#" );
+		if( getSetting( "environment" ) neq "development" ){
+			// Render Error Out
+			event.renderData( 
+				type		= prc.response.getFormat(),
+				data 		= prc.response.getDataPacket( reset=true ),
+				contentType = prc.response.getContentType(),
+				statusCode 	= prc.response.getStatusCode(),
+				statusText 	= prc.response.getStatusText(),
+				location 	= prc.response.getLocation(),
+				isBinary 	= prc.response.getBinary()
+			);
 		}
 		
-		// Render Error Out
-		event.renderData( 
-			type		= prc.response.getFormat(),
-			data 		= prc.response.getDataPacket( reset=true ),
-			contentType = prc.response.getContentType(),
-			statusCode 	= prc.response.getStatusCode(),
-			statusText 	= prc.response.getStatusText(),
-			location 	= prc.response.getLocation(),
-			isBinary 	= prc.response.getBinary()
-		);
 	}
 
 	/**

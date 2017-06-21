@@ -71,19 +71,34 @@ component{
 		// announce event
 		announceInterception( "cbadmin_preLogin" );
 
-		// authenticate users
+		// VALID LOGINS
 		if( securityService.authenticate( rc.username, rc.password ) ){
 			// set remember me
 			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
+			var oAuthor = securityService.getAuthorSession();
+			
 			// announce event
-			announceInterception( "cbadmin_onLogin" );
+			announceInterception( "cbadmin_onLogin", { author = oAuthor } );
+			
+			// Verify if user needs to reset their password?
+			if( oAuthor.getIsPasswordReset() ){
+				var token = securityService.generateResetToken( oAuthor );
+				messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
+				setNextEvent(
+					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
+					queryString = "token=#token#"
+				);
+			}
+			
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
 				setNextEvent( uri=rc._securedURL );
 			} else {
 				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
-		} else {
+		} 
+		// INVALID LOGINS
+		else {
 			// announce event
 			announceInterception( "cbadmin_onBadLogin" );
 			// message and redirect
@@ -166,6 +181,9 @@ component{
 	function verifyReset( event, rc, prc ){
 		event.paramValue( "token", "" );
 
+		// Sanitize
+		rc.token = antiSamy.htmlSanitizer( rc.token );
+
 		// Validate Token
 		var results = securityService.validateResetToken( trim( rc.token ) );
 		if( results.error ){
@@ -189,6 +207,11 @@ component{
 		event.paramValue( "token", "" )
 			.paramValue( "password", "" )
 			.paramValue( "password_confirmation", "" );
+
+		// Sanitize
+		rc.token                 = antiSamy.htmlSanitizer( rc.token );
+		rc.password              = antiSamy.htmlSanitizer( rc.password );
+		rc.password_confirmation = antiSamy.htmlSanitizer( rc.password_confirmation );
 
 		// Validate passwords
 		if( !len( rc.password) || !len( rc.password_confirmation ) ){

@@ -73,6 +73,17 @@ component {
 				directoryRename( contentBoxUIPath , contentBoxPath & "/modules/contentbox-ui" );
 			}
 
+			/****************************** UPDATE SECURITY RULES ******************************/
+			
+			var aRules = securityRuleService.getAll();
+			for( var oRule in aRules ){
+				if( findNoCase( "AUTHOR_ADMIN", oRule.getPermissions() ) ){
+					oRule.setSecureList( "^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset)" );
+					securityRuleService.save( entity=oRule );
+					arguments.log.append( "Updated author security rules" );
+				}
+			}
+
 			arguments.log.append( "Finalized #variables.version# preInstallation patching" );
 		} catch( Any e ) {
 			ORMClearSession();

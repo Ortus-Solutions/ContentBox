@@ -194,13 +194,12 @@ component implements="ISecurityService" singleton{
 	string function encryptString( required string ){
 		return bCrypt.hashPassword( arguments.string );
 	}
-	
+
 	/**
-	* Send password reminder email, this verifies that the email is valid and they must click on the token
-	* link in order to reset their password.
-	* @author The author to send the reminder to
-	*/
-	ISecurityService function sendPasswordReminder( required Author author ){
+	 * This function will store a reset token in hash for the user to pickup on password resets
+	 * @author The author to create the reset token for.
+	 */
+	string function generateResetToken( required Author author ){
 		// Store Security Token For X minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
 		cache.set( 
@@ -209,6 +208,17 @@ component implements="ISecurityService" singleton{
 			RESET_TOKEN_TIMEOUT, 
 			RESET_TOKEN_TIMEOUT 
 		);
+		return token;
+	}
+	
+	/**
+	* Send password reminder email, this verifies that the email is valid and they must click on the token
+	* link in order to reset their password.
+	* @author The author to send the reminder to
+	*/
+	ISecurityService function sendPasswordReminder( required Author author ){
+		// Generate security token
+		var token = generateResetToken( arguments.author );
 		
 		// get settings
 		var settings = settingService.getAllSettings( asStruct=true );
@@ -313,6 +323,7 @@ component implements="ISecurityService" singleton{
 		
 		// set it in the user and save reset password
 		arguments.author.setPassword( arguments.password );
+		arguments.author.setIsPasswordReset( false );
 		authorService.saveAuthor( author=arguments.author, passwordChange=true );
 		
 		// get mail payload

@@ -79,6 +79,14 @@ component 	persistent="true"
 				notnull="false" 
 				length="8000" 
 				default="";
+
+	property 	name="isPasswordReset" 	
+				ormtype="boolean" 
+				sqltype="bit"
+				notnull="true" 
+				default="false" 
+				dbdefault="0"
+				index="idx_passwordReset";
 	
 	/* *********************************************************************
 	**							RELATIONSHIPS									
@@ -200,6 +208,7 @@ component 	persistent="true"
 		variables.loggedIn 			= false;
 		variables.isActive 			= true;
 		variables.permissionGroups 	= [];
+		variables.isPasswordReset 	= false;
 		
 		// Setup empty preferences
 		setPreferences( {} );

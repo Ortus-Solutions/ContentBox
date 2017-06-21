@@ -74,7 +74,7 @@
 									<i class="fa fa-edit fa-lg"></i> Edit
 								</a>
 							</li>
-					
+
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
@@ -85,6 +85,12 @@
 							<li>
 								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
 									<i class="fa fa-download"></i> Export as XML
+								</a>
+							</li>
+							<li>
+								<a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
+									title="Issue a password reset for the user upon next login.">
+									<i class="fa fa-lock"></i> Reset Password
 								</a>
 							</li>
 							</cfif>

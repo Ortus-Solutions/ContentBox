@@ -9,6 +9,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="authorService"			inject="id:authorService@cb";
+	property name="securityService"			inject="id:securityService@cb";
 	property name="entryService"			inject="id:entryService@cb";
 	property name="permissionService"		inject="id:permissionService@cb";
 	property name="permissionGroupService"	inject="id:permissionGroupService@cb";
@@ -21,7 +22,7 @@ component extends="baseHandler"{
 	*/
 	function preHandler( event, rc, prc, action, eventArguments){
 		// Specific admin validation actions
-		if( listFindNoCase( "save,editor,savePreferences,passwordChange,saveRawPreferences", arguments.action ) ){
+		if( listFindNoCase( "save,editor,savePreferences,passwordChange,doPasswordReset,saveRawPreferences", arguments.action ) ){
 			// Get incoming author to verify credentials
 			arguments.event.paramValue( "authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
@@ -84,6 +85,7 @@ component extends="baseHandler"{
 		// exit Handlers
 		prc.xehAuthorRemove 	= "#prc.cbAdminEntryPoint#.authors.remove";
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.authors.export";
+		prc.xehPasswordReset	= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
 		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){ 
@@ -142,6 +144,34 @@ component extends="baseHandler"{
 	}
 
 	/**
+	* Issue a password reset for the user
+	*/
+	function doPasswordReset( event, rc, prc ){
+		event.paramValue( "editing", false );
+
+		// get new or persisted author
+		var oAuthor  = authorService.get( event.getValue( "authorID", 0 ) );
+		// viewlets only if editing a user
+		if( oAuthor.isLoaded() ){
+			// Issue a password reset for a user
+			oAuthor.setIsPasswordReset( true );
+			authorService.saveAuthor( oAuthor );
+			securityService.sendPasswordReminder( oAuthor );
+			// announce event
+			announceInterception( "cbadmin_onPasswordReset", { author = oAuthor } );
+			cbMessagebox.info( "Author marked for password reset upon login and email notification sent!" );
+		} else {
+			cbMessagebox.error( "Invalid Author Sent!" );
+		}
+
+		// relocate
+		setNextEvent( 
+			event		= ( rc.editing ? prc.xehAuthorEditor : prc.xehAuthors ),
+			queryString	= ( rc.editing ? "authorID=#oAuthor.getAuthorID()#" : "" )
+		);
+	}
+
+	/**
 	* Author editor panel
 	* @return html
 	*/
@@ -158,6 +188,7 @@ component extends="baseHandler"{
 		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
 		prc.xehExport 				= "#prc.cbAdminEntryPoint#.authors.export";
+		prc.xehPasswordReset		= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
