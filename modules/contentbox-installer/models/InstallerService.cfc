@@ -181,7 +181,8 @@ component accessors="true"{
 			"GLOBAL_SEARCH" 				= "Ability to do global searches in the ContentBox Admin",
 			"EDITORS_LINKED_CONTENT" 		= "Ability to view the linked content panel",
 			"MENUS_ADMIN" 					= "Ability to manage the menu builder",
-			"EDITORS_FEATURED_IMAGE"		= "Ability to view the featured image panel"
+			"EDITORS_FEATURED_IMAGE"		= "Ability to view the featured image panel",
+			"EMAIL_TEMPLATE_ADMIN"			= "Ability to admin and preview email templates"
 		};
 
 		var allperms = [];
@@ -228,6 +229,7 @@ component accessors="true"{
 		oRole.addPermission( permissions[ "GLOBAL_SEARCH"] );
 		oRole.addPermission( permissions[ "MENUS_ADMIN"] );
 		oRole.addPermission( permissions[ "EDITORS_FEATURED_IMAGE"] );
+		oRole.addPermission( permissions[ "EMAIL_TEMPLATE_ADMIN"] );
 		roleService.save( entity=oRole, transactional=false );
 
 		// Create Admin

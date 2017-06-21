@@ -144,41 +144,14 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
+
                                                         <cfoutput>#renderView( args=args )#</cfoutput>
-                                                        <!---FOOTER--->
-                                                        <table border="0" cellpadding="0" cellspacing="0" class="kmSplitBlock" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;margin-top:10px;">
-                                                            <tbody class="kmSplitBlockOuter">
-                                                                <tr>
-                                                                    <td class="kmSplitBlockInner" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; padding-top:9px;padding-bottom:9px;background-color:#333333;padding-left:18px;padding-right:10px;">
-                                                                        <table align="left" border="0" cellpadding="0" cellspacing="0" class="kmSplitContentOuter" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                                                            <tbody>
-                                                                                <tr>
-                                                                                    <td class="kmSplitContentInner" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                                                                        <table align="left" border="0" cellpadding="0" cellspacing="0" class="kmSplitContentLeftContentContainer" width="268" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td class="kmTextContent" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; color: #505050; font-family: Helvetica; font-size: 14px; line-height: 150%; text-align: left">
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                        <table align="right" border="0" cellpadding="0" cellspacing="0" class="kmSplitContentRightContentContainer" width="268" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
-                                                                                            <tbody>
-                                                                                                <tr>
-                                                                                                    <td class="kmImageContent" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; padding: 0; padding-top:0px;padding-bottom:0;padding-left:9px;padding-right:9px;">
-                                                                                                        <img align="right" alt="" class="kmImage" src="contentbox-horizontal.png" width="177" height="25" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; max-width: 100%; padding-bottom: 0; display: inline; vertical-align: bottom" />
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                            
+                                                        <!-- Footer -->
+                                                        <div style="text-align: center; border-top: 1px dotted gray; margin: 20px; padding-top: 20px">
+                                                            <img alt="contentbox" class="kmImage" src="contentbox-horizontal.png" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; max-width: 100%; padding-bottom: 0; display: inline; vertical-align: bottom" />
+                                                        </div>
+                                                       
                                                     </td>
                                                 </tr>
                                             </tbody>

@@ -46,7 +46,11 @@ component {
 				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd", 
 				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent",
 				// Login Form
-				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm"
+				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm",
+				// Security events
+				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout",
+				"cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder",
+				"cbadmin_onPasswordReset", "cbadmin_onInvalidPasswordReset"
 			]
 		};
 		

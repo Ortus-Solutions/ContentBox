@@ -8,8 +8,7 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI
-	property name="settingService"		inject="id:settingService@cb";
-	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
+	property name="settingService"	inject="id:settingService@cb";
 
 	/**
 	* Configure
@@ -53,7 +52,7 @@ component extends="coldbox.system.Interceptor"{
 	*/
 	private function limiter( count, duration, event, settings ) {
 		// Get real IP address of requester
-		var realIP = loginTrackerService.getRealIP();
+		var realIP = settingService.getRealIP();
 		
 		// If first time visit, create record.
 		if( !structKeyExists( variables.limitData, realIP ) ){

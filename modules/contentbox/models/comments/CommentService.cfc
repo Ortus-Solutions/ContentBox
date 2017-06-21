@@ -117,7 +117,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			var results = { moderated=true, messages=[] };
 
 			// Log the IP Address
-			inComment.setAuthorIP( loginTrackerService.getRealIP() );
+			inComment.setAuthorIP( settingService.getRealIP() );
 			// Default moderation unless user is logged in
 			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 

@@ -8,17 +8,20 @@
 component implements="ISecurityService" singleton{
 
 	// Dependencies
-	property name="authorService" 	inject="id:authorService@cb";
-	property name="settingService"	inject="id:settingService@cb";
-	property name="sessionStorage" 	inject="sessionStorage@cbStorages";
-	property name="cookieStorage" 	inject="cookieStorage@cbStorages";
-	property name="mailService"		inject="mailService@cbmailservices";
-	property name="renderer"		inject="provider:ColdBoxRenderer";
-	property name="CBHelper"		inject="id:CBHelper@cb";
-	property name="log"				inject="logbox:logger:{this}";
-	property name="cache"			inject="cachebox:default";
-	property name="bCrypt"			inject="BCrypt@BCrypt";
+	property name="authorService" 		inject="id:authorService@cb";
+	property name="settingService"		inject="id:settingService@cb";
+	property name="sessionStorage" 		inject="sessionStorage@cbStorages";
+	property name="cookieStorage" 		inject="cookieStorage@cbStorages";
+	property name="mailService"			inject="mailService@cbmailservices";
+	property name="renderer"			inject="provider:ColdBoxRenderer";
+	property name="CBHelper"			inject="id:CBHelper@cb";
+	property name="log"					inject="logbox:logger:{this}";
+	property name="cache"				inject="cachebox:default";
+	property name="bCrypt"				inject="BCrypt@BCrypt";
 	
+	// Static Variables
+	RESET_TOKEN_TIMEOUT = 30;
+
 	/**
 	* Constructor
 	*/
@@ -193,13 +196,19 @@ component implements="ISecurityService" singleton{
 	}
 	
 	/**
-	* Send password reminder email
+	* Send password reminder email, this verifies that the email is valid and they must click on the token
+	* link in order to reset their password.
 	* @author The author to send the reminder to
 	*/
-	ISecurityService function sendPasswordReminder(required Author author){
-		// Store Security Token For 30 minutes
+	ISecurityService function sendPasswordReminder( required Author author ){
+		// Store Security Token For X minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
-		cache.set( "reset-token-#cgi.http_host#-#token#", arguments.author.getAuthorID(), 30, 30 );
+		cache.set( 
+			"reset-token-#cgi.http_host#-#token#", 
+			arguments.author.getAuthorID(), 
+			RESET_TOKEN_TIMEOUT, 
+			RESET_TOKEN_TIMEOUT 
+		);
 		
 		// get settings
 		var settings = settingService.getAllSettings( asStruct=true );
@@ -207,8 +216,12 @@ component implements="ISecurityService" singleton{
 		// get mail payload
 		var bodyTokens = {
 			name 		= arguments.author.getName(),
+			ip 			= settingService.getRealIP(),
+			linkTimeout = RESET_TOKEN_TIMEOUT,
+			siteName 	= settings.cb_site_name,
 			linkToken 	= CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#"
 		};
+
 		var mail = mailservice.newMail(
 			to			= arguments.author.getEmail(),
 			from		= settings.cb_site_outgoingEmail,
@@ -222,7 +235,7 @@ component implements="ISecurityService" singleton{
 			useTLS		= settings.cb_site_mail_tls,
 			useSSL		= settings.cb_site_mail_ssl
 		);
-		//body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_verification" )									   
+
 		mail.setBody( 
 			renderer.get()
 				.renderLayout( 
@@ -230,52 +243,90 @@ component implements="ISecurityService" singleton{
 					layout 	= "/contentbox/email_templates/layouts/email"
 				)
 		);
+		
 		// send it out
 		mailService.send( mail );
 		
 		return this;
 	}
-	
+
 	/**
-	* Resets a user's password if the passed in token is valid
-	* @token Security token
-	* 
-	* @Returns {error, author}
-	*/
-	struct function resetUserPassword( required token ){
+	 * This function validates an incoming pw reset token to figure out their user.
+	 * The token is not removed just yet. It will be removed once the password has been reset.
+	 * @token The security token
+	 *
+	 * @returns {error, author}
+	 */
+	struct function validateResetToken( required token ){
 		var results = { error = false, author = "" };
 		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
-		if( isNull( authorID ) ){ results.error = true; return results; };
-		
+		if( isNull( authorID ) ){ 
+			results.error = true; 
+			return results; 
+		};
+
 		// Verify the author of the token
 		results.author = authorService.get( authorID );
-		if( isNull( results.author ) ){ results.error = true; return results; };
+		if( isNull( results.author ) ){ 
+			results.error = true; 
+			return results; 
+		};
+
+		return results;
+	}
+	
+	/**
+	* Resets a user's password.
+	* @token 	Security token
+	* @author 	The author you are reseting the password for
+	* @password The password you have chosen
+	* 
+	* @Returns {error:boolean, messages:string}
+	*/
+	struct function resetUserPassword( required token, required Author author, required password ){
+		var results = { error = false, messages = "" };
+		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
+		var authorID = cache.get( cacheKey );
+
+		// If token not found, don't reset and return back
+		if( isNull( authorID ) ){ 
+			results.error 		= true; 
+			results.messages 	= "Token does not exist or has expired";
+			return results; 
+		};
 		
-		// Remove token now that we have the data.
+		// Verify the author of the token
+		if( arguments.author.getAuthorID() neq authorID ){ 
+			results.error 		= true; 
+			results.messages 	= "Author reset token mismatch"; 
+			return results; 
+		};
+		
+		// Remove token now that we have the data and it has been validated
 		cache.clear( cacheKey );
 		
-		// generate temporary password
-		var genPassword = hash( results.author.getEmail() & results.author.getAuthorID() & now() );
 		// get settings
 		var settings = settingService.getAllSettings( asStruct=true );
 		
 		// set it in the user and save reset password
-		results.author.setPassword( genPassword );
-		authorService.saveAuthor( author=results.author, passwordChange=true );
+		arguments.author.setPassword( arguments.password );
+		authorService.saveAuthor( author=arguments.author, passwordChange=true );
 		
 		// get mail payload
 		var bodyTokens = {
-			genPassword	= genPassword,
-			name		= results.author.getName(),
-			linkLogin 	= CBHelper.linkAdminLogin( ssl=settings.cb_admin_ssl )
+			name		= arguments.author.getName(),
+			ip 			= settingService.getRealIP(),
+			linkLogin 	= CBHelper.linkAdminLogin( ssl=settings.cb_admin_ssl ),
+			siteName 	= settings.cb_site_name,
+			adminEmail 	= settings.cb_site_email
 		};
 		var mail = mailservice.newMail(
-			to			= results.author.getEmail(),
+			to			= arguments.author.getEmail(),
 			from		= settings.cb_site_outgoingEmail,
-			subject		= "#settings.cb_site_name# Password Reset Issued",
+			subject		= "#settings.cb_site_name# Password Reset Completed",
 			bodyTokens	= bodyTokens,
 			type		= "html",
 			server		= settings.cb_site_mail_server,
@@ -289,7 +340,7 @@ component implements="ISecurityService" singleton{
 		mail.setBody( 
 			renderer.get()
 				.renderLayout( 
-					view 	= "/contentbox/email_templates/password_reminder", 
+					view 	= "/contentbox/email_templates/password_reset", 
 					layout 	= "/contentbox/email_templates/layouts/email" 
 				) 
 		);

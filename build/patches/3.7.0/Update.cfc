@@ -172,7 +172,8 @@ component {
 		var oRole = roleService.findWhere( { role = "Administrator" } );
 		// Create new Permissions
 		var perms = [
-			"MAINTENANCE_MODE_VIEWER"
+			"MAINTENANCE_MODE_VIEWER",
+			"EMAIL_TEMPLATE_ADMIN"
 		];
 
 		// iterate and add
@@ -197,7 +198,8 @@ component {
 
 		// Setup Permissions
 		var perms = [
-			"MAINTENANCE_MODE_VIEWER"
+			"MAINTENANCE_MODE_VIEWER",
+			"EMAIL_TEMPLATE_ADMIN"
 		];
 
 		// iterate and add
@@ -220,7 +222,8 @@ component {
 	private function updatePermissions(){
 		// Create new Permissions
 		var perms = {
-			"MAINTENANCE_MODE_VIEWER" = "Ability to view the Website front end, even while the site is in maintenance mode."
+			"MAINTENANCE_MODE_VIEWER" 		= "Ability to view the Website front end, even while the site is in maintenance mode.",
+			"EMAIL_TEMPLATE_ADMIN"			= "Ability to admin and preview email templates"
 		};
 
 		for( var key in perms ){

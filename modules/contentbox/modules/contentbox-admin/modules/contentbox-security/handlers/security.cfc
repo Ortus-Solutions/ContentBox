@@ -149,7 +149,7 @@ component{
 			// announce event
 			announceInterception( "cbadmin_onPasswordReminder", { author = oAuthor } );
 			// messagebox
-			messagebox.info( cb.r( resource='messages.reminder_sent@security', values="15" ) );
+			messagebox.info( cb.r( resource='messages.reminder_sent@security', values="30" ) );
 		} else {
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
@@ -164,37 +164,77 @@ component{
 	* Verify the reset
 	*/
 	function verifyReset( event, rc, prc ){
-		arguments.event.paramValue( "token", "" );
+		event.paramValue( "token", "" );
 
 		// Validate Token
-		var isTokenValid = securityService.validateResetToken( trim( rc.token ) );
-		if( !isTokenValid ){
+		var results = securityService.validateResetToken( trim( rc.token ) );
+		if( results.error ){
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
-			// messagebox
+			// Exception
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
-		} else {
-			
+		} 
+
+		// Present rest password page.
+		prc.xehPasswordChange = "#prc.cbAdminEntryPoint#.security.doPasswordChange";
+		event.setView( view="security/verifyReset" );
+	}
+
+	/**
+	* Reset a user password. Must have a valid user token setup already
+	*/
+	function doPasswordChange( event, rc, prc ){
+		event.paramValue( "token", "" )
+			.paramValue( "password", "" )
+			.paramValue( "password_confirmation", "" );
+
+		// Validate passwords
+		if( !len( rc.password) || !len( rc.password_confirmation ) ){
+			// Exception
+			messagebox.error( cb.r( "messages.invalid_password@security" ) );
+			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			return;
 		}
 
+		// Validate confirmed password
+		if( compare( rc.password, rc.password_confirmation ) neq 0 ){
+			messagebox.error( cb.r( "messages.password_mismatch@security" ) );
+			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			return;
+		}
 
-		// Validate token
-		var results = securityService.resetUserPassword( trim( rc.token ) );
-		if( !results.error ){
-			// announce event
-			announceInterception( "cbadmin_onPasswordReset", { author = results.author } );
-			// Messagebox
-			messagebox.info( cb.r( "messages.password_reset@security" ) );
-		} else {
+		// Validate Token
+		var results = securityService.validateResetToken( trim( rc.token ) );
+		if( results.error ){
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
-			// messagebox
+			// Exception
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
-		}
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			return;
+		} 
 
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+		// Token is valid, let's reset this sucker.
+		var resetResults = securityService.resetUserPassword(
+			token 		= rc.token,
+			author 		= results.author,
+			password 	= rc.password
+		);
+
+		if( resetResults.error ){
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			messagebox.error( resetResults.messages );	
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			return;
+		}
+		
+		// announce event and relcoate to login with new password
+		announceInterception( "cbadmin_onPasswordReset", { author = results.author  } );
+		messagebox.info( cb.r( "messages.password_reset@security" ) );
+		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 	}
 
 }

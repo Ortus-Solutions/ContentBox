@@ -36,6 +36,13 @@ interface{
 	* Send password reminder for an author
 	*/
 	ISecurityService function sendPasswordReminder( required Author author );
+
+	/**
+	* Resets a user's password.
+	* 
+	* @returns {error:boolean, messages:string}
+	*/
+	struct function resetUserPassword( required token, required Author author, required password );
 	
 	/**
 	* Check to authorize a user to view a content entry or page
