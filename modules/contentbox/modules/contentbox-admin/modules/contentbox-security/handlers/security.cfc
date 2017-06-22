@@ -239,6 +239,16 @@ component{
 			return;
 		} 
 
+		// Validate you are not using the same password if persisted already
+		if( authorService.isSameHash( rc.password, results.author.getPassword() ) ){
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			// Exception
+			messagebox.error( cb.r( "messages.password_used@security" ) );
+			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			return;
+		}
+
 		// Token is valid, let's reset this sucker.
 		var resetResults = securityService.resetUserPassword(
 			token 		= rc.token,

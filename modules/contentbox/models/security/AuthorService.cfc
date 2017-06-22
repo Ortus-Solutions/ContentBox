@@ -36,6 +36,13 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		// send for deletion
 		delete( entity=arguments.author, transactional=arguments.transactional );
 	}
+
+	/**
+	* This function will encrypt an incoming target string using bcrypt and compare it with another bcrypt string
+	*/
+	boolean function isSameHash( required in, required target ){
+		return variables.bcrypt.checkPassword( arguments.in, arguments.target );
+	}
 	
 	/**
 	* Save an author with extra pizazz!
