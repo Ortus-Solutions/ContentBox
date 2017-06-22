@@ -69,7 +69,7 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** FORCE PASSWORD RESET *********************************************/
 		
 		if( 
-		 	!findNoCase( "security.verifyReset", event.getCurrentEvent() )
+		 	!findNoCase( "contentbox-security:security", event.getCurrentEvent() )
 			&&
 			prc.oCurrentAuthor.getIsPasswordReset()
 		){
