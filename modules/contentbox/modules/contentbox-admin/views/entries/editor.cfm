@@ -208,74 +208,13 @@
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="entry-sidebar">
                         
-                        <!---Begin Page Info--->
+                        <!---Begin Info--->
                         <cfif prc.entry.isLoaded()> 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
-                                        <i class="fa fa-info-circle fa-lg"></i> Entry Info
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="pageinfo" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <!--- Persisted Info --->
-                                    <table class="table table-hover table-condensed table-striped">
-                                        <tr>
-                                            <th class="col-md-4">Created By:</th>
-                                            <td class="col-md-6">
-                                                <a href="mailto:#prc.entry.getCreatorEmail()#">#prc.entry.getCreatorName()#</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Created On:</th>
-                                            <td>
-                                                #prc.entry.getDisplayCreatedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Published On:</th>
-                                            <td>
-                                                #prc.entry.getDisplayPublishedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Version:</th>
-                                            <td>
-                                                #prc.entry.getActiveContent().getVersion()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Last Edit By:</th>
-                                            <td class="col-md-6">
-                                                <a href="mailto:#prc.entry.getAuthorEmail()#">#prc.entry.getAuthorName()#</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Last Edit On:</th>
-                                            <td class="col-md-6">
-                                                #prc.entry.getActiveContent().getDisplayCreatedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Views:</th>
-                                            <td>
-                                                #prc.entry.getNumberOfHits()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Comments:</th>
-                                            <td>
-                                                #prc.entry.getNumberOfComments()#
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                            #renderView(
+                                view    = "_tags/content/infotable",
+                                args    = { content = prc.entry }
+                            )#
                         </cfif>
-                        <!---End Page Info--->
 
                         <!---Begin Related Content--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
