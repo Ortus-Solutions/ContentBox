@@ -141,6 +141,20 @@
 							</select>
 						</div>
 
+						<!--- Sort By --->
+						<div class="form-group">
+							<label for="sortOrder" class="control-label">Sort By: </label>
+							<select name="sortOrder" id="sortOrder" class="form-control input-sm">
+								<option value="name_asc" 			>Name</option>
+								<option value="lastLogin_desc" 		>Recent Sign in</option>
+								<option value="lastLogin_asc"  		>Oldest sign in</option>
+								<option value="createdDate_desc" 	>Last created</option>
+								<option value="createdDate_asc"   	>Oldest Created</option>
+								<option value="modifiedDate_desc" 	>Last updated</option>
+								<option value="modifiedDate_asc"  	>Oldest updated</option>
+							</select>
+						</div>
+
 						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply Filters</a>
 						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
 					#html.endForm()#

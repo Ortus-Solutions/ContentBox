@@ -101,7 +101,8 @@ component extends="baseHandler"{
 			.paramValue( "isFiltering", false, true )
 			.paramValue( "fStatus", "any" )
 			.paramValue( "fRole", "any" )
-			.paramValue( "fGroups", "any" );
+			.paramValue( "fGroups", "any" )
+			.paramValue( "sortOrder", "lastname_asc" );
 
 		// prepare paging object
 		prc.oPaging 	= variables.paging;
@@ -117,13 +118,25 @@ component extends="baseHandler"{
 		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){ 
 			prc.isFiltering = true;
 		}
-		
+
+		// Determine Sort Order
+		var sortOrder = "lastName";
+		switch( rc.sortOrder ){
+			case "lastname_asc" 		: { sortOrder = "lastName asc";      break; }
+			case "lastLogin_desc"    	: { sortOrder = "lastLogin desc";    break; }
+			case "lastLogin_asc"     	: { sortOrder = "lastLogin asc";     break; }
+			case "createdDate_desc"  	: { sortOrder = "createdDate desc";  break; }
+			case "createdDate_asc"   	: { sortOrder = "createdDate asc";   break; }
+			case "modifiedDate_desc" 	: { sortOrder = "modifiedDate desc"; break; }
+			case "modifiedDate_asc"  	: { sortOrder = "modifiedDate asc";  break; }
+		}
+
 		// Get all authors or search
 		var results = authorService.search( 
-			searchTerm= rc.searchAuthors,
+			searchTerm 			= rc.searchAuthors,
 			offset    			= ( rc.showAll ? 0 : prc.paging.startRow-1 ),
 			max       			= ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-			sortOrder 			= "lastName asc",
+			sortOrder 			= sortOrder,
 			isActive  			= rc.fStatus,
 			role      			= rc.fRole,
 			permissionGroups 	= rc.fGroups
