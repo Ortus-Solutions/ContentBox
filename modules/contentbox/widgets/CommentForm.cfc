@@ -33,17 +33,24 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// captcha?
 		if( !oCurrentAuthor.isLoggedIn() AND cbSettings.cb_comments_captcha ){
 			saveContent variable="captcha"{
-				writeOutput( "
-					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
-					#html.textField(
-						name 		= "captchacode",
-						label 		= "Enter the security code shown above:",
-						required 	= "required",
-						class 		= "form-control",
-						groupWrapper= "div class=form-group",
-						size 		= "50" 
-					)#
-				" );
+				if (cbSettings.cb_comments_captcha_type eq "coldFusion") {
+					writeOutput( "
+						<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
+						#html.textField(
+							name 		= "captchacode",
+							label 		= "Enter the security code shown above:",
+							required 	= "required",
+							class 		= "form-control",
+							groupWrapper= "div class=form-group",
+							size 		= "50" 
+						)#
+					" );
+				} else {
+					writeOutput( "
+						<script src='https://www.google.com/recaptcha/api.js'></script>
+						<div class='g-recaptcha' data-sitekey='#cbSettings.cb_comments_captcha_public_key#'></div>
+					" );
+				}
 			}
 		}
 

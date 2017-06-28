@@ -349,6 +349,7 @@ component{
 			.paramValue( "authorEmail", "" )
 			.paramValue( "content", "" )
 			.paramValue( "captchacode", "" )
+			.paramValue( "g-recaptcha-response", "" )
 			.paramValue( "subscribe", false );
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
@@ -379,10 +380,14 @@ component{
 			arrayAppend( commentErrors, "Please provide a comment!" ); 
 		}
 
+		if (prc.cbSettings.cb_comments_captcha_type eq "reCAPTCHA") {
+			rc.captchacode = rc["g-recaptcha-response"];
+		}
+
 		// Captcha Validation
 		if( !prc.oCurrentAuthor.isLoggedIn() AND
 			prc.cbSettings.cb_comments_captcha AND NOT 
-			captchaService.validate( rc.captchacode ) 
+			captchaService.validate( rc.captchacode, prc.cbSettings.cb_comments_captcha_type, prc.cbSettings.cb_comments_captcha_secret_key )
 		){
 			ArrayAppend( commentErrors, "Invalid security code. Please try again." );
 		}

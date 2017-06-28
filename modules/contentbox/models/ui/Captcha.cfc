@@ -60,12 +60,31 @@ Updates
 	
 	<cffunction name="validate" access="public" returntype="boolean" output="false" hint="I validate the passed in string against the captcha code">
 		<cfargument name="code" type="string" required="true" />
+		<cfargument name="type" type="string" default="coldFusion" />
+		<cfargument name="reCAPTCHASecretKey" type="string" default="" />
 		
-		<cfif hash(lcase(arguments.code),'SHA') eq getCaptchaCode()>
-			<cfset clearCaptcha() /><!--- delete the captcha struct --->
-			<cfreturn true />
+		<cfif arguments.type eq "coldFusion">
+			<cfif hash(lcase(arguments.code),'SHA') eq getCaptchaCode()>
+				<cfset clearCaptcha() /><!--- delete the captcha struct --->
+				<cfreturn true />
+			<cfelse>
+				<cfset setValidated(false) />
+				<cfreturn isValidated() />
+			</cfif>
 		<cfelse>
-			<cfset setValidated(false) />
+			<cfset var baseURL = "https://www.google.com/recaptcha/api/siteverify">
+			<cfset var requestUrl = baseURL & "?secret=" & arguments.reCAPTCHASecretKey & "&response=" & arguments.code & "&remoteip" & cgi.remote_addr>
+
+			<cfhttp result="apiCall" method="GET" charset="utf-8" url="#requestUrl#" />
+
+			<cfif structKeyExists(apiCall, "filecontent")>
+				<cfset var response = deserializeJSON(apiCall.filecontent)>
+
+				<cfset setValidated(structKeyExists(response, "success") and response.success) />
+			<cfelse>
+				<cfset setValidated(false) />
+			</cfif>
+
 			<cfreturn isValidated() />
 		</cfif>
 	</cffunction>

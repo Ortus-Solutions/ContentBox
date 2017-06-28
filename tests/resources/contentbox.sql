@@ -1310,7 +1310,10 @@ VALUES
 	(172,'cb_theme_default_headerLogo','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
 	(173,'cb_theme_default_hpHeaderBtnText','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
 	(174,'cb_theme_default_hpHeaderImgBg','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-	(175,'cb_theme_default_showSiteSearch','true',b'0','2016-06-14 12:56:47','2016-06-14 12:56:47',b'0');
+	(175,'cb_theme_default_showSiteSearch','true',b'0','2016-06-14 12:56:47','2016-06-14 12:56:47',b'0'),
+	(176,'cb_comments_captcha_type','coldFusion',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
+	(177,'cb_comments_captcha_public_key','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
+	(178,'cb_comments_captcha_secret_key','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0');
 
 /*!40000 ALTER TABLE `cb_setting` ENABLE KEYS */;
 UNLOCK TABLES;

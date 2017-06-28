@@ -14,6 +14,11 @@ $(document).ready(function() {
             cb_comments_moderation_expiration: 'Please enter a vaild integer greater than or equal to 0'
         }
     } );
+
+    // captcha type
+    $( 'input[name=cb_comments_captcha_type]' ).on( 'change', function() {
+        $( '.recaptcha-settings' ).css( 'display', ( $( this ).val() == 'coldFusion' ? 'none' : '' ) );
+    } );
 } );
 </script>
 </cfoutput>

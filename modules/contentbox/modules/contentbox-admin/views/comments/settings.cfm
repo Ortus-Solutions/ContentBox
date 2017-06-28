@@ -97,7 +97,56 @@
 												)#
                                             </div>
                                         </div>
-                                                                    
+
+                                        <!--- Captcha settings --->
+                                        <div class="form-group">
+                                            #html.label(
+                                                field="cb_comments_captcha_type",
+                                                content="Captcha Type:",
+                                                class="control-label"
+                                            )#
+                                            <br/>
+
+                                            #html.radioButton(
+                                                name    = "cb_comments_captcha_type",
+                                                value   = "coldFusion",
+                                                checked = prc.cbSettings.cb_comments_captcha_type eq "coldFusion"
+                                            )#
+                                            <label for="coldFusion" class="inline">&nbsp;ColdFusion</label>
+                                            <br/>
+
+                                            #html.radioButton(
+                                                name    = "cb_comments_captcha_type",
+                                                value   = "reCAPTCHA",
+                                                checked = prc.cbSettings.cb_comments_captcha_type eq "reCAPTCHA"
+                                            )#
+                                            <label for="reCAPTCHA" class="inline">&nbsp;reCAPTCHA</label>
+                                        </div>
+
+                                        <div class="recaptcha-settings"<cfif prc.cbSettings.cb_comments_captcha_type eq "coldFusion"> style="display: none"</cfif>>
+                                            #html.textField(
+                                                name="cb_comments_captcha_public_key",
+                                                label="reCAPTCHA Public Key",
+                                                value=prc.cbSettings.cb_comments_captcha_public_key,
+                                                class="form-control",
+                                                size="60",
+                                                wrapper="div class=controls",
+                                                labelClass="control-label",
+                                                groupWrapper="div class=form-group"
+                                            )#
+
+                                            #html.textField(
+                                                name="cb_comments_captcha_secret_key",
+                                                label="reCAPTCHA Secret Key",
+                                                value=prc.cbSettings.cb_comments_captcha_secret_key,
+                                                class="form-control",
+                                                size="60",
+                                                wrapper="div class=controls",
+                                                labelClass="control-label",
+                                                groupWrapper="div class=form-group"
+                                            )#
+                                        </div>
+
                                         <!--- Whois URL --->
                                         #html.textField(
                                             name="cb_comments_whoisURL",

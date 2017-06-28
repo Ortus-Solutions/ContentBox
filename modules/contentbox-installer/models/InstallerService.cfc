@@ -335,6 +335,9 @@ component accessors="true"{
 			"cb_comments_moderation_blacklist" 		= "",
 			"cb_comments_moderation_blockedlist" 	= "",
 			"cb_comments_captcha" 					= "true",
+			"cb_comments_captcha_type" 				= "coldFusion",
+			"cb_comments_captcha_public_key" 		= "",
+			"cb_comments_captcha_secret_key" 		= "",
 			"cb_comments_moderation_expiration" 	= "30",
 
 			// Mail Settings
