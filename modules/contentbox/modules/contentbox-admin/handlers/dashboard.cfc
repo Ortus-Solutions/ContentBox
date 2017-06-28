@@ -67,13 +67,20 @@ component extends="baseHandler"{
 
 		// convert report to chart data
 		prc.aTopContent = [];
+		prc.aTopContentTotalHits = 0;
+
 		for( var thisContent in prc.topContent ){
 			arrayAppend( prc.aTopContent, { "label" = thisContent.getTitle(), "value" = thisContent.getNumberOfHits() } );
+			prc.aTopContentTotalHits += thisContent.getNumberOfHits();
 		}
 		prc.aTopContent = serializeJSON( prc.aTopContent );
+
 		prc.aTopCommented = [];
+		prc.aTopCommentedTotalHits = 0;
+
 		for( var thisContent in prc.topCommented ){
 			arrayAppend( prc.aTopCommented, { "label" = thisContent.getTitle(), "value" = thisContent.getNumberOfComments() } );
+			prc.aTopCommentedTotalHits += thisContent.getNumberOfComments();
 		}
 		prc.aTopCommented = serializeJSON( prc.aTopCommented );
 
