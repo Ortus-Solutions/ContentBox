@@ -34,7 +34,7 @@ function loadForgeBox( page ){
 	}
 
 	$forgebox.html( '<div class="text-center"><i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>Please wait, connecting to ForgeBox...</div>' );
-	$forgebox.load( '#event.buildLink( prc.xehForgeBox )#', params );
+	$forgebox.load( '#event.buildLink( prc.xehForgeBox )#?' + $.param( params ) );
 }
 </script>
 </cfoutput>
