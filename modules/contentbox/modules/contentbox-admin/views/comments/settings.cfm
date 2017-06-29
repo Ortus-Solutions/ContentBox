@@ -77,26 +77,6 @@
 												)#
                                             </div>
                                         </div>
-                                        
-                                        <!--- Captcha --->
-                                        <div class="form-group">
-                                            #html.label(
-                                                field="cb_comments_captcha",
-                                                content="Use Security Captcha Image:",
-                                                class="control-label"
-                                            )#
-                                            <div class="controls">
-                                            	#html.checkbox(
-													name    = "cb_comments_captcha_toggle",
-													data	= { toggle: 'toggle', match: 'cb_comments_captcha' },
-													checked	= prc.cbSettings.cb_comments_captcha
-												)#
-												#html.hiddenField(
-													name	= "cb_comments_captcha",
-													value	= prc.cbSettings.cb_comments_captcha
-												)#
-                                            </div>
-                                        </div>
                                                                     
                                         <!--- Whois URL --->
                                         #html.textField(
