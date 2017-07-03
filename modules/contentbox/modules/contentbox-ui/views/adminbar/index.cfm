@@ -1,5 +1,5 @@
 <cfoutput>
-<div id="cb-admin-bar" class="aki-bar">
+<div id="cb-admin-bar">
 
 	<span id="cb-admin-bar-actions">
 
@@ -90,8 +90,8 @@
 
 
 <script>
-
 setTimeout( insertAdminBar, 500 );
+
 function insertAdminBar(){
 	document.body.insertBefore(
 		document.getElementById( 'cb-admin-bar' ),
@@ -99,61 +99,68 @@ function insertAdminBar(){
 	);
 }
 
-		var a = getCookie("adminbarstatus");
+var a         = getCookie( "adminbarstatus" );
+var el        = document.getElementById( "cb-admin-bar" );
+var hasClass1 = el.classList.contains('fade_out');
 
-		var el = document.getElementById("cb-admin-bar");
-		var hasClass1 = el.classList.contains('fade_out');
-
-		if(a=="out"){
-			el.classList.add("fade_out");
-		}else{
-			//do nothing
-		}
+if( a== "out" ){
+	el.classList.add( "fade_out" );
+}else{
+	//do nothing
+}
 
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener( "DOMContentLoaded", function(){
 	document.getElementById( "shrink" ).addEventListener('click', function() {
-		var el1 = document.getElementById("cb-admin-bar");
+		var el1 = document.getElementById( "cb-admin-bar" );
 		var hasClass = el1.classList.contains('fade_out');
 
-		if(hasClass === false){
-			setCookie("adminbarstatus", "out", 7);
-			el1.classList.add("fade_out");
-		}else{
-			document.getElementById("shrink").style.visibility="hidden";
-			document.getElementById("avatar").style.visibility="hidden";
-			document.getElementById("cb-admin-bar-actions").style.visibility="hidden";
-			setTimeout(function(){
-				el1.classList.remove("fade_out");
-				setCookie("adminbarstatus", "in", 7);
-				setTimeout(function(){
-	   					document.getElementById("avatar").style.visibility="visible";
-						document.getElementById("cb-admin-bar-actions").style.visibility="visible";
-						document.getElementById("shrink").style.visibility="visible";
-					}, 1500);
-			}, 400);
+		if( hasClass === false ){
+			setCookie( "adminbarstatus", "out", 7);
+			el1.classList.add( "fade_out" );
+		} else {
+
+			document.getElementById( "shrink" ).style.visibility="hidden";
+			document.getElementById( "avatar" ).style.visibility="hidden";
+			document.getElementById( "cb-admin-bar-actions" ).style.visibility="hidden";
+
+			setTimeout(
+				function(){
+					el1.classList.remove( "fade_out" );
+					setCookie( "adminbarstatus", "in", 7);
+					setTimeout(
+						function(){
+		   					document.getElementById( "avatar" ).style.visibility="visible";
+							document.getElementById( "cb-admin-bar-actions" ).style.visibility="visible";
+							document.getElementById( "shrink" ).style.visibility="visible";
+						},
+						1500
+					);
+				},
+				400
+			);
 
 		}
 	});
 });
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie( cname, cvalue, exdays ){
     var d = new Date();
-    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    d.setTime( d.getTime() + ( exdays * 24 * 60 * 60 * 1000 ) );
     var expires = "expires="+d.toUTCString();
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-function getCookie(cname) {
-    var name = cname + "=";
-    var ca = document.cookie.split(';');
-    for(var i = 0; i < ca.length; i++) {
+function getCookie( cname ){
+    var name 	= cname + "=";
+    var ca 		= document.cookie.split( ';' );
+    for( var i = 0; i < ca.length; i++ ){
         var c = ca[i];
-        while (c.charAt(0) == ' ') {
+        while( c.charAt(0) == ' ' ){
             c = c.substring(1);
         }
-        if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
+        if( c.indexOf( name ) == 0 ){
+            return c.substring( name.length, c.length );
         }
     }
     return "";
@@ -175,9 +182,6 @@ function getCookie(cname) {
     position: fixed;
     z-index: 9999;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-}
-
-.aki-bar {
 	transition: all 2s ease;
 	-moz-transition: all 2s ease;
     -webkit-transition: all 2s ease;
@@ -270,39 +274,32 @@ function getCookie(cname) {
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-/* responsive
-===================================*/
-<!--- @media (max-width: 1400px) {
-##publisher{
-  display: none;
-}
-} --->
+/* responsive */
 
 @media (max-width: 1400px) {
- ##avatar{
-  display: none;
-}
+	##avatar{
+		 display: none;
+	}
 }
 
 @media (max-width: 1200px) {
-.admin-bar-label.layout, .admin-bar-label.comments, .admin-bar-label.hits, .admin-bar-label.publisher, .icon-info{
-  display: none;
-}
+	.admin-bar-label.layout, .admin-bar-label.comments, .admin-bar-label.hits, .admin-bar-label.publisher, .icon-info{
+		display: none;
+	}
 }
 
 
 @media (max-width: 768px) {
-.button.custom_fields, .button.seo, .button.history{
-  display: none;
-}
+	.button.custom_fields, .button.seo, .button.history{
+	  display: none;
+	}
 }
 
 @media (max-width: 480px) {
-.button.edit, .button.clear-cache{
-  display: none;
+	.button.edit, .button.clear-cache{
+  		display: none;
+	}
 }
-}
-
 
 @font-face {
   font-family: 'icomoon';
