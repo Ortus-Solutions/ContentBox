@@ -84,7 +84,6 @@ component extends="coldbox.system.EventHandler"{
 			// Execute action
 			var actionResults = arguments.targetAction( argumentCollection=args );
 		} catch( Any e ){
-			writeDump( e );abort;
 			// Log Locally
 			log.error( "Error calling #event.getCurrentEvent()#: #e.message# #e.detail#", e );
 
