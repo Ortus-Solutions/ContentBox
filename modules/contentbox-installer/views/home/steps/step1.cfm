@@ -63,7 +63,7 @@
 )#
 
 <!--- Show Rules --->
-<div id="passwordRules" class="well well-sm">
+<div id="passwordRules" class="well well-sm" data-min-length="8">
     <span class="badge" id="pw_rule_lower">abc</span>
     <span class="badge" id="pw_rule_upper">ABC</span>
     <span class="badge" id="pw_rule_digit">123</span>

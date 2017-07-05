@@ -1,10 +1,42 @@
 <cfoutput>
 <fieldset>
+	<legend><i class="fa fa-lock fa-lg"></i> Password Options</legend>
+
+	<!--- Min Password Length --->
+	<div class="form-group">
+		<label class="control-label" for="cb_security_min_password_length">
+			Minimum Password Length:
+			<span class="badge badge-info" id="min_password_length">#prc.cbSettings.cb_security_min_password_length#</span>
+		</label>
+		<div class="controls">
+			<small>The minimum length for user passwords. ContentBox limits the minimum to 8 characters.</small>
+
+			<div>
+				<strong class="margin10">8</strong>
+				<input 	type="text"
+						class="form-control"
+						id="cb_security_min_password_length"
+						name="cb_security_min_password_length"
+						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
+						data-provide="slider"
+						data-slider-min="8"
+						data-slider-max="50"
+						data-slider-step="1"
+						data-slider-tooltip="hide"
+				>
+				<strong class="margin10">50</strong>
+			</div>
+		</div>
+	</div>
+
+</fieldset>
+
+<fieldset>
 	<legend><i class="fa fa-paw fa-lg"></i> Login Tracker</legend>
-	
+
 	<!--- Login Blocker --->
 	<div class="form-group">
-        #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:" )#
+        #html.label( class="control-label", field="cb_security_login_blocker", content="Enable Login Tracker:" )#
         <div class="controls">
             <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/><br />
             #html.checkbox(
@@ -151,7 +183,7 @@
             	class 	= "form-control",
             	value 	= prc.cbSettings.cb_security_rate_limiter_message,
             	rows 	= "4"
-            )#     
+            )#
         </div>
     </div>
 
@@ -163,7 +195,7 @@
                 name    = "cb_security_rate_limiter_redirectURL",
                 class   = "form-control",
                 value   = prc.cbSettings.cb_security_rate_limiter_redirectURL
-            )#     
+            )#
         </div>
     </div>
 
@@ -211,6 +243,6 @@
 				value	= prc.cbSettings.cb_site_ssl
 			)#
         </div>
-    </div>  
+    </div>
 </fieldset>
 </cfoutput>

@@ -3,6 +3,10 @@
 $(document).ready(function() {
 	// form validators
 	$( "##settingsForm" ).validate();
+	// Password length binding
+	$( "##cb_security_min_password_length" ).on( "slide", function( slideEvt ){
+		$( "##min_password_length" ).text( slideEvt.value );
+	});
 } );
 function emailTest(){
 	$( "##emailTestDiv" ).html( "" );
@@ -15,9 +19,9 @@ function emailTest(){
 		  cb_site_mail_smtp : $( "##cb_site_mail_smtp" ).val(),
 		  cb_site_mail_tls : $( "##cb_site_mail_tls" ).val(),
 		  cb_site_mail_ssl : $( "##cb_site_mail_ssl" ).val(),
-		  cb_site_outgoingEmail : $( "##cb_site_outgoingEmail" ).val()		
-		}, 
-		function(data){ 
+		  cb_site_outgoingEmail : $( "##cb_site_outgoingEmail" ).val()
+		},
+		function(data){
 			if( data.ERROR ){
 				var eMessages = $.map(data.ERRORARRAY, function(val,index) {
 				     return val;
@@ -33,8 +37,9 @@ function emailTest(){
 	);
 	return false;
 }
-function chooseAdapter(adapter){
+function chooseAdapter( adapter ){
 	$( "##settingsForm" ).find( "##cb_search_adapter" ).val( adapter );
 }
+
 </script>
 </cfoutput>

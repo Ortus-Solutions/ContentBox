@@ -5,13 +5,13 @@ $( document ).ready( function(){
 	// pointers
 	$authorForm 	= $( "##authorForm" );
 	$authorUsername = $authorForm.find( "##username" );
-	
+
 	// initialize validator and add a custom form submission logic
 	$authorForm.validate();
-    
+
 	// Custom username unique validator
-    $.validator.addMethod( 
-    	'username', 
+    $.validator.addMethod(
+    	'username',
     	function( value, element ) {
 			if( value.length && value == "#prc.author.getUsername()#" ){
 				return true;
@@ -21,13 +21,13 @@ $( document ).ready( function(){
 				return false;
 			}
 			return true;
-    	}, 
-    	"The username you entered already exists, try a new one!" 
+    	},
+    	"The username you entered already exists, try a new one!"
     );
 
     // Custom email unique validator
-    $.validator.addMethod( 
-    	'email', 
+    $.validator.addMethod(
+    	'email',
     	function( value, element ) {
 			if( value.length && value == "#prc.author.getEmail()#" ){
 				return true;
@@ -37,33 +37,33 @@ $( document ).ready( function(){
 				return false;
 			}
 			return true;
-    	}, 
-    	"The email you entered already exists, try a new one!" 
+    	},
+    	"The email you entered already exists, try a new one!"
     );
 
     // Custom Password Validator
-    $.validator.addMethod( 
-    	"pwcheck", 
-    	passwordValidator, 
-		'Password should be at least 8 characters long and should contain at least 1 digit, 1 uppercase, 1 lowercase and 1 special chars' 
+    $.validator.addMethod(
+    	"pwcheck",
+    	passwordValidator,
+		'Password should be at least #prc.cbSettings.cb_security_min_password_length# characters long and should contain at least 1 digit, 1 uppercase, 1 lowercase and 1 special chars' 
 	);
 
 	<cfif prc.author.isLoaded()>
     $( "##authorPasswordForm" ).validate();
 
     // Password match validator
-    $.validator.addMethod( 
-    	'password', 
+    $.validator.addMethod(
+    	'password',
     	function( value, element ){
         	return (value==$( "[name=password]" ).val()) ? true : false;
-    	}, 
-    	'Passwords need to match' 
+    	},
+    	'Passwords need to match'
     );
 
 	// Setup Permissions
 	$permissionsTab = $( "##permissionsTab" );
 	</cfif>
-	
+
 	// Password change rules
 	$( "##password" ).keyup( passwordMeter );
 } );

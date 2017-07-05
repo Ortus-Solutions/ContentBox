@@ -1,10 +1,10 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>" id="main-content-slot">
-    	
-    	
+
+
     	<div class="panel panel-default">
-           
+
             <div class="panel-heading">
 
                 <h3 class="panel-title">
@@ -13,10 +13,10 @@
                 </h3>
 
                 <div class="actions">
-                   
+
                     <!--- Back To Inbox --->
                     #announceInterception( "cbadmin_onAuthorEditorActions" )#
-					
+
 					<!--- Back button --->
 					<p class="text-center">
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
@@ -33,7 +33,7 @@
             </div>
 
             <div class="panel-body">
-            	
+
             	<!--- Messageboxes --->
             	#getModel( "messagebox@cbMessagebox" ).renderIt()#
 
@@ -42,7 +42,7 @@
 
                     <!--- Documentation Navigation Bar --->
                     <ul class="nav nav-tabs">
-                    	
+
                     	<li class="active">
                     		<a href="##userDetails" data-toggle="tab"><i class="fa fa-eye"></i> Details</a>
                     	</li>
@@ -77,7 +77,7 @@
 							#html.startForm(
 								name 		= "authorForm",
 								action 		= prc.xehAuthorsave,
-								novalidate 	= "novalidate", 
+								novalidate 	= "novalidate",
 								class 		= "form-vertical"
 							)#
 								#html.startFieldset( legend="User Details" )#
@@ -144,15 +144,15 @@
 										labelClass  	= "control-label",
 										groupWrapper	= "div class=form-group"
 									)#
-									
+
 									<!--- Show Rules --->
-									<div id="passwordRules" class="well well-sm">
+									<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
 										<span class="badge" id="pw_rule_lower">abc</span>
 										<span class="badge" id="pw_rule_upper">ABC</span>
 										<span class="badge" id="pw_rule_digit">123</span>
 										<span class="badge" id="pw_rule_special">!@$</span>
 										<span class="badge" id="pw_rule_count">0</span>
-										<p class="help-block">At least 8 characters including upper and lower case letters, numbers, and symbols.</p>
+										<p class="help-block">At least #prc.cbSettings.cb_security_min_password_length# characters including upper and lower case letters, numbers, and symbols.</p>
 									</div>
 
 								</cfif>
@@ -165,7 +165,7 @@
 											field   = "isActive",
 											content = "Active User:"
 										)#
-										
+
 										<div class="controls">
 											#html.checkbox(
 												name    = "isActive_toggle",
@@ -178,7 +178,7 @@
 											)#
 										</div>
 									</div>
-									
+
 									<!--- Roles --->
 									#html.select(
 										label     		= "User Role:",
@@ -197,7 +197,7 @@
 									<label>Active User: </label> <span class="textRed">#prc.author.getIsActive()#</span><br/>
 									<label>User Role: </label> <span class="textRed">#prc.author.getRole().getRole()#</span><br/>
 								</cfif>
-								
+
 								<!--- Biography --->
 								#html.textarea(
 									name   			= "biography",
@@ -211,14 +211,14 @@
 								)#
 
 								#html.endFieldSet()#
-								
+
 								<!--- Action Bar --->
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 								<div class="form-actions">
 									<input type="submit" value="Save Details" class="btn btn-danger">
 								</div>
 								</cfif>
-								
+
 							#html.endForm()#
 						</div>
 
@@ -229,11 +229,11 @@
 								name       = "authorPasswordForm",
 								action     = prc.xehAuthorChangePassword,
 								novalidate = "novalidate",
-								class      = "form-vertical" 
+								class      = "form-vertical"
 							)#
 								#html.startFieldset( legend="Change Password" )#
 								#html.hiddenField( name="authorID", bind=prc.author )#
-								
+
 								<!--- Fields --->
 								#html.passwordField(
 									name    		= "password",
@@ -243,7 +243,7 @@
 									class   		= "form-control pwcheck",
 									wrapper 		= "div class=controls",
 									labelClass 		= "control-label",
-									groupWrapper 	= "div class=form-group" 
+									groupWrapper 	= "div class=form-group"
 								)#
 
 								#html.passwordField(
@@ -254,21 +254,21 @@
 									class   		= "form-control pwcheck",
 									wrapper 		= "div class=controls",
 									labelClass 		= "control-label",
-									groupWrapper 	= "div class=form-group" 
+									groupWrapper 	= "div class=form-group"
 								)#
 
 								<!--- Show Rules --->
-								<div id="passwordRules" class="well well-sm">
+								<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
 									<span class="badge" id="pw_rule_lower">abc</span>
 									<span class="badge" id="pw_rule_upper">ABC</span>
 									<span class="badge" id="pw_rule_digit">123</span>
 									<span class="badge" id="pw_rule_special">!@$</span>
 									<span class="badge" id="pw_rule_count">0</span>
-									<p class="help-block">At least 8 characters including upper and lower case letters, numbers, and symbols.</p>
+									<p class="help-block">At least #prc.cbSettings.cb_security_min_password_length# characters including upper and lower case letters, numbers, and symbols.</p>
 								</div>
-								
+
 								#html.endFieldSet()#
-								
+
 								<!--- Action Bar --->
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
 								<div class="form-actions">
@@ -277,7 +277,7 @@
 								</cfif>
 							#html.endForm()#
 							</div>
-							
+
 							<!--- Preferences --->
 							<div class="tab-pane" id="preferences">#prc.preferencesViewlet#</div>
 
@@ -312,15 +312,15 @@
 
     <cfif prc.author.isLoaded()>
     <div class="col-md-4" id="main-content-sidebar">
-    	
+
     	<div class="panel panel-primary">
-		
+
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-camera-retro"></i> Snapshot</h3>
 			</div>
 
 			<div class="panel-body">
-				
+
 				<div class="text-center margin10" id="author_actions">
 					<div class="btn-group" role="group" aria-label="...">
 						<!--- <button type="button" class="btn btn-default">1</button> --->
@@ -422,7 +422,7 @@
 						</td>
 					</tr>
 				</table>
-				
+
 				<p></p>
 
 				<!--- Password Reset --->
@@ -433,7 +433,7 @@
 					</div>
 				</cfif>
 
-				
+
 				<!---Gravatar info --->
 				<cfif prc.cbSettings.cb_gravatar_display>
 				<div class="well well-sm">
