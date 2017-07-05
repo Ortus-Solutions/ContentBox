@@ -18,7 +18,7 @@ component implements="ISecurityService" singleton{
 	property name="log"					inject="logbox:logger:{this}";
 	property name="cache"				inject="cachebox:default";
 	property name="bCrypt"				inject="BCrypt@BCrypt";
-	
+
 	// Static Variables
 	RESET_TOKEN_TIMEOUT = 30;
 
@@ -28,7 +28,7 @@ component implements="ISecurityService" singleton{
 	public SecurityService function init(){
 		return this;
 	}
-	
+
 	/**
 	* Update an author's last login timestamp
 	* @author The author object
@@ -38,7 +38,7 @@ component implements="ISecurityService" singleton{
 		authorService.save( arguments.author );
 		return this;
 	}
-	
+
 	/**
 	* User validator via security interceptor
 	* @rule The security rule
@@ -47,10 +47,10 @@ component implements="ISecurityService" singleton{
 	boolean function userValidator( required struct rule, any controller ){
 		var isAllowed 	= false;
 		var author 		= getAuthorSession();
-		
+
 		// First check if user has been authenticated.
 		if( author.isLoaded() AND author.isLoggedIn() ){
-			
+
 			// Check if the rule requires roles
 			if( len( rule.roles ) ){
 				for(var x=1; x lte listLen( rule.roles ); x++){
@@ -60,7 +60,7 @@ component implements="ISecurityService" singleton{
 					}
 				}
 			}
-			
+
 			// Check if the rule requires permissions
 			if( len( rule.permissions ) ){
 				for(var y=1; y lte listLen( rule.permissions ); y++){
@@ -70,7 +70,7 @@ component implements="ISecurityService" singleton{
 					}
 				}
 			}
-			
+
 			// Check for empty rules and perms
 			if( !len( rule.roles ) AND !len( rule.permissions ) ){
 				isAllowed = true;
@@ -84,23 +84,23 @@ component implements="ISecurityService" singleton{
 				message = rule.message
 			);
 		}
-		
+
 		return isAllowed;
 	}
-	
+
 	/**
 	* Get an author from session, or returns a new empty author entity
 	*/
 	Author function getAuthorSession(){
-		
+
 		// Check if valid user id in session
 		var authorID = val( sessionStorage.getVar( "loggedInAuthorID", "" ) );
-		
+
 		// If that fails, check for a cookie
 		if( !authorID ) {
 			authorID = getKeepMeLoggedIn();
-		}	
-			
+		}
+
 		// If we found an authorID, load it up
 		if( authorID ){
 			// try to get it with that ID
@@ -111,31 +111,31 @@ component implements="ISecurityService" singleton{
 				return author;
 			}
 		}
-				
+
 		// return new author, not found or not valid
 		return authorService.new();
 	}
-	
+
 	/**
 	* Set a new author in session
 	* @author The author to store
-	* 
+	*
 	* @return SecurityService
 	*/
 	ISecurityService function setAuthorSession( required Author author ){
 		sessionStorage.setVar( "loggedInAuthorID", author.getAuthorID() );
 		return this;
-	} 
+	}
 
 	/**
 	* Delete author session
-	* 
+	*
 	* @return SecurityService
 	*/
 	ISecurityService function logout(){
 		sessionStorage.clearAll();
 		cookieStorage.deleteVar( name="contentbox_keep_logged_in" );
-		
+
 		return this;
 	}
 
@@ -184,7 +184,7 @@ component implements="ISecurityService" singleton{
 			return true;
 		}
 
-		return false;	
+		return false;
 	}
 
 	/**
@@ -202,36 +202,53 @@ component implements="ISecurityService" singleton{
 	string function generateResetToken( required Author author ){
 		// Store Security Token For X minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
-		cache.set( 
-			"reset-token-#cgi.http_host#-#token#", 
-			arguments.author.getAuthorID(), 
-			RESET_TOKEN_TIMEOUT, 
-			RESET_TOKEN_TIMEOUT 
+		cache.set(
+			"reset-token-#cgi.http_host#-#token#",
+			arguments.author.getAuthorID(),
+			RESET_TOKEN_TIMEOUT,
+			RESET_TOKEN_TIMEOUT
 		);
 		return token;
 	}
-	
+
 	/**
 	* Send password reminder email, this verifies that the email is valid and they must click on the token
 	* link in order to reset their password.
-	* @author The author to send the reminder to
+	* @author 		The author to send the reminder to
+	* @adminIssued 	Was this reset issued by a user or an admin
+	* @issuer 		The admin that issued the reset
+	*
+	* @return The mailing results of the password reminder: struct.
 	*/
-	ISecurityService function sendPasswordReminder( required Author author ){
+	struct function sendPasswordReminder(
+		required Author author,
+		boolean adminIssued=false,
+		Author issuer
+	){
 		// Generate security token
 		var token = generateResetToken( arguments.author );
-		
+
 		// get settings
 		var settings = settingService.getAllSettings( asStruct=true );
-		
+
 		// get mail payload
 		var bodyTokens = {
 			name 		= arguments.author.getName(),
 			ip 			= settingService.getRealIP(),
 			linkTimeout = RESET_TOKEN_TIMEOUT,
 			siteName 	= settings.cb_site_name,
-			linkToken 	= CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#"
+			linkToken 	= CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#",
+			issuedBy 	= "",
+			issuedEmail	= ""
 		};
 
+		// Check if an issuer was passed
+		if( !isNull( arguments.issuer ) ){
+			bodyTokens.issuedBy 	= arguments.issuer.getName();
+			bodyTokens.issuedEmail 	= arguments.issuer.getEmail();
+		}
+
+		// Build email out
 		var mail = mailservice.newMail(
 			to			= arguments.author.getEmail(),
 			from		= settings.cb_site_outgoingEmail,
@@ -246,18 +263,22 @@ component implements="ISecurityService" singleton{
 			useSSL		= settings.cb_site_mail_ssl
 		);
 
-		mail.setBody( 
+		// Decide template depending if issued by user or admin
+		var emailTemplate = "password_verification";
+		if( arguments.adminIssued ){
+			emailTemplate &= "_admin";
+		}
+
+		mail.setBody(
 			renderer.get()
-				.renderLayout( 
-					view 	= "/contentbox/email_templates/password_verification", 
+				.renderLayout(
+					view 	= "/contentbox/email_templates/#emailTemplate#",
 					layout 	= "/contentbox/email_templates/layouts/email"
 				)
 		);
-		
+
 		// send it out
-		mailService.send( mail );
-		
-		return this;
+		return mailService.send( mail );
 	}
 
 	/**
@@ -273,27 +294,27 @@ component implements="ISecurityService" singleton{
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
-		if( isNull( authorID ) ){ 
-			results.error = true; 
-			return results; 
+		if( isNull( authorID ) ){
+			results.error = true;
+			return results;
 		};
 
 		// Verify the author of the token
 		results.author = authorService.get( authorID );
-		if( isNull( results.author ) ){ 
-			results.error = true; 
-			return results; 
+		if( isNull( results.author ) ){
+			results.error = true;
+			return results;
 		};
 
 		return results;
 	}
-	
+
 	/**
 	* Resets a user's password.
 	* @token 	Security token
 	* @author 	The author you are reseting the password for
 	* @password The password you have chosen
-	* 
+	*
 	* @Returns {error:boolean, messages:string}
 	*/
 	struct function resetUserPassword( required token, required Author author, required password ){
@@ -302,30 +323,30 @@ component implements="ISecurityService" singleton{
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
-		if( isNull( authorID ) ){ 
-			results.error 		= true; 
+		if( isNull( authorID ) ){
+			results.error 		= true;
 			results.messages 	= "Token does not exist or has expired";
-			return results; 
+			return results;
 		};
-		
+
 		// Verify the author of the token
-		if( arguments.author.getAuthorID() neq authorID ){ 
-			results.error 		= true; 
-			results.messages 	= "Author reset token mismatch"; 
-			return results; 
+		if( arguments.author.getAuthorID() neq authorID ){
+			results.error 		= true;
+			results.messages 	= "Author reset token mismatch";
+			return results;
 		};
-		
+
 		// Remove token now that we have the data and it has been validated
 		cache.clear( cacheKey );
-		
+
 		// get settings
 		var settings = settingService.getAllSettings( asStruct=true );
-		
+
 		// set it in the user and save reset password
 		arguments.author.setPassword( arguments.password );
 		arguments.author.setIsPasswordReset( false );
 		authorService.saveAuthor( author=arguments.author, passwordChange=true );
-		
+
 		// get mail payload
 		var bodyTokens = {
 			name		= arguments.author.getName(),
@@ -348,19 +369,19 @@ component implements="ISecurityService" singleton{
 			useSSL		= settings.cb_site_mail_ssl
 		);
 		//,body=renderer.get().renderExternalView(view="/contentbox/email_templates/password_reminder" )
-		mail.setBody( 
+		mail.setBody(
 			renderer.get()
-				.renderLayout( 
-					view 	= "/contentbox/email_templates/password_reset", 
-					layout 	= "/contentbox/email_templates/layouts/email" 
-				) 
+				.renderLayout(
+					view 	= "/contentbox/email_templates/password_reset",
+					layout 	= "/contentbox/email_templates/layouts/email"
+				)
 		);
 		// send it out
 		mailService.send( mail );
-		
+
 		return results;
 	}
-	
+
 	/**
 	* Check to authorize a user to view a content entry or page
 	* @content The content object
@@ -373,10 +394,10 @@ component implements="ISecurityService" singleton{
 			sessionStorage.setVar( "protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	* Checks Whether a content entry or page is protected and user has credentials for it
 	* @content The content object to check
@@ -389,7 +410,7 @@ component implements="ISecurityService" singleton{
 		}
 		return false;
 	}
-	
+
 	/**
 	* Get password content protected salt
 	* @content The content object
@@ -397,13 +418,13 @@ component implements="ISecurityService" singleton{
 	private string function getContentProtectedHash( required content ){
 		return hash( arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256" );
 	}
-	
+
 	/**
 	* Get remember me cookie
 	*/
 	any function getRememberMe(){
 		var cookieValue = cookieStorage.getVar( name="contentbox_remember_me", default="" );
-		
+
 		try{
 			return decryptIt(  cookieValue );
 		} catch( Any e ){
@@ -413,14 +434,14 @@ component implements="ISecurityService" singleton{
 			return "";
 		}
 	}
-	
-	
+
+
 	/**
 	* Get keep me logged in cookie
 	*/
 	any function getKeepMeLoggedIn(){
 		var cookieValue = cookieStorage.getVar( name="contentbox_keep_logged_in", default="" );
-		
+
 		try{
 			// Decrypted value should be a number representing the authorID
 			return val( decryptIt(  cookieValue ) );
@@ -431,35 +452,35 @@ component implements="ISecurityService" singleton{
 			return 0;
 		}
 	}
-	
-	
+
+
 	/**
 	* Set remember me cookie
 	* @username The username to store
 	* @days The days to store
 	*/
 	ISecurityService function setRememberMe( required username, required numeric days=0 ){
-				
+
 		// If the user now only wants to be remembered for this session, remove any existing cookies.
 		if( !arguments.days ) {
 			cookieStorage.deleteVar( name="contentbox_remember_me" );
 			cookieStorage.deleteVar( name="contentbox_keep_logged_in" );
 			return this;
 		}
-		
+
 		// Save the username to pre-populate the login field after their login expires for up to a year.
 		cookieStorage.setVar( name="contentbox_remember_me", value=encryptIt( arguments.username ), expires=365 );
-		
+
 		// Look up the user ID and store for the duration specified
 		var author = authorService.findWhere( { username=arguments.username, isActive=true } );
 		if( !isNull( author ) ) {
 			// The user will be auto-logged in as long as this cookie exists
-			cookieStorage.setVar( name="contentbox_keep_logged_in", value=encryptIt( author.getAuthorID() ), expires=arguments.days );			
+			cookieStorage.setVar( name="contentbox_keep_logged_in", value=encryptIt( author.getAuthorID() ), expires=arguments.days );
 		}
-		
+
 		return this;
 	}
-	
+
 	/**
 	* ContentBox encryption
 	* @encValue value to encrypt
@@ -469,7 +490,7 @@ component implements="ISecurityService" singleton{
 		if( !len( arguments.encValue ) ){ return arguments.encValue; }
 		return encrypt( arguments.encValue, getEncryptionKey() , "BLOWFISH", "HEX" );
 	}
-	
+
 	/**
 	* ContentBox Decryption
 	* @decValue value to decrypt
@@ -478,14 +499,14 @@ component implements="ISecurityService" singleton{
 		if( !len( arguments.decValue) ){ return arguments.decValue; }
 		return decrypt( arguments.decValue, getEncryptionKey(), "BLOWFISH", "HEX" );
 	}
-	
+
 	/**
 	* Verifies we have a salt in our installation
 	* if not, it will generate a new cb_enc_key
 	*/
 	string function getEncryptionKey(){
 		var setting = settingService.findWhere( { name = "cb_enc_key" } );
-		
+
 		// if no key, then create it for this ContentBox installation
 		if( isNull( setting ) ){
 			setting = settingService.new();
@@ -494,7 +515,7 @@ component implements="ISecurityService" singleton{
 			settingService.save(entity=setting);
 			log.info( "Registered new cookie encryption key" );
 		}
-		
+
 		return setting.getValue();
 	}
 }

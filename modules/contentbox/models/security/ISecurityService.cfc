@@ -11,12 +11,12 @@ interface{
 	* User validator via security interceptor
 	*/
 	boolean function userValidator( required struct rule, any controller );
-	
+
 	/**
 	* Get an author from session, or returns a new empty author entity
 	*/
 	Author function getAuthorSession();
-	
+
 	/**
 	* Set a new author in session
 	*/
@@ -31,27 +31,27 @@ interface{
 	* Verify if an author has valid credentials in our system.
 	*/
 	boolean function authenticate( required username, required password );
-	
+
 	/**
 	* Send password reminder for an author
 	*/
-	ISecurityService function sendPasswordReminder( required Author author );
+	struct function sendPasswordReminder( required Author author, boolean adminIssued=false, Author issuer );
 
 	/**
 	* Resets a user's password.
-	* 
+	*
 	* @returns {error:boolean, messages:string}
 	*/
 	struct function resetUserPassword( required token, required Author author, required password );
-	
+
 	/**
 	* Check to authorize a user to view a content entry or page
 	*/
 	boolean function authorizeContent( required content, required password );
-	
+
 	/**
 	* Checks Whether a content entry or page is protected and user has credentials for it
 	*/
 	boolean function isContentViewable( required content );
-	
+
 }

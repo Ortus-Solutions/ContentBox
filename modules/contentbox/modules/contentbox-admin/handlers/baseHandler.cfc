@@ -185,6 +185,8 @@ component extends="coldbox.system.EventHandler"{
 				location 	= prc.response.getLocation(),
 				isBinary 	= prc.response.getBinary()
 			);
+		} else {
+			throw( exception );
 		}
 
 	}

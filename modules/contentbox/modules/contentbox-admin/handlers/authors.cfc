@@ -16,7 +16,7 @@ component extends="baseHandler"{
 	property name="roleService"				inject="id:roleService@cb";
 	property name="editorService"			inject="id:editorService@cb";
 	property name="paging"					inject="id:paging@cb";
-	
+
 	/**
 	* Pre handler
 	*/
@@ -27,10 +27,10 @@ component extends="baseHandler"{
 			arguments.event.paramValue( "authorID", 0);
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
-			if( 
-				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) 
-				AND 
-				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID() 
+			if(
+				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )
+				AND
+				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
 			){
 				// relocate
 				cbMessagebox.error( "You do not have permissions to do this!" );
@@ -59,7 +59,7 @@ component extends="baseHandler"{
 		// Get Roles
 		prc.aRoles 				= roleService.getAll( sortOrder="role" );
 		prc.aPermissionGroups 	= permissionGroupService.getAll( sortOrder="name" );
-		
+
 		// View
 		event.setView( "authors/index" );
 	}
@@ -72,18 +72,22 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_onGlobalPasswordReset" );
 		// Get All Authors and reset the heck out of all of them.
 		var allAuthors = authorService.getAll();
-		
+
 		for( var thisAuthor in allAuthors ){
 			// Issue a password reset for a user
 			thisAuthor.setIsPasswordReset( true );
-			securityService.sendPasswordReminder( thisAuthor );
+			securityService.sendPasswordReminder(
+				author      = thisAuthor,
+				adminIssued = true,
+				issuer      = prc.oCurrentAuthor
+			);
 			// announce individual event
 			announceInterception( "cbadmin_onPasswordReset", { author = thisAuthor } );
 		}
 
 		// Bulk Save
 		authorService.saveAll( allAuthors );
-		
+
 		// relocate
 		cbMessagebox.info( "Global password reset issued!" );
 		setNextEvent( prc.xehAuthors );
@@ -115,7 +119,7 @@ component extends="baseHandler"{
 		prc.xehPasswordReset	= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
-		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){ 
+		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){
 			prc.isFiltering = true;
 		}
 
@@ -132,7 +136,7 @@ component extends="baseHandler"{
 		}
 
 		// Get all authors or search
-		var results = authorService.search( 
+		var results = authorService.search(
 			searchTerm 			= rc.searchAuthors,
 			offset    			= ( rc.showAll ? 0 : prc.paging.startRow-1 ),
 			max       			= ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
@@ -195,7 +199,11 @@ component extends="baseHandler"{
 			// Issue a password reset for a user
 			oAuthor.setIsPasswordReset( true );
 			authorService.saveAuthor( oAuthor );
-			securityService.sendPasswordReminder( oAuthor );
+			securityService.sendPasswordReminder(
+				author      = oAuthor,
+				adminIssued = true,
+				issuer      = prc.oCurrentAuthor
+			);
 			// announce event
 			announceInterception( "cbadmin_onPasswordReset", { author = oAuthor } );
 			cbMessagebox.info( "Author marked for password reset upon login and email notification sent!" );
@@ -204,7 +212,7 @@ component extends="baseHandler"{
 		}
 
 		// relocate
-		setNextEvent( 
+		setNextEvent(
 			event		= ( rc.editing ? prc.xehAuthorEditor : prc.xehAuthors ),
 			queryString	= ( rc.editing ? "authorID=#oAuthor.getAuthorID()#" : "" )
 		);
@@ -233,23 +241,23 @@ component extends="baseHandler"{
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
 		prc.roles = roleService.list( sortOrder="role", asQuery=false );
-		
+
 		// viewlets only if editing a user
 		if( prc.author.isLoaded() ){
 			// Preferences Viewlet
-			var args = { 
-				authorID	= rc.authorID, 
-				sorting		= false, 
-				max			= 5, 
-				pagination	= false, 
-				latest		= true 
+			var args = {
+				authorID	= rc.authorID,
+				sorting		= false,
+				max			= 5,
+				pagination	= false,
+				latest		= true
 			};
 			prc.preferencesViewlet 	= listPreferences(  event, rc, prc  );
-			
+
 			// Latest Edits
 			prc.latestEditsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
-				eventArguments 	= { 
+				eventArguments 	= {
 					author 		= prc.author,
 					showHits 	= true,
 					showAuthor 	= false
@@ -259,8 +267,8 @@ component extends="baseHandler"{
 			// Latest Drafts
 			prc.latestDraftsViewlet = runEvent(
 				event 			= "contentbox-admin:content.latestContentEdits",
-				eventArguments 	= { 
-					author 				= prc.author, 
+				eventArguments 	= {
+					author 				= prc.author,
 					isPublished			= false,
 					showHits 			= false,
 					colorCodings		= false,
@@ -281,14 +289,14 @@ component extends="baseHandler"{
 		rc.authorID = prc.oCurrentAuthor.getAuthorID();
 		editor( argumentCollection=arguments );
 	}
-	
+
 	/**
 	* change user editor preferences
 	*/
 	function changeEditor( event, rc, prc ){
 		var results = { "ERROR" = false, "MESSAGES" = "" };
 		try{
-			// store the new author preference	
+			// store the new author preference
 			prc.oCurrentAuthor.setPreference(name="editor", value=rc.editor);
 			// save Author preference
 			authorService.saveAuthor( prc.oCurrentAuthor );
@@ -313,7 +321,7 @@ component extends="baseHandler"{
 
 		// Check preference value
 		if( len( rc.preference ) ){
-			// store the new author preference	
+			// store the new author preference
 			prc.oCurrentAuthor.setPreference( name=rc.preference, value=rc.value );
 			// save Author preference
 			authorService.saveAuthor( prc.oCurrentAuthor );
@@ -326,14 +334,14 @@ component extends="baseHandler"{
 		// return preference saved
 		event.renderData( type="json", data=results );
 	}
-	
+
 	/**
 	* Save user preferences
 	*/
 	function savePreferences( event, rc, prc ){
 		var oAuthor 		= authorService.get( id=rc.authorID );
 		var allPreferences 	= {};
-		
+
 		// iterate rc keys that start with "preference."
 		for( var key in rc ){
 			if( reFindNoCase( "^preference\.", key ) ){
@@ -351,12 +359,12 @@ component extends="baseHandler"{
 		// message
 		cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 		// relocate
-		setNextEvent( 
+		setNextEvent(
 			event		= prc.xehAuthorEditor,
-			queryString	= "authorID=#oAuthor.getAuthorID()###preferences" 
+			queryString	= "authorID=#oAuthor.getAuthorID()###preferences"
 		);
 	}
-	
+
 	/**
 	* Save raw preferences
 	*/
@@ -376,16 +384,16 @@ component extends="baseHandler"{
 			// message
 			cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 			// relocate
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );	
+			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 		}
 		else{
 			// message
 			cbMessagebox.error(messageArray=vResult.getAllErrors());
 			// relocate
 			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
-		}	
+		}
 	}
-	
+
 	/**
 	* Save user
 	*/
@@ -486,10 +494,10 @@ component extends="baseHandler"{
 		// Get all permissions
 		prc.aPermissions 		= permissionService.list( sortOrder="permission", asQuery=false );
 		prc.aPermissionGroups	= permissionGroupService.list( sortOrder="name", asQuery=false );
-		
+
 		// Get author
 		prc.author = authorService.get( rc.authorID );
-		
+
 		// view
 		event.setView( view="authors/permissions", layout="ajax" );
 	}
@@ -557,7 +565,7 @@ component extends="baseHandler"{
 		// Saved
 		event.renderData( data="true", type="json" );
 	}
-	
+
 	/**
 	* Export a user
 	*/
@@ -565,7 +573,7 @@ component extends="baseHandler"{
 		event.paramValue( "format", "json" );
 		// get user
 		prc.user  = authorService.get( event.getValue( "authorID",0) );
-		
+
 		// relocate if not existent
 		if( !prc.user.isLoaded() ){
 			cbMessagebox.warn( "authorID sent is not valid" );
@@ -576,7 +584,7 @@ component extends="baseHandler"{
 			case "xml" : case "json" : {
 				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=prc.user.getMemento(), type=rc.format, xmlRootName="user" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
@@ -584,7 +592,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	/**
 	* Export all users
 	*/
@@ -592,12 +600,12 @@ component extends="baseHandler"{
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = authorService.getAllForExport();
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Users." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=data, type=rc.format, xmlRootName="users" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
@@ -605,7 +613,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	/**
 	* Import all users
 	*/
