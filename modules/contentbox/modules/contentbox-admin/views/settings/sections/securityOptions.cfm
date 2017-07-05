@@ -6,7 +6,7 @@
 	<div class="form-group">
 		<label class="control-label" for="cb_security_min_password_length">
 			Minimum Password Length:
-			<span class="badge badge-info" id="min_password_length">#prc.cbSettings.cb_security_min_password_length#</span>
+			<span class="badge badge-info" id="cb_security_min_password_length_label">#prc.cbSettings.cb_security_min_password_length#</span>
 		</label>
 		<div class="controls">
 			<small>The minimum length for user passwords. ContentBox limits the minimum to 8 characters.</small>

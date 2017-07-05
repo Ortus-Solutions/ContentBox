@@ -4,14 +4,26 @@
 
     <!--- Max Search Results --->
     <div class="form-group">
-        <label class="control-label" for="cb_search_maxResults">Max Search Results:</label>
+        <label class="control-label" for="cb_search_maxResults">
+            Max Search Results:
+            <span class="badge badge-info" id="cb_search_maxResults_label">#prc.cbSettings.cb_search_maxResults#</span>
+        </label>
         <div class="controls">
             <small>The number of search results to show before paging kicks in.</small><br/>
-            <select name="cb_search_maxResults" id="cb_search_maxResults" class="form-control input-sm">
-                <cfloop from="5" to="50" step="5" index="i">
-                    <option value="#i#" <cfif i eq prc.cbSettings.cb_search_maxResults>selected="selected"</cfif>>#i#</option>
-                </cfloop>
-            </select>
+            <strong class="margin10">5</strong>
+            <input 	type="text"
+                    id="cb_search_maxResults"
+                    name="cb_search_maxResults"
+                    class="slider"
+                    data-slider-value="#prc.cbSettings.cb_search_maxResults#"
+                    data-provide="slider"
+                    data-slider-min="5"
+                    data-slider-max="50"
+                    data-slider-step="5"
+                    data-slider-tooltip="hide"
+            >
+            <strong class="margin10">50</strong>
+
         </div>
     </div>
     <!--- Search Adapter --->

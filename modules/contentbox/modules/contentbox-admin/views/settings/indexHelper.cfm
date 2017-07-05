@@ -3,9 +3,9 @@
 $(document).ready(function() {
 	// form validators
 	$( "##settingsForm" ).validate();
-	// Password length binding
-	$( "##cb_security_min_password_length" ).on( "slide", function( slideEvt ){
-		$( "##min_password_length" ).text( slideEvt.value );
+	// Slider Label Binders by convention, expecting an ID_label field
+	$( "input.slider" ).on( "slide", function( slideEvt ){
+		$( "##" + slideEvt.target.id + "_label" ).text( slideEvt.value );
 	});
 } );
 function emailTest(){
