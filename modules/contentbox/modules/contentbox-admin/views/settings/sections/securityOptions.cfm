@@ -20,11 +20,11 @@
 						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
 						data-provide="slider"
 						data-slider-min="8"
-						data-slider-max="50"
+						data-slider-max="100"
 						data-slider-step="1"
 						data-slider-tooltip="hide"
 				>
-				<strong class="margin10">50</strong>
+				<strong class="margin10">100</strong>
 			</div>
 		</div>
 	</div>
