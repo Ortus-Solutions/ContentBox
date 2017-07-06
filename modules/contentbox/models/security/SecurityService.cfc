@@ -20,7 +20,7 @@ component implements="ISecurityService" singleton{
 	property name="bCrypt"				inject="BCrypt@BCrypt";
 
 	// Static Variables
-	RESET_TOKEN_TIMEOUT = 30;
+	RESET_TOKEN_TIMEOUT = 60;
 
 	/**
 	* Constructor
@@ -197,6 +197,7 @@ component implements="ISecurityService" singleton{
 
 	/**
 	 * This function will store a reset token in hash for the user to pickup on password resets
+	 *
 	 * @author The author to create the reset token for.
 	 */
 	string function generateResetToken( required Author author ){
@@ -209,6 +210,60 @@ component implements="ISecurityService" singleton{
 			RESET_TOKEN_TIMEOUT
 		);
 		return token;
+	}
+
+	/**
+	* Sends a new author their reminder to reset their password and log in to their account
+	*
+	* @author The author to send the reminder to
+	*
+	* @return error:boolean,errorArray
+	*/
+	struct function sendNewAuthorReminder( required Author author ){
+		// Generate security token
+		var token = generateResetToken( arguments.author );
+
+		// get settings
+		var settings = settingService.getAllSettings( asStruct=true );
+
+		// get mail payload
+		var bodyTokens = {
+			name 		= arguments.author.getName(),
+			email 		= arguments.author.getEmail(),
+			username 	= arguments.author.getUsername(),
+			linkTimeout = RESET_TOKEN_TIMEOUT,
+			linkToken 	= CBHelper.linkAdmin( event="security.verifyReset", ssl=settings.cb_admin_ssl ) & "?token=#token#",
+			resetLink 	= CBHelper.linkAdmin( event="security.lostPassword", ssl=settings.cb_admin_ssl ),
+			siteName 	= settings.cb_site_name,
+			issuedBy 	= "",
+			issuedEmail	= ""
+		};
+
+		// Build email out
+		var mail = mailservice.newMail(
+			to			= arguments.author.getEmail(),
+			from		= settings.cb_site_outgoingEmail,
+			subject		= "#settings.cb_site_name# Account was created for you",
+			bodyTokens	= bodyTokens,
+			type		= "html",
+			server		= settings.cb_site_mail_server,
+			username	= settings.cb_site_mail_username,
+			password	= settings.cb_site_mail_password,
+			port		= settings.cb_site_mail_smtp,
+			useTLS		= settings.cb_site_mail_tls,
+			useSSL		= settings.cb_site_mail_ssl
+		);
+
+		mail.setBody(
+			renderer.get()
+				.renderLayout(
+					view 	= "/contentbox/email_templates/author_welcome",
+					layout 	= "/contentbox/email_templates/layouts/email"
+				)
+		);
+
+		// send it out
+		return mailService.send( mail );
 	}
 
 	/**

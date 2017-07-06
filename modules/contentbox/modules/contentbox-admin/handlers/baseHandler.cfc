@@ -198,7 +198,7 @@ component extends="coldbox.system.EventHandler"{
 		// Log Locally
 		log.warn( "InvalidHTTPMethod Execution of (#arguments.faultAction#): #event.getHTTPMethod()#", getHTTPRequestData() );
 		// Setup Response
-		prc.response = getModel( "Response" )
+		prc.response = getModel( "Response@cb" )
 			.setError( true )
 			.addMessage( "InvalidHTTPMethod Execution of (#arguments.faultAction#): #event.getHTTPMethod()#" )
 			.setStatusCode( STATUS.NOT_ALLOWED )
@@ -222,7 +222,7 @@ component extends="coldbox.system.EventHandler"{
 		// Log Locally
 		log.warn( "Invalid HTTP Method Execution of (#arguments.missingAction#): #event.getHTTPMethod()#", getHTTPRequestData() );
 		// Setup Response
-		prc.response = getModel( "Response" )
+		prc.response = getModel( "Response@cb" )
 			.setError( true )
 			.addMessage( "Action '#arguments.missingAction#' could not be found" )
 			.setStatusCode( STATUS.NOT_ALLOWED )
@@ -247,7 +247,7 @@ component extends="coldbox.system.EventHandler"{
 	private function routeNotFound( event, rc, prc ){
 
 		if( !structKeyExists( prc, "response" ) ){
-			prc.response = getModel( "Response" );
+			prc.response = getModel( "Response@cb" );
 		}
 
 		prc.response.setError( true )
@@ -265,7 +265,7 @@ component extends="coldbox.system.EventHandler"{
 		prc 	= getRequestCollection( private=true )
 	){
 		if( !structKeyExists( prc, "response" ) ){
-			prc.response = getModel( "Response" );
+			prc.response = getModel( "Response@cb" );
 		}
 
 		prc.response.setError( true )
@@ -284,7 +284,7 @@ component extends="coldbox.system.EventHandler"{
 		abort 	= false
 	){
 		if( !structKeyExists( prc, "response" ) ){
-			prc.response = getModel( "Response" );
+			prc.response = getModel( "Response@cb" );
 		}
 
 		log.warn( "Invalid Authentication", getHTTPRequestData() );
@@ -305,7 +305,7 @@ component extends="coldbox.system.EventHandler"{
 		abort 	= false
 	){
 		if( !structKeyExists( prc, "response" ) ){
-			prc.response = getModel( "Response" );
+			prc.response = getModel( "Response@cb" );
 		}
 
 		log.warn( "Authorization Failure", getHTTPRequestData() );

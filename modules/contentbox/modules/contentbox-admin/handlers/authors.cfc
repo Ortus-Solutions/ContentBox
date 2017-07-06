@@ -53,6 +53,7 @@ component extends="baseHandler"{
 		prc.xehImportAll			= "#prc.cbAdminEntryPoint#.authors.importAll";
 		prc.xehExportAll 			= "#prc.cbAdminEntryPoint#.authors.exportAll";
 		prc.xehAuthorRemove 		= "#prc.cbAdminEntryPoint#.authors.remove";
+		prc.xehAuthorCreate 		= "#prc.cbAdminEntryPoint#.authors.new";
 		prc.xehAuthorsearch 		= "#prc.cbAdminEntryPoint#.authors";
 		prc.xehGlobalPasswordReset 	= "#prc.cbAdminEntryPoint#.authors.doGlobalPasswordReset";
 
@@ -217,6 +218,76 @@ component extends="baseHandler"{
 			queryString	= ( rc.editing ? "authorID=#oAuthor.getAuthorID()#" : "" )
 		);
 	}
+
+	/**
+	* New author wizard
+	* You must have the AUTHOR_ADMIN permission to execute
+	*/
+	function new( event, rc, prc ){
+		// exit handlers
+		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.doNew";
+		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#.authors.usernameCheck";
+		prc.xehEmailCheck	 		= "#prc.cbAdminEntryPoint#.authors.emailCheck";
+
+		// get new author for form
+		prc.author  = authorService.new();
+		// get all roles
+		prc.roles = roleService.list( sortOrder="role", asQuery=false );
+		// Get all permission groups
+		prc.aPermissionGroups	= permissionGroupService.list( sortOrder="name", asQuery=false );
+		// get editors for preferences
+		prc.editors = editorService.getRegisteredEditors();
+		// Get All registered markups so we can display them
+		prc.markups = editorService.getRegisteredMarkups();
+
+		// view
+		event.setView( "authors/new" );
+	}
+
+	/**
+	* Create a new user in the system
+	* You must have the AUTHOR_ADMIN permission to execute
+	*/
+	function doNew( event, rc, prc ){
+		// Get new author with defaults
+		var oAuthor = authorService.new( {
+			isActive 		= true,
+			isPasswordReset = true,
+			password 		= hash( createUUID() & now() )
+		} );
+
+		// get and populate author
+		populateModel( model=oAuthor, composeRelationships=true, exclude="preference" );
+
+		// iterate rc keys that start with "preference."
+		var allPreferences 	= {};
+		for( var key in rc ){
+			if( reFindNoCase( "^preference\.", key ) ){
+				allPreferences[ listLast( key, "." ) ] = rc[ key ];
+			}
+		}
+		// Store Preferences for saving
+		oAuthor.setPreferences( allPreferences );
+
+    	// validate it
+    	var vResults = validateModel( target=oAuthor, excludes="password" );
+		if( !vResults.hasErrors() ){
+			// announce event
+			announceInterception( "cbadmin_preNewAuthorSave", { author=oAuthor } );
+			// save author
+			authorService.createNewAuthor( oAuthor );
+			// announce event
+			announceInterception( "cbadmin_postNewAuthorSave", { author=oAuthor } );
+			// message
+			cbMessagebox.setMessage( "info","New Author Created and Notified!" );
+			// relocate
+			setNextEvent( prc.xehAuthors );
+		} else {
+			cbMessagebox.warn( messageArray=vResults.getAllErrors() );
+			return new( argumentCollection=arguments );
+		}
+	}
+
 
 	/**
 	* Author editor panel
@@ -428,7 +499,6 @@ component extends="baseHandler"{
 			cbMessagebox.warn(messageArray=vResults.getAllErrors());
 			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()#" );
 		}
-
 	}
 
 	/**

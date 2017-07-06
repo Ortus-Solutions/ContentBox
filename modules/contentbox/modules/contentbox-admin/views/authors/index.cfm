@@ -9,7 +9,7 @@
 	<div class="col-md-9">
 		<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
-		
+
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -17,16 +17,16 @@
 
 		#html.startForm( name="authorForm", action=prc.xehAuthorRemove )#
 			<input type="hidden" name="targetAuthorID" id="targetAuthorID" value="" />
-			
+
 			<div class="panel panel-default">
-				
+
 				<div class="panel-heading">
 					<div class="row">
-						
+
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
-									name 		= "userSearch", 
+									name 		= "userSearch",
 									class 		= "form-control",
 									placeholder	= "Quick Search"
 								)#
@@ -37,13 +37,13 @@
 							<div class="pull-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
-								    	
+
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 
 								    	<ul class="dropdown-menu">
-								    		
+
 								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 								    			<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
@@ -62,7 +62,7 @@
 
 												<li>
 													<a 	href="#event.buildLink( linkto=prc.xehGlobalPasswordReset )#"
-														class="confirmIt" 
+														class="confirmIt"
 														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
 														title="Users will be prompted to change their passwords upon login"
 													>
@@ -77,7 +77,7 @@
 								</cfif>
 
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehAuthorEditor)#')">Create User</button>
+									<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')">Create User</button>
 								</cfif>
 
 							</div>
@@ -99,13 +99,13 @@
 
 	<!--- Sidebar Filters --->
 	<div class="col-md-3">
-		
+
 		<div class="panel panel-primary">
-			
+
 			<div class="panel-heading">
 				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
-			
+
 			<div class="panel-body">
 				<div id="filterBox">
 					#html.startForm( name="filterForm", action=prc.xehAuthorSearch, class="form-vertical",role="form" )#

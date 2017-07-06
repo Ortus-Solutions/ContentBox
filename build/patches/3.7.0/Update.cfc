@@ -78,7 +78,7 @@ component {
 			var aRules = securityRuleService.getAll();
 			for( var oRule in aRules ){
 				if( findNoCase( "AUTHOR_ADMIN", oRule.getPermissions() ) ){
-					oRule.setSecureList( "^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset)" );
+					oRule.setSecureList( "^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)" );
 					securityRuleService.save( entity=oRule );
 					arguments.log.append( "Updated author security rules" );
 				}
