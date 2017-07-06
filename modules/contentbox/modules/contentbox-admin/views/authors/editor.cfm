@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <div class="row">
-    <div class="<cfif prc.author.isLoaded()>col-md-8<cfelse>col-md-12</cfif>" id="main-content-slot">
+    <div class="col-md-8" id="main-content-slot">
 
 
     	<div class="panel panel-default">
@@ -9,7 +9,7 @@
 
                 <h3 class="panel-title">
                 	#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="30" )#
-					<cfif prc.author.isLoaded()>#prc.author.getName()#<cfelse>Create Author</cfif>
+					#prc.author.getName()#
                 </h3>
 
                 <div class="actions">
@@ -46,25 +46,23 @@
                     	<li class="active">
                     		<a href="##userDetails" data-toggle="tab"><i class="fa fa-eye"></i> Details</a>
                     	</li>
-
-						<cfif prc.author.isLoaded()>
-							<li>
-								<a href="##change_password" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a>
-							</li>
-							<li>
-								<a href="##preferences" data-toggle="tab"><i class="fa fa-briefcase"></i> Preferences</a></li>
-							<li>
-								<a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="fa fa-lock"></i> Permissions</a>
-							</li>
-							<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-							<li>
-								<a href="##latestEdits" data-toggle="tab"><i class="fa fa-clock-o"></i> Latest Edits</a>
-							</li>
-							<li>
-								<a href="##latestDrafts" data-toggle="tab"><i class="fa fa-pencil"></i> Latest Drafts</a>
-							</li>
-							</cfif>
+						<li>
+							<a href="##change_password" data-toggle="tab"><i class="fa fa-key"></i> Change Password</a>
+						</li>
+						<li>
+							<a href="##preferences" data-toggle="tab"><i class="fa fa-briefcase"></i> Preferences</a></li>
+						<li>
+							<a href="##permissionsTab" onclick="loadPermissions();" data-toggle="tab"><i class="fa fa-lock"></i> Permissions</a>
+						</li>
+						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+						<li>
+							<a href="##latestEdits" data-toggle="tab"><i class="fa fa-clock-o"></i> Latest Edits</a>
+						</li>
+						<li>
+							<a href="##latestDrafts" data-toggle="tab"><i class="fa fa-pencil"></i> Latest Drafts</a>
+						</li>
 						</cfif>
+
 						<!--- cbadmin Event --->
     					#announceInterception( "cbadmin_onAuthorEditorNav" )#
                     </ul>
@@ -132,31 +130,6 @@
 									groupWrapper	= "div class=form-group"
 								)#
 
-								<cfif NOT prc.author.isLoaded()>
-									#html.passwordField(
-										name    		= "password",
-										bind    		= prc.author,
-										label   		= "*Password:",
-										required		= "required",
-										size    		= "50",
-										class   		= "form-control pwcheck",
-										wrapper 		= "div class=controls",
-										labelClass  	= "control-label",
-										groupWrapper	= "div class=form-group"
-									)#
-
-									<!--- Show Rules --->
-									<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
-										<span class="badge" id="pw_rule_lower">abc</span>
-										<span class="badge" id="pw_rule_upper">ABC</span>
-										<span class="badge" id="pw_rule_digit">123</span>
-										<span class="badge" id="pw_rule_special">!@$</span>
-										<span class="badge" id="pw_rule_count">0</span>
-										<p class="help-block">At least #prc.cbSettings.cb_security_min_password_length# characters including upper and lower case letters, numbers, and symbols.</p>
-									</div>
-
-								</cfif>
-
 								<!--- Active --->
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									<div class="form-group">
@@ -222,85 +195,83 @@
 							#html.endForm()#
 						</div>
 
-						<cfif prc.author.isLoaded()>
-							<!--- Change Password --->
-							<div class="tab-pane" id="change_password">
-							#html.startForm(
-								name       = "authorPasswordForm",
-								action     = prc.xehAuthorChangePassword,
-								novalidate = "novalidate",
-								class      = "form-vertical"
+						<!--- Change Password --->
+						<div class="tab-pane" id="change_password">
+						#html.startForm(
+							name       = "authorPasswordForm",
+							action     = prc.xehAuthorChangePassword,
+							novalidate = "novalidate",
+							class      = "form-vertical"
+						)#
+							#html.startFieldset( legend="Change Password" )#
+							#html.hiddenField( name="authorID", bind=prc.author )#
+
+							<!--- Fields --->
+							#html.passwordField(
+								name    		= "password",
+								label   		= "Password:",
+								required		= "required",
+								size    		= "50",
+								class   		= "form-control pwcheck",
+								wrapper 		= "div class=controls",
+								labelClass 		= "control-label",
+								groupWrapper 	= "div class=form-group"
 							)#
-								#html.startFieldset( legend="Change Password" )#
-								#html.hiddenField( name="authorID", bind=prc.author )#
 
-								<!--- Fields --->
-								#html.passwordField(
-									name    		= "password",
-									label   		= "Password:",
-									required		= "required",
-									size    		= "50",
-									class   		= "form-control pwcheck",
-									wrapper 		= "div class=controls",
-									labelClass 		= "control-label",
-									groupWrapper 	= "div class=form-group"
-								)#
+							#html.passwordField(
+								name    		= "password_confirm",
+								label   		= "Confirm Password:",
+								required		= "required",
+								size    		= "50",
+								class   		= "form-control pwcheck",
+								wrapper 		= "div class=controls",
+								labelClass 		= "control-label",
+								groupWrapper 	= "div class=form-group"
+							)#
 
-								#html.passwordField(
-									name    		= "password_confirm",
-									label   		= "Confirm Password:",
-									required		= "required",
-									size    		= "50",
-									class   		= "form-control pwcheck",
-									wrapper 		= "div class=controls",
-									labelClass 		= "control-label",
-									groupWrapper 	= "div class=form-group"
-								)#
-
-								<!--- Show Rules --->
-								<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
-									<span class="badge" id="pw_rule_lower">abc</span>
-									<span class="badge" id="pw_rule_upper">ABC</span>
-									<span class="badge" id="pw_rule_digit">123</span>
-									<span class="badge" id="pw_rule_special">!@$</span>
-									<span class="badge" id="pw_rule_count">0</span>
-									<p class="help-block">At least #prc.cbSettings.cb_security_min_password_length# characters including upper and lower case letters, numbers, and symbols.</p>
-								</div>
-
-								#html.endFieldSet()#
-
-								<!--- Action Bar --->
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
-								<div class="form-actions">
-									<input type="submit" value="Change Password" class="btn btn-danger">
-								</div>
-								</cfif>
-							#html.endForm()#
+							<!--- Show Rules --->
+							<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
+								<span class="badge" id="pw_rule_lower">abc</span>
+								<span class="badge" id="pw_rule_upper">ABC</span>
+								<span class="badge" id="pw_rule_digit">123</span>
+								<span class="badge" id="pw_rule_special">!@$</span>
+								<span class="badge" id="pw_rule_count">0</span>
+								<p class="help-block">At least #prc.cbSettings.cb_security_min_password_length# characters including upper and lower case letters, numbers, and symbols.</p>
 							</div>
 
-							<!--- Preferences --->
-							<div class="tab-pane" id="preferences">#prc.preferencesViewlet#</div>
+							#html.endFieldSet()#
 
-							<!--- Permissions --->
-							<div class="tab-pane" id="permissionsTab"></div>
-
-							<!--- Latest Edits --->
-							<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-								<div class="tab-pane" id="latestEdits">
-									#html.startFieldSet( legend="Latest Edits" )#
-									#prc.latestEditsViewlet#
-									#html.endFieldSet()#
-								</div>
-
-								<!--- Latest Drafts --->
-								<div class="tab-pane" id="latestDrafts">
-									#html.startFieldSet( legend="Latest Drafts" )#
-									#prc.latestDraftsViewlet#
-									#html.endFieldSet()#
-								</div>
+							<!--- Action Bar --->
+							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+							<div class="form-actions">
+								<input type="submit" value="Change Password" class="btn btn-danger">
+							</div>
 							</cfif>
+						#html.endForm()#
+						</div>
 
+						<!--- Preferences --->
+						<div class="tab-pane" id="preferences">#prc.preferencesViewlet#</div>
+
+						<!--- Permissions --->
+						<div class="tab-pane" id="permissionsTab"></div>
+
+						<!--- Latest Edits --->
+						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<div class="tab-pane" id="latestEdits">
+								#html.startFieldSet( legend="Latest Edits" )#
+								#prc.latestEditsViewlet#
+								#html.endFieldSet()#
+							</div>
+
+							<!--- Latest Drafts --->
+							<div class="tab-pane" id="latestDrafts">
+								#html.startFieldSet( legend="Latest Drafts" )#
+								#prc.latestDraftsViewlet#
+								#html.endFieldSet()#
+							</div>
 						</cfif>
+
 						<!--- cbadmin Event --->
 						#announceInterception( "cbadmin_onAuthorEditorContent" )#
                    	</div>
@@ -310,7 +281,6 @@
  		</div>
     </div>
 
-    <cfif prc.author.isLoaded()>
     <div class="col-md-4" id="main-content-sidebar">
 
     	<div class="panel panel-primary">
@@ -447,6 +417,5 @@
 		<!--- cbadmin Event --->
 		#announceInterception( "cbadmin_onAuthorEditorSidebar" )#
     </div>
-	</cfif>
 </div>
 </cfoutput>

@@ -59,23 +59,23 @@ component extends="coldbox.system.Interceptor"{
 		if( prc.oCurrentAuthor.getPreference( "sidemenuCollapse", false ) == "true" ){
 			prc.sideMenuClass = "sidebar-mini";
 		}
-		
+
 		/************************************** FORCE SSL *********************************************/
-		
+
 		if( prc.cbSettings.cb_admin_ssl and !event.isSSL() ){
 			setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
 		}
 
 		/************************************** FORCE PASSWORD RESET *********************************************/
-		
-		if( 
+
+		if(
 		 	!findNoCase( "contentbox-security:security", event.getCurrentEvent() )
 			&&
 			prc.oCurrentAuthor.getIsPasswordReset()
 		){
 			var token = securityService.generateResetToken( prc.oCurrentAuthor );
-			getInstance( "messagebox@cbMessagebox" ).info( 
-				prc.CBHelper.r( "messages.password_reset_detected@security" ) 
+			getInstance( "messagebox@cbMessagebox" ).info(
+				prc.CBHelper.r( "messages.password_reset_detected@security" )
 			);
 			setNextEvent(
 				event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
@@ -83,7 +83,7 @@ component extends="coldbox.system.Interceptor"{
 			);
 			return;
 		}
-		
+
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 
 		// Global Admin Exit Handlers
@@ -119,6 +119,7 @@ component extends="coldbox.system.Interceptor"{
 
 		// Authors Tab
 		prc.xehAuthors					= "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorNew				= "#prc.cbAdminEntryPoint#.authors.new";
 		prc.xehAuthorEditor				= "#prc.cbAdminEntryPoint#.authors.editor";
 		prc.xehPermissions				= "#prc.cbAdminEntryPoint#.permissions";
 		prc.xehPermissionGroups			= "#prc.cbAdminEntryPoint#.permissionGroups";
@@ -143,10 +144,10 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCKFileBrowserURL			= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLImage	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		prc.xehCKFileBrowserURLFlash	= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
-		
+
 		// Search global
 		prc.xehSearchGlobal 			= "#prc.cbAdminEntryPoint#.content.search";
-		
+
 		// Prepare Admin Actions
 		prc.xehAdminActionData 			= [
 			{ name="Clear RSS Caches",          value="rss-purge" },
