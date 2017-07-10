@@ -7,7 +7,7 @@
 #
 # Host: Localhost (MySQL 5.7.14)
 # Database: contentbox
-# Generation Time: 2017-06-21 23:31:49 +0000
+# Generation Time: 2017-07-10 15:11:02 +0000
 # ************************************************************
 
 
@@ -61,9 +61,11 @@ LOCK TABLES `cb_author` WRITE;
 
 INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`)
 VALUES
-  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-06-21 18:03:03','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"simplemde\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"no\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-06-21 18:29:30',b'0',b'0'),
+  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-07-10 10:08:50','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"ckeditor\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"no\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-07-10 10:08:50',b'0',b'0'),
   (2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',b'0',b'0'),
-  (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$WzD.PZHqpf5IAGvPkPwYqeFh5bCjiwNWQ/fIEEaETtHSS43e6rBkC',b'1','2017-06-21 17:40:38','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',3,'2017-06-21 18:16:47',b'0',b'1');
+  (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',b'1','2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-06 12:18:13',b'0',b'0'),
+  (4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',b'1','2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',b'0',b'1'),
+  (5,'Jorge','Morelos','joremorelos@morelos.com','joremorelos@morelos.com','$2a$12$IBAYihdRG.Hj8fh/fztmi.MvFRn2lPxk4Thw1mnmbVzjoLnNCgzOe',b'1',NULL,'2017-07-06 12:07:02','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 12:07:02',b'0',b'1');
 
 /*!40000 ALTER TABLE `cb_author` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -88,7 +90,9 @@ LOCK TABLES `cb_authorPermissionGroups` WRITE;
 
 INSERT INTO `cb_authorPermissionGroups` (`FK_authorID`, `FK_permissionGroupID`)
 VALUES
-  (3,1);
+  (4,1),
+  (5,1),
+  (5,2);
 
 /*!40000 ALTER TABLE `cb_authorPermissionGroups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -113,8 +117,12 @@ LOCK TABLES `cb_authorPermissions` WRITE;
 
 INSERT INTO `cb_authorPermissions` (`FK_authorID`, `FK_permissionID`)
 VALUES
-  (3,14),
-  (3,36);
+  (3,36),
+  (3,45),
+  (3,42),
+  (3,41),
+  (3,40),
+  (3,44);
 
 /*!40000 ALTER TABLE `cb_authorPermissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -695,9 +703,10 @@ LOCK TABLES `cb_loginAttempts` WRITE;
 
 INSERT INTO `cb_loginAttempts` (`loginAttemptsID`, `value`, `attempts`, `createdDate`, `lastLoginSuccessIP`, `modifiedDate`, `isDeleted`)
 VALUES
-  (15,'lmajano@ortussolutions.com',0,'2016-11-28 14:56:37',NULL,'2017-06-13 14:13:56',b'0'),
   (16,'lmajano',0,'2016-11-28 14:56:43','127.0.0.1','2016-11-28 14:56:46',b'0'),
-  (17,'testermajano',0,'2017-06-21 16:07:26','127.0.0.1','2017-06-21 17:37:42',b'0');
+  (17,'testermajano',0,'2017-06-21 16:07:26','127.0.0.1','2017-06-21 17:37:42',b'0'),
+  (19,'joejoe@joe.com',0,'2017-07-06 11:37:09',NULL,'2017-07-06 11:37:31',b'0'),
+  (20,'joejoe',0,'2017-07-06 11:38:28','127.0.0.1','2017-07-06 11:38:28',b'0');
 
 /*!40000 ALTER TABLE `cb_loginAttempts` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1133,7 +1142,6 @@ VALUES
   (2,27),
   (2,3),
   (2,46),
-  (1,14),
   (1,18),
   (1,13),
   (1,10),
@@ -1147,6 +1155,7 @@ VALUES
   (1,42),
   (1,25),
   (1,41),
+  (1,46),
   (1,31),
   (1,5),
   (1,40),
@@ -1154,8 +1163,7 @@ VALUES
   (1,43),
   (1,6),
   (1,23),
-  (1,27),
-  (1,46);
+  (1,27);
 
 /*!40000 ALTER TABLE `cb_rolePermissions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1192,31 +1200,30 @@ LOCK TABLES `cb_securityRule` WRITE;
 
 INSERT INTO `cb_securityRule` (`ruleID`, `whitelist`, `securelist`, `roles`, `permissions`, `redirect`, `useSSL`, `order`, `match`, `createdDate`, `modifiedDate`, `isDeleted`, `message`, `messageType`)
 VALUES
-  (1,'','^contentbox-admin:modules\\..*','','MODULES_ADMIN','cbadmin/security/login',b'0',1,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (2,'','^contentbox-admin:mediamanager\\..*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',1,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (3,'','^contentbox-admin:versions\\.(remove)','','VERSIONS_DELETE','cbadmin/security/login',b'0',1,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (4,'','^contentbox-admin:versions\\.(rollback)','','VERSIONS_ROLLBACK','cbadmin/security/login',b'0',1,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (5,'','^contentbox-admin:emailtemplates\\..*','','EMAIL_TEMPLATE_ADMIN','cbadmin/security/login',b'0',2,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (6,'','^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$','','WIDGET_ADMIN','cbadmin/security/login',b'0',2,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (7,'','^contentbox-admin:tools\\.(importer|doImport)','','TOOLS_IMPORT','cbadmin/security/login',b'0',3,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (8,'','^contentbox-admin:(settings|permissions|roles|securityRules)\\..*','','SYSTEM_TAB','cbadmin/security/login',b'0',4,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (9,'','^contentbox-admin:settings\\.save','','SYSTEM_SAVE_CONFIGURATION','cbadmin/security/login',b'0',5,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (10,'','^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)','','SYSTEM_RAW_SETTINGS','cbadmin/security/login',b'0',6,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (11,'','^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)','','SECURITYRULES_ADMIN','cbadmin/security/login',b'0',7,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (12,'','^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)','','ROLES_ADMIN','cbadmin/security/login',b'0',8,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (13,'','^contentbox-admin:permissions\\.(remove|save)','','PERMISSIONS_ADMIN','cbadmin/security/login',b'0',9,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (14,'','^contentbox-admin:dashboard\\.reload','','RELOAD_MODULES','cbadmin/security/login',b'0',10,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (15,'','^contentbox-admin:pages\\.(changeOrder|remove)','','PAGES_ADMIN','cbadmin/security/login',b'0',11,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (16,'','^contentbox-admin:layouts\\.(remove|upload|rebuildRegistry|activate)','','LAYOUT_ADMIN','cbadmin/security/login',b'0',12,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (17,'','^contentbox-admin:entries\\.(quickPost|remove)','','ENTRIES_ADMIN','cbadmin/security/login',b'0',13,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (18,'','^contentbox-admin:customHTML\\.(editor|remove|save)','','CUSTOMHTML_ADMIN','cbadmin/security/login',b'0',14,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (19,'','^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)','','COMMENTS_ADMIN','cbadmin/security/login',b'0',15,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (20,'','^contentbox-admin:categories\\.(remove|save)','','CATEGORIES_ADMIN','cbadmin/security/login',b'0',16,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (21,'','^contentbox-admin:authors\\.(remove|removePermission|savePermission)','','AUTHOR_ADMIN','cbadmin/security/login',b'0',17,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (22,'^contentbox-admin:security\\.','^contentbox-admin:.*','','CONTENTBOX_ADMIN','cbadmin/security/login',b'0',18,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (23,'','^contentbox-filebrowser:.*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',19,'event','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0',NULL,'info'),
-  (24,'test','nothing','','','security.login',b'1',20,'event','2016-06-16 12:22:04','2016-06-16 12:22:04',b'0','You are out fool','Warn'),
-  (25,'','firstRule','','ADMIN','cbadmin/login',b'0',0,'event','2017-06-14 11:50:56','2017-06-14 11:50:56',b'0','','info');
+  (26,'','^contentbox-admin:modules\\..*','','MODULES_ADMIN','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info'),
+  (27,'','^contentbox-admin:mediamanager\\..*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info'),
+  (28,'','^contentbox-admin:versions\\.(remove)','','VERSIONS_DELETE','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info'),
+  (29,'','^contentbox-admin:versions\\.(rollback)','','VERSIONS_ROLLBACK','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info'),
+  (30,'','^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$','','WIDGET_ADMIN','cbadmin/security/login',b'0',2,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info'),
+  (31,'','^contentbox-admin:tools\\.(importer|doImport)','','TOOLS_IMPORT','cbadmin/security/login',b'0',3,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info'),
+  (32,'','^contentbox-admin:(settings|permissions|roles|securityRules)\\..*','','SYSTEM_TAB','cbadmin/security/login',b'0',4,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (33,'','^contentbox-admin:settings\\.save','','SYSTEM_SAVE_CONFIGURATION','cbadmin/security/login',b'0',5,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (34,'','^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)','','SYSTEM_RAW_SETTINGS','cbadmin/security/login',b'0',6,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (35,'','^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)','','SECURITYRULES_ADMIN','cbadmin/security/login',b'0',7,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (36,'','^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)','','ROLES_ADMIN','cbadmin/security/login',b'0',8,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (37,'','^contentbox-admin:permissions\\.(remove|save)','','PERMISSIONS_ADMIN','cbadmin/security/login',b'0',9,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (38,'','^contentbox-admin:dashboard\\.reload','','RELOAD_MODULES','cbadmin/security/login',b'0',10,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (39,'','^contentbox-admin:pages\\.(changeOrder|remove)','','PAGES_ADMIN','cbadmin/security/login',b'0',11,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (40,'','^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)','','THEME_ADMIN','cbadmin/security/login',b'0',12,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (41,'','^contentbox-admin:entries\\.(quickPost|remove)','','ENTRIES_ADMIN','cbadmin/security/login',b'0',13,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (42,'','^contentbox-admin:contentStore\\.(editor|remove|save)','','CONTENTSTORE_ADMIN','cbadmin/security/login',b'0',14,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (43,'','^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)','','COMMENTS_ADMIN','cbadmin/security/login',b'0',15,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (44,'','^contentbox-admin:categories\\.(remove|save)','','CATEGORIES_ADMIN','cbadmin/security/login',b'0',16,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (45,'','^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)','','AUTHOR_ADMIN','cbadmin/security/login',b'0',17,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (46,'^contentbox-admin:security\\.','^contentbox-admin:.*','','CONTENTBOX_ADMIN','cbadmin/security/login',b'0',18,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (47,'','^contentbox-filebrowser:.*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',19,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (48,'','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$','','TOOLS_IMPORT','cbadmin/security/login',b'0',20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info'),
+  (49,'','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$','','TOOLS_EXPORT','cbadmin/security/login',b'0',20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info');
 
 /*!40000 ALTER TABLE `cb_securityRule` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1263,7 +1270,7 @@ VALUES
   (14,'cb_site_ssl','false',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (15,'cb_html_beforeContent','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (16,'cb_dashboard_recentComments','10',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (17,'cb_versions_max_history','10',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
+  (17,'cb_versions_max_history','10',b'0','2016-05-03 16:23:26','2017-07-05 15:21:46',b'0'),
   (18,'cb_media_provider_caching','true',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (19,'cb_site_keywords','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (20,'cb_html_preIndexDisplay','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
@@ -1413,7 +1420,8 @@ VALUES
   (184,'cb_site_sitemap','true',b'0','2017-06-13 14:32:33','2017-06-13 14:32:56',b'0'),
   (185,'cb_site_adminbar','true',b'1','2017-06-13 14:33:11','2017-06-13 14:33:11',b'0'),
   (186,'CB_SECURITY_RATE_LIMITER_LOGGING','true',b'1','2017-06-13 14:33:22','2017-06-13 14:33:22',b'0'),
-  (187,'cb_security_rate_limiter_redirectURL','',b'1','2017-06-13 14:33:30','2017-06-13 14:33:30',b'0');
+  (187,'cb_security_rate_limiter_redirectURL','',b'1','2017-06-13 14:33:30','2017-06-13 14:33:30',b'0'),
+  (188,'cb_security_min_password_length','8',b'1','2017-07-05 14:07:42','2017-07-05 14:40:56',b'0');
 
 /*!40000 ALTER TABLE `cb_setting` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1448,7 +1456,7 @@ VALUES
   (31,9,190,'2016-05-03 16:23:26','2016-12-02 19:42:07',b'0'),
   (32,2,191,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (33,4,189,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (35,90,147,'2016-05-03 16:23:26','2017-06-21 17:59:23',b'0'),
+  (35,101,147,'2016-05-03 16:23:26','2017-07-10 10:06:51',b'0'),
   (38,3,162,'2016-05-03 16:23:26','2016-12-02 19:42:05',b'0'),
   (39,1,160,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (43,3,207,'2016-05-18 11:35:32','2016-05-18 11:35:32',b'0'),
