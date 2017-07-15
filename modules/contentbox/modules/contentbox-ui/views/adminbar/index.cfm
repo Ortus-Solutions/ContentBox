@@ -5,7 +5,7 @@
 
 		<cfif !isNull( args.oContent )>
 
-			<cfif args.oContent.getContentType() == "Page">
+			<cfif args.oContent.getContentType() eq "Page">
 			<span class="icon-info"></span>
 			<span class="admin-bar-label layout">
 				Layout: #args.oContent.getLayout()#
@@ -103,7 +103,7 @@ var a         = getCookie( "adminbarstatus" );
 var el        = document.getElementById( "cb-admin-bar" );
 var hasClass1 = el.classList.contains('fade_out');
 
-if( a== "out" ){
+if( a == "out" ){
 	el.classList.add( "fade_out" );
 }else{
 	//do nothing
