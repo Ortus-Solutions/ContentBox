@@ -26,105 +26,82 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	any function renderIt( any content ){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getPrivateValue( name="cbSettings" );
-		var captcha			= "";
-		var commentForm 	= "";
 		var oCurrentAuthor 	= securityService.getAuthorSession();
-		
-		// captcha?
-		if( !oCurrentAuthor.isLoggedIn() AND cbSettings.cb_comments_captcha ){
-			saveContent variable="captcha"{
-				writeOutput( "
-					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
-					#html.textField(
-						name 		= "captchacode",
-						label 		= "Enter the security code shown above:",
-						required 	= "required",
-						class 		= "form-control",
-						groupWrapper= "div class=form-group",
-						size 		= "50" 
-					)#
-				" );
-			}
-		}
+		var iData = { commentForm = "" };
 
 		// generate comment form
-		saveContent variable="commentForm"{
-			writeOutput('
-			#html.startForm( 
-				name 		= "commentForm", 
-				action 		= cb.linkCommentPost( arguments.content ), 
-				novalidate 	= "novalidate" 
+		iData.commentForm &= '
+			#html.startForm(
+				name 		= "commentForm",
+				action 		= cb.linkCommentPost( arguments.content ),
+				novalidate 	= "novalidate"
+			)#
+		';
+
+		cb.event( "cbui_preCommentForm", iData );
+
+		iData.commentForm &= '
+			#getModel( "messagebox@cbMessagebox" ).renderIt()#
+
+			#html.hiddenField( name="contentID", value=arguments.content.getContentID() )#
+			#html.hiddenField( name="contentType", value=arguments.content.getContentType() )#
+
+			#html.textField(
+				name 		= "author",
+				label 		= "Name: (required)",
+				size 		= "50",
+				class 		= "form-control",
+				groupWrapper= "div class=form-group",
+				required 	= "required",
+				value 		= event.getValue( "author", oCurrentAuthor.getName() )
 			)#
 
-				#cb.event( "cbui_preCommentForm" )#
+			#html.inputField(
+				name 		= "authorEmail",
+				type 		= "email",
+				label 		= "Email: (required)",
+				size 		= "50",
+				class 		= "form-control",
+				groupWrapper= "div class=form-group",
+				required 	= "required",
+				value 		= event.getValue( "authorEmail", oCurrentAuthor.getEmail() )
+			)#
 
-				#getModel( "messagebox@cbMessagebox" ).renderIt()#
+			#html.inputField(
+				name 		= "authorURL",
+				type 		= "url",
+				label 		= "Website:",
+				size 		= "50",
+				class 		= "form-control",
+				groupWrapper= "div class=form-group",
+				value 		= event.getValue( "authorURL", "" )
+			)#
 
-				#html.hiddenField( name="contentID", value=arguments.content.getContentID() )#
-				#html.hiddenField( name="contentType", value=arguments.content.getContentType() )#
+			#html.textArea(
+				name 		= "content",
+				label 		= "Comment:",
+				class 		= "form-control",
+				required 	= "required",
+				value 		= event.getValue( "content", "" )
+			)#
 
-				#html.textField( 
-					name 		= "author", 
-					label 		= "Name: (required)",
-					size 		= "50", 
-					class 		= "form-control",
-					groupWrapper= "div class=form-group",
-					required 	= "required", 
-					value 		= event.getValue( "author", oCurrentAuthor.getName() ) 
-				)#
+			#html.checkBox(
+				name 			= "subscribe",
+				label 			= "Notify me of follow-up comments by email.",
+				groupwrapper 	= "div class=checkbox",
+				checked 		= event.getValue( "subscribe", false )
+			)#
+		';
 
-				#html.inputField( 
-					name 		= "authorEmail", 
-					type 		= "email", 
-					label 		= "Email: (required)", 
-					size 		= "50", 
-					class 		= "form-control",
-					groupWrapper= "div class=form-group",
-					required 	= "required", 
-					value 		= event.getValue( "authorEmail", oCurrentAuthor.getEmail() ) 
-				)#
+		cb.event( "cbui_postCommentForm", iData );
 
-				#html.inputField( 
-					name 		= "authorURL", 
-					type 		= "url", 
-					label 		= "Website:", 
-					size 		= "50", 
-					class 		= "form-control",
-					groupWrapper= "div class=form-group",
-					value 		= event.getValue( "authorURL", "" ) 
-				)#
-
-				#html.textArea( 
-					name 		= "content", 
-					label 		= "Comment:", 
-					class 		= "form-control",
-					required 	= "required", 
-					value 		= event.getValue( "content", "" ) 
-				)#
-
-				#html.checkBox( 
-					name 			= "subscribe", 
-					label 			= "Notify me of follow-up comments by email.",
-					groupwrapper 	= "div class=checkbox",
-					checked 		= event.getValue( "subscribe", false )
-				)#
-				
-				<cfif len( captcha )>
-				<p>
-				#captcha#
-				</p>
-				</cfif>
-				
-				#cb.event( "cbui_postCommentForm" )#
-
-				<div class="buttons">
-					#html.submitButton( name="commentSubmitButton", value="Submit", class="btn btn-primary" )#
-				</div>
+		iData.commentForm &= '
+			<div class="buttons">
+				#html.submitButton( name="commentSubmitButton", value="Submit", class="btn btn-primary" )#
+			</div>
 			#html.endForm()#
-			');
-		}
+		';
 
-		return commentForm;
+		return iData.commentForm;
 	}
-
 }

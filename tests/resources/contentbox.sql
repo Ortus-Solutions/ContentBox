@@ -1256,7 +1256,6 @@ INSERT INTO `cb_setting` (`settingID`, `name`, `value`, `isCore`, `createdDate`,
 VALUES
   (1,'cb_comments_moderation_blockedlist','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (2,'cb_paging_maxrows','25',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (3,'cb_comments_captcha','true',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (4,'cb_site_name','ContentBox Site',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (5,'cb_comments_urltranslations','true',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (6,'cb_editors_ckeditor_extraplugins','cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,cbKeyBinding,about',b'0','2016-05-03 16:23:26','2016-05-06 15:47:29',b'0'),
