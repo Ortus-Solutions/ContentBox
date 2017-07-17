@@ -25,6 +25,14 @@ component extends="tests.resources.BaseTest"{
 		// all your suites go here.
 		describe( "Comment Service", function(){
 
+			aroundEach(function( spec, suite ){
+				// Make sure we always rollback
+				transaction{
+					arguments.spec.body();
+					transactionRollback();
+				}
+			});
+
 			beforeEach(function( currentSpec ){
 				commentService = getModel( "CommentService@cb" );
 			});

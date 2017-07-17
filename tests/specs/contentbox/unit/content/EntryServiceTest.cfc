@@ -91,7 +91,7 @@ component extends="tests.resources.BaseTest"{
 					month	= dateFormat( entry.getPublishedDate(), "mm" ),
 					day 	= dateFormat( entry.getPublishedDate(), "dd" )
 				);
-				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
+				expect(	arrayLen( r.entries ) ).toBeGTE( 1 );
 			});
 
 			it( "can find published entries by criteria", function(){
