@@ -60,17 +60,23 @@ component{
 	};
 
 	public boolean function onRequestStart(String targetPage){
-
-		//Set a high timeout for long running tests
+		// Set a high timeout for long running tests
 		setting requestTimeout="9999";
 
 		// ORM Reload for fresh results
 		if( structKeyExists( url, "fwreinit" ) ){
-			pagePoolClear();
+			if( structKeyExists( server, "lucee" ) ){
+				pagePoolClear();
+			}
 			ormReload();
 		}
 
 		return true;
 	}
+
+	public void function onRequestEnd() { 
+        structDelete( application, "cbController" );
+        structDelete( application, "wirebox" );
+    } 
 
 }

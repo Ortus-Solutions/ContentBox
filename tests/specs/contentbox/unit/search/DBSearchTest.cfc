@@ -4,7 +4,7 @@
 * www.ortussolutions.com/products/contentbox
 * ---
 */
-component extends="coldbox.system.testing.BaseTestCase"{
+component extends="tests.resources.BaseTest"{
 
 /*********************************** LIFE CYCLE Methods ***********************************/
 

@@ -4,7 +4,7 @@
 * www.ortussolutions.com/products/contentbox
 * ---
 */
-component extends="coldbox.system.testing.BaseTestCase"{
+component extends="tests.resources.BaseTest"{
 
 /*********************************** LIFE CYCLE Methods ***********************************/
 
@@ -83,7 +83,7 @@ component extends="coldbox.system.testing.BaseTestCase"{
 					year 	= dateformat( entry.getPublishedDate(), "yyyy" ), 
 					month 	= dateFormat( entry.getPublishedDate(), "mm" ) 
 				);
-				expect(	arrayLen( r.entries ) ).toBeGT( 1 );
+				expect(	arrayLen( r.entries ) ).toBeGTE( 1 );
 				
 				// year + Month + day
 				var r = model.findPublishedEntriesByDate(
