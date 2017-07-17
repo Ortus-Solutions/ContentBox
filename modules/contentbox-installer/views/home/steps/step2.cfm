@@ -6,18 +6,19 @@
 <!--- Populate With Sample Data --->
 <div class="form-group">
     #html.label( 
-        field="populatedata", 
-        content=cb.r( "tab.site.sampledata@installer" ), 
-        class="control-label" 
+        field   = "populatedata", 
+        content = cb.r( "tab.site.sampledata@installer" ), 
+        class   = "control-label"
     )#
     <div class="controls">
     	#html.checkbox(
 			name    = "populatedata_toggle",
-			data	= { toggle: 'toggle', match: 'populatedata' }
+			data	= { toggle: 'toggle', match: 'populatedata' },
+            checked = true
 		)#
 		#html.hiddenField(
 			name	= "populatedata",
-            value   = false
+            value   = true
 		)#
     </div>
 </div>
