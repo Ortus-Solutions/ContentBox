@@ -1,0 +1,60 @@
+version: "3"
+services:
+
+  # Microsoft SQL Server
+  #mssql:
+  #  image: microsoft/mssql-server-linux
+  #  environment:
+  #    ACCEPT_EULA: Y
+  #    SA_PASSWORD: "ContentB0x!"
+  #  ports:
+  #    - "1433:1433"
+  #  volumes:
+  #    #- ./.engines/mssql/data:/var/opt/mssql/data
+  #    - ./.engines/mssql/log:/var/opt/mssql/log
+
+  # MySQL Server
+  mysql:
+    image: mysql
+    ports:
+      - 4306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: "contentbox"
+      MYSQL_DATABASE: "contentbox"
+    volumes:
+      - .engines/mysql/initdb:/docker-entrypoint-initdb.d
+      - .engines/mysql/data:/var/lib/mysql
+
+  ## Oracle
+  #oracle:
+  #  image: oracle/database:12.2.0.1-ee
+  #  volumes:
+  #    - ./engines/oracle/data:/opt/oracle/oradata # persistent oracle database data.
+  #  environment:
+  #    ORACLE_SID: "contentbox"
+  #    ORACLE_PWD: "contentbox"
+  #  ports:
+  #    - 1521:1521
+  #    - 8080:8080
+  #    - 5500:5500
+  #    
+  ## PostgreSQL
+  # image: postgres
+  # volumes:
+  # .engines/postgres/initdb:/docker-entrypoint-initdb.d
+  # .engines/postgres/data:/var/lib/postgresql/data
+  # environment:
+  #   POSTGRES_PASSWORD: "contentbox"
+  #   POSTGRES_USER: "contentbox"
+  #   POSTGRES_DB: "contentbox"
+  # ports:
+  #   - 5432:5432
+  #   
+  # Redis Service
+  # redis:
+  #   image: redis:latest
+  #   ports:
+  #     - 6379:6379
+  #   volumes:
+  #     # We'll mount the 'redis-data' volume into the location redis stores it's data:
+  #     - .engines/redis/data:/var/lib/redis
