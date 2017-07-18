@@ -56,11 +56,11 @@ component 	persistent="true"
 							and contentCategories.FK_contentID = contentStore.contentID
 						   	and contentStore.contentID = content.contentID
 						  	and content.isPublished = 1
-						  	and content.publishedDate <= CURRENT_TIMESTAMP()
+						  	and content.publishedDate <= CURRENT_TIMESTAMP
 						  	and content.passwordProtection = ''
 						  	and ( 
 								content.expireDate is null or
-								content.expireDate >= CURRENT_TIMESTAMP()
+								content.expireDate >= CURRENT_TIMESTAMP
 						  	)" ;
 
 	property 	name="numberOfEntries" 
@@ -77,11 +77,11 @@ component 	persistent="true"
 							and contentCategories.FK_contentID = entry.contentID
 						   	and entry.contentID = content.contentID
 						  	and content.isPublished = 1
-						  	and content.publishedDate <= CURRENT_TIMESTAMP()
+						  	and content.publishedDate <= CURRENT_TIMESTAMP
 						  	and content.passwordProtection = ''
 						  	and ( 
 								content.expireDate is null or
-								content.expireDate >= CURRENT_TIMESTAMP()
+								content.expireDate >= CURRENT_TIMESTAMP
 						  	)" ;
 
 	property 	name="numberOfPages" 	
@@ -98,13 +98,13 @@ component 	persistent="true"
 							and contentCategories.FK_contentID = page.contentID
 							and page.contentID = content.contentID
 							and content.isPublished = 1
-						  	and content.publishedDate <= CURRENT_TIMESTAMP()
+						  	and content.publishedDate <= CURRENT_TIMESTAMP
 						  	and content.passwordProtection = ''
 						  	and ( 
 								content.expireDate is null or
-								content.expireDate >= CURRENT_TIMESTAMP()
+								content.expireDate >= CURRENT_TIMESTAMP
 						  	)" ;
-
+	
 	/* *********************************************************************
 	**							PK + CONSTRAINTS									
 	********************************************************************* */
