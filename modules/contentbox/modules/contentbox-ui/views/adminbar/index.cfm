@@ -170,6 +170,9 @@ function getCookie( cname ){
 
 
 <style>
+body{
+	margin-top:50px !important;
+}
 ##cb-admin-bar{
 	padding: 7px 20px;
     width: 100%;
