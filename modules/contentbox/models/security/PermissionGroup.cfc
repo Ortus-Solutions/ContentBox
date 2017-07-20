@@ -67,6 +67,9 @@ component 	persistent="true"
 				formula="select count(*) from cb_groupPermissions as groupPermissions 
 						 where groupPermissions.FK_permissionGroupID = permissionGroupID";
 	
+	property 	name="numberOfAuthors" 	
+				formula="select count(*) from cb_authorPermissionGroups as pg where pg.FK_permissionGroupID = permissionGroupID";
+
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES									
 	********************************************************************* */

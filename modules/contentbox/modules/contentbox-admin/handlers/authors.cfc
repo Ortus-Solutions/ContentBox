@@ -20,7 +20,7 @@ component extends="baseHandler"{
 	/**
 	* Pre handler
 	*/
-	function preHandler( event, rc, prc, action, eventArguments){
+	function preHandler( event, rc, prc, action, eventArguments ){
 		// Specific admin validation actions
 		if( listFindNoCase( "save,editor,savePreferences,passwordChange,doPasswordReset,saveRawPreferences", arguments.action ) ){
 			// Get incoming author to verify credentials
@@ -60,6 +60,7 @@ component extends="baseHandler"{
 		// Get Roles
 		prc.aRoles 				= roleService.getAll( sortOrder="role" );
 		prc.aPermissionGroups 	= permissionGroupService.getAll( sortOrder="name" );
+		prc.statusReport 		= authorService.getStatusReport();
 
 		// View
 		event.setView( "authors/index" );
@@ -104,7 +105,7 @@ component extends="baseHandler"{
 			.paramValue( "showAll", false )
 			.paramValue( "searchAuthors", "" )
 			.paramValue( "isFiltering", false, true )
-			.paramValue( "fStatus", "any" )
+			.paramValue( "fStatus", "true" )
 			.paramValue( "fRole", "any" )
 			.paramValue( "fGroups", "any" )
 			.paramValue( "sortOrder", "lastname_asc" );
