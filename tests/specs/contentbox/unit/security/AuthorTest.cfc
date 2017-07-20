@@ -26,6 +26,13 @@ component extends="tests.resources.BaseTest"{
 				model = entityNew( "cbAuthor" );
 			});
 
+			it( "can generate an API Token", function(){
+				var APIToken = model.getAPIToken();
+				expect(	APIToken ).notToBeEmpty();
+				var newToken = model.generateAPIToken().getAPIToken();
+				expect(	newToken ).notToBe( APIToken );
+			});
+
 			it( "can load properly", function(){
 				var testUser = entityLoad( "cbAuthor" )[ 1 ];
 				expect(	testUser.isLoaded() ).toBeTrue();
