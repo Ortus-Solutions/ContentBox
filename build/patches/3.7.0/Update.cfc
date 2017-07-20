@@ -103,6 +103,8 @@ component {
 			ORMCloseSession();
 			ORMReload();
 
+			// Generate Author API Tokens
+			generateAPITokens();
 			// Update new settings
 			updateSettings();
 			// Update Permissions
@@ -178,6 +180,20 @@ component {
 	}
 
 	/************************************** PRIVATE *********************************************/
+
+	private function generateAPITokens(){
+		var aAuthors = authorService.getAll();
+		var aTargetAuthors = [];
+
+		for( var this author in aAuthors ){
+			if( !len( author.getAPIToken() ) ){
+				author.generateAPIToken();
+				arrayAppend( aTargetAuthors, author );
+			}
+		}
+		
+		authorService.saveAll( aTargetAuthors );
+	}
 
 	private function updateAdmin(){
 		var oRole = roleService.findWhere( { role = "Administrator" } );
