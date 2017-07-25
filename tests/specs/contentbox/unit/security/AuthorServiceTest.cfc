@@ -23,6 +23,20 @@ component extends="tests.resources.BaseTest"{
 		// all your suites go here.
 		describe( "Author Service", function(){
 
+			it( "can search for authors with 2 factor auth status", function(){
+				var results = authorService.search( twoFactorAuth = "true" );
+				for( var item in results.authors ){
+					expect(	item.getIs2FactorAuth() ).toBeTrue();
+				}
+			});
+
+			it( "can search for authors without 2 factor auth status", function(){
+				var results = authorService.search( twoFactorAuth = "false" );
+				for( var item in results.authors ){
+					expect(	item.getIs2FactorAuth() ).toBeFalse();
+				}
+			});
+
 			it( "can be created", function(){
 				expect(	authorService ).toBeComponent();
 			});

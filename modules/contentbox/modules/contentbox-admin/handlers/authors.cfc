@@ -106,6 +106,7 @@ component extends="baseHandler"{
 			.paramValue( "searchAuthors", "" )
 			.paramValue( "isFiltering", false, true )
 			.paramValue( "fStatus", "true" )
+			.paramValue( "f2FactorAuth", "true" )
 			.paramValue( "fRole", "any" )
 			.paramValue( "fGroups", "any" )
 			.paramValue( "sortOrder", "lastname_asc" );
@@ -121,11 +122,16 @@ component extends="baseHandler"{
 		prc.xehPasswordReset	= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
-		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){
+		if( rc.fRole neq "any" 
+			OR rc.fStatus neq "any" 
+			OR rc.f2FactorAuth neq "any"
+			OR rc.fGroups neq "any" 
+			OR rc.showAll 
+		){
 			prc.isFiltering = true;
 		}
 
-		// Determine Sort Order
+		// Determine Sort Order internally to avoid XSS
 		var sortOrder = "lastName";
 		switch( rc.sortOrder ){
 			case "lastname_asc" 		: { sortOrder = "lastName asc";      break; }
@@ -145,7 +151,8 @@ component extends="baseHandler"{
 			sortOrder 			= sortOrder,
 			isActive  			= rc.fStatus,
 			role      			= rc.fRole,
-			permissionGroups 	= rc.fGroups
+			permissionGroups 	= rc.fGroups,
+			twoFactorAuth		= rc.f2FactorAuth
 		);
 		prc.authors 		= results.authors;
 		prc.authorCount 	= results.count;

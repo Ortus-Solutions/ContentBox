@@ -302,6 +302,11 @@ component accessors="true"{
 			"cb_security_rate_limiter_message"		= "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
 			"cb_security_rate_limiter_redirectURL"	= "",
 
+			// Login Settings
+			"cb_security_2factorAuth_force_toggle" 	= "false",
+			"cb_security_login_signout_url"			= "",
+			"cb_security_login_signin_text"			= "",
+
 			// Admin settings
 			"cb_admin_ssl" 							= "false",
 			"cb_admin_quicksearch_max" 				= "5",

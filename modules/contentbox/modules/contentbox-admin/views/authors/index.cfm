@@ -122,6 +122,16 @@
 							</select>
 						</div>
 
+						<!--- 2 Factor Auth --->
+						<div class="form-group">
+							<label for="f2FactorAuth" class="control-label">2 Factor Auth: </label>
+							<select name="f2FactorAuth" id="f2FactorAuth" class="form-control input-sm">
+								<option value="any" selected="selected">Any Status</option>
+								<option value="true">Active (#prc.statusReport.2FactorAuthEnabled#)</option>
+								<option value="false">Deactivated (#prc.statusReport.2FactorAuthDisabled#)</option>
+							</select>
+						</div>
+
 						<!--- Roles --->
 						<div class="form-group">
 							<label for="fRole" class="control-label">Roles: </label>

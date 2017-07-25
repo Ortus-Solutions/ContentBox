@@ -158,7 +158,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	/**
-	* Author search by name, email or username
+	* Author search by many criteria.
+	* 
 	* @searchTerm		 	Search in firstname, lastname and email fields
 	* @isActive  		 	Search with active bit
 	* @role      		 	Apply a role filter
@@ -167,6 +168,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* @asQuery   		 	Query or objects
 	* @sortOrder 		 	The sort order to apply
 	* @permissionGroups 	Single or list of permissiong groups to search on
+	* @twoFactorAuth 		Two factor auth or any
+	*
+	* @return {authors:array, count:numeric}
 	*/
 	function search(
 		string searchTerm="",
@@ -176,7 +180,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		numeric offset=0,
 		boolean asQuery=false,
 		string sortOrder="lastName",
-		string permissionGroups
+		string permissionGroups,
+		string twoFactorAuth
 	){
 		var results = {};
 		var c = newCriteria();
@@ -193,6 +198,11 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		// isActive filter
 		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any" ){
 			c.eq( "isActive", javaCast( "boolean", arguments.isActive ) );
+		}
+
+		// twoFactorAuth filter
+		if( structKeyExists( arguments, "twoFactorAuth" ) AND arguments.twoFactorAuth NEQ "any" ){
+			c.eq( "is2FactorAuth", javaCast( "boolean", arguments.twoFactorAuth ) );
 		}
 
 		// role filter

@@ -7,7 +7,7 @@
 #
 # Host: Localhost (MySQL 5.7.14)
 # Database: contentbox
-# Generation Time: 2017-07-10 15:11:02 +0000
+# Generation Time: 2017-07-24 21:22:15 +0000
 # ************************************************************
 
 
@@ -19,7 +19,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-USE `contentbox`;
+use `contentbox`;
 
 # Dump of table cb_author
 # ------------------------------------------------------------
@@ -42,8 +42,11 @@ CREATE TABLE `cb_author` (
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `isPasswordReset` bit(1) NOT NULL DEFAULT b'0',
+  `is2FactorAuth` bit(1) NOT NULL DEFAULT b'0',
+  `APIToken` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`authorID`),
   UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `APIToken` (`APIToken`),
   KEY `FK6847396B9724FA40` (`FK_roleID`),
   KEY `idx_active` (`isActive`),
   KEY `idx_email` (`email`),
@@ -53,19 +56,21 @@ CREATE TABLE `cb_author` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_passwordReset` (`isPasswordReset`),
+  KEY `idx_apitoken` (`APIToken`),
+  KEY `idx_2factorauth` (`is2FactorAuth`),
   CONSTRAINT `FK6847396B9724FA40` FOREIGN KEY (`FK_roleID`) REFERENCES `cb_role` (`roleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `cb_author` WRITE;
 /*!40000 ALTER TABLE `cb_author` DISABLE KEYS */;
 
-INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`)
+INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`, `is2FactorAuth`, `APIToken`)
 VALUES
-  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-07-10 10:08:50','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"ckeditor\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"no\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-07-10 10:08:50',b'0',b'0'),
-  (2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',b'0',b'0'),
-  (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',b'1','2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-06 12:18:13',b'0',b'0'),
-  (4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',b'1','2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',b'0',b'1'),
-  (5,'Jorge','Morelos','joremorelos@morelos.com','joremorelos@morelos.com','$2a$12$IBAYihdRG.Hj8fh/fztmi.MvFRn2lPxk4Thw1mnmbVzjoLnNCgzOe',b'1',NULL,'2017-07-06 12:07:02','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 12:07:02',b'0',b'1');
+  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-07-20 15:35:28','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"ckeditor\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"yes\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-07-20 15:35:28',b'0',b'0',b'0','04AF40069044B3625811EF6C4399CC4DC3EBA390FB5F4CD25D16FA7B592C81189A8B29459CD5EDC021073D619BFEDC12EFA3F6A1395B89CE880B8D936CA88DF4'),
+  (2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',b'0',b'0',b'0','A2707287EC2849AC4BF63E3D75286B1BAD81A23726D62899694F66BBC497E4E9EA3895F22BF8B36F3165C2F4CC3197D5163F9BC172FEE39A45C93CE640970D9C'),
+  (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',b'1','2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-18 15:22:13',b'0',b'1',b'1','1DD3F7B17C26C3DD750ABD3DFDEE5E3404DF8B96028CD16FD741B2B6C45D501FE93EED010B94B8FF2A33CFCB8B9FCF7D7B492B8ECF24E61E70072848E34023CA'),
+  (4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',b'1','2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',b'0',b'1',b'1','488AB7F5CEF6CBF977C8D21FD1AC973C9163E1AE5D1D37EF23A3371614619E1F7851AFB5C0AC9AD4BD3F99FD44208872BB3E64455C91A0C395DA5F0AEB0F3E4D'),
+  (5,'Jorge','Morelos','joremorelos@morelos.com','joremorelos@morelos.com','$2a$12$IBAYihdRG.Hj8fh/fztmi.MvFRn2lPxk4Thw1mnmbVzjoLnNCgzOe',b'0',NULL,'2017-07-06 12:07:02','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-19 17:01:18',b'0',b'1',b'0','0123971AF933E4406919693283CFB83C2494A3DC8F21565F84BEF4BD54F81916A9CE13F4C1F0745C5654CEB1CA28678C9B5AD92575F50459864C3EA3C6DA84EA');
 
 /*!40000 ALTER TABLE `cb_author` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -255,7 +260,6 @@ CREATE TABLE `cb_content` (
   `passwordProtection` varchar(100) DEFAULT NULL,
   `HTMLKeywords` varchar(160) DEFAULT NULL,
   `HTMLDescription` varchar(160) DEFAULT NULL,
-  `hits` bigint(20) DEFAULT '0',
   `cache` bit(1) NOT NULL DEFAULT b'1',
   `cacheLayout` bit(1) NOT NULL DEFAULT b'1',
   `cacheTimeout` int(11) DEFAULT '0',
@@ -296,54 +300,54 @@ CREATE TABLE `cb_content` (
 LOCK TABLES `cb_content` WRITE;
 /*!40000 ALTER TABLE `cb_content` DISABLE KEYS */;
 
-INSERT INTO `cb_content` (`contentID`, `contentType`, `title`, `slug`, `createdDate`, `publishedDate`, `expireDate`, `isPublished`, `allowComments`, `passwordProtection`, `HTMLKeywords`, `HTMLDescription`, `hits`, `cache`, `cacheLayout`, `cacheTimeout`, `cacheLastAccessTimeout`, `markup`, `FK_authorID`, `FK_parentID`, `showInSearch`, `featuredImage`, `featuredImageURL`, `modifiedDate`, `isDeleted`, `HTMLTitle`)
+INSERT INTO `cb_content` (`contentID`, `contentType`, `title`, `slug`, `createdDate`, `publishedDate`, `expireDate`, `isPublished`, `allowComments`, `passwordProtection`, `HTMLKeywords`, `HTMLDescription`, `cache`, `cacheLayout`, `cacheTimeout`, `cacheLastAccessTimeout`, `markup`, `FK_authorID`, `FK_parentID`, `showInSearch`, `featuredImage`, `featuredImageURL`, `modifiedDate`, `isDeleted`, `HTMLTitle`)
 VALUES
-  (63,'Entry','An awesome blog entry','an-awesome-blog-entry','2013-07-12 09:53:01','2013-07-20 16:05:46',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (64,'Entry','Another Test','another-test','2013-07-12 09:53:31','2013-07-20 16:39:53',NULL,b'0',b'1','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (65,'Entry','ContentBox Modular CMS at the South Florida CFUG','contentbox-modular-cms-at-the-south-florida-cfug','2012-09-13 15:55:12','2013-07-20 16:39:39',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'html',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (67,'Entry','Test with an excerpt','test-with-an-excerpt','2013-07-15 17:56:10','2013-07-20 16:39:39',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (69,'Entry','Updating an ORM entity','updating-an-orm-entity','2013-07-19 18:45:08','2013-07-20 16:39:39',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (86,'Entry','Copy of Updating an ORM entity','copy-of-updating-an-orm-entity','2013-07-20 16:10:43','2013-07-20 16:39:39',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'html',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (87,'Entry','Copy of Another Test','copy-of-another-test','2013-07-20 16:12:16','2013-07-20 16:39:39',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'html',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (88,'Entry','Copy of Copy of Another Test','copy-of-copy-of-another-test','2013-07-20 16:12:23','2013-07-20 16:12:00',NULL,b'0',b'1','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (109,'Entry','Couchbase Infrastructure','couchbase-infrastructure','2013-07-26 16:53:43','2013-07-26 16:53:00',NULL,b'1',b'1','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (110,'Entry','Couchbase Details','couchbase-details','2013-07-26 16:55:00','2013-10-11 10:31:28',NULL,b'1',b'1','','','',101,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (111,'ContentStore','First Content Store','first-content-store','2013-08-12 11:59:12','2013-08-12 12:02:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (114,'ContentStore','My News','my-awesome-news','2013-08-14 18:14:43','2013-08-14 18:14:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (122,'ContentStore','blog-sidebar-top','blog-sidebar-top','2013-08-22 20:42:37','2013-08-22 20:42:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (123,'ContentStore','foot','foot','2013-08-22 20:43:59','2013-08-22 20:43:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (124,'ContentStore','support options','support-options-baby','2013-08-22 20:45:19','2013-08-22 20:45:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (127,'ContentStore','FireFox Test','firefox-test','2013-08-29 08:29:36','2013-08-29 08:29:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',3,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (132,'Entry','Couchbase Conference','couchbase-conference','2013-09-13 16:54:52','2013-09-13 16:54:00',NULL,b'1',b'1','','','',3,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (133,'Entry','Disk Queues','disk-queues','2013-09-13 16:55:05','2013-09-13 16:54:00',NULL,b'1',b'1','','','',4,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (135,'Entry','This is just awesome','this-is-just-awesome','2013-10-15 16:48:56','2013-10-15 16:48:00',NULL,b'1',b'1','','','',35,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (141,'Entry','Closures cannot be declared outside of cfscript','closures-cannot-be-declared-outside-of-cfscript','2013-11-11 11:53:03','2013-11-11 11:52:00',NULL,b'1',b'1','','','',23,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (142,'Entry','Disk Queues ','disk-queues-77CAF','2014-01-31 14:41:16','2014-01-31 14:41:00',NULL,b'1',b'1','','','',17,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (147,'Page','support','support','2013-07-20 15:38:47','2013-07-20 15:38:00',NULL,b'1',b'0','','','',1,b'1',b'1',0,0,'html',1,NULL,b'1','','','2016-08-05 14:42:30',b'0',NULL),
-  (159,'ContentStore','Small Footer','foot/small-footer','2014-09-26 16:00:44','2014-09-26 16:00:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,123,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
-  (160,'Page','No Layout Test','no-layout-test','2015-03-29 10:13:59','2015-03-29 10:13:00',NULL,b'1',b'0','test','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-08-05 14:42:30',b'0',NULL),
-  (162,'Page','No Sidebar','email-test','2015-09-16 10:33:56','2015-09-16 10:33:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-08-05 14:42:30',b'0',NULL),
-  (168,'ContentStore','Lucee 4.5.2.018','lucee-452018','2016-01-14 11:44:58','2016-01-14 11:42:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-05-03 16:23:25',b'0',NULL),
-  (169,'ContentStore','Another test','another-test-a161b','2016-01-14 11:45:35','2016-01-14 11:45:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-05-05 15:56:12',b'0',NULL),
-  (176,'Page','parent page','parent-page','2016-04-12 09:26:56','2016-04-12 09:26:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-05-03 16:23:25',b'0',NULL),
-  (177,'Page','child 1','parent-page/child-1','2016-04-12 09:27:06','2016-04-12 09:27:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,176,b'1','','','2016-05-03 16:23:25',b'0',NULL),
-  (189,'Page','node','node','2016-04-12 13:18:51','2016-04-12 13:18:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-08-05 14:42:30',b'0',NULL),
-  (190,'Page','child1','node/child1','2016-04-12 13:19:04','2016-04-12 13:18:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,189,b'1','','','2016-05-03 16:23:25',b'0',NULL),
-  (191,'Page','child2','node/child2','2016-04-12 13:19:10','2016-04-12 13:19:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,189,b'1','','','2016-05-03 16:23:25',b'0',NULL),
-  (192,'Page','Test Markdown','test-markdown','2016-05-05 11:12:23','2016-05-05 11:11:00','2016-05-01 00:00:00',b'0',b'0','','','',0,b'1',b'1',0,0,'Markdown',1,NULL,b'0','','','2016-08-05 14:42:24',b'0',NULL),
-  (206,'Page','products','products','2016-05-18 11:35:32','2017-06-13 17:08:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2017-06-13 17:08:36',b'0',''),
-  (207,'Page','coldbox','products/coldbox','2016-05-18 11:35:32','2013-07-11 11:23:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,206,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (208,'Page','mini','products/coldbox/mini','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,207,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (209,'Page','services','products/coldbox/services','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,207,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (210,'Page','servers','products/coldbox/services/servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,209,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (211,'Page','More Servers','products/coldbox/services/more-servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,209,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (212,'Page','support','products/coldbox/services/support','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'HTML',1,209,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (213,'Page','coldbox-new','products/coldbox-new','2016-05-18 11:35:32','2016-04-11 11:32:00',NULL,b'1',b'0','','','',0,b'1',b'1',0,0,'html',1,206,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (214,'Page','mini','products/coldbox-new/mini','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',0,b'1',b'1',0,0,'html',1,213,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (215,'Page','services','products/coldbox-new/services','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',0,b'1',b'1',0,0,'html',1,213,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (216,'Page','servers','products/coldbox-new/services/servers','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',0,b'1',b'1',0,0,'html',1,215,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (217,'Page','More Servers','products/coldbox-new/services/more-servers','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',0,b'1',b'1',0,0,'html',1,215,b'1','','','2016-05-18 11:35:32',b'0',NULL),
-  (218,'Page','support','products/coldbox-new/services/support','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',0,b'1',b'1',0,0,'html',1,215,b'1','','','2016-05-18 11:35:32',b'0',NULL);
+  (63,'Entry','An awesome blog entry','an-awesome-blog-entry','2013-07-12 09:53:01','2013-07-20 16:05:46',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (64,'Entry','Another Test','another-test','2013-07-12 09:53:31','2013-07-20 16:39:53',NULL,b'0',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (65,'Entry','ContentBox Modular CMS at the South Florida CFUG','contentbox-modular-cms-at-the-south-florida-cfug','2012-09-13 15:55:12','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'html',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (67,'Entry','Test with an excerpt','test-with-an-excerpt','2013-07-15 17:56:10','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (69,'Entry','Updating an ORM entity','updating-an-orm-entity','2013-07-19 18:45:08','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (86,'Entry','Copy of Updating an ORM entity','copy-of-updating-an-orm-entity','2013-07-20 16:10:43','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'html',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (87,'Entry','Copy of Another Test','copy-of-another-test','2013-07-20 16:12:16','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'html',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (88,'Entry','Copy of Copy of Another Test','copy-of-copy-of-another-test','2013-07-20 16:12:23','2013-07-20 16:12:00',NULL,b'0',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (109,'Entry','Couchbase Infrastructure','couchbase-infrastructure','2013-07-26 16:53:43','2013-07-26 16:53:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (110,'Entry','Couchbase Details','couchbase-details','2013-07-26 16:55:00','2013-10-11 10:31:28',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (111,'ContentStore','First Content Store','first-content-store','2013-08-12 11:59:12','2013-08-12 12:02:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (114,'ContentStore','My News','my-awesome-news','2013-08-14 18:14:43','2013-08-14 18:14:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (122,'ContentStore','blog-sidebar-top','blog-sidebar-top','2013-08-22 20:42:37','2013-08-22 20:42:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (123,'ContentStore','foot','foot','2013-08-22 20:43:59','2013-08-22 20:43:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (124,'ContentStore','support options','support-options-baby','2013-08-22 20:45:19','2013-08-22 20:45:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (127,'ContentStore','FireFox Test','firefox-test','2013-08-29 08:29:36','2013-08-29 08:29:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',3,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (132,'Entry','Couchbase Conference','couchbase-conference','2013-09-13 16:54:52','2013-09-13 16:54:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (133,'Entry','Disk Queues','disk-queues','2013-09-13 16:55:05','2013-09-13 16:54:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (135,'Entry','This is just awesome','this-is-just-awesome','2013-10-15 16:48:56','2013-10-15 16:48:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (141,'Entry','Closures cannot be declared outside of cfscript','closures-cannot-be-declared-outside-of-cfscript','2013-11-11 11:53:03','2013-11-11 11:52:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (142,'Entry','Disk Queues ','disk-queues-77CAF','2014-01-31 14:41:16','2014-01-31 14:41:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (147,'Page','support','support','2013-07-20 15:38:47','2013-07-20 15:38:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'html',1,NULL,b'1','','','2016-08-05 14:42:30',b'0',NULL),
+  (159,'ContentStore','Small Footer','foot/small-footer','2014-09-26 16:00:44','2014-09-26 16:00:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,123,b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL),
+  (160,'Page','No Layout Test','no-layout-test','2015-03-29 10:13:59','2015-03-29 10:13:00',NULL,b'1',b'0','test','','',b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-08-05 14:42:30',b'0',NULL),
+  (162,'Page','No Sidebar','email-test','2015-09-16 10:33:56','2015-09-16 10:33:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1',NULL,NULL,'2016-08-05 14:42:30',b'0',NULL),
+  (168,'ContentStore','Lucee 4.5.2.018','lucee-452018','2016-01-14 11:44:58','2016-01-14 11:42:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-05-03 16:23:25',b'0',NULL),
+  (169,'ContentStore','Another test','another-test-a161b','2016-01-14 11:45:35','2016-01-14 11:45:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-05-05 15:56:12',b'0',NULL),
+  (176,'Page','parent page','parent-page','2016-04-12 09:26:56','2016-04-12 09:26:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-05-03 16:23:25',b'0',NULL),
+  (177,'Page','child 1','parent-page/child-1','2016-04-12 09:27:06','2016-04-12 09:27:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,176,b'1','','','2016-05-03 16:23:25',b'0',NULL),
+  (189,'Page','node','node','2016-04-12 13:18:51','2016-04-12 13:18:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2016-08-05 14:42:30',b'0',NULL),
+  (190,'Page','child1','node/child1','2016-04-12 13:19:04','2016-04-12 13:18:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,189,b'1','','','2016-05-03 16:23:25',b'0',NULL),
+  (191,'Page','child2','node/child2','2016-04-12 13:19:10','2016-04-12 13:19:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,189,b'1','','','2016-05-03 16:23:25',b'0',NULL),
+  (192,'Page','Test Markdown','test-markdown','2016-05-05 11:12:23','2016-05-05 11:11:00','2016-05-01 00:00:00',b'0',b'0','','','',b'1',b'1',0,0,'Markdown',1,NULL,b'0','','','2016-08-05 14:42:24',b'0',NULL),
+  (206,'Page','products','products','2016-05-18 11:35:32','2017-06-13 17:08:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,NULL,b'1','','','2017-06-13 17:08:36',b'0',''),
+  (207,'Page','coldbox','products/coldbox','2016-05-18 11:35:32','2013-07-11 11:23:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,206,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (208,'Page','mini','products/coldbox/mini','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,207,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (209,'Page','services','products/coldbox/services','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,207,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (210,'Page','servers','products/coldbox/services/servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,209,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (211,'Page','More Servers','products/coldbox/services/more-servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,209,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (212,'Page','support','products/coldbox/services/support','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',1,209,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (213,'Page','coldbox-new','products/coldbox-new','2016-05-18 11:35:32','2016-04-11 11:32:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'html',1,206,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (214,'Page','mini','products/coldbox-new/mini','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',1,213,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (215,'Page','services','products/coldbox-new/services','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',1,213,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (216,'Page','servers','products/coldbox-new/services/servers','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',1,215,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (217,'Page','More Servers','products/coldbox-new/services/more-servers','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',1,215,b'1','','','2016-05-18 11:35:32',b'0',NULL),
+  (218,'Page','support','products/coldbox-new/services/support','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',1,215,b'1','','','2016-05-18 11:35:32',b'0',NULL);
 
 /*!40000 ALTER TABLE `cb_content` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -357,8 +361,6 @@ DROP TABLE IF EXISTS `cb_contentCategories`;
 CREATE TABLE `cb_contentCategories` (
   `FK_contentID` int(11) NOT NULL,
   `FK_categoryID` int(11) NOT NULL,
-  `pid` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`pid`),
   KEY `FKD96A0F95F10ECD0` (`FK_categoryID`),
   KEY `FKD96A0F9591F58374` (`FK_contentID`),
   CONSTRAINT `FKD96A0F9591F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`),
@@ -368,17 +370,17 @@ CREATE TABLE `cb_contentCategories` (
 LOCK TABLES `cb_contentCategories` WRITE;
 /*!40000 ALTER TABLE `cb_contentCategories` DISABLE KEYS */;
 
-INSERT INTO `cb_contentCategories` (`FK_contentID`, `FK_categoryID`, `pid`)
+INSERT INTO `cb_contentCategories` (`FK_contentID`, `FK_categoryID`)
 VALUES
-  (114,2,4),
-  (114,4,69),
-  (64,2,88),
-  (64,4,89),
-  (87,2,90),
-  (87,4,91),
-  (88,2,92),
-  (88,4,93),
-  (147,5,96);
+  (114,2),
+  (114,4),
+  (64,2),
+  (64,4),
+  (87,2),
+  (87,4),
+  (88,2),
+  (88,4),
+  (147,5);
 
 /*!40000 ALTER TABLE `cb_contentCategories` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -721,7 +723,6 @@ CREATE TABLE `cb_menu` (
   `menuID` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(200) NOT NULL,
   `slug` varchar(200) NOT NULL,
-  `cls` varchar(160) DEFAULT NULL,
   `listType` varchar(20) DEFAULT NULL,
   `createdDate` datetime NOT NULL,
   `menuClass` varchar(160) DEFAULT NULL,
@@ -740,10 +741,10 @@ CREATE TABLE `cb_menu` (
 LOCK TABLES `cb_menu` WRITE;
 /*!40000 ALTER TABLE `cb_menu` DISABLE KEYS */;
 
-INSERT INTO `cb_menu` (`menuID`, `title`, `slug`, `cls`, `listType`, `createdDate`, `menuClass`, `listClass`, `modifiedDate`, `isDeleted`)
+INSERT INTO `cb_menu` (`menuID`, `title`, `slug`, `listType`, `createdDate`, `menuClass`, `listClass`, `modifiedDate`, `isDeleted`)
 VALUES
-  (2,'Test','test',NULL,'ul','2016-05-04 17:00:14','','','2016-05-04 17:20:11',b'0'),
-  (3,'test','test -e123c',NULL,'ul','2016-05-04 17:02:54','','','2016-05-04 17:02:54',b'0');
+  (2,'Test','test','ul','2016-05-04 17:00:14','','','2016-05-04 17:20:11',b'0'),
+  (3,'test','test -e123c','ul','2016-05-04 17:02:54','','','2016-05-04 17:02:54',b'0');
 
 /*!40000 ALTER TABLE `cb_menu` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -759,7 +760,6 @@ CREATE TABLE `cb_menuItem` (
   `menuType` varchar(255) NOT NULL,
   `title` varchar(200) NOT NULL,
   `label` varchar(200) DEFAULT NULL,
-  `cls` varchar(200) DEFAULT NULL,
   `data` varchar(255) DEFAULT NULL,
   `active` bit(1) DEFAULT NULL,
   `FK_menuID` int(11) NOT NULL,
@@ -789,10 +789,10 @@ CREATE TABLE `cb_menuItem` (
 LOCK TABLES `cb_menuItem` WRITE;
 /*!40000 ALTER TABLE `cb_menuItem` DISABLE KEYS */;
 
-INSERT INTO `cb_menuItem` (`menuItemID`, `menuType`, `title`, `label`, `cls`, `data`, `active`, `FK_menuID`, `FK_parentID`, `mediaPath`, `contentSlug`, `menuSlug`, `url`, `js`, `itemClass`, `target`, `urlClass`, `createdDate`, `modifiedDate`, `isDeleted`)
+INSERT INTO `cb_menuItem` (`menuItemID`, `menuType`, `title`, `label`, `data`, `active`, `FK_menuID`, `FK_parentID`, `mediaPath`, `contentSlug`, `menuSlug`, `url`, `js`, `itemClass`, `target`, `urlClass`, `createdDate`, `modifiedDate`, `isDeleted`)
 VALUES
-  (7,'Free','','test',NULL,'',b'1',2,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,'2016-05-04 17:22:08','2016-05-04 17:22:08',b'0'),
-  (8,'URL','','hello',NULL,'',b'1',2,NULL,NULL,NULL,NULL,'http://www.ortussolutions.com',NULL,'','_blank','test','2016-05-04 17:22:08','2016-05-04 17:22:08',b'0');
+  (7,'Free','','test','',b'1',2,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,'2016-05-04 17:22:08','2016-05-04 17:22:08',b'0'),
+  (8,'URL','','hello','',b'1',2,NULL,NULL,NULL,NULL,'http://www.ortussolutions.com',NULL,'','_blank','test','2016-05-04 17:22:08','2016-05-04 17:22:08',b'0');
 
 /*!40000 ALTER TABLE `cb_menuItem` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1421,7 +1421,10 @@ VALUES
   (185,'cb_site_adminbar','true',b'1','2017-06-13 14:33:11','2017-06-13 14:33:11',b'0'),
   (186,'CB_SECURITY_RATE_LIMITER_LOGGING','true',b'1','2017-06-13 14:33:22','2017-06-13 14:33:22',b'0'),
   (187,'cb_security_rate_limiter_redirectURL','',b'1','2017-06-13 14:33:30','2017-06-13 14:33:30',b'0'),
-  (188,'cb_security_min_password_length','8',b'1','2017-07-05 14:07:42','2017-07-05 14:40:56',b'0');
+  (188,'cb_security_min_password_length','8',b'1','2017-07-05 14:07:42','2017-07-05 14:40:56',b'0'),
+  (189,'cb_security_2factorAuth_force','false',b'1','2017-07-20 11:43:43','2017-07-20 11:43:43',b'0'),
+  (190,'cb_security_login_signout_url','',b'1','2017-07-20 11:49:47','2017-07-20 11:49:47',b'0'),
+  (191,'cb_security_login_signin_text','',b'1','2017-07-20 13:48:21','2017-07-20 13:48:21',b'0');
 
 /*!40000 ALTER TABLE `cb_setting` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1456,11 +1459,11 @@ VALUES
   (31,9,190,'2016-05-03 16:23:26','2016-12-02 19:42:07',b'0'),
   (32,2,191,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (33,4,189,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (35,101,147,'2016-05-03 16:23:26','2017-07-10 10:06:51',b'0'),
+  (35,105,147,'2016-05-03 16:23:26','2017-07-24 16:21:57',b'0'),
   (38,3,162,'2016-05-03 16:23:26','2016-12-02 19:42:05',b'0'),
   (39,1,160,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (43,3,207,'2016-05-18 11:35:32','2016-05-18 11:35:32',b'0'),
-  (44,3,213,'2016-05-18 11:35:32','2016-05-18 11:35:32',b'0'),
+  (44,4,213,'2016-05-18 11:35:32','2017-07-18 15:21:37',b'0'),
   (45,1,192,'2016-05-18 11:48:04','2016-05-18 11:48:04',b'0'),
   (46,9,141,'2016-08-05 11:41:28','2016-08-05 11:52:22',b'0'),
   (47,29,142,'2016-11-28 14:56:53','2017-06-20 11:37:12',b'0');

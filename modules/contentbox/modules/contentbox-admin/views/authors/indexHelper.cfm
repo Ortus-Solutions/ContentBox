@@ -12,9 +12,10 @@ $( document ).ready( function(){
 		cloneDialog		: $( "##cloneDialog" ),
 		filterBox		: $( "##filterBox" ),
 		filters 		: [
-			{ name : "fStatus", defaultValue : "true" },
-			{ name : "fRole", 	defaultValue : "any" },
-			{ name : "fGroups", defaultValue : "any" }
+			{ name : "fStatus",      defaultValue : "true" },
+			{ name : "f2FactorAuth", defaultValue : "any" },
+			{ name : "fRole", 	     defaultValue : "any" },
+			{ name : "fGroups",      defaultValue : "any" }
 		],
 		sortOrder 		: $( "##sortOrder" )
 	} );
