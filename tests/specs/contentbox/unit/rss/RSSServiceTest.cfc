@@ -14,6 +14,11 @@ component extends="tests.resources.BaseTest"{
 		service.$property( "settingService", "variables", mockSettingsService );
 		service.$property( "CBHelper", "variables", mockCBHelper );
 	}
+
+	function teardown(){
+		// self cleanup on this test only.
+		structdelete( application, "cbController" );
+	}
 	
 	function testBuildCommentFeed(){
 		// mock cb
