@@ -19,6 +19,7 @@ component{
 	property name="captchaService"		inject="id:captcha@cb";
 	property name="messagebox"			inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller"		inject="DataMarshaller@coldbox";
+	property name="markdown"			inject="Processor@cbmarkdown";
 	
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -114,7 +115,7 @@ component{
 	function maintenance( event, rc, prc ){
 		// If no maintenance view exists, just output data
 		if( !themeService.themeMaintenanceViewExists() ){
-			event.renderData( data=prc.cbSettings.cb_site_maintenance_message );
+			event.renderData( data=markdown.toHTML( prc.cbSettings.cb_site_maintenance_message ) );
 		} else {
 			// output maintenance view
 			event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox" )

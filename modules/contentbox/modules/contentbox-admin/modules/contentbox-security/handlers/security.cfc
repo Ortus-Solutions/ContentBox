@@ -13,6 +13,7 @@ component{
 	property name="antiSamy"		inject="antisamy@cbantisamy";
 	property name="cb"				inject="cbhelper@cb";
 	property name="messagebox"		inject="messagebox@cbMessagebox";
+	property name="markdown"		inject="Processor@cbmarkdown";
 
 	// Method Security
 	this.allowedMethods = {
@@ -50,6 +51,8 @@ component{
 		// secured URL from security interceptor
 		arguments.event.paramValue( "_securedURL", "" );
 		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
+		// Markdown Processing of sign in text
+		prc.signInText = markdown.toHTML( prc.cbSettings.cb_security_login_signin_text );
 		// view
 		event.setView( view="security/login" );
 	}

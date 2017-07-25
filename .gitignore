@@ -40,3 +40,4 @@ modules/contentbox/modules/contentbox-deps/modules/*
 /tests/logs/*
 /tests/test-results/*
 /tests/specs/contentbox-installer/unit/logs
+tests/specs/contentbox/unit/security/logs

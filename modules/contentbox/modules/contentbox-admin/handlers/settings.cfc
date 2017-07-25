@@ -15,6 +15,7 @@ component extends="baseHandler"{
 	property name="mediaService"		inject="id:mediaService@cb";
 	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
 	property name="mailService"			inject="id:mailservice@cbMailservices";
+	property name="markdownEditor"		inject="id:markdownEditor@contentbox-markdowneditor";
 	
 	/**
 	* Pre handler
@@ -44,6 +45,8 @@ component extends="baseHandler"{
 		prc.cb = CBHelper;
 		// caches
 		prc.cacheNames = cachebox.getCacheNames();
+		// Markdown Editor Availability
+		variables.markdownEditor.loadAssets();
 		// view
 		event.setView( "settings/index" );
 	}

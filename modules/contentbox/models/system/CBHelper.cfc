@@ -25,6 +25,7 @@ component accessors="true" singleton threadSafe{
 	property name="controller"			inject="coldbox";
 	property name="resourceService"		inject="resourceService@cbi18n";
 	property name="securityService"		inject="securityService@cb";
+	property name="markdown"			inject="Processor@cbmarkdown";
 	
 	/**
 	* Constructor 
@@ -137,10 +138,10 @@ component accessors="true" singleton threadSafe{
 	}
 	
 	/**
-	* Get the maintenance message from the ContentBox settings
+	* Get the maintenance message from the ContentBox settings in rendering condition.
 	*/
 	function getMaintenanceMessage(){
-		return setting( "cb_site_maintenance_message" );
+		return markdown.toHTML( setting( "cb_site_maintenance_message" ) );
 	}
 
 	/**

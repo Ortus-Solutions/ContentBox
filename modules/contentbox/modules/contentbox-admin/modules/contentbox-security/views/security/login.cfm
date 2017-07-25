@@ -18,12 +18,14 @@
                 	novalidate	= "novalidate", 
                 	class		= "form-horizontal"
                 )#
-
+					#html.hiddenField( name="_securedURL", value=rc._securedURL )#
+					
+					<!--- Sign In Text --->
+					<cfif len( prc.signInText )>#prc.signInText#</cfif>
+					
                 	<!--- Event --->
 					#announceInterception( "cbadmin_beforeLoginForm" )#
 
-					#html.hiddenField( name="_securedURL", value=rc._securedURL )#
-	                
 	                <div class="form-group">
 	                    <div class="col-md-12 controls">
 	                        #html.textfield(
