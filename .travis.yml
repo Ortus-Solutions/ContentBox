@@ -40,7 +40,7 @@ before_script:
   # create test database
   - mysql -u root -e 'create database contentbox;'
   # import database
-  - mysql -u root < tests/resources/contentbox.sql
+  - mysql -u root < tests/resources/mysql/contentbox.sql
   # Ready for testing
   - box server start
 
