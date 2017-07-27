@@ -80,9 +80,6 @@ component{
 			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
 			var oAuthor = securityService.getAuthorSession();
 			
-			// announce event
-			announceInterception( "cbadmin_onLogin", { author = oAuthor } );
-			
 			// Verify if user needs to reset their password?
 			if( oAuthor.getIsPasswordReset() ){
 				var token = securityService.generateResetToken( oAuthor );
@@ -92,6 +89,9 @@ component{
 					queryString = "token=#token#"
 				);
 			}
+
+			// announce event
+			announceInterception( "cbadmin_onLogin", { author = oAuthor, securedURL = rc._securedURL } );
 			
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
