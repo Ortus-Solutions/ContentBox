@@ -41,8 +41,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	/**
 	* This function will encrypt an incoming target string using bcrypt and compare it with another bcrypt string
 	*/
-	boolean function isSameHash( required in, required target ){
-		return variables.bcrypt.checkPassword( arguments.in, arguments.target );
+	boolean function isSameHash( required incoming, required target ){
+		return variables.bcrypt.checkPassword( arguments.incoming, arguments.target );
 	}
 
 	/**
