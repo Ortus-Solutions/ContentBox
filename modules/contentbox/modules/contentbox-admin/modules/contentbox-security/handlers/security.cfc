@@ -122,7 +122,11 @@ component{
 		// message redirect
 		messagebox.info( cb.r( "messages.seeyou@security" ) );
 		// relocate
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+		var relocateTo = prc.cbSettings.cb_security_login_signout_url;
+		if( !len( relocateTo ) ){
+			relocateTo = "#prc.cbAdminEntryPoint#.security.login";
+		}
+		setNextEvent( relocateTo );
 	}
 
 	/**
