@@ -125,6 +125,8 @@ component {
 		loadConfigOverrides();
 		// Load Environment Overrides Now, they take precedence
 		loadEnvironmentOverrides();
+		// Pre-flight check settings
+		wirebox.getInstance( "settingService@cb" ).preFlightCheck();
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@cb" ).startup();
 		// Startup localization settings
