@@ -37,6 +37,7 @@ component{
 	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
 										
 	this.mappings[ "/root" ]   				= rootPath;
+	this.mappings[ "/cbapp" ]   			= rootPath;
 	this.mappings[ "/tests" ] 				= getDirectoryFromPath( getCurrentTemplatePath() );
 	this.mappings[ "/coldbox" ] 			= rootPath & "coldbox" ;
 	this.mappings[ "/testbox" ] 			= rootPath & "testbox" ;
