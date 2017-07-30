@@ -197,7 +197,7 @@ function fbQuickView(){
 	// only images
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	// show it
-	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ escape( target.attr( "data-fullURL" ) );
+	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent( target.attr( "data-fullURL" ) );
 	$('.imagepreview').attr('src', imgURL);
 	openModal( $( "##modalPreview" ), 500 );
 }
@@ -337,7 +337,7 @@ function fbDownload(){
 		alert( '#$r( "jsmessages.downloadFolder@fb" )#' ); return;
 	}	
 	// Trigger the download
-	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ escape(sPath) );
+	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent(sPath) );
 }
 </cfif>
 <!--- CallBack --->
