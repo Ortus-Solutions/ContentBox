@@ -16,6 +16,7 @@ component extends="tests.resources.BaseTest"{
 	// executes after all suites+specs in the run() method
 	function afterAll(){
 		super.afterAll();
+		structdelete( cookie, "CONTENTBOX_2FACTOR_DEVICE" );
 	}
 
 /*********************************** BDD SUITES ***********************************/
@@ -67,6 +68,18 @@ component extends="tests.resources.BaseTest"{
 				model.unRegisterProvider( "mock" );
 				expect(	model.hasProvider( "mock" ) ).toBeFalse();
 				
+			});
+
+			it( "can set trusted devices", function(){
+				model.setTrustedDevice( "luis" );
+				expect(	cookie[ "CONTENTBOX_2FACTOR_DEVICE" ] ).notToBeEmpty();
+			});
+
+			it( "can validate trusted devices", function(){
+				model.setTrustedDevice( "luis" );
+				expect(	model.isTrustedDevice( "luis" ) ).toBeTrue();
+
+				expect(	model.isTrustedDevice( "mockTesting" ) ).toBeFalse();
 			});
 
 		});

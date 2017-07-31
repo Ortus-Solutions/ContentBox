@@ -8,12 +8,19 @@
 component accessors="true" threadSafe singleton{
 
 	// DI
-	property name="settingService" inject="settingService@cb";
+	property name="settingService" 		inject="settingService@cb";
+	property name="securityService" 	inject="securityService@cb";
+	property name="authorService" 		inject="authorService@cb";
+	property name="cookieStorage" 		inject="cookieStorage@cbStorages";
 
 	/**
 	 * Providers registry
 	 */
 	property name="providers"	type="struct";
+
+	// Static Properties
+	
+	variables.TRUSTED_DEVICE_COOKIE = "contentbox_2factor_device";
 	
 	/**
 	* Constructor
@@ -34,6 +41,13 @@ component accessors="true" threadSafe singleton{
 	*/
 	string function getDefaultProvider(){
 		return settingService.getSetting( "cb_security_2factorAuth_provider" );
+	}
+
+	/**
+	* Get the default system trusted device timespan
+	*/
+	numeric function getTrustedDeviceTimespan(){
+		return settingService.getSetting( "cb_security_2factorAuth_trusted_days" );
 	}
 	
 	/**
@@ -90,6 +104,43 @@ component accessors="true" threadSafe singleton{
 	*/
 	boolean function hasProvider( required name ){
 		return structKeyExists( variables.providers, arguments.name );
+	}
+
+	/**
+	 * Set a trusted device cookie for a user, usually called if the two factor authentication was valid.
+	 * @trustedID The trusted ID to track in the tracking cookie
+	 */
+	TwoFactorService function setTrustedDevice( required trustedID ){
+		cookieStorage.setVar( 
+			name    = variables.TRUSTED_DEVICE_COOKIE, 
+			value   = securityService.encryptIt( arguments.trustedID ), 
+			expires = getTrustedDeviceTimespan()
+		);
+		return this;
+	}
+
+	/**
+	 * Verify if the incoming trusted ID is valid
+	 * @trustedID The trusted ID to verify
+	 */
+	boolean function isTrustedDevice( required trustedID ){
+		var cookieValue = cookieStorage.getVar( name=variables.TRUSTED_DEVICE_COOKIE, default="" );
+
+		try{
+			// decrypt the target id
+			var targetTrustedID = securityService.decryptIt( cookieValue );
+			// Verify they are the same
+			if( targetTrustedID neq arguments.trustedID ){
+				cookieStorage.deleteVar( name=variables.TRUSTED_DEVICE_COOKIE );
+				return false;
+			}
+			return true;
+		} catch( Any e ){
+			// Errors on decryption
+			log.error( "Error decrypting trusted id cookie: #e.message# #e.detail#", cookieValue );
+			cookieStorage.deleteVar( name=variables.TRUSTED_DEVICE_COOKIE );
+			return false;
+		}
 	}
 
 }
