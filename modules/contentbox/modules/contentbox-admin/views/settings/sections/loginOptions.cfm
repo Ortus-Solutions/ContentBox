@@ -25,9 +25,26 @@
         </div>
     </div>
 
+    <!--- Default Provider --->
+	<div class="form-group">
+		<label class="control-label" for="cb_security_2factorAuth_provider">Default Two Factor Provider:</label>
+		<div class="controls">
+			<small>Choose the default two factor provider that will be used for authentication by all ContentBox users. Please note that each provider could have different setup options. Ultimately, refer to the provider documentation.</small><br/>
+			#html.select(
+				name            = "cb_security_2factorAuth_provider", 
+				options         = prc.twoFactorProviders,
+				column          = "name",
+				nameColumn      = "displayName",
+				class           = "form-control input-sm",
+				selectedValue   = prc.cbSettings.cb_security_2factorAuth_provider
+			)#
+		</div>
+	</div>
+	
+	<!--- Event for Two Factor Modules to Add their settings here --->
+	#announceInterception( "cbadmin_onTwoFactorSettingsPanel" )#
+
 </fieldset>
-
-
 
 <fieldset>
     <legend><i class="fa fa-cogs fa-lg"></i>  Login Options</legend>

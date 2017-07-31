@@ -16,6 +16,7 @@ component extends="baseHandler"{
 	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
 	property name="mailService"			inject="id:mailservice@cbMailservices";
 	property name="markdownEditor"		inject="id:markdownEditor@contentbox-markdowneditor";
+	property name="twoFactorService"	inject="id:twoFactorService@cb";
 	
 	/**
 	* Pre handler
@@ -39,6 +40,8 @@ component extends="baseHandler"{
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get all registered media providers so we can display them
 		prc.mediaProviders = mediaService.getRegisteredProvidersMap();
+		// Get All registered two factor providers so we can display them
+		prc.twoFactorProviders = twoFactorService.getRegisteredProvidersMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper
