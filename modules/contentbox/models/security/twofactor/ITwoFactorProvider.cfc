@@ -17,4 +17,10 @@ interface{
 	*/
 	function getDisplayName();
 
+	/**
+	 * If true, then ContentBox will set a tracking cookie for the authentication provider user browser.
+	 * If the user, logs in and the device is within the trusted timespan, then no two-factor authentication validation will occur.
+	 */
+	boolean function allowTrustedDevice();
+
 }

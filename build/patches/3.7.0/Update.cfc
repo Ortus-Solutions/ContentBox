@@ -266,6 +266,8 @@ component {
 		addSetting( "cb_security_rate_limiter_logging"      , "true" );
 		addSetting( "cb_security_min_password_length"       , "8" );
 		addSetting( "cb_security_2factorAuth_force_toggle" 	, "false" );
+		addSetting( "cb_security_2factorAuth_provider" 		, "email" );
+		addSetting( "cb_security_2factorAuth_trusted_days"	, "30" );
 		addSetting( "cb_security_login_signout_url"			, "" );
 		addSetting( "cb_security_login_signin_text"			, "" );
 		

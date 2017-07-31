@@ -10,6 +10,8 @@ component
 	implements="contentbox.models.security.twofactor.ITwoFactorProvider"
 	singleton{
 
+	variables.ALLOW_TRUSTED_DEVICE = true;
+
 	/**
 	 * Constructor
 	 */
@@ -30,5 +32,13 @@ component
 	function getDisplayName(){
 		return "Email";
 	};
+
+	/**
+	 * If true, then ContentBox will set a tracking cookie for the authentication provider user browser.
+	 * If the user, logs in and the device is within the trusted timespan, then no two-factor authentication validation will occur.
+	 */
+	boolean function allowTrustedDevice(){
+		return variables.ALLOW_TRUSTED_DEVICE;
+	}
 
 }
