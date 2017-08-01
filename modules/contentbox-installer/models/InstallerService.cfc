@@ -45,8 +45,6 @@ component accessors="true"{
 			var adminRole = createRoles( arguments.setup );
 			// create Author
 			var author = createAuthor( arguments.setup, adminRole );
-			// create All Settings
-			createSettings( arguments.setup );
 			// create all security rules
 			createSecurityRules( arguments.setup );
 			// Do we create sample data?
@@ -258,26 +256,6 @@ component accessors="true"{
 		authorService.saveAuthor( oAuthor );
 
 		return oAuthor;
-	}
-
-	/**
-	* Create settings
-	* @setup The setup object
-	*/
-	function createSettings( required setup ){
-
-		// Create Settings
-		var settings = settingService.DEFAULTS;
-
-		// Create setting objects and save
-		var aSettings = [];
-		for( var key in settings ){
-			// Prepare core setting
-			var props = { name = key, value = trim( settings[ key ] ), isCore = true };
-			arrayAppend( aSettings, settingService.new( properties=props ) );
-		}
-
-		settingService.saveAll( entities=aSettings, transactional=false );
 	}
 
 	/**
