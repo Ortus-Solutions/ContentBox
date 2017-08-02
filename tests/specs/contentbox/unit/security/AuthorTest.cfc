@@ -84,7 +84,7 @@ component extends="tests.resources.BaseTest"{
 			});
 			
 			it( "can check permissions even without a role", function(){
-				expect( model.checkPermission( "test" ) ).toBeTrue();
+				expect( model.checkPermission( "test" ) ).toBeFalse();
 			});
 
 		});
