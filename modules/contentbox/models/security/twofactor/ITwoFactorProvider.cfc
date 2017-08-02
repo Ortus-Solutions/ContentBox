@@ -18,9 +18,35 @@ interface{
 	function getDisplayName();
 
 	/**
+	* Get the display help for the provider.  Used in the UI verification screen.
+	*/
+	function getDisplayHelp();
+
+	/**
 	 * If true, then ContentBox will set a tracking cookie for the authentication provider user browser.
 	 * If the user, logs in and the device is within the trusted timespan, then no two-factor authentication validation will occur.
 	 */
 	boolean function allowTrustedDevice();
+
+	/**
+	 * Send a challenge via the 2 factor auth implementation.
+	 * The return must be a struct with an error boolean bit and a messages string
+	 * 
+	 * @author The author to challenge
+	 * 
+	 * @return struct:{ error:boolean, messages=string }
+	 */
+	struct function sendChallenge( required author );
+
+	/**
+	 * Leverage the default provider to verify a challenge for the specific user.
+	 * The return is a structure containing an error flag and a messages string.
+	 *
+	 * @code The verification code
+	 * @author The author to verify challenge
+	 *
+	 * @return struct:{ error:boolean, messages:string }
+	 */
+	struct function verifyChallenge( required string code, required author );
 
 }

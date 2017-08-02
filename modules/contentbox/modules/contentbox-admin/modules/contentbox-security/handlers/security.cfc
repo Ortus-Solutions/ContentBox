@@ -5,30 +5,17 @@
 * ---
 * ContentBox security handler
 */
-component{
+component extends="baseHandler"{
 
 	// DI
-	property name="securityService" inject="securityService@cb";
-	property name="authorService" 	inject="authorService@cb";
-	property name="antiSamy"		inject="antisamy@cbantisamy";
-	property name="cb"				inject="cbhelper@cb";
-	property name="messagebox"		inject="messagebox@cbMessagebox";
-	property name="markdown"		inject="Processor@cbmarkdown";
+	property name="antiSamy"			inject="antisamy@cbantisamy";
+	property name="markdown"			inject="Processor@cbmarkdown";
 
 	// Method Security
 	this.allowedMethods = {
 		doLogin 		= "POST",
 		doLostPassword 	= "POST"
 	};
-
-	/**
-	* Pre handler
-	*/
-	function preHandler( event, currentAction, rc, prc ){
-		prc.langs 		= getModuleSettings( "contentbox" ).languages;
-		prc.entryPoint 	= getModuleConfig( "contentbox-security" ).entryPoint;
-		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
-	}
 
 	/**
 	* Change language
@@ -88,6 +75,14 @@ component{
 					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
 					queryString = "token=#token#"
 				);
+			}
+
+			// Verify if we have to challenge via two factor auth
+			if( twoFactorService.canChallenge( oAuthor ) ){
+				// Send challenge
+				twoFactorService.sendChallenge( oAuthor );
+				// Relocate to two factor auth presenter
+				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
 			}
 
 			// announce event

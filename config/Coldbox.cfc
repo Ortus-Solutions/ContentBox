@@ -142,7 +142,7 @@ component{
 		mailsettings.protocol = {
 			class = "cbmailservices.models.protocols.FileProtocol",
 			properties = {
-				filePath = "logs"
+				filePath = expandPath( "/cbapp/logs" )
 			}
 		};
 		//logbox.debug 	= ["coldbox.system.interceptors.Security"];

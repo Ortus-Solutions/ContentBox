@@ -37,10 +37,25 @@ component accessors="true" threadSafe singleton{
 	}
 	
 	/**
+	 * Are we forcing global two factor authentication
+	 */
+	boolean function isForceTwoFactorAuth(){
+		// Doing !! to force a boolean
+		return !!settingService.getSetting( "cb_security_2factorAuth_force_toggle" );
+	}
+
+	/**
 	* Get the default system provider name
 	*/
 	string function getDefaultProvider(){
 		return settingService.getSetting( "cb_security_2factorAuth_provider" );
+	}
+
+	/**
+	* Get the default system provider object
+	*/
+	contentbox.models.security.twofactor.ITwoFactorProvider function getDefaultProviderObject(){
+		return getProvider( getDefaultProvider() );
 	}
 
 	/**
@@ -141,6 +156,59 @@ component accessors="true" threadSafe singleton{
 			cookieStorage.deleteVar( name=variables.TRUSTED_DEVICE_COOKIE );
 			return false;
 		}
+	}
+
+	/**
+	 * Can we challenge this author for two factor authentication
+	 * @author The author to challenge or not
+	 */
+	boolean function canChallenge( required author ){
+		var oProvider 	= getProvider( getDefaultProvider() );
+		var results 	= false;
+		if( 
+			// Verify if global force is enabled
+			isForceTwoFactorAuth()
+			OR
+			// Verify if user has two factor auth enabled
+			arguments.author.getIs2FactorAuth()
+		){
+			// Verify if using trusted device options and if device is trusted
+			if( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ){
+				results = false;
+			} else {
+				results = true;
+			}
+		}
+
+		// If we got here, we can't challenge, allow them to continue.
+		return results;
+	}
+
+	/**
+	 * Leverage the default provider to send a challenge to the specific user.
+	 * The return is a structure containing an error flag and a messages string.
+	 * 
+	 * @author The author to challenge
+	 *
+	 * @return struct:{ error:boolean, messages:string }
+	 */
+	struct function sendChallenge( required author ){
+		return getProvider( getDefaultProvider() )
+			.sendChallenge( arguments.author );
+	}
+
+	/**
+	 * Leverage the default provider to verify a challenge for the specific user.
+	 * The return is a structure containing an error flag and a messages string.
+	 *
+	 * @code The verification code
+	 * @author The author to verify challenge
+	 *
+	 * @return struct:{ error:boolean, messages:string }
+	 */
+	struct function verifyChallenge( required string code, required author ){
+		return getProvider( getDefaultProvider() )
+			.verifyChallenge( arguments.code, arguments.author );
 	}
 
 }

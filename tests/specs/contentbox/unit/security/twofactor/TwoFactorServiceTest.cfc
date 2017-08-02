@@ -24,12 +24,17 @@ component extends="tests.resources.BaseTest"{
 	function run( testResults, testBox ){
 		describe( "Two Factor Services", function(){
 			beforeEach(function( currentSpec ){
-				model = getInstance( "TwoFactorService@cb" );
-				var mockProvider = createStub( implements="contentbox.models.security.twofactor.ITwoFactorProvider" )
+				model = prepareMock( getInstance( "TwoFactorService@cb" ) );
+				mockProvider = createStub( implements="contentbox.models.security.twofactor.ITwoFactorProvider" )
 					.$( "getName", "email" )
-					.$( "getDisplayName", "email" );
+					.$( "getDisplayName", "email" )
+					.$( "allowTrustedDevice", true );
 				// Register a mock provider for testing usages
 				model.registerProvider( mockProvider );
+			});
+
+			it( "can validate global force authentication", function(){
+				expect(	model.isForceTwoFactorAuth() ).toBeBoolean();
 			});
 
 			it( "can initialize and register the default provider", function(){
@@ -82,8 +87,49 @@ component extends="tests.resources.BaseTest"{
 				expect(	model.isTrustedDevice( "mockTesting" ) ).toBeFalse();
 			});
 
+			it( "can send provider challenges", function(){
+				var thisUser = getInstance( "AuthorService@cb" ).findByUsername( "lmajano" );
+				var results = { error=false, messages="message sent" };
+				mockProvider.$( "sendChallenge", results );
+				expect(	model.sendChallenge( thisUser ) ).toBe( results );
+			});
+
+			story( "I can challenge for two factor authentication with trusted device features", function(){
+				beforeEach( function() {
+					thisUser = getInstance( "AuthorService@cb" ).findByUsername( "lmajano" );
+					model.registerProvider( mockProvider );
+				} );
+				given( "A global force and no trusted device", function(){
+					then( "I should challenge", function(){
+						model.$( "isForceTwoFactorAuth", true )
+							.$( "isTrustedDevice", false ); 
+						expect(	model.canChallenge( thisUser ) ).toBeTrue();
+					});
+				});
+				given( "A global force and a trusted device", function(){
+					then( "I should NOT challenge", function(){
+						model.$( "isForceTwoFactorAuth", true )
+							.$( "isTrustedDevice", true ); 
+						expect(	model.canChallenge( thisUser ) ).toBeFalse();
+					});
+				});
+				given( "No global force but user set authentication and no trusted device", function(){
+					then( "I should challenge", function(){
+						thisUser.setIs2FactorAuth( true );
+						model.$( "isForceTwoFactorAuth", false )
+							.$( "isTrustedDevice", false ); 
+						expect(	model.canChallenge( thisUser ) ).toBeTrue();
+					});
+				});
+				given( "No global force but user set authentication and a trusted device", function(){
+					then( "I should NOT challenge", function(){
+						thisUser.setIs2FactorAuth( true );
+						model.$( "isForceTwoFactorAuth", false )
+							.$( "isTrustedDevice", true ); 
+						expect(	model.canChallenge( thisUser ) ).toBeFalse();
+					});
+				});
+			});
 		});
-
 	}
-
 }

@@ -16,7 +16,7 @@ component implements="ISecurityService" singleton{
 	property name="renderer"			inject="provider:ColdBoxRenderer";
 	property name="CBHelper"			inject="id:CBHelper@cb";
 	property name="log"					inject="logbox:logger:{this}";
-	property name="cache"				inject="cachebox:default";
+	property name="cache"				inject="cachebox:template";
 	property name="bCrypt"				inject="BCrypt@BCrypt";
 
 	// Static Variables
