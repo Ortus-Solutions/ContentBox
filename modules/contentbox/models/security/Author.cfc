@@ -231,7 +231,7 @@ component 	persistent="true"
 
 		// checks via role, then group permissions and then local permissions
 		if( 
-			getRole().checkPermission( arguments.slug )
+			( hasRole() && getRole().checkPermission( arguments.slug ) )
 			OR
 			checkGroupPermissions( arguments.slug )
 			OR
