@@ -4,10 +4,12 @@
 $( document ).ready( function(){
 	// pointers
 	$authorForm 	= $( "##authorForm" );
+	$twofactorForm 	= $( "##twofactorForm" );
 	$authorUsername = $authorForm.find( "##username" );
 
 	// initialize validator and add a custom form submission logic
 	$authorForm.validate();
+	$twofactorForm.validate();
 
 	// Custom username unique validator
     $.validator.addMethod(
@@ -61,7 +63,7 @@ $( document ).ready( function(){
     );
 
 	// Setup Permissions
-	$permissionsTab = $( "##permissionsTab" );
+	$permissions = $( "##permissions" );
 	</cfif>
 
 	// Password change rules
@@ -95,7 +97,7 @@ function isEmailFound( email ){
 }
 <cfif prc.author.isLoaded()>
 function loadPermissions(){
-	$permissionsTab.load( '#event.buildLink( prc.xehAuthorPermissions )#/authorID/' + #prc.author.getAuthorID()# );
+	$permissions.load( '#event.buildLink( prc.xehAuthorPermissions )#/authorID/' + #prc.author.getAuthorID()# );
 }
 </cfif>
 </script>

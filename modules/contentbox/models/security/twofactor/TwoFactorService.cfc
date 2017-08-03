@@ -41,7 +41,7 @@ component accessors="true" threadSafe singleton{
 	 */
 	boolean function isForceTwoFactorAuth(){
 		// Doing !! to force a boolean
-		return !!settingService.getSetting( "cb_security_2factorAuth_force_toggle" );
+		return !!settingService.getSetting( "cb_security_2factorAuth_force" );
 	}
 
 	/**

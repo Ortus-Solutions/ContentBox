@@ -9,7 +9,8 @@
 component 
 	extends="contentbox.models.security.twofactor.BaseTwoFactorProvider"
 	implements="contentbox.models.security.twofactor.ITwoFactorProvider"
-	singleton{
+	singleton
+	threadsafe{
 
 	// DI
 	property name="mailService"		inject="mailService@cbmailservices";
@@ -41,10 +42,26 @@ component
 	};
 
 	/**
+	* Get the display help for the provider.  Used in the UI setup screens for the author
+	*/
+	function getAuthorSetupHelp(){
+		return "Make sure you have a valid email address setup in your author details.  We will use this email account
+			to send you verification tokens to increase your account's security."
+	}
+
+	/**
 	* Get the display help for the provider.  Used in the UI verification screen.
 	*/
-	function getDisplayHelp(){
+	function getVerificationHelp(){
 		return "Please enter the verification code that was sent to your account email address.";
+	}
+
+	/**
+	* Get the author options form. This will be sent for saving. You can listen to save operations by 
+	* listening to the event 'cbadmin_onAuthorTwoFactorSaveOptions'
+	*/
+	function getAuthorOptions(){
+		return "";
 	}
 
 	/**

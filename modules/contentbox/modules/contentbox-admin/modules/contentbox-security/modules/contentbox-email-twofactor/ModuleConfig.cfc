@@ -15,7 +15,6 @@ component {
 	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
-	this.entryPoint			= "cbadmin/security/email-twofactor";
 	this.dependencies 		= [ "contentbox-admin" ];
 
 	/**
@@ -42,9 +41,10 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Register this 2 Auth provider with the TwoFactorService
 		var twoFactorService = wirebox.getInstance( "TwoFactorService@cb" );
 		twoFactorService.registerProvider( 
-			wirebox.getInstance( "EmailTwoFactorProvider@contentbox-email-twofactor" ) 
+			wirebox.getInstance( "EmailTwoFactorProvider@contentbox-email-twofactor" )
 		);
 	}
 
@@ -52,6 +52,7 @@ component {
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
+		// Like a Ninja, remove yourself
 		var twoFactorService = wirebox.getInstance( "TwoFactorService@cb" );
 		twoFactorService.unregisterProvider( 'email' );
 	}

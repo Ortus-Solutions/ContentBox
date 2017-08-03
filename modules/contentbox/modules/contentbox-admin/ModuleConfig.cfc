@@ -121,7 +121,7 @@ component {
 				// Static Site Exporters,
 				"cbadmin_preStaticSiteExport", "cbadmin_postStaticSiteExport",
 				// Two Factor Events
-				"cbadmin_onTwoFactorSettingsPanel"
+				"cbadmin_onTwoFactorSettingsPanel", "cbadmin_onAuthorTwoFactorOptions", "cbadmin_onAuthorTwoFactorSaveOptions"
 			])
 		};
 

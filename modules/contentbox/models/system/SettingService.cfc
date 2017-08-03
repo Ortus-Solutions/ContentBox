@@ -60,7 +60,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		"cb_security_rate_limiter_bots_only"	= "true",
 		"cb_security_rate_limiter_message"		= "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
 		"cb_security_rate_limiter_redirectURL"	= "",
-		"cb_security_2factorAuth_force_toggle" 	= "false",
+		"cb_security_2factorAuth_force" 		= "false",
 		"cb_security_2factorAuth_provider" 		= "email",
 		"cb_security_2factorAuth_trusted_days"	= "30",
 		"cb_security_login_signout_url"	        = "",

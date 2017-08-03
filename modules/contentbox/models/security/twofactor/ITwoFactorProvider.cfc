@@ -18,9 +18,14 @@ interface{
 	function getDisplayName();
 
 	/**
-	* Get the display help for the provider.  Used in the UI verification screen.
+	* Get the display help for the provider.  Used in the UI setup screens for the author
 	*/
-	function getDisplayHelp();
+	function getAuthorSetupHelp();
+
+	/**
+	* Get the verification help for the provider.  Used in the UI verification screen.
+	*/
+	function getVerificationHelp();
 
 	/**
 	 * If true, then ContentBox will set a tracking cookie for the authentication provider user browser.

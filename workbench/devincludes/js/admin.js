@@ -520,6 +520,7 @@ function activateToggleCheckboxes(){
     $( '.tab-content' ).find( 'input[data-toggle="toggle"]' ).change( function() {
         var inputMatch = $( this ).data( 'match' );
         $( "#" + inputMatch ).val( $( this ).prop( 'checked' ) );
+        
         //console.log( $( this ).prop( 'checked' ) + " input match :" + inputMatch );
     });
 }
