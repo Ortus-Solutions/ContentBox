@@ -89,6 +89,10 @@ component extends="tests.resources.BaseTest"{
 				model.setPreference( "UnitTest", "Hello" );
 				expect( model.getPreference( "UnitTest" ) ).toBe( "Hello" );
 			});
+			
+			it( "can check permissions even without a role", function(){
+				expect( model.checkPermission( "test" ) ).toBeFalse();
+			});
 
 		});
 
