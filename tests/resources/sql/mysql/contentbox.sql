@@ -7,7 +7,7 @@
 #
 # Host: Localhost (MySQL 5.7.14)
 # Database: contentbox
-# Generation Time: 2017-07-24 21:22:15 +0000
+# Generation Time: 2017-08-04 22:57:25 +0000
 # ************************************************************
 
 
@@ -66,7 +66,7 @@ LOCK TABLES `cb_author` WRITE;
 
 INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`, `is2FactorAuth`, `APIToken`)
 VALUES
-  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-07-20 15:35:28','2013-07-11 11:06:39','','{\"FACEBOOK\":\"http://facebook.com/lmajano\",\"EDITOR\":\"ckeditor\",\"MARKUP\":\"HTML\",\"sidemenuCollapse\":\"yes\",\"SIDEBARSTATE\":\"true\",\"TWITTER\":\"http://twitter.com/lmajano\",\"GOOGLE\":\"\"}',2,'2017-07-20 15:35:28',b'0',b'0',b'0','04AF40069044B3625811EF6C4399CC4DC3EBA390FB5F4CD25D16FA7B592C81189A8B29459CD5EDC021073D619BFEDC12EFA3F6A1395B89CE880B8D936CA88DF4'),
+  (1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2017-08-04 17:49:58','2013-07-11 11:06:39','','{\"sidemenuCollapse\":\"yes\",\"linkedin\":\"\",\"sidebarState\":\"yes\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',2,'2017-08-04 17:49:58',b'0',b'0',b'1','04AF40069044B3625811EF6C4399CC4DC3EBA390FB5F4CD25D16FA7B592C81189A8B29459CD5EDC021073D619BFEDC12EFA3F6A1395B89CE880B8D936CA88DF4'),
   (2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',b'1','2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',b'0',b'0',b'0','A2707287EC2849AC4BF63E3D75286B1BAD81A23726D62899694F66BBC497E4E9EA3895F22BF8B36F3165C2F4CC3197D5163F9BC172FEE39A45C93CE640970D9C'),
   (3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',b'1','2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-18 15:22:13',b'0',b'1',b'1','1DD3F7B17C26C3DD750ABD3DFDEE5E3404DF8B96028CD16FD741B2B6C45D501FE93EED010B94B8FF2A33CFCB8B9FCF7D7B492B8ECF24E61E70072848E34023CA'),
   (4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',b'1','2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',b'0',b'1',b'1','488AB7F5CEF6CBF977C8D21FD1AC973C9163E1AE5D1D37EF23A3371614619E1F7851AFB5C0AC9AD4BD3F99FD44208872BB3E64455C91A0C395DA5F0AEB0F3E4D'),
@@ -1422,9 +1422,11 @@ VALUES
   (186,'CB_SECURITY_RATE_LIMITER_LOGGING','true',b'1','2017-06-13 14:33:22','2017-06-13 14:33:22',b'0'),
   (187,'cb_security_rate_limiter_redirectURL','',b'1','2017-06-13 14:33:30','2017-06-13 14:33:30',b'0'),
   (188,'cb_security_min_password_length','8',b'1','2017-07-05 14:07:42','2017-07-05 14:40:56',b'0'),
-  (189,'cb_security_2factorAuth_force','false',b'1','2017-07-20 11:43:43','2017-07-20 11:43:43',b'0'),
+  (189,'cb_security_2factorAuth_force','false',b'1','2017-07-20 11:43:43','2017-08-04 17:57:12',b'0'),
   (190,'cb_security_login_signout_url','',b'1','2017-07-20 11:49:47','2017-07-20 11:49:47',b'0'),
-  (191,'cb_security_login_signin_text','',b'1','2017-07-20 13:48:21','2017-07-20 13:48:21',b'0');
+  (191,'cb_security_login_signin_text','',b'1','2017-07-20 13:48:21','2017-07-20 13:48:21',b'0'),
+  (193,'cb_security_2factorAuth_provider','email',b'1','2017-07-31 15:59:15','2017-07-31 15:59:15',b'0'),
+  (194,'cb_security_2factorAuth_trusted_days','30',b'1','2017-07-31 16:37:05','2017-07-31 16:37:05',b'0');
 
 /*!40000 ALTER TABLE `cb_setting` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1459,7 +1461,7 @@ VALUES
   (31,9,190,'2016-05-03 16:23:26','2016-12-02 19:42:07',b'0'),
   (32,2,191,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (33,4,189,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (35,105,147,'2016-05-03 16:23:26','2017-07-24 16:21:57',b'0'),
+  (35,118,147,'2016-05-03 16:23:26','2017-08-03 10:46:08',b'0'),
   (38,3,162,'2016-05-03 16:23:26','2016-12-02 19:42:05',b'0'),
   (39,1,160,'2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (43,3,207,'2016-05-18 11:35:32','2016-05-18 11:35:32',b'0'),
