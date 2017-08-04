@@ -9,6 +9,9 @@ component extends="baseHandler"{
 
 	// Method Security
 	this.allowedMethods = {
+		"index" 		= "GET",
+		"doValidation" 	= "POST",
+		"resendCode" 	= "GET"
 	};
 
 	/**
@@ -16,12 +19,23 @@ component extends="baseHandler"{
 	*/
 	function preHandler( event, currentAction, rc, prc ){
 		super.preHandler( argumentCollection=arguments );
-		// If current author is not logged in, they can't access the secondary validation
-		if( !prc.oCurrentAuthor.isLoggedIn() ){
+		// Keep Flash data
+		flash.keep( "authorData" );
+		// Verify if authorData exists, else you can't authenticate via two factor.
+		if( !flash.exists( "authorData" ) ){
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
-			setNextEvent( "#prc.entryPoint#.security.login" );
+			setNextEvent( "#prc.entryPoint#.login" );
+		}
+		// Inflate author for requested events
+		prc.oAuthor = authorService.get( flash.get( "authorData" ).authorID );
+		// Verify author, just in case
+		if( isNull( prc.oAuthor ) OR !prc.oAuthor.isLoaded() ){
+			// message and redirect
+			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
+			// Relocate
+			setNextEvent( "#prc.entryPoint#.login" );
 		}
 	}
 
@@ -46,22 +60,27 @@ component extends="baseHandler"{
 		// Verify the challenge code
 		var results = twoFactorService.verifyChallenge( 
 			code   = rc.twofactorcode, 
-			author = prc.oCurrentAuthor 
+			author = prc.oAuthor 
 		);
 
 		// Check for errors
 		if( results.error ){
-			announceInterception( "cbadmin_onInvalidTwoFactor", { author = prc.oCurrentAuthor } );
+			announceInterception( "cbadmin_onInvalidTwoFactor", { author = prc.oAuthor } );
 			// message and redirect
 			messagebox.error( results.messages );
+			flash.keep( "authorData" );
 			setNextEvent( "#prc.entryPoint#.twofactor" );
 		} else {
-			// Are we trusting devices? If so, trust this device
-			if( twoFactorService.getDefaultProviderObject().allowTrustedDevice() ){
-				twoFactorService.setTrustedDevice( prc.oCurrentAuthor.getAuthorID() );
+			// Are we trusting devices? If so, trust this device if passed
+			if( twoFactorService.getDefaultProviderObject().allowTrustedDevice() AND rc.trustDevice ){
+				twoFactorService.setTrustedDevice( prc.oAuthor.getAuthorID() );
 			}
 			// announce event
-			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oCurrentAuthor } );
+			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
+			// Set keep me log in remember cookie, if set.
+			securityService.setRememberMe( prc.oAuthor.getUsername(), val( flash.get( "authorData" ).rememberMe ) );
+			// Set in session, validations are now complete
+			securityService.setAuthorSession( prc.oAuthor );
 			// Redirect to dashboard, success!!
 			setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
 		}
@@ -72,7 +91,7 @@ component extends="baseHandler"{
 	*/
 	function resendCode( event, rc, prc ){
 		// Send challenge
-		twoFactorService.sendChallenge( prc.oCurrentAuthor );
+		twoFactorService.sendChallenge( prc.oAuthor );
 		// message and redirect
 		messagebox.info( cb.r( "twofactor.codesent@security" ) );
 		// Relocate

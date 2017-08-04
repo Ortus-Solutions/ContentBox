@@ -26,7 +26,7 @@
 					#announceInterception( "cbadmin_beforeTwoFactorForm" )#
 
 					<!--- Challenge Text --->
-					<p>#prc.provider.getDisplayHelp()#</p>
+					<p>#prc.provider.getVerificationHelp()#</p>
                 	
 	                <div class="form-group">
 	                    <div class="col-md-12 controls">
@@ -42,7 +42,10 @@
 
 					<div class="checkbox">
 					    <label>
-					    	<input type="checkbox" name="trustDevice" id="trustDevice"> #cb.r( "twofactor.trust@security" )#
+					    	<input type="checkbox" name="trustDevice" id="trustDevice" value="true"> #cb.r( "twofactor.trust@security" )#
+					    	<cfif prc.cbSettings.cb_security_2factorAuth_trusted_days gt 0>
+							(#prc.cbSettings.cb_security_2factorAuth_trusted_days# #cb.r( "common.days@security" )#)
+					    	</cfif>
 					    </label>
 					</div>
 

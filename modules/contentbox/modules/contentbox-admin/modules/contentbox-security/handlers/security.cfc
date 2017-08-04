@@ -61,15 +61,13 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_preLogin" );
 
-		// VALID LOGINS
-		if( securityService.authenticate( rc.username, rc.password ) ){
-			// set remember me
-			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
-			var oAuthor = securityService.getAuthorSession();
-			
+		// Authenticate credentials
+		var results = securityService.authenticate( rc.username, rc.password );
+		if( results.isAuthenticated ){
+
 			// Verify if user needs to reset their password?
-			if( oAuthor.getIsPasswordReset() ){
-				var token = securityService.generateResetToken( oAuthor );
+			if( results.author.getIsPasswordReset() ){
+				var token = securityService.generateResetToken( results.author );
 				messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
 				setNextEvent(
 					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
@@ -78,15 +76,25 @@ component extends="baseHandler"{
 			}
 
 			// Verify if we have to challenge via two factor auth
-			if( twoFactorService.canChallenge( oAuthor ) ){
+			if( twoFactorService.canChallenge( results.author ) ){
+				// Flash data needed for authorizations
+				flash.put( "authorData", { 
+					authorID 	= results.author.getAuthorID(), 
+					rememberMe 	= rc.rememberMe
+				} );
 				// Send challenge
-				twoFactorService.sendChallenge( oAuthor );
+				twoFactorService.sendChallenge( results.author );
 				// Relocate to two factor auth presenter
 				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
 			}
 
+			// Set keep me log in remember cookie, if set.
+			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
+			// Set in session, validations are now complete
+			securityService.setAuthorSession( results.author );
+
 			// announce event
-			announceInterception( "cbadmin_onLogin", { author = oAuthor, securedURL = rc._securedURL } );
+			announceInterception( "cbadmin_onLogin", { author = results.author, securedURL = rc._securedURL } );
 			
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
@@ -216,7 +224,7 @@ component extends="baseHandler"{
 		rc.password_confirmation = antiSamy.htmlSanitizer( rc.password_confirmation );
 
 		// Validate passwords
-		if( !len( rc.password) || !len( rc.password_confirmation ) ){
+		if( !len( rc.password ) || !len( rc.password_confirmation ) ){
 			// Exception
 			messagebox.error( cb.r( "messages.invalid_password@security" ) );
 			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );

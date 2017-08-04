@@ -40,8 +40,9 @@ component implements="ISecurityService" singleton{
 	}
 
 	/**
-	* User validator via security interceptor
-	* @rule The security rule
+	* Validates if a user can access an event. Called via the cbSecurity module.
+	* 
+	* @rule The security rule being tested for
 	* @controller The ColdBox controller calling the validation
 	*/
 	boolean function userValidator( required struct rule, any controller ){
@@ -140,20 +141,30 @@ component implements="ISecurityService" singleton{
 	}
 
 	/**
-	* Verify if an author is valid
+	* Authenticate an author via ContentBox credentials.
+	* This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
+	* The `author` object which it represents.
+	* 
 	* @username The username to validate
 	* @password The password to validate
+	*
+	* @return struct:{ isAuthenticated:boolean, author:Author }
 	*/
-	boolean function authenticate( required username, required password ){
+	struct function authenticate( required username, required password ){
+		var results = { isAuthenticated = false, author = authorService.new() };
 
 		// Find username
 		var oAuthor = authorService.findWhere( {
-			username = arguments.username,
-			isActive = true,
-			isDeleted=false
+			username 	= arguments.username,
+			isActive 	= true,
+			isDeleted 	= false
 		} );
-		// Verify
-		if( isNull( oAuthor ) ){ return false; }
+
+		// Verify if author found
+		if( isNull( oAuthor ) ){ 
+			// return not authenticated
+			return results; 
+		}
 
 		// Determine password type
 		var isBcrypt = ( findNoCase( "$", oAuthor.getPassword() ) ? true : false );
@@ -179,12 +190,13 @@ component implements="ISecurityService" singleton{
 			}
 			// Set last login date
 			updateAuthorLoginTimestamp( oAuthor );
-			// set them in session
-			setAuthorSession( oAuthor );
-			return true;
+			
+			// User authenticated, mark and return
+			results.isAuthenticated = true;
+			results.author = oAuthor;
 		}
 
-		return false;
+		return results;
 	}
 
 	/**

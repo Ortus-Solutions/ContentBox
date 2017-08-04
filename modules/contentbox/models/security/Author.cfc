@@ -355,7 +355,8 @@ component 	persistent="true"
 	}	
 
 	/**
-	* Logged in
+	* Utility method to verify if an author has been logged in to the system or not.
+	* This method does not account for permissions.  Only for logged in status.
 	*/
 	function isLoggedIn(){
 		return getLoggedIn();
