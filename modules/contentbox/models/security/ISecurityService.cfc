@@ -28,9 +28,16 @@ interface{
 	ISecurityService function logout();
 
 	/**
-	* Verify if an author has valid credentials in our system.
+	* Authenticate an author via ContentBox credentials.
+	* This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
+	* The `author` object which it represents.
+	* 
+	* @username The username to validate
+	* @password The password to validate
+	*
+	* @return struct:{ isAuthenticated:boolean, author:Author }
 	*/
-	boolean function authenticate( required username, required password );
+	struct function authenticate( required username, required password );
 
 	/**
 	* Send password reminder for an author

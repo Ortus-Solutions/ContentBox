@@ -5,29 +5,17 @@
 * ---
 * ContentBox security handler
 */
-component{
+component extends="baseHandler"{
 
 	// DI
-	property name="securityService" inject="securityService@cb";
-	property name="authorService" 	inject="authorService@cb";
-	property name="antiSamy"		inject="antisamy@cbantisamy";
-	property name="cb"				inject="cbhelper@cb";
-	property name="messagebox"		inject="messagebox@cbMessagebox";
+	property name="antiSamy"			inject="antisamy@cbantisamy";
+	property name="markdown"			inject="Processor@cbmarkdown";
 
 	// Method Security
 	this.allowedMethods = {
 		doLogin 		= "POST",
 		doLostPassword 	= "POST"
 	};
-
-	/**
-	* Pre handler
-	*/
-	function preHandler( event, currentAction, rc, prc ){
-		prc.langs 		= getModuleSettings( "contentbox" ).languages;
-		prc.entryPoint 	= getModuleConfig( "contentbox-security" ).entryPoint;
-		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
-	}
 
 	/**
 	* Change language
@@ -50,6 +38,8 @@ component{
 		// secured URL from security interceptor
 		arguments.event.paramValue( "_securedURL", "" );
 		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
+		// Markdown Processing of sign in text
+		prc.signInText = markdown.toHTML( prc.cbSettings.cb_security_login_signin_text );
 		// view
 		event.setView( view="security/login" );
 	}
@@ -71,24 +61,40 @@ component{
 		// announce event
 		announceInterception( "cbadmin_preLogin" );
 
-		// VALID LOGINS
-		if( securityService.authenticate( rc.username, rc.password ) ){
-			// set remember me
-			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
-			var oAuthor = securityService.getAuthorSession();
-			
-			// announce event
-			announceInterception( "cbadmin_onLogin", { author = oAuthor } );
-			
+		// Authenticate credentials
+		var results = securityService.authenticate( rc.username, rc.password );
+		if( results.isAuthenticated ){
+
 			// Verify if user needs to reset their password?
-			if( oAuthor.getIsPasswordReset() ){
-				var token = securityService.generateResetToken( oAuthor );
+			if( results.author.getIsPasswordReset() ){
+				var token = securityService.generateResetToken( results.author );
 				messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
 				setNextEvent(
 					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
 					queryString = "token=#token#"
 				);
 			}
+
+			// Verify if we have to challenge via two factor auth
+			if( twoFactorService.canChallenge( results.author ) ){
+				// Flash data needed for authorizations
+				flash.put( "authorData", { 
+					authorID 	= results.author.getAuthorID(), 
+					rememberMe 	= rc.rememberMe
+				} );
+				// Send challenge
+				twoFactorService.sendChallenge( results.author );
+				// Relocate to two factor auth presenter
+				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
+			}
+
+			// Set keep me log in remember cookie, if set.
+			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
+			// Set in session, validations are now complete
+			securityService.setAuthorSession( results.author );
+
+			// announce event
+			announceInterception( "cbadmin_onLogin", { author = results.author, securedURL = rc._securedURL } );
 			
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
@@ -119,7 +125,11 @@ component{
 		// message redirect
 		messagebox.info( cb.r( "messages.seeyou@security" ) );
 		// relocate
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+		var relocateTo = prc.cbSettings.cb_security_login_signout_url;
+		if( !len( relocateTo ) ){
+			relocateTo = "#prc.cbAdminEntryPoint#.security.login";
+		}
+		setNextEvent( relocateTo );
 	}
 
 	/**
@@ -214,7 +224,7 @@ component{
 		rc.password_confirmation = antiSamy.htmlSanitizer( rc.password_confirmation );
 
 		// Validate passwords
-		if( !len( rc.password) || !len( rc.password_confirmation ) ){
+		if( !len( rc.password ) || !len( rc.password_confirmation ) ){
 			// Exception
 			messagebox.error( cb.r( "messages.invalid_password@security" ) );
 			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );

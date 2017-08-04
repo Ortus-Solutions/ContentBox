@@ -263,7 +263,7 @@ component accessors="true" threadSafe singleton{
 			.addHeaderSubMenu( 
 				name 	= "myprofile", 
 				title 	= "ctrl+shift+A", 
-				label 	= "<i class='fa fa-camera'></i> My Profile", 
+				label 	= "<i class='fa fa-id-card-o'></i> My Profile", 
 				href 	= variables.buildLink,
 				href_to = xehMyProfile,
 				data 	= { keybinding = "ctrl+shift+a" } 

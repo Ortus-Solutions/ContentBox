@@ -27,6 +27,74 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	/**
+	 * Get a status report of authors in the system.
+	 */
+	function getStatusReport(){
+		var c 		= newCriteria();
+		var results = {
+			"active" 		      = 0,
+			"deactivated"         = 0,
+			"2FactorAuthEnabled"  = 0,
+			"2FactorAuthDisabled" = 0
+		};
+
+		var statusReport = c.withProjections( 
+				count 			= "isActive:authors", 
+				groupProperty 	= "isActive"
+			)
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list();
+
+		for( var row in statusReport ){
+			if( row.get( "isActive" ) ){
+				results.active = row.get( "authors" );
+			} else {
+				results.deactivated = row.get( "authors" );
+			}
+		}
+
+		var twoFactorAuthReport = c.withProjections( 
+				count 			= "is2FactorAuth:authors", 
+				groupProperty 	= "is2FactorAuth"
+			)
+			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list();
+		
+		for( var row in twoFactorAuthReport ){
+			if( row.get( "is2FactorAuth" ) ){
+				results[  "2FactorAuthEnabled" ] = row.get( "authors" );
+			} else {
+				results[ "2FactorAuthDisabled" ] = row.get( "authors" );
+			}
+		}
+
+		return results;
+	}
+
+	/**
+	* Validate that the sent API Token is valid and active
+	*/
+	boolean function isValidAPIToken( required APIToken ){
+		var c = newCriteria()
+			.isEq( "APIToken", arguments.APIToken )
+			.isTrue( "isActive" );
+
+		return ( c.count() ? true : false );
+	}
+
+	/**
+	* Get Author for corresponding API Token
+	* @returns Populated User object.  If APIToken isn't found, returns new Author.
+	*/
+	any function getAuthorizedAuthor( required APIToken ){
+		var c = newCriteria()
+			.isEq( "APIToken", arguments.APIToken )
+			.isTrue( "isActive" );
+
+		return ( c.get() ?: new() );
+	}
+
+	/**
 	 * Delete an author from the system
 	 * @author 			The author object
 	 * @transactional 	Auto transactions
@@ -72,18 +140,26 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* @returns AuthorService
 	*/
 	function saveAuthor( required author, boolean passwordChange=false, boolean transactional=true ){
-		// hash password if new author
+		
+		// bcrypt password if new author
 		if( !arguments.author.isLoaded() OR arguments.passwordChange ){
 			// bcrypt the incoming password
 			arguments.author.setPassword( variables.bcrypt.hashPassword( arguments.author.getPassword() ) );
 		}
+
+		// Verify if the author has already an API Token, else generate one for them.
+		if( !len( arguments.author.getAPIToken() ) ){
+			arguments.author.generateAPIToken();
+		}
+
 		// save the author
 		save( entity=arguments.author, transactional=arguments.transactional );
 		return this;
 	}
 
 	/**
-	* Author search by name, email or username
+	* Author search by many criteria.
+	* 
 	* @searchTerm		 	Search in firstname, lastname and email fields
 	* @isActive  		 	Search with active bit
 	* @role      		 	Apply a role filter
@@ -92,6 +168,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* @asQuery   		 	Query or objects
 	* @sortOrder 		 	The sort order to apply
 	* @permissionGroups 	Single or list of permissiong groups to search on
+	* @twoFactorAuth 		Two factor auth or any
+	*
+	* @return {authors:array, count:numeric}
 	*/
 	function search(
 		string searchTerm="",
@@ -101,7 +180,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		numeric offset=0,
 		boolean asQuery=false,
 		string sortOrder="lastName",
-		string permissionGroups
+		string permissionGroups,
+		string twoFactorAuth
 	){
 		var results = {};
 		var c = newCriteria();
@@ -118,6 +198,11 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		// isActive filter
 		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any" ){
 			c.eq( "isActive", javaCast( "boolean", arguments.isActive ) );
+		}
+
+		// twoFactorAuth filter
+		if( structKeyExists( arguments, "twoFactorAuth" ) AND arguments.twoFactorAuth NEQ "any" ){
+			c.eq( "is2FactorAuth", javaCast( "boolean", arguments.twoFactorAuth ) );
 		}
 
 		// role filter

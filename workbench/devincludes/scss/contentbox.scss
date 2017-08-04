@@ -50,8 +50,10 @@
 #header .user-nav ul li.dropdown.settings .dropdown-menu:before {
 	left: 43%;
 }
-#login-wrapper #username{
-	padding-left: 32px;
+#login-wrapper{
+	#username, #twofactorcode{
+		padding-left: 32px;
+	}
 }
 .main-content-wrapper .dropdown-menu > li > a:hover, .main-content-wrapper .dropdown-menu > li > a:active {
 	background-color: #16a086;

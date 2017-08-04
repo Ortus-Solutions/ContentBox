@@ -10,7 +10,7 @@
 		<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
 
-		<!---Import Log --->
+		<!--- Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
 		</cfif>
@@ -22,7 +22,8 @@
 
 				<div class="panel-heading">
 					<div class="row">
-
+						
+						<!--- Quick Search --->
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
@@ -34,6 +35,8 @@
 						</div>
 
 						<div class="col-md-6">
+
+							<!--- Actions Bar --->
 							<div class="pull-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group btn-group-sm">
@@ -114,8 +117,18 @@
 							<label for="fStatus" class="control-label">Status: </label>
 							<select name="fStatus" id="fStatus" class="form-control input-sm">
 								<option value="any">Any Status</option>
-								<option value="true">Active</option>
-								<option value="false">Deactivated</option>
+								<option value="true" selected="selected">Active (#prc.statusReport.active#)</option>
+								<option value="false">Deactivated (#prc.statusReport.deactivated#)</option>
+							</select>
+						</div>
+
+						<!--- 2 Factor Auth --->
+						<div class="form-group">
+							<label for="f2FactorAuth" class="control-label">2 Factor Auth: </label>
+							<select name="f2FactorAuth" id="f2FactorAuth" class="form-control input-sm">
+								<option value="any" selected="selected">Any Status</option>
+								<option value="true">Active (#prc.statusReport.2FactorAuthEnabled#)</option>
+								<option value="false">Deactivated (#prc.statusReport.2FactorAuthDisabled#)</option>
 							</select>
 						</div>
 
@@ -125,7 +138,7 @@
 							<select name="fRole" id="fRole" class="form-control input-sm">
 								<option value="any">All Roles</option>
 								<cfloop array="#prc.aRoles#" index="thisRole">
-								<option value="#thisRole.getRoleID()#">#thisRole.getRole()#</option>
+								<option value="#thisRole.getRoleID()#">#thisRole.getRole()# (#thisRole.getNumberOfAuthors()#)</option>
 								</cfloop>
 							</select>
 						</div>
@@ -136,7 +149,7 @@
 							<select name="fGroups" id="fGroups" class="form-control input-sm">
 								<option value="any">All Groups</option>
 								<cfloop array="#prc.aPermissionGroups#" index="thisGroup">
-								<option value="#thisGroup.getPermissionGroupID()#">#thisGroup.getName()#</option>
+								<option value="#thisGroup.getPermissionGroupID()#">#thisGroup.getName()# (#thisGroup.getNumberOfAuthors()#)</option>
 								</cfloop>
 							</select>
 						</div>
@@ -147,11 +160,11 @@
 							<select name="sortOrder" id="sortOrder" class="form-control input-sm">
 								<option value="name_asc" 			>Name</option>
 								<option value="lastLogin_desc" 		>Recent Sign in</option>
-								<option value="lastLogin_asc"  		>Oldest sign in</option>
-								<option value="createdDate_desc" 	>Last created</option>
+								<option value="lastLogin_asc"  		>Oldest Sign in</option>
+								<option value="createdDate_desc" 	>Last Created</option>
 								<option value="createdDate_asc"   	>Oldest Created</option>
-								<option value="modifiedDate_desc" 	>Last updated</option>
-								<option value="modifiedDate_asc"  	>Oldest updated</option>
+								<option value="modifiedDate_desc" 	>Last Updated</option>
+								<option value="modifiedDate_asc"  	>Oldest Updated</option>
 							</select>
 						</div>
 

@@ -22,7 +22,9 @@ component extends="tests.resources.BaseTest"{
 
 	function run( testResults, testBox ){
 		describe( "DB Search Adapter", function(){
+
 			beforeEach(function( currentSpec ){
+				setup();
 				model = getInstance( "DBSearch@cb" );
 			});
 
@@ -46,7 +48,6 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			it( "can render search results", function(){
-				setup();
 				// setup
 				var r = model.search( searchTerm='awesome' );
 				var prc = getRequestContext().getPrivateCollection();
@@ -60,7 +61,6 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			it( "can render search with no results", function(){
-				setup();
 				// setup
 				var r = model.search( searchTerm='bogus pocus' );
 				var prc = getRequestContext().getPrivateCollection();

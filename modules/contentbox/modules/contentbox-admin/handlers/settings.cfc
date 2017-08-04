@@ -15,6 +15,8 @@ component extends="baseHandler"{
 	property name="mediaService"		inject="id:mediaService@cb";
 	property name="LoginTrackerService"	inject="id:LoginTrackerService@cb";
 	property name="mailService"			inject="id:mailservice@cbMailservices";
+	property name="markdownEditor"		inject="id:markdownEditor@contentbox-markdowneditor";
+	property name="twoFactorService"	inject="id:twoFactorService@cb";
 	
 	/**
 	* Pre handler
@@ -38,12 +40,16 @@ component extends="baseHandler"{
 		prc.markups = editorService.getRegisteredMarkups();
 		// Get all registered media providers so we can display them
 		prc.mediaProviders = mediaService.getRegisteredProvidersMap();
+		// Get All registered two factor providers so we can display them
+		prc.twoFactorProviders = twoFactorService.getRegisteredProvidersMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper
 		prc.cb = CBHelper;
 		// caches
 		prc.cacheNames = cachebox.getCacheNames();
+		// Markdown Editor Availability
+		variables.markdownEditor.loadAssets();
 		// view
 		event.setView( "settings/index" );
 	}

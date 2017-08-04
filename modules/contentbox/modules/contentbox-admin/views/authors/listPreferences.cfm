@@ -75,28 +75,46 @@
 		)#
 
 		<!--- Nav Bar Collapse --->
-		#html.select(
-			name  			= "preference.sidemenuCollapse",
-			label 			= "Collapsed Left Navbar",
-			options 		= "yes,no",
-			class 			= "form-control input-sm",
-			selectedValue 	= prc.author.getPreference( "sidemenuCollapse", "no" ),
-			wrapper 		= "div class=controls",
-			labelClass 		= "control-label",
-			groupWrapper 	= "div class=form-group"
-		)#
+		<div class="form-group">
+			#html.label(
+				class   = "control-label",
+				field   = "preference.sidemenuCollapse",
+				content = "Collapsed Left Navbar:"
+			)#
+
+			<div class="controls">
+				#html.checkbox(
+					name    = "preference.sidemenuCollapse_toggle",
+					data	= { toggle: 'toggle', match: 'preference\.sidemenuCollapse' },
+					checked = prc.author.getPreference( "sidemenuCollapse", false )
+				)#
+				#html.hiddenField(
+					name	= "preference.sidemenuCollapse",
+					value 	= prc.author.getPreference( "sidemenuCollapse", "no" )
+				)#
+			</div>
+		</div>
 
 		<!--- Right Sidebar --->
-		#html.select(
-			name  			= "preference.sidebarState",
-			label 			= "Show Content Sidebar",
-			options 		= "yes,no",
-			class 			= "form-control input-sm",
-			selectedValue 	= prc.author.getPreference( "sidebarState", "yes" ),
-			wrapper 		= "div class=controls",
-			labelClass		= "control-label",
-			groupWrapper 	= "div class=form-group"
-		)#
+		<div class="form-group">
+			#html.label(
+				class   = "control-label",
+				field   = "preference.sidebarState",
+				content = "Collapsed Left Navbar:"
+			)#
+
+			<div class="controls">
+				#html.checkbox(
+					name    = "preference.sidebarState_toggle",
+					data	= { toggle: 'toggle', match: 'preference\.sidebarState' },
+					checked = prc.author.getPreference( "sidebarState", true )
+				)#
+				#html.hiddenField(
+					name	= "preference.sidebarState",
+					value 	= prc.author.getPreference( "sidebarState", "yes" )
+				)#
+			</div>
+		</div>
 
 		<!--- Admin Event --->
 		#announceInterception( "cbadmin_UserPreferencePanel" )#

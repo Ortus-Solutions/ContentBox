@@ -1,4 +1,10 @@
 ﻿<cfoutput>
+<style>
+.CodeMirror, .CodeMirror-scroll {
+	height: 200px;
+	min-height: 200px;
+}
+</style>
 <script>
 $(document).ready(function() {
 	// form validators
@@ -7,6 +13,19 @@ $(document).ready(function() {
 	$( "input.slider" ).on( "slide", function( slideEvt ){
 		$( "##" + slideEvt.target.id + "_label" ).text( slideEvt.value );
 	});
+	// Load all MDEditors for .mde classes
+	var mdEditors =  {};
+	$( ".mde" ).each( function(){
+		mdEditors[ $( this ).prop( "id" ) ] = new SimpleMDE( { 
+			element 		: this,
+			autosave 		: { enabled : false },
+			promptURLs 		: true,
+			tabSize 		: 2,
+			forceSync 		: true,
+			placeholder 	: 'Type here...',
+			spellChecker 	: false
+		} );
+	} );
 } );
 function emailTest(){
 	$( "##emailTestDiv" ).html( "" );

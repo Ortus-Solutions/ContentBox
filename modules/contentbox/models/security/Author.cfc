@@ -87,6 +87,21 @@ component 	persistent="true"
 				default="false" 
 				dbdefault="0"
 				index="idx_passwordReset";
+
+	property 	name="is2FactorAuth"
+				ormtype="boolean" 
+				sqltype="bit"
+				notnull="true" 
+				default="false" 
+				dbdefault="0"
+				index="idx_2factorauth";
+
+	property 	name="APIToken"			
+				notnull="false"
+				length="255"
+				unique="true"
+				index="idx_apitoken"
+				default="";
 	
 	/* *********************************************************************
 	**							RELATIONSHIPS									
@@ -209,12 +224,35 @@ component 	persistent="true"
 		variables.isActive 			= true;
 		variables.permissionGroups 	= [];
 		variables.isPasswordReset 	= false;
+		variables.is2FactorAuth		= false;
+		variables.APIToken 			= "";
 		
 		// Setup empty preferences
 		setPreferences( {} );
+
+		// startup a token
+		generateAPIToken();
 		
 		super.init();
 
+		return this;
+	}
+
+	/**
+	* Listen to postLoad's from the ORM
+	*/
+	function postLoad(){
+		// Verify if the user has already an API Token, else generate one for them.
+		if( !len( getAPIToken() ) ){
+			generateAPIToken();
+		}
+	}
+
+	/**
+	* Generate new API Token, stores it locally but does not persist it.
+	*/
+	Author function generateAPIToken(){
+		variables.APIToken = hash( createUUID() & now(), "sha-512" );
 		return this;
 	}
 
@@ -317,7 +355,8 @@ component 	persistent="true"
 	}	
 
 	/**
-	* Logged in
+	* Utility method to verify if an author has been logged in to the system or not.
+	* This method does not account for permissions.  Only for logged in status.
 	*/
 	function isLoggedIn(){
 		return getLoggedIn();

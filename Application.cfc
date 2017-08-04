@@ -68,12 +68,17 @@ component{
 		skipCFCWithError	= true
 	};
 
+	// Local ORM SQL Logging
+	if( reFindNoCase( "^(dev\.|localhost|127\.0\.0)", cgi.http_host )  ){
+		this.ormSettings.logSQL = true;
+	}
+
 	/************************************** METHODS *********************************************/
 
 	// application start
 	public boolean function onApplicationStart(){
-		//Set a high timeout for any orm updates
-		setting requestTimeout="180";
+		// Set a high timeout for any orm updates
+		setting requestTimeout="300";
 		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
 		application.cbBootstrap.loadColdbox();
 		return true;
@@ -129,6 +134,4 @@ component{
 		//Run onAppStart
 		onApplicationStart();
 	}
-
-	//@cf9-onError@
 }

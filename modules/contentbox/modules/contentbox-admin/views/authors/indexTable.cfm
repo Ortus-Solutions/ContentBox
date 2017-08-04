@@ -37,9 +37,15 @@
 					<cfelse>
 						#author.getName()#
 					</cfif>
+
 					<cfif prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 						<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
 					</cfif>
+
+					<cfif author.getIs2FactorAuth()>
+						<i class="fa fa-mobile fa-lg" title="2 Factor Auth Enabled"></i>
+					</cfif>
+
 					<br>
 					#author.getEmail()#
 				</div>

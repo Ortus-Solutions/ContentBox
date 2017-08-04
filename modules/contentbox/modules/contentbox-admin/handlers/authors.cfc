@@ -16,15 +16,26 @@ component extends="baseHandler"{
 	property name="roleService"				inject="id:roleService@cb";
 	property name="editorService"			inject="id:editorService@cb";
 	property name="paging"					inject="id:paging@cb";
+	property name="twoFactorService"		inject="id:twoFactorService@cb";
 
 	/**
 	* Pre handler
 	*/
-	function preHandler( event, rc, prc, action, eventArguments){
+	function preHandler( event, rc, prc, action, eventArguments ){
+		var protectedActions = [ 
+			"save",
+			"editor",
+			"savePreferences",
+			"passwordChange",
+			"doPasswordReset",
+			"saveRawPreferences",
+			"saveTwoFactor"
+		];
+
 		// Specific admin validation actions
-		if( listFindNoCase( "save,editor,savePreferences,passwordChange,doPasswordReset,saveRawPreferences", arguments.action ) ){
+		if( arrayFindNoCase( protectedActions, arguments.action ) ){
 			// Get incoming author to verify credentials
-			arguments.event.paramValue( "authorID", 0);
+			arguments.event.paramValue( "authorID", 0 );
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
 			if(
@@ -60,6 +71,7 @@ component extends="baseHandler"{
 		// Get Roles
 		prc.aRoles 				= roleService.getAll( sortOrder="role" );
 		prc.aPermissionGroups 	= permissionGroupService.getAll( sortOrder="name" );
+		prc.statusReport 		= authorService.getStatusReport();
 
 		// View
 		event.setView( "authors/index" );
@@ -104,7 +116,8 @@ component extends="baseHandler"{
 			.paramValue( "showAll", false )
 			.paramValue( "searchAuthors", "" )
 			.paramValue( "isFiltering", false, true )
-			.paramValue( "fStatus", "any" )
+			.paramValue( "fStatus", "true" )
+			.paramValue( "f2FactorAuth", "true" )
 			.paramValue( "fRole", "any" )
 			.paramValue( "fGroups", "any" )
 			.paramValue( "sortOrder", "lastname_asc" );
@@ -120,11 +133,16 @@ component extends="baseHandler"{
 		prc.xehPasswordReset	= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
-		if( rc.fRole neq "any" OR rc.fStatus neq "any" OR rc.fGroups neq "any" or rc.showAll ){
+		if( rc.fRole neq "any" 
+			OR rc.fStatus neq "any" 
+			OR rc.f2FactorAuth neq "any"
+			OR rc.fGroups neq "any" 
+			OR rc.showAll 
+		){
 			prc.isFiltering = true;
 		}
 
-		// Determine Sort Order
+		// Determine Sort Order internally to avoid XSS
 		var sortOrder = "lastName";
 		switch( rc.sortOrder ){
 			case "lastname_asc" 		: { sortOrder = "lastName asc";      break; }
@@ -144,7 +162,8 @@ component extends="baseHandler"{
 			sortOrder 			= sortOrder,
 			isActive  			= rc.fStatus,
 			role      			= rc.fRole,
-			permissionGroups 	= rc.fGroups
+			permissionGroups 	= rc.fGroups,
+			twoFactorAuth		= rc.f2FactorAuth
 		);
 		prc.authors 		= results.authors;
 		prc.authorCount 	= results.count;
@@ -288,6 +307,25 @@ component extends="baseHandler"{
 		}
 	}
 
+	/**
+	* Save Two Factor Authentication details.
+	*/
+	function saveTwoFactor( event, rc, prc ){
+		// Get the persisted user
+		var oAuthor = authorService.get( id=rc.authorID );
+		oAuthor.setIs2FactorAuth( !!rc.is2FactorAuth );
+		// Announce event
+		announceInterception( "cbadmin_onAuthorTwoFactorSaveOptions", { author=oAuthor } );
+		// save Author
+		authorService.saveAuthor( oAuthor );
+		// message
+		cbMessagebox.setMessage( "info","Two Factor Settings Saved!" );
+		// relocate
+		setNextEvent(
+			event		= prc.xehAuthorEditor,
+			queryString	= "authorID=#oAuthor.getAuthorID()###twofactor"
+		);
+	}
 
 	/**
 	* Author editor panel
@@ -307,11 +345,14 @@ component extends="baseHandler"{
 		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
 		prc.xehExport 				= "#prc.cbAdminEntryPoint#.authors.export";
 		prc.xehPasswordReset		= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
+		prc.xehSaveTwoFactor 		= "#prc.cbAdminEntryPoint#.authors.saveTwoFactor";
 
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
 		// get roles
 		prc.roles = roleService.list( sortOrder="role", asQuery=false );
+		// get two factor provider
+		prc.twoFactorProvider = twoFactorService.getDefaultProviderObject();
 
 		// viewlets only if editing a user
 		if( prc.author.isLoaded() ){

@@ -14,16 +14,18 @@
     )#
 
     <!--- Description --->
-    #html.textarea(
-        name            = "cb_dashboard_welcome_body",
-        label           = "Welcome Body:",
-        value           = prc.cbSettings.cb_dashboard_welcome_body,
-        rows            = "3",
-        class           = "form-control",
-        wrapper         = "div class=controls",
-        labelClass      = "control-label",
-        groupWrapper    = "div class=form-group"
-    )#
+    <div class="form-group">
+        <label class="control-label" for="cb_dashboard_welcome_body">Welcome Body:</label>
+        <div class="controls">
+            <small>HTML/Markdown enabled.</small><br/>
+            #html.textarea(
+                name            = "cb_dashboard_welcome_body",
+                value           = prc.cbSettings.cb_dashboard_welcome_body,
+                rows            = "3",
+                class           = "form-control mde"
+            )#
+        </div>
+    </div>
 
     <!--- Dashboard Feed --->
     <div class="form-group">

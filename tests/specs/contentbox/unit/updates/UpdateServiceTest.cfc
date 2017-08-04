@@ -24,6 +24,11 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		model.onDIComplete();
 	}
 
+	function teardown(){
+		// self cleanup on this test only.
+		structdelete( application, "cbController" );
+	}
+
 	function testPath(){
 		path = model.getPatchesLocation();
 		assertEquals( expandPath( "/contentbox/updates" ), path );

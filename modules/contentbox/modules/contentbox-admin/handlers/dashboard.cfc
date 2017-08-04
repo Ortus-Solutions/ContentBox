@@ -15,6 +15,7 @@ component extends="baseHandler"{
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="feedReader"			inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
+	property name="markdown"			inject="Processor@cbmarkdown";
 
 	/**
 	* Pre handler 
@@ -42,6 +43,8 @@ component extends="baseHandler"{
 		
 		// Installer Check
 		prc.installerCheck = settingService.isInstallationPresent();
+		// Welcome Body
+		prc.welcomeBody = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
 		// announce event
 		announceInterception( "cbadmin_onDashboard" );
 		// dashboard view

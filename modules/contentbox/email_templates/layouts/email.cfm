@@ -1,4 +1,5 @@
 <cfset settings = getInstance( "settingService@cb" ).getAllSettings( asStruct=true )>
+<cfparam name="args.viewModule" default="">
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -147,7 +148,7 @@
                                             <tr>
                                                 <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
 
-                                                    <cfoutput>#renderView( args=args )#</cfoutput>
+                                                    <cfoutput>#renderView( args=args, module=args.viewModule )#</cfoutput>
 
                                                     <!-- Footer -->
                                                     <div style="text-align: center; border-top: 1px dotted gray; margin: 20px; padding-top: 20px">
