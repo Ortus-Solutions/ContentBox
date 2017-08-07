@@ -10,7 +10,7 @@ component implements="ISecurityService" singleton{
 	// Dependencies
 	property name="authorService" 		inject="id:authorService@cb";
 	property name="settingService"		inject="id:settingService@cb";
-	property name="sessionStorage" 		inject="sessionStorage@cbStorages";
+	property name="cacheStorage" 		inject="cacheStorage@cbStorages";
 	property name="cookieStorage" 		inject="cookieStorage@cbStorages";
 	property name="mailService"			inject="mailService@cbmailservices";
 	property name="renderer"			inject="provider:ColdBoxRenderer";
@@ -95,7 +95,7 @@ component implements="ISecurityService" singleton{
 	Author function getAuthorSession(){
 
 		// Check if valid user id in session
-		var authorID = val( sessionStorage.getVar( "loggedInAuthorID", "" ) );
+		var authorID = val( cacheStorage.getVar( "loggedInAuthorID", "" ) );
 
 		// If that fails, check for a cookie
 		if( !authorID ) {
@@ -124,7 +124,7 @@ component implements="ISecurityService" singleton{
 	* @return SecurityService
 	*/
 	ISecurityService function setAuthorSession( required Author author ){
-		sessionStorage.setVar( "loggedInAuthorID", author.getAuthorID() );
+		cacheStorage.setVar( "loggedInAuthorID", author.getAuthorID() );
 		return this;
 	}
 
@@ -134,7 +134,7 @@ component implements="ISecurityService" singleton{
 	* @return SecurityService
 	*/
 	ISecurityService function logout(){
-		sessionStorage.clearAll();
+		cacheStorage.clearAll();
 		cookieStorage.deleteVar( name="contentbox_keep_logged_in" );
 
 		return this;
@@ -458,7 +458,7 @@ component implements="ISecurityService" singleton{
 		// Validate Password
 		if( compare( arguments.content.getPasswordProtection(), arguments.password ) eq 0 ){
 			// Set simple validation
-			sessionStorage.setVar( "protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
+			cacheStorage.setVar( "protection-#hash(arguments.content.getSlug())#",  getContentProtectedHash( arguments.content ) );
 			return true;
 		}
 
@@ -470,7 +470,7 @@ component implements="ISecurityService" singleton{
 	* @content The content object to check
 	*/
 	boolean function isContentViewable( required content ){
-		var protectedHash = sessionStorage.getVar( "protection-#hash(arguments.content.getSlug())#","" );
+		var protectedHash = cacheStorage.getVar( "protection-#hash(arguments.content.getSlug())#","" );
 		//check hash against validated content
 		if( compare( protectedHash, getContentProtectedHash( arguments.content ) )  EQ 0 ){
 			return true;
