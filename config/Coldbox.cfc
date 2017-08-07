@@ -7,7 +7,7 @@
 */
 component{
 
-	// Configure ColdBox Application
+	// Configure Application
 	function configure(){
 
 		// coldbox directives
@@ -32,7 +32,7 @@ component{
 			//Extension Points
 			applicationHelper 			= "",
 			viewsHelper					= "",
-			modulesExternalLocation		= [ "/modules_app" ],
+			modulesExternalLocation		= [],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
@@ -62,16 +62,6 @@ component{
 			development = "local,127\.0\.0\.1"
 		};
 
-		// Module Directives
-		modules = {
-			//Turn to false in production
-			autoReload = false,
-			// An array of modules names to load, empty means all of them
-			include = [],
-			// An array of modules names to NOT load, empty means none
-			exclude = []
-		};
-
 		//LogBox DSL
 		logBox = {
 			// Define Appenders
@@ -82,13 +72,13 @@ component{
 			root = { levelmax="INFO", appenders="*" }
 		};
 
-		//Layout Settings
+		// Layout Settings
 		layoutSettings = {
 			defaultLayout = "",
 			defaultView   = ""
 		};
 
-		//Interceptor Settings
+		// Interceptor Settings
 		interceptorSettings = {
 			throwOnInvalidStates = false,
 			customInterceptionPoints = ""
