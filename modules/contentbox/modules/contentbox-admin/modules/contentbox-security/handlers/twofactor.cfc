@@ -71,10 +71,13 @@ component extends="baseHandler"{
 			flash.keep( "authorData" );
 			setNextEvent( "#prc.entryPoint#.twofactor" );
 		} else {
+			var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
 			// Are we trusting devices? If so, trust this device if passed
-			if( twoFactorService.getDefaultProviderObject().allowTrustedDevice() AND rc.trustDevice ){
+			if( oTwoFactorProvider.allowTrustedDevice() AND rc.trustDevice ){
 				twoFactorService.setTrustedDevice( prc.oAuthor.getAuthorID() );
 			}
+			// Call Provider finalize callback, in case something is needed for teardowns
+			oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );
 			// announce event
 			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
 			// Set keep me log in remember cookie, if set.

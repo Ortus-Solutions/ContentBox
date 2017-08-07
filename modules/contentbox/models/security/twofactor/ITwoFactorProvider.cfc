@@ -54,4 +54,14 @@ interface{
 	 */
 	struct function verifyChallenge( required string code, required author );
 
+	/**
+	 * This method is called once a two factor challenge is accepted and valid. 
+	 * Meaning the user has completed the validation and will be logged in to ContentBox now.
+	 *
+	 * @code The verification code
+	 * @author The author to verify challenge
+	 *
+	 */
+	function finalize( required string code, required author );
+
 }
