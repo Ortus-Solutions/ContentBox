@@ -122,7 +122,6 @@ component{
 
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	function development(){
-
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching 			= false;
@@ -133,7 +132,7 @@ component{
 		logbox.appenders.files = { 
 			class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
-				filename = "contentbox", filePath=expandPath( "/cbapp/logs" ), async=true
+				filename = "contentbox", filePath="/logs", async=true
 			}
 		};
 
@@ -141,7 +140,7 @@ component{
 		mailsettings.protocol = {
 			class = "cbmailservices.models.protocols.FileProtocol",
 			properties = {
-				filePath = expandPath( "/cbapp/logs" )
+				filePath = "/logs"
 			}
 		};
 		//logbox.debug 	= ["coldbox.system.interceptors.Security"];
