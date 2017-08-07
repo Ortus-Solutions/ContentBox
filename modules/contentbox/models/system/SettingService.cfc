@@ -103,7 +103,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		"cb_comments_notifyemails" 				= "",
 		"cb_comments_moderation_blacklist" 		= "",
 		"cb_comments_moderation_blockedlist" 	= "",
-		"cb_comments_captcha" 					= "true",
 		"cb_comments_moderation_expiration" 	= "30",
 
 		// Mail Settings

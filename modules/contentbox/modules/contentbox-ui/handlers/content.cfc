@@ -16,7 +16,6 @@ component{
 	property name="rssService"			inject="id:rssService@cb";
 	property name="themeService"		inject="id:themeService@cb";
 	property name="antiSamy"			inject="antisamy@cbantisamy";
-	property name="captchaService"		inject="id:captcha@cb";
 	property name="messagebox"			inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller"		inject="DataMarshaller@coldbox";
 	property name="markdown"			inject="Processor@cbmarkdown";
@@ -349,7 +348,6 @@ component{
 			.paramValue( "authorURL", "" )
 			.paramValue( "authorEmail", "" )
 			.paramValue( "content", "" )
-			.paramValue( "captchacode", "" )
 			.paramValue( "subscribe", false );
 		
 		// Check if comments enabled? else kick them out, who knows how they got here
@@ -362,7 +360,6 @@ component{
 		rc.author 		= left( antiSamy.htmlSanitizer( trim( rc.author ) ), 100 );
 		rc.authorEmail 	= left( antiSamy.htmlSanitizer( trim( rc.authorEmail ) ), 255 );
 		rc.authorURL 	= left( antiSamy.htmlSanitizer( trim( rc.authorURL ) ), 255 );
-		rc.captchacode 	= left( antiSamy.htmlSanitizer( trim( rc.captchacode ) ), 100 );
 		rc.content 		= antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
 
 		// Validate incoming data
@@ -378,14 +375,6 @@ component{
 		}
 		if( !len( rc.content ) ){ 
 			arrayAppend( commentErrors, "Please provide a comment!" ); 
-		}
-
-		// Captcha Validation
-		if( !prc.oCurrentAuthor.isLoggedIn() AND
-			prc.cbSettings.cb_comments_captcha AND NOT 
-			captchaService.validate( rc.captchacode ) 
-		){
-			ArrayAppend( commentErrors, "Invalid security code. Please try again." );
 		}
 
 		// announce event

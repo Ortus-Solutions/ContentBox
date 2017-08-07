@@ -10,7 +10,6 @@ component singleton{
 	// DI
 	property name="mediaService" 	inject="id:mediaService@cb";
 	property name="settingService"  inject="id:settingService@cb";
-	property name="captchaService"	inject="id:captcha@cb";
 
 	/**
 	* Deliver Media
@@ -55,24 +54,6 @@ component singleton{
 				
 		// Deliver it baby!
 		mediaProvider.deliverMedia( prc.mediaPath );
-	}
-	
-	/**
-	* Deliver Captcha
-	*/
-	function captcha( event, rc, prc ){
-		// Setup Expire headers
-		event.setHTTPHeader( name="expires", 		value="#GetHttpTimeString( now() )#" )
-			.setHTTPHeader(  name="pragma", 		value="no-cache" )
-			.setHTTPHeader(  name="cache-control",  value="no-cache, no-store, must-revalidate" );
-		// Deliver Captcha
-		var data 	= captchaService.display();
-		var imgURL 	= arrayToList( reMatchNoCase( 'src="([^"]*)"', data ) );
-		imgURL 		= replace( replace( imgURL, "src=", "" ) , '"', "", "all" );
-		// deliver image
-		getPageContext().forward( imgURL );
-		// abort so CF does not choke.
-		abort;
 	}
 	
 	/************************************** PRIVATE *********************************************/

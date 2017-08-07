@@ -26,27 +26,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	any function renderIt( any content ){
 		var event 			= getRequestContext();
 		var cbSettings 		= event.getPrivateValue( name="cbSettings" );
-		var captcha			= "";
 		var commentForm 	= "";
 		var oCurrentAuthor 	= securityService.getAuthorSession();
 		
-		// captcha?
-		if( !oCurrentAuthor.isLoggedIn() AND cbSettings.cb_comments_captcha ){
-			saveContent variable="captcha"{
-				writeOutput( "
-					<img src='#event.buildLink( event.getValue( 'cbEntryPoint', '', true) & '__captcha')#'>
-					#html.textField(
-						name 		= "captchacode",
-						label 		= "Enter the security code shown above:",
-						required 	= "required",
-						class 		= "form-control",
-						groupWrapper= "div class=form-group",
-						size 		= "50" 
-					)#
-				" );
-			}
-		}
-
 		// generate comment form
 		saveContent variable="commentForm"{
 			writeOutput('
@@ -108,12 +90,6 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 					groupwrapper 	= "div class=checkbox",
 					checked 		= event.getValue( "subscribe", false )
 				)#
-				
-				<cfif len( captcha )>
-				<p>
-				#captcha#
-				</p>
-				</cfif>
 				
 				#cb.event( "cbui_postCommentForm" )#
 
