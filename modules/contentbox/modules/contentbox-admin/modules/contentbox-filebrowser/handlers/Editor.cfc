@@ -3,9 +3,6 @@
 */
 component extends="coldbox.system.EventHandler"{
 
-	// DI
-	property name="fileUtils" inject="coldbox.system.core.util.FileUtils";
-
 	/**
 	* Index
 	*/

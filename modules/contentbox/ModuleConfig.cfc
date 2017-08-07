@@ -95,8 +95,6 @@ component {
 		// ColdBox Integrations
 		binder.map( "ColdBoxRenderer" ).toDSL( "coldbox:Renderer" );
 		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
-		binder.map( "FileUtils@cb" ).to( "coldbox.system.core.util.FileUtils" );
-		
 	}
 	
 	/**
