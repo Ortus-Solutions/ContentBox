@@ -10,7 +10,7 @@ component accessors="true" implements="contentbox.models.media.IMediaProvider" s
 	// Dependecnies
 	property name="mediaService"		inject="mediaService@cb";
 	property name="log"					inject="logbox:logger:{this}";
-	property name="contentUtils" 		inject="ContentUtils@cb";
+	property name="contentUtil" 		inject="contentUtil@cb";
 	
 	/**
 	* Constructor
@@ -56,7 +56,7 @@ component accessors="true" implements="contentbox.models.media.IMediaProvider" s
 		// get the real path
 		var realPath = getRealMediaPath( arguments.mediaPath );
 		// Deliver the file
-		contentUtils.sendFile( 
+		contentUtil.sendFile( 
 			file		= realPath, 
 			disposition	= "inline", 
 			mimeType	= getPageContext().getServletContext().getMimeType( realPath ) 

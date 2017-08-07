@@ -8,7 +8,7 @@
 component{
 
 	// DI
-	property name="contentUtils"		inject="contentUtils@cb";
+	property name="contentUtil"		inject="contentUtil@cb";
 	property name="cookieStorage"		inject="cookieStorage@cbStorages";
 
 	/**
@@ -306,7 +306,7 @@ component{
 			};
 			announceInterception( "fb_preFileDownload", iData );
 
-			contentUtils.sendFile( file=rc.path );
+			contentUtil.sendFile( file=rc.path );
 			data.errors = false;
 			data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
 

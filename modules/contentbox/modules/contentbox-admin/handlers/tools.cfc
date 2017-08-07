@@ -13,7 +13,7 @@ component extends="baseHandler"{
     property name="widgetService"       inject="id:widgetService@cb";
     property name="roleService"         inject="id:roleService@cb";
     property name="templateService"     inject="id:emailtemplateService@cb";
-	property name="contentUtils"        inject="id:contentUtils@cb";
+	property name="contentUtil"        inject="id:contentUtil@cb";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
 	property name="staticExporter"		inject="staticExporter@cb";
 
@@ -169,7 +169,7 @@ component extends="baseHandler"{
 		// save success message
 		var filename = variables.HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) );
 		// send it
-		contentUtils.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
+		contentUtil.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
 	}
 
 	/**
@@ -191,7 +191,7 @@ component extends="baseHandler"{
 		// save success message
 		var filename = variables.HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) );
 		// send it
-		contentUtils.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
+		contentUtil.sendFile( file=exportFilePath, name=fileName, abortAtEnd=true );
 	}
 
 	/**************************************** PRIVATE ****************************************/
