@@ -57,6 +57,9 @@ component extends="baseHandler"{
 		event.paramValue( "twofactorCode", "" )
 			.paramValue( "trustDevice", false );
 
+		// Get author data
+		var authorData = flash.get( "authorData" );
+
 		// Verify the challenge code
 		var results = twoFactorService.verifyChallenge( 
 			code   = rc.twofactorcode, 
@@ -78,14 +81,22 @@ component extends="baseHandler"{
 			}
 			// Call Provider finalize callback, in case something is needed for teardowns
 			oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );
-			// announce event
-			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
 			// Set keep me log in remember cookie, if set.
-			securityService.setRememberMe( prc.oAuthor.getUsername(), val( flash.get( "authorData" ).rememberMe ) );
+			securityService.setRememberMe( prc.oAuthor.getUsername(), val( authorData.rememberMe ) );
 			// Set in session, validations are now complete
 			securityService.setAuthorSession( prc.oAuthor );
-			// Redirect to dashboard, success!!
-			setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
+			
+			// announce events
+			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
+			// announce event
+			announceInterception( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
+			
+			// check if securedURL came in?
+			if( len( authorData.securedURL ) ){
+				setNextEvent( uri=authorData.securedURL );
+			} else {
+				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
+			}
 		}
 	}
 

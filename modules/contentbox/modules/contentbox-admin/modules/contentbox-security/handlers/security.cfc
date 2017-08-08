@@ -80,7 +80,8 @@ component extends="baseHandler"{
 				// Flash data needed for authorizations
 				flash.put( "authorData", { 
 					authorID 	= results.author.getAuthorID(), 
-					rememberMe 	= rc.rememberMe
+					rememberMe 	= rc.rememberMe,
+					securedURL  = rc._securedURL
 				} );
 				// Send challenge
 				twoFactorService.sendChallenge( results.author );
