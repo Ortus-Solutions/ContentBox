@@ -84,7 +84,12 @@ component extends="baseHandler"{
 					securedURL  = rc._securedURL
 				} );
 				// Send challenge
-				twoFactorService.sendChallenge( results.author );
+				var twoFactorResults = twoFactorService.sendChallenge( results.author );
+				// Verify error, if so, log it and setup a messagebox
+				if( twoFactorResults.error ){
+					log.error( prc.twoFactorResults.messages ); 
+					messagebox.error( cb.r( "twofactor.error@security" ) );
+				}
 				// Relocate to two factor auth presenter
 				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
 			}

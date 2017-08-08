@@ -105,9 +105,15 @@ component extends="baseHandler"{
 	*/
 	function resendCode( event, rc, prc ){
 		// Send challenge
-		twoFactorService.sendChallenge( prc.oAuthor );
-		// message and redirect
-		messagebox.info( cb.r( "twofactor.codesent@security" ) );
+		var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
+		// Verify error, if so, log it and setup a messagebox
+		if( twoFactorResults.error ){
+			log.error( prc.twoFactorResults.messages );
+			messagebox.error( cb.r( "twofactor.error@security" ) );
+		} else {
+			// message and redirect
+			messagebox.info( cb.r( "twofactor.codesent@security" ) );
+		}
 		// Relocate
 		setNextEvent( "#prc.entryPoint#.twofactor" );
 	}
