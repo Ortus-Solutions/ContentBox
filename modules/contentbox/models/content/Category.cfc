@@ -148,11 +148,10 @@ component 	persistent="true"
 		var c = arguments.service.newCriteria();
 	
 		c.createAlias( "categories", "categories" )
-			.eq( "categories.categoryID", javaCast( "int", getCategoryID() ) )
-			// Publishing Bits
+			.isEq( "categories.categoryID", javaCast( "int", getCategoryID() ) )
 			.isTrue( "isPublished" )
 			.isLE( "publishedDate", now() )
-			.eq( "passwordProtection", "" )
+			.isEq( "passwordProtection", "" )
 			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) );
 
 		return c.count( "contentID" );

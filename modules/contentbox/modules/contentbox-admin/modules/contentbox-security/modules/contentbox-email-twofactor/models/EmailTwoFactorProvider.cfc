@@ -46,7 +46,7 @@ component
 	*/
 	function getAuthorSetupHelp(){
 		return "Make sure you have a valid email address setup in your author details.  We will use this email account
-			to send you verification tokens to increase your account's security."
+			to send you verification tokens to increase your account's security.";
 	}
 
 	/**
