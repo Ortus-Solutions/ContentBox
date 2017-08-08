@@ -55,8 +55,8 @@ component{
 					provider = "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
 					properties = {
 						objectDefaultTimeout = 60,
-						objectDefaultLastAccessTimeout = 30,
-						useLastAccessTimeouts = true,
+						objectDefaultLastAccessTimeout = 0,
+						useLastAccessTimeouts = false,
 						freeMemoryPercentageThreshold = 0,
 						reapFrequency = 2,
 						evictionPolicy = "LRU",
