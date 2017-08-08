@@ -1,9 +1,13 @@
 ﻿<cfoutput>
 <div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehContentStore )#';return false;"><i class="fa fa-reply"></i> Back</button>
+    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
+        <i class="fa fa-reply"></i> Back
+    </button>
+
     <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
         <span class="fa fa-cog"></span>
     </button>
+
     <ul class="dropdown-menu">
         <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
         <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>

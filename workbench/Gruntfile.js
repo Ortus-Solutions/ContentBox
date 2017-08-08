@@ -134,6 +134,7 @@ module.exports = function(grunt) {
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
 						,"bower_components/lodash/dist/lodash.min.js"
+						,"bower_components/history.js/scripts/bundled/html4+html5/jquery.history.js"
 						// Vendor Libraries
 						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"devincludes/vendor/js/modernizr.min.js"

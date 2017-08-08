@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.parentcontentID#';return false;">
+    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/?parent=#prc.parentcontentID#';return false;">
         <i class="fa fa-reply"></i> Back
     </button>
 

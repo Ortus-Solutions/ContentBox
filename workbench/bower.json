@@ -37,6 +37,7 @@
     "jq-fullscreen": "^0.6.0",
     "lodash": "^4.17.4",
     "bootstrap-toggle": "^2.2.2",
-    "seiyria-bootstrap-slider": "^9.8.1"
+    "seiyria-bootstrap-slider": "^9.8.1",
+    "history.js": "history#^1.8.0"
   }
 }
