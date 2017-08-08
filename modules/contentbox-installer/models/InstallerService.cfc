@@ -1,4 +1,4 @@
-/**
+				/**
 * ContentBox - A Modular Content Platform
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
@@ -45,6 +45,8 @@ component accessors="true"{
 			var adminRole = createRoles( arguments.setup );
 			// create Author
 			var author = createAuthor( arguments.setup, adminRole );
+			// Create settings according to setup
+			createSettings( arguments.setup );
 			// create all security rules
 			createSecurityRules( arguments.setup );
 			// Do we create sample data?
@@ -61,6 +63,37 @@ component accessors="true"{
 			// Reload Security Rules
 			securityInterceptor.loadRules();
 		}
+	}
+
+	/**
+	 * Create settings from setup
+	 * @setup The setup object
+	 */
+	function createSettings( required setup ){
+
+		var settings = {
+			"cb_site_name"							= arguments.setup.getSiteName(),
+			"cb_site_tagline"						= arguments.setup.getSiteTagLine(),
+			"cb_site_description"					= arguments.setup.getSiteDescription(),
+			"cb_site_keywords"						= arguments.setup.getSiteKeywords(),
+			"cb_site_outgoingEmail"					= arguments.setup.getSiteOutgoingEmail(),
+			"cb_site_mail_server" 					= arguments.setup.getcb_site_mail_server(),
+			"cb_site_mail_username" 				= arguments.setup.getcb_site_mail_username(),
+			"cb_site_mail_password" 				= arguments.setup.getcb_site_mail_password(),
+			"cb_site_mail_smtp" 					= arguments.setup.getcb_site_mail_smtp(),
+			"cb_site_mail_tls" 						= arguments.setup.getcb_site_mail_tls(),
+			"cb_site_mail_ssl" 						= arguments.setup.getcb_site_mail_ssl()
+		};
+
+		// Update settings according to setup options
+		var aSettings = [];
+		for( var thisSetting in settings ){
+			var oSetting = settingService.findByName( thisSetting );
+			oSetting.setValue( settings[ thisSetting ] );
+			arrayAppend( aSettings, oSetting );
+		}
+		// Save all settings
+		settingService.saveAll( aSettings );
 	}
 
 	/**
