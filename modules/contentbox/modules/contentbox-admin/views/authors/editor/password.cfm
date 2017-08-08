@@ -1,5 +1,5 @@
 <cfoutput>
-<div class="tab-pane" id="password" style="min-height: 400px">
+<div class="tab-pane" id="change-password" style="min-height: 400px">
 	#html.startForm(
 		name       = "authorPasswordForm",
 		action     = prc.xehAuthorChangePassword,

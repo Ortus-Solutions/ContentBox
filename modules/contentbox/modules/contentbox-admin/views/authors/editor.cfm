@@ -46,7 +46,7 @@
                     		<a href="##details" data-toggle="tab"><i class="fa fa-eye"></i> Details</a>
                     	</li>
 						<li>
-							<a href="##password" data-toggle="tab"><i class="fa fa-key"></i> Password</a>
+							<a href="##change-password" data-toggle="tab"><i class="fa fa-key"></i> Password</a>
 						</li>
 						<li>
 							<a href="##twofactor"  data-toggle="tab"><i class="fa fa-mobile fa-lg"></i> Two Factor</a>
