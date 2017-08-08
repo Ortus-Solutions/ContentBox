@@ -105,9 +105,16 @@ component extends="baseHandler"{
 	*/
 	function resendCode( event, rc, prc ){
 		// Send challenge
-		twoFactorService.sendChallenge( prc.oAuthor );
-		// message and redirect
-		messagebox.info( cb.r( "twofactor.codesent@security" ) );
+		prc.twoFactorResult = twoFactorService.sendChallenge( prc.oAuthor );
+		// check the result of the send request
+		if( prc.twoFactorResult.error ){
+			// log the error and notify the user
+			log.error( prc.twoFactorResult.messages ); 
+			messagebox.warning( "There was an error sending your code. Please contact the site administrator for more information." );
+		} else {
+			// message and redirect
+			messagebox.info( cb.r( "twofactor.codesent@security" ) );
+		}
 		// Relocate
 		setNextEvent( "#prc.entryPoint#.twofactor" );
 	}
