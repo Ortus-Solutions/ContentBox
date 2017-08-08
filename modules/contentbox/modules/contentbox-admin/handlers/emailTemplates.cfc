@@ -24,7 +24,7 @@ component extends="baseHandler"{
 			view 	= "/contentbox/email_templates/#encodeForHTML( rc.template )#", 
 			layout 	= "/contentbox/email_templates/layouts/email",
 			args 	= bindingArgs
-		)
+		);
 	}
 
 }

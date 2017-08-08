@@ -199,7 +199,7 @@ component extends="baseContentHandler"{
 		var clone = entryService.new( { 
 			title 	= rc.title, 
 			slug 	= variables.HTMLHelper.slugify( rc.title ),
-			excerpt = original.getExcerpt(),
+			excerpt = original.getExcerpt()
 		} );
 
 		clone.setCreator( prc.oCurrentAuthor );

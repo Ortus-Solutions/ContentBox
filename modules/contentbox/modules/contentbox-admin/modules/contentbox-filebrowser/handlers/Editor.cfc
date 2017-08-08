@@ -11,7 +11,8 @@ component extends="coldbox.system.EventHandler"{
 			.paramValue( "imageSrc", "" )
 			.paramValue( "imageName", "" );
 
-		var info		= ImageInfo( rc.imagePath );
+		var thisImage 	= imageRead( rc.imagepath );
+		var info		= ImageInfo( thisImage );
 		prc.width		= info.width;
 		prc.height		= info.height;
 		prc.imageRelPath= rc.imageSrc;
@@ -43,7 +44,7 @@ component extends="coldbox.system.EventHandler"{
 		}else{
 
 			prc.fileInfo 	= getFileInfo( rc.filePath );
-			prc.imgInfo 	= ImageInfo( rc.filePath );
+			prc.imgInfo 	= ImageInfo( imageRead( rc.filePath ) );
 			prc.fileRelPath = rc.fileSrc;
 			prc.fileSrc 	= event.buildLink( '' ) & rc.fileSrc;
 
@@ -154,7 +155,7 @@ component extends="coldbox.system.EventHandler"{
 				// read from in memory
 		    	var sourceImage = ImageRead( rc.imgPath & "&type=" & rc.type );
 			}else{
-			    // read the image and create a ColdFusion image object --->
+			    // read the image and create a ColdFusion image object
 			    var sourceImage = ImageNew( sanitizeUrl( rc.imgName, rc.imgPath ) );
 			}
 		    ImageSetAntialiasing( sourceImage, true );
@@ -192,9 +193,9 @@ component extends="coldbox.system.EventHandler"{
 
 			if( rc.overwrite AND !len( rc.saveAs ) ){
 				imageWrite( sourceImage, rc.imgPath, 1, rc.overwrite );
-			}elseif( len(rc.saveAs) ){
+			} else if( len( rc.saveAs ) ){
 				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & rc.saveAs & ext, 1, rc.overwrite );
-			}else{
+			} else {
 				imageWrite( sourceImage, getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName, 1 );				
 			}
 

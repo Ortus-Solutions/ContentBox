@@ -145,9 +145,10 @@ component{
 	* @helpFilePath - the relative directory for the help files. Defaulting to ./includes/help/ inside the theme.
 	* @return the contents of the file or empty string if the file does not exist
 	*/
-	function loadHelpFile( required string helpFileName, string helpFilePath='./includes/help/' ){
+	function loadHelpFile( required string helpFileName, string helpFilePath='includes/help/' ){
 		try {
-			return fileRead( arguments.helpFilePath & arguments.helpFileName );
+			var thisPath = getDirectoryFromPath( getMetadata( this ).path ) & arguments.helpFilePath;
+			return fileRead( thisPath & arguments.helpFileName );
 		} catch( any e ){
 			return '';
 		}
