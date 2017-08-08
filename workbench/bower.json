@@ -18,7 +18,7 @@
     "morris.js": "morrisjs#~0.5.1",
     "ckeditor": "^4.7.1",
     "Bootstrap-Confirmation": "bootstrap-confirmation#*",
-    "bootstrap-datepicker": "^1.7.0",
+    "bootstrap-datepicker": "^1.7.1",
     "jquery.cookie": "^1.4.1",
     "jquery-nestable": "*",
     "TableDnD": "^0.9.1",
@@ -37,10 +37,6 @@
     "jq-fullscreen": "^0.6.0",
     "lodash": "^4.17.4",
     "bootstrap-toggle": "^2.2.2",
-    "seiyria-bootstrap-slider": "^9.8.0"
-  },
-  "resolutions": {
-    "jquery": "2.2.3",
-    "bootstrap": "^3"
+    "seiyria-bootstrap-slider": "^9.8.1"
   }
 }
