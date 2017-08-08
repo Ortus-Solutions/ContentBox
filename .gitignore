@@ -26,6 +26,9 @@ testbox/*
 **/node_modules/**
 **/bower_components/**
 
+# Runtime Properties
+config/runtime.properties.cfm
+
 # Engines
 .engines
 

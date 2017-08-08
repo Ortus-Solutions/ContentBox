@@ -18,7 +18,7 @@ component{
 	this.setDomainCookies 	= true;
 	this.scriptProtect		= false;
 	this.secureJSON 		= false;
-	
+
 	/**************************************
 	LUCEE Specific Settings
 	**************************************/
@@ -43,7 +43,9 @@ component{
 	this.mappings[ "/contentbox" ] 			= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings[ "/cborm" ] 	 			= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
-	// THE DATASOURCE FOR CONTENTBOX MANDATORY
+	// LOAD THE DATASOURCE, EITHER FROM DISK OR ENGINE
+	loadDatasource();
+	// THE CONTENTBOX DATASOURCE NAME
 	this.datasource = "contentbox";
 	// ORM SETTINGS
 	this.ormEnabled = true;
@@ -70,7 +72,7 @@ component{
 
 	// Local ORM SQL Logging
 	if( reFindNoCase( "^(dev\.|localhost|127\.0\.0)", cgi.http_host )  ){
-		this.ormSettings.logSQL = true;
+		this.ormSettings.logSQL = false;
 	}
 
 	/************************************** METHODS *********************************************/
@@ -133,5 +135,52 @@ component{
 	private void function reinitApplication(){
 		//Run onAppStart
 		onApplicationStart();
+	}
+
+	/**
+	 * Load the datasource by convention by looking at `config/runtime.properties.cfm` 
+	 * or if not, load by default name of `contentbox` which needs to be registered in the CFML engine
+	 * This is mostly used for baking docker images with seeded datasources.
+	 */
+	private void function loadDatasource(){
+		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties, 
+		// if it does not exist
+		var runtimeProperties = COLDBOX_APP_ROOT_PATH & 'config/runtime.properties.cfm';
+		if( fileExists( runtimeProperties ) ){
+			var props = createObject( "java", "java.util.Properties" ).init();
+			props.load( createObject( "java", "java.io.FileInputStream" ).init( runtimeProperties ) );
+
+			// Init the datasource with shared engine properties
+			this.datasources[ "contentbox" ] = {
+				username 	= props.getProperty( "DB_USERNAME", "" ),
+				password 	= props.getProperty( "DB_PASSWORD", "" ),
+				storage 	= props.getProperty( "DB_STORAGE", "false" ),
+				clob 		= true,
+				blob 		= true
+			};
+			var dsn = this.datasources[ "contentbox" ];
+
+			// Check for full JDBC Connection strings and classes
+			var connectionString = props.getProperty( "DB_CONNECTIONSTRING", "" );
+			// If no connection string, add required common host/database params
+			if( !len( connectionString ) ){
+				dsn.host     	= props.getProperty( "DB_HOST" );
+				dsn.port     	= props.getProperty( "DB_PORT" );
+				dsn.database 	= props.getProperty( "DB_DATABASE" );
+				// Lucee Driver Type
+				dsn.type 	 	= props.getProperty( "DB_TYPE", "" );
+				// ACF Driver Type
+				dsn.driver 		= props.getProperty( "DB_DRIVER", "" );
+			} 
+			// Leverages Connection strings
+			else {
+				if( structKeyExists( server, "lucee" ) ){
+					dsn.connectionString = connectionString;
+					dsn.class 			 = props.getProperty( "DB_CLASS" );
+				} else {
+					dsn.url = connectionString;
+				}
+			}
+		}
 	}
 }
