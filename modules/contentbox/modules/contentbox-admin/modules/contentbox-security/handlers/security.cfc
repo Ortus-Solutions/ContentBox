@@ -80,11 +80,16 @@ component extends="baseHandler"{
 				// Flash data needed for authorizations
 				flash.put( "authorData", { 
 					authorID 	= results.author.getAuthorID(), 
-					rememberMe 	= rc.rememberMe,
-					securedURL  = rc._securedURL
+					rememberMe 	= rc.rememberMe
 				} );
 				// Send challenge
-				twoFactorService.sendChallenge( results.author );
+				prc.twoFactorResult = twoFactorService.sendChallenge( results.author );
+				// check the result of the send request
+				if( prc.twoFactorResult.error ){
+					// log the error and notify the user
+					log.error( prc.twoFactorResult.messages ); 
+					messagebox.warning( "There was an error sending your code. Please contact the site administrator for more information." );
+				}
 				// Relocate to two factor auth presenter
 				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
 			}
