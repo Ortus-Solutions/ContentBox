@@ -79,7 +79,10 @@ component
 	 */
 	string function generateValidationToken( required author ){
 		// Store Security Token For X minutes
-		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
+		var token = left( 
+			hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() ),
+			6
+		);
 		// Cache the code for 5 minutes
 		cache.set(
 			"email-twofactor-token-#token#",
