@@ -24,15 +24,6 @@ component{
 	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
 
-	// Datasource definitions For Standalone mode/travis mode.
-	if( directoryExists( "/home/travis" ) ){
-		this.datasources[ "contentbox" ] = {
-			  class 			: 'org.gjt.mm.mysql.Driver',
-			  connectionString	: 'jdbc:mysql://localhost:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true',
-			  username 			: 'root'
-		};
-	}
-
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
 	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
 										
@@ -46,6 +37,20 @@ component{
 	// Modular ORM Dependencies
 	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
+	// Datasource definitions For Standalone mode/travis mode.
+	if( directoryExists( "/home/travis" ) ){
+		this.datasources[ "contentbox" ] = {
+			driver 				: "MySQL5",
+			type 				: "mysql",
+			connectionString	: 'jdbc:mysql://localhost:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true',
+			url					: 'jdbc:mysql://localhost:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true',
+			username 			: 'root'
+		};
+		if( structKeyExists( server, "lucee" ) ){
+			this.datasources[ "contentbox" ].class = 'org.gjt.mm.mysql.Driver';
+		}
+	}
+	
 	// ORM Settings
 	this.ormEnabled = true;
 	this.datasource = "contentbox";
