@@ -18,11 +18,11 @@ git:
   depth: 500
 
 env:
-matrix:
-  - ENGINE=lucee@4.5
-  - ENGINE=lucee@5
-  - ENGINE=adobe@11
-  - ENGINE=adobe@2016
+  matrix:
+    - ENGINE=lucee@4.5
+    - ENGINE=lucee@5
+    - ENGINE=adobe@11
+    - ENGINE=adobe@2016
   
 addons:
   apt:
