@@ -76,6 +76,7 @@ component accessors="true"{
 			"cb_site_tagline"						= arguments.setup.getSiteTagLine(),
 			"cb_site_description"					= arguments.setup.getSiteDescription(),
 			"cb_site_keywords"						= arguments.setup.getSiteKeywords(),
+			"cb_site_email"							= arguments.setup.getSiteEmail(),
 			"cb_site_outgoingEmail"					= arguments.setup.getSiteOutgoingEmail(),
 			"cb_site_mail_server" 					= arguments.setup.getcb_site_mail_server(),
 			"cb_site_mail_username" 				= arguments.setup.getcb_site_mail_username(),
