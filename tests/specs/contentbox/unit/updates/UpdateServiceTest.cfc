@@ -64,13 +64,13 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		mockZip.$( "extract", true );
 
 		// good patch
-		var r = model.downloadPatch( "http://localhost:8589/tests/resources/test.zip", log );
+		var r = model.downloadPatch( "http://localhost:8589/tests/resources/patches/test.zip", log );
 		//debug( log.toString() );
 		assertTrue( fileExists( expandPath( "/tests/resources/patches/test/test.zip" ) ) );
 		fileDelete( expandPath( "/tests/resources/patches/test/test.zip" ) );
 
 		// Bad Patch
-		r = model.downloadPatch( "http://localhost:8589/tests/resources/invalid.zip", log );
+		r = model.downloadPatch( "http://localhost:8589/tests/resources/patches/invalid.zip", log );
 		//debug( log.toString() );
 		assertFalse( r );
 	}
