@@ -20,7 +20,7 @@ git:
 env:
   matrix:
     - ENGINE=lucee@4.5
-    - ENGINE=lucee@5
+    #- ENGINE=lucee@5 Activate once patch is released, works on snapshot only right now.
     - ENGINE=adobe@11
     - ENGINE=adobe@2016
   
