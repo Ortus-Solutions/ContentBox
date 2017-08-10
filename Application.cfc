@@ -151,14 +151,13 @@ component{
 			props.load( createObject( "java", "java.io.FileInputStream" ).init( runtimeProperties ) );
 
 			// Init the datasource with shared engine properties
-			this.datasources[ "contentbox" ] = {
+			var dsn = {
 				username 	= props.getProperty( "DB_USERNAME", "" ),
 				password 	= props.getProperty( "DB_PASSWORD", "" ),
 				storage 	= props.getProperty( "DB_STORAGE", "false" ),
 				clob 		= true,
 				blob 		= true
 			};
-			var dsn = this.datasources[ "contentbox" ];
 
 			// Check for full JDBC Connection strings and classes
 			var connectionString = props.getProperty( "DB_CONNECTIONSTRING", "" );
@@ -171,7 +170,7 @@ component{
 				dsn.type 	 	= props.getProperty( "DB_TYPE", "" );
 				// ACF Driver Type
 				dsn.driver 		= props.getProperty( "DB_DRIVER", "" );
-			} 
+			}
 			// Leverages Connection strings
 			else {
 				if( structKeyExists( server, "lucee" ) ){
@@ -181,6 +180,8 @@ component{
 					dsn.url = connectionString;
 				}
 			}
+			// Set it
+			this.datasources[ "contentbox" ] = dsn;
 		}
 	}
 }

@@ -164,12 +164,16 @@ component {
 				}
 			}
 
+			// Save flash scope before relocation
+			flash.saveFlash();
+
 			// stop application
 			applicationstop();
 
-			// Hard Redirect
-			coldbox.setNextEvent( "cbadmin.autoupdates" );
-
+			// Hard Redirect using CF Location to avoid Controller issues.
+			var event = controller.getRequestService().getContext();
+			location( event.buildLink( "cbadmin.autoupdates" ) );
+			
 		} catch( Any e ) {
 			ORMClearSession();
 			arguments.log.append( "Error doing #variables.version# patch postInstallation. Details: #e.message# #e.detail# #chr( 13 )#" );
