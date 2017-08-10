@@ -30,7 +30,7 @@
         "testbox":"testbox"
     },
     "devDependencies":{
-        "testbox":"^2.4.0+80"
+        "testbox":"^2.5.0+107"
     },
     "ignores":[
         

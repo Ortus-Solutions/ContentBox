@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-md-8">
     	<!--- Dashboard welcome body --->
-		<p class="lead">#prc.cbSettings.cb_dashboard_welcome_body#</p>
+		<p class="lead">#prc.welcomeBody#</p>
 
 		<!--- Messagebox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#

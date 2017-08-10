@@ -14,7 +14,7 @@
 	<!--- ************************************************************************************************--->
 	<!---                               BODY START					                                      --->
 	<!--- ************************************************************************************************--->
-	<body 	class="off-canvas" 
+	<body 	class="off-canvas"
 			data-showsidebar="#lcase( yesNoFormat( prc.oCurrentAuthor.getPreference( "sidebarState", true ) ) )#"
 			data-preferenceURL="#event.buildLink( prc.xehSavePreference )#"
 	>
@@ -96,7 +96,7 @@
 								</cfif>
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 									<li>
-										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorEditor )#" title="ctrl+shift+a">
+										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
 											<i class="fa fa-user"></i> New User
 										</a>
 									</li>
@@ -118,10 +118,10 @@
 							</ul>
 						</li>
 						</cfif>
-						
+
 						<!--- Utils --->
 						#prc.adminMenuService.generateUtilsMenu()#
-						
+
 						<!--- Support Menu --->
 						<span class="hidden-xs hidden-sm">
 							#prc.adminMenuService.generateSupportMenu()#
@@ -133,13 +133,13 @@
 								<i class="fa fa-arrows-alt"></i>
 							</a>
 						</li>
-						
+
 						<!--- Profile --->
 						<li class="profile-photo hidden-xs">
 							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="35", class="img-circle" )#
 						</li>
 						#prc.adminMenuService.generateProfileMenu()#
-						
+
 						<!--- Notifications :
 						TODO: Enable once done
 						<li class="dropdown messages">
@@ -147,7 +147,7 @@
 							<div class="toggle-navigation toggle-right">
 								<button type="button" class="btn btn-default" id="toggle-right">
 									<i class="fa fa-bullhorn"></i>
-								</button>                        
+								</button>
 							</div>
 						</li>
 						--->
@@ -163,7 +163,7 @@
 				<!--- Main Generated Menu --->
 				#prc.adminMenuService.generateMenu()#
 			</nav>
-			
+
 			<!--- ************************************************************************************************--->
 			<!---                               MAIN CONTENT					                                  --->
 			<!--- ************************************************************************************************--->
@@ -171,13 +171,13 @@
 				<section id="main-content">
 					<!--- cbadmin event --->
 					#announceInterception( "cbadmin_beforeContent" )#
-					
+
 					<!--- Side Bar Trigger --->
-					<div 	class="pull-right" 
+					<div 	class="pull-right"
 							id="main-content-sidebar-trigger"
 							style="display: none;"
 					>
-						<button type="button" 
+						<button type="button"
 								class="btn btn-primary btn-xs"
 								title="Toggle Right Sidebar (ctrl+shift+e)"
 								data-keybinding="ctrl+shift+e"
@@ -196,7 +196,7 @@
 			<!---                               FOOTER						                                      --->
 			<!--- ************************************************************************************************--->
 			#renderView( view="_tags/footer", module="contentbox-admin" )#
-		</section>  
+		</section>
 
 		<!--- ************************************************************************************************--->
 		<!---                               RIGHT SIDEBAR                                         			  --->
@@ -306,7 +306,7 @@
 		<!---                               BODY END VIEW                                                     --->
 		<!--- ************************************************************************************************--->
 		<cfinclude template="inc/HTMLBodyEnd.cfm"/>
-		
+
 	</body>
 </html>
 </cfoutput>

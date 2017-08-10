@@ -4,6 +4,7 @@
 <p>
     #cb.r( "tab.admin.instructions@installer" )#
 </p>
+
 <!--- Fields --->
 #html.textField(
     name="firstName",
@@ -15,6 +16,7 @@
     labelClass="control-label",
     groupWrapper="div class=form-group"
 )#
+
 #html.textField(
     name="lastName",
     label=cb.r( "tab.admin.lname@installer" ),
@@ -25,6 +27,7 @@
     labelClass="control-label",
     groupWrapper="div class=form-group"
 )#
+
 #html.inputField(
     name="email",
     type="email",
@@ -36,6 +39,7 @@
     labelClass="control-label",
     groupWrapper="div class=form-group"
 )#
+
 #html.textField(
     name="username",
     label=cb.r( "tab.admin.username@installer" ),
@@ -46,6 +50,7 @@
     labelClass="control-label",
     groupWrapper="div class=form-group"
 )#
+
 #html.passwordField(
     name="password",
     label=cb.r( "tab.admin.password@installer" ),
@@ -56,6 +61,17 @@
     labelClass="control-label",
     groupWrapper="div class=form-group"
 )#
+
+<!--- Show Rules --->
+<div id="passwordRules" class="well well-sm" data-min-length="8">
+    <span class="badge" id="pw_rule_lower">abc</span>
+    <span class="badge" id="pw_rule_upper">ABC</span>
+    <span class="badge" id="pw_rule_digit">123</span>
+    <span class="badge" id="pw_rule_special">!@$</span>
+    <span class="badge" id="pw_rule_count">0</span>
+    <p class="help-block">At least 8 characters including upper and lower case letters, numbers, and symbols.</p>
+</div>
+
 #html.passwordField(
     name="password_confirm",
     label=cb.r( "tab.admin.password_confirm@installer" ),

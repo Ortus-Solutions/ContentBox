@@ -17,6 +17,9 @@
 .form-control:focus {
     border-color: #7c7c7c;
 }
+select.form-control {
+    height: auto;
+}
 .form-horizontal.form-border .form-group {
     border-bottom: 1px solid #eff2f7;
     padding-bottom: 15px;

@@ -125,6 +125,9 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	$contentID				= $targetEditorForm.find( "#contentID" );
 	$changelog				= $targetEditorForm.find( "#changelog" );
 	$slug 					= $targetEditorForm.find( '#slug' );
+	$publishingBar 			= $targetEditorForm.find( "#publishingBar" );
+	$actionBar 				= $targetEditorForm.find( "#actionBar" );
+	$publishButton 			= $targetEditorForm.find( "#publishButton" );
 	$withExcerpt			= withExcerpt || true;
 	$wasSubmitted 			= false;
 	
@@ -137,18 +140,30 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 
 	// Activate Form Validators
 	$targetEditorForm.validate( {
-    	ignore : 'content',
-        submitHandler : function( form ) {
+    	ignore  		: 'content',
+        submitHandler 	: function( form ) {
 			// Update Editor Content
-        	try{ updateEditorContent(); } catch( err ){ console.log( err ); };
+        	try{ 
+        		updateEditorContent(); 
+        	} catch( err ){ 
+        		console.log( err ); 
+        	};
+			
 			// Update excerpt
 			if( $withExcerpt ){
-				try{ updateEditorExcerpt(); } catch( err ){ console.log( err ); };
+				try{ 
+					updateEditorExcerpt(); 
+				} catch( err ){ 
+					console.log( err ); 
+				};
 			}
+			
 			// if it's valid, submit form
             if( $content.val().length ) {
             	// enable slug for saving.
             	$slug.prop( "disabled", false );
+            	// Disable Publish Buttons
+            	$publishButton.prop( 'disabled', true );
             	// submit
             	form.submit();
             } else {
@@ -203,11 +218,28 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
     }
 }
 
+/**
+ * Checks if user wants to draft content that is published already
+ * @return {boolean}
+ */
+function shouldPublish(){
+	// Confirm if you really want to quick save if content is published already
+	if( $isPublished.val() == 'true' ){
+		return confirm( "Your content is published already, quick saving it will draft it and unpublish it" );
+	}
+	return true;
+}
 
 /**
  * Quick save content
  */
 function quickSave(){
+	
+	// Confirm if you really want to quick save if content is published already
+	if( !shouldPublish() ){
+		return;
+	}
+
 	// Draft it
 	$isPublished.val( "false" );
 	// Commit Changelog default it to quick save if not set
@@ -377,9 +409,18 @@ function togglePermalink(){
 
 /**
  * Toggle draft mode or not
+ * @return {boolean} Returns an indicator if we should publish or not
  */
 function toggleDraft(){
+	// Confirm if you really want to quick save if content is published already
+	if( !shouldPublish() ){
+		return false;
+	}
+	// set published bit to false
 	$isPublished.val( 'false' );
+	// record we are submitting
+	setWasSubmitted();
+	return true;
 }
 
 /**
@@ -388,12 +429,22 @@ function toggleDraft(){
  */
 function quickPublish( isDraft ){
 	if( isDraft ){
-		toggleDraft();
+		// verify we can draft this content
+		if( !toggleDraft() ){
+			return false;
+		}
+	} else {
+		// set published bit
+		$isPublished.val( "true" );
+		// set was submitted
+		setWasSubmitted();
 	}
+
 	// Verify changelogs and open sidebar if closed:
 	if( $cbEditorConfig.changelogMandatory && !isMainSidebarOpen() ){
 		toggleSidebar();
 	}
+
 	// submit form
 	$targetEditorForm.submit();
 }
@@ -405,6 +456,14 @@ function toggleLoaderBar(){
 	// Activate Loader
 	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
+}
+
+/**
+ * Open the publishing bar for publishing
+ */
+function togglePublishingBar(){
+	$publishingBar.slideToggle();
+	$actionBar.slideToggle();
 }
 
 /**

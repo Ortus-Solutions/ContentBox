@@ -14,15 +14,17 @@ component extends="baseHandler"{
 	function index( event, rc, prc ){
 		// order by
 		event.paramValue( "orderBy", "POPULAR" );
+		event.paramValue( "startrow", "0" );
 
 		// exit Handlers
 		prc.xeh 				= "#prc.cbAdminEntryPoint#.layouts.remove";
 		prc.xehForgeBoxInstall  = "#prc.cbAdminEntryPoint#.forgebox.install";
+		prc.xehForgeBox			= "#prc.cbAdminEntryPoint#.forgebox.index";
 		prc.markdown 			= variables.markdown;
 
 		// get entries
 		try{
-			prc.entries = forgebox.getEntries( orderBy=forgebox.ORDER[ rc.orderBy ], typeSlug=rc.typeslug );
+			prc.entries = forgebox.getEntries( orderBy=forgebox.ORDER[ rc.orderBy ], typeSlug=rc.typeslug, startrow=rc.startrow );
 			prc.errors = false;
 		} catch( Any e ) {
 			prc.errors = true;

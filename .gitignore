@@ -4,15 +4,14 @@
 .settings/**
 settings.xml
 .project
-logs/**
 *.cache.*
 .idea
 web.config
 "Icon\r"
 WEB-INF/**
-artifacts/**
 
 # Build Dependencies
+artifacts/**
 build/build.number
 build/apidocs/docbox
 build/resources/WEB-INF/*
@@ -21,10 +20,14 @@ build/build-forgebox/**
 build/dependencies
 
 # Global Dependencies
+logs/**
 coldbox/*
 testbox/*
 **/node_modules/**
 **/bower_components/**
+
+# Runtime Properties
+config/runtime.properties.cfm
 
 # Engines
 .engines
@@ -33,9 +36,9 @@ testbox/*
 modules/contentbox/themes/default/bower_components
 modules/contentbox/themes/default/node_modules
 
-# ContentBox Modules
+# ContentBox Dependency Modules
 modules/contentbox/modules/contentbox-deps/modules/*
 
 # Testing
-/tests/logs/*
+/tests/**/logs/**
 /tests/test-results/*

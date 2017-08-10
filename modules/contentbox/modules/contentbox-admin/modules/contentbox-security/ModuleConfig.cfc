@@ -33,6 +33,7 @@ component {
 		// SES Routes
 		routes = [
 			{ pattern="/", handler="security", action="login" },
+			{ pattern="/twofactor/:action?", handler="twofactor" },
 			{ pattern="/language/:lang", handler="security", action="changelang" },
 			{ pattern="/:action", handler="security" },
 			{ pattern="/:handler/:action?" }
@@ -46,7 +47,13 @@ component {
 				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd", 
 				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent",
 				// Login Form
-				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm"
+				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm",
+				// Security events
+				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout",
+				"cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder",
+				"cbadmin_onPasswordReset", "cbadmin_onInvalidPasswordReset",
+				// Two Factor Events
+				"cbadmin_beforeTwoFactorForm","cbadmin_afterTwoFactorForm", "cbadmin_onInvalidTwoFactor", "cbadmin_onValidTwoFactor"
 			]
 		};
 		

@@ -191,6 +191,31 @@
 			</p>
 		</div>
 		</cfloop>
+
+		<cfif prc.entries.totalRecords gt 25>
+			<ul class="pagination pull-right">
+				<cfset count = 0>
+				<cfparam name="rc.page" default="1">
+
+				<cfif rc.page neq 1>
+					<li aria-controls="pages">
+						<a class="forge-box-page-btn" data-page="#rc.page - 1#">Previous</a>
+					</li>
+				</cfif>
+
+				<cfloop from="1" to="#prc.entries.totalRecords#" index="i" step="25">
+					<li<cfif rc.page eq ++count> class="active"</cfif> aria-controls="pages">
+						<a class="forge-box-page-btn"<cfif rc.page neq count> data-page="#count#"</cfif>>#count#</a>
+					</li>
+				</cfloop>
+
+				<cfif rc.page lt count>
+					<li aria-controls="pages">
+						<a class="forge-box-page-btn" data-page="#rc.page + 1#">Next</a>
+					</li>
+				</cfif>
+			</ul>
+		</cfif>
 	</cfif>
 #html.endForm()#
 </cfoutput>

@@ -103,6 +103,7 @@
 				<exclude name="box*.json" />
 				<exclude name="coldbox/**" />
 				<exclude name="config/"/>
+				<exclude name="docker-compose.yml"/>
       			<exclude name="logs/**" />
       			<exclude name="settings.xml" />
       			<exclude name="server.json" />

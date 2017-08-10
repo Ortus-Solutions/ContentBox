@@ -44,6 +44,10 @@ component 	persistent="true"
 				formula="select count(*) from cb_rolePermissions as rolePermissions 
 						where rolePermissions.FK_permissionID=permissionID";
 
+	property 	name="numberOfGroups" 
+				formula="select count(*) from cb_groupPermissions as groupPermissions 
+						where groupPermissions.FK_permissionID=permissionID";
+
 	/* *********************************************************************
 	**							PK + CONSTRAINTS									
 	********************************************************************* */
@@ -71,7 +75,7 @@ component 	persistent="true"
 	* Get memento representation
 	*/
 	function getMemento( excludes="" ){
-		var pList = listToArray( "permission,description,numberOfRoles" );
+		var pList = listToArray( "permission,description,numberOfRoles,numberOfGroups" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;

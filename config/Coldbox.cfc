@@ -7,7 +7,7 @@
 */
 component{
 
-	// Configure ColdBox Application
+	// Configure Application
 	function configure(){
 
 		// coldbox directives
@@ -32,7 +32,7 @@ component{
 			//Extension Points
 			applicationHelper 			= "",
 			viewsHelper					= "",
-			modulesExternalLocation		= [ "/modules_app" ],
+			modulesExternalLocation		= [],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
@@ -62,16 +62,6 @@ component{
 			development = "local,127\.0\.0\.1"
 		};
 
-		// Module Directives
-		modules = {
-			//Turn to false in production
-			autoReload = false,
-			// An array of modules names to load, empty means all of them
-			include = [],
-			// An array of modules names to NOT load, empty means none
-			exclude = []
-		};
-
 		//LogBox DSL
 		logBox = {
 			// Define Appenders
@@ -82,13 +72,13 @@ component{
 			root = { levelmax="INFO", appenders="*" }
 		};
 
-		//Layout Settings
+		// Layout Settings
 		layoutSettings = {
 			defaultLayout = "",
 			defaultView   = ""
 		};
 
-		//Interceptor Settings
+		// Interceptor Settings
 		interceptorSettings = {
 			throwOnInvalidStates = false,
 			customInterceptionPoints = ""
@@ -108,6 +98,15 @@ component{
 			{ class="coldbox.system.interceptors.SES" }
 		];
 
+		// ContentBox relies on the Cache Storage for tracking sessions, which delegates to a Cache provider
+		storages = {
+		    // Cache Storage Settings
+		    cacheStorage = {
+		        cachename   = "sessions",
+		        timeout     = 60 // The default timeout of the session bucket, defaults to 60
+		    }
+		};
+
 		// ContentBox Runtime Overrides
 		"contentbox" = {
 			// Runtime Settings Override by site slug
@@ -123,7 +122,6 @@ component{
 
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	function development(){
-
 		//coldbox.debugmode=true;
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching 			= false;
@@ -134,7 +132,7 @@ component{
 		logbox.appenders.files = { 
 			class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
-				filename = "ContentBox", filePath="logs", async=true
+				filename = "contentbox", filePath="/logs", async=true
 			}
 		};
 
@@ -142,7 +140,7 @@ component{
 		mailsettings.protocol = {
 			class = "cbmailservices.models.protocols.FileProtocol",
 			properties = {
-				filePath = "logs"
+				filePath = "/logs"
 			}
 		};
 		//logbox.debug 	= ["coldbox.system.interceptors.Security"];

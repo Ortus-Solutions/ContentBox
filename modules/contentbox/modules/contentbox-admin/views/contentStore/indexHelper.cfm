@@ -4,6 +4,11 @@
 <!--- page JS --->
 <script>
 $(document).ready(function() {
+	// Create history Listener
+	History.Adapter.bind( window, 'statechange', function(){
+		//console.log( "called history: " + data.parent );
+		contentLoad( { parent: History.getState().data.parent } );
+	} );
 	// Setup content view
 	setupContentView( { 
 		tableContainer	: $( "##contentTableContainer" ), 

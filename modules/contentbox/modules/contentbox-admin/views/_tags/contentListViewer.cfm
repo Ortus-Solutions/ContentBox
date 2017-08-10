@@ -58,11 +58,14 @@ function resetFilter( reload ){
 	$( "##fCreators" ).val( 'all' );
 }
 // Content drill down
-function contentDrilldown(parent){
+function contentDrilldown( parent ){
 	resetFilter();
 	if( parent == undefined ){ parent = ""; }
 	$searchField.val( '' );
-	contentLoad( { parent: parent } );
+	// push history
+	History.pushState( { parent : parent }, document.title, "?parent=" + parent );
+	// load history
+	//contentLoad( { parent: parent } );
 }
 // show all content
 function contentShowAll(){

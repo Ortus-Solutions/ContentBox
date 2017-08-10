@@ -1,10 +1,42 @@
 <cfoutput>
 <fieldset>
+	<legend><i class="fa fa-lock fa-lg"></i> Password Options</legend>
+
+	<!--- Min Password Length --->
+	<div class="form-group">
+		<label class="control-label" for="cb_security_min_password_length">
+			Minimum Password Length:
+			<span class="badge badge-info" id="cb_security_min_password_length_label">#prc.cbSettings.cb_security_min_password_length#</span>
+		</label>
+		<div class="controls">
+			<small>The minimum length for user passwords. ContentBox limits the minimum to 8 characters.</small>
+
+			<div>
+				<strong class="margin10">8</strong>
+				<input 	type="text"
+						class="form-control slider"
+						id="cb_security_min_password_length"
+						name="cb_security_min_password_length"
+						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
+						data-provide="slider"
+						data-slider-min="8"
+						data-slider-max="100"
+						data-slider-step="1"
+						data-slider-tooltip="hide"
+				>
+				<strong class="margin10">100</strong>
+			</div>
+		</div>
+	</div>
+
+</fieldset>
+
+<fieldset>
 	<legend><i class="fa fa-paw fa-lg"></i> Login Tracker</legend>
-	
+
 	<!--- Login Blocker --->
 	<div class="form-group">
-        #html.label(class="control-label",field="cb_security_login_blocker",content="Enable Login Tracker:" )#
+        #html.label( class="control-label", field="cb_security_login_blocker", content="Enable Login Tracker:" )#
         <div class="controls">
             <small>When enabled, all logins attempts will by tracked and blocking is enabled if too many attempts occur.</small><br/><br />
             #html.checkbox(
@@ -12,6 +44,7 @@
 				data	= { toggle: 'toggle', match: 'cb_security_login_blocker' },
 				checked	= prc.cbSettings.cb_security_login_blocker
 			)#
+
 			#html.hiddenField(
 				name	= "cb_security_login_blocker",
 				value	= prc.cbSettings.cb_security_login_blocker
@@ -21,41 +54,74 @@
 
     <!--- Max Attempts --->
 	<div class="form-group">
-        <label class="control-label" for="cb_security_max_attempts">Max Invalid Attempts To Block:</label>
+        <label class="control-label" for="cb_security_max_attempts">
+			Max Invalid Attempts To Block:
+			<span class="badge badge-info" id="cb_security_max_attempts_label">#prc.cbSettings.cb_security_max_attempts#</span>
+		</label>
         <div class="controls">
             <small>The number of invalid login attempts before a user is blocked.</small><br/>
-			<select name="cb_security_max_attempts" class="form-control" id="cb_security_max_attempts">
-				<cfloop from="5" to="50" step="5" index="i">
-					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_attempts>selected="selected"</cfif>>#i#</option>
-				</cfloop>
-			</select>
+			<strong class="margin10">5</strong>
+			<input 	type="text"
+					class="form-control slider"
+					id="cb_security_max_attempts"
+					name="cb_security_max_attempts"
+					data-slider-value="#prc.cbSettings.cb_security_max_attempts#"
+					data-provide="slider"
+					data-slider-min="5"
+					data-slider-max="50"
+					data-slider-step="5"
+					data-slider-tooltip="hide"
+			>
+			<strong class="margin10">50</strong>
         </div>
     </div>
 
     <!--- Block Time--->
 	<div class="form-group">
-        <label class="control-label" for="cb_security_blocktime">Minutes To Block:</label>
+        <label class="control-label" for="cb_security_blocktime">
+			Minutes To Block:
+			<span class="badge badge-info" id="cb_security_blocktime_label">#prc.cbSettings.cb_security_blocktime#</span>
+		</label>
         <div class="controls">
             <small>The number of minutes a user will be blocked if max attempts is triggered.</small><br/>
-			<select name="cb_security_blocktime" class="form-control" id="cb_security_blocktime">
-				<cfloop from="5" to="60" step="5" index="i">
-					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_blocktime>selected="selected"</cfif>>#i#</option>
-				</cfloop>
-			</select>
+			<strong class="margin10">5</strong>
+			<input 	type="text"
+					class="form-control slider"
+					id="cb_security_blocktime"
+					name="cb_security_blocktime"
+					data-slider-value="#prc.cbSettings.cb_security_blocktime#"
+					data-provide="slider"
+					data-slider-min="5"
+					data-slider-max="60"
+					data-slider-step="5"
+					data-slider-tooltip="hide"
+			>
+			<strong class="margin10">60</strong>
         </div>
     </div>
 
     <!--- Max Auth Logs --->
 	<div class="form-group">
-        <label class="control-label" for="cb_security_max_auth_logs">Max Auth Logs:</label>
+        <label class="control-label" for="cb_security_max_auth_logs">
+			Max Auth Logs:
+			<span class="badge badge-info" id="cb_security_max_auth_logs_label">#prc.cbSettings.cb_security_max_auth_logs#</span>
+		</label>
         <div class="controls">
             <small>The number of log entries to keep before rotating logs.</small><br/>
-			<select name="cb_security_max_auth_logs" class="form-control" id="cb_security_max_auth_logs">
-				<cfloop from="100" to="2000" step="100" index="i">
-					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_max_auth_logs>selected="selected"</cfif>>#i#</option>
-				</cfloop>
-				<option value="" <cfif prc.cbSettings.cb_security_max_auth_logs eq "">selected="selected"</cfif>>Unlimited</option>
-			</select>
+			<strong class="margin10">100</strong>
+			<input 	type="text"
+					class="form-control slider"
+					id="cb_security_max_auth_logs"
+					name="cb_security_max_auth_logs"
+					data-slider-value="#prc.cbSettings.cb_security_max_auth_logs#"
+					data-provide="slider"
+					data-slider-min="100"
+					data-slider-max="5000"
+					data-slider-step="5"
+					data-slider-tooltip="hide"
+					data-slider-scale="logarithmic"
+			>
+			<strong class="margin10">5000</strong>
         </div>
     </div>
 
@@ -80,6 +146,23 @@
         </div>
     </div>
 
+    <!--- Rate Limiter logging --->
+    <div class="form-group">
+        #html.label( class="control-label", field="cb_security_rate_limiter_logging", content="Enable Rate Limiter Logging:" )#
+        <div class="controls">
+            <small>When enabled, and if an IP is rate limited then ContentBox will log the blocked event using the system logs.</small><br/><br />
+            #html.checkbox(
+                name    = "cb_security_rate_limiter_logging_toggle",
+                data    = { toggle: 'toggle', match: 'cb_security_rate_limiter_logging' },
+                checked = prc.cbSettings.cb_security_rate_limiter_logging
+            )#
+            #html.hiddenField(
+                name    = "cb_security_rate_limiter_logging",
+                value   = prc.cbSettings.cb_security_rate_limiter_logging
+            )#
+        </div>
+    </div>
+
     <!--- Bot Limiter --->
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter_bots_only", content="Enable For Automated Requests Only:" )#
@@ -99,31 +182,53 @@
 
     <!--- Limiter Count --->
     <div class="form-group">
-        <label class="control-label" for="cb_security_rate_limiter_count">Limiter Count:</label>
+        <label class="control-label" for="cb_security_rate_limiter_count">
+			Limiter Count:
+			<span class="badge badge-info" id="cb_security_rate_limiter_count_label">#prc.cbSettings.cb_security_rate_limiter_count#</span>
+		</label>
         <div class="controls">
             <small>Throttle requests made more than this count in the duration specified.</small><br/>
-			<select name="cb_security_rate_limiter_count" class="form-control" id="cb_security_rate_limiter_count">
-				<cfloop from="1" to="25" step="1" index="i">
-					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_count>selected="selected"</cfif>>#i#</option>
-				</cfloop>
-			</select>
+			<strong class="margin10">1</strong>
+			<input 	type="text"
+					class="form-control slider"
+					id="cb_security_rate_limiter_count"
+					name="cb_security_rate_limiter_count"
+					data-slider-value="#prc.cbSettings.cb_security_rate_limiter_count#"
+					data-provide="slider"
+					data-slider-min="1"
+					data-slider-max="25"
+					data-slider-step="1"
+					data-slider-tooltip="hide"
+			>
+			<strong class="margin10">25</strong>
         </div>
 	</div>
 
 	<!--- Limiter Duration --->
     <div class="form-group">
-        <label class="control-label" for="cb_security_rate_limiter_duration">Limiter Duration (Seconds):</label>
+        <label class="control-label" for="cb_security_rate_limiter_duration">
+			Limiter Duration (Seconds):
+			<span class="badge badge-info" id="cb_security_rate_limiter_duration_label">#prc.cbSettings.cb_security_rate_limiter_duration#</span>
+		</label>
         <div class="controls">
             <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
-			<select name="cb_security_rate_limiter_duration" class="form-control" id="cb_security_rate_limiter_duration">
-				<cfloop from="1" to="25" step="1" index="i">
-					<option value="#i#" <cfif i eq prc.cbSettings.cb_security_rate_limiter_duration>selected="selected"</cfif>>#i#</option>
-				</cfloop>
-			</select>
+			<strong class="margin10">1</strong>
+			<input 	type="text"
+					class="form-control slider"
+					id="cb_security_rate_limiter_duration"
+					name="cb_security_rate_limiter_duration"
+					data-slider-value="#prc.cbSettings.cb_security_rate_limiter_duration#"
+					data-provide="slider"
+					data-slider-min="1"
+					data-slider-max="50"
+					data-slider-step="1"
+					data-slider-tooltip="hide"
+			>
+			<strong class="margin10">60</strong>
         </div>
 	</div>
 
-    <!--- Bot Regex Matching --->
+    <!--- Limiter Message --->
     <div class="form-group">
         #html.label( field="cb_security_rate_limiter_message", class="control-label", content="Limiter Message:" )#
         <div class="controls">
@@ -133,9 +238,22 @@
             	class 	= "form-control",
             	value 	= prc.cbSettings.cb_security_rate_limiter_message,
             	rows 	= "4"
-            )#     
+            )#
         </div>
     </div>
+
+    <div class="form-group">
+        #html.label( field="cb_security_rate_limiter_redirectURL", class="control-label", content="Limiter Redirect URL:" )#
+        <div class="controls">
+            <small>If you fill out this URL, then instead of showing the above limiter message, we will redirect (302) the request to this URL.</small>
+            #html.URLField(
+                name    = "cb_security_rate_limiter_redirectURL",
+                class   = "form-control",
+                value   = prc.cbSettings.cb_security_rate_limiter_redirectURL
+            )#
+        </div>
+    </div>
+
 </fieldset>
 
 <fieldset>
@@ -180,6 +298,6 @@
 				value	= prc.cbSettings.cb_site_ssl
 			)#
         </div>
-    </div>  
+    </div>
 </fieldset>
 </cfoutput>

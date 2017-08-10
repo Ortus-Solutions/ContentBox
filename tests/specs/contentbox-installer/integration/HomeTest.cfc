@@ -1,4 +1,4 @@
-component extends="coldbox.system.testing.BaseTestCase" appMapping="/"{
+component extends="tests.resources.BaseTest"{
 	
 /*********************************** LIFE CYCLE Methods ***********************************/
 
@@ -23,11 +23,11 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/"{
 			});
 
 			it( "Can startup the installer", function(){
-				var e = execute("contentbox-installer:Home.index");
+				var e = execute( "contentbox-installer:Home.index" );
 			});
 
 			it( "Can finalize the installer", function() {
-				var e = execute("contentbox-installer:Home.finished");
+				var e = execute( "contentbox-installer:Home.finished" );
 			} );
 
 		});

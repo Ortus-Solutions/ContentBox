@@ -1,39 +1,51 @@
 /**
-* The base model test case will use the 'model' annotation as the instantiation path
-* and then create it, prepare it for mocking and then place it in the variables scope as 'model'. It is your
-* responsibility to update the model annotation instantiation path and init your model.
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.ui.editors.CKEditor"{
+component extends="tests.resources.BaseTest"{
 
-	void function setup(){
-		super.setup();
-		
-		mockInterceptorService = getMockBox().createEmptyMock("coldbox.system.web.services.InterceptorService")
-			.$("appendInterceptionPoints");
-		mockEvent = getMockRequestContext();
-		mockRequestService = getMockBox().createEmptyMock("coldbox.system.web.services.RequestService")
-			.$("getContext", mockEvent);
-		mockModuleSettings = {
-			"contentbox-admin" = { entryPoint = "cbadmin" }
-		};
-		mockColdBox = getMockBox().createEmptyMock("coldbox.system.web.Controller")
-			.$("getInterceptorService", mockInterceptorService)
-			.$("getRequestService", mockRequestService)
-			.$("getSetting").$args("modules").$results( mockModuleSettings )
-			.$("getSetting").$args("htmlBaseURL").$results( "http://localhost/index.cfm" );
-		
-		// init the model object
-		model.init( mockColdBox );
+/*********************************** LIFE CYCLE Methods ***********************************/
+
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
 	}
-	
-	function testCompileJS(){
-		makePublic( model, "compileJS");
-		mockEvent.$("getValue", "cbadmin")
-			.$("buildLink", "http://localhost/cbadmin/ckeditor");
-		
-		t = model.compileJS( {toolbar= model.getTOOLBAR_JSON()}, {extraPlugins = listToArray( model.getExtraPlugins() )} );
-		
-		debug( t );
+
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
 	}
-	
+
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+		describe( "CKEditor", function(){
+			beforeEach(function( currentSpec ){
+				model = prepareMock( getInstance( "CKEditor@contentbox-ckeditor" ) );
+				prc = getRequestContext().getPrivateCollection();
+				prc.cbAdminEntryPoint = "/cbadmin";
+			});
+
+			it( "can compileJS", function(){
+				makePublic( model, "compileJS" );
+				var t = model.compileJS( 
+					{ toolbar 		= { "unit" = "true" }, excerptToolbar = { "excerptTest" = "true" } }, 
+					{ extraPlugins 	= listToArray( model.getExtraPlugins() ) },
+					{ extraConfig 	= "extraconfig = 'true'" },
+					{ contentsCss 	= [ "/unit/css" ] }
+				);
+				
+				expect(	t ).notToBeEmpty();
+				expect(	t ).toInclude( "extraconfig" )
+					.toInclude( "unit/css" )
+					.toInclude( '"unit":' )
+					.toInclude( '"excerptTest":' );
+			});
+
+		});
+
+	}
+
 }

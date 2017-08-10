@@ -10,7 +10,7 @@
             #html.textField(name="cb_rss_title", required="required", value=prc.cbSettings.cb_rss_title, class="form-control input-sm width98",title="The title of the rss feed." )#
         </div>
     </div>
-     
+
     <!--- RSS feed generator --->
     <div class="form-group">
     	#html.label(class="control-label",field="",content="Feed Generator: " )#
@@ -19,7 +19,7 @@
              #html.textField(name="cb_rss_generator",required="required",value=prc.cbSettings.cb_rss_generator,class="form-control input-sm width98",title="The generator of the rss feed." )#
         </div>
     </div>
-     
+
     <!--- RSS feed copyright --->
     <div class="form-group">
         #html.label(class="control-label",field="",content="Feed Copyright: " )#
@@ -28,7 +28,7 @@
              #html.textField(name="cb_rss_copyright",required="required",value=prc.cbSettings.cb_rss_copyright,class="form-control input-sm width98",title="Copyright." )#
         </div>
     </div>
-     
+
     <!--- RSS feed description --->
     <div class="form-group">
         #html.label(class="control-label",field="",content="Feed Description: " )#
@@ -37,14 +37,14 @@
              #html.textField(name="cb_rss_description",required="required",value=prc.cbSettings.cb_rss_description,class="form-control input-sm width98",title="RSS feed description." )#
         </div>
     </div>
-     
+
 	<!--- RSS feed webmaster --->
 	<div class="form-group">
 	    #html.label(class="control-label",field="",content="Feed Webmaster: " )#
 	    <div class="controls">
 	        <small>RSS feed webmaster. Ex: myemail@mysite.com (Site Administrator)</small></br>
 	        #html.textField(
-	        	name="cb_rss_webmaster", 
+	        	name="cb_rss_webmaster",
 	        	value=prc.cbSettings.cb_rss_webmaster,
 	        	class="form-control input-sm width98",
 	        	title="RSS feed webmaster."
@@ -54,26 +54,51 @@
 
     <!--- Max RSS Entries --->
     <div class="form-group">
-        <label class="control-label" for="cb_rss_maxEntries">Max RSS Content Items:</label>
+        <label class="control-label" for="cb_rss_maxEntries">
+            Max RSS Content Items:
+            <span class="badge badge-info" id="cb_rss_maxEntries_label">#prc.cbSettings.cb_rss_maxEntries#</span>
+        </label>
         <div class="controls">
             <small>The number of recent content items to show on the syndication feeds.</small><br/>
-            <select name="cb_rss_maxEntries" id="cb_rss_maxEntries" class="form-control input-sm">
-                <cfloop from="5" to="50" step="5" index="i">
-                    <option value="#i#" <cfif i eq prc.cbSettings.cb_rss_maxEntries>selected="selected"</cfif>>#i#</option>
-                </cfloop>
-            </select>
+            <strong class="margin10">10</strong>
+            <input 	type="text"
+                    id="cb_rss_maxEntries"
+                    name="cb_rss_maxEntries"
+                    class="slider"
+                    data-slider-value="#prc.cbSettings.cb_rss_maxEntries#"
+                    data-provide="slider"
+                    data-slider-min="10"
+                    data-slider-max="50"
+                    data-slider-step="10"
+                    data-slider-tooltip="hide"
+            >
+            <strong class="margin10">50</strong>
+
         </div>
-    </div>    
+    </div>
+
     <!--- Max RSS Comments --->
     <div class="form-group">
-        <label class="control-label" for="cb_rss_maxComments">Max RSS Content Comments:</label>
+        <label class="control-label" for="cb_rss_maxComments">
+            Max RSS Content Comments:
+            <span class="badge badge-info" id="cb_rss_maxComments_label">#prc.cbSettings.cb_rss_maxComments#</span>
+        </label>
         <div class="controls">
             <small>The number of recent comments to show on the syndication feeds.</small><br/>
-            <select name="cb_rss_maxComments" id="cb_rss_maxComments" class="form-control input-sm">
-                <cfloop from="5" to="50" step="5" index="i">
-                    <option value="#i#" <cfif i eq prc.cbSettings.cb_rss_maxComments>selected="selected"</cfif>>#i#</option>
-                </cfloop>
-            </select>
+            <strong class="margin10">10</strong>
+            <input 	type="text"
+                    id="cb_rss_maxComments"
+                    name="cb_rss_maxComments"
+                    class="slider"
+                    data-slider-value="#prc.cbSettings.cb_rss_maxComments#"
+                    data-provide="slider"
+                    data-slider-min="10"
+                    data-slider-max="50"
+                    data-slider-step="10"
+                    data-slider-tooltip="hide"
+            >
+            <strong class="margin10">50</strong>
+
         </div>
     </div>
 </fieldset>
@@ -112,28 +137,55 @@
             )#
         </div>
     </div>
+
     <!--- Rss Cache Timeouts --->
     <div class="form-group">
-        <label class="control-label" for="cb_rss_cachingTimeout">Feed Cache Timeouts:</label>
+        <label class="control-label" for="cb_rss_cachingTimeout">
+            Feed Cache Timeouts:
+            <span class="badge badge-info" id="cb_rss_cachingTimeout_label">#prc.cbSettings.cb_rss_cachingTimeout#</span>
+        </label>
         <div class="controls">
             <small>The number of minutes a feed XML is cached per permutation of feed type.</small><br/>
-            <select name="cb_rss_cachingTimeout" id="cb_rss_cachingTimeout" class="input-sm">
-                <cfloop from="5" to="100" step="5" index="i">
-                    <option value="#i#" <cfif i eq prc.cbSettings.cb_rss_cachingTimeout>selected="selected"</cfif>>#i#</option>
-                </cfloop>
-            </select>
+            <strong class="margin10">5</strong>
+            <input 	type="text"
+                    id="cb_rss_cachingTimeout"
+                    name="cb_rss_cachingTimeout"
+                    class="slider"
+                    data-slider-value="#prc.cbSettings.cb_rss_cachingTimeout#"
+                    data-provide="slider"
+                    data-slider-min="5"
+                    data-slider-max="1440"
+                    data-slider-step="5"
+                    data-slider-tooltip="hide"
+                    data-slider-scale="logarithmic"
+            >
+            <strong class="margin10">500</strong>
         </div>
     </div>
+
     <!--- Rss Cache Last Access Timeouts --->
     <div class="form-group">
-        <label class="control-label" for="cb_rss_cachingTimeoutIdle">Feed Cache Idle Timeouts:</label>
+        <label class="control-label" for="cb_rss_cachingTimeoutIdle">
+            Feed Cache Idle Timeouts:
+            <span class="badge badge-info" id="cb_rss_cachingTimeoutIdle_label">#prc.cbSettings.cb_rss_cachingTimeoutIdle#</span>
+        </label>
         <div class="controls">
             <small>The number of idle minutes allowed for cached RSS feeds to live. Usually this is less than the timeout you selected above</small><br/>
-            <select name="cb_rss_cachingTimeoutIdle" id="cb_rss_cachingTimeoutIdle" class="form-control input-sm">
-                <cfloop from="5" to="100" step="5" index="i">
-                    <option value="#i#" <cfif i eq prc.cbSettings.cb_rss_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
-                </cfloop>
-            </select>
+            <strong class="margin10">5</strong>
+            <input 	type="text"
+                    id="cb_rss_cachingTimeoutIdle"
+                    name="cb_rss_cachingTimeoutIdle"
+                    class="slider"
+                    data-slider-value="#prc.cbSettings.cb_rss_cachingTimeoutIdle#"
+                    data-provide="slider"
+                    data-slider-min="5"
+                    data-slider-max="1440"
+                    data-slider-step="5"
+                    data-slider-tooltip="hide"
+                    data-slider-scale="logarithmic"
+            >
+            <strong class="margin10">500</strong>
+
         </div>
     </div>
 </fieldset>

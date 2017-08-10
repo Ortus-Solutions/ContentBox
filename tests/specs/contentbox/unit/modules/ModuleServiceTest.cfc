@@ -1,47 +1,50 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.modules.ModuleService"{
+component extends="tests.resources.BaseTest"{
 
-	function setup(){
-		super.setup();
-		model.init();
+/*********************************** LIFE CYCLE Methods ***********************************/
+
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
 	}
 
-	function testPopulateModule(){
-		module = entityNew("cbModule");
-		mock = getMockBox().createStub();
-		mock.title = mock.description = mock.author = mock.webURL = mock.forgeboxslug = mock.entryPoint = "unit";
-		mock.version = "1.0.0";
-
-		model.populateModule( module, mock );
-		assertEquals( "1.0.0", module.getVersion() );
-		assertEquals( "unit", module.getAuthor() );
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
 	}
 
-	function testFindModules(){
-		r = model.findModules();
-		assertTrue( isStruct(r) );
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+
+		describe( "Module Services", function(){
+			beforeEach(function( currentSpec ){
+				model = getInstance( "ModuleService@cb" );
+			});
+
+			it( "can populate a module", function(){
+				var module = entityNew( "cbModule" );
+				var mock = getMockBox().createStub();
+				mock.title = mock.description = mock.author = mock.webURL = mock.forgeboxslug = mock.entryPoint = "unit";
+				mock.version = "1.0.0";
+
+				model.populateModule( module, mock );
+				expect(	module.getVersion() ).toBe( "1.0.0" );
+				expect(	module.getAuthor() ).toBe( "unit" );
+			});
+
+			it( "can find modules", function(){
+				var r = model.findModules();
+				expect(	r.count ).toBe( 1 );
+			});
+
+		});
+
 	}
 
 }

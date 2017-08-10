@@ -1,89 +1,102 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
-
-http://www.apache.org/licenses/LICENSE-2.0 
-
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.comments.CommentService"{
+component extends="tests.resources.BaseTest"{
 
-	function setup(){
-		super.setup();
-		model.init(eventHandling=false);
+	/*********************************** LIFE CYCLE Methods ***********************************/
+
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
+	}
+
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
+	}
+
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+
+		// all your suites go here.
+		describe( "Comment Service", function(){
+
+			aroundEach(function( spec, suite ){
+				// Make sure we always rollback
+				transaction{
+					arguments.spec.body();
+					transactionRollback();
+				}
+			});
+
+			beforeEach(function( currentSpec ){
+				commentService = getModel( "CommentService@cb" );
+			});
+
+			it( "can get approved comment count", function(){
+				var r = commentService.getApprovedCommentCount();
+				expect(	r ).toBeGT( 0 );
+			});
+
+			it( "can get unapproved comment count", function(){
+				var r = commentService.getUnApprovedCommentCount();
+				expect(	r ).toBeGT( 0 );
+			});
+
+			describe( "Approved Comment Finders", function(){
+				it( "cand find all", function(){
+					var r = commentService.findApprovedComments();
+					expect(	r.count ).toBeGT( 0 );
+				});
+				it( "can find by content ID", function(){
+					var r = commentService.findApprovedComments( contentID=0 );
+					expect(	r.count ).toBe( 0 );
+					
+					var r = commentService.findApprovedComments( contentID=142 );
+					expect(	r.count ).toBeGT( 0 );
+				});
+				it( "can find by content types", function(){
+					var r = commentService.findApprovedComments(contentType="invalid" );
+					expect(	r.count ).toBe( 0 );
+					
+					var r = commentService.findApprovedComments(contentType="Entry" );
+					expect(	r.count ).toBeGT( 0 );
+				});
+			});
+
+			it( "can do comment searching by parameters", function(){
+				// test get all
+				var r = commentService.search();
+				expect(	r.count ).toBeGT( 0 );
+				
+				// test any approved
+				var r = commentService.search( isApproved="any" );
+				expect(	r.count ).toBeGT( 0 );
+				
+				var r = commentService.search( isApproved=false );
+				expect(	r.count ).toBe( 1 );
+				
+				var r = commentService.search( contentID=142);
+				expect(	r.count ).toBeGT( 0 );
+				
+				// disjunction with content
+				var r = commentService.search( contentID=142, search="awesome" );
+				expect(	r.count ).toBeGTE( 1 );
+				// disjunction with author
+				var r = commentService.search( contentID=142, search="Pio" );
+				expect(	r.count ).toBeGTE( 1 );
+				// disjunction with authorEmail
+				var r = commentService.search( contentID=142, search="Test" );
+				expect(	r.count ).toBeGTE( 1 );
+			});
+			
+
+
+		});
 	}
 	
-	function testgetApprovedCommentCount(){
-		r = model.getApprovedCommentCount();
-		assertTrue( r gt 0 );	
-	}
-	
-	function testgetUnApprovedCommentCount(){
-		r = model.getUnApprovedCommentCount();
-		assertTrue( r gt 0 );	
-	}
-	
-	function testfindApprovedComments(){
-		// get all approved comments for all content
-		c = model.findApprovedComments();
-		assertTrue( c.count gt 0 );
-		
-		c = model.findApprovedComments(contentID=0);
-		assertTrue( c.count eq 0 );
-		
-		c = model.findApprovedComments(contentID=1);
-		assertTrue( c.count gt 0 );
-		
-		c = model.findApprovedComments(contentType="invalid");
-		assertTrue( c.count eq 0 );
-		
-		c = model.findApprovedComments(contentType="Entry");
-		assertTrue( c.count gt 0 );
-	}
-	
-	function testsearch(){
-		// test get all
-		r = model.search();
-		assertTrue( r.count gt 0 );
-		
-		// test any approved
-		r = model.search(isApproved="any");
-		assertTrue( r.count gt 0 );
-		
-		r = model.search(isApproved=false);
-		assertTrue( r.count eq 1 );
-		
-		r = model.search(contentID=1);
-		assertTrue( r.count gt 0 );
-		
-		// disjunction with content
-		r = model.search(contentID=1,search="amazing");
-		assertTrue( r.count eq 1 );
-		// disjunction with author
-		r = model.search(contentID=1,search="Awesome Joe");
-		assertTrue( r.count eq 1 );
-		// disjunction with authorEmail
-		r = model.search(contentID=1,search="awesomejoe");
-		assertTrue( r.count eq 1 );
-		
-		// disjunction with authorEmail
-		r = model.search(contentID=1,search="badjoe");
-		assertTrue( r.count eq 1 );
-	} 
-	
-} 
+}

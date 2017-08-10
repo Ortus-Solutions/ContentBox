@@ -41,8 +41,15 @@ function remove(themeName){
 }
 function loadForgeBox(orderBY){
 	if( orderBY == null ){ orderBY = "popular"; }
-	$forgebox.load('#event.buildLink(prc.xehForgeBox)#',
-		{typeslug:'#prc.forgeBoxSlug#', installDir:'#prc.forgeBoxInstallDir#', returnURL:'#prc.forgeboxReturnURL#', orderBY:orderBY} );
+
+	var params = {
+		typeslug: '#prc.forgeBoxSlug#',
+		installDir: '#prc.forgeBoxInstallDir#',
+		returnURL: '#prc.forgeboxReturnURL#',
+		orderBY: orderBY
+	};
+
+	$forgebox.load('#event.buildLink(prc.xehForgeBox)#?' + $.param( params ) );
 }
 function toggleUploader(){
 	$( "##uploaderBar" ).slideToggle();

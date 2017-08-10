@@ -5,14 +5,24 @@
     },
     "name":"cbcms-adobe11",
     "JVM":{
-        "heapSize":"512"
+        "heapSize":"768"
     },
     "web":{
         "rewrites":{
             "enable":"true"
         },
         "http":{
-            "port":"8592"
+            "port":"8589"
         }
-    }
+    },
+    "trayicon":"modules/contentbox/content/ContentBox_300.png",
+    "trayOptions":[
+        {
+            "label":"Open ContentBox Admin",
+            "action":"openbrowser",
+            "url":"http://\\${runwar.host}:\\${runwar.port}/cbadmin",
+            "disabled":false,
+            "image":"modules/contentbox/content/ContentBox-Circle_32.png"
+        }
+    ]
 }

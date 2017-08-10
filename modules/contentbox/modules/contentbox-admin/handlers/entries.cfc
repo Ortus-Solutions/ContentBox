@@ -178,7 +178,9 @@ component extends="baseContentHandler"{
 		event.setView( "entries/editor" );
 	}
 
-	// clone
+	/**
+	* Clone an entry
+	*/
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
@@ -186,8 +188,7 @@ component extends="baseContentHandler"{
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
-		// decode the incoming title
-		rc.title = urldecode( rc.title );
+
 		// get the entry to clone
 		var original = entryService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
@@ -195,17 +196,27 @@ component extends="baseContentHandler"{
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = entryService.new( { title=rc.title, slug=variables.HTMLHelper.slugify( rc.title ) } );
+		var clone = entryService.new( { 
+			title 	= rc.title, 
+			slug 	= variables.HTMLHelper.slugify( rc.title ),
+			excerpt = original.getExcerpt()
+		} );
+
 		clone.setCreator( prc.oCurrentAuthor );
+		
 		// prepare for clone
-		clone.prepareForClone(author=prc.oCurrentAuthor,
-							  original=original,
-							  originalService=entryService,
-							  publish=rc.entryStatus,
-							  originalSlugRoot=original.getSlug(),
-							  newSlugRoot=clone.getSlug());
+		clone.prepareForClone(
+			author				= prc.oCurrentAuthor,
+			original			= original,
+			originalService		= entryService,
+			publish				= rc.entryStatus,
+			originalSlugRoot	= original.getSlug(),
+			newSlugRoot			= clone.getSlug()
+		);
+
 		// clone this sucker now!
 		entryService.saveEntry( clone );
+		
 		// relocate
 		cbMessageBox.info( "Entry Cloned, isn't that cool!" );
 		setNextEvent(event=prc.xehEntries);

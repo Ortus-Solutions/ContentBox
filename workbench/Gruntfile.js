@@ -1,18 +1,18 @@
 module.exports = function(grunt) {
 
 	// Register Tasks
-	grunt.registerTask( 
-		'default', 
-		[ 
+	grunt.registerTask(
+		'default',
+		[
 			'clean:targetIncludes', // clean target
 			'css', // run css tasks
 			'js', // run js tasks
 			'watch' // start a watcher
 		]
 	);
-	grunt.registerTask( 
-		'js', 
-		[ 
+	grunt.registerTask(
+		'js',
+		[
 			'clean:js', // clean targets
 			'clean:plugins', // clean plugins
 			'concat', // concat everything
@@ -21,9 +21,9 @@ module.exports = function(grunt) {
 			'copy:plugins', // Copy plugins
 		]
 	);
-	grunt.registerTask( 
-		'css', 
-		[ 
+	grunt.registerTask(
+		'css',
+		[
 			'clean:css', // clean target
 			'copy:fonts', //copy fonts
 			'sass:distTheme', // sass compilation
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 
 			recompile : {
 				files : [ 'Gruntfile.js', 'bower.json', 'devincludes/plugins/**' ],
-				tasks : [ 'default' ]	
+				tasks : [ 'default' ]
 			},
 
 			css : {
@@ -88,7 +88,7 @@ module.exports = function(grunt) {
 			},
 			target : {
 				files : {
-					'../modules/contentbox/modules/contentbox-admin/includes/css/contentbox.min.css' : [ 
+					'../modules/contentbox/modules/contentbox-admin/includes/css/contentbox.min.css' : [
 						// THEME
 						'../modules/contentbox/modules/contentbox-admin/includes/css/theme.css'
 						// BOWER COMPONENTS
@@ -99,6 +99,7 @@ module.exports = function(grunt) {
 						,'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css'
 						,'bower_components/clockpicker/dist/bootstrap-clockpicker.css'
 						,'bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css'
+						,'bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
 						// VENDOR CSS
 						,'devincludes/vendor/css/*.css'
 					]
@@ -115,9 +116,9 @@ module.exports = function(grunt) {
 			appjs : {
 				files : {
 					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-app.js' : [ "devincludes/js/*.js" ],
-					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-editors.js' : [ 
+					'../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-editors.js' : [
 						"devincludes/js/editors/editors.js",
-						"devincludes/js/editors/autosave.js" 
+						"devincludes/js/editors/autosave.js"
 					]
 				}
 			},
@@ -133,7 +134,7 @@ module.exports = function(grunt) {
 						,"bower_components/moment/min/moment-with-locales.min.js"
 						,"bower_components/lz-string/libs/lz-string.min.js"
 						,"bower_components/lodash/dist/lodash.min.js"
-						,"bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"
+						,"bower_components/history.js/scripts/bundled/html4+html5/jquery.history.js"
 						// Vendor Libraries
 						,"devincludes/vendor/js/jquery.validate.bootstrap.js"
 						,"devincludes/vendor/js/modernizr.min.js"
@@ -143,7 +144,7 @@ module.exports = function(grunt) {
 
 	        // Post Lib: Libraries which are brought in before the </body> end
 	        postjs : {
-	        	src : [ 
+	        	src : [
 	        		// Bower Libraries
 			      	"bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
 					,"bower_components/es6-shim/es6-shim.min.js"
@@ -160,6 +161,8 @@ module.exports = function(grunt) {
 					,"bower_components/Bootstrap-Confirmation/bootstrap-confirmation.js"
 					,"bower_components/jquery-nestable/jquery.nestable.js"
 					,"bower_components/jq-fullscreen/release/jquery.fullscreen.min.js"
+					,"bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js"
+					,'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
 					// Vendor libraries
 					,"devincludes/vendor/js/bootstrap-fileupload.js"
 					,"devincludes/vendor/js/jquery.uidivfilter.js"
@@ -205,16 +208,16 @@ module.exports = function(grunt) {
 		copy : {
 			//Fonts to be copied over - will *replace* distribution fonts directory
 		  	fonts : {
-			  	files : [ 
-			  		{ 
-						expand 	: true, 
+			  	files : [
+			  		{
+						expand 	: true,
 						flatten : true,
 						src 	: 'bower_components/font-awesome-sass/assets/fonts/font-awesome/**',
 						filter 	: 'isFile',
 						dest 	: '../modules/contentbox/modules/contentbox-admin/includes/fonts/font-awesome'
 					},
-					{ 
-						expand 	: true, 
+					{
+						expand 	: true,
 						flatten : true,
 						src 	: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/**',
 						filter 	: 'isFile',
@@ -224,30 +227,30 @@ module.exports = function(grunt) {
 		  	},
 
 			/**
-			* Individual Javascript files migrated to project /includes/js 
+			* Individual Javascript files migrated to project /includes/js
 			**/
 			js : {
-				files : [ 
+				files : [
 					// Single Javascript files to copy from bower
 				  	{
 				  		expand 	: true,
 				  		flatten : true,
 				  		cwd 	: 'bower_components/',
-				  		src 	: [ 
+				  		src 	: [
 							"respond/dest/respond.min.js",
 							"html5shiv/dist/html5shiv.min.js"
 				  		],
-				  		dest 	: '../modules/contentbox/modules/contentbox-admin/includes/js/'	
+				  		dest 	: '../modules/contentbox/modules/contentbox-admin/includes/js/'
 				  	},
 				  	// Extra version of jQuery for CB FileBrowser
 				  	{
 				  		expand 	: true,
 				  		flatten : true,
 				  		cwd 	: 'bower_components/',
-				  		src 	: [ 
+				  		src 	: [
 							"jquery/dist/jquery.min.js"
 				  		],
-				  		dest 	: '../modules/contentbox/modules/contentbox-admin/includes/js/'	
+				  		dest 	: '../modules/contentbox/modules/contentbox-admin/includes/js/'
 				  	}
 				]
 			},
@@ -261,7 +264,7 @@ module.exports = function(grunt) {
 					// CKEditor
 					{
 						expand 	: true,
-						cwd 	: 'bower_components/', 
+						cwd 	: 'bower_components/',
 						src 	: [
 							'ckeditor/plugins/**',
 							'ckeditor/adapters/**',
@@ -270,34 +273,34 @@ module.exports = function(grunt) {
 							'ckeditor/ckeditor.js',
 							'ckeditor/styles.js',
 							'ckeditor/*.css',
-						], 
+						],
 						dest 	: '../modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes/',
 					},
 					// ContentBox CKEditor Config + Plugins
 					{
 						expand 	: true,
-						cwd 	: 'devincludes/plugins/ckeditor/', 
+						cwd 	: 'devincludes/plugins/ckeditor/',
 						src 	: [
 							'**'
-						], 
+						],
 						dest 	: '../modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor',
 					},
 					// AutoSave
 					{
 						expand 	: true,
-						cwd 	: 'devincludes/plugins/autosave', 
+						cwd 	: 'devincludes/plugins/autosave',
 						src 	: [
 							'**'
-						], 
+						],
 						dest 	: '../modules/contentbox/modules/contentbox-admin/includes/plugins/autosave',
 					},
 					// Simple MDE Editor
 					{
 						expand 	: true,
-						cwd 	: 'bower_components/simplemde/dist', 
+						cwd 	: 'bower_components/simplemde/dist',
 						src 	: [
 							'**'
-						], 
+						],
 						dest 	: '../modules/contentbox/modules/contentbox-admin/modules/contentbox-markdowneditor/includes/simplemde',
 					},
 				],
@@ -312,7 +315,7 @@ module.exports = function(grunt) {
 			options : {
 		      force : true
 		    },
-		    targetIncludes : [ 
+		    targetIncludes : [
 				'../modules/contentbox/modules/contentbox-admin/includes/plugins',
 				'../modules/contentbox/modules/contentbox-admin/includes/fonts',
 				'../modules/contentbox/modules/contentbox-admin/includes/css',
@@ -324,7 +327,7 @@ module.exports = function(grunt) {
 			themecss	: [ "../modules/contentbox/modules/contentbox-admin/includes/css/theme.css" ],
 			js 			: [ '../modules/contentbox/modules/contentbox-admin/includes/js' ],
 			plugins		: [ '../modules/contentbox/modules/contentbox-admin/includes/plugins' ]
-		} 
+		}
 
 	});
 

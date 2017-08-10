@@ -38,7 +38,7 @@
 					#html.hiddenField( name="version", 		value=prc.entryVersion.version )#
 					
 					#html.startFieldSet( legend="Description" )#
-						<p>#prc.entryData.description#</p>
+						<p>#prc.markdown.toHTML(prc.entryData.description)#</p>
 						
 						<cfif len( prc.entryData.installInstructions )>
 						<div class="alert alert-danger">

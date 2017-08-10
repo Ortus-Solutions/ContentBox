@@ -86,6 +86,8 @@ component {
 				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove",
 				"cbadmin_preAuthorPreferencesSave" , "cbadmin_postAuthorPreferencesSave", "cbadmin_UserPreferencePanel",
 				"cbadmin_onAuthorEditorNav", "cbadmin_onAuthorEditorContent", "cbadmin_onAuthorEditorSidebar", "cbadmin_onAuthorEditorActions",
+				"cbadmin_onPasswordReset", "cbadmin_onGlobalPasswordReset", "cbadmin_onNewAuthorForm", "cbadmin_onNewAuthorActions",
+				"cbadmin_preNewAuthorSave", "cbadmin_postNewAuthorSave",
 				// Category Events
 				"cbadmin_preCategorySave","cbadmin_postCategorySave","cbadmin_preCategoryRemove","cbadmin_postCategoryRemove",
 				// Comment Events
@@ -93,13 +95,13 @@ component {
 				"cbadmin_onCommentSettingsNav","cbadmin_onCommentSettingsContent",
 				// Permission events
 				"cbadmin_prePermissionSave", "cbadmin_postPermissionSave", "cbadmin_prePermissionRemove" , "cbadmin_postPermissionRemove" ,
+				// PermissionGroup events
+				"cbadmin_prePermissionGroupSave", "cbadmin_postPermissionGroupSave", "cbadmin_prePermissionGroupRemove" , "cbadmin_postPermissionGroupRemove",
 				// Roles events
-				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove" ,
+				"cbadmin_preRoleSave", "cbadmin_postRoleSave", "cbadmin_preRoleRemove" , "cbadmin_postRoleRemove",
 				// Dashboard events
 				"cbadmin_onDashboard", "cbadmin_preDashboardContent", "cbadmin_postDashboardContent", "cbadmin_preDashboardSideBar", "cbadmin_postDashboardSideBar",
 				"cbadmin_onDashboardTabNav", "cbadmin_preDashboardTabContent", "cbadmin_postDashboardTabContent",
-				// Security events
-				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout","cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder", "cbadmin_onPasswordReset", "cbadmin_onInvalidPasswordReset",
 				// Settings events
 				"cbadmin_preSettingsSave","cbadmin_postSettingsSave","cbadmin_preSettingRemove","cbadmin_postSettingRemove","cbadmin_onSettingsNav","cbadmin_onSettingsContent",
 				// Global HTML Events
@@ -117,7 +119,9 @@ component {
 				// Global Search
 				"onGlobalSearchRequest", "onGlobalSearchDisplay",
 				// Static Site Exporters,
-				"cbadmin_preStaticSiteExport", "cbadmin_postStaticSiteExport"
+				"cbadmin_preStaticSiteExport", "cbadmin_postStaticSiteExport",
+				// Two Factor Events
+				"cbadmin_onTwoFactorSettingsPanel", "cbadmin_onAuthorTwoFactorOptions", "cbadmin_onAuthorTwoFactorSaveOptions"
 			])
 		};
 

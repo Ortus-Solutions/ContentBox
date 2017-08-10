@@ -41,8 +41,6 @@ component {
 			{ pattern="/__page_preview", handler="page", action="preview" },
 			// media delivery
 			{ pattern="/__media", handler="media", action="index" },
-			// captcha delivery
-			{ pattern="/__captcha", handler="media", action="captcha" },
 			// subscribe link
 			{ pattern="/__subscribe", handler="subscription", action="subscribe" },
 			// manage subscriptions

@@ -7,17 +7,22 @@
         </h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         #getModel( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         #html.startForm(name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate" )#
             #html.anchor(name="top" )#
+            
             <div class="panel panel-default">
+                
                 <div class="panel-body">
+                    
                     <!--- Vertical Nav --->
                     <div class="tab-wrapper tab-left tab-primary">
                         <!--- Tabs --->
@@ -30,6 +35,9 @@
                             </li>
                             <li>
                                 <a href="##security_options" data-toggle="tab"><i class="fa fa-lock fa-lg"></i> Security Options</a>
+                            </li>
+                            <li>
+                                <a href="##login_options" data-toggle="tab"><i class="fa fa-sign-in fa-lg"></i> Login Options</a>
                             </li>
                             <li>
                                 <a href="##content_options" data-toggle="tab"><i class="fa fa-file fa-lg"></i> Content Options</a>
@@ -83,6 +91,14 @@
                             
                             <div class="tab-pane" id="security_options">
                                 #renderView( "settings/sections/securityOptions" )#
+                            </div>
+
+                            <!--- ********************************************************************* --->
+                            <!---                           LOGIN OPTIONS                               --->
+                            <!--- ********************************************************************* --->
+                            
+                            <div class="tab-pane" id="login_options">
+                                #renderView( "settings/sections/loginOptions" )#
                             </div>
                             
                             <!--- ********************************************************************* --->
@@ -160,6 +176,7 @@
                         <!--- End Tab Content --->
                     </div>
                     <!--- End Vertical Nav --->
+
                 </div>
             </div>
         #html.endForm()#

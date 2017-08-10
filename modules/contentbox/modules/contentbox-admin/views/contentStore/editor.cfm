@@ -1,9 +1,13 @@
 ﻿<cfoutput>
 <div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehContentStore )#';return false;"><i class="fa fa-reply"></i> Back</button>
+    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
+        <i class="fa fa-reply"></i> Back
+    </button>
+
     <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
         <span class="fa fa-cog"></span>
     </button>
+
     <ul class="dropdown-menu">
         <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
         <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
@@ -154,62 +158,13 @@
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
                         
-                        <!---Begin Page Info--->
-                        <cfif prc.content.isLoaded()>   
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
-                                        <i class="fa fa-info-circle fa-lg"></i> Content Info
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="pageinfo" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <!--- Persisted Info --->
-                                    <table class="table table-hover table-condensed table-striped" width="100%">
-                                        <tr>
-                                            <th width="85" class="textRight">Created By:</th>
-                                            <td>
-                                                <a href="mailto:#prc.content.getCreatorEmail()#">#prc.content.getCreatorName()#</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="textRight">Created On:</th>
-                                            <td>
-                                                #prc.content.getDisplayCreatedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="textRight">Published On:</th>
-                                            <td>
-                                                #prc.content.getDisplayPublishedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="textRight">Version:</th>
-                                            <td>
-                                                #prc.content.getActiveContent().getVersion()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th width="85" class="textRight">Last Edit By:</th>
-                                            <td>
-                                                <a href="mailto:#prc.content.getAuthorEmail()#">#prc.content.getAuthorName()#</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th width="85" class="textRight">Last Edit On:</th>
-                                            <td>
-                                                #prc.content.getActiveContent().getDisplayCreatedDate()#
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                        <!---Begin Info--->
+                        <cfif prc.content.isLoaded()> 
+                            #renderView(
+                                view    = "_tags/content/infotable",
+                                args    = { content = prc.content }
+                            )#
                         </cfif>
-                        <!---End content Info--->
                         
                         <!---Begin Related Content--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>

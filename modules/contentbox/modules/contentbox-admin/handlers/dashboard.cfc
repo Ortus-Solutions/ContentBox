@@ -15,6 +15,7 @@ component extends="baseHandler"{
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="feedReader"			inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
+	property name="markdown"			inject="Processor@cbmarkdown";
 
 	/**
 	* Pre handler 
@@ -42,6 +43,8 @@ component extends="baseHandler"{
 		
 		// Installer Check
 		prc.installerCheck = settingService.isInstallationPresent();
+		// Welcome Body
+		prc.welcomeBody = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
 		// announce event
 		announceInterception( "cbadmin_onDashboard" );
 		// dashboard view
@@ -67,13 +70,20 @@ component extends="baseHandler"{
 
 		// convert report to chart data
 		prc.aTopContent = [];
+		prc.aTopContentTotalHits = 0;
+
 		for( var thisContent in prc.topContent ){
 			arrayAppend( prc.aTopContent, { "label" = thisContent.getTitle(), "value" = thisContent.getNumberOfHits() } );
+			prc.aTopContentTotalHits += thisContent.getNumberOfHits();
 		}
 		prc.aTopContent = serializeJSON( prc.aTopContent );
+
 		prc.aTopCommented = [];
+		prc.aTopCommentedTotalHits = 0;
+
 		for( var thisContent in prc.topCommented ){
 			arrayAppend( prc.aTopCommented, { "label" = thisContent.getTitle(), "value" = thisContent.getNumberOfComments() } );
+			prc.aTopCommentedTotalHits += thisContent.getNumberOfComments();
 		}
 		prc.aTopCommented = serializeJSON( prc.aTopCommented );
 

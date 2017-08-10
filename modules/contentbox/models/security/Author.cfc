@@ -79,6 +79,29 @@ component 	persistent="true"
 				notnull="false" 
 				length="8000" 
 				default="";
+
+	property 	name="isPasswordReset" 	
+				ormtype="boolean" 
+				sqltype="bit"
+				notnull="true" 
+				default="false" 
+				dbdefault="0"
+				index="idx_passwordReset";
+
+	property 	name="is2FactorAuth"
+				ormtype="boolean" 
+				sqltype="bit"
+				notnull="true" 
+				default="false" 
+				dbdefault="0"
+				index="idx_2factorauth";
+
+	property 	name="APIToken"			
+				notnull="false"
+				length="255"
+				unique="true"
+				index="idx_apitoken"
+				default="";
 	
 	/* *********************************************************************
 	**							RELATIONSHIPS									
@@ -131,6 +154,19 @@ component 	persistent="true"
 			 	inversejoincolumn="FK_permissionID" 
 			 	orderby="permission";
 
+	// M2M -> A-la-carte Author Permission Groups
+	property 	name="permissionGroups" 
+				singularName="permissionGroup" 
+				fieldtype="many-to-many" 
+				type="array" 
+				lazy="extra"
+			 	cfc="contentbox.models.security.PermissionGroup" 
+			 	cascade="all"
+			 	fkcolumn="FK_authorID" 
+			 	linktable="cb_authorPermissionGroups" 
+			 	inversejoincolumn="FK_permissionGroupID" 
+			 	orderby="name";
+
 	/* *********************************************************************
 	**							CALCULATED FIELDS									
 	********************************************************************* */
@@ -138,11 +174,15 @@ component 	persistent="true"
 	// Calculated properties
 	property 	name="numberOfEntries" 
 				formula="select count(*) from cb_content as content 
-						where content.FK_authorID=authorID and content.contentType='entry'" ;
+						where content.FK_authorID=authorID and content.contentType = 'Entry'" ;
 
 	property 	name="numberOfPages" 	
 				formula="select count(*) from cb_content as content 
-						where content.FK_authorID=authorID and content.contentType='page'" ;
+						where content.FK_authorID=authorID and content.contentType = 'Page'" ;
+
+	property 	name="numberOfContentStore" 	
+				formula="select count(*) from cb_content as content 
+						where content.FK_authorID=authorID and content.contentType = 'ContentStore'" ;
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES									
@@ -182,8 +222,16 @@ component 	persistent="true"
 		variables.permissionList 	= "";
 		variables.loggedIn 			= false;
 		variables.isActive 			= true;
+		variables.permissionGroups 	= [];
+		variables.isPasswordReset 	= false;
+		variables.is2FactorAuth		= false;
+		variables.APIToken 			= "";
+		
 		// Setup empty preferences
 		setPreferences( {} );
+
+		// startup a token
+		generateAPIToken();
 		
 		super.init();
 
@@ -191,20 +239,65 @@ component 	persistent="true"
 	}
 
 	/**
-	* Check for permission
-	* @slug.hint The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
+	* Listen to postLoad's from the ORM
 	*/
-	boolean function checkPermission(required slug){
-		// cache list
+	function postLoad(){
+		// Verify if the user has already an API Token, else generate one for them.
+		if( !len( getAPIToken() ) ){
+			generateAPIToken();
+		}
+	}
+
+	/**
+	* Generate new API Token, stores it locally but does not persist it.
+	*/
+	Author function generateAPIToken(){
+		variables.APIToken = hash( createUUID() & now(), "sha-512" );
+		return this;
+	}
+
+	/**
+	* Check for permission
+	* @slug The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
+	*/
+	boolean function checkPermission( required slug ){
+		// cache permission list
 		if( !len( permissionList ) AND hasPermission() ){
 			var q = entityToQuery( getPermissions() );
 			permissionList = valueList( q.permission );
 		}
-		// checks via role and local
-		if( getRole().checkPermission( arguments.slug ) OR inPermissionList( arguments.slug ) ){
+
+		// checks via role, then group permissions and then local permissions
+		if( 
+			( hasRole() && getRole().checkPermission( arguments.slug ) )
+			OR
+			checkGroupPermissions( arguments.slug )
+			OR
+			inPermissionList( arguments.slug )
+		){
 			return true;
 		}
 
+		return false;
+	}
+
+	/**
+	* This utility function checks if a slug is in any permission group this user belongs to.
+	* @slug The slug to check
+	*/
+	boolean function checkGroupPermissions( required slug ){
+		// If no groups, just return false
+		if( !hasPermissionGroup() ){
+			return false;
+		}
+		
+		// iterate and check, break if found, short-circuit approach.
+		for( var thisGroup in variables.permissionGroups ){
+			if( thisGroup.checkPermission( arguments.slug ) ){
+				return true;
+			}
+		}
+		// nada found
 		return false;
 	}
 	
@@ -235,20 +328,35 @@ component 	persistent="true"
 	
 	/**
 	* Override the setPermissions
+	* @permissions The permissions array to override
 	*/
-	Author function setPermissions(required array permissions){
+	Author function setPermissions( required array permissions ){
 		if( hasPermission() ){
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
-		}
-		else{
+		} else {
 			variables.permissions = arguments.permissions;
 		}
 		return this;
 	}
 
 	/**
-	* Logged in
+	* Shortcut Utlity function to get a list of all the permission groups this user belongs to.
+	*/
+	string function getPermissionGroupsList( delimiter = "," ){
+		if( hasPermissionGroup() ){
+			var aGroups = [];
+			for( var thisGroup in variables.permissionGroups ){
+				arrayAppend( aGroups, thisGroup.getName() );
+			}
+			return arrayToList( aGroups, arguments.delimiter );
+		}
+		return "";
+	}	
+
+	/**
+	* Utility method to verify if an author has been logged in to the system or not.
+	* This method does not account for permissions.  Only for logged in status.
 	*/
 	function isLoggedIn(){
 		return getLoggedIn();
@@ -276,14 +384,16 @@ component 	persistent="true"
 
 	/**
 	* Get a flat representation of this entry
-	* @excludes Exclude properties, by default it does pages and entries
-	* @showRole Show Roles
-	* @showPermissions Show permissions
+	* @excludes 			Exclude properties, by default it does pages and entries
+	* @showRole 			Show Roles
+	* @showPermissions 		Show permissions
+	* @showPermissionGroups Show permission groups
 	*/
 	function getMemento( 
 		excludes="pages,entries",
 		boolean showRole=true,
-		boolean showPermissions=true
+		boolean showPermissions=true,
+		boolean showPermissionGroups=true
 	){
 		// Do this to convert native Array to CF Array for content properties
 		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
@@ -302,6 +412,16 @@ component 	persistent="true"
 			}
 		} else if( arguments.showPermissions ) {
 			result[ "permissions" ] = [];
+		}
+
+		// Permission Groups
+		if( arguments.showPermissionGroups && hasPermissionGroup() ){
+			result[ "permissiongroups" ] = [];
+			for( var thisGroup in variables.permissiongroups ){
+				arrayAppend( result[ "permissiongroups" ], thisGroup.getMemento() );
+			}
+		} else if( arguments.showPermissionGroups ) {
+			result[ "permissiongroups" ] = [];
 		}
 
 		return result;

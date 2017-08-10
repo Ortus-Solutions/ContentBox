@@ -19,16 +19,18 @@
 	#html.label( 
 		class   = "control-label",
 		field   = "fullrewrite",
-		content = cb.r( "tab.rewrites.enable@installer" ) 
+		content = cb.r( "tab.rewrites.enable@installer" )
 	)#
 	<div class="controls">
 		<label>
 			#html.checkbox(
 				name    = "fullrewrite_toggle",
-				data	= { toggle: 'toggle', match: 'fullrewrite' }
+				data	= { toggle: 'toggle', match: 'fullrewrite' },
+				checked = true
 			)#
 			#html.hiddenField(
-				name	= "fullrewrite"
+				name	= "fullrewrite",
+				value	= true
 			)#
 		</label>
 		#html.select( 

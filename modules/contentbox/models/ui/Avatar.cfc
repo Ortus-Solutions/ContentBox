@@ -29,7 +29,13 @@ component singleton{
 
 		// render it out
 		savecontent variable="avatar"{
-			writeOutput('<img class="#arguments.class#" align="middle" width="#arguments.size#" height="#arguments.size#" src="//www.gravatar.com/avatar.php?gravatar_id=#lcase(Hash(emailTarget))#&s=#arguments.size#&r=#prc.cbSettings.cb_gravatar_rating#" />');
+			writeOutput( '
+				<img 	class="#arguments.class#" 
+						align="middle" 
+						width="#arguments.size#" 
+						height="#arguments.size#" 
+						src="//www.gravatar.com/avatar.php?gravatar_id=#lcase( Hash( emailTarget ) )#&s=#arguments.size#&r=#prc.cbSettings.cb_gravatar_rating#" />'
+			);
 		}
 		
 		return avatar;

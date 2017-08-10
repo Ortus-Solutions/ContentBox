@@ -25,7 +25,7 @@ component accessors="true" singleton{
 	* @wirebox.inject wirebox
 	*/
 	MediaService function init( required wirebox ){
-		// The system media providers
+		// The registered system media providers
 		variables.providers = {};
 		
 		// store factory
@@ -55,23 +55,26 @@ component accessors="true" singleton{
 	
 	/**
 	* Get a named provider object
+	* @name The provider to get,that must be registered
 	*/
-	function getProvider(required name){
+	function getProvider( required name ){
 		return variables.providers[ arguments.name ];
 	}
 	
 	/**
 	* Register a new media provider in ContentBox
+	* @provider The provider object to register
 	*/
 	MediaService function registerProvider( required contentbox.models.media.IMediaProvider provider ){
-		variables.providers[ arguments.provider.getName() ] = arguments.provider;	
+		variables.providers[ arguments.provider.getName() ] = arguments.provider;
 		return this;
 	}
 	
 	/**
 	* UnRegister a provider in ContentBox
+	* @name The name of the provider to unregister
 	*/
-	MediaService function unRegisterProvider(required name){
+	MediaService function unRegisterProvider( required name ){
 		structDelete( variables.providers, arguments.name );	
 		return this;
 	}

@@ -1,39 +1,37 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
+* ContentBox - A Modular Content Platform
+* Copyright since 2012 by Ortus Solutions, Corp
+* www.ortussolutions.com/products/contentbox
+* ---
 */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.content.ContentVersionService"{
+component extends="tests.resources.BaseTest"{
 
-	function setup(){
-		super.setup();
-		model.init();
-		model.setEventHandling( false );
+	/*********************************** LIFE CYCLE Methods ***********************************/
+
+	// executes before all suites+specs in the run() method
+	function beforeAll(){
+		super.beforeAll();
 	}
 
-	function testfindRelatedVersions(){
-		var page = entityLoad("cbPage")[1];
-		r = model.findRelatedVersions(contentID=page.getContentID());
-		debug( r );
-		assertTrue( r.count gt 0 );
+	// executes after all suites+specs in the run() method
+	function afterAll(){
+		super.afterAll();
+	}
+
+/*********************************** BDD SUITES ***********************************/
+
+	function run( testResults, testBox ){
+		describe( "Content Version Service", function(){
+			beforeEach(function( currentSpec ){
+				model = getInstance( "ContentVersionService@cb" );
+			});
+
+			it( "can find related versions", function(){
+				var r = model.findRelatedVersions( contentID=142 );
+				expect(	r.count ).toBeGT( 0 );
+			});
+		
+		});
 	}
 
 }

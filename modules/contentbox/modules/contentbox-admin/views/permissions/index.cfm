@@ -7,6 +7,7 @@
         </h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         #getModel( "messagebox@cbMessagebox" ).renderit()#
@@ -16,26 +17,32 @@
 		</cfif>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
     	#html.startForm(
-            name="permissionForm", 
-            action=prc.xehPermissionRemove, 
-            class="form-vertical"
+            name	= "permissionForm", 
+            action	= prc.xehPermissionRemove, 
+            class	= "form-vertical"
         )#
-        	#html.hiddenField(name="permissionID",value="" )#
+        	
+        	#html.hiddenField( name="permissionID", value="" )#
+        	
         	<div class="panel panel-default">
+				
 				<div class="panel-heading">
 					<div class="row">
+						
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
-									name="permissionFilter",
-									class="form-control",
-									placeholder="Quick Search"
+									name		= "permissionFilter",
+									class		= "form-control",
+									placeholder	= "Quick Search"
 								)#
 							</div>
 						</div>
+						
 						<div class="col-md-6">
 							<div class="pull-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
@@ -59,6 +66,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="panel-body">
 					<!--- permissions --->
 					<table name="permissions" id="permissions" class="table table-striped table-hover table-condensed" width="100%">
@@ -66,7 +74,8 @@
 							<tr>
 								<th>Permission</th>
 								<th>Description</th>
-								<th class="text-center">Roles Assigned</th>		
+								<th class="text-center">Roles Assigned</th>
+								<th class="text-center">Groups Assigned</th>		
 								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>				
@@ -83,10 +92,17 @@
 										#permission.getPermission()#
 									</cfif>
 								</td>
+
 								<td>#permission.getDescription()#</td>
+
 								<td class="text-center">
 									<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
 								</td>
+
+								<td class="text-center">
+									<span class="badge badge-info">#permission.getNumberOfGroups()#</span>
+								</td>
+								
 								<td class="text-center">
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 										<!--- Edit Command --->

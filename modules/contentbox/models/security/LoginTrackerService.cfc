@@ -22,23 +22,6 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get Real IP, by looking at clustered, proxy headers and locally.
-	*/
-	function getRealIP(){
-		var headers = GetHttpRequestData().headers;
-
-		// Very balanced headers
-		if( structKeyExists( headers, 'x-cluster-client-ip' ) ){
-			return headers[ 'x-cluster-client-ip' ];
-		}
-		if( structKeyExists( headers, 'X-Forwarded-For' ) ){
-			return headers[ 'X-Forwarded-For' ];
-		}
-
-		return len( cgi.remote_addr ) ? cgi.remote_addr : '127.0.0.1';
-	}
-
-	/**
 	* Verify if an attempt is being blocked or not
 	* @attempt The login attempt object
 	*/

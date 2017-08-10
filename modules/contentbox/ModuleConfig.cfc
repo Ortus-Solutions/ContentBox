@@ -26,6 +26,8 @@ component {
 	*/
 	function configure(){
 
+		variables.log = controller.getLogBox().getLogger( this );
+
 		// contentbox settings
 		settings = {
 			codename 			= "Psalm 144:1",
@@ -95,8 +97,6 @@ component {
 		// ColdBox Integrations
 		binder.map( "ColdBoxRenderer" ).toDSL( "coldbox:Renderer" );
 		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
-		binder.map( "FileUtils@cb" ).to( "coldbox.system.core.util.FileUtils" );
-		
 	}
 	
 	/**
@@ -121,6 +121,8 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		// Pre-flight check settings
+		wirebox.getInstance( "settingService@cb" ).preFlightCheck();
 		// Loadup Config Overrides
 		loadConfigOverrides();
 		// Load Environment Overrides Now, they take precedence
@@ -167,6 +169,8 @@ component {
 			structAppend( allSettings, overrides, true );
 			// Store them
 			settingService.storeSettings( allSettings );
+			// Log it
+			variables.log.info( "ContentBox config overrides loaded.", overrides );
 		}
 	}
 
@@ -176,7 +180,7 @@ component {
 	 * Example: contentbox.default.cb_media_directoryRoot
 	 */
 	private function loadEnvironmentOverrides(){
-		var settingService      	= wirebox.getInstance( "SettingService@cb" );
+		var settingService      = wirebox.getInstance( "SettingService@cb" );
 		var oSystem 			= createObject( "java", "java.lang.System" );
 		var environmentSettings = oSystem.getEnv();
 		var overrides 			= {};
@@ -196,6 +200,8 @@ component {
 		structAppend( allSettings, overrides, true );
 		// Store them
 		settingService.storeSettings( allSettings );
+		// Log it
+		variables.log.info( "ContentBox environment overrides loaded.", overrides );
 	}
 
 }

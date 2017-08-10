@@ -227,7 +227,9 @@ component extends="baseContentHandler"{
 		event.setView( "contentStore/editor" );
 	}
 
-	// clone
+	/**
+	* Clone a page
+	*/
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
@@ -235,31 +237,41 @@ component extends="baseContentHandler"{
 			setNextEvent(event=prc.xehPages);
 			return;
 		}
-		// decode the incoming title
-		rc.title = urldecode( rc.title );
+
 		// get the content to clone
 		var original = contentStoreService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
 		if( rc.title eq original.getTitle() ){
 			rc.title = "Copy of #rc.title#";
 		}
+
 		// get a clone
-		var clone = contentStoreService.new( { title=rc.title, slug=variables.HTMLHelper.slugify( rc.title ) } );
+		var clone = contentStoreService.new( { 
+			title 		= rc.title, 
+			slug 		= variables.HTMLHelper.slugify( rc.title ),
+			description = original.getDescription(),
+			order 		= original.getOrder() + 1
+		} );
 		clone.setCreator( prc.oCurrentAuthor );
+
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );
 			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
+
 		// prepare for cloning
-		clone.prepareForClone(author=prc.oCurrentAuthor,
-							  original=original,
-							  originalService=contentStoreService,
-							  publish=rc.contentStatus,
-							  originalSlugRoot=original.getSlug(),
-							  newSlugRoot=clone.getSlug());
+		clone.prepareForClone(
+			author				= prc.oCurrentAuthor,
+			original			= original,
+			originalService		= contentStoreService,
+			publish				= rc.contentStatus,
+			originalSlugRoot	= original.getSlug(),
+			newSlugRoot			= clone.getSlug()
+		);
 		// clone this sucker now!
 		contentStoreService.saveContent( clone );
+		
 		// relocate
 		cbMessageBox.info( "Content Cloned, isn't that cool!" );
 		if( clone.hasParent() ){

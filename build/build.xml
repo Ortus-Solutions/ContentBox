@@ -177,6 +177,7 @@
       			<exclude name="build/**" />
       			<exclude name="box*.json" />
       			<exclude name="coldbox/**" />
+      			<exclude name="docker-compose.yml" />
       			<exclude name="logs/**" />
       			<exclude name="settings.xml" />
       			<exclude name="server.json" />
@@ -209,6 +210,9 @@
 
         <!-- Create site box.json -->
         <copy file="box-site.json" toFile="${dir.build}/installer/box.json" overwrite="true"  encoding="UTF-8"/>
+
+        <!-- Copy server.json -->
+        <copy file="build/resources/server.json" toFile="${dir.build}/installer/server.json" overwrite="true"  encoding="UTF-8"/>
         
         <!-- replace slugs -->
         <replaceregexp match='\-site' replace="-installer" flags="ig" byline="true" encoding="UTF-8">

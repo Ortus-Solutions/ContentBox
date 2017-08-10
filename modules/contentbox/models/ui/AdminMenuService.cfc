@@ -263,7 +263,7 @@ component accessors="true" threadSafe singleton{
 			.addHeaderSubMenu( 
 				name 	= "myprofile", 
 				title 	= "ctrl+shift+A", 
-				label 	= "<i class='fa fa-camera'></i> My Profile", 
+				label 	= "<i class='fa fa-id-card-o'></i> My Profile", 
 				href 	= variables.buildLink,
 				href_to = xehMyProfile,
 				data 	= { keybinding = "ctrl+shift+a" } 
@@ -404,6 +404,7 @@ component accessors="true" threadSafe singleton{
 		prc.xehAuthorEditor		= "#this.ADMIN_ENTRYPOINT#.authors.editor";
 		prc.xehPermissions		= "#this.ADMIN_ENTRYPOINT#.permissions";
 		prc.xehRoles			= "#this.ADMIN_ENTRYPOINT#.roles";
+		prc.xehPermissionGroups	= "#this.ADMIN_ENTRYPOINT#.permissionGroups";
 
 		// Tools
 		prc.xehToolsImport		= "#this.ADMIN_ENTRYPOINT#.tools.importer";
@@ -453,6 +454,7 @@ component accessors="true" threadSafe singleton{
 		addTopMenu( name=this.USERS, label="<i class='fa fa-user'></i> Users" )
 			.addSubMenu( name="Manage", label="Manage", href=variables.buildLink, href_to=prc.xehAuthors, permissions="AUTHOR_ADMIN" )
 			.addSubMenu( name="Permissions", label="Permissions", href=variables.buildLink, href_to=prc.xehPermissions, permissions="PERMISSIONS_ADMIN" )
+			.addSubMenu( name="PermissionGroups", label="Permission Groups", href=variables.buildLink, href_to=prc.xehPermissionGroups, permissions="PERMISSIONS_ADMIN" )
 			.addSubMenu( name="Roles", label="Roles", href=variables.buildLink, href_to=prc.xehRoles, permissions="ROLES_ADMIN" );
 
 		// Tools

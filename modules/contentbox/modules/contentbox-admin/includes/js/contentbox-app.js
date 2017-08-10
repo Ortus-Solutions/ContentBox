@@ -1,5 +1,11 @@
 $( document ).ready(function() {
-    
+    // GLOBAL STATIC
+    REGEX_LOWER   = /[a-z]/,
+    REGEX_UPPER   = /[A-Z]/,
+    REGEX_DIGIT   = /[0-9]/,
+    REGEX_DIGITS  = /[0-9].*[0-9]/,
+    REGEX_SPECIAL = /[^a-zA-Z0-9]/;
+
     // If the sidebar preference is off, toggle it
     if( $( "body" ).attr( "data-showsidebar" ) == "no" ){
         toggleSidebar();
@@ -12,16 +18,16 @@ $( document ).ready(function() {
     // setup global variables
     $confirmIt          = $( '#confirmIt' );
     $remoteModal        = $( "#modal" );
-    
+
     // Attach modal listeners
     attachModalListeners();
-    
+
     // Global Tool Tip Settings
     toolTipSettings = {
          animation  : 'slide',
          delay      : { show: 100, hide: 100 }
     };
-    
+
     // Search Capabilities
     activateContentSearch();
     // activate confirmations
@@ -70,7 +76,7 @@ $( document ).ready(function() {
         } );
         return this;
     };
-    // simple method to blank out all form fields 
+    // simple method to blank out all form fields
     $.fn.clearForm = function() {
         if( this.data( 'validator') === undefined ){ return; }
         // reset classes and what not
@@ -111,20 +117,20 @@ $( document ).ready(function() {
         var activeTab = $( '[href="' + location.hash + '"]' );
         if( activeTab ){ activeTab.tab( 'show' ); }
     } );
-    
+
     // Nav Search Shortcut
-    jwerty.key( 
-        "ctrl+shift+s/\\", 
-        function(){ 
-            $( "#nav-search" ).focus(); 
-            return false; 
-        } 
+    jwerty.key(
+        "ctrl+shift+s/\\",
+        function(){
+            $( "#nav-search" ).focus();
+            return false;
+        }
     );
-    
+
     // find all links with the key-binding data attribute
     $( '[data-keybinding]' ).each(function(){
         var boundItem = $( this );
-        jwerty.key( boundItem.data( 'keybinding' ), function(){ 
+        jwerty.key( boundItem.data( 'keybinding' ), function(){
             // give precedence to onclick
             if( boundItem.attr( 'onclick' ) ) {
                 // if onclick, call event
@@ -132,7 +138,7 @@ $( document ).ready(function() {
             } else {
                 // otherwise, follow link
                 to( boundItem.attr( 'href' ) );
-            } 
+            }
         } );
     } );
 
@@ -165,10 +171,10 @@ $( document ).ready(function() {
             var active = accordion.find( '.in' ).attr( 'id' );
             // set cookie
             $.cookie( data, active );
-        } );           
+        } );
     } );
 
-     
+
 } );
 
 /**
@@ -210,7 +216,7 @@ function toggleSidebar(){
     var sidebar         = $( "#main-content-sidebar" );
     var type            = sidebar.css( "display" );
     var sidebarState    = false;
-    
+
     // nosidebar exit
     if( type === undefined ){ return; }
 
@@ -276,7 +282,7 @@ function adminNotifier( type, message, delay ){
             toastr.info( message ); break;
         }
     }
-    
+
 }
 function activateContentSearch(){
     // local refs
@@ -289,15 +295,15 @@ function activateContentSearch(){
         //if( $nav_search.is( ":focus" ) ){ return; }
         $( this ).animate( {
                 opacity: 1.0
-            }, 
-            500, 
-            function(){} 
+            },
+            500,
+            function(){}
         );
     } ).blur( function(){
         $( this ).animate( {
                 opacity: 0.50
-            }, 
-            500, 
+            },
+            500,
             function(){}
         );
     } );
@@ -308,9 +314,9 @@ function activateContentSearch(){
                 var $this = $( this );
                 // Only send requests if more than 2 characters
                 if( $this.val().length > 1 ){
-                    $nav_search_results.load( 
-                        $( "#nav-search-url" ).val(), 
-                        { search : $this.val() }, 
+                    $nav_search_results.load(
+                        $( "#nav-search-url" ).val(),
+                        { search : $this.val() },
                         function( data ){
                             if( $nav_search_results.css( "display" ) === "none" ){
                                 $nav_search_results.fadeIn().slideDown();
@@ -344,7 +350,7 @@ function quickLinks( inURL ){
     }
 }
 function activateTooltips(){
-    //Tooltip 
+    //Tooltip
     $( '[title]' ).tooltip( toolTipSettings );
 }
 function hideAllTooltips(){
@@ -411,7 +417,7 @@ function openRemoteModal( url, params, w, h, delay ){
     var args = {};
     var maxHeight   = ( $( window ).height() - 200 );
     var maxWidth    = ( $( window ).width() * 0.85 );
-    
+
     // Set default values for modal data elements
     modal.data( 'url', url );
     modal.data( 'params', params );
@@ -429,7 +435,7 @@ function openRemoteModal( url, params, w, h, delay ){
         height = maxHeight;
     }
     modal.data( 'height', height );
-    
+
     // in delay mode, we'll create a modal and then load the data (seems to be necessary for iframes to load correctly)
     if( delay ) {
         modal.data( 'delay', true );
@@ -458,8 +464,8 @@ function setPreviewSize( activeBtn, w ){
         modalSize   = { 'width' : w };
 
     // width is bigger than original size, reset to original
-    if( !w || modalSize.width > orig.width ){ 
-        modalSize = { 'width' : orig.width }; 
+    if( !w || modalSize.width > orig.width ){
+        modalSize = { 'width' : orig.width };
     }
 
     // toggle "Quick Preview" on Mobile Views
@@ -494,7 +500,7 @@ function attachModalListeners(){
                     height    : modal.data( 'height' )
                 } );
             } );
-        }        
+        }
     } );
     // Remote hidden event: Reset loader
     $remoteModal.on( 'hidden.bs.modal', function() {
@@ -514,6 +520,7 @@ function activateToggleCheckboxes(){
     $( '.tab-content' ).find( 'input[data-toggle="toggle"]' ).change( function() {
         var inputMatch = $( this ).data( 'match' );
         $( "#" + inputMatch ).val( $( this ).prop( 'checked' ) );
+        
         //console.log( $( this ).prop( 'checked' ) + " input match :" + inputMatch );
     });
 }
@@ -537,7 +544,7 @@ function activateConfirmations(){
             window.location =  $confirmIt.data( 'confirmSrc' );
         }
     } );
-    
+
     // Activate dynamic confirmations from <a> of class confirmIt
     $( ".confirmIt" ).click( function( e ){
         // Enable button
@@ -596,7 +603,7 @@ function checkByValue(id,recordID){
     $( "input[name='" + id + "']" ).each(function(){
         if( this.value === recordID ){ this.checked = true; }
         else{ this.checked = false; }
-    } );    
+    } );
 }
 /**
  * Get today's date in us or rest of the world format
@@ -608,7 +615,7 @@ function getToday( us ){
     if( us ){
         return moment().format( "YYYY-MM-DD" );
     } else {
-        return moment().format( "DD-MM-YYYY" ); 
+        return moment().format( "DD-MM-YYYY" );
     }
 }
 
@@ -637,27 +644,87 @@ function importContent(){
     var $importForm = $( "#importForm" );
     // open modal for cloning options
     openModal( $importDialog, 500, 350 );
-    
+
     // form validator button bar loader
-    $importForm.validate( { 
+    $importForm.validate( {
         submitHandler: function(form){
             $importForm.find( "#importButtonBar" ).slideUp();
             $importForm.find( "#importBarLoader" ).slideDown();
             form.submit();
         }
     } );
-    
+
     // close button
     $importForm.find( "#closeButton" ).click( function( e ){
-        closeModal( $importDialog ); 
+        closeModal( $importDialog );
         return false;
     } );
-    
+
     // clone button
     $importForm.find( "#importButton" ).click( function( e ){
         $importForm.submit();
     } );
 }
+
+/**
+ * Password meter event closure used to monitor password changes for the meter rules to activate.
+ * This expects the following ID's to be in DOM: pw_rule_lower, upper, digit, symbol and count.
+ * It also expects the passwordRules element to contain the min length data element
+ */
+function passwordMeter( event ){
+    var value = $( this ).val();
+    //console.log( value );
+
+    // Counter bind
+    $( "#pw_rule_count" ).html( value.length );
+    var minLength = $( "#passwordRules" ).data( "min-length" );
+
+    // Rule Checks
+    var rules = {
+        lower   : REGEX_LOWER.test( value ),
+        upper   : REGEX_UPPER.test( value ),
+        digit   : REGEX_DIGIT.test( value ),
+        special : REGEX_SPECIAL.test( value )
+    };
+
+    // Counter
+    if( value.length >= minLength ){
+        $( "#pw_rule_count" ).addClass( "badge-success" );
+    } else {
+        $( "#pw_rule_count" ).removeClass( "badge-success" );
+    }
+
+    // Iterate and test rules
+    for( var key in rules ){
+        if( rules[ key ] ){
+            $( "#pw_rule_" + key ).addClass( "badge-success" );
+        } else {
+            $( "#pw_rule_" + key ).removeClass( "badge-success" );
+        }
+    }
+}
+
+/**
+ * Used by our form validator to validate password fields according to default rules
+ * @param  {any} value The password value
+ * @return {boolean} Password validates via our rules
+ */
+function passwordValidator( value ){
+    var minLength = $( "#passwordRules" ).data( "min-length" );
+
+    var lower   = REGEX_LOWER.test( value ),
+        upper   = REGEX_UPPER.test( value ),
+        digit   = REGEX_DIGIT.test( value ),
+        digits  = REGEX_DIGITS.test( value ),
+        special = REGEX_SPECIAL.test( value );
+
+    return lower // has a lowercase letter
+       && upper // has an uppercase letter
+       && digit // has at least one digit
+       && special // has special chars
+       && value.length >= minLength // at least characters
+}
+
 var app = function() {
 
     var init = function() {

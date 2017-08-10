@@ -1063,10 +1063,23 @@ component 	persistent="true"
 		required any newSlugRoot
 	){
 		// set not published
-		setIsPublished( arguments.publish);
+		setIsPublished( arguments.publish );
+		
 		// reset creation date
 		setCreatedDate( now() );
 		setPublishedDate( now() );
+
+		// Base Content Properties
+		HTMLKeywords			= arguments.original.getHTMLKeywords();
+		HTMLDescription			= arguments.original.getHTMLDescription();
+		HTMLTitle 				= arguments.original.getHTMLTitle();
+		cache 					= arguments.original.getCache();
+		cacheLayout 			= arguments.original.getCacheLayout();
+		cacheTimeout 			= arguments.original.getCacheTimeout();
+		cacheLastAccessTimeout 	= arguments.original.getCacheLastAccessTimeout();
+		showInSearch 			= arguments.original.getShowInSearch();
+		featuredImage 			= arguments.original.getFeaturedImage();
+		featuredImageURL		= arguments.original.getFeaturedImageURL();
 		// reset hits
 		numberOfHits = 0;
 		// remove all comments
@@ -1074,21 +1087,28 @@ component 	persistent="true"
 		// get latest content versioning
 		var latestContent = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
-		latestContent = reReplaceNoCase(latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all" );
+		latestContent = reReplaceNoCase( latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all" );
 		// reset versioning, and start with one
-		addNewContentVersion(content=latestContent, changelog="Content Cloned!", author=arguments.author);
+		addNewContentVersion(
+			content		= latestContent, 
+			changelog	= "Content Cloned!", 
+			author		= arguments.author
+		);
 
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
-		for(var thisField in newFields){
-			var newField = customFieldService.new( {key=thisField.getKey(),value=thisField.getValue()} );
+		for( var thisField in newFields ){
+			var newField = customFieldService.new( {
+				key		= thisField.getKey(),
+				value	= thisField.getValue()
+			} );
 			newField.setRelatedContent( this );
 			addCustomField( newField );
 		}
 
 		// safe clone categories
 		var newCategories = arguments.original.getCategories();
-		for(var thisCategory in newCategories){
+		for( var thisCategory in newCategories ){
 			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
 		}
 
@@ -1102,7 +1122,7 @@ component 	persistent="true"
 		if( original.hasChild() ){
 			var allChildren = original.getChildren();
 			// iterate and copy
-			for(var thisChild in allChildren){
+			for( var thisChild in allChildren ){
 				var newChild = originalService.new();
 				// attach to new parent copy
 				newChild.setParent( this );
@@ -1113,12 +1133,14 @@ component 	persistent="true"
 				// Create the new hierarchical slug
 				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
 				// now deep clone until no more child is left behind.
-				newChild.prepareForClone(author=arguments.author,
-										 original=thisChild,
-										 originalService=originalService,
-										 publish=arguments.publish,
-										 originalSlugRoot=arguments.originalSlugRoot,
-										 newSlugRoot=arguments.newSlugRoot);
+				newChild.prepareForClone(
+					author				= arguments.author,
+					original			= thisChild,
+					originalService		= originalService,
+					publish				= arguments.publish,
+					originalSlugRoot	= arguments.originalSlugRoot,
+					newSlugRoot			= arguments.newSlugRoot
+				);
 				// now attach it
 				addChild( newChild );
 			}

@@ -42,7 +42,7 @@ component extends="coldbox.system.Interceptor"{
 
 		// prepare collections
 		var prc 			= event.getCollection( private = true );
-		var realIP 			= loginTrackerService.getRealIP();
+		var realIP 			= settingService.getRealIP();
 		var realUsername 	= event.getValue( 'username', '' );
 
 		// Try to find by username or IP
@@ -88,7 +88,7 @@ component extends="coldbox.system.Interceptor"{
 		var oUser = securityService.getAuthorSession();
 		// Build entry to log
 		var oEntry = loginTrackerService.new( {
-			lastLoginSuccessIP  = loginTrackerService.getRealIP(),
+			lastLoginSuccessIP  = settingService.getRealIP(),
 			attempts 			= 0,
 			value 				= oUser.getUsername()
 		} );
@@ -102,7 +102,7 @@ component extends="coldbox.system.Interceptor"{
 			loginTrackerService.delete( prc.oBlockByIP );
 		}
 		// Save logged in user
-		oEntry.setLastLoginSuccessIP( loginTrackerService.getRealIP() );
+		oEntry.setLastLoginSuccessIP( settingService.getRealIP() );
 		oEntry.setCreatedDate( now() );
 		oEntry.setAttempts( 0 );
 		loginTrackerService.save( oEntry );
@@ -118,7 +118,7 @@ component extends="coldbox.system.Interceptor"{
 		if( !settingService.getSetting( "cb_security_login_blocker" ) ){ return; }
 		// prepare collections
 		var prc 			= event.getCollection( private = true );
-		var realIP 			= loginTrackerService.getRealIP();
+		var realIP 			= settingService.getRealIP();
 		var realUsername 	= event.getValue( 'username', '' );
 		
 		// make or update entry for IP 

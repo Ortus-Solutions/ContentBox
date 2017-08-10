@@ -86,7 +86,8 @@
 				data	= { toggle: 'toggle', match: 'cb_site_mail_tls' }
 			)#
 			#html.hiddenField(
-				name	= "cb_site_mail_tls"
+				name	= "cb_site_mail_tls",
+                value   = false
 			)#
         </div>
     </div>
@@ -104,7 +105,8 @@
 				data	= { toggle: 'toggle', match: 'cb_site_mail_ssl' }
 			)#
 			#html.hiddenField(
-				name	= "cb_site_mail_ssl"
+				name	= "cb_site_mail_ssl",
+                value   = false
 			)#
         </div>
     </div>

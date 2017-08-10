@@ -4,17 +4,29 @@
 
         <!--- Content Max Versions --->
         <div class="form-group">
-            <label class="control-label" for="cb_versions_max_history">Content Max Versions To Keep:</label>
+            <label class="control-label" for="cb_versions_max_history">
+                Content Max Versions To Keep:
+                <span class="badge badge-info" id="cb_versions_max_history_label">#prc.cbSettings.cb_versions_max_history#</span>
+            </label>
             <div class="controls">
                 <small>The number of versions to keep before older versions are removed.</small><br/>
-                <select name="cb_versions_max_history" id="cb_versions_max_history" class="form-control input-sm">
-                    <cfloop from="10" to="1000" step="10" index="i">
-                        <option value="#i#" <cfif i eq prc.cbSettings.cb_versions_max_history>selected="selected"</cfif>>#i#</option>
-                    </cfloop>
-                    <option value="" <cfif prc.cbSettings.cb_versions_max_history eq "">selected="selected"</cfif>>Unlimited</option>
-                </select>
+                <strong class="margin10">10</strong>
+                <input 	type="text"
+                        id="cb_versions_max_history"
+                        name="cb_versions_max_history"
+                        class="slider"
+                        data-slider-value="#prc.cbSettings.cb_versions_max_history#"
+                        data-provide="slider"
+                        data-slider-min="10"
+                        data-slider-max="500"
+                        data-slider-step="10"
+                        data-scale="logarithmic"
+                        data-slider-tooltip="hide"
+                >
+                <strong class="margin10">500</strong>
             </div>
         </div>
+
         <!--- Commit Mandatory --->
         <div class="form-group">
             #html.label(
@@ -79,7 +91,7 @@
 
 	<fieldset>
     	<legend><i class="fa fa-bar-chart-o fa-lg"></i> Content Stats Tracking</legend>
-        
+
         <!--- Hit Count --->
         <div class="form-group">
             #html.label(
@@ -100,7 +112,7 @@
 				)#
             </div>
         </div>
-        
+
         <!--- Hit Count Ignore bots --->
         <div class="form-group">
             #html.label(
@@ -121,7 +133,7 @@
 				)#
             </div>
         </div>
-        
+
         <!--- Bot Regex Matching --->
         <div class="form-group">
 	        #html.label( field="cb_content_bot_regex", content="Bot Regex Matchers:" )#
@@ -133,9 +145,9 @@
 	            	rows="4",
 	            	class="form-control",
 	            	title="One regex per line please"
-	            )#     
+	            )#
 	        </div>
-        </div>  
+        </div>
     </fieldset>
 
     <fieldset>
@@ -236,28 +248,56 @@
                 )#
             </div>
         </div>
+
         <!--- Content Cache Timeouts --->
         <div class="form-group">
-            <label class="control-label" for="cb_content_cachingTimeout">Content Cache Timeouts:</label>
+            <label class="control-label" for="cb_content_cachingTimeout">
+                Content Cache Timeouts:
+                <span class="badge badge-info" id="cb_content_cachingTimeout_label">#prc.cbSettings.cb_content_cachingTimeout#</span>
+            </label>
             <div class="controls">
                 <small>The number of minutes a rendered content (blog,page,contentStore) is cached for.</small><br/>
-                <select name="cb_content_cachingTimeout" id="cb_content_cachingTimeout" class="form-control input-sm">
-                    <cfloop from="5" to="100" step="5" index="i">
-                        <option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeout>selected="selected"</cfif>>#i#</option>
-                    </cfloop>
-                </select>
+                <strong class="margin10">5</strong>
+                <input 	type="text"
+                        id="cb_content_cachingTimeout"
+                        name="cb_content_cachingTimeout"
+                        class="slider"
+                        data-slider-value="#prc.cbSettings.cb_content_cachingTimeout#"
+                        data-provide="slider"
+                        data-slider-min="5"
+                        data-slider-max="1440"
+                        data-slider-step="5"
+                        data-slider-tooltip="hide"
+                        data-slider-scale="logarithmic"
+                >
+                <strong class="margin10">1440</strong>
+
             </div>
         </div>
+
         <!--- Content Last Access Timeouts --->
         <div class="form-group">
-            <label class="control-label" for="cb_rss_cachingTimeoutIdle">Content Cache Idle Timeouts:</label>
+            <label class="control-label" for="cb_content_cachingTimeoutIdle">
+                Content Cache Idle Timeouts:
+                <span class="badge badge-info" id="cb_content_cachingTimeoutIdle_label">#prc.cbSettings.cb_content_cachingTimeoutIdle#</span>
+            </label>
             <div class="controls">
                 <small>The number of idle minutes allowed for cached rendered content (blog,page,contentStore) to live if not used. Usually this is less than the timeout you selected above</small><br/>
-                <select name="cb_content_cachingTimeoutIdle" id="cb_content_cachingTimeoutIdle" class="form-control input-sm">
-                    <cfloop from="5" to="100" step="5" index="i">
-                        <option value="#i#" <cfif i eq prc.cbSettings.cb_content_cachingTimeoutIdle>selected="selected"</cfif>>#i#</option>
-                    </cfloop>
-                </select>
+                <strong class="margin10">5</strong>
+                <input 	type="text"
+                        id="cb_content_cachingTimeoutIdle"
+                        name="cb_content_cachingTimeoutIdle"
+                        class="slider"
+                        data-slider-value="#prc.cbSettings.cb_content_cachingTimeoutIdle#"
+                        data-provide="slider"
+                        data-slider-min="5"
+                        data-slider-max="1440"
+                        data-slider-step="5"
+                        data-slider-tooltip="hide"
+                        data-slider-scale="logarithmic"
+                >
+                <strong class="margin10">500</strong>
+
             </div>
         </div>
     </fieldset>

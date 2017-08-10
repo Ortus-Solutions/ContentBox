@@ -5,11 +5,11 @@
 * ---
 * This is the main controller of events for the filebrowser
 */
-component hint="Main filebrowser module handler"{
+component{
 
 	// DI
-	property name="fileUtils"		inject="FileUtils@cb";
-	property name="cookieStorage"	inject="cookieStorage@cbStorages";
+	property name="contentUtil"		inject="contentUtil@cb";
+	property name="cookieStorage"		inject="cookieStorage@cbStorages";
 
 	/**
 	* Pre handler
@@ -183,8 +183,7 @@ component hint="Main filebrowser module handler"{
 				directoryName = rc.dName
 			};
 			announceInterception( "fb_preFolderCreation", iData );
-
-			fileUtils.directoryCreate( rc.path & "/" & rc.dName );
+			directoryCreate( rc.path & "/" & rc.dName );
 			data.errors = false;
 			data.messages = $r( resource="messages.folder_created@fb", values="#rc.path#/#rc.dName#" );
 
@@ -244,10 +243,10 @@ component hint="Main filebrowser module handler"{
 			announceInterception( "fb_preFileRemoval", iData );
 
 			if( fileExists( rc.path ) ){
-				fileUtils.removeFile( rc.path );
+				fileDelete( rc.path );
 			}
 			else if( directoryExists( rc.path ) ){
-				fileUtils.directoryRemove( path=rc.path, recurse=true );
+				directoryDelete( rc.path, true );
 			}
 			data.errors = false;
 			data.messages = $r( resource="messages.removed@fb", values="#rc.path#" );
@@ -307,7 +306,7 @@ component hint="Main filebrowser module handler"{
 			};
 			announceInterception( "fb_preFileDownload", iData );
 
-			fileUtils.sendFile( file=rc.path );
+			contentUtil.sendFile( file=rc.path );
 			data.errors = false;
 			data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
 
@@ -363,10 +362,10 @@ component hint="Main filebrowser module handler"{
 			announceInterception( "fb_preFileRename", iData );
 
 			if( fileExists( rc.path ) ){
-				fileUtils.renameFile( rc.path, rc.name );
+				fileMove( rc.path, rc.name );
 			}
 			else if( directoryExists( rc.path ) ){
-				fileUtils.directoryRename( rc.path, rc.name );
+				directoryRename( rc.path, rc.name );
 			}
 			data.errors = false;
 			data.messages = $r( resource="messages.renamed@fb", values='#rc.path#' );
@@ -419,12 +418,12 @@ component hint="Main filebrowser module handler"{
 				path = rc.path
 			};
 			announceInterception( "fb_preFileUpload", iData );
-
-			iData.results = fileUtils.uploadFile( 
-				fileField		= "FILEDATA",
-				destination		= rc.path,
-				nameConflict	= "Overwrite",
-				accept			= prc.fbSettings.acceptMimeTypes 
+			iData.results = fileUpload( 
+				rc.path, // destination
+				"FILEDATA", // form field
+				"overwrite", // overwrite
+				prc.fbSettings.acceptMimeTypes, // accept
+				true // strict mime types	
 			);
 			// debug log file
 			if( log.canDebug() ){

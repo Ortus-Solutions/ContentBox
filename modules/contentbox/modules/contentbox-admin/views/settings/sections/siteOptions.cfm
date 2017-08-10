@@ -31,7 +31,7 @@
 			label           = "Site Description:",
 			value           = prc.cbSettings.cb_site_description,
 			rows            = "3",
-			class           = "form-control",
+			class           = "form-control mde",
 			title           = "Your site description, also used in the HTML description meta tag",
 			wrapper         = "div class=controls",
 			labelClass      = "control-label",
@@ -215,13 +215,13 @@
 		<div class="form-group">
 			#html.label(class="control-label",field="cb_site_maintenance_message",content="Offline Message: " )#
 			<div class="controls">
-				<small>The message to show users once the site is in maintenance mode, HTML is ok.</small><br/>
+				<small>The message to show users once the site is in maintenance mode, HTML/Markdown is ok.</small><br/>
 				#html.textarea(
-					name="cb_site_maintenance_message",
-					value=prc.cbSettings.cb_site_maintenance_message,
-					class="form-control",
-					rows="3",
-					title="Make it meaningful?"
+					name  = "cb_site_maintenance_message",
+					value = prc.cbSettings.cb_site_maintenance_message,
+					class = "form-control mde",
+					rows  = "3",
+					title = "Make it meaningful?"
 				)#
 			</div>
 		</div>

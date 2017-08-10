@@ -299,38 +299,57 @@ component extends="baseContentHandler"{
 		}
 	}
 
+	/**
+	* Clone a page
+	*/
 	function clone( event, rc, prc ){
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			setNextEvent(event=prc.xehPages);
+			setNextEvent( prc.xehPages );
 			return;
 		}
-		// decode the incoming title
-		rc.title = urldecode( rc.title );
+
 		// get the page to clone
 		var original = pageService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
 		if( rc.title eq original.getTitle() ){
 			rc.title = "Copy of #rc.title#";
 		}
+
 		// get a clone
-		var clone = pageService.new( {title=rc.title,slug=variables.HTMLHelper.slugify( rc.title )} );
+		var clone = pageService.new( {
+			title 			= rc.title,
+			slug 			= variables.HTMLHelper.slugify( rc.title ),
+			layout 			= original.getLayout(),
+			mobileLayout	= original.getMobileLayout(),
+			order 			= original.getOrder() + 1,
+			showInMenu		= original.getShowInMenu(),
+			excerpt 		= original.getExcerpt(),
+			SSLOnly 		= original.getSSLonly()
+		} );
+
 		clone.setCreator( prc.oCurrentAuthor );
+		
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );
 			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
+
 		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(author=prc.oCurrentAuthor,
-							  original=original,
-							  originalService=pageService,
-							  publish=rc.pageStatus,
-							  originalSlugRoot=original.getSlug(),
-							  newSlugRoot=clone.getSlug());
+		clone.prepareForClone(
+			author				= prc.oCurrentAuthor,
+			original			= original,
+			originalService		= pageService,
+			publish				= rc.pageStatus,
+			originalSlugRoot	= original.getSlug(),
+			newSlugRoot			= clone.getSlug()
+		);
+
 		// clone this sucker now!
 		pageService.savePage( clone );
+		
 		// relocate
 		cbMessageBox.info( "Page Cloned, isn't that cool!" );
 		if( clone.hasParent() ){

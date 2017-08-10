@@ -1,11 +1,13 @@
 ﻿<cfoutput>
 <div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/parent/#prc.parentcontentID#';return false;">
+    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/?parent=#prc.parentcontentID#';return false;">
         <i class="fa fa-reply"></i> Back
     </button>
+
     <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
         <span class="fa fa-cog"></span>
     </button>
+
     <ul class="dropdown-menu">
         <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
         <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
@@ -15,6 +17,7 @@
         </cfif>
     </ul>
 </div>
+
 <!--- Page Form  --->
 #html.startForm(
     action      = prc.xehPageSave,
@@ -29,8 +32,8 @@
             #getModel( "messagebox@cbMessagebox" ).renderit()#
 
             <!--- id --->
-            #html.hiddenField(name="contentID",bind=prc.page)#
-            #html.hiddenField(name="contentType",bind=prc.page)#
+            #html.hiddenField( name="contentID", bind=prc.page )#
+            #html.hiddenField( name="contentType", bind=prc.page )#
 
             <div class="panel panel-default">
                 <!-- Nav tabs -->
@@ -82,17 +85,18 @@
                     <div role="tabpanel" class="tab-pane active" id="editor">
                         <!--- title --->
                         #html.textfield(
-                            label="Title:",
-                            name="title",
-                            bind=prc.page,
-                            maxlength="100",
-                            required="required",
-                            title="The title for this page",
-                            class="form-control",
-                            wrapper="div class=controls",
-                            labelClass="control-label",
-                            groupWrapper="div class=form-group"
+                            label           = "Title:",
+                            name            = "title",
+                            bind            = prc.page,
+                            maxlength       = "100",
+                            required        = "required",
+                            title           = "The title for this page",
+                            class           = "form-control",
+                            wrapper         = "div class=controls",
+                            labelClass      = "control-label",
+                            groupWrapper    = "div class=form-group"
                         )#
+
                         <!--- slug --->
                         <div class="form-group">
                             <label for="slug" class="control-label">Permalink:
@@ -120,62 +124,69 @@
                                 </div>
                             </div>
                         </div>
-                        <!---ContentToolBar --->
+
+                        <!--- ContentToolBar --->
                         #renderView( view="_tags/content/markup", args={ content = prc.page } )#
                         
                         <!--- content --->
                         #html.textarea(
-                            name="content", 
-                            value=htmlEditFormat( prc.page.getContent() ), 
-                            rows="25", 
-                            class="form-control"
+                            name    = "content", 
+                            value   = htmlEditFormat( prc.page.getContent() ), 
+                            rows    = "25", 
+                            class   = "form-control"
                         )#
+
                         <cfif prc.cbSettings.cb_page_excerpts>
                             <!--- excerpt --->
                             #html.textarea(
-                                label="Excerpt:", 
-                                name="excerpt", 
-                                bind=prc.page, 
-                                rows="10", 
-                                class="form-control"
+                                label   = "Excerpt:", 
+                                name    = "excerpt", 
+                                bind    = prc.page, 
+                                rows    = "10", 
+                                class   = "form-control"
                             )#
                         </cfif>
                     </div>
                     
                     <!--- Custom Fields --->
                      <div role="tabpanel" class="tab-pane" id="custom_fields">
-                         #renderView( view="_tags/customFields", args={ fieldType="Page", customFields=prc.page.getCustomFields() } )#
+                         #renderView( 
+                            view = "_tags/customFields", 
+                            args = { fieldType="Page", customFields=prc.page.getCustomFields() } 
+                        )#
                     </div>
 
                     <!--- SEO --->
                     <div role="tabpanel" class="tab-pane" id="seo">
                         <div class="form-group">
                             #html.textfield(
-                                name="htmlTitle",
-                                label="Title: (Leave blank to use the page name)", 
-                                bind=prc.page,
-                                class="form-control",
-                                maxlength="255"
+                                name      = "htmlTitle",
+                                label     = "Title: (Leave blank to use the page name)", 
+                                bind      = prc.page,
+                                class     = "form-control",
+                                maxlength = "255"
                             )#
                         </div>
+
                         <div class="form-group">
                             #html.textArea(
-                                name="htmlKeywords",
-                                label="Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
-                                bind=prc.page,
-                                class="form-control",
-                                maxlength="160",
-                                rows="5"
+                                name        = "htmlKeywords",
+                                label       = "Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
+                                bind        = prc.page,
+                                class       = "form-control",
+                                maxlength   = "160",
+                                rows        = "5"
                             )#
                         </div>
+
                         <div class="form-group">
                             #html.textArea(
-                                name="htmlDescription",
-                                label="Description: (<span id='html_description_count'>0</span>/160 characters left)", 
-                                bind=prc.page,
-                                class="form-control",
-                                maxlength="160",
-                                rows="5"
+                                name        = "htmlDescription",
+                                label       = "Description: (<span id='html_description_count'>0</span>/160 characters left)", 
+                                bind        = prc.page,
+                                class       = "form-control",
+                                maxlength   = "160",
+                                rows        = "5"
                             )#
                         </div>
                     </div>
@@ -199,91 +210,32 @@
             <!--- Event --->
             #announceInterception( "cbadmin_pageEditorFooter" )#
         </div>
+
+        <!---- SIDEBAR --->
         <div class="col-md-4" id="main-content-sidebar">
             <div class="panel panel-primary">
+                
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-info-circle"></i> Page Details</h3>
+                    <h3 class="panel-title"><i class="fa fa-info-circle"></i> Details</h3>
                 </div>
+                
                 <div class="panel-body">
-                    <cfset pArgs = { content=prc.page }>
-                    #renderView( view="_tags/content/publishing", args=pArgs )#
+                    
+                    #renderView( 
+                        view    = "_tags/content/publishing",
+                        args    = { content = prc.page }
+                    )#
 
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="page-sidebar">
+                        
                         <!---Begin Page Info--->
                         <cfif prc.page.isLoaded()> 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
-                                        <i class="fa fa-info-circle fa-lg"></i> Page Info
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="pageinfo" class="panel-collapse collapse in">
-                                <div class="panel-body">
-                                    <!--- Persisted Info --->
-                                    <table class="table table-hover table-condensed table-striped">
-                                        <tr>
-                                            <th class="col-md-4">Created By:</th>
-                                            <td class="col-md-8">
-                                                <a href="mailto:#prc.page.getCreatorEmail()#">#prc.page.getCreatorName()#</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Created On:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getDisplayCreatedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Published On:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getDisplayPublishedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Version:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getActiveContent().getVersion()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Last Edit By:</th>
-                                            <td class="col-md-8">
-                                                <a href="mailto:#prc.page.getAuthorEmail()#">#prc.page.getAuthorName()#</a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Last Edit On:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getActiveContent().getDisplayCreatedDate()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Child Pages:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getNumberOfChildren()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Views:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getNumberOfHits()#
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th class="col-md-4">Comments:</th>
-                                            <td class="col-md-8">
-                                                #prc.page.getNumberOfComments()#
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+                            #renderView(
+                                view    = "_tags/content/infotable",
+                                args    = { content = prc.page }
+                            )#
                         </cfif>
-                        <!---End page Info--->
                         
                         <!---Begin Display Options--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_DISPLAY_OPTIONS" )>

@@ -5,29 +5,17 @@
 * ---
 * ContentBox security handler
 */
-component{
+component extends="baseHandler"{
 
 	// DI
-	property name="securityService" inject="securityService@cb";
-	property name="authorService" 	inject="authorService@cb";
-	property name="antiSamy"		inject="antisamy@cbantisamy";
-	property name="cb"				inject="cbhelper@cb";
-	property name="messagebox"		inject="messagebox@cbMessagebox";
+	property name="antiSamy"			inject="antisamy@cbantisamy";
+	property name="markdown"			inject="Processor@cbmarkdown";
 
 	// Method Security
 	this.allowedMethods = {
 		doLogin 		= "POST",
 		doLostPassword 	= "POST"
 	};
-
-	/**
-	* Pre handler
-	*/
-	function preHandler( event, currentAction, rc, prc ){
-		prc.langs 		= getModuleSettings( "contentbox" ).languages;
-		prc.entryPoint 	= getModuleConfig( "contentbox-security" ).entryPoint;
-		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
-	}
 
 	/**
 	* Change language
@@ -50,6 +38,8 @@ component{
 		// secured URL from security interceptor
 		arguments.event.paramValue( "_securedURL", "" );
 		rc._securedURL = antiSamy.htmlSanitizer( rc._securedURL );
+		// Markdown Processing of sign in text
+		prc.signInText = markdown.toHTML( prc.cbSettings.cb_security_login_signin_text );
 		// view
 		event.setView( view="security/login" );
 	}
@@ -71,19 +61,56 @@ component{
 		// announce event
 		announceInterception( "cbadmin_preLogin" );
 
-		// authenticate users
-		if( securityService.authenticate( rc.username, rc.password ) ){
-			// set remember me
+		// Authenticate credentials
+		var results = securityService.authenticate( rc.username, rc.password );
+		if( results.isAuthenticated ){
+
+			// Verify if user needs to reset their password?
+			if( results.author.getIsPasswordReset() ){
+				var token = securityService.generateResetToken( results.author );
+				messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
+				setNextEvent(
+					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
+					queryString = "token=#token#"
+				);
+			}
+
+			// Verify if we have to challenge via two factor auth
+			if( twoFactorService.canChallenge( results.author ) ){
+				// Flash data needed for authorizations
+				flash.put( "authorData", { 
+					authorID 	= results.author.getAuthorID(), 
+					rememberMe 	= rc.rememberMe,
+					securedURL  = rc._securedURL
+				} );
+				// Send challenge
+				var twoFactorResults = twoFactorService.sendChallenge( results.author );
+				// Verify error, if so, log it and setup a messagebox
+				if( twoFactorResults.error ){
+					log.error( prc.twoFactorResults.messages ); 
+					messagebox.error( cb.r( "twofactor.error@security" ) );
+				}
+				// Relocate to two factor auth presenter
+				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
+			}
+
+			// Set keep me log in remember cookie, if set.
 			securityService.setRememberMe( rc.username, val( rc.rememberMe ) );
+			// Set in session, validations are now complete
+			securityService.setAuthorSession( results.author );
+
 			// announce event
-			announceInterception( "cbadmin_onLogin" );
+			announceInterception( "cbadmin_onLogin", { author = results.author, securedURL = rc._securedURL } );
+			
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
 				setNextEvent( uri=rc._securedURL );
 			} else {
 				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
-		} else {
+		} 
+		// INVALID LOGINS
+		else {
 			// announce event
 			announceInterception( "cbadmin_onBadLogin" );
 			// message and redirect
@@ -104,7 +131,11 @@ component{
 		// message redirect
 		messagebox.info( cb.r( "messages.seeyou@security" ) );
 		// relocate
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+		var relocateTo = prc.cbSettings.cb_security_login_signout_url;
+		if( !len( relocateTo ) ){
+			relocateTo = "#prc.cbAdminEntryPoint#.security.login";
+		}
+		setNextEvent( relocateTo );
 	}
 
 	/**
@@ -149,7 +180,7 @@ component{
 			// announce event
 			announceInterception( "cbadmin_onPasswordReminder", { author = oAuthor } );
 			// messagebox
-			messagebox.info( cb.r( resource='messages.reminder_sent@security', values="15" ) );
+			messagebox.info( cb.r( resource='messages.reminder_sent@security', values="30" ) );
 		} else {
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
@@ -164,24 +195,95 @@ component{
 	* Verify the reset
 	*/
 	function verifyReset( event, rc, prc ){
-		arguments.event.paramValue( "token", "" );
+		event.paramValue( "token", "" );
 
-		// Validate token
-		var results = securityService.resetUserPassword( trim( rc.token ) );
-		if( !results.error ){
-			// announce event
-			announceInterception( "cbadmin_onPasswordReset", { author = results.author } );
-			// Messagebox
-			messagebox.info( cb.r( "messages.password_reset@security" ) );
-		} else {
+		// Sanitize
+		rc.token = antiSamy.htmlSanitizer( rc.token );
+
+		// Validate Token
+		var results = securityService.validateResetToken( trim( rc.token ) );
+		if( results.error ){
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
-			// messagebox
+			// Exception
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			return;
+		} 
+
+		// Present rest password page.
+		prc.xehPasswordChange = "#prc.cbAdminEntryPoint#.security.doPasswordChange";
+		event.setView( view="security/verifyReset" );
+	}
+
+	/**
+	* Reset a user password. Must have a valid user token setup already
+	*/
+	function doPasswordChange( event, rc, prc ){
+		event.paramValue( "token", "" )
+			.paramValue( "password", "" )
+			.paramValue( "password_confirmation", "" );
+
+		// Sanitize
+		rc.token                 = antiSamy.htmlSanitizer( rc.token );
+		rc.password              = antiSamy.htmlSanitizer( rc.password );
+		rc.password_confirmation = antiSamy.htmlSanitizer( rc.password_confirmation );
+
+		// Validate passwords
+		if( !len( rc.password ) || !len( rc.password_confirmation ) ){
+			// Exception
+			messagebox.error( cb.r( "messages.invalid_password@security" ) );
+			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			return;
 		}
 
-		// Relcoate to login
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+		// Validate confirmed password
+		if( compare( rc.password, rc.password_confirmation ) neq 0 ){
+			messagebox.error( cb.r( "messages.password_mismatch@security" ) );
+			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			return;
+		}
+
+		// Validate Token
+		var results = securityService.validateResetToken( trim( rc.token ) );
+		if( results.error ){
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			// Exception
+			messagebox.error( cb.r( "messages.invalid_token@security" ) );
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			return;
+		} 
+
+		// Validate you are not using the same password if persisted already
+		if( authorService.isSameHash( rc.password, results.author.getPassword() ) ){
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			// Exception
+			messagebox.error( cb.r( "messages.password_used@security" ) );
+			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			return;
+		}
+
+		// Token is valid, let's reset this sucker.
+		var resetResults = securityService.resetUserPassword(
+			token 		= rc.token,
+			author 		= results.author,
+			password 	= rc.password
+		);
+
+		if( resetResults.error ){
+			// announce event
+			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
+			messagebox.error( resetResults.messages );	
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			return;
+		}
+		
+		// announce event and relcoate to login with new password
+		announceInterception( "cbadmin_onPasswordReset", { author = results.author  } );
+		messagebox.info( cb.r( "messages.password_reset@security" ) );
+		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 	}
 
 }
