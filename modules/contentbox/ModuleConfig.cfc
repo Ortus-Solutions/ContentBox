@@ -26,6 +26,8 @@ component {
 	*/
 	function configure(){
 
+		variables.log = controller.getLogBox().getLogger( this );
+
 		// contentbox settings
 		settings = {
 			codename 			= "Psalm 144:1",
@@ -167,6 +169,8 @@ component {
 			structAppend( allSettings, overrides, true );
 			// Store them
 			settingService.storeSettings( allSettings );
+			// Log it
+			variables.log.info( "ContentBox config overrides loaded.", overrides );
 		}
 	}
 
@@ -176,7 +180,7 @@ component {
 	 * Example: contentbox.default.cb_media_directoryRoot
 	 */
 	private function loadEnvironmentOverrides(){
-		var settingService      	= wirebox.getInstance( "SettingService@cb" );
+		var settingService      = wirebox.getInstance( "SettingService@cb" );
 		var oSystem 			= createObject( "java", "java.lang.System" );
 		var environmentSettings = oSystem.getEnv();
 		var overrides 			= {};
@@ -196,6 +200,8 @@ component {
 		structAppend( allSettings, overrides, true );
 		// Store them
 		settingService.storeSettings( allSettings );
+		// Log it
+		variables.log.info( "ContentBox environment overrides loaded.", overrides );
 	}
 
 }
