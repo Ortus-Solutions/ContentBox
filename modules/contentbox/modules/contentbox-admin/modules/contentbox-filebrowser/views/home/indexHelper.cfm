@@ -353,20 +353,20 @@ function fbChoose(){
 <!--- Uploads Scripts --->
 <cfif prc.fbSettings.allowUploads>
 <script type="text/javascript">
-$(document).ready(function() {
+$( document ).ready( function(){
 	// show upload button
-	$("##file_uploader").on("change", function() {
-		if($(this).val().length !=0){
-			$("##file_uploader_button").removeClass("hidden"); 
+	$( "##file_uploader" ).on( "change", function() {
+		if( $( this ).val().length !=0 ){
+			$( "##file_uploader_button" ).removeClass( "hidden" ); 
 		}else{
-			$("##file_uploader_button").addClass("hidden"); 
+			$( "##file_uploader_button" ).addClass( "hidden" ); 
 		}
-	});
+	} );
 
-	$( '##file_uploader_button' ).on('click', function() {
-		var iframe = $( '##upload-iframe' );
-		var form = $( '##upload-form' );
-		var field = $( '##filewrapper' );
+	$( '##file_uploader_button' ).on('click', function(){
+		var iframe  = $( '##upload-iframe' );
+		var form    = $( '##upload-form' );
+		var field   = $( '##filewrapper' );
 		var wrapper = $( '##manual_upload_wrapper' );
 		wrapper.append( '<p id="upload_message"><i class="fa fa-spinner fa-spin fa-2x fa-fw"></i> Uploading your file...</p>' );
 		// move to target form
@@ -375,17 +375,13 @@ $(document).ready(function() {
 		// submit the form; it's target is the iframe, so AJAX-ish upload style
 		form.submit();
 		// handle load method of iframe
-		iframe.load(function() {
-			try {
-				// try to get JSON response from server in textfield
-				var result = $( iframe.contents().text() );
-				var JSON = $.parseJSON( result.val() );
-				if( !JSON.ERRORS ) {
-					fbRefresh();
-				}
-			}
-			// errors? reset stuff and allow to try again
-			catch( e ) {
+		iframe.load(function(){
+			// try to get JSON response from server in textfield
+			var results = $.parseJSON( iframe.contents().text() );
+			if( !results.errors ) {
+				fbRefresh();
+			} else {
+				wrapper.append( "<div class='alert alert-danger'>" + results.messages + "</div>" );	
 				$( '##upload_message' ).remove();
 				field.prependTo( wrapper );
 				field.show();

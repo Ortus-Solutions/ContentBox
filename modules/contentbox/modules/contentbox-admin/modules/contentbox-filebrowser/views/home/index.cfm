@@ -90,8 +90,8 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		                        <span class="fileinput-new">Select file</span>
 		                        <span class="fileinput-exists">Change</span>
 									<input type="file" name="FILEDATA" id="file_uploader" />
-									#html.hiddenField(name="validated",value="false" )#
-									#html.hiddenField(name="overwrite",id="overwrite",value="false" )#
+									#html.hiddenField( name="validated", value="false" )#
+									#html.hiddenField( name="overwrite", value="false" )#
 		                    </span>
 		            		<a href="javascript:void(0)" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">Remove</a>
 		            	</div>
@@ -351,7 +351,13 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
-<form id="upload-form" name="upload-form" enctype="multipart/form-data" method="POST" target="upload-iframe" action="#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#">
+<form 	id="upload-form" 
+		name="upload-form" 
+		enctype="multipart/form-data" 
+		method="POST" 
+		target="upload-iframe" 
+		action="#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#"
+>
 	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
 	<input type="hidden" name="manual" value="true" />
 </form>
