@@ -189,10 +189,10 @@ component {
 		var aAuthors = authorService.getAll();
 		var aTargetAuthors = [];
 
-		for( var this author in aAuthors ){
-			if( !len( author.getAPIToken() ) ){
-				author.generateAPIToken();
-				arrayAppend( aTargetAuthors, author );
+		for( var thisAuthor in aAuthors ){
+			if( !len( thisAuthor.getAPIToken() ) ){
+				thisAuthor.generateAPIToken();
+				arrayAppend( aTargetAuthors, thisAuthor );
 			}
 		}
 		
