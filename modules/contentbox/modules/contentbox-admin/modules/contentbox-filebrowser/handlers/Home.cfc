@@ -387,12 +387,15 @@ component{
 	* Upload File
 	*/
 	function upload( event, rc, prc ){
+		// setup results
+		var data = { "errors" = false, "messages" = "" };
 		// param values
 		event.paramValue( "path", "" )
 			.paramValue( "manual", false );
 
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
+		
 		// traversal test
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
@@ -419,11 +422,10 @@ component{
 			};
 			announceInterception( "fb_preFileUpload", iData );
 			iData.results = fileUpload( 
-				rc.path, // destination
-				"FILEDATA", // form field
-				"overwrite", // overwrite
-				prc.fbSettings.acceptMimeTypes, // accept
-				true // strict mime types	
+				rc.path,
+				"FILEDATA",
+				prc.fbSettings.acceptMimeTypes,
+				"overwrite"
 			);
 			// debug log file
 			if( log.canDebug() ){
@@ -439,7 +441,11 @@ component{
 		catch(Any e){
 			data.errors = true;
 			data.messages = $r( resource="messages.error_uploading@fb", values="#e.message# #e.detail#" );
+			if( getSetting( "environment" ) == "development" ){
+				data.messages &= "Stack: #e.stacktrace#";
+			}
 			log.error( data.messages, e );
+			
 			// Announce exception
 			var iData = {
 				fileField = "FILEDATA",
@@ -449,7 +455,7 @@ component{
 			announceInterception( "fb_onFileUploadError", iData );
 		}
 		// Manual uploader?
-		if( rc.manual ) {
+		if( rc.manual AND !data.errors) {
 			event.renderData( data="<textarea id='data_result'='upload'>#serializeJSON( data )#</textarea>", type="text" );
 		} else {
 			// render stuff out

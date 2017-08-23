@@ -4,11 +4,11 @@
 * Copyright 2012 by Luis Majano and Ortus Solutions, Corp
 * www.ortussolutions.com
 * ---
-* Updater for 3.8.0
+* Updater for 3.7.1
 *
 * DB Structure Changes Comment Below
 *
-* Remove Interface for conversion from 3.X.X -> 3.8.0
+* Remove Interface for conversion from 3.X.X -> 3.7.1
 *
 * ---
 * Start Commit Hash: 9bc15e16b76557af87c39b618fa331ceb0ef9372
@@ -43,7 +43,7 @@ component {
 	*/
 	function onDIComplete(){
 		// setup update variables that are used globally
-		variables.version 				= "3.8.0";
+		variables.version 				= "3.7.1";
 		variables.currentVersion 		= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath				= getDirectoryFromPath( getMetadata( this ).path );
 		variables.appPath 				= coldbox.getSetting( "ApplicationPath" );
