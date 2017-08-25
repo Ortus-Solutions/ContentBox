@@ -72,7 +72,7 @@ component{
 
 	// Local ORM SQL Logging
 	if( reFindNoCase( "^(dev\.|localhost|127\.0\.0)", cgi.http_host )  ){
-		this.ormSettings.logSQL = false;
+		this.ormSettings.logSQL = true;
 	}
 
 	/************************************** METHODS *********************************************/
