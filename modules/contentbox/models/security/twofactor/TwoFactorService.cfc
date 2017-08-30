@@ -163,7 +163,6 @@ component accessors="true" threadSafe singleton{
 	 * @author The author to challenge or not
 	 */
 	boolean function canChallenge( required author ){
-		var oProvider 	= getProvider( getDefaultProvider() );
 		var results 	= false;
 		if( 
 			// Verify if global force is enabled
@@ -172,6 +171,7 @@ component accessors="true" threadSafe singleton{
 			// Verify if user has two factor auth enabled
 			arguments.author.getIs2FactorAuth()
 		){
+			var oProvider 	= getProvider( getDefaultProvider() );
 			// Verify if using trusted device options and if device is trusted
 			if( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ){
 				results = false;
