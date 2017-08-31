@@ -47,7 +47,7 @@
 								    	<ul class="dropdown-menu">
 								    		<li><a href="javascript:changeStatus('approve')"><i class="fa fa-thumbs-up"></i> Approve Selected</a></li>
 											<li><a href="javascript:changeStatus('moderate')"><i class="fa fa-thumbs-down"></i> Moderate Selected</a></li>
-											<li><a href="javascript:remove()" class="confirmIt"><i class="fa fa-trash-o"></i> Remove Selected</a></li>
+											<li><a href="javascript:removeAll()" class="confirmIt"><i class="fa fa-trash-o"></i> Remove Selected</a></li>
 											<li><a href="javascript:removeAllModerated()" class="confirmIt" data-message="Are you sure you want to delete all moderated comments?" title="Nuclear: Delete all moderated comments!"><i class="fa fa-times"></i> Remove All Moderated</a></li>
 								    	</ul>
 								    </div>
