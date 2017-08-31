@@ -54,6 +54,9 @@ function remove(recordID){
 	//Submit Form
 	$commentForm.submit();
 }
+function removeAll(){
+	$commentForm.submit();
+}
 function removeAllModerated(){
 	$commentForm.attr( "action","#event.buildlink(linkTo=prc.xehCommentRemoveAllModerated)#" );
 	$commentForm.submit();
