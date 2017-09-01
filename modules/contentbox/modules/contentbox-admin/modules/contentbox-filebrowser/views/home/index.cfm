@@ -178,7 +178,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							<!--- Directory or File --->
 							<cfif prc.fbqListing.type eq "Dir">
 								<!--- Folder --->
-								<div id="#validIDName#"
+								<div id="fb-dir-#validIDName#"
 									 onClick="javascript:return false;"
 									 class="folders"
 									 data-type="dir"
@@ -195,7 +195,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 								</div>
 							<cfelseif prc.fbSettings.showFiles>
 								<!--- Display the DiV --->
-								<div id="#validIDName#"
+								<div id="fb-file-#validIDName#"
 									 class="files"
 									 data-type="file"
 									 data-name="#prc.fbqListing.Name#"
@@ -225,7 +225,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<!--- Directory or File --->
 					<cfif prc.fbqListing.type eq "Dir">
 						<!--- Folder --->
-						<div id="#validIDName#"
+						<div id="fb-dir-#validIDName#"
 							 class="folders filterDiv"
 							 data-type="dir"
 							 data-name="#prc.fbqListing.Name#"
@@ -240,7 +240,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 						</div>
 					<cfelseif prc.fbSettings.showFiles>
 						<!--- Display the DiV --->
-						<div id="#validIDName#"
+						<div id="fb-file-#validIDName#"
 							 class="files filterDiv"
 							 data-type="file"
 							 data-name="#prc.fbqListing.Name#"
@@ -356,7 +356,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		enctype="multipart/form-data" 
 		method="POST" 
 		target="upload-iframe" 
-		action="#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#"
+		action="#event.buildLink( prc.xehFBUpload )#"
 >
 	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
 	<input type="hidden" name="manual" value="true" />
