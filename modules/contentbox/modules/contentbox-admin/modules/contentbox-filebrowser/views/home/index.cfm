@@ -356,7 +356,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		enctype="multipart/form-data" 
 		method="POST" 
 		target="upload-iframe" 
-		action="#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#"
+		action="#event.buildLink( prc.xehFBUpload )#"
 >
 	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
 	<input type="hidden" name="manual" value="true" />
