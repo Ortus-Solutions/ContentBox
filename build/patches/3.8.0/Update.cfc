@@ -171,7 +171,7 @@ component {
 			applicationstop();
 
 			// Hard Redirect using CF Location to avoid Controller issues.
-			var event = controller.getRequestService().getContext();
+			var event = coldbox.getRequestService().getContext();
 			location( event.buildLink( "cbadmin.autoupdates" ) );
 			
 		} catch( Any e ) {
