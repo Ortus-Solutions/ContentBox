@@ -85,6 +85,9 @@
 		<!-- Build ID -->
 		<property name="build.label" value="contentbox-${contentbox.version}+${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
 		
+		<!-- Version Identifier -->
+		<concat destfile="${dir.build}/version.json">{ "version" : "${contentbox.version}" }</concat>
+
 		<!-- Permissions -->
 		<antcall target="update.permissions" />
 		<!-- Get Build Dependencies -->
