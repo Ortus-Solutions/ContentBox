@@ -87,7 +87,7 @@ component extends="baseHandler"{
 				var twoFactorResults = twoFactorService.sendChallenge( results.author );
 				// Verify error, if so, log it and setup a messagebox
 				if( twoFactorResults.error ){
-					log.error( prc.twoFactorResults.messages ); 
+					log.error( twoFactorResults.messages ); 
 					messagebox.error( cb.r( "twofactor.error@security" ) );
 				}
 				// Relocate to two factor auth presenter
