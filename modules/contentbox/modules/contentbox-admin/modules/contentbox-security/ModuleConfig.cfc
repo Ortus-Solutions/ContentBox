@@ -48,6 +48,8 @@ component {
 				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent",
 				// Login Form
 				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm",
+				// Lost Password
+				"cbadmin_afterLostPasswordForm", "cbadmin_afterBackToLogin",
 				// Security events
 				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout",
 				"cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder",
