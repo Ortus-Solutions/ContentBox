@@ -546,6 +546,10 @@ component extends="baseHandler"{
 	* Change user password
 	*/
 	function passwordChange( event, rc, prc ){
+		if( prc.oCurrentAuthor.getAuthorID() != rc.authorID ){
+			cbMessagebox.error( "You cannot change passwords for other users. Please start a password reset instead." );
+			return setNextEvent(event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+		}
 		var oAuthor = authorService.get(id=rc.authorID);
 
 		// validate passwords
