@@ -110,7 +110,7 @@
 							</li>
 							<li>
 								<a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
-									title="Issue a password reset for the user upon next login.">
+									title="Email User a password reset token and link to reset password.">
 									<i class="fa fa-lock"></i> Reset Password
 								</a>
 							</li>
