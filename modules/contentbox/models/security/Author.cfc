@@ -207,7 +207,7 @@ component 	persistent="true"
 		"firstName" = { required=true, size="1..100" },
 		"lastName" 	= { required=true, size="1..100" },
 		"email" 	= { required=true, size="1..255", type="email" },
-		"username" 	= { required=true, size="1..100" },
+		"username" 	= { required=true, size="1..100", validator: "UniqueValidator@cborm" },
 		"password"	= { required=true, size="1..100" }
 	};
 
