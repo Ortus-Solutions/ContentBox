@@ -546,15 +546,19 @@ component extends="baseHandler"{
 	* Change user password
 	*/
 	function passwordChange( event, rc, prc ){
-		var oAuthor = authorService.get(id=rc.authorID);
+		if( prc.oCurrentAuthor.getAuthorID() != rc.authorID ){
+			cbMessagebox.error( "You cannot change passwords for other users. Please start a password reset instead." );
+			return setNextEvent( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+		}
+		var oAuthor = authorService.get( id=rc.authorID );
 
 		// validate passwords
-		if( compareNoCase(rc.password, rc.password_confirm) EQ 0){
+		if( compareNoCase( rc.password, rc.password_confirm ) EQ 0){
 			// set new password
 			oAuthor.setPassword( rc.password );
-			authorService.saveAuthor(author=oAuthor, passwordChange=true);
+			authorService.saveAuthor( author=oAuthor, passwordChange=true );
 			// announce event
-			announceInterception( "cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password} );
+			announceInterception( "cbadmin_onAuthorPasswordChange", { author=oAuthor, password=rc.password } );
 			// message
 			cbMessagebox.info( "Password Updated!" );
 		}
@@ -564,7 +568,7 @@ component extends="baseHandler"{
 		}
 
 		// relocate
-		setNextEvent(event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+		setNextEvent( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
 	}
 
 	/**
