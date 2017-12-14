@@ -315,6 +315,26 @@ component extends="baseHandler"{
         flash.put( "authorID", rc.authorID );
         prc.oAuthor = authorService.get( id=rc.authorID );
 
+        // iterate rc keys that start with "preference."
+        var allPreferences 	= {};
+		for( var key in rc ){
+			if( reFindNoCase( "^preference\.", key ) ){
+				allPreferences[ listLast( key, "." ) ] = rc[ key ];
+			}
+		}
+        prc.oAuthor.setPreferences( allPreferences );
+        populateModel( model = prc.oAuthor, exclude = "preference" );
+        var vResults = validateModel( target = prc.oAuthor, excludes = "password" );
+		if ( vResults.hasErrors() ) {
+            cbMessagebox.warn( messageArray=vResults.getAllErrors() );
+            setNextEvent(
+                event		= prc.xehAuthorEditor,
+                queryString	= "authorID=#prc.oAuthor.getAuthorID()###twofactor"
+            );
+        }
+
+        authorService.saveAuthor( prc.oAuthor );
+
         prc.xehValidate = "#prc.cbadminEntryPoint#.authors.doTwoFactorEnrollment";
         prc.xehResend 	= "#prc.cbadminEntryPoint#.authors.enrollTwoFactor";
         prc.provider 	= twoFactorService.getDefaultProviderObject();

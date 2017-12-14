@@ -45,9 +45,18 @@
 			<!--- Provider Setup Help --->
 			<div class="form-group">
 				<label>Provider Instructions: </label><br>
-				#prc.twoFactorProvider.getAuthorSetupHelp()#
-			</div>
+				#prc.twoFactorProvider.getAuthorSetupHelp( prc.author )#
+            </div>
 
+            <!--- Provider Setup Help --->
+            <cfif len( prc.twoFactorProvider.getAuthorSetupForm( prc.author ) )>
+                <label>Required Provider Information: </label><br>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        #prc.twoFactorProvider.getAuthorSetupForm( prc.author )#
+                    </div>
+                </div>
+            </cfif>
 			<!--- Provider Author Options --->
 			<cfif len( prc.twoFactorProvider.getAuthorOptions() )>
                 <div class="form-group">
