@@ -22,7 +22,7 @@ component extends="baseHandler"{
 	* Pre handler
 	*/
 	function preHandler( event, rc, prc, action, eventArguments ){
-		var protectedActions = [ 
+		var protectedActions = [
 			"save",
 			"editor",
 			"savePreferences",
@@ -133,11 +133,11 @@ component extends="baseHandler"{
 		prc.xehPasswordReset	= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
-		if( rc.fRole neq "any" 
-			OR rc.fStatus neq "any" 
+		if( rc.fRole neq "any"
+			OR rc.fStatus neq "any"
 			OR rc.f2FactorAuth neq "any"
-			OR rc.fGroups neq "any" 
-			OR rc.showAll 
+			OR rc.fGroups neq "any"
+			OR rc.showAll
 		){
 			prc.isFiltering = true;
 		}
@@ -305,7 +305,78 @@ component extends="baseHandler"{
 			cbMessagebox.warn( messageArray=vResults.getAllErrors() );
 			return new( argumentCollection=arguments );
 		}
-	}
+    }
+
+    /**
+     * Present the enrollment form for two-factor authentication
+     */
+    function enrollTwoFactor( event, rc, prc ){
+        param rc.authorID = flash.get( "authorID", "" );
+        flash.put( "authorID", rc.authorID );
+        prc.oAuthor = authorService.get( id=rc.authorID );
+
+        prc.xehValidate = "#prc.cbadminEntryPoint#.authors.doTwoFactorEnrollment";
+        prc.xehResend 	= "#prc.cbadminEntryPoint#.authors.enrollTwoFactor";
+        prc.provider 	= twoFactorService.getDefaultProviderObject();
+        prc.showTrustedDeviceCheckbox = false;
+
+        // Send challenge
+        var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
+        // Verify error, if so, log it and setup a messagebox
+        if( twoFactorResults.error ){
+            log.error( twoFactorResults.messages );
+            cbMessagebox.error( $r( "twofactor.error@security" ) );
+        } else {
+            cbMessagebox.append( $r( "twofactor.codesent@security" ) );
+        }
+
+        event.setView( view = "twofactor/index", module = "contentbox-security" );
+    }
+
+    /**
+     * Validate the two-factor authentication.
+     */
+    function doTwoFactorEnrollment( event, rc, prc ){
+        event.paramValue( "twofactorCode", "" )
+            .paramValue( "trustDevice", false )
+            .paramValue( "authorID", flash.get( "authorID", "" ) );
+
+        prc.oAuthor = authorService.get( id=rc.authorID );
+
+        // Verify the challenge code
+        var results = twoFactorService.verifyChallenge(
+            code   = rc.twofactorcode,
+            author = prc.oAuthor
+        );
+
+        // Check for errors
+        if( results.error ){
+            announceInterception( "cbadmin_onInvalidTwoFactor", { author = prc.oAuthor } );
+            // message and redirect
+            cbMessagebox.error( results.messages & "#chr(10)#" );
+            flash.keep( "authorID" );
+            setNextEvent( "#prc.cbadminEntryPoint#.authors.enrollTwoFactor" );
+        } else {
+            var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
+            // Call Provider finalize callback, in case something is needed for teardowns
+            oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );
+
+            // announce events
+            announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
+
+            cbMessagebox.info( "Successfully enrolled" );
+            rc.is2FactorAuth = true;
+            return saveTwoFactor( event, rc, prc );
+        }
+    }
+
+    /**
+    * Un-enroll the user from two-factor authentication
+    */
+    function unenrollTwoFactor( event, rc, prc ){
+        rc.is2FactorAuth = false;
+        return saveTwoFactor( event, rc, prc );
+    }
 
 	/**
 	* Save Two Factor Authentication details.
@@ -344,8 +415,9 @@ component extends="baseHandler"{
 		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
 		prc.xehExport 				= "#prc.cbAdminEntryPoint#.authors.export";
-		prc.xehPasswordReset		= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
-		prc.xehSaveTwoFactor 		= "#prc.cbAdminEntryPoint#.authors.saveTwoFactor";
+        prc.xehPasswordReset		= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
+        prc.xehEnrollTwoFactor 		= "#prc.cbAdminEntryPoint#.authors.enrollTwofactor";
+        prc.xehUnenrollTwoFactor 	= "#prc.cbAdminEntryPoint#.authors.unenrollTwoFactor";
 
 		// get new or persisted author
 		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
