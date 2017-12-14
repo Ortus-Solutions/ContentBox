@@ -136,7 +136,9 @@ component {
 			// Admin Comment Cleanup/Moderation listener
 			{ class="#moduleMapping#.interceptors.CommentCleanup", name="CommentCleanup@cbAdmin" },
 			// Admin MenuBuilder Cleanups
-			{ class="#moduleMapping#.interceptors.MenuCleanup", name="MenuCleanup@cbAdmin" }
+            { class="#moduleMapping#.interceptors.MenuCleanup", name="MenuCleanup@cbAdmin" },
+            // Unenroll Two Factor on Provider Change
+			{ class="#moduleMapping#.interceptors.UnenrollTwoFactorOnProviderChange", name="UnenrollTwoFactorOnProviderChange@cbAdmin" }
 		];
 
 	}

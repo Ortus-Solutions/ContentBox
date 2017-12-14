@@ -5,10 +5,10 @@
 
 	<!--- Global Two Factor Auth --->
 	<div class="form-group">
-        #html.label( 
-        	class   = "control-label", 
-        	field   = "cb_security_2factorAuth_force", 
-        	content = "Force 2 Factor Authentication" 
+        #html.label(
+        	class   = "control-label",
+        	field   = "cb_security_2factorAuth_force",
+        	content = "Force 2 Factor Authentication"
         )#
         <div class="controls">
             <small>Require all users to setup Two-factor authentication.</small><br/><br />
@@ -24,7 +24,7 @@
 			)#
         </div>
     </div>
-	
+
 	<!--- Trusted Device Length --->
 	<div class="form-group">
 		<label class="control-label" for="cb_security_2factorAuth_trusted_days">
@@ -57,17 +57,19 @@
 		<label class="control-label" for="cb_security_2factorAuth_provider">Default Two Factor Provider:</label>
 		<div class="controls">
 			<small>Choose the default two factor provider that will be used for authentication by all ContentBox users. Please note that each provider could have different setup options. Ultimately, refer to the provider documentation.</small><br/>
+            <small class="text-danger"><strong>Note:</strong> Changing the default two factor provider will unenroll all currently enrolled users!</small><br />
 			#html.select(
-				name            = "cb_security_2factorAuth_provider", 
+                name            = "cb_security_2factorAuth_provider",
 				options         = prc.twoFactorProviders,
 				column          = "name",
 				nameColumn      = "displayName",
 				class           = "form-control input-sm",
 				selectedValue   = prc.cbSettings.cb_security_2factorAuth_provider
-			)#
+            )#
+            <br />
 		</div>
 	</div>
-	
+
 	<!--- Event for Two Factor Modules to Add their settings here --->
 	#announceInterception( "cbadmin_onTwoFactorSettingsPanel" )#
 
@@ -112,6 +114,6 @@
 			)#
 		</div>
 	</div>
-	
+
 </fieldset>
 </cfoutput>
