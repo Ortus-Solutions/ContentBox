@@ -12,6 +12,7 @@ component accessors="true" threadSafe singleton{
 	property name="securityService" 	inject="securityService@cb";
 	property name="authorService" 		inject="authorService@cb";
 	property name="cookieStorage" 		inject="cookieStorage@cbStorages";
+	property name="log"                 inject="logbox:logger:{this}";
 
 	/**
 	 * Providers registry
@@ -19,9 +20,9 @@ component accessors="true" threadSafe singleton{
 	property name="providers"	type="struct";
 
 	// Static Properties
-	
+
 	variables.TRUSTED_DEVICE_COOKIE = "contentbox_2factor_device";
-	
+
 	/**
 	* Constructor
 	* @wirebox.inject wirebox
@@ -29,13 +30,13 @@ component accessors="true" threadSafe singleton{
 	TwoFactorService function init( required wirebox ){
 		// init providers
 		variables.providers = {};
-		
+
 		// store factory
 		variables.wirebox = arguments.wirebox;
-		
+
 		return this;
 	}
-	
+
 	/**
 	 * Are we forcing global two factor authentication
 	 */
@@ -64,32 +65,32 @@ component accessors="true" threadSafe singleton{
 	numeric function getTrustedDeviceTimespan(){
 		return settingService.getSetting( "cb_security_2factorAuth_trusted_days" );
 	}
-	
+
 	/**
 	* Register a new two factor authenticator in ContentBox
 	* @provider The provider instance to register
 	*/
 	TwoFactorService function registerProvider( required contentbox.models.security.twofactor.ITwoFactorProvider provider ){
-		variables.providers[ arguments.provider.getName() ] = arguments.provider;	
+		variables.providers[ arguments.provider.getName() ] = arguments.provider;
 		return this;
 	}
-	
+
 	/**
 	* UnRegister a provider in ContentBox
 	* @name The name of the provider to unregister
 	*/
 	TwoFactorService function unRegisterProvider( required name ){
-		structDelete( variables.providers, arguments.name );	
+		structDelete( variables.providers, arguments.name );
 		return this;
 	}
-	
+
 	/**
 	* Get an array of registered provider names in alphabetical order
 	*/
 	array function getRegisteredProviders(){
 		return listToArray( listSort( structKeyList( variables.providers ), "textnocase" ) );
 	}
-	
+
 	/**
 	* Get an array of registered provider names in alphabetical order with their display names
 	*/
@@ -97,14 +98,14 @@ component accessors="true" threadSafe singleton{
 		var aProviders = getRegisteredProviders();
 		var result = [];
 		for( var thisProvider in aProviders ){
-			arrayAppend( result, { 
-				name        = thisProvider, 
-				displayName = variables.providers[ thisProvider ].getDisplayName() 
+			arrayAppend( result, {
+				name        = thisProvider,
+				displayName = variables.providers[ thisProvider ].getDisplayName()
 			} );
 		}
 		return result;
 	}
-	
+
 	/**
 	* Get a registered provider instance
 	* @name The name of the provider
@@ -126,9 +127,9 @@ component accessors="true" threadSafe singleton{
 	 * @trustedID The trusted ID to track in the tracking cookie
 	 */
 	TwoFactorService function setTrustedDevice( required trustedID ){
-		cookieStorage.setVar( 
-			name    = variables.TRUSTED_DEVICE_COOKIE, 
-			value   = securityService.encryptIt( arguments.trustedID ), 
+		cookieStorage.setVar(
+			name    = variables.TRUSTED_DEVICE_COOKIE,
+			value   = securityService.encryptIt( arguments.trustedID ),
 			expires = getTrustedDeviceTimespan()
 		);
 		return this;
@@ -165,7 +166,7 @@ component accessors="true" threadSafe singleton{
 	boolean function canChallenge( required author ){
 		var oProvider 	= getProvider( getDefaultProvider() );
 		var results 	= false;
-		if( 
+		if(
 			// Verify if global force is enabled
 			isForceTwoFactorAuth()
 			OR
@@ -187,7 +188,7 @@ component accessors="true" threadSafe singleton{
 	/**
 	 * Leverage the default provider to send a challenge to the specific user.
 	 * The return is a structure containing an error flag and a messages string.
-	 * 
+	 *
 	 * @author The author to challenge
 	 *
 	 * @return struct:{ error:boolean, messages:string }
