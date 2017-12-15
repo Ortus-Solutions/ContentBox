@@ -440,6 +440,7 @@ component extends="baseHandler"{
 	* @return html
 	*/
 	function editor( event, rc, prc ){
+        prc.htmlTitle = "Author Editor";
 		// exit handlers
 		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
 		prc.xehAuthorPreferences 	= "#prc.cbAdminEntryPoint#.authors.savePreferences";
