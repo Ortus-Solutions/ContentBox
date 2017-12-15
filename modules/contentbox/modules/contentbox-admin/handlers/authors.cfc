@@ -308,6 +308,23 @@ component extends="baseHandler"{
     }
 
     /**
+     * Show the two-factor authentication screen for forced enrollment
+     */
+    function forceTwoFactorEnrollment( event, rc, prc ) {
+        prc.author = prc.oCurrentAuthor;
+        prc.xehEnrollTwoFactor = "#prc.cbAdminEntryPoint#.authors.enrollTwofactor";
+        prc.xehUnenrollTwoFactor = "#prc.cbAdminEntryPoint#.authors.unenrollTwoFactor";
+        prc.twoFactorProvider = twoFactorService.getDefaultProviderObject();
+        flash.putAll( {
+            "layout" = "simple",
+            "xehInvalidData" = "#prc.cbAdminEntryPoint#.authors.forceTwoFactorEnrollment",
+            "xehEnrollmentSuccess" = "/",
+            "xehEnrollmentSuccessQueryString" = ""
+        } );
+        event.setView( view = "twofactor/forceEnrollment", layout = "simple" );
+    }
+
+    /**
      * Present the enrollment form for two-factor authentication
      */
     function enrollTwoFactor( event, rc, prc ){
@@ -327,8 +344,9 @@ component extends="baseHandler"{
         var vResults = validateModel( target = prc.oAuthor, excludes = "password" );
 		if ( vResults.hasErrors() ) {
             cbMessagebox.warn( messageArray=vResults.getAllErrors() );
+            flash.keep( "layout,xehInvalidData,xehEnrollmentSuccess,xehEnrollmentSuccessQueryString" )
             setNextEvent(
-                event		= prc.xehAuthorEditor,
+                event		= flash.get( "xehInvalidData", prc.xehAuthorEditor ),
                 queryString	= "authorID=#prc.oAuthor.getAuthorID()###twofactor"
             );
         }
@@ -338,7 +356,6 @@ component extends="baseHandler"{
         prc.xehValidate = "#prc.cbadminEntryPoint#.authors.doTwoFactorEnrollment";
         prc.xehResend 	= "#prc.cbadminEntryPoint#.authors.enrollTwoFactor";
         prc.provider 	= twoFactorService.getDefaultProviderObject();
-        prc.showTrustedDeviceCheckbox = false;
 
         // Send challenge
         var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
@@ -349,8 +366,8 @@ component extends="baseHandler"{
         } else {
             cbMessagebox.append( $r( "twofactor.codesent@security" ) );
         }
-
-        event.setView( view = "twofactor/index", module = "contentbox-security" );
+        flash.keep( "layout,xehEnrollmentSuccess,xehEnrollmentSuccessQueryString" );
+        event.setView( view = "twofactor/index", module = "contentbox-security", layout = flash.get( "layout", "admin" ) );
     }
 
     /**
@@ -374,7 +391,7 @@ component extends="baseHandler"{
             announceInterception( "cbadmin_onInvalidTwoFactor", { author = prc.oAuthor } );
             // message and redirect
             cbMessagebox.error( results.messages & "#chr(10)#" );
-            flash.keep( "authorID" );
+            flash.keep( "authorID,layout,xehEnrollmentSuccess,xehEnrollmentSuccessQueryString" );
             setNextEvent( "#prc.cbadminEntryPoint#.authors.enrollTwoFactor" );
         } else {
             var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
@@ -413,8 +430,8 @@ component extends="baseHandler"{
 		cbMessagebox.setMessage( "info","Two Factor Settings Saved!" );
 		// relocate
 		setNextEvent(
-			event		= prc.xehAuthorEditor,
-			queryString	= "authorID=#oAuthor.getAuthorID()###twofactor"
+			event		= flash.get( "xehEnrollmentSuccess", prc.xehAuthorEditor ),
+			queryString	= flash.get( "xehEnrollmentSuccessQueryString", "authorID=#oAuthor.getAuthorID()###twofactor" )
 		);
 	}
 
@@ -786,7 +803,6 @@ component extends="baseHandler"{
 			cbMessagebox.warn( "authorID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.authors" );
 		}
-		//writeDump( prc.role.getMemento() );abort;
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );

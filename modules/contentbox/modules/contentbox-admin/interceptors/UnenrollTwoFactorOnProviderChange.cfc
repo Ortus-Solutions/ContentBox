@@ -13,8 +13,7 @@ component extends="coldbox.system.Interceptor"{
     function configure(){}
 
     /**
-     * Fires after the save of a page
-     * Will cleanup any slug changes for menus
+     * Unenrolls all users from two-factor authentication on two-factor provider change
      */
     public void function cbadmin_preSettingsSave( required any event, required struct interceptData ) {
         if ( interceptData.oldSettings.cb_security_2factorAuth_provider != interceptData.newSettings.cb_security_2factorAuth_provider ) {

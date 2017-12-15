@@ -40,16 +40,14 @@
 	                    </div>
 	                </div>
 
-                    <cfif event.getPrivateValue( "showTrustedDeviceCheckbox", true )>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="trustDevice" id="trustDevice" value="true"> #cb.r( "twofactor.trust@security" )#
-                                <cfif prc.cbSettings.cb_security_2factorAuth_trusted_days gt 0>
-                                (#prc.cbSettings.cb_security_2factorAuth_trusted_days# #cb.r( "common.days@security" )#)
-                                </cfif>
-                            </label>
-                        </div>
-                    </cfif>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="trustDevice" id="trustDevice" value="true"> #cb.r( "twofactor.trust@security" )#
+                            <cfif prc.cbSettings.cb_security_2factorAuth_trusted_days gt 0>
+                            (#prc.cbSettings.cb_security_2factorAuth_trusted_days# #cb.r( "common.days@security" )#)
+                            </cfif>
+                        </label>
+                    </div>
 
 					<p>&nbsp;</p>
 
