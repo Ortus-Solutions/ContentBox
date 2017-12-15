@@ -11,16 +11,21 @@ interface{
 	* Get the internal name of a provider, used for registration, internal naming and more.
 	*/
 	function getName();
-	
+
 	/**
 	* Get the display name for the provider.  Used in all UI screens
 	*/
-	function getDisplayName();
+    function getDisplayName();
+
+    /**
+     * Returns html to display to the user for required two-factor fields
+     */
+    function getAuthorSetupForm( required author );
 
 	/**
 	* Get the display help for the provider.  Used in the UI setup screens for the author
 	*/
-	function getAuthorSetupHelp();
+    function getAuthorSetupHelp( required author );
 
 	/**
 	* Get the verification help for the provider.  Used in the UI verification screen.
@@ -36,9 +41,9 @@ interface{
 	/**
 	 * Send a challenge via the 2 factor auth implementation.
 	 * The return must be a struct with an error boolean bit and a messages string
-	 * 
+	 *
 	 * @author The author to challenge
-	 * 
+	 *
 	 * @return struct:{ error:boolean, messages=string }
 	 */
 	struct function sendChallenge( required author );
@@ -55,7 +60,7 @@ interface{
 	struct function verifyChallenge( required string code, required author );
 
 	/**
-	 * This method is called once a two factor challenge is accepted and valid. 
+	 * This method is called once a two factor challenge is accepted and valid.
 	 * Meaning the user has completed the validation and will be logged in to ContentBox now.
 	 *
 	 * @code The verification code

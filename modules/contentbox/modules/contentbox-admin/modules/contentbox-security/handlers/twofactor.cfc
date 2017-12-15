@@ -61,9 +61,9 @@ component extends="baseHandler"{
 		var authorData = flash.get( "authorData" );
 
 		// Verify the challenge code
-		var results = twoFactorService.verifyChallenge( 
-			code   = rc.twofactorcode, 
-			author = prc.oAuthor 
+		var results = twoFactorService.verifyChallenge(
+			code   = rc.twofactorcode,
+			author = prc.oAuthor
 		);
 
 		// Check for errors
@@ -85,12 +85,12 @@ component extends="baseHandler"{
 			securityService.setRememberMe( prc.oAuthor.getUsername(), val( authorData.rememberMe ) );
 			// Set in session, validations are now complete
 			securityService.setAuthorSession( prc.oAuthor );
-			
+
 			// announce events
 			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
 			// announce event
 			announceInterception( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
-			
+
 			// check if securedURL came in?
 			if( len( authorData.securedURL ) ){
 				setNextEvent( uri=authorData.securedURL );
@@ -108,7 +108,7 @@ component extends="baseHandler"{
 		var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
 		// Verify error, if so, log it and setup a messagebox
 		if( twoFactorResults.error ){
-			log.error( prc.twoFactorResults.messages );
+			log.error( twoFactorResults.messages );
 			messagebox.error( cb.r( "twofactor.error@security" ) );
 		} else {
 			// message and redirect
