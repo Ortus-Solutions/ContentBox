@@ -78,8 +78,8 @@ component extends="baseHandler"{
 			// Verify if we have to challenge via two factor auth
 			if( twoFactorService.canChallenge( results.author ) ){
 				// Flash data needed for authorizations
-				flash.put( "authorData", { 
-					authorID 	= results.author.getAuthorID(), 
+				flash.put( "authorData", {
+					authorID 	= results.author.getAuthorID(),
 					rememberMe 	= rc.rememberMe,
 					securedURL  = rc._securedURL
 				} );
@@ -87,7 +87,7 @@ component extends="baseHandler"{
 				var twoFactorResults = twoFactorService.sendChallenge( results.author );
 				// Verify error, if so, log it and setup a messagebox
 				if( twoFactorResults.error ){
-					log.error( twoFactorResults.messages ); 
+					log.error( twoFactorResults.messages );
 					messagebox.error( cb.r( "twofactor.error@security" ) );
 				}
 				// Relocate to two factor auth presenter
@@ -101,14 +101,14 @@ component extends="baseHandler"{
 
 			// announce event
 			announceInterception( "cbadmin_onLogin", { author = results.author, securedURL = rc._securedURL } );
-			
+
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
 				setNextEvent( uri=rc._securedURL );
 			} else {
 				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
-		} 
+		}
 		// INVALID LOGINS
 		else {
 			// announce event
@@ -165,7 +165,7 @@ component extends="baseHandler"{
 			arrayAppend( errors, "#cb.r( 'validation.need_email@security' )#<br />" );
 		} else {
 			// Try To get the Author
-			oAuthor = authorService.findWhere( { email = rc.email } );
+			oAuthor = authorService.findWhere( { email = rc.email, isActive = 1 } );
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
 				// Don't give away that the email did not exist.
 				messagebox.info( cb.r( resource='messages.lostpassword_check@security', values="5" ) );
@@ -209,7 +209,7 @@ component extends="baseHandler"{
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
-		} 
+		}
 
 		// Present rest password page.
 		prc.xehPasswordChange = "#prc.cbAdminEntryPoint#.security.doPasswordChange";
@@ -253,7 +253,7 @@ component extends="baseHandler"{
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
-		} 
+		}
 
 		// Validate you are not using the same password if persisted already
 		if( authorService.isSameHash( rc.password, results.author.getPassword() ) ){
@@ -275,11 +275,11 @@ component extends="baseHandler"{
 		if( resetResults.error ){
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
-			messagebox.error( resetResults.messages );	
+			messagebox.error( resetResults.messages );
 			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
 		}
-		
+
 		// announce event and relcoate to login with new password
 		announceInterception( "cbadmin_onPasswordReset", { author = results.author  } );
 		messagebox.info( cb.r( "messages.password_reset@security" ) );
