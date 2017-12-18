@@ -26,6 +26,10 @@ component extends="coldbox.system.Interceptor"{
      *
      */
     public void function preProcess( required any event, required struct interceptData, buffer, rc, prc ) {
+        if ( ! event.privateValueExists( "oCurrentAuthor" ) ) {
+            return;
+        }
+
         if ( ! prc.oCurrentAuthor.getLoggedIn() ) {
             return;
         }
