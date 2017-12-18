@@ -7,7 +7,10 @@
 */
 component extends="coldbox.system.Interceptor"{
 
-    property name="twoFactorService" inject="id:TwoFactorService@cb";
+    // DI
+    property name="twoFactorService"    inject="id:TwoFactorService@cb";
+    property name="securityService" 	inject="id:securityService@cb";
+
 
     variables.allowedEvents = [
         "contentbox-admin:authors.forceTwoFactorEnrollment",
@@ -26,7 +29,9 @@ component extends="coldbox.system.Interceptor"{
      *
      */
     public void function preProcess( required any event, required struct interceptData, buffer, rc, prc ) {
-        if ( ! prc.oCurrentAuthor.getLoggedIn() ) {
+        var oCurrentAuthor = securityService.getAuthorSession();
+
+        if ( ! oCurrentAuthor.getLoggedIn() ) {
             return;
         }
 
@@ -34,7 +39,7 @@ component extends="coldbox.system.Interceptor"{
             return;
         }
 
-        if ( prc.oCurrentAuthor.getIs2FactorAuth() ) {
+        if ( oCurrentAuthor.getIs2FactorAuth() ) {
             return;
         }
 
