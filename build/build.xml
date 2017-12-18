@@ -401,11 +401,18 @@
  		<zip destfile="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip">
 			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />	
  		</zip>
+
+		<!-- Create Installer With Dependencies -->
+		<zip destfile="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" basedir="${dir.build}/war" />
+
+		<!-- Cleanup -->
  		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
  		
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" />
  	</target>
  	
  	<!-- Build Express Edition -->
