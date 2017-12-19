@@ -403,7 +403,11 @@
  		</zip>
 
 		<!-- Create Installer With Dependencies -->
-		<zip destfile="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" basedir="${dir.build}/war" />
+		<zip destfile="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" basedir="${dir.build}/war">
+			<patternset>
+		        <exclude name="WEB-INF/**"/>
+		    </patternset>
+		</zip>
 
 		<!-- Cleanup -->
  		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
