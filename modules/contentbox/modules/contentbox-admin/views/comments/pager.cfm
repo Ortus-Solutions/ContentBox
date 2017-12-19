@@ -40,8 +40,10 @@
 			<td>
 				<strong>#comment.getParentTitle()#</strong> 
 				<br/>
-				#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
-				<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
+				#left( comment.getDisplayContent(), prc.cbSettings.cb_comments_maxDisplayChars )#
+				<cfif len( comment.getDisplayContent() ) gt prc.cbSettings.cb_comments_maxDisplayChars>
+				....<strong>more</strong>
+				</cfif>
 			</td>
 			<td class="text-center">
 				#comment.getDisplayCreatedDate()#

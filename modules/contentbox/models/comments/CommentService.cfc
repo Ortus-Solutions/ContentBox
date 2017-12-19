@@ -351,7 +351,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Activate URL's from text
 	*/
 	private function activateURLs(required text){
-		return REReplaceNoCase(arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL" );
+		return REReplaceNoCase( arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL" );
 	}
 
 	/**
