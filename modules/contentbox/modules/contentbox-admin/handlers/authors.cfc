@@ -332,6 +332,16 @@ component extends="baseHandler"{
         flash.put( "authorID", rc.authorID );
         prc.oAuthor = authorService.get( id=rc.authorID );
 
+        if ( prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID() ) {
+            cbMessagebox.warn( "You cannot enroll another user in two-factor authentication." );
+            flash.keep();
+            setNextEvent(
+                event		= flash.get( "xehInvalidData", prc.xehAuthorEditor ),
+                queryString	= "authorID=#prc.oAuthor.getAuthorID()###twofactor"
+            );
+            return;
+        }
+
         // iterate rc keys that start with "preference."
         var allPreferences 	= {};
 		for( var key in rc ){

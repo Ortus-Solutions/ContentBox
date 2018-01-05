@@ -83,7 +83,7 @@
                         value = "Un-enroll",
                         class = "btn btn-danger"
                     )#
-                <cfelse>
+                <cfelseif prc.author.getAuthorId() EQ prc.oCurrentAuthor.getAuthorId()>
                     #html.button(
                         type = "submit",
                         value = "Enroll",
