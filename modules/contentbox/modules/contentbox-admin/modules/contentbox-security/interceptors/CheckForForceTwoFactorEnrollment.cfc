@@ -8,8 +8,17 @@
 component extends="coldbox.system.Interceptor"{
 
     property name="twoFactorService" inject="id:TwoFactorService@cb";
+    property name="securityService"  inject="id:securityService@cb";
 
     variables.allowedEvents = [
+        "contentbox-security:security.changeLang",
+        "contentbox-security:security.login",
+        "contentbox-security:security.doLogin",
+        "contentbox-security:security.doLogout",
+        "contentbox-security:security.lostPassword",
+        "contentbox-security:security.doLostPassword",
+        "contentbox-security:security.verifyReset",
+        "contentbox-security:security.doPasswordChange",
         "contentbox-admin:authors.forceTwoFactorEnrollment",
         "contentbox-admin:authors.enrollTwofactor",
         "contentbox-admin:authors.forceTwoFactorEnrollment",
@@ -26,6 +35,9 @@ component extends="coldbox.system.Interceptor"{
      *
      */
     public void function preProcess( required any event, required struct interceptData, buffer, rc, prc ) {
+        param prc.oCurrentAuthor = securityService.getAuthorSession();
+        param prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
+
         if ( ! event.privateValueExists( "oCurrentAuthor" ) ) {
             return;
         }
@@ -46,7 +58,7 @@ component extends="coldbox.system.Interceptor"{
             return;
         }
 
-        event.overrideEvent( "contentbox-admin:authors.forceTwoFactorEnrollment" );
+        setNextEvent( "#prc.cbAdminEntryPoint#.authors.forceTwoFactorEnrollment" );
     }
 
 }
