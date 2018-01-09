@@ -9,7 +9,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "1.0" );
 		setDescription( "A cool basic widget that shows some ContentBox meta links anywhere you like." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "info" );
 		return this;
 	}
@@ -37,7 +37,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		}
 		arrayAppend(links, {link=cb.linkRSS(), title="Entries RSS"} );
 		arrayAppend(links, {link=cb.linkRSS(comments=true), title="Comments RSS"} );
-		arrayAppend(links, {link="http://www.ortussolutions.com/products/contentbox", title="ContentBox"} );
+		arrayAppend(links, {link="https://www.ortussolutions.com/products/contentbox", title="ContentBox"} );
 
 		saveContent variable="rString"{
 			// title

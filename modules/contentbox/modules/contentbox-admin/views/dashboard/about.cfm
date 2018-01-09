@@ -6,8 +6,8 @@
     		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="margin10" title="Modular CMS"/>
 		    <h2><span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
 	        <blockquote class="clearfix">
-				<strong>ContentBox</strong> #$r( "dashboard.about.blockquote1.1@admin" )#<a href="http://www.ortussolutions.com">Ortus Solutions</a> #$r( "dashboard.about.blockquote1.2@admin" )# <a href="http://www.coldbox.org">ColdBox Platform</a> #$r( "dashboard.about.blockquote1.3@admin" )#
-				<small><a href="http://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
+				<strong>ContentBox</strong> #$r( "dashboard.about.blockquote1.1@admin" )#<a href="https://www.ortussolutions.com">Ortus Solutions</a> #$r( "dashboard.about.blockquote1.2@admin" )# <a href="http://www.coldbox.org">ColdBox Platform</a> #$r( "dashboard.about.blockquote1.3@admin" )#
+				<small><a href="https://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
 			</blockquote>
 		</div>
 
@@ -184,7 +184,7 @@
 				<ul>
 					<li><a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">#$r( "dashboard.about.help.sourceCode@admin" )#</a></li>
 					<li><a href="https://ortussolutions.atlassian.net/browse/CONTENTBOX" target="_blank">#$r( "dashboard.about.help.submitBugs@admin" )#</a></li>
-					<li><a href="http://www.ortussolutions.com/services" target="_blank">#$r( "dashboard.about.help.services@admin" )#</a></li>
+					<li><a href="https://www.ortussolutions.com/services" target="_blank">#$r( "dashboard.about.help.services@admin" )#</a></li>
 				</ul>
 		    </div>
 		</div>

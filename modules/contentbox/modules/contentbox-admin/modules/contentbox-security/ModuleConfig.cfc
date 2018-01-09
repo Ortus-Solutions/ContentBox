@@ -10,7 +10,7 @@ component {
 	// Module Properties
 	this.title 				= "ContentBox Security";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox Security Module";
 	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;

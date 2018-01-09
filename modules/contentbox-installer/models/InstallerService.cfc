@@ -385,9 +385,9 @@ component accessors="true"{
 		contentStore.setCreator( author );
 		contentStore.addNewContentVersion(
 			content 	= '<p style="text-align: center;">
-	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="/index.cfm/__media/ContentBox_300.png" /></a></p>
+	<a href="https://www.ortussolutions.com/products/contentbox"><img alt="" src="/index.cfm/__media/ContentBox_300.png" /></a></p>
 <p style="text-align: center;">
-	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
+	Created by <a href="https://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
 			changelog 	= "First creation",
 			author 		= author
 		);

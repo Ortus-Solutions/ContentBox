@@ -213,7 +213,7 @@ component accessors="true" threadSafe singleton{
 			.addHeaderSubMenu( 
 				name 	= "support", 
 				label 	= '<i class="fa fa-ambulance"></i> Professional Support', 
-				href 	= "http://www.ortussolutions.com/services/support", 
+				href 	= "https://www.ortussolutions.com/services/support", 
 				target 	= "_blank" 
 			)
 			.addHeaderSubMenu( 

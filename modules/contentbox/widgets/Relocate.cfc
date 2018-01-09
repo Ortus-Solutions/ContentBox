@@ -13,7 +13,7 @@ component extends="contentbox.models.ui.BaseWidget"{
 		setVersion( "1.0" );
 		setDescription( "Issues 302 relocations once it is executed on any content page." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "Utilities" );
 		setIcon( "repeat" );
 		return this;

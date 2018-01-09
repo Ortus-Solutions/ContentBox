@@ -10,7 +10,7 @@ component{
 	// Module Properties
 	this.title 				= "File Browser";
 	this.author 			= "Ortus Solutions";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "A file-directory browser and selector";
 	this.version			= "2.0.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa

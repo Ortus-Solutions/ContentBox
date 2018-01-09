@@ -10,7 +10,7 @@ component {
 	// Module Properties
 	this.title 				= "ContentBox Core";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "This is the core module used to power the admin, RESTful and UI modules";
 	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;

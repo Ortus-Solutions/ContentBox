@@ -86,7 +86,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		"cb_dashboard_recentPages" 				= "5",
 		"cb_dashboard_recentComments" 			= "5",
 		"cb_dashboard_recentcontentstore" 		= "5",
-		"cb_dashboard_newsfeed" 				= "http://www.ortussolutions.com/blog/rss",
+		"cb_dashboard_newsfeed" 				= "https://www.ortussolutions.com/blog/rss",
 		"cb_dashboard_newsfeed_count" 			= "5",
 		"cb_dashboard_welcome_title" 			= "Dashboard",
 		"cb_dashboard_welcome_body" 			= "",
