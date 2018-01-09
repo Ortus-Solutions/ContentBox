@@ -34,9 +34,10 @@
                 <div class="alert alert-info">
                     <label class="control-label" class="radio inline">
                         #html.radioButton(
-                            name="cb_media_provider",
-                            checked=(prc.cbSettings.cb_media_provider eq thisProvider.name),
-                            value=thisProvider.name
+							name    = "cb_media_provider",
+							id 		= "cb_media_provider_#thisProvider.name#",
+                            checked = ( prc.cbSettings.cb_media_provider eq thisProvider.name ),
+                            value   = thisProvider.name
                         )#
                         <strong>#thisProvider.displayName#</strong>
                     </label><br/>
