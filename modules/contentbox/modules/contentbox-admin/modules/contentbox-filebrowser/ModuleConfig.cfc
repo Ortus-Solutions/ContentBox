@@ -28,7 +28,7 @@ component{
 			// The title name for usage inline and the layout
 			title = "ContentBox FileBrowser v#this.version#",
 			// the directory root path to start the visualizer on, absolute path, set it to contentbox default location
-			directoryRoot = expandPath( "/contentbox/content" ),
+			directoryRoot = expandPath( "/contentbox-custom/content" ),
 			// Secure the visualization or creation of stuff above the directory root or not
 			traversalSecurity = true,
 			// Show files on the visualizer or not
