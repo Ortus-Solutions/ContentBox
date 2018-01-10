@@ -172,7 +172,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		"cb_html_postPageDisplay" 				= "",
 
 		// Media Manager
-		"cb_media_directoryRoot" 				= "/contentbox-custom/content",
+		"cb_media_directoryRoot" 				= "/contentbox-custom/_content",
 		"cb_media_createFolders" 				= "true",
 		"cb_media_allowDelete" 					= "true",
 		"cb_media_allowDownloads" 				= "true",

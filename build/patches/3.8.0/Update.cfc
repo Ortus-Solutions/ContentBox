@@ -84,6 +84,20 @@ component {
 				}
 			}
 
+			/****************************** GENERATE CUSTOM MODULE ******************************/
+
+			customModulesPath = variables.appPath & "modules_app/contentbox-custom";
+			if( !directoryExists( customModulesPath ) ){
+				directoryCreate( customModulesPath );
+				directoryCreate( customModulesPath & "/_content" );
+				directoryCreate( customModulesPath & "/_modules" );
+				directoryCreate( customModulesPath & "/_themes" );
+				fileCopy(
+					variables.thisPath & "ModuleConfig.cfc",
+					customModulesPath & "ModuleConfig.cfc"
+				)
+			}
+
 			arguments.log.append( "Finalized #variables.version# preInstallation patching" );
 		} catch( Any e ) {
 			ORMClearSession();

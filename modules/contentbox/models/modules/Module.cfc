@@ -70,6 +70,11 @@ component 	persistent="true"
 				default="false" 
 				index="idx_activeModule";
 
+	property 	name="moduleType"
+				default="core"
+				dbdefault="'core'"
+				index="idx_moduleType";
+
 	/* *********************************************************************
 	**							PK + CONSTRAINTS									
 	********************************************************************* */
@@ -94,8 +99,11 @@ component 	persistent="true"
 	* Constructor
 	*/
 	function init(){
-		variables.isActive = false;
+		variables.isActive 		= false;
+		variables.moduleType 	= "core";
+		
 		super.init();
+
 		return this;
 	}
 
@@ -104,7 +112,7 @@ component 	persistent="true"
 	* @excludes Property excludes
 	*/
 	function getMemento( excludes="" ){
-		var pList 	= listToArray( "name,title,version,entryPoint,author,webURL,forgeBoxSlug,description,isActive" );
+		var pList 	= listToArray( "name,title,version,entryPoint,author,webURL,forgeBoxSlug,description,isActive,moduleType" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 		
 		return result;

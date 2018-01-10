@@ -50,7 +50,7 @@ component extends="baseHandler"{
 		rc.returnURL 	= urldecode( rc.returnURL );
 		switch ( rc.installDir ) {
 			case "modules":
-				rc.installDir = getInstance( "moduleService@cb" ).getModulesPath();
+				rc.installDir = getInstance( "moduleService@cb" ).getCustomModulesPath();
 				break;
 			case "themes":
 				rc.installDir = getInstance( "themeService@cb" ).getThemesPath();

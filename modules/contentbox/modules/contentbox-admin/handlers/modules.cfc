@@ -35,7 +35,7 @@ component extends="baseHandler"{
 			.paramValue( "moduleAction", "index" );
 
 		// get module by moduleEntryPoint
-		var module = moduleService.findWhere( {entryPoint = rc.moduleEntryPoint} );
+		var module = moduleService.findWhere( { entryPoint = rc.moduleEntryPoint } );
 		if( isNull( module ) ){
 			cbMessagebox.warn( "No modules where found with the following entryPoint: #rc.moduleEntryPoint#. Please make sure your module has an entry point." );
 			return setNextEvent( prc.xehModules );
