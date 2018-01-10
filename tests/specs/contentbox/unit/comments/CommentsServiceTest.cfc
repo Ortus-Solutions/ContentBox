@@ -26,11 +26,19 @@ component extends="tests.resources.BaseTest"{
 		describe( "Comment Service", function(){
 
 			aroundEach(function( spec, suite ){
-				// Make sure we always rollback
-				transaction{
-					arguments.spec.body();
+				try{
+					// Make sure we always rollback
+					transaction{
+						arguments.spec.body();
+					}
+				} 
+				catch( any e ){
+					rethrow;
+				}
+				finally{
 					transactionRollback();
 				}
+				
 			});
 
 			beforeEach(function( currentSpec ){
