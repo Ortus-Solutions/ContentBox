@@ -29,12 +29,6 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		structdelete( application, "cbController" );
 	}
 
-	function testPath(){
-		path = model.getPatchesLocation();
-		assertEquals( expandPath( "/contentbox/updates" ), path );
-		debug(path);
-	}
-
 	function testBuildUpdater(){
 		 var source = expandPath( "/tests/resources/patches/Update.cfc" );
 		 var version = "1-0-0-0-1";
