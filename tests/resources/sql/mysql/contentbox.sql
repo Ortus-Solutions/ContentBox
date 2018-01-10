@@ -1345,7 +1345,7 @@ VALUES
   (87,'cb_dashboard_newsfeed','http://www.ortussolutions.com/blog/rss',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (88,'cb_html_afterContent','',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (89,'cb_rss_maxComments','10',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
-  (90,'cb_media_directoryRoot','/contentbox/content',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
+  (90,'cb_media_directoryRoot','/contentbox-custom/_content',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (91,'cb_media_html5uploads_maxFiles','25',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (92,'cb_admin_quicksearch_max','10',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),
   (93,'cb_media_allowDelete','true',b'0','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0'),

@@ -2473,7 +2473,7 @@ GO
 INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'89', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_rss_maxComments', N'10', N'0')
 GO
 
-INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'90', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_media_directoryRoot', N'/contentbox/content', N'0')
+INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'90', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_media_directoryRoot', N'/contentbox-custom/_content', N'0')
 GO
 
 INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'91', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_media_html5uploads_maxFiles', N'25', N'0')
