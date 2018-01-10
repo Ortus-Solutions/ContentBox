@@ -64,110 +64,113 @@ component accessors=true {
     * On DI Complete
     */
     function onDIComplete(){
-        var contentBoxPath = moduleSettings[ "contentbox" ].path;
+        var contentBoxPath  = moduleSettings[ "contentbox" ].path;
+        var customPath      = moduleSettings[ "contentbox-custom" ].path;
+
         dataServiceMappings = {
             "authors" = { 
-                fileName="authors",
-                service="authorService",
-                displayName="Authors",
-                priority=3 
+                fileName    = "authors",
+                service     = "authorService",
+                displayName = "Authors",
+                priority    = 3 
             },
             "categories" = { 
-                fileName="categories",
-                service="categoryService",
-                displayName="Categories",
-                priority=1 
+                fileName    = "categories",
+                service     = "categoryService",
+                displayName = "Categories",
+                priority    = 1 
             },
             "contentstore" = { 
-                fileName="contentstore",
-                service="contentStoreService",
-                displayName="Content Store",
-                priority=4
+                fileName    = "contentstore",
+                service     = "contentStoreService",
+                displayName = "Content Store",
+                priority    = 4
             },
             "menus" = { 
-                fileName="menus",
-                service="menuService",
-                displayName="Menus",
-                priority=5
+                fileName    = "menus",
+                service     = "menuService",
+                displayName = "Menus",
+                priority    = 5
             },
             "permissions" = { 
-                fileName="permissions",
-                service="permissionService",
-                displayName="Permissions",
-                priority=1 
+                fileName    = "permissions",
+                service     = "permissionService",
+                displayName = "Permissions",
+                priority    = 1 
             },
             "roles" = { 
-                fileName="roles",
-                service="roleService",
-                displayName="Roles",
-                priority=2 
+                fileName    = "roles",
+                service     = "roleService",
+                displayName = "Roles",
+                priority    = 2 
             },
             "securityrules" = {
-                fileName="securityrules",
-                service="securityRuleService",
-                displayName="Security Rules",
-                priority=1 
+                fileName    = "securityrules",
+                service     = "securityRuleService",
+                displayName = "Security Rules",
+                priority    = 1 
             },
             "settings" = { 
-                fileName="settings",
-                service="settingService",
-                displayName="Settings",
-                priority=1 
+                fileName    = "settings",
+                service     = "settingService",
+                displayName = "Settings",
+                priority    = 1 
             },
             "entries" = { 
-                fileName="entries",
-                service="entryService",
-                displayName="Entries",
-                priority=4 
+                fileName    = "entries",
+                service     = "entryService",
+                displayName = "Entries",
+                priority    = 4 
             },
             "pages" = { 
-                fileName="pages",
-                service="pageService",
-                displayName="Pages",
-                priority=4 
+                fileName    = "pages",
+                service     = "pageService",
+                displayName = "Pages",
+                priority    = 4 
             }
         };
+
         filePathMappings = {
             "emailtemplates" = { 
-                fileName="emailtemplates",
-                displayName="Email Templates",
-                directory = contentBoxPath & "/email_templates",
-                type="template",
-                extension="",
-                priority=1
+                fileName    = "emailtemplates",
+                displayName = "Email Templates",
+                directory   =  contentBoxPath & "/email_templates",
+                type        = "template",
+                extension   = "",
+                priority    = 1
             },
             "themes" = {
-                fileName="themes",
-                displayName="Themes",
-                directory = contentBoxPath & "/themes",
-                type="folder",
-                extension="",
-                priority=1
+                fileName    = "themes",
+                displayName = "Themes",
+                directory   =  contentBoxPath & "/themes",
+                type        = "folder",
+                extension   = "",
+                priority    = 1
             },
             "medialibrary" = {
-                fileName="medialibrary",
-                displayName="Media Library",
-                directory = expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
-                includeFiles = "*",
-                type="folder",
-                extension="",
-                priority=1
+                fileName      = "medialibrary",
+                displayName   = "Media Library",
+                directory     =  expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
+                includeFiles  =  "*",
+                type          = "folder",
+                extension     = "",
+                priority      = 1
             },
             "modules" = {
-                fileName="modules",
-                displayName="Modules",
-                directory = contentBoxPath & "/modules_user",
-                type="folder",
-                extension="",
-                priority=1
+                fileName    = "modules",
+                displayName = "Modules",
+                directory   =  customPath & "/_modules",
+                type        = "folder",
+                extension   = "",
+                priority    = 1
             },
             "widgets" = {
-                fileName="widgets",
-                displayName="Widgets",
-                directory = contentBoxPath & "/widgets",
-                type="component",
-                extension=".cfc",
-                priority=1
+                fileName    = "widgets",
+                displayName = "Widgets",
+                directory   =  contentBoxPath & "/widgets",
+                type        = "component",
+                extension   = ".cfc",
+                priority    = 1
             }
         };
     }
