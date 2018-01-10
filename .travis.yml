@@ -20,7 +20,7 @@ git:
 env:
   matrix:
     - ENGINE=lucee@4.5
-    #- ENGINE=lucee@5 Activate once patch is released, works on snapshot only right now.
+    - ENGINE=lucee@5
     - ENGINE=adobe@11
     - ENGINE=adobe@2016
   
@@ -59,7 +59,7 @@ before_script:
 script:
   # Run tests
   - box package set testbox.runner="http://localhost:8589/tests/runner.cfm"
-  - box testbox run
+  - box testbox run verbose=true
   # Execute build via ANT
   - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
   # Get ContentBox Version for rest of build process
