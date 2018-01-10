@@ -817,6 +817,7 @@ CREATE TABLE `cb_module` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
+  `moduleType` varchar(255) DEFAULT 'core',
   PRIMARY KEY (`moduleID`),
   KEY `idx_active` (`isActive`),
   KEY `idx_entryPoint` (`entryPoint`),
@@ -824,7 +825,8 @@ CREATE TABLE `cb_module` (
   KEY `idx_activeModule` (`isActive`),
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
-  KEY `idx_deleted` (`isDeleted`)
+  KEY `idx_deleted` (`isDeleted`),
+  KEY `idx_moduleType` (`moduleType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 LOCK TABLES `cb_module` WRITE;
