@@ -116,8 +116,9 @@ component accessors="true" threadSafe{
 
 		// if there are files, then remove, else continue
 		if( len( removalText ) ){
-			var files = listToArray( removalText, chr(10) );
+			var files = listToArray( removalText, chr( 10 ) );
 			for( var thisFile in files ){
+				thisFile = trim( thisFile );
 				if( fileExists( expandPath( "/#thisFile#" ) ) ){
 					fileDelete( expandPath( "/#thisFile#" ) );
 					arguments.log.append( "Removed: #thisFile#<br/>" );
