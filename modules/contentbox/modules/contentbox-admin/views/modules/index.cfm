@@ -41,16 +41,17 @@
 		                <!-- Tab ` -->
 		                <div id="managePane" class="tab-pane active">
 							<!--- CategoryForm --->
-							#html.startForm(name="moduleForm" )#
-								#html.hiddenField(name="moduleName" )#
+							#html.startForm( name="moduleForm" )#
+								#html.hiddenField( name="moduleName" )#
+								
 								<!--- Content Bar --->
 								<div class="well well-sm">
 									<div class="form-group form-inline no-margin">
 										#html.textField(
-											name="moduleFilter",
-											size="30",
-											class="form-control",
-											placeholder="Quick Search"
+											name        = "moduleFilter",
+											size        = "30",
+											class       = "form-control",
+											placeholder = "Quick Search"
 										)#
 									</div>
 								</div>
@@ -60,6 +61,7 @@
 									<thead>
 										<tr>
 											<th>Module</th>
+											<th>Type</th>
 											<th>Description</th>
 											<th width="100" class="text-center {sorter:false}">Actions</th>
 										</tr>
@@ -72,12 +74,18 @@
 												Version #module.getVersion()#
 												By <a href="#module.getWebURL()#" target="_blank" title="#module.getWebURL()#">#module.getAuthor()#</a>
 											</td>
+
+											<td>
+												<span class="label label-#( module.getModuleType() eq "core" ? "info" : "sucess" )#">#module.getModuleType()#</span>
+											</td>
+
 											<td>
 												#module.getDescription()#<br/>
 												<cfif len( module.getForgeBoxSlug() )>
 												ForgeBox URL: <a href="#prc.forgeBoxEntryURL & "/" & module.getForgeBoxSlug()#" target="_blank">#module.getForgeBoxSlug()#</a>
 												</cfif>
 											</td>
+
 											<td class="text-center">
 											<cfif prc.oCurrentAuthor.checkPermission( "MODULES_ADMIN" )>
 												<div class="btn-group btn-group-sm">
