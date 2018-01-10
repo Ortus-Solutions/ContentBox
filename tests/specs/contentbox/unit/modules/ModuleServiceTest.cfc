@@ -57,7 +57,7 @@ component extends="tests.resources.BaseTest"{
 
 			it( "can find modules", function(){
 				var r = model.findModules();
-				expect(	r.count ).toBeGT( 1 );
+				expect(	r.count ).toBeGTE( 1 );
 			});
 
 			
