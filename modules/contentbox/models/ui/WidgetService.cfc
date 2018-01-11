@@ -17,9 +17,14 @@ component accessors="true" singleton threadSafe{
 	property name="log"					inject="logbox:logger:{this}";
 
 	/**
-	* The widgets location path
+	* The core widgets location path
 	*/
-	property name="widgetsPath" 		type="string";
+	property name="coreWidgetsPath" 		type="string";
+
+	/**
+	 * The custom widgets location path
+	 */
+	property name="customWidgetsPath" 		type="string";
 
 	/**
 	* Constructor
@@ -33,7 +38,8 @@ component accessors="true" singleton threadSafe{
 	*/
 	function onDIComplete(){
 		// Verify widgets path location
-		variables.widgetsPath = moduleSettings[ "contentbox" ].path & "/widgets";
+		variables.coreWidgetsPath 	= variables.moduleSettings[ "contentbox" ].path & "/widgets";
+		variables.customWidgetsPath = variables.moduleSettings[ "contentbox-custom" ].path & "/_widgets";
 	}
 
 	/**
@@ -50,53 +56,61 @@ component accessors="true" singleton threadSafe{
 	 */
 	query function getWidgetCategories() {
 		var widgets = getWidgets();
-		var q = new Query();
-			q.setDbType( 'query' );
-			q.setAttributes( QoQ=widgets );
-			q.setSQL( 'select distinct category from QoQ order by category ASC' );
+		var q = new Query( 
+			dbType 	= "query",
+			sql 	= "select distinct category from QoQ order by category ASC"
+		);
 		return q.execute().getResult();
 	}
 
 	/**
-	* Get installed widgets
+	 * Get a query listing of widgets in a path
+	 *
+	 * @path The path to check
+	 */
+	private query function getWidgetsFromPath( required path ){
+		return directoryList( arguments.path, false, "query", "*.cfc", "name asc" );
+	}
+
+	/**
+	* Get all installed widgets in the core and custom location
 	*/
 	query function getWidgets(){
 		// get core widgets
-		var widgets = directoryList( widgetsPath, false, "query", "*.cfc", "name asc" );
+		var qAllWidgets 	= getWidgetsFromPath( variables.coreWidgetsPath );
 		// get module widgets
-		var moduleWidgets = moduleService.getModuleWidgetCache();
+		var moduleWidgets 	= moduleService.getModuleWidgetCache();
 		// get theme widgets
-		var themeWidgets = themeService.getWidgetCache();
+		var themeWidgets 	= themeService.getWidgetCache();
 
 		// Add custom columns
-		QueryAddColumn( widgets, "filename", [] );
-		QueryAddColumn( widgets, "plugin", [] );
-		QueryAddColumn( widgets, "widgettype", [] );
-		QueryAddColumn( widgets, "module", [] );
-		QueryAddColumn( widgets, "category", [] );
-		QueryAddColumn( widgets, "icon", [] );
-		QueryAddColumn( widgets, "debug", [] );
-		// cleanup and more stuff
-
+		QueryAddColumn( qAllWidgets, "filename",   [] );
+		QueryAddColumn( qAllWidgets, "plugin",     [] );
+		QueryAddColumn( qAllWidgets, "widgettype", [] );
+		QueryAddColumn( qAllWidgets, "module",     [] );
+		QueryAddColumn( qAllWidgets, "category",   [] );
+		QueryAddColumn( qAllWidgets, "icon",       [] );
+		QueryAddColumn( qAllWidgets, "debug",      [] );
+		
 		// add core widgets
-		for( var x=1; x lte widgets.recordCount; x++ ){
+		for( var x=1; x lte qAllWidgets.recordCount; x++ ){
 			// filename
-			widgets.fileName[ x ] = widgets.name[ x ];
+			qAllWidgets.fileName[ x ] = qAllWidgets.name[ x ];
 			// rip extension name only
-			widgets.name[ x ] = ripExtension( widgets.name[ x ] );
-			// try to create the plugin
-			widgets.plugin[ x ] = "";
+			qAllWidgets.name[ x ] = ripExtension( qAllWidgets.name[ x ] );
 			// set the type
-			widgets.widgettype[ x ] = "Core";
+			qAllWidgets.widgettype[ x ] = "Core";
 			try{
-				//widgets.plugin[ x ] = getWidget( widgets.name[ x ], widgets.widgettype[ x ] );
-				widgets.category[ x ] = getWidgetCategory( widgets.name[ x ], widgets.widgettype[ x ] );
-				widgets.icon[ x ] = getWidgetIcon( widgets.name[ x ], widgets.widgettype[ x ] );
+				qAllWidgets.category[ x ] = getWidgetCategory( qAllWidgets.name[ x ], qAllWidgets.widgettype[ x ] );
+				qAllWidgets.icon[ x ] = getWidgetIcon( qAllWidgets.name[ x ], qAllWidgets.widgettype[ x ] );
 			}
 			catch(any e){
-				log.error( "Error creating widget plugin: #widgets.name[ x ]#",e);
+				log.error( "Error creating widget plugin: #qAllWidgets.name[ x ]#",e);
 			}
 		}
+
+		writeDump( var=qAllWidgets );abort;
+
 		// add module widgets
 		for( var widget in moduleWidgets ) {
 			var widgetName = listGetAt( widget, 1, "@" );
@@ -144,37 +158,39 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Get a widget by name
-	* @name
-	* @type This can be one of the following: core, theme, module
-	*/
+	 * Get a widget by name
+	 * @name The name of the widget
+	 * @type This can be one of the following: core, theme, module
+	 */
 	any function getWidget( required name, required string type="core" ){
 		var path = "";
 		switch( type ) {
-			case "theme":
+			case "theme" :
 				var path = themeService.getThemeWidgetPath( arguments.name );
 				break;
-			case "module":
+			case "module" :
 				var path = moduleService.getModuleWidgetPath( arguments.name );
 				break;
-			case "core":
+			case "core" : case "custom" :
 				var path = "contentbox.widgets." & arguments.name;
+				
 				break;
 		}
+
 		if( len( path ) ) {
 			// Init Arguments added for backwards compat
 			return wirebox.getInstance( 
 				name 			= path, 
-				initArguments	= { "controller" = variables.coldbox } 
+				initArguments	= { "controller" = variables.coldbox }
 			);
 		}
 	}
 
 	/**
-	* Get a widget icon representation
-	* @name The name of the widget
-	* @type This can be one of the following: core, theme, module
-	*/
+	 * Get a widget icon representation
+	 * @name The name of the widget
+	 * @type This can be one of the following: core, theme, module
+	 */
 	string function getWidgetIcon( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var icon = widget.getIcon();
@@ -195,10 +211,10 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Get a widget category
-	* @name The name of the widget
-	* @type This can be one of the following: core, theme, module
-	*/
+	 * Get a widget category
+	 * @name The name of the widget
+	 * @type This can be one of the following: core, theme, module
+	 */
 	string function getWidgetCategory( required name, required string type="core" ) {
 		var widget = getWidget( argumentCollection=arguments );
 		var category = widget.getCategory();
@@ -220,36 +236,53 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Gets widget file path by name and type
-	 * @name {String}
-	 * @type {String}
+	 * 
+	 * @name The name of the widget
+	 * @type The type of widget
 	 */
 	function getWidgetFilePath( required string name, required string type ) {
 		var widgetPath = "";
 		// switch on widget type (core, theme, module )
 		switch( type ) {
-			case "theme":
-				var theme = themeService.getActiveTheme();
-				widgetPath = "#theme.directory#/#theme.name#/widgets/#replaceNoCase( arguments.name, '~', '', 'one' )#.cfc";
+			case "theme" :
+				var theme 	= themeService.getActiveTheme();
+				widgetPath 	= "#theme.directory#/#theme.name#/widgets/#replaceNoCase( arguments.name, '~', '', 'one' )#.cfc";
 				break;
-			case "module":
+			case "module" :
 				var widgetname = listGetAt( arguments.name, 1, '@' );
 				var modulename = listGetAt( arguments.name, 2, '@' );
 				widgetPath = moduleSettings[ "contentbox" ].path & "/modules/#modulename#/widgets/#widgetname#.cfc";
 				break;
-			case "core":
-				widgetPath = getWidgetsPath() & "/#arguments.name#.cfc";
+			case "core" : case "custom" :
+				// Check custom path first
+				if( fileExists( variables.customWidgetsPath & "/#arguments.name#.cfc " ) ){
+					widgetPath = variables.customWidgetsPath & "/#arguments.name#.cfc";	
+				} else {
+					widgetPath = variables.coreWidgetsPath & "/#arguments.name#.cfc";
+				}
 				break;
 		}
 		return widgetPath;
 	}
 
 	/**
-	* Remove widget
-	* @widgetFile The location of the widget to remove
-	*/
+	 * Remove widget
+	 * @widgetFile The location of the widget to remove
+	 */
 	boolean function removeWidget( required widgetFile ){
-		var wPath = getWidgetsPath() & "/" & arguments.widgetFile & ".cfc";
-		if( fileExists( wPath ) ){ fileDelete( wPath ); return true; }
+		var wPath 		= variables.coreWidgestPath & "/" & arguments.widgetFile & ".cfc";
+		var wCustomPath = variables.customWidgetsPath & "/" & arguments.widgetFile & ".cfc";
+		
+		if( fileExists( wPath ) ){ 
+			fileDelete( wPath ); 
+			return true; 
+		}
+
+		if( fileExists( wCustomPath ) ){ 
+			fileDelete( wCustomPath ); 
+			return true; 
+		}
+
 		return false;
 	}
 
@@ -260,8 +293,9 @@ component accessors="true" singleton threadSafe{
 	* @return The CFFile structure from the upload results
 	*/
 	struct function uploadWidget( required fileField ){
-		var destination = getWidgetsPath();
-		var results = fileUpload( destination, arguments.fileField, "", "overwrite" );
+		var destination 	= variables.customWidgetsPath;
+		var results 		= fileUpload( destination, arguments.fileField, "", "overwrite" );
+		
 		if( results.clientfileext neq "cfc" ){
 			fileDelete( results.serverDirectory & "/" & results.serverfile );
 			throw( message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType" );
@@ -270,21 +304,21 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Rip Extensions from file name
-	* @fileName The target to rip
-	*/
+	 * Rip Extensions from file name
+	 * @fileName The target to rip
+	 */
 	function ripExtension( required filename ){
 		return reReplace( arguments.filename, "\.[^.]*$", "" );
 	}
 
 	/**
-	* Get widget rendering arguments
-	* @udf The target UDF to render out arguments for
-	* @widget The widget name
-	* @type The widget type
-	* 
-	* @return The argument metadata structure
-	*/
+	 * Get widget rendering arguments
+	 * @udf The target UDF to render out arguments for
+	 * @widget The widget name
+	 * @type The widget type
+	 * 
+	 * @return The argument metadata structure
+	 */
 	function getWidgetRenderArgs( udf, widget, type ){
 		// get widget
 		var p = getWidget( name=arguments.widget, type=arguments.type );

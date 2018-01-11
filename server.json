@@ -1,28 +1,26 @@
 {
-    "force":true,
-    "app":{
-        "serverHomeDirectory":".engines/lucee4"
+    "force": true,
+    "app": {
+        "serverHomeDirectory": ".engines/lucee4"
     },
-    "name":"cbcms-lucee",
-    "web":{
-        "rewrites":{
-            "enable":"true"
+    "name": "cbcms-lucee",
+    "web": {
+        "rewrites": {
+            "enable": "true"
         },
-        "http":{
-            "port":"8589"
+        "http": {
+            "port": "8589"
         }
     },
-    "JVM":{
-        "heapSize":"768"
+    "JVM": {
+        "heapSize": "768"
     },
-    "trayicon":"modules/contentbox/content/ContentBox_300.png",
-    "trayOptions":[
-        {
-            "label":"Open ContentBox Admin",
-            "action":"openbrowser",
-            "url":"http://\\${runwar.host}:\\${runwar.port}/cbadmin",
-            "disabled":false,
-            "image":"modules/contentbox/content/ContentBox-Circle_32.png"
-        }
-    ]
+    "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
+    "trayOptions": [{
+        "label": "Open ContentBox Admin",
+        "action": "openbrowser",
+        "url": "http://\\${runwar.host}:\\${runwar.port}/cbadmin",
+        "disabled": false,
+        "image": "modules_app/contentbox-custom/_content/ContentBox-Circle_32.png"
+    }]
 }
