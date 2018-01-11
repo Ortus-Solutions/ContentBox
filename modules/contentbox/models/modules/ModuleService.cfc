@@ -130,16 +130,22 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 * Find modules in ContentBox using the active criteria or `any`
 	 * 
 	 * @isActive The active criteria, true, false or any for all modules
+	 * @moduleType The module type criteria
 	 * 
 	 * @return struct:{ count:numeric, modules:array of objects }
 	 */
-	struct function findModules( isActive="any" ){
+	struct function findModules( isActive="any", moduleType ){
 		var results 	= {};
 		var criteria 	= newCriteria();
 
 		// isApproved filter
 		if( !isNull( arguments.isActive ) AND arguments.isActive NEQ "any" ){
 			criteria.eq( "isActive", javaCast( "Boolean", arguments.isActive ) );
+		}
+
+		// moduleType filter
+		if( !isNull( arguments.moduleType ) ){
+			criteria.eq( "moduleType", arguments.moduleType );
 		}
 
 		// run criteria query and projections count
@@ -150,17 +156,18 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 	
 	/**
-	 * gets path for requested widget from modules' widget cache
+	 * Shortcut to get the invocation path for requested widget from modules' widget cache
 	 * 
 	 * @widgetName {String}
 	 * 
-	 * @return The path or empty if not found
+	 * @return The invocation path or empty if not found
 	 */
-	string function getModuleWidgetPath( required string widgetName ) {
+	string function getModuleWidgetInvocationPath( required string widgetName ) {
 		var path = "";
-		// if widget name is in module widget cache, return its path
+
+		// if widget name is in module widget cache, return its invocation path
 		if( structKeyExists( variables.moduleWidgetCache, arguments.widgetName ) ) {
-			path = variables.moduleWidgetCache[ arguments.widgetName ];
+			path = variables.moduleWidgetCache[ arguments.widgetName ].invocationPath;
 		} else {
 			log.error( "Could not find #arguments.widgetname# widget in the module." );
 		}
@@ -176,7 +183,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	Module function registerNewModule( required name, required type ){
 		var thisPath 			= variables[ arguments.type & "ModulesPath" ];
 		var thisInvocationPath 	= variables[ arguments.type & "ModulesInvocationPath" ];
-		
 
 		if( fileExists( thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
 			
@@ -486,10 +492,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     					// set widget properties in cache
     					var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
     					var widget = {
-    						name = widgetName,
-    						path = moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#"
+    						name 			= widgetName,
+							invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
+							path 			= directory.directory[ i ] & "/" & directory.name[ i ],
+							module 			= module.getName()
     					};
-    					cache[ widgetName & "@" & module.getName() ] = widget.path;
+    					cache[ widgetName & "@" & module.getName() ] = widget;
     				}
     				
     			}

@@ -92,6 +92,7 @@ component {
 				directoryCreate( customModulesPath & "/_content" );
 				directoryCreate( customModulesPath & "/_modules" );
 				directoryCreate( customModulesPath & "/_themes" );
+				directoryCreate( customModulesPath & "/_widgets" );
 				fileCopy(
 					variables.thisPath & "ModuleConfig.cfc",
 					customModulesPath & "ModuleConfig.cfc"

@@ -42,9 +42,13 @@ component extends="baseHandler"{
 				prc.cbFileBrowserSettings.title = "Updates Library";
 				prc.cbFileBrowserSettings.directoryRoot = getModel( "UpdateService@cb" ).getPatchesLocation(); break;
 			}
-			case "widgets" : {
-				prc.cbFileBrowserSettings.title = "Widgets Library";
+			case "coreWidgets" : {
+				prc.cbFileBrowserSettings.title = "Core Widgets Library";
 				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getWidgetsPath(); break;
+			}
+			case "customWidgets" : {
+				prc.cbFileBrowserSettings.title = "Custom Widgets Library";
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCustomWidgetsPath(); break;
 			}
 		}
 		// options
@@ -53,7 +57,8 @@ component extends="baseHandler"{
 			{ name="<i class='fa fa-bolt'></i> Core Modules", 	value="CoreModules"	},
 			{ name="<i class='fa fa-bolt'></i> Custom Modules", value="CustomModules"	},
 			{ name="<i class='fa fa-download'></i> Updates", 	value="Updates"	},
-			{ name="<i class='fa fa-magic'></i> Widgets", 		value="Widgets	"}
+			{ name="<i class='fa fa-magic'></i> Core Widgets", 		value="CoreWidgets"},
+			{ name="<i class='fa fa-magic'></i> Custom Widgets", 		value="CustomWidgets"}
 		];
 
 		// build argument list for widget

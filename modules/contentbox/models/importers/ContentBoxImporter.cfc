@@ -90,7 +90,7 @@ component accessors=true {
                 "Themes" 			= contentBoxPath & "/themes",
                 "Media Library" 	= expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
                 "Modules" 			= customPath & "/_modules",
-                "Widgets" 			= contentBoxPath & "/widgets"
+                "Widgets" 			= customPath & "/_widgets"
             };
         } catch( any e ) {
             log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );

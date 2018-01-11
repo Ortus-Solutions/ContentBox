@@ -132,7 +132,7 @@ component extends="baseHandler"{
 		
 		// tab
 		prc.tabTools_export = true;
-		prc.modules 		= moduleService.findModules().modules;
+		prc.modules 		= moduleService.findModules( moduleType = "custom" ).modules;
 		prc.themes 			= themeService.getThemes();
 		prc.widgets 		= widgetService.getWidgets();
 		prc.widgetService 	= widgetService;

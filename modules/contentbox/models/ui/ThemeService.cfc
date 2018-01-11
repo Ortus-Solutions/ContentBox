@@ -110,16 +110,16 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	 * Returns path for the requested widget from themes service's layout cache
+	 * Returns the invocation path for the requested widget from themes service's layout cache
+	 * 
 	 * @widgetName The name of the widget
-	 * return String
 	 */
-	string function getThemeWidgetPath( required string widgetName ) {
+	string function getThemeWidgetInvocationPath( required string widgetName ) {
 		var path 		= "";
 		var parsedName 	=  replaceNoCase( arguments.widgetName, "~", "", "one" );
 		// if requested widget exists in the cache, return the path
 		if( structKeyExists( variables.widgetCache, parsedName ) ) {
-			path = variables.widgetCache[ parsedName ];
+			path = variables.widgetCache[ parsedName ].invocationPath;
 		} else {
 			log.error( "Could not find '#parsedName#' widget in the currently active theme." );	
 		}
@@ -160,7 +160,12 @@ component accessors="true" threadSafe singleton{
 			for( var i=1; i <= listLen( iData.themeRecord.widgets ); i++ ) {
 				var widgetName = replaceNoCase( listGetAt( iData.themeRecord.widgets, i ), ".cfc", "", "one" );
 				var widgetPath = "#variables.themesInvocationPath#.#themeName#.widgets.#widgetName#";
-				variables.widgetCache[ widgetName ] = widgetPath;
+				variables.widgetCache[ widgetName ] = {
+					name 			= widgetName,
+					invocationPath 	= widgetPath,
+					path 			= "#variables.themesPath#/#themeName#/widgets/#widgetName#.cfc",
+					theme 			= themeName
+				};
 			}
 
 			// activate theme modules

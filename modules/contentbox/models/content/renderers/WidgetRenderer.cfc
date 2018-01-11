@@ -56,8 +56,8 @@ component accessors="true" extends="BaseRenderer"{
 				isThemeWidget 	= widgetType == "Theme";
 				
 				// Detect direct method call
-				if( find( ".", widgetName) ){
-					widgetContent = evaluate( "widgetService.getWidget( '#getToken(widgetName,1,"." )#' ).#getToken(widgetName,2,"." )#(argumentCollection=attributes)" );
+				if( find( ".", widgetName ) ){
+					widgetContent = evaluate( "widgetService.getWidget( '#getToken( widgetName, 1, "." )#' ).#getToken( widgetName, 2, "." )#( argumentCollection=attributes )" );
 				} else {
 					if( isModuleWidget ) {
 						// Render out the module widget
@@ -68,7 +68,7 @@ component accessors="true" extends="BaseRenderer"{
 							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="theme" ).#widgetUDF#( argumentCollection=attributes )' );
 						} else {
 							// Render out the core widget
-							widgetContent = evaluate( 'widgetService.getWidget( widgetName ).#widgetUDF#( argumentCollection=attributes )' );
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) ).#widgetUDF#( argumentCollection=attributes )' );
 						}
 					}
 				}
@@ -183,7 +183,7 @@ component accessors="true" extends="BaseRenderer"{
 							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type="theme" ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
 						} else {
 							// Render out the core widget
-							widgetContent = evaluate( 'widgetService.getWidget( widgetName ).#widgetArgs.widgetUDF#(argumentCollection=widgetArgs)' );
+							widgetContent = evaluate( 'widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) ).#widgetUDF#( argumentCollection=widgetArgs )' );
 						}
 					}
 				}

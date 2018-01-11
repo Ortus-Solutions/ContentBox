@@ -1428,41 +1428,26 @@ component accessors="true" singleton threadSafe{
 	/************************************** widget functions *********************************************/
 
 	/**
-	* Execute a widget's renderit method
-	* @name The name of the installed widget to execute
-	* @args The argument collection to pass to the widget's renderIt() method
-	*/
-	function widget(required name,struct args=structnew()){
-		return getWidget(arguments.name).renderit(argumentCollection=arguments.args);
+	 * Execute a widget's renderit method
+	 * 
+	 * @name The name of the installed widget to execute
+	 * @args The argument collection to pass to the widget's renderIt() method
+	 */
+	function widget( required name, struct args=structnew() ){
+		return getWidget( arguments.name )
+			.renderit( argumentCollection=arguments.args );
 	}
 
 	/**
-	* Return a widget object
-	* @name The name of the installed widget to return
-	*/
-	function getWidget(required name){
-		var layoutWidgetPath = themeRoot() & "/widgets/#arguments.name#.cfc";
-
-		// layout widgets overrides
-		if( fileExists( expandPath( layoutWidgetPath ) ) ){
-			var widgetCreationPath = replace( reReplace(themeRoot(),"^/","" )  ,"/",".","all" ) & ".widgets.#arguments.name#";
-			return wirebox.getInstance( widgetCreationPath );
-		}
-
-		// module widgets
-		// if "@" is used in widget name, assume it's a module widget
-		if( findNoCase( "@", arguments.name ) ) {
-			// get module widgets
-			var cache = moduleService.getModuleWidgetCache();
-			// check if requested widget exists in widget cache
-			if( structKeyExists( cache, arguments.name ) && len( cache[ arguments.name ] ) ) {
-				// if exists, use it as the requested widget
-				return wirebox.getInstance( cache[ arguments.name ] );
-			}
-		}
-		
-		// return core contentbox widget instead
-		return widgetService.getWidget( arguments.name );
+	 * Return a widget object according to name convention:
+	 * - ~name = Active Theme Widget
+	 * - name@module = Module Widget
+	 * - module = Custom or Core Widget
+	 * 
+	 * @name The name of the installed widget to return
+	 */
+	function getWidget( required name ){
+		return widgetService.getWidgetByDiscovery( arguments.name );
 	}
 
 	/************************************** quick HTML *********************************************/
