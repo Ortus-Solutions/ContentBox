@@ -56,7 +56,8 @@
                         #prc.twoFactorProvider.getAuthorSetupForm( prc.author )#
                     </div>
                 </div>
-            </cfif>
+			</cfif>
+			
 			<!--- Provider Author Options --->
 			<cfif len( prc.twoFactorProvider.getAuthorOptions() )>
                 <div class="form-group">
