@@ -46,7 +46,8 @@ component accessors=true threadSafe singleton{
 	){
 		var lb = chr( 13 ) & chr( 10 );
 		var results = {
-			exportLog 		= createObject( "java", "java.lang.StringBuilder" ).init( 'Starting static site generation with the following options: #arguments.toString()#. #lb#' ),
+			exportLog 		= createObject( "java", "java.lang.StringBuilder" )
+				.init( 'Starting static site generation with the following options: #arguments.toString()#. #lb#' ),
 			exportDirectory = arguments.exportDirectory,
 			exportFile 		= getTempDirectory() & "/" & createUUID() & ".zip"
 		};
@@ -69,6 +70,8 @@ component accessors=true threadSafe singleton{
 		arguments.prc.cbSettings 	= allSettings;
 		// Place the default theme
 		arguments.prc.cbTheme 		= arguments.prc.cbSettings.cb_site_theme;
+		// Place the default theme record
+		arguments.prc.cbThemeRecord = themeService.getThemeRecord( arguments.prc.cbTheme );
 		// Place theme root location
 		arguments.prc.cbthemeRoot 	= arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
 		// Place widgets root location
@@ -80,7 +83,7 @@ component accessors=true threadSafe singleton{
 		// Copy over content media
 		directoryCopy( expandPath( allSettings.cb_media_directoryRoot ), arguments.exportDirectory & "/__media", true );
 		// Copy over the theme
-		directoryCopy( themeService.getThemesPath() & "/#prc.cbTheme#", arguments.exportDirectory & "/__theme", true );
+		directoryCopy( arguments.prc.cbThemeRecord.path, arguments.exportDirectory & "/__theme", true );
 
 		// Create Blog repository
 		if( arguments.includeBlog ){
@@ -191,10 +194,13 @@ component accessors=true threadSafe singleton{
 		interceptorService.processState( "cbui_preRequest" );
 		
 		// Render out entry
-		arguments.event.setView( view = "#themeName#/views/entry", module = "contentbox" );
+		arguments.event.setView( 
+			view = "#themeName#/views/entry", 
+			module = arguments.prc.cbThemeRecord.module 
+		);
 		outputContent = renderer.renderLayout(
 			layout 		= "#themeName#/layouts/blog",
-			module 		= "contentbox"
+			module 		= arguments.prc.cbThemeRecord.module
 		);
 
 		//****** Content Conversions ******
@@ -245,10 +251,13 @@ component accessors=true threadSafe singleton{
 		if( thisLayout eq '-no-layout-' ){
 			outputContent = arguments.content.renderContent();
 		} else {
-			arguments.event.setView( view = "#themeName#/views/page", module = "contentbox" );
+			arguments.event.setView( 
+				view 	= "#themeName#/views/page", 
+				module 	= arguments.prc.cbThemeRecord.module 
+			);
 			outputContent = renderer.renderLayout(
 				layout 		= "#themeName#/layouts/#thisLayout#",
-				module 		= "contentbox"
+				module 		= arguments.prc.cbThemeRecord.module
 			);
 		}
 

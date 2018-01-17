@@ -47,7 +47,6 @@ component extends="baseHandler"{
 
 		// Get all layouts
 		prc.themes 			= themeService.getThemes();
-		prc.themesPath 		= themeService.getThemesPath();
 		prc.activeTheme 	= themeService.getActiveTheme();
 		prc.themeService	= themeService;
 

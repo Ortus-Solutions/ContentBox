@@ -133,13 +133,13 @@ component {
 		// Startup the ContentBox theme service and activate the current layout
 		controller.getWireBox().getInstance( "themeService@cb" ).startupActiveTheme();
 		// Get ses handle
-		var ses = controller.getInterceptorService().getInterceptor('SES',true);
+		var ses = controller.getInterceptorService().getInterceptor( 'SES', true );
 		
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
 		
 		// Treat the blog as the Main Application?
-		if( !len(this.entryPoint) ){
+		if( !len( this.entryPoint ) ){
 			
 			// get parent routes so we can re-mix them later
 			var parentRoutes 		= ses.getRoutes();

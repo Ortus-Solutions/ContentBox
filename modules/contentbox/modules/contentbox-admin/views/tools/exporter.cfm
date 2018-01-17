@@ -287,6 +287,7 @@
 						<hr>
 
 						<div class="row">
+
 							<div class="col-md-3">
 								<h4><i class="fa fa-photo fa-lg"></i> Themes</h4>
 								<div class="checkbox">
@@ -300,26 +301,24 @@
 									<small class="muted clearfix">Export layouts, all or a-la-carte</small>
 								</div>
 							</div>
+
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
 									<div class="row">
-										<cfloop query="prc.themes">
+										<cfloop collection="#prc.themes#" item="themeName">
+											<cfset thisTheme = prc.themes[ themeName ]>
 											<div class="col-md-6">
-												<cfset name = prc.themes.name>
+												<cfset name = thisTheme.name>
 												<label for="export_themes_#name#" class="checkbox">
 													#html.checkbox(
 														name 	= "export_themes",
 														id 		= "export_themes_#name#",
-														value 	= "#prc.themes.name#",
+														value 	= "#thisTheme.name#",
 														checked = true,
 														data 	= { alacarte=true } 
 													)# #name#
 												</label>
 											</div>
-											<cfif currentRow MOD 2 eq 0>
-												</div>
-												<div class="row">
-											</cfif>
 										</cfloop>
 									</div>
 								</div>

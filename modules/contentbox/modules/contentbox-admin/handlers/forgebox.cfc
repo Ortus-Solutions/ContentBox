@@ -53,7 +53,7 @@ component extends="baseHandler"{
 				rc.installDir = getInstance( "moduleService@cb" ).getCustomModulesPath();
 				break;
 			case "themes":
-				rc.installDir = getInstance( "themeService@cb" ).getThemesPath();
+				rc.installDir = getInstance( "themeService@cb" ).getCustomThemesPath();
 				break;
 			case "widgets":
 				rc.installDir = getInstance( "widgetService@cb" ).getCustomWidgetsPath();

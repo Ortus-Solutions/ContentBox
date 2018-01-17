@@ -87,7 +87,7 @@ component accessors=true {
 
             filePathMappings = {
                 "Email Templates" 	= contentBoxPath & "/email_templates",
-                "Themes" 			= contentBoxPath & "/themes",
+                "Themes" 			= customPath & "/_themes",
                 "Media Library" 	= expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
                 "Modules" 			= customPath & "/_modules",
                 "Widgets" 			= customPath & "/_widgets"

@@ -17,6 +17,7 @@ component accessors="true" singleton threadSafe{
 	property name="contentStoreService"	inject="id:contentStoreService@cb";
 	property name="widgetService"		inject="id:widgetService@cb";
 	property name="moduleService"		inject="id:moduleService@cb";
+	property name="themeService"		inject="id:themeService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="menuService"			inject="id:menuService@cb";
 	property name="menuItemService"		inject="id:menuItemService@cb";
@@ -174,8 +175,8 @@ component accessors="true" singleton threadSafe{
 	/************************************** root methods *********************************************/
 
 	/**
-	* Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
-	*/
+	 * Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
+	 */
 	function themeRoot(){
 		var prc = getRequestCollection( private=true );
 		return prc.cbthemeRoot;
@@ -239,8 +240,9 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Get the location of the widgets in the application, great for assets, cfincludes, etc
-	*/
+	 * DEPRECATED: Please use widget services now for path discovery
+	 * Get the location of the widgets in the application, great for assets, cfincludes, etc
+	 */
 	function widgetRoot(){
 		var prc = getRequestCollection(private=true);
 		return prc.cbWidgetRoot;
@@ -344,15 +346,16 @@ component accessors="true" singleton threadSafe{
 			prc.cbAdminEntryPoint = "";
 		}
 		// Place global cb options on scope
-		prc.cbSettings = settingService.getAllSettings( asStruct=true );
+		prc.cbSettings 		= settingService.getAllSettings( asStruct=true );
 		// Place the default layout on scope
-		prc.cbTheme = prc.cbSettings.cb_site_theme;
+		prc.cbTheme        	= prc.cbSettings.cb_site_theme;
+		prc.cbThemeRecord  	= themeService.getThemeRecord( prc.cbTheme );
 		// Place layout root location
-		prc.cbthemeRoot = prc.cbRoot & "/themes/" & prc.cbTheme;
+		prc.cbthemeRoot    	= prc.cbThemeRecord.includePath;
 		// Place widgets root location
-		prc.cbWidgetRoot = prc.cbRoot & "/widgets";
+		prc.cbWidgetRoot   	= prc.cbRoot & "/widgets";
 		// Place current logged in Author if any
-		prc.oCurrentAuthor = securityService.getAuthorSession();
+		prc.oCurrentAuthor 	= securityService.getAuthorSession();
 		// announce event
 		this.event( "cbui_preRequest" );
 

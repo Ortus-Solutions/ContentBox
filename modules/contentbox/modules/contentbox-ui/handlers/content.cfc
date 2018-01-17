@@ -94,7 +94,7 @@ component{
 				var eArgs = { noCache=true };
 				runEvent( event="contentbox-ui:page.index", eventArguments=eArgs );
 				// Override the layout
-				event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module );
 			} else {
 				// Override layout and event so we can display it
 				event.setLayout( "#rc.l#/layouts/blog" )
@@ -117,8 +117,8 @@ component{
 			event.renderData( data=markdown.toHTML( prc.cbSettings.cb_site_maintenance_message ) );
 		} else {
 			// output maintenance view
-			event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module="contentbox" )
-				.setView( view="#prc.cbTheme#/views/maintenance", module="contentbox" );
+			event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#", module=prc.cbThemeRecord.module )
+				.setView( view="#prc.cbTheme#/views/maintenance", module=prc.cbThemeRecord.module );
 		}
 	}
 
@@ -141,8 +141,8 @@ component{
 		);
 
 		// Set view to render
-		event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
-			.setView( view="#prc.cbTheme#/views/error", module="contentbox" );
+		event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module )
+			.setView( view="#prc.cbTheme#/views/error", module=prc.cbThemeRecord.module );
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -240,8 +240,8 @@ component{
 		if( isNull( data.content ) ){
 			data.content = renderLayout( 
 				layout 		= "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
-				module 		= "contentbox",
-				viewModule 	= "contentbox" 
+				module 		= prc.cbThemeRecord.module,
+				viewModule 	= prc.cbThemeRecord.module 
 			);
 		}
 
