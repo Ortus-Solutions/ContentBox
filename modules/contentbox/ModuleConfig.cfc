@@ -26,7 +26,11 @@ component {
 	*/
 	function configure(){
 
+		// Setup a logger for this class
 		variables.log = controller.getLogBox().getLogger( this );
+
+		// Verify custom module, this is needed for registration and loading.
+		verifyCustomModule();
 
 		// contentbox settings
 		settings = {
@@ -202,6 +206,33 @@ component {
 		settingService.storeSettings( allSettings );
 		// Log it
 		variables.log.info( "ContentBox environment overrides loaded.", overrides );
+	}
+
+	/**
+	 * Verify the custom module exists. If not, we will auto-generate one to avoid conflicts
+	 * and issues with new custom approaches.
+	 */
+	private function verifyCustomModule(){
+		var appPath 			= controller.getSetting( "ApplicationPath" );
+		var customModulesPath 	= appPath & "modules_app/contentbox-custom";
+
+		// Verify modules_app: just in case
+		if( !directoryExists( appPath & "modules_app" ) ){
+			directoryCreate( appPath & "modules_app" );
+		}
+
+		// Build out the module
+		if( !directoryExists( customModulesPath ) ){
+			directoryCreate( customModulesPath );
+			directoryCreate( customModulesPath & "/_content" );
+			directoryCreate( customModulesPath & "/_modules" );
+			directoryCreate( customModulesPath & "/_themes" );
+			directoryCreate( customModulesPath & "/_widgets" );
+			fileCopy(
+				modulePath & "models/modules/custom/ModuleConfigBase.cfc",
+				customModulesPath & "ModuleConfig.cfc"
+			)
+		}
 	}
 
 }
