@@ -1,23 +1,23 @@
 {
-  "name": "ContentBoxCMS",
-  "version": "0.0.0",
-  "description": "ContentBox CMS Admin assets",
-  "main": "Gruntfile.js",
-  "private": "true",
-  "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-bower-concat": "^1.0.0",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-copy": "^1.0.0",
-    "grunt-contrib-cssmin": "^2.0.0",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-contrib-uglify": "^2.2.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-injector": "^1.1.0",
-    "grunt-rev": "^0.1.0",
-    "grunt-sass": "^2.0.0",
-    "matchdep": "^1.0.1"
-  },
-  "dependencies": {}
+    "name": "ContentBoxCMS",
+    "version": "0.0.0",
+    "description": "ContentBox CMS Admin assets",
+    "main": "Gruntfile.js",
+    "private": "true",
+    "devDependencies": {
+        "grunt": "^1.0.1",
+        "grunt-bower-concat": "^1.0.0",
+        "grunt-contrib-clean": "^1.1.0",
+        "grunt-contrib-concat": "^1.0.1",
+        "grunt-contrib-copy": "^1.0.0",
+        "grunt-contrib-cssmin": "^2.2.1",
+        "grunt-contrib-jshint": "^1.0.0",
+        "grunt-contrib-uglify": "^3.3.0",
+        "grunt-contrib-watch": "^1.0.0",
+        "grunt-injector": "^1.1.0",
+        "grunt-rev": "^0.1.0",
+        "grunt-sass": "^2.0.0",
+        "matchdep": "^2.0.0"
+    },
+    "dependencies": {}
 }
