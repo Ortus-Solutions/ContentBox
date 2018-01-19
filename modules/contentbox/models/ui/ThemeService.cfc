@@ -296,6 +296,18 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
+	 * Get all registered custom themes via the registry.
+	 */
+	struct function getCustomThemes(){
+		if( isSimpleValue( variables.themeRegistry ) ){
+			buildThemeRegistry();
+		}
+		return variables.themeRegistry.filter( function( item, contents ){
+			return ( contents.type == "custom" ? true : false );
+		} );
+	}
+
+	/**
 	* Build the theme registry via discovery
 	*/
 	ThemeService function buildThemeRegistry(){

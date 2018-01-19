@@ -13,43 +13,43 @@
 
 <div class="row">
 	<div class="col-md-12">
-		
-		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate", target="_blank" )#  
+
+		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate", target="_blank" )#
 			<div class="panel panel-default">
-				
+
 				<div class="panel-heading">
 					<h3 class="panel-title"><i class="fa fa-archive"></i> Export A Box Archive</h3>
 				</div>
 
 				<div class="panel-body">
-					
+
 					<p>From this panel you can choose to export your entire site or parts of it as a <strong>*.box</strong> archive package.</p>
-					
+
 					<div class="row margin10">
 						<div class="col-md-6 well well-sm text-center alert-success">
 							<h2>Option ##1: Everything!</h2>
 							<small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
 							<label class="btn btn-success btn-toggle radio" for="export_everything">
-								#html.radioButton( 
-									name 	= "export_type", 
-									id 		= "export_everything", 
-									checked = true, 
-									value 	= "everything" 
+								#html.radioButton(
+									name 	= "export_type",
+									id 		= "export_everything",
+									checked = true,
+									value 	= "everything"
 								)# Export Everything
 							</label>
 						</div>
 
 						<div class="col-md-1">&nbsp;</div>
-						
+
 						<div class="col-md-5 well well-sm text-center">
 							<h2>Option ##2: Mr. Picky</h2>
 							<small>For the more discriminating, select only the bits that you want to export.</small><br />
 							<label class="btn btn-toggle radio" for="export_selective">
-								#html.radioButton( 
-									name 	= "export_type", 
-									id 		= "export_selective", 
-									value 	= "selective" 
-								)# 
+								#html.radioButton(
+									name 	= "export_type",
+									id 		= "export_selective",
+									value 	= "selective"
+								)#
 								Export a-la-carte
 							</label>
 						</div>
@@ -69,7 +69,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -85,7 +85,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -101,7 +101,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -117,7 +117,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -133,7 +133,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -149,7 +149,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -165,7 +165,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -181,7 +181,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -197,7 +197,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -213,7 +213,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -229,7 +229,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -245,7 +245,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -256,7 +256,7 @@
 										#html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"} )# Toggle All
 									</label>
 									<small class="muted clearfix">Export modules, all or a-la-carte</small>
-								</div>								
+								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
@@ -283,7 +283,7 @@
 						</div>
 
 
-						
+
 						<hr>
 
 						<div class="row">
@@ -295,7 +295,7 @@
 										#html.checkbox(
 											name 	= "toggle_layouts",
 											checked = true,
-											data 	= { togglegroup="export_layouts" } 
+											data 	= { togglegroup="export_layouts" }
 										)# Toggle All
 									</label>
 									<small class="muted clearfix">Export layouts, all or a-la-carte</small>
@@ -315,16 +315,19 @@
 														id 		= "export_themes_#name#",
 														value 	= "#thisTheme.name#",
 														checked = true,
-														data 	= { alacarte=true } 
+														data 	= { alacarte=true }
 													)# #name#
 												</label>
 											</div>
 										</cfloop>
+										<cfif prc.themes.isEmpty()>
+											<strong>No custom themes found!</strong>
+										</cfif>
 									</div>
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -374,27 +377,27 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 					</fieldset>
 
 					<!--- Submit Button --->
 					<div class="actionBar" id="uploadBar">
-						#html.button( 
-							type    = "button", 
-							value   = "<i class='fa fa-search'></i> Preview Export", 
-							class   = "btn btn-primary btn-normal btn-lg", 
-							onclick = "return previewExport()" 
+						#html.button(
+							type    = "button",
+							value   = "<i class='fa fa-search'></i> Preview Export",
+							class   = "btn btn-primary btn-normal btn-lg",
+							onclick = "return previewExport()"
 						)#
-						#html.button( 
-							type    = "button", 
-							value   = "<i class='fa fa-download' id='export-icon'></i> Start Export", 
-							class   = "btn btn-danger btn-lg", 
-							onclick = "doExport()" 
+						#html.button(
+							type    = "button",
+							value   = "<i class='fa fa-download' id='export-icon'></i> Start Export",
+							class   = "btn btn-danger btn-lg",
+							onclick = "doExport()"
 						)#
 					</div>
-					
+
 					<!--- Loader --->
 					<div class="loaders" id="uploadBarLoader">
 						<i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>
@@ -411,7 +414,7 @@
 				</div>
 				<div class="panel-body">
 					<p>ContentBox can export your entire site as a static HTML generated site. Please fill out the following options in order to generate your static site.</p>
-					
+
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" value="true" name="blogContent" checked="checked"> Include Blog Content
@@ -420,11 +423,11 @@
 
 					<!--- Submit Button --->
 					<div class="actionBar" id="siteGeneratorBar">
-						#html.button( 
-							type    = "button", 
-							value   = "<i class='fa fa-download' id='export-icon'></i> Start Generation", 
-							class   = "btn btn-danger btn-lg", 
-							onclick = "doSiteExport()" 
+						#html.button(
+							type    = "button",
+							value   = "<i class='fa fa-download' id='export-icon'></i> Start Generation",
+							class   = "btn btn-danger btn-lg",
+							onclick = "doSiteExport()"
 						)#
 					</div>
 
@@ -436,7 +439,7 @@
 
 				</div>
 
-					
+
 			</div>
 		#html.endForm()#
 

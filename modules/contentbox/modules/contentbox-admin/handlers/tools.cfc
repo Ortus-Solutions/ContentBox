@@ -6,7 +6,7 @@
 * Tools for ContentBox.
 */
 component extends="baseHandler"{
-	
+
 	// DI
 	property name="moduleService"       inject="id:moduleService@cb";
     property name="themeService"       	inject="id:themeService@cb";
@@ -22,7 +22,7 @@ component extends="baseHandler"{
 		// Tab control
 		prc.tabTools = true;
 	}
-	
+
 	/**
 	 * Import Into ContentBox
 	 */
@@ -32,7 +32,7 @@ component extends="baseHandler"{
 		rc.xehCBPreImport= "#prc.cbAdminEntryPoint#.tools.doCBPreImport";
 		rc.xehCBImport 	 = "#prc.cbAdminEntryPoint#.tools.doCBImport";
 		// tab
-		prc.tabTools_import = true; 
+		prc.tabTools_import = true;
 		prc.roles = roleService.list( sortOrder="role" );
 		// view
 		event.setView( "tools/importer" );
@@ -100,7 +100,7 @@ component extends="baseHandler"{
 		event.paramValue( "defaultPassword","" );
 		event.paramValue( "tableprefix","" );
 		event.paramValue( "roleID","" );
-		
+
 		setting requesttimeout="18000";
 
 		// validate
@@ -108,7 +108,7 @@ component extends="baseHandler"{
 			cbMessagebox.warn( "Please fill out all required fields." );
 			setNextEvent( prc.xehToolsImport );
 		}
-		
+
 		try{
 			// get importer
 			var importer = getModel( "#rc.importer#Importer@cb" );
@@ -117,10 +117,10 @@ component extends="baseHandler"{
 		} catch( any e ){
 			cbMessagebox.error( "Error importing from datasource: #e.message# #e.detail#" );
 		}
-		
+
 		setNextEvent(prc.xehToolsImport);
 	}
-	
+
 	/**
 	* Show the exporter console
 	*/
@@ -129,18 +129,18 @@ component extends="baseHandler"{
 		prc.xehExport 			= "#prc.cbAdminEntryPoint#.tools.doExport";
 		prc.xehPreviewExport 	= "#prc.cbAdminEntryPoint#.tools.previewExport";
 		prc.xehSiteGenerator 	= "#prc.cbAdminEntryPoint#.tools.doStaticSite";
-		
+
 		// tab
 		prc.tabTools_export = true;
 		prc.modules 		= moduleService.findModules( moduleType = "custom" ).modules;
-		prc.themes 			= themeService.getThemes();
+		prc.themes 			= themeService.getCustomThemes();
 		prc.widgets 		= widgetService.getWidgets();
 		prc.widgetService 	= widgetService;
-		
+
 		// view
 		event.setView( "tools/exporter" );
 	}
-	
+
 	/**
 	* Preview of the export
 	*/
@@ -181,7 +181,7 @@ component extends="baseHandler"{
 		// Export Site
 		var results = staticExporter.export(
 			includeBlog = rc.blogContent,
-			event 		= event, 
+			event 		= event,
 			rc 			= rc,
 			prc 		= prc
 		);
