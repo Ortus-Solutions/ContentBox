@@ -93,9 +93,9 @@ component accessors=true threadSafe singleton{
 
 		// Announce export
 		interceptorService.processState( "cbadmin_preStaticSiteExport", { options = arguments } );
-		
+
 		// Get root pages, we need objects in order to render out the site
-		var aPages = pageService.search( 
+		var aPages = pageService.search(
 			parent		= "",
 			sortOrder	= "order asc"
 		);
@@ -106,12 +106,12 @@ component accessors=true threadSafe singleton{
 			// put in scope for fake access
 			prc.page = oHomePage;
 			// process it
-			processStaticPage( 
-				content 	= oHomePage, 
-				isHome 		= true, 
-				event 		= event, 
-				rc 			= rc, 
-				prc 		= prc, 
+			processStaticPage(
+				content 	= oHomePage,
+				isHome 		= true,
+				event 		= event,
+				rc 			= rc,
+				prc 		= prc,
 				exportDir 	= arguments.exportDirectory,
 				settings 	= allSettings
 			);
@@ -122,12 +122,12 @@ component accessors=true threadSafe singleton{
 			// put in scope for fake access
 			prc.page = thisPage;
 			// process it
-			processStaticPage( 
-				content 	= thisPage, 
-				isHome 		= false, 
-				event 		= event, 
-				rc 			= rc, 
-				prc 		= prc, 
+			processStaticPage(
+				content 	= thisPage,
+				isHome 		= false,
+				event 		= event,
+				rc 			= rc,
+				prc 		= prc,
 				exportDir 	= arguments.exportDirectory,
 				settings 	= allSettings
 			);
@@ -144,11 +144,11 @@ component accessors=true threadSafe singleton{
 				prc.entry 		= thisEntry;
 				prc.comments 	= prc.entry.getComments();
 				// process it
-				processStaticEntry( 
-					content 	= thisEntry, 
-					event 		= event, 
-					rc 			= rc, 
-					prc 		= prc, 
+				processStaticEntry(
+					content 	= thisEntry,
+					event 		= event,
+					rc 			= rc,
+					prc 		= prc,
 					exportDir 	= blogExportDir,
 					settings 	= allSettings
 				);
@@ -178,10 +178,10 @@ component accessors=true threadSafe singleton{
 	 * @exportDir The location of export
 	 * @settings All of the ContentBox Settings
 	 */
-	private function processStaticEntry( 
-		required content, 
-		required event, 
-		required rc, 
+	private function processStaticEntry(
+		required content,
+		required event,
+		required rc,
 		required prc,
 		required exportDir,
 		required settings
@@ -192,11 +192,11 @@ component accessors=true threadSafe singleton{
 
 		// announce event
 		interceptorService.processState( "cbui_preRequest" );
-		
+
 		// Render out entry
-		arguments.event.setView( 
-			view = "#themeName#/views/entry", 
-			module = arguments.prc.cbThemeRecord.module 
+		arguments.event.setView(
+			view = "#themeName#/views/entry",
+			module = arguments.prc.cbThemeRecord.module
 		);
 		outputContent = renderer.renderLayout(
 			layout 		= "#themeName#/layouts/blog",
@@ -209,7 +209,7 @@ component accessors=true threadSafe singleton{
 		// replace local server addresses
 		outputContent = replaceNoCase( outputContent, arguments.event.buildLink( '' ), "/", "all" );
 		// replace theme root to new static locations
-		outputContent = replaceNoCase( outputContent, arguments.prc.cbThemeRoot, "/__theme", "all" );
+		outputContent = replaceNoCase( outputContent, arguments.prc.cbThemeRoot, "/__theme/#themeName#", "all" );
 		//**********************************
 
 		// Create child container, just in case
@@ -230,11 +230,11 @@ component accessors=true threadSafe singleton{
 	 * @exportDir The location of export
 	 * @settings All of the ContentBox Settings
 	 */
-	private function processStaticPage( 
-		required content, 
+	private function processStaticPage(
+		required content,
 		boolean isHome=false,
-		required event, 
-		required rc, 
+		required event,
+		required rc,
 		required prc,
 		required exportDir,
 		required settings
@@ -251,9 +251,9 @@ component accessors=true threadSafe singleton{
 		if( thisLayout eq '-no-layout-' ){
 			outputContent = arguments.content.renderContent();
 		} else {
-			arguments.event.setView( 
-				view 	= "#themeName#/views/page", 
-				module 	= arguments.prc.cbThemeRecord.module 
+			arguments.event.setView(
+				view 	= "#themeName#/views/page",
+				module 	= arguments.prc.cbThemeRecord.module
 			);
 			outputContent = renderer.renderLayout(
 				layout 		= "#themeName#/layouts/#thisLayout#",
@@ -280,19 +280,19 @@ component accessors=true threadSafe singleton{
 			fileWrite( arguments.exportDir & "/index.html", outputContent );
 		} else {
 			fileWrite( arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html", outputContent );
-		}	
+		}
 
 		// Do we have children
 		if( arguments.content.hasChild() ){
 			// iterate over children and process them
 			for( var thisChild in arguments.content.getChildren() ){
 				// process it
-				processStaticPage( 
-					content 	= thisChild, 
-					isHome 		= false, 
-					event 		= event, 
-					rc 			= rc, 
-					prc 		= prc, 
+				processStaticPage(
+					content 	= thisChild,
+					isHome 		= false,
+					event 		= event,
+					rc 			= rc,
+					prc 		= prc,
 					exportDir 	= exportDir,
 					settings 	= allSettings
 				);
