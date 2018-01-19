@@ -96,7 +96,7 @@ component {
 				fileCopy(
 					variables.thisPath & "ModuleConfig.cfc",
 					customModulesPath & "ModuleConfig.cfc"
-				)
+				);
 			}
 
 			arguments.log.append( "Finalized #variables.version# preInstallation patching" );
@@ -188,7 +188,7 @@ component {
 			// Hard Redirect using CF Location to avoid Controller issues.
 			var event = coldbox.getRequestService().getContext();
 			location( event.buildLink( "cbadmin.autoupdates" ) );
-			
+
 		} catch( Any e ) {
 			ORMClearSession();
 			arguments.log.append( "Error doing #variables.version# patch postInstallation. Details: #e.message# #e.detail# #chr( 13 )#" );
@@ -210,7 +210,7 @@ component {
 				arrayAppend( aTargetAuthors, thisAuthor );
 			}
 		}
-		
+
 		authorService.saveAll( aTargetAuthors );
 	}
 
@@ -289,7 +289,7 @@ component {
 		addSetting( "cb_security_2factorAuth_trusted_days"	, "30" );
 		addSetting( "cb_security_login_signout_url"			, "" );
 		addSetting( "cb_security_login_signin_text"			, "" );
-		
+
 		// Update dashboard settings
 		var oSetting = settingService.findWhere( { name="cb_dashboard_welcome_title" } );
 		if( !isNull( oSetting ) ){
