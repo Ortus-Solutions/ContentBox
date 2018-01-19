@@ -1,38 +1,36 @@
 {
-    "name":"ContentBox Tester Site",
-    "author":"Ortus Solutions <info@ortussolutions.com>",
-    "shortDescription":"A tester site for developing the ContentBox Modular CMS",
-    "type":"cms",
-    "keywords":"cms,content management,modular cms",
-    "homepage":"https://www.contentboxcms.org",
-    "documentation":"https://contentbox.ortusbooks.com",
-    "repository":{
-        "type":"git",
-        "url":"https://github.com/Ortus-Solutions/ContentBox"
+    "name": "ContentBox Tester Site",
+    "author": "Ortus Solutions <info@ortussolutions.com>",
+    "shortDescription": "A tester site for developing the ContentBox Modular CMS",
+    "type": "cms",
+    "keywords": "cms,content management,modular cms",
+    "homepage": "https://www.contentboxcms.org",
+    "documentation": "https://contentbox.ortusbooks.com",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/Ortus-Solutions/ContentBox"
     },
-    "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
-    "license":[
-        {
-            "type":"Apache2",
-            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
-        }
-    ],
-    "contributors":[
+    "bugs": "https://ortussolutions.atlassian.net/browse/CONTENTBOX",
+    "license": [{
+        "type": "Apache2",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }],
+    "contributors": [
         "Joel Watson <existdissolve@gmail.com>",
         "Brad Wood <bdw429s@gmail.com>",
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
-    "dependencies":{
-        "coldbox":"^4.3.0"
+    "dependencies": {
+        "coldbox": "^4.3.0"
     },
-    "installPaths":{
-        "coldbox":"coldbox",
-        "testbox":"testbox"
+    "installPaths": {
+        "coldbox": "coldbox",
+        "testbox": "testbox"
     },
-    "devDependencies":{
-        "testbox":"^2.5.0+107"
+    "devDependencies": {
+        "testbox": "^2.5.0+107"
     },
-    "ignores":[
-        
+    "ignores": [
+
     ]
 }
