@@ -5,9 +5,7 @@ install
 cd modules/contentbox && install
 cd ../../workbench
 # Install NPM dependencies
-!npm install -g bower yarn grunt-cli
+!npm install -g yarn grunt-cli
 # Install Yarn deps
 !yarn install
-# Install Bower deps
-!bower install
 echo "====> Finished installing all dependencies, go rock ContentBox Development!"
