@@ -580,10 +580,10 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	* Build out the settings form HTML
-	* @activeTheme The active theme struct
-	*/
-	function buildSettingsForm( required query activeTheme ){
+	 * Build out the settings form HTML
+	 * @activeTheme The active theme struct
+	 */
+	function buildSettingsForm( required struct activeTheme ){
 		// Get theme CFC
 		var oTheme 		= variables.themeRegistry[ arguments.activeTheme.name ].descriptor;
 		var settingForm = "";
