@@ -75,6 +75,16 @@ component extends="baseHandler"{
 				);
 			}
 
+			//If Global MFA is turned on and the user is not enrolled to a provider, then force it to enroll
+			if( twoFactorService.isForceTwoFactorAuth() AND !results.author.getIs2FactorAuth() ){
+				flash.put( "authorData", {
+					authorID 	= results.author.getAuthorID(),
+					rememberMe 	= rc.rememberMe,
+					securedURL  = rc._securedURL
+				} );
+				setNextEvent( "#prc.cbAdminEntryPoint#.authors.forceTwoFactorEnrollment" );
+			}
+
 			// Verify if we have to challenge via two factor auth
 			if( twoFactorService.canChallenge( results.author ) ){
 				// Flash data needed for authorizations
@@ -91,7 +101,7 @@ component extends="baseHandler"{
 					messagebox.error( cb.r( "twofactor.error@security" ) );
 				}
 				// Relocate to two factor auth presenter
-				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
+				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" ); 
 			}
 
 			// Set keep me log in remember cookie, if set.
