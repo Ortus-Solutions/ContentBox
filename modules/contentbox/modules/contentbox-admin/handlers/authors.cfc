@@ -360,7 +360,7 @@ component extends="baseHandler"{
         var vResults = validateModel( target = prc.oAuthor, excludes = "password" );
 		if ( vResults.hasErrors() ) {
             cbMessagebox.warn( messageArray=vResults.getAllErrors() );
-            flash.keep( "layout,xehInvalidData,xehEnrollmentSuccess,xehEnrollmentSuccessQueryString" )
+            flash.keep( );
             setNextEvent(
                 event		= flash.get( "xehInvalidData", prc.xehAuthorEditor ),
                 queryString	= "authorID=#prc.oAuthor.getAuthorID()###twofactor"

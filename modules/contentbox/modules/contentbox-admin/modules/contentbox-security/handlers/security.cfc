@@ -75,7 +75,7 @@ component extends="baseHandler"{
 				);
 			}
 
-			//If Global MFA is turned on and the user is not enrolled to a provider, then force it to enroll
+			// If Global MFA is turned on and the user is not enrolled to a provider, then force it to enroll
 			if( twoFactorService.isForceTwoFactorAuth() AND !results.author.getIs2FactorAuth() ){
 				flash.put( "authorData", {
 					authorID 	= results.author.getAuthorID(),

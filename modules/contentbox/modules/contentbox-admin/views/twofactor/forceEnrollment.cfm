@@ -79,7 +79,7 @@
                         Action Bar
                         Saving only if you have permissions, else it is view only.
                     --->
-                    <cfif ( !prc.oCurrentAuthor.isLoaded() AND prc.author.isLoaded() ) OR ( prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID() OR prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) )>
+                    <cfif ( prc.author.isLoaded() OR ( prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID() OR prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) ) )>
                     <div class="form-actions">
                         <div class="form-group">
                             <cfif prc.author.getIs2FactorAuth()>
