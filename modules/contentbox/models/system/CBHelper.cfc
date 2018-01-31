@@ -369,7 +369,7 @@ component accessors="true" singleton threadSafe{
 
 		// Do we set a layout for them already?
 		if( structKeyExists( arguments, "layout" ) ){
-			event.setLayout( name="#prc.cbTheme#/layouts/" & arguments.layout, module="contentbox" );
+			event.setLayout( name="#prc.cbThemeRecord.includePath#/layouts/" & arguments.layout );
 		}
 
 		/************************************** FORCE SITE WIDE SSL *********************************************/
