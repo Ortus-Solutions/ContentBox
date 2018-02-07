@@ -311,7 +311,13 @@ component extends="baseHandler"{
      * Show the two-factor authentication screen for forced enrollment
      */
     function forceTwoFactorEnrollment( event, rc, prc ) {
-        prc.author = prc.oCurrentAuthor;
+		if( flash.exists( "authorData" ) ){
+			// Inflate author for requested events
+			prc.author = authorService.get( flash.get( "authorData" ).authorID );
+		} else {
+			prc.author = prc.oCurrentAuthor;
+		}
+        
         prc.xehEnrollTwoFactor = "#prc.cbAdminEntryPoint#.authors.enrollTwofactor";
         prc.xehUnenrollTwoFactor = "#prc.cbAdminEntryPoint#.authors.unenrollTwoFactor";
         prc.twoFactorProvider = twoFactorService.getDefaultProviderObject();
@@ -332,7 +338,7 @@ component extends="baseHandler"{
         flash.put( "authorID", rc.authorID );
         prc.oAuthor = authorService.get( id=rc.authorID );
 
-        if ( prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID() ) {
+        if ( prc.oCurrentAuthor.isLoaded() && prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID() ) {
             cbMessagebox.warn( "You cannot enroll another user in two-factor authentication." );
             flash.keep();
             setNextEvent(
@@ -354,7 +360,7 @@ component extends="baseHandler"{
         var vResults = validateModel( target = prc.oAuthor, excludes = "password" );
 		if ( vResults.hasErrors() ) {
             cbMessagebox.warn( messageArray=vResults.getAllErrors() );
-            flash.keep( "layout,xehInvalidData,xehEnrollmentSuccess,xehEnrollmentSuccessQueryString" );
+            flash.keep( );
             setNextEvent(
                 event		= flash.get( "xehInvalidData", prc.xehAuthorEditor ),
                 queryString	= "authorID=#prc.oAuthor.getAuthorID()###twofactor"
@@ -438,6 +444,10 @@ component extends="baseHandler"{
 		authorService.saveAuthor( oAuthor );
 		// message
 		cbMessagebox.setMessage( "info","Two Factor Settings Saved!" );
+		if ( !prc.oCurrentAuthor.isLoaded() ){
+			// Set in session, validations are now complete
+			securityService.setAuthorSession( oAuthor );
+		}
 		// relocate
 		setNextEvent(
 			event		= flash.get( "xehEnrollmentSuccess", prc.xehAuthorEditor ),

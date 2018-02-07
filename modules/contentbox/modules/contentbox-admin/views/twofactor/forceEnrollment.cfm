@@ -4,12 +4,12 @@
         <div class="panel panel-primary animated fadeInDown">
             <div class="panel-heading">
                 <h3 class="panel-title">
-                   <i class="fa fa-key"></i> Enroll in Two Factor Authentication
+                    <i class="fa fa-key"></i> Enroll in Two Factor Authentication
                 </h3>
             </div>
             <div class="panel-body">
-	        	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+                <!--- Render Messagebox. --->
+                #getModel( "messagebox@cbMessagebox" ).renderit()#
 
                 <!--- AuthorForm --->
                 #html.startForm(
@@ -79,7 +79,7 @@
                         Action Bar
                         Saving only if you have permissions, else it is view only.
                     --->
-                    <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+                    <cfif ( prc.author.isLoaded() OR ( prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID() OR prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) ) )>
                     <div class="form-actions">
                         <div class="form-group">
                             <cfif prc.author.getIs2FactorAuth()>
