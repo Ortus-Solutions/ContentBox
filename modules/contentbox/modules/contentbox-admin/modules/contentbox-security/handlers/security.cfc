@@ -23,7 +23,7 @@ component extends="baseHandler"{
 	function changeLang( event, rc, prc ){
 		event.paramValue( "lang", "en_US" );
 		setFWLocale( rc.lang );
-		setNextEvent( prc.entryPoint );
+		setNextEvent( "#prc.cbAdminEntryPoint#/security" );
 	}
 
 	/**
@@ -75,13 +75,25 @@ component extends="baseHandler"{
 				);
 			}
 
+			// If Global MFA is turned on and the user is not enrolled to a provider, then force it to enroll
+            if( twoFactorService.isForceTwoFactorAuth() AND !results.author.getIs2FactorAuth() ){
+				return runEvent(
+					event 			= "contentbox-security:twoFactorEnrollment.forceEnrollment",
+					eventArguments 	= {
+						authorID      = results.author.getAuthorID(),
+						relocationURL = _securedURL,
+						rememberMe 	  = rc.rememberMe
+					} );
+            }
+
 			// Verify if we have to challenge via two factor auth
 			if( twoFactorService.canChallenge( results.author ) ){
 				// Flash data needed for authorizations
 				flash.put( "authorData", {
-					authorID 	= results.author.getAuthorID(),
-					rememberMe 	= rc.rememberMe,
-					securedURL  = rc._securedURL
+					authorID     = results.author.getAuthorID(),
+					rememberMe   = rc.rememberMe,
+					securedURL   = rc._securedURL,
+					isEnrollment = false
 				} );
 				// Send challenge
 				var twoFactorResults = twoFactorService.sendChallenge( results.author );

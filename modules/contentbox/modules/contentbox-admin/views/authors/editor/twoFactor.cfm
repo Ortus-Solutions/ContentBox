@@ -8,6 +8,7 @@
 		class 		= "form-vertical"
 	)#
 		#html.hiddenField( name="authorID", bind=prc.author )#
+		#html.hiddenField( name="relocationURL", value=event.buildLink( prc.xehTwoFactorRelocation ) )#
 
 		<fieldset>
 			<legend>Two-Factor Authentication</legend>
@@ -32,7 +33,11 @@
 						content = "Status:"
                     )#
 
-                    #prc.author.getIs2FactorAuth() ? "Enrolled" : "Not Enrolled"#
+					<cfif prc.author.getIs2FactorAuth()>
+						<span class="label label-success">Enrolled</span>
+					<cfelse>
+						<span class="label label-danger">Not Enrolled</span>
+					</cfif>
 				</div>
 			</cfif>
 
@@ -57,7 +62,7 @@
                     </div>
                 </div>
 			</cfif>
-			
+
 			<!--- Provider Author Options --->
 			<cfif len( prc.twoFactorProvider.getAuthorOptions() )>
                 <div class="form-group">

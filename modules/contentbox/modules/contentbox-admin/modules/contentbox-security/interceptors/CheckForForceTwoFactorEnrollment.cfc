@@ -3,14 +3,16 @@
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
 * ---
-* Unenroll users from two-factor authentication on provider change
+* Checks for two factor enforcement
 */
 component extends="coldbox.system.Interceptor"{
 
+	// DI
     property name="twoFactorService" inject="id:TwoFactorService@cb";
     property name="securityService"  inject="id:securityService@cb";
 
-    variables.allowedEvents = [
+	// static ecluded event patterns
+    variables.EXCLUDED_EVENT_PATTERNS = [
         "contentbox-security:security.changeLang",
         "contentbox-security:security.login",
         "contentbox-security:security.doLogin",
@@ -18,11 +20,7 @@ component extends="coldbox.system.Interceptor"{
         "contentbox-security:security.lostPassword",
         "contentbox-security:security.doLostPassword",
         "contentbox-security:security.verifyReset",
-        "contentbox-security:security.doPasswordChange",
-        "contentbox-admin:authors.forceTwoFactorEnrollment",
-        "contentbox-admin:authors.enrollTwofactor",
-        "contentbox-admin:authors.forceTwoFactorEnrollment",
-        "contentbox-admin:authors.doTwoFactorEnrollment"
+        "contentbox-security:security.doPasswordChange"
     ];
 
 
@@ -32,33 +30,38 @@ component extends="coldbox.system.Interceptor"{
     function configure(){}
 
     /**
-     *
+     * Process the check on each request
      */
-    public void function preProcess( required any event, required struct interceptData, buffer, rc, prc ) {
-        param prc.oCurrentAuthor = securityService.getAuthorSession();
-        param prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
-
-        if ( ! event.privateValueExists( "oCurrentAuthor" ) ) {
+    public void function preProcess( required any event, required struct interceptData, buffer, rc, prc ){
+		// Do not execute on the security module
+        if ( reFindNoCase( "^contentbox\-security\:", event.getCurrentEvent() ) ) {
             return;
-        }
+		}
 
-        if ( ! prc.oCurrentAuthor.getLoggedIn() ) {
-            return;
-        }
+		// Param Values
+		param prc.oCurrentAuthor	= securityService.getAuthorSession();
+		param prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 
-        if ( ! twoFactorService.isForceTwoFactorAuth() ) {
-            return;
-        }
+		// User not logged in
+		if ( ! prc.oCurrentAuthor.getLoggedIn() ) {
+			return;
+		}
 
-        if ( prc.oCurrentAuthor.getIs2FactorAuth() ) {
-            return;
-        }
+		// Global force is disabled
+		if ( ! twoFactorService.isForceTwoFactorAuth() ) {
+			return;
+		}
 
-        if ( arrayContains( allowedEvents, rc.event ) ) {
-            return;
-        }
+		// User already enrolled
+		if ( prc.oCurrentAuthor.getIs2FactorAuth() ) {
+			return;
+		}
 
-        setNextEvent( "#prc.cbAdminEntryPoint#.authors.forceTwoFactorEnrollment" );
+		// Relocate to force the enrolmment for this user.
+		setNextEvent(
+			event       = "#prc.cbAdminEntryPoint#.security.twofactorEnrollment.forceEnrollment",
+			queryString = "authorID=#prc.oCurrentAuthor.getAuthorID()#"
+		);
     }
 
 }

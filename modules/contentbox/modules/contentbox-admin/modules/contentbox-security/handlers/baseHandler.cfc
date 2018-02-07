@@ -19,8 +19,7 @@ component{
 	*/
 	function preHandler( event, currentAction, rc, prc ){
 		prc.langs 		= getModuleSettings( "contentbox" ).languages;
-		prc.entryPoint 	= getModuleConfig( "contentbox-security" ).entryPoint;
-		prc.xehLang 	= event.buildLink( "#prc.entryPoint#/language" );
+		prc.xehLang 	= event.buildLink( "#prc.cbAdminEntryPoint#/language" );
 	}
 
 }

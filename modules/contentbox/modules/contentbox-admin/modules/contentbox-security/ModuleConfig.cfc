@@ -34,6 +34,7 @@ component {
 		routes = [
 			{ pattern="/", handler="security", action="login" },
 			{ pattern="/twofactor/:action?", handler="twofactor" },
+			{ pattern="/twofactorEnrollment/:action?", handler="twofactorEnrollment" },
 			{ pattern="/language/:lang", handler="security", action="changelang" },
 			{ pattern="/:action", handler="security" },
 			{ pattern="/:handler/:action?" }
@@ -71,11 +72,11 @@ component {
 			 		rulesModelMethod 	= "getSecurityRules",
 			 		validatorModel 		= "securityService@cb"
 			 	}
-            },
-            {
+			}
+            ,{
                 class = "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
                 name = "CheckForForceTwoFactorEnrollment@contentbox-security"
-            }
+			}
 		];
 
 	}
