@@ -1,6 +1,6 @@
 <cfoutput>
 <div class="tab-pane" id="change-password" style="min-height: 400px">
-	<cfif prc.oCurrentAuthor.getAuthorID() == rc.authorID>
+	<cfif prc.oCurrentAuthor.getAuthorID() eq rc.authorID>
 		#html.startForm(
 			name       = "authorPasswordForm",
 			action     = prc.xehAuthorChangePassword,
@@ -62,7 +62,7 @@
 		<p><a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#rc.authorID#" class="btn btn-danger">Email Password Reset</a></p>
 
 		#html.endFieldSet()#
-		
-	</cfif>	
+
+	</cfif>
 </div>
 </cfoutput>
