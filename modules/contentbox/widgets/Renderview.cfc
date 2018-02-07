@@ -41,6 +41,10 @@ component extends="contentbox.models.ui.BaseWidget"{
 		}
 		// Replace with inflated data
 		arguments.args = viewArgs;
+		
+		//Clean up incoming arguments
+		structDelete( arguments, "event" );
+		
 		// Execute rendering
 		return renderView(argumentCollection=arguments);
 	}
