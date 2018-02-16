@@ -204,7 +204,7 @@ component accessors="true" threadSafe singleton{
 
 			// Filter out settings
 			arguments.settings.filter( function( key, value ){
-				return ( findNoCase( "cb_theme_#name#_", thisSettingName ) ? true : false );
+				return ( findNoCase( "cb_theme_#name#_", key ) ? true : false );
 			} ).each( function( key, value ){
 				var oSetting = settingService.findWhere( { name=key } );
 				oSetting.setValue( value );
