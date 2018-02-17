@@ -113,7 +113,7 @@ function switchEditor( editorType ){
  * @param saveURL The URL used for saving the content asynchronously
  * @param collapseNav Automatically collapse main navigation for better editing experience 
  */
-function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
+function setupEditors( theForm, withExcerpt, saveURL ){
 	// Setup global editor elements
 	$targetEditorForm   	= theForm;
 	$targetEditorSaveURL 	= saveURL;
@@ -211,11 +211,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 
 	// Collapse navigation for better editing experience
     var bodyEl = $( '#container' );
-    collapseNav = collapseNav || true;
-    if( collapseNav && !$( bodyEl ).hasClass( 'sidebar-mini' ) ){
-        $( 'body' ).removeClass('off-canvas-open');
-        $( bodyEl ).toggleClass( 'sidebar-mini' );
-    }
+
 }
 
 /**
