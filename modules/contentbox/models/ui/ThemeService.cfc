@@ -168,7 +168,7 @@ component accessors="true" threadSafe singleton{
 			var widgetName = replaceNoCase( thisWidget, ".cfc", "", "one" );
 			variables.widgetCache[ widgetName ] = {
 				name 			= widgetName,
-				invocationPath 	= "#themeRecord.invocationPath#.#themeName#.widgets.#widgetName#",
+				invocationPath 	= "#themeRecord.invocationPath#.widgets.#widgetName#",
 				path 			= "#themeRecord.path#/#themeName#/widgets/#thisWidget#",
 				theme 			= themeName
 			};
@@ -178,7 +178,7 @@ component accessors="true" threadSafe singleton{
 		for( var thisModule in themeRecord.modules.listToArray() ){
 			moduleService.registerAndActivateModule(
 				moduleName 		= thisModule,
-				invocationPath 	= "#themeRecord.invocationPath#.#themeName#.modules"
+				invocationPath 	= "#themeRecord.invocationPath#.modules"
 			);
 		}
 
