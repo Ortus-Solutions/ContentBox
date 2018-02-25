@@ -180,9 +180,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 * @name The name of the module to register
 	 * @type The type of module: core or custom
 	 */
-	Module function registerNewModule( required name, required type ){
-		var thisPath 			= variables[ arguments.type & "ModulesPath" ];
-		var thisInvocationPath 	= variables[ arguments.type & "ModulesInvocationPath" ];
+	Module function registerNewModule( required name, required type, thisInvocationPath="", thisPath ){
+		var thisPath 			= arguments.thisPath 			?: variables[ arguments.type & "ModulesPath" ];
+		var thisInvocationPath 	= arguments.thisInvocationPath 	?: variables[ arguments.type & "ModulesInvocationPath" ];
 
 		if( fileExists( thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
 			
@@ -359,7 +359,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				// check if module already in database records or new
 				if( isNull( thisModule ) ){
 					// new record, so register it
-					thisModule = registerNewModule( moduleName, arguments.moduleType );
+					thisModule = registerNewModule( moduleName, arguments.moduleType, invocationPath, path );
 				}
 
 				// If we get here, the module is loaded in the database now
@@ -374,6 +374,16 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 					path 			= arguments.path,
 					invocationPath 	= arguments.invocationPath
 				};
+
+				var qChildModules 	= getModulesOnDisk( arguments.path & "/#moduleName#" & "/modules" );
+				qChildModules.each( function( row ){
+					cModuleRegistration(
+						arguments.row, 
+						"custom", 
+						variables.moduleMap[ moduleName ].invocationPath & ".#moduleName#" & ".modules",
+						variables.moduleMap[ moduleName ].path & "/#moduleName#" & "/modules" 
+					);
+				} );
 			}
 		};
 
@@ -396,7 +406,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				variables.customModulesPath 
 			);
 		} );
-		
+
 		// build widget cache
 		buildModuleWidgetsCache();
 
