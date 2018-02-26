@@ -184,7 +184,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		var thisPath 			= arguments.thisPath 			?: variables[ arguments.type & "ModulesPath" ];
 		var thisInvocationPath 	= arguments.thisInvocationPath 	?: variables[ arguments.type & "ModulesInvocationPath" ];
 
-		if( fileExists( thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
+		if( fileExists( local.thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
 			
 			var oConfig = createObject( "component", thisInvocationPath & ".#arguments.name#.ModuleConfig" );
 			var oModule = new( { name = arguments.name, moduleType = arguments.type } );
