@@ -1670,7 +1670,7 @@ component accessors="true" singleton threadSafe{
 	function quickLayout(
 		required layout,
 		view="",
-		module="contentbox",
+		module=themeRecord().module,
 		args=structNew(),
 		viewModule="",
 		boolean prePostExempt=false
