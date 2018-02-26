@@ -180,11 +180,11 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 * @name The name of the module to register
 	 * @type The type of module: core or custom
 	 */
-	Module function registerNewModule( required name, required type, thisInvocationPath="", thisPath ){
-		var thisPath 			= arguments.thisPath 			?: variables[ arguments.type & "ModulesPath" ];
-		var thisInvocationPath 	= arguments.thisInvocationPath 	?: variables[ arguments.type & "ModulesInvocationPath" ];
+	Module function registerNewModule( required name, required type, thisModuleInvocationPath="", thisModulePath ){
+		var thisPath 			= arguments.thisModulePath 			?: variables[ arguments.type & "ModulesPath" ];
+		var thisInvocationPath 	= arguments.thisModuleInvocationPath 	?: variables[ arguments.type & "ModulesInvocationPath" ];
 
-		if( fileExists( local.thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
+		if( fileExists( thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
 			
 			var oConfig = createObject( "component", thisInvocationPath & ".#arguments.name#.ModuleConfig" );
 			var oModule = new( { name = arguments.name, moduleType = arguments.type } );
