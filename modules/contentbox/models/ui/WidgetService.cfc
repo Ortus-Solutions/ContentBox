@@ -59,7 +59,7 @@ component accessors="true" singleton threadSafe{
 	 */
 	array function getWidgetsList(){
 		var w = getWidgets();
-		return valueList( w.name ).listToArray();
+		return listToArray(valueList( w.name ));
 	}
 
 	/**

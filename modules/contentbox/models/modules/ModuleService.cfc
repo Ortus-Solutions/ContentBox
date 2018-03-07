@@ -378,24 +378,24 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		};
 
 		// Register Core
-		qCoreModules.each( function( row ){
+		for(row in qCoreModules){
 			cModuleRegistration( 
-				arguments.row, 
+				row, 
 				"core", 
 				variables.coreModulesInvocationPath, 
 				variables.coreModulesPath
 			);
-		} );
+		}
 
 		// Register Custom
-		qCustomModules.each( function( row ){
+		for(row in qCustomModules){
 			cModuleRegistration(
-				arguments.row, 
+				row, 
 				"custom", 
 				variables.customModulesInvocationPath,
 				variables.customModulesPath 
 			);
-		} );
+		}
 		
 		// build widget cache
 		buildModuleWidgetsCache();
