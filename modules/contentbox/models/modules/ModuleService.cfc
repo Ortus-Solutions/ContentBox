@@ -63,7 +63,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	ModuleService function init(){
 		// init it
 		super.init( entityName="cbModule" );
-		
+
 		variables.customModulesPath 			= "";
 		variables.customModulesInvocationPath 	= "";
 		variables.coreModulesPath 				= "";
@@ -72,7 +72,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		variables.moduleRegistry 				= {};
 		variables.moduleConfigCache 			= {};
 		variables.moduleMap 					= {};
-		
+
 		return this;
 	}
 
@@ -95,10 +95,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	 * Populate module from Module Configuration CFC and returns the module
-	 * 
+	 *
 	 * @model The module object
 	 * @config The config object to populate with
-	 * 
+	 *
 	 * @return The module populated
 	 */
 	any function populateModule( any module, any config ){
@@ -116,9 +116,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	 * Find a module in the DB by entry point
-	 * 
+	 *
 	 * @entryPoint The point to find
-	 * 
+	 *
 	 * @return The persisted module or a new module object representing not found.
 	 */
 	Module function findModuleByEntryPoint( required entryPoint ){
@@ -128,10 +128,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	 * Find modules in ContentBox using the active criteria or `any`
-	 * 
+	 *
 	 * @isActive The active criteria, true, false or any for all modules
 	 * @moduleType The module type criteria
-	 * 
+	 *
 	 * @return struct:{ count:numeric, modules:array of objects }
 	 */
 	struct function findModules( isActive="any", moduleType ){
@@ -154,12 +154,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		return results;
 	}
-	
+
 	/**
 	 * Shortcut to get the invocation path for requested widget from modules' widget cache
-	 * 
+	 *
 	 * @widgetName {String}
-	 * 
+	 *
 	 * @return The invocation path or empty if not found
 	 */
 	string function getModuleWidgetInvocationPath( required string widgetName ) {
@@ -173,10 +173,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 		return path;
 	}
-	
+
 	/**
 	 * Register a new module and return the module representation, this does not activate, just registers
-	 * 
+	 *
 	 * @name The name of the module to register
 	 * @type The type of module: core or custom
 	 */
@@ -185,7 +185,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		var thisInvocationPath 	= variables[ arguments.type & "ModulesInvocationPath" ];
 
 		if( fileExists( thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ){
-			
+
 			var oConfig = createObject( "component", thisInvocationPath & ".#arguments.name#.ModuleConfig" );
 			var oModule = new( { name = arguments.name, moduleType = arguments.type } );
 
@@ -202,25 +202,25 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	 * Deactivate a module from ContentBox
-	 * 
+	 *
 	 * @name The module to deactivate
 	 */
 	ModuleService function deactivateModule( required name ){
 		// Get Module Record
 		var oModule = findWhere( { name=arguments.name } );
-		
+
 		// deactivate record
 		oModule.setIsActive( false );
-		
+
 		// Call deactivate on module if it exists
 		if( structKeyExists( variables.moduleConfigCache, arguments.name ) ){
 			var config = variables.moduleConfigCache[ arguments.name ];
-			
+
 			// Call deactivate if it exists
 			if( structKeyExists( config, "onDeactivate" ) ){
 				config.onDeactivate();
 			}
-			
+
 			// deactivate from ColdBox
 			coldboxModuleService.unload( arguments.name );
 			detachColdBoxModuleRegistration( arguments.name );
@@ -228,16 +228,16 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		// save deactivated module status
 		save( oModule );
-		
+
 		//rebuild widgets cache
 		buildModuleWidgetsCache();
-		
+
 		return this;
 	}
 
 	/**
 	 * Detach coldbox module configuration registrations
-	 * 
+	 *
 	 * @name The name of the module to detach
 	 */
 	private ModuleService function detachColdBoxModuleRegistration( required name ){
@@ -250,13 +250,13 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	 * Activate a module from ContentBox
-	 * 
+	 *
 	 * @name The name of the module to activate
 	 */
 	ModuleService function activateModule( required name ){
 		var oModule 	= findWhere( { name = arguments.name } );
 		var sModuleMap 	= variables.moduleMap[ arguments.name ];
-		
+
 		// Set module as active
 		oModule.setIsActive( true );
 		// detach from coldbox just in case
@@ -267,7 +267,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		var oConfig = variables.moduleConfigCache[ arguments.name ];
 		// Repopulate module, just in case
 		populateModule( oModule, oConfig );
-		
+
 		// Call activate now if found on Module Config
 		if( structKeyExists( oConfig, "onActivate" ) ){
 			try{
@@ -285,16 +285,16 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		// save module status
 		save( oModule );
-		
+
 		//rebuild widgets cache
 		buildModuleWidgetsCache();
-		
+
 		return this;
 	}
 
 	/**
 	 * Delete Module, should only be done on deactivated modules
-	 * 
+	 *
 	 * @name The name of the module to delete
 	 */
 	ModuleService function deleteModule( required name ){
@@ -305,8 +305,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		if( structKeyExists( oConfig, "onDelete" ) ){
 			oConfig.onDelete();
 		}
-		
-		// Now delete it		
+
+		// Now delete it
 		deleteWhere( { "name" = arguments.name } );
 		if( directoryExists( moduleEntry.path & "/#arguments.name#" ) ){
 			directoryDelete( moduleEntry.path & "/#arguments.name#", true );
@@ -320,19 +320,19 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 */
 	ModuleService function resetModules(){
 		var aModules = list( asQuery=false );
-		
+
 		transaction{
 			for( var thisModule in aModules ){
 				deactivateModule( thisModule.getName() );
 			}
-			
+
 			// remove all modules from the DB
 			deleteAll();
 
 			// Reset internal map
 			variables.moduleMap = {};
 		}
-		
+
 		// now start them up again
 		startup();
 
@@ -369,7 +369,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				}
 
 				// Register type lookup for faster finding, instead of querying the db.
-				variables.moduleMap[ moduleName ] = { 
+				variables.moduleMap[ moduleName ] = {
 					type 			= arguments.moduleType,
 					path 			= arguments.path,
 					invocationPath 	= arguments.invocationPath
@@ -378,25 +378,25 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		};
 
 		// Register Core
-		for(var row in qCoreModules){
-			cModuleRegistration( 
-				row, 
-				"core", 
-				variables.coreModulesInvocationPath, 
+		for( var row in qCoreModules){
+			cModuleRegistration(
+				row,
+				"core",
+				variables.coreModulesInvocationPath,
 				variables.coreModulesPath
 			);
 		}
 
 		// Register Custom
-		for(var row in qCustomModules){
+		for( var row in qCustomModules){
 			cModuleRegistration(
-				row, 
-				"custom", 
+				row,
+				"custom",
 				variables.customModulesInvocationPath,
-				variables.customModulesPath 
+				variables.customModulesPath
 			);
 		}
-		
+
 		// build widget cache
 		buildModuleWidgetsCache();
 
@@ -405,23 +405,23 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	 * Upload a Module to the custom modules location, returns structure with [error:boolean, logInfo=string]
-	 * 
+	 *
 	 * @fileField The field it uploads from
 	 */
 	struct function uploadModule( required fileField ){
 		var destination 	= variables.coreModulesPath;
 		var installLog 		= createObject( "java","java.lang.StringBuilder" ).init( "" );
-		var results 		= { 
-			"error" 	= true, 
-			"logInfo" 	= "" 
+		var results 		= {
+			"error" 	= true,
+			"logInfo" 	= ""
 		};
 
 		// Upload the module zip
 		var fileResults = fileUpload(
-			destination, 
-			arguments.fileField, 
-			"application/octet-stream,application/x-zip-compressed,application/zip", 
-			"overwrite" 
+			destination,
+			arguments.fileField,
+			"application/octet-stream,application/x-zip-compressed,application/zip",
+			"overwrite"
 		);
 
 		// Unzip File?
@@ -440,18 +440,18 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 			// extract it
 			zipUtil.extract(
-				zipFilePath = "#destination#/#fileResults.clientFile#", 
-				extractPath = "#destination#" 
+				zipFilePath = "#destination#/#fileResults.clientFile#",
+				extractPath = "#destination#"
 			);
-			
+
 			// Removal of Mac stuff
 			if( directoryExists( destination & "/__MACOSX" ) ){
 				directoryDelete( destination & "/__MACOSX", true);
 			}
-			
+
 			// rescan and startup the modules
 			startup();
-			
+
 			// success
 			results.error = false;
 		} else {
@@ -461,7 +461,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		// flatten messages;
 		results.logInfo = installLog.toString();
-		
+
 		// return results
 		return results;
 	}
@@ -499,7 +499,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
     					};
     					cache[ widgetName & "@" & module.getName() ] = widget;
     				}
-    				
+
     			}
 			}
 		}

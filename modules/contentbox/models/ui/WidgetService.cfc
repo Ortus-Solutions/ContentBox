@@ -59,7 +59,7 @@ component accessors="true" singleton threadSafe{
 	 */
 	array function getWidgetsList(){
 		var w = getWidgets();
-		return listToArray(valueList( w.name ));
+		return listToArray( valueList( w.name ) );
 	}
 
 	/**
@@ -68,14 +68,14 @@ component accessors="true" singleton threadSafe{
 	 */
 	query function getWidgetCategories(){
 		var widgets = getWidgets();
-		var q = new Query( 
+		var q = new Query(
 			dbType 	= "query",
 			QoQ 	= widgets,
 			sql 	= "select distinct category from QoQ order by category ASC"
 		);
 		return q.execute().getResult();
 	}
-	
+
 	/**
 	 * Get all installed widgets in ContentBox by looking at the following locations:
 	 * - core
@@ -85,7 +85,7 @@ component accessors="true" singleton threadSafe{
 	 */
 	query function getWidgets(){
 		var qAllWidgets = queryNew( "" );
-		
+
 		// Add custom columns
 		QueryAddColumn( qAllWidgets, "name",   					[] );
 		QueryAddColumn( qAllWidgets, "directory",				[] );
@@ -101,7 +101,7 @@ component accessors="true" singleton threadSafe{
 			.processWidgets( qAllWidgets, "Custom"  )
 			.processModuleWidgets( qAllWidgets )
 			.processThemeWidgets( qAllWidgets );
-		
+
 		return qAllWidgets;
 	}
 
@@ -125,7 +125,7 @@ component accessors="true" singleton threadSafe{
 			querySetCell( arguments.qRecords, "directory", 		qWidgets.directory[ x ] );
 			querySetCell( arguments.qRecords, "filename", 		qWidgets.name[ x ] );
 			querySetCell( arguments.qRecords, "widgettype", 	arguments.type );
-			
+
 			if( arguments.type == "Core" ){
 				var invocationPath = "contentbox.wigets.#widgetName#";
 				querySetCell( arguments.qRecords, "invocationPath", invocationPath );
@@ -161,7 +161,7 @@ component accessors="true" singleton threadSafe{
 			var thisRecord = moduleWidgets[ widget ];
 			var widgetName = listGetAt( widget, 1, "@" );
 			var moduleName = listGetAt( widget, 2, "@" );
-			
+
 			// Add new row with data
 			queryAddRow( arguments.qRecords );
 			querySetCell( arguments.qRecords, "name", widgetName );
@@ -215,7 +215,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Discover the type of widget, either custom or core. Custom widget's take precedence
-	 * 
+	 *
 	 * @name The name of the widget
 	 */
 	string function discoverWidgetType( required name ){
@@ -236,7 +236,7 @@ component accessors="true" singleton threadSafe{
 	any function getWidgetByDiscovery( required name ){
 		var isModuleWidget 	= findNoCase( "@", arguments.name ) ? true : false;
 		var isThemeWidget 	= findNoCase( "~", arguments.name ) ? true : false;
-		
+
 		if( isModuleWidget ){
 			return getWidget( arguments.name, "module" );
 		}
@@ -251,10 +251,10 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Get a widget by name and type (defaults to `core|custom`)
-	 * 
+	 *
 	 * @name The name of the widget
 	 * @type This can be one of the following: core, custom, theme, module
-	 * 
+	 *
 	 * @throws WidgetNotFoundException
 	 */
 	any function getWidget( required name, required string type="core" ){
@@ -277,8 +277,8 @@ component accessors="true" singleton threadSafe{
 
 		if( len( widgetPath ) ) {
 			// Init Arguments added for backwards compat
-			return wirebox.getInstance( 
-				name 			= widgetPath, 
+			return wirebox.getInstance(
+				name 			= widgetPath,
 				initArguments	= { "controller" = variables.coldbox }
 			);
 		} else {
@@ -291,7 +291,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Get a widget icon representation
-	 * 
+	 *
 	 * @name The name of the widget
 	 * @type This can be one of the following: core, theme, module
 	 */
@@ -316,7 +316,7 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Get a widget category
-	 * 
+	 *
 	 * @name The name of the widget
 	 * @type This can be one of the following: core, theme, module
 	 */
@@ -341,15 +341,15 @@ component accessors="true" singleton threadSafe{
 
 	/**
 	 * Remove a widget from the custom locations
-	 *  
+	 *
 	 * @widgetFile The location of the widget to remove
 	 */
 	boolean function removeWidget( required widgetFile ){
 		var wCustomPath = variables.customWidgetsPath & "/" & arguments.widgetFile & ".cfc";
-		
-		if( fileExists( wCustomPath ) ){ 
+
+		if( fileExists( wCustomPath ) ){
 			fileDelete( wCustomPath );
-			return true; 
+			return true;
 		}
 
 		structDelete( variables.customWidgetsMap, arguments.widgetFile );
@@ -361,13 +361,13 @@ component accessors="true" singleton threadSafe{
 	 * Upload a widget to the custom location
 	 *
 	 * @fileField The form file field to use
-	 * 
+	 *
 	 * @return The CFFile structure from the upload results
 	 */
 	struct function uploadWidget( required fileField ){
 		var destination 	= variables.customWidgetsPath;
 		var results 		= fileUpload( destination, arguments.fileField, "", "overwrite" );
-		
+
 		if( results.clientfileext neq "cfc" ){
 			fileDelete( results.serverDirectory & "/" & results.serverfile );
 			throw( message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType" );
@@ -392,7 +392,7 @@ component accessors="true" singleton threadSafe{
 	 * @udf The target UDF to render out arguments for
 	 * @widget The widget name
 	 * @type The widget type
-	 * 
+	 *
 	 * @return The argument metadata structure
 	 */
 	function getWidgetRenderArgs( required udf, required widget, required type ){
