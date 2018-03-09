@@ -378,7 +378,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		};
 
 		// Register Core
-		for(row in qCoreModules){
+		for(var row in qCoreModules){
 			cModuleRegistration( 
 				row, 
 				"core", 
@@ -388,7 +388,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 
 		// Register Custom
-		for(row in qCustomModules){
+		for(var row in qCustomModules){
 			cModuleRegistration(
 				row, 
 				"custom", 
