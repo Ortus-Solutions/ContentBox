@@ -33,7 +33,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* Proxy into the CB Helper
 	*/
 	any function onMissingMethod( missingMethodName, missingMethodArguments ){
-		return evaluate( "variables.cb.#missingMethodName#(argumentCollection=arguments.missingMethodArguments)" );
+		return invoke(
+			variables.cb,
+			missingMethodName,
+			missingMethodArguments
+		);
 	}
 
 

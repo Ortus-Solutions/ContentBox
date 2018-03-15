@@ -714,7 +714,7 @@ component accessors="true" threadSafe singleton{
     						var options = "";
     						// Check options UDF
     						if( structKeyExists( thisSettingMD, "optionsUDF" ) ){
-    							options = evaluate( "oTheme.#thisSettingMD.optionsUDF#()" );
+								options = invoke( oTheme, thisSettingMD.optionsUDF );
     						} else if( structKeyExists( thisSettingMD, "options" ) ){
     							options = thisSettingMD.options;
     						}
