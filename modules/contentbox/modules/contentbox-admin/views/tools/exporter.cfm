@@ -344,7 +344,36 @@
 								<div class="controls checkbox-spacer">
 									<div class="row">
 										<cfset counter = 1>
-										<cfloop query="prc.widgets">
+										<cfscript>
+											for (w in prc.widgets){
+												if (w.widgettype eq "Custom"){
+													writeOutput('<div class="col-md-6">');
+														try{
+															p = prc.widgetService.getWidget( name=w.name, type=w.widgetType );
+														} catch( Any e ){
+															log.error( 'Error Building #w.toString()#. #e.message# #e.detail#', e );
+															writeOutput( "<div class='alert alert-danger'>Error building '#w.name#' widget: #e.message# #e.detail#</div>" );
+															continue;
+														}
+														writeOutput('<label for="export_widgets_#w.name#" class="checkbox">
+															#html.checkbox(
+																name      	= "export_widgets",
+																id        	= "export_widgets_#w.name#",
+																value 		= "#w.name#",
+																checked 	= true,
+																data  		= { alacarte = true }
+															)# #w.name#
+														</label>
+													</div>');
+													if (counter MOD 2 eq 0){
+														writeOutput('</div>
+														<div class="row">');
+													}
+													counter++;
+												}
+											}
+											</cfscript>
+										<!---<cfloop query="prc.widgets">
 											<cfif prc.widgets.widgettype eq "Custom">
 												<div class="col-md-6">
 													<cfscript>
@@ -372,7 +401,7 @@
 												</cfif>
 												<cfset counter++>
 											</cfif>
-										</cfloop>
+										</cfloop>--->
 									</div>
 								</div>
 							</div>
