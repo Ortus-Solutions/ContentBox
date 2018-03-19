@@ -344,6 +344,42 @@
 								<div class="controls checkbox-spacer">
 									<div class="row">
 										<cfset counter = 1>
+										<!-- Here is the pull request: https://github.com/Ortus-Solutions/ContentBox/pull/383/-->
+										<!-- Error when clicking Tools -> Export in the admin -->
+										<!-- In CF11 cfloop on query object is not working(query object which is created by using queryNew() function) -->
+										<!-- So, instead of cfloop use for() loop in cfscript. Rewrite the set of code in cfscript, previously some part was written in tags and some was in cfscript. -->
+										<!-- NOTE: Only for CF11 cfloop is not supporting. -->
+										<!-- NOTE: We can revisit the code once CF11 support is dropped. -->
+										<!---<cfloop array="#prc.widgets#" index="w">
+										<cfif w.widgettype eq "Custom">
+											<div class="col-md-6">
+												<cfscript>
+												try{
+													p = prc.widgetService.getWidget( name=w.name, type=w.widgetType );
+												} catch( Any e ){
+													log.error( 'Error Building #w.toString()#. #e.message# #e.detail#', e );
+													writeOutput( "<div class='alert alert-danger'>Error building '#w.name#' widget: #e.message# #e.detail#</div>" );
+													continue;
+												}
+												</cfscript>
+												<label for="export_widgets_#w.name#" class="checkbox">
+													#html.checkbox(
+														name      	= "export_widgets",
+														id        	= "export_widgets_#w.name#",
+														value 		= "#w.name#",
+														checked 	= true,
+														data  		= { alacarte = true }
+													)# #w.name#
+												</label>
+											</div>
+											<cfif counter MOD 2 eq 0>
+												</div>
+												<div class="row">
+											</cfif>
+											<cfset counter++>
+										</cfif>
+										</cfloop>--->
+										<!-- for() loop-->
 										<cfscript>
 											for (w in prc.widgets){
 												if (w.widgettype eq "Custom"){
@@ -372,7 +408,7 @@
 													counter++;
 												}
 											}
-											</cfscript>
+										</cfscript>
 									</div>
 								</div>
 							</div>
