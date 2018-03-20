@@ -60,7 +60,7 @@ component {
 			{ pattern="/contentStore/page/:page", handler="contentStore" },
 			{ pattern="/menus/page/:page", handler="menus" },
 			{ pattern="/mediamanager/library/:library", handler="mediamanager", action="index" },
-			{ pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
+			{ pattern="/module/:moduleEntryPoint/:moduleHandler?/:moduleAction?", handler="modules", action="execute" },
 			{ pattern="/:handler/:action?" }
 		];
 
