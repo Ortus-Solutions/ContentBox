@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
-<!-- ====================================================================== 
+<!-- ======================================================================
      ContentBox Modular CMS Build
      ====================================================================== -->
  <project name="contentbox-build" default="build.all" basedir="../">
  	<description>
     	Build a new distribution of ContentBox Modular CMS
     </description>
-	
+
  	<!-- Version: UPDATE ON EACH RELEASE AS NEEDED -->
  	<property name="groupID"					value="ortussolutions" />
  	<property name="contentbox.slug"			value="contentbox"/>
-	
+
 	<!-- Travis -->
 	<condition property="isTravis" else="false">
     	<isset property="isTravis"/>
@@ -34,7 +34,7 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml" classpathref="cp" />
  	<!-- Import Box-Repo Tasks -->
 	<import><url url="https://raw.githubusercontent.com/Ortus-Solutions/box-tasks/master/box-repo.xml"/></import>
- 	
+
 	<!-- Init -->
 	<target name="init" description="Init build" unless="src.isInit">
 		<!-- Default environment check, if not passed via -Denvironment -->
@@ -49,7 +49,7 @@
 				<loadproperties srcFile="build/build-${environment}.properties"/>
 			</then>
 		</if>
-		
+
 		<!-- Load root properties -->
 		<echo>Loading base properties</echo>
 		<loadproperties srcFile="build/build.properties"/>
@@ -62,7 +62,7 @@
 		<mkdir dir="${dir.build}"/>
 		<mkdir dir="${be.exports}"/>
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
-		
+
 		<!-- Build Number -->
 		<if>
 			<not><available file="${be.exports}/build.number" /></not>
@@ -72,8 +72,8 @@
 			<not><isset property="build.number" /></not>
 			<then>
 				<propertyfile file="${be.exports}/build.number" comment="Build Number for ANT. Edit not!">
-					<entry key="build.number" 
-							type="int" 
+					<entry key="build.number"
+							type="int"
 					     	operation="+"
 							pattern="00000"
 					     	default="00210" />
@@ -84,7 +84,7 @@
 
 		<!-- Build ID -->
 		<property name="build.label" value="contentbox-${contentbox.version}+${build.number}-${start.DSTAMP}${start.TSTAMP}"/>
-		
+
 		<!-- Version Identifier -->
 		<concat destfile="${dir.build}/version.json">{ "version" : "${contentbox.version}" }</concat>
 
@@ -92,7 +92,7 @@
 		<antcall target="update.permissions" />
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
-		
+
 		<!-- Mark as init -->
 		<property name="src.isInit" value="true" />
 	</target>
@@ -117,11 +117,11 @@
 	<target name="build.module" description="Build a new ContentBox module source release" depends="init">
 		<!-- Create module Build dir -->
 		<mkdir dir="${dir.build}/module"/>
-		
+
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/module/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
-		
-		<!-- Copy Source -->	
+
+		<!-- Copy Source -->
       	<copy todir="${dir.build}/module" encoding="UTF-8">
       		<fileset dir="modules/contentbox">
       			<exclude name="modules/contentbox-deps/modules/**" />
@@ -151,13 +151,13 @@
 		</if>
 
 		<!-- Zip Module Release with no dependencies -->
-		<zip 	destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" 
-				basedir="${dir.build}/module" 
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip"
+				basedir="${dir.build}/module"
 		/>
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-${contentbox.version}.zip" />
-		
+
 		<!-- copy box.json to root of exports -->
 		<copy file="${dir.build}/module/box.json" toFile="${dir.contentbox.exports}/box.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
@@ -167,12 +167,12 @@
 		<!-- Create site Build dir -->
 		<mkdir dir="${dir.build}/installer"/>
 		<mkdir dir="${dir.build}/installer-module"/>
-		
+
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/installer/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 		<concat destfile="${dir.build}/installer-module/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 
-		<!-- Copy Source -->	
+		<!-- Copy Source -->
       	<copy todir="${dir.build}/installer" encoding="UTF-8">
       		<fileset dir=".">
       			<exclude name=".*/**" />
@@ -195,7 +195,7 @@
       		</fileset>
         </copy>
 
-        <!-- Copy installer module source -->	
+        <!-- Copy installer module source -->
       	<copy todir="${dir.build}/installer-module" encoding="UTF-8">
       		<fileset dir="modules/contentbox-installer">
       			<exclude name="**/bower_components/**" />
@@ -203,12 +203,12 @@
       		</fileset>
       		<fileset file="readme.md" />
         </copy>
-		
+
 		<!-- Activate DSN Creator link -->
-		<replace file="${dir.build}/installer/Application.cfc" 
-				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
-				 summary="true" 
-				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+		<replace file="${dir.build}/installer/Application.cfc"
+				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
+				 summary="true"
+				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
 				 encoding="UTF-8"/>
 
         <!-- Create site box.json -->
@@ -216,7 +216,7 @@
 
         <!-- Copy server.json -->
         <copy file="build/resources/server.json" toFile="${dir.build}/installer/server.json" overwrite="true"  encoding="UTF-8"/>
-        
+
         <!-- replace slugs -->
         <replaceregexp match='\-site' replace="-installer" flags="ig" byline="true" encoding="UTF-8">
 			<fileset file="${dir.build}/installer/box.json" />
@@ -254,11 +254,11 @@
 		</if>
 
 		<!-- Zip Module Release with no dependencies -->
-		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" 
-				basedir="${dir.build}/installer" 
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip"
+				basedir="${dir.build}/installer"
 		/>
-		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip" 
-				basedir="${dir.build}/installer-module" 
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip"
+				basedir="${dir.build}/installer-module"
 		/>
 
 		<!-- Build Checksum -->
@@ -266,21 +266,21 @@
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-module-${contentbox.version}.zip" />
-		
+
 		<!-- copy box.json to root of exports -->
 		<copy file="${dir.build}/installer/box.json" toFile="${dir.contentbox.exports}/box-installer.json" overwrite="true"  encoding="UTF-8"/>
 		<copy file="${dir.build}/installer-module/box.json" toFile="${dir.contentbox.exports}/box-installer-module.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
-	
+
 	<!-- Build site distro -->
 	<target name="build.site" description="Build a new ContentBox site release" depends="build.installer">
 		<!-- Create site Build dir -->
 		<mkdir dir="${dir.build}/site"/>
-		
+
 		<!-- Copy build ID -->
 		<concat destfile="${dir.build}/site/${build.label}">Build Number: ${build.number}, Built on ${start.TODAY}</concat>
 
-		<!-- Copy Source -->	
+		<!-- Copy Source -->
       	<copy todir="${dir.build}/site" encoding="UTF-8">
       		<fileset dir="${dir.build}/installer">
       			<!-- Remove Dependencies -->
@@ -289,10 +289,10 @@
         </copy>
 
         <!-- Deactivate DSN Creator link -->
-		<replace file="${dir.build}/site/Application.cfc" 
-				 value='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
-				 summary="true" 
-				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+		<replace file="${dir.build}/site/Application.cfc"
+				 value='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
+				 summary="true"
+				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
 				 encoding="UTF-8"/>
 
         <!-- replace slugs -->
@@ -304,18 +304,18 @@
 		</replaceregexp>
 
 		<!-- Zip Module Release with no dependencies -->
-		<zip 	destfile="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" 
-				basedir="${dir.build}/site" 
+		<zip 	destfile="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip"
+				basedir="${dir.build}/site"
 		/>
 
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-site-${contentbox.version}.zip" />
-		
+
 		<!-- copy box.json to root of exports -->
 		<copy file="${dir.build}/site/box.json" toFile="${dir.contentbox.exports}/box-site.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
-	
+
  	<!-- Build API Docs -->
  	<target name="build.apidocs" description="Builds the api docs" depends="init">
  		<!-- Create API apidocs dir -->
@@ -330,8 +330,8 @@
 		</exec>
 		<sleep seconds="5"/>
 		<!-- Get the apidocs now -->
-		<get dest="${dir.build}/docbox.html" 
-			 src="${url.apidocs}?version=${contentbox.version}&amp;path=${dir.api}" 
+		<get dest="${dir.build}/docbox.html"
+			 src="${url.apidocs}?version=${contentbox.version}&amp;path=${dir.api}"
 			 verbose="true"
 			 retries="5"/>
 		<delete file="${dir.build}/docbox.html" />
@@ -345,7 +345,7 @@
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
  		<checksum forceoverwrite="true" algorithm="SHA-512" fileext=".sha512" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
  	</target>
- 	
+
  	<!-- Build war -->
  	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.site">
  		<!-- Unzip War -->
@@ -359,10 +359,10 @@
 				<exclude name="**/apidocs/*"/>
 		    </patternset>
  		</unzip>
- 		
+
  		<!-- Replace web.xml -->
  		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/war/WEB-INF" overwrite="true" encoding="UTF-8"/>
- 		
+
  		<!-- Create Patch directory-->
  		<mkdir dir="${dir.build}/war/WEB-INF/lib/lucee-server/patches"/>
 
@@ -370,12 +370,12 @@
  		<if>
  			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
  			<then>
-	 			<copy 	file="${dir.dependencies}/lucee-${lucee.patch}.lco" 
-	 					toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/${lucee.patch}.lco" 
+	 			<copy 	file="${dir.dependencies}/lucee-${lucee.patch}.lco"
+	 					toFile="${dir.build}/WEB-INF/lib/lucee-server/patches/${lucee.patch}.lco"
 	 					encoding="UTF-8" />
  			</then>
  		</if>
- 		
+
  		<!-- Copy Tuckey -->
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/war/WEB-INF" overwrite="true" encoding="UTF-8"/>
  		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/war/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
@@ -395,11 +395,11 @@
 		<exec executable="box" dir="${dir.build}/war">
 			<arg line="install id=coldbox@4.3.0 production=true" />
 		</exec>
-		
+
  		<!-- Create War -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" basedir="${dir.build}/war" />
  		<zip destfile="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip">
-			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />	
+			<fileset file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
  		</zip>
 
 		<!-- Create Installer With Dependencies -->
@@ -411,14 +411,14 @@
 
 		<!-- Cleanup -->
  		<delete file="${dir.contentbox.exports}/contentbox-${contentbox.version}.war" />
- 		
+
  		<!-- Build Checksum -->
  		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
  		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-war-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" fileext=".sha512" algorithm="SHA-512" file="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" />
  	</target>
- 	
+
  	<!-- Build Express Edition -->
  	<target name="build.express" description="Build an express server" depends="build.war">
  		<!-- Unzip tomcat -->
@@ -432,46 +432,47 @@
  		</delete>
  		<!-- create root app -->
  		<mkdir dir="${dir.build}/express/webapps/ROOT" />
- 		
+
  		<!-- Copy ContentBox war into it -->
  		<copy toDir="${dir.build}/express/webapps/ROOT" overwrite="true" encoding="UTF-8">
 			<fileset dir="${dir.build}/war" />
  		</copy>
- 		
+
  		<!-- Remove DSN creator link For Express Edition -->
-		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
-				 value="" 
-				 summary="true" 
-				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";' 
+		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc"
+				 value=""
+				 summary="true"
+				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
 				 encoding="UTF-8"/>
 
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
- 		
- 		<!-- Create embedded datasource in Application.cfc 
+
+ 		<!-- Create embedded datasource in Application.cfc
  		<loadfile property="express.appdsn" srcFile="${dir.resources}/express-dsn.txt" />
- 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc" 
- 				 value="${express.appdsn}" 
- 				 summary="true" 
+ 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc"
+ 				 value="${express.appdsn}"
+ 				 summary="true"
  				 token='this.datasource = "contentbox";'
- 				 encoding="UTF-8"/>-->
- 				
+ 				 encoding="UTF-8"/> -->
+
+		<!-- Copy DSN to config -->
+		<copy todir="${dir.build}/express/webapps/ROOT/config" overwrite="true" encoding="UTF-8">
+ 			<fileset file="${dir.resources}/runtime.properties.cfm" />
+ 		</copy>
  		<!-- Custom Server Config -->
  		<copy todir="${dir.build}/express" overwrite="true" encoding="UTF-8">
  			<fileset dir="${dir.resources}/express" />
  		</copy>
- 		<copy todir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee" overwrite="true" encoding="UTF-8">
- 			<fileset file="${dir.resources}/lucee-web.xml.cfm" />
- 		</copy>
- 		
+
  		<!-- add execution perms -->
  		<chmod perm="ugo+rx">
  			<fileset dir="${dir.build}/express/bin" />
  		</chmod>
- 		
+
  		<!-- NO JRE EXPRESS -->
  		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express" />
- 		
+
  		<!-- MAC JRE -->
  		<unzip src="${dir.dependencies}/jre-darwin64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
  		<chmod perm="ugo+rx">
@@ -507,7 +508,7 @@
 			</fileset>
 		</checksum>
  	</target>
- 	
+
 	<!-- Build all releases-->
 	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.forgebox,build.patch">
 		<!-- Copy as BE to root -->
@@ -517,14 +518,14 @@
 		</copy>
 
 		<!-- Create Box Repo From macrodef -->
-		<box-repo location="${be.exports}" 
-				  artifactID="${contentbox.slug}" 
+		<box-repo location="${be.exports}"
+				  artifactID="${contentbox.slug}"
 				  groupID="${groupID}"
 				  buildID="${build.number}"
 				  latest="${contentbox.version}"
 				  stableVersion="${contentbox.stableversion}"
 				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nodeps"/>
-		
+
 		<!-- Cleanup -->
 		<if>
 			<equals arg1="$isTravis" arg2="false" />
@@ -539,8 +540,8 @@
 	<target name="build.forgebox" description="Build ForgeBox package submissions" depends="init">
 		<!-- Create module Build dir -->
 		<mkdir dir="${dir.build}/forgebox"/>
-		
-		<!-- Copy Source -->	
+
+		<!-- Copy Source -->
       	<copy todir="${dir.build}/forgebox" encoding="UTF-8">
       		<fileset dir="build/forgebox" />
         </copy>
@@ -550,7 +551,7 @@
 			<fileset dir="${dir.build}/forgebox" />
 		</replaceregexp>
 	</target>
- 	
+
  	<!-- Build Patches -->
     <target name="build.patch">
         <subant target="build">
@@ -560,31 +561,31 @@
     		<property name="build.branch"	value="${build.branch}" />
         </subant>
     </target>
- 	
+
  	<!-- Get Dependencies -->
 	<target name="getDependencies" description="Get all the necessary dependencies for the build process using: box.repo.url">
 		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="lucee" 
- 						artifactID="lucee" 
+ 		<box-dependency groupID="lucee"
+ 						artifactID="lucee"
  						version="${lucee.version}"
  						extension="war"
  						destination="${dir.dependencies}"/>
  		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="tuckey" 
- 						artifactID="urlrewritefilter" 
+ 		<box-dependency groupID="tuckey"
+ 						artifactID="urlrewritefilter"
  						version="${tuckey.version}"
  						extension="jar"
  						destination="${dir.dependencies}"/>
  		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="apache" 
- 						artifactID="apache-tomcat" 
+ 		<box-dependency groupID="apache"
+ 						artifactID="apache-tomcat"
  						version="${express.server.version}"
  						destination="${dir.dependencies}"/>
 		<!-- Download Dependency via box task-->
 		<if>
  			<not><equals arg1="${lucee.patch}" arg2=""></equals></not>
  			<then>
-	 			<box-dependency groupID="lucee" 
+	 			<box-dependency groupID="lucee"
 		 						artifactID="lucee"
 		 						version="${lucee.patch}"
 		 						extension="lco"
@@ -592,21 +593,21 @@
  			</then>
  		</if>
  		<!-- Download Dependency via box task-->
- 		<box-dependency groupID="oracle" 
+ 		<box-dependency groupID="oracle"
  						artifactID="jre"
  						version="${jre.version}"
  						destination="${dir.dependencies}"
  						classifiers="win64"/>
- 		<box-dependency groupID="oracle" 
+ 		<box-dependency groupID="oracle"
  						artifactID="jre"
  						version="${jre.version}"
  						destination="${dir.dependencies}"
  						classifiers="darwin64"/>
- 		<box-dependency groupID="oracle" 
+ 		<box-dependency groupID="oracle"
  						artifactID="jre"
  						version="${jre.version}"
  						destination="${dir.dependencies}"
  						classifiers="linux64"/>
 	</target>
-	
+
 </project>

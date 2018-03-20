@@ -248,7 +248,7 @@ fi
 #JAVA_OPTS="$JAVA_OPTS -Dorg.apache.catalina.security.SecurityListener.UMASK=`umask`"
 
 #CONTENTBOX ADDITIONS
-CATALINA_OPTS="-Xmx512m -Xmx512m -javaagent:$CATALINA_BASE/webapps/ROOT/WEB-INF/lib/lucee-inst.jar"
+CATALINA_OPTS="-Xmx512m -Xmx512m -Dlucee-extensions=6DD4728A-AB0C-4F67-9DCE1A91A8ACD114"
 
 # ----- Execute The Requested Command -----------------------------------------
 
