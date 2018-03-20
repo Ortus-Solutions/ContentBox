@@ -218,7 +218,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 			// Call deactivate if it exists
 			if( structKeyExists( config, "onDeactivate" ) ){
-				config.onDeactivate();
+				try{
+					config.onDeactivate();
+				}catch( Any e ){
+					log.error( "Error deactivating module: #arguments.name# with #e.message & e.detail#", e );
+					// dont' throw. just log and continue deactivating modules.
+				}
 			}
 
 			// deactivate from ColdBox
@@ -229,7 +234,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		// save deactivated module status
 		save( oModule );
 
-		//rebuild widgets cache
+		// rebuild widgets cache
 		buildModuleWidgetsCache();
 
 		return this;
