@@ -10,7 +10,6 @@ component extends="tests.resources.BaseTest"{
 
 		// executes before all suites+specs in the run() method
 		function beforeAll(){
-			reset();
 			super.beforeAll();
 
 			widgetService = getInstance( "widgetService@cb" );
