@@ -23,14 +23,16 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^4.3.0"
+        "coldbox":"be"
     },
     "installPaths":{
-        "coldbox":"coldbox",
-        "testbox":"testbox"
+        "testbox":"testbox",
+        "coldbox":"/Users/lmajano/Sites/contentbox/coldbox",
+        "route-visualizer":"/Users/lmajano/Sites/contentbox/modules/route-visualizer"
     },
     "devDependencies":{
-        "testbox":"^2.6.0+156"
+        "testbox":"^2.6.0+156",
+        "route-visualizer":"^1.0.0"
     },
     "ignores":[]
 }

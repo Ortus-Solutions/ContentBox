@@ -10,7 +10,7 @@ component extends="baseHandler"{
 	// Dependencies
 	property name="moduleService"	inject="id:moduleService@cb";
 	property name="cb" 				inject="cbHelper@cb";
-	property name="routingService"	inject="coldbox:interceptor:ses";
+	property name="routingService"	inject="coldbox:routingService";
 
 	// PrePost Actions
 	this.prehandler_except = "execute";
@@ -43,21 +43,21 @@ component extends="baseHandler"{
 		// Clean incoming routed URL from base proxy: cbadmin/module
 		var routedURL = event.getCurrentRoutedURL().replacenocase( "cbadmin/module", "" );
 		// Discover it's route
-		var route = routingService.findRoute( routedURL, event );
+		var routeResults = routingService.findRoute( routedURL, event );
 
 		// Check if route is discovered, basically if we get handler => contentbox-ui:page then it was not found
-		if( route.handler == "contentbox-ui:page" ){
+		if( routeResults.route.handler == "contentbox-ui:page" ){
 			cbMessagebox.warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
 			return setNextEvent( prc.xehModules );
 		}
 
-		// Setup discovered data
-		var thisModule 	= route.module;
-		var thisHandler = route.handler ?: "";
-		var thisAction 	= route.action ?: "index";
+		// Process the route, this discovers the route
+		prc.contentbox_moduleEvent = routingService.processRoute( routeResults, event, rc, prc );
 
-		// store incoming module event so modules can use it
-		prc.contentbox_moduleEvent = "#thisModule#:#thisHandler#.#thisAction#";
+		// Default module actions
+		if( isSimpleValue( routeResults.route.action ) and !routeResults.route.action.len() ){
+			prc.contentbox_moduleEvent &= ".index";
+		}
 
 		// execute module event
 		var results = runEvent( event=prc.contentbox_moduleEvent );
@@ -69,7 +69,7 @@ component extends="baseHandler"{
 
 		// stash the module view, so it renders in the admin layout if not set already
 		if( !structKeyExists( prc, "viewModule" ) or !len( prc.viewModule )) {
-			prc.viewModule = thisModule;
+			prc.viewModule = routeResults.route.module;
 		}
 
 		// Check for renderData
