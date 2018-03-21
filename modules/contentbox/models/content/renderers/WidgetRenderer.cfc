@@ -42,16 +42,16 @@ component accessors="true" extends="BaseRenderer"{
 		var targets 		= reMatchNoCase( regex, builder.toString() );
 		var targetLen 		= arrayLen( targets );
 		var isModuleWidget 	= false;
-		var attributes 		= "";
+		var tagAttributes 	= "";
 
 		// Loop over found mustaches {{{Widget}}}
 		for( var x=1; x lte targetLen; x++ ){
-			attributes = xmlParse( targets[ x ] ).widget.XmlAttributes;
+			tagAttributes = xmlParse( targets[ x ] ).widget.XmlAttributes;
 			try{
 
-				widgetName 		= attributes.widgetname;
-				widgetType 		= attributes.widgettype;
-				widgetUDF 		= structKeyExists( attributes, "widgetUDF" ) ? attributes.widgetUDF : "renderIt";
+				widgetName 		= tagAttributes.widgetname;
+				widgetType 		= tagAttributes.widgettype;
+				widgetUDF 		= structKeyExists( tagAttributes, "widgetUDF" ) ? tagAttributes.widgetUDF : "renderIt";
 				isModuleWidget 	= widgetType == "Module";
 				isThemeWidget 	= widgetType == "Theme";
 
@@ -60,7 +60,7 @@ component accessors="true" extends="BaseRenderer"{
 					widgetContent = invoke(
 						widgetService.getWidget( '#getToken( widgetName, 1, "." )#' ),
 						getToken( widgetName, 2, "." ),
-						attributes
+						tagAttributes
 					);
 				} else {
 					if( isModuleWidget ) {
@@ -68,7 +68,7 @@ component accessors="true" extends="BaseRenderer"{
 						widgetContent = invoke(
 							widgetService.getWidget( name=widgetName, type="module" ),
 							widgetUDF,
-							attributes
+							tagAttributes
 						);
 					} else {
 						if( isThemeWidget ) {
@@ -76,21 +76,28 @@ component accessors="true" extends="BaseRenderer"{
 							widgetContent = invoke(
 								widgetService.getWidget( name=widgetName, type="theme" ),
 								widgetUDF,
-								attributes
+								tagAttributes
 							);
 						} else {
-							// Render out the core widget
-							widgetContent = invoke(
-								widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) ),
-								widgetUDF,
-								attributes
-							);
+							// lucee 4.5 split
+							if( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ){
+								// Render out the core widget, do it the old way, until lucee 4.5 is not supported
+								var thisWidget = widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) );
+								widgetContent = thisWidget[ widgetUDF ]( argumentCollection=tagAttributes );
+							} else {
+								// Render out the core widget
+								widgetContent = invoke(
+									widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) ),
+									widgetUDF,
+									tagAttributes
+								);
+							}
 						}
 					}
 				}
 				// Verify null widgetContent
 				if( isNull( widgetContent ) ){
-					log.warn( "Widget: #widgetName# produce no content in page #arguments.content.getTitle()#", attributes );
+					log.warn( "Widget: #widgetName# produce no content in page #arguments.content.getTitle()#", tagAttributes );
 					widgetContent = "";
 				}
 			} catch( Any e ) {
