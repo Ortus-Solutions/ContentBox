@@ -330,25 +330,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 </div> <!--- end panel FileBrowser --->
 
-<!--- Image modal preview --->
-#announceInterception( "fb_preQuickViewBar" )#
-<div id="modalPreview" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryLabel" aria-hidden="true">
-	<div class="modal-dialog">
-        <div class="modal-content" id="modalContent">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-image"></i> Image preview</h4>
-		    </div>
-			<!--- Create/Edit form --->
-			<div class="modal-body">
-				<img src="" class="imagepreview img-scaled" style="" >
-			</div>
-			<!--- Footer --->
-		</div>
-	</div>
-</div>
-#announceInterception( "fb_postQuickViewBar" )#
-
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
 <form 	id="upload-form" 
