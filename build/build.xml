@@ -393,7 +393,7 @@
 			<arg line="install production=true" />
 		</exec>
 		<exec executable="box" dir="${dir.build}/war">
-			<arg line="install id=coldbox@4.3.0 production=true" />
+			<arg line="install id=coldbox@be production=true" />
 		</exec>
 
  		<!-- Create War -->
