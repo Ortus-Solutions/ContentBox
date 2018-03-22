@@ -27,8 +27,8 @@
     },
     "installPaths":{
         "testbox":"testbox",
-        "coldbox":"/Users/lmajano/Sites/contentbox/coldbox",
-        "route-visualizer":"/Users/lmajano/Sites/contentbox/modules/route-visualizer"
+        "coldbox":"coldbox",
+        "route-visualizer":"modules/route-visualizer"
     },
     "devDependencies":{
         "testbox":"^2.6.0+156",
