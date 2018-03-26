@@ -44,6 +44,8 @@ component{
 		boolean widget=false,
 		struct settings={}
 	){
+		if(fileExists(expandPath('\modules\contentbox\content\download.zip')))
+			fileDelete(expandPath('\modules\contentbox\content\download.zip'));
 		// params
 		event.paramValue( "path","" );
 		event.paramValue( "callback","" );
@@ -225,38 +227,40 @@ component{
 			event.renderData( data=data, type="json" );
 			return;
 		}
-
+		rc.pathsArray = ListToArray(rc.path);
+		for(i=1;i<=arrayLen(rc.pathsArray);i++){
 		// Traversal Security
-		if( NOT isTraversalSecure( prc, rc.path ) ){
-			data.errors = true;
-			data.messages = $r( "messages.traversal_security@fb" );
-			event.renderData( data=data, type="json" );
-			return;
-		}
-
-		// removal
-		try{
-			// Announce it
-			var iData = {
-				path = rc.path
-			};
-			announceInterception( "fb_preFileRemoval", iData );
-
-			if( fileExists( rc.path ) ){
-				fileDelete( rc.path );
+			if( NOT isTraversalSecure( prc, rc.pathsArray[i] ) ){
+				data.errors = true;
+				data.messages = $r( "messages.traversal_security@fb" );
+				event.renderData( data=data, type="json" );
+				return;
 			}
-			else if( directoryExists( rc.path ) ){
-				directoryDelete( rc.path, true );
-			}
-			data.errors = false;
-			data.messages = $r( resource="messages.removed@fb", values="#rc.path#" );
 
-			// Announce it
-			announceInterception( "fb_postFileRemoval", iData );
-		} catch( Any e ) {
-			data.errors = true;
-			data.messages = $r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
-			log.error( data.messages, e );
+			// removal
+			try{
+				// Announce it
+					var iData = {
+						path = rc.pathsArray[i]
+					};
+					announceInterception( "fb_preFileRemoval", iData );
+
+					if( fileExists( rc.pathsArray[i] ) ){
+						fileDelete( rc.pathsArray[i] );
+					}
+					else if( directoryExists( rc.pathsArray[i] ) ){
+						directoryDelete( rc.pathsArray[i], true );
+					}
+					data.errors = false;
+					data.messages = $r( resource="messages.removed@fb", values="#rc.pathsArray[i]#" );
+
+					// Announce it
+					announceInterception( "fb_postFileRemoval", iData );
+			} catch( Any e ) {
+				data.errors = true;
+				data.messages = $r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
+				log.error( data.messages, e );
+			}
 		}
 		// render stuff out
 		event.renderData( data=data, type="json" );
@@ -280,44 +284,59 @@ component{
 			event.renderData( data=data, type="json" );
 			return;
 		}
-
-		// clean incoming path and names
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
-		if( !len( rc.path ) ){
-			data.errors = true;
-			data.messages = $r( "messages.invalid_path@fb" );
-			event.renderData( data=data, type="json" );
-			return;
+		
+			if( !len( rc.path ) ){
+				data.errors = true;
+				data.messages = $r( "messages.invalid_path@fb" );
+				event.renderData( data=data, type="json" );
+				return;
+			}
+		rc.pathsArray = ListToArray(rc.path);
+		if(fileExists(expandPath('\modules\contentbox\content\download.zip')))
+			fileDelete(expandPath('\modules\contentbox\content\download.zip'));
+		if(arrayLen(rc.pathsArray) > 1){
+			for(i=1;i<=arrayLen(rc.pathsArray);i++){
+				// Traversal Security
+				if( NOT isTraversalSecure(prc, rc.pathsArray[i]) ){
+					data.errors = true;
+					data.messages = $r( "messages.traversal_security@fb" );
+					event.renderData( data=data, type="json" );
+					return;
+				}
+				cfzip(action="zip",source="#rc.pathsArray[i]#",file="#expandPath('\modules\contentbox\content\download.zip')#");
+			}
+				rc.path=expandPath('\modules\contentbox\content\download.zip');
+		}else{
+			if( NOT isTraversalSecure(prc, rc.path) ){
+				data.errors = true;
+				data.messages = $r( "messages.traversal_security@fb" );
+				event.renderData( data=data, type="json" );
+				return;
+			}
 		}
 
-		// Traversal Security
-		if( NOT isTraversalSecure(prc, rc.path) ){
-			data.errors = true;
-			data.messages = $r( "messages.traversal_security@fb" );
-			event.renderData( data=data, type="json" );
-			return;
-		}
+			// download
+			try{
+				// Announce it
+					// clean incoming path and names
+				var iData = {
+					path = rc.path
+				};
+				announceInterception( "fb_preFileDownload", iData );
 
-		// download
-		try{
-			// Announce it
-			var iData = {
-				path = rc.path
-			};
-			announceInterception( "fb_preFileDownload", iData );
+				contentUtil.sendFile( file=rc.path );
+				data.errors = false;
+				data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
+				// Announce it
+				announceInterception( "fb_postFileDownload", iData );
+			}
+			catch(Any e){
+				data.errors = true;
+				data.messages = $r( resource="messages.error_downloading@fb", values="#e.message# #e.detail#" );
+				log.error( data.messages, e );
+			}
 
-			contentUtil.sendFile( file=rc.path );
-			data.errors = false;
-			data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
-
-			// Announce it
-			announceInterception( "fb_postFileDownload", iData );
-		}
-		catch(Any e){
-			data.errors = true;
-			data.messages = $r( resource="messages.error_downloading@fb", values="#e.message# #e.detail#" );
-			log.error( data.messages, e );
-		}
 		// render stuff out
 		event.renderData( data=data, type="json" );
 	}
@@ -456,7 +475,7 @@ component{
 		}
 		// Manual uploader?
 		if( rc.manual AND !data.errors) {
-			event.renderData( data=serializeJSON( data ), type="text" );
+			event.renderData( data="<textarea id='data_result'='upload'>#serializeJSON( data )#</textarea>", type="text" );
 		} else {
 			// render stuff out
 			event.renderData( data=data, type="json" );
@@ -610,5 +629,9 @@ component{
 			};
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}
+	}
+
+	remote function test() returnformat="JSON"{
+		return 'Kavitha';
 	}
 }

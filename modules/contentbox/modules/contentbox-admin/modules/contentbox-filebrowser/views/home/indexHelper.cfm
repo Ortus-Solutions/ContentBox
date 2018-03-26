@@ -130,6 +130,10 @@ $( document ).ready( function() {
     $('.files,.folders').on('click contextmenu', function(e){
 		// history cleanup
 		if(!e.ctrlKey){
+			$selectedItemType.val('');
+			$selectedItemID.val('');
+			$selectedItem.val('');
+			$selectedItemURL.val('');
 			for (var i in fbSelectHistory) {
 				$( "##" + fbSelectHistory[i] ).removeClass( "selected" );
 			}
@@ -138,11 +142,31 @@ $( document ).ready( function() {
 		// highlight selection
 		var $sItem = $(this);
 		$sItem.addClass( "selected" );
-		$selectedItemType.val( $sItem.attr( "data-type" ) );
-		$selectedItemID.val( $sItem.attr( "id" ) );
+		if($selectedItemType.val() != ''){
+			var selectedDataType = $selectedItemType.val();
+			$selectedItemType.val( selectedDataType + ',' + $sItem.attr( "data-type" ) );
+		}else{
+			$selectedItemType.val( $sItem.attr( "data-type" ) );
+		}
+		if($selectedItemID.val() != ''){
+			var selectedIds = $selectedItemID.val();
+			$selectedItemID.val( selectedIds + ',' + $sItem.attr( "id" ) );
+		}else{
+			$selectedItemID.val( $sItem.attr( "id" ) );
+		}
 		// save selection
-		$selectedItem.val( $sItem.attr( "data-fullURL" ) );
-		$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
+		if($selectedItem.val() != ''){
+			var selectedFiles = $selectedItem.val();
+			$selectedItem.val( selectedFiles + ',' + $sItem.attr( "data-fullURL" ) );
+		}else{
+			$selectedItem.val( $sItem.attr( "data-fullURL" ) );
+		}
+		if($selectedItemURL.val() != ''){
+			var selectedURL = $selectedItemURL.val();
+			$selectedItemURL.val( selectedURL + ',' + $sItem.attr( "data-relURL" ) );
+		}else{
+			$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
+		}
 		// history set
 		fbSelectHistory.push($sItem.attr( "id" ));
 		// status text
@@ -198,11 +222,8 @@ function fbQuickView(){
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	// show it
 	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent( target.attr( "data-fullURL" ) );
-	// Preview Image
-	bootbox.dialog({
-		title: '<i class="fa fa-image"></i> #$r( "jsmessages.image_preview@fb" )#',
-		message: "<img src=" + imgURL + ">"
-	});
+	$('.imagepreview').attr('src', imgURL);
+	openModal( $( "##modalPreview" ), 500 );
 }
 function fbRename(){
 	if(noMultiSelectAction()){return;};
@@ -332,7 +353,7 @@ function fbDelete(){
 <!--- Download --->
 <cfif prc.fbSettings.allowDownload>
 function fbDownload(){
-	var sPath = $selectedItem.val();
+	var sPath = $selectedItem.val().split(',');
 	var sType = $selectedItemType.val();
 	if( !sPath.length ){
 		alert( '#$r( "jsmessages.select@fb" )#' ); return;
@@ -405,7 +426,7 @@ $( document ).ready( function(){
 		<cfif len( prc.fbSettings.acceptMimeTypes )>
 		allowedfiletypes : "#prc.fbSettings.acceptMimeTypes#".split( "," ),
 		</cfif>
-		url: '#event.buildLink( prc.xehFBUpload )#',
+		url: '#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#',
 		data: {
 	        path: '#prc.fbSafeCurrentRoot#'
 	    },
