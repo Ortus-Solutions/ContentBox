@@ -7,12 +7,12 @@
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div id="croppedImage">
                             <img class="img-scaled" src="#prc.imageSrc#?nocahe=#Rand()#" id="cropbox">
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
 
                         <div class="tab-wrapper margin0">
 

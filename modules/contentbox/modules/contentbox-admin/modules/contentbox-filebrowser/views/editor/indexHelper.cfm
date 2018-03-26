@@ -190,7 +190,7 @@
 		function buildJCrop() {
 			jQuery('##cropbox').Jcrop({
 				aspectRatio: 0,  //If you don't want to keep aspectRatio
-				boxWidth: 800,   //Maximum width you want for your bigger images
+				boxWidth: 750,   //Maximum width you want for your bigger images
 				boxHeight: 600,  //Maximum Height for your bigger images
 				bgColor: '##ccc',
 				bgOpacity: '0.5',
