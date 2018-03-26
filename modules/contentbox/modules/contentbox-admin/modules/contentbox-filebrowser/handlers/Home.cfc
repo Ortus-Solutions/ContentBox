@@ -630,8 +630,4 @@ component{
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}
 	}
-
-	remote function test() returnformat="JSON"{
-		return 'Kavitha';
-	}
 }
