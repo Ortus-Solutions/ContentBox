@@ -1501,6 +1501,7 @@ component accessors="true" singleton threadSafe{
 		return prc.oPaging.renderit(
 			foundRows		= prc.entriesCount,
 			link			= prc.pagingLink,
+			aslist			= true,
 			pagingMaxRows	= setting( "cb_paging_maxentries" )
 		);
 	}
