@@ -150,7 +150,7 @@
 		    </div>
 		    <div class="panel-body<cfif len(rc.searchComments)> selected</cfif>">
 		    	<!--- Search Form --->
-				#html.startForm( name="commentSearchForm",action=prc.xehComments, class="form-vertical" )#
+				#html.startForm( name="commentSearchForm",action=prc.xehComments, class="form-vertical", method="get" )#
 					<div class="form-group">
 						#html.textField(
 							label="Search:",
@@ -171,7 +171,7 @@
 		        <h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 		    </div>
 		    <div class="panel-body<cfif rc.isFiltering> selected</cfif>">
-		    	#html.startForm( name="commentFilterForm",action=prc.xehComments, class="form-vertical" )#
+		    	#html.startForm( name="commentFilterForm",action=prc.xehComments, class="form-vertical", method="get" )#
 			    	<div class="form-group">
 			    		<!--- Status --->
 						<label for="fStatus">Comment Status: </label>
