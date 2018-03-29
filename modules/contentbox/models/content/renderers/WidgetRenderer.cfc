@@ -41,65 +41,58 @@ component accessors="true" extends="BaseRenderer"{
 		// match widgets in our incoming builder and build our targets array and len
 		var targets 		= reMatchNoCase( regex, builder.toString() );
 		var targetLen 		= arrayLen( targets );
-		var isModuleWidget 	= false;
-		var tagAttributes 	= "";
 
-		// Loop over found mustaches {{{Widget}}}
+		// Loop over found tags
 		for( var x=1; x lte targetLen; x++ ){
-			tagAttributes = xmlParse( targets[ x ] ).widget.XmlAttributes;
+			var tagAttributes = xmlParse( targets[ x ] ).widget.XmlAttributes;
 			try{
 
-				widgetName 		= tagAttributes.widgetname;
-				widgetType 		= tagAttributes.widgettype;
-				widgetUDF 		= structKeyExists( tagAttributes, "widgetUDF" ) ? tagAttributes.widgetUDF : "renderIt";
-				isModuleWidget 	= widgetType == "Module";
-				isThemeWidget 	= widgetType == "Theme";
+				var widgetName 		= tagAttributes.widgetname;
+				var widgetType 		= tagAttributes.widgettype;
+				var widgetUDF 		= structKeyExists( tagAttributes, "widgetUDF" ) ? tagAttributes.widgetUDF : "renderIt";
+				var isModuleWidget 	= widgetType == "Module";
+				var isThemeWidget 	= widgetType == "Theme";
 
-				// Detect direct method call
+				// Widget Executions
+				var oWidget = "";
+				var oWidgetMethod = "";
+				var widgetContent = "";
+
+				// Detect Widget and Method Calls
 				if( find( ".", widgetName ) ){
+					oWidget = widgetService.getWidget( '#getToken( widgetName, 1, "." )#' );
+					oWidgetMethod = getToken( widgetName, 2, "." );
+				} else if ( isModuleWidget ){
+					// Render out the module widget
+					oWidget = widgetService.getWidget( name=widgetName, type="module" );
+					oWidgetMethod = widgetUDF;
+				} else if ( isThemeWidget ){
+					// Render out the theme widget
+					oWidget = widgetService.getWidget( name=widgetName, type="theme" );
+					oWidgetMethod = widgetUDF;
+				} else {
+					oWidget = widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) );
+					oWidgetMethod = widgetUDF;
+				}
+
+				// lucee 4.5 split due to invoke bug
+				if( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ){
+					widgetContent = evaluate( "oWidget.oWidgetMethod( argumentCollection=tagAttributes )" );
+				} else {
+					// Render out the widgets
 					widgetContent = invoke(
-						widgetService.getWidget( '#getToken( widgetName, 1, "." )#' ),
-						getToken( widgetName, 2, "." ),
+						oWidget,
+						oWidgetMethod,
 						tagAttributes
 					);
-				} else {
-					if( isModuleWidget ) {
-						// Render out the module widget
-						widgetContent = invoke(
-							widgetService.getWidget( name=widgetName, type="module" ),
-							widgetUDF,
-							tagAttributes
-						);
-					} else {
-						if( isThemeWidget ) {
-							// Render out the theme widget
-							widgetContent = invoke(
-								widgetService.getWidget( name=widgetName, type="theme" ),
-								widgetUDF,
-								tagAttributes
-							);
-						} else {
-							// lucee 4.5 split
-							if( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ){
-								// Render out the core widget, do it the old way, until lucee 4.5 is not supported
-								var thisWidget = widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) );
-								widgetContent = thisWidget[ widgetUDF ]( argumentCollection=tagAttributes );
-							} else {
-								// Render out the core widget
-								widgetContent = invoke(
-									widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) ),
-									widgetUDF,
-									tagAttributes
-								);
-							}
-						}
-					}
 				}
+
 				// Verify null widgetContent
 				if( isNull( widgetContent ) ){
 					log.warn( "Widget: #widgetName# produce no content in page #arguments.content.getTitle()#", tagAttributes );
 					widgetContent = "";
 				}
+
 			} catch( Any e ) {
 				widgetContent = "Error translating tag widget: #e.message# #e.detail#";
 				log.error( "Error translating tag widget on target: #targets[ x ]#", e);
@@ -131,15 +124,12 @@ component accessors="true" extends="BaseRenderer"{
 		// match widgets in our incoming builder and build our targets array and len
 		var targets 		= reMatch( regex, builder.toString() );
 		var targetLen 		= arrayLen( targets );
-		var tagString		= "";
-		var widgetContent	= "";
-		var isModuleWidget 	= false;
 		var moduleName 		= "";
 
 		// Loop over found mustaches {{{Widget}}}
 		for( var x=1; x lte targetLen; x++ ){
 			// convert mustache to tag
-			tagString = replace( targets[ x ], "{{{", "<" );
+			var tagString = replace( targets[ x ], "{{{", "<" );
 			tagString = replace( tagString, "}}}", "/>" );
 			// convert quotes to standards
 			tagString = replace( tagString, "&##34;", '"', "all" );
@@ -153,10 +143,11 @@ component accessors="true" extends="BaseRenderer"{
 				}
 
 				// Parse arguments separated by commas
-				tagString 		= replace( tagString, "',", "' ", "all" );
-				tagString 		= replace( tagString, '",',  '" ', "all" );
-				isModuleWidget 	= findNoCase( "@", tagString ) ? true : false;
-				isThemeWidget 	= findNoCase( "~", tagString ) ? true : false;
+				tagString 			= replace( tagString, "',", "' ", "all" );
+				tagString 			= replace( tagString, '",',  '" ', "all" );
+
+				var isModuleWidget 	= findNoCase( "@", tagString ) ? true : false;
+				var isThemeWidget 	= findNoCase( "~", tagString ) ? true : false;
 
 				if( isModuleWidget ) {
 					var startPos 	= find( "@", tagString ) + 1;
@@ -188,51 +179,54 @@ component accessors="true" extends="BaseRenderer"{
 						widgetArgs[ key ] = trim( tagXML[ widgetName ].XMLAttributes[ key ] );
 					}
 				}
+
 				// set default UDF, if doesn't exist
 				if( !structKeyExists( widgetArgs, "udf" ) ) {
 					widgetArgs[ "widgetUDF" ] = "renderIt";
 				}
 
+				// Widget Executions
+				var oWidget = "";
+				var oWidgetMethod = "";
+				var widgetContent = "";
+
 				// Detect direct method call
 				if( find( ".", widgetName) ){
+					oWidget = widgetService.getWidget( '#getToken( widgetName, 1, "." )#' );
+					oWidgetMethod = getToken( widgetName, 2, "." );
+				} else if( isModuleWidget ) {
+					oWidget = widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" );
+					oWidgetMethod = widgetArgs.widgetUDF;
+				} else if( isThemeWidget ){
+					oWidget = widgetService.getWidget( name=widgetName, type="theme" );
+					oWidgetMethod = widgetArgs.widgetUDF;
+				} else {
+					oWidget = widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) );
+					oWidgetMethod = widgetArgs.widgetUDF;
+				}
+
+				// lucee 4.5 split due to invoke bug
+				if( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ){
+					widgetContent = evaluate( "oWidget.oWidgetMethod( argumentCollection=widgetArgs )" );
+				} else {
+					// Render out the widgets
 					widgetContent = invoke(
-						widgetService.getWidget( '#getToken( widgetName, 1, "." )#' ),
-						getToken( widgetName, 2, "." ),
+						oWidget,
+						oWidgetMethod,
 						widgetArgs
 					);
-				} else {
-					if( isModuleWidget ) {
-						// Render out the module widget
-						widgetContent = invoke(
-							widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" ),
-							widgetArgs.widgetUDF,
-							widgetArgs
-						);
-					} else {
-						if( isThemeWidget ) {
-							// Render out the theme widget
-							widgetContent = invoke(
-								widgetService.getWidget( name=widgetName, type="theme" ),
-								widgetArgs.widgetUDF,
-								widgetArgs
-							);
-						} else {
-							// Render out the core widget
-							widgetContent = invoke(
-								widgetService.getWidget( name=widgetName, type=widgetService.discoverWidgetType( widgetName ) ),
-								widgetArgs.widgetUDF,
-								widgetArgs
-							);
-						}
-					}
 				}
+
+				// Verify null widgetContent
+				if( isNull( widgetContent ) ){
+					log.warn( "Widget: #widgetName# produce no content in page #arguments.content.getTitle()#", tagAttributes );
+					widgetContent = "";
+				}
+
 			} catch( Any e ) {
 				widgetContent = "Error translating markup widget: #e.message# #e.detail# #e.stacktrace#";
 				log.error( "Error translating markup widget on target: #targets[ x ]#", e);
 			}
-
-			// null checks
-			if( isNull( widgetContent ) ){ widgetContent = "null!"; }
 
 			// PROCESS REPLACING
 			multiStringReplace(
