@@ -23,7 +23,7 @@ env:
     - ENGINE=lucee@5
     - ENGINE=adobe@11
     - ENGINE=adobe@2016
-  
+
 addons:
   apt:
     packages:
@@ -77,7 +77,7 @@ deploy:
   # Upload binaries
   - provider: s3
     on:
-      branch: 
+      branch:
         - development
         - master
       condition: "$ENGINE = lucee@4.5"
@@ -88,11 +88,11 @@ deploy:
     local-dir: artifacts
     upload-dir: ortussolutions
     acl: public_read
-  
+
   # Upload api docs
   - provider: s3
     on:
-      branch: 
+      branch:
         - development
         - master
       condition: "$ENGINE = lucee@4.5"
@@ -105,5 +105,5 @@ deploy:
     acl: public_read
 
 # Now publish assets to ForgeBox
-after_success:
-  - build/forgebox-publish.sh
+after_deploy:
+  - if [ ${ENGINE} = 'lucee@4.5' ]; then box forgebox publish; fi
