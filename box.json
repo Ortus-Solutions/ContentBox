@@ -27,12 +27,10 @@
     },
     "installPaths":{
         "testbox":"testbox",
-        "coldbox":"coldbox",
-        "route-visualizer":"modules/route-visualizer"
+        "coldbox":"coldbox"
     },
     "devDependencies":{
-        "testbox":"^2.6.0+156",
-        "route-visualizer":"^1.0.0"
+        "testbox":"^2.6.0+156"
     },
     "ignores":[]
 }
