@@ -113,12 +113,13 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
+		var settingService = wirebox.getInstance( "settingService@cb" );
 		// Pre-flight check settings
-		wirebox.getInstance( "settingService@cb" ).preFlightCheck();
+		settingService.preFlightCheck();
 		// Loadup Config Overrides
-		loadConfigOverrides();
+		settingService.loadConfigOverrides();
 		// Load Environment Overrides Now, they take precedence
-		loadEnvironmentOverrides();
+		settingService.loadEnvironmentOverrides();
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@cb" ).startup();
 		// Startup localization settings
@@ -151,62 +152,6 @@ component {
 
 
 	/************************************** PRIVATE *********************************************/
-
-	/**
-	* Load up config overrides
-	*/
-	private function loadConfigOverrides(){
-		var settingService 	= wirebox.getInstance( "SettingService@cb" );
-		var oConfig 		= controller.getSetting( "ColdBoxConfig" );
-		var configStruct 	= controller.getConfigSettings();
-		var contentboxDSL 	= oConfig.getPropertyMixin( "contentbox", "variables", structnew() );
-
-		// Verify if we have settings on the default site for now.
-		if(
-			structKeyExists( contentboxDSL, "settings" )
-			&&
-			structKeyExists( contentboxDSL.settings, "default" )
-		){
-			var overrides 	= contentboxDSL.settings.default;
-			var allSettings = settingService.getAllSettings( asStruct = true );
-			// Append and override
-			structAppend( allSettings, overrides, true );
-			// Store them
-			settingService.storeSettings( allSettings );
-			// Log it
-			variables.log.info( "ContentBox config overrides loaded.", overrides );
-		}
-	}
-
-	/**
-	 * Load up java environment overrides for ContentBox settings
-	 * The pattern to look is `contentbox.{site}.{setting}`
-	 * Example: contentbox.default.cb_media_directoryRoot
-	 */
-	private function loadEnvironmentOverrides(){
-		var settingService      = wirebox.getInstance( "SettingService@cb" );
-		var oSystem 			= createObject( "java", "java.lang.System" );
-		var environmentSettings = oSystem.getEnv();
-		var overrides 			= {};
-
-		// iterate and override
-		for( var thisKey in environmentSettings ){
-			if( REFindNoCase( "^contentbox\_default\_", thisKey ) ){
-				// No multi-site yet, so get the last part as the setting.
-				overrides[ reReplaceNoCase( thisKey, "^contentbox\_default\_", "" ) ] = environmentSettings[  thisKey ];
-			}
-		}
-		// If empty, exit out.
-		if( structIsEmpty( overrides ) ){ return; }
-
-		// Append and override
-		var allSettings = settingService.getAllSettings( asStruct = true );
-		structAppend( allSettings, overrides, true );
-		// Store them
-		settingService.storeSettings( allSettings );
-		// Log it
-		variables.log.info( "ContentBox environment overrides loaded.", overrides );
-	}
 
 	/**
 	 * Verify the custom module exists. If not, we will auto-generate one to avoid conflicts

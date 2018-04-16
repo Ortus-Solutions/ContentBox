@@ -12,6 +12,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	property name="moduleSettings"	inject="coldbox:setting:modules";
 	property name="appMapping"		inject="coldbox:setting:appMapping";
 	property name="requestService"	inject="coldbox:requestService";
+	property name="coldbox"			inject="coldbox";
 	property name="dateUtil"        inject="DateUtil@cb";
 
 	/**
@@ -234,7 +235,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	* Constructor
 	*/
 	SettingService function init(){
-		CBReadyFlag = false;
+
+		variables.oSystem 		= createObject( "java", "java.lang.System" );
+		variables.CBReadyFlag 	= false;
 
 		// init it
 		super.init( entityName="cbSetting" );
@@ -260,7 +263,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 				save( new( {
 					name 	= thisSetting,
 					value 	= trim( this.DEFAULTS[ thisSetting ] ),
-					isCore 	= true 
+					isCore 	= true
 				} ) );
 			}
 		}
@@ -442,6 +445,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 		getSettingsCacheProvider().clear( getSettingsCacheKey() );
 		// Re-load cache provider name, in case user changed it
 		loadCacheProviderName();
+		// Loadup Config Overrides
+		loadConfigOverrides();
+		// Load Environment Overrides Now, they take precedence
+		loadEnvironmentOverrides();
 		return this;
 	}
 
@@ -618,6 +625,60 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	function getSettingsCacheProvider(){
 		// Return the cache to use
 		return cacheBox.getCache( variables.cacheProviderName );
+	}
+
+	/**
+	* Load up config overrides
+	*/
+	function loadConfigOverrides(){
+		var oConfig 		= coldbox.getSetting( "ColdBoxConfig" );
+		var configStruct 	= coldbox.getConfigSettings();
+		var contentboxDSL 	= oConfig.getPropertyMixin( "contentbox", "variables", structnew() );
+
+		// Verify if we have settings on the default site for now.
+		if(
+			structKeyExists( contentboxDSL, "settings" )
+			&&
+			structKeyExists( contentboxDSL.settings, "default" )
+		){
+			var overrides 	= contentboxDSL.settings.default;
+			var allSettings = getAllSettings( asStruct = true );
+			// Append and override
+			structAppend( allSettings, overrides, true );
+			// Store them
+			storeSettings( allSettings );
+			// Log it
+			variables.log.info( "ContentBox config overrides loaded.", overrides );
+		}
+	}
+
+	/**
+	 * Load up java environment overrides for ContentBox settings
+	 * The pattern to look is `contentbox.{site}.{setting}`
+	 * Example: contentbox.default.cb_media_directoryRoot
+	 */
+	function loadEnvironmentOverrides(){
+		var environmentSettings = variables.oSystem.getEnv();
+		var overrides 			= {};
+
+		// iterate and override
+		for( var thisKey in environmentSettings ){
+			if( REFindNoCase( "^contentbox\_default\_", thisKey ) ){
+				// No multi-site yet, so get the last part as the setting.
+				overrides[ reReplaceNoCase( thisKey, "^contentbox\_default\_", "" ) ] = environmentSettings[  thisKey ];
+			}
+		}
+
+		// If empty, exit out.
+		if( structIsEmpty( overrides ) ){ return; }
+
+		// Append and override
+		var allSettings = getAllSettings( asStruct = true );
+		structAppend( allSettings, overrides, true );
+		// Store them
+		storeSettings( allSettings );
+		// Log it
+		variables.log.info( "ContentBox environment overrides loaded.", overrides );
 	}
 
 	/******************************** PRIVATE ************************************************/
