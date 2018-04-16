@@ -61,7 +61,7 @@ component accessors="true"{
 			settingService.activateCB();
 			// Reload Security Rules
 			coldbox.getInterceptorService()
-				.getInterceptor( "security@cb" )
+				.getInterceptor( "cbSecurity@contentbox-security" )
 				.loadRules();
 		}
 	}

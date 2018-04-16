@@ -65,7 +65,7 @@ component {
 			// ContentBox security via cbSecurity Module
 			{
 				class 		= "cbsecurity.interceptors.Security",
-			  	name 		= "security@cb",
+			  	name 		= "cbSecurity",
 			  	properties 	= {
 			 		rulesSource 		= "model",
 			 		rulesModel			= "securityRuleService@cb",
@@ -75,7 +75,7 @@ component {
 			}
             ,{
                 class = "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
-                name = "CheckForForceTwoFactorEnrollment@contentbox-security"
+                name = "CheckForForceTwoFactorEnrollment"
 			}
 		];
 

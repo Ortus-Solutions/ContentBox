@@ -66,7 +66,7 @@ component {
 			{ pattern="/__rss", handler="rss", action="index" },
 
 			/************************************** CATCH ALL PAGE ROUTE *********************************************/
-	
+
 			// page permalink, discovery of nested pages is done here, the aboved slugs are reserved.
 			{ pattern="/__pageCommentPost", handler="page", action="commentPost" },
 			// Catch All Page Routing
@@ -74,9 +74,9 @@ component {
 			// Home Pattern
 			{ pattern="/", handler="blog", action="index" }
 		];
-		
+
 		/************************************** BLOG ROUTES NAMESPACE *********************************************/
-		
+
 		blogRoutes = [
 			// Blog Archives
 			{ pattern="/archives/:year-numeric{4}?/:month-numeric{1,2}?/:day-numeric{1,2}?", handler="blog", action="archives", namespace="blog" },
@@ -117,11 +117,21 @@ component {
 		// CB UI Interceptors
 		interceptors = [
 			// CB UI Request Interceptor
-			{ class="#moduleMapping#.interceptors.CBRequest", properties={ entryPoint=this.entryPoint }, name="CBRequest@cbUI" },
+			{
+				class      = "#moduleMapping#.interceptors.CBRequest",
+				name       = "CBRequest",
+				properties = { entryPoint = this.entryPoint }
+			},
 			// Simple Security For pages and blog entries
-			{ class="#moduleMapping#.interceptors.SimpleSecurity", name="SimpleSecurity@cb" },
+			{
+				class = "#moduleMapping#.interceptors.SimpleSecurity",
+				name  = "SimpleSecurity"
+			},
 			// Global HTML interceptor for rendering HTML Points
-			{ class="#moduleMapping#.interceptors.GlobalHTML", name="GlobalHTML@cb"}
+			{
+				class = "#moduleMapping#.interceptors.GlobalHTML",
+				name  = "GlobalHTML"
+			}
 		];
 
 	}
@@ -134,13 +144,13 @@ component {
 		controller.getWireBox().getInstance( "themeService@cb" ).startupActiveTheme();
 		// Get ses handle
 		var ses = controller.getInterceptorService().getInterceptor( 'SES', true );
-		
+
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
-		
+
 		// Treat the blog as the Main Application?
 		if( !len( this.entryPoint ) ){
-			
+
 			// get parent routes so we can re-mix them later
 			var parentRoutes 		= ses.getRoutes();
 			var newRoutes			= [];
@@ -157,7 +167,7 @@ component {
 
 			// Add parent routing
 			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?" );
-			
+
 			// Add routes manually to take over parent routes
 			for(var x=1; x LTE arrayLen( variables.routes ); x++){
 				// append module location to it so the route is now system wide
@@ -171,9 +181,9 @@ component {
 			}
 			// change the default event of the entire app
 			controller.setSetting( "DefaultEvent","contentbox-ui:blog" );
-		}		
+		}
 	}
-	
+
 	/**
 	* Register blog namespace routes
 	*/
@@ -190,7 +200,7 @@ component {
 		else{
 			ses.addNamespace(pattern="#this.entryPoint#/blog", namespace="blog", append=false);
 		}
-		
+
 		// Register namespace routes
 		for(var x=1; x LTE arrayLen( variables.blogRoutes ); x++){
 			var args = duplicate( variables.blogRoutes[ x ] );

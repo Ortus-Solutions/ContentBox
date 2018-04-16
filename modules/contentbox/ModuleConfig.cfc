@@ -138,6 +138,18 @@ component {
 	function onUnload(){
 	}
 
+	/************************************** APP LISTENERS *********************************************/
+
+	/**
+	 * Listen to when application and all modules are fully loaded.
+	 * We use this interception to startup some services and discoveries.
+	 */
+	function afterConfigurationLoad( event, interceptData, rc, prc ){
+		// Discover all widgets
+		wirebox.getInstance( "widgetservice@cb" ).getWidgets();
+	}
+
+
 	/************************************** PRIVATE *********************************************/
 
 	/**
