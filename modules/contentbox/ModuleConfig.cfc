@@ -234,5 +234,16 @@ component {
 			);
 		}
 	}
+	
+	/**
+	* This interception point waits until after ContentBox is loaded, to call the widget service to build the Widget maps.
+	* Previously Custom widgets were not found, because the Custom Map was not built until another function calls getWidgets()
+	* 
+	*/
+	function postModuleLoad( event, interceptData, buffer, rc, prc ) {
+        if( arguments.interceptData.moduleName == "contentbox" ){
+            wirebox.getInstance( "widgetservice@cb" ).getWidgets();
+        }
+    }
 
 }
