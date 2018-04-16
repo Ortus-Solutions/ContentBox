@@ -192,7 +192,7 @@ component accessors="true" extends="BaseRenderer"{
 
 				// Detect direct method call
 				if( find( ".", widgetName) ){
-					oWidget = widgetService.getWidget( '#getToken( widgetName, 1, "." )#' );
+					oWidget = widgetService.getWidget( name='#getToken( widgetName, 1, "." )#', type=widgetService.discoverWidgetType( widgetName ) );
 					oWidgetMethod = getToken( widgetName, 2, "." );
 				} else if( isModuleWidget ) {
 					oWidget = widgetService.getWidget( name=widgetName & "@" & moduleName, type="module" );

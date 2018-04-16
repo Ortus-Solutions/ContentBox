@@ -42,6 +42,8 @@ component accessors="true" singleton threadSafe{
 	WidgetService function init(){
 		variables.coreWidgetsMap 	= {};
 		variables.customWidgetsMap 	= {};
+
+		variables.loadedWidgets 	= "";
 		return this;
 	}
 
@@ -82,8 +84,16 @@ component accessors="true" singleton threadSafe{
 	 * - custom
 	 * - active theme
 	 * - registered modules
+	 *
+	 * @reload Widgets are lazy loaded, or you can force a reload
 	 */
-	query function getWidgets(){
+	query function getWidgets( boolean reload = false ){
+
+		// If query is loaded and not a reload then return it.
+		if( isQuery( variables.loadedWidgets ) and !arguments.reload ){
+			return variables.loadedWidgets;
+		}
+
 		var qAllWidgets = queryNew( "" );
 
 		// Add custom columns
@@ -101,6 +111,9 @@ component accessors="true" singleton threadSafe{
 			.processWidgets( qAllWidgets, "Custom"  )
 			.processModuleWidgets( qAllWidgets )
 			.processThemeWidgets( qAllWidgets );
+
+		// Cache it
+		variables.loadedWidgets = qAllWidgets;
 
 		return qAllWidgets;
 	}
@@ -214,14 +227,33 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	 * Discover the type of widget, either custom or core. Custom widget's take precedence
+	 * Discover the type of widget, either custom or core.
+	 * The lookup order is: custom, theme, core
 	 *
 	 * @name The name of the widget
 	 */
 	string function discoverWidgetType( required name ){
-		if( variables.customWidgetsMap.keyExists( arguments.name ) ){
-			return "custom";
+		var isCustom 	= false;
+		var isTheme 	= false;
+		var qWidgets 	= getWidgets();
+
+		for( var thisRow in qWidgets ){
+			if( thisrow.name == arguments.name && thisRow.widgetType == "Custom" ){
+				isCustom = true;
+			}
+			if( thisrow.name == arguments.name && thisRow.widgetType == "Theme" ){
+				isTheme = true;
+			}
 		}
+
+		if( isCustom ){
+			return "Custom";
+		}
+
+		if( isTheme ){
+			return "Theme";
+		}
+
 		return "core";
 	}
 
@@ -352,7 +384,8 @@ component accessors="true" singleton threadSafe{
 			return true;
 		}
 
-		structDelete( variables.customWidgetsMap, arguments.widgetFile );
+		// Process widgets
+		getWidgets( reload=true );
 
 		return false;
 	}
@@ -374,7 +407,7 @@ component accessors="true" singleton threadSafe{
 		}
 
 		// Process widgets
-		getWidgets();
+		getWidgets( reload=true );
 
 		return results;
 	}
