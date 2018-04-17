@@ -174,7 +174,7 @@ component {
 			directoryCreate( customModulesPath & "/_themes" );
 			directoryCreate( customModulesPath & "/_widgets" );
 			fileCopy(
-				modulePath & "models/modules/custom/ModuleConfigBase.cfc",
+				modulePath & "/models/modules/custom/ModuleConfigBase.cfc",
 				customModulesPath & "ModuleConfig.cfc"
 			);
 		}
