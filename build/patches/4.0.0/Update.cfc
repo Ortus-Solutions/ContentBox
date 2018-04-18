@@ -95,7 +95,7 @@ component {
 				directoryCreate( customModulesPath & "/_widgets" );
 				fileCopy(
 					variables.thisPath & "ModuleConfig.cfc",
-					customModulesPath & "ModuleConfig.cfc"
+					customModulesPath & "/ModuleConfig.cfc"
 				);
 			}
 
