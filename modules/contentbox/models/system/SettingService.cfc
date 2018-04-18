@@ -14,6 +14,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	property name="requestService"	inject="coldbox:requestService";
 	property name="coldbox"			inject="coldbox";
 	property name="dateUtil"        inject="DateUtil@cb";
+	property name="log"				inject="logbox:logger:{this}";
 
 	/**
 	* The cache provider name to use for settings caching. Defaults to 'template' cache.
