@@ -140,10 +140,10 @@ component accessors="true"{
 	* @setup The setup object
 	*/
 	function processRewrite( required setup ){
-		// rewrite on routes.cfm
-		var routesPath = appPath & "config/Routes.cfm";
+		// rewrite on Router
+		var routesPath = appPath & "config/Router.cfc";
 		var c = fileRead( routesPath );
-		c = replacenocase( c, "index.cfm", "", "all" );
+		c = replacenocase( c, "setFullRewrites( true )", "setFullRewrites( false )" );
 		fileWrite( routesPath, c );
 
 		// determine engine and setup the appropriate file for the rewrite engine
