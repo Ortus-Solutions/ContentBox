@@ -25,6 +25,26 @@
 			</p>
 		</div>
 		<div class="form-vertical">
+
+			<div class="alert alert-info">
+
+				<p>
+					<strong>Important:</strong>
+					Please note that the ORM engine will try to auto-detect your database.  However, we would highly encourage you to
+					setup the Database ORM Dialect in the <code>Application.cfc</code> before you go any further.  Look for the
+					<code>Dialect</code> key in the <code>ORM Settings</code> structure, uncomment it and set it to the value of your database.
+				</p>
+
+				<p>Common dialects are:</p>
+				<ul>
+					<li>HyperSonic -> <code>MySQLwithInnoDB</code></li>
+					<li>Microsoft SQL -> <code>MicrosoftSQLServer</code></li>
+					<li>MySQL -> <code>MySQLwithInnoDB</code></li>
+					<li>Oracle -> <code>Oracle10g</code></li>
+				</ul>
+
+			</div>
+
 			<fieldset>
 				<legend>Datasource Created?</legend>
 				<p>Do you have a datasource created already?</p>
