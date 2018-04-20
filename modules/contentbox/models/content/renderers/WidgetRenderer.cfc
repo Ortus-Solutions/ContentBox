@@ -77,7 +77,7 @@ component accessors="true" extends="BaseRenderer"{
 
 				// lucee 4.5 split due to invoke bug
 				if( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ){
-					widgetContent = evaluate( "oWidget.oWidgetMethod( argumentCollection=tagAttributes )" );
+					widgetContent = evaluate( "oWidget.#oWidgetMethod#( argumentCollection=tagAttributes )" );
 				} else {
 					// Render out the widgets
 					widgetContent = invoke(
@@ -207,7 +207,7 @@ component accessors="true" extends="BaseRenderer"{
 
 				// lucee 4.5 split due to invoke bug
 				if( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ){
-					widgetContent = evaluate( "oWidget.oWidgetMethod( argumentCollection=widgetArgs )" );
+					widgetContent = evaluate( "oWidget.#oWidgetMethod#( argumentCollection=widgetArgs )" );
 				} else {
 					// Render out the widgets
 					widgetContent = invoke(
