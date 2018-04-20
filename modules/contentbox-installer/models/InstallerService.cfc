@@ -143,7 +143,7 @@ component accessors="true"{
 		// rewrite on Router
 		var routesPath = appPath & "config/Router.cfc";
 		var c = fileRead( routesPath );
-		c = replacenocase( c, "setFullRewrites( true )", "setFullRewrites( false )" );
+		c = replacenocase( c, "setFullRewrites( false )", "setFullRewrites( true )" );
 		fileWrite( routesPath, c );
 
 		// determine engine and setup the appropriate file for the rewrite engine
