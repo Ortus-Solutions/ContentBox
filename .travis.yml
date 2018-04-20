@@ -106,4 +106,4 @@ deploy:
 
 # Now publish assets to ForgeBox
 after_deploy:
-  - if [ ${ENGINE} = 'lucee@4.5' ]; then box forgebox publish; fi
+  - build/forgebox-publish.sh;
