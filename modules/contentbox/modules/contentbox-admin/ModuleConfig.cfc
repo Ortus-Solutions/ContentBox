@@ -10,7 +10,7 @@ component {
 	// Module Properties
 	this.title 				= "ContentBox Admin";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox Administration Module";
 	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
@@ -60,7 +60,7 @@ component {
 			{ pattern="/contentStore/page/:page", handler="contentStore" },
 			{ pattern="/menus/page/:page", handler="menus" },
 			{ pattern="/mediamanager/library/:library", handler="mediamanager", action="index" },
-			{ pattern="/module/:moduleEntryPoint/:moduleHandler/:moduleAction?", handler="modules", action="execute" },
+			{ pattern="/module/:moduleEntryPoint/:moduleHandler?/:moduleAction?", handler="modules", action="execute" },
 			{ pattern="/:handler/:action?" }
 		];
 
@@ -136,7 +136,9 @@ component {
 			// Admin Comment Cleanup/Moderation listener
 			{ class="#moduleMapping#.interceptors.CommentCleanup", name="CommentCleanup@cbAdmin" },
 			// Admin MenuBuilder Cleanups
-			{ class="#moduleMapping#.interceptors.MenuCleanup", name="MenuCleanup@cbAdmin" }
+            { class="#moduleMapping#.interceptors.MenuCleanup", name="MenuCleanup@cbAdmin" },
+            // Unenroll Two Factor on Provider Change
+			{ class="#moduleMapping#.interceptors.UnenrollTwoFactorOnProviderChange", name="UnenrollTwoFactorOnProviderChange@cbAdmin" }
 		];
 
 	}

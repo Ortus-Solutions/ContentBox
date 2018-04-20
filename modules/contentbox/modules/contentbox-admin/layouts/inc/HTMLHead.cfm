@@ -9,8 +9,12 @@
     <!--- SES --->
     <base href="#cb.siteBaseURL()#" />
     <!--- Title --->
-    <cfif structKeyExists( prc, 'cb_site_name' )>
-        <title>#prc.cbSettings.cb_site_name# - ContentBox Administrator</title>        
+    <cfif event.privateValueExists( "htmlTitle" )>
+        <title>#prc.htmlTitle# &mdash; ContentBox Administrator</title>
+    <cfelseif structKeyExists( prc, 'cbSettings' )>
+        <title>#prc.cbSettings.cb_site_name# &mdash; ContentBox Administrator</title>
+    <cfelse>
+        <title>ContentBox Administrator</title>
     </cfif>
     <!--- Description --->
     <meta name="description" content="ContentBox Modular CMS - Admin">

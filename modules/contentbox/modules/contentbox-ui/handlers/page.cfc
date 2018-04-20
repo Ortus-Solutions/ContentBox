@@ -56,8 +56,8 @@ component extends="content"{
 				return prc.page.renderContent();
 			}
 			default : {
-				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module="contentbox" )
-					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module=prc.cbThemeRecord.module )
+					.setView( view="#prc.cbTheme#/views/page", module=prc.cbThemeRecord.module );
 			}
 		} 
 	}
@@ -126,8 +126,8 @@ component extends="content"{
 				return prc.page.renderContent();
 			} else {
 				// set skin view
-				event.setLayout( name="#prc.cbTheme#/layouts/#thisLayout#", module="contentbox" )
-					.setView( view="#prc.cbTheme#/views/page", module="contentbox" );
+				event.setLayout( name="#prc.cbTheme#/layouts/#thisLayout#", module=prc.cbThemeRecord.module )
+					.setView( view="#prc.cbTheme#/views/page", module=prc.cbThemeRecord.module );
 			}
 		} else {
 			// missing page
@@ -136,8 +136,8 @@ component extends="content"{
 			// announce event
 			announceInterception( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
 			// set skin not found
-			event.setLayout( name="#prc.cbTheme#/layouts/pages", module="contentbox" )
-				.setView( view="#prc.cbTheme#/views/notfound", module="contentbox" )
+			event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module )
+				.setView( view="#prc.cbTheme#/views/notfound", module=prc.cbThemeRecord.module )
 				.setHTTPHeader( "404", "Page not found" );				
 		}
 	}
@@ -174,8 +174,8 @@ component extends="content"{
 		}
 		
 		// set skin search
-		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module="contentbox" )
-			.setView( view="#prc.cbTheme#/views/search", module="contentbox" );
+		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module=prc.cbThemeRecord.module )
+			.setView( view="#prc.cbTheme#/views/search", module=prc.cbThemeRecord.module );
 			
 		// announce event
 		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );

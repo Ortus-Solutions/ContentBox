@@ -24,7 +24,7 @@ CREATE DATABASE contentbox;
 -- ----------------------------
 IF EXISTS (SELECT * FROM sys.all_objects WHERE object_id = OBJECT_ID(N'[dbo].[cb_author]') AND type IN ('U'))
 	DROP TABLE [dbo].[cb_author]
-GO 
+GO
 
 CREATE TABLE [dbo].[cb_author] (
   [authorID] int IDENTITY(1,1) NOT NULL,
@@ -709,7 +709,7 @@ GO
 INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'193', N'2013-07-26 16:53:43.000', N'2016-05-03 16:23:25.000', N'0', N'<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n', N'', N'1', N'1', N'1', N'109')
 GO
 
-INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'194', N'2013-07-26 16:55:00.000', N'2016-05-03 16:23:25.000', N'0', N'<p>{{{CustomHTML slug=''contentbox''}}}</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n', N'', N'1', N'0', N'1', N'110')
+INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'194', N'2013-07-26 16:55:00.000', N'2016-05-03 16:23:25.000', N'0', N'<p>{{{ContentStore slug=''contentbox''}}}</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n', N'', N'1', N'0', N'1', N'110')
 GO
 
 INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'195', N'2013-08-12 11:59:12.000', N'2016-05-03 16:23:25.000', N'0', N'<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n', N'quick save', N'1', N'0', N'1', N'111')
@@ -772,7 +772,7 @@ GO
 INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'266', N'2013-08-29 08:31:17.000', N'2016-05-03 16:23:25.000', N'0', N'lorem ipsum lorem', N'quick save', N'4', N'0', N'1', N'127')
 GO
 
-INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'267', N'2013-08-29 08:32:16.000', N'2016-05-03 16:23:25.000', N'0', N'<p>{{{CustomHTML slug=''contentbox''}}}</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n', N'quick save', N'2', N'1', N'1', N'110')
+INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'267', N'2013-08-29 08:32:16.000', N'2016-05-03 16:23:25.000', N'0', N'<p>{{{ContentStore slug=''contentbox''}}}</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Ut odio. Nam sed est. Nam a risus et est iaculis adipiscing. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Integer ut justo. In tincidunt viverra nisl. Donec dictum malesuada magna. Curabitur id nibh auctor tellus adipiscing pharetra. Fusce vel justo non orci semper feugiat. Cras eu leo at purus ultrices tristique.</p>\r\n\r\n<p>Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>\r\n\r\n<p>&nbsp;</p>\r\n', N'quick save', N'2', N'1', N'1', N'110')
 GO
 
 INSERT INTO [dbo].[cb_contentVersion] ([contentVersionID], [createdDate], [modifiedDate], [isDeleted], [content], [changelog], [version], [isActive], [FK_authorID], [FK_contentID]) VALUES (N'272', N'2013-09-13 16:54:52.000', N'2016-05-03 16:23:25.000', N'0', N'<p>I am at the conference</p>\r\n', N'', N'1', N'1', N'1', N'132')
@@ -2473,7 +2473,7 @@ GO
 INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'89', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_rss_maxComments', N'10', N'0')
 GO
 
-INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'90', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_media_directoryRoot', N'/contentbox/content', N'0')
+INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'90', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_media_directoryRoot', N'/contentbox-custom/_content', N'0')
 GO
 
 INSERT INTO [dbo].[cb_setting] ([settingID], [createdDate], [modifiedDate], [isDeleted], [name], [value], [isCore]) VALUES (N'91', N'2016-05-03 16:23:26.000', N'2016-05-03 16:23:26.000', N'0', N'cb_media_html5uploads_maxFiles', N'25', N'0')
@@ -2902,7 +2902,7 @@ GO
 -- Uniques structure for table cb_author
 -- ----------------------------
 ALTER TABLE [dbo].[cb_author] ADD CONSTRAINT [UQ__cb_autho__F3DBC572B8B4E5E6] UNIQUE NONCLUSTERED ([username] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -2911,7 +2911,7 @@ GO
 -- Primary Key structure for table cb_author
 -- ----------------------------
 ALTER TABLE [dbo].[cb_author] ADD CONSTRAINT [PK__cb_autho__8E2731D9ADD2571C] PRIMARY KEY CLUSTERED ([authorID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -2948,7 +2948,7 @@ GO
 -- Uniques structure for table cb_category
 -- ----------------------------
 ALTER TABLE [dbo].[cb_category] ADD CONSTRAINT [UQ__cb_categ__32DD1E4C04F4D297] UNIQUE NONCLUSTERED ([slug] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -2957,7 +2957,7 @@ GO
 -- Primary Key structure for table cb_category
 -- ----------------------------
 ALTER TABLE [dbo].[cb_category] ADD CONSTRAINT [PK__cb_categ__23CAF1F8C1940345] PRIMARY KEY CLUSTERED ([categoryID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3001,7 +3001,7 @@ GO
 -- Primary Key structure for table cb_comment
 -- ----------------------------
 ALTER TABLE [dbo].[cb_comment] ADD CONSTRAINT [PK__cb_comme__CDDE91BDB42E1FC0] PRIMARY KEY CLUSTERED ([commentID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3020,7 +3020,7 @@ GO
 -- Primary Key structure for table cb_commentSubscriptions
 -- ----------------------------
 ALTER TABLE [dbo].[cb_commentSubscriptions] ADD CONSTRAINT [PK__cb_comme__4A0F55C7E8C52728] PRIMARY KEY CLUSTERED ([subscriptionID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3127,7 +3127,7 @@ GO
 -- Uniques structure for table cb_content
 -- ----------------------------
 ALTER TABLE [dbo].[cb_content] ADD CONSTRAINT [UQ__cb_conte__32DD1E4CD839CB97] UNIQUE NONCLUSTERED ([slug] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3136,7 +3136,7 @@ GO
 -- Primary Key structure for table cb_content
 -- ----------------------------
 ALTER TABLE [dbo].[cb_content] ADD CONSTRAINT [PK__cb_conte__0BDC8739945C196A] PRIMARY KEY CLUSTERED ([contentID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3145,7 +3145,7 @@ GO
 -- Primary Key structure for table cb_contentStore
 -- ----------------------------
 ALTER TABLE [dbo].[cb_contentStore] ADD CONSTRAINT [PK__cb_conte__0BDC8739DB50412F] PRIMARY KEY CLUSTERED ([contentID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3195,7 +3195,7 @@ GO
 -- Primary Key structure for table cb_contentVersion
 -- ----------------------------
 ALTER TABLE [dbo].[cb_contentVersion] ADD CONSTRAINT [PK__cb_conte__3CDF037BA7005CC4] PRIMARY KEY CLUSTERED ([contentVersionID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3232,7 +3232,7 @@ GO
 -- Primary Key structure for table cb_customfield
 -- ----------------------------
 ALTER TABLE [dbo].[cb_customfield] ADD CONSTRAINT [PK__cb_custo__1204C101D5F0A717] PRIMARY KEY CLUSTERED ([customFieldID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3241,7 +3241,7 @@ GO
 -- Primary Key structure for table cb_entry
 -- ----------------------------
 ALTER TABLE [dbo].[cb_entry] ADD CONSTRAINT [PK__cb_entry__0BDC8739DF749516] PRIMARY KEY CLUSTERED ([contentID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3278,7 +3278,7 @@ GO
 -- Primary Key structure for table cb_loginAttempts
 -- ----------------------------
 ALTER TABLE [dbo].[cb_loginAttempts] ADD CONSTRAINT [PK__cb_login__2DABEC8B3CE81F66] PRIMARY KEY CLUSTERED ([loginAttemptsID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3321,7 +3321,7 @@ GO
 -- Uniques structure for table cb_menu
 -- ----------------------------
 ALTER TABLE [dbo].[cb_menu] ADD CONSTRAINT [UQ__cb_menu__32DD1E4C3551F986] UNIQUE NONCLUSTERED ([slug] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3330,7 +3330,7 @@ GO
 -- Primary Key structure for table cb_menu
 -- ----------------------------
 ALTER TABLE [dbo].[cb_menu] ADD CONSTRAINT [PK__cb_menu__3B407E94CBDFA278] PRIMARY KEY CLUSTERED ([menuID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3367,7 +3367,7 @@ GO
 -- Primary Key structure for table cb_menuItem
 -- ----------------------------
 ALTER TABLE [dbo].[cb_menuItem] ADD CONSTRAINT [PK__cb_menuI__682A1008C8F1B29C] PRIMARY KEY CLUSTERED ([menuItemID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3416,7 +3416,7 @@ GO
 -- Primary Key structure for table cb_module
 -- ----------------------------
 ALTER TABLE [dbo].[cb_module] ADD CONSTRAINT [PK__cb_modul__8EEC8E3797A7A023] PRIMARY KEY CLUSTERED ([moduleID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3441,7 +3441,7 @@ GO
 -- Primary Key structure for table cb_page
 -- ----------------------------
 ALTER TABLE [dbo].[cb_page] ADD CONSTRAINT [PK__cb_page__0BDC87398D076AC0] PRIMARY KEY CLUSTERED ([contentID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3472,7 +3472,7 @@ GO
 -- Uniques structure for table cb_permission
 -- ----------------------------
 ALTER TABLE [dbo].[cb_permission] ADD CONSTRAINT [UQ__cb_permi__2038359BD5B8A1FA] UNIQUE NONCLUSTERED ([permission] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3481,7 +3481,7 @@ GO
 -- Primary Key structure for table cb_permission
 -- ----------------------------
 ALTER TABLE [dbo].[cb_permission] ADD CONSTRAINT [PK__cb_permi__D821317C9F84E341] PRIMARY KEY CLUSTERED ([permissionID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3512,7 +3512,7 @@ GO
 -- Uniques structure for table cb_permissionGroup
 -- ----------------------------
 ALTER TABLE [dbo].[cb_permissionGroup] ADD CONSTRAINT [UQ__cb_permi__72E12F1B9673C008] UNIQUE NONCLUSTERED ([name] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3521,7 +3521,7 @@ GO
 -- Primary Key structure for table cb_permissionGroup
 -- ----------------------------
 ALTER TABLE [dbo].[cb_permissionGroup] ADD CONSTRAINT [PK__cb_permi__DAE909206AF82044] PRIMARY KEY CLUSTERED ([permissionGroupID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3552,7 +3552,7 @@ GO
 -- Uniques structure for table cb_role
 -- ----------------------------
 ALTER TABLE [dbo].[cb_role] ADD CONSTRAINT [UQ__cb_role__863D2148FCC4191F] UNIQUE NONCLUSTERED ([role] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3561,7 +3561,7 @@ GO
 -- Primary Key structure for table cb_role
 -- ----------------------------
 ALTER TABLE [dbo].[cb_role] ADD CONSTRAINT [PK__cb_role__CD98460A9FE6E28A] PRIMARY KEY CLUSTERED ([roleID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3592,7 +3592,7 @@ GO
 -- Primary Key structure for table cb_securityRule
 -- ----------------------------
 ALTER TABLE [dbo].[cb_securityRule] ADD CONSTRAINT [PK__cb_secur__121C0641C55C7BD9] PRIMARY KEY CLUSTERED ([ruleID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3629,7 +3629,7 @@ GO
 -- Primary Key structure for table cb_setting
 -- ----------------------------
 ALTER TABLE [dbo].[cb_setting] ADD CONSTRAINT [PK__cb_setti__097EE21C0C595154] PRIMARY KEY CLUSTERED ([settingID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3660,7 +3660,7 @@ GO
 -- Uniques structure for table cb_stats
 -- ----------------------------
 ALTER TABLE [dbo].[cb_stats] ADD CONSTRAINT [UQ__cb_stats__39B41B2811E40FB3] UNIQUE NONCLUSTERED ([FK_contentID] ASC)
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3669,7 +3669,7 @@ GO
 -- Primary Key structure for table cb_stats
 -- ----------------------------
 ALTER TABLE [dbo].[cb_stats] ADD CONSTRAINT [PK__cb_stats__516391FC1A8825DA] PRIMARY KEY CLUSTERED ([statsID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3706,7 +3706,7 @@ GO
 -- Primary Key structure for table cb_subscribers
 -- ----------------------------
 ALTER TABLE [dbo].[cb_subscribers] ADD CONSTRAINT [PK__cb_subsc__B167CE46BE817CE8] PRIMARY KEY CLUSTERED ([subscriberID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 
@@ -3743,7 +3743,7 @@ GO
 -- Primary Key structure for table cb_subscriptions
 -- ----------------------------
 ALTER TABLE [dbo].[cb_subscriptions] ADD CONSTRAINT [PK__cb_subsc__4A0F55C75CAE9DA5] PRIMARY KEY CLUSTERED ([subscriptionID])
-WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)  
+WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
 ON [PRIMARY]
 GO
 

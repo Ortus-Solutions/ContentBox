@@ -6,7 +6,7 @@
 * Provides email two factor authentication. This provider leverages the `template` cache
 * to store unique tokens.
 */
-component 
+component
 	extends="contentbox.models.security.twofactor.BaseTwoFactorProvider"
 	implements="contentbox.models.security.twofactor.ITwoFactorProvider"
 	singleton
@@ -33,18 +33,28 @@ component
 	function getName(){
 		return "email";
 	}
-	
+
 	/**
 	* Get the display name of the provider
 	*/
 	function getDisplayName(){
 		return "Email";
-	};
+    };
+
+    /**
+     * Returns html to display to the user for required two-factor fields
+     */
+    function getAuthorSetupForm( required author ) {
+        return '
+            <label class="control-label" for="email">Email: </label>
+            <input class="form-control" disabled type="email" id="email" name="email" value="#author.getEmail()#" />
+        ';
+    }
 
 	/**
 	* Get the display help for the provider.  Used in the UI setup screens for the author
 	*/
-	function getAuthorSetupHelp(){
+	function getAuthorSetupHelp( required author ){
 		return "Make sure you have a valid email address setup in your author details.  We will use this email account
 			to send you verification tokens to increase your account's security.";
 	}
@@ -57,7 +67,7 @@ component
 	}
 
 	/**
-	* Get the author options form. This will be sent for saving. You can listen to save operations by 
+	* Get the author options form. This will be sent for saving. You can listen to save operations by
 	* listening to the event 'cbadmin_onAuthorTwoFactorSaveOptions'
 	*/
 	function getAuthorOptions(){
@@ -79,7 +89,7 @@ component
 	 */
 	string function generateValidationToken( required author ){
 		// Store Security Token For X minutes
-		var token = left( 
+		var token = left(
 			hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() ),
 			6
 		);
@@ -96,9 +106,9 @@ component
 	/**
 	 * Send a challenge via the 2 factor auth implementation.
 	 * The return must be a struct with an error boolean bit and a messages string
-	 * 
+	 *
 	 * @author The author to challenge
-	 * 
+	 *
 	 * @return struct:{ error:boolean, messages=string }
 	 */
 	struct function sendChallenge( required author ){
@@ -153,21 +163,21 @@ component
 			} else {
 				results.messages = "Validation code sent!";
 			}
-			
+
 			// Send it to the user
 		} catch( Any e ){
 			results.error 		= true;
-			results.messages 	= "Error Sending Email Challenge: #e.message# #e.detail#"; 
+			results.messages 	= "Error Sending Email Challenge: #e.message# #e.detail#";
 			// Log this.
 			log.error( "Error Sending Email Challenge: #e.message# #e.detail#", e );
 		}
-		
+
 		return results;
 	}
 
 	/**
-	 * Verify the challenge 
-	 * 
+	 * Verify the challenge
+	 *
 	 * @code The verification code
 	 * @author The author to verify challenge
 	 *
@@ -189,7 +199,7 @@ component
 	}
 
 	/**
-	 * This method is called once a two factor challenge is accepted and valid. 
+	 * This method is called once a two factor challenge is accepted and valid.
 	 * Meaning the user has completed the validation and will be logged in to ContentBox now.
 	 *
 	 * @code The verification code

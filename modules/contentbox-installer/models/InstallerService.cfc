@@ -19,7 +19,6 @@ component accessors="true"{
 	property name="permissionService" 	inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
 	property name="appPath" 			inject="coldbox:setting:applicationPath";
-	property name="securityInterceptor" inject="coldbox:interceptor:security@cb";
 	property name="coldbox"				inject="coldbox";
 
 	/**
@@ -61,7 +60,9 @@ component accessors="true"{
 			// ContentBox is now online, mark it:
 			settingService.activateCB();
 			// Reload Security Rules
-			securityInterceptor.loadRules();
+			coldbox.getInterceptorService()
+				.getInterceptor( "cbSecurity@contentbox-security" )
+				.loadRules();
 		}
 	}
 
@@ -139,10 +140,10 @@ component accessors="true"{
 	* @setup The setup object
 	*/
 	function processRewrite( required setup ){
-		// rewrite on routes.cfm
-		var routesPath = appPath & "config/Routes.cfm";
+		// rewrite on Router
+		var routesPath = appPath & "config/Router.cfc";
 		var c = fileRead( routesPath );
-		c = replacenocase( c, "index.cfm", "", "all" );
+		c = replacenocase( c, "setFullRewrites( false )", "setFullRewrites( true )" );
 		fileWrite( routesPath, c );
 
 		// determine engine and setup the appropriate file for the rewrite engine
@@ -385,9 +386,9 @@ component accessors="true"{
 		contentStore.setCreator( author );
 		contentStore.addNewContentVersion(
 			content 	= '<p style="text-align: center;">
-	<a href="http://www.ortussolutions.com/products/contentbox"><img alt="" src="/index.cfm/__media/ContentBox_300.png" /></a></p>
+	<a href="https://www.ortussolutions.com/products/contentbox"><img alt="" src="/index.cfm/__media/ContentBox_300.png" /></a></p>
 <p style="text-align: center;">
-	Created by <a href="http://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
+	Created by <a href="https://www.ortussolutions.com">Ortus Solutions, Corp</a> and powered by <a href="http://coldbox.org">ColdBox Platform</a>.</p>',
 			changelog 	= "First creation",
 			author 		= author
 		);

@@ -132,7 +132,7 @@ component{
 		logbox.appenders.files = { 
 			class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
-				filename = "contentbox", filePath="/logs", async=true
+				filename = "contentbox", filePath="/logs", async=false
 			}
 		};
 

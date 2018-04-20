@@ -96,8 +96,10 @@
 										<a title="Open in Site" href="#prc.CBHelper.linkComment(comment)#">#comment.getParentTitle()#</a>
 									</strong> 
 									<br/>
-									#left(comment.getContent(),prc.cbSettings.cb_comments_maxDisplayChars)#
-									<cfif len(comment.getContent()) gt prc.cbSettings.cb_comments_maxDisplayChars>....<strong>more</strong></cfif>
+									#left( comment.getDisplayContent(), prc.cbSettings.cb_comments_maxDisplayChars )#
+									<cfif len( comment.getDisplayContent() ) gt prc.cbSettings.cb_comments_maxDisplayChars>
+									....<strong>more</strong>
+									</cfif>
 								</td>
 								<td class="text-center">
 									#comment.getDisplayCreatedDate()#
@@ -148,7 +150,7 @@
 		    </div>
 		    <div class="panel-body<cfif len(rc.searchComments)> selected</cfif>">
 		    	<!--- Search Form --->
-				#html.startForm( name="commentSearchForm",action=prc.xehComments, class="form-vertical" )#
+				#html.startForm( name="commentSearchForm",action=prc.xehComments, class="form-vertical", method="get" )#
 					<div class="form-group">
 						#html.textField(
 							label="Search:",
@@ -169,7 +171,7 @@
 		        <h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 		    </div>
 		    <div class="panel-body<cfif rc.isFiltering> selected</cfif>">
-		    	#html.startForm( name="commentFilterForm",action=prc.xehComments, class="form-vertical" )#
+		    	#html.startForm( name="commentFilterForm",action=prc.xehComments, class="form-vertical", method="get" )#
 			    	<div class="form-group">
 			    		<!--- Status --->
 						<label for="fStatus">Comment Status: </label>

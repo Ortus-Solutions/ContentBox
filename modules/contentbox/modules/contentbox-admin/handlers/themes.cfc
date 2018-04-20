@@ -47,7 +47,6 @@ component extends="baseHandler"{
 
 		// Get all layouts
 		prc.themes 			= themeService.getThemes();
-		prc.themesPath 		= themeService.getThemesPath();
 		prc.activeTheme 	= themeService.getActiveTheme();
 		prc.themeService	= themeService;
 
@@ -63,7 +62,7 @@ component extends="baseHandler"{
 		// view
 		event.setView( "themes/index" );
 	}
-	
+
 	/**
 	* Save theme settings
 	*/
@@ -78,7 +77,7 @@ component extends="baseHandler"{
 
 		// Announce event
 		announceInterception( "cbadmin_preThemeSettingsSave", { name=rc.themeName } );
-		
+
 		// Results validated, save settings
 		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
 		settingservice.flushSettingsCache();

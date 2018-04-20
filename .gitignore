@@ -9,6 +9,7 @@ settings.xml
 web.config
 "Icon\r"
 WEB-INF/**
+.vscode/*
 
 # Build Dependencies
 artifacts/**
@@ -35,6 +36,7 @@ config/runtime.properties.cfm
 # Module Dependencies
 modules/contentbox/themes/default/bower_components
 modules/contentbox/themes/default/node_modules
+modules/route-visualizer/**
 
 # ContentBox Dependency Modules
 modules/contentbox/modules/contentbox-deps/modules/*
@@ -42,3 +44,4 @@ modules/contentbox/modules/contentbox-deps/modules/*
 # Testing
 /tests/**/logs/**
 /tests/test-results/*
+tests/resources/patches/tmp/

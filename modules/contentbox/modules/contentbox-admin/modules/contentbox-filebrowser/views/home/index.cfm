@@ -106,16 +106,16 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<!--- Uploader Message --->
 		<div id="uploaderHelp">#$r( "dragdrop@fb" )#</div>
-		
+
 		<!--- Show the File Listing --->
 		<div id="fileListing">
-			
+
 			<!---Clear Fix --->
 			<div style="clear:both"></div>
-			
+
 			<!---Upload Message Bar --->
 			<div id="fileUploaderMessage">#$r( "dropupload@fb" )#</div>
-			
+
 			#announceInterception( "fb_preFileListing" )#
 			<!--- Messagebox --->
 			#getModel( "messagebox@cbMessagebox" ).renderit()#
@@ -140,10 +140,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<a href="javascript:fbDrilldown('#$getBackPath(prc.fbCurrentRoot)#')" title="#$r( "back@fb" )#">..</a><br>
 				</cfif>
 			</cfif>
-			
+
 			<!--- Keep count of the excluded items from the display, so we can adjust the item count in the status bar --->
 			<cfset excludeCounter = 0>
- 
+
 			<!--- Display directories --->
 			<cfif prc.fbqListing.recordcount>
 			<cfloop query="prc.fbqListing">
@@ -178,9 +178,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 							<!--- Directory or File --->
 							<cfif prc.fbqListing.type eq "Dir">
 								<!--- Folder --->
-								<div id="#validIDName#"
+								<div id="fb-dir-#validIDName#"
 									 onClick="javascript:return false;"
 									 class="folders"
+									 title="#prc.fbqListing.name#"
 									 data-type="dir"
 									 data-name="#prc.fbqListing.Name#"
 									 data-fullURL="#plainURL#"
@@ -195,10 +196,11 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 								</div>
 							<cfelseif prc.fbSettings.showFiles>
 								<!--- Display the DiV --->
-								<div id="#validIDName#"
+								<div id="fb-file-#validIDName#"
 									 class="files"
 									 data-type="file"
 									 data-name="#prc.fbqListing.Name#"
+									 title="#prc.fbqListing.name# (#numberFormat( prc.fbqListing.size / 1024 )# kb)"
 									 data-fullURL="#plainURL#"
 									 data-relURL="#mediaURL#"
 									 data-lastModified="#dateFormat( prc.fbqListing.dateLastModified, "medium" )# #timeFormat( prc.fbqListing.dateLastModified, "medium" )#"
@@ -225,7 +227,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<!--- Directory or File --->
 					<cfif prc.fbqListing.type eq "Dir">
 						<!--- Folder --->
-						<div id="#validIDName#"
+						<div id="fb-dir-#validIDName#"
 							 class="folders filterDiv"
 							 data-type="dir"
 							 data-name="#prc.fbqListing.Name#"
@@ -240,7 +242,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 						</div>
 					<cfelseif prc.fbSettings.showFiles>
 						<!--- Display the DiV --->
-						<div id="#validIDName#"
+						<div id="fb-file-#validIDName#"
 							 class="files filterDiv"
 							 data-type="file"
 							 data-name="#prc.fbqListing.Name#"
@@ -277,13 +279,13 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<cfloop list="#rootPath#" delimiters="/" index="crumb">
 				<cfif crumbDir neq "">
 					&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;
-				</cfif>	
+				</cfif>
 				<cfset crumbDir = crumbDir & crumb & "/">
 				<cfif ( !prc.fbSettings.traversalSecurity OR findNoCase(prc.fbSettings.directoryRoot, crumbDir ) )>
 					<a href="javascript:fbDrilldown('#JSStringFormat( crumbDir )#')">#crumb#</a>
 				<cfelse>
 					#crumb#
-				</cfif>		
+				</cfif>
 			</cfloop>
 			(#prc.fbqListing.recordCount-excludeCounter# #$r( "items@fb" )#)
 			#announceInterception( "fb_postLocationBar" )#
@@ -330,33 +332,14 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 </div> <!--- end panel FileBrowser --->
 
-<!--- Image modal preview --->
-#announceInterception( "fb_preQuickViewBar" )#
-<div id="modalPreview" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="categoryLabel" aria-hidden="true">
-	<div class="modal-dialog">
-        <div class="modal-content" id="modalContent">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-image"></i> Image preview</h4>
-		    </div>
-			<!--- Create/Edit form --->
-			<div class="modal-body">
-				<img src="" class="imagepreview img-scaled" style="" >
-			</div>
-			<!--- Footer --->
-		</div>
-	</div>
-</div>
-#announceInterception( "fb_postQuickViewBar" )#
-
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
-<form 	id="upload-form" 
-		name="upload-form" 
-		enctype="multipart/form-data" 
-		method="POST" 
-		target="upload-iframe" 
-		action="#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#&folder=#prc.fbSafeCurrentRoot#"
+<form 	id="upload-form"
+		name="upload-form"
+		enctype="multipart/form-data"
+		method="POST"
+		target="upload-iframe"
+		action="#event.buildLink( prc.xehFBUpload )#"
 >
 	<input type="hidden" name="path" value='#prc.fbSafeCurrentRoot#' />
 	<input type="hidden" name="manual" value="true" />

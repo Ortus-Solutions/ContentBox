@@ -13,7 +13,7 @@ component extends="contentbox.models.ui.BaseWidget"{
 		setVersion( "1.0" );
 		setDescription( "Renders any view within the deployed ColdBox application." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
 		setIcon( "file" );
 		return this;
@@ -41,6 +41,10 @@ component extends="contentbox.models.ui.BaseWidget"{
 		}
 		// Replace with inflated data
 		arguments.args = viewArgs;
+		
+		//Clean up incoming arguments
+		structDelete( arguments, "event" );
+		
 		// Execute rendering
 		return renderView(argumentCollection=arguments);
 	}

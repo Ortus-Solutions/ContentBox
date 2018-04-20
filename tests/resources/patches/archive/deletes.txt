@@ -1,2 +1,2 @@
-/tests/resources/patches/tmp/test.txt
-/tests/resources/patches/tmp/test2.txt
+tests/resources/patches/tmp/test.txt
+tests/resources/patches/tmp/test2.txt

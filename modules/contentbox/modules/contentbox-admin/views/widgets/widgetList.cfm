@@ -98,8 +98,8 @@
                                                         href="javascript:testWidgetCode( '#widgetName#', '#prc.widgets.widgetType#' )">
                                                         <i class="fa fa-bolt fa-lg"></i> 
                                                     </a>
-                                                    <!---only allow deletion of core widgets--->
-                                                    <cfif prc.widgets.widgettype eq "core">
+                                                    <!---only allow deletion of custom widgets--->
+                                                    <cfif prc.widgets.widgettype eq "custom">
                                                         <!--- Delete Command --->
                                                         <a title="Delete Widget" data-container="body"  href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
                                                             <i class="fa fa-trash-o fa-lg"></i> 

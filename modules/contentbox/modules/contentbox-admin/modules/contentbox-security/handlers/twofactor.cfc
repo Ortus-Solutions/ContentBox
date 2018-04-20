@@ -26,7 +26,7 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
-			setNextEvent( "#prc.entryPoint#.login" );
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 		// Inflate author for requested events
 		prc.oAuthor = authorService.get( flash.get( "authorData" ).authorID );
@@ -35,16 +35,22 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
-			setNextEvent( "#prc.entryPoint#.login" );
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
 
 	/**
-	* Present Two-Factor Challenge
-	*/
+	 * Present Two-Factor Challenge
+	 *
+	 * Input Parameters
+	 * - authorID : To whom we are challenging, defaults to 0
+	 * - isEnrollment : Are we in enrollment mode, defaults to false
+	 * - rememberMe : Do we remember the device, defaults to false
+	 * - securedURL : Where to go next as relocation, defaults to ""
+	 */
 	function index( event, rc, prc ){
-		prc.xehValidate = "#prc.entryPoint#.twofactor.doValidation";
-		prc.xehResend 	= "#prc.entryPoint#.twofactor.resendCode";
+		prc.xehValidate = "#prc.cbAdminEntryPoint#.security.twofactor.doValidation";
+		prc.xehResend 	= "#prc.cbAdminEntryPoint#.security.twofactor.resendCode";
 		prc.provider 	= twoFactorService.getDefaultProviderObject();
 
 		event.setView( "twofactor/index" );
@@ -61,9 +67,9 @@ component extends="baseHandler"{
 		var authorData = flash.get( "authorData" );
 
 		// Verify the challenge code
-		var results = twoFactorService.verifyChallenge( 
-			code   = rc.twofactorcode, 
-			author = prc.oAuthor 
+		var results = twoFactorService.verifyChallenge(
+			code   = rc.twofactorcode,
+			author = prc.oAuthor
 		);
 
 		// Check for errors
@@ -72,7 +78,7 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.error( results.messages );
 			flash.keep( "authorData" );
-			setNextEvent( "#prc.entryPoint#.twofactor" );
+			setNextEvent( "#prc.cbAdminEntryPoint#.security.twofactor" );
 		} else {
 			var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
 			// Are we trusting devices? If so, trust this device if passed
@@ -83,14 +89,24 @@ component extends="baseHandler"{
 			oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );
 			// Set keep me log in remember cookie, if set.
 			securityService.setRememberMe( prc.oAuthor.getUsername(), val( authorData.rememberMe ) );
-			// Set in session, validations are now complete
-			securityService.setAuthorSession( prc.oAuthor );
-			
-			// announce events
+			// announce valid two factor
 			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
-			// announce event
-			announceInterception( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
-			
+
+			// Are we in enrollment or loging in mode.
+			if( authorData.isEnrollment ){
+				prc.oAuthor.setIs2FactorAuth( true );
+				authorService.save( prc.oAuthor );
+				messagebox.info( cb.r( "twofactor.enrollmentSuccess@security" ) );
+			}
+
+			// If you are logged in already, then skip this
+			if( !prc.oCurrentAuthor.isLoggedIn() ){
+				// Set in session, validations are now complete
+				securityService.setAuthorSession( prc.oAuthor );
+				// announce event
+				announceInterception( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
+			}
+
 			// check if securedURL came in?
 			if( len( authorData.securedURL ) ){
 				setNextEvent( uri=authorData.securedURL );
@@ -108,14 +124,16 @@ component extends="baseHandler"{
 		var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
 		// Verify error, if so, log it and setup a messagebox
 		if( twoFactorResults.error ){
-			log.error( prc.twoFactorResults.messages );
+			log.error( twoFactorResults.messages );
 			messagebox.error( cb.r( "twofactor.error@security" ) );
 		} else {
 			// message and redirect
 			messagebox.info( cb.r( "twofactor.codesent@security" ) );
 		}
+		// Keep Data
+		flash.keep( "authorData" );
 		// Relocate
-		setNextEvent( "#prc.entryPoint#.twofactor" );
+		setNextEvent( "#prc.cbAdminEntryPoint#.security.twofactor" );
 	}
 
 }

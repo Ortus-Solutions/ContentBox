@@ -13,7 +13,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "1.0" );
 		setDescription( "A widget that renders ContentStore content anywhere you like." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "hdd-o" );
 		setCategory( "Content" );
 
@@ -28,11 +28,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	*/
 	any function renderIt(required string slug, string defaultValue){
 
-		var content = contentStoreService.findBySlug( arguments.slug );
+		var content = contentStoreService.findBySlug( slug=arguments.slug, showUnpublished=true );
 
-		// Return if loaded 
-		if( content.isLoaded() ){
+		// Return if loaded and published
+		if( content.isLoaded() && content.isContentPublished() && !content.isExpired() ){
 			return content.renderContent();
+		}
+
+		// Return empty if expired
+		if( content.isLoaded() && content.isExpired() ){
+			return "";
 		}
 
 		// default value
@@ -41,13 +46,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		}
 
 		// else throw
-		throw(message="The content slug '#arguments.slug#' does not exist", type="InvalidContentStoreException" );
+		throw( message="The content slug '#arguments.slug#' does not exist", type="InvalidContentStoreException" );
 	}
 
 	/**
 	* Return an array of slug lists, the @ignore annotation means the ContentBox widget editors do not use it only used internally.
 	* @cbignore
-	*/ 
+	*/
 	array function getSlugList(){
 		return contentStoreService.getAllFlatSlugs();
 	}

@@ -9,7 +9,7 @@ component hint="My Module Configuration"{
 	// Module Properties
 	this.title 				= "HelloContentBox";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "This is an awesome hello world module";
 	this.version			= "1.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa

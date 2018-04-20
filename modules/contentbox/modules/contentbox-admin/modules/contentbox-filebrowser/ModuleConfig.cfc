@@ -10,7 +10,7 @@ component{
 	// Module Properties
 	this.title 				= "File Browser";
 	this.author 			= "Ortus Solutions";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "A file-directory browser and selector";
 	this.version			= "2.0.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
@@ -28,7 +28,7 @@ component{
 			// The title name for usage inline and the layout
 			title = "ContentBox FileBrowser v#this.version#",
 			// the directory root path to start the visualizer on, absolute path, set it to contentbox default location
-			directoryRoot = expandPath( "/contentbox/content" ),
+			directoryRoot = expandPath( "/contentbox-custom/_content" ),
 			// Secure the visualization or creation of stuff above the directory root or not
 			traversalSecurity = true,
 			// Show files on the visualizer or not

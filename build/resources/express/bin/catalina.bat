@@ -201,7 +201,7 @@ set LOGGING_MANAGER=-Djava.util.logging.manager=org.apache.juli.ClassLoaderLogMa
 set JAVA_OPTS=%JAVA_OPTS% %LOGGING_MANAGER%
 
 rem CONTENTBOX ADDITIONS
-set CATALINA_OPTS=-Xmx512m -Xmx512m -javaagent:%CATALINA_BASE%/webapps/ROOT/WEB-INF/lib/lucee-inst.jar
+set CATALINA_OPTS=-Xmx512m -Xmx512m -Dlucee-extensions=6DD4728A-AB0C-4F67-9DCE1A91A8ACD114
 
 rem ----- Execute The Requested Command ---------------------------------------
 

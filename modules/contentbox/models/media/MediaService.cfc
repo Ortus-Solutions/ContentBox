@@ -18,7 +18,7 @@ component accessors="true" singleton{
 	property name="providers" type="struct";
 
 	// Static default media root, just in case it is not loaded.
-	variables.DEFAULT_MEDIA_ROOT = "/contentbox/content";
+	variables.DEFAULT_MEDIA_ROOT = "/contentbox-custom/_content";
 	
 	/**
 	* Constructor

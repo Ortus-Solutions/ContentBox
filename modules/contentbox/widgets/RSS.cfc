@@ -16,7 +16,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "1.0" );
 		setDescription( "A widget that reads an RSS feed and displays the items as you see fit." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "Content" );
 		setIcon( "rss" );
 		return this;

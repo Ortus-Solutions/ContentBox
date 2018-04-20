@@ -43,11 +43,16 @@
                        		)#
                         </div>
                     </div>
-
-               		<a href="#event.buildLink( prc.xehLogin )#" class="">
-               			<i class="fa fa-chevron-left"></i> #cb.r( "backtologin@security" )#
-               		</a> 
-                #html.endForm()#
+                 #html.endForm()#
+               	
+                #announceInterception( "cbadmin_afterLostPasswordForm" )#
+                
+                <a href="#event.buildLink( prc.xehLogin )#" class="">
+               		<i class="fa fa-chevron-left"></i> #cb.r( "backtologin@security" )#
+               	</a> 
+                
+                #announceInterception( "cbadmin_afterBackToLogin" )#
+               
             </div>
         </div>
     </div>

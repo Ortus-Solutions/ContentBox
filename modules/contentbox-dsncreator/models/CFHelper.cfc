@@ -1,4 +1,4 @@
-<!--- 
+<!---
 ********************************************************************************
 ContentBox - A Modular Content Platform
 Copyright 2012 by Luis Majano and Ortus Solutions, Corp
@@ -22,26 +22,26 @@ limitations under the License.
 ********************************************************************************
 --->
 <cfcomponent output="false" hint="ContentBox DSN creator helper" extends="BaseHelper">
-	
+
 	<!--- Constructor --->
 	<cffunction name="init" output="false" returntype="CFHelper" hint="constructor" access="public">
 		<cfscript>
 			super.init();
 			return this;
 		</cfscript>
-	</cffunction> 
-    
-    <!--- verifyCFMLAdmin --->    
-    <cffunction name="verifyCFMLAdmin" output="false" access="public" returntype="struct" hint="Verify if the cf admin password validates. Returns struct: {error:boolean, messages:string}">    
+	</cffunction>
+
+    <!--- verifyCFMLAdmin --->
+    <cffunction name="verifyCFMLAdmin" output="false" access="public" returntype="struct" hint="Verify if the cf admin password validates. Returns struct: {error:boolean, messages:string}">
     	<cfargument name="cfmlPassword" required=true>
     	<cfscript>
 			var results = { error = false, messages = "" };
     		try{
     			var isValid = loginCFML( arguments.cfmlPassword );
-    			
+
     			if( isValid ){
     				results.messages = "CFML Password Verified!";
-    			}	
+    			}
     			else{
     				results.error = true;
     				results.messages = "Invalid CFML Password!";
@@ -51,13 +51,13 @@ limitations under the License.
     			results.error = true;
     			results.messages = "Error validating password: #e.message# #e.detail#";
     		}
-    		
+
     		return results;
-    	</cfscript>    
+    	</cfscript>
     </cffunction>
-    
-    <!--- createDSN --->    
-    <cffunction name="createDSN" output="false" access="public" returntype="any" hint="Create the DSN, returns struct: {error:boolean, messages:string}">    
+
+    <!--- createDSN --->
+    <cffunction name="createDSN" output="false" access="public" returntype="any" hint="Create the DSN, returns struct: {error:boolean, messages:string}">
     	<cfargument name="cfmlPassword" 	required=true>
 		<cfargument name="dsnName" 			required="true">
     	<cfargument name="dbType" 			required="true">
@@ -67,10 +67,10 @@ limitations under the License.
 		<cfargument name="dbPassword" 		required="false" default="">
 		<cfscript>
 			var results = { error = false, messages = "" };
-    		
+
 			try{
 				// Login First
-				loginCFML( arguments.cfmlPassword );	    
+				loginCFML( arguments.cfmlPassword );
 				// Create CF DSN Manager
 				var oDSNManager = createObject( "component","cfide.adminapi.datasource" );
 				// Verify DSN Does not Exist yet
@@ -85,6 +85,13 @@ limitations under the License.
 					username = arguments.dbUsername,
 					password = arguments.dbPassword
 				};
+
+				// Detect port in host
+				if( arguments.dbHost.find( ":" ) ){
+					data.port = arguments.dbHost.getToken( 2, ":" );
+					data.host = arguments.dbHost.getToken( 1, ":" );
+				}
+
 				// Create DSN
 				switch( arguments.dbType ){
 					case "mssql" : {
@@ -99,7 +106,7 @@ limitations under the License.
 						oDSNManager.setPostgreSQL(argumentCollection=data);
 						break;
 					}
-					case "derby" : { 
+					case "derby" : {
 						data.isnewdb = true;
 						oDSNManager.setDerbyEmbedded(argumentCollection=data);
 						break;
@@ -109,7 +116,7 @@ limitations under the License.
 						break;
 					}
 				}
-				
+
 				// Verify It
 				var isVerified = oDSNManager.verifyDsn( arguments.dsnName );
 				// Check if it verified
@@ -127,19 +134,19 @@ limitations under the License.
 				results.error = true;
 				results.messages = "Error creating DSN: #e.message# #e.detail#";
 			}
-			
+
 			return results;
-    	</cfscript>    
+    	</cfscript>
     </cffunction>
-    
+
     <!------------------------------------------- PRIVATE ------------------------------------------>
-		
-	<!--- loginCFML --->    
-    <cffunction name="loginCFML" output="false" access="private" returntype="any" hint="Login to CFML admin">    
+
+	<!--- loginCFML --->
+    <cffunction name="loginCFML" output="false" access="private" returntype="any" hint="Login to CFML admin">
     	<cfargument name="cfmlPassword" required=true>
-    	<cfscript>	
-			return createObject( "component","cfide.adminapi.administrator" ).login( arguments.cfmlPassword );    
-    	</cfscript>    
+    	<cfscript>
+			return createObject( "component","cfide.adminapi.administrator" ).login( arguments.cfmlPassword );
+    	</cfscript>
     </cffunction>
-			
+
 </cfcomponent>

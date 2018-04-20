@@ -36,7 +36,7 @@
 		            </ul>
 		            <!-- End Tabs -->
 		            <!-- Tab Content -->
-		            <div class="tab-content">
+		            <div class="tab-content" style="min-height: 600px">
 		                <div id="managePane" class="tab-pane active">
 							<!--- CategoryForm --->
 							#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#

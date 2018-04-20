@@ -13,7 +13,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "2.0" );
 		setDescription( "This widget creates a simple ContentBox search form." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "Miscellaneous" );
 		setIcon( "search" );
 		return this;

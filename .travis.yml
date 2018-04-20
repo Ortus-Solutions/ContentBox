@@ -20,10 +20,10 @@ git:
 env:
   matrix:
     - ENGINE=lucee@4.5
-    #- ENGINE=lucee@5 Activate once patch is released, works on snapshot only right now.
+    - ENGINE=lucee@5
     - ENGINE=adobe@11
     - ENGINE=adobe@2016
-  
+
 addons:
   apt:
     packages:
@@ -59,11 +59,11 @@ before_script:
 script:
   # Run tests
   - box package set testbox.runner="http://localhost:8589/tests/runner.cfm"
-  - box testbox run
+  - box testbox run verbose=true
   # Execute build via ANT
   - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
   # Get ContentBox Version for rest of build process
-  - PROJECT_VERSION="$(cat build/build-contentbox/module/box.json | jq -r '.version')"
+  - PROJECT_VERSION="$(cat build/build-contentbox/version.json | jq -r '.version')"
   # Spit out debugging info
   - cat build/build-contentbox/module/box.json
 
@@ -77,7 +77,7 @@ deploy:
   # Upload binaries
   - provider: s3
     on:
-      branch: 
+      branch:
         - development
         - master
       condition: "$ENGINE = lucee@4.5"
@@ -88,11 +88,11 @@ deploy:
     local-dir: artifacts
     upload-dir: ortussolutions
     acl: public_read
-  
+
   # Upload api docs
   - provider: s3
     on:
-      branch: 
+      branch:
         - development
         - master
       condition: "$ENGINE = lucee@4.5"
@@ -105,5 +105,5 @@ deploy:
     acl: public_read
 
 # Now publish assets to ForgeBox
-after_success:
-  - build/forgebox-publish.sh
+after_deploy:
+  - if [ ${ENGINE} = 'lucee@4.5' ]; then box forgebox publish; fi

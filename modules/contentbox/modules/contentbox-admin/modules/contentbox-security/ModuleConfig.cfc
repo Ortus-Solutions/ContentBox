@@ -10,7 +10,7 @@ component {
 	// Module Properties
 	this.title 				= "ContentBox Security";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox Security Module";
 	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
@@ -22,7 +22,7 @@ component {
 
 		// Layout Settings
 		layoutSettings = { defaultLayout = "simple.cfm" };
-	
+
 		// i18n
 		i18n = {
 			resourceBundles = {
@@ -34,20 +34,23 @@ component {
 		routes = [
 			{ pattern="/", handler="security", action="login" },
 			{ pattern="/twofactor/:action?", handler="twofactor" },
+			{ pattern="/twofactorEnrollment/:action?", handler="twofactorEnrollment" },
 			{ pattern="/language/:lang", handler="security", action="changelang" },
 			{ pattern="/:action", handler="security" },
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
 			customInterceptionPoints = [
 				// Login Layout HTML points
-				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd", 
+				"cbadmin_beforeLoginHeadEnd", "cbadmin_afterLoginBodyStart", "cbadmin_beforeLoginBodyEnd",
 				"cbadmin_loginFooter", "cbadmin_beforeLoginContent", "cbadmin_afterLoginContent",
 				// Login Form
 				"cbadmin_beforeLoginForm", "cbadmin_afterLoginForm",
+				// Lost Password
+				"cbadmin_afterLostPasswordForm", "cbadmin_afterBackToLogin",
 				// Security events
 				"cbadmin_preLogin","cbadmin_onLogin","cbadmin_onBadLogin","cbadmin_onLogout",
 				"cbadmin_onPasswordReminder","cbadmin_onInvalidPasswordReminder",
@@ -56,19 +59,23 @@ component {
 				"cbadmin_beforeTwoFactorForm","cbadmin_afterTwoFactorForm", "cbadmin_onInvalidTwoFactor", "cbadmin_onValidTwoFactor"
 			]
 		};
-		
+
 		// interceptors
 		interceptors = [
 			// ContentBox security via cbSecurity Module
-			{ 
+			{
 				class 		= "cbsecurity.interceptors.Security",
-			  	name 		= "security@cb",
+			  	name 		= "cbSecurity",
 			  	properties 	= {
 			 		rulesSource 		= "model",
 			 		rulesModel			= "securityRuleService@cb",
 			 		rulesModelMethod 	= "getSecurityRules",
-			 		validatorModel 		= "securityService@cb" 
+			 		validatorModel 		= "securityService@cb"
 			 	}
+			}
+            ,{
+                class = "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
+                name = "CheckForForceTwoFactorEnrollment"
 			}
 		];
 

@@ -13,43 +13,43 @@
 
 <div class="row">
 	<div class="col-md-12">
-		
-		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate", target="_blank" )#  
+
+		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate", target="_blank" )#
 			<div class="panel panel-default">
-				
+
 				<div class="panel-heading">
 					<h3 class="panel-title"><i class="fa fa-archive"></i> Export A Box Archive</h3>
 				</div>
 
 				<div class="panel-body">
-					
+
 					<p>From this panel you can choose to export your entire site or parts of it as a <strong>*.box</strong> archive package.</p>
-					
+
 					<div class="row margin10">
 						<div class="col-md-6 well well-sm text-center alert-success">
 							<h2>Option ##1: Everything!</h2>
 							<small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
 							<label class="btn btn-success btn-toggle radio" for="export_everything">
-								#html.radioButton( 
-									name 	= "export_type", 
-									id 		= "export_everything", 
-									checked = true, 
-									value 	= "everything" 
+								#html.radioButton(
+									name 	= "export_type",
+									id 		= "export_everything",
+									checked = true,
+									value 	= "everything"
 								)# Export Everything
 							</label>
 						</div>
 
 						<div class="col-md-1">&nbsp;</div>
-						
+
 						<div class="col-md-5 well well-sm text-center">
 							<h2>Option ##2: Mr. Picky</h2>
 							<small>For the more discriminating, select only the bits that you want to export.</small><br />
 							<label class="btn btn-toggle radio" for="export_selective">
-								#html.radioButton( 
-									name 	= "export_type", 
-									id 		= "export_selective", 
-									value 	= "selective" 
-								)# 
+								#html.radioButton(
+									name 	= "export_type",
+									id 		= "export_selective",
+									value 	= "selective"
+								)#
 								Export a-la-carte
 							</label>
 						</div>
@@ -69,7 +69,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -85,7 +85,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -101,7 +101,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -117,7 +117,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -133,7 +133,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -149,7 +149,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -165,7 +165,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -181,7 +181,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -197,7 +197,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -213,7 +213,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -229,7 +229,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
@@ -245,18 +245,18 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-bolt fa-lg"></i> Modules</h4>
+								<h4><i class="fa fa-bolt fa-lg"></i> Custom Modules</h4>
 								<div class="checkbox">
 									<label class="checkbox" for="toggle_modules">
 										#html.checkbox(name="toggle_modules",checked=true,data={togglegroup="export_modules"} )# Toggle All
 									</label>
 									<small class="muted clearfix">Export modules, all or a-la-carte</small>
-								</div>								
+								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
@@ -273,16 +273,21 @@
 											</cfif>
 											<cfset mcounter++>
 										</cfloop>
+
+										<cfif !arrayLen( prc.modules )>
+											<strong>No custom modules found!</strong>
+										</cfif>
 									</div>
 								</div>
 							</div>
 						</div>
 
 
-						
+
 						<hr>
 
 						<div class="row">
+
 							<div class="col-md-3">
 								<h4><i class="fa fa-photo fa-lg"></i> Themes</h4>
 								<div class="checkbox">
@@ -290,108 +295,145 @@
 										#html.checkbox(
 											name 	= "toggle_layouts",
 											checked = true,
-											data 	= { togglegroup="export_layouts" } 
+											data 	= { togglegroup="export_layouts" }
 										)# Toggle All
 									</label>
 									<small class="muted clearfix">Export layouts, all or a-la-carte</small>
 								</div>
 							</div>
+
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
 									<div class="row">
-										<cfloop query="prc.themes">
+										<cfloop collection="#prc.themes#" item="themeName">
+											<cfset thisTheme = prc.themes[ themeName ]>
 											<div class="col-md-6">
-												<cfset name = prc.themes.name>
+												<cfset name = thisTheme.name>
 												<label for="export_themes_#name#" class="checkbox">
 													#html.checkbox(
 														name 	= "export_themes",
 														id 		= "export_themes_#name#",
-														value 	= "#prc.themes.name#",
+														value 	= "#thisTheme.name#",
 														checked = true,
-														data 	= { alacarte=true } 
+														data 	= { alacarte=true }
 													)# #name#
 												</label>
 											</div>
-											<cfif currentRow MOD 2 eq 0>
-												</div>
-												<div class="row">
-											</cfif>
 										</cfloop>
+										<cfif prc.themes.isEmpty()>
+											<strong>No custom themes found!</strong>
+										</cfif>
 									</div>
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-magic fa-lg"></i> Widgets</h4>
+								<h4><i class="fa fa-magic fa-lg"></i> Custom Widgets</h4>
 								<div class="checkbox">
 									<label class="checkbox" for="toggle_widgets">
-										#html.checkbox( name="toggle_widgets", checked=true, data={togglegroup="export_widgets"} )# Toggle All
+										#html.checkbox( name="toggle_widgets", checked=true, data={ togglegroup="export_widgets" } )# Toggle All
 									</label>
-									<small class="muted clearfix">Export core widgets, all or a-la-carte. For layout or module widgets, please export the necessary layout and/or modules.</small>
+									<small class="muted clearfix">Export custom widgets, all or a-la-carte. For layout or module widgets, please export the necessary layout and/or modules.</small>
 								</div>
 							</div>
 							<div class="col-md-9">
 								<div class="controls checkbox-spacer">
 									<div class="row">
 										<cfset counter = 1>
-										<cfloop query="prc.widgets">
-											<cfif prc.widgets.widgettype eq "Core">
-												<div class="col-md-6">
-													<cfscript>
-													try{
-														p = prc.widgetService.getWidget( name=prc.widgets.name, type=prc.widgets.widgetType );
-													} catch( Any e ){
-														log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
-														writeOutput( "<div class='alert alert-danger'>Error building '#prc.widgets.name#' widget: #e.message# #e.detail#</div>" );
-														continue;
-													}
-													</cfscript>
-													<label for="export_widgets_#prc.widgets.name#" class="checkbox">
-														#html.checkbox(
-															name      	= "export_widgets",
-															id        	= "export_widgets_#prc.widgets.name#",
-															value 		= "#prc.widgets.name#",
-															checked 	= true,
-															data  		= { alacarte = true }
-														)# #prc.widgets.name#
-													</label>
+										<!-- Here is the pull request: https://github.com/Ortus-Solutions/ContentBox/pull/383/-->
+										<!-- Error when clicking Tools -> Export in the admin -->
+										<!-- In CF11 cfloop on query object is not working(query object which is created by using queryNew() function) -->
+										<!-- So, instead of cfloop use for() loop in cfscript. Rewrite the set of code in cfscript, previously some part was written in tags and some was in cfscript. -->
+										<!-- NOTE: Only for CF11 cfloop is not supporting. -->
+										<!-- NOTE: We can revisit the code once CF11 support is dropped. -->
+										<!---<cfloop array="#prc.widgets#" index="w">
+										<cfif w.widgettype eq "Custom">
+											<div class="col-md-6">
+												<cfscript>
+												try{
+													p = prc.widgetService.getWidget( name=w.name, type=w.widgetType );
+												} catch( Any e ){
+													log.error( 'Error Building #w.toString()#. #e.message# #e.detail#', e );
+													writeOutput( "<div class='alert alert-danger'>Error building '#w.name#' widget: #e.message# #e.detail#</div>" );
+													continue;
+												}
+												</cfscript>
+												<label for="export_widgets_#w.name#" class="checkbox">
+													#html.checkbox(
+														name      	= "export_widgets",
+														id        	= "export_widgets_#w.name#",
+														value 		= "#w.name#",
+														checked 	= true,
+														data  		= { alacarte = true }
+													)# #w.name#
+												</label>
+											</div>
+											<cfif counter MOD 2 eq 0>
 												</div>
-												<cfif counter MOD 2 eq 0>
-													</div>
-													<div class="row">
-												</cfif>
-												<cfset counter++>
+												<div class="row">
 											</cfif>
-										</cfloop>
+											<cfset counter++>
+										</cfif>
+										</cfloop>--->
+										<!-- for() loop-->
+										<cfscript>
+											for (w in prc.widgets){
+												if (w.widgettype eq "Custom"){
+													writeOutput('<div class="col-md-6">');
+														try{
+															p = prc.widgetService.getWidget( name=w.name, type=w.widgetType );
+														} catch( Any e ){
+															log.error( 'Error Building #w.toString()#. #e.message# #e.detail#', e );
+															writeOutput( "<div class='alert alert-danger'>Error building '#w.name#' widget: #e.message# #e.detail#</div>" );
+															continue;
+														}
+														writeOutput('<label for="export_widgets_#w.name#" class="checkbox">
+															#html.checkbox(
+																name      	= "export_widgets",
+																id        	= "export_widgets_#w.name#",
+																value 		= "#w.name#",
+																checked 	= true,
+																data  		= { alacarte = true }
+															)# #w.name#
+														</label>
+													</div>');
+													if (counter MOD 2 eq 0){
+														writeOutput('</div>
+														<div class="row">');
+													}
+													counter++;
+												}
+											}
+										</cfscript>
 									</div>
 								</div>
 							</div>
 						</div>
-						
+
 						<hr>
 
 					</fieldset>
 
 					<!--- Submit Button --->
 					<div class="actionBar" id="uploadBar">
-						#html.button( 
-							type    = "button", 
-							value   = "<i class='fa fa-search'></i> Preview Export", 
-							class   = "btn btn-primary btn-normal btn-lg", 
-							onclick = "return previewExport()" 
+						#html.button(
+							type    = "button",
+							value   = "<i class='fa fa-search'></i> Preview Export",
+							class   = "btn btn-primary btn-normal btn-lg",
+							onclick = "return previewExport()"
 						)#
-						#html.button( 
-							type    = "button", 
-							value   = "<i class='fa fa-download' id='export-icon'></i> Start Export", 
-							class   = "btn btn-danger btn-lg", 
-							onclick = "doExport()" 
+						#html.button(
+							type    = "button",
+							value   = "<i class='fa fa-download' id='export-icon'></i> Start Export",
+							class   = "btn btn-danger btn-lg",
+							onclick = "doExport()"
 						)#
 					</div>
-					
+
 					<!--- Loader --->
 					<div class="loaders" id="uploadBarLoader">
 						<i class="fa fa-spinner fa-spin fa-lg icon-4x"></i><br/>
@@ -408,7 +450,7 @@
 				</div>
 				<div class="panel-body">
 					<p>ContentBox can export your entire site as a static HTML generated site. Please fill out the following options in order to generate your static site.</p>
-					
+
 					<div class="checkbox">
 						<label>
 							<input type="checkbox" value="true" name="blogContent" checked="checked"> Include Blog Content
@@ -417,11 +459,11 @@
 
 					<!--- Submit Button --->
 					<div class="actionBar" id="siteGeneratorBar">
-						#html.button( 
-							type    = "button", 
-							value   = "<i class='fa fa-download' id='export-icon'></i> Start Generation", 
-							class   = "btn btn-danger btn-lg", 
-							onclick = "doSiteExport()" 
+						#html.button(
+							type    = "button",
+							value   = "<i class='fa fa-download' id='export-icon'></i> Start Generation",
+							class   = "btn btn-danger btn-lg",
+							onclick = "doSiteExport()"
 						)#
 					</div>
 
@@ -433,7 +475,7 @@
 
 				</div>
 
-					
+
 			</div>
 		#html.endForm()#
 

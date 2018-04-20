@@ -13,7 +13,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "1.0" );
 		setDescription( "A widget that can render out a ContentBox page anywhere you like." );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "arrow-circle-left" );
 		setCategory( "Content" );
 		return this;

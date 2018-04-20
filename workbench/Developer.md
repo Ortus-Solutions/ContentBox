@@ -2,32 +2,31 @@
 
 ## Asset Compilation
 
-All assets for this project are compiled using Grunt and managed via Bower and Yarn.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/devincludes`.  Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use `Gruntfile.js` to configure your asset distributions.
+All assets for this project are compiled using Grunt and managed via Yarn.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/resources`.  
+Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use `Gruntfile.js` to configure your asset distributions.
 
 ## Setup
 To setup your development environment, install [NodeJS](https://nodejs.org/en/) and run in the root of the project: `box recipe workbench/setup.boxr` to install all dependencies.  If not you will have to run these manually.
 
 ```
 cd workbench
-## Install Bower and Grunt-cli globally
-npm install -g bower yarn grunt-cli
+## Install Grunt-cli globally
+npm install -g yarn grunt-cli
 ## Install assets
 yarn install
-## Install Bower assets
-bower install
 ```
 
-To start Grunt compilation, run `Grunt` from the workbench directory.  Directories and relevant files, along with the `Gruntfile.js`, itself, will be watched for changes, which will recompile relevant assets.
+To start Grunt compilation, run `grunt` from the workbench directory.  Directories and relevant files, along with the `Gruntfile.js`, itself, will be watched for changes, which will recompile relevant assets.
 
 ## CSS/SCSS
 
-The directory `workbench/devincludes/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
+The directory `workbench/resources/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
 
-### Bower CSS
-All needed CSS from bower libraries are added via the `cssmin` task.
+### CSS
+All needed CSS from libraries are added via the `cssmin` task.
 
 ### Vendor CSS
-Vendor CSS files are added into `workbench/devincludes/vendor/css`.
+Vendor CSS files are added into `workbench/resources/vendor/css`.
 
 ### Output
 The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS, and bower CSS.
@@ -37,7 +36,7 @@ The build process will produce a `modules/contentbox-admin/includes/css/contentb
 
 **ContentBox Libraries**
 
-All JS files in the `workbench/devincludes/js` are the core ContentBox JavaScript libraries.  They will all be minified and sent to a `contentbox-pre.js` library.
+All JS files in the `workbench/resources/js` are the core ContentBox JavaScript libraries.  They will all be minified and sent to a `contentbox-pre.js` library.
 
 **Global Libraries**
 
@@ -50,7 +49,7 @@ Two global libraries are created in ContentBox:
 
 ## Vendor Libaries ##
 
-JavaScript libraries not managed by Bower will be placed under the `workbench/devincludes/vendor/js` folder and optimized by our build process into their appropriate global libraries.
+JavaScript libraries not managed by Bower will be placed under the `workbench/resources/vendor/js` folder and optimized by our build process into their appropriate global libraries.
 
 
 ## Runtime Assets

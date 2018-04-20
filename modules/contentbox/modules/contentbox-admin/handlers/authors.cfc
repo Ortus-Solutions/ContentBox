@@ -22,7 +22,7 @@ component extends="baseHandler"{
 	* Pre handler
 	*/
 	function preHandler( event, rc, prc, action, eventArguments ){
-		var protectedActions = [ 
+		var protectedActions = [
 			"save",
 			"editor",
 			"savePreferences",
@@ -133,11 +133,11 @@ component extends="baseHandler"{
 		prc.xehPasswordReset	= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
 
 		// is Filtering?
-		if( rc.fRole neq "any" 
-			OR rc.fStatus neq "any" 
+		if( rc.fRole neq "any"
+			OR rc.fStatus neq "any"
 			OR rc.f2FactorAuth neq "any"
-			OR rc.fGroups neq "any" 
-			OR rc.showAll 
+			OR rc.fGroups neq "any"
+			OR rc.showAll
 		){
 			prc.isFiltering = true;
 		}
@@ -305,50 +305,36 @@ component extends="baseHandler"{
 			cbMessagebox.warn( messageArray=vResults.getAllErrors() );
 			return new( argumentCollection=arguments );
 		}
-	}
-
-	/**
-	* Save Two Factor Authentication details.
-	*/
-	function saveTwoFactor( event, rc, prc ){
-		// Get the persisted user
-		var oAuthor = authorService.get( id=rc.authorID );
-		oAuthor.setIs2FactorAuth( !!rc.is2FactorAuth );
-		// Announce event
-		announceInterception( "cbadmin_onAuthorTwoFactorSaveOptions", { author=oAuthor } );
-		// save Author
-		authorService.saveAuthor( oAuthor );
-		// message
-		cbMessagebox.setMessage( "info","Two Factor Settings Saved!" );
-		// relocate
-		setNextEvent(
-			event		= prc.xehAuthorEditor,
-			queryString	= "authorID=#oAuthor.getAuthorID()###twofactor"
-		);
-	}
+    }
 
 	/**
 	* Author editor panel
 	* @return html
 	*/
 	function editor( event, rc, prc ){
+		event.paramValue( "authorID", 0 );
+
+		// HTML Title
+        prc.htmlTitle = "Author Editor";
 		// exit handlers
-		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#.authors.save";
-		prc.xehAuthorPreferences 	= "#prc.cbAdminEntryPoint#.authors.savePreferences";
-		prc.xehAuthorRawPreferences = "#prc.cbAdminEntryPoint#.authors.saveRawPreferences";
-		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#.authors.passwordChange";
-		prc.xehAuthorPermissions 	= "#prc.cbAdminEntryPoint#.authors.permissions";
-		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#.authors.usernameCheck";
-		prc.xehEmailCheck	 		= "#prc.cbAdminEntryPoint#.authors.emailCheck";
-		prc.xehEntriesManager  		= "#prc.cbAdminEntryPoint#.entries.index";
-		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#.pages.index";
-		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#.contentStore.index";
-		prc.xehExport 				= "#prc.cbAdminEntryPoint#.authors.export";
-		prc.xehPasswordReset		= "#prc.cbAdminEntryPoint#.authors.doPasswordReset";
-		prc.xehSaveTwoFactor 		= "#prc.cbAdminEntryPoint#.authors.saveTwoFactor";
+		prc.xehAuthorsave 			= "#prc.cbAdminEntryPoint#/authors/save";
+		prc.xehAuthorPreferences 	= "#prc.cbAdminEntryPoint#/authors/savePreferences";
+		prc.xehAuthorRawPreferences = "#prc.cbAdminEntryPoint#/authors/saveRawPreferences";
+		prc.xehAuthorChangePassword = "#prc.cbAdminEntryPoint#/authors/passwordChange";
+		prc.xehAuthorPermissions 	= "#prc.cbAdminEntryPoint#/authors/permissions";
+		prc.xehUsernameCheck	 	= "#prc.cbAdminEntryPoint#/authors/usernameCheck";
+		prc.xehEmailCheck	 		= "#prc.cbAdminEntryPoint#/authors/emailCheck";
+		prc.xehEntriesManager  		= "#prc.cbAdminEntryPoint#.entries/index";
+		prc.xehPagesManager  		= "#prc.cbAdminEntryPoint#/pages/index";
+		prc.xehContentStoreManager  = "#prc.cbAdminEntryPoint#/contentStore/index";
+		prc.xehExport 				= "#prc.cbAdminEntryPoint#/authors/export";
+        prc.xehPasswordReset		= "#prc.cbAdminEntryPoint#/authors/doPasswordReset";
+        prc.xehEnrollTwoFactor 		= "#prc.cbAdminEntryPoint#/security/twofactorEnrollment/process";
+		prc.xehUnenrollTwoFactor 	= "#prc.cbAdminEntryPoint#/security/twofactorEnrollment/unenroll";
+		prc.xehTwoFactorRelocation	= "#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor";
 
 		// get new or persisted author
-		prc.author  = authorService.get( event.getValue( "authorID", 0 ) );
+		prc.author  = authorService.get( rc.authorID );
 		// get roles
 		prc.roles = roleService.list( sortOrder="role", asQuery=false );
 		// get two factor provider
@@ -546,15 +532,19 @@ component extends="baseHandler"{
 	* Change user password
 	*/
 	function passwordChange( event, rc, prc ){
-		var oAuthor = authorService.get(id=rc.authorID);
+		if( prc.oCurrentAuthor.getAuthorID() != rc.authorID ){
+			cbMessagebox.error( "You cannot change passwords for other users. Please start a password reset instead." );
+			return setNextEvent( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+		}
+		var oAuthor = authorService.get( id=rc.authorID );
 
 		// validate passwords
-		if( compareNoCase(rc.password, rc.password_confirm) EQ 0){
+		if( compareNoCase( rc.password, rc.password_confirm ) EQ 0){
 			// set new password
 			oAuthor.setPassword( rc.password );
-			authorService.saveAuthor(author=oAuthor, passwordChange=true);
+			authorService.saveAuthor( author=oAuthor, passwordChange=true );
 			// announce event
-			announceInterception( "cbadmin_onAuthorPasswordChange",{author=oAuthor,password=rc.password} );
+			announceInterception( "cbadmin_onAuthorPasswordChange", { author=oAuthor, password=rc.password } );
 			// message
 			cbMessagebox.info( "Password Updated!" );
 		}
@@ -564,7 +554,7 @@ component extends="baseHandler"{
 		}
 
 		// relocate
-		setNextEvent(event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+		setNextEvent( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
 	}
 
 	/**
@@ -690,7 +680,6 @@ component extends="baseHandler"{
 			cbMessagebox.warn( "authorID sent is not valid" );
 			setNextEvent( "#prc.cbAdminEntryPoint#.authors" );
 		}
-		//writeDump( prc.role.getMemento() );abort;
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );

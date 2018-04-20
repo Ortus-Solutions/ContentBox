@@ -48,7 +48,7 @@
 
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s or \" data-toggle="tooltip" data-placement="right"/>
+				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->

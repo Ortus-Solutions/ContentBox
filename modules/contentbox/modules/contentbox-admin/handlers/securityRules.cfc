@@ -5,7 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="ruleService"				inject="id:securityRuleService@cb";
-	property name="securityInterceptor"		inject="coldbox:interceptor:security@cb";
+	property name="securityInterceptor"		inject="coldbox:interceptor:cbSecurity@contentbox-security";
 
 	// index
 	function index(event,rc,prc){
@@ -19,7 +19,7 @@ component extends="baseHandler"{
 		prc.xehExport 		= "#prc.cbAdminEntryPoint#.securityRules.export";
 		prc.xehExportAll 	= "#prc.cbAdminEntryPoint#.securityRules.exportAll";
 		prc.xehImportAll	= "#prc.cbAdminEntryPoint#.securityRules.importAll";
-		
+
 		// get content pieces
 		prc.rules = ruleService.getAll(sortOrder="order asc" );
 
@@ -130,13 +130,13 @@ component extends="baseHandler"{
 		}
 		setNextEvent(event=prc.xehsecurityRules);
 	}
-	
+
 	// Export Entry
 	function export(event,rc,prc){
 		event.paramValue( "format", "json" );
 		// get role
 		prc.rule  = ruleService.get( event.getValue( "ruleID",0) );
-		
+
 		// relocate if not existent
 		if( !prc.rule.isLoaded() ){
 			cbMessagebox.warn( "ruleID sent is not valid" );
@@ -146,7 +146,7 @@ component extends="baseHandler"{
 			case "xml" : case "json" : {
 				var filename = "SecurityRule-#prc.rule.getRuleID()#." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=prc.rule.getMemento(), type=rc.format, xmlRootName="securityrule" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
@@ -154,18 +154,18 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	// Export All Entries
 	function exportAll(event,rc,prc){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = ruleService.getAllForExport();
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "SecurityRules." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=data, type=rc.format, xmlRootName="securityrules" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default:{
@@ -173,7 +173,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	// import entries
 	function importAll(event,rc,prc){
 		event.paramValue( "importFile", "" );

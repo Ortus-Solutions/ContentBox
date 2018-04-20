@@ -10,7 +10,7 @@ component {
 	// Module Properties
 	this.title 				= "contentbox-dsncreator";
 	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "http://www.ortussolutions.com";
+	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "The ContentBox DSN Creator module";
 	this.version			= "@version.number@+@build.number@";
 	this.autoMapModels 		= false;

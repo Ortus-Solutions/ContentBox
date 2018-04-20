@@ -107,33 +107,34 @@
 											</tr>
 										</thead>				
 										<tbody>
-											<cfloop query="prc.themes">
+											<cfloop collection="#prc.themes#" item="themeName">
+												<cfset thisTheme = prc.themes[ themeName ]>
 											<tr>
 												<td>
-													<cfif prc.cbSettings.cb_site_theme eq prc.themes.name>
+													<cfif prc.cbSettings.cb_site_theme eq themeName>
 														<i class="fa fa-asterisk fa-lg text-warning" title="Active Theme"></i>
 													</cfif>
-													<strong>#prc.themes.themeName#</strong>
+													<strong>#thisTheme.themeName#</strong>
 													<br/>	
-													Version #prc.themes.version# by 
-													<a href="#prc.themes.authorURL#" title="#prc.themes.AuthorURL#" target="_blank">#prc.themes.Author#</a>
+													Version #thisTheme.version# by 
+													<a href="#thisTheme.authorURL#" title="#thisTheme.AuthorURL#" target="_blank">#thisTheme.Author#</a>
 													
 													<p>&nbsp;</p>
 
 													<!--- Button Bar --->
 													<div class="btn-group">
-														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ prc.themes.name>
-															<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#prc.themes.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
+														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ thisTheme.name>
+															<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#thisTheme.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
 																<i class="fa fa-eye"></i> Preview
 															</button>
-															<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#prc.themes.name#')">
+															<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#thisTheme.name#')">
 																<i class="fa fa-bolt"></i> Activate
 															</button>
 														</cfif>	
 
 														<!--- Delete Command --->
-														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.themes.name neq prc.activeTheme.name>
-															<a href="javascript:remove('#JSStringFormat(prc.themes.name)#')" 
+														<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND thisTheme.name neq prc.activeTheme.name>
+															<a href="javascript:remove('#JSStringFormat(thisTheme.name)#')" 
 															   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
 															   <i class="fa fa-trash-o fa-lg"></i> Remove
 															</a>
@@ -142,16 +143,16 @@
 
 												</td>
 												<td class="text-center">
-													<cfif len( prc.themes.screenShotURL )>
+													<cfif len( thisTheme.screenShotURL )>
 														<!--- image --->
-														<a href="#prc.themes.screenShotURL#" target="_blank">
-															<img src="#prc.themes.screenShotURL#"  alt="screenshot" class="img-thumbnail" width="300" border="0"/>
+														<a href="#thisTheme.screenShotURL#" target="_blank">
+															<img src="#thisTheme.screenShotURL#"  alt="screenshot" class="img-thumbnail" width="300" border="0"/>
 														</a>
 														<br/>
 													</cfif>
 													<!--- description --->
 													<p>
-														#prc.themes.description#
+														#thisTheme.description#
 													</p>
 												</td>
 											</tr>

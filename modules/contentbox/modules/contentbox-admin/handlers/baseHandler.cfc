@@ -186,7 +186,7 @@ component extends="coldbox.system.EventHandler"{
 				isBinary 	= prc.response.getBinary()
 			);
 		} else {
-			throw( exception );
+			throw( object=exception );
 		}
 
 	}

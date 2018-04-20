@@ -94,13 +94,13 @@ component extends="baseHandler"{
 		// render it out
 		event.setView( view="widgets/editorSelector", layout="ajax" );
 	}
-	
+
 	// Preview Widget
 	function preview( event, rc, prc ) {
 		// get widget
 		var widget = WidgetService.getWidget( name=rc.widgetname, type=rc.widgettype );
 		try {
-			event.renderData( data=evaluate( "widget.#rc.widgetudf#( argumentCollection=rc )" ), type="html" );
+			event.renderData( data=invoke( widget, rc.widgetudf, rc ), type="html" );
 		}
 		catch ( any e ) {
 			log.error( "Error rendering widget: #e.message# #e.detail#", e);
@@ -123,8 +123,8 @@ component extends="baseHandler"{
         	widget 		= widget,
         	udf 		= rc.widgetudf,
         	module 		= find( "@", rc.widgetname ) ? listGetAt( rc.widgetname, 2, '@' ) : "",
-        	category 	= !isNull( widget.getCategory() ) ? 
-        					widget.getCategory() : 
+        	category 	= !isNull( widget.getCategory() ) ?
+        					widget.getCategory() :
         					rc.widgetType=="Core" ?
                             	"Miscellaneous" :
                                 rc.widgetType,

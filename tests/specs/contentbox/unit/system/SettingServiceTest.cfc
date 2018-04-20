@@ -23,19 +23,18 @@ component extends="tests.resources.BaseTest"{
 	function run( testResults, testBox ){
 		describe( "Settings Services", function(){
 			beforeEach(function( currentSpec ){
-				mockCache = createEmptyMock( "coldbox.system.cache.providers.CacheBoxColdBoxProvider" );
 				model = prepareMock( getInstance( "SettingService@cb" ) );
-				model.$( "getSettingsCacheProvider", mockCache );
+				cache = model.getSettingsCacheProvider();
 			});
 
 			it( "can flush settings", function(){
-				mockCache.$( "clear" );
+				model.storeSettings( {} );
+				expect( model.getAllSettings() ).toBeEmpty();
 				model.flushSettingsCache();
-				expect(	mockCache.$once( "clear" ) ).toBeTrue();
+				expect( model.getAllSettings() ).notToBeEmpty();
 			});
 
 			it( "can get all settings", function(){
-				mockCache.$( "get", { mysetting=true } );
 				var r = model.getAllSettings( asStruct=true );
 				expect(	r ).toBeStruct()
 					.notToBeEmpty();

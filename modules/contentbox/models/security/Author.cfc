@@ -145,10 +145,10 @@ component 	persistent="true"
 	property 	name="permissions" 
 				singularName="permission" 
 				fieldtype="many-to-many" 
+				cascade="save-update"
 				type="array" 
 				lazy="extra"
 			 	cfc="contentbox.models.security.Permission" 
-			 	cascade="all"
 			 	fkcolumn="FK_authorID" 
 			 	linktable="cb_authorPermissions" 
 			 	inversejoincolumn="FK_permissionID" 
@@ -161,7 +161,7 @@ component 	persistent="true"
 				type="array" 
 				lazy="extra"
 			 	cfc="contentbox.models.security.PermissionGroup" 
-			 	cascade="all"
+			 	cascade="save-update"
 			 	fkcolumn="FK_authorID" 
 			 	linktable="cb_authorPermissionGroups" 
 			 	inversejoincolumn="FK_permissionGroupID" 
@@ -207,7 +207,7 @@ component 	persistent="true"
 		"firstName" = { required=true, size="1..100" },
 		"lastName" 	= { required=true, size="1..100" },
 		"email" 	= { required=true, size="1..255", type="email" },
-		"username" 	= { required=true, size="1..100" },
+		"username" 	= { required=true, size="1..100", validator: "UniqueValidator@cborm" },
 		"password"	= { required=true, size="1..100" }
 	};
 

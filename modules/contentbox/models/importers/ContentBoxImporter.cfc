@@ -65,9 +65,12 @@ component accessors=true {
             // convert files query to array
             var fileList 		= listToArray( valueList( files.entry ) );
             var contentBoxPath 	= moduleSettings[ "contentbox" ].path;
+            var customPath      = moduleSettings[ "contentbox-custom" ].path;
+
             // now set values
             setFileNames( fileList );
             setContentBoxPackagePath( arguments.importFile );
+
             // set some cheat mappings
             dataServiceMappings = {
                 "Authors" 			= "authorService",
@@ -81,12 +84,13 @@ component accessors=true {
                 "Entries" 			= "entryService",
                 "Pages" 			= "pageService"
             };
+
             filePathMappings = {
                 "Email Templates" 	= contentBoxPath & "/email_templates",
-                "Themes" 			= contentBoxPath & "/themes",
+                "Themes" 			= customPath & "/_themes",
                 "Media Library" 	= expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
-                "Modules" 			= contentBoxPath & "/modules_user",
-                "Widgets" 			= contentBoxPath & "/widgets"
+                "Modules" 			= customPath & "/_modules",
+                "Widgets" 			= customPath & "/_widgets"
             };
         } catch( any e ) {
             log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );

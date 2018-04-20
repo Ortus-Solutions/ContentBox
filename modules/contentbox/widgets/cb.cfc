@@ -16,7 +16,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setVersion( "1.0" );
 		setDescription( "A proxy to our CBHelper object" );
 		setAuthor( "Ortus Solutions" );
-		setAuthorURL( "http://www.ortussolutions.com" );
+		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "wrench" );
 		setCategory( "Utilities" );
 		return this;
@@ -33,7 +33,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* Proxy into the CB Helper
 	*/
 	any function onMissingMethod( missingMethodName, missingMethodArguments ){
-		return evaluate( "variables.cb.#missingMethodName#(argumentCollection=arguments.missingMethodArguments)" );
+		return invoke(
+			variables.cb,
+			missingMethodName,
+			missingMethodArguments
+		);
 	}
 
 

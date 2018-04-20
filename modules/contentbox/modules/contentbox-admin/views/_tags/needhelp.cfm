@@ -1,6 +1,6 @@
 <cfoutput>
 <div class="text-center margin10">
-	<a href="http://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox and ContentBox">
+	<a href="https://www.ortussolutions.com" target="_blank" title="The Gurus behind ColdBox and ContentBox">
 		<img class="img-thumbnail" src="#prc.cbroot#/includes/images/ortus-top-logo.png" alt="Ortus Solutions" border="0" />
 	</a>
 </div>

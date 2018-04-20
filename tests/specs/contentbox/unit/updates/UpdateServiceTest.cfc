@@ -29,12 +29,6 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		structdelete( application, "cbController" );
 	}
 
-	function testPath(){
-		path = model.getPatchesLocation();
-		assertEquals( expandPath( "/contentbox/updates" ), path );
-		debug(path);
-	}
-
 	function testBuildUpdater(){
 		 var source = expandPath( "/tests/resources/patches/Update.cfc" );
 		 var version = "1-0-0-0-1";
@@ -76,22 +70,10 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 	}
 
 	function testProcessRemovals(){
-		var source = expandPath( "/tests/resources/patches/archive/deletes_empty.txt" );
-		var dest = expandPath( "/tests/resources/patches/deletes_empty.txt" );
-		var log = createObject( "java","java.lang.StringBuilder" ).init('');
-
-		fileCopy( source, dest );
-
-		// test empty
-		model.processRemovals( dest, log );
-		debug( log.toString() );
-		assertTrue( findNoCase( "No updated files to remove. <br/>", log.toString() ) );
-		assertFalse( fileExists( dest ) );
-
 		// test with files
 		var source		= expandPath( "/tests/resources/patches/archive/deletes.txt" );
 		var dest		= expandPath( "/tests/resources/patches/deletes.txt" );
-		var log			= createObject( "java","java.lang.StringBuilder" ).init('');
+		var log 		= createObject( "java", "java.lang.StringBuilder" ).init( '' );
 		var destination	= expandPath( "/tests/resources/patches/tmp/test.txt" );
 
 		fileCopy( source, dest );
@@ -99,10 +81,21 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 
 		model.processRemovals( dest, log );
 		
-		assertFalse( fileExists( dest ) );
-		assertFalse( fileExists( destination ) );
 		debug( log.toString() );
 
+		assertFalse( fileExists( destination ) );
+
+		// test empty
+		var source	= expandPath( "/tests/resources/patches/archive/deletes_empty.txt" );
+		var dest	= expandPath( "/tests/resources/patches/deletes_empty.txt" );
+		var log 	= createObject( "java", "java.lang.StringBuilder" ).init( '' );
+
+		fileCopy( source, dest );
+
+		model.processRemovals( dest, log );
+		debug( log.toString() );
+		assertTrue( findNoCase( "No updated files to remove. <br/>", log.toString() ) );
+		assertFalse( fileExists( dest ) );
 	}
 
 	function testProcessUpdates(){

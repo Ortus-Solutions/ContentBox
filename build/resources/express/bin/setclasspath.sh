@@ -21,11 +21,9 @@
 #  endorsed directory.
 # -----------------------------------------------------------------------------
 
-# Embedded JRE
-JRE_HOME=../jre
-
 # Make sure prerequisite environment variables are set
 if [ -z "$JAVA_HOME" -a -z "$JRE_HOME" ]; then
+
   if $darwin; then
     # Bugzilla 54390
     if [ -x '/usr/libexec/java_home' ] ; then
@@ -47,12 +45,19 @@ if [ -z "$JAVA_HOME" -a -z "$JRE_HOME" ]; then
       fi
     fi
   fi
+
+  if [ -z "$JAVA_HOME" -a -z "$JRE_HOME" ]; then
+    # Embedded JRE Try it
+    JRE_HOME=../jre
+  fi
+
   if [ -z "$JAVA_HOME" -a -z "$JRE_HOME" ]; then
     echo "Neither the JAVA_HOME nor the JRE_HOME environment variable is defined"
     echo "At least one of these environment variable is needed to run this program"
     exit 1
   fi
 fi
+
 if [ -z "$JAVA_HOME" -a "$1" = "debug" ]; then
   echo "JAVA_HOME should point to a JDK in order to run in debug mode."
   exit 1
