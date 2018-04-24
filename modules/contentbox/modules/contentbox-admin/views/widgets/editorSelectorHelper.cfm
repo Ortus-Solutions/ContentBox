@@ -76,6 +76,10 @@ function switchWidgetFormMode( mode ) {
                 iconName = detail.find( "##widgetIcon" ).val();
                 titleBar.html( '<i class="fa fa-' + iconName + '"></i> Insert \'' +widgetDisplayName+ '\' Widget' );
                 //updatePreview();
+
+                if(widgetName == 'Menu' && !$('##widget-preview-content li').length){
+                    $('##widget-button-insert').css("display","none");
+                }
             } )
             break;
     }
