@@ -160,36 +160,4 @@ component extends="baseHandler"{
 		setNextEvent(prc.xehModules);
 	}
 
-	/**
-	 * Upload a new module
-	 */
-	function upload( event, rc, prc ){
-		var fp = event.getTrimValue( "fileModule","" );
-
-		// Verify
-		if( len( fp ) eq 0){
-			cbMessagebox.warn( "Please choose a file to upload" );
-		}
-		else{
-			// Upload File
-			try{
-				var results = moduleService.uploadModule( "fileModule" );
-				if( results.error ){
-					flash.put( "forgeboxInstallLog", results.logInfo );
-					cbMessagebox.error( "Error installing module, please check out the log information." );
-				}
-				else{
-					// Messagebox
-					cbMessagebox.info( "Module Installed Successfully in your 'modules' folder." );
-					flash.put( "forgeboxInstallLog", "Please verify if the module was
-					registered successfully by looking below in your modules listing.  Some modules need some manual installations so please verify the file structure in your
-					media manager modules library.  If the module does not appear below, then it was not a valid module installation and some manual work is needed." );
-				}
-			} catch( Any e ){
-				cbMessagebox.error( "Error Installing Module: #e.detail# #e.message#" );
-			}
-		}
-
-		setNextEvent( prc.xehModules );
-	}
 }

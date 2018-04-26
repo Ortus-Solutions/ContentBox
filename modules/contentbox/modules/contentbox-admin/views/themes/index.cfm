@@ -51,7 +51,7 @@
 									<!--- Rebuild Registry Button --->
 									<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
 										<div class="btn-group btn-sm pull-right">
-											<button class="btn btn-sm btn-primary" onclick="return toggleUploader()" ><i class="fa fa-upload"></i> Upload Theme</button>
+
 											<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan Themes directory and rebuild registry"><i class="fa fa-refresh"></i> Rebuild Registry</button>
 										</div>
 									</cfif>
@@ -64,35 +64,6 @@
 											placeholder="Quick Filter"
 										)#
 									</div>
-								</div>
-
-								<!--- Uploader --->
-								<div id="uploaderBar" class="well well-sm" style="display:none">
-									#html.startForm(
-										name="themeUploadForm",
-										action=prc.xehThemeupload,
-										multipart=true,
-										novalidate="novalidate",
-										class="form-vertical"
-									)#
-										<fieldset>
-											<legend>Theme Uploader</legend>
-											#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
-												name="fileTheme",
-												label="Upload Theme (.zip):",
-												required=true
-											)#
-	    									<div id="uploadBar">
-	    										#html.submitButton(
-	    											value="Upload & Install",
-	    											class="btn btn-danger"
-	    										)#
-	    									</div>
-	    									<div class="loaders" id="uploadBarLoader">
-	    										<i class="fa fa-spinner fa-spin fa-lg"></i>
-	    									</div>
-	                                	</fieldset>
-									#html.endForm()#
 								</div>
 
 								<!--- Theme Form --->
