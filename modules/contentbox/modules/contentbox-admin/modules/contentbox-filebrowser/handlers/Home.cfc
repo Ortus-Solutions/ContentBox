@@ -44,8 +44,6 @@ component{
 		boolean widget=false,
 		struct settings={}
 	){
-		if(fileExists(expandPath('\modules\contentbox\content\download.zip')))
-			fileDelete(expandPath('\modules\contentbox\content\download.zip'));
 		// params
 		event.paramValue( "path","" );
 		event.paramValue( "callback","" );
@@ -228,9 +226,9 @@ component{
 			return;
 		}
 		rc.pathsArray = ListToArray(rc.path);
-		for(i=1;i<=arrayLen(rc.pathsArray);i++){
+		for( var thisFile in rc.pathsArray){
 		// Traversal Security
-			if( NOT isTraversalSecure( prc, rc.pathsArray[i] ) ){
+			if( NOT isTraversalSecure( prc, thisFile ) ){
 				data.errors = true;
 				data.messages = $r( "messages.traversal_security@fb" );
 				event.renderData( data=data, type="json" );
@@ -241,18 +239,18 @@ component{
 			try{
 				// Announce it
 					var iData = {
-						path = rc.pathsArray[i]
+						path = thisFile
 					};
 					announceInterception( "fb_preFileRemoval", iData );
 
-					if( fileExists( rc.pathsArray[i] ) ){
-						fileDelete( rc.pathsArray[i] );
+					if( fileExists( thisFile ) ){
+						fileDelete( thisFile );
 					}
-					else if( directoryExists( rc.pathsArray[i] ) ){
-						directoryDelete( rc.pathsArray[i], true );
+					else if( directoryExists( thisFile ) ){
+						directoryDelete( thisFile, true );
 					}
 					data.errors = false;
-					data.messages = $r( resource="messages.removed@fb", values="#rc.pathsArray[i]#" );
+					data.messages = $r( resource="messages.removed@fb", values="#thisFile#" );
 
 					// Announce it
 					announceInterception( "fb_postFileRemoval", iData );
@@ -285,7 +283,6 @@ component{
 			return;
 		}
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
-		
 			if( !len( rc.path ) ){
 				data.errors = true;
 				data.messages = $r( "messages.invalid_path@fb" );
@@ -293,20 +290,22 @@ component{
 				return;
 			}
 		rc.pathsArray = ListToArray(rc.path);
-		if(fileExists(expandPath('\modules\contentbox\content\download.zip')))
-			fileDelete(expandPath('\modules\contentbox\content\download.zip'));
+		if(fileExists("#GetTempDirectory()#\download.zip"))
+			fileDelete("#GetTempDirectory()#\download.zip");
 		if(arrayLen(rc.pathsArray) > 1){
-			for(i=1;i<=arrayLen(rc.pathsArray);i++){
-				// Traversal Security
-				if( NOT isTraversalSecure(prc, rc.pathsArray[i]) ){
-					data.errors = true;
-					data.messages = $r( "messages.traversal_security@fb" );
-					event.renderData( data=data, type="json" );
-					return;
+			cfzip( action="zip", file="#GetTempDirectory()#\download.zip" ) {
+				for( var thisFile in rc.pathsArray){
+					// Traversal Security
+					if( NOT isTraversalSecure(prc, thisFile) ){
+						data.errors = true;
+						data.messages = $r( "messages.traversal_security@fb" );
+						event.renderData( data=data, type="json" );
+						return;
+					}
+					cfzipParam( source = thisFile );
 				}
-				cfzip(action="zip",source="#rc.pathsArray[i]#",file="#expandPath('\modules\contentbox\content\download.zip')#");
 			}
-				rc.path=expandPath('\modules\contentbox\content\download.zip');
+			rc.path="#GetTempDirectory()#\download.zip";
 		}else{
 			if( NOT isTraversalSecure(prc, rc.path) ){
 				data.errors = true;
