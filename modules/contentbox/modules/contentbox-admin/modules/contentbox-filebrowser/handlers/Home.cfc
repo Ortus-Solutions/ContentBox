@@ -114,13 +114,14 @@ component{
 			if(prc.fbPreferences.sorting eq "lastmodified"){
 				prc.fbPreferences.sorting ="datelastmodified"
 			}
-			var fileListQuery = new query();
+			var fileListQuery = new Query(
+				dbType = "query",
+				qry = prc.fbqListing,
+				sql = "select * from qry where type=:dir order by #prc.fbPreferences.sorting#"
+			);
 
-			fileListQuery.setDBType("query");
-			fileListQuery.setattributes(qry = prc.fbqListing);
-			fileListQuery.setattributes(sortby1 = prc.fbPreferences.sorting);
-			fileListQuery.addParam(name="dir",value="dir",cfsqltype="cf_sql_varchar");
-			fileListQuery.setsql("select * from qry where type=:dir order by #prc.fbPreferences.sorting#" );
+			fileListQuery.addParam( name="dir", value="dir", cfsqltype="cf_sql_varchar" );
+
 			prc.fbqListing=fileListQuery.execute().getresult();
 
 			if(prc.fbPreferences.sorting eq "datelastmodified"){
@@ -558,7 +559,7 @@ component{
 				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 			if( !structKeyExists( prefs, "listFolder" ) ){
-				prefs.listType = "listing";
+				prefs.listFolder = "listing";
 				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}
