@@ -375,7 +375,7 @@ component accessors="true" singleton threadSafe{
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 
 		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
-			controller.setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+			controller.relocate( event=event.getCurrentRoutedURL(), ssl=true );
 		}
 
 		/************************************** IDENTITY HEADER *********************************************/
@@ -1061,7 +1061,7 @@ component accessors="true" singleton threadSafe{
 
 	){
 		arguments.event = adminRoot() & ".module.#arguments.module#.#arguments.event#";
-		return controller.setNextEvent( argumentCollection=arguments );
+		return controller.relocate( argumentCollection=arguments );
 	}
 
 	/**
