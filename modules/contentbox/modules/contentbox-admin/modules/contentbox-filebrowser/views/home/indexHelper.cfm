@@ -72,6 +72,7 @@ $( document ).ready( function() {
 	$selectButton		= $fileBrowser.find( "##bt_select" );
 	$sorting			= $fileBrowser.find( "##fbSorting" );
 	$listType			= $fileBrowser.find( "##listType" );
+	$listFolder			= $fileBrowser.find( "##listFolder" );
 	$quickView			= $fileBrowser.find( "##quickViewBar" );
 	$quickViewContents	= $fileBrowser.find( "##quickViewBarContents" );
 	//disable it
@@ -165,15 +166,17 @@ $( document ).ready( function() {
 function noMultiSelectAction(){
 	if( fbSelectHistory.length != 1 ){ alert( '#$r( "jsmessages.no_multi_select@fb" )#' ); return true; }
 }
-function fbListTypeChange( listType ){
+function fbListTypeChange( listType,file ){
 	$listType.val( listType );
+	$listFolder.val( file);
 	fbRefresh();
 }
 function fbRefresh(){
 	$('.tooltip').remove();
 	$fileLoaderBar.slideDown();
 	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#',
-		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
+		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val(),listFolder
+		:$listFolder.val() },
 		function(){
 			$fileLoaderBar.slideUp();
 		} );

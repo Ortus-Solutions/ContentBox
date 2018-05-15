@@ -110,6 +110,24 @@ component{
 		// get directory listing.
 		prc.fbqListing = directoryList( prc.fbCurrentRoot, false, "query", prc.fbSettings.extensionFilter, "#prc.fbPreferences.sorting#" );
 
+		if(prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
+			if(prc.fbPreferences.sorting eq "lastmodified"){
+				prc.fbPreferences.sorting ="datelastmodified"
+			}
+			var fileListQuery = new Query(
+				dbType = "query",
+				qry = prc.fbqListing,
+				sql = "select * from qry where type=:dir order by #prc.fbPreferences.sorting#"
+			);
+
+			fileListQuery.addParam( name="dir", value="dir", cfsqltype="cf_sql_varchar" );
+
+			prc.fbqListing=fileListQuery.execute().getresult();
+
+			if(prc.fbPreferences.sorting eq "datelastmodified"){
+				prc.fbPreferences.sorting ="lastmodified"
+			}
+		}
 		var iData = {
 			directory = prc.fbCurrentRoot,
 			listing = prc.fbqListing
@@ -395,7 +413,7 @@ component{
 
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
-		
+
 		// traversal test
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
@@ -421,7 +439,7 @@ component{
 				path = rc.path
 			};
 			announceInterception( "fb_preFileUpload", iData );
-			iData.results = fileUpload( 
+			iData.results = fileUpload(
 				rc.path,
 				"FILEDATA",
 				prc.fbSettings.acceptMimeTypes,
@@ -445,7 +463,7 @@ component{
 				data.messages &= "Stack: #e.stacktrace#";
 			}
 			log.error( data.messages, e );
-			
+
 			// Announce exception
 			var iData = {
 				fileField = "FILEDATA",
@@ -480,14 +498,14 @@ component{
 	* @force Force the loading of assets on demand
 	* @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
-	private function loadAssets( 
-		event, 
-		rc, 
-		prc, 
-		boolean force=false, 
-		struct settings={} 
+	private function loadAssets(
+		event,
+		rc,
+		prc,
+		boolean force=false,
+		struct settings={}
 	){
-		
+
 		// merge the settings structs if passed
 		if( !structIsEmpty( arguments.settings ) ){
 			mergeSettings( prc.fbSettings, arguments.settings );
@@ -540,6 +558,10 @@ component{
 				prefs.listType = "listing";
 				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
+			if( !structKeyExists( prefs, "listFolder" ) ){
+				prefs.listFolder = "listing";
+				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
+			}
 		}
 		return prefs;
 	}
@@ -562,6 +584,14 @@ component{
 				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}
+		if( structKeyExists( rc, "listFolder" ) AND reFindNoCase( "^(all|dir)$", rc.listFolder ) ){
+			var prefs = getPreferences();
+			if( NOT structKeyExists(prefs, "listFolder" ) OR prefs.listFolder NEQ rc.listFolder ){
+				prefs.listFolder = rc.listFolder;
+				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
+			}
+		}
+
 	}
 
 	/**
@@ -602,11 +632,11 @@ component{
 		}
 
 		if( !flash.exists( "filebrowser" ) ){
-			var filebrowser = { 
-				callback		= rc.callback, 
-				cancelCallback	= rc.cancelCallback, 
-				filterType		= rc.filterType, 
-				settings		= prc.fbsettings 
+			var filebrowser = {
+				callback		= rc.callback,
+				cancelCallback	= rc.cancelCallback,
+				filterType		= rc.filterType,
+				settings		= prc.fbsettings
 			};
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}

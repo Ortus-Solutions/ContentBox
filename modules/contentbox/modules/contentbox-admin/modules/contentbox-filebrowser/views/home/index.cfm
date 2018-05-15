@@ -45,16 +45,28 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		  </a>
 		</div>
 
+		<!---Grid or listing --->
+
 		<div class="btn-group btn-group-sm" role="group">
-		  <a href="javascript:fbListTypeChange('listing')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "filelisting@fb" )#">
+		  <a href="javascript:fbListTypeChange('listing','all')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "filelisting@fb" )#">
 		  	<i class="fa fa-list-ul"></i>
 		  </a>
-		  <a href="javascript:fbListTypeChange('grid')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "gridlisting@fb" )#">
+		  <a href="javascript:fbListTypeChange('grid','all')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "gridlisting@fb" )#">
 		  	<i class="fa fa-th"></i>
 		  </a>
 		</div>
 
-		<!---Grid or listing --->
+		<!---Grid or listing of Directories--->
+
+		<div class="btn-group btn-group-sm" role="group">
+			<a href="javascript:fbListTypeChange('listing','dir')" class="btn btn-info"  data-toggle="tooltip" data-container="body" title="#$r( "directorylistview@fb" )#">
+				<i class="fa fa-align-justify"></i>
+			</a>
+			<a href="javascript:fbListTypeChange('grid','dir')" class="btn btn-info"  data-toggle="tooltip" data-container="body" title="#$r( "directorygridview@fb" )#">
+				<i class="fa fa-folder"></i>
+			</a>
+		</div>
+
 		<div class="form-group">
 			<!--- Sorting --->
 			#html.label( field="fbSorting", content=$r( "sortby@fb" ))#
@@ -66,6 +78,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			#html.textField( name="fbQuickFilter", class="form-control" )#
 		</div>
 		#html.hiddenField( name="listType", value=prc.fbPreferences.listType )#
+		#html.hiddenField( name="listFolder", value=prc.fbPreferences.listFolder )#
 
 		<!---event --->
 		#announceInterception( "fb_postTitleBar" )#
