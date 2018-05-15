@@ -83,7 +83,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<div class="form-group col-md-6">
 					<div class="controls" id="manual_upload_wrapper">
 		                <div class="fileinput fileinput-new input-group" data-provides="fileinput" id="filewrapper">
-		                    <div class="form-control" data-trigger="fileinput">
+		                    <div class="form-control" data-trigger="fileinput" style="height:auto">
 		                        <i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span>
 		                    </div>
 		                    <span class="input-group-addon btn btn-default btn-file">
