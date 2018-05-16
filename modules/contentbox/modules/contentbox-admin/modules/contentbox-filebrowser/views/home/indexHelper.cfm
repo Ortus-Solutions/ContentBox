@@ -426,7 +426,7 @@ $( document ).ready( function(){
 		<cfif len( prc.fbSettings.acceptMimeTypes )>
 		allowedfiletypes : "#prc.fbSettings.acceptMimeTypes#".split( "," ),
 		</cfif>
-		url: '#event.buildLink( prc.xehFBUpload )#?#$safe( session.URLToken )#',
+		url: '#event.buildLink( prc.xehFBUpload )#',
 		data: {
 	        path: '#prc.fbSafeCurrentRoot#'
 	    },
