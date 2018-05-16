@@ -56,7 +56,7 @@ function switchWidgetFormMode( mode ) {
         case 'list':
             findSelectedWidget().removeClass( 'selected' );
             detail.fadeOut( 300, function() {
-                list.fadeIn( 300 )  
+                list.fadeIn( 300 )
                 filter.show();
                 backBtn.hide();
                 insertBtn.hide();
@@ -76,6 +76,10 @@ function switchWidgetFormMode( mode ) {
                 iconName = detail.find( "##widgetIcon" ).val();
                 titleBar.html( '<i class="fa fa-' + iconName + '"></i> Insert \'' +widgetDisplayName+ '\' Widget' );
                 //updatePreview();
+
+                if(!$('##widget-preview-content li').length){
+                    $('##widget-button-insert').css("display","none");
+                }
             } )
             break;
     }

@@ -25,7 +25,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
     * @slug.optionsUDF getSlugList
     * @defaultValue.hint The string to show if the menu does not exist
     */
-    any function renderIt( required string slug, string defaultValue ){
+    any function renderIt( string slug = 'EmptyMenuList', string defaultValue ){
         var menu = menuService.findWhere( { slug=arguments.slug } );
 
         if( !isNull( menu ) ){
@@ -37,7 +37,12 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
             catch( any e ) {
                 return arguments.defaultValue;
             }
-            return menuContent;            
+            return menuContent;
+        }
+
+        if( isNull( menu ) ){
+
+            return "Menu Items Not Found.Create Menu Items to Use as a widget. ";
         }
 
         // default value
