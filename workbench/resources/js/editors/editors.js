@@ -224,7 +224,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
  */
 function shouldPublish(){
 	// Confirm if you really want to quick save if content is published already
-	if( $contentID.len() && $isPublished.val() == 'true' ){
+	if( $contentID.length && $isPublished.val() == 'true' ){
 		return confirm( "Your content is published already, quick saving it will draft it and unpublish it" );
 	}
 	return true;
