@@ -107,11 +107,11 @@ function switchEditor( editorType ){
 }
 
 /**
- * Setup the editors. 
+ * Setup the editors.
  * @param theForm The form container for the editor
  * @param withExcerpt Using excerpt or not apart from the main 'content' object
  * @param saveURL The URL used for saving the content asynchronously
- * @param collapseNav Automatically collapse main navigation for better editing experience 
+ * @param collapseNav Automatically collapse main navigation for better editing experience
  */
 function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	// Setup global editor elements
@@ -130,7 +130,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	$publishButton 			= $targetEditorForm.find( "#publishButton" );
 	$withExcerpt			= withExcerpt || true;
 	$wasSubmitted 			= false;
-	
+
 	// Startup the choosen editor via driver CFC
 	$cbEditorStartup();
 
@@ -143,21 +143,21 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
     	ignore  		: 'content',
         submitHandler 	: function( form ) {
 			// Update Editor Content
-        	try{ 
-        		updateEditorContent(); 
-        	} catch( err ){ 
-        		console.log( err ); 
+        	try{
+        		updateEditorContent();
+        	} catch( err ){
+        		console.log( err );
         	};
-			
+
 			// Update excerpt
 			if( $withExcerpt ){
-				try{ 
-					updateEditorExcerpt(); 
-				} catch( err ){ 
-					console.log( err ); 
+				try{
+					updateEditorExcerpt();
+				} catch( err ){
+					console.log( err );
 				};
 			}
-			
+
 			// if it's valid, submit form
             if( $content.val().length ) {
             	// enable slug for saving.
@@ -194,7 +194,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
-	
+
 	// counters
 	$( "#htmlKeywords" ).keyup(function(){
 		$( "#html_keywords_count" ).html( $( "#htmlKeywords" ).val().length );
@@ -224,7 +224,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
  */
 function shouldPublish(){
 	// Confirm if you really want to quick save if content is published already
-	if( $isPublished.val() == 'true' ){
+	if( $contentID.len() && $isPublished.val() == 'true' ){
 		return confirm( "Your content is published already, quick saving it will draft it and unpublish it" );
 	}
 	return true;
@@ -234,7 +234,7 @@ function shouldPublish(){
  * Quick save content
  */
 function quickSave(){
-	
+
 	// Confirm if you really want to quick save if content is published already
 	if( !shouldPublish() ){
 		return;
@@ -260,18 +260,18 @@ function quickSave(){
 	toggleLoaderBar();
 	// Save current content, just in case editor has not saved it
 	if( !$content.val().length ){
-		$content.val( getEditorContent() );	
+		$content.val( getEditorContent() );
 	}
 	// enable for quick save, if disabled
 	var disableSlug = false;
-	if( $slug.prop( "disabled" ) ){ 
+	if( $slug.prop( "disabled" ) ){
 		$slug.prop( "disabled", false );
 		disableSlug = true;
 	}
 	// Post it
 	$.post(
-		$targetEditorSaveURL, 
-		$targetEditorForm.serialize(), 
+		$targetEditorSaveURL,
+		$targetEditorForm.serialize(),
 		function( data ){
 			// Save new id
 			$contentID.val( data.CONTENTID );
@@ -287,7 +287,7 @@ function quickSave(){
 			// notify
 			adminNotifier( "info", "Draft Saved!" );
 		},
-		"json" 
+		"json"
 	);
 }
 
@@ -297,10 +297,10 @@ function quickSave(){
  */
 function previewContent(){
 	// Open the preview window for content
-	openRemoteModal( 
+	openRemoteModal(
 		getPreviewSelectorURL(),
-		{ 
-			content		: getEditorContent(), 
+		{
+			content		: getEditorContent(),
 			layout		: $( "#layout" ).val(),
 			title		: $( "#title" ).val(),
 			slug		: $slug.val(),
@@ -356,12 +356,12 @@ function askLeaveConfirmation(){
  */
 function permalinkUniqueCheck( linkToUse ){
 	var linkToUse = linkToUse || $slug.val();
-	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness	
+	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness
 	if( !linkToUse.length ){ return; }
 	// Verify unique
-	$.getJSON( 
-		$cbEditorConfig.slugCheckURL, 
-		{ slug : linkToUse, contentID : $( "#contentID" ).val() }, 
+	$.getJSON(
+		$cbEditorConfig.slugCheckURL,
+		{ slug : linkToUse, contentID : $( "#contentID" ).val() },
 		function( data ){
 			if( !data.UNIQUE ){
 				$( "#slugCheckErrors" )
@@ -370,7 +370,7 @@ function permalinkUniqueCheck( linkToUse ){
 			} else {
 				$( "#slugCheckErrors" ).html( "" ).removeClass( "alert alert-danger" );
 			}
-		} 
+		}
 	);
 }
 
@@ -382,26 +382,26 @@ function createPermalink( linkToUse ){
 	var $title 		= $targetEditorForm.find( "#title" );
 	var linkToUse 	= linkToUse || $title.val();
 	if( !linkToUse.length ){ return; }
-	
+
 	togglePermalink()
-	
-	$.get( 
-		$cbEditorConfig.slugifyURL, 
-		{ slug : linkToUse }, 
+
+	$.get(
+		$cbEditorConfig.slugifyURL,
+		{ slug : linkToUse },
 		function( data ){
 			$slug.val( data );
 			permalinkUniqueCheck();
 			togglePermalink();
-		} 
+		}
 	);
 }
 
 /**
- * Toggle permalink 
+ * Toggle permalink
  */
 function togglePermalink(){
 	var toggle = $( '#togglePermalink' );
-	// Toggle lock icon on click..	
+	// Toggle lock icon on click..
 	toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
@@ -424,7 +424,7 @@ function toggleDraft(){
 }
 
 /**
- * Quick publish 
+ * Quick publish
  * @param  {Boolean} isDraft draft mode or publish
  */
 function quickPublish( isDraft ){
