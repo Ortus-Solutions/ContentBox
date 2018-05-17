@@ -147,7 +147,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		if( entry.hasExcerpt() ){
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
 		} else {
-			bodyTokens.entryExcerpt = entry.renderContentSilent( entry.getContentVersions()[ 1 ].getContent() );
+			bodyTokens.entryExcerpt = entry.renderContentSilent( entry.getActiveContent().getContent() );
 		}
 
 		var mail = mailservice.newMail(
@@ -236,10 +236,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_postPageSave( event, interceptData, buffer ){
 		var page 		= arguments.interceptData.page;
 		// Get settings
-		var settings 	= settingService.getAllSettings(asStruct=true);
+		var settings 	= settingService.getAllSettings( asStruct=true );
 
 		// Only new pages are announced, not updates, and also verify page notifications are online.
-		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_page ){ return; }
+		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_page ){
+			return;
+		}
 
 		// get current logged in author performing the action
 		var currentAuthor = securityService.getAuthorSession();
@@ -254,10 +256,11 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			pagePublishedDate	= page.getDisplayPublishedDate(),
 			pageExpireDate		= page.getDisplayExpireDate()
 		};
+
 		if( page.hasExcerpt() ){
 			bodyTokens.pageExcerpt = page.renderExcerpt();
 		} else {
-			bodyTokens.pageExcerpt = page.renderContentSilent( page.getContentVersions()[1].getContent() );
+			bodyTokens.pageExcerpt = page.renderContentSilent( page.getActiveContent().getContent() );
 		}
 
 		var mail = mailservice.newMail(
@@ -364,7 +367,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			contentPublishedDate	= content.getDisplayPublishedDate(),
 			contentExpireDate		= content.getDisplayExpireDate(),
 			contentURL 				= arguments.event.buildLink( linkto="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
-			contentExcerpt			= content.renderContentSilent( content.getContentVersions()[ 1 ].getContent() )
+			contentExcerpt			= content.renderContentSilent( content.getActiveContent().getContent() )
 		};
 
 		var mail = mailservice.newMail(
@@ -417,7 +420,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			contentPublishedDate	= content.getDisplayPublishedDate(),
 			contentExpireDate		= content.getDisplayExpireDate(),
 			contentURL 				= arguments.event.buildLink( linkto="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
-			contentExcerpt			= content.renderContentSilent( content.getContentVersions()[ 1 ].getContent() )
+			contentExcerpt			= content.renderContentSilent( content.getActiveContent().getContent() )
 		};
 
 		var mail = mailservice.newMail(
