@@ -643,7 +643,7 @@ component accessors="true" singleton threadSafe{
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if( structKeyExists( prc.meta, "description" ) ){
-			return stripWhitespace(prc.meta.description);
+			return stripWhitespace( prc.meta.description );
 		} else {
 			return '';
 		}
@@ -712,7 +712,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Description is set Manually, return it
 		if( len( getMetaDescription() ) ){
-			return stripWhitespace(getMetaDescription());
+			return getMetaDescription();
 		}
 
 		// Check if in page view or entry view
@@ -726,13 +726,13 @@ component accessors="true" singleton threadSafe{
 		if( isObject( oCurrentContent ) ){
 			// Do we have current page SEO description set?
 			if( len( oCurrentContent.getHTMLDescription() ) ){
-				return oCurrentContent.getHTMLDescription();
+				return trim( oCurrentContent.getHTMLDescription() );
 			}
 
 			// Default description from content in non HTML mode
 			return HTMLEditFormat(
 				REReplaceNoCase(
-					left( stripWhitespace(oCurrentContent.getContent()), 160 ),
+					left( stripWhitespace( oCurrentContent.renderContent() ), 160 ),
 					"<[^>]*>",
 					"",
 					"ALL"
@@ -740,8 +740,8 @@ component accessors="true" singleton threadSafe{
 			);
 		}
 
-		// Return global site description
-		return HTMLEditFormat( siteDescription() );
+		// Return global site description as metadata
+		return HTMLEditFormat( trim( siteDescription() ) );
 	}
 
 	/**
@@ -1931,7 +1931,9 @@ component accessors="true" singleton threadSafe{
 	*/
 	function stripWhitespace( required stringTarget ){
 		arguments.stringTarget = REReplace( arguments.stringTarget, "\s", " ", "ALL" );
-		return REReplace( arguments.stringTarget, "\s{2,}", " ", "ALL" );
+		return trim(
+			REReplace( arguments.stringTarget, "\s{2,}", " ", "ALL" )
+		);
 	}
 
 	/************************************** PRIVATE *********************************************/
