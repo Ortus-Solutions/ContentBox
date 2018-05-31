@@ -35,8 +35,10 @@ function pagerLink(page){
 	} );
 }
 function insertContentStore(slug){
-	var customContent = "{{{ContentStore slug='"+slug+"'}}}";
-	insertEditorContent( '#rc.editorName#', customContent );
+	var widgetContent = new CKEDITOR.dom.element( 'contentstore' );
+	var contentData = "{{{ContentStore slug='"+slug+"'}}}";
+    widgetContent.setText( contentData );
+    insertEditorContent( '#rc.editorName#', widgetContent );
 	closeRemoteModal();
 	return false;
 }
