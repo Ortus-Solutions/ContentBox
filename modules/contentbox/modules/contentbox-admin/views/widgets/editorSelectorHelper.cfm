@@ -77,7 +77,7 @@ function switchWidgetFormMode( mode ) {
                 titleBar.html( '<i class="fa fa-' + iconName + '"></i> Insert \'' +widgetDisplayName+ '\' Widget' );
                 //updatePreview();
 
-                if(!$('##widget-preview-content li').length){
+                if(!$('##widget-preview-content').text().length){
                     $('##widget-button-insert').css("display","none");
                 }
             } )
