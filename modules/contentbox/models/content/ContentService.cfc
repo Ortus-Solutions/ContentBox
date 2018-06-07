@@ -283,18 +283,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		any searchTerm="",
 		any category="",
 		boolean asQuery=false,
-		string sortOrder="",
+		string sortOrder="publishedDate DESC",
 		any parent,
 		boolean showInMenu
 	){
 
 		var results = {};
 		var c = newCriteria();
-		// sorting
-		var sortOrder = "publishedDate DESC";
-		if( len( arguments.sortOrder ) ) {
-			sortOrder = arguments.sortOrder;
-		}
 
 		// only published pages
 		c.isTrue( "isPublished" )
@@ -334,7 +329,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, max=arguments.max, sortOrder=sortOrder, asQuery=arguments.asQuery );
+							.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery );
 
 		return results;
 	}
