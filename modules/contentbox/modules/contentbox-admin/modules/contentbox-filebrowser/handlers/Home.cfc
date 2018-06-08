@@ -492,7 +492,7 @@ component{
 		}
 		// Manual uploader?
 		if( rc.manual AND !data.errors) {
-			event.renderData( data="<textarea id='data_result'='upload'>#serializeJSON( data )#</textarea>", type="text" );
+			event.renderData( data=serializeJSON( data ), type="text" );
 		} else {
 			// render stuff out
 			event.renderData( data=data, type="json" );
