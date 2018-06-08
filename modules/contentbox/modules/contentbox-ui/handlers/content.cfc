@@ -195,7 +195,7 @@ component{
 			// get content data from cache
 			prc.contentCacheData = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
-			if( !isNull( prc.contentCacheData ) ){
+			if( !isNull( prc.contentCacheData ) and ( !isNull(prc.oCurrentAuthor.getAuthorID()) and prc.oCurrentAuthor.getAuthorID() or prc.contentCacheData.ISPUBLISHED) ){
 				// Set cache headers if allowed
 				if( prc.cbSettings.cb_content_cachingHeader ){
 					event.setHTTPHeader( statusCode="203", statustext="ContentBoxCache Non-Authoritative Information" )
@@ -229,7 +229,7 @@ component{
 		structAppend( args, arguments.eventArguments );
 		// execute the wrapped action
 		data.content = arguments.action( argumentCollection=args );
-		
+		data.isPublished = (structKeyExists(prc,"page") and isDate(prc.page.getPublishedDate()) and dateCompare(now(), prc.page.getPublishedDate()) GTE 0);
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
 		
