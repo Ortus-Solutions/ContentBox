@@ -112,7 +112,7 @@ component{
 
 		if(prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
 			if(prc.fbPreferences.sorting eq "lastmodified"){
-				prc.fbPreferences.sorting ="datelastmodified"
+				prc.fbPreferences.sorting ="datelastmodified";
 			}
 			var fileListQuery = new Query(
 				dbType = "query",
@@ -125,7 +125,7 @@ component{
 			prc.fbqListing=fileListQuery.execute().getresult();
 
 			if(prc.fbPreferences.sorting eq "datelastmodified"){
-				prc.fbPreferences.sorting ="lastmodified"
+				prc.fbPreferences.sorting ="lastmodified";
 			}
 		}
 		var iData = {
