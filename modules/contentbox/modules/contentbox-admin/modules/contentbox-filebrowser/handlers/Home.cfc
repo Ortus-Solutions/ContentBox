@@ -110,7 +110,7 @@ component{
 		// get directory listing.
 		prc.fbqListing = directoryList( prc.fbCurrentRoot, false, "query", prc.fbSettings.extensionFilter, "#prc.fbPreferences.sorting#" );
 
-		if(prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
+		if( structkeyexists(prc.fbPreferences,"listFolder") AND prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
 			if(prc.fbPreferences.sorting eq "lastmodified"){
 				prc.fbPreferences.sorting ="datelastmodified"
 			}
