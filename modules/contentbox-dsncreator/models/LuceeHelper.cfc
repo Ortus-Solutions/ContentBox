@@ -81,45 +81,43 @@ limitations under the License.
 				<cfthrow type="DuplicateDSNException" message="Datsource #arguments.dsnName# already exists!">
 			</cfif>
 
+			<cfswitch expression="#arguments.dbType#">
+				<cfcase value="mssql">
+					<cfset local.dsnString = "jdbc:sqlserver://{host}:{port}">
+					<cfset local.dbPort = "1433">
+					<cfset local.className = "com.microsoft.jdbc.sqlserver.SQLServerDriver">
+				</cfcase>
+				<cfcase value="mysql">
+					<cfset local.dsnString = "jdbc:mysql://{host}:{port}/{database}">
+					<cfset local.dbPort = "3306">
+					<cfset local.className = "org.gjt.mm.mysql.Driver">
+				</cfcase>
+				<cfcase value="oracle">
+					<cfset local.dsnString = "jdbc:oracle:{drivertype}:@{host}:{port}:{database}">
+					<cfset local.dbPort = "1521">
+					<cfset local.className = "oracle.jdbc.driver.OracleDriver">
+				</cfcase>
+				<cfcase value="postgresql">
+					<cfset local.dsnString = "jdbc:postgresql://{host}:{port}/{database}">
+					<cfset local.dbPort = "5432">
+					<cfset local.className = "org.postgresql.Driver">
+				</cfcase>
+				<cfcase value="h2">
+					<cfset local.dsnString = "jdbc:h2:{path}{database};MODE={mode}">
+					<cfset local.dbPort = "">
+					<cfset local.className = "org.h2.Driver">
+				</cfcase>
+				<cfcase value="HSQLDB">
+					<cfset local.dsnString = "jdbc:hsqldb:file:{database}">
+					<cfset local.dbPort = "">
+					<cfset local.className = "org.hsqldb.jdbcDriver">
+				</cfcase>
+			</cfswitch>
+
 			<!--- Detect ports in the host --->
 			<cfif arguments.dbHost.find( ":" )>
 				<cfset local.dbPort = arguments.dbHost.getToken( 2, ":" )>
 				<cfset arguments.dbHost = getToken( arguments.dbHost, 1, ":" )>
-			</cfif>
-
-			<cfif isNull( local.dbPort )>
-				<cfswitch expression="#arguments.dbType#">
-					<cfcase value="mssql">
-						<cfset local.dsnString = "jdbc:sqlserver://{host}:{port}">
-						<cfset local.dbPort = "1433">
-						<cfset local.className = "com.microsoft.jdbc.sqlserver.SQLServerDriver">
-					</cfcase>
-					<cfcase value="mysql">
-						<cfset local.dsnString = "jdbc:mysql://{host}:{port}/{database}">
-						<cfset local.dbPort = "3306">
-						<cfset local.className = "org.gjt.mm.mysql.Driver">
-					</cfcase>
-					<cfcase value="oracle">
-						<cfset local.dsnString = "jdbc:oracle:{drivertype}:@{host}:{port}:{database}">
-						<cfset local.dbPort = "1521">
-						<cfset local.className = "oracle.jdbc.driver.OracleDriver">
-					</cfcase>
-					<cfcase value="postgresql">
-						<cfset local.dsnString = "jdbc:postgresql://{host}:{port}/{database}">
-						<cfset local.dbPort = "5432">
-						<cfset local.className = "org.postgresql.Driver">
-					</cfcase>
-					<cfcase value="h2">
-						<cfset local.dsnString = "jdbc:h2:{path}{database};MODE={mode}">
-						<cfset local.dbPort = "">
-						<cfset local.className = "org.h2.Driver">
-					</cfcase>
-					<cfcase value="HSQLDB">
-						<cfset local.dsnString = "jdbc:hsqldb:file:{database}">
-						<cfset local.dbPort = "">
-						<cfset local.className = "org.hsqldb.jdbcDriver">
-					</cfcase>
-				</cfswitch>
 			</cfif>
 
 			<!---Create Datasource --->
