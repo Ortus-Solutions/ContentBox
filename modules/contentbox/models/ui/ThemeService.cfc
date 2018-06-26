@@ -448,7 +448,7 @@ component accessors="true" threadSafe singleton{
 	 */
 	boolean function removeTheme( required themeName ){
 		// verify name or even if it exists
-		if( !len( arguments.themeName ) || variables.themeRegistry.keyExists( arguments.themeName ) ){
+		if( !len( arguments.themeName ) || !variables.themeRegistry.keyExists( arguments.themeName ) ){
 			return false;
 		}
 		// Get themeRecord

@@ -110,9 +110,9 @@ component{
 		// get directory listing.
 		prc.fbqListing = directoryList( prc.fbCurrentRoot, false, "query", prc.fbSettings.extensionFilter, "#prc.fbPreferences.sorting#" );
 
-		if(prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
+		if( structkeyexists(prc.fbPreferences,"listFolder") AND prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
 			if(prc.fbPreferences.sorting eq "lastmodified"){
-				prc.fbPreferences.sorting ="datelastmodified"
+				prc.fbPreferences.sorting ="datelastmodified";
 			}
 			var fileListQuery = new Query(
 				dbType = "query",
@@ -125,7 +125,7 @@ component{
 			prc.fbqListing=fileListQuery.execute().getresult();
 
 			if(prc.fbPreferences.sorting eq "datelastmodified"){
-				prc.fbPreferences.sorting ="lastmodified"
+				prc.fbPreferences.sorting ="lastmodified";
 			}
 		}
 		var iData = {
@@ -492,7 +492,7 @@ component{
 		}
 		// Manual uploader?
 		if( rc.manual AND !data.errors) {
-			event.renderData( data="<textarea id='data_result'='upload'>#serializeJSON( data )#</textarea>", type="text" );
+			event.renderData( data=serializeJSON( data ), type="text" );
 		} else {
 			// render stuff out
 			event.renderData( data=data, type="json" );
