@@ -234,14 +234,14 @@ function shouldPublish(){
  * Quick save content
  */
 function quickSave(){
+	// Draft it
+	$isPublished.val( "false" );
 
 	// Confirm if you really want to quick save if content is published already
 	if( !shouldPublish() ){
 		return;
 	}
 
-	// Draft it
-	$isPublished.val( "false" );
 	// Commit Changelog default it to quick save if not set
 	if( !$changelog.val().length ){
 		$changelog.val( "quick save" );
