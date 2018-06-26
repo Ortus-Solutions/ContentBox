@@ -356,7 +356,7 @@ function fbDelete(){
 <!--- Download --->
 <cfif prc.fbSettings.allowDownload>
 function fbDownload(){
-	var sPath = $selectedItem.val().split(',');
+	var sPath = ($selectedItem.val() != "") ? $selectedItem.val().split(',') :[];
 	var sType = $selectedItemType.val();
 	if( !sPath.length ){
 		alert( '#$r( "jsmessages.select@fb" )#' ); return;
