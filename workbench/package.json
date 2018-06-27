@@ -20,7 +20,6 @@
         "matchdep": "^2.0.0"
     },
     "dependencies": {
-        "bower": "^1.8.2",
         "global": "^4.3.2",
         "@bower_components/Bootstrap-Confirmation": "rochappy/Bootstrap-Confirmation#*",
         "@bower_components/TableDnD": "isocra/TableDnD#^1.0.3",
