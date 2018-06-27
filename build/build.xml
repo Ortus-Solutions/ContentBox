@@ -88,29 +88,11 @@
 		<!-- Version Identifier -->
 		<concat destfile="${dir.build}/version.json">{ "version" : "${contentbox.version}" }</concat>
 
-		<!-- Permissions -->
-		<antcall target="update.permissions" />
 		<!-- Get Build Dependencies -->
  		<antcall target="getDependencies" />
 
 		<!-- Mark as init -->
 		<property name="src.isInit" value="true" />
-	</target>
-
-	<!-- update permissions on reports -->
-	<target name="update.permissions" description="Update staging server permissions">
-		<!-- Integration permissions -->
-		<if>
-			<equals arg1="${environment}" arg2="auto" />
-			<then>
-				<chmod file="${dir.build}/**" perm="go+wrs" type="both" verbose="true" />
-				<chown owner="stg-ortus" verbose="true">
-					<fileset dir="${dir.build}" />
-				</chown>
-			</then>
-			<else>
-			</else>
-		</if>
 	</target>
 
 	<!-- Build module distro -->
