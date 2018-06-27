@@ -1,5 +1,5 @@
 {
-    "name":"ContentBox Modular CMS",
+    "name":"ContentBox Modular CMS - Module",
     "version":"@version.number@+@build.number@",
     "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
@@ -13,7 +13,7 @@
         "url":"https://github.com/Ortus-Solutions/ContentBox"
     },
     "bugs":"https://ortussolutions.atlassian.net/browse/CONTENTBOX",
-    "shortDescription":"A Modular Content Management System",
+    "shortDescription":"A Modular Content Management System. This installs the module edition only (no installer)",
     "license":[
         {
             "type":"Apache2",
