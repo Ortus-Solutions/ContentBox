@@ -75,12 +75,16 @@
                                     <i class="fa fa-comments"></i> Comments
                                 </a>
                             </li>
-                        </cfif>
+						</cfif>
+
+						<!--- Event --->
+						#announceInterception( "cbadmin_pageEditorNav" )#
+
                     </ul>
                 </div>
 
                 <div class="panel-body tab-content">
-                    
+
                     <!--- Editor --->
                     <div role="tabpanel" class="tab-pane active" id="editor">
                         <!--- title --->
@@ -110,14 +114,14 @@
                                 <div id='slugCheckErrors'></div>
                                 <div class="input-group">
                                     #html.textfield(
-                                        name="slug", 
-                                        bind=prc.page, 
-                                        maxlength="100", 
-                                        class="form-control", 
-                                        title="The URL permalink for this page", 
+                                        name="slug",
+                                        bind=prc.page,
+                                        maxlength="100",
+                                        class="form-control",
+                                        title="The URL permalink for this page",
                                         disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#"
                                     )#
-                                    
+
                                     <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
                                         <i id="togglePermalink" class="fa fa-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
                                     </a>
@@ -127,32 +131,32 @@
 
                         <!--- ContentToolBar --->
                         #renderView( view="_tags/content/markup", args={ content = prc.page } )#
-                        
+
                         <!--- content --->
                         #html.textarea(
-                            name    = "content", 
-                            value   = htmlEditFormat( prc.page.getContent() ), 
-                            rows    = "25", 
+                            name    = "content",
+                            value   = htmlEditFormat( prc.page.getContent() ),
+                            rows    = "25",
                             class   = "form-control"
                         )#
 
                         <cfif prc.cbSettings.cb_page_excerpts>
                             <!--- excerpt --->
                             #html.textarea(
-                                label   = "Excerpt:", 
-                                name    = "excerpt", 
-                                bind    = prc.page, 
-                                rows    = "10", 
+                                label   = "Excerpt:",
+                                name    = "excerpt",
+                                bind    = prc.page,
+                                rows    = "10",
                                 class   = "form-control"
                             )#
                         </cfif>
                     </div>
-                    
+
                     <!--- Custom Fields --->
                      <div role="tabpanel" class="tab-pane" id="custom_fields">
-                         #renderView( 
-                            view = "_tags/customFields", 
-                            args = { fieldType="Page", customFields=prc.page.getCustomFields() } 
+                         #renderView(
+                            view = "_tags/customFields",
+                            args = { fieldType="Page", customFields=prc.page.getCustomFields() }
                         )#
                     </div>
 
@@ -161,7 +165,7 @@
                         <div class="form-group">
                             #html.textfield(
                                 name      = "htmlTitle",
-                                label     = "Title: (Leave blank to use the page name)", 
+                                label     = "Title: (Leave blank to use the page name)",
                                 bind      = prc.page,
                                 class     = "form-control",
                                 maxlength = "255"
@@ -171,7 +175,7 @@
                         <div class="form-group">
                             #html.textArea(
                                 name        = "htmlKeywords",
-                                label       = "Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)", 
+                                label       = "Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)",
                                 bind        = prc.page,
                                 class       = "form-control",
                                 maxlength   = "160",
@@ -182,7 +186,7 @@
                         <div class="form-group">
                             #html.textArea(
                                 name        = "htmlDescription",
-                                label       = "Description: (<span id='html_description_count'>0</span>/160 characters left)", 
+                                label       = "Description: (<span id='html_description_count'>0</span>/160 characters left)",
                                 bind        = prc.page,
                                 class       = "form-control",
                                 maxlength   = "160",
@@ -190,13 +194,13 @@
                             )#
                         </div>
                     </div>
-                    
+
                     <cfif prc.page.isLoaded()>
                         <!--- History --->
                         <div role="tabpanel" class="tab-pane" id="history">
                             #prc.versionsViewlet#
                         </div>
-                        
+
                         <!--- Comments --->
                         <div role="tabpanel" class="tab-pane" id="comments">
                             #prc.commentsViewlet#
@@ -206,7 +210,7 @@
                 <!--- Event --->
                 #announceInterception( "cbadmin_pageEditorInBody" )#
             </div>
-                
+
             <!--- Event --->
             #announceInterception( "cbadmin_pageEditorFooter" )#
         </div>
@@ -214,29 +218,29 @@
         <!---- SIDEBAR --->
         <div class="col-md-4" id="main-content-sidebar">
             <div class="panel panel-primary">
-                
+
                 <div class="panel-heading">
                     <h3 class="panel-title"><i class="fa fa-info-circle"></i> Details</h3>
                 </div>
-                
+
                 <div class="panel-body">
-                    
-                    #renderView( 
+
+                    #renderView(
                         view    = "_tags/content/publishing",
                         args    = { content = prc.page }
                     )#
 
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="page-sidebar">
-                        
+
                         <!---Begin Page Info--->
-                        <cfif prc.page.isLoaded()> 
+                        <cfif prc.page.isLoaded()>
                             #renderView(
                                 view    = "_tags/content/infotable",
                                 args    = { content = prc.page }
                             )#
                         </cfif>
-                        
+
                         <!---Begin Display Options--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_DISPLAY_OPTIONS" )>
                         <div class="panel panel-default">
@@ -276,7 +280,7 @@
                                             <option value="-no-layout-" <cfif prc.page.getLayoutWithDefault() eq "-no-layout-">selected="selected"</cfif>>-no-layout-</option>
                                             <!-- Custom Layouts -->
                                             #html.options(
-                                                values=prc.availableLayouts, 
+                                                values=prc.availableLayouts,
                                                 selectedValue=prc.page.getLayoutWithDefault()
                                             )#
                                         </select>
@@ -289,7 +293,7 @@
                                             <option value="" <cfif prc.page.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
                                             <option value="-inherit-" <cfif prc.page.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
                                             #html.options(
-                                                values=prc.availableLayouts, 
+                                                values=prc.availableLayouts,
                                                 selectedValue=prc.page.getMobileLayout()
                                             )#
                                         </select>
@@ -343,7 +347,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content
                                     </a>
 
                                 </h4>
@@ -366,7 +370,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content
                                     </a>
 
                                 </h4>
@@ -409,11 +413,11 @@
                                             </select>
                                         </div>
                                     </cfif>
-                                    
+
                                     <!--- Allow Comments --->
                                     <cfif prc.cbSettings.cb_comments_enabled>
                                         <div class="form-group">
-                                            <i class="fa fa-comments fa-lg"></i> 
+                                            <i class="fa fa-comments fa-lg"></i>
                                             #html.label(
                                                 field="allowComments",
                                                 content="Allow Comments:",
@@ -422,7 +426,7 @@
                                             #html.select(
                                                 name="allowComments",
                                                 options="Yes,No",
-                                                selectedValue=yesNoFormat(prc.page.getAllowComments()), 
+                                                selectedValue=yesNoFormat(prc.page.getAllowComments()),
                                                 class="form-control input-sm"
                                             )#
                                         </div>
@@ -438,20 +442,20 @@
                                         )#
                                         #html.select(
                                             name="sslOnly",
-                                            options="Yes,No", 
-                                            selectedValue=yesNoFormat( prc.page.getSSLOnly() ), 
+                                            options="Yes,No",
+                                            selectedValue=yesNoFormat( prc.page.getSSLOnly() ),
                                             class="form-control input-sm"
                                         )#
                                     </div>
-                                    
+
                                     <!--- Password Protection --->
                                     <div class="form-group">
                                         <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
                                         #html.textfield(
                                             name="passwordProtection",
                                             bind=prc.page,
-                                            title="Password protect your page, leave empty for none", 
-                                            class="form-control", 
+                                            title="Password protect your page, leave empty for none",
+                                            class="form-control",
                                             maxlength="100"
                                         )#
                                     </div>
@@ -460,7 +464,7 @@
                         </div>
                         </cfif>
                         <!---End Modfiers--->
-                            
+
                         <!---Begin Cache Settings--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
@@ -483,7 +487,7 @@
                                         #html.select(
                                             name="cache",
                                             options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.page.getCache()), 
+                                            selectedValue=yesNoFormat(prc.page.getCache()),
                                             class="form-control input-sm"
                                         )#
                                     </div>
@@ -516,7 +520,7 @@
                         </div>
                         </cfif>
                         <!---End Cache Settings--->
-                            
+
                         <!---Begin Categories--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
@@ -544,7 +548,7 @@
                                         </div>
                                     </cfloop>
                                     </div>
-                
+
                                     <!--- New Categories --->
                                     #html.textField(
                                         name="newCategories",
@@ -558,7 +562,7 @@
                         </div>
                         </cfif>
                         <!---End Categories--->
-                            
+
                         <!---Begin Featured Image --->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
                         <div class="panel panel-default">
@@ -597,21 +601,21 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>        
+                        </div>
                         </cfif>
                         <!---End Featured Image--->
-                        
+
                         <!--- Event --->
                         #announceInterception( "cbadmin_pageEditorSidebarAccordion" )#
                     </div>
                     <!--- End Accordion --->
-        
+
                     <!--- Event --->
                     #announceInterception( "cbadmin_pageEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception( "cbadmin_pageEditorSidebarFooter" )# 
+            #announceInterception( "cbadmin_pageEditorSidebarFooter" )#
         </div>
     </div>
 

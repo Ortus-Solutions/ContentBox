@@ -20,7 +20,7 @@
     action=prc.xehContentSave,
     name="contentForm",
     novalidate="novalidate",
-    class="form-vertical", 
+    class="form-vertical",
     role="form"
 )#
     <div class="row">
@@ -59,7 +59,10 @@
                                     <i class="fa fa-history"></i> History
                                 </a>
                             </li>
-                        </cfif>
+						</cfif>
+
+						<!--- Event --->
+						#announceInterception( "cbadmin_ContentStoreEditorNav" )#
                     </ul>
                 </div>
 
@@ -78,7 +81,7 @@
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
                         )#
-                        
+
                         <!--- slug --->
                         <div class="form-group">
                             <label for="slug" class="control-label">Slug:</label>
@@ -86,10 +89,10 @@
                                 <div id='slugCheckErrors'></div>
                                 <div class="input-group">
                                     #html.textfield(
-                                        name="slug", 
-                                        bind=prc.content, 
-                                        maxlength="100", 
-                                        class="form-control", 
+                                        name="slug",
+                                        bind=prc.content,
+                                        maxlength="100",
+                                        class="form-control",
                                         title="The unique slug for this content, this is how they are retreived",
                                         disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
                                     )#
@@ -98,7 +101,7 @@
                                     </a>
                                 </div>
                             </div>
-                        </div>      
+                        </div>
 
                         <!--- Description --->
                         #html.textarea(
@@ -111,10 +114,10 @@
                             wrapper="div class=controls",
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
-                        )# 
+                        )#
 
                         <!---ContentToolBar --->
-                        #renderView( view="_tags/content/markup", args={ content=prc.content } )#    	
+                        #renderView( view="_tags/content/markup", args={ content=prc.content } )#
 
                         <!--- content --->
                         #html.textarea(
@@ -141,7 +144,7 @@
                 <!--- Event --->
                 #announceInterception( "cbadmin_contentStoreEditorInBody" )#
             </div>
-        
+
             <!--- Event --->
             #announceInterception( "cbadmin_contentStoreEditorFooter" )#
         </div>
@@ -153,26 +156,26 @@
                 <div class="panel-body">
                     <cfset pArgs = { content=prc.content }>
                     #renderView( view="_tags/content/publishing", args=pArgs )#
-                   
-        
+
+
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
-                        
+
                         <!---Begin Info--->
-                        <cfif prc.content.isLoaded()> 
+                        <cfif prc.content.isLoaded()>
                             #renderView(
                                 view    = "_tags/content/infotable",
                                 args    = { content = prc.content }
                             )#
                         </cfif>
-                        
+
                         <!---Begin Related Content--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content
                                     </a>
                                 </h4>
                             </div>
@@ -193,7 +196,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content
                                     </a>
                                 </h4>
                             </div>
@@ -278,7 +281,7 @@
                             #html.hiddenField( name="parentContent", value=prc.parentcontentID )#
                         </cfif>
                         <!---End Modfiers--->
-                            
+
                         <!---Begin Cache Settings--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
@@ -301,7 +304,7 @@
                                         #html.select(
                                             name="cache",
                                             options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.content.getCache()), 
+                                            selectedValue=yesNoFormat(prc.content.getCache()),
                                             class="form-control input-sm"
                                         )#
                                     </div>
@@ -334,7 +337,7 @@
                         </div>
                         </cfif>
                         <!---End Cache Settings--->
-                            
+
                         <!---Begin Categories--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
@@ -362,7 +365,7 @@
                                         </div>
                                     </cfloop>
                                     </div>
-                
+
                                     <!--- New Categories --->
                                     #html.textField(
                                         name="newCategories",
@@ -376,12 +379,12 @@
                         </div>
                         </cfif>
                         <!---End Categories--->
-                            
+
                         <!--- Event --->
-                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#     
-                    </div>  
+                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#
+                    </div>
                     <!--- End Accordion --->
-        
+
                     <!--- Event --->
                     #announceInterception( "cbadmin_contentStoreEditorSidebar" )#
                 </div>
