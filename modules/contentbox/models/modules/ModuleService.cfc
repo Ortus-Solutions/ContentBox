@@ -312,7 +312,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 
 		// Now delete it
-		deleteWhere( { "name" = arguments.name } );
+		deleteWhere( name = arguments.name );
 		if( directoryExists( moduleEntry.path & "/#arguments.name#" ) ){
 			directoryDelete( moduleEntry.path & "/#arguments.name#", true );
 		}
