@@ -172,10 +172,12 @@
                             )#
                         </div>
 
-                        <div class="form-group">
+						<div class="form-group">
+							<label for="htmlKeywords">
+								Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)
+							</label>
                             #html.textArea(
                                 name        = "htmlKeywords",
-                                label       = "Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)",
                                 bind        = prc.page,
                                 class       = "form-control",
                                 maxlength   = "160",
@@ -183,10 +185,12 @@
                             )#
                         </div>
 
-                        <div class="form-group">
+						<div class="form-group">
+							<label for="htmlKeywords">
+								Description: (<span id='html_description_count'>0</span>/160 characters left)
+							</label>
                             #html.textArea(
                                 name        = "htmlDescription",
-                                label       = "Description: (<span id='html_description_count'>0</span>/160 characters left)",
                                 bind        = prc.page,
                                 class       = "form-control",
                                 maxlength   = "160",

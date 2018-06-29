@@ -1,11 +1,10 @@
 <cfset settings = getInstance( "settingService@cb" ).getAllSettings( asStruct=true )>
-<cfparam name="args.viewModule" default="">
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <base href="<cfoutput>#getSetting( "HTMLBaseURL" )#</cfoutput>/modules/contentbox/email_templates/images/" />
+    <base href="<cfoutput>#event.getHTMLBaseURL()#</cfoutput>/modules/contentbox/email_templates/images/" />
     <title></title>
     <!--[if gte mso 6]>
       <style>
@@ -148,7 +147,7 @@
                                             <tr>
                                                 <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
 
-                                                    <cfoutput>#renderView( args=args, module=args.viewModule )#</cfoutput>
+                                                    <cfoutput>#renderView( args=args )#</cfoutput>
 
                                                     <!-- Footer -->
                                                     <div style="text-align: center; border-top: 1px dotted gray; margin: 20px; padding-top: 20px">
@@ -159,7 +158,7 @@
                                                         <cfoutput>
                                                         <small style="color: gray">
                                                             You're receiving this email because of your account on
-                                                            <a href="#getSetting( "HTMLBaseURL" )#">
+                                                            <a href="#event.getHTMLBaseURL()#">
                                                                 <em>#settings.cb_site_name#</em>
                                                             </a>
                                                             <br>
