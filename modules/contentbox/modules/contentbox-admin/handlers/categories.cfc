@@ -75,24 +75,26 @@ component extends="baseHandler"{
 		var messages = [];
 		
 		// Iterate and remove
-		for( var thisCatID in rc.categoryID ){
-			var category = categoryService.get( thisCatID );
-			if( isNull( category ) ){
-				arrayAppend( messages, "Invalid categoryID sent: #thisCatID#, so skipped removal" );
+			for( var thisCatID in rc.categoryID ){
+				var category = categoryService.get( thisCatID );
+				
+				if( isNull( category ) ) {
+					arrayAppend( messages, "Invalid categoryID sent: #thisCatID#, so skipped removal" );
+				}
+				else if((category.getnumberOfContentStore() == 0) AND (category.getnumberOfPages() == 0)) {
+					// GET id to be sent for announcing later
+					var categoryID 	= category.getCategoryID();
+					var title		= category.getSlug();
+					// announce event
+					announceInterception( "cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
+					// Delete category via service
+					categoryService.deleteCategory( category ); 
+					arrayAppend( messages, "Category '#title#' removed" );
+					// announce event
+					announceInterception( "cbadmin_postCategoryRemove", { categoryID=categoryID } );
+				}else
+					arrayAppend( messages, "Category #category.getSlug()# can't be removed Because this category Mapped with contentstore or page." );
 			}
-			else{
-				// GET id to be sent for announcing later
-				var categoryID 	= category.getCategoryID();
-				var title		= category.getSlug();
-				// announce event
-				announceInterception( "cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
-				// Delete category via service
-				categoryService.deleteCategory( category ); 
-				arrayAppend( messages, "Category '#title#' removed" );
-				// announce event
-				announceInterception( "cbadmin_postCategoryRemove", { categoryID=categoryID } );
-			}
-		}
 		
 		// messagebox
 		cbMessagebox.info(messageArray=messages);
