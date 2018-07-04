@@ -76,7 +76,7 @@
 											</td>
 
 											<td>
-												<span class="label label-#( module.getModuleType() eq "core" ? "info" : "sucess" )#">#module.getModuleType()#</span>
+												<span class="label label-#( module.getModuleType() eq "core" ? "info" : "success" )#">#module.getModuleType()#</span>
 											</td>
 
 											<td>
