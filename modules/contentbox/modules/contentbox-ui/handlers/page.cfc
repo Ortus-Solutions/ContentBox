@@ -1,4 +1,4 @@
-﻿/**
+/**
 * ContentBox - A Modular Content Platform
 * Copyright since 2012 by Ortus Solutions, Corp
 * www.ortussolutions.com/products/contentbox
@@ -9,6 +9,7 @@ component extends="content"{
 
 	// DI
 	property name="pageService"			inject="id:pageService@cb";
+	property name="contentService"		inject="id:contentService@cb";
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
@@ -97,7 +98,7 @@ component extends="content"{
 			var showUnpublished = true;
 		}
 		// Try to get the page using the incoming URI
-		prc.page = pageService.findBySlug( incomingURL, showUnpublished );
+		prc.page = contentService.findBySlug( incomingURL, showUnpublished );
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
 			// Verify SSL?
@@ -107,7 +108,7 @@ component extends="content"{
 				return;
 			}
 			// Record hit
-			pageService.updateHits( prc.page.getContentID() );
+			contentService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
@@ -205,7 +206,7 @@ component extends="content"{
 		// incoming params
 		event.paramValue( "contentID", "" );
 		// Try to retrieve page by contentID
-		var page = pageService.get( rc.contentID );
+		var page = contentService.get( rc.contentID );
 		// If null, kick them out
 		if( isNull( page ) ){ 
 			setNextEvent( prc.cbEntryPoint ); 
