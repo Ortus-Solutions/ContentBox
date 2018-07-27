@@ -24,11 +24,11 @@
     ],
     "dependencies":{
         "testbox":"be",
-        "coldbox":"5.1.x"
+        "coldbox":"^5.1.3"
     },
     "installPaths":{
-        "testbox":"testbox",
-        "coldbox":"coldbox/"
+        "testbox":"testbox/",
+        "coldbox":"coldbox"
     },
     "devDependencies":{},
     "ignores":[]
