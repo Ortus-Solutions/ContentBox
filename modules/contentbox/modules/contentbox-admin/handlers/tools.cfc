@@ -87,7 +87,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehToolsImport );
+		relocate( prc.xehToolsImport );
 	}
 
 	/**
@@ -106,7 +106,7 @@ component extends="baseHandler"{
 		// validate
 		if( !len( rc.dsn ) or !len( rc.defaultPassword ) ){
 			cbMessagebox.warn( "Please fill out all required fields." );
-			setNextEvent( prc.xehToolsImport );
+			relocate( prc.xehToolsImport );
 		}
 
 		try{
@@ -118,7 +118,7 @@ component extends="baseHandler"{
 			cbMessagebox.error( "Error importing from datasource: #e.message# #e.detail#" );
 		}
 
-		setNextEvent(prc.xehToolsImport);
+		relocate(prc.xehToolsImport);
 	}
 
 	/**

@@ -164,9 +164,9 @@ component extends="baseContentHandler"{
 		}
 		// relocate back
 		if( len( rc.parent ) ){
-			setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
+			relocate( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 		} else {
-			setNextEvent( event=prc.xehContentStore );
+			relocate( event=prc.xehContentStore );
 		}
 	}
 
@@ -234,7 +234,7 @@ component extends="baseContentHandler"{
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			setNextEvent(event=prc.xehPages);
+			relocate(event=prc.xehPages);
 			return;
 		}
 
@@ -275,9 +275,9 @@ component extends="baseContentHandler"{
 		// relocate
 		cbMessageBox.info( "Content Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
-			setNextEvent( event=prc.xehContentStore, querystring="parent=#clone.getParent().getContentID()#" );
+			relocate( event=prc.xehContentStore, querystring="parent=#clone.getParent().getContentID()#" );
 		} else {
-			setNextEvent( event=prc.xehContentStore );
+			relocate( event=prc.xehContentStore );
 		}
 	}
 
@@ -387,9 +387,9 @@ component extends="baseContentHandler"{
 			// relocate
 			cbMessageBox.info( "content Saved!" );
 			if( content.hasParent() ){
-				setNextEvent( event=prc.xehContentStore, querystring="parent=#content.getParent().getContentID()#" );
+				relocate( event=prc.xehContentStore, querystring="parent=#content.getParent().getContentID()#" );
 			} else {
-				setNextEvent( event=prc.xehContentStore );
+				relocate( event=prc.xehContentStore );
 			}
 		}
 	}
@@ -403,7 +403,7 @@ component extends="baseContentHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			cbMessageBox.warn( "No content sent to delete!" );
-			setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
+			relocate( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 		}
 
 		// Inflate to array
@@ -435,7 +435,7 @@ component extends="baseContentHandler"{
 		// messagebox
 		cbMessageBox.info( messageArray=messages );
 		// relocate
-		setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
+		relocate( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 	}
 
 	// pager viewlet
@@ -538,7 +538,7 @@ component extends="baseContentHandler"{
 		// relocate if not existent
 		if( !prc.content.isLoaded() ){
 			cbMessageBox.warn( "ContentID sent is not valid" );
-			setNextEvent( prc.xehContentStore );
+			relocate( prc.xehContentStore );
 		}
 
 		switch( rc.format ){
@@ -592,7 +592,7 @@ component extends="baseContentHandler"{
 			log.error( errorMessage, e );
 			cbMessageBox.error( errorMessage );
 		}
-		setNextEvent( prc.xehContentStore );
+		relocate( prc.xehContentStore );
 	}
 
 }

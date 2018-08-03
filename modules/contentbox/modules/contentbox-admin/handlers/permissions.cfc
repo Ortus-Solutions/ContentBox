@@ -45,7 +45,7 @@ component extends="baseHandler"{
 		// messagebox
 		cbMessagebox.setMessage( "info","Permission saved!" );
 		// relocate
-		setNextEvent( prc.xehPermissions );
+		relocate( prc.xehPermissions );
 	}
 	
 	// remove
@@ -62,7 +62,7 @@ component extends="baseHandler"{
 			// Message
 			cbMessagebox.setMessage( "info","Permission and all relationships Removed!" );
 		}
-		setNextEvent( prc.xehPermissions );
+		relocate( prc.xehPermissions );
 	}
 	
 	// Export All Permissions
@@ -103,6 +103,6 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehPermissions );
+		relocate( prc.xehPermissions );
 	}
 }

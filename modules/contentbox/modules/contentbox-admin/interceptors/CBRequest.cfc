@@ -30,7 +30,7 @@ component extends="coldbox.system.Interceptor"{
 
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
-			setNextEvent( 'cbInstaller' );
+			relocate( 'cbInstaller' );
 		}
 
 		/************************************** SETUP CONTEXT REQUEST *********************************************/
@@ -63,7 +63,7 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** FORCE SSL *********************************************/
 
 		if( prc.cbSettings.cb_admin_ssl and !event.isSSL() ){
-			setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+			relocate( event=event.getCurrentRoutedURL(), ssl=true );
 		}
 
 		/************************************** FORCE PASSWORD RESET *********************************************/
@@ -77,7 +77,7 @@ component extends="coldbox.system.Interceptor"{
 			getInstance( "messagebox@cbMessagebox" ).info(
 				prc.CBHelper.r( "messages.password_reset_detected@security" )
 			);
-			setNextEvent(
+			relocate(
 				event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
 				queryString = "token=#token#"
 			);

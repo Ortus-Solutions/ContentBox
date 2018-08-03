@@ -87,7 +87,7 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
 
 		// Relocate
-		setNextEvent( event=prc.xehActiveTheme );
+		relocate( event=prc.xehActiveTheme );
 	}
 
 	/**
@@ -101,7 +101,7 @@ component extends="baseHandler"{
 		// messages
 		cbMessagebox.info( "#rc.themeName# Activated!" );
 		// Relocate
-		setNextEvent(prc.xehThemes);
+		relocate(prc.xehThemes);
 	}
 
 	/**
@@ -110,7 +110,7 @@ component extends="baseHandler"{
 	function rebuildRegistry( event, rc, prc ){
 		themeService.buildThemeRegistry();
 		cbMessagebox.info( "Themes re-scanned and registered!" );
-		setNextEvent( event=prc.xehThemes, queryString="##themesPane" );
+		relocate( event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 	/**
@@ -123,7 +123,7 @@ component extends="baseHandler"{
 		else{
 			cbMessagebox.error( "Error removing theme, please check your logs for more information!" );
 		}
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
+		relocate(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 }

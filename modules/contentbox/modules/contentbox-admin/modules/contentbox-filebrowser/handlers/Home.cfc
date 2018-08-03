@@ -98,7 +98,7 @@ component{
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
 			getModel( "messagebox@cbMessagebox" ).warn( $r( "messages.traversal@fb" ) );
-			setNextEvent(prc.xehFBBrowser);
+			relocate(prc.xehFBBrowser);
 		}
 
 		// Get storage preferences

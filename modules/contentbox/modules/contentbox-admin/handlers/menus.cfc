@@ -200,7 +200,7 @@ component extends="baseHandler" {
 		cbMessagebox.setMessage( "info", "Menu saved!" );
 		// relocate
 		var targetEvent = ( len( rc.saveEvent ) ? rc.saveEvent & "/menuID/#rc.menuID#" : prc.xehMenus );
-		setNextEvent( targetEvent );
+		relocate( targetEvent );
 	}
 
 	/**
@@ -236,7 +236,7 @@ component extends="baseHandler" {
 		// verify if contentID sent
 		if( !len( rc.menuID ) ){
 			cbMessagebox.warn( "No menus sent to delete!" );
-			setNextEvent( event=prc.xehMenus );
+			relocate( event=prc.xehMenus );
 		}
 		
 		// Inflate to array
@@ -264,7 +264,7 @@ component extends="baseHandler" {
 		
 		// messagebox
 		cbMessagebox.info( messageArray=messages );
-		setNextEvent( prc.xehMenus );
+		relocate( prc.xehMenus );
 	}
 
 	/**
@@ -280,7 +280,7 @@ component extends="baseHandler" {
 		// relocate if not existent
 		if( !oMenu.isLoaded() ){
 			cbMessagebox.warn( "MenuID sent is not valid" );
-			setNextEvent( prc.xehMenus );
+			relocate( prc.xehMenus );
 		}
 		
 		switch( rc.format ){
@@ -338,6 +338,6 @@ component extends="baseHandler" {
 			cbMessagebox.error( errorMessage );
 		}
 
-		setNextEvent( prc.xehMenus );
+		relocate( prc.xehMenus );
 	}
 }

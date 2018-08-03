@@ -45,7 +45,7 @@ component extends="baseHandler"{
 			){
 				// relocate
 				cbMessagebox.error( "You do not have permissions to do this!" );
-				setNextEvent( event=prc.xehAuthors );
+				relocate( event=prc.xehAuthors );
 				return;
 			}
 		}
@@ -103,7 +103,7 @@ component extends="baseHandler"{
 
 		// relocate
 		cbMessagebox.info( "Global password reset issued!" );
-		setNextEvent( prc.xehAuthors );
+		relocate( prc.xehAuthors );
 	}
 
 	/**
@@ -232,7 +232,7 @@ component extends="baseHandler"{
 		}
 
 		// relocate
-		setNextEvent(
+		relocate(
 			event		= ( rc.editing ? prc.xehAuthorEditor : prc.xehAuthors ),
 			queryString	= ( rc.editing ? "authorID=#oAuthor.getAuthorID()#" : "" )
 		);
@@ -300,7 +300,7 @@ component extends="baseHandler"{
 			// message
 			cbMessagebox.setMessage( "info","New Author Created and Notified!" );
 			// relocate
-			setNextEvent( prc.xehAuthors );
+			relocate( prc.xehAuthors );
 		} else {
 			cbMessagebox.warn( messageArray=vResults.getAllErrors() );
 			return new( argumentCollection=arguments );
@@ -457,7 +457,7 @@ component extends="baseHandler"{
 		// message
 		cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 		// relocate
-		setNextEvent(
+		relocate(
 			event		= prc.xehAuthorEditor,
 			queryString	= "authorID=#oAuthor.getAuthorID()###preferences"
 		);
@@ -482,13 +482,13 @@ component extends="baseHandler"{
 			// message
 			cbMessagebox.setMessage( "info","Author Preferences Saved!" );
 			// relocate
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
+			relocate(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 		}
 		else{
 			// message
 			cbMessagebox.error(messageArray=vResult.getAllErrors());
 			// relocate
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
+			relocate(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()###preferences" );
 		}
 	}
 
@@ -520,11 +520,11 @@ component extends="baseHandler"{
 			// message
 			cbMessagebox.setMessage( "info","Author saved!" );
 			// relocate
-			setNextEvent(prc.xehAuthors);
+			relocate(prc.xehAuthors);
 		}
 		else{
 			cbMessagebox.warn(messageArray=vResults.getAllErrors());
-			setNextEvent(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()#" );
+			relocate(event=prc.xehAuthorEditor,queryString="authorID=#oAuthor.getAuthorID()#" );
 		}
 	}
 
@@ -534,7 +534,7 @@ component extends="baseHandler"{
 	function passwordChange( event, rc, prc ){
 		if( prc.oCurrentAuthor.getAuthorID() != rc.authorID ){
 			cbMessagebox.error( "You cannot change passwords for other users. Please start a password reset instead." );
-			return setNextEvent( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+			return relocate( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
 		}
 		var oAuthor = authorService.get( id=rc.authorID );
 
@@ -554,7 +554,7 @@ component extends="baseHandler"{
 		}
 
 		// relocate
-		setNextEvent( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
+		relocate( event=prc.xehAuthorEditor, queryString="authorID=#rc.authorID#" );
 	}
 
 	/**
@@ -567,7 +567,7 @@ component extends="baseHandler"{
 
 		if( isNull( oAuthor ) ){
 			cbMessagebox.setMessage( "warning","Invalid Author!" );
-			setNextEvent( prc.xehAuthors );
+			relocate( prc.xehAuthors );
 		}
 		// announce event
 		announceInterception( "cbadmin_preAuthorRemove", { author=oAuthor,authorID = rc.targetAuthorID } );
@@ -578,7 +578,7 @@ component extends="baseHandler"{
 		// message
 		cbMessagebox.setMessage( "info","Author Removed!" );
 		// redirect
-		setNextEvent(prc.xehAuthors);
+		relocate(prc.xehAuthors);
 	}
 
 	/**
@@ -678,7 +678,7 @@ component extends="baseHandler"{
 		// relocate if not existent
 		if( !prc.user.isLoaded() ){
 			cbMessagebox.warn( "authorID sent is not valid" );
-			setNextEvent( "#prc.cbAdminEntryPoint#.authors" );
+			relocate( "#prc.cbAdminEntryPoint#.authors" );
 		}
 		switch( rc.format ){
 			case "xml" : case "json" : {
@@ -735,7 +735,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehAuthors );
+		relocate( prc.xehAuthors );
 	}
 
 	/******************************************** PRIVATE ****************************************************/

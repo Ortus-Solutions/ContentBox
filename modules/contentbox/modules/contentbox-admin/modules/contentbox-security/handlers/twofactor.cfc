@@ -26,7 +26,7 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+			relocate( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 		// Inflate author for requested events
 		prc.oAuthor = authorService.get( flash.get( "authorData" ).authorID );
@@ -35,7 +35,7 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+			relocate( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
 
@@ -78,7 +78,7 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.error( results.messages );
 			flash.keep( "authorData" );
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.twofactor" );
+			relocate( "#prc.cbAdminEntryPoint#.security.twofactor" );
 		} else {
 			var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
 			// Are we trusting devices? If so, trust this device if passed
@@ -109,9 +109,9 @@ component extends="baseHandler"{
 
 			// check if securedURL came in?
 			if( len( authorData.securedURL ) ){
-				setNextEvent( uri=authorData.securedURL );
+				relocate( uri=authorData.securedURL );
 			} else {
-				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
+				relocate( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
 		}
 	}
@@ -133,7 +133,7 @@ component extends="baseHandler"{
 		// Keep Data
 		flash.keep( "authorData" );
 		// Relocate
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.twofactor" );
+		relocate( "#prc.cbAdminEntryPoint#.security.twofactor" );
 	}
 
 }

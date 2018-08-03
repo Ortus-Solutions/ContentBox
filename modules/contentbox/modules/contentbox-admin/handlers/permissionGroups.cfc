@@ -46,7 +46,7 @@ component extends="baseHandler"{
 		// messagebox
 		cbMessagebox.setMessage( "info","Permission Group saved!" );
 		// relocate
-		setNextEvent( prc.xehPermissionGroups );
+		relocate( prc.xehPermissionGroups );
 	}
 	
 	/**
@@ -64,7 +64,7 @@ component extends="baseHandler"{
 		// Message
 		cbMessagebox.setMessage( "info","Permission Group Removed!" );
 		// relocate
-		setNextEvent( prc.xehPermissionGroups );
+		relocate( prc.xehPermissionGroups );
 	}
 	
 	/**
@@ -128,7 +128,7 @@ component extends="baseHandler"{
 		// relocate if not existent
 		if( !prc.oGroup.isLoaded() ){
 			cbMessagebox.warn( "permissionGroupID sent is not valid" );
-			setNextEvent( prc.xehPermissionGroups );
+			relocate( prc.xehPermissionGroups );
 		}
 
 		//writeDump( prc.oGroup.getMemento() );abort;
@@ -194,7 +194,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehPermissionGroups );
+		relocate( prc.xehPermissionGroups );
 	}
 
 }

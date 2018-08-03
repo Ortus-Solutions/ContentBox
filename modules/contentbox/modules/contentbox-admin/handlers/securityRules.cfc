@@ -43,14 +43,14 @@ component extends="baseHandler"{
 		// announce event
 		announceInterception( "cbadmin_onResetSecurityRules" );
 		cbMessagebox.info( "Security Rules Re-created and Re-applied!" );
-		setNextEvent(prc.xehsecurityRules);
+		relocate(prc.xehsecurityRules);
 	}
 
 	// Apply the security rules
 	function apply(event,rc,prc){
 		securityInterceptor.loadRules();
 		cbMessagebox.info( "Security Rules Applied!" );
-		setNextEvent(prc.xehsecurityRules);
+		relocate(prc.xehsecurityRules);
 	}
 
 	// change order for all rules
@@ -108,7 +108,7 @@ component extends="baseHandler"{
 		}
 
 		// relocate back to editor
-		setNextEvent(prc.xehsecurityRules);
+		relocate(prc.xehsecurityRules);
 	}
 
 	// remove
@@ -128,7 +128,7 @@ component extends="baseHandler"{
 		else{
 			cbMessagebox.warn( "No ID selected!" );
 		}
-		setNextEvent(event=prc.xehsecurityRules);
+		relocate(event=prc.xehsecurityRules);
 	}
 
 	// Export Entry
@@ -140,7 +140,7 @@ component extends="baseHandler"{
 		// relocate if not existent
 		if( !prc.rule.isLoaded() ){
 			cbMessagebox.warn( "ruleID sent is not valid" );
-			setNextEvent( "#prc.cbAdminEntryPoint#.securityrules" );
+			relocate( "#prc.cbAdminEntryPoint#.securityrules" );
 		}
 		switch( rc.format ){
 			case "xml" : case "json" : {
@@ -193,7 +193,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehSecurityRules );
+		relocate( prc.xehSecurityRules );
 	}
 
 }

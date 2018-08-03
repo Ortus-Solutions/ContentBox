@@ -43,7 +43,7 @@ component extends="contentbox.models.ui.BaseWidget"{
 
 		// relocate only if rendering a page on the front end.
 		if( cb.isEntryView() || cb.isPageView() ){
-			setNextEvent( URL=to, ssl=arguments.ssl, statusCode=arguments.statusCode );
+			relocate( URL=to, ssl=arguments.ssl, statusCode=arguments.statusCode );
 		}
 		// Return empty content
 		return "";

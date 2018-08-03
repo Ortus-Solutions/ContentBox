@@ -42,7 +42,7 @@ component extends="baseHandler"{
 		// messagebox
 		cbMessagebox.setMessage( "info","Role saved!" );
 		// relocate
-		setNextEvent( prc.xehroles );
+		relocate( prc.xehroles );
 	}
 	
 	// remove
@@ -58,7 +58,7 @@ component extends="baseHandler"{
 		// Message
 		cbMessagebox.setMessage( "info","Role Removed!" );
 		// relocate
-		setNextEvent( prc.xehroles );
+		relocate( prc.xehroles );
 	}
 	
 	// permissions
@@ -114,7 +114,7 @@ component extends="baseHandler"{
 		// relocate if not existent
 		if( !prc.role.isLoaded() ){
 			cbMessagebox.warn( "roleID sent is not valid" );
-			setNextEvent( "#prc.cbAdminEntryPoint#.roles" );
+			relocate( "#prc.cbAdminEntryPoint#.roles" );
 		}
 		//writeDump( prc.role.getMemento() );abort;
 		switch( rc.format ){
@@ -167,7 +167,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehRoles );
+		relocate( prc.xehRoles );
 	}
 
 }

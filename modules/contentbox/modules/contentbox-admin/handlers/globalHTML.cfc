@@ -36,7 +36,7 @@ component extends="baseHandler"{
 		// relocate back to editor
 		cbMessagebox.info( "All Global HTML updated! Yeeehaww!" );
 		// relocate
-		setNextEvent( prc.xehGlobalHTML );
+		relocate( prc.xehGlobalHTML );
 	}
 
 }

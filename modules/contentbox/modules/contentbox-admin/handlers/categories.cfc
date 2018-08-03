@@ -56,7 +56,7 @@ component extends="baseHandler"{
 			cbMessagebox.setMessage( "warning","Category '#rc.category#' already exists!" );	
 		}
 		// relocate
-		setNextEvent(prc.xehCategories);
+		relocate(prc.xehCategories);
 	}
 	
 	// remove
@@ -67,7 +67,7 @@ component extends="baseHandler"{
 		// verify if contentID sent
 		if( !len( rc.categoryID ) ){
 			cbMessagebox.warn( "No categories sent to delete!" );
-			setNextEvent(event=prc.xehCategories);
+			relocate(event=prc.xehCategories);
 		}
 		
 		// Inflate to array
@@ -96,7 +96,7 @@ component extends="baseHandler"{
 		
 		// messagebox
 		cbMessagebox.info(messageArray=messages);
-		setNextEvent( prc.xehCategories );
+		relocate( prc.xehCategories );
 	}
 
 	// Export All categories
@@ -137,6 +137,6 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehCategories );
+		relocate( prc.xehCategories );
 	}
 }

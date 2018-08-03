@@ -29,7 +29,7 @@ component extends="baseHandler"{
 		// Validate Author
 		if( !prc.oAuthor.isLoaded() ){
 			messagebox.warn( cb.r( "twofactor.invalidAuthor@security" ) );
-            setNextEvent( "#prc.cbAdminEntryPoint#/security/login" );
+            relocate( "#prc.cbAdminEntryPoint#/security/login" );
             return;
 		}
 	}
@@ -58,7 +58,7 @@ component extends="baseHandler"{
 			prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID()
 		){
 			messagebox.warn( cb.r( "twofactor.illegalAuthorEnrollment@security" ) );
-            setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
+            relocate( "#prc.cbAdminEntryPoint#.dashboard" );
             return;
 		}
 
@@ -89,7 +89,7 @@ component extends="baseHandler"{
 		}
 
 		// Relocate to two factor auth presenter
-		setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
+		relocate( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
 	}
 
 
@@ -100,7 +100,7 @@ component extends="baseHandler"{
 		prc.oAuthor.setIs2FactorAuth( false );
 		authorService.save( prc.oAuthor );
 		messagebox.info( cb.r( "twofactor.unenrollment@security" ) );
-		setNextEvent( "#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor" );
+		relocate( "#prc.cbAdminEntryPoint#/authors/editor/authorID/#rc.authorID###twofactor" );
 	}
 
 }

@@ -75,7 +75,7 @@ component extends="coldbox.system.Interceptor"{
 			// Log it
 			log.warn( "Request blocked (#realIP#;#realUsername#) via login tracker" );
 			// Relocate
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+			relocate( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
 

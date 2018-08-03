@@ -30,7 +30,7 @@ component extends="baseHandler"{
 		if( flash.exists( "updateRestart" ) and flash.get( "updateRestart" ) ){
 			flash.saveFlash();
 			applicationstop();
-			setnextEvent( prc.xehAutoUpdater );
+			relocate( prc.xehAutoUpdater );
 			return;
 		}
 
@@ -95,7 +95,7 @@ component extends="baseHandler"{
 		// verify download URL
 		if( !len( rc.downloadURL ) ){
 			cbMessagebox.error( "No download URL detected" );
-			setnextEvent( prc.xehAutoUpdater );
+			relocate( prc.xehAutoUpdater );
 			return;
 		}
 
@@ -115,7 +115,7 @@ component extends="baseHandler"{
 			log.error( "Error installing auto-update", e);
 		}
 
-		setnextEvent( prc.xehAutoUpdater );
+		relocate( prc.xehAutoUpdater );
 	}
 
 	/**
@@ -144,7 +144,7 @@ component extends="baseHandler"{
 			}
 		}
 
-		setnextEvent( prc.xehAutoUpdater );
+		relocate( prc.xehAutoUpdater );
 	}
 
 }

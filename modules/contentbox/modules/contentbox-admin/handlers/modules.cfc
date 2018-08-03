@@ -48,7 +48,7 @@ component extends="baseHandler"{
 		// Check if route is discovered, basically if we get handler => contentbox-ui:page then it was not found
 		if( routeResults.route.handler == "contentbox-ui:page" ){
 			cbMessagebox.warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
-			return setNextEvent( prc.xehModules );
+			return relocate( prc.xehModules );
 		}
 
 		// Process the route, this discovers the route
@@ -121,7 +121,7 @@ component extends="baseHandler"{
 	function activate( event, rc, prc ){
 		moduleService.activateModule( rc.moduleName );
 		cbMessagebox.info( "Modules Activated, woohoo!" );
-		setNextEvent(prc.xehModules);
+		relocate(prc.xehModules);
 	}
 
 	/**
@@ -130,7 +130,7 @@ component extends="baseHandler"{
 	function deactivate( event, rc, prc ){
 		moduleService.deactivateModule( rc.moduleName );
 		cbMessagebox.info( "Modules Deactivated!" );
-		setNextEvent(prc.xehModules);
+		relocate(prc.xehModules);
 	}
 
 	/**
@@ -139,7 +139,7 @@ component extends="baseHandler"{
 	function reset( event, rc, prc ){
 		moduleService.resetModules();
 		cbMessagebox.info( "Modules Reset!" );
-		setNextEvent(prc.xehModules);
+		relocate(prc.xehModules);
 	}
 
 	/**
@@ -148,7 +148,7 @@ component extends="baseHandler"{
 	function rescan( event, rc, prc ){
 		moduleService.startup();
 		cbMessagebox.info( "Modules Rescaned and Revamped!" );
-		setNextEvent(prc.xehModules);
+		relocate(prc.xehModules);
 	}
 
 	/**
@@ -157,7 +157,7 @@ component extends="baseHandler"{
 	function remove( event, rc, prc ){
 		moduleService.deleteModule( rc.moduleName );
 		cbMessagebox.info( "Module Removed Forever!" );
-		setNextEvent(prc.xehModules);
+		relocate(prc.xehModules);
 	}
 
 }

@@ -23,7 +23,7 @@ component extends="baseHandler"{
 	function changeLang( event, rc, prc ){
 		event.paramValue( "lang", "en_US" );
 		setFWLocale( rc.lang );
-		setNextEvent( "#prc.cbAdminEntryPoint#/security" );
+		relocate( "#prc.cbAdminEntryPoint#/security" );
 	}
 
 	/**
@@ -69,7 +69,7 @@ component extends="baseHandler"{
 			if( results.author.getIsPasswordReset() ){
 				var token = securityService.generateResetToken( results.author );
 				messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
-				setNextEvent(
+				relocate(
 					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
 					queryString = "token=#token#"
 				);
@@ -103,7 +103,7 @@ component extends="baseHandler"{
 					messagebox.error( cb.r( "twofactor.error@security" ) );
 				}
 				// Relocate to two factor auth presenter
-				setNextEvent( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
+				relocate( event	= "#prc.cbAdminEntryPoint#.security.twofactor" );
 			}
 
 			// Set keep me log in remember cookie, if set.
@@ -116,9 +116,9 @@ component extends="baseHandler"{
 
 			// check if securedURL came in?
 			if( len( rc._securedURL ) ){
-				setNextEvent( uri=rc._securedURL );
+				relocate( uri=rc._securedURL );
 			} else {
-				setNextEvent( "#prc.cbAdminEntryPoint#.dashboard" );
+				relocate( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
 		}
 		// INVALID LOGINS
@@ -128,7 +128,7 @@ component extends="baseHandler"{
 			// message and redirect
 			messagebox.warn( cb.r( "messages.invalid_credentials@security" ));
 			// Relocate
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+			relocate( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
 
@@ -147,7 +147,7 @@ component extends="baseHandler"{
 		if( !len( relocateTo ) ){
 			relocateTo = "#prc.cbAdminEntryPoint#.security.login";
 		}
-		setNextEvent( relocateTo );
+		relocate( relocateTo );
 	}
 
 	/**
@@ -181,7 +181,7 @@ component extends="baseHandler"{
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
 				// Don't give away that the email did not exist.
 				messagebox.info( cb.r( resource='messages.lostpassword_check@security', values="5" ) );
-				setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+				relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			}
 		}
 
@@ -200,7 +200,7 @@ component extends="baseHandler"{
 			messagebox.error( messageArray=errors );
 		}
 		// Re Route
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+		relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 	}
 
 	/**
@@ -219,7 +219,7 @@ component extends="baseHandler"{
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			// Exception
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
 		}
 
@@ -245,14 +245,14 @@ component extends="baseHandler"{
 		if( !len( rc.password ) || !len( rc.password_confirmation ) ){
 			// Exception
 			messagebox.error( cb.r( "messages.invalid_password@security" ) );
-			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			relocate( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
 			return;
 		}
 
 		// Validate confirmed password
 		if( compare( rc.password, rc.password_confirmation ) neq 0 ){
 			messagebox.error( cb.r( "messages.password_mismatch@security" ) );
-			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			relocate( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
 			return;
 		}
 
@@ -263,7 +263,7 @@ component extends="baseHandler"{
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			// Exception
 			messagebox.error( cb.r( "messages.invalid_token@security" ) );
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
 		}
 
@@ -273,7 +273,7 @@ component extends="baseHandler"{
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			// Exception
 			messagebox.error( cb.r( "messages.password_used@security" ) );
-			setNextEvent( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
+			relocate( event="#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#" );
 			return;
 		}
 
@@ -288,14 +288,14 @@ component extends="baseHandler"{
 			// announce event
 			announceInterception( "cbadmin_onInvalidPasswordReset", { token = rc.token } );
 			messagebox.error( resetResults.messages );
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+			relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			return;
 		}
 
 		// announce event and relcoate to login with new password
 		announceInterception( "cbadmin_onPasswordReset", { author = results.author  } );
 		messagebox.info( cb.r( "messages.password_reset@security" ) );
-		setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );
+		relocate( "#prc.cbAdminEntryPoint#.security.login" );
 	}
 
 }
