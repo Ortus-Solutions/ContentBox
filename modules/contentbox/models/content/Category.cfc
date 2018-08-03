@@ -74,7 +74,7 @@ component 	persistent="true"
 
 	this.constraints = {
 		"category" 	= { required = true, size = "1..200" },
-		"slug" 		= { required = true, size = "1..200" }
+		"slug"		= { required = true, size = "1..200", validator: "UniqueValidator@cborm" },
 	};
 
 	/* *********************************************************************
