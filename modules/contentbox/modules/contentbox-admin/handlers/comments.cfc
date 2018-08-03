@@ -196,9 +196,8 @@ component extends="baseHandler"{
 
 		// No comments selected
 		if( arrayLen( rc.commentID ) eq 0 ){
-			arrayAppend( data.message, "No comments selected!" );
 			data.error = true;
-			cbMessagebox.warn( data.messages );
+			cbMessagebox.warn( "No comments selected!" );
 		}
 
 		// If ajax call, return as ajax
