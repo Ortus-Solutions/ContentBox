@@ -11,7 +11,6 @@
 		{ "code": "AVOID_USING_CFINSERT_TAG" },
 		{ "code": "AVOID_USING_CFUPDATE_TAG" },
 		{ "code": "ARG_VAR_CONFLICT" },
-		{ "code": "ARG_VAR_MIXED" },
 		{ "code": "ARG_HINT_MISSING" },
 		{ "code": "ARG_HINT_MISSING_SCRIPT" },
 		{ "code" : "ARGUMENT_INVALID_NAME" },
