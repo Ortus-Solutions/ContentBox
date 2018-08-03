@@ -62,7 +62,7 @@ component{
 	function changeLang( event, rc, prc ){
 		event.paramValue( "lang", "en_US" );
 		setFWLocale( rc.lang );
-		setNextEvent( url="/" );
+		relocatE( url="/" );
 	}
 
 	/**
@@ -104,7 +104,7 @@ component{
 			}
 		} else {
 			// 	Invalid Credentials
-			setNextEvent( URL=CBHelper.linkBlog() );
+			relocatE( URL=CBHelper.linkBlog() );
 		}
 	}
 
@@ -322,7 +322,7 @@ component{
 			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) NEQ 0
 		){
 			// Not an author, kick them out.
-			setNextEvent( URL=CBHelper.linkHome() );
+			relocatE( URL=CBHelper.linkHome() );
 		}
 
 		// xss headers
@@ -353,7 +353,7 @@ component{
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
 			messagebox.warn( "Comments are disabled! So you can't post any!" );
-			setNextEvent( URL=CBHelper.linkContent( arguments.thisContent ) );
+			relocatE( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
@@ -391,7 +391,7 @@ component{
 			// Message
 			messagebox.warn( arrayToList( commentErrors, "<br>" ) );
 			// Redirect
-			setNextEvent(
+			relocatE(
 				URL 	= CBHelper.linkComments( arguments.thisContent ),
 				persist = "author,authorEmail,authorURL,content"
 			);
@@ -429,10 +429,10 @@ component{
 			// Message
 			messagebox.warn( arrayToList( results.messages, "<br>" ) );
 			// relocate back to comments
-			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ) );
+			relocatE( URL=CBHelper.linkComments( arguments.thisContent ) );
 		} else {
 			// relocate back to comment
-			setNextEvent( URL=CBHelper.linkComment( comment ) );
+			relocatE( URL=CBHelper.linkComment( comment ) );
 		}
 	}
 

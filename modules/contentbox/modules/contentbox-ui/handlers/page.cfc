@@ -8,31 +8,40 @@
 component extends="content"{
 
 	// DI
-	property name="pageService"			inject="id:pageService@cb";
 	property name="searchService"		inject="id:SearchService@cb";
 	property name="securityService"		inject="id:securityService@cb";
 	property name="mobileDetector"		inject="id:mobileDetector@cb";
 	property name="themeService"		inject="id:themeService@cb";
-	
+
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
-	
+
 	/**
-	* Pre Handler
-	*/
+	 * Pre handler for pages
+	 *
+	 * @event
+	 * @action
+	 * @eventArguments
+	 * @rc
+	 * @prc
+	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 	}
 
 	/**
-	* Preview a page
-	*/
+	 * Preview a page
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function preview( event, rc, prc ){
 		// Run parent preview
 		super.preview( argumentCollection = arguments );
-		
+
 		// Construct the preview entry according to passed arguments
-		prc.page = pageService.new();
+		prc.page = contentService.new();
 		prc.page.setTitle( rc.title );
 		prc.page.setSlug( rc.slug );
 		prc.page.setPublishedDate( now() );
@@ -47,7 +56,7 @@ component extends="content"{
 			.setActiveContent( prc.page.getContentVersions() );
 		// Do we have a parent?
 		if( len( rc.parentPage ) && isNumeric( rc.parentPage ) ){
-			var parent = pageService.get( rc.parentPage );
+			var parent = contentService.get( rc.parentPage );
 			if( !isNull( parent ) ){ prc.page.setParent( parent ); }
 		}
 		// set skin view
@@ -59,12 +68,17 @@ component extends="content"{
 				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module=prc.cbThemeRecord.module )
 					.setView( view="#prc.cbTheme#/views/page", module=prc.cbThemeRecord.module );
 			}
-		} 
+		}
 	}
-	
+
 	/**
-	* Around page advice that provides caching and multi-output format
-	*/
+	 * Around page advice that provides caching and multi-output format
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 * @eventArguments
+	 */
 	function aroundIndex( event, rc, prc , eventArguments ){
 		// setup wrap arguments
 		arguments.contentCaching 	= prc.cbSettings.cb_content_caching;
@@ -72,14 +86,19 @@ component extends="content"{
 
 		return wrapContentAdvice( argumentCollection = arguments );
 	}
-	
+
 	/**
-	* Present pages
-	*/
+	 * Present pages in the UI
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function index( event, rc, prc ){
 		// incoming params
 		event.paramValue( "pageSlug", "" );
 		var incomingURL  = "";
+
 		// Do we have an override page setup by the settings?
 		if( !structKeyExists( prc, "pageOverride" ) ){
 			// Try slug parsing for hiearchical URLs
@@ -87,27 +106,31 @@ component extends="content"{
 		} else {
 			incomingURL	 = prc.pageOverride;
 		}
+
 		// Entry point cleanup
 		if( len( prc.cbEntryPoint ) ){
 			incomingURL = replacenocase( incomingURL, prc.cbEntryPoint & "/", "" );
 		}
+
 		// get the author and do publish unpublished tests
 		var showUnpublished = false;
 		if( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ){
 			var showUnpublished = true;
 		}
+
 		// Try to get the page using the incoming URI
-		prc.page = pageService.findBySlug( incomingURL, showUnpublished );
+		prc.page = contentService.findBySlug( incomingURL, showUnpublished );
+
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
 			// Verify SSL?
 			if( prc.page.getSSLOnly() and !event.isSSL() ){
 				log.warn( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
-				setNextEvent( event=incomingURL, ssl=true );
+				relocatE( event=incomingURL, ssl=true );
 				return;
 			}
 			// Record hit
-			pageService.updateHits( prc.page.getContentID() );
+			contentService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults 	= commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
@@ -138,14 +161,19 @@ component extends="content"{
 			// set skin not found
 			event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module )
 				.setView( view="#prc.cbTheme#/views/notfound", module=prc.cbThemeRecord.module )
-				.setHTTPHeader( "404", "Page not found" );				
+				.setHTTPHeader( "404", "Page not found" );
 		}
 	}
 
 	/**
-	* Content Search
-	* @return html
-	*/
+	 * Content search
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 *
+	 * @return HTML
+	 */
 	function search( event, rc, prc ){
 		// incoming params
 		event.paramValue( "page", 1 )
@@ -162,29 +190,33 @@ component extends="content"{
 		// get search results
 		if( len( rc.q ) ){
 			var searchAdapter = searchService.getSearchAdapter();
-			prc.searchResults = searchAdapter.search( 
+			prc.searchResults = searchAdapter.search(
 				offset 		= prc.pagingBoundaries.startRow-1,
 				max 		= prc.cbSettings.cb_search_maxResults,
-				searchTerm	= rc.q 
+				searchTerm	= rc.q
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
 			prc.searchResults 			= getModel( "SearchResults@cb" );
 			prc.searchResultsContent 	= "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
-		
+
 		// set skin search
 		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module=prc.cbThemeRecord.module )
 			.setView( view="#prc.cbTheme#/views/search", module=prc.cbThemeRecord.module );
-			
+
 		// announce event
 		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
 	}
 
 
 	/**
-	* Display the RSS feeds
-	*/
+	 * RSS Feeds
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function rss( event, rc, prc ){
 		// params
 		event.paramValue( "category","" );
@@ -199,16 +231,20 @@ component extends="content"{
 	}
 
 	/**
-	* Comment Form Post
-	*/
+	 * Comment Form Post
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function commentPost( event, rc, prc ){
 		// incoming params
 		event.paramValue( "contentID", "" );
 		// Try to retrieve page by contentID
-		var page = pageService.get( rc.contentID );
+		var page = contentService.get( rc.contentID );
 		// If null, kick them out
-		if( isNull( page ) ){ 
-			setNextEvent( prc.cbEntryPoint ); 
+		if( isNull( page ) ){
+			relocatE( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );
@@ -219,16 +255,17 @@ component extends="content"{
 	/************************************** PRIVATE *********************************************/
 
 	/**
-	* Verify if a chosen page layout exists or not.
-	* @layout The layout to verify
-	*/
+	 * Verify if a chosen page layout exists or not.
+	 *
+	 * @layout The layout to verify
+	 */
 	private function verifyPageLayout( required layout ){
 		var excluded = "-no-layout-";
 		// Verify exclusions
 		if( listFindNoCase( excluded, arguments.layout ) ){ return; }
 		// Verify layout
 		if( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
-			throw( 
+			throw(
 				message	= "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
 			    detail	= "Please verify your page layout settings",
 				type 	= "ContentBox.InvalidPageLayout"
