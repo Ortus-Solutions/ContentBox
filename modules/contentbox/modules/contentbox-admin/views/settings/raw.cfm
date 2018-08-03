@@ -1,15 +1,14 @@
 ﻿<cfoutput>
 <div class="row">
+
     <div class="col-md-12">
         <h1 class="h1">
             <img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" height="30"/>
             Geek Panel
         </h1>
         <div class="label label-warning">Environment: #getSetting('Environment')#</div>
-        
+	</div>
 
-       
-    </div>
     <div class="col-md-12">
 
         <!--- messageBox --->
@@ -25,7 +24,8 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
-                <div class="tab-wrapper tab-left tab-primary">
+				<div class="tab-wrapper tab-left tab-primary">
+
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
@@ -41,12 +41,12 @@
                             <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
-                    <!-- End Tabs -->
+					<!-- End Tabs -->
+
                     <!-- Tab Content -->
                     <div class="tab-content">
                         <!--- Raw Settings Pane --->
                         <div class="tab-pane active" id="raw">
-                            <br>
                             <p>
                                 Below are all the ContentBox settings in your installation. Modify at your own risk.
                                 <div class="alert alert-warning">
@@ -54,40 +54,43 @@
                                 </div>
                             </p>
                             <!---settings form--->
-                            #html.startForm(name="settingForm",action=prc.xehSettingRemove)#
+                            #html.startForm( name="settingForm", action=prc.xehSettingRemove )#
                                 <input type="hidden" name="settingID" id="settingID" value="" />
                                 <div class="row well well-sm">
-                                    <div class="col-md-6">
+
+									<div class="col-md-6">
                                         <div class="form-group form-inline no-margin">
                                             #html.textField(
-                                                name="settingSearch",
-                                                class="form-control",
-                                                placeholder="Quick Search",
-                                                value=event.getValue( "search", "" )
+                                                name        = "settingSearch",
+                                                class       = "form-control",
+                                                placeholder = "Quick Search",
+                                                value       = event.getValue( "search", "" )
                                             )#
                                         </div>
-                                    </div>
+									</div>
+
                                     <div class="col-md-6">
-                                        <div class="pull-right">
-                                            <div class="btn-group btn-group-sm">
+										<div class="pull-right">
+
+											<div class="btn-group btn-group-sm">
                                                 <a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
                                                     <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
-                                                </a>
+												</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
                                                     <li><a href="javascript:flushSettingsCache()"><i class="fa fa-refresh"></i> Flush Settings Cache</a></li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
-                                                    <li><a href="javascript:importSettings()"><i class="fa fa-upload"></i> Import Settings</a></li>
+                                                    <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import Settings</a></li>
                                                     </cfif>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-														<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-														<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+														<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+														<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 													</cfif>
                                                 </ul>
                                             </div>
-                                            
+
                                             <div class="btn-group btn-group-sm">
                                                 <a href="##" onclick="return createSetting();" class="btn btn-primary btn-sm">Create Setting</a>
                                                 <button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -117,9 +120,9 @@
                                         <div class="modal-body">
                                             <!--- Create/Edit form --->
                                             #html.startForm(
-                                                action      = prc.xehSettingsave, 
-                                                name        = "settingEditor", 
-                                                novalidate  = "novalidate", 
+                                                action      = prc.xehSettingsave,
+                                                name        = "settingEditor",
+                                                novalidate  = "novalidate",
                                                 class       = "vertical-form"
                                             )#
                                                 <input type="hidden" name="settingID" id="settingID" value="" />
@@ -146,7 +149,7 @@
                                             #html.resetButton(
                                                 name="btnReset",
                                                 value="Cancel",
-                                                class="btn", 
+                                                class="btn",
                                                 onclick="closeModal( $('##settingEditorContainer') )"
                                             )#
                                             #html.button(
@@ -159,7 +162,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+						</div>
+
                         <!--- WireBox Pane --->
                         <div class="tab-pane" id="wirebox">
                             <br>
@@ -193,7 +197,7 @@
                                             <th class="text-center {sorter:false}">Actions</th>
                                         </tr>
                                     </thead>
-            
+
                                     <tbody>
                                         <cfloop collection="#prc.singletons#" item="target">
                                         <tr>
@@ -209,7 +213,8 @@
                                     </tbody>
                                 </table>
                             #html.endForm()#
-                        </div>
+						</div>
+
                         <!--- CacheBox Pane --->
                         <div class="tab-pane" id="cachebox">
                             <br>
@@ -217,12 +222,13 @@
                             <cachebox:monitor cacheFactory="#controller.getCacheBox()#"
                                               baseURL="#event.buildLink(prc.xehRawSettings)#"
                                               enableMonitor=false/>
-                        </div>
+						</div>
+
                         <!--- ContentBox Events Docs --->
                         <div class="tab-pane" id="_events">
                             <br>
-                            <p>Here you can see all the registered interception events that ContentBox offers and you can implement in 
-                            your application, modules, layouts, etc. You can read more about writing 
+                            <p>Here you can see all the registered interception events that ContentBox offers and you can implement in
+                            your application, modules, layouts, etc. You can read more about writing
                             <a href="http://wiki.coldbox.org/wiki/Interceptors.cfm">interceptors</a> in our documentation.</p>
                             <div class="row well well-sm">
                                 <div class="col-md-6">
@@ -236,7 +242,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6"></div>
-                            </div>
+							</div>
+
                             <!---Event Forms --->
                             #html.startForm(name="eventsForm" )#
                                 <!--- events --->
@@ -246,7 +253,7 @@
                                             <th width="30" class="{sorter:none}">No.</th>
                                             <th>Event</th>
                                             <th width="200">Module</th>
-                                            <th width="100">Listeners</th>                                  
+                                            <th width="100">Listeners</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -283,20 +290,23 @@
                             #html.endForm()#
                         </div>
                     </div>
-                    <!-- End Tab Content -->
+					<!-- End Tab Content -->
+
                 </div>
-                <!-- End Vertical Nav -->
+				<!-- End Vertical Nav -->
+
             </div>
         </div>
     </div>
 </div>
-<cfscript>
-    dialogArgs = {
-        title = "Import Settings",
+
+#renderView(
+	view = "_tags/dialog/import",
+	args = {
+        title       = "Import Settings",
         contentArea = "settings",
-        action = prc.xehSettingsImport,
+        action      = prc.xehSettingsImport,
         contentInfo = "Choose the ContentBox <strong>JSON</strong> settings file to import."
-    };
-</cfscript>
-#renderView( view="_tags/dialog/import", args=dialogArgs )#
+    }
+)#
 </cfoutput>
