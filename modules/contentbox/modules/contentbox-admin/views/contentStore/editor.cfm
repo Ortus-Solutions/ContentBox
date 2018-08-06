@@ -138,7 +138,10 @@
                         <div role="tabpanel" class="tab-pane" id="history">
                             #prc.versionsViewlet#
                         </div>
-                    </cfif>
+					</cfif>
+
+					<!--- Custom tab content --->
+					#announceInterception( "cbadmin_contentStoreEditorNavContent" )#
 
                 </div>
                 <!--- Event --->

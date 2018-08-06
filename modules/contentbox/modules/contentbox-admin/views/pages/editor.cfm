@@ -3,11 +3,11 @@
         <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/?parent=#prc.parentcontentID#';return false;">
             <i class="fa fa-reply"></i> Back
         </button>
-    
+
         <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
             <span class="fa fa-cog"></span>
         </button>
-    
+
         <ul class="dropdown-menu">
             <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
             <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
@@ -17,7 +17,7 @@
             </cfif>
         </ul>
     </div>
-    
+
     <!--- Page Form  --->
     #html.startForm(
         action      = prc.xehPageSave,
@@ -25,27 +25,27 @@
         novalidate  = "novalidate",
         class       = "form-vertical"
     )#
-    
+
         <div class="row">
             <div class="col-md-8" id="main-content-slot">
                 <!--- MessageBox --->
                 #getModel( "messagebox@cbMessagebox" ).renderit()#
-    
+
                 <!--- id --->
                 #html.hiddenField( name="contentID", bind=prc.page )#
                 #html.hiddenField( name="contentType", bind=prc.page )#
-    
+
                 <div class="panel panel-default">
                     <!-- Nav tabs -->
                     <div class="tab-wrapper margin0">
                         <ul class="nav nav-tabs" role="tablist">
-    
+
                             <li role="presentation" class="active">
                                 <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
                                     <i class="fa fa-edit"></i> Editor
                                 </a>
                             </li>
-    
+
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                                 <li role="presentation">
                                     <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
@@ -53,7 +53,7 @@
                                     </a>
                                 </li>
                             </cfif>
-    
+
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>
                                 <li role="presentation">
                                     <a href="##seo" aria-controls="seo" role="tab" data-toggle="tab">
@@ -61,7 +61,7 @@
                                     </a>
                                 </li>
                             </cfif>
-    
+
                             <!---Loaded Panels--->
                             <cfif prc.page.isLoaded()>
                                 <li role="presentation">
@@ -69,22 +69,22 @@
                                         <i class="fa fa-history"></i> History
                                     </a>
                                 </li>
-    
+
                                 <li role="presentation">
                                     <a href="##comments" aria-controls="comments" role="tab" data-toggle="tab">
                                         <i class="fa fa-comments"></i> Comments
                                     </a>
                                 </li>
                             </cfif>
-    
+
                             <!--- Event --->
                             #announceInterception( "cbadmin_pageEditorNav" )#
-    
+
                         </ul>
                     </div>
-    
+
                     <div class="panel-body tab-content">
-    
+
                         <!--- Editor --->
                         <div role="tabpanel" class="tab-pane active" id="editor">
                             <!--- title --->
@@ -100,7 +100,7 @@
                                 labelClass      = "control-label",
                                 groupWrapper    = "div class=form-group"
                             )#
-    
+
                             <!--- slug --->
                             <div class="form-group">
                                 <label for="slug" class="control-label">Permalink:
@@ -121,17 +121,17 @@
                                             title="The URL permalink for this page",
                                             disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#"
                                         )#
-    
+
                                         <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
                                             <i id="togglePermalink" class="fa fa-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
                                         </a>
                                     </div>
                                 </div>
                             </div>
-    
+
                             <!--- ContentToolBar --->
                             #renderView( view="_tags/content/markup", args={ content = prc.page } )#
-    
+
                             <!--- content --->
                             #html.textarea(
                                 name    = "content",
@@ -139,7 +139,7 @@
                                 rows    = "25",
                                 class   = "form-control"
                             )#
-    
+
                             <cfif prc.cbSettings.cb_page_excerpts>
                                 <!--- excerpt --->
                                 #html.textarea(
@@ -151,7 +151,7 @@
                                 )#
                             </cfif>
                         </div>
-    
+
                         <!--- Custom Fields --->
                          <div role="tabpanel" class="tab-pane" id="custom_fields">
                              #renderView(
@@ -159,7 +159,7 @@
                                 args = { fieldType="Page", customFields=prc.page.getCustomFields() }
                             )#
                         </div>
-    
+
                         <!--- SEO --->
                         <div role="tabpanel" class="tab-pane" id="seo">
                             <div class="form-group">
@@ -171,7 +171,7 @@
                                     maxlength = "255"
                                 )#
                             </div>
-    
+
                             <div class="form-group">
                                 <label for="htmlKeywords">
                                     Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)
@@ -184,7 +184,7 @@
                                     rows        = "5"
                                 )#
                             </div>
-    
+
                             <div class="form-group">
                                 <label for="htmlKeywords">
                                     Description: (<span id='html_description_count'>0</span>/160 characters left)
@@ -198,47 +198,49 @@
                                 )#
                             </div>
                         </div>
-    
+
                         <cfif prc.page.isLoaded()>
                             <!--- History --->
                             <div role="tabpanel" class="tab-pane" id="history">
                                 #prc.versionsViewlet#
                             </div>
-    
+
                             <!--- Comments --->
                             <div role="tabpanel" class="tab-pane" id="comments">
                                 #prc.commentsViewlet#
                             </div>
-                            <!--- Custom tab content --->
-                            #announceInterception( "cbadmin_pageEditorNavContent" )#
-                        </cfif>
-                    </div>
+						</cfif>
+
+						<!--- Custom tab content --->
+						#announceInterception( "cbadmin_pageEditorNavContent" )#
+					</div>
+
                     <!--- Event --->
                     #announceInterception( "cbadmin_pageEditorInBody" )#
                 </div>
-    
+
                 <!--- Event --->
                 #announceInterception( "cbadmin_pageEditorFooter" )#
             </div>
-    
+
             <!---- SIDEBAR --->
             <div class="col-md-4" id="main-content-sidebar">
                 <div class="panel panel-primary">
-    
+
                     <div class="panel-heading">
                         <h3 class="panel-title"><i class="fa fa-info-circle"></i> Details</h3>
                     </div>
-    
+
                     <div class="panel-body">
-    
+
                         #renderView(
                             view    = "_tags/content/publishing",
                             args    = { content = prc.page }
                         )#
-    
+
                         <!--- Accordion --->
                         <div id="accordion" class="panel-group accordion" data-stateful="page-sidebar">
-    
+
                             <!---Begin Page Info--->
                             <cfif prc.page.isLoaded()>
                                 #renderView(
@@ -246,7 +248,7 @@
                                     args    = { content = prc.page }
                                 )#
                             </cfif>
-    
+
                             <!---Begin Display Options--->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_DISPLAY_OPTIONS" )>
                             <div class="panel panel-default">
@@ -346,7 +348,7 @@
                                 #html.hiddenField(name="parentPage", value=prc.parentcontentID)#
                             </cfif>
                             <!---End Display Options--->
-    
+
                             <!---Begin Related Content--->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                             <div class="panel panel-default">
@@ -355,7 +357,7 @@
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
                                             <i class="fa fa-sitemap fa-lg"></i> Related Content
                                         </a>
-    
+
                                     </h4>
                                 </div>
                                 <div id="relatedcontent" class="panel-collapse collapse">
@@ -369,7 +371,7 @@
                                 #html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
                             </cfif>
                             <!---End Related Content--->
-    
+
                             <!---Begin Linked Content--->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
                             <div class="panel panel-default">
@@ -378,7 +380,7 @@
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
                                             <i class="fa fa-link fa-lg"></i> Linked Content
                                         </a>
-    
+
                                     </h4>
                                 </div>
                                 <div id="linkedcontent" class="panel-collapse collapse">
@@ -390,7 +392,7 @@
                             </div>
                             </cfif>
                             <!---End Linked Content--->
-    
+
                             <!---Begin Modifiers--->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
                             <div class="panel panel-default">
@@ -419,7 +421,7 @@
                                                 </select>
                                             </div>
                                         </cfif>
-    
+
                                         <!--- Allow Comments --->
                                         <cfif prc.cbSettings.cb_comments_enabled>
                                             <div class="form-group">
@@ -437,7 +439,7 @@
                                                 )#
                                             </div>
                                         </cfif>
-    
+
                                         <!--- SSL Only --->
                                         <div class="form-group">
                                             <i class="icon-shield icon-large"></i>
@@ -453,7 +455,7 @@
                                                 class="form-control input-sm"
                                             )#
                                         </div>
-    
+
                                         <!--- Password Protection --->
                                         <div class="form-group">
                                             <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
@@ -470,7 +472,7 @@
                             </div>
                             </cfif>
                             <!---End Modfiers--->
-    
+
                             <!---Begin Cache Settings--->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                             <div class="panel panel-default">
@@ -526,7 +528,7 @@
                             </div>
                             </cfif>
                             <!---End Cache Settings--->
-    
+
                             <!---Begin Categories--->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                             <div class="panel panel-default">
@@ -554,7 +556,7 @@
                                             </div>
                                         </cfloop>
                                         </div>
-    
+
                                         <!--- New Categories --->
                                         #html.textField(
                                             name="newCategories",
@@ -568,7 +570,7 @@
                             </div>
                             </cfif>
                             <!---End Categories--->
-    
+
                             <!---Begin Featured Image --->
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
                             <div class="panel panel-default">
@@ -610,12 +612,12 @@
                             </div>
                             </cfif>
                             <!---End Featured Image--->
-    
+
                             <!--- Event --->
                             #announceInterception( "cbadmin_pageEditorSidebarAccordion" )#
                         </div>
                         <!--- End Accordion --->
-    
+
                         <!--- Event --->
                         #announceInterception( "cbadmin_pageEditorSidebar" )#
                     </div>
@@ -624,7 +626,6 @@
                 #announceInterception( "cbadmin_pageEditorSidebarFooter" )#
             </div>
         </div>
-    
+
     #html.endForm()#
     </cfoutput>
-    

@@ -208,7 +208,10 @@
                         <div role="tabpanel" class="tab-pane" id="comments">
                             #prc.commentsViewlet#
                         </div>
-                    </cfif>
+					</cfif>
+
+					<!--- Custom tab content --->
+					#announceInterception( "cbadmin_entryEditorNavContent" )#
 
 				</div>
 
