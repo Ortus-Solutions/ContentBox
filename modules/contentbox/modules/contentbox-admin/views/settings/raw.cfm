@@ -169,21 +169,14 @@
                             <br>
                             <p>The following are all the objects that are currently in the singleton scope.</p>
                             <div class="row well well-sm">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group form-inline no-margin">
                                         #html.textField(
-                                            name="singletonsFilter",
-                                            size="30",
-                                            class="form-control",
-                                            placeholder="Quick Filter"
+                                            name         = "singletonsFilter",
+                                            size         = "30",
+                                            class        = "form-control",
+                                            placeholder  = "Quick Filter"
                                         )#
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="pull-right">
-                                        <div class="btn-group btn-group-sm">
-                                            <button class="btn btn-sm btn-info" onclick="return to('#event.buildLink(prc.xehFlushSingletons)#')" title="Clear All Singletons"><i class="fa fa-trash-o"></i> Clear All Singletons</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
