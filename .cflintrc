@@ -45,7 +45,6 @@
 		{ "code": "NEVER_USE_QUERY_IN_CFM" },
 		{ "code": "OUTPUT_ATTR" },
 		{ "code" : "QUERYPARAM_REQ" },
-        { "code": "UNUSED_LOCAL_VARIABLE" },
         { "code": "UNUSED_METHOD_ARGUMENT" },
 		{ "code": "SQL_SELECT_STAR" },
 		{ "code": "SCOPE_ALLCAPS_NAME" },

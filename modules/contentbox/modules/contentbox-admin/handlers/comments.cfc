@@ -92,11 +92,12 @@ component extends="baseHandler"{
 		event.paramValue( "commentID","" );
 		event.paramValue( "page","1" );
 		var data = { "ERROR" = false, "MESSAGES" = "" };
+
 		// check if comment id list has length
 		if( len( rc.commentID ) ){
-			commentService.bulkStatus(commentID=rc.commentID, status=rc.commentStatus);
+			commentService.bulkStatus( commentID=rc.commentID, status=rc.commentStatus );
 			// announce event
-			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
+			announceInterception( "cbadmin_onCommentStatusUpdate", { commentID=rc.commentID, status=rc.commentStatus } );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
 			cbMessagebox.info( data.messages );
