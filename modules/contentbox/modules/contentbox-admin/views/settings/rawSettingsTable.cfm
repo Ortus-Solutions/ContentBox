@@ -24,7 +24,7 @@
 			<td>
 				<cfif len( setting.getValue() ) gt 90 >
 					#html.textarea(
-						value 	= setting.getValue(), 
+						value 	= setting.getValue(),
 						rows 	= "5",
 						class 	= "form-control",
 						disabled = "true"
@@ -42,21 +42,23 @@
 			</td>
 			<td class="text-center">
 				<div class="btn-group btn-group-sm">
-					
+
 					<!--- Edit Command --->
-					<a 	class="btn btn-sm btn-primary" 
-						href="javascript:edit( '#setting.getSettingId()#',
-											   '#HTMLEditFormat( setting.getName() )#',
-											   '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#',
-											   #setting.getIsCore()# )"
+					<a 	class="btn btn-sm btn-primary"
+						href="javascript:edit(
+							'#setting.getSettingId()#',
+							'#encodeForHTMLAttribute( setting.getName() )#',
+							'#encodeForHTMLAttribute( JSStringFormat( setting.getValue() ) )#',
+							#setting.getIsCore() ? 'true' : 'false'#
+						)"
 						title="Edit Setting">
 						<i class="fa fa-edit fa-lg"></i>
 					</a>
-					
+
 					<!--- Delete Command --->
 					<cfif setting.getIsCore()>
 						<a 	class="btn btn-sm btn-danger"
-						disabled="disabled"							
+						disabled="disabled"
 					<cfelse>
 						<a 	class="btn btn-sm btn-danger confirmIt"
 						href="javascript:remove('#setting.getsettingID()#', #setting.getIsCore()#)"
@@ -75,8 +77,8 @@
 <!--- Paging --->
 <cfif !rc.viewAll>
 	#prc.oPaging.renderit(
-		foundRows 	= prc.settingsCount, 
-		link 		= prc.pagingLink, 
+		foundRows 	= prc.settingsCount,
+		link 		= prc.pagingLink,
 		asList 		= true
 	)#
 </cfif>
