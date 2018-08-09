@@ -44,7 +44,7 @@ component extends="baseHandler"{
 			}
 			case "coreWidgets" : {
 				prc.cbFileBrowserSettings.title = "Core Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getWidgetsPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCoreWidgetsPath(); break;
 			}
 			case "customWidgets" : {
 				prc.cbFileBrowserSettings.title = "Custom Widgets Library";
