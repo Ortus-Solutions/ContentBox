@@ -234,7 +234,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @content the Content object to delete
 	*/
 	ContentService function deleteContent( required any content ){
-		
+
 		transaction{
 			// Check for dis-associations
 			if( arguments.content.hasParent() ){
@@ -267,16 +267,20 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Find published content objects
-	* @max The maximum number of records to paginate
-	* @offset The offset in the pagination
-	* @searchTerm The search term to search
-	* @category The category to filter the content on
-	* @asQuery Return as query or array of objects, defaults to array of objects
-	* @sortOrder how we need to sort the results
-	* @parent The parent ID to filter on or not
-	* @showInMenu Whether to filter with the show in menu bit or not
-	*/
+	 * Find published content objects
+	 *
+	 * @max The maximum number of records to paginate
+	 * @offset The offset in the pagination
+	 * @searchTerm The search term to search
+	 * @category The category to filter the content on
+	 * @asQuery Return as query or array of objects, defaults to array of objects
+	 * @sortOrder how we need to sort the results
+	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @showInMenu Whether to filter with the show in menu bit or not
+	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
+	 *
+	 * @return struct as { count, content }
+	 */
 	function findPublishedContent(
 		numeric max=0,
 		numeric offset=0,
@@ -285,10 +289,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		boolean asQuery=false,
 		string sortOrder="publishedDate DESC",
 		any parent,
-		boolean showInMenu
+		boolean showInMenu,
+		slugPrefix=""
 	){
 
-		var results = {};
+		var results = { "count" : 0, "content" : [] };
 		var c = newCriteria();
 
 		// only published pages
@@ -313,23 +318,38 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( len(arguments.searchTerm) ){
 			// like disjunctions
 			c.createAlias( "activeContent","ac" );
-			c.or( c.restrictions.like( "title","%#arguments.searchTerm#%" ),
-				  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
+			c.or(
+				c.restrictions.like( "title","%#arguments.searchTerm#%" ),
+				c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
+			);
 		}
 
+
 		// parent filter
-		if( structKeyExists(arguments,"parent" ) ){
-			if( len( trim( arguments.parent ) ) ){
+		if( !isNull( arguments.parent ) ){
+			if( isSimpleValue( arguments.parent ) and len( arguments.parent ) ){
 				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+			} else if( isObject( arguments.parent ) ){
+				c.eq( "parent", arguments.parent );
 			} else {
 				c.isNull( "parent" );
 			}
 		}
 
+		// Slug Prefix
+		if( len( arguments.slugPrefix ) ){
+			c.ilike( "slug", "#arguments.slugPrefix#/%" );
+		}
+
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery );
+							.list(
+								offset    = arguments.offset,
+								max       = arguments.max,
+								sortOrder = arguments.sortOrder,
+								asQuery   = arguments.asQuery
+							);
 
 		return results;
 	}
@@ -366,8 +386,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @max 			The maximum number of records to return
 	* @offset 		The pagination offset
 	*/
-	array function findExpiredContent( 
-		any author, 
+	array function findExpiredContent(
+		any author,
 		numeric max=0,
 		numeric offset=0
 	){
@@ -377,17 +397,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		c.isTrue( "isPublished" )
 			.isLT( "publishedDate", now() )
 			.isLT( "expireDate", now() );
-		
+
 		// author filter
 		if( structKeyExists( arguments, "author") ){
 			c.isEq( "ac.author", arguments.author );
 		}
-			
-		return c.list( 
-			max 		= arguments.max, 
+
+		return c.list(
+			max 		= arguments.max,
 			offset 		= arguments.offset,
 			sortOrder 	= "expireDate desc",
-			asQuery 	= false 
+			asQuery 	= false
 		);
 	}
 
@@ -397,8 +417,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @max 			The maximum number of records to return
 	* @offset 		The pagination offset
 	*/
-	array function findFuturePublishedContent( 
-		any author, 
+	array function findFuturePublishedContent(
+		any author,
 		numeric max=0,
 		numeric offset=0
 	){
@@ -407,17 +427,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// Only non-expired future publishing pages
 		c.isTrue( "isPublished" )
 			.isGT( "publishedDate", now() );
-		
+
 		// author filter
 		if( structKeyExists( arguments, "author") ){
 			c.isEq( "ac.author", arguments.author );
 		}
-			
-		return c.list( 
-			max 		= arguments.max, 
+
+		return c.list(
+			max 		= arguments.max,
 			offset 		= arguments.offset,
-			sortOrder 	= "publishedDate desc", 
-			asQuery 	= false 
+			sortOrder 	= "publishedDate desc",
+			asQuery 	= false
 		);
 	}
 
@@ -439,7 +459,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( structKeyExists( arguments, "author") ){
 			c.isEq( "ac.author", arguments.author );
 		}
-			
+
 		return c.list( max=arguments.max, sortOrder="ac.createdDate desc", asQuery=false );
 	}
 
@@ -568,7 +588,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		required any contentData,
 		required any importLog,
 		any parent,
-		struct newContent={} 
+		struct newContent={}
 	){
 
 		// setup
@@ -577,7 +597,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		newContent[ thisContent.slug ] = oContent;
-		
+
 		// date cleanups, just in case.
 		var badDateRegex  	= " -\d{4}$";
 		thisContent.createdDate 	= reReplace( thisContent.createdDate, badDateRegex, "" );
@@ -591,12 +611,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		thisContent.expireDate 		= dateUtil.epochToLocal( thisContent.expireDate );
 
 		// populate content from data and ignore relationships, we need to build those manually.
-		populator.populateFromStruct( 
+		populator.populateFromStruct(
 			target					= oContent,
 			memento					= thisContent,
 			exclude					= "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
 			composeRelationships	= false,
-			nullEmptyInclude		= "publishedDate,expireDate" 
+			nullEmptyInclude		= "publishedDate,expireDate"
 		);
 
 		// determine author else ignore import
@@ -826,7 +846,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @isPublished	Show all content or true/false published content
 	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatContent( 
+	array function getAllFlatContent(
 		sortOrder="title asc",
 		boolean isPublished,
 		boolean showInSearch
@@ -834,10 +854,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var c = newCriteria();
 
 		// only published content
-		if( 
-			structKeyExists( arguments, "isPublished") 
-			&& 
-			isBoolean( arguments.isPublished ) 
+		if(
+			structKeyExists( arguments, "isPublished")
+			&&
+			isBoolean( arguments.isPublished )
 		){
 			// Published bit
 			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
@@ -850,10 +870,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// Show in Search
-		if( 
-			structKeyExists( arguments, "showInSearch") 
-			&& 
-			isBoolean( arguments.showInSearch ) 
+		if(
+			structKeyExists( arguments, "showInSearch")
+			&&
+			isBoolean( arguments.showInSearch )
 		){
 			// showInSearch bit
 			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );

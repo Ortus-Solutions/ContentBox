@@ -30,7 +30,6 @@
 		{ "code": "COMPLEX_BOOLEAN_CHECK" },
         { "code": "EXCESSIVE_FUNCTION_LENGTH" },
         { "code": "EXCESSIVE_COMPONENT_LENGTH" },
-        { "code": "EXCESSIVE_ARGUMENTS" },
 		{ "code": "EXCESSIVE_FUNCTIONS" },
 		{ "code": "EXPLICIT_BOOLEAN_CHECK" },
         { "code": "FUNCTION_TOO_COMPLEX" },
