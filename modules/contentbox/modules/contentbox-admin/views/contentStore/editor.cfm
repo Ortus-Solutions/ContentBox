@@ -17,20 +17,20 @@
 
 <!--- content Form  --->
 #html.startForm(
-    action=prc.xehContentSave,
-    name="contentForm",
-    novalidate="novalidate",
-    class="form-vertical",
-    role="form"
+    action      = prc.xehContentSave,
+    name        = "contentForm",
+    novalidate  = "novalidate",
+    class       = "form-vertical",
+    role        = "form"
 )#
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
             #getModel( "messagebox@cbMessagebox" ).renderit()#
             <!--- form --->
-            #html.hiddenField(name="contentID",bind=prc.content)#
-            #html.hiddenField(name="contentType",bind=prc.content)#
-            #html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
+            #html.hiddenField( name="contentID", bind=prc.content)#
+            #html.hiddenField( name="contentType", bind=prc.content)#
+            #html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
 
             <div class="panel panel-default">
 
@@ -70,16 +70,16 @@
                     <div role="tabpanel" class="tab-pane active" id="editor">
                         <!--- title --->
                         #html.textfield(
-                            label="Title:",
-                            name="title",
-                            bind=prc.content,
-                            maxlength="100",
-                            required="required",
-                            title="The title for this content",
-                            class="form-control",
-                            wrapper="div class=controls",
-                            labelClass="control-label",
-                            groupWrapper="div class=form-group"
+                            label    	= "Title:",
+                            name     	= "title",
+                            bind     	= prc.content,
+                            maxlength	= "100",
+                            required 	= "required",
+                            title    	= "The title for this content",
+                            class    	= "form-control",
+                            wrapper  	= "div class=controls",
+                            labelClass	= "control-label",
+                            groupWrapper= "div class=form-group"
                         )#
 
                         <!--- slug --->
@@ -89,15 +89,21 @@
                                 <div id='slugCheckErrors'></div>
                                 <div class="input-group">
                                     #html.textfield(
-                                        name="slug",
-                                        bind=prc.content,
-                                        maxlength="100",
-                                        class="form-control",
-                                        title="The unique slug for this content, this is how they are retreived",
-                                        disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
+                                        name      = "slug",
+                                        bind      = prc.content,
+                                        maxlength = "100",
+                                        class     = "form-control",
+                                        title     = "The unique slug for this content, this is how they are retreived",
+                                        disabled  = "#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
                                     )#
-                                    <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink" data-container="body">
-                                            <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+									<a title=""
+										class="input-group-addon"
+										href="javascript:void(0)"
+										onclick="togglePermalink(); return false;"
+										data-original-title="Lock/Unlock permalink"
+										data-container="body"
+									>
+                                        <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
                                     </a>
                                 </div>
                             </div>
@@ -105,15 +111,15 @@
 
                         <!--- Description --->
                         #html.textarea(
-                            name="description",
-                            label="Short Description:",
-                            bind=prc.content,
-                            rows=3,
-                            class="form-control",
-                            title="A short description for metadata purposes",
-                            wrapper="div class=controls",
-                            labelClass="control-label",
-                            groupWrapper="div class=form-group"
+                            name   		= "description",
+                            label  		= "Short Description:",
+                            bind   		= prc.content,
+                            rows   		= 3,
+                            class  		= "form-control",
+                            title  		= "A short description for metadata purposes",
+                            wrapper		= "div class=controls",
+                            labelClass	= "control-label",
+                            groupWrapper= "div class=form-group"
                         )#
 
                         <!---ContentToolBar --->
