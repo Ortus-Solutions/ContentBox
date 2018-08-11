@@ -40,7 +40,7 @@ component extends="baseHandler"{
     	// announce event
 		announceInterception( "cbadmin_prePermissionGroupSave", { group=oGroup, permissionGroupID=rc.permissionGroupID } );
 		// check if permission group already exists
-		var isSaveablePermissionGroup = (rc.permissionGroupID!="" && isNull( permissionGroupService.findWhere( criteria={ name=rc.name } ) )) || isNull( permissionGroupService.findWhere( criteria={ name=rc.name } ) ) ? true : false;
+		var isSaveablePermissionGroup = ( rc.permissionGroupID!="" && ( ( ( isNull(permissionGroupService.findWhere( criteria={ name=rc.name } ) ) ) || ( permissionGroupService.findWhere( criteria={ name=rc.name } ).getpermissionGroupID() == rc.permissionGroupID ) ) || isNull( permissionGroupService.findWhere( criteria={ name=rc.name } ) ) ) ) || isNull( permissionGroupService.findWhere( criteria={ name=rc.name } ) ) ? true : false;
 		// if non-existent
 		if( isSaveablePermissionGroup ) {
 			// save group

@@ -36,7 +36,7 @@ component extends="baseHandler"{
     	// announce event
 		announceInterception( "cbadmin_preRoleSave",{role=orole,roleID=rc.roleID} );
 		// check if roles already exists
-		var isSaveableRole = (rc.roleID!="" && isNull( roleService.findWhere( criteria={ role=rc.role } ) )) || isNull( roleService.findWhere( criteria={ role=rc.role } ) ) ? true : false;
+		var isSaveableRole = ( rc.roleID!="" && ( ( ( isNull(roleService.findWhere( criteria={ role=rc.role } ) ) ) || ( roleService.findWhere( criteria={ role=rc.role } ).getroleID() == rc.roleID ) ) || isNull( roleService.findWhere( criteria={ role=rc.role } ) ) ) ) || isNull( roleService.findWhere( criteria={ role=rc.role } ) ) ? true : false;
 		// if non-existent
 		if( isSaveableRole ) {
 			// save role

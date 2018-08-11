@@ -39,7 +39,7 @@ component extends="baseHandler"{
     	// announce event
 		announceInterception( "cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID} );
 		// check if permission already exists
-		var isSaveablePermission = (rc.permissionID!="" && isNull( permissionService.findWhere( criteria={ permission=rc.permission } ) )) || isNull( permissionService.findWhere( criteria={ permission=rc.permission } ) ) ? true : false;
+		var isSaveablePermission = ( rc.permissionID!="" && ( ( ( isNull(permissionService.findWhere( criteria={ permission=rc.permission } ) ) ) || ( permissionService.findWhere( criteria={ permission=rc.permission } ).getPermissionID() == rc.permissionID ) ) || isNull( permissionService.findWhere( criteria={ permission=rc.permission } ) ) ) ) || isNull( permissionService.findWhere( criteria={ permission=rc.permission } ) ) ? true : false;
 		// if non-existent
 		if( isSaveablePermission ) {
 			// save permission
