@@ -41,7 +41,7 @@ component extends="baseHandler"{
     	// announce event
 		announceInterception( "cbadmin_preCategorySave",{category=oCategory,categoryID=rc.categoryID} );
 		// check if category already exists
-		var isSaveableCategory = rc.categoryID!="" || isNull( categoryService.findWhere( criteria={ slug=rc.category } ) ) ? true : false;
+		var isSaveableCategory = (rc.categoryID!="" && isNull( categoryService.findWhere( criteria={ slug=rc.category } ) )) || isNull( categoryService.findWhere( criteria={ slug=rc.category } ) ) ? true : false;
 		// if non-existent
 		if( isSaveableCategory ) {
 			// save category
