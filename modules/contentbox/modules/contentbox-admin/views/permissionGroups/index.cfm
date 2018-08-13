@@ -84,7 +84,11 @@
 				</div>
 
 				<div class="panel-body">
-					
+					<!--- Info Bar --->
+					<div class="alert alert-warning">
+						<i class="fa fa-warning fa-lg"></i>
+						You cannot delete permission groups that have authors attached to them.  You will need to un-attach those authors from the group first.
+					</div>
 					<!--- groups --->
 					<table name="groups" id="groups" class="table table-striped table-hover table-condensed" width="98%">
 						
@@ -93,6 +97,7 @@
 								<th>Group</th>
 								<th>Description</th>		
 								<th width="95" class="text-center">Permissions</th>
+								<th width="95" class="text-center">Authors</th>
 								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
@@ -120,6 +125,10 @@
 								</td>
 
 								<td class="text-center">
+									<span class="badge badge-info">#group.getNumberOfAuthors()#</span>
+								</td>
+
+								<td class="text-center">
 									<!--- permissions --->
 									<a 	class="btn btn-sm btn-primary" 
 										href="javascript:openRemoteModal( 
@@ -139,14 +148,16 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												
 												<!--- Delete Command --->
-												<li>
-													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )" 
-														class="confirmIt" 
-														data-title="<i class='fa fa-trash-o'></i> Delete Group?"
-													>
-														<i class="fa fa-trash-o fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
-													</a>
-												</li>
+												<cfif group.getNumberOfAuthors() eq 0>
+													<li>
+														<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )" 
+															class="confirmIt" 
+															data-title="<i class='fa fa-trash-o'></i> Delete Group?"
+														>
+															<i class="fa fa-trash-o fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
+														</a>
+													</li>
+												</cfif>
 												
 												<!--- Edit Command --->
 												<li>

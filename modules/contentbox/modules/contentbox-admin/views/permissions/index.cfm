@@ -68,6 +68,11 @@
 				</div>
 
 				<div class="panel-body">
+					<!--- Info Bar --->
+					<div class="alert alert-warning">
+						<i class="fa fa-warning fa-lg"></i>
+						You cannot delete permissions that have groups attached to them.  You will need to un-attach those groups from the permission first.
+					</div>
 					<!--- permissions --->
 					<table name="permissions" id="permissions" class="table table-striped table-hover table-condensed" width="100%">
 						<thead>
@@ -113,9 +118,13 @@
 										   	<i class="fa fa-edit fa-lg"></i>
 										</a>
 										<!--- Delete Command --->
-										<a class="btn btn-sm btn-danger confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
-											<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o fa-lg"></i>
-										</a>
+										<cfif permission.getNumberOfGroups() eq 0>
+											<a class="btn btn-sm btn-danger confirmIt" title="Delete Permission" data-title="Delete Permission?" href="javascript:remove('#permission.getPermissionID()#');">
+										<cfelse>
+											<a class="btn btn-sm btn-danger" href="javascript:void(0);" disabled>
+										</cfif>
+												<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o fa-lg"></i>
+											</a>
 									</cfif>
 								</td>
 							</tr>
