@@ -64,7 +64,7 @@
 							onclick="return confirm( 'Are you sure?' )" 
 							title="Remove Permission"
 						>
-							<i class="fa fa-circle-o fa-lg textRed"></i>
+							<i class="fa fa-minus-circle fa-lg textRed"></i>
 						</a>
 						<!--- Name --->
 						&nbsp; 
