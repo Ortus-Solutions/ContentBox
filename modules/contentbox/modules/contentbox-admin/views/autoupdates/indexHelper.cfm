@@ -8,7 +8,7 @@ $(document).ready(function() {
 	$( "##uploadNowForm" ).validate();
 } );
 function checkForUpdates(){
-	var icon 			= '<i class="fa fa-circle-o-notch fa-spin"></i>';
+	var icon 			= '<i class="fa fa-circle-notch fa-spin"></i>';
 	var $btn 			= $( "##btnUpdates" );
 	var originalValue 	= $btn.html();
 

@@ -20,7 +20,7 @@ $(document).ready(function() {
 	activateTooltips();
 } );
 function installEntry( id, downloadURL ){
-	$( "##"+id ).html( '<div class="text-center"><i class="fa fa-circle-o-notch fa-spin fa-lg"></i><br/>Please wait, installing from ForgeBox...</div>' );
+	$( "##"+id ).html( '<div class="text-center"><i class="fa fa-circle-notch fa-spin fa-lg"></i><br/>Please wait, installing from ForgeBox...</div>' );
 	$downloadURL.val( downloadURL );
 	$forgeBoxInstall.submit();
 	return true;
