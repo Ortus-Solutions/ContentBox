@@ -49,8 +49,8 @@ component extends="coldbox.system.Interceptor"{
 		var aBlockIPs	 		= loginTrackerService.findAllByValue( realIP );
 		var aBlockUsernames 	= loginTrackerService.findAllByValue( realUsername );
 
-		prc.oBlockByIP	 		= ( aBlockIps.len() ? aBlockIps[ 1 ] : loginTrackerService.new() );
-		prc.oBlockByUsername 	= ( aBlockUsernames.len() ? aBlockUsernames[ 1 ] : loginTrackerService.new() );
+		prc.oBlockByIP	 		= ( arrayLen(aBlockIps) ? aBlockIps[ 1 ] : loginTrackerService.new() );
+		prc.oBlockByUsername 	= ( arrayLen(aBlockUsernames) ? aBlockUsernames[ 1 ] : loginTrackerService.new() );
 
 		// do checks to prevent login
 		var isBlocked = false;
