@@ -1,10 +1,10 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* This is the ContentBox UI helper class that is injected by the CBRequest interceptor
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
+ */
 component accessors="true" singleton threadSafe{
 
 	// DI
@@ -29,8 +29,8 @@ component accessors="true" singleton threadSafe{
 	property name="markdown"			inject="Processor@cbmarkdown";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	function init(){
 		return this;
 	}
@@ -1414,15 +1414,17 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Link to the commenting post action, this is where comments are submitted to
-	* @content The entry or page to link to its comments
-	* @ssl	Use SSL or not, defaults to false.
-	*/
+	 * Link to the commenting post action, this is where comments are submitted to
+	 *
+	 * @content The entry or page to link to its comments
+	 * @ssl	Use SSL or not, defaults to false.
+	 *
+	 * @return The URL to submit to.
+	 */
 	function linkCommentPost( required content, boolean ssl=getRequestContext().isSSL() ){
-
 		if( arguments.content.getContentType() eq "page" ){
 			var xeh = siteRoot() & sep() & "__pageCommentPost";
-			return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+			return getRequestContext().buildLink( linkTo=xeh, ssl=arguments.ssl );
 		}
 
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
