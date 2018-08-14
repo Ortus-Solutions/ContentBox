@@ -5,7 +5,7 @@ component extends="baseHandler"{
 
 	// Dependencies
 	property name="permissionService"		inject="id:permissionService@cb";
-	
+
 	// pre handler
 	function preHandler(event,action,eventArguments){
 		var rc 	= event.getCollection();
@@ -13,7 +13,7 @@ component extends="baseHandler"{
 		// Tab control
 		prc.tabUsers = true;
 	}
-	
+
 	// index
 	function index(event,rc,prc){
 		// exit Handlers
@@ -21,7 +21,7 @@ component extends="baseHandler"{
 		prc.xehPermissionSave 	= "#prc.cbAdminEntryPoint#.permissions.save";
 		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.permissions.exportAll";
 		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.permissions.importAll";
-		
+
 		// Get all permissions
 		prc.permissions = permissionService.list(sortOrder="permission",asQuery=false);
 		// Tab
@@ -38,16 +38,24 @@ component extends="baseHandler"{
 		var oPermission = populateModel( permissionService.get(id=rc.permissionID) );
     	// announce event
 		announceInterception( "cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID} );
-		// save permission
-		permissionService.save( oPermission );
-		// announce event
-		announceInterception( "cbadmin_postPermissionSave",{permission=oPermission} );
-		// messagebox
-		cbMessagebox.setMessage( "info","Permission saved!" );
+		// check if permission already exists
+		var isSaveablePermission = ( rc.permissionID!="" && ( ( ( isNull(permissionService.findWhere( criteria={ permission=rc.permission } ) ) ) || ( permissionService.findWhere( criteria={ permission=rc.permission } ).getPermissionID() == rc.permissionID ) ) || isNull( permissionService.findWhere( criteria={ permission=rc.permission } ) ) ) ) || isNull( permissionService.findWhere( criteria={ permission=rc.permission } ) ) ? true : false;
+		// if non-existent
+		if( isSaveablePermission ) {
+			// save permission
+			permissionService.save( oPermission );
+			// announce event
+			announceInterception( "cbadmin_postPermissionSave",{permission=oPermission} );
+			// messagebox
+			cbMessagebox.setMessage( "info","Permission saved!" );
+		} else {
+			// messagebox
+			cbMessagebox.setMessage( "warning","Permission '#rc.permission#' already exists!" );
+		}
 		// relocate
 		relocate( prc.xehPermissions );
 	}
-	
+
 	// remove
 	function remove(event,rc,prc){
 		// announce event
@@ -64,18 +72,18 @@ component extends="baseHandler"{
 		}
 		relocate( prc.xehPermissions );
 	}
-	
+
 	// Export All Permissions
 	function exportAll(event,rc,prc){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = permissionService.getAllForExport();
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Permissions." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=data, type=rc.format, xmlRootName="permissions" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); ; 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); ;
 				break;
 			}
 			default:{
@@ -83,7 +91,7 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
+
 	// import settings
 	function importAll(event,rc,prc){
 		event.paramValue( "importFile", "" );
