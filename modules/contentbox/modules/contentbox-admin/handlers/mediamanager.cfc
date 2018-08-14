@@ -51,6 +51,7 @@ component extends="baseHandler"{
 				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCustomWidgetsPath(); break;
 			}
 		}
+
 		// options
 		prc.libraryOptions = [
 			{ name="<i class='fa fa-pencil'></i> Content", 		value="Content"	},
@@ -63,6 +64,9 @@ component extends="baseHandler"{
 
 		// build argument list for widget
 		prc.fbArgs = { widget=true, settings=prc.cbFileBrowserSettings };
+
+		// Light up
+		prc.tabContent_mediaManager = true;
 
 		// view
 		event.setView( "mediamanager/index" );

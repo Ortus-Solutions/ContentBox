@@ -1,10 +1,10 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* The base content handler
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * The base content handler
+ */
 component extends="baseHandler"{
 
 	// Dependencies
@@ -14,8 +14,17 @@ component extends="baseHandler"{
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="editorService"		inject="id:editorService@cb";
 
-	// pre handler
+	/**
+	 * Pre Handler
+	 *
+	 * @event
+	 * @action
+	 * @eventArguments
+	 * @rc
+	 * @prc
+	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
+		prc.tabContent = true;
 	}
 
 	/**

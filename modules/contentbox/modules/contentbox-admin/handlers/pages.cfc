@@ -47,6 +47,8 @@ component extends="baseContentHandler"{
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
+		prc.tabContent_Pages 	= true;
+
 		// view
 		event.setView( "pages/index" );
 	}

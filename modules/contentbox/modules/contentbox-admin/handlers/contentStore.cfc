@@ -46,6 +46,9 @@ component extends="baseContentHandler"{
 		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
 		prc.xehResetHits 			= "#prc.cbAdminEntryPoint#.content.resetHits";
 
+		// Light up
+		prc.tabContent_contentStore = true;
+
 		// view
 		event.setView( "contentStore/index" );
 	}
@@ -83,14 +86,14 @@ component extends="baseContentHandler"{
 		}
 
 		// search content with filters and all
-		var contentResults = contentStoreService.search( 
+		var contentResults = contentStoreService.search(
 			search		= rc.searchContent,
 			isPublished	= rc.fStatus,
 			category	= rc.fCategories,
 			author		= rc.fAuthors,
 			creator		= rc.fCreators,
 			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-			sortOrder	= "order asc, createdDate desc" 
+			sortOrder	= "order asc, createdDate desc"
 		);
 		prc.content 	 = contentResults.content;
 		prc.contentCount = contentResults.count;
@@ -246,8 +249,8 @@ component extends="baseContentHandler"{
 		}
 
 		// get a clone
-		var clone = contentStoreService.new( { 
-			title 		= rc.title, 
+		var clone = contentStoreService.new( {
+			title 		= rc.title,
 			slug 		= variables.HTMLHelper.slugify( rc.title ),
 			description = original.getDescription(),
 			order 		= original.getOrder() + 1
@@ -271,7 +274,7 @@ component extends="baseContentHandler"{
 		);
 		// clone this sucker now!
 		contentStoreService.saveContent( clone );
-		
+
 		// relocate
 		cbMessageBox.info( "Content Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
@@ -303,7 +306,7 @@ component extends="baseContentHandler"{
 		if( NOT len( rc.publishedDate ) ){
 			rc.publishedDate = dateFormat( now() );
 		}
-		
+
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent" ) ){
 			rc.content = rc.quickcontent;

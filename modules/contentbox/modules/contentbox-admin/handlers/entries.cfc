@@ -47,6 +47,9 @@ component extends="baseContentHandler"{
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
+		// Light up
+		prc.tabContent_blog = true;
+
 		// view
 		event.setView( "entries/index" );
 	}
@@ -196,14 +199,14 @@ component extends="baseContentHandler"{
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = entryService.new( { 
-			title 	= rc.title, 
+		var clone = entryService.new( {
+			title 	= rc.title,
 			slug 	= variables.HTMLHelper.slugify( rc.title ),
 			excerpt = original.getExcerpt()
 		} );
 
 		clone.setCreator( prc.oCurrentAuthor );
-		
+
 		// prepare for clone
 		clone.prepareForClone(
 			author				= prc.oCurrentAuthor,
@@ -216,7 +219,7 @@ component extends="baseContentHandler"{
 
 		// clone this sucker now!
 		entryService.saveEntry( clone );
-		
+
 		// relocate
 		cbMessageBox.info( "Entry Cloned, isn't that cool!" );
 		relocate(event=prc.xehEntries);
