@@ -47,7 +47,7 @@
 				<div class="text-center">
 					<button
 						class="btn btn-primary btn-sm"
-						<cfif prc.content.getParentID().len()>
+						<cfif len( prc.content.getParentID() )>
 							onclick="to( '#event.buildLink( prc.xehBackTrack )#/parent/#prc.content.getParentID()#' );return false;"
 						<cfelse>
 							onclick="to( '#event.buildLink( prc.xehBackTrack )#' );return false;"
