@@ -78,7 +78,7 @@
 						#renderView( view="authors/editor/password" )#
 
 						<!--- Two Factor--->
-                    	#renderView( view="authors/editor/twofactor" )#
+                    	#renderView( view="authors/editor/twoFactor" )#
 
 						<!--- Preferences --->
 						#renderView( view="authors/editor/preferences" )#
