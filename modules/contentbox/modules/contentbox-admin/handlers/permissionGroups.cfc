@@ -1,11 +1,29 @@
 /**
-* Manage permission groups
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manage Permission Groups
+ */
 component extends="baseHandler"{
 
 	// Dependencies
 	property name="permissionGroupService"			inject="id:permissionGroupService@cb";
 	property name="permissionService"				inject="id:permissionService@cb";
+
+	/**
+	 * Pre handler
+	 *
+	 * @event
+	 * @action
+	 * @eventArguments
+	 * @rc
+	 * @prc
+	 */
+	function preHandler( event, action, eventArguments, rc, prc ){
+		// Tab control
+		prc.tabUsers = true;
+	}
 
 	/**
 	 * Manage groups
@@ -32,15 +50,24 @@ component extends="baseHandler"{
 	 */
 	function save( event, rc, prc ){
 		// populate and get
-		var oGroup = populateModel( permissionGroupService.get( id=rc.permissionGroupID ) );
-    	// announce event
-		announceInterception( "cbadmin_prePermissionGroupSave", { group=oGroup, permissionGroupID=rc.permissionGroupID } );
-		// save group
-		permissionGroupService.save( oGroup );
-		// announce event
-		announceInterception( "cbadmin_postPermissionGroupSave", { group=oGroup } );
-		// messagebox
-		cbMessagebox.setMessage( "info","Permission Group saved!" );
+		var oGroup 		= populateModel( permissionGroupService.get( id=rc.permissionGroupID ) );
+		var vResults 	= validateModel( oGroup );
+
+		// Validation Results
+		if( !vResults.hasErrors() ){
+			// announce event
+			announceInterception( "cbadmin_prePermissionGroupSave", { group=oGroup, permissionGroupID=rc.permissionGroupID } );
+			// save group
+			permissionGroupService.save( oGroup );
+			// announce event
+			announceInterception( "cbadmin_postPermissionGroupSave", { group=oGroup } );
+			// messagebox
+			cbMessagebox.setMessage( "info","Permission Group saved!" );
+
+		} else {
+			// messagebox
+			cbMessagebox.warning( messageArray=vResults.getAllErrors() );
+		}
 		// relocate
 		relocate( prc.xehPermissionGroups );
 	}

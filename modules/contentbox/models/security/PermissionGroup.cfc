@@ -33,7 +33,8 @@ component 	persistent="true"
 				notnull="true"
 				length="255"
 				unique="true"
-				default="";
+				default=""
+				index="idx_permissionGroupName";
 
 	property 	name="description"
 				ormtype="string"
@@ -96,7 +97,7 @@ component 	persistent="true"
 	this.pk = "permissionGroupID";
 
 	this.constraints = {
-		"name"	 			= { required = true, size = "1..255" },
+		"name"	 			= { required = true, size = "1..255", validator = "UniqueValidator@cborm" },
 		"description"		= { required = false, size = "1..500" }
 	};
 

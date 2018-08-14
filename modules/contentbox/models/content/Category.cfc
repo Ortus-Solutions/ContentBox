@@ -33,7 +33,8 @@ component 	persistent="true"
 
 	property 	name="category"
 				notnull="true"
-				length="200";
+				length="200"
+				index="idx_categoryName";
 
 	property 	name="slug"
 				notnull="true"
@@ -73,7 +74,7 @@ component 	persistent="true"
 	this.pk = "categoryID";
 
 	this.constraints = {
-		"category" 	= { required = true, size = "1..200" },
+		"category" 	= { required = true, size = "1..200", validator = "UniqueValidator@cborm" },
 		"slug"		= { required = true, size = "1..200", validator = "UniqueValidator@cborm" }
 	};
 

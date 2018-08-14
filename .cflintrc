@@ -15,7 +15,6 @@
 		{ "code": "ARG_HINT_MISSING_SCRIPT" },
 		{ "code" : "ARGUMENT_INVALID_NAME" },
 		{ "code" : "ARGUMENT_ALLCAPS_NAME" },
-		{ "code" : "ARGUMENT_TOO_WORDY" },
 		{ "code" : "ARGUMENT_IS_TEMPORARY" },
         { "code": "CFQUERYPARAM_REQ" },
         { "code": "COMPARE_INSTEAD_OF_ASSIGN" },
@@ -48,8 +47,7 @@
 		{ "code": "SQL_SELECT_STAR" },
 		{ "code": "SCOPE_ALLCAPS_NAME" },
 		{ "code": "VAR_ALLCAPS_NAME" },
-		{ "code": "VAR_INVALID_NAME" },
-		{ "code": "VAR_TOO_WORDY" }
+		{ "code": "VAR_INVALID_NAME" }
     ],
     "inheritParent": false,
     "parameters": {
