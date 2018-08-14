@@ -181,7 +181,7 @@
                     
                     <!--- Action Bar --->
                     <div class="form-actions">
-                        <button class="btn" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
+                        <button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>
                         &nbsp;<button type="submit" class="btn btn-danger">Save</button>
                     </div>
                 #html.endForm()#

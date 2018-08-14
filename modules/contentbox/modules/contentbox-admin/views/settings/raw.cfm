@@ -149,7 +149,7 @@
                                             #html.resetButton(
                                                 name="btnReset",
                                                 value="Cancel",
-                                                class="btn",
+                                                class="btn btn-default",
                                                 onclick="closeModal( $('##settingEditorContainer') )"
                                             )#
                                             #html.button(

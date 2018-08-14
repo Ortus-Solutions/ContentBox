@@ -26,7 +26,7 @@
 		</div>
 		<!--- Button Bar --->
 		<div class="modal-footer">
-			<button class="btn" onclick="closeRemoteModal()"> Close </button>
+			<button class="btn btn-default" onclick="closeRemoteModal()"> Close </button>
 		</div>
 	</div>
 </div>

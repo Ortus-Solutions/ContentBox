@@ -21,18 +21,18 @@
 <div class="row">
     <div class="col-md-12">
     	#html.startForm(
-            name	= "permissionForm", 
-            action	= prc.xehPermissionRemove, 
+            name	= "permissionForm",
+            action	= prc.xehPermissionRemove,
             class	= "form-vertical"
         )#
-        	
+
         	#html.hiddenField( name="permissionID", value="" )#
-        	
+
         	<div class="panel panel-default">
-				
+
 				<div class="panel-heading">
 					<div class="row">
-						
+
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
@@ -42,7 +42,7 @@
 								)#
 							</div>
 						</div>
-						
+
 						<div class="col-md-6">
 							<div class="pull-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
@@ -75,10 +75,10 @@
 								<th>Permission</th>
 								<th>Description</th>
 								<th class="text-center">Roles Assigned</th>
-								<th class="text-center">Groups Assigned</th>		
+								<th class="text-center">Groups Assigned</th>
 								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
-						</thead>				
+						</thead>
 						<tbody>
 							<cfloop array="#prc.permissions#" index="permission">
 							<tr>
@@ -86,7 +86,7 @@
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<a href="javascript:edit('#permission.getPermissionID()#',
 									   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-									   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')" 
+									   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')"
 									   title="Edit #permission.getPermission()#">#permission.getPermission()#</a>
 									<cfelse>
 										#permission.getPermission()#
@@ -102,13 +102,13 @@
 								<td class="text-center">
 									<span class="badge badge-info">#permission.getNumberOfGroups()#</span>
 								</td>
-								
+
 								<td class="text-center">
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 										<!--- Edit Command --->
 										<a class="btn btn-sm btn-primary" href="javascript:edit('#permission.getPermissionID()#',
 										   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-										   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#');" 
+										   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#');"
 										   title="Edit #permission.getPermission()#">
 										   	<i class="fa fa-edit fa-lg"></i>
 										</a>
@@ -121,10 +121,10 @@
 							</tr>
 							</cfloop>
 						</tbody>
-					</table>			
+					</table>
 				</div>
-			</div>	
-		#html.endForm()#	
+			</div>
+		#html.endForm()#
     </div>
 </div>
 <cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
@@ -173,10 +173,10 @@
 				<!--- Footer --->
 				<div class="modal-footer">
 					#html.resetButton(
-						name="btnReset",
-						value="Cancel",
-						class="btn", 
-						onclick="closeModal( $('##permissionEditorContainer') )"
+						name     = "btnReset",
+						value    = "Cancel",
+						class    = "btn btn-default",
+						onclick  = "closeModal( $('##permissionEditorContainer') )"
 					)#
 					#html.submitButton( name="btnSave",value="Save",class="btn btn-danger" )#
 				</div>

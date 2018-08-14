@@ -162,7 +162,7 @@
 						)#
 					</div>
 					<button type="submit" class="btn btn-danger">Search</button>
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>
+					<button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>
 				#html.endForm()#
 		    </div>
 		</div>
@@ -182,7 +182,7 @@
 						</select>
 			    	</div>
 					<button type="submit" class="btn btn-danger">Apply Filters</button>
-					<button class="btn" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>
+					<button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>
 				#html.endForm()#
 		    </div>
 		</div>
