@@ -71,7 +71,7 @@ component{
 	};
 
 	// Local ORM SQL Logging
-	if( reFindNoCase( "^(dev\.|localhost|127\.0\.0)", cgi.http_host )  ){
+	if( reFindNoCase( "^(dev\.|localhost)", cgi.http_host )  ){
 		this.ormSettings.logSQL = true;
 	}
 
@@ -89,19 +89,19 @@ component{
 	// request start
 	public boolean function onRequestStart( string targetPage ){
 		// In case bootstrap or controller are missing, perform a manual restart
-		if( 
-			!structKeyExists( application, "cbBootstrap" ) 
+		if(
+			!structKeyExists( application, "cbBootstrap" )
 			||
 			!structKeyExists( application, "cbController" )
 		){
 			reinitApplication();
 		}
-		
+
 		// Development Reinit + ORM Reloads
-		if( 
+		if(
 			structKeyExists( application, "cbController")
-			&& 
-			application.cbController.getSetting( "environment" ) == "development" 
+			&&
+			application.cbController.getSetting( "environment" ) == "development"
 			&&
 			application.cbBootstrap.isFWReinit()
 		){
@@ -138,12 +138,12 @@ component{
 	}
 
 	/**
-	 * Load the datasource by convention by looking at `config/runtime.properties.cfm` 
+	 * Load the datasource by convention by looking at `config/runtime.properties.cfm`
 	 * or if not, load by default name of `contentbox` which needs to be registered in the CFML engine
 	 * This is mostly used for baking docker images with seeded datasources.
 	 */
 	private void function loadDatasource(){
-		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties, 
+		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties,
 		// if it does not exist
 		var runtimeProperties = COLDBOX_APP_ROOT_PATH & 'config/runtime.properties.cfm';
 		if( fileExists( runtimeProperties ) ){
