@@ -61,7 +61,7 @@
 						disabled="disabled"
 					<cfelse>
 						<a 	class="btn btn-sm btn-danger confirmIt"
-						href="javascript:remove('#setting.getsettingID()#', #setting.getIsCore()#)"
+						href="javascript:remove( '#setting.getsettingID()#' )"
 						title="Delete Setting"
 					</cfif>
 						data-title="<i class='fa fa-trash-o'></i> Delete Setting?">

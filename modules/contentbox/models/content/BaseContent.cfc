@@ -30,7 +30,7 @@ component 	persistent="true"
 	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
-	property 	name="renderedContent" persistent="false";
+	property 	name="renderedContent" persistent="false" default="";
 
 	/* *********************************************************************
 	**							STUPID PROPERTIES DUE TO ACF BUG
@@ -391,6 +391,7 @@ component 	persistent="true"
 		variables.markup 					= "HTML";
 		variables.contentType 				= "";
 		variables.showInSearch				= true;
+		variables.renderedContent 			= "";
 
 		super.init();
 
@@ -1307,15 +1308,17 @@ component 	persistent="true"
 			// Try to get content?
 			var cachedContent = cache.get( cacheKey );
 			// Verify it exists, if it does, return it
-			if( !isNull( cachedContent ) AND len( cachedContent ) ){ return cachedContent; }
+			if( !isNull( cachedContent ) AND len( cachedContent ) ){
+				return cachedContent;
+			}
 		}
 
 		// Check if we need to translate
-		if( NOT len( renderedContent ) ){
+		if( NOT len( variables.renderedContent ) ){
 			lock name="contentbox.contentrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
-				if( NOT len( renderedContent ) ){
+				if( NOT len( variables.renderedContent ) ){
 					// save content
-					renderedContent = renderContentSilent();
+					variables.renderedContent = renderContentSilent();
 				}
 			}
 		}
@@ -1325,14 +1328,14 @@ component 	persistent="true"
 			// Store content in cache, of local timeouts are 0 then use global timeouts.
 			cache.set(
 				cacheKey,
-				renderedContent,
+				variables.renderedContent,
 				( getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout() ),
 				( getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout() )
 			);
 		}
 
 		// renturn translated content
-		return renderedContent;
+		return variables.renderedContent;
 	}
 
 	/**
