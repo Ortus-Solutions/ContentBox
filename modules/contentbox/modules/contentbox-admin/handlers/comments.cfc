@@ -46,13 +46,22 @@ component extends="baseHandler"{
 		// prepare paging object
 		prc.oPaging 	= getModel( "Paging@cb" );
 		prc.paging 		= prc.oPaging.getBoundaries();
-		prc.pagingLink 	= event.buildLink('#prc.xehComments#.page.@page@?');
+		prc.pagingLink 	= event.buildLink( '#prc.xehComments#.page.@page@?' );
+
 		// Append search to paging link?
-		if( len(rc.searchComments) ){ prc.pagingLink&="&searchComments=#rc.searchComments#"; }
+		if( len(rc.searchComments) ){
+			prc.pagingLink&="&searchComments=#rc.searchComments#";
+		}
+
 		// Append filters to paging link?
-		if( rc.fStatus neq "any" ){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		if( rc.fStatus neq "any" ){
+			prc.pagingLink&="&fStatus=#rc.fStatus#";
+		}
+
 		// is Filtering?
-		if( rc.fStatus neq "any" ){ rc.isFiltering = true; }
+		if( rc.fStatus neq "any" ){
+			rc.isFiltering = true;
+		}
 
 		// search comments with filters and all
 		var commentResults = commentService.search(
@@ -61,16 +70,17 @@ component extends="baseHandler"{
 			max			= prc.cbSettings.cb_paging_maxrows,
 			isApproved	= rc.fStatus
 		);
+
 		prc.comments 	 		= commentResults.comments;
 		prc.commentsCount 		= commentResults.count;
 		prc.countApproved 		= commentService.getApprovedCommentCount();
 		prc.countUnApproved 	= commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
-		prc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";
-		prc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
-		prc.xehCommentstatus 	= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		prc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentEditor 			 = "#prc.cbAdminEntryPoint#.comments.editor";
+		prc.xehCommentRemove 			 = "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentstatus 			 = "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentQuickLook			 = "#prc.cbAdminEntryPoint#.comments.quicklook";
 		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// tab
@@ -161,12 +171,14 @@ component extends="baseHandler"{
 	 * @event
 	 * @rc
 	 * @prc
+	 *
+	 * @return HTML
 	 */
 	function quickLook( event, rc, prc ){
 		// get new or persisted
-		rc.comment  = commentService.get( event.getValue( "commentID",0) );
+		rc.comment  = commentService.get( event.getValue( "commentID", 0 ) );
 		// view
-		event.setView(view="comments/quickLook",layout="ajax" );
+		event.setView( view="comments/quickLook", layout="ajax" );
 	}
 
 	/**
@@ -178,17 +190,17 @@ component extends="baseHandler"{
 	 */
 	function save( event, rc, prc ){
 		// populate and get comment
-		var oComment = populateModel( commentService.get(id=rc.commentID) );
+		var oComment = populateModel( commentService.get( id=rc.commentID ) );
 		// announce event
-		announceInterception( "cbadmin_preCommentSave",{comment=oComment,commentID=rc.commentID} );
+		announceInterception( "cbadmin_preCommentSave", { comment=oComment, commentID=rc.commentID } );
 		// save comment
 		commentService.save( oComment );
 		// announce event
-		announceInterception( "cbadmin_postCommentSave",{comment=oComment} );
+		announceInterception( "cbadmin_postCommentSave", { comment=oComment } );
 		// notice
 		cbMessagebox.info( "Comment Saved!" );
 		// relocate
-		relocate(prc.xehComments);
+		relocate( prc.xehComments );
 	}
 
 	/**
@@ -197,6 +209,8 @@ component extends="baseHandler"{
 	 * @event
 	 * @rc
 	 * @prc
+	 *
+	 * @return JSON or relocation
 	 */
 	function removeAllModerated( event, rc, prc ) {
 		var data = { "ERROR" = false, "MESSAGES" = "" };
@@ -214,7 +228,7 @@ component extends="baseHandler"{
 			event.renderData( data=data, type="json" );
 		} else {
 			// relocate back
-			relocate(event=prc.xehComments, queryString="page=1" );
+			relocate( event=prc.xehComments, queryString="page=1" );
 		}
 	}
 
@@ -224,6 +238,8 @@ component extends="baseHandler"{
 	 * @event
 	 * @rc
 	 * @prc
+	 *
+	 * @return JSON or relocation
 	 */
 	function remove( event, rc, prc ){
 		// param values
@@ -245,7 +261,7 @@ component extends="baseHandler"{
 					// announce event
 					announceInterception( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
 					// remove
-					//commentService.delete( oComment );
+					commentService.delete( oComment );
 					arrayAppend( data.messages, "Comment #thisCommentID# removed" );
 					// announce event
 					announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID } );
