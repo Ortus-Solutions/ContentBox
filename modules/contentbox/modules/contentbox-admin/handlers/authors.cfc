@@ -621,8 +621,10 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Remove permission to a author and gracefully end.
-	*/
+	 * Remove permission to a author and gracefully end.
+	 *
+	 * @return json
+	 */
 	function removePermission( event, rc, prc ){
 		var oAuthor 	= authorService.get( rc.authorID );
 		var oPermission = permissionService.get( rc.permissionID );
@@ -632,12 +634,14 @@ component extends="baseHandler"{
 		// Save it
 		authorService.saveAuthor( oAuthor );
 		// Saved
-		event.renderData(data="true",type="json" );
+		event.renderData( data="true",type="json" );
 	}
 
 	/**
-	* Save permission groups to the author and gracefully end.
-	*/
+	 * Save permission groups to the author and gracefully end.
+	 *
+	 * @return json
+	 */
 	function savePermissionGroup( event, rc, prc ){
 		var oAuthor = authorService.get( rc.authorID );
 		var oGroup 	= permissionGroupService.get( rc.permissionGroupID );
@@ -648,21 +652,27 @@ component extends="baseHandler"{
 			// Save it
 			authorService.saveAuthor( oAuthor );
 		}
+
 		// Saved
 		event.renderData( data="true", type="json" );
 	}
 
 	/**
-	* Remove permission to a author and gracefully end.
-	*/
+	 * Remove permission to a author and gracefully end.
+	 *
+	 * @return json
+	 */
 	function removePermissionGroup( event, rc, prc ){
 		var oAuthor = authorService.get( rc.authorID );
 		var oGroup 	= permissionGroupService.get( rc.permissionGroupID );
 
-		// Remove it
-		oAuthor.removePermissionGroup( oGroup );
-		// Save it
-		authorService.saveAuthor( oAuthor );
+		if( oAuthor.hasPermissionGroup( oGroup) ){
+			// Remove it
+			oAuthor.removePermissionGroup( oGroup );
+			// Save it
+			authorService.saveAuthor( oAuthor );
+		}
+
 		// Saved
 		event.renderData( data="true", type="json" );
 	}
@@ -673,18 +683,27 @@ component extends="baseHandler"{
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get user
-		prc.user  = authorService.get( event.getValue( "authorID",0) );
+		prc.user  = authorService.get( event.getValue( "authorID", 0 ) );
 
 		// relocate if not existent
 		if( !prc.user.isLoaded() ){
 			cbMessagebox.warn( "authorID sent is not valid" );
 			relocate( "#prc.cbAdminEntryPoint#.authors" );
 		}
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.user.getMemento(), type=rc.format, xmlRootName="user" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
+				event
+					.renderData(
+						data        = prc.user.getMemento(),
+						type        = rc.format,
+						xmlRootName = "user"
+					)
+					.setHTTPHeader(
+						name  = "Content-Disposition",
+						value = " attachment; filename=#fileName#"
+					);
 				break;
 			}
 			default:{
@@ -704,12 +723,20 @@ component extends="baseHandler"{
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Users." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="users" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
+				event
+					.renderData(
+						data        = data,
+						type        = rc.format,
+						xmlRootName = "users"
+					)
+					.setHTTPHeader(
+						name  = "Content-Disposition",
+						value = " attachment; filename=#fileName#"
+					);
 				break;
 			}
 			default:{
-				event.renderData(data="Invalid export type: #rc.format#" );
+				event.renderData( data="Invalid export type: #rc.format#" );
 			}
 		}
 	}
@@ -725,12 +752,10 @@ component extends="baseHandler"{
 				var importLog = authorService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
 				cbMessagebox.info( "Users imported sucessfully!" );
 				flash.put( "importLog", importLog );
-			}
-			else{
+			} else {
 				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
-		}
-		catch(any e){
+		} catch( any e ){
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
@@ -741,9 +766,9 @@ component extends="baseHandler"{
 	/******************************************** PRIVATE ****************************************************/
 
 	/**
-	* List author preferences
-	* @return view
-	*/
+	 * List author preferences
+	 * @return view
+	 */
 	private function listPreferences( event, rc, prc ){
 		// get editors for preferences
 		prc.editors = editorService.getRegisteredEditors();

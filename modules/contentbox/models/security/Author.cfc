@@ -1,204 +1,205 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* I am a ContentBox User/Author entity
-*/
-component 	persistent="true" 
-			entityname="cbAuthor" 
-			table="cb_author" 
-			batchsize="25" 
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * I am a ContentBox User/Author entity
+ */
+component 	persistent="true"
+			entityname="cbAuthor"
+			table="cb_author"
+			batchsize="25"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbAuthor" 
+			cachename="cbAuthor"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
-	**							DI									
+	**							DI
 	********************************************************************* */
 
 	property name="authorService"		inject="authorService@cb" persistent="false";
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="authorID" 	
-				fieldtype="id" 
-				generator="native" 
-				setter="false" 
+	property 	name="authorID"
+				fieldtype="id"
+				generator="native"
+				setter="false"
 				params="{ allocationSize = 1, sequence = 'authorID_seq' }";
 
-	property 	name="firstName"	
-				length="100" 
+	property 	name="firstName"
+				length="100"
 				notnull="true"
 				default="";
 
-	property 	name="lastName"	
-				length="100" 
+	property 	name="lastName"
+				length="100"
 				notnull="true"
 				default="";
 
-	property 	name="email"		
-				length="255" 
-				notnull="true" 
+	property 	name="email"
+				length="255"
+				notnull="true"
 				index="idx_email"
 				default="";
 
-	property 	name="username"	
-				length="100" 
-				notnull="true" 
-				index="idx_login" 
+	property 	name="username"
+				length="100"
+				notnull="true"
+				index="idx_login"
 				unique="true"
 				default="";
 
-	property 	name="password"	
-				length="100" 
-				notnull="true" 
+	property 	name="password"
+				length="100"
+				notnull="true"
 				index="idx_login"
 				default="";
 
-	property 	name="isActive" 	
-				ormtype="boolean" 
-				notnull="true" 
-				default="false" 
+	property 	name="isActive"
+				ormtype="boolean"
+				notnull="true"
+				default="false"
 				index="idx_login,idx_activeAuthor";
 
-	property 	name="lastLogin" 	
-				ormtype="timestamp" 
+	property 	name="lastLogin"
+				ormtype="timestamp"
 				notnull="false";
 
-	property 	name="biography"   
-				ormtype="text" 		
-				notnull="false" 
+	property 	name="biography"
+				ormtype="text"
+				notnull="false"
 				length="8000"
 				default="";
 
-	property 	name="preferences" 
-				ormtype="text" 		
-				notnull="false" 
-				length="8000" 
+	property 	name="preferences"
+				ormtype="text"
+				notnull="false"
+				length="8000"
 				default="";
 
-	property 	name="isPasswordReset" 	
-				ormtype="boolean" 
+	property 	name="isPasswordReset"
+				ormtype="boolean"
 				sqltype="bit"
-				notnull="true" 
-				default="false" 
+				notnull="true"
+				default="false"
 				dbdefault="0"
 				index="idx_passwordReset";
 
 	property 	name="is2FactorAuth"
-				ormtype="boolean" 
+				ormtype="boolean"
 				sqltype="bit"
-				notnull="true" 
-				default="false" 
+				notnull="true"
+				default="false"
 				dbdefault="0"
 				index="idx_2factorauth";
 
-	property 	name="APIToken"			
+	property 	name="APIToken"
 				notnull="false"
 				length="255"
 				unique="true"
 				index="idx_apitoken"
 				default="";
-	
+
 	/* *********************************************************************
-	**							RELATIONSHIPS									
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// O2M -> Entries
-	property 	name="entries" 
-				singularName="entry" 
+	property 	name="entries"
+				singularName="entry"
 				type="array"
 				fieldtype="one-to-many"
 				cfc="contentbox.models.content.Entry"
-			 	fkcolumn="FK_authorID" 
-			 	inverse="true" 
-			 	lazy="extra" 
-			 	cascade="save-update" 
-			 	batchsize="10" 
+			 	fkcolumn="FK_authorID"
+			 	inverse="true"
+			 	lazy="extra"
+			 	cascade="save-update"
+			 	batchsize="10"
 			 	orderby="publishedDate DESC";
 
 	// O2M -> Pages
-	property 	name="pages" 
-				singularName="page" 
-				type="array" 
-				fieldtype="one-to-many" 
+	property 	name="pages"
+				singularName="page"
+				type="array"
+				fieldtype="one-to-many"
 				cfc="contentbox.models.content.Page"
-				fkcolumn="FK_authorID" 
-				inverse="true" 
-				lazy="extra" 
-				cascade="save-update" 
-				batchsize="10" 
+				fkcolumn="FK_authorID"
+				inverse="true"
+				lazy="extra"
+				cascade="save-update"
+				batchsize="10"
 				orderby="publishedDate DESC";
 
 	// M20 -> Role
-	property 	name="role" 
-				notnull="true" 
-				fieldtype="many-to-one" 
-				cfc="contentbox.models.security.Role" 
-				fkcolumn="FK_roleID" 
+	property 	name="role"
+				notnull="true"
+				fieldtype="many-to-one"
+				cfc="contentbox.models.security.Role"
+				fkcolumn="FK_roleID"
 				lazy="true";
 
 	// M2M -> A-la-carte Author Permissions
-	property 	name="permissions" 
-				singularName="permission" 
-				fieldtype="many-to-many" 
+	property 	name="permissions"
+				singularName="permission"
+				fieldtype="many-to-many"
 				cascade="save-update"
-				type="array" 
+				type="array"
 				lazy="extra"
-			 	cfc="contentbox.models.security.Permission" 
-			 	fkcolumn="FK_authorID" 
-			 	linktable="cb_authorPermissions" 
-			 	inversejoincolumn="FK_permissionID" 
+			 	cfc="contentbox.models.security.Permission"
+			 	fkcolumn="FK_authorID"
+			 	linktable="cb_authorPermissions"
+			 	inversejoincolumn="FK_permissionID"
 			 	orderby="permission";
 
 	// M2M -> A-la-carte Author Permission Groups
-	property 	name="permissionGroups" 
-				singularName="permissionGroup" 
-				fieldtype="many-to-many" 
-				type="array" 
+	property 	name="permissionGroups"
+				singularName="permissionGroup"
+				fieldtype="many-to-many"
+				type="array"
 				lazy="extra"
-			 	cfc="contentbox.models.security.PermissionGroup" 
+				inverse="true"
+			 	cfc="contentbox.models.security.PermissionGroup"
 			 	cascade="save-update"
-			 	fkcolumn="FK_authorID" 
-			 	linktable="cb_authorPermissionGroups" 
-			 	inversejoincolumn="FK_permissionGroupID" 
+			 	fkcolumn="FK_authorID"
+			 	linktable="cb_authorPermissionGroups"
+			 	inversejoincolumn="FK_permissionGroupID"
 			 	orderby="name";
 
 	/* *********************************************************************
-	**							CALCULATED FIELDS									
+	**							CALCULATED FIELDS
 	********************************************************************* */
 
 	// Calculated properties
-	property 	name="numberOfEntries" 
-				formula="select count(*) from cb_content as content 
+	property 	name="numberOfEntries"
+				formula="select count(*) from cb_content as content
 						where content.FK_authorID=authorID and content.contentType = 'Entry'" ;
 
-	property 	name="numberOfPages" 	
-				formula="select count(*) from cb_content as content 
+	property 	name="numberOfPages"
+				formula="select count(*) from cb_content as content
 						where content.FK_authorID=authorID and content.contentType = 'Page'" ;
 
-	property 	name="numberOfContentStore" 	
-				formula="select count(*) from cb_content as content 
+	property 	name="numberOfContentStore"
+				formula="select count(*) from cb_content as content
 						where content.FK_authorID=authorID and content.contentType = 'ContentStore'" ;
 
 	/* *********************************************************************
-	**							NON PERSISTED PROPERTIES									
+	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
 	// Non-persisted properties
-	property 	name="loggedIn"		
-				persistent="false" 
-				default="false" 
+	property 	name="loggedIn"
+				persistent="false"
+				default="false"
 				type="boolean";
-	
-	property 	name="permissionList" 	
+
+	property 	name="permissionList"
 				persistent="false";
-	
+
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "authorID";
@@ -212,7 +213,7 @@ component 	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -226,13 +227,13 @@ component 	persistent="true"
 		variables.isPasswordReset 	= false;
 		variables.is2FactorAuth		= false;
 		variables.APIToken 			= "";
-		
+
 		// Setup empty preferences
 		setPreferences( {} );
 
 		// startup a token
 		generateAPIToken();
-		
+
 		super.init();
 
 		return this;
@@ -268,7 +269,7 @@ component 	persistent="true"
 		}
 
 		// checks via role, then group permissions and then local permissions
-		if( 
+		if(
 			( hasRole() && getRole().checkPermission( arguments.slug ) )
 			OR
 			checkGroupPermissions( arguments.slug )
@@ -290,7 +291,7 @@ component 	persistent="true"
 		if( !hasPermissionGroup() ){
 			return false;
 		}
-		
+
 		// iterate and check, break if found, short-circuit approach.
 		for( var thisGroup in variables.permissionGroups ){
 			if( thisGroup.checkPermission( arguments.slug ) ){
@@ -300,24 +301,24 @@ component 	persistent="true"
 		// nada found
 		return false;
 	}
-	
+
 	/**
-	* Verify that a passed in list of perms the user can use 
+	* Verify that a passed in list of perms the user can use
 	*/
 	public function inPermissionList( required list ){
 		var aList = listToArray( arguments.list );
 		var isFound = false;
-		
+
 		for( var thisPerm in aList ){
 			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
 				isFound = true;
 				break;
 			}
 		}
-		
+
 		return isFound;
 	}
-	
+
 	/**
 	* Clear all permissions
 	*/
@@ -325,7 +326,7 @@ component 	persistent="true"
 		permissions = [];
 		return this;
 	}
-	
+
 	/**
 	* Override the setPermissions
 	* @permissions The permissions array to override
@@ -352,7 +353,35 @@ component 	persistent="true"
 			return arrayToList( aGroups, arguments.delimiter );
 		}
 		return "";
-	}	
+	}
+
+	/**
+	 * Add both sides of this relationship: PermissionGroup <-> Author
+	 *
+	 * @group The permission group to add
+	 */
+	Author function addPermissionGroup( required group ){
+		// Only add if not already there.
+		if ( !hasPermissionGroup( arguments.group ) ){
+			arrayAppend( variables.permissionGroups, arguments.group );
+			arguments.group.addAuthor( this );
+		}
+		return this;
+	}
+
+	/**
+	 * Remove both sides of this relationship: PermissionGroup <-> Author
+	 *
+	 * @group The permission group to add
+	 */
+	Author function removePermissionGroup( required group ){
+		// Only add if not already there.
+		if ( hasPermissionGroup( arguments.group ) ){
+			arrayDelete( variables.permissionGroups, arguments.group );
+			arguments.group.removeAuthor( this );
+		}
+		return this;
+	}
 
 	/**
 	* Utility method to verify if an author has been logged in to the system or not.
@@ -389,7 +418,7 @@ component 	persistent="true"
 	* @showPermissions 		Show permissions
 	* @showPermissionGroups Show permission groups
 	*/
-	function getMemento( 
+	function getMemento(
 		excludes="pages,entries",
 		boolean showRole=true,
 		boolean showPermissions=true,
@@ -398,12 +427,12 @@ component 	persistent="true"
 		// Do this to convert native Array to CF Array for content properties
 		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		// Do Role Relationship
 		if( arguments.showRole && hasRole() ){
 			result[ "role" ] = getRole().getMemento();
 		}
-		
+
 		// Permissions
 		if( arguments.showPermissions && hasPermission() ){
 			result[ "permissions" ] = [];
@@ -426,9 +455,9 @@ component 	persistent="true"
 
 		return result;
 	}
-	
+
 	/************************************** PREFERENCE FUNCTIONS *********************************************/
-	
+
 	/**
 	* Store a preferences structure or JSON data in the user prefernces
 	* @preferences.hint A struct of data or a JSON packet to store
@@ -443,7 +472,7 @@ component 	persistent="true"
 		}
 		return this;
 	}
-	
+
 	/**
 	* Get all user preferences in inflated format
 	*/
@@ -452,7 +481,7 @@ component 	persistent="true"
 			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structnew() );
 		}
 	}
-	
+
 	/**
 	* Get a preference, you can pass a default value if preference does not exist
 	*/
@@ -473,7 +502,7 @@ component 	persistent="true"
 			  type="User.PreferenceNotFound",
 			  detail="Valid preferences are #structKeyList( allPreferences )#" );
 	}
-	
+
 	/**
 	* Set a preference in the user preferences
 	*/
@@ -483,5 +512,5 @@ component 	persistent="true"
 		// store in lock mode
 		return setPreferences( allPreferences );
 	}
-	
+
 }

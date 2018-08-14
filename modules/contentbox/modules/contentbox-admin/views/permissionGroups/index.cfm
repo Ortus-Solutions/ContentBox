@@ -85,6 +85,12 @@
 
 				<div class="panel-body">
 
+					<!--- Info Bar --->
+					<div class="alert alert-warning">
+						<i class="fa fa-warning fa-lg"></i>
+						Once you delete a permission group all assigned permissions and authors will be unassigned.
+					</div>
+
 					<!--- groups --->
 					<table name="groups" id="groups" class="table table-striped table-hover table-condensed" width="98%">
 
@@ -93,6 +99,7 @@
 								<th>Group</th>
 								<th>Description</th>
 								<th width="95" class="text-center">Permissions</th>
+								<th width="95" class="text-center">Authors</th>
 								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
@@ -117,6 +124,10 @@
 
 								<td class="text-center">
 									<span class="badge badge-info">#group.getNumberOfPermissions()#</span>
+								</td>
+
+								<td class="text-center">
+									<span class="badge badge-info">#group.getNumberOfAuthors()#</span>
 								</td>
 
 								<td class="text-center">
@@ -162,14 +173,14 @@
 												<!--- Export --->
 												<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 													<li>
-														<a 	href="#event.buildLink( linkto=prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
+														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
 															<i class="fa fa-download"></i> Export as JSON
 														</a>
 													</li>
 													<li>
-														<a 	href="#event.buildLink( linkto=prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml"
+														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml"
 															target="_blank"
 														>
 															<i class="fa fa-download"></i> Export as XML
@@ -262,14 +273,14 @@
 </cfif>
 
 <cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Permission Groups",
+	#renderView(
+		view = "_tags/dialog/import",
+		args = {
+			title       = "Import Permission Groups",
 			contentArea = "groups",
-			action = prc.xehImportAll,
+			action      = prc.xehImportAll,
 			contentInfo = "Choose the ContentBox <strong>JSON</strong> permission group's file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+		}
+	)#
 </cfif>
 </cfoutput>
