@@ -1,22 +1,23 @@
 ﻿<cfoutput>
-<!--- Custom JS --->
 <script>
-$(document).ready(function() {
-	$settingEditor = $( "##settingEditor" );
-	$importDialog = $( "##importDialog" );
+$( document ).ready( function() {
+	$settingEditor 	= $( "##settingEditor" );
+	$importDialog 	= $( "##importDialog" );
+
 	// settings sorting
 	$( "##settings" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
 	} );
+	// Search filter
 	$( "##eventFilter" ).keyup(
 		_.debounce(
             function(){
@@ -25,15 +26,16 @@ $(document).ready(function() {
             300
         )
 	);
+
 	// singletons sorting + filter
 	$( "##singletons" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -41,15 +43,18 @@ $(document).ready(function() {
 	$( "##singletonsFilter" ).keyup(function(){
 		$.uiTableFilter( $( "##singletons" ), this.value );
 	} );
+
 	// form validator
 	$settingEditor.validate();
+
 	// reset
 	$('##btnReset').click(function() {
 		$settingEditor.find( "##settingID" ).val( '' );
 		$settingEditor.find( "##btnSave" ).val( "Save" );
 		$settingEditor.find( "##btnReset" ).val( "Reset" );
 	} );
-	// keyup quick search
+
+	// settings quick search
 	$( "##settingSearch" ).keyup(
 		_.debounce(
             function(){
@@ -61,6 +66,7 @@ $(document).ready(function() {
             300
         )
 	);
+
 	// Load settings
 	settingsLoad( $( "##settingSearch" ).val() );
 } );
@@ -78,26 +84,35 @@ function flushSettingsCache(){
 			$( "##specialActionsLoader" ).addClass( "hidden" );
 		}
 	} );
-	
+
 }
 function settingsLoad(search, viewAll, page){
-	if( search == undefined){ search = ""; }
-	if( viewAll == undefined){ viewAll = false; }
-	if( page == undefined){ page = 1; }
-	
-	$('##settingsTableContainer').load( '#event.buildLink( prc.xehRawSettingsTable )#', 
-		{ search: search, viewAll: viewAll, page: page }, 
-		function(){
-			$(this).fadeIn();
-			activateConfirmations();
-	} );
+	if( search == undefined ){
+		search = "";
+	}
+	if( viewAll == undefined ){
+		viewAll = false;
+	}
+	if( page == undefined ){
+		page = 1;
+	}
+
+	$('##settingsTableContainer')
+		.load(
+			'#event.buildLink( prc.xehRawSettingsTable )#',
+			{ search: search, viewAll: viewAll, page: page },
+			function(){
+				$( this ).fadeIn();
+				activateConfirmations();
+			}
+		);
 }
-function settingsPaginate(page){
+function settingsPaginate( page ){
 	$('##settingsTableContainer').fadeOut();
 	settingsLoad( $( "##settingSearch" ).val() , false, page );
 }
 function viewAllSettings(){
-	$('##settingsTableContainer').fadeOut();
+	$( '##settingsTableContainer' ).fadeOut();
 	settingsLoad( "", true );
 }
 function edit( settingID, name, value, isCore ){
@@ -111,7 +126,7 @@ function edit( settingID, name, value, isCore ){
 	$settingEditor.find( "##btnSave" ).val( "Update" );
 	$settingEditor.find( "##btnReset" ).val( "Cancel" );
 }
-function remove(settingID){
+function remove( settingID ){
 	var $settingForm = $( "##settingForm" );
 	$( "##delete_"+ settingID).removeClass( "icon-remove-sign" ).addClass( "fa fa-spinner fa-spin" );
 	$settingForm.find( "##settingID" ).val( settingID );

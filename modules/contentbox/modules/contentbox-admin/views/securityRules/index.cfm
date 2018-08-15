@@ -13,12 +13,15 @@
 		</cfif>
     </div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-primary">
+
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fa fa-info-circle"></i> About Security Rules</h3>
-		    </div>
+			</div>
+
 		    <div class="panel-body">
 		    	<!--- Usage --->
 				<div class="alert alert-danger">
@@ -26,7 +29,7 @@
 					Please remember that the security rules are fired in the order shown. You can drag and drop
 					the rows to the desired order of firing. Be careful with security rules as with much power comes great responsibility!
 				</div>
-				
+
 				<ul class="tipList">
 					<li>Security rules are used to secure ContentBox according to incoming events or URLs, much like a firewall.</li>
 					<li>The order of the rules is extremely important as they fire and traverse as you see them on screen.</li>
@@ -35,10 +38,12 @@
 		    </div>
 		</div>
 	</div>
-</div>	
+</div>
+
 <div class="row">
 	<div class="col-md-12">
 		<div class="panel panel-default">
+			#html.startForm( name="ruleForm", action=prc.xehRemoveRule )#
 			<div class="panel-heading">
 				<div class="row">
 					<div class="col-md-7">
@@ -76,7 +81,7 @@
 												<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
-											<li><a href="#event.buildLink(prc.xehResetRules)#" 
+											<li><a href="#event.buildLink(prc.xehResetRules)#"
 												data-title="<i class='fa fa-refresh'></i> Really Reset All Rules?" class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
 												<i class="fa fa-eraser"></i> Reset Rules
@@ -94,15 +99,18 @@
 					</div>
 				</div>
 			</div>
+
 		    <div class="panel-body">
-		    	#html.startForm(name="ruleForm",action=prc.xehRemoveRule)#
-					#html.hiddenField(name="ruleID" )#
-					<div id="rulesTable">#renderView( "securityRules/rulesTable" )#</div>
-				#html.endForm()#
-		    </div>
+				#html.hiddenField( name="ruleID" )#
+				<div id="rulesTable">#renderView( "securityRules/rulesTable" )#</div>
+			</div>
+
+			#html.endForm()#
+
 		</div>
 	</div>
 </div>
+
 <cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 	<cfscript>
 		dialogArgs = {

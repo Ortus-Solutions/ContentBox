@@ -87,7 +87,7 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
 
 		// Relocate
-		setNextEvent( event=prc.xehActiveTheme );
+		relocate( event=prc.xehActiveTheme );
 	}
 
 	/**
@@ -101,7 +101,7 @@ component extends="baseHandler"{
 		// messages
 		cbMessagebox.info( "#rc.themeName# Activated!" );
 		// Relocate
-		setNextEvent(prc.xehThemes);
+		relocate(prc.xehThemes);
 	}
 
 	/**
@@ -110,7 +110,7 @@ component extends="baseHandler"{
 	function rebuildRegistry( event, rc, prc ){
 		themeService.buildThemeRegistry();
 		cbMessagebox.info( "Themes re-scanned and registered!" );
-		setNextEvent( event=prc.xehThemes, queryString="##themesPane" );
+		relocate( event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 	/**
@@ -123,39 +123,7 @@ component extends="baseHandler"{
 		else{
 			cbMessagebox.error( "Error removing theme, please check your logs for more information!" );
 		}
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
-	}
-
-	/**
-	* Upload a new theme
-	*/
-	function upload( event, rc, prc ){
-		var fp = event.getTrimValue( "fileTheme","" );
-
-		// Verify
-		if( len( fp ) eq 0){
-			cbMessagebox.setMessage(type="warning", message="Please choose a file to upload" );
-		}
-		else{
-			// Upload File
-			try{
-				var results = themeService.uploadTheme( "fileTheme" );
-
-				if( !results.error ){
-					// Good
-					cbMessagebox.setMessage(type="info", message="Theme Installed Successfully" );
-				}
-				else{
-					// Bad
-					cbMessagebox.error(results.messages);
-				}
-			}
-			catch(Any e){
-				cbMessagebox.error( "Error uploading file: #e.detail# #e.message#" );
-			}
-		}
-
-		setNextEvent(event=prc.xehThemes, queryString="##themesPane" );
+		relocate(event=prc.xehThemes, queryString="##themesPane" );
 	}
 
 }

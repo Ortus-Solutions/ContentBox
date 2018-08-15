@@ -2,7 +2,7 @@
 * Email Two factor provider Test
 */
 component extends="tests.resources.BaseTest"{
-	
+
 /*********************************** LIFE CYCLE Methods ***********************************/
 
 	// executes before all suites+specs in the run() method
@@ -23,10 +23,6 @@ component extends="tests.resources.BaseTest"{
 			beforeEach(function( currentSpec ){
 				mockUser = getInstance( "authorService@cb" ).findByUsername( "lmajano" );
 				provider = getInstance( "EmailTwoFactorProvider@contentbox-email-twofactor" );
-			});
-
-			it( "can be created", function(){
-				expect(	provider ).toBeComponent();
 			});
 
 			it( "can get names", function(){
@@ -50,5 +46,5 @@ component extends="tests.resources.BaseTest"{
 			});
 		});
 	}
-	
+
 }

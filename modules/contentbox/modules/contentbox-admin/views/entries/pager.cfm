@@ -41,10 +41,10 @@
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif entry.isContentPublished()>
-					<i class="fa fa-circle-o fa-lg textGreen" title="Entry Published!"></i>
+					<i class="fa fa-circle fa-lg textGreen" title="Entry Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="fa fa-circle-o fa-lg textRed" title="Entry Draft!"></i>
+					<i class="fa fa-circle fa-lg textRed" title="Entry Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>

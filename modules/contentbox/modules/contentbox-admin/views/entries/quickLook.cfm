@@ -13,7 +13,7 @@
 			<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 				<button class="btn btn-primary" onclick="return to('#event.buildLink(prc.xehEntryEditor)#/contentID/#prc.entry.getContentID()#')"> Edit </button>
 			</cfif>
-			<button class="btn" onclick="closeRemoteModal()"> Close </button>
+			<button class="btn btn-default" onclick="closeRemoteModal()"> Close </button>
 		</div>
 	</div>
 </div>

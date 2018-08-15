@@ -98,7 +98,7 @@ component{
 		// traversal testing
 		if( NOT isTraversalSecure(prc, prc.fbCurrentRoot) ){
 			getModel( "messagebox@cbMessagebox" ).warn( $r( "messages.traversal@fb" ) );
-			setNextEvent(prc.xehFBBrowser);
+			relocate(prc.xehFBBrowser);
 		}
 
 		// Get storage preferences
@@ -110,6 +110,24 @@ component{
 		// get directory listing.
 		prc.fbqListing = directoryList( prc.fbCurrentRoot, false, "query", prc.fbSettings.extensionFilter, "#prc.fbPreferences.sorting#" );
 
+		if( structkeyexists(prc.fbPreferences,"listFolder") AND prc.fbPreferences.listFolder eq "dir" and structkeyexists(rc,"sorting")){
+			if(prc.fbPreferences.sorting eq "lastmodified"){
+				prc.fbPreferences.sorting ="datelastmodified";
+			}
+			var fileListQuery = new Query(
+				dbType = "query",
+				qry = prc.fbqListing,
+				sql = "select * from qry where type=:dir order by #prc.fbPreferences.sorting#"
+			);
+
+			fileListQuery.addParam( name="dir", value="dir", cfsqltype="cf_sql_varchar" );
+
+			prc.fbqListing=fileListQuery.execute().getresult();
+
+			if(prc.fbPreferences.sorting eq "datelastmodified"){
+				prc.fbPreferences.sorting ="lastmodified";
+			}
+		}
 		var iData = {
 			directory = prc.fbCurrentRoot,
 			listing = prc.fbqListing
@@ -225,38 +243,40 @@ component{
 			event.renderData( data=data, type="json" );
 			return;
 		}
-
+		rc.pathsArray = ListToArray(rc.path);
+		for( var thisFile in rc.pathsArray){
 		// Traversal Security
-		if( NOT isTraversalSecure( prc, rc.path ) ){
-			data.errors = true;
-			data.messages = $r( "messages.traversal_security@fb" );
-			event.renderData( data=data, type="json" );
-			return;
-		}
-
-		// removal
-		try{
-			// Announce it
-			var iData = {
-				path = rc.path
-			};
-			announceInterception( "fb_preFileRemoval", iData );
-
-			if( fileExists( rc.path ) ){
-				fileDelete( rc.path );
+			if( NOT isTraversalSecure( prc, thisFile ) ){
+				data.errors = true;
+				data.messages = $r( "messages.traversal_security@fb" );
+				event.renderData( data=data, type="json" );
+				return;
 			}
-			else if( directoryExists( rc.path ) ){
-				directoryDelete( rc.path, true );
-			}
-			data.errors = false;
-			data.messages = $r( resource="messages.removed@fb", values="#rc.path#" );
 
-			// Announce it
-			announceInterception( "fb_postFileRemoval", iData );
-		} catch( Any e ) {
-			data.errors = true;
-			data.messages = $r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
-			log.error( data.messages, e );
+			// removal
+			try{
+				// Announce it
+					var iData = {
+						path = thisFile
+					};
+					announceInterception( "fb_preFileRemoval", iData );
+
+					if( fileExists( thisFile ) ){
+						fileDelete( thisFile );
+					}
+					else if( directoryExists( thisFile ) ){
+						directoryDelete( thisFile, true );
+					}
+					data.errors = false;
+					data.messages = $r( resource="messages.removed@fb", values="#thisFile#" );
+
+					// Announce it
+					announceInterception( "fb_postFileRemoval", iData );
+			} catch( Any e ) {
+				data.errors = true;
+				data.messages = $r( resource="messages.error_removing@fb", values="#e.message# #e.detail#" );
+				log.error( data.messages, e );
+			}
 		}
 		// render stuff out
 		event.renderData( data=data, type="json" );
@@ -280,44 +300,60 @@ component{
 			event.renderData( data=data, type="json" );
 			return;
 		}
-
-		// clean incoming path and names
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
-		if( !len( rc.path ) ){
-			data.errors = true;
-			data.messages = $r( "messages.invalid_path@fb" );
-			event.renderData( data=data, type="json" );
-			return;
+			if( !len( rc.path ) ){
+				data.errors = true;
+				data.messages = $r( "messages.invalid_path@fb" );
+				event.renderData( data=data, type="json" );
+				return;
+			}
+		rc.pathsArray = ListToArray(rc.path);
+		if(fileExists("#GetTempDirectory()#\download.zip"))
+			fileDelete("#GetTempDirectory()#\download.zip");
+		if(arrayLen(rc.pathsArray) > 1){
+			cfzip( action="zip", file="#GetTempDirectory()#\download.zip" ) {
+				for( var thisFile in rc.pathsArray){
+					// Traversal Security
+					if( NOT isTraversalSecure(prc, thisFile) ){
+						data.errors = true;
+						data.messages = $r( "messages.traversal_security@fb" );
+						event.renderData( data=data, type="json" );
+						return;
+					}
+					cfzipParam( source = thisFile );
+				}
+			}
+			rc.path="#GetTempDirectory()#\download.zip";
+		}else{
+			if( NOT isTraversalSecure(prc, rc.path) ){
+				data.errors = true;
+				data.messages = $r( "messages.traversal_security@fb" );
+				event.renderData( data=data, type="json" );
+				return;
+			}
 		}
 
-		// Traversal Security
-		if( NOT isTraversalSecure(prc, rc.path) ){
-			data.errors = true;
-			data.messages = $r( "messages.traversal_security@fb" );
-			event.renderData( data=data, type="json" );
-			return;
-		}
+			// download
+			try{
+				// Announce it
+					// clean incoming path and names
+				var iData = {
+					path = rc.path
+				};
+				announceInterception( "fb_preFileDownload", iData );
 
-		// download
-		try{
-			// Announce it
-			var iData = {
-				path = rc.path
-			};
-			announceInterception( "fb_preFileDownload", iData );
+				contentUtil.sendFile( file=rc.path );
+				data.errors = false;
+				data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
+				// Announce it
+				announceInterception( "fb_postFileDownload", iData );
+			}
+			catch(Any e){
+				data.errors = true;
+				data.messages = $r( resource="messages.error_downloading@fb", values="#e.message# #e.detail#" );
+				log.error( data.messages, e );
+			}
 
-			contentUtil.sendFile( file=rc.path );
-			data.errors = false;
-			data.messages = $r( resource="messages.downloaded@fb", values='#rc.path#' );
-
-			// Announce it
-			announceInterception( "fb_postFileDownload", iData );
-		}
-		catch(Any e){
-			data.errors = true;
-			data.messages = $r( resource="messages.error_downloading@fb", values="#e.message# #e.detail#" );
-			log.error( data.messages, e );
-		}
 		// render stuff out
 		event.renderData( data=data, type="json" );
 	}
@@ -395,7 +431,7 @@ component{
 
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( URLDecode( trim( rc.path ) ) );
-		
+
 		// traversal test
 		if( NOT isTraversalSecure( prc, rc.path ) ){
 			data.errors = true;
@@ -421,7 +457,7 @@ component{
 				path = rc.path
 			};
 			announceInterception( "fb_preFileUpload", iData );
-			iData.results = fileUpload( 
+			iData.results = fileUpload(
 				rc.path,
 				"FILEDATA",
 				prc.fbSettings.acceptMimeTypes,
@@ -445,7 +481,7 @@ component{
 				data.messages &= "Stack: #e.stacktrace#";
 			}
 			log.error( data.messages, e );
-			
+
 			// Announce exception
 			var iData = {
 				fileField = "FILEDATA",
@@ -480,14 +516,14 @@ component{
 	* @force Force the loading of assets on demand
 	* @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	*/
-	private function loadAssets( 
-		event, 
-		rc, 
-		prc, 
-		boolean force=false, 
-		struct settings={} 
+	private function loadAssets(
+		event,
+		rc,
+		prc,
+		boolean force=false,
+		struct settings={}
 	){
-		
+
 		// merge the settings structs if passed
 		if( !structIsEmpty( arguments.settings ) ){
 			mergeSettings( prc.fbSettings, arguments.settings );
@@ -540,6 +576,10 @@ component{
 				prefs.listType = "listing";
 				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
+			if( !structKeyExists( prefs, "listFolder" ) ){
+				prefs.listFolder = "listing";
+				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
+			}
 		}
 		return prefs;
 	}
@@ -562,6 +602,14 @@ component{
 				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}
+		if( structKeyExists( rc, "listFolder" ) AND reFindNoCase( "^(all|dir)$", rc.listFolder ) ){
+			var prefs = getPreferences();
+			if( NOT structKeyExists(prefs, "listFolder" ) OR prefs.listFolder NEQ rc.listFolder ){
+				prefs.listFolder = rc.listFolder;
+				cookieStorage.setVar( "fileBrowserPrefs", serializeJSON( prefs ) );
+			}
+		}
+
 	}
 
 	/**
@@ -602,11 +650,11 @@ component{
 		}
 
 		if( !flash.exists( "filebrowser" ) ){
-			var filebrowser = { 
-				callback		= rc.callback, 
-				cancelCallback	= rc.cancelCallback, 
-				filterType		= rc.filterType, 
-				settings		= prc.fbsettings 
+			var filebrowser = {
+				callback		= rc.callback,
+				cancelCallback	= rc.cancelCallback,
+				filterType		= rc.filterType,
+				settings		= prc.fbsettings
 			};
 			flash.put( name="filebrowser", value=filebrowser, autoPurge=false );
 		}

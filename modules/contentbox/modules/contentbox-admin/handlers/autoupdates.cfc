@@ -7,10 +7,10 @@
 */
 component extends="baseHandler"{
 
-	// DI 
+	// DI
 	property name="moduleSettings"	inject="coldbox:moduleSettings:contentbox";
 	property name="markdown"	inject="Processor@cbmarkdown";
-	
+
 	/**
 	* Show Auto Updates screen
 	*/
@@ -30,7 +30,7 @@ component extends="baseHandler"{
 		if( flash.exists( "updateRestart" ) and flash.get( "updateRestart" ) ){
 			flash.saveFlash();
 			applicationstop();
-			setnextEvent( prc.xehAutoUpdater );
+			relocate( prc.xehAutoUpdater );
 			return;
 		}
 
@@ -69,8 +69,9 @@ component extends="baseHandler"{
 		try{
 			prc.entryData 		= forgeboxsdk.getEntry( slug=rc.channel );
 			prc.entryVersion 	= forgeboxsdk.getLatestVersion( slug=rc.channel );
+
 			// Check if versions are new.
-			prc.updateFound = updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.entryVersion.version );
+			prc.updateFound = updateService.isNewVersion( cVersion=prc.contentboxVersion, nVersion=prc.entryVersion.latestVersion.version );
 			// Verify if we have updates?
 			if( prc.updateFound ){
 				cbMessagebox.info( "Woopeee! There is a new ContentBox update for you!" );
@@ -94,7 +95,7 @@ component extends="baseHandler"{
 		// verify download URL
 		if( !len( rc.downloadURL ) ){
 			cbMessagebox.error( "No download URL detected" );
-			setnextEvent( prc.xehAutoUpdater );
+			relocate( prc.xehAutoUpdater );
 			return;
 		}
 
@@ -114,7 +115,7 @@ component extends="baseHandler"{
 			log.error( "Error installing auto-update", e);
 		}
 
-		setnextEvent( prc.xehAutoUpdater );
+		relocate( prc.xehAutoUpdater );
 	}
 
 	/**
@@ -143,7 +144,7 @@ component extends="baseHandler"{
 			}
 		}
 
-		setnextEvent( prc.xehAutoUpdater );
+		relocate( prc.xehAutoUpdater );
 	}
 
 }

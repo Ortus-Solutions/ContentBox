@@ -88,10 +88,10 @@
 				</td>
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
-						<i class="fa fa-circle-o fa-lg textGreen"></i>
+						<i class="fa fa-circle fa-lg textGreen"></i>
 						<span class="hidden">yes</span>
 					<cfelse>
-						<i class="fa fa-circle-o fa-lg textRed"></i>
+						<i class="fa fa-circle fa-lg textRed"></i>
 						<span class="hidden">no</span>
 					</cfif>
 				</td>
@@ -103,18 +103,18 @@
 						<i class="fa fa-fighter-jet fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
 						<span class="hidden">published in future</span>
 					<cfelseif page.isContentPublished()>
-						<i class="fa fa-circle-o fa-lg textGreen" title="Page Published"></i>
+						<i class="fa fa-circle fa-lg textGreen" title="Page Published"></i>
 						<span class="hidden">published in future</span>
 					<cfelse>
-						<i class="fa fa-circle-o fa-lg textRed" title="Page Draft"></i>
+						<i class="fa fa-circle fa-lg textRed" title="Page Draft"></i>
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
 				<td class="text-center">
 					<cfif page.getShowInSearch()>
-						<i class="fa fa-circle-o fa-lg textGreen" title="Searchable!"></i>
+						<i class="fa fa-circle fa-lg textGreen" title="Searchable!"></i>
 					<cfelse>
-						<i class="fa fa-circle-o fa-lg textRed" title="Excluded!"></i>
+						<i class="fa fa-circle fa-lg textRed" title="Excluded!"></i>
 					</cfif>
 				</td>
 				<td class="text-center"><span class="badge badge-info">#page.getNumberOfHits()#</span></td>

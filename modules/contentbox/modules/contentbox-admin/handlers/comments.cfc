@@ -14,17 +14,31 @@ component extends="baseHandler"{
 	// Public properties
 	this.preHandler_except = "pager";
 
-	// pre handler
+	/**
+	 * Pre handler
+	 *
+	 * @event
+	 * @action
+	 * @eventArguments
+	 * @rc
+	 * @prc
+	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab selection
 		prc.tabComments = true;
 	}
 
-	// index
+	/**
+	 * Main display of comments
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function index( event, rc, prc ){
 		// params
-		event.paramValue( "page",1);
-		event.paramValue( "searchComments","" );
+		event.paramValue( "page", 1);
+		event.paramValue( "searchComments", "" );
 		event.paramValue( "fStatus","any" );
 		event.paramValue( "ftype","any" );
 		event.paramValue( "isFiltering",false);
@@ -32,13 +46,22 @@ component extends="baseHandler"{
 		// prepare paging object
 		prc.oPaging 	= getModel( "Paging@cb" );
 		prc.paging 		= prc.oPaging.getBoundaries();
-		prc.pagingLink 	= event.buildLink('#prc.xehComments#.page.@page@?');
+		prc.pagingLink 	= event.buildLink( '#prc.xehComments#.page.@page@?' );
+
 		// Append search to paging link?
-		if( len(rc.searchComments) ){ prc.pagingLink&="&searchComments=#rc.searchComments#"; }
+		if( len(rc.searchComments) ){
+			prc.pagingLink&="&searchComments=#rc.searchComments#";
+		}
+
 		// Append filters to paging link?
-		if( rc.fStatus neq "any" ){ prc.pagingLink&="&fStatus=#rc.fStatus#"; }
+		if( rc.fStatus neq "any" ){
+			prc.pagingLink&="&fStatus=#rc.fStatus#";
+		}
+
 		// is Filtering?
-		if( rc.fStatus neq "any" ){ rc.isFiltering = true; }
+		if( rc.fStatus neq "any" ){
+			rc.isFiltering = true;
+		}
 
 		// search comments with filters and all
 		var commentResults = commentService.search(
@@ -47,36 +70,44 @@ component extends="baseHandler"{
 			max			= prc.cbSettings.cb_paging_maxrows,
 			isApproved	= rc.fStatus
 		);
+
 		prc.comments 	 		= commentResults.comments;
 		prc.commentsCount 		= commentResults.count;
 		prc.countApproved 		= commentService.getApprovedCommentCount();
 		prc.countUnApproved 	= commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
-		prc.xehCommentEditor 	= "#prc.cbAdminEntryPoint#.comments.editor";
-		prc.xehCommentRemove 	= "#prc.cbAdminEntryPoint#.comments.remove";
-		prc.xehCommentstatus 	= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		prc.xehCommentQuickLook	= "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentEditor 			 = "#prc.cbAdminEntryPoint#.comments.editor";
+		prc.xehCommentRemove 			 = "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentstatus 			 = "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentQuickLook			 = "#prc.cbAdminEntryPoint#.comments.quicklook";
 		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// tab
 		prc.tabComments_inbox = true;
-		
+
 		// display
 		event.setView( "comments/index" );
 	}
 
-	// change status
+	/**
+	 * Submit a status udpate on a comment
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function doStatusUpdate( event, rc, prc ){
 		// param values
 		event.paramValue( "commentID","" );
 		event.paramValue( "page","1" );
 		var data = { "ERROR" = false, "MESSAGES" = "" };
+
 		// check if comment id list has length
 		if( len( rc.commentID ) ){
-			commentService.bulkStatus(commentID=rc.commentID, status=rc.commentStatus);
+			commentService.bulkStatus( commentID=rc.commentID, status=rc.commentStatus );
 			// announce event
-			announceInterception( "cbadmin_onCommentStatusUpdate", {commentID=rc.commentID,status=rc.commentStatus} );
+			announceInterception( "cbadmin_onCommentStatusUpdate", { commentID=rc.commentID, status=rc.commentStatus } );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
 			cbMessagebox.info( data.messages );
@@ -85,18 +116,24 @@ component extends="baseHandler"{
 			data.error = true;
 			cbMessagebox.warn( data.messages );
 		}
-		
+
 		// If ajax call, return as ajax
 		if( event.isAjax() ){
 			event.renderData( data=data, type="json" );
 		}
 		else{
 			// relocate back
-			setNextEvent( event=prc.xehComments, queryString="page=#rc.page#" );
+			relocate( event=prc.xehComments, queryString="page=#rc.page#" );
 		}
 	}
 
-	// editor
+	/**
+	 * Show the comment editor
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function editor( event, rc, prc ){
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue( "commentID",0) );
@@ -106,13 +143,19 @@ component extends="baseHandler"{
 		event.setView(view="comments/editor",layout="ajax" );
 	}
 
-	// comment moderators
+	/**
+	 * Show the comment moderator
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function moderate( event, rc, prc ){
 		// get new or persisted
 		rc.comment  = commentService.get( event.getValue( "commentID",0) );
 		if( isNull(rc.Comment) ){
 			cbMessagebox.error( "The commentID #rc.commentID# is invalid." );
-			setNextEvent(prc.xehComments);
+			relocate(prc.xehComments);
 			return;
 		}
 		// exit handlers
@@ -122,30 +165,53 @@ component extends="baseHandler"{
 		event.setView( "comments/moderate" );
 	}
 
-	// quick look
+	/**
+	 * Comment quick look
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 *
+	 * @return HTML
+	 */
 	function quickLook( event, rc, prc ){
 		// get new or persisted
-		rc.comment  = commentService.get( event.getValue( "commentID",0) );
+		rc.comment  = commentService.get( event.getValue( "commentID", 0 ) );
 		// view
-		event.setView(view="comments/quickLook",layout="ajax" );
+		event.setView( view="comments/quickLook", layout="ajax" );
 	}
 
-	// save
+	/**
+	 * Save a comment
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function save( event, rc, prc ){
 		// populate and get comment
-		var oComment = populateModel( commentService.get(id=rc.commentID) );
+		var oComment = populateModel( commentService.get( id=rc.commentID ) );
 		// announce event
-		announceInterception( "cbadmin_preCommentSave",{comment=oComment,commentID=rc.commentID} );
+		announceInterception( "cbadmin_preCommentSave", { comment=oComment, commentID=rc.commentID } );
 		// save comment
 		commentService.save( oComment );
 		// announce event
-		announceInterception( "cbadmin_postCommentSave",{comment=oComment} );
+		announceInterception( "cbadmin_postCommentSave", { comment=oComment } );
 		// notice
 		cbMessagebox.info( "Comment Saved!" );
 		// relocate
-		setNextEvent(prc.xehComments);
+		relocate( prc.xehComments );
 	}
 
+	/**
+	 * Remove all Moderated comments
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 *
+	 * @return JSON or relocation
+	 */
 	function removeAllModerated( event, rc, prc ) {
 		var data = { "ERROR" = false, "MESSAGES" = "" };
 		// announce event
@@ -162,11 +228,19 @@ component extends="baseHandler"{
 			event.renderData( data=data, type="json" );
 		} else {
 			// relocate back
-			setNextEvent(event=prc.xehComments, queryString="page=1" );
+			relocate( event=prc.xehComments, queryString="page=1" );
 		}
 	}
 
-	// remove a comment
+	/**
+	 * Remove comments from the database
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 *
+	 * @return JSON or relocation
+	 */
 	function remove( event, rc, prc ){
 		// param values
 		event.paramValue( "commentID", "" )
@@ -174,45 +248,60 @@ component extends="baseHandler"{
 
 		// prepare data return object
 		var data = { "ERROR" = false, "MESSAGES" = [] };
-		// Inflate Ids to array
-		rc.commentID = listToArray( rc.commentID );
 
-		// Iterate and remove
-		for( var thisCommentID in rc.commentID ){
-			var oComment = commentService.get( thisCommentID );
-			// null checks
-			if( isNull( oComment ) ){
-				arrayAppend( data.messages, "Invalid commentID sent: #thisCommentID#, so skipped removal" );
-			} else {
-				// announce event
-				announceInterception( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
-				// remove
-				commentService.delete( oComment ); 
-				arrayAppend( data.messages, "Comment #thisCommentID# removed" );
-				// announce event
-				announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID } );
-			}
-		}
+		// Remove incoming comments
+		rc.commentID
+			.listToArray()
+			.each( function( thisCommentID ){
+				var oComment = commentService.get( thisCommentID );
+				// null checks
+				if( isNull( oComment ) ){
+					arrayAppend( data.messages, "Invalid commentID sent: #thisCommentID#, so skipped removal" );
+				} else {
+					// announce event
+					announceInterception( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
+					// remove
+					commentService.delete( oComment );
+					arrayAppend( data.messages, "Comment #thisCommentID# removed" );
+					// announce event
+					announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID } );
+				}
+			} );
 
 		// No comments selected
-		if( arrayLen( rc.commentID ) eq 0 ){
+		if( !len( rc.commentID ) ){
 			arrayAppend( data.messages, "No comments selected!" );
 			data.error = true;
-			cbMessagebox.warn( messageArray = data.messages );
+			cbMessagebox.warn( messageArray=data.messages );
 		}
 
-		// If ajax call, return as ajax
+		// If ajax call, return as ajax json
 		if( event.isAjax() ){
-			event.renderData( data=data, type="json" );
+			return data;
 		} else {
 			// relocate back
-			setNextEvent( event=prc.xehComments, queryString="page=#rc.page#" );
+			relocate( event=prc.xehComments, queryString="page=#rc.page#" );
 		}
 	}
 
-	// pager viewlet
-	// TODO: add link to pages
-	function pager(event,rc,prc,contentID="all",max=0,pagination=true){
+	/**
+	 * Comment Pager
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 * @contentID The content ID to filter the comments on, defaults to all
+	 * @max Max number of comments to show, shows the global default
+	 * @pagination Turn pagination on or off
+	 */
+	function pager(
+		event,
+		rc,
+		prc,
+		contentID="all",
+		max=0,
+		pagination=true
+	){
 
 		// check if contentID exists in rc to do an override, maybe it's the paging call
 		if( event.valueExists( "commentPager_contentID" ) ){
@@ -240,16 +329,18 @@ component extends="baseHandler"{
 		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// prepare paging object
-		prc.commentPager_oPaging 	= getModel( "Paging@cb" );
+		prc.commentPager_oPaging 		= getModel( "Paging@cb" );
 		prc.commentPager_paging 	  	= prc.commentPager_oPaging.getBoundaries();
 		prc.commentPager_pagingLink 	= "javascript:commentPagerLink(@page@)";
 		prc.commentPager_pagination		= arguments.pagination;
 		prc.commentPager_max			= arguments.max;
 
 		// search entries with filters and all
-		var commentResults = commentService.search(contentID=arguments.contentID,
-											       offset=prc.commentPager_paging.startRow-1,
-											       max=arguments.max);
+		var commentResults = commentService.search(
+			contentID = arguments.contentID,
+			offset    = prc.commentPager_paging.startRow-1,
+			max       = arguments.max
+		);
 		prc.commentPager_comments 	     = commentResults.comments;
 		prc.commentPager_commentsCount   = commentResults.count;
 
@@ -257,17 +348,25 @@ component extends="baseHandler"{
 		prc.commentPager_contentID	= arguments.contentID;
 
 		// view pager
-		return renderView(view="comments/pager",module="contentbox-admin" );
+		return renderView( view="comments/pager", module="contentbox-admin" );
 	}
 
-	// settings
+	/**
+	 * Show comment settings panel
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
 	function settings( event, rc, prc ){
 		rc.xehSaveSettings = "#prc.cbAdminEntryPoint#.comments.saveSettings";
 		prc.tabComments_settings = true;
 		event.setView( "comments/settings" );
 	}
 
-	// save settings
+	/**
+	 * Save the comment settings
+	 */
 	function saveSettings( event, rc, prc ){
 		// announce event
 		announceInterception( "cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
@@ -277,6 +376,6 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor
 		cbMessagebox.info( "All comment settings updated!" );
-		setNextEvent(prc.xehCommentsettings);
+		relocate( prc.xehCommentsettings );
 	}
 }

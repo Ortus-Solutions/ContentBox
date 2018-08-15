@@ -124,7 +124,7 @@
 							<br /><small>Below are the current supported database types:<br/></small>
 							<select name="dbType" id="dbType" class="form-control input-sm">
 								<!---<option value="derby">Apache Derby</option>--->
-								<option value="mssql">Microsft SQL Server</option>
+								<option value="mssql">Microsoft SQL Server</option>
 								<option value="mysql">MySQL</option>
 								<cfif listFindNoCase( "railo,lucee", server.coldfusion.productname )>
 								<option value="HSQLDB">HSQLDB (Hypersonic Embedded SQL DB)</option>
@@ -140,7 +140,7 @@
 							<label class="control-label" for="dbServer">Database Server:</label>
 							<br />
 							<small>
-								Your database host address (localhost, 127.0.0.1 or ip address, leave empty for embedded database). It can also include your port if needed, separated by a <code>:</code>, like <code>localhost:33306</code>
+								Your database host address (localhost, 127.0.0.1 or ip address, leave empty for embedded database). It can also include your port if needed, separated by a <code>:</code>, like <code>localhost:3306</code>
 							</small>
 							<br/>
 							<input type="text" class="form-control" size="40" name="dbServer" id="dbServer" required="required" />
@@ -166,7 +166,7 @@
 					<div class="form-group">
 						<div class="controls">
 							<label class="control-label" for="dbUsername">Database Password:</label>
-							<br /><small>The password of the database user that will use the connection.  (Use empty for embedded database)<br/></small>
+							<br /><small>The password of the database user that will use the connection.  (Leave empty for embedded database)<br/></small>
 							<input type="password" class="form-control" size="40" name="dbPassword" id="dbPassword" />
 						</div>
 					</div>

@@ -44,13 +44,14 @@ component extends="baseHandler"{
 			}
 			case "coreWidgets" : {
 				prc.cbFileBrowserSettings.title = "Core Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getWidgetsPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCoreWidgetsPath(); break;
 			}
 			case "customWidgets" : {
 				prc.cbFileBrowserSettings.title = "Custom Widgets Library";
 				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCustomWidgetsPath(); break;
 			}
 		}
+
 		// options
 		prc.libraryOptions = [
 			{ name="<i class='fa fa-pencil'></i> Content", 		value="Content"	},
@@ -63,6 +64,9 @@ component extends="baseHandler"{
 
 		// build argument list for widget
 		prc.fbArgs = { widget=true, settings=prc.cbFileBrowserSettings };
+
+		// Light up
+		prc.tabContent_mediaManager = true;
 
 		// view
 		event.setView( "mediamanager/index" );

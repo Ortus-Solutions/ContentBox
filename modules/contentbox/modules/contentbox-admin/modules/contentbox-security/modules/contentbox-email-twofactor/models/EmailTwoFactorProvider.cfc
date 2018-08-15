@@ -149,7 +149,7 @@ component
 					.renderLayout(
 						layout 		= "/contentbox/email_templates/layouts/email",
 						view 		= "emails/verification",
-						args 		= { viewModule 	= "contentbox-email-twofactor" }
+						viewModule 	= "contentbox-email-twofactor"
 					)
 			);
 

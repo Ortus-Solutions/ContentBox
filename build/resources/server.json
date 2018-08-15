@@ -5,9 +5,9 @@
         }
     },
     "JVM": {
-        "heapSize": "512"
+        "heapSize": "768"
     },
-    "trayicon": "modules/contentbox/content/ContentBox_300.png",
+    "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
     "trayOptions": [{
         "label": "Open ContentBox Admin",
         "action": "openbrowser",

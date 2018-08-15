@@ -54,12 +54,12 @@ component{
 		settings = {
 
 		};
-		
+
 		// environment settings, create a detectEnvironment() method to detect it yourself.
 		// create a function with the name of the environment so it can be executed if that environment is detected
 		// the value of the environment is a list of regex patterns to match the cgi.http_host.
 		environments = {
-			development = "local,127\.0\.0\.1"
+			development = "localhost,dev"
 		};
 
 		//LogBox DSL
@@ -129,7 +129,7 @@ component{
 		coldbox.customErrorTemplate 	= "/coldbox/system/includes/BugReport.cfm";
 
 		// debugging file
-		logbox.appenders.files = { 
+		logbox.appenders.files = {
 			class="coldbox.system.logging.appenders.RollingFileAppender",
 			properties = {
 				filename = "contentbox", filePath="/logs", async=false

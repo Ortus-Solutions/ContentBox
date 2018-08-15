@@ -1,27 +1,43 @@
 /**
-* Manage permissions
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manage Permissions
+ */
 component extends="baseHandler"{
 
 	// Dependencies
 	property name="permissionService"		inject="id:permissionService@cb";
-	
-	// pre handler
-	function preHandler(event,action,eventArguments){
-		var rc 	= event.getCollection();
-		var prc = event.getCollection(private=true);
+
+	/**
+	 * Pre handler
+	 *
+	 * @event
+	 * @action
+	 * @eventArguments
+	 * @rc
+	 * @prc
+	 */
+	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
 		prc.tabUsers = true;
 	}
-	
-	// index
-	function index(event,rc,prc){
+
+	/**
+	 * Manage permissions
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
+	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.permissions.remove";
 		prc.xehPermissionSave 	= "#prc.cbAdminEntryPoint#.permissions.save";
 		prc.xehExportAll 		= "#prc.cbAdminEntryPoint#.permissions.exportAll";
 		prc.xehImportAll		= "#prc.cbAdminEntryPoint#.permissions.importAll";
-		
+
 		// Get all permissions
 		prc.permissions = permissionService.list(sortOrder="permission",asQuery=false);
 		// Tab
@@ -30,26 +46,47 @@ component extends="baseHandler"{
 		event.setView( "permissions/index" );
 	}
 
-	// save
-	function save(event,rc,prc){
+	/**
+	 * Save permissions
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
+	function save( event, rc, prc ){
 		// UCASE permission
 		rc.permission = ucase( rc.permission );
 		// populate and get
-		var oPermission = populateModel( permissionService.get(id=rc.permissionID) );
-    	// announce event
-		announceInterception( "cbadmin_prePermissionSave",{permission=oPermission,permissionID=rc.permissionID} );
-		// save permission
-		permissionService.save( oPermission );
-		// announce event
-		announceInterception( "cbadmin_postPermissionSave",{permission=oPermission} );
-		// messagebox
-		cbMessagebox.setMessage( "info","Permission saved!" );
+		var oPermission = populateModel( permissionService.get( id=rc.permissionID ) );
+		var vResults 	= validateModel( oPermission );
+
+		// Validation Results
+		if( !vResults.hasErrors() ){
+			// announce event
+			announceInterception( "cbadmin_prePermissionSave", { permission=oPermission, permissionID=rc.permissionID } );
+			// save permission
+			permissionService.save( oPermission );
+			// announce event
+			announceInterception( "cbadmin_postPermissionSave", { permission=oPermission } );
+			// messagebox
+			cbMessagebox.setMessage( "info", "Permission saved!" );
+
+		} else {
+			// messagebox
+			cbMessagebox.warning( messageArray=vResults.getAllErrors() );
+		}
 		// relocate
-		setNextEvent( prc.xehPermissions );
+		relocate( prc.xehPermissions );
 	}
-	
-	// remove
-	function remove(event,rc,prc){
+
+	/**
+	 * Remove permissions
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
+	function remove( event, rc, prc ){
 		// announce event
 		announceInterception( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID} );
 		// delete by id
@@ -62,20 +99,22 @@ component extends="baseHandler"{
 			// Message
 			cbMessagebox.setMessage( "info","Permission and all relationships Removed!" );
 		}
-		setNextEvent( prc.xehPermissions );
+		relocate( prc.xehPermissions );
 	}
-	
-	// Export All Permissions
-	function exportAll(event,rc,prc){
+
+	/**
+	 * Export all permissions
+	 */
+	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
 		var data  = permissionService.getAllForExport();
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "Permissions." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData(data=data, type=rc.format, xmlRootName="permissions" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); ; 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); ;
 				break;
 			}
 			default:{
@@ -83,9 +122,15 @@ component extends="baseHandler"{
 			}
 		}
 	}
-	
-	// import settings
-	function importAll(event,rc,prc){
+
+	/**
+	 * Import permissions
+	 *
+	 * @event
+	 * @rc
+	 * @prc
+	 */
+	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try{
@@ -103,6 +148,6 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehPermissions );
+		relocate( prc.xehPermissions );
 	}
 }

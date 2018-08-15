@@ -41,10 +41,10 @@
             		</tr>
             	</thead>
             	<tbody>
-            		<cfloop query="prc.settings">
+            		<cfloop collection="#prc.settings#" item="setting">
             		<tr>
-            			<td>#HTMLEditFormat( prc.settings.name )#</td>
-            			<td>#HTMLEditFormat( prc.settings.value )#</td>
+            			<td>#HTMLEditFormat( setting )#</td>
+            			<td>#HTMLEditFormat( prc.settings[setting] )#</td>
             		</tr>
             		</cfloop>
             	</tbody>

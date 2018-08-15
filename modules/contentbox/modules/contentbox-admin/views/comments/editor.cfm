@@ -56,14 +56,14 @@
                     labelClass="control-label",
                     class="form-control",
                     groupWrapper="div class=form-group"
-                )#   
+                )#
             </div>
             <!--- Button Bar --->
             <div class="modal-footer">
-                <button class="btn" onclick="closeRemoteModal();return false;" title="Close Modal"> Close </button>
+                <button class="btn btn-default" onclick="closeRemoteModal();return false;" title="Close Modal"> Close </button>
                 <button type="submit" class="btn btn-danger">Save</button>
             </div>
-        #html.endForm()#   
+        #html.endForm()#
     </div>
 </div>
 </cfoutput>

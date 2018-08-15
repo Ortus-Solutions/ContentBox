@@ -10,9 +10,9 @@
 
 <div class="row">
     <div class="col-md-12">
-        
+
         #getModel( "messagebox@cbMessagebox" ).renderit()#
-        
+
         <!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -25,16 +25,16 @@
 
     <div class="col-md-12">
     	#html.startForm(
-            name	= "groupForm", 
-            action	= prc.xehGroupRemove, 
+            name	= "groupForm",
+            action	= prc.xehGroupRemove,
             class	= "form-vertical"
         )#
-        	
+
         	#html.hiddenField( name="permissionGroupID", value="" )#
 
         	<div class="panel panel-default">
 				<div class="panel-heading">
-					
+
 					<div class="row">
 
 						<div class="col-md-6">
@@ -84,15 +84,22 @@
 				</div>
 
 				<div class="panel-body">
-					
+
+					<!--- Info Bar --->
+					<div class="alert alert-warning">
+						<i class="fa fa-warning fa-lg"></i>
+						Once you delete a permission group all assigned permissions and authors will be unassigned.
+					</div>
+
 					<!--- groups --->
 					<table name="groups" id="groups" class="table table-striped table-hover table-condensed" width="98%">
-						
+
 						<thead>
 							<tr>
 								<th>Group</th>
-								<th>Description</th>		
+								<th>Description</th>
 								<th width="95" class="text-center">Permissions</th>
+								<th width="95" class="text-center">Authors</th>
 								<th width="100" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
@@ -106,7 +113,7 @@
 									<a href="javascript:edit(
 										'#group.getPermissionGroupID()#',
 									   	'#HTMLEditFormat( jsstringFormat( group.getName() ) )#',
-									   	'#HTMLEditFormat( jsstringFormat( group.getDescription() ) )#')" 
+									   	'#HTMLEditFormat( jsstringFormat( group.getDescription() ) )#')"
 									   title="Edit #group.getName()#">#group.getName()#</a>
 									<cfelse>
 										#group.getName()#
@@ -120,34 +127,38 @@
 								</td>
 
 								<td class="text-center">
+									<span class="badge badge-info">#group.getNumberOfAuthors()#</span>
+								</td>
+
+								<td class="text-center">
 									<!--- permissions --->
-									<a 	class="btn btn-sm btn-primary" 
-										href="javascript:openRemoteModal( 
-											'#event.buildLink( prc.xehGroupPermissions )#', 
-											{ permissionGroupID: '#group.getPermissionGroupID()#'} 
+									<a 	class="btn btn-sm btn-primary"
+										href="javascript:openRemoteModal(
+											'#event.buildLink( prc.xehGroupPermissions )#',
+											{ permissionGroupID: '#group.getPermissionGroupID()#'}
 										);"
 										title="Manage Permissions">
 										<i class="fa fa-lock fa-lg"></i>
 									</a>
-									
-									<!--- Actions --->	
+
+									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
 											<i class="fa fa-cogs fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
-												
+
 												<!--- Delete Command --->
 												<li>
-													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )" 
-														class="confirmIt" 
+													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )"
+														class="confirmIt"
 														data-title="<i class='fa fa-trash-o'></i> Delete Group?"
 													>
 														<i class="fa fa-trash-o fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
 													</a>
 												</li>
-												
+
 												<!--- Edit Command --->
 												<li>
 													<a href="javascript:edit(
@@ -158,18 +169,18 @@
 											   			<i class="fa fa-edit fa-lg"></i> Edit
 											   		</a>
 											   	</li>
-											
+
 												<!--- Export --->
 												<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 													<li>
-														<a 	href="#event.buildLink( linkto=prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json" 
+														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
 															<i class="fa fa-download"></i> Export as JSON
 														</a>
 													</li>
 													<li>
-														<a 	href="#event.buildLink( linkto=prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml" 
+														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml"
 															target="_blank"
 														>
 															<i class="fa fa-download"></i> Export as XML
@@ -185,7 +196,7 @@
 						</tbody>
 					</table>
 				</div>
-			</div>	
+			</div>
 
         #html.endForm()#
     </div>
@@ -197,7 +208,7 @@
 	<div id="groupEditorContainer" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document" >
 			<div class="modal-content">
-		
+
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 					<h4><i class="fa fa-group"></i> Group Editor</h4>
@@ -244,7 +255,7 @@
 					#html.resetButton(
 						name	= "btnReset",
 						value	= "Cancel",
-						class	= "btn", 
+						class	= "btn btn-default",
 						onclick	= "closeModal( $('##groupEditorContainer') )"
 					)#
 
@@ -262,14 +273,14 @@
 </cfif>
 
 <cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Permission Groups",
+	#renderView(
+		view = "_tags/dialog/import",
+		args = {
+			title       = "Import Permission Groups",
 			contentArea = "groups",
-			action = prc.xehImportAll,
+			action      = prc.xehImportAll,
 			contentInfo = "Choose the ContentBox <strong>JSON</strong> permission group's file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+		}
+	)#
 </cfif>
 </cfoutput>

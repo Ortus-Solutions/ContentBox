@@ -47,6 +47,8 @@ component extends="baseContentHandler"{
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
 
+		prc.tabContent_Pages 	= true;
+
 		// view
 		event.setView( "pages/index" );
 	}
@@ -85,14 +87,14 @@ component extends="baseContentHandler"{
 		}
 
 		// search entries with filters and all
-		var pageResults = pageService.search( 
+		var pageResults = pageService.search(
 			search		= rc.searchPages,
 			isPublished	= rc.fStatus,
 			category	= rc.fCategories,
 			author		= rc.fAuthors,
 			creator		= rc.fCreators,
 			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-			sortOrder	= "order asc" 
+			sortOrder	= "order asc"
 		);
 		prc.pages 		= pageResults.pages;
 		prc.pagesCount  = pageResults.count;
@@ -109,7 +111,7 @@ component extends="baseContentHandler"{
 		prc.xehPageHistory 		= "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehPageExport 		= "#prc.cbAdminEntryPoint#.pages.export";
 		prc.xehPageClone 		= "#prc.cbAdminEntryPoint#.pages.clone";
-		
+
 		// view
 		event.setView( view="pages/indexTable", layout="ajax" );
 	}
@@ -190,9 +192,10 @@ component extends="baseContentHandler"{
 		event.paramValue( "slug", "" );
 		event.paramValue( "creatorID", "" );
 		event.paramValue( "changelog", "" );
+		event.paramValue( "parentPage", "null" );
 		event.paramValue( "publishedDate", now() );
-		event.paramValue( "publishedHour", timeFormat(rc.publishedDate,"HH" ) );
-		event.paramValue( "publishedMinute", timeFormat(rc.publishedDate,"mm" ) );
+		event.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) );
+		event.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) );
 		event.paramValue( "publishedTime", event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) );
 		event.paramValue( "expireHour", "" );
 		event.paramValue( "expireMinute", "" );
@@ -203,9 +206,9 @@ component extends="baseContentHandler"{
 		if( NOT len( rc.publishedDate ) ){
 			rc.publishedDate = dateFormat( now() );
 		}
-		
+
 		// slugify the incoming title or slug
-		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( ListLast(rc.slug,"/") ) );
+		rc.slug = ( NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) ) );
 
 		// Verify permission for publishing, else save as draft
 		if( !prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) ){
@@ -226,35 +229,47 @@ component extends="baseContentHandler"{
 			arrayAppend(errors, "Please enter the content to save!" );
 		}
 		if( arrayLen( errors ) ){
-			cbMessageBox.warn(messageArray=errors);
-			editor(argumentCollection=arguments);
+			cbMessageBox.warn( messageArray=errors );
+			editor( argumentCollection=arguments );
 			return;
 		}
 
 		// Attach creator if new page
-		if( isNew ){ page.setCreator( prc.oCurrentAuthor ); }
+		if( isNew ){
+			page.setCreator( prc.oCurrentAuthor );
+		}
 		// Override creator?
-		else if( !isNew and prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) and len( rc.creatorID ) and page.getCreator().getAuthorID() NEQ rc.creatorID ){
+		else if(
+			!isNew and
+			prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) and
+			rc.creatorID.len() and
+			page.getCreator().getAuthorID() NEQ rc.creatorID
+		){
 			page.setCreator( authorService.get( rc.creatorID ) );
 		}
+
 		// Register a new content in the page, versionized!
-		page.addNewContentVersion(content=rc.content, changelog=rc.changelog, author=prc.oCurrentAuthor);
+		page.addNewContentVersion(
+			content   = rc.content,
+			changelog = rc.changelog,
+			author    = prc.oCurrentAuthor
+		);
 
 		// attach a parent page if it exists and not the same
-		if( isNumeric(rc.parentPage) AND page.getContentID() NEQ rc.parentPage ){
+		if(	rc.parentPage neq "null" AND page.getContentID() NEQ rc.parentPage ){
 			page.setParent( pageService.get( rc.parentPage ) );
-			// update slug
+			// update slug according to hierarchy
 			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
 		}
 		// Remove parent
-		else if( rc.parentPage EQ "null" OR rc.parentPage EQ ""){
+		else if( rc.parentPage EQ "null" OR !rc.parentPage.len() ){
 			page.setParent( javaCast( "null", "" ) );
 		}
 
 		// Create new categories?
 		var categories = [];
-		if( len(trim(rc.newCategories)) ){
-			categories = categoryService.createCategories( trim(rc.newCategories) );
+		if( len( trim( rc.newCategories ) ) ){
+			categories = categoryService.createCategories( trim( rc.newCategories ) );
 		}
 		// Inflate sent categories from collection
 		categories.addAll( categoryService.inflateCategories( rc ) );
@@ -266,9 +281,9 @@ component extends="baseContentHandler"{
 		page.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
 		announceInterception( "cbadmin_prePageSave", {
-			page=page,
-			isNew=isNew,
-			originalSlug=originalSlug
+			page         = page,
+			isNew        = isNew,
+			originalSlug = originalSlug
 		} );
 
 		// save entry
@@ -276,9 +291,9 @@ component extends="baseContentHandler"{
 
 		// announce event
 		announceInterception( "cbadmin_postPageSave", {
-			page=page,
-			isNew=isNew,
-			originalSlug=originalSlug
+			page          = page,
+			isNew         = isNew,
+			originalSlug  = originalSlug
 		} );
 
 		// Ajax?
@@ -286,15 +301,15 @@ component extends="baseContentHandler"{
 			var rData = {
 				"CONTENTID" = page.getContentID()
 			};
-			event.renderData(type="json",data=rData);
+			event.renderData( type="json", data=rData );
 		}
 		else{
 			// relocate
 			cbMessageBox.info( "Page Saved!" );
 			if( page.hasParent() ){
-				setNextEvent( event=prc.xehPages, querystring="parent=#page.getParent().getContentID()#" );
+				relocate( event=prc.xehPages, querystring="parent=#page.getParent().getContentID()#" );
 			} else {
-				setNextEvent( event=prc.xehPages );
+				relocate( event=prc.xehPages );
 			}
 		}
 	}
@@ -306,7 +321,7 @@ component extends="baseContentHandler"{
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			setNextEvent( prc.xehPages );
+			relocate( prc.xehPages );
 			return;
 		}
 
@@ -330,7 +345,7 @@ component extends="baseContentHandler"{
 		} );
 
 		clone.setCreator( prc.oCurrentAuthor );
-		
+
 		// attach to the original's parent.
 		if( original.hasParent() ){
 			clone.setParent( original.getParent() );
@@ -349,13 +364,13 @@ component extends="baseContentHandler"{
 
 		// clone this sucker now!
 		pageService.savePage( clone );
-		
+
 		// relocate
 		cbMessageBox.info( "Page Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
-			setNextEvent( event=prc.xehPages, querystring="parent=#clone.getParent().getContentID()#" );
+			relocate( event=prc.xehPages, querystring="parent=#clone.getParent().getContentID()#" );
 		} else {
-			setNextEvent( event=prc.xehPages );
+			relocate( event=prc.xehPages );
 		}
 	}
 
@@ -378,9 +393,9 @@ component extends="baseContentHandler"{
 		}
 		// relocate back
 		if( len( rc.parent ) ){
-			setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
+			relocate( event=prc.xehPages, queryString="parent=#rc.parent#" );
 		} else {
-			setNextEvent( event=prc.xehPages );
+			relocate( event=prc.xehPages );
 		}
 	}
 
@@ -395,7 +410,7 @@ component extends="baseContentHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			cbMessageBox.warn( "No pages sent to delete!" );
-			setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
+			relocate( event=prc.xehPages, queryString="parent=#rc.parent#" );
 		}
 
 		// Inflate to array
@@ -427,7 +442,7 @@ component extends="baseContentHandler"{
 		// messagebox
 		cbMessageBox.info( messageArray=messages );
 		// relocate
-		setNextEvent( event=prc.xehPages, queryString="parent=#rc.parent#" );
+		relocate( event=prc.xehPages, queryString="parent=#rc.parent#" );
 	}
 
 	/**
@@ -587,7 +602,7 @@ component extends="baseContentHandler"{
 		// relocate if not existent
 		if( !prc.page.isLoaded() ){
 			cbMessageBox.warn( "ContentID sent is not valid" );
-			setNextEvent( "#prc.cbAdminEntryPoint#.pages" );
+			relocate( "#prc.cbAdminEntryPoint#.pages" );
 		}
 		switch( rc.format ){
 			case "xml" : case "json" : {
@@ -639,7 +654,7 @@ component extends="baseContentHandler"{
 			log.error( errorMessage, e );
 			cbMessageBox.error( errorMessage );
 		}
-		setNextEvent( prc.xehPages );
+		relocate( prc.xehPages );
 	}
 
 }

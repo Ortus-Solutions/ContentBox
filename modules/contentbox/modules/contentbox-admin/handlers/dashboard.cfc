@@ -284,7 +284,7 @@ component extends="baseHandler"{
 					break;
 				}
 				default:{
-					setNextEvent( prc.xehDashboard );
+					relocate( prc.xehDashboard );
 				}
 			}
 			
@@ -296,7 +296,7 @@ component extends="baseHandler"{
 				event.renderData( type="json", data={ error = false, executed = true } );
 			} else {
 				// relocate back to dashboard
-				setNextEvent( prc.xehDashboard );
+				relocate( prc.xehDashboard );
 			}
 		} catch( Any e ) {
 			// Log Exception
@@ -309,7 +309,7 @@ component extends="baseHandler"{
 				// MessageBox
 				cbMessagebox.error( "Error running admin reload module action: #e.message# #e.detail#" );
 				// relocate back to dashboard
-				setNextEvent( prc.xehDashboard );
+				relocate( prc.xehDashboard );
 			}
 		}
 		

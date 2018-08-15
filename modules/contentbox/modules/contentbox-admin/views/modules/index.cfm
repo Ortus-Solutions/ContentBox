@@ -76,7 +76,7 @@
 											</td>
 
 											<td>
-												<span class="label label-#( module.getModuleType() eq "core" ? "info" : "sucess" )#">#module.getModuleType()#</span>
+												<span class="label label-#( module.getModuleType() eq "core" ? "info" : "success" )#">#module.getModuleType()#</span>
 											</td>
 
 											<td>
@@ -140,35 +140,7 @@
 					</div>
 			    </div>
 			</div>
-			<div class="panel panel-primary">
-			    <div class="panel-heading">
-			        <h3 class="panel-title"><i class="fa fa-upload"></i> Module Uploader</h3>
-			    </div>
-			    <div class="panel-body">
-			    	#html.startForm(
-			    		name="moduleUploadForm",
-			    		action=prc.xehModuleUpload,
-			    		multipart=true,
-			    		novalidate="novalidate"
-			    	)#
-						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
-							name="fileModule",
-							label="Upload Module:",
-							columnWidth=2,
-							useRemoveButton=false,
-							required=true
-						)#
-		
-						<div class="actionBar" id="uploadBar">
-							#html.submitButton( value="Upload & Install",class="btn btn-danger" )#
-						</div>
-						<!--- Loader --->
-						<div class="loaders" id="uploadBarLoader">
-							<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i> Uploading...
-						</div>
-					#html.endForm()#
-			    </div>
-			</div>
+
 		</cfif>
 	</div>
 </div>

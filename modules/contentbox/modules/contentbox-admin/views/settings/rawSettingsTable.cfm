@@ -24,7 +24,7 @@
 			<td>
 				<cfif len( setting.getValue() ) gt 90 >
 					#html.textarea(
-						value 	= setting.getValue(), 
+						value 	= setting.getValue(),
 						rows 	= "5",
 						class 	= "form-control",
 						disabled = "true"
@@ -35,31 +35,33 @@
 			</td>
 			<td class="text-center">
 				<cfif setting.getIsCore()>
-					<i class="fa fa-circle-o text-success" title="Core Setting"></i>
+					<i class="fa fa-circle text-success" title="Core Setting"></i>
 				<cfelse>
-					<i class="fa fa-circle-o text-danger"></i>
+					<i class="fa fa-circle text-danger"></i>
 				</cfif>
 			</td>
 			<td class="text-center">
 				<div class="btn-group btn-group-sm">
-					
+
 					<!--- Edit Command --->
-					<a 	class="btn btn-sm btn-primary" 
-						href="javascript:edit( '#setting.getSettingId()#',
-											   '#HTMLEditFormat( setting.getName() )#',
-											   '#HTMLEditFormat( JSStringFormat( setting.getValue() ) )#',
-											   #setting.getIsCore()# )"
+					<a 	class="btn btn-sm btn-primary"
+						href="javascript:edit(
+							'#setting.getSettingId()#',
+							'#encodeForHTMLAttribute( setting.getName() )#',
+							'#encodeForHTMLAttribute( JSStringFormat( setting.getValue() ) )#',
+							#setting.getIsCore() ? 'true' : 'false'#
+						)"
 						title="Edit Setting">
 						<i class="fa fa-edit fa-lg"></i>
 					</a>
-					
+
 					<!--- Delete Command --->
 					<cfif setting.getIsCore()>
 						<a 	class="btn btn-sm btn-danger"
-						disabled="disabled"							
+						disabled="disabled"
 					<cfelse>
 						<a 	class="btn btn-sm btn-danger confirmIt"
-						href="javascript:remove('#setting.getsettingID()#', #setting.getIsCore()#)"
+						href="javascript:remove( '#setting.getsettingID()#' )"
 						title="Delete Setting"
 					</cfif>
 						data-title="<i class='fa fa-trash-o'></i> Delete Setting?">
@@ -75,8 +77,8 @@
 <!--- Paging --->
 <cfif !rc.viewAll>
 	#prc.oPaging.renderit(
-		foundRows 	= prc.settingsCount, 
-		link 		= prc.pagingLink, 
+		foundRows 	= prc.settingsCount,
+		link 		= prc.pagingLink,
 		asList 		= true
 	)#
 </cfif>

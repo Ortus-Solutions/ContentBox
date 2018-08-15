@@ -21,12 +21,13 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Save a page and do necessary updates
-	* @page.hint The page to save or update
-	* @originalSlug.hint If an original slug is passed, then we need to update hierarchy slugs.
-	* 
-	* @return PageService
-	*/
+	 * Save a page and do necessary updates
+	 *
+	 * @page The page to save or update
+	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
+	 *
+	 * @return PageService
+	 */
 	function savePage( required any page, string originalSlug="" ){
 
 		transaction{
@@ -54,17 +55,17 @@ component extends="ContentService" singleton{
 
 	/**
 	* page search returns struct with keys [pages,count]
-	* @search.hint The search term to search on
-	* @isPublished.hint Boolean bit to search if page is published or not, pass 'any' or not to ignore.
-	* @author.hint The authorID to filter on, pass 'all' to ignore filter
-	* @parent.hint The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	* @creator.hint The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	* @category.hint The categorie(s) to filter on. You can also pass 'all' or 'none'
-	* @max.hint The maximum records to return
-	* @offset.hint The offset on the pagination
-	* @sortOrder.hint Sorting of the results, defaults to page title asc
-	* @searchActiveContent.hint If true, it searches title and content on the page, else it just searches on title
-	* @showInSearch.hint If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	* @search The search term to search on
+	* @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
+	* @author The authorID to filter on, pass 'all' to ignore filter
+	* @parent The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	* @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	* @category The categorie(s) to filter on. You can also pass 'all' or 'none'
+	* @max The maximum records to return
+	* @offset The offset on the pagination
+	* @sortOrder Sorting of the results, defaults to page title asc
+	* @searchActiveContent If true, it searches title and content on the page, else it just searches on title
+	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	*
 	* @returns struct = [pages,count]
 	*/
@@ -115,15 +116,15 @@ component extends="ContentService" singleton{
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
-				c.or( 
+				c.or(
 					c.restrictions.like( "title", "%#arguments.search#%" ),
 					c.restrictions.like( "slug", "%#arguments.search#%" ),
-					c.restrictions.like( "ac.content", "%#arguments.search#%" ) 
+					c.restrictions.like( "ac.content", "%#arguments.search#%" )
 				);
 			} else {
-				c.or( 
+				c.or(
 					c.restrictions.like( "title","%#arguments.search#%" ),
-					c.restrictions.like( "slug","%#arguments.search#%" ) 
+					c.restrictions.like( "slug","%#arguments.search#%" )
 				);
 			}
 		}
@@ -163,25 +164,25 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( 
+							.list(
 								offset 		= arguments.offset,
 								max 		= arguments.max,
 								sortOrder 	= arguments.sortOrder,
-								asQuery 	= false 
+								asQuery 	= false
 							);
 		return results;
 	}
 
 	/**
 	* Find published pages in ContentBox that have no passwords
-	* @max.hint The max number of pages to return, defaults to 0=all
-	* @offset.hint The pagination offset
-	* @searchTerm.hint Pass a search term to narrow down results
-	* @category.hint Pass a list of categories to narrow down results
-	* @asQuery.hint Return results as array of objects or query, default is array of objects
-	* @parent.hint The parent ID to restrict the search on
-	* @showInMenu.hint If passed, it limits the search to this content property
-	* @sortOrder.hint The sort order string, defaults to publisedDate DESC
+	* @max The max number of pages to return, defaults to 0=all
+	* @offset The pagination offset
+	* @searchTerm Pass a search term to narrow down results
+	* @category Pass a list of categories to narrow down results
+	* @asQuery Return results as array of objects or query, default is array of objects
+	* @parent The parent ID to restrict the search on
+	* @showInMenu If passed, it limits the search to this content property
+	* @sortOrder The sort order string, defaults to publisedDate DESC
 	*/
 	function findPublishedPages(
 		numeric max=0,
@@ -236,11 +237,11 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( 
+							.list(
 								offset 		= arguments.offset,
 								max 		= arguments.max,
 								sortOrder 	= arguments.sortOrder,
-								asQuery 	= arguments.asQuery 
+								asQuery 	= arguments.asQuery
 							);
 
 		return results;
@@ -252,8 +253,8 @@ component extends="ContentService" singleton{
 	* @isPublished	Show all content or true/false published content
 	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatPages( 
-		sortOrder="title asc", 
+	array function getAllFlatPages(
+		sortOrder="title asc",
 		boolean isPublished,
 		boolean showInSearch
 	){

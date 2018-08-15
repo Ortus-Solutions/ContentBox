@@ -23,9 +23,6 @@ component extends="tests.resources.BaseTest"{
 
 	function run( testResults, testBox ){
 		describe( "Base Two Factor Provider", function(){
-			it( "can be created", function(){
-				expect(	provider ).toBeComponent();
-			});
 			it( "can get all settings", function(){
 				expect(	provider.getAllSettings() ).toBeStruct();
 			});

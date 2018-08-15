@@ -391,28 +391,6 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	 * Upload a widget to the custom location
-	 *
-	 * @fileField The form file field to use
-	 *
-	 * @return The CFFile structure from the upload results
-	 */
-	struct function uploadWidget( required fileField ){
-		var destination 	= variables.customWidgetsPath;
-		var results 		= fileUpload( destination, arguments.fileField, "", "overwrite" );
-
-		if( results.clientfileext neq "cfc" ){
-			fileDelete( results.serverDirectory & "/" & results.serverfile );
-			throw( message="Invalid widget type detected: #results.clientfileext#", type="InvalidWidgetType" );
-		}
-
-		// Process widgets
-		getWidgets( reload=true );
-
-		return results;
-	}
-
-	/**
 	 * Rip Extensions from file name
 	 * @fileName The target to rip
 	 */

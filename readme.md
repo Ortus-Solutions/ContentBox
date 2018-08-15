@@ -2,7 +2,7 @@
 
 <img src="https://www.contentboxcms.org/__media/ContentBox_300.png" class="img-thumbnail"/>
 
->Copyright 2012 by Ortus Solutions, Corp - https://www.ortussolutions.com
+>Copyright Since 2012 by Ortus Solutions, Corp - https://www.ortussolutions.com/products/contentbox
 
 Because of God's grace, this project exists. If you don't like this, then don't read it, its not for you.
 
@@ -16,12 +16,15 @@ Holy Ghost which is given unto us. ." Romans 5:5
 ----
 
 # Welcome to ContentBox
-ContentBox is a modular content management engine based on the popular [ColdBox](www.coldbox.org) MVC framework.
+
+ContentBox is FREE Professional Open Source modular content management engine based on the popular [ColdBox](www.coldbox.org) MVC framework.
 
 ## License
+
 Apache License, Version 2.0.
 
 ## Versioning
+
 ContentBox is maintained under the Semantic Versioning guidelines as much as possible.
 
 Releases will be numbered with the following format:
@@ -51,18 +54,19 @@ Blog
 - https://www.ortussolutions.com/blog
 
 ## System Requirements
-- Lucee 4.5+
-- ColdFusion 10+
+
+* Lucee 4.5+
+* ColdFusion 11+
 
 # ContentBox Installation
 
-You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/content/installation/index.html or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running with ContentBox.  You can install it in three different formats:
+You can follow in-depth installation instructions here: https://contentbox.ortusbooks.com/getting-started/installation or you can use [CommandBox](https://www.ortussolutions.com/products/commandbox) to quickly get up and running with ContentBox.  You can install it in three different formats:
 
-1. **ContentBox Installer** : Install a new site with our DSN Creator, Installer and ContentBox Modules
-1. **ContentBox Modules**: Install ContentBox as a module into an existing ColdBox application (Requires ORM configuration)
-1. **ContentBox Site**: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers) 
+1. **ContentBox Installer** : Install a new site with our DSN Creator, Installer and ContentBox Modules: `box install contentbox-installer`
+1. **ContentBox Modules**: Install ContentBox as a module into an existing ColdBox application (Requires ORM configuration): `box install contentbox`
+1. **ContentBox Site**: Create a new site with our ContentBox Modules only, no installer or DSN creator (Great for containers) : `box install contentbox-site`
 
-```
+```bash
 # Install New Site with DSN Creator, Installer and ContentBox modules
 install contentbox-installer
 
@@ -79,18 +83,20 @@ If you want to develop and hack at the source, you will need to download [Comman
 
 You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  Please note that the default CFML engine is a Lucee 4.5 engine.  You can start any of the following engines:
 
-* `cbcms-adobe10` - ACF 10
-* `cbcms-adobe11` - ACF 11
-* `cbcms-adobe2016` - ACF 2016
-* `cbcms-lucee5` - Lucee 5
+* `server start name=cbcms-adobe11` - ACF 11
+* `server start name=cbcms-adobe2016` - ACF 2016
+* `server start name=cbcms-lucee5` - Lucee 5
 
 ### Test Suites
+
 For running our test suites you will need 2 more steps, so please refer to the [Readme](tests/readme.md) in the tests folder.
 
 ### UI Development
-If developing CSS and Javascript assets, please refer to the [Developer Guide](workbench/Developer.md) in the `workbench/Developer.md` folder.
 
----
- 
-###THE DAILY BREAD
+If developing CSS and Javascript assets, please refer to the [UI Developer Guide](workbench/Developer.md) in the `workbench/Developer.md` folder.
+
+----
+
+### THE DAILY BREAD
+
  > "I am the way, and the truth, and the life; no one comes to the Father, but by me (JESUS)" Jn 14:1-12

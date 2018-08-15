@@ -46,6 +46,9 @@ component extends="baseContentHandler"{
 		prc.xehContentClone 		= "#prc.cbAdminEntryPoint#.contentStore.clone";
 		prc.xehResetHits 			= "#prc.cbAdminEntryPoint#.content.resetHits";
 
+		// Light up
+		prc.tabContent_contentStore = true;
+
 		// view
 		event.setView( "contentStore/index" );
 	}
@@ -83,14 +86,14 @@ component extends="baseContentHandler"{
 		}
 
 		// search content with filters and all
-		var contentResults = contentStoreService.search( 
+		var contentResults = contentStoreService.search(
 			search		= rc.searchContent,
 			isPublished	= rc.fStatus,
 			category	= rc.fCategories,
 			author		= rc.fAuthors,
 			creator		= rc.fCreators,
 			parent		= ( !isNull( rc.parent ) ? rc.parent : javaCast( "null", "" ) ),
-			sortOrder	= "order asc, createdDate desc" 
+			sortOrder	= "order asc, createdDate desc"
 		);
 		prc.content 	 = contentResults.content;
 		prc.contentCount = contentResults.count;
@@ -164,9 +167,9 @@ component extends="baseContentHandler"{
 		}
 		// relocate back
 		if( len( rc.parent ) ){
-			setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
+			relocate( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 		} else {
-			setNextEvent( event=prc.xehContentStore );
+			relocate( event=prc.xehContentStore );
 		}
 	}
 
@@ -234,7 +237,7 @@ component extends="baseContentHandler"{
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			setNextEvent(event=prc.xehPages);
+			relocate(event=prc.xehPages);
 			return;
 		}
 
@@ -246,8 +249,8 @@ component extends="baseContentHandler"{
 		}
 
 		// get a clone
-		var clone = contentStoreService.new( { 
-			title 		= rc.title, 
+		var clone = contentStoreService.new( {
+			title 		= rc.title,
 			slug 		= variables.HTMLHelper.slugify( rc.title ),
 			description = original.getDescription(),
 			order 		= original.getOrder() + 1
@@ -271,13 +274,13 @@ component extends="baseContentHandler"{
 		);
 		// clone this sucker now!
 		contentStoreService.saveContent( clone );
-		
+
 		// relocate
 		cbMessageBox.info( "Content Cloned, isn't that cool!" );
 		if( clone.hasParent() ){
-			setNextEvent( event=prc.xehContentStore, querystring="parent=#clone.getParent().getContentID()#" );
+			relocate( event=prc.xehContentStore, querystring="parent=#clone.getParent().getContentID()#" );
 		} else {
-			setNextEvent( event=prc.xehContentStore );
+			relocate( event=prc.xehContentStore );
 		}
 	}
 
@@ -303,7 +306,7 @@ component extends="baseContentHandler"{
 		if( NOT len( rc.publishedDate ) ){
 			rc.publishedDate = dateFormat( now() );
 		}
-		
+
 		// Quick content check
 		if( structKeyExists(rc,"quickcontent" ) ){
 			rc.content = rc.quickcontent;
@@ -387,9 +390,9 @@ component extends="baseContentHandler"{
 			// relocate
 			cbMessageBox.info( "content Saved!" );
 			if( content.hasParent() ){
-				setNextEvent( event=prc.xehContentStore, querystring="parent=#content.getParent().getContentID()#" );
+				relocate( event=prc.xehContentStore, querystring="parent=#content.getParent().getContentID()#" );
 			} else {
-				setNextEvent( event=prc.xehContentStore );
+				relocate( event=prc.xehContentStore );
 			}
 		}
 	}
@@ -403,7 +406,7 @@ component extends="baseContentHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			cbMessageBox.warn( "No content sent to delete!" );
-			setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
+			relocate( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 		}
 
 		// Inflate to array
@@ -435,7 +438,7 @@ component extends="baseContentHandler"{
 		// messagebox
 		cbMessageBox.info( messageArray=messages );
 		// relocate
-		setNextEvent( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
+		relocate( event=prc.xehContentStore, queryString="parent=#rc.parent#" );
 	}
 
 	// pager viewlet
@@ -538,7 +541,7 @@ component extends="baseContentHandler"{
 		// relocate if not existent
 		if( !prc.content.isLoaded() ){
 			cbMessageBox.warn( "ContentID sent is not valid" );
-			setNextEvent( prc.xehContentStore );
+			relocate( prc.xehContentStore );
 		}
 
 		switch( rc.format ){
@@ -592,7 +595,7 @@ component extends="baseContentHandler"{
 			log.error( errorMessage, e );
 			cbMessageBox.error( errorMessage );
 		}
-		setNextEvent( prc.xehContentStore );
+		relocate( prc.xehContentStore );
 	}
 
 }

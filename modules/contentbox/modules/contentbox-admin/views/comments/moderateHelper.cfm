@@ -5,7 +5,7 @@ $(document).ready(function() {
 	$commentForm = $( "##commentForm" );
 } );
 function removeComment(){
-	$commentForm.attr( "action","#event.buildlink(linkTo=rc.xehCommentRemove)#" );
+	$commentForm.attr( "action", "#event.buildlink( rc.xehCommentRemove )#" );
 }
 </script>
 </cfoutput>

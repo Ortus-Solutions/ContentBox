@@ -2,7 +2,7 @@
 * Author service tests
 */
 component extends="tests.resources.BaseTest"{
-	
+
 /*********************************** LIFE CYCLE Methods ***********************************/
 
 	// executes before all suites+specs in the run() method
@@ -38,7 +38,7 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			it( "can be created", function(){
-				expect(	authorService ).toBeComponent();
+				expect(	isObject( authorService ) ).toBeTrue();
 			});
 
 			it( "can validate API Tokens", function(){
@@ -89,5 +89,5 @@ component extends="tests.resources.BaseTest"{
 			});
 		});
 	}
-	
+
 }

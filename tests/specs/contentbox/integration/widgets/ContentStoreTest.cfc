@@ -29,10 +29,6 @@ component extends="tests.resources.BaseTest"{
 					widget = widgetService.getWidget( "ContentStore" );
 				});
 
-				it( "can be created", function(){
-					expect(	widget ).toBeComponent();
-				});
-
 				it( "can get valid content store items", function(){
 					var r = widget.renderIt( "foot" );
 					expect( r.len() ).toBeGT( 0 );

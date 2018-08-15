@@ -17,20 +17,20 @@
 
 <!--- content Form  --->
 #html.startForm(
-    action=prc.xehContentSave,
-    name="contentForm",
-    novalidate="novalidate",
-    class="form-vertical", 
-    role="form"
+    action      = prc.xehContentSave,
+    name        = "contentForm",
+    novalidate  = "novalidate",
+    class       = "form-vertical",
+    role        = "form"
 )#
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
             #getModel( "messagebox@cbMessagebox" ).renderit()#
             <!--- form --->
-            #html.hiddenField(name="contentID",bind=prc.content)#
-            #html.hiddenField(name="contentType",bind=prc.content)#
-            #html.hiddenField(name="sluggerURL",value=event.buildLink(prc.xehSlugify))#
+            #html.hiddenField( name="contentID", bind=prc.content)#
+            #html.hiddenField( name="contentType", bind=prc.content)#
+            #html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
 
             <div class="panel panel-default">
 
@@ -59,7 +59,10 @@
                                     <i class="fa fa-history"></i> History
                                 </a>
                             </li>
-                        </cfif>
+						</cfif>
+
+						<!--- Event --->
+						#announceInterception( "cbadmin_ContentStoreEditorNav" )#
                     </ul>
                 </div>
 
@@ -67,18 +70,18 @@
                     <div role="tabpanel" class="tab-pane active" id="editor">
                         <!--- title --->
                         #html.textfield(
-                            label="Title:",
-                            name="title",
-                            bind=prc.content,
-                            maxlength="100",
-                            required="required",
-                            title="The title for this content",
-                            class="form-control",
-                            wrapper="div class=controls",
-                            labelClass="control-label",
-                            groupWrapper="div class=form-group"
+                            label    	= "Title:",
+                            name     	= "title",
+                            bind     	= prc.content,
+                            maxlength	= "100",
+                            required 	= "required",
+                            title    	= "The title for this content",
+                            class    	= "form-control",
+                            wrapper  	= "div class=controls",
+                            labelClass	= "control-label",
+                            groupWrapper= "div class=form-group"
                         )#
-                        
+
                         <!--- slug --->
                         <div class="form-group">
                             <label for="slug" class="control-label">Slug:</label>
@@ -86,35 +89,41 @@
                                 <div id='slugCheckErrors'></div>
                                 <div class="input-group">
                                     #html.textfield(
-                                        name="slug", 
-                                        bind=prc.content, 
-                                        maxlength="100", 
-                                        class="form-control", 
-                                        title="The unique slug for this content, this is how they are retreived",
-                                        disabled="#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
+                                        name      = "slug",
+                                        bind      = prc.content,
+                                        maxlength = "100",
+                                        class     = "form-control",
+                                        title     = "The unique slug for this content, this is how they are retreived",
+                                        disabled  = "#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
                                     )#
-                                    <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock permalink" data-container="body">
-                                            <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+									<a title=""
+										class="input-group-addon"
+										href="javascript:void(0)"
+										onclick="togglePermalink(); return false;"
+										data-original-title="Lock/Unlock permalink"
+										data-container="body"
+									>
+                                        <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
                                     </a>
                                 </div>
                             </div>
-                        </div>      
+                        </div>
 
                         <!--- Description --->
                         #html.textarea(
-                            name="description",
-                            label="Short Description:",
-                            bind=prc.content,
-                            rows=3,
-                            class="form-control",
-                            title="A short description for metadata purposes",
-                            wrapper="div class=controls",
-                            labelClass="control-label",
-                            groupWrapper="div class=form-group"
-                        )# 
+                            name   		= "description",
+                            label  		= "Short Description:",
+                            bind   		= prc.content,
+                            rows   		= 3,
+                            class  		= "form-control",
+                            title  		= "A short description for metadata purposes",
+                            wrapper		= "div class=controls",
+                            labelClass	= "control-label",
+                            groupWrapper= "div class=form-group"
+                        )#
 
                         <!---ContentToolBar --->
-                        #renderView( view="_tags/content/markup", args={ content=prc.content } )#    	
+                        #renderView( view="_tags/content/markup", args={ content=prc.content } )#
 
                         <!--- content --->
                         #html.textarea(
@@ -135,13 +144,16 @@
                         <div role="tabpanel" class="tab-pane" id="history">
                             #prc.versionsViewlet#
                         </div>
-                    </cfif>
+					</cfif>
+
+					<!--- Custom tab content --->
+					#announceInterception( "cbadmin_contentStoreEditorNavContent" )#
 
                 </div>
                 <!--- Event --->
                 #announceInterception( "cbadmin_contentStoreEditorInBody" )#
             </div>
-        
+
             <!--- Event --->
             #announceInterception( "cbadmin_contentStoreEditorFooter" )#
         </div>
@@ -153,26 +165,26 @@
                 <div class="panel-body">
                     <cfset pArgs = { content=prc.content }>
                     #renderView( view="_tags/content/publishing", args=pArgs )#
-                   
-        
+
+
                     <!--- Accordion --->
                     <div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
-                        
+
                         <!---Begin Info--->
-                        <cfif prc.content.isLoaded()> 
+                        <cfif prc.content.isLoaded()>
                             #renderView(
                                 view    = "_tags/content/infotable",
                                 args    = { content = prc.content }
                             )#
                         </cfif>
-                        
+
                         <!---Begin Related Content--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap fa-lg"></i> Related Content                                
+                                        <i class="fa fa-sitemap fa-lg"></i> Related Content
                                     </a>
                                 </h4>
                             </div>
@@ -193,7 +205,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link fa-lg"></i> Linked Content                                
+                                        <i class="fa fa-link fa-lg"></i> Linked Content
                                     </a>
                                 </h4>
                             </div>
@@ -278,7 +290,7 @@
                             #html.hiddenField( name="parentContent", value=prc.parentcontentID )#
                         </cfif>
                         <!---End Modfiers--->
-                            
+
                         <!---Begin Cache Settings--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
                         <div class="panel panel-default">
@@ -301,7 +313,7 @@
                                         #html.select(
                                             name="cache",
                                             options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.content.getCache()), 
+                                            selectedValue=yesNoFormat(prc.content.getCache()),
                                             class="form-control input-sm"
                                         )#
                                     </div>
@@ -334,7 +346,7 @@
                         </div>
                         </cfif>
                         <!---End Cache Settings--->
-                            
+
                         <!---Begin Categories--->
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
                         <div class="panel panel-default">
@@ -362,7 +374,7 @@
                                         </div>
                                     </cfloop>
                                     </div>
-                
+
                                     <!--- New Categories --->
                                     #html.textField(
                                         name="newCategories",
@@ -376,12 +388,12 @@
                         </div>
                         </cfif>
                         <!---End Categories--->
-                            
+
                         <!--- Event --->
-                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#     
-                    </div>  
+                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#
+                    </div>
                     <!--- End Accordion --->
-        
+
                     <!--- Event --->
                     #announceInterception( "cbadmin_contentStoreEditorSidebar" )#
                 </div>

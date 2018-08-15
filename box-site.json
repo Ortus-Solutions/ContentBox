@@ -27,7 +27,7 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^5.0.0",
+        "coldbox":"^5.1.4",
         "contentbox":"^@version.number@+@build.number@"
     },
     "installPaths":{
@@ -35,7 +35,7 @@
         "testbox":"testbox"
     },
     "devDependencies":{
-        "testbox":"^2.6.0"
+        "testbox":"^2.7.0"
     },
     "ignores":[
     ]

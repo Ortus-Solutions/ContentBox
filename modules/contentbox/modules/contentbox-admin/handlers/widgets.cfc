@@ -59,31 +59,10 @@ component extends="baseHandler"{
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
 		cbMessagebox.info( "Widget Removed Forever!" );
-		setNextEvent(prc.xehWidgets);
+		relocate(prc.xehWidgets);
 	}
 
-	//upload
-	function upload( event, rc, prc ){
-		var fp = event.getTrimValue( "fileWidget","" );
 
-		// Verify
-		if( len( fp ) eq 0){
-			cbMessagebox.setMessage(type="warning", message="Please choose a file to upload" );
-		}
-		else{
-			// Upload File
-			try{
-				widgetService.uploadWidget( "fileWidget" );
-				// Info
-				cbMessagebox.setMessage(type="info", message="Widget Installed Successfully" );
-			}
-			catch(Any e){
-				cbMessagebox.error( "Error uploading file: #e.detail# #e.message#" );
-			}
-		}
-
-		setNextEvent(prc.xehWidgets);
-	}
 
 	// Editor Selector
 	function editorSelector( event, rc, prc ){

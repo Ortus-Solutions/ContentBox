@@ -12,11 +12,11 @@
                         <ul>
                         <cfloop collection="#prc.fileInfo#" item="myKey">
                             <li><b>#myKey#</b>: #prc.fileInfo[myKey]#</li>
-                        </cfloop>                        
+                        </cfloop>
                         </ul>
                         <h1>Image Info</h1>
                         <cfif structKeyExists( prc, "imgInfo" )>
-                        #parseStruct(prc.ImgInfo)#                     
+                        #parseStruct(prc.ImgInfo)#
                         </cfif>
                     </div>
                 </div>
@@ -41,13 +41,13 @@ function parseStruct( data ){
         return arrayToList( arguments.data );
     }
     if( isStruct( arguments.data) ){
-        
+
         var newList = "<ul>";
 
-        for( k in arguments.data ){
-            newList &= "<li><b>" & k & "</b>: " & parseStruct( arguments.data[k] ) & "</li>";
+        for( var k in arguments.data ){
+            newList &= "<li><b>" & k & "</b>: " & parseStruct( arguments.data[ k ] ) & "</li>";
         }
-        return newList &= "</ul>";
+        return "#newList#</ul>";
     }
 
 }

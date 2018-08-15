@@ -1,10 +1,10 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* This is the ContentBox UI helper class that is injected by the CBRequest interceptor
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
+ */
 component accessors="true" singleton threadSafe{
 
 	// DI
@@ -29,8 +29,8 @@ component accessors="true" singleton threadSafe{
 	property name="markdown"			inject="Processor@cbmarkdown";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	function init(){
 		return this;
 	}
@@ -375,7 +375,7 @@ component accessors="true" singleton threadSafe{
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 
 		if( prc.cbSettings.cb_site_ssl and !event.isSSL() ){
-			controller.setNextEvent( event=event.getCurrentRoutedURL(), ssl=true );
+			controller.relocate( event=event.getCurrentRoutedURL(), ssl=true );
 		}
 
 		/************************************** IDENTITY HEADER *********************************************/
@@ -643,7 +643,7 @@ component accessors="true" singleton threadSafe{
 		var prc = getPrivateRequestCollection();
 		checkMetaStruct();
 		if( structKeyExists( prc.meta, "description" ) ){
-			return stripWhitespace(prc.meta.description);
+			return stripWhitespace( prc.meta.description );
 		} else {
 			return '';
 		}
@@ -712,7 +712,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Description is set Manually, return it
 		if( len( getMetaDescription() ) ){
-			return stripWhitespace(getMetaDescription());
+			return getMetaDescription();
 		}
 
 		// Check if in page view or entry view
@@ -726,13 +726,13 @@ component accessors="true" singleton threadSafe{
 		if( isObject( oCurrentContent ) ){
 			// Do we have current page SEO description set?
 			if( len( oCurrentContent.getHTMLDescription() ) ){
-				return oCurrentContent.getHTMLDescription();
+				return trim( oCurrentContent.getHTMLDescription() );
 			}
 
 			// Default description from content in non HTML mode
 			return HTMLEditFormat(
 				REReplaceNoCase(
-					left( stripWhitespace(oCurrentContent.getContent()), 160 ),
+					left( stripWhitespace( oCurrentContent.renderContent() ), 160 ),
 					"<[^>]*>",
 					"",
 					"ALL"
@@ -740,8 +740,8 @@ component accessors="true" singleton threadSafe{
 			);
 		}
 
-		// Return global site description
-		return HTMLEditFormat( siteDescription() );
+		// Return global site description as metadata
+		return HTMLEditFormat( trim( siteDescription() ) );
 	}
 
 	/**
@@ -1061,7 +1061,7 @@ component accessors="true" singleton threadSafe{
 
 	){
 		arguments.event = adminRoot() & ".module.#arguments.module#.#arguments.event#";
-		return controller.setNextEvent( argumentCollection=arguments );
+		return controller.relocate( argumentCollection=arguments );
 	}
 
 	/**
@@ -1414,15 +1414,17 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* Link to the commenting post action, this is where comments are submitted to
-	* @content The entry or page to link to its comments
-	* @ssl	Use SSL or not, defaults to false.
-	*/
+	 * Link to the commenting post action, this is where comments are submitted to
+	 *
+	 * @content The entry or page to link to its comments
+	 * @ssl	Use SSL or not, defaults to false.
+	 *
+	 * @return The URL to submit to.
+	 */
 	function linkCommentPost( required content, boolean ssl=getRequestContext().isSSL() ){
-
 		if( arguments.content.getContentType() eq "page" ){
 			var xeh = siteRoot() & sep() & "__pageCommentPost";
-			return getRequestContext().buildLink(linkTo=xeh, ssl=arguments.ssl);
+			return getRequestContext().buildLink( linkTo=xeh, ssl=arguments.ssl );
 		}
 
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";
@@ -1931,7 +1933,9 @@ component accessors="true" singleton threadSafe{
 	*/
 	function stripWhitespace( required stringTarget ){
 		arguments.stringTarget = REReplace( arguments.stringTarget, "\s", " ", "ALL" );
-		return REReplace( arguments.stringTarget, "\s{2,}", " ", "ALL" );
+		return trim(
+			REReplace( arguments.stringTarget, "\s{2,}", " ", "ALL" )
+		);
 	}
 
 	/************************************** PRIVATE *********************************************/

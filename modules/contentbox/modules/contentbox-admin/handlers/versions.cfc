@@ -42,8 +42,9 @@ component extends="baseHandler"{
 
 		// Pager with all versions
 		prc.versionsPager = pager( event, rc, prc, rc.contentID, 0, false );
+
 		// view
-		event.setView( view="versions/index" );
+		event.setView( "versions/index" );
 	}
 
 	/**

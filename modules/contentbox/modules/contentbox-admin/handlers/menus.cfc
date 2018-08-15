@@ -12,18 +12,19 @@ component extends="baseHandler" {
 	property name="menuItemService" inject="id:menuItemService@cb";
 	property name="cb"              inject="id:cbHelper@cb";
 	property name="HTMLHelper"      inject="HTMLHelper@coldbox";
-	
+
 	// Public properties
 	this.preHandler_except = "pager";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// exit Handlers
-		prc.xehMenus      = "#prc.cbAdminEntryPoint#.menus";
-		prc.xehMenuEditor = "#prc.cbAdminEntryPoint#.menus.editor";
-		prc.xehMenuRemove = "#prc.cbAdminEntryPoint#.menus.remove";
+		prc.xehMenus      	= "#prc.cbAdminEntryPoint#.menus";
+		prc.xehMenuEditor 	= "#prc.cbAdminEntryPoint#.menus.editor";
+		prc.xehMenuRemove 	= "#prc.cbAdminEntryPoint#.menus.remove";
+		prc.tabContent 		= true;
 	}
-	
+
 	/**
 	* Menu Manager index
 	*/
@@ -37,6 +38,9 @@ component extends="baseHandler" {
 		prc.xehMenuTable    = "#prc.cbAdminEntryPoint#.menus.menuTable";
 		// Get all menus
 		prc.menus = menuService.list( sortOrder="title", asQuery=false );
+
+		// Light up
+		prc.tabContent_menu = true;
 		// view
 		event.setView( "menus/index" );
 	}
@@ -63,7 +67,7 @@ component extends="baseHandler" {
 	function slugify( event, rc, prc ){
 		event.renderData( data=trim( variables.HTMLHelper.slugify( rc.slug ) ),type="plain" );
 	}
-	
+
 	/**
 	* Verify if slug is unique
 	* @return json
@@ -91,11 +95,11 @@ component extends="baseHandler" {
 		event.paramValue( "menuID", 0 );
 		// get new or persisted
 		prc.menuItems   = "";
-		prc.menu        = menuService.get( rc.menuID );   
+		prc.menu        = menuService.get( rc.menuID );
 		if( prc.menu.isLoaded() ) {
 			prc.menuItems = menuService.buildEditableMenu( prc.menu.getMenuItems() );
-		}       
-		
+		}
+
 		// exit handlers
 		prc.xehMenuSave   = "#prc.cbAdminEntryPoint#.menus.save";
 		prc.xehMenuEditor = "#prc.cbAdminEntryPoint#.menus.editor";
@@ -103,13 +107,13 @@ component extends="baseHandler" {
 		prc.xehMenuItem   = "#prc.cbAdminEntryPoint#.menus.createMenuItem";
 		prc.xehSlugify    = "#prc.cbAdminEntryPoint#.menus.slugify";
 		prc.xehSlugCheck  = "#prc.cbAdminEntryPoint#.menus.slugUnique";
-		
+
 		// get registered providers
 		prc.providers = menuItemService.getProviders();
 
 		// add assets
-		prc.cssAppendList = "";       
-		prc.jsAppendList  = "";        
+		prc.cssAppendList = "";
+		prc.jsAppendList  = "";
 
 		// view
 		event.setView( "menus/editor" );
@@ -128,8 +132,8 @@ component extends="baseHandler" {
 		};
 		var str = '<li class="dd-item dd3-item" data-id="new-#createUUID()#">';
 		savecontent variable="menuString" {
-			writeoutput(renderView( 
-				view="menus/provider", 
+			writeoutput(renderView(
+				view="menus/provider",
 				args = args
 			));
 		};
@@ -149,15 +153,15 @@ component extends="baseHandler" {
 		// search content with filters and all
 		var results = menuService.search(
 			searchTerm  = rc.searchMenu,
-			sortOrder	= "createdDate desc" 
+			sortOrder	= "createdDate desc"
 		);
 		prc.menus 		= results.menus;
 		prc.menuCount 	= results.count;
 
 		// exit handlers
 		prc.xehMenuSearch = "#prc.cbAdminEntryPoint#.menus";
-		prc.xehMenuExport = "#prc.cbAdminEntryPoint#.menus.export";        
-		
+		prc.xehMenuExport = "#prc.cbAdminEntryPoint#.menus.export";
+
 		// view
 		event.setView( view="menus/indexTable", layout="ajax" );
 	}
@@ -171,8 +175,8 @@ component extends="baseHandler" {
 			.paramvalue( "menuID", 0 )
 			.paramValue( "menuItems", "{}");
 		// slugify if not passed, and allow passed slugs to be saved as-is
-		if( !len( rc.slug ) ) { 
-			rc.slug = variables.HTMLHelper.slugify( rc.title ); 
+		if( !len( rc.slug ) ) {
+			rc.slug = variables.HTMLHelper.slugify( rc.title );
 		}
 		var oMenu 			= menuService.get( id=rc.menuID );
 		var originalSlug 	= oMenu.getSlug();
@@ -185,22 +189,22 @@ component extends="baseHandler" {
 		// populate items from form
 		oMenu.populateMenuItems( rawData=deserializeJSON( rc.menuItems ) );
 		// announce event
-		announceInterception( "cbadmin_preMenuSave", { 
-			menu 	= oMenu, 
-			menuID 	= rc.menuID 
+		announceInterception( "cbadmin_preMenuSave", {
+			menu 	= oMenu,
+			menuID 	= rc.menuID
 		} );
 		// save menu
 		menuService.saveMenu( menu=oMenu, originalSlug=originalSlug );
 		// announce event
-		announceInterception( "cbadmin_postMenuSave", { 
-			menu 		= oMenu, 
-			originalSlug= originalSlug 
+		announceInterception( "cbadmin_postMenuSave", {
+			menu 		= oMenu,
+			originalSlug= originalSlug
 		} );
 		// messagebox
 		cbMessagebox.setMessage( "info", "Menu saved!" );
 		// relocate
 		var targetEvent = ( len( rc.saveEvent ) ? rc.saveEvent & "/menuID/#rc.menuID#" : prc.xehMenus );
-		setNextEvent( targetEvent );
+		relocate( targetEvent );
 	}
 
 	/**
@@ -213,8 +217,8 @@ component extends="baseHandler" {
 			.paramvalue( "menuID", 0 )
 			.paramValue( "menuItems", "{}");
 		// slugify if not passed, and allow passed slugs to be saved as-is
-		if( !len( rc.slug ) ) { 
-			rc.slug = variables.HTMLHelper.slugify( rc.title ); 
+		if( !len( rc.slug ) ) {
+			rc.slug = variables.HTMLHelper.slugify( rc.title );
 		}
 		var oMenu  			= menuService.new();
 		var originalSlug 	= oMenu.getSlug();
@@ -225,24 +229,24 @@ component extends="baseHandler" {
 		// render data
 		event.renderData( data=cb.buildProviderMenu( menu=oMenu ), type="text" );
 	}
-	
+
 	/**
 	* Remove a menu
 	*/
 	function remove( event, rc, prc ){
 		// params
 		event.paramValue( "menuID", "" );
-		
+
 		// verify if contentID sent
 		if( !len( rc.menuID ) ){
 			cbMessagebox.warn( "No menus sent to delete!" );
-			setNextEvent( event=prc.xehMenus );
+			relocate( event=prc.xehMenus );
 		}
-		
+
 		// Inflate to array
 		rc.menuID = listToArray( rc.menuID );
 		var messages = [];
-		
+
 		// Iterate and remove
 		for( var thisMenuID in rc.menuID ){
 			var oMenu = menuService.get( thisMenuID );
@@ -255,16 +259,16 @@ component extends="baseHandler" {
 				// announce event
 				announceInterception( "cbadmin_preMenuRemove", { menu=oMenu, menuID=menuID } );
 				// Delete it
-				menuService.delete( oMenu ); 
+				menuService.delete( oMenu );
 				arrayAppend( messages, "Menu '#title#' removed" );
 				// announce event
 				announceInterception( "cbadmin_postMenuRemove", { menuID=menuID } );
 			}
 		}
-		
+
 		// messagebox
 		cbMessagebox.info( messageArray=messages );
-		setNextEvent( prc.xehMenus );
+		relocate( prc.xehMenus );
 	}
 
 	/**
@@ -276,18 +280,18 @@ component extends="baseHandler" {
 			.paramValue( "menuID", 0 );
 		// get menu
 		var oMenu  = menuService.get( rc.menuID );
-		
+
 		// relocate if not existent
 		if( !oMenu.isLoaded() ){
 			cbMessagebox.warn( "MenuID sent is not valid" );
-			setNextEvent( prc.xehMenus );
+			relocate( prc.xehMenus );
 		}
-		
+
 		switch( rc.format ){
 			case "xml" : case "json" : {
 				var filename = "#oMenu.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData( data=oMenu.getMemento(), type=rc.format, xmlRootName="menu" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default :{
@@ -309,7 +313,7 @@ component extends="baseHandler" {
 			case "xml" : case "json" : {
 				var filename = "Menus." & ( rc.format eq "xml" ? "xml" : "json" );
 				event.renderData( data=data, type=rc.format, xmlRootName="menus" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" ); 
+					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 				break;
 			}
 			default : {
@@ -317,7 +321,7 @@ component extends="baseHandler" {
 			}
 		}
 	}
-	
+
 	/**
 	* Import menu from json data
 	*/
@@ -338,6 +342,6 @@ component extends="baseHandler" {
 			cbMessagebox.error( errorMessage );
 		}
 
-		setNextEvent( prc.xehMenus );
+		relocate( prc.xehMenus );
 	}
 }

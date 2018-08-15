@@ -312,7 +312,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 
 		// Now delete it
-		deleteWhere( { "name" = arguments.name } );
+		deleteWhere( name = arguments.name );
 		if( directoryExists( moduleEntry.path & "/#arguments.name#" ) ){
 			directoryDelete( moduleEntry.path & "/#arguments.name#", true );
 		}
@@ -406,69 +406,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		buildModuleWidgetsCache();
 
 		return this;
-	}
-
-	/**
-	 * Upload a Module to the custom modules location, returns structure with [error:boolean, logInfo=string]
-	 *
-	 * @fileField The field it uploads from
-	 */
-	struct function uploadModule( required fileField ){
-		var destination 	= variables.coreModulesPath;
-		var installLog 		= createObject( "java","java.lang.StringBuilder" ).init( "" );
-		var results 		= {
-			"error" 	= true,
-			"logInfo" 	= ""
-		};
-
-		// Upload the module zip
-		var fileResults = fileUpload(
-			destination,
-			arguments.fileField,
-			"application/octet-stream,application/x-zip-compressed,application/zip",
-			"overwrite"
-		);
-
-		// Unzip File?
-		if ( listLast( fileResults.clientFile, "." ) eq "zip" ){
-			// test zip has files?
-			try{
-				var listing = zipUtil.list( "#destination#/#fileResults.clientFile#" );
-			} catch( Any e ) {
-				// bad zip file.
-				installLog.append( "Error getting listing of zip archive (#destination#/#fileResults.clientFile#), bad zip, file will be removed.<br />" );
-				fileDelete( destination & "/" & fileResults.clientFile );
-				// flatten messages;
-				results.logInfo = installLog.toString();
-				return results;
-			}
-
-			// extract it
-			zipUtil.extract(
-				zipFilePath = "#destination#/#fileResults.clientFile#",
-				extractPath = "#destination#"
-			);
-
-			// Removal of Mac stuff
-			if( directoryExists( destination & "/__MACOSX" ) ){
-				directoryDelete( destination & "/__MACOSX", true);
-			}
-
-			// rescan and startup the modules
-			startup();
-
-			// success
-			results.error = false;
-		} else {
-			installLog.append( "File #fileResults.clientFile# is not a zip file, so cannot extract it or use it, file will be removed.<br/>" );
-			fileDelete( destination & "/" & fileResults.clientFile );
-		}
-
-		// flatten messages;
-		results.logInfo = installLog.toString();
-
-		// return results
-		return results;
 	}
 
 	/**

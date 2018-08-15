@@ -19,10 +19,10 @@ component{
 	property name="messagebox"			inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller"		inject="DataMarshaller@coldbox";
 	property name="markdown"			inject="Processor@cbmarkdown";
-	
+
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
-	
+
 	/**
 	* Pre Handler
 	*/
@@ -30,7 +30,7 @@ component{
 		// Maintenance Mode?
 		if( prc.cbSettings.cb_site_maintenance ){
 			if( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.checkPermission( "MAINTENANCE_MODE_VIEWER" )  ){
-				addAsset( "#prc.cbRoot#/includes/js/maintenance.js" );	
+				addAsset( "#prc.cbRoot#/includes/js/maintenance.js" );
 			} else {
 				event.overrideEvent( "contentbox-ui:page.maintenance" );
 				return;
@@ -42,9 +42,9 @@ component{
 
 		// Home page determination either blog or a page
 		// Blog routes are in the blog namespace
-		if( event.getCurrentRoute() eq "/" AND 
-			prc.cbSettings.cb_site_homepage neq "cbBlog" AND 
-			event.getCurrentRoutedNamespace() neq "blog" 
+		if( event.getCurrentRoute() eq "/" AND
+			prc.cbSettings.cb_site_homepage neq "cbBlog" AND
+			event.getCurrentRoutedNamespace() neq "blog"
 		){
 			event.overrideEvent( "contentbox-ui:page.index" );
 			prc.pageOverride = prc.cbSettings.cb_site_homepage;
@@ -62,9 +62,9 @@ component{
 	function changeLang( event, rc, prc ){
 		event.paramValue( "lang", "en_US" );
 		setFWLocale( rc.lang );
-		setNextEvent( url="/" );
+		relocatE( url="/" );
 	}
-	
+
 	/**
 	* Preview the site
 	*/
@@ -75,10 +75,10 @@ component{
 
 		// xss headers
 		event.setHTTPHeader( name="X-XSS-Protection", value=0 );
-		
+
 		// valid Author?
-		if( prc.oCurrentAuthor.isLoaded() AND 
-			prc.oCurrentAuthor.isLoggedIn() AND 
+		if( prc.oCurrentAuthor.isLoaded() AND
+			prc.oCurrentAuthor.isLoggedIn() AND
 			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) EQ 0
 		){
 			// Place theme on scope
@@ -104,10 +104,10 @@ component{
 			}
 		} else {
 			// 	Invalid Credentials
-			setNextEvent( URL=CBHelper.linkBlog() );
+			relocatE( URL=CBHelper.linkBlog() );
 		}
 	}
-	
+
 	/**
 	* Go Into maintenance mode.
 	*/
@@ -131,13 +131,13 @@ component{
 		prc.exception   = arguments.exception;
 
 		// announce event
-		announceInterception( 
+		announceInterception(
 			"cbui_onError",
 			{
 				faultAction 	= arguments.faultAction,
 				exception 		= arguments.exception,
 				eventArguments 	= arguments.eventArguments
-			} 
+			}
 		);
 
 		// Set view to render
@@ -156,9 +156,9 @@ component{
 	* @action The action to wrap
 	* @contentCaching Wether content caching is enabled or not
 	*/
-	private function wrapContentAdvice( 
-		required event, 
-		required rc, 
+	private function wrapContentAdvice(
+		required event,
+		required rc,
 		required prc,
 		required eventArguments,
 		required action,
@@ -172,11 +172,11 @@ component{
 		}
 
 		// Caching Enabled? Then test if data is in cache.
-		var cacheEnabled = ( 
-			arguments.contentCaching AND 
-			!structKeyExists( eventArguments, "noCache" ) AND 
+		var cacheEnabled = (
+			arguments.contentCaching AND
+			!structKeyExists( eventArguments, "noCache" ) AND
 			!event.valueExists( "cbCache" ) AND
-			!flash.exists( "commentErrors" ) 
+			!flash.exists( "commentErrors" )
 		);
 		if( cacheEnabled ){
 			// Get appropriate cache provider from settings
@@ -188,10 +188,10 @@ component{
 			} else {
 				cacheKey = "cb-content-wrapper-#cgi.http_host#-#left( event.getCurrentRoutedURL(), 500 )#";
 			}
-			
+
 			// Incorporate internal hash + rc distinct hash + formats
 			cacheKey &= hash( ".#getFWLocale()#.#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash  );
-			
+
 			// get content data from cache
 			prc.contentCacheData = cache.get( cacheKey );
 			// if NOT null and caching enabled and noCache event argument does not exist and no incoming cbCache URL arg, then cache
@@ -213,12 +213,12 @@ component{
 				return;
 			}
 		}
-		
+
 		// Prepare data packet for rendering and caching and more
-		var data = { 
-			contentID  	= "", 
-			contentType = "text/html", 
-			isBinary 	= false 
+		var data = {
+			contentID  	= "",
+			contentType = "text/html",
+			isBinary 	= false
 		};
 		// Prepare args for action execution
 		var args = {
@@ -229,19 +229,19 @@ component{
 		structAppend( args, arguments.eventArguments );
 		// execute the wrapped action
 		data.content = arguments.action( argumentCollection=args );
-		
+
 		// Check for missing page? If so, just return, no need to do multiple formats or caching for a missing page
 		if( structKeyExists( prc, "missingPage" ) ){ return; }
-		
+
 		// Get the content object required: page or entry
 		var oContent = ( structKeyExists( prc, "page" ) ? prc.page : prc.entry );
 
 		// generate content only if content is not set, else means handler generated content.
 		if( isNull( data.content ) ){
-			data.content = renderLayout( 
-				layout 		= "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#", 
+			data.content = renderLayout(
+				layout 		= "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout( format=rc.format, layout=listLast( event.getCurrentLayout(), '/' ) )#",
 				module 		= prc.cbThemeRecord.module,
-				viewModule 	= prc.cbThemeRecord.module 
+				viewModule 	= prc.cbThemeRecord.module
 			);
 		}
 
@@ -265,10 +265,10 @@ component{
 				break;
 			}
 			case "xml" : {
-				data.content 		= dataMarshaller.marshallData( 
-					data 		= oContent.getResponseMemento(), 
-					type 		= "xml", 
-					xmlRootName = lcase( oContent.getContentType() ) 
+				data.content 		= dataMarshaller.marshallData(
+					data 		= oContent.getResponseMemento(),
+					type 		= "xml",
+					xmlRootName = lcase( oContent.getContentType() )
 				);
 				data.contentType	= "text/xml";
 				data.isBinary 		= false;
@@ -279,16 +279,16 @@ component{
 				data.isBinary 		= false;
 			}
 		}
-		
+
 		// Tell renderdata to render it
-		event.renderData( 
-			data 		= data.content, 
-			contentType = data.contentType, 
+		event.renderData(
+			data 		= data.content,
+			contentType = data.contentType,
 			isBinary 	= data.isBinary
 		);
-		
+
 		// verify if caching is possible by testing the content parameters
-		if( cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.getIsPublished() ){
+		if( cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.isContentPublished() ){
 			// store content ID as we have it by now
 			data.contentID = oContent.getContentID();
 			// Cache data
@@ -296,7 +296,7 @@ component{
 				cachekey,
 				data,
 				( oContent.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : oContent.getCacheTimeout() ),
-				( oContent.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : oContent.getCacheLastAccessTimeout())  
+				( oContent.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : oContent.getCacheLastAccessTimeout())
 			);
 		}
 	}
@@ -315,30 +315,30 @@ component{
 
 		// Get all categories
 		prc.categories = categoryService.list( sortOrder="category", asQuery=false );
-		
+
 		// valid Author?
-		if( !prc.oCurrentAuthor.isLoaded() OR 
-			!prc.oCurrentAuthor.isLoggedIn() OR 
+		if( !prc.oCurrentAuthor.isLoaded() OR
+			!prc.oCurrentAuthor.isLoggedIn() OR
 			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) NEQ 0
 		){
 			// Not an author, kick them out.
-			setNextEvent( URL=CBHelper.linkHome() );
+			relocatE( URL=CBHelper.linkHome() );
 		}
 
 		// xss headers
 		event.setHTTPHeader( name="X-XSS-Protection", value=0 );
 	}
-	
+
 	/**
 	* Validate incoming comment post, if not valid, it redirects back
 	* @thisContent The content object to validate the comment post for
-	* 
+	*
 	* @return content handler
 	*/
-	private function validateCommentPost( 
-		required event, 
-		required rc, 
-		required prc, 
+	private function validateCommentPost(
+		required event,
+		required rc,
+		required prc,
 		required thisContent
 	){
 		var commentErrors 	= [];
@@ -349,11 +349,11 @@ component{
 			.paramValue( "authorEmail", "" )
 			.paramValue( "content", "" )
 			.paramValue( "subscribe", false );
-		
+
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
 			messagebox.warn( "Comments are disabled! So you can't post any!" );
-			setNextEvent( URL=CBHelper.linkContent( arguments.thisContent ) );
+			relocatE( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
@@ -364,17 +364,17 @@ component{
 
 		// Validate incoming data
 		commentErrors = [];
-		if( !len( rc.author ) ){ 
-			arrayAppend( commentErrors, "Your name is missing!" ); 
+		if( !len( rc.author ) ){
+			arrayAppend( commentErrors, "Your name is missing!" );
 		}
-		if( !len( rc.authorEmail ) OR NOT isValid( "email", rc.authorEmail ) ){ 
-			arrayAppend( commentErrors, "Your email is missing or is invalid!" ); 
+		if( !len( rc.authorEmail ) OR NOT isValid( "email", rc.authorEmail ) ){
+			arrayAppend( commentErrors, "Your email is missing or is invalid!" );
 		}
-		if( len( rc.authorURL ) AND NOT isValid( "URL", rc.authorURL ) ){ 
-			arrayAppend( commentErrors, "Your website URL is invalid!" ); 
+		if( len( rc.authorURL ) AND NOT isValid( "URL", rc.authorURL ) ){
+			arrayAppend( commentErrors, "Your website URL is invalid!" );
 		}
-		if( !len( rc.content ) ){ 
-			arrayAppend( commentErrors, "Please provide a comment!" ); 
+		if( !len( rc.content ) ){
+			arrayAppend( commentErrors, "Please provide a comment!" );
 		}
 
 		// announce event
@@ -391,9 +391,9 @@ component{
 			// Message
 			messagebox.warn( arrayToList( commentErrors, "<br>" ) );
 			// Redirect
-			setNextEvent( 
-				URL 	= CBHelper.linkComments( arguments.thisContent ), 
-				persist = "author,authorEmail,authorURL,content" 
+			relocatE(
+				URL 	= CBHelper.linkComments( arguments.thisContent ),
+				persist = "author,authorEmail,authorURL,content"
 			);
 			return;
 		}
@@ -429,10 +429,10 @@ component{
 			// Message
 			messagebox.warn( arrayToList( results.messages, "<br>" ) );
 			// relocate back to comments
-			setNextEvent( URL=CBHelper.linkComments( arguments.thisContent ) );
+			relocatE( URL=CBHelper.linkComments( arguments.thisContent ) );
 		} else {
 			// relocate back to comment
-			setNextEvent( URL=CBHelper.linkComment( comment ) );
+			relocatE( URL=CBHelper.linkComment( comment ) );
 		}
 	}
 

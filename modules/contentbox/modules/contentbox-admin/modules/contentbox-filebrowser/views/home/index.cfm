@@ -4,6 +4,7 @@ Copyright since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
 www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ********************************************************************************
 ----------------------------------------------------------------------->
+<cfparam name="prc.fbPreferences.listFolder" default="">
 <cfoutput>
 <cfif prc.widget>
 	<h3>ContentBox Media Manager</h3>
@@ -45,16 +46,28 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		  </a>
 		</div>
 
+		<!---Grid or listing --->
+
 		<div class="btn-group btn-group-sm" role="group">
-		  <a href="javascript:fbListTypeChange('listing')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "filelisting@fb" )#">
+		  <a href="javascript:fbListTypeChange('listing','all')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "filelisting@fb" )#">
 		  	<i class="fa fa-list-ul"></i>
 		  </a>
-		  <a href="javascript:fbListTypeChange('grid')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "gridlisting@fb" )#">
+		  <a href="javascript:fbListTypeChange('grid','all')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "gridlisting@fb" )#">
 		  	<i class="fa fa-th"></i>
 		  </a>
 		</div>
 
-		<!---Grid or listing --->
+		<!---Grid or listing of Directories--->
+
+		<div class="btn-group btn-group-sm" role="group">
+			<a href="javascript:fbListTypeChange('listing','dir')" class="btn btn-info"  data-toggle="tooltip" data-container="body" title="#$r( "directorylistview@fb" )#">
+				<i class="fa fa-align-justify"></i>
+			</a>
+			<a href="javascript:fbListTypeChange('grid','dir')" class="btn btn-info"  data-toggle="tooltip" data-container="body" title="#$r( "directorygridview@fb" )#">
+				<i class="fa fa-folder"></i>
+			</a>
+		</div>
+
 		<div class="form-group">
 			<!--- Sorting --->
 			#html.label( field="fbSorting", content=$r( "sortby@fb" ))#
@@ -66,6 +79,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			#html.textField( name="fbQuickFilter", class="form-control" )#
 		</div>
 		#html.hiddenField( name="listType", value=prc.fbPreferences.listType )#
+		#html.hiddenField( name="listFolder", value=prc.fbPreferences.listFolder )#
 
 		<!---event --->
 		#announceInterception( "fb_postTitleBar" )#
@@ -83,7 +97,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<div class="form-group col-md-6">
 					<div class="controls" id="manual_upload_wrapper">
 		                <div class="fileinput fileinput-new input-group" data-provides="fileinput" id="filewrapper">
-		                    <div class="form-control" data-trigger="fileinput">
+		                    <div class="form-control" data-trigger="fileinput" style="height:auto">
 		                        <i class="fa fa-file fileinput-exists"></i> <span class="fileinput-filename"></span>
 		                    </div>
 		                    <span class="input-group-addon btn btn-default btn-file">
@@ -297,7 +311,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<!--- Loader Bar --->
 			<div id="loaderBar">
-				<i class="fa fa-circle-o-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
+				<i class="fa fa-circle-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
 			</div>
 
 			<!--- Status Text --->

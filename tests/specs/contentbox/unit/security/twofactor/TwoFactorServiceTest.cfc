@@ -57,7 +57,7 @@ component extends="tests.resources.BaseTest"{
 
 			it( "can get a provider instance", function(){
 				var provider = model.getProvider( "email" );
-				expect(	provider ).toBeComponent();
+				expect(	isObject( provider ) ).toBeTrue();
 			});
 
 			it( "can verify providers", function(){
@@ -72,7 +72,7 @@ component extends="tests.resources.BaseTest"{
 				model.registerProvider( provider );
 				model.unRegisterProvider( "mock" );
 				expect(	model.hasProvider( "mock" ) ).toBeFalse();
-				
+
 			});
 
 			it( "can set trusted devices", function(){
@@ -102,14 +102,14 @@ component extends="tests.resources.BaseTest"{
 				given( "A global force and no trusted device", function(){
 					then( "I should challenge", function(){
 						model.$( "isForceTwoFactorAuth", true )
-							.$( "isTrustedDevice", false ); 
+							.$( "isTrustedDevice", false );
 						expect(	model.canChallenge( thisUser ) ).toBeTrue();
 					});
 				});
 				given( "A global force and a trusted device", function(){
 					then( "I should NOT challenge", function(){
 						model.$( "isForceTwoFactorAuth", true )
-							.$( "isTrustedDevice", true ); 
+							.$( "isTrustedDevice", true );
 						expect(	model.canChallenge( thisUser ) ).toBeFalse();
 					});
 				});
@@ -117,7 +117,7 @@ component extends="tests.resources.BaseTest"{
 					then( "I should challenge", function(){
 						thisUser.setIs2FactorAuth( true );
 						model.$( "isForceTwoFactorAuth", false )
-							.$( "isTrustedDevice", false ); 
+							.$( "isTrustedDevice", false );
 						expect(	model.canChallenge( thisUser ) ).toBeTrue();
 					});
 				});
@@ -125,7 +125,7 @@ component extends="tests.resources.BaseTest"{
 					then( "I should NOT challenge", function(){
 						thisUser.setIs2FactorAuth( true );
 						model.$( "isForceTwoFactorAuth", false )
-							.$( "isTrustedDevice", true ); 
+							.$( "isTrustedDevice", true );
 						expect(	model.canChallenge( thisUser ) ).toBeFalse();
 					});
 				});

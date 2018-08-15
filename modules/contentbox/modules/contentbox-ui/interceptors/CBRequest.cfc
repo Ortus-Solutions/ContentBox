@@ -24,7 +24,7 @@ component extends="coldbox.system.Interceptor"{
 	function preProcess( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
-			setNextEvent( "cbInstaller" );
+			relocate( "cbInstaller" );
 		}
 		
 		// Prepare UI Request

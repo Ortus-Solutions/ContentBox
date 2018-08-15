@@ -72,6 +72,7 @@ $( document ).ready( function() {
 	$selectButton		= $fileBrowser.find( "##bt_select" );
 	$sorting			= $fileBrowser.find( "##fbSorting" );
 	$listType			= $fileBrowser.find( "##listType" );
+	$listFolder			= $fileBrowser.find( "##listFolder" );
 	$quickView			= $fileBrowser.find( "##quickViewBar" );
 	$quickViewContents	= $fileBrowser.find( "##quickViewBarContents" );
 	//disable it
@@ -130,6 +131,10 @@ $( document ).ready( function() {
     $('.files,.folders').on('click contextmenu', function(e){
 		// history cleanup
 		if(!e.ctrlKey){
+			$selectedItemType.val('');
+			$selectedItemID.val('');
+			$selectedItem.val('');
+			$selectedItemURL.val('');
 			for (var i in fbSelectHistory) {
 				$( "##" + fbSelectHistory[i] ).removeClass( "selected" );
 			}
@@ -138,11 +143,31 @@ $( document ).ready( function() {
 		// highlight selection
 		var $sItem = $(this);
 		$sItem.addClass( "selected" );
-		$selectedItemType.val( $sItem.attr( "data-type" ) );
-		$selectedItemID.val( $sItem.attr( "id" ) );
+		if($selectedItemType.val() != ''){
+			var selectedDataType = $selectedItemType.val();
+			$selectedItemType.val( selectedDataType + ',' + $sItem.attr( "data-type" ) );
+		}else{
+			$selectedItemType.val( $sItem.attr( "data-type" ) );
+		}
+		if($selectedItemID.val() != ''){
+			var selectedIds = $selectedItemID.val();
+			$selectedItemID.val( selectedIds + ',' + $sItem.attr( "id" ) );
+		}else{
+			$selectedItemID.val( $sItem.attr( "id" ) );
+		}
 		// save selection
-		$selectedItem.val( $sItem.attr( "data-fullURL" ) );
-		$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
+		if($selectedItem.val() != ''){
+			var selectedFiles = $selectedItem.val();
+			$selectedItem.val( selectedFiles + ',' + $sItem.attr( "data-fullURL" ) );
+		}else{
+			$selectedItem.val( $sItem.attr( "data-fullURL" ) );
+		}
+		if($selectedItemURL.val() != ''){
+			var selectedURL = $selectedItemURL.val();
+			$selectedItemURL.val( selectedURL + ',' + $sItem.attr( "data-relURL" ) );
+		}else{
+			$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
+		}
 		// history set
 		fbSelectHistory.push($sItem.attr( "id" ));
 		// status text
@@ -165,15 +190,17 @@ $( document ).ready( function() {
 function noMultiSelectAction(){
 	if( fbSelectHistory.length != 1 ){ alert( '#$r( "jsmessages.no_multi_select@fb" )#' ); return true; }
 }
-function fbListTypeChange( listType ){
+function fbListTypeChange( listType,file ){
 	$listType.val( listType );
+	$listFolder.val( file);
 	fbRefresh();
 }
 function fbRefresh(){
 	$('.tooltip').remove();
 	$fileLoaderBar.slideDown();
 	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#',
-		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val() },
+		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val(),listFolder
+		:$listFolder.val() },
 		function(){
 			$fileLoaderBar.slideUp();
 		} );
@@ -198,11 +225,8 @@ function fbQuickView(){
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	// show it
 	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent( target.attr( "data-fullURL" ) );
-	// Preview Image
-	bootbox.dialog({
-		title: '<i class="fa fa-image"></i> #$r( "jsmessages.image_preview@fb" )#',
-		message: "<img src=" + imgURL + ">"
-	});
+	$('.imagepreview').attr('src', imgURL);
+	openModal( $( "##modalPreview" ), 500 );
 }
 function fbRename(){
 	if(noMultiSelectAction()){return;};
@@ -332,7 +356,7 @@ function fbDelete(){
 <!--- Download --->
 <cfif prc.fbSettings.allowDownload>
 function fbDownload(){
-	var sPath = $selectedItem.val();
+	var sPath = ($selectedItem.val() != "") ? $selectedItem.val().split(',') :[];
 	var sType = $selectedItemType.val();
 	if( !sPath.length ){
 		alert( '#$r( "jsmessages.select@fb" )#' ); return;

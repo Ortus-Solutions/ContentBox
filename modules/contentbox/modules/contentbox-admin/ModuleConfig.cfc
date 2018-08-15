@@ -73,15 +73,15 @@ component {
 				// Entry Events
 				"cbadmin_preEntrySave","cbadmin_postEntrySave","cbadmin_preEntryRemove","cbadmin_postEntryRemove", "cbadmin_onEntryStatusUpdate",
 				"cbadmin_entryEditorSidebar", "cbadmin_entryEditorSidebarAccordion", "cbadmin_entryEditorSidebarFooter",
-				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody",
+				"cbadmin_entryEditorFooter", "cbadmin_entryEditorInBody", "cbadmin_entryEditorNav", "cbadmin_entryEditorNavContent",
 				// ContentStore Events
 				"cbadmin_preContentStoreSave","cbadmin_postContentStoreSave","cbadmin_preContentStoreRemove","cbadmin_postContentStoreRemove", "cbadmin_onContentStoreStatusUpdate",
 				"cbadmin_ContentStoreEditorSidebar", "cbadmin_ContentStoreEditorSidebarAccordion", "cbadmin_ContentStoreEditorSidebarFooter",
-				"cbadmin_ContentStoreEditorFooter", "cbadmin_ContentStoreEditorInBody",
+				"cbadmin_ContentStoreEditorFooter", "cbadmin_ContentStoreEditorInBody", "cbadmin_ContentStoreEditorNav", "cbadmin_contentStoreEditorNavContent",
 				// Page Events
 				"cbadmin_prePageSave","cbadmin_postPageSave","cbadmin_prePageRemove","cbadmin_postPageRemove", "cbadmin_onPageStatusUpdate",
 				"cbadmin_pageEditorSidebar", "cbadmin_pageEditorSidebarAccordion", "cbadmin_pageEditorSidebarFooter",
-				"cbadmin_pageEditorFooter", "cbadmin_pageEditorInBody",
+				"cbadmin_pageEditorFooter", "cbadmin_pageEditorInBody", "cbadmin_pageEditorNav", "cbadmin_pageEditorNavContent",
 				// Author Events
 				"cbadmin_preAuthorSave","cbadmin_postAuthorSave","cbadmin_onAuthorPasswordChange","cbadmin_preAuthorRemove","cbadmin_postAuthorRemove",
 				"cbadmin_preAuthorPreferencesSave" , "cbadmin_postAuthorPreferencesSave", "cbadmin_UserPreferencePanel",

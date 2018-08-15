@@ -98,7 +98,7 @@ component extends="baseHandler"{
 		announceInterception( "cbadmin_postSettingsSave" );
 		// relocate back to editor
 		cbMessagebox.info( "All ContentBox settings updated! Yeeehaww!" );
-		setNextEvent(prc.xehSettings);
+		relocate(prc.xehSettings);
 	}
 
 	/**
@@ -193,7 +193,7 @@ component extends="baseHandler"{
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );
 		}
-		setNextEvent( prc.xehRawSettings );
+		relocate( prc.xehRawSettings );
 	}
 
 	/**
@@ -223,7 +223,7 @@ component extends="baseHandler"{
 		// messagebox
 		cbMessagebox.setMessage( "info","Setting saved!" );
 		// relocate
-		setNextEvent(event=prc.xehRawSettings,queryString="page=#rc.page#" );
+		relocate(event=prc.xehRawSettings,queryString="page=#rc.page#" );
 	}
 
 	/**
@@ -243,7 +243,7 @@ component extends="baseHandler"{
 			settingsService.flushSettingsCache();
 			cbMessagebox.setMessage( "info","Setting Removed!" );
 		}
-		setNextEvent(prc.xehRawSettings);
+		relocate(prc.xehRawSettings);
 	}
 
 	/**
@@ -269,7 +269,7 @@ component extends="baseHandler"{
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
 		cbMessagebox.setMessage( "info","All singletons flushed and awaiting re-creation." );
-		setNextEvent(event=prc.xehRawSettings,queryString="##wirebox" );
+		relocate(event=prc.xehRawSettings,queryString="##wirebox" );
 	}
 
 	/**
@@ -308,7 +308,7 @@ component extends="baseHandler"{
 	*/
 	any function truncateAuthLogs( event, rc, prc ){
 		loginTrackerService.truncate();
-		setNextEvent( "#prc.cbAdminEntryPoint#.settings.authLogs" );
+		relocate( "#prc.cbAdminEntryPoint#.settings.authLogs" );
 	}
 
 }

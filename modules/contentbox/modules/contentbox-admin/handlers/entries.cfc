@@ -27,7 +27,7 @@ component extends="baseContentHandler"{
 		// Verify if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
 			cbMessageBox.warn( "The blog has been currently disabled. You can activate it again in your ContentBox settings panel" );
-			setNextEvent(prc.xehDashboard);
+			relocate(prc.xehDashboard);
 		}
 	}
 
@@ -46,6 +46,9 @@ component extends="baseContentHandler"{
 		prc.xehEntryImport		= "#prc.cbAdminEntryPoint#.entries.importAll";
 		prc.xehEntryClone 		= "#prc.cbAdminEntryPoint#.entries.clone";
 		prc.xehResetHits 		= "#prc.cbAdminEntryPoint#.content.resetHits";
+
+		// Light up
+		prc.tabContent_blog = true;
 
 		// view
 		event.setView( "entries/index" );
@@ -125,7 +128,7 @@ component extends="baseContentHandler"{
 		}
 
 		// relocate back
-		setNextEvent(event=prc.xehEntries);
+		relocate(event=prc.xehEntries);
 	}
 
 	// editor
@@ -185,7 +188,7 @@ component extends="baseContentHandler"{
 		// validation
 		if( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ){
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			setNextEvent(event=prc.xehPages);
+			relocate(event=prc.xehPages);
 			return;
 		}
 
@@ -196,14 +199,14 @@ component extends="baseContentHandler"{
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = entryService.new( { 
-			title 	= rc.title, 
+		var clone = entryService.new( {
+			title 	= rc.title,
 			slug 	= variables.HTMLHelper.slugify( rc.title ),
 			excerpt = original.getExcerpt()
 		} );
 
 		clone.setCreator( prc.oCurrentAuthor );
-		
+
 		// prepare for clone
 		clone.prepareForClone(
 			author				= prc.oCurrentAuthor,
@@ -216,10 +219,10 @@ component extends="baseContentHandler"{
 
 		// clone this sucker now!
 		entryService.saveEntry( clone );
-		
+
 		// relocate
 		cbMessageBox.info( "Entry Cloned, isn't that cool!" );
-		setNextEvent(event=prc.xehEntries);
+		relocate(event=prc.xehEntries);
 	}
 
 	// save
@@ -329,7 +332,7 @@ component extends="baseContentHandler"{
 		else{
 			// relocate
 			cbMessageBox.info( "Entry Saved!" );
-			setNextEvent(prc.xehEntries);
+			relocate(prc.xehEntries);
 		}
 	}
 
@@ -341,7 +344,7 @@ component extends="baseContentHandler"{
 		// verify if contentID sent
 		if( !len( rc.contentID ) ){
 			cbMessageBox.warn( "No entries sent to delete!" );
-			setNextEvent(event=prc.xehEntries);
+			relocate(event=prc.xehEntries);
 		}
 
 		// Inflate to array
@@ -370,7 +373,7 @@ component extends="baseContentHandler"{
 		// messagebox
 		cbMessageBox.info(messageArray=messages);
 		// relocate
-		setNextEvent(event=prc.xehEntries);
+		relocate(event=prc.xehEntries);
 	}
 
 	// pager viewlet
@@ -466,7 +469,7 @@ component extends="baseContentHandler"{
 		// relocate if not existent
 		if( !prc.entry.isLoaded() ){
 			cbMessageBox.warn( "ContentID sent is not valid" );
-			setNextEvent( "#prc.cbAdminEntryPoint#.entries" );
+			relocate( "#prc.cbAdminEntryPoint#.entries" );
 		}
 
 		switch( rc.format ){
@@ -520,7 +523,7 @@ component extends="baseContentHandler"{
 			log.error( errorMessage, e );
 			cbMessageBox.error( errorMessage );
 		}
-		setNextEvent( prc.xehEntries );
+		relocate( prc.xehEntries );
 	}
 
 }

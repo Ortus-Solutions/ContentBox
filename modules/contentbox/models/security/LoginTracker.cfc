@@ -45,9 +45,12 @@ component extends="coldbox.system.Interceptor"{
 		var realIP 			= settingService.getRealIP();
 		var realUsername 	= event.getValue( 'username', '' );
 
-		// Try to find by username or IP
-		prc.oBlockByIP	 		= loginTrackerService.findByValue( realIP );
-		prc.oBlockByUsername 	= loginTrackerService.findByValue( realUsername );
+		// Try to find by username or IPs being blocked
+		var aBlockIPs	 		= loginTrackerService.findAllByValue( realIP );
+		var aBlockUsernames 	= loginTrackerService.findAllByValue( realUsername );
+
+		prc.oBlockByIP	 		= ( arrayLen(aBlockIps) ? aBlockIps[ 1 ] : loginTrackerService.new() );
+		prc.oBlockByUsername 	= ( arrayLen(aBlockUsernames) ? aBlockUsernames[ 1 ] : loginTrackerService.new() );
 
 		// do checks to prevent login
 		var isBlocked = false;
@@ -72,10 +75,10 @@ component extends="coldbox.system.Interceptor"{
 			// Log it
 			log.warn( "Request blocked (#realIP#;#realUsername#) via login tracker" );
 			// Relocate
-			setNextEvent( "#prc.cbAdminEntryPoint#.security.login" );			
+			relocate( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 	}
-	
+
 	/**
 	* Listen to successful logins
 	*/
@@ -120,8 +123,8 @@ component extends="coldbox.system.Interceptor"{
 		var prc 			= event.getCollection( private = true );
 		var realIP 			= settingService.getRealIP();
 		var realUsername 	= event.getValue( 'username', '' );
-		
-		// make or update entry for IP 
+
+		// make or update entry for IP
 		if( !isNull( prc.oBlockByIP ) ){
 			prc.oBlockByIP.setAttempts( prc.oBlockByIP.getAttempts() + 1 );
 		} else {
@@ -134,7 +137,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.oBlockByIP.setCreatedDate( now() );
 		loginTrackerService.save( prc.oBlockByIP );
 
-		// make or update entry for username 
+		// make or update entry for username
 		if( !isNull( prc.oBlockByUsername ) ){
 			prc.oBlockByUsername.setAttempts( prc.oBlockByUsername.getAttempts() + 1 );
 		}else{
@@ -145,7 +148,7 @@ component extends="coldbox.system.Interceptor"{
 		}
 		// Update date + Log it by ip
 		prc.oBlockByUsername.setCreatedDate( now() );
-		loginTrackerService.save( prc.oBlockByUsername );		
-	}	
-	
+		loginTrackerService.save( prc.oBlockByUsername );
+	}
+
 }
