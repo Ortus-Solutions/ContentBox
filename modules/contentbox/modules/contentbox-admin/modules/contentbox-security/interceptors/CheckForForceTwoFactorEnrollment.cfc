@@ -38,24 +38,27 @@ component extends="coldbox.system.Interceptor"{
             return;
 		}
 
+		// Global force is disabled
+		if ( ! twoFactorService.isForceTwoFactorAuth() ) {
+			return;
+		}
+		
 		// Param Values
 		param prc.oCurrentAuthor	= securityService.getAuthorSession();
-		param prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 
 		// User not logged in
 		if ( ! prc.oCurrentAuthor.getLoggedIn() ) {
 			return;
 		}
 
-		// Global force is disabled
-		if ( ! twoFactorService.isForceTwoFactorAuth() ) {
-			return;
-		}
 
 		// User already enrolled
 		if ( prc.oCurrentAuthor.getIs2FactorAuth() ) {
 			return;
 		}
+
+		// Param Values
+		param prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 
 		// Relocate to force the enrolmment for this user.
 		relocate(
