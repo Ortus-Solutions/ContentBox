@@ -572,6 +572,10 @@ component implements="ISecurityService" singleton{
 	* if not, it will generate a new cb_enc_key
 	*/
 	string function getEncryptionKey(){
+		var encKey = val( cacheStorage.getVar( "cb_enc_key","") );
+		if(encKey neq "")
+			return encKey;
+			
 		var setting = settingService.findWhere( { name = "cb_enc_key" } );
 
 		// if no key, then create it for this ContentBox installation
@@ -581,6 +585,8 @@ component implements="ISecurityService" singleton{
 			setting.setName( "cb_enc_key" );
 			settingService.save(entity=setting);
 			log.info( "Registered new cookie encryption key" );
+
+			cacheStorage.setVar( "cb_enc_key", setting.getValue() );
 		}
 
 		return setting.getValue();
