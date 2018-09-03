@@ -572,7 +572,7 @@ component implements="ISecurityService" singleton{
 	* if not, it will generate a new cb_enc_key
 	*/
 	string function getEncryptionKey(){
-		var encKey = val( cacheStorage.getVar( "cb_enc_key","") );
+		var encKey = cacheStorage.getVar( "cb_enc_key","");
 		if(encKey neq "")
 			return encKey;
 			
