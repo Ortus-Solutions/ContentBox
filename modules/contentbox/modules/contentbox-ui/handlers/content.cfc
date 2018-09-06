@@ -37,9 +37,6 @@ component{
 			}
 		}
 
-		// Get all categories
-		prc.categories = categoryService.list ( sortOrder="category", asQuery=false );
-
 		// Home page determination either blog or a page
 		// Blog routes are in the blog namespace
 		if( event.getCurrentRoute() eq "/" AND
@@ -312,9 +309,6 @@ component{
 			.paramValue( "title", "" )
 			.paramValue( "slug", "" )
 			.paramValue( "h", "" );
-
-		// Get all categories
-		prc.categories = categoryService.list( sortOrder="category", asQuery=false );
 
 		// valid Author?
 		if( !prc.oCurrentAuthor.isLoaded() OR
