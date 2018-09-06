@@ -558,17 +558,11 @@ component accessors="true" singleton threadSafe{
 	 * Get the current page's or blog entries custom fields as a struct
 	 */
 	struct function getCurrentCustomFields(){
-		var fields = "";
 		if( isPageView() ){
-			fields = getCurrentPage().getCustomFields();
+			return getCurrentPage().getCustomFieldsAsStruct();
 		} else {
-			fields = getCurrentEntry().getCustomFields();
+			return getCurrentEntry().getCustomFieldsAsStruct();
 		}
-		var results = {};
-		for( var thisField in fields ){
-			results[ thisField.getKey() ] = thisField.getValue();
-		}
-		return results;
 	}
 
 	/**
