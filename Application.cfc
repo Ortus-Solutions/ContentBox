@@ -11,7 +11,7 @@ component{
 	//include "modules/contentbox-installer/includes/dsn_relocation.cfm";
 
 	// Application properties, modify as you see fit
-	this.name 				= "ContentBox" & hash( getCurrentTemplatePath() );
+	this.name 				= "ContentBox CMS";
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan( 0, 1, 0, 0 );
 	this.setClientCookies 	= true;
