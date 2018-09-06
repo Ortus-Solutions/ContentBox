@@ -133,9 +133,14 @@ component extends="content"{
 			contentService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults 	= commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
-			prc.comments 		= commentResults.comments;
-			prc.commentsCount 	= commentResults.count;
+			if(prc.page.getAllowComments()){
+				var commentResults 	= commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
+				prc.comments 		= commentResults.comments;
+				prc.commentsCount 	= commentResults.count;
+			} else {
+				prc.comments 		= [];
+				prc.commentsCount 	= 0;				
+			}
 			// Detect Mobile Device
 			var isMobileDevice 	= mobileDetector.isMobile();
 			// announce event
