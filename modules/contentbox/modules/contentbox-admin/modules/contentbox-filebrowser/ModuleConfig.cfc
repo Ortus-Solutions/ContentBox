@@ -12,7 +12,6 @@ component{
 	this.author 			= "Ortus Solutions";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "A file-directory browser and selector";
-	this.version			= "2.0.0";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
@@ -26,7 +25,7 @@ component{
 		// module settings - stored in modules.name.settings
 		settings = {
 			// The title name for usage inline and the layout
-			title = "ContentBox FileBrowser v#this.version#",
+			title = "ContentBox FileBrowser",
 			// the directory root path to start the visualizer on, absolute path, set it to contentbox default location
 			directoryRoot = expandPath( "/contentbox-custom/_content" ),
 			// Secure the visualization or creation of stuff above the directory root or not
@@ -66,7 +65,7 @@ component{
 				// max file size in mbytes
 				maxfilesize = 100,
 				// max multiple upload files
-				maxfiles = 25	
+				maxfiles = 25
 			},
 			useMediaPath = false,
 			mediaPath = "__media"
