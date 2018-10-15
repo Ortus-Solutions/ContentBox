@@ -140,7 +140,7 @@ module.exports = function( grunt ){
 		injector : {
 			options : {
 				transform : function( filepath, index, length ){
-					return 'addAsset( "#prc.fbModRoot#' + filepath + ' ");';
+					return 'addAsset( "#prc.fbModRoot#' + filepath + '");';
 				},
 				starttag : "//injector:{{ext}}//",
 				endtag : "//endinjector//"
