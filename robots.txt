@@ -4,7 +4,6 @@ Allow: /modules/contentbox/themes/
 Disallow: /coldbox/
 Disallow: /config/
 Disallow: /handlers/
-Disallow: /includes/
 Disallow: /layouts/
 Disallow: /interceptors/
 Disallow: /logs/
