@@ -87,11 +87,11 @@ component {
 			{ pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true, namespace="blog" },
 			{ pattern="/rss/", handler="blog", action="rss" , namespace="blog" },
 			// category filter
-			{ pattern="/category/:category/:page-numeric?", handler="blog", action="index" , namespace="blog" },
+			{ pattern="/category/:category/:page-numeric?", handler="blog", action="index", namespace="blog" },
 			// search filter
-			{ pattern="/search/:q?/:page-numeric?", handler="blog", action="index" , namespace="blog" },
+			{ pattern="/search/:q?/:page-numeric?", handler="blog", action="index", namespace="blog" },
 			// Blog comment post
-			{ pattern="/:entrySlug/commentPost", handler="blog", action="commentPost" , namespace="blog" },
+			{ pattern="/:entrySlug/commentPost", handler="blog", action="commentPost", namespace="blog" },
 			// blog permalink
 			{ pattern="/:entrySlug", handler="blog", action="entry", namespace="blog" },
 			// Blog reserved route

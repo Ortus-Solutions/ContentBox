@@ -22,7 +22,7 @@ component extends="ContentService" singleton{
 
 	/**
 	* Save an entry
-	* 
+	*
 	* @return EntryService
 	*/
 	function saveEntry( required any entry, boolean transactional=true ){
@@ -41,16 +41,16 @@ component extends="ContentService" singleton{
 
 	/**
 	* entry search returns struct with keys [entries,count]
-	* @search.hint The search term to search on
-	* @isPublished.hint Boolean bit to search if page is published or not, pass 'any' or not to ignore.
-	* @author.hint The authorID to filter on, pass 'all' to ignore filter
-	* @creator.hint The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	* @category.hint The categorie(s) to filter on. You can also pass 'all' or 'none'
-	* @max.hint The maximum records to return
-	* @offset.hint The offset on the pagination
-	* @sortOrder.hint Sorting of the results, defaults to page title asc
-	* @searchActiveContent.hint If true, it searches title and content on the page, else it just searches on title
-	* @showInSearch.hint If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	* @search The search term to search on
+	* @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
+	* @author The authorID to filter on, pass 'all' to ignore filter
+	* @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	* @category The categorie(s) to filter on. You can also pass 'all' or 'none'
+	* @max The maximum records to return
+	* @offset The offset on the pagination
+	* @sortOrder Sorting of the results, defaults to page title asc
+	* @searchActiveContent If true, it searches title and content on the page, else it just searches on title
+	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	*
 	* @returns struct = [entries,count]
 	*/
@@ -173,19 +173,19 @@ component extends="ContentService" singleton{
 				    AND publishedDate <= :now";
 		var params = {};
 		params[ "now" ] = now();
-		
+
 		// year lookup mandatory
 		if( arguments.year NEQ 0 ){
 			params[ "year" ] = arguments.year;
 			hql &= " AND YEAR( publishedDate ) = :year";
 		}
-		
+
 		// month lookup
 		if( arguments.month NEQ 0 ){
 			params[ "month" ] = arguments.month;
 			hql &= " AND MONTH( publishedDate ) = :month";
 		}
-		
+
 		// day lookup
 		if( arguments.day NEQ 0 ){
 			params[ "day" ] = arguments.day;
@@ -214,14 +214,17 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Find published entries in ContentBox that have no passwords
-	* @max.hint The max number of pages to return, defaults to 0=all
-	* @offset.hint The pagination offset
-	* @searchTerm.hint Pass a search term to narrow down results
-	* @category.hint Pass a list of categories to narrow down results
-	* @asQuery.hint Return results as array of objects or query, default is array of objects
-	* @sortOrder.hint The sort order string, defaults to publisedDate DESC
-	*/
+	 * Find published entries in ContentBox that have no passwords
+	 *
+	 * @max The max number of pages to return, defaults to 0=all
+	 * @offset The pagination offset
+	 * @searchTerm Pass a search term to narrow down results
+	 * @category Pass a list of categories to narrow down results by using an OR, or delimit the list with a `+` to narrow down result by using an AND operation on the categories
+	 * @asQuery Return results as array of objects or query, default is array of objects
+	 * @sortOrder The sort order string, defaults to publisedDate DESC
+	 *
+	 * @return struct of { count, entries }
+	 */
 	function findPublishedEntries(
 		numeric max=0,
 		numeric offset=0,
@@ -233,6 +236,15 @@ component extends="ContentService" singleton{
 		var results = {};
 		var c = newCriteria();
 
+
+
+		// Category Filter
+		if( len( arguments.category ) ){
+			// Join to categories
+			c.createAlias( "categories", "cats" )
+				.isIn( "cats.slug", listToArray( arguments.category ) );
+		}
+
 		// only published pages
 		c.isTrue( "isPublished" )
 			.isLT( "publishedDate", Now() )
@@ -240,14 +252,8 @@ component extends="ContentService" singleton{
 			// only non-password pages
 			.isEq( "passwordProtection", "" );
 
-		// Category Filter
-		if( len( arguments.category ) ){
-			// create association with categories by slug.
-			c.createAlias( "categories", "cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
-		}
-
 		// Search Criteria
-		if( len(arguments.searchTerm) ){
+		if( len( arguments.searchTerm ) ){
 			// like disjunctions
 			c.createAlias( "activeContent", "ac" );
 			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
@@ -257,10 +263,12 @@ component extends="ContentService" singleton{
 		// run criteria query and projections count
 		results.count 	= c.count( "contentID" );
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset,
-								   max=arguments.max,
-								   sortOrder=arguments.sortOrder,
-								   asQuery=arguments.asQuery );
+							.list(
+								offset    = arguments.offset,
+								max       = arguments.max,
+								sortOrder = arguments.sortOrder,
+								asQuery   = arguments.asQuery
+							);
 
 		return results;
 	}
@@ -271,8 +279,8 @@ component extends="ContentService" singleton{
 	* @isPublished	Show all content or true/false published content
 	* @showInSearch Show all content or true/false showInSearch flag
 	*/
-	array function getAllFlatEntries( 
-		sortOrder="title asc", 
+	array function getAllFlatEntries(
+		sortOrder="title asc",
 		boolean isPublished,
 		boolean showInSearch
 	){
