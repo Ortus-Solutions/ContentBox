@@ -25,7 +25,8 @@ component  	persistent="true"
 				params="{ allocationSize = 1, sequence = 'settingID_seq' }";
 
 	property 	name="name" 
-			 	notnull="true" 
+			 	notnull="true"
+				unique="true"
 				length="100";
 
 	property 	name="value" 
@@ -46,7 +47,7 @@ component  	persistent="true"
 	this.pk = "settingID";
 
 	this.constraints ={
-		"name" 		= { required=true, size="1..100" },
+		"name" 		= { required=true, size="1..100", validator: "UniqueValidator@cborm" },
 		"value" 	= { required=true }
 	};
 
