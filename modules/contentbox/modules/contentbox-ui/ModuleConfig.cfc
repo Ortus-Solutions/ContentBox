@@ -161,7 +161,7 @@ component {
 				parentRoutes.filter( function( item ){
 					return ( item.pattern NEQ ":handler/" AND item.pattern NEQ ":handler/:action/" );
 				} )
-			)
+			);
 
 			// Add parent execution routing
 			routingService.addRoute( pattern="#variables.parentSESPrefix#/:handler/:action?" );
