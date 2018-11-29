@@ -411,46 +411,51 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	/**
      * Iterates over all registered, active modules and sets any found widgets into a cache in moduleservice
      */
-	private ModuleService function buildModuleWidgetsCache() {
-		// get all active modules
-		var activeModules 	= findModules( isActive=true );
-		var cache 			= {};
-
-		// loop over active modules
-		for( var module in activeModules.modules ) {
-			// Module reference maps pointer
-			var moduleRecord = variables.moduleMap[ module.getName() ];
-
-			// Widgets path
-			var thisWidgetsPath = moduleRecord.path & "/" & module.getName() & "/widgets";
-			// check that module widgets folder exists on disk, if so, iterate and register
-			if( directoryExists( thisWidgetsPath ) ) {
-				var directory = directoryList( thisWidgetsPath, false, "query" );
-				// make sure there are widgets in the directory
-				if( directory.recordCount ) {
-					var moduleWidgets = [];
-					// loop over widgets
-    				for( var i=1; i <= directory.recordCount; i++ ) {
-    					// set widget properties in cache
-    					var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
-    					var widget = {
-    						name 			= widgetName,
-							invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
-							path 			= directory.directory[ i ] & "/" & directory.name[ i ],
-							module 			= module.getName()
-    					};
-    					cache[ widgetName & "@" & module.getName() ] = widget;
-    				}
-
-    			}
+		private ModuleService function buildModuleWidgetsCache() {
+			// get all active modules
+			var activeModules 	= findModules( isActive=true );
+			var cache 			= {};
+	
+			// loop over active modules
+			for( var module in activeModules.modules ) {
+				if(variables.moduleMap.keyExists(module.getName())){
+					// Module reference maps pointer
+					var moduleRecord = variables.moduleMap[ module.getName() ];
+	
+					// Widgets path
+					var thisWidgetsPath = moduleRecord.path & "/" & module.getName() & "/widgets";
+					// check that module widgets folder exists on disk, if so, iterate and register
+					if( directoryExists( thisWidgetsPath ) ) {
+						var directory = directoryList( thisWidgetsPath, false, "query" );
+						// make sure there are widgets in the directory
+						if( directory.recordCount ) {
+							var moduleWidgets = [];
+							// loop over widgets
+								for( var i=1; i <= directory.recordCount; i++ ) {
+									// set widget properties in cache
+									var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
+									var widget = {
+										name 			= widgetName,
+									invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
+									path 			= directory.directory[ i ] & "/" & directory.name[ i ],
+									module 			= module.getName()
+									};
+									cache[ widgetName & "@" & module.getName() ] = widget;
+								}
+	
+							}
+					}
+				}
+				else {
+					deactivateModule( module.getName() );
+				}
 			}
+			
+			// Store constructed cache
+			moduleWidgetCache = cache;
+	
+			return this;
 		}
-
-		// Store constructed cache
-		moduleWidgetCache = cache;
-
-		return this;
-	}
 
 	/**
 	 * Get all modules loaded on disk path
