@@ -103,15 +103,13 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 * @return The module populated
 	 */
 	any function populateModule( any module, any config ){
-		arguments.module.setTitle( arguments.config.title );
-		arguments.module.setAuthor( arguments.config.author );
-		arguments.module.setWebURL( arguments.config.webURL );
-		arguments.module.setDescription( arguments.config.description );
-		arguments.module.setVersion( arguments.config.version );
-		arguments.module.setEntryPoint( arguments.config.entryPoint );
-		if( structKeyExists( arguments.config, "forgeboxslug" ) ){
-			arguments.module.setForgeBoxSlug( arguments.config.forgeboxSlug );
-		}
+		arguments.module.setTitle( arguments.config.title ?: "" );
+		arguments.module.setAuthor( arguments.config.author ?: "" );
+		arguments.module.setWebURL( arguments.config.webURL ?: "" );
+		arguments.module.setDescription( arguments.config.description ?: "" );
+		arguments.module.setVersion( arguments.config.version ?: "" );
+		arguments.module.setEntryPoint( arguments.config.entryPoint ?: "" );
+		arguments.module.setForgeBoxSlug( arguments.config.forgeboxSlug ?: "" );
 		return arguments.module;
 	}
 
