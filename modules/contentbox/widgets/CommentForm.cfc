@@ -5,7 +5,7 @@
  * ---
  * A cool basic commenting form for ContentBox
  */
-component extends="contentbox.models.ui.BaseWidget"{
+component extends="contentbox.models.ui.BaseWidget" singleton{
 
 	/**
 	 * Constructor
