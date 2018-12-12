@@ -208,9 +208,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) );
 		}
 		// By criteria now
-		var content = c.isEq( "slug",arguments.slug).get();
+		var content = c.isEq( "slug", arguments.slug ).get();
+
 		// return accordingly
-		return ( isNull( content ) ? new() : content );
+		return ( isNull( content ) || isSimpleValue( content ) ? new() : content );
 	}
 
 	/**

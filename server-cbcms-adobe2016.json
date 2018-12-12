@@ -5,7 +5,7 @@
     },
     "name":"cbcms-adobe2016",
     "JVM":{
-        "heapSize":"768"
+        "heapSize":"1024"
     },
     "web":{
         "rewrites":{

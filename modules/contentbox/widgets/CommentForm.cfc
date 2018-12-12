@@ -5,7 +5,7 @@
  * ---
  * A cool basic commenting form for ContentBox
  */
-component extends="contentbox.models.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget"{
 
 	/**
 	 * Constructor
@@ -13,7 +13,6 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	CommentForm function init(){
 		// Widget Properties
 		setName( "CommentForm" );
-		setVersion( "1.0" );
 		setDescription( "A cool basic commenting form for ContentBox content objects." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
@@ -25,7 +24,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	/**
 	 * The main commenting form widget
 	 *
-	 * @content The content object to build the comment form or a slug that represents the content object. If empty, we will take the content object from the
+	 * @content The content object to build the comment form or a content slug to load. If empty, we will take the content object from the prc scopes.
 	 */
 	any function renderIt( any content ){
 		var event 			= getRequestContext();
@@ -35,9 +34,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var oCurrentAuthor 	= securityService.getAuthorSession();
 
 		// Check if content simple value
-		if( isSimpleValue( arguments.content ) ){
+		if( isSimpleValue( arguments.content ) and len( arguments.content ) ){
+			var originalSlug = arguments.content;
 			arguments.content = contentService.findBySlug( arguments.content );
-		} else if( isNull( arguments.content ) ){
+			if( !arguments.content.isLoaded() ){
+				return "The content slug: #originalSlug# was not found, cannot generate comment form.";
+			}
+		}
+
+		// Is it null or still a string?
+		if( isNull( arguments.content ) || isSimpleValue( arguments.content ) ){
 			// Check if we are in a page or entry
 			if( structKeyExists( prc, "entry" ) ){
 				arguments.content = prc.entry;
