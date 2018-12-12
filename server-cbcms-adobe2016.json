@@ -8,6 +8,7 @@
         "heapSize":"1024"
     },
     "web":{
+		"directoryBrowsing" : true,
         "rewrites":{
             "enable":"true"
         },

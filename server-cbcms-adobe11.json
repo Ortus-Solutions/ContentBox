@@ -1,26 +1,29 @@
 {
-    "app": {
-        "cfengine": "adobe@11",
-        "serverHomeDirectory": ".engines/acf11"
+    "app":{
+        "cfengine":"adobe@11",
+        "serverHomeDirectory":".engines/acf11"
     },
-    "name": "cbcms-adobe11",
-    "JVM": {
-        "heapSize": "1024"
+    "name":"cbcms-adobe11",
+    "JVM":{
+        "heapSize":"1024"
     },
-    "web": {
-        "rewrites": {
-            "enable": "true"
+    "web":{
+        "directoryBrowsing":true,
+        "rewrites":{
+            "enable":"true"
         },
-        "http": {
-            "port": "8589"
+        "http":{
+            "port":"8589"
         }
     },
-    "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
-    "trayOptions": [{
-        "label": "Open ContentBox Admin",
-        "action": "openbrowser",
-        "url": "http://\\${runwar.host}:\\${runwar.port}/cbadmin",
-        "disabled": false,
-        "image": "modules_app/contentbox-custom/_content/ContentBox-Circle_32.png"
-    }]
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBox_300.png",
+    "trayOptions":[
+        {
+            "label":"Open ContentBox Admin",
+            "action":"openbrowser",
+            "url":"http://\\${runwar.host}:\\${runwar.port}/cbadmin",
+            "disabled":false,
+            "image":"modules_app/contentbox-custom/_content/ContentBox-Circle_32.png"
+        }
+    ]
 }
