@@ -6,23 +6,23 @@ www.ortussolutions.com
 ********************************************************************************
 Apache License, Version 2.0
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp] 
+Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
 
 Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License. 
-You may obtain a copy of the License at 
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0 
+http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software 
-distributed under the License is distributed on an "AS IS" BASIS, 
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-See the License for the specific language governing permissions and 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
 limitations under the License.
 ********************************************************************************
 * Import a blogcfc database into contentbox
 */
-component implements="contentbox.models.importers.ICBImporter" {
+component implements="cbadmin.models.importers.ICBImporter" {
 
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
@@ -119,14 +119,14 @@ component implements="contentbox.models.importers.ICBImporter" {
 						layout="pages"
 					};
 					var page = pageService.new(properties = props);
-	
+
 					// blogCFC has no concept of authored pages, so we grab the first author we find from blogCFC
 					// This may need revising later.
 					page.addNewContentVersion(content = props.content, changelog = "Imported content", author = defaultAuthor);
 					page.setCreator( defaultAuthor );
 					entitySave( page );
 				}
-				log.info( "Pages imported" );	
+				log.info( "Pages imported" );
 			} catch( any e ){
 				log.info( "Error Importing Pages - Version might support Pages" );
 			}
@@ -167,7 +167,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 				entry.setStats( oStat );
 				entry.addNewContentVersion(content = props.content, changelog = "Imported content", author = authorService.get( authorMap[q.username[ x ]] ));
 				entry.setCreator( authorService.get( authorMap[q.username[ x ]] ) );
-				
+
 				// entry categories
 				var thisSQL = "
 					select		tblBlogCategories.categoryname,categoryId
@@ -184,7 +184,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 				}
 				entry.setCategories(aCategories);
 				entitySave(entry);
-				
+
 				// Categories won't save in ContentBox Express without this flush :/
 				ORMFlush();
 

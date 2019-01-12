@@ -5,7 +5,7 @@
 * ---
 * Import a WordPress database into contentbox
 */
-component implements="contentbox.models.importers.ICBImporter"{
+component implements="cbadmin.models.importers.ICBImporter"{
 
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
@@ -51,7 +51,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				var props 	= {category=q.name[ x ], slug=q.slug[ x ]};
 				var cat 	= categoryService.new(properties=props);
 				var exists = categoryService.findAllBySlug( q.slug[ x ] );
-				
+
 				if( arrayLen( exists ) ){
 					cat = exists[ 1 ];
 				}else{
@@ -77,7 +77,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 						     firstName=listFirst(q.display_name[ x ]," " ), lastName=trim(replacenocase(q.display_name[ x ], listFirst(q.display_name[ x ]," " ), "" ))};
 				var author = authorService.new(properties=props);
 				author.setRole( defaultRole );
-				
+
 				// duplicate usernames
 				var exists = authorService.findAllByUsername( props.username );
 				if( arrayLen( exists ) ){
@@ -143,7 +143,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 											password=arguments.dsnPassword,
-											sql="select * from #arguments.tableprefix#_comments 
+											sql="select * from #arguments.tableprefix#_comments
 												WHERE comment_post_ID = '#q.id[ x ]#'
 												  AND comment_approved <> 'spam'" ).execute().getResult();
 				var aComments = [];
@@ -162,7 +162,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				}
 				page.setComments( aComments );
 				log.info( "Comments imported successfully!" );
-				
+
 				entitySave( page );
 
 			}
@@ -204,7 +204,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				// Add content versionized!
 				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qEntries.author_id[ x ]] ));
 				entry.setCreator( authorService.get( authorMap[qEntries.author_id[ x ]] ) );
-				
+
 				// Save entry and store in reference map
 				entryMap[ qEntries.id[ x ] ] = entry;
 				var c = entryService.newCriteria();
@@ -217,7 +217,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 					counter++;
 					entry.setSlug(props.slug & '-' & counter);
 				}while( count );
-				
+
 				// entry categories
 				var thisSQL = "
 				select a.term_id, a.name, a.slug, b.term_taxonomy_id, d.post_name, d.id
@@ -226,7 +226,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 					AND b.taxonomy = 'category'
 					AND b.term_taxonomy_id = c.term_taxonomy_id
 					AND c.object_id = d.id
-					AND d.post_type = 'post' 
+					AND d.post_type = 'post'
 					AND d.id = '#qEntries.id[ x ]#'
 				";
 				var qCategories = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
@@ -237,24 +237,24 @@ component implements="contentbox.models.importers.ICBImporter"{
 					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.term_id[y] ] ) );
 				}
 				entry.setCategories( aCategories );
-				
+
 				log.info( "Starting to import Post Comments...." );
 				// Import entry comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 											password=arguments.dsnPassword,
-											sql="select * from #arguments.tableprefix#_comments 
+											sql="select * from #arguments.tableprefix#_comments
 												WHERE comment_post_ID = '#qEntries.id[ x ]#'
 												  AND comment_approved <> 'spam'" ).execute().getResult();
 
 				var aComments = [];
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
-						content = qComments.comment_content[y], 
-						author = qComments.comment_author[y], 
+						content = qComments.comment_content[y],
+						author = qComments.comment_author[y],
 						authorIP = '127.0.0.1',
 						authorEmail = qComments.comment_author_email[y],
 						authorURL= qComments.comment_author_url[y],
-						createdDate = qComments.comment_date[y], 
+						createdDate = qComments.comment_date[y],
 						isApproved = qComments.comment_approved[y]
 					};
 					var comment = commentService.new(properties=props);
@@ -265,7 +265,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				}
 				entry.setComments( aComments );
 				log.info( "Comments imported successfully!" );
-				
+
 				// Save entry
 				entitySave( entry );
 			}

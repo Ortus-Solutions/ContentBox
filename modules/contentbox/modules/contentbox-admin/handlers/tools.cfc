@@ -45,7 +45,7 @@ component extends="baseHandler"{
 		event.paramValue( "CBUpload", "" );
 		// make sure upload was valid
 		if( len( rc.CBUpload ) && fileExists( rc.CBUpload ) ) {
-			var ContentBoxImporter = getModel( "ContentBoxImporter@cb" );
+			var ContentBoxImporter = getModel( "ContentBoxImporter@cbadmin" );
 			ContentBoxImporter.setup( importFile=rc.CBUpload );
 			// check validity of package
 			if( ContentBoxImporter.isValid() ) {
@@ -72,7 +72,7 @@ component extends="baseHandler"{
 		event.paramValue( "overwrite", false );
 		try{
 			if( len( rc.CBUpload ) and fileExists( rc.CBUpload ) ){
-				var ContentBoxImporter = getModel( "ContentBoxImporter@cb" );
+				var ContentBoxImporter = getModel( "ContentBoxImporter@cbadmin" );
 				ContentBoxImporter.setup( importFile=rc.CBUpload );
 				// already validated, so just process the import
 				var importLog = ContentBoxImporter.execute( overrideContent=rc.overwrite );
@@ -111,7 +111,7 @@ component extends="baseHandler"{
 
 		try{
 			// get importer
-			var importer = getModel( "#rc.importer#Importer@cb" );
+			var importer = getModel( "#rc.importer#Importer@cbadmin" );
 			importer.execute( argumentCollection=rc );
 			cbMessagebox.info( "Content imported successfully! Please check out your ContentBox now!" );
 		} catch( any e ){

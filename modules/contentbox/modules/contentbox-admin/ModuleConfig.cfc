@@ -15,6 +15,8 @@ component {
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
+	this.modelNamespace 	= "cbadmin";
+	this.cfmapping			= "cbadmin";
 	this.dependencies 		= [ "contentbox" ];
 
 	/**

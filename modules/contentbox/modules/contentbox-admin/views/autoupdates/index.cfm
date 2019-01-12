@@ -118,7 +118,7 @@
 									class="form-vertical"
 								)#
 									<p>#$r( "autoUpdates.uploadUpdate.info@admin" )#</p>
-									#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+									#getModel( "BootstrapFileUpload@cbadmin" ).renderIt( 
 										name    = "filePatch", 
 										label   = "Upload Patch:",
 										required= true

@@ -27,7 +27,7 @@
 				<div class="modal-body">
 						<p>#args.contentInfo#</p>
 				
-						#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+						#getModel( "BootstrapFileUpload@cbadmin" ).renderIt( 
 							name        = "importFile",
 							required    = true
 						)#      
