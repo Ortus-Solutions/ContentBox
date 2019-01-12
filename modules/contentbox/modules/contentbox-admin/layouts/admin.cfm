@@ -270,15 +270,17 @@
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 						<h4 class="modal-title" id="confirmItTitle">Are you sure?</h4>
 					</div>
+
 					<!--body-->
 					<div class="modal-body">
 						<p id="confirmItMessage">Are you sure you want to perform this action?</p>
 					</div>
+
 					<!-- footer -->
 					<div class="modal-footer">
 						<span id="confirmItLoader" style="display:none"><i class="fa fa-spinner fa-spin fa-2x"></i></span>
 						<span id="confirmItButtons">
-							<button class="btn" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
+							<button class="btn btn-default" data-dismiss="modal" aria-hidden="true"><i class="icon-remove"></i> Cancel</button>
 							<button class="btn btn-danger" data-action="confirm"><i class="icon-check"></i>  Confirm </button>
 						</span>
 					</div>
