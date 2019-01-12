@@ -6,7 +6,7 @@
 * Export ContentBox data based on user selection. This is a transient object
 */
 component accessors=true {
-    
+
     /**
     * The exporters to use
     */
@@ -43,8 +43,8 @@ component accessors=true {
     property name="templateService"     inject="id:emailtemplateService@cb";
     property name="log"                 inject="logbox:logger:{this}";
     property name="zipUtil"             inject="zipUtil@cb";
-    property name="dataExporter"        inject="id:dataExporter@cb";
-    property name="fileExporter"        inject="id:fileExporter@cb";
+    property name="dataExporter"        inject="id:dataExporter@cbadmin";
+    property name="fileExporter"        inject="id:fileExporter@cbadmin";
     property name="wirebox"             inject="wirebox";
     property name="HTMLHelper"          inject="HTMLHelper@coldbox";
 
@@ -56,7 +56,7 @@ component accessors=true {
         descriptor 			= {};
         dataServiceMappings = {};
         filePathMappings 	= {};
-        
+
         return this;
     }
 
@@ -68,70 +68,70 @@ component accessors=true {
         var customPath      = moduleSettings[ "contentbox-custom" ].path;
 
         dataServiceMappings = {
-            "authors" = { 
+            "authors" = {
                 fileName    = "authors",
                 service     = "authorService",
                 displayName = "Authors",
-                priority    = 3 
+                priority    = 3
             },
-            "categories" = { 
+            "categories" = {
                 fileName    = "categories",
                 service     = "categoryService",
                 displayName = "Categories",
-                priority    = 1 
+                priority    = 1
             },
-            "contentstore" = { 
+            "contentstore" = {
                 fileName    = "contentstore",
                 service     = "contentStoreService",
                 displayName = "Content Store",
                 priority    = 4
             },
-            "menus" = { 
+            "menus" = {
                 fileName    = "menus",
                 service     = "menuService",
                 displayName = "Menus",
                 priority    = 5
             },
-            "permissions" = { 
+            "permissions" = {
                 fileName    = "permissions",
                 service     = "permissionService",
                 displayName = "Permissions",
-                priority    = 1 
+                priority    = 1
             },
-            "roles" = { 
+            "roles" = {
                 fileName    = "roles",
                 service     = "roleService",
                 displayName = "Roles",
-                priority    = 2 
+                priority    = 2
             },
             "securityrules" = {
                 fileName    = "securityrules",
                 service     = "securityRuleService",
                 displayName = "Security Rules",
-                priority    = 1 
+                priority    = 1
             },
-            "settings" = { 
+            "settings" = {
                 fileName    = "settings",
                 service     = "settingService",
                 displayName = "Settings",
-                priority    = 1 
+                priority    = 1
             },
-            "entries" = { 
+            "entries" = {
                 fileName    = "entries",
                 service     = "entryService",
                 displayName = "Entries",
-                priority    = 4 
+                priority    = 4
             },
-            "pages" = { 
+            "pages" = {
                 fileName    = "pages",
                 service     = "pageService",
                 displayName = "Pages",
-                priority    = 4 
+                priority    = 4
             }
         };
 
         filePathMappings = {
-            "emailtemplates" = { 
+            "emailtemplates" = {
                 fileName    = "emailtemplates",
                 displayName = "Email Templates",
                 directory   =  contentBoxPath & "/email_templates",
@@ -189,7 +189,7 @@ component accessors=true {
                 switch( config.type ) {
                     // add data exporter
                     case "data":
-                        var exporter = wirebox.getInstance( "dataExporter@cb" );
+                        var exporter = wirebox.getInstance( "dataExporter@cbadmin" );
                             exporter.setFileName( config.def.fileName );
                             exporter.setDisplayName( config.def.displayName );
                             exporter.setContent( variables[ config.def.service ].getAllForExport() );
@@ -198,7 +198,7 @@ component accessors=true {
                     // add file exporter
                     case "file":
                         var includedFiles = !isBoolean( targets[ key ] ) && listLen( targets[ key ] ) ? targets[ key ] : "*";
-                        var exporter = wirebox.getInstance( "fileExporter@cb" );
+                        var exporter = wirebox.getInstance( "fileExporter@cbadmin" );
                             exporter.setFileName( config.def.fileName );
                             exporter.setDisplayName( config.def.displayName );
                             exporter.setDirectory( config.def.directory );
@@ -247,14 +247,14 @@ component accessors=true {
         directoryCreate( tmpDirectory );
         // process exporters
         for( var exporter in exporters ) {
-            if( isInstanceOf( exporter, "contentbox.models.exporters.DataExporter" ) ) {
+            if( isInstanceOf( exporter, "cbadmin.models.exporters.DataExporter" ) ) {
                 exportLog.append( "Beginning export of #exporter.getDisplayName()#<br />" );
                 var fileName = tmpDirectory & "/" & exporter.getFileName() & "." & exporter.getFormat();
                 exportLog.append( "#arrayLen( exporter.getContent() )# records found<br />" );
                 fileWrite( fileName, serializeJSON( exporter.getContent() ) );
                 exportLog.append( "Export of #exporter.getDisplayName()# complete!<br />" );
             }
-            if( isInstanceOf( exporter, "contentbox.models.exporters.FileExporter" ) ) {
+            if( isInstanceOf( exporter, "cbadmin.models.exporters.FileExporter" ) ) {
                 var fileName = tmpDirectory & "/" & exporter.getFileName() & "." & exporter.getFormat();
                 // if all files, just grab directory
                 if( exporter.getIncludeFiles() == "*" ) {
@@ -273,7 +273,7 @@ component accessors=true {
                         for( var folder in folders ) {
                             // copy folder to tmp directory
                             directoryCopy( folder, tmppath & "/" & listLast( folder, "/" ), true );
-                        } 
+                        }
                         // now add tmp to zip file
                         zipUtil.addFiles( zipFilePath=fileName, directory=tmppath, recurse=true );
                         // finally, we can delete that now
@@ -290,21 +290,21 @@ component accessors=true {
         // add descriptor file
         fileWrite( tmpDirectory & "/descriptor.json", serializeJSON( getDescriptor() ) );
         exportLog.append( "Package descriptor complete!<br />" );
-        
+
         // done! now we just need to compress the whole thing
         exportLog.append( "Generating ContentBox package export<br />" );
-        
+
         var exportFile = tmpDirectory & "/" & HTMLHelper.slugify( settingService.getSetting( "cb_site_name" ) ) & ".cbox";
-        zipUtil.addFiles( 
-            zipFilePath=exportFile, 
-            directory=tmpDirectory, 
-            recurse=true 
+        zipUtil.addFiles(
+            zipFilePath=exportFile,
+            directory=tmpDirectory,
+            recurse=true
         );
         exportLog.append( "ContentBox package export complete!<br />" );
-        
+
         var flattendExportLog = exportLog.toString();
         log.info( flattendExportLog );
-        
+
         return { "exportfile" = exportFile, exportlog = flattendExportLog };
     }
 
@@ -350,7 +350,7 @@ component accessors=true {
                 "filename" = exporter.getFileName() & "." & exporter.getFormat(),
                 "priority" = exporter.getPriority()
             };
-        }  
-        setDescriptor( content );      
+        }
+        setDescriptor( content );
     }
 }

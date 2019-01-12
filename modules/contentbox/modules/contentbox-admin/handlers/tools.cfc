@@ -15,7 +15,7 @@ component extends="baseHandler"{
     property name="templateService"     inject="id:emailtemplateService@cb";
 	property name="contentUtil"        inject="id:contentUtil@cb";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
-	property name="staticExporter"		inject="staticExporter@cb";
+	property name="staticExporter"		inject="staticExporter@cbadmin";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
@@ -147,7 +147,7 @@ component extends="baseHandler"{
 	function previewExport( event, rc, prc ) {
 		// get targets
 		var targets 			= prepareExportTargets( rc );
-		var contentBoxExporter 	= getModel( "ContentBoxExporter@cb" );
+		var contentBoxExporter 	= getModel( "ContentBoxExporter@cbadmin" );
 		// build up exporter instance from targets in rc
 		prc.descriptor = contentBoxExporter.setup( targets ).getDescriptor();
 		// Sort the content
@@ -162,7 +162,7 @@ component extends="baseHandler"{
 	function doExport( event, rc, prc ) {
 		// get targets
 		var targets 			= prepareExportTargets( rc );
-		var contentBoxExporter 	= getModel( "ContentBoxExporter@cb" );
+		var contentBoxExporter 	= getModel( "ContentBoxExporter@cbadmin" );
 		var exportResult 		= contentBoxExporter.setup( targets ).export();
 		// export the content
 		var exportFilePath = exportResult.exportfile;
