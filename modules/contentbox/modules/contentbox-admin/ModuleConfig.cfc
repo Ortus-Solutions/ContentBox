@@ -25,13 +25,12 @@ component {
 	function configure(){
 
 		// Layout Settings
-		layoutSettings = { defaultLayout = "admin.cfm" };
+		layoutSettings = {
+			defaultLayout = "admin.cfm"
+		};
 
 		// Module Settings
 		settings = {
-			// ForgeBox Settings
-			forgeBoxURL 	 = "http://www.coldbox.org/forgebox",
-			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
 		};
 
 		// i18n

@@ -37,7 +37,6 @@ component extends="baseHandler"{
 		prc.xehFlushRegistry 	= "#prc.cbAdminEntryPoint#.themes.rebuildRegistry";
 		prc.xehActivate			= "#prc.cbAdminEntryPoint#.themes.activate";
 		prc.xehPreview			= "#prc.cbEntryPoint#.__preview";
-		prc.xehForgeBox			= "#prc.cbAdminEntryPoint#.forgebox.index";
 		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.themes.saveSettings";
 
 		// Rescan if newly installed theme?
@@ -50,15 +49,9 @@ component extends="baseHandler"{
 		prc.activeTheme 	= themeService.getActiveTheme();
 		prc.themeService	= themeService;
 
-		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
-		// ForgeBox Stuff
-		prc.forgeBoxSlug 		= "contentbox-themes";
-		prc.forgeBoxInstallDir 	= "themes";
-		prc.forgeboxReturnURL 	= URLEncodedFormat( event.buildLink( linkto=prc.xehThemes, querystring="rescan=true##managePane" ) );
-
 		// Tab
 		prc.tabLookAndFeel_themes = true;
+
 		// view
 		event.setView( "themes/index" );
 	}

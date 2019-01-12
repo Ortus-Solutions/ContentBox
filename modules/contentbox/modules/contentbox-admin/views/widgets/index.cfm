@@ -8,57 +8,22 @@
     <div class="col-md-12">
        	<!--- MessageBox --->
 		#getModel( "messagebox@cbMessagebox" ).renderit()#
-
-		<!--- Logs --->
-		<cfif flash.exists( "forgeboxInstallLog" )>
-			<h3>Installation Log</h3>
-			<div class="consoleLog">#flash.get( "forgeboxInstallLog" )#</div>
-		</cfif>
     </div>
 </div>
 <div class="row">
 	<div class="col-md-9">
 		<div class="panel panel-default">
 		    <div class="panel-body">
-		        <!-- Vertical Nav -->
-		        <div class="tab-wrapper tab-primary">
-		            <!-- Tabs -->
-		            <ul class="nav nav-tabs">
-		            	<li title="Manage Widgets" class="active">
-		            		<a href="##managePane" data-toggle="tab"><i class="fa fa-cog fa-lg"></i>  Manage</a>
-		            	</li>
-						<!--- Install --->
-						<cfif prc.oCurrentAuthor.checkPermission( "FORGEBOX_ADMIN" )>
-							<li title="Install New Widgets">
-								<a href="##forgeboxPane" data-toggle="tab" onclick="loadForgeBox()"><i class="fa fa-cloud-download fa-lg"></i> ForgeBox</a>
-							</li>
-						</cfif>
-		            </ul>
-		            <!-- End Tabs -->
-		            <!-- Tab Content -->
-		            <div class="tab-content" style="min-height: 600px">
-		                <div id="managePane" class="tab-pane active">
-							<!--- CategoryForm --->
-							#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#
-								#html.hiddenField(name="widgetFile" )#
 
-								<!--- widgets --->
-								#renderView(view="widgets/widgetList", module="contentbox-admin", args={ mode="edit", cols=2 } )#
+				<!--- CategoryForm --->
+				#html.startForm(name="widgetForm",action=prc.xehWidgetRemove)#
+					#html.hiddenField(name="widgetFile" )#
 
-							#html.endForm()#
-						</div>
-						<!--- end manage pane --->
-						<!--- ForgeBox --->
-						<div id="forgeboxPane" class="tab-pane">
-							<div class="text-center">
-								<i class="fa fa-spinner fa-spin fa-lg icon-4x"></i> <br/>
-								Please wait, connecting to ForgeBox...
-							</div>
-						</div>
-		            </div>
-		            <!-- End Tab Content -->
-		        </div>
-		        <!-- End Vertical Nav -->
+					<!--- widgets --->
+					#renderView(view="widgets/widgetList", module="contentbox-admin", args={ mode="edit", cols=2 } )#
+
+				#html.endForm()#
+
 		    </div>
 		</div>
 	</div>
