@@ -748,7 +748,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Title is set Manually, return it
 		if( len( getMetaTitle() ) ){
-			return getMetaTitle();
+			return encodeForHTML( getMetaTitle() );
 		}
 
 		// Check if in page view or entry view
@@ -762,14 +762,14 @@ component accessors="true" singleton threadSafe{
 		if( isObject( oCurrentContent ) ){
 			// Do we have current page SEO title set?
 			if( len( oCurrentContent.getHTMLTitle() ) ){
-				return oCurrentContent.getHTMLTitle();
+				return encodeForHTML( oCurrentContent.getHTMLTitle() );
 			}
 			// Get current page slug title
-			return oCurrentContent.getTitle();
+			return encodeForHTML( oCurrentContent.getTitle() );
 		}
 
 		// Return global site title + tagline
-		return siteName() & " - " & siteTagLine();
+		return encodeForHTML( siteName() & " - " & siteTagLine() );
 	}
 
 	/**
@@ -780,7 +780,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Description is set Manually, return it
 		if( len( getMetaDescription() ) ){
-			return getMetaDescription();
+			return encodeForHTMLAttribute( getMetaDescription() );
 		}
 
 		// Check if in page view or entry view
@@ -794,11 +794,11 @@ component accessors="true" singleton threadSafe{
 		if( isObject( oCurrentContent ) ){
 			// Do we have current page SEO description set?
 			if( len( oCurrentContent.getHTMLDescription() ) ){
-				return trim( oCurrentContent.getHTMLDescription() );
+				return encodeForHTMLAttribute( oCurrentContent.getHTMLDescription() );
 			}
 
 			// Default description from content in non HTML mode
-			return HTMLEditFormat(
+			return encodeForHTMLAttribute(
 				REReplaceNoCase(
 					left( stripWhitespace( oCurrentContent.renderContent() ), 160 ),
 					"<[^>]*>",
@@ -809,7 +809,7 @@ component accessors="true" singleton threadSafe{
 		}
 
 		// Return global site description as metadata
-		return HTMLEditFormat( trim( siteDescription() ) );
+		return encodeForHTMLAttribute( trim( siteDescription() ) );
 	}
 
 	/**
@@ -820,7 +820,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Keywords is set Manually, return it
 		if( len( getMetaKeywords() ) ){
-			return stripWhitespace(getMetaKeywords());
+			return encodeForHTMLAttribute( stripWhitespace( getMetaKeywords() ) );
 		}
 
 		// Check if in page view or entry view
@@ -832,11 +832,11 @@ component accessors="true" singleton threadSafe{
 
 		// in context view or global
 		if( isObject( oCurrentContent ) AND len( oCurrentContent.getHTMLKeywords() ) ){
-			return stripWhitespace(oCurrentContent.getHTMLKeywords());
+			return encodeForHTMLAttribute( stripWhitespace( oCurrentContent.getHTMLKeywords() ) );
 		}
 
 		// Return global site description
-		return siteKeywords();
+		return encodeForHTMLAttribute( siteKeywords() );
 	}
 
 
@@ -1997,8 +1997,8 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* removes CR LF TAB double spaces from string
-	*/
+	 * removes CR LF TAB double spaces from string
+	 */
 	function stripWhitespace( required stringTarget ){
 		arguments.stringTarget = REReplace( arguments.stringTarget, "\s", " ", "ALL" );
 		return trim(
