@@ -8,10 +8,11 @@
 component extends="content"{
 
 	// DI
-	property name="searchService"		inject="id:SearchService@cb";
-	property name="securityService"		inject="id:securityService@cb";
-	property name="mobileDetector"		inject="id:mobileDetector@cb";
-	property name="themeService"		inject="id:themeService@cb";
+	property name="pageService"			inject="pageService@cb";
+	property name="searchService"		inject="SearchService@cb";
+	property name="securityService"		inject="securityService@cb";
+	property name="mobileDetector"		inject="mobileDetector@cb";
+	property name="themeService"		inject="themeService@cb";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -40,8 +41,11 @@ component extends="content"{
 		// Run parent preview
 		super.preview( argumentCollection = arguments );
 
+		// Determine content type service to allow for custom content types
+		var typeService = ( rc.contentType == "page" ? variables.pageService : variables.contentService );
+
 		// Construct the preview entry according to passed arguments
-		prc.page = contentService.new();
+		prc.page = typeService.new();
 		prc.page.setTitle( rc.title );
 		prc.page.setSlug( rc.slug );
 		prc.page.setPublishedDate( now() );
@@ -49,23 +53,33 @@ component extends="content"{
 		prc.page.setCache( false );
 		prc.page.setMarkup( rc.markup );
 		prc.page.setLayout( rc.layout );
+
 		// Comments need to be empty
 		prc.comments = [];
+
 		// Create preview version
-		prc.page.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
+		prc.page
+			.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
 			.setActiveContent( prc.page.getContentVersions() );
-		// Do we have a parent?
+
+			// Do we have a parent?
 		if( len( rc.parentPage ) && isNumeric( rc.parentPage ) ){
 			var parent = contentService.get( rc.parentPage );
-			if( !isNull( parent ) ){ prc.page.setParent( parent ); }
+			if( !isNull( parent ) ){
+				prc.page.setParent( parent );
+			}
 		}
+
 		// set skin view
 		switch( rc.layout ){
 			case "-no-layout-" : {
 				return prc.page.renderContent();
 			}
 			default : {
-				event.setLayout( name="#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#", module=prc.cbThemeRecord.module )
+				event.setLayout(
+						name   = "#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#",
+						module = prc.cbThemeRecord.module
+					)
 					.setView( view="#prc.cbTheme#/views/page", module=prc.cbThemeRecord.module );
 			}
 		}
@@ -126,7 +140,7 @@ component extends="content"{
 			// Verify SSL?
 			if( prc.page.getSSLOnly() and !event.isSSL() ){
 				log.warn( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
-				relocatE( event=incomingURL, ssl=true );
+				relocate( event=incomingURL, ssl=true );
 				return;
 			}
 			// Record hit
@@ -139,7 +153,7 @@ component extends="content"{
 				prc.commentsCount 	= commentResults.count;
 			} else {
 				prc.comments 		= [];
-				prc.commentsCount 	= 0;				
+				prc.commentsCount 	= 0;
 			}
 			// Detect Mobile Device
 			var isMobileDevice 	= mobileDetector.isMobile();
@@ -249,7 +263,7 @@ component extends="content"{
 		var page = contentService.get( rc.contentID );
 		// If null, kick them out
 		if( isNull( page ) ){
-			relocatE( prc.cbEntryPoint );
+			relocate( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );

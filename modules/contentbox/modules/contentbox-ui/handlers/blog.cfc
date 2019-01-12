@@ -279,7 +279,7 @@ component extends="content"{
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
 		// If null, kick them out
 		if( isNull( thisEntry ) ){
-			relocatE( prc.cbEntryPoint );
+			relocate( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, thisEntry );
