@@ -130,8 +130,6 @@ component extends="baseHandler"{
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
 		arraySort( prc.interceptionPoints, "textnocase" );
-		// Get Singletons
-		prc.singletons = wirebox.getScope( "singleton" ).getSingletons();
 		// Raw tab
 		prc.tabSystem_geekSettings = true;
 		// view
