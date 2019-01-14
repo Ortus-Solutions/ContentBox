@@ -11,6 +11,7 @@ component {
 	this.title 				= "ContentBox Core";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
+	this.version 			= "@version.number@+@build.number@";
 	this.description 		= "This is the core module used to power the admin, RESTful and UI modules";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
