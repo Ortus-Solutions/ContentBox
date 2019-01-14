@@ -5,7 +5,7 @@
 * ---
 * Import a MachBlog database into contentbox
 */
-component  implements="ICBImporter" {
+component implements="ICBImporter" {
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
@@ -17,15 +17,15 @@ component  implements="ICBImporter" {
 	property name="log"					inject="logbox:logger:{this}";
 	property name="htmlHelper"			inject="HTMLHelper@coldbox";
 	property name="bCrypt"				inject="BCrypt@BCrypt";
-	
-	
+
+
 	/**
 	* Constructor
 	*/
 	MachBlogImporter function init(){
 		return this;
 	}
-	
+
 	/**
 	* Import from MachBlog, returns the string console.
 	*/
@@ -39,11 +39,11 @@ component  implements="ICBImporter" {
 		var baseDate = CreateDate(1970,1,1);
 
 		log.info( "Starting import process: #arguments.toString()#" );
-		
+
 		try{
-			
+
 			/************************************** CATEGORIES *********************************************/
-			
+
 			var q = new Query(datasource=arguments.dsn,
 							  username=arguments.dsnUsername,
 						      password=arguments.dsnPassword,
@@ -56,9 +56,9 @@ component  implements="ICBImporter" {
 				catMap[ q.category_id[ x ] ] = cat.getCategoryID();
 			}
 			log.info( "Categories imported successfully!" );
-			
+
 			/************************************** AUTHORS *********************************************/
-			
+
 			log.info( "Starting to import Authors...." );
 			// Get the default role
 			var defaultRole = roleService.get( arguments.roleID );
@@ -76,31 +76,31 @@ component  implements="ICBImporter" {
 				if( authorService.usernameFound(props.username) ){
 					author.setUsername( props.username & "-#left( hash(now()), 5)#" );
 				}
-				
+
 				entitySave( author );
 				log.info( "Imported author: #props.firstName# #props.lastName#" );
 				authorMap[ q.user_id[ x ] ] = author.getAuthorID();
 			 }
 			 log.info( "Authors imported successfully!" );
-			 
+
 			 /************************************** PAGES *********************************************/
 			 // NO PAGE SUPPORT IN MACHBLOG
-			 
+
 			 /************************************** ENTRIES *********************************************/
-			
+
 			log.info( "Starting to import Entries...." );
 			// Import Entries
 			var q = new Query(datasource=arguments.dsn,
 							  username=arguments.dsnUsername,
 						      password=arguments.dsnPassword,
 						      sql="select * from #arguments.tablePrefix#machblog_entry order by dt_modified asc" ).execute().getResult();
-						      
+
 			for(var x=1; x lte q.recordcount; x++){
 				var published = true;
 				if( !q.is_active[ x ] ){ published = false; }
 				var props = {title=q.title[ x ], slug=htmlHelper.slugify(q.title[ x ]), content=q.body[ x ]&q.more_body[ x ], excerpt=q.body[ x ], publishedDate=DateAdd( "s", q.dt_posted[ x ]/1000, baseDate),
 							 createdDate=DateAdd( "s", q.dt_created[ x ]/1000, baseDate), isPublished=published, allowComments=q.allow_comments[ x ]};
-				
+
 				// slug checks
 				if( !len(Trim(props.slug)) ){
 					props.slug = htmlHelper.slugify(props.title);
@@ -111,7 +111,7 @@ component  implements="ICBImporter" {
 					props.slug &= "-" & left(hash(now()),5);
 				}
 				SlugMap[ props.slug ] = "found";
-				
+
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
 				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.created_by_id[ x ]] ));
@@ -126,13 +126,13 @@ component  implements="ICBImporter" {
 					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[y]] ) );
 				}
 				entry.setCategories( aCategories );
-				
+
 				// Custom Fields
-				// NO CUSTOM FIELD SUPPORT IN MACHBLOG	
-				
+				// NO CUSTOM FIELD SUPPORT IN MACHBLOG
+
 				// Save entity
 				entitySave( entry );
-				
+
 				log.info( "Starting to import Entry Comments...." );
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,
@@ -141,8 +141,8 @@ component  implements="ICBImporter" {
 							       		  sql="select * from #arguments.tablePrefix#machblog_comment as comment where comment.entry_id = '#q.entry_id[ x ]#' order by dt_created asc" ).execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
-						content = qComments.comment[y], author = qComments.name[y], authorIP = qComments.ip_created[y], authorEmail = qComments.email[y], 
-						authorURL= qComments.url[y], createdDate = DateAdd( "s", qComments.dt_created[y]/1000, baseDate), isApproved = qComments.is_active[y]	
+						content = qComments.comment[y], author = qComments.name[y], authorIP = qComments.ip_created[y], authorEmail = qComments.email[y],
+						authorURL= qComments.url[y], createdDate = DateAdd( "s", qComments.dt_created[y]/1000, baseDate), isApproved = qComments.is_active[y]
 					};
 					var comment = commentService.new(properties=props);
 					comment.setRelatedContent( entry );
@@ -150,7 +150,7 @@ component  implements="ICBImporter" {
 					log.info( "Entry Comment imported: #props.authorEmail#" );
 				}
 				log.info( "Comments imported successfully!" );
-				
+
 				log.info( "Entry imported: #entry.getTitle()#" );
 			}
 			log.info( "Entries imported successfully!" );
@@ -161,7 +161,7 @@ component  implements="ICBImporter" {
 			log.error( "Error importing blog: #e.message# #e.detail#",e);
 			rethrow;
 		}
-		
+
 		// Commit All entities
 		transaction action="commit"{}
 	}

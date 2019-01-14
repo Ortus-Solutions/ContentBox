@@ -19,6 +19,9 @@ component implements="ISecurityService" singleton{
 	property name="cache"				inject="cachebox:template";
 	property name="bCrypt"				inject="BCrypt@BCrypt";
 
+	// Properties
+	property name="encryptionKey";
+
 	// Static Variables
 	RESET_TOKEN_TIMEOUT = 60;
 
@@ -26,6 +29,7 @@ component implements="ISecurityService" singleton{
 	* Constructor
 	*/
 	public SecurityService function init(){
+		variables.encryptionKey = "";
 		return this;
 	}
 
@@ -41,7 +45,7 @@ component implements="ISecurityService" singleton{
 
 	/**
 	* Validates if a user can access an event. Called via the cbSecurity module.
-	* 
+	*
 	* @rule The security rule being tested for
 	* @controller The ColdBox controller calling the validation
 	*/
@@ -144,7 +148,7 @@ component implements="ISecurityService" singleton{
 	* Authenticate an author via ContentBox credentials.
 	* This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
 	* The `author` object which it represents.
-	* 
+	*
 	* @username The username to validate
 	* @password The password to validate
 	*
@@ -161,9 +165,9 @@ component implements="ISecurityService" singleton{
 		} );
 
 		// Verify if author found
-		if( isNull( oAuthor ) ){ 
+		if( isNull( oAuthor ) ){
 			// return not authenticated
-			return results; 
+			return results;
 		}
 
 		// Determine password type
@@ -190,7 +194,7 @@ component implements="ISecurityService" singleton{
 			}
 			// Set last login date
 			updateAuthorLoginTimestamp( oAuthor );
-			
+
 			// User authenticated, mark and return
 			results.isAuthenticated = true;
 			results.author = oAuthor;
@@ -572,17 +576,29 @@ component implements="ISecurityService" singleton{
 	* if not, it will generate a new cb_enc_key
 	*/
 	string function getEncryptionKey(){
-		var setting = settingService.findWhere( { name = "cb_enc_key" } );
+
+		// Is the encryption key loaded?
+		if( len( variables.encryptionKey ) ){
+			return variables.encryptionKey;
+		}
+
+		// Verify we have one in the installation, else generate one
+		var oSetting = settingService.findWhere( { name = "cb_enc_key" } );
 
 		// if no key, then create it for this ContentBox installation
-		if( isNull( setting ) ){
-			setting = settingService.new();
-			setting.setValue( generateSecretKey( "BLOWFISH" ) );
-			setting.setName( "cb_enc_key" );
-			settingService.save(entity=setting);
+		if( isNull( oSetting ) ){
+			oSetting = settingService.new( {
+				name = "cb_enc_key",
+				value = generateSecretKey( "BLOWFISH" )
+			} );
+			settingService.save( entity=oSetting );
 			log.info( "Registered new cookie encryption key" );
 		}
 
-		return setting.getValue();
+		// Seed it locally, so we do not ask the DB again
+		variables.encryptionKey = oSetting.getValue();
+
+		// Return it.
+		return oSetting.getValue();
 	}
 }

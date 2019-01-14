@@ -12,10 +12,11 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox Administration Module";
-	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin";
+	this.modelNamespace 	= "cbadmin";
+	this.cfmapping			= "cbadmin";
 	this.dependencies 		= [ "contentbox" ];
 
 	/**
@@ -24,13 +25,12 @@ component {
 	function configure(){
 
 		// Layout Settings
-		layoutSettings = { defaultLayout = "admin.cfm" };
+		layoutSettings = {
+			defaultLayout = "admin.cfm"
+		};
 
 		// Module Settings
 		settings = {
-			// ForgeBox Settings
-			forgeBoxURL 	 = "http://www.coldbox.org/forgebox",
-			forgeBoxEntryURL = "http://www.coldbox.org/forgebox/view"
 		};
 
 		// i18n

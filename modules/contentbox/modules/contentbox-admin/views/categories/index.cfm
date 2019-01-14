@@ -1,7 +1,9 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-tag"></i> Content Categories</h1>
+		<h1 class="h1">
+			<i class="fa fa-tag"></i> Content Categories
+		</h1>
 	</div>
 </div>
 
@@ -46,28 +48,54 @@
 									</button>
 							    	<ul class="dropdown-menu">
 							    		<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
-							    		<li><a href="javascript:bulkRemove()" class="confirmIt"
-												data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?" data-message="This will delete the categories and associations, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a></li>
+										<li>
+											<a 	href="javascript:bulkRemove()"
+												class="confirmIt"
+												data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?"
+												data-message="This will delete the categories and all of its associations, are you sure?"
+											>
+												<i class="fa fa-trash-o"></i> Delete Selected
+											</a>
+										</li>
 										</cfif>
+
 										<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-							    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+										<li>
+											<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a>
+										</li>
 										</cfif>
+
 							    		<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
-											<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-											<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+											<li>
+												<a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank">
+													<i class="fa fa-download"></i> Export All as JSON
+												</a>
+											</li>
+											<li>
+												<a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank">
+													<i class="fa fa-download"></i> Export All as XML
+												</a>
+											</li>
 										</cfif>
 							    	</ul>
 							    </div>
 							</cfif>
+
 							<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 								<!--- Create --->
-								<button onclick="return createCategory();" class="btn btn-primary btn-sm">Create Category</button>
+								<button
+									onclick="return createCategory()"
+									class="btn btn-primary btn-sm"
+								>
+									Create Category
+								</button>
 							</cfif>
 						</div>
 					</div>
 				</div> <!--- end row --->
 
 			</div> <!--- end panel-heading --->
+
 			<div class="panel-body">
 				<table id="categories" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
 					<thead>
@@ -107,11 +135,25 @@
 							<td class="text-center">
 								<div class="btn-group">
 									<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+
 									<!--- Edit Command --->
-									<button type="button" class="btn btn-primary btn-sm" onclick="javascript:edit('#category.getCategoryID()#','#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')" title="Edit #category.getCategory()#"><i class="fa fa-edit"></i></button>
+									<button
+										type="button"
+										class="btn btn-primary btn-sm"
+										onclick="javascript:edit( '#category.getCategoryID()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
+										title="Edit #category.getCategory()#"
+										>
+											<i class="fa fa-edit"></i>
+									</button>
+
 									<!--- Delete Command --->
-									<a class="btn btn-danger btn-sm confirmIt" href="javascript:removeCategory('#category.getcategoryID()#')" title="Delete Category" data-title="Delete Category?">
+									<a 	class="btn btn-danger btn-sm confirmIt"
+										href="javascript:removeCategory( '#category.getcategoryID()#' )"
+										title="Delete Category"
+										data-title="Delete Category?"
+										data-message="Delete the category and all of its associations"
+									>
 										<i class="fa fa-trash-o" id="delete_#category.getCategoryID()#"></i>
 									</a>
 									</cfif>

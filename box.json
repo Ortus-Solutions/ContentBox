@@ -23,12 +23,12 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "testbox":"be",
-        "coldbox":"^5.1.4"
+        "testbox":"^2.8.0",
+        "coldbox":"^5.3.0"
     },
     "installPaths":{
         "testbox":"testbox/",
-        "coldbox":"coldbox"
+        "coldbox":"coldbox/"
     },
     "devDependencies":{},
     "ignores":[]

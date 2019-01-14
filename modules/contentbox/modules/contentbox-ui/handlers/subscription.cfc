@@ -31,7 +31,7 @@ component{
 					subscriptionService.deleteWhere( subscriptionToken = targets[ i ] );
 				}
 				messagebox.info( "Your subscriptions were successfully updated!" );
-				relocatE( "__subscriptions/#rc.subscriberToken#" );
+				relocate( "__subscriptions/#rc.subscriberToken#" );
 			} else {
 				messagebox.error( "Sorry, the subscriber token sent is not valid!" );
 			}
@@ -39,7 +39,7 @@ component{
 			messagebox.warn( "Sorry, we couldn't complete your request. Please try again." );
 		}
 
-		relocatE( URL=CBHelper.linkHome() );
+		relocate( URL=CBHelper.linkHome() );
 	}
 
 	/**
@@ -82,6 +82,6 @@ component{
 			messagebox.warn( "Sorry, your request could not be completed." );
 		}
 
-		relocatE( "__subscriptions/#prc.subscriberToken#" );
+		relocate( "__subscriptions/#prc.subscriberToken#" );
 	}
 }

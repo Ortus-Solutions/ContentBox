@@ -5,7 +5,7 @@
 * ---
  * Exporter for Data-based content
  */
-component implements="contentbox.models.exporters.ICBExporter" accessors=true {
+component implements="cbadmin.models.exporters.ICBExporter" accessors=true {
     property name="fileName" type="string";
     property name="displayName" type="string";
     property name="content" type="any";
@@ -33,7 +33,7 @@ component implements="contentbox.models.exporters.ICBExporter" accessors=true {
 
     /**
      * Gets "total" based on content type
-     */ 
+     */
     public numeric function getTotal() {
         var total = 0;
         if( !isNull( content ) ) {

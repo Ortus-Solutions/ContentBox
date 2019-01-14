@@ -38,8 +38,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			"2FactorAuthDisabled" = 0
 		};
 
-		var statusReport = c.withProjections( 
-				count 			= "isActive:authors", 
+		var statusReport = c.withProjections(
+				count 			= "isActive:authors",
 				groupProperty 	= "isActive"
 			)
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
@@ -53,13 +53,13 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			}
 		}
 
-		var twoFactorAuthReport = c.withProjections( 
-				count 			= "is2FactorAuth:authors", 
+		var twoFactorAuthReport = c.withProjections(
+				count 			= "is2FactorAuth:authors",
 				groupProperty 	= "is2FactorAuth"
 			)
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list();
-		
+
 		for( var row in twoFactorAuthReport ){
 			if( row.get( "is2FactorAuth" ) ){
 				results[  "2FactorAuthEnabled" ] = row.get( "authors" );
@@ -140,7 +140,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* @returns AuthorService
 	*/
 	function saveAuthor( required author, boolean passwordChange=false, boolean transactional=true ){
-		
+
 		// bcrypt password if new author
 		if( !arguments.author.isLoaded() OR arguments.passwordChange ){
 			// bcrypt the incoming password
@@ -159,7 +159,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 	/**
 	* Author search by many criteria.
-	* 
+	*
 	* @searchTerm		 	Search in firstname, lastname and email fields
 	* @isActive  		 	Search with active bit
 	* @role      		 	Apply a role filter
@@ -328,7 +328,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			}
 
 			// Group Permissions
-			if( arrayLen( thisUser.grouppermissions ) ){
+			if( arrayLen( thisUser.permissiongroups ) ){
 				// Create group permissions that don't exist first
 				var allGroups = [];
 				for( var thisGroup in thisUser.permissiongroups ){

@@ -37,9 +37,6 @@ component{
 			}
 		}
 
-		// Get all categories
-		prc.categories = categoryService.list ( sortOrder="category", asQuery=false );
-
 		// Home page determination either blog or a page
 		// Blog routes are in the blog namespace
 		if( event.getCurrentRoute() eq "/" AND
@@ -62,7 +59,7 @@ component{
 	function changeLang( event, rc, prc ){
 		event.paramValue( "lang", "en_US" );
 		setFWLocale( rc.lang );
-		relocatE( url="/" );
+		relocate( url="/" );
 	}
 
 	/**
@@ -104,7 +101,7 @@ component{
 			}
 		} else {
 			// 	Invalid Credentials
-			relocatE( URL=CBHelper.linkBlog() );
+			relocate( URL=CBHelper.linkBlog() );
 		}
 	}
 
@@ -313,16 +310,13 @@ component{
 			.paramValue( "slug", "" )
 			.paramValue( "h", "" );
 
-		// Get all categories
-		prc.categories = categoryService.list( sortOrder="category", asQuery=false );
-
 		// valid Author?
 		if( !prc.oCurrentAuthor.isLoaded() OR
 			!prc.oCurrentAuthor.isLoggedIn() OR
 			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) NEQ 0
 		){
 			// Not an author, kick them out.
-			relocatE( URL=CBHelper.linkHome() );
+			relocate( URL=CBHelper.linkHome() );
 		}
 
 		// xss headers
@@ -353,7 +347,7 @@ component{
 		// Check if comments enabled? else kick them out, who knows how they got here
 		if( NOT CBHelper.isCommentsEnabled( arguments.thisContent ) ){
 			messagebox.warn( "Comments are disabled! So you can't post any!" );
-			relocatE( URL=CBHelper.linkContent( arguments.thisContent ) );
+			relocate( URL=CBHelper.linkContent( arguments.thisContent ) );
 		}
 
 		// Trim values & XSS Cleanup of fields
@@ -391,7 +385,7 @@ component{
 			// Message
 			messagebox.warn( arrayToList( commentErrors, "<br>" ) );
 			// Redirect
-			relocatE(
+			relocate(
 				URL 	= CBHelper.linkComments( arguments.thisContent ),
 				persist = "author,authorEmail,authorURL,content"
 			);
@@ -429,10 +423,10 @@ component{
 			// Message
 			messagebox.warn( arrayToList( results.messages, "<br>" ) );
 			// relocate back to comments
-			relocatE( URL=CBHelper.linkComments( arguments.thisContent ) );
+			relocate( URL=CBHelper.linkComments( arguments.thisContent ) );
 		} else {
 			// relocate back to comment
-			relocatE( URL=CBHelper.linkComment( comment ) );
+			relocate( URL=CBHelper.linkComment( comment ) );
 		}
 	}
 

@@ -5,8 +5,8 @@
 * ---
 * Import a mango database into contentbox
 */
-component implements="contentbox.models.importers.ICBImporter"{
-	
+component implements="cbadmin.models.importers.ICBImporter"{
+
 	// DI
 	property name="categoryService"		inject="id:categoryService@cb";
 	property name="entryService"		inject="id:entryService@cb";
@@ -18,15 +18,15 @@ component implements="contentbox.models.importers.ICBImporter"{
 	property name="log"					inject="logbox:logger:{this}";
 	property name="htmlHelper"			inject="HTMLHelper@coldbox";
 	property name="bCrypt"				inject="BCrypt@BCrypt";
-	
-	
+
+
 	/**
 	* Constructor
 	*/
 	MangoImporter function init(){
 		return this;
 	}
-	
+
 	/**
 	* Import from mango blog, returns the string console.
 	*/
@@ -39,31 +39,31 @@ component implements="contentbox.models.importers.ICBImporter"{
 		var pageSlugMap = {};
 
 		log.info( "Starting import process: #arguments.toString()#" );
-		
+
 		try{
-			
+
 			/************************************** CATEGORIES *********************************************/
-			
+
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						      password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#category" ).execute().getResult();
 			for(var x=1; x lte q.recordcount; x++){
 				var props 	= {category=q.title[ x ], slug=q.name[ x ]};
 				var cat 	= categoryService.new(properties=props);
 				var exists 	= categoryService.findAllBySlug( q.name[ x ] );
-				
+
 				if( arrayLen( exists ) ){
 					cat = exists[ 1 ];
 				}else{
 					entitySave( cat );
 				}
-				
+
 				log.info( "Imported category: #props.category#" );
 				catMap[ q.id[ x ] ] = cat.getCategoryID();
 			}
 			log.info( "Categories imported successfully!" );
 
 			/************************************** AUTHORS *********************************************/
-			
+
 			log.info( "Starting to import Authors...." );
 			// Get the default role
 			var defaultRole = roleService.get( arguments.roleID );
@@ -79,13 +79,13 @@ component implements="contentbox.models.importers.ICBImporter"{
 				if( authorService.usernameFound(props.username) ){
 					author.setUsername( props.username & "-#left( hash(now()), 5)#" );
 				}
-				
+
 				entitySave( author );
 				log.info( "Imported author: #props.firstName# #props.lastName#" );
 				authorMap[ q.id[ x ] ] = author.getAuthorID();
 			}
 			log.info( "Authors imported successfully!" );
-			
+
 			/************************************** PAGES *********************************************/
 			log.info( "Starting to import Pages...." );
 			// Import Pages
@@ -101,7 +101,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				if( qPages.status[ x ] neq "published" ){ published = false; }
 				var props = {title=qPages.title[ x ], slug=qPages.name[ x ], content=qPages.content[ x ], excerpt=qPages.excerpt[ x ], publishedDate=qPages.last_modified[ x ],
 							 createdDate=qPages.last_modified[ x ], isPublished=published, allowComments=qPages.comments_allowed[ x ], order=qPages.sort_order[ x ], layout="pages"};
-				
+
 				// slug checks
 				if( !len(Trim(props.slug)) ){
 					props.slug = htmlHelper.slugify(props.title);
@@ -112,7 +112,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 					props.slug &= "-" & left(hash(now()),5);
 				}
 				pageSlugMap[ props.slug ] = "found";
-								
+
 				var page = pageService.new(properties=props);
 				// Add content versionized!
 				page.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[qPages.author_id[ x ]] ));
@@ -129,20 +129,20 @@ component implements="contentbox.models.importers.ICBImporter"{
 					page.addCustomField( thisCustomField );
 					thisCustomField.setRelatedContent( page );
 				}
-				
+
 				// Save page and store in reference map
-				pageMap[ qPages.id[ x ] ] = page;	
+				pageMap[ qPages.id[ x ] ] = page;
 				entitySave( page );
-				
+
 				log.info( "Starting to import Page Comments...." );
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#qPages.id[ x ]#'" ).execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
-						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y], 
+						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y],
 						authorURL= qComments.creator_url[y],
-						createdDate = qComments.created_on[y], isApproved = qComments.approved[y]	
+						createdDate = qComments.created_on[y], isApproved = qComments.approved[y]
 					};
 					var comment = commentService.new(properties=props);
 					comment.setRelatedContent( page );
@@ -150,18 +150,18 @@ component implements="contentbox.models.importers.ICBImporter"{
 					log.info( "Page Comment imported: #props.authorEmail#" );
 				}
 				log.info( "Comments imported successfully!" );
-				
+
 				// Hierarchies
 				if( len( qPages.parent_page_id[ x ] ) ){
 					// relate to page
 					page.setParent( pageMap[ qPages.parent_page_id[ x ] ] );
 				}
-				
+
 				log.info( "Page imported: #props.title#" );
 			}
-			
+
 			/************************************** ENTRIES *********************************************/
-			
+
 			log.info( "Starting to import Entries...." );
 			// Import Entries
 			var q = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
@@ -177,7 +177,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 				if( q.status[ x ] neq "published" ){ published = false; }
 				var props = {title=q.title[ x ], slug=q.name[ x ], content=q.content[ x ], excerpt=q.excerpt[ x ], publishedDate=q.last_modified[ x ],
 							 createdDate=q.last_modified[ x ], isPublished=published, allowComments=q.comments_allowed[ x ]};
-				
+
 				// slug checks
 				if( !len(Trim(props.slug)) ){
 					props.slug = htmlHelper.slugify(props.title);
@@ -188,7 +188,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 					props.slug &= "-" & left(hash(now()),5);
 				}
 				SlugMap[ props.slug ] = "found";
-				
+
 				var entry = entryService.new(properties=props);
 				// Add content versionized!
 				entry.addNewContentVersion(content=props.content,changelog="Imported content",author=authorService.get( authorMap[q.author_id[ x ]] ));
@@ -201,7 +201,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[y]] ) );
 				}
 				entry.setCategories( aCategories );
-				
+
 				// Custom Fields
 				var qCustomFields = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 						     		    password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#entry_custom_field as cf where cf.entry_id = '#q.id[ x ]#'" ).execute().getResult();
@@ -212,20 +212,20 @@ component implements="contentbox.models.importers.ICBImporter"{
 					var thisCustomField = customFieldService.new(properties=props);
 					entry.addCustomField( thisCustomField );
 					thisCustomField.setRelatedContent( entry );
-				}	
-				
+				}
+
 				// Save entity
 				entitySave( entry );
-				
+
 				log.info( "Starting to import Entry Comments...." );
 				// Import page comments
 				var qComments = new Query(datasource=arguments.dsn,username=arguments.dsnUsername,
 							       		  password=arguments.dsnPassword,sql="select * from #arguments.tablePrefix#comment as mc where mc.entry_id = '#q.id[ x ]#'" ).execute().getResult();
 				for(var y=1; y lte qComments.recordcount; y++){
 					var props = {
-						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y], 
+						content = qComments.content[y], author = qComments.creator_name[y], authorIP = '127.0.0.1', authorEmail = qComments.creator_email[y],
 						authorURL= qComments.creator_url[y],
-						createdDate = qComments.created_on[y], isApproved = qComments.approved[y]	
+						createdDate = qComments.created_on[y], isApproved = qComments.approved[y]
 					};
 					var comment = commentService.new(properties=props);
 					comment.setRelatedContent( entry );
@@ -233,7 +233,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 					log.info( "Entry Comment imported: #props.authorEmail#" );
 				}
 				log.info( "Comments imported successfully!" );
-				
+
 				log.info( "Entry imported: #entry.getTitle()#" );
 			}
 			log.info( "Entries imported successfully!" );
@@ -243,7 +243,7 @@ component implements="contentbox.models.importers.ICBImporter"{
 			log.error( "Error importing blog: #e.message# #e.detail#",e);
 			rethrow;
 		}
-		
+
 		// Commit All entities
 		transaction action="commit"{}
 

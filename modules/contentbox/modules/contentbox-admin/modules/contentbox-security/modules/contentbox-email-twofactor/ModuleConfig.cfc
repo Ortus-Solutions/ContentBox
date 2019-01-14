@@ -12,7 +12,6 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "Provides email two factor authentication";
-	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.dependencies 		= [ "contentbox-admin" ];
@@ -26,13 +25,13 @@ component {
 		routes = [
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
 			customInterceptionPoints = [ ]
 		};
-		
+
 		// interceptors
 		interceptors = [ ];
 	}
@@ -43,7 +42,7 @@ component {
 	function onLoad(){
 		// Register this 2 Auth provider with the TwoFactorService
 		var twoFactorService = wirebox.getInstance( "TwoFactorService@cb" );
-		twoFactorService.registerProvider( 
+		twoFactorService.registerProvider(
 			wirebox.getInstance( "EmailTwoFactorProvider@contentbox-email-twofactor" )
 		);
 	}

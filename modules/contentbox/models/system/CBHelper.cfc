@@ -438,10 +438,12 @@ component accessors="true" singleton threadSafe{
 			event.getCurrentEvent() eq "contentbox-ui:blog.entry"
 		);
 	}
+
 	/**
-	* Determine if you are in the page view
-	* @page Optional page slug to determine if you are in that page or not.
-	*/
+	 * Determine if you are in the page view
+	 *
+	 * @page Optional page slug to determine if you are in that page or not.
+	 */
 	boolean function isPageView( page="" ){
 		var event = getRequestContext();
 		if(
@@ -464,55 +466,127 @@ component accessors="true" singleton threadSafe{
 		}
 		return false;
 	}
+
 	/**
 	 * Determine if you're in a "preview" mode or not
 	 */
 	boolean function isPreview(){
-		var event = getRequestContext();
-		return reFindNoCase( "contentbox-ui:.*preview", event.getCurrentEvent() ) ? true : false;
+		return reFindNoCase( "contentbox-ui:.*preview", getRequestContext().getCurrentEvent() ) ? true : false;
 	}
 
-	// Get the index page entries, else throws exception
+	/**
+	 * Get the index page entries, else throws exception
+	 *
+	 * @throws ContentBox.CBHelper.InvalidEntriesContext
+	 * @return array of entries
+	 */
 	any function getCurrentEntries(){
 		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"entries" ) ){ return prc.entries; }
-		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="ContentBox.CBHelper.InvalidEntriesContext" );
+		if( structKeyExists( prc, "entries" ) ){
+			return prc.entries;
+		}
+		throw(
+			message = "Entries not found in collection",
+			detail  = "This probably means you are trying to use the entries in an non-index page",
+			type    = "ContentBox.CBHelper.InvalidEntriesContext"
+		);
 	}
-	// Get the index page entries count, else throws exception
-	any function getCurrentEntriesCount(){
+
+	/**
+	 * Get the index page entries count, else throws exception
+	 *
+	 * @throws ContentBox.CBHelper.InvalidEntriesContext
+	 */
+	numeric function getCurrentEntriesCount(){
 		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"entriesCount" ) ){ return prc.entriesCount; }
-		throw(message="Entries not found in collection",detail="This probably means you are trying to use the entries in an non-index page",type="ContentBox.CBHelper.InvalidEntriesContext" );
+		if( structKeyExists( prc, "entriesCount" ) ){
+			return prc.entriesCount;
+		}
+		throw(
+			message = "Entries not found in collection",
+			detail  = "This probably means you are trying to use the entries in an non-index page",
+			type    = "ContentBox.CBHelper.InvalidEntriesContext"
+		);
 	}
-	// Get the the blog categories, else throws exception
+
+	/**
+	 * Get the current array of category entities
+	 *
+	 * @return array of entities
+	 */
 	any function getCurrentCategories(){
-		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"categories" ) ){ return prc.categories; }
-		throw(message="Categories not found in collection",detail="Hmm, weird as categories should be available to all blog events",type="ContentBox.CBHelper.InvalidBlogContext" );
+		return categoryService.list( sortOrder="category", asQuery=false );
 	}
-	// Get the viewed entry if in entry view, else throws exception
+
+	/**
+	 * Get the viewed entry if in entry view, else throws exception
+	 *
+	 * @throws ContentBox.CBHelper.InvalidEntryContext
+	 * @return Entry
+	 */
 	any function getCurrentEntry(){
 		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"entry" ) ){ return prc.entry; }
-		throw(message="Entry not found in collection",detail="This probably means you are trying to use the entry in an non-entry page",type="ContentBox.CBHelper.InvalidEntryContext" );
+		if( structKeyExists( prc, "entry" ) ){
+			return prc.entry;
+		}
+		throw(
+			message = "Entry not found in collection",
+			detail  = "This probably means you are trying to use the entry in an non-entry page",
+			type    = "ContentBox.CBHelper.InvalidEntryContext"
+		);
 	}
-	// Get the viewed page if in page view, else throws exception
+
+	/**
+	 * Get the viewed page if in page view, else throws exception
+	 *
+	 * @throws ContentBox.CBHelper.InvalidPageContext
+	 * @return Page
+	 */
 	any function getCurrentPage(){
 		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"page" ) ){ return prc.page; }
-		throw(message="Page not found in collection",detail="This probably means you are trying to use the page in an non-page page! Redundant huh?",type="ContentBox.CBHelper.InvalidPageContext" );
+		if( structKeyExists( prc, "page" ) ){
+			return prc.page;
+		}
+		throw(
+			message = "Page not found in collection",
+			detail  = "This probably means you are trying to use the page in an non-page page! Redundant huh?",
+			type    = "ContentBox.CBHelper.InvalidPageContext"
+		);
 	}
-	// Get the viewed page's or entry's comments, else throw exception
+
+	/**
+	 * Get the viewed page's or entry's comments, else throw exception
+	 *
+	 * @throws ContentBox.CBHelper.InvalidCommentContext
+	 * @return array of comments
+	 */
 	any function getCurrentComments(){
 		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"comments" ) ){ return prc.comments; }
-		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext" );
+		if( structKeyExists( prc, "comments" ) ){
+			return prc.comments;
+		}
+		throw(
+			message = "Comments not found in collection",
+			detail  = "This probably means you are trying to use the entry or page comments in an non-entry or non-page page",
+			type    = "ContentBox.CBHelper.InvalidCommentContext"
+		);
 	}
-	// Get the viewed entry's comments count, else throw exception
-	any function getCurrentCommentsCount(){
+
+	/**
+	 * Get the viewed entry's comments count, else throw exception
+	 *
+	 * @throws ContentBox.CBHelper.InvalidCommentContext
+	 */
+	numeric function getCurrentCommentsCount(){
 		var prc = getRequestCollection( private=true );
-		if( structKeyExists(prc,"commentsCount" ) ){ return prc.commentsCount; }
-		throw(message="Comments not found in collection",detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",type="ContentBox.CBHelper.InvalidCommentContext" );
+		if( structKeyExists( prc, "commentsCount" ) ){
+			return prc.commentsCount;
+		}
+		throw(
+			message="Comments not found in collection",
+			detail="This probably means you are trying to use the entry or page comments in an non-entry or non-page page",
+			type="ContentBox.CBHelper.InvalidCommentContext"
+		);
 	}
 
 	/**
@@ -558,17 +632,11 @@ component accessors="true" singleton threadSafe{
 	 * Get the current page's or blog entries custom fields as a struct
 	 */
 	struct function getCurrentCustomFields(){
-		var fields = "";
 		if( isPageView() ){
-			fields = getCurrentPage().getCustomFields();
+			return getCurrentPage().getCustomFieldsAsStruct();
 		} else {
-			fields = getCurrentEntry().getCustomFields();
+			return getCurrentEntry().getCustomFieldsAsStruct();
 		}
-		var results = {};
-		for( var thisField in fields ){
-			results[ thisField.getKey() ] = thisField.getValue();
-		}
-		return results;
 	}
 
 	/**
@@ -680,7 +748,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Title is set Manually, return it
 		if( len( getMetaTitle() ) ){
-			return getMetaTitle();
+			return encodeForHTML( getMetaTitle() );
 		}
 
 		// Check if in page view or entry view
@@ -694,14 +762,14 @@ component accessors="true" singleton threadSafe{
 		if( isObject( oCurrentContent ) ){
 			// Do we have current page SEO title set?
 			if( len( oCurrentContent.getHTMLTitle() ) ){
-				return oCurrentContent.getHTMLTitle();
+				return encodeForHTML( oCurrentContent.getHTMLTitle() );
 			}
 			// Get current page slug title
-			return oCurrentContent.getTitle();
+			return encodeForHTML( oCurrentContent.getTitle() );
 		}
 
 		// Return global site title + tagline
-		return siteName() & " - " & siteTagLine();
+		return encodeForHTML( siteName() & " - " & siteTagLine() );
 	}
 
 	/**
@@ -712,7 +780,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Description is set Manually, return it
 		if( len( getMetaDescription() ) ){
-			return getMetaDescription();
+			return encodeForHTMLAttribute( getMetaDescription() );
 		}
 
 		// Check if in page view or entry view
@@ -726,11 +794,11 @@ component accessors="true" singleton threadSafe{
 		if( isObject( oCurrentContent ) ){
 			// Do we have current page SEO description set?
 			if( len( oCurrentContent.getHTMLDescription() ) ){
-				return trim( oCurrentContent.getHTMLDescription() );
+				return encodeForHTMLAttribute( oCurrentContent.getHTMLDescription() );
 			}
 
 			// Default description from content in non HTML mode
-			return HTMLEditFormat(
+			return encodeForHTMLAttribute(
 				REReplaceNoCase(
 					left( stripWhitespace( oCurrentContent.renderContent() ), 160 ),
 					"<[^>]*>",
@@ -741,7 +809,7 @@ component accessors="true" singleton threadSafe{
 		}
 
 		// Return global site description as metadata
-		return HTMLEditFormat( trim( siteDescription() ) );
+		return encodeForHTMLAttribute( trim( siteDescription() ) );
 	}
 
 	/**
@@ -752,7 +820,7 @@ component accessors="true" singleton threadSafe{
 
 		// If Meta Keywords is set Manually, return it
 		if( len( getMetaKeywords() ) ){
-			return stripWhitespace(getMetaKeywords());
+			return encodeForHTMLAttribute( stripWhitespace( getMetaKeywords() ) );
 		}
 
 		// Check if in page view or entry view
@@ -764,11 +832,11 @@ component accessors="true" singleton threadSafe{
 
 		// in context view or global
 		if( isObject( oCurrentContent ) AND len( oCurrentContent.getHTMLKeywords() ) ){
-			return stripWhitespace(oCurrentContent.getHTMLKeywords());
+			return encodeForHTMLAttribute( stripWhitespace( oCurrentContent.getHTMLKeywords() ) );
 		}
 
 		// Return global site description
-		return siteKeywords();
+		return encodeForHTMLAttribute( siteKeywords() );
 	}
 
 
@@ -1929,8 +1997,8 @@ component accessors="true" singleton threadSafe{
 	}
 
 	/**
-	* removes CR LF TAB double spaces from string
-	*/
+	 * removes CR LF TAB double spaces from string
+	 */
 	function stripWhitespace( required stringTarget ){
 		arguments.stringTarget = REReplace( arguments.stringTarget, "\s", " ", "ALL" );
 		return trim(

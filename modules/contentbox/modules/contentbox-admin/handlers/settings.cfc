@@ -17,7 +17,7 @@ component extends="baseHandler"{
 	property name="mailService"			inject="id:mailservice@cbMailservices";
 	property name="markdownEditor"		inject="id:markdownEditor@contentbox-markdowneditor";
 	property name="twoFactorService"	inject="id:twoFactorService@cb";
-	
+
 	/**
 	* Pre handler
 	*/
@@ -53,7 +53,7 @@ component extends="baseHandler"{
 		// view
 		event.setView( "settings/index" );
 	}
-	
+
 	/**
 	* Email Testing of settings
 	* @return json
@@ -73,8 +73,8 @@ component extends="baseHandler"{
 		);
 		// send it out
 		var results = mailService.send( mail );
-		
-		event.renderData( data=results, type="json" );		
+
+		event.renderData( data=results, type="json" );
 	}
 
 	/**
@@ -82,23 +82,33 @@ component extends="baseHandler"{
 	*/
 	function save( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preSettingsSave",{ oldSettings = prc.cbSettings, newSettings = rc } );
+		announceInterception(
+			"cbadmin_preSettingsSave",
+			{ oldSettings = prc.cbSettings, newSettings = rc }
+		);
 		// bulk save the options
 		settingsService.bulkSave( rc );
+
 		// Do blog entry point change
-		var ses 	= getInterceptor( "SES" );
-		var routes 	= ses.getRoutes();
-		for( var key in routes ){
-			if( key.namespaceRouting eq "blog" ){
-				key.pattern = key.regexpattern = replace(  rc[ "cb_site_blog_entrypoint" ] , "/", "-", "all" ) & "/";
-			}
-		}
-		ses.setRoutes( routes );
+		var routingService 	= controller.getRoutingService();
+
+		routingService.setRoutes(
+			routingService.getRoutes()
+				.map( function( item ){
+					if( item.namespaceRouting eq "blog" ){
+						item.pattern = item.regexpattern = replace(  rc[ "cb_site_blog_entrypoint" ] , "/", "-", "all" ) & "/";
+					}
+					return item;
+				} )
+		);
+
 		// announce event
 		announceInterception( "cbadmin_postSettingsSave" );
+
 		// relocate back to editor
 		cbMessagebox.info( "All ContentBox settings updated! Yeeehaww!" );
-		relocate(prc.xehSettings);
+
+		relocate( prc.xehSettings );
 	}
 
 	/**
@@ -120,14 +130,12 @@ component extends="baseHandler"{
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
 		arraySort( prc.interceptionPoints, "textnocase" );
-		// Get Singletons
-		prc.singletons = wirebox.getScope( "singleton" ).getSingletons();
 		// Raw tab
 		prc.tabSystem_geekSettings = true;
 		// view
 		event.setView( "settings/raw" );
 	}
-	
+
 	/**
 	* Present the raw settings table
 	* @return html
@@ -137,23 +145,23 @@ component extends="baseHandler"{
 		event.paramValue( "page", 1 );
 		event.paramValue( "search", "" );
 		event.paramValue( "viewAll", false );
-		
+
 		// prepare paging object
 		prc.oPaging = getModel( "Paging@cb" );
 		prc.paging 		= prc.oPaging.getBoundaries();
 		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 		prc.pagingLink 	= "javascript:settingsPaginate(@page@)";
-		
+
 		// View all?
 		var offset  = prc.paging.startRow-1;
 		var max		= prc.cbSettings.cb_paging_maxrows;
 		if( rc.viewAll ){ offset = max = 0; }
-		
+
 		// Get settings
 		var results = settingsService.search(search=rc.search, offset=offset, max=max);
 		prc.settings = results.settings;
 		prc.settingsCount = results.count;
-		
+
 		event.setView(view="settings/rawSettingsTable", layout="ajax" );
 	}
 
@@ -163,11 +171,11 @@ component extends="baseHandler"{
 	*/
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
-		
+
 		// get all prepared content objects
 		var data  		= settingsService.getAllForExport();
 		var filename 	= "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
-				
+
 		event.renderData( data=data, formats="xml,json", xmlRootName="settings" )
 			.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
 	}

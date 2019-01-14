@@ -2,8 +2,8 @@
 <script>
 $( document ).ready( function(){
 	// Setup view
-	setupView( { 
-		tableContainer	: $( "##authorTableContainer" ), 
+	setupView( {
+		tableContainer	: $( "##authorTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehAuthorTable )#',
 		searchField 	: $( "##userSearch" ),
 		searchName		: 'searchAuthors',
@@ -38,9 +38,9 @@ function setupView( settings ){
 
 	// setup filters
 	$filters 		= settings.filters;
-	
+
 	// quick search binding
-	$searchField.keyup( 
+	$searchField.keyup(
 		_.debounce(
 			function(){
 				var $this = $( this );
@@ -99,7 +99,7 @@ function contentPaginate(page){
 function contentLoad( criteria ){
 	// default checks
 	if( criteria == undefined ){ criteria = {}; }
-	
+
 	// default criteria matches
 	if( !( "search" in criteria ) ){ criteria.search = ""; }
 	if( !( "page" in criteria ) ){ criteria.page = 1; }
@@ -109,26 +109,26 @@ function contentLoad( criteria ){
 	$tableContainer.css( 'opacity', .60 );
 
 	// setup ajax arguments
-	var args = {  
-		page 	: criteria.page, 
+	var args = {
+		page 	: criteria.page,
 		showAll : criteria.showAll
 	};
-	
+
 	// do we have filters, if so apply them to arguments
 	for( var thisFilter in $filters ){
 		args[ $filters[ thisFilter ].name ] = $( "##" + $filters[ thisFilter ].name ).val();
 	}
-	
+
 	// Add dynamic search key name
 	args[ $searchName ] = criteria.search;
 
 	// Add sort order
 	args[ 'sortOrder' ] = $sortOrder.val();
-	console.log( $sortOrder.val() );
+
 	// load content
-	$tableContainer.load( 
-		$tableURL, 
-		args, 
+	$tableContainer.load(
+		$tableURL,
+		args,
 		function(){
 			$tableContainer.css( 'opacity', 1 );
 			$( this ).fadeIn( 'fast' );

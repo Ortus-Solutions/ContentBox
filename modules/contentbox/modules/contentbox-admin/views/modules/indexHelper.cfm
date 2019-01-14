@@ -4,15 +4,14 @@
 $(document).ready(function() {
 	$uploadForm = $( "##moduleUploadForm" );
 	$moduleForm = $( "##moduleForm" );
-	$forgebox   = $( "##forgeboxPane" );
 	$( "##modules" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -46,18 +45,6 @@ function deactivate(moduleName){
 	$moduleForm.find( "##moduleName" ).val( moduleName );
 	$moduleForm.attr( "action","#event.buildLink(prc.xehModuleDeactivate)#" );
 	$moduleForm.submit();
-}
-function loadForgeBox(orderBY){
-	if( orderBY == null ){ orderBY = "popular"; }
-
-	var params = {
-		typeslug: '#prc.forgeBoxSlug#',
-		installDir: '#prc.forgeBoxInstallDir#',
-		returnURL: '#prc.forgeboxReturnURL#',
-		orderBY: orderBY
-	};
-
-	$forgebox.load('#event.buildLink(prc.xehForgeBox)#?' + $.param( params ) );
 }
 </script>
 </cfoutput>

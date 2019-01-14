@@ -1,5 +1,6 @@
 <cfoutput>
-    <div id="contentToolBar">
+	<div id="contentToolBar">
+
         <!--- editor selector --->
         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
             <div class="btn-group btn-group-sm">
@@ -10,7 +11,7 @@
                 </a>
                 <ul class="dropdown-menu">
                     <cfloop array="#prc.editors#" index="thisEditor">
-                        <li>
+                        <li <cfif thisEditor.name eq prc.defaultEditor>class="active"</cfif>>
                             <a href="javascript:switchEditor( '#thisEditor.name#' )">
                                 #thisEditor.displayName#
                             </a>
@@ -18,11 +19,12 @@
                     </cfloop>
                 </ul>
             </div>
-        </cfif>
+		</cfif>
+
         <!--- markup --->
         #html.hiddenField(
-            name="markup", 
-            value=args.content.isLoaded() ? args.content.getMarkup() : prc.defaultMarkup
+            name	= "markup",
+            value	= args.content.isLoaded() ? args.content.getMarkup() : prc.defaultMarkup
         )#
         <div class="btn-group btn-group-sm">
             <a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
@@ -32,12 +34,14 @@
             </a>
             <ul class="dropdown-menu">
                 <cfloop array="#prc.markups#" index="thismarkup">
-                    <li>
+                    <li <cfif thisMarkup eq args.content.getMarkup()>class="active"</cfif>>
                         <a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</a>
                     </li>
                 </cfloop>
             </ul>
-        </div>
+		</div>
+
+		<!--- Auto Save Operations --->
         <div class="btn-group btn-group-sm" id="contentAutoSave">
             <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
                 <i class="fa fa-save"></i>
@@ -49,7 +53,7 @@
             </ul>
         </div>
 
-        <!---Right References Panel --->
+        <!--- Preview Panel --->
         <div class="pull-right">
             <a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
                 <i class="fa fa-eye fa-lg"></i>

@@ -6,30 +6,29 @@
 * ContentBox installer module
 */
 component {
-	
+
 	// Module Properties
 	this.title 				= "contentbox-dsncreator";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "The ContentBox DSN Creator module";
-	this.version			= "@version.number@+@build.number@";
 	this.autoMapModels 		= false;
-	
+
 	function configure(){
 	}
-	
+
 	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		
+
 	}
-	
+
 	/**
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		
+
 	}
-	
+
 }

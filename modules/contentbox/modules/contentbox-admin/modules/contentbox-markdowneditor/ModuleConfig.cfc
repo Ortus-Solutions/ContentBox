@@ -12,7 +12,6 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox Markdown Module";
-	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin/markdown";
@@ -27,13 +26,13 @@ component {
 		routes = [
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
 			customInterceptionPoints = [ ]
 		};
-		
+
 		// interceptors
 		interceptors = [ ];
 	}

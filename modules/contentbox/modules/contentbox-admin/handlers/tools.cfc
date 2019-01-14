@@ -15,7 +15,7 @@ component extends="baseHandler"{
     property name="templateService"     inject="id:emailtemplateService@cb";
 	property name="contentUtil"        inject="id:contentUtil@cb";
 	property name="HTMLHelper"			inject="HTMLHelper@coldbox";
-	property name="staticExporter"		inject="staticExporter@cb";
+	property name="staticExporter"		inject="staticExporter@cbadmin";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
@@ -45,7 +45,7 @@ component extends="baseHandler"{
 		event.paramValue( "CBUpload", "" );
 		// make sure upload was valid
 		if( len( rc.CBUpload ) && fileExists( rc.CBUpload ) ) {
-			var ContentBoxImporter = getModel( "ContentBoxImporter@cb" );
+			var ContentBoxImporter = getModel( "ContentBoxImporter@cbadmin" );
 			ContentBoxImporter.setup( importFile=rc.CBUpload );
 			// check validity of package
 			if( ContentBoxImporter.isValid() ) {
@@ -72,7 +72,7 @@ component extends="baseHandler"{
 		event.paramValue( "overwrite", false );
 		try{
 			if( len( rc.CBUpload ) and fileExists( rc.CBUpload ) ){
-				var ContentBoxImporter = getModel( "ContentBoxImporter@cb" );
+				var ContentBoxImporter = getModel( "ContentBoxImporter@cbadmin" );
 				ContentBoxImporter.setup( importFile=rc.CBUpload );
 				// already validated, so just process the import
 				var importLog = ContentBoxImporter.execute( overrideContent=rc.overwrite );
@@ -111,7 +111,7 @@ component extends="baseHandler"{
 
 		try{
 			// get importer
-			var importer = getModel( "#rc.importer#Importer@cb" );
+			var importer = getModel( "#rc.importer#Importer@cbadmin" );
 			importer.execute( argumentCollection=rc );
 			cbMessagebox.info( "Content imported successfully! Please check out your ContentBox now!" );
 		} catch( any e ){
@@ -147,7 +147,7 @@ component extends="baseHandler"{
 	function previewExport( event, rc, prc ) {
 		// get targets
 		var targets 			= prepareExportTargets( rc );
-		var contentBoxExporter 	= getModel( "ContentBoxExporter@cb" );
+		var contentBoxExporter 	= getModel( "ContentBoxExporter@cbadmin" );
 		// build up exporter instance from targets in rc
 		prc.descriptor = contentBoxExporter.setup( targets ).getDescriptor();
 		// Sort the content
@@ -162,7 +162,7 @@ component extends="baseHandler"{
 	function doExport( event, rc, prc ) {
 		// get targets
 		var targets 			= prepareExportTargets( rc );
-		var contentBoxExporter 	= getModel( "ContentBoxExporter@cb" );
+		var contentBoxExporter 	= getModel( "ContentBoxExporter@cbadmin" );
 		var exportResult 		= contentBoxExporter.setup( targets ).export();
 		// export the content
 		var exportFilePath = exportResult.exportfile;

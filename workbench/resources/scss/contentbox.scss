@@ -11,8 +11,8 @@
   padding: 5px 0px 0px 0px;
 }
 /** Header */
-#header .brand{ 
-	background-color: white!important; 
+#header .brand{
+	background-color: white!important;
 }
 #header .logo{
 	padding: 15px 0 0 0px !important;
@@ -118,7 +118,7 @@ img.img-screenshot{ height: 200px; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
 .checkbox-spacer {margin-top:5px;}
-.btn-toggle.radio {padding-left:30px;}  
+.btn-toggle.radio {padding-left:30px;}
 
 /**============================== WIDGETS ==============================**/
 
@@ -205,7 +205,7 @@ widgetinfobar::-moz-selection {
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
 
 #div-search { padding: 6px 14px 2px 14px; }
-#div-search input{ 
+#div-search input{
 	background-color: #fafafa;
 	border-radius: 3px;
 	box-shadow: none !important;
@@ -223,8 +223,8 @@ widgetinfobar::-moz-selection {
 	display: none;
 	top: 60px;
 	left: 312px;
-	background-color: #293949; 
-	padding: 5px 10px; 
+	background-color: #293949;
+	padding: 5px 10px;
 	width: 425px;
 	position: absolute;
 	min-height: 100px;
@@ -258,7 +258,7 @@ widgetinfobar::-moz-selection {
 
 /**============================== DIFF CSS ==============================**/
 /* LEGEND */
-#legend { 
+#legend {
 	font-size:9px;
 	line-height:1em;
 	margin:1em 0;
@@ -274,9 +274,9 @@ widgetinfobar::-moz-selection {
 	}
 }
 /* DIFF */
-table.diff { 
-	width: 100%; 
-	margin: 0px; 
+table.diff {
+	width: 100%;
+	margin: 0px;
 	padding: 0px;
 	tr{
 		margin: 0px; padding: 0px;
@@ -284,19 +284,19 @@ table.diff {
 	tr:hover, td:hover{
 		background: #d7eafe;
 	},
-	td { 
-		margin: 0px; 
-		padding: 3px; 
-		border-collapse: collapse; 
+	td {
+		margin: 0px;
+		padding: 3px;
+		border-collapse: collapse;
 		font-family: "Courier New";
 		font-size: 11px;
 		font-weight: bold;
 		line-height: normal;
-		vertical-align: top; 
+		vertical-align: top;
 	},
 	td.linenum {
 		background-color: #EFEFEF;
-		color: #666666; 
+		color: #666666;
 		text-align: right;
 	}
 }
@@ -341,19 +341,6 @@ table.diff {
 .hand-cursor{cursor:pointer !important;}
 .size12{ font-size: 12px; }
 
-/**============================== FORGEBOX CSS ==============================**/
-
-#forgebox-entrysidebar { width:180px; float:right; }
-#forgebox-entrycontent { width:515px; }
-.forgeBox-entrybox { margin:10px 0px 0px 0px; border:1px solid #CCC; background:#FFFFFF url(../images/divbg.gif) repeat-x bottom left; padding:10px; -moz-border-radius:10px; -webkit-border-radius:10px; -khtml-border-radius:10px; }
-.forgebox-rating { float:right; margin-right:5px; }
-.forgebox-infobox { top:20px !important; border:10px solid #666; padding:10px; background-color:#fff; width: 95%; min-height: 70%;-moz-box-shadow:0 0 15px #ccc; -webkit-box-shadow:0 0 15px #ccc; -moz-border-radius:6px; -webkit-border-radius:6px;width:90%}
-.forgebox-infobox a.close { background:url(../images/x.png) no-repeat scroll 0 0; position:absolute; right:-5px; top:-5px; width:25px; height:29px; cursor:pointer; }
-.forgebox-infobox h2 { background:#FFF url(../images/box_header_bg.gif) repeat-x; margin:-10px; margin-bottom: .5em; padding:5px 10px!important; color:inherit; }
-.forgebox-download { float:right; clear:right; }
-.forgebox-modal{ height: auto; width: 50%}
-
-
 /**============================== MEDIA QUERIES ==============================**/
 
 @media all and (max-width: 437px) {
@@ -366,8 +353,8 @@ table.diff {
 	}
 }
 @media only screen and (max-width: 853px) {
-	#header div.brand{ 
-		display: none; 
+	#header div.brand{
+		display: none;
 	}
 	.main-content-wrapper {
 		margin-left: 0;

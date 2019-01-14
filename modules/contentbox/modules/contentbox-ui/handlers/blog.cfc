@@ -1,10 +1,10 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Handler For ContentBox blog pages
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Handler For ContentBox blog pages
+ */
 component extends="content"{
 
 	// DI
@@ -13,8 +13,10 @@ component extends="content"{
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
 
-	// pre Handler
-	function preHandler( event, rc, prc ,action,eventArguments){
+	/**
+	 * Pre Handler
+	 */
+	function preHandler( event, rc,prc , action, eventArguments ){
 		// Check if disabled?
 		if( prc.cbSettings.cb_site_disable_blog ){
 			event.overrideEvent( "contentbox-ui:blog.disabled" );
@@ -24,15 +26,15 @@ component extends="content"{
 	}
 
 	/**
-	* Action if blog is disabled
-	*/
+	 * Action if blog is disabled
+	 */
 	function disabled( event, rc, prc ){
 		// missing page, the blog as it does not exist
 		prc.missingPage 	 = event.getCurrentRoutedURL();
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
 
 		// set 404 headers
-		event.setHTTPHeader( "404","Page not found" );
+		event.setHTTPHeader( "404", "Page not found" );
 
 		// set skin not found
 		event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module )
@@ -40,8 +42,8 @@ component extends="content"{
 	}
 
 	/**
-	* Preview a blog entry
-	*/
+	 * Preview a blog entry
+	 */
 	function preview( event, rc, prc ){
 		// Run parent preview
 		super.preview( argumentCollection=arguments );
@@ -66,8 +68,8 @@ component extends="content"{
 	}
 
 	/**
-	* The blog home page
-	*/
+	 * The blog home page
+	 */
 	function index( event, rc, prc ){
 		// incoming params
 		event.paramValue( "page", 1 )
@@ -83,7 +85,7 @@ component extends="content"{
 		rc.category = antiSamy.clean( rc.category );
 
 		// prepare paging object
-		prc.oPaging 			= getModel( "Paging@cb" );
+		prc.oPaging 			= getInstance( "Paging@cb" );
 		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
 		prc.pagingLink 			= CBHelper.linkBlog() & "?page=@page@";
 
@@ -91,6 +93,7 @@ component extends="content"{
 		if( len( rc.q ) ){
 			prc.pagingLink = CBHelper.linkBlog() & "/search/#rc.q#/@page@?";
 		}
+
 		// Category Filter Link Override
 		if( len( rc.category ) ){
 			prc.pagingLink = CBHelper.linkBlog() & "/category/#rc.category#/@page@?";
@@ -98,7 +101,7 @@ component extends="content"{
 
 		// get published entries
 		var entryResults = entryService.findPublishedEntries(
-			offset		= prc.pagingBoundaries.startRow-1,
+			offset		= prc.pagingBoundaries.startRow - 1,
 			max			= prc.cbSettings.cb_paging_maxentries,
 			category	= rc.category,
 			searchTerm	= rc.q
@@ -108,9 +111,10 @@ component extends="content"{
 
 		// announce event
 		announceInterception(
-			"cbui_onIndex", {
-			entries 	= prc.entries,
-			entriesCount= prc.entriesCount
+			"cbui_onIndex",
+			{
+				entries 	= prc.entries,
+				entriesCount= prc.entriesCount
 			}
 		);
 
@@ -133,8 +137,8 @@ component extends="content"{
 	}
 
 	/**
-	* The archives
-	*/
+	 * The archives
+	 */
 	function archives( event, rc, prc ){
 		// incoming params
 		event.paramValue( "page", 1 )
@@ -275,7 +279,7 @@ component extends="content"{
 		var thisEntry = entryService.findBySlug( rc.entrySlug );
 		// If null, kick them out
 		if( isNull( thisEntry ) ){
-			relocatE( prc.cbEntryPoint );
+			relocate( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, thisEntry );

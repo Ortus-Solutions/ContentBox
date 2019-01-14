@@ -32,9 +32,6 @@
                             <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
                         </li>
                         <li>
-                            <a href="##wirebox" data-toggle="tab"><i class="fa fa-th fa-lg"></i> <span class="hidden-xs">WireBox</span></a>
-                        </li>
-                        <li>
                             <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li>
@@ -162,50 +159,6 @@
                                     </div>
                                 </div>
                             </div>
-						</div>
-
-                        <!--- WireBox Pane --->
-                        <div class="tab-pane" id="wirebox">
-                            <br>
-                            <p>The following are all the objects that are currently in the singleton scope.</p>
-                            <div class="row well well-sm">
-                                <div class="col-md-12">
-                                    <div class="form-group form-inline no-margin">
-                                        #html.textField(
-                                            name         = "singletonsFilter",
-                                            size         = "30",
-                                            class        = "form-control",
-                                            placeholder  = "Quick Filter"
-                                        )#
-                                    </div>
-                                </div>
-                            </div>
-                            #html.startForm(name="singletonForm" )#
-                                <!--- settings --->
-                                <table name="singletons" id="singletons" class="table table-hover table-striped table-condensed" width="98%">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Path</th>
-                                            <th class="text-center {sorter:false}">Actions</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <cfloop collection="#prc.singletons#" item="target">
-                                        <tr>
-                                            <td><strong>#target#</strong></td>
-                                            <td>
-                                                #wirebox.getBinder().getMapping(target).getPath()#
-                                            </td>
-                                            <td class="text-center">
-                                                <a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehMappingDump)#', {id:'#target#'} )" title="Dump Mapping Memento"><i class="fa fa-eye fa-lg"></i> </a>
-                                            </td>
-                                        </tr>
-                                        </cfloop>
-                                    </tbody>
-                                </table>
-                            #html.endForm()#
 						</div>
 
                         <!--- CacheBox Pane --->

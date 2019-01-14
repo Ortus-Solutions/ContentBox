@@ -11,7 +11,6 @@ component{
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "Generates XML, TXT, JSON and HTML Sitemaps for your website";
-	this.version			= "@version.number@+@build.number@";
 	// If true, looks for views in the parent first, if not found, then in the module. Else vice-versa
 	this.viewParentLookup 	= true;
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa

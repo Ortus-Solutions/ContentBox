@@ -27,23 +27,6 @@ $( document ).ready( function() {
         )
 	);
 
-	// singletons sorting + filter
-	$( "##singletons" ).dataTable( {
-		"paging": false,
-		"info": false,
-		"searching": false,
-	    "columnDefs": [
-	        {
-	            "orderable": false,
-	            "targets": '{sorter:false}'
-	        }
-	    ],
-	    "order": []
-	} );
-	$( "##singletonsFilter" ).keyup(function(){
-		$.uiTableFilter( $( "##singletons" ), this.value );
-	} );
-
 	// form validator
 	$settingEditor.validate();
 

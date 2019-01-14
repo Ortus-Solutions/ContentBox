@@ -12,7 +12,6 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox CKEditor Module";
-	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.entryPoint			= "cbadmin/ckeditor";
@@ -27,18 +26,18 @@ component {
 		routes = [
 			{ pattern="/:handler/:action?" }
 		];
-		
+
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints = [ 
+			customInterceptionPoints = [
 				"cbadmin_ckeditorToolbar",
 				"cbadmin_ckeditorExtraPlugins",
 				"cbadmin_ckeditorExtraConfig",
 				"cbadmin_ckeditorContentsCss"
 			]
 		};
-		
+
 		// interceptors
 		interceptors = [ ];
 	}

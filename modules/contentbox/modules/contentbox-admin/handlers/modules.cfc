@@ -91,7 +91,6 @@ component extends="baseHandler"{
 		prc.xehModuleRescan     = "#prc.cbAdminEntryPoint#.modules.rescan";
 		prc.xehModuleActivate   = "#prc.cbAdminEntryPoint#.modules.activate";
 		prc.xehmoduleDeactivate = "#prc.cbAdminEntryPoint#.modules.deactivate";
-		prc.xehForgeBox		    = "#prc.cbAdminEntryPoint#.forgebox.index";
 
 		// tab
 		prc.tabModules_manage = true;
@@ -103,13 +102,6 @@ component extends="baseHandler"{
 		var modules = moduleService.findModules();
 		prc.modules = modules.modules;
 		prc.modulesCount = modules.count;
-
-		// ForgeBox Entry URL
-		prc.forgeBoxEntryURL = getModuleSettings( "contentbox-admin" ).forgeBoxEntryURL;
-		// ForgeBox Stuff
-		prc.forgeBoxSlug = "contentbox-modules";
-		prc.forgeBoxInstallDir = "modules";
-		prc.forgeboxReturnURL = URLEncodedFormat( event.buildLink( linkto=prc.xehModules, querystring="rescan=true" ) );
 
 		// view
 		event.setView( "modules/index" );

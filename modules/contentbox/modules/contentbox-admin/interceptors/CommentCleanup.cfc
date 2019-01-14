@@ -21,7 +21,7 @@ component extends="coldbox.system.Interceptor"{
     /**
      * on admin login
      */
-    public void function cbadmin_onLogin( event, interceptData ) async="true" {
+    public void function cbadmin_onLogin( event, interceptData ){
         var author 				= securityService.getAuthorSession();
         var isContentBoxAdmin 	= author.checkPermission( "CONTENTBOX_ADMIN" );
         // if an admin, continue...

@@ -1,10 +1,10 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* ContentBox UI module configuration
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * ContentBox UI module configuration
+ */
 component {
 
 	// Module Properties
@@ -12,7 +12,6 @@ component {
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "ContentBox UI Module";
-	this.version			= "@version.number@+@build.number@";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;
 	this.dependencies 		= [ "contentbox" ];
@@ -22,6 +21,9 @@ component {
 	// BY DEFAULT IT TAKES OVER THE ENTIRE APPLICATION
 	this.entryPoint	= "";
 
+	/**
+	 * Configure the module
+	 */
 	function configure(){
 
 		// PARENT APPLICATION ROUTING IF IN TAKE OVER MODE. YOU CAN CUSTOMIZE THIS IF YOU LIKE.
@@ -85,11 +87,11 @@ component {
 			{ pattern="/rss/comments/:entrySlug?", handler="blog", action="rss", commentRSS=true, namespace="blog" },
 			{ pattern="/rss/", handler="blog", action="rss" , namespace="blog" },
 			// category filter
-			{ pattern="/category/:category/:page-numeric?", handler="blog", action="index" , namespace="blog" },
+			{ pattern="/category/:category/:page-numeric?", handler="blog", action="index", namespace="blog" },
 			// search filter
-			{ pattern="/search/:q?/:page-numeric?", handler="blog", action="index" , namespace="blog" },
+			{ pattern="/search/:q?/:page-numeric?", handler="blog", action="index", namespace="blog" },
 			// Blog comment post
-			{ pattern="/:entrySlug/commentPost", handler="blog", action="commentPost" , namespace="blog" },
+			{ pattern="/:entrySlug/commentPost", handler="blog", action="commentPost", namespace="blog" },
 			// blog permalink
 			{ pattern="/:entrySlug", handler="blog", action="entry", namespace="blog" },
 			// Blog reserved route
@@ -137,13 +139,11 @@ component {
 	}
 
 	/**
-	* Fired when the module is registered and activated.
-	*/
+	 * Fired when the module is registered and activated.
+	 */
 	function onLoad(){
 		// Startup the ContentBox theme service and activate the current layout
-		controller.getWireBox().getInstance( "themeService@cb" ).startupActiveTheme();
-		// Get ses handle
-		var ses = controller.getInterceptorService().getInterceptor( 'SES', true );
+		wirebox.getInstance( "themeService@cb" ).startupActiveTheme();
 
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
@@ -152,65 +152,71 @@ component {
 		if( !len( this.entryPoint ) ){
 
 			// get parent routes so we can re-mix them later
-			var parentRoutes 		= ses.getRoutes();
+			var routingService 		= controller.getRoutingService();
+			var parentRoutes 		= routingService.getRoutes();
 			var newRoutes			= [];
 
-			// iterate and only keep module routing
-			for(var x=1; x lte arrayLen(parentRoutes); x++){
-				if( parentRoutes[ x ].pattern NEQ ":handler/" AND
-				    parentRoutes[ x ].pattern NEQ ":handler/:action/" ){
-					arrayAppend(newRoutes, parentRoutes[ x ]);
-				}
-			}
-			// override new cleaned routes
-			ses.setRoutes( newRoutes );
+			// Keep non-convention routing
+			routingService.setRoutes(
+				parentRoutes.filter( function( item ){
+					return ( item.pattern NEQ ":handler/" AND item.pattern NEQ ":handler/:action/" );
+				} )
+			);
 
-			// Add parent routing
-			ses.addRoute(pattern="#variables.parentSESPrefix#/:handler/:action?" );
+			// Add parent execution routing
+			routingService.addRoute( pattern="#variables.parentSESPrefix#/:handler/:action?" );
 
-			// Add routes manually to take over parent routes
-			for(var x=1; x LTE arrayLen( variables.routes ); x++){
-				// append module location to it so the route is now system wide
-				var args = duplicate( variables.routes[ x ] );
+			// Register UI routes now in take over mode.
+			variables.routes.each( function( item ){
 				// Check if handler defined
-				if( structKeyExists(args,"handler" ) ){
-					args.handler = "contentbox-ui:#args.handler#";
+				if( structKeyExists( item, "handler" ) ){
+					item.handler = "contentbox-ui:#item.handler#";
 				}
 				// add it as main application route.
-				ses.addRoute(argumentCollection=args);
-			}
-			// change the default event of the entire app
-			controller.setSetting( "DefaultEvent","contentbox-ui:blog" );
+				routingService.addRoute( argumentCollection=item );
+			} );
+
+			// Point Default event to UI
+			controller.setSetting( "DefaultEvent", "contentbox-ui:blog" );
 		}
 	}
 
 	/**
-	* Register blog namespace routes
-	*/
+	 * Register blog namespace and its routes
+	 */
 	private function registerBlogNamespace(){
 		// Get ses handle
-		var ses = controller.getInterceptorService().getInterceptor('SES',true);
+		var routingService = controller.getRoutingService();
 		// Get setting service
-		var settingService = controller.getWireBox().getInstance( "settingService@cb" );
+		var settingService = wirebox.getInstance( "settingService@cb" );
 		// Get blog entry point from DB
-		var blogEntryPoint = settingService.findWhere( {name="cb_site_blog_entrypoint"} );
+		var blogEntryPoint = settingService.findWhere( { name="cb_site_blog_entrypoint" } );
+
+		// Register Custom Blog Namespace
 		if( !isNull( blogEntryPoint ) ){
-			ses.addNamespace(pattern="#this.entryPoint#/#blogEntryPoint.getValue()#", namespace="blog", append=false);
+			routingService.addNamespace(
+				pattern   = "#this.entryPoint#/#blogEntryPoint.getValue()#",
+				namespace = "blog",
+				append    = false
+			);
 		}
-		else{
-			ses.addNamespace(pattern="#this.entryPoint#/blog", namespace="blog", append=false);
+		// Register Default Blog Namespace
+		else {
+			routingService.addNamespace(
+				pattern   = "#this.entryPoint#/blog",
+				namespace = "blog",
+				append    = false
+			);
 		}
 
 		// Register namespace routes
-		for(var x=1; x LTE arrayLen( variables.blogRoutes ); x++){
-			var args = duplicate( variables.blogRoutes[ x ] );
+		variables.blogRoutes.each( function( item ){
 			// Check if handler defined
-			if( structKeyExists(args,"handler" ) ){
-				args.handler = "contentbox-ui:#args.handler#";
+			if( structKeyExists( item, "handler" ) ){
+				item.handler = "contentbox-ui:#item.handler#";
 			}
-			// Add the namespace routes
-			ses.addRoute(argumentCollection=args);
-		}
+			routingService.addRoute( argumentCollection=item );
+		} );
 	}
 
 }

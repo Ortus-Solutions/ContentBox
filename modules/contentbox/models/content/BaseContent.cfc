@@ -1085,20 +1085,21 @@ component 	persistent="true"
 		setPublishedDate( now() );
 
 		// Base Content Properties
-		HTMLKeywords			= arguments.original.getHTMLKeywords();
-		HTMLDescription			= arguments.original.getHTMLDescription();
-		HTMLTitle 				= arguments.original.getHTMLTitle();
-		cache 					= arguments.original.getCache();
-		cacheLayout 			= arguments.original.getCacheLayout();
-		cacheTimeout 			= arguments.original.getCacheTimeout();
-		cacheLastAccessTimeout 	= arguments.original.getCacheLastAccessTimeout();
-		showInSearch 			= arguments.original.getShowInSearch();
-		featuredImage 			= arguments.original.getFeaturedImage();
-		featuredImageURL		= arguments.original.getFeaturedImageURL();
+		variables.HTMLKeywords			= arguments.original.getHTMLKeywords();
+		variables.HTMLDescription		= arguments.original.getHTMLDescription();
+		variables.HTMLTitle 			= arguments.original.getHTMLTitle();
+		variables.markup 				= arguments.original.getMarkup();
+		variables.cache 				= arguments.original.getCache();
+		variables.cacheLayout 			= arguments.original.getCacheLayout();
+		variables.cacheTimeout 			= arguments.original.getCacheTimeout();
+		variables.cacheLastAccessTimeout= arguments.original.getCacheLastAccessTimeout();
+		variables.showInSearch 			= arguments.original.getShowInSearch();
+		variables.featuredImage 		= arguments.original.getFeaturedImage();
+		variables.featuredImageURL		= arguments.original.getFeaturedImageURL();
 		// reset hits
-		numberOfHits = 0;
+		variables.numberOfHits = 0;
 		// remove all comments
-		comments = [];
+		variables.comments = [];
 		// get latest content versioning
 		var latestContent = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
@@ -1160,8 +1161,9 @@ component 	persistent="true"
 				addChild( newChild );
 			}
 		}
+
 		// evict original entity, just in case
-		contentService.evictEntity( arguments.original );
+		variables.contentService.evictEntity( arguments.original );
 
 		return this;
 	}

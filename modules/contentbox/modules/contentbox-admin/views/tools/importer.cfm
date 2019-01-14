@@ -76,7 +76,7 @@
 										content = "Select ContentBox Package",
 										class   = "control-label" 
 									)#
-									#getModel( "BootstrapFileUpload@contentbox-admin" ).renderIt( 
+									#getModel( "BootstrapFileUpload@cbadmin" ).renderIt( 
 										name="CBUpload",
 										required=true
 									)# 
