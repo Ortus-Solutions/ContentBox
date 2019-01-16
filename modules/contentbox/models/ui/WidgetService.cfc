@@ -37,6 +37,11 @@ component accessors="true" singleton threadSafe{
 	property name="customWidgetsMap" type="struct";
 
 	/**
+	 * The loaded widgets in the entire system: core, custom, theme, modules
+	 */
+	property name="loadedWidgets";
+
+	/**
 	* Constructor
 	*/
 	WidgetService function init(){
@@ -123,7 +128,7 @@ component accessors="true" singleton threadSafe{
 	 * @qRecords The records query to attach yourself to
 	 * @type The type to process
 	 */
-	private function processWidgets( query qRecords, type ){
+	WidgetService function processWidgets( query qRecords=getLoadedWidgets(), type ){
 		// get core widgets to start with.
 		var qWidgets = getWidgetsFromPath(
 			( arguments.type == "Core" ? variables.coreWidgetsPath : variables.customWidgetsPath )
@@ -159,14 +164,14 @@ component accessors="true" singleton threadSafe{
 			}
 		}
 
-		return variables;
+		return this;
 	}
 
 	/**
 	 * Discover modules widgets and attach records to incoming widget records
 	 * @qRecords The records query to attach yourself to
 	 */
-	private function processModuleWidgets( query qRecords ){
+	WidgetService function processModuleWidgets( query qRecords=getLoadedWidgets() ){
 		// get module widgets
 		var moduleWidgets = moduleService.getModuleWidgetCache();
 		// add module widgets
@@ -193,16 +198,17 @@ component accessors="true" singleton threadSafe{
 			}
 		}
 
-		return variables;
+		return this;
 	}
 
 	/**
 	 * Discover active theme widgets and attach records to incoming widget records
 	 * @qRecords The records query to attach yourself to
 	 */
-	private function processThemeWidgets( query qRecords ){
+	WidgetService function processThemeWidgets( query qRecords=getLoadedWidgets() ){
 		// get theme widgets
 		var themeWidgets = themeService.getWidgetCache();
+
 		// add theme widgets
 		for( var widget in themeWidgets ) {
 			var thisRecord = themeWidgets[ widget ];
@@ -223,7 +229,7 @@ component accessors="true" singleton threadSafe{
 			}
 		}
 
-		return variables;
+		return this;
 	}
 
 	/**

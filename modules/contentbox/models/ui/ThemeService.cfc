@@ -8,7 +8,9 @@
 component accessors="true" threadSafe singleton{
 
 	// DI
-	property name="settingService"		inject="id:settingService@cb";
+	property name="settingService"		inject="settingService@cb";
+	// Provide this one in, due to chicken and the egg issues.
+	property name="widgetService"		inject="provider:widgetService@cb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
 	property name="interceptorService"	inject="coldbox:interceptorService";
 	property name="zipUtil"				inject="zipUtil@cb";
@@ -134,8 +136,10 @@ component accessors="true" threadSafe singleton{
 
 	/**
 	 * Startup Active Theme procedures
+	 *
+	 * @processWidgets Process widget registration on activation, defaults to true.
 	 */
-	function startupActiveTheme(){
+	function startupActiveTheme( boolean processWidgets=true ){
 		// get theme setting.
 		var thisTheme = settingService.findWhere( { name="cb_site_theme" } );
 		if( isNull( thisTheme ) ){ return; }
@@ -146,7 +150,7 @@ component accessors="true" threadSafe singleton{
 		var oTheme 		= themeRecord.descriptor;
 
 		// Register description as an interceptor with custom points
-		interceptorService.registerInterceptor(
+		variables.interceptorService.registerInterceptor(
 			interceptorObject	= oTheme,
 			interceptorName		= "cbtheme-#themeName#",
 			customPoints		= themeRecord.customInterceptionPoints
@@ -176,14 +180,19 @@ component accessors="true" threadSafe singleton{
 
 		// activate theme modules
 		for( var thisModule in themeRecord.modules.listToArray() ){
-			moduleService.registerAndActivateModule(
+			variables.moduleService.registerAndActivateModule(
 				moduleName 		= thisModule,
 				invocationPath 	= "#themeRecord.invocationPath#.modules"
 			);
 		}
 
+		// Register all widgets
+		if( arguments.processWidgets ){
+			variables.widgetService.processThemeWidgets();
+		}
+
 		// Announce theme activation
-		interceptorService.processState( "cbadmin_onThemeActivation", iData );
+		variables.interceptorService.processState( "cbadmin_onThemeActivation", iData );
 
 		// Call Theme Callbacks: onActivation
 		if( structKeyExists( oTheme, "onActivation" ) ){
@@ -276,8 +285,13 @@ component accessors="true" threadSafe singleton{
 			oTheme.setValue( arguments.themeName );
 			// save the new theme setting
 			settingService.save( oTheme );
+
 			// Startup active theme
-			startupActiveTheme();
+			startupActiveTheme( processWidgets=false );
+
+			// Force Recreation of all Widgets, since we need to deactivate the old widgets
+			widgetService.getWidgets( reload=true );
+
 			// flush the settings
 			settingService.flushSettingsCache();
 		}

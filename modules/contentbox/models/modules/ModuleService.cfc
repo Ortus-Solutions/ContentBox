@@ -435,9 +435,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 								var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
 								var widget = {
 									name 			= widgetName,
-								invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
-								path 			= directory.directory[ i ] & "/" & directory.name[ i ],
-								module 			= module.getName()
+									invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
+									path 			= directory.directory[ i ] & "/" & directory.name[ i ],
+									module 			= module.getName()
 								};
 								cache[ widgetName & "@" & module.getName() ] = widget;
 							}
@@ -451,9 +451,9 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 
 			// Store constructed cache
-			moduleWidgetCache = cache;
+			variables.moduleWidgetCache = cache;
 
-			// Reload widget global cache
+			// Force Reload all widgets
 			widgetService.getWidgets( reload=true );
 
 			return this;
