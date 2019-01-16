@@ -1,0 +1,46 @@
+echo off
+
+# Unistall ColdBox
+echo "Uninstalling current version of ColdBox..."
+uninstall coldbox
+
+echo "Installing latest version of ColdBox 5..."
+install coldbox@^5.0.0
+
+# Create the ContentBox Custom Module
+echo "Creating the custom module at 'modules_app/contentbox-custom'"
+mkdir modules_app/contentbox-custom
+
+# Move Media Library
+echo "Moving your media library to 'modules_app/contentbox-custom/_content'"
+mv modules/contentbox/content modules_app/contentbox-custom/_content
+
+# Move Custom Modules
+echo "Moving your custom modules to 'modules_app/contentbox-custom/_modules'"
+mv modules/contentbox/modules_user modules_app/contentbox-custom/_modules
+
+# Create Custom Widgets Repository
+echo "Creating your custom widgets repository at 'modules_app/contentbox-custom/_widgets'"
+mkdir modules_app/contentbox-custom/_widgets
+touch modules_app/contentbox-custom/_widgets/.gitkeep
+
+# Custom Themes Repository
+echo "Moving your custom themes to the new custom repository at 'modules_app/contentbox-custom/_themes'"
+mv modules/contentbox/themes modules_app/contentbox-custom/_themes
+touch modules_app/contentbox-custom/_themes/.gitkeep
+
+# Remove default theme
+rm modules_app/contentbox-custom/_themes/default --recurse --force
+
+# Uninstall current version of ContentBox
+echo "Now to the fun stuf: Removing previous version of ContentBox `package show version`..."
+uninstall contentbox
+
+echo "Installing ContentBox v4.2.1"
+install contentbox@4.2.1
+
+# Create Module Config According to installed version
+echo "Installing ModuleConfig for custom contentbox module..."
+cp modules/contentbox/models/modules/custom/ModuleConfigBase.cfc modules_app/contentbox-custom/ModuleConfig.cfc
+
+echo "Eureka!  You are now ready to startup your engines and run ContentBox!"
