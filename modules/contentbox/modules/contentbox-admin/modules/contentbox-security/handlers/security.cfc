@@ -136,10 +136,10 @@ component extends="baseHandler"{
 	* Logout a user
 	*/
 	function doLogout( event, rc, prc ){
-		// logout
-		securityService.logout();
 		// announce event
 		announceInterception( "cbadmin_onLogout" );
+		// logout
+		securityService.logout();
 		// message redirect
 		messagebox.info( cb.r( "messages.seeyou@security" ) );
 		// relocate
