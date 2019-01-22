@@ -167,6 +167,7 @@ component {
 			}
 
 			// Move modules to backup for new dependency approach
+			/**
 			var modulesPath 	= expandPath( "/coldbox/system/modules" );
 			var modulesBakPath 	= expandPath( "/coldbox/system" ) & "/modules_bak";
 			if( directoryExists( expandPath( "/coldbox/system/modules" ) ) ){
@@ -178,6 +179,7 @@ component {
 					cbMessagebox.info( local.updateMessage );
 				}
 			}
+			*/
 
 			// Save flash scope before relocation
 			flash.saveFlash();
