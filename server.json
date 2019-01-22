@@ -1,20 +1,22 @@
 {
-    "force": true,
     "app": {
-        "serverHomeDirectory": ".engines/lucee4"
+        "cfengine": "lucee@5",
+        "serverHomeDirectory": ".engines/lucee5"
     },
-    "name": "cbcms-lucee",
+    "name": "cbcms-lucee5",
+    "JVM": {
+        "heapSize": "768"
+    },
     "web": {
+		"directoryBrowsing" : true,
         "rewrites": {
             "enable": "true"
         },
         "http": {
             "port": "8589"
         }
-    },
-    "JVM": {
-        "heapSize": "768"
-    },
+	},
+	"openBrowserURL" : "http://localhost:${runwar.port}",
     "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
     "trayOptions": [{
         "label": "Open ContentBox Admin",

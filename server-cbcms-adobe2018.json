@@ -1,14 +1,14 @@
 {
     "app":{
-        "cfengine":"adobe@11",
-        "serverHomeDirectory":".engines/acf11"
+        "cfengine":"adobe@2018",
+        "serverHomeDirectory":".engines/acf2018"
     },
-    "name":"cbcms-adobe11",
+    "name":"cbcms-adobe2018",
     "JVM":{
         "heapSize":"1024"
     },
     "web":{
-        "directoryBrowsing":true,
+		"directoryBrowsing" : true,
         "rewrites":{
             "enable":"true"
         },
