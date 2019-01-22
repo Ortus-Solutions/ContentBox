@@ -1,12 +1,14 @@
 {
     "web": {
+		"directoryBrowsing": false,
         "rewrites": {
             "enable": "true"
         }
     },
     "JVM": {
         "heapSize": "768"
-    },
+	},
+	"openBrowserURL" : "http://localhost:${runwar.port}",
     "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
     "trayOptions": [{
         "label": "Open ContentBox Admin",
