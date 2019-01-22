@@ -343,63 +343,73 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		return this;
 	}
 
+
+
 	/**
 	 * Startup the service. This iterates through all modules on disk and if it finds a module that it has not been
 	 * registered, it will register it.  If it loads a module that is registered and marked as active it will activate it.
 	 */
 	ModuleService function startup(){
-		// Get Core Modules From Disk
-		var qCoreModules 	= getModulesOnDisk( variables.coreModulesPath );
-		// Get Custom Modules From Disk
-		var qCustomModules 	= getModulesOnDisk( variables.customModulesPath );
+		// Register ColdBox Closure
+		var registerColdBoxModule = function( name, moduleType, invocationPath, path ){
+			var oModule = findWhere( { name = arguments.name } );
 
-		// Registration closure
-		var cModuleRegistration = function( row, moduleType, invocationPath, path ){
-			// Only look at directories as modules
-			if( arguments.row.type eq "dir" and left( arguments.row.name, 1 ) neq '.' ){
-				var moduleName = arguments.row.name;
-				var thisModule = findWhere( { name = moduleName } );
+			// Register type lookup for faster finding, instead of querying the db.
+			variables.moduleMap[ arguments.name ] = {
+				type 			= arguments.moduleType,
+				path 			= arguments.path,
+				invocationPath 	= arguments.invocationPath
+			};
 
-				// check if module already in database records or new
-				if( isNull( thisModule ) ){
-					// new record, so register it
-					thisModule = registerNewModule( moduleName, arguments.moduleType );
-				}
-
-				// If we get here, the module is loaded in the database now
-				if( thisModule.getIsActive() AND not structKeyExists( variables.moduleRegistry, moduleName ) ){
-					// load only active modules via ColdBox if they are not loaded already
-					variables.coldboxModuleService.registerAndActivateModule( moduleName, arguments.invocationPath );
-				}
-
-				// Register type lookup for faster finding, instead of querying the db.
-				variables.moduleMap[ moduleName ] = {
-					type 			= arguments.moduleType,
-					path 			= arguments.path,
-					invocationPath 	= arguments.invocationPath
-				};
+			// check if module already in database records or new
+			if( isNull( oModule ) ){
+				// new record, so register it
+				oModule = registerNewModule( arguments.name, arguments.moduleType );
 			}
+
+			// If we get here, the module is loaded in the database now
+			if( oModule.getIsActive() AND !structKeyExists( variables.moduleRegistry, arguments.name ) ){
+				// Register with ColdBox now
+				variables.coldboxModuleService.registerModule(
+					moduleName 		= arguments.name,
+					invocationPath 	= arguments.invocationPath
+				);
+				// Module registered, move to activation
+				return true;
+			}
+
+			// Filter this sucker out
+			return false;
 		};
 
-		// Register Core
-		for( var row in qCoreModules){
-			cModuleRegistration(
-				row,
-				"core",
-				variables.coreModulesInvocationPath,
-				variables.coreModulesPath
-			);
-		}
+		// Get Core Modules From Disk
+		getModulesOnDisk( variables.coreModulesPath )
+			.filter( function( name ){
+				return registerColdBoxModule(
+					arguments.name,
+					"core",
+					variables.coreModulesInvocationPath,
+					variables.coreModulesPath
+				);
+			} )
+			.each( function( name ){
+				variables.coldboxModuleService.activateModule( arguments.name );
+			} );
 
-		// Register Custom
-		for( var row in qCustomModules){
-			cModuleRegistration(
-				row,
-				"custom",
-				variables.customModulesInvocationPath,
-				variables.customModulesPath
-			);
-		}
+		// Get Custom Modules From Disk
+		getModulesOnDisk( variables.customModulesPath )
+			.filter( function( name ){
+				return registerColdBoxModule(
+					arguments.name,
+					"custom",
+					variables.customModulesInvocationPath,
+					variables.customModulesPath
+				);
+			} )
+			.each( function( name ){
+				variables.coldboxModuleService.activateModule( arguments.name );
+			} );
+
 
 		// build widget cache
 		buildModuleWidgetsCache();
@@ -407,64 +417,70 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		return this;
 	}
 
-		/**
-		 * Iterates over all registered, active modules and sets any found widgets into a cache in moduleservice
-		 */
-		private ModuleService function buildModuleWidgetsCache() {
-			// get all active modules
-			var activeModules 	= findModules( isActive=true );
-			var cache 			= {};
+	/**
+	 * Iterates over all registered, active modules and sets any found widgets into a cache in moduleservice
+	 */
+	private ModuleService function buildModuleWidgetsCache() {
+		// get all active modules
+		var activeModules 	= findModules( isActive=true );
+		var cache 			= {};
 
-			// loop over active modules
-			for( var module in activeModules.modules ) {
-				if( variables.moduleMap.keyExists( module.getName() ) ){
-					// Module reference maps pointer
-					var moduleRecord = variables.moduleMap[ module.getName() ];
+		// loop over active modules
+		for( var module in activeModules.modules ) {
+			if( variables.moduleMap.keyExists( module.getName() ) ){
+				// Module reference maps pointer
+				var moduleRecord = variables.moduleMap[ module.getName() ];
 
-					// Widgets path
-					var thisWidgetsPath = moduleRecord.path & "/" & module.getName() & "/widgets";
-					// check that module widgets folder exists on disk, if so, iterate and register
-					if( directoryExists( thisWidgetsPath ) ) {
-						var directory = directoryList( thisWidgetsPath, false, "query", "*.cfc" );
-						// make sure there are widgets in the directory
-						if( directory.recordCount ) {
-							var moduleWidgets = [];
-							// loop over widgets
-							for( var i=1; i <= directory.recordCount; i++ ) {
-								// set widget properties in cache
-								var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
-								var widget = {
-									name 			= widgetName,
-									invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
-									path 			= directory.directory[ i ] & "/" & directory.name[ i ],
-									module 			= module.getName()
-								};
-								cache[ widgetName & "@" & module.getName() ] = widget;
-							}
-
+				// Widgets path
+				var thisWidgetsPath = moduleRecord.path & "/" & module.getName() & "/widgets";
+				// check that module widgets folder exists on disk, if so, iterate and register
+				if( directoryExists( thisWidgetsPath ) ) {
+					var directory = directoryList( thisWidgetsPath, false, "query", "*.cfc" );
+					// make sure there are widgets in the directory
+					if( directory.recordCount ) {
+						var moduleWidgets = [];
+						// loop over widgets
+						for( var i=1; i <= directory.recordCount; i++ ) {
+							// set widget properties in cache
+							var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
+							var widget = {
+								name 			= widgetName,
+								invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
+								path 			= directory.directory[ i ] & "/" & directory.name[ i ],
+								module 			= module.getName()
+							};
+							cache[ widgetName & "@" & module.getName() ] = widget;
 						}
+
 					}
-				} else {
-					deactivateModule( module.getName() );
 				}
+			} else {
+				deactivateModule( module.getName() );
 			}
-
-
-			// Store constructed cache
-			variables.moduleWidgetCache = cache;
-
-			// Force Reload all widgets
-			widgetService.getWidgets( reload=true );
-
-			return this;
 		}
 
+
+		// Store constructed cache
+		variables.moduleWidgetCache = cache;
+
+		// Force Reload all widgets
+		widgetService.getWidgets( reload=true );
+
+		return this;
+	}
+
 	/**
-	 * Get all modules loaded on disk path
+	 * Get a collection of directory modules on disk at a specific location
 	 *
 	 * @path The path to check
+	 *
+	 * @return An array of names found on disk
 	 */
-	private query function getModulesOnDisk( required path ){
-		return directoryList( arguments.path, false, "query", "", "name asc" );
+	private array function getModulesOnDisk( required path ){
+		// path, recurse, listInfo, filter, sort, type
+		return directoryList( arguments.path, false, "name", "", "name asc", "dir" )
+			.filter( function( name ) {
+				return ( left( name, 1 ) neq '.' );
+			} );
 	}
 }

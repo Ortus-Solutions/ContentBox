@@ -7,7 +7,7 @@
 component hint="My Module Configuration"{
 
 	// Module Properties
-	this.title 				= "HelloContentBox";
+	this.title 				= "HelloContentBox 2";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "This is an awesome hello world module";
@@ -16,8 +16,7 @@ component hint="My Module Configuration"{
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// Module Entry Point
-	this.entryPoint			= "HelloContentBox";
-	this.dependencies 		= [ "Hello2" ];
+	this.entryPoint			= "HelloContentBox2";
 
 	function configure(){
 

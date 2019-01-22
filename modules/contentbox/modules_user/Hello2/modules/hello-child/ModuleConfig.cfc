@@ -1,13 +1,14 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-*/
-component hint="My Module Configuration"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A child module for hello
+ */
+component{
 
 	// Module Properties
-	this.title 				= "HelloContentBox";
+	this.title 				= "Hello Child";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
 	this.description 		= "This is an awesome hello world module";
@@ -16,8 +17,7 @@ component hint="My Module Configuration"{
 	// If true, looks for layouts in the parent first, if not found, then in module. Else vice-versa
 	this.layoutParentLookup = true;
 	// Module Entry Point
-	this.entryPoint			= "HelloContentBox";
-	this.dependencies 		= [ "Hello2" ];
+	this.entryPoint			= "Hello-Child";
 
 	function configure(){
 
@@ -49,7 +49,7 @@ component hint="My Module Configuration"{
 		// SES Routes
 		routes = [
 			// Module Entry Point
-			{pattern="/", handler="home",action="index"},
+			{pattern="/", handler="main",action="index"},
 			// Convention Route
 			{pattern="/:handler/:action?"}
 		];
@@ -63,19 +63,12 @@ component hint="My Module Configuration"{
 		interceptors = [
 		];
 
-		// Binder Mappings
-		// binder.map( "Alias" ).to( "#moduleMapping#.model.MyService" );
-
 	}
 
 	/**
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		// Let's add ourselves to the main menu in the Modules section
-		var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
-		// Add Menu Contribution
-		menuService.addSubMenu(topMenu=menuService.MODULES,name="HelloContentBox",label="Hello ContentBox",href="#menuService.buildModuleLink('HelloContentBox','home')#" );
 	}
 
 	/**
@@ -89,10 +82,6 @@ component hint="My Module Configuration"{
 	* Fired when the module is unregistered and unloaded
 	*/
 	function onUnload(){
-		// Let's remove ourselves to the main menu in the Modules section
-		var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
-		// Remove Menu Contribution
-		menuService.removeSubMenu(topMenu=menuService.MODULES,name="HelloContentBox" );
 	}
 
 	/**
