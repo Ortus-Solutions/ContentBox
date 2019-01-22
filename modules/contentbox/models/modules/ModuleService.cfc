@@ -382,7 +382,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			return false;
 		};
 
-		// Get Core Modules From Disk
+		// Register and Activate Core Modules First
 		getModulesOnDisk( variables.coreModulesPath )
 			.filter( function( name ){
 				return registerColdBoxModule(
@@ -396,7 +396,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				variables.coldboxModuleService.activateModule( arguments.name );
 			} );
 
-		// Get Custom Modules From Disk
+		// Register and Activate Custom Modules
 		getModulesOnDisk( variables.customModulesPath )
 			.filter( function( name ){
 				return registerColdBoxModule(
@@ -410,7 +410,6 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				variables.coldboxModuleService.activateModule( arguments.name );
 			} );
 
-
 		// build widget cache
 		buildModuleWidgetsCache();
 
@@ -421,47 +420,48 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 * Iterates over all registered, active modules and sets any found widgets into a cache in moduleservice
 	 */
 	private ModuleService function buildModuleWidgetsCache() {
-		// get all active modules
-		var activeModules 	= findModules( isActive=true );
-		var cache 			= {};
 
-		// loop over active modules
-		for( var module in activeModules.modules ) {
-			if( variables.moduleMap.keyExists( module.getName() ) ){
+		// Init Module Widget Cache
+		variables.moduleWidgetCache = {};
+
+		// Process Module Widgets
+		findModules( isActive=true )
+			.modules
+			.filter( function( thisModule ){
+				// Active and On Disk Module?
+				if( variables.moduleMap.keyExists( thisModule.getName() ) ){
+					return true;
+				}
+
+				// Deactivate it, not fond in registry, might be an orphaned record
+				if( log.canWarn() ){
+					log.warn( "Orphaned module discovered: #module.getName()#, deactiving it from the database" );
+				}
+				deactivateModule( module.getName() );
+			} )
+			.each( function( thisModule ){
 				// Module reference maps pointer
-				var moduleRecord = variables.moduleMap[ module.getName() ];
+				var moduleRecord = variables.moduleMap[ thisModule.getName() ];
+				// Widgets path + local Reference
+				var thisWidgetsPath = moduleRecord.path & "/" & thisModule.getName() & "/widgets";
 
-				// Widgets path
-				var thisWidgetsPath = moduleRecord.path & "/" & module.getName() & "/widgets";
 				// check that module widgets folder exists on disk, if so, iterate and register
 				if( directoryExists( thisWidgetsPath ) ) {
-					var directory = directoryList( thisWidgetsPath, false, "query", "*.cfc" );
-					// make sure there are widgets in the directory
-					if( directory.recordCount ) {
-						var moduleWidgets = [];
-						// loop over widgets
-						for( var i=1; i <= directory.recordCount; i++ ) {
-							// set widget properties in cache
-							var widgetName = reReplaceNoCase( directory.name[ i ], ".cfc", "", "all" );
-							var widget = {
+
+					directoryList( thisWidgetsPath, false, "name", "*.cfc" )
+						.each( function( thisWidget ){
+							var widgetName = reReplaceNoCase( thisWidget, ".cfc", "", "all" );
+							// Store Record
+							variables.moduleWidgetCache[ widgetName & "@" & thisModule.getName() ] = {
 								name 			= widgetName,
-								invocationPath 	= moduleRecord.invocationPath & ".#module.getName()#.widgets.#widgetName#",
-								path 			= directory.directory[ i ] & "/" & directory.name[ i ],
-								module 			= module.getName()
+								invocationPath 	= moduleRecord.invocationPath & ".#thisModule.getName()#.widgets.#widgetName#",
+								path 			= thisWidgetsPath & "/" & thisWidget,
+								module 			= thisModule.getName()
 							};
-							cache[ widgetName & "@" & module.getName() ] = widget;
-						}
+						} );
 
-					}
-				}
-			} else {
-				deactivateModule( module.getName() );
-			}
-		}
-
-
-		// Store constructed cache
-		variables.moduleWidgetCache = cache;
+				} // end if widgets found
+			} );
 
 		// Force Reload all widgets
 		widgetService.getWidgets( reload=true );
