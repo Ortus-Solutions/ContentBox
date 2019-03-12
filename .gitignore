@@ -26,6 +26,8 @@ coldbox/*
 testbox/*
 **/node_modules/**
 **/bower_components/**
+**/app_modules/**
+workbench/app_modules
 
 # Runtime Properties
 config/runtime.properties.cfm
