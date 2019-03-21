@@ -482,23 +482,43 @@
                                             <i class="fa fa-rocket fa-lg"></i> Cache Settings
                                         </a>
                                     </h4>
-                                </div>
+								</div>
+
                                 <div id="cachesettings" class="panel-collapse collapse">
-                                    <div class="panel-body">
+									<div class="panel-body">
+										<div class="form-group">
+                                            <!--- Cache Settings --->
+                                            #html.label(
+                                                field	= "cacheLayout",
+                                                content	= "Cache Entire Page: (faster)"
+											)#
+
+											<br />
+											<small>Caches the entire page output including translations</small><Br/>
+
+                                            #html.select(
+                                                name			= "cacheLayout",
+                                                options			= "Yes,No",
+                                                selectedValue	= yesNoFormat( prc.page.getCacheLayout() ),
+                                                class			= "form-control input-sm"
+                                            )#
+										</div>
+
                                         <div class="form-group">
                                             <!--- Cache Settings --->
                                             #html.label(
-                                                field="cache",
-                                                content="Cache Content: (fast)"
+                                                field	= "cache",
+                                                content	= "Cache Content: (fast)"
                                             )#
                                             <br /><small>Caches content translation only</small><Br/>
                                             #html.select(
-                                                name="cache",
-                                                options="Yes,No",
-                                                selectedValue=yesNoFormat(prc.page.getCache()),
-                                                class="form-control input-sm"
+                                                name          = "cache",
+                                                options       = "Yes,No",
+                                                selectedValue = yesNoFormat( prc.page.getCache() ),
+                                                class         = "form-control input-sm"
                                             )#
-                                        </div>
+										</div>
+
                                         <div class="form-group">
                                             #html.inputField(
                                                 type="numeric",

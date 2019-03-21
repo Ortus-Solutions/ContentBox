@@ -390,19 +390,37 @@
                             <div id="cachesettings" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     <div class="form-group">
-                                        <!--- Cache Settings --->
-                                        #html.label(
-                                            field="cache",
-                                            content="Cache Content: (fast)"
-                                        )#
-                                        <br /><small>Caches content translation only</small><Br/>
-                                        #html.select(
-                                            name="cache",
-                                            options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.entry.getCache()),
-                                            class="form-control input-sm"
-                                        )#
-                                    </div>
+										<!--- Cache Settings --->
+										#html.label(
+											field	= "cacheLayout",
+											content	= "Cache Entire Page: (faster)"
+										)#
+
+										<br />
+										<small>Caches the entire page output including translations</small><Br/>
+
+										#html.select(
+											name			= "cacheLayout",
+											options			= "Yes,No",
+											selectedValue	= yesNoFormat( prc.entry.getCacheLayout() ),
+											class			= "form-control input-sm"
+										)#
+									</div>
+
+									<div class="form-group">
+										<!--- Cache Settings --->
+										#html.label(
+											field	= "cache",
+											content	= "Cache Content: (fast)"
+										)#
+										<br /><small>Caches content translation only</small><Br/>
+										#html.select(
+											name          = "cache",
+											options       = "Yes,No",
+											selectedValue = yesNoFormat( prc.entry.getCache() ),
+											class         = "form-control input-sm"
+										)#
+									</div>
                                     <div class="form-group">
                                         #html.inputField(
                                             type="numeric",
