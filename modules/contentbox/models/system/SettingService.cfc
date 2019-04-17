@@ -255,7 +255,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	 */
 	SettingService function preFlightCheck(){
 		var missingSettings = false;
-		var loadedSettings 	= getAllSettings( asStruct = true );
+		var loadedSettings 	= getAllSettings( asStruct = true, useCache=false );
 
 		// Iterate over default core settings and check they exist
 		for( var thisSetting in this.DEFAULTS ){
@@ -401,14 +401,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" threadsaf
 	*
 	* @return struct or array of objects
 	*/
-	function getAllSettings( boolean asStruct=false ){
+	function getAllSettings( boolean asStruct=false, boolean useCache=true ){
 		var cache 		= getSettingsCacheProvider();
 		var cacheKey 	= getSettingsCacheKey();
 		// retrieve all settings from cache
 		var settings = cache.get( getSettingsCacheKey() );
 
 		// found in cache?
-		if( isNull( settings ) ){
+		if( !useCache || isNull( settings ) ){
 			// not found, so query db
 			var settings = list( sortOrder="name" );
 			// cache them for 5 days, usually app timeout
