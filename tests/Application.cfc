@@ -47,7 +47,7 @@ component{
 			username 			: 'root'
 		};
 		if( structKeyExists( server, "lucee" ) ){
-			this.datasources[ "contentbox" ].class = 'org.gjt.mm.mysql.Driver';
+			this.datasources[ "contentbox" ].class = 'com.mysql.jdbc.Driver';
 		}
 	}
 	

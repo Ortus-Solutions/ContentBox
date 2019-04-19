@@ -4,7 +4,7 @@ DB_DRIVER=MySQL5
 DB_TYPE=mysql
 
 # Connection String or URL in ACF terms
-# DB_CLASS=org.gjt.mm.mysql.Driver
+# DB_CLASS=com.mysql.jdbc.Driver
 # DB_CONNECTIONSTRING=jdbc:mysql://localhost:3306/ortussolutions?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true
 
 # Database Connection + Credentials

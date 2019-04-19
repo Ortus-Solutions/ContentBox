@@ -90,7 +90,7 @@ limitations under the License.
 				<cfcase value="mysql">
 					<cfset local.dsnString = "jdbc:mysql://{host}:{port}/{database}">
 					<cfset local.dbPort = "3306">
-					<cfset local.className = "org.gjt.mm.mysql.Driver">
+					<cfset local.className = "com.mysql.jdbc.Driver">
 				</cfcase>
 				<cfcase value="oracle">
 					<cfset local.dsnString = "jdbc:oracle:{drivertype}:@{host}:{port}:{database}">
