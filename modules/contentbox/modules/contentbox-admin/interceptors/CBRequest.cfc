@@ -22,7 +22,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess( event, interceptData, rc, prc ){
+	function preProcess( required any event, required struct interceptData, buffer, rc, prc ){
 		// Only execute for admin or child modules
 		if( !reFindNoCase( "^(contentbox-admin|#variables.childModulesRegex#)", event.getCurrentEvent() ) ){
 			return;
