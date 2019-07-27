@@ -145,7 +145,7 @@ component {
 	 * Listen to when application and all modules are fully loaded.
 	 * We use this interception to startup some services and discoveries.
 	 */
-	function afterConfigurationLoad( event, interceptData, rc, prc ){
+	function afterConfigurationLoad( event, interceptData, buffer, rc, prc ){
 		// Discover all widgets
 		wirebox.getInstance( "widgetservice@cb" ).getWidgets();
 	}
