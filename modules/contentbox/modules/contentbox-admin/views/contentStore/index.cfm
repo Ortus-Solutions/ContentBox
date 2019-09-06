@@ -79,7 +79,7 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(linkTo=prc.xehContentEditor)#');">Create Content</button>
+								<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(linkTo=prc.xehContentEditor, queryString="parentID=#rc.parent#")#');">Create Content</button>
 							</div>
 						</div>
 					</div>
