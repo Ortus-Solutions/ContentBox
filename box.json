@@ -23,8 +23,8 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "testbox":"^2.8.0",
-        "coldbox":"^5.3.0"
+        "testbox":"^3.0.0",
+        "coldbox":"^5.6.0"
     },
     "installPaths":{
         "testbox":"testbox/",
