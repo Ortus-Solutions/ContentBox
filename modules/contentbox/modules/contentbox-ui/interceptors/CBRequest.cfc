@@ -1,10 +1,10 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manages ContentBox UI Module Requests
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manages ContentBox UI Module Requests
+ */
 component extends="coldbox.system.Interceptor"{
 
 	// DI
@@ -18,12 +18,25 @@ component extends="coldbox.system.Interceptor"{
 	function configure(){}
 
 	/**
-	* Fired on contentbox requests
-	*/
+	 * Fired on contentbox requests
+	 */
 	function preProcess( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
+
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
-			relocate( "cbInstaller" );
+
+			// Check if installer module exists, else throw exception
+			if( controller.getSetting( "modules" ).keyExists( "contentbox-installer" ) ){
+				// Relocate to it
+				relocate( "cbInstaller" );
+			} else {
+				throw(
+					message = "Oops! ContentBox is not installed and the Installer module cannot be found",
+					detail  = "To install the installer module use CommandBox via 'install contentbox-installer'",
+					type    = "ContentBoxInstallerMissing"
+				);
+			}
+
 		}
 
 		// Prepare UI Request
