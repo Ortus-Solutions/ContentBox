@@ -16,7 +16,7 @@ services:
 
   # MySQL Server
   mysql:
-    image: mysql
+    image: mysql:5.7
     ports:
       - 4306:3306
     environment:
@@ -38,7 +38,7 @@ services:
   #    - 1521:1521
   #    - 8080:8080
   #    - 5500:5500
-  #    
+  #
   ## PostgreSQL
   # image: postgres
   # volumes:
@@ -50,7 +50,7 @@ services:
   #   POSTGRES_DB: "contentbox"
   # ports:
   #   - 5432:5432
-  #   
+  #
   # Redis Service
   # redis:
   #   image: redis:latest
