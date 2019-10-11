@@ -41,7 +41,7 @@ component{
 
 			//Error/Exception Handling
 			exceptionHandler			= "",
-			onInvalidEvent				= "",
+			invalidEventHandler			= "",
 			customErrorTemplate			= "",
 
 			//Application Aspects
@@ -80,22 +80,11 @@ component{
 
 		// Interceptor Settings
 		interceptorSettings = {
-			throwOnInvalidStates = false,
 			customInterceptionPoints = ""
-		};
-
-		// ORM Module Configuration
-		orm = {
-			// Enable Injection
-			injection = {
-				enabled = true
-			}
 		};
 
 		//Register interceptors as an array, we need order
 		interceptors = [
-			//SES
-			{ class="coldbox.system.interceptors.SES" }
 		];
 
 		// ContentBox relies on the Cache Storage for tracking sessions, which delegates to a Cache provider
@@ -116,6 +105,21 @@ component{
 		  			//"cb_media_directoryRoot" 	= "/docker/mount"
 		  		}
 		  	}
+		};
+
+		// Module Settings
+		moduleSettings = {
+
+			cborm = {
+				injection = {
+					// enable entity injection via WireBox
+					enabled = true,
+					// Which entities to include in DI ONLY, if empty include all entities
+					include = "",
+					// Which entities to exclude from DI, if empty, none are excluded
+					exclude = ""
+				}
+			}
 		};
 
 	}

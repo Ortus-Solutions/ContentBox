@@ -37,7 +37,7 @@ component extends="tests.resources.BaseTest"{
 				model.$( "save" ).$( "getNextMaxOrder", 99 );
 				model.saveRule( t );
 				expect(	t.getOrder() ).toBe( 99 );
-				
+
 				t.$property( "ruleID", "variables", 40 );
 				t.setOrder( 40 );
 				model.saveRule( t );
@@ -45,7 +45,7 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			it( "can get security rules", function(){
-				var rule = model.new( 
+				var rule = model.new(
 					properties={
 						whitelist	= "",
 						securelist	= "firstRule",
@@ -59,7 +59,7 @@ component extends="tests.resources.BaseTest"{
 				);
 
 				try{
-					model.$( "save" ).$( "delete" );
+					model.$( "save", model ).$( "delete", model );
 
 					model.save( rule );
 					var rule = model.new(
@@ -75,7 +75,7 @@ component extends="tests.resources.BaseTest"{
 						);
 					model.save( rule );
 					var r = model.getSecurityRules();
-					
+
 					lastOrder = r.order[ 1 ];
 					for(var x=2; x lte r.recordcount; x++){
 						expect(	lastOrder ).toBeLTE( r.order[ x ] );
@@ -86,7 +86,7 @@ component extends="tests.resources.BaseTest"{
 				} finally {
 					model.delete( rule );
 				}
-				
+
 			});
 
 		});
