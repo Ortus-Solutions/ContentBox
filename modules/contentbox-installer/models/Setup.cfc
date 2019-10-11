@@ -1,11 +1,11 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A setup representation object
-*/
-component accessors="true"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A setup representation object
+ */
+component accessors="true" {
 
 	// Properties
 	property name="firstName";
@@ -31,34 +31,34 @@ component accessors="true"{
 	property name="cb_site_mail_ssl";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	function init(){
-		siteKeywords 			= "";
-		siteDescription 		= "";
-		cb_site_mail_server 	= "";
-		cb_site_mail_username 	= "";
-		cb_site_mail_password 	= "";
-		cb_site_mail_smtp 		= "25";
-		cb_site_mail_tls 		= "false";
-		cb_site_mail_ssl 		= "false";
-		populateData 			= true;
-		fullRewrite 			= true;
-		rewrite_engine 			= "mod_rewrite";
+		variables.siteKeywords    = "";
+		variables.siteDescription = "";
+		variables.cb_site_mail_server = "";
+		variables.cb_site_mail_username = "";
+		variables.cb_site_mail_password = "";
+		variables.cb_site_mail_smtp = "25";
+		variables.cb_site_mail_tls = "false";
+		variables.cb_site_mail_ssl = "false";
+		variables.populateData = true;
+		variables.fullRewrite  = true;
+		variables.rewrite_engine = "mod_rewrite";
 
 		return this;
 	}
 
 	/**
-	* Get user data
-	*/
+	 * Get user data
+	 */
 	function getUserData(){
 		var results = {
-			firstname 	= firstname,
-			lastName 	= lastName,
-			email 		= email,
-			username 	= username,
-			password 	= password
+			firstname : firstname,
+			lastName  : lastName,
+			email     : email,
+			username  : username,
+			password  : password
 		};
 		return results;
 	}
