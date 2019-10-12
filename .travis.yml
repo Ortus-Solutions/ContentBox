@@ -53,7 +53,7 @@ before_script:
   # import database
   - mysql -u root < tests/resources/sql/mysql/contentbox.sql
   # Startup testing engine
-  - box server start cfengine=$ENGINE name=$ENGINE port=8589 rewritesEnable=true
+  - box server start serverConfigFile=server-cbcms-${ENGINE}
 
 script:
   # Run tests
@@ -69,7 +69,7 @@ script:
 after_failure:
   - cd $TRAVIS_BUILD_DIR
   - cat $TRAVIS_BUILD_DIR/tests/results/results.txt
-  - box server log name=$ENGINE
+  - box server log name=cbcms-${ENGINE}
   - cat `box system-log`
 
 deploy:
