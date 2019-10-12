@@ -57,7 +57,7 @@ component extends="tests.resources.BaseTest"{
 
 				var user = authorService.findByUsername( "lmajano" );
 				var good = authorService.getAuthorizedAuthor( user.getAPIToken() );
-				expect(	good ).toBe( user );
+				expect(	good.getAuthorId() ).toBe( user.getAuthorId() );
 			});
 
 			it( "can get status author reports", function(){

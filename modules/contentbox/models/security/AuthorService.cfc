@@ -87,11 +87,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* @returns Populated User object.  If APIToken isn't found, returns new Author.
 	*/
 	any function getAuthorizedAuthor( required APIToken ){
-		var c = newCriteria()
+		var oUser = newCriteria()
 			.isEq( "APIToken", arguments.APIToken )
-			.isTrue( "isActive" );
+			.isTrue( "isActive" )
+			.get();
 
-		return ( c.get() ?: new() );
+		return ( !isNull( oUser ) ? oUser : this.new() );
 	}
 
 	/**
