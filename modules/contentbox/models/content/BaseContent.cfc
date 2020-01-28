@@ -356,7 +356,7 @@ component 	persistent="true"
 		"title" 				= { required = true, size = "1..200" },
 		"slug" 					= { required = true, size = "1..200" },
 		"publishedDate"			= { required = false, type = "date" },
-		"expireDate" 			= { required = true, type = "date" },
+		"expireDate" 			= { required = false, type = "date" },
 		"passwordProtection" 	= { required = false, size = "1..100" },
 		"HTMLKeywords" 			= { required = false, size = "1..160" },
 		"HTMLDescription"		= { required = false, size = "1..160" },
