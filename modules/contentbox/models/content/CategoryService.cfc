@@ -140,6 +140,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			//.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="category" );
 	}
+
+	/**
+	* Get an array of slug names of all categories in the system
+	*/
+	array function getAllSlugs(){
+		var c = newCriteria();
+		
+		return c.withProjections( property="slug" )
+			//.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.list( sortOrder="category" );
+	}
 	
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
