@@ -27,7 +27,17 @@ function getFormValues() {
         vals = {};
     // loop over form fields, and add form field values to struct
     $.each( form, function(){
-        vals[ this.name ] = this.value;
+        if(typeof vals[ this.name ] !== 'undefined') {
+            if($( '##widget-arguments' ).find( 'form' ).find( "[name='" + this.name + "']" ).attr( "multiple" ) == "multiple" ) {
+                vals[ this.name ] += "," + this.value;
+            }
+            else {
+                vals[ this.name ] = this.value;
+            }
+        }
+        else {
+            vals[ this.name ] = this.value;
+        }
     } );
     return vals;
 }
