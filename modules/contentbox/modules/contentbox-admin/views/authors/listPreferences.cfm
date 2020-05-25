@@ -100,7 +100,7 @@
 			#html.label(
 				class   = "control-label",
 				field   = "preference.sidebarState",
-				content = "Collapsed Left Navbar:"
+				content = "Show Content Sidebar:"
 			)#
 
 			<div class="controls">
