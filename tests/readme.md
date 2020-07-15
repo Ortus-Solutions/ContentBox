@@ -41,4 +41,4 @@ If you are in the Lucee CFML engine, then you will need to register a `default` 
 We also deliver a ColdBox application that is used for integration testing and so much more.
 This is found under `/coldbox/test-harness` which also needs access to the `coolblog` datasource.
 
-#Happy Coding and Contributing!
+# Happy Coding and Contributing!
