@@ -216,6 +216,7 @@ body{
 }
 
 ##cb-admin-bar h4 img{
+	display: inline-block;
 	vertical-align: text-bottom;
 	margin-right: 5px;
     margin-bottom: -5px;
