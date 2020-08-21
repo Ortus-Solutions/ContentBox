@@ -63,11 +63,11 @@ component extends="baseHandler"{
 		// Validation Results
 		if( !vResults.hasErrors() ){
 			// announce event
-			announceInterception( "cbadmin_prePermissionSave", { permission=oPermission, permissionID=rc.permissionID } );
+			announce( "cbadmin_prePermissionSave", { permission=oPermission, permissionID=rc.permissionID } );
 			// save permission
 			permissionService.save( oPermission );
 			// announce event
-			announceInterception( "cbadmin_postPermissionSave", { permission=oPermission } );
+			announce( "cbadmin_postPermissionSave", { permission=oPermission } );
 			// messagebox
 			cbMessagebox.setMessage( "info", "Permission saved!" );
 
@@ -88,14 +88,14 @@ component extends="baseHandler"{
 	 */
 	function remove( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID} );
+		announce( "cbadmin_prePermissionRemove",{permissionID=rc.permissionID} );
 		// delete by id
 		if( !permissionService.deletePermission( rc.permissionID ) ){
 			cbMessagebox.setMessage( "warning","Invalid Permission detected!" );
 		}
 		else{
 			// announce event
-			announceInterception( "cbadmin_postPermissionRemove",{permissionID=rc.permissionID} );
+			announce( "cbadmin_postPermissionRemove",{permissionID=rc.permissionID} );
 			// Message
 			cbMessagebox.setMessage( "info","Permission and all relationships Removed!" );
 		}

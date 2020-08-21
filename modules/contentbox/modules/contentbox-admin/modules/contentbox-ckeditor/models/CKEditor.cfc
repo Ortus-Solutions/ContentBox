@@ -19,32 +19,32 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* The extra plugins we have created for CKEditor
 	*/
 	property name="extraPlugins";
-	
+
 	/**
 	* Constructor
 	* @coldbox.inject coldbox
 	* @settingService.inject settingService@cb
 	* @html.inject HTMLHelper@coldbox
 	*/
-	function init( 
-		required coldbox, 
+	function init(
+		required coldbox,
 		required settingService,
 		required html
 	){
-		
+
 		// register dependencies
 		variables.interceptorService = arguments.coldbox.getInterceptorService();
 		variables.requestService	 = arguments.coldbox.getRequestService();
 		variables.coldbox 			 = arguments.coldbox;
 		variables.settingService	 = arguments.settingService;
 		variables.html 				 = arguments.html;
-		
+
 		// Store admin entry point and base URL settings
 		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
 		ADMIN_ROOT 			= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].mapping;
 		CKEDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-ckeditor" ].mapping;
 		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
-		
+
 		return this;
 	}
 
@@ -54,48 +54,48 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	function getName(){
 		return "ckeditor";
 	}
-	
+
 	/**
 	* Get the display name of an editor
 	*/
 	function getDisplayName(){
 		return "CKEditor";
 	};
-	
+
 	/**
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
 		// prepare toolbar announcement on startup
-		var iData = { 
-			toolbar 		= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ), 
+		var iData = {
+			toolbar 		= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ),
 			excerptToolbar 	= deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) )
 		};
 		// Announce the editor toolbar is about to be processed
-		interceptorService.processState( "cbadmin_ckeditorToolbar", iData );
+		interceptorService.announce( "cbadmin_ckeditorToolbar", iData );
 		// Load extra plugins according to our version
 		var iData2 = { extraPlugins = listToArray( settingService.getSetting( "cb_editors_ckeditor_extraplugins" ) ) };
 		// Announce extra plugins to see if user implements more.
-		interceptorService.processState( "cbadmin_ckeditorExtraPlugins", iData2 );
+		interceptorService.announce( "cbadmin_ckeditorExtraPlugins", iData2 );
 		// Load extra configuration
 		var iData3 = { extraConfig = "" };
 		// Announce extra configuration
-		interceptorService.processState( "cbadmin_ckeditorExtraConfig", iData3 );
+		interceptorService.announce( "cbadmin_ckeditorExtraConfig", iData3 );
 		// Load contentsCss configuration
 		var iData4 = { contentsCss = [] };
 		// Announce extra configuration
-		interceptorService.processState( "cbadmin_ckeditorContentsCss", iData4 );
+		interceptorService.announce( "cbadmin_ckeditorContentsCss", iData4 );
 		// Now prepare our JavaScript and load it. No need to send assets to the head as CKEditor comes pre-bundled
 		return compileJS( iData, iData2, iData3, iData4 );
 	}
-	
+
 	/**
-	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc. 
+	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc.
 	* return the appropriate JavaScript
 	*/
 	function loadAssets(){
 		var js = "";
-		
+
 		// Load Assets, they are included with ContentBox
 		html.addAsset( "#variables.CKEDITOR_ROOT#/includes/ckeditor/ckeditor.js" );
 		html.addAsset( "#variables.CKEDITOR_ROOT#/includes/ckeditor/adapters/jquery.js" );
@@ -136,10 +136,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			}
 			" );
 		}
-		
+
 		return js;
 	};
-	
+
 	/**
 	* Compile the needed JS to display into the screen
 	*/
@@ -147,12 +147,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		var js 					= "";
 		var event 				= requestService.getContext();
 		var cbAdminEntryPoint 	= event.getValue( name="cbAdminEntryPoint", private=true );
-		
+
 		// CK Editor Integration Handlers
 		var xehCKFileBrowserURL			= "#cbAdminEntryPoint#/ckfilebrowser/";
 		var xehCKFileBrowserURLImage	= "#cbAdminEntryPoint#/ckfilebrowser/";
 		var xehCKFileBrowserURLFlash	= "#cbAdminEntryPoint#/ckfilebrowser/";
-		
+
 		// Determine Extra Plugins code
 		var extraPlugins = "";
 		if( arrayLen( arguments.iData2.extraPlugins ) ){
@@ -163,20 +163,20 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		if( len( arguments.iData3.extraConfig ) ){
 			extraConfig = "#arguments.iData3.extraConfig#,";
 		}
-		
+
 		/**
 		 We build the compiled JS with the knowledge of some inline variables we have context to
 		 $excerpt - The excerpt jquery object
 		 $content - The content jquery object
 		 $withExcerpt - an argument telling us if an excerpt is available to render or not
 		*/
-		
+
 		savecontent variable="js"{
 			writeOutput( "
 			// toolbar Configuration
 			var ckToolbar = $.parseJSON( '#serializeJSON( arguments.iData.toolbar )#' );
 			var ckExcerptToolbar = $.parseJSON( '#serializeJSON( arguments.iData.excerptToolbar )#' );
-			
+
 			// Activate ckeditor on content object
 			$content.ckeditor( function(){}, {
 					#extraPlugins#
@@ -190,7 +190,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 					filebrowserFlashBrowseUrl: '#event.buildLink( xehCKFileBrowserURLFlash )#',
 					baseHref: '#HTML_BASE_URL#/'
 				} );
-				
+
 			// Active Excerpts
 			if( $withExcerpt ){
 				$excerpt.ckeditor( function(){}, {
@@ -205,7 +205,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			}
 			" );
 		}
-		
+
 		return js;
 	}
 
@@ -213,7 +213,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* Shutdown the editor(s) on a page
 	*/
 	function shutdown(){
-		
+
 	}
 
-} 
+}

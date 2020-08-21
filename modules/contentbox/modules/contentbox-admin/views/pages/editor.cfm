@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-md-8" id="main-content-slot">
                 <!--- MessageBox --->
-                #getModel( "messagebox@cbMessagebox" ).renderit()#
+                #getInstance( "messagebox@cbMessagebox" ).renderit()#
 
                 <!--- id --->
                 #html.hiddenField( name="contentID", bind=prc.page )#
@@ -78,7 +78,7 @@
                             </cfif>
 
                             <!--- Event --->
-                            #announceInterception( "cbadmin_pageEditorNav" )#
+                            #announce( "cbadmin_pageEditorNav" )#
 
                         </ul>
                     </div>
@@ -212,15 +212,15 @@
 						</cfif>
 
 						<!--- Custom tab content --->
-						#announceInterception( "cbadmin_pageEditorNavContent" )#
+						#announce( "cbadmin_pageEditorNavContent" )#
 					</div>
 
                     <!--- Event --->
-                    #announceInterception( "cbadmin_pageEditorInBody" )#
+                    #announce( "cbadmin_pageEditorInBody" )#
                 </div>
 
                 <!--- Event --->
-                #announceInterception( "cbadmin_pageEditorFooter" )#
+                #announce( "cbadmin_pageEditorFooter" )#
             </div>
 
             <!---- SIDEBAR --->
@@ -634,16 +634,16 @@
                             <!---End Featured Image--->
 
                             <!--- Event --->
-                            #announceInterception( "cbadmin_pageEditorSidebarAccordion" )#
+                            #announce( "cbadmin_pageEditorSidebarAccordion" )#
                         </div>
                         <!--- End Accordion --->
 
                         <!--- Event --->
-                        #announceInterception( "cbadmin_pageEditorSidebar" )#
+                        #announce( "cbadmin_pageEditorSidebar" )#
                     </div>
                 </div>
                 <!--- Event --->
-                #announceInterception( "cbadmin_pageEditorSidebarFooter" )#
+                #announce( "cbadmin_pageEditorSidebarFooter" )#
             </div>
         </div>
 

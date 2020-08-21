@@ -14,7 +14,7 @@
                 <div class="actions">
 
                     <!--- Back To Inbox --->
-                    #announceInterception( "cbadmin_onNewAuthorActions" )#
+                    #announce( "cbadmin_onNewAuthorActions" )#
 
 					<!--- Back button --->
 					<p class="text-center">
@@ -28,7 +28,7 @@
             <div class="panel-body">
 
             	<!--- Messageboxes --->
-            	#getModel( "messagebox@cbMessagebox" ).renderIt()#
+            	#getInstance( "messagebox@cbMessagebox" ).renderIt()#
 
 				<!--- AuthorForm --->
 				#html.startForm(
@@ -227,7 +227,7 @@
 				#html.endForm()#
 
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_onNewAuthorForm" )#
+				#announce( "cbadmin_onNewAuthorForm" )#
             </div>
  		</div>
     </div>

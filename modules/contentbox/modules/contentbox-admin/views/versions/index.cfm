@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-8">
         <!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
 		<!--- Version History Panel --->
 		#prc.versionsPager#
 	</div>

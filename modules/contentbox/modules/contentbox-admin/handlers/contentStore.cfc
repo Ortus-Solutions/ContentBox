@@ -158,7 +158,7 @@ component extends="baseContentHandler"{
 		if( len( rc.contentID ) ){
 			contentStoreService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
 			// announce event
-			announceInterception( "cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
+			announce( "cbadmin_onContentStoreStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
 			cbMessageBox.info( "#listLen(rc.contentID)# content where set to '#rc.contentStatus#'" );
 		}
@@ -373,11 +373,11 @@ component extends="baseContentHandler"{
 		// Inflate Related Content into the content
 		content.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announceInterception( "cbadmin_preContentStoreSave", {content=content, isNew=isNew} );
+		announce( "cbadmin_preContentStoreSave", {content=content, isNew=isNew} );
 		// save content
 		contentStoreService.saveContent( content );
 		// announce event
-		announceInterception( "cbadmin_postContentStoreSave", {content=content, isNew=isNew} );
+		announce( "cbadmin_postContentStoreSave", {content=content, isNew=isNew} );
 
 		// Ajax?
 		if( event.isAjax() ){
@@ -423,7 +423,7 @@ component extends="baseContentHandler"{
 				var contentID 	= content.getContentID();
 				var title		= content.getTitle();
 				// announce event
-				announceInterception( "cbadmin_preContentStoreRemove", { content=content } );
+				announce( "cbadmin_preContentStoreRemove", { content=content } );
 				// Diassociate it
 				if( content.hasParent() ){
 					content.getParent().removeChild( content );
@@ -432,7 +432,7 @@ component extends="baseContentHandler"{
 				contentStoreService.deleteContent( content );
 				arrayAppend( messages, "content '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postContentStoreRemove", { contentID=contentID } );
+				announce( "cbadmin_postContentStoreRemove", { contentID=contentID } );
 			}
 		}
 		// messagebox
@@ -464,7 +464,7 @@ component extends="baseContentHandler"{
 		prc.xehContentHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging object
-		prc.pager_oPaging 		= getModel( "Paging@cb" );
+		prc.pager_oPaging 		= getInstance( "Paging@cb" );
 		prc.pager_paging 	  	= prc.pager_oPaging.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
@@ -508,7 +508,7 @@ component extends="baseContentHandler"{
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.contentStore.editorSelector";
 
 		// prepare paging object
-		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.oPaging 	= getInstance( "Paging@cb" );
 		prc.paging 	  		= prc.oPaging.getBoundaries();
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 

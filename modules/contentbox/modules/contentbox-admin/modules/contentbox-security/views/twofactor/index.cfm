@@ -12,7 +12,7 @@
 
             <div class="panel-body">
 	        	<!--- Render Messagebox --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
                 #html.startForm(
                 	action		= prc.xehValidate,
@@ -23,7 +23,7 @@
                 )#
 
 					<!--- Event --->
-					#announceInterception( "cbadmin_beforeTwoFactorForm" )#
+					#announce( "cbadmin_beforeTwoFactorForm" )#
 
 					<!--- Challenge Text --->
 					<p>#prc.provider.getVerificationHelp()#</p>
@@ -64,7 +64,7 @@
                		</a>
 
 	                <!--- Event --->
-					#announceInterception( "cbadmin_afterTwoFactorForm" )#
+					#announce( "cbadmin_afterTwoFactorForm" )#
 
                 #html.endForm()#
             </div>

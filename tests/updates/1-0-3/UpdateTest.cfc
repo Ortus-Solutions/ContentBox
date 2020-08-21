@@ -2,9 +2,9 @@ component extends="coldbox.system.testing.BaseTestCase"{
 
 	function setup(){
 		super.setup();
-		update = getMockBox().prepareMock( getModel("root.ant.patches.1-0-3.Update") );
-		permService = getModel("permissionService@cb");
-		roleService = getMockBox().prepareMock( getModel("roleService@cb") ).$("save");
+		update = getMockBox().prepareMock( getInstance("root.ant.patches.1-0-3.Update") );
+		permService = getInstance("permissionService@cb");
+		roleService = getMockBox().prepareMock( getInstance("roleService@cb") ).$("save");
 
 		update.$property("roleService","variables",roleService);
 	}

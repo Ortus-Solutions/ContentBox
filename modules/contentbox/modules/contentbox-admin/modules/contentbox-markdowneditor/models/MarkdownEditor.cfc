@@ -16,19 +16,19 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* @settingService.inject settingService@cb
 	* @html.inject HTMLHelper@coldbox
 	*/
-	function init( 
-		required coldbox, 
+	function init(
+		required coldbox,
 		required settingService,
 		required html
 	){
-		
+
 		// register dependencies
 		variables.interceptorService = arguments.coldbox.getInterceptorService();
 		variables.requestService	 = arguments.coldbox.getRequestService();
 		variables.coldbox 			 = arguments.coldbox;
 		variables.settingService	 = arguments.settingService;
 		variables.html 				 = arguments.html;
-		
+
 		// Store admin entry point and base URL settings
 		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
 		EDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-markdowneditor" ].mapping;
@@ -37,10 +37,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		// Store Toolbars
 		variables.toolbarJS 		= buildToolbarJS( 'content' );
 		variables.toolbarExcerptJS 	= buildToolbarJS( 'excerpt' );
-		
+
 		// Register our Editor events
 		interceptorService.appendInterceptionPoints( "cbadmin_mdEditorToolbar,cbadmin_mdEditorExtraConfig" );
-		
+
 		return this;
 	}
 
@@ -50,40 +50,40 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	function getName(){
 		return "simplemde";
 	}
-	
+
 	/**
 	* Get the display name of an editor
 	*/
 	function getDisplayName(){
 		return "Code Editor (Markdown+HTML)";
 	};
-	
+
 	/**
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
 		// prepare toolbar announcement on startup
-		var iData = { 
-			toolbar 		= variables.toolbarJS, 
+		var iData = {
+			toolbar 		= variables.toolbarJS,
 			excerptToolbar 	= variables.toolbarExcerptJS
 		};
 		// Announce the editor toolbar is about to be processed
-		interceptorService.processState( "cbadmin_mdEditorToolbar", iData );
+		interceptorService.announce( "cbadmin_mdEditorToolbar", iData );
 		// Load extra configuration
 		var iData2 = { extraConfig = "" };
 		// Announce extra configuration
-		interceptorService.processState( "cbadmin_mdEditorExtraConfig", iData2 );
+		interceptorService.announce( "cbadmin_mdEditorExtraConfig", iData2 );
 		// Now prepare our JavaScript and load it.
 		return compileJS( iData, iData2 );
 	}
-	
+
 	/**
-	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc. 
+	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc.
 	* return the appropriate JavaScript
 	*/
 	function loadAssets(){
 		var js = "";
-		
+
 		// Load Assets, they are included with ContentBox
 		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.css" );
 		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.js" );
@@ -139,12 +139,12 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			// Insert Widgets
 			$insertCBWidget = function( editor ){
 				// Open the selector widget dialog.
-    			openRemoteModal( 
-                    getWidgetSelectorURL(), 
-                    { editorName : editor }, 
+    			openRemoteModal(
+                    getWidgetSelectorURL(),
+                    { editorName : editor },
                     $( window ).width() - 200,
                     $( window ).height() - 300,
-                    true 
+                    true
                 );
 			};
 
@@ -173,9 +173,9 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			};
 			// Choose Media
 			$insertCBMediaContent = function( sPath, sURL, sType ){
-				if( !sPath.length || sType === 'dir' ){ 
-			        alert( 'Please select a file first.' ); 
-			        return; 
+				if( !sPath.length || sType === 'dir' ){
+			        alert( 'Please select a file first.' );
+			        return;
 			    }
 				var link = '![' + sURL.substr( sURL.lastIndexOf( '/' ) + 1 ) + ']('+ sURL + ')';
 				insertEditorContent( simpleMDETargetEditor, link );
@@ -183,16 +183,16 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			}
 			" );
 		}
-		
+
 		return js;
 	};
-	
+
 	/**
 	* Compile the needed JS to display into the screen
 	*/
 	private function compileJS( required iData, required iData2 ){
 		var js 					= "";
-		
+
 		// Determine Extra Configuration
 		var extraConfig = "";
 		if( len( arguments.iData2.extraConfig ) ){
@@ -202,7 +202,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		savecontent variable="js"{
 			writeOutput( "
 			// Activate on content object
-			simpleMDE_content = new SimpleMDE( { 
+			simpleMDE_content = new SimpleMDE( {
 				#extraConfig#
 				element 		: document.getElementById( 'content' ),
 				autosave 		: { enabled : false },
@@ -217,7 +217,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			// Active Excerpts
 			if( $withExcerpt ){
 				// Activate on content object
-				simpleMDE_excerpt = new SimpleMDE( { 
+				simpleMDE_excerpt = new SimpleMDE( {
 					#extraConfig#
 					element  		: document.getElementById( 'excerpt' ),
 					autosave  		: { enabled : false },
@@ -240,7 +240,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			} );
 			" );
 		}
-		
+
 		return js;
 	}
 
@@ -263,7 +263,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			}
 			" );
 		}
-		
+
 		return js;
 	}
 
@@ -272,7 +272,7 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	* @editor The editor name to bind the toolbar to
 	*/
 	private function buildToolbarJS( required editor ){
-		return "[ 
+		return "[
 			{
 				name : 'cbSave',
 				action : function(){ quickSave(); },
@@ -292,10 +292,10 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				title : 'Redo'
 			},
 			'|',
-			'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|', 
-			'code', 'quote', 'unordered-list', 'ordered-list', '|', 
+			'bold', 'italic', 'strikethrough', 'heading', 'heading-smaller', 'heading-bigger', '|',
+			'code', 'quote', 'unordered-list', 'ordered-list', '|',
 			'link', 'image', 'table', 'horizontal-rule', '|',
-			'preview', 'side-by-side', 'fullscreen', 
+			'preview', 'side-by-side', 'fullscreen',
 			{
 				name : 'cbLivePreview',
 				action : function(){ previewContent(); },
@@ -336,4 +336,4 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		]";
 	}
 
-} 
+}

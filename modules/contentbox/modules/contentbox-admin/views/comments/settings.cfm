@@ -6,16 +6,16 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #getInstance( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         #html.startForm(
-            name="commentSettingsForm", 
-            action=rc.xehSaveSettings, 
+            name="commentSettingsForm",
+            action=rc.xehSaveSettings,
             class="form-vertical"
-        )#		
+        )#
             #html.anchor(name="top" )#
             <div class="panel panel-default">
                 <div class="panel-body">
@@ -28,12 +28,12 @@
                             <li><a href="##moderation" data-toggle="tab"><i class="fa fa-unlock fa-lg"></i> <span class="hidden-xs">Moderation</span></a></li>
                             <li><a href="##notifications" data-toggle="tab"><i class="fa fa-envelope fa-lg"></i> <span class="hidden-xs">Notifications</span></a></li>
                             <!--- cbadmin Event --->
-                            #announceInterception( "cbadmin_onCommentSettingsNav" )#
-                        </ul>       
-                        
+                            #announce( "cbadmin_onCommentSettingsNav" )#
+                        </ul>
+
                         <!--- Tab Content --->
                         <div class="tab-content">
-                            
+
                             <!--- comment options --->
                             <div class="tab-pane active" id="general_options">
                                 <fieldset>
@@ -54,10 +54,10 @@
 												#html.hiddenField(
 													name	= "cb_comments_enabled",
 													value	= prc.cbSettings.cb_comments_enabled
-												)# 
+												)#
                                             </div>
                                         </div>
-                                           
+
                                         <!--- URL Translations --->
                                         <div class="form-group">
                                             #html.label(
@@ -77,7 +77,7 @@
 												)#
                                             </div>
                                         </div>
-                                        
+
                                         <!--- Whois URL --->
                                         #html.textField(
                                             name="cb_comments_whoisURL",
@@ -133,8 +133,8 @@
 												value	= prc.cbSettings.cb_comments_moderation_whitelist
 											)#
                                         </div>
-                                    </div>  
-                                    
+                                    </div>
+
                                     <!--- Auto-Delete Moderated Comments --->
                                     <div class="form-group">
                                         #html.label(
@@ -150,7 +150,7 @@
                                                 type="number"
                                             )#
                                         </div>
-                                    </div>  
+                                    </div>
 
                                     <!--- Moderated Keywords --->
                                     <div class="form-group">
@@ -170,7 +170,7 @@
                                             )#
                                         </div>
                                     </div>
-                                    
+
                                     <!--- Blocked Keywords --->
                                     <div class="form-group">
                                         #html.label(
@@ -185,9 +185,9 @@
                                                 rows="8",
                                                 class="form-control",
                                                 title="One per line please"
-                                            )#     
+                                            )#
                                         </div>
-                                    </div>  
+                                    </div>
                                 </fieldset>
                             </div>
                             <!--- Notifications --->
@@ -195,7 +195,7 @@
                                 <fieldset>
                                     <legend><i class="fa fa-envelope fa-lg"></i> Notifications</legend>
                                     <p>
-                                        By default all comment notifications are sent to the system email: <a href="mailto:#prc.cbSettings.cb_site_email#">#prc.cbSettings.cb_site_email#</a>, 
+                                        By default all comment notifications are sent to the system email: <a href="mailto:#prc.cbSettings.cb_site_email#">#prc.cbSettings.cb_site_email#</a>,
                                     but you can add more emails separated by commas, ohh goody!
                                     </p>
                                     <!--- Email Notifications --->
@@ -209,8 +209,8 @@
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
-                                    )#     
-                                    
+                                    )#
+
                                     <!--- Notification on Comment --->
                                     <div class="form-group">
                                         #html.label(field="cb_comments_notify",content="Send a notification that a comment has been made:" )#
@@ -226,13 +226,13 @@
 											)#
                                         </div>
                                     </div>
-                                    
+
                                     <!--- Notification on Moderation --->
                                     <div class="form-group">
                                         #html.label(
                                             field="cb_comments_moderation_notify",
                                             content="Send a notification when a comment needs moderation:"
-                                        )#    
+                                        )#
                                         <div class="controls">
                                         	#html.checkbox(
 												name    = "cb_comments_moderation_notify_toggle",
@@ -244,16 +244,16 @@
 												value	= prc.cbSettings.cb_comments_moderation_notify
 											)#
                                         </div>
-                                    </div>                              
-                                </fieldset>                     
+                                    </div>
+                                </fieldset>
                             </div>
                             <!--- cbadmin Event --->
-                            #announceInterception( "cbadmin_onCommentSettingsContent" )#
+                            #announce( "cbadmin_onCommentSettingsContent" )#
                             <!--- End Tab Content --->
                             <div class="form-actions">
                                 #html.button(type="submit", value="Save Settings", class="btn btn-danger" )#
                             </div>
-                            
+
                         </div>
                         <!--- End Tab Content --->
                     </div>

@@ -17,18 +17,18 @@ component extends="coldbox.system.Interceptor"{
 		// the limiter data
 		variables.limitData = {};
 	}
-	
+
 	/**
 	* Limiter
 	*/
-	function onRequestCapture( event, interceptData, buffer ){
+	function onRequestCapture( event, data, buffer ){
 		var allSettings = settingService.getAllSettings( asStruct=true );
 
 		// If turned off, just exist
 		if( !structKeyExists( allSettings, "cb_security_rate_limiter" ) || allSettings.cb_security_rate_limiter == false ){
 			return false;
 		}
-		
+
 		// do we limit bot OR normal requests as well?
 		if( !len( cgi.http_cookie ) OR !allSettings.cb_security_rate_limiter_bots_only ) {
 			// limit it now.
@@ -41,9 +41,9 @@ component extends="coldbox.system.Interceptor"{
 		}
 	}
 
-	/** 
+	/**
 	* Written by Charlie Arehart, charlie@carehart.org, in 2009, updated 2012, modified by Luis Majano 2016
-	* - Throttles requests made more than "count" times within "duration" seconds from single IP. 
+	* - Throttles requests made more than "count" times within "duration" seconds from single IP.
 	* - Duck typed for performance
 	* @count	The throttle counter
 	* @duration	The time in seconds to limit
@@ -53,7 +53,7 @@ component extends="coldbox.system.Interceptor"{
 	private function limiter( count, duration, event, settings ) {
 		// Get real IP address of requester
 		var realIP = settingService.getRealIP();
-		
+
 		// If first time visit, create record.
 		if( !structKeyExists( variables.limitData, realIP ) ){
 			lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5"{
@@ -71,7 +71,7 @@ component extends="coldbox.system.Interceptor"{
 		log.info( "Limit data", targetData );
 		//log.info( "DateDiff " & dateDiff( "s", targetData.lastAttempt, Now() ) );
 		//log.info( "Within Duration " & dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration );
-		
+
 		// Are we executing another request withing our duration in seconds? Ex: Has X seconds passed before last attempt
 		if( dateDiff( "s", targetData.lastAttempt, Now() ) LT arguments.duration ){
 			// Limit by count?
@@ -81,7 +81,7 @@ component extends="coldbox.system.Interceptor"{
 					// Log it to app logs
 					log.info( "'limiter invoked for:','#realIP#',#targetData.attempts#,#cgi.request_method#,'#cgi.SCRIPT_NAME#', '#cgi.QUERY_STRING#','#cgi.http_user_agent#','#targetData.lastAttempt#',#listlen(cgi.http_cookie,";" )#" );
 				}
-				
+
 				// Log attempt
 				lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5"{
 					targetData.attempts++;
@@ -95,8 +95,8 @@ component extends="coldbox.system.Interceptor"{
 				}
 
 				// Output Message
-				writeOutput( 
-					replaceNoCase( settings[ "cb_security_rate_limiter_message" ], "{duration}", arguments.duration, "all" ) 
+				writeOutput(
+					replaceNoCase( settings[ "cb_security_rate_limiter_message" ], "{duration}", arguments.duration, "all" )
 				);
 				arguments.event.setHTTPHeader( statusCode="503", statusText="Service Unavailable" )
 					.setHTTPHeader( name="Retry-After", value=arguments.duration );
@@ -105,7 +105,7 @@ component extends="coldbox.system.Interceptor"{
 				event.noExecution();
 
 				// Hard abort;
-				abort; 
+				abort;
 			} else {
 				// Log attempt
 				lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5"{
@@ -123,5 +123,5 @@ component extends="coldbox.system.Interceptor"{
 
 		return this;
 	}
-	
+
 }

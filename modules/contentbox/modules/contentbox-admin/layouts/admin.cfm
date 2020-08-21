@@ -20,7 +20,7 @@
 	>
 
 		<!--- cbadmin Event --->
-		#announceInterception( "cbadmin_afterBodyStart" )#
+		#announce( "cbadmin_afterBodyStart" )#
 
 		<!--- ************************************************************************************************--->
 		<!---                               MAIN CONTAINER					                                      --->
@@ -62,7 +62,7 @@
 					<ul>
 						<!--- View Site --->
 						<li class="" data-placement="right auto" title="Visit Site">
-							<a class="btn btn-default options toggle" href="#event.buildLink( linkTo=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
+							<a class="btn btn-default options toggle" href="#event.buildLink( to=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
 								<i class="fa fa-home"></i>
 							</a>
 						</li>
@@ -136,7 +136,7 @@
 
 						<!--- Profile --->
 						<li class="profile-photo hidden-xs">
-							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="35", class="img-circle" )#
+							#getInstance( "Avatar@cb" ).renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="35", class="img-circle" )#
 						</li>
 						#prc.adminMenuService.generateProfileMenu()#
 
@@ -170,7 +170,7 @@
 			<section class="main-content-wrapper" id="main-content-wrapper">
 				<section id="main-content">
 					<!--- cbadmin event --->
-					#announceInterception( "cbadmin_beforeContent" )#
+					#announce( "cbadmin_beforeContent" )#
 
 					<!--- Side Bar Trigger --->
 					<div 	class="pull-right"
@@ -188,7 +188,7 @@
 					<!--- Main Content --->
 					#renderView()#
 					<!--- cbadmin event --->
-					#announceInterception( "cbadmin_afterContent" )#
+					#announce( "cbadmin_afterContent" )#
 				</section>
 			</section>
 

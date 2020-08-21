@@ -25,7 +25,7 @@ function commentPagerChangeStatus( status, recordID ){
 		.addClass( "fa fa-spinner fa-spin" );
 	// ajax status change
 	$.post(
-		"#event.buildlink(linkTo=prc.xehCommentPagerStatus)#",
+		"#event.buildlink(to=prc.xehCommentPagerStatus)#",
 		{
 			commentStatus : status,
 			commentID     : recordID

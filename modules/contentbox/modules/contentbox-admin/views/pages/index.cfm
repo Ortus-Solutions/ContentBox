@@ -7,7 +7,7 @@
 <div class="row">
 	<div class="col-md-9">
 		<!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -28,7 +28,7 @@
 					<div class="row">
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
-								#html.textField( 
+								#html.textField(
 									name="pageSearch",
 									class="form-control",
 									placeholder="Quick Search"
@@ -45,9 +45,9 @@
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 								    			<li>
-								    				<a href="javascript:bulkRemove()" 
+								    				<a href="javascript:bulkRemove()"
 								    					class="confirmIt"
-														data-title="Delete Selected Categories?" 
+														data-title="Delete Selected Categories?"
 														data-message="This will delete the categories and associations, are you sure?">
 															<i class="fa fa-trash-o"></i> Delete Selected
 													</a>
@@ -69,8 +69,8 @@
 								    			</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (linkto=prc.xehPageExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( linkto=prc.xehPageExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink (to=prc.xehPageExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( to=prc.xehPageExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
 											<li>
 												<a href="javascript:resetBulkHits()"><i class="fa fa-refresh"></i> Reset Hits Selected</a>
@@ -82,8 +82,8 @@
 											</li>
 								    	</ul>
 								    </div>
-								    <button class="btn btn-primary btn-sm" 
-										onclick="return to('#event.buildLink(linkTo=prc.xehPageEditor)#/parentID/' + getParentContentID() )">Create Page</button>
+								    <button class="btn btn-primary btn-sm"
+										onclick="return to('#event.buildLink(to=prc.xehPageEditor)#/parentID/' + getParentContentID() )">Create Page</button>
 								</cfif>
 							</div>
 						</div>
@@ -193,7 +193,7 @@
 			title = "Import Pages",
 			contentArea = "page",
 			action = prc.xehPageImport,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> pages file to import. The creator of the page is matched via their <strong>username</strong> and 
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> pages file to import. The creator of the page is matched via their <strong>username</strong> and
                 page overrides are matched via their <strong>slug</strong>.
                 If the importer cannot find the username from the import file in your installation, then it will ignore the record."
 		};

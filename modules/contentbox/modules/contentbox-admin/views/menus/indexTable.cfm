@@ -10,7 +10,7 @@
                 <th width="100" class="text-center {sorter:false}">Actions</th>
             </tr>
         </thead>
-        
+
         <tbody>
             <cfloop array="#prc.menus#" index="menu">
             <tr id="contentID-#menu.getMenuID()#" data-contentID="#menu.getMenuID()#">
@@ -44,8 +44,8 @@
                                 </li>
                                 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
-                                    <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-                                    <li><a href="#event.buildLink(linkto=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
                                 </cfif>
                             </cfif>
                         </ul>

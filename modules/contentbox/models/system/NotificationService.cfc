@@ -13,20 +13,20 @@
 component extends="coldbox.system.Interceptor" accessors="true"{
 
 	// DI
-	property name="settingService"	inject="id:settingService@cb";
+	property name="settingService" 	inject="id:settingService@cb";
 	property name="securityService"	inject="id:securityService@cb";
-	property name="mailService"		inject="mailService@cbmailservices";
-	property name="renderer"		inject="provider:ColdBoxRenderer";
-	property name="CBHelper"		inject="id:CBHelper@cb";
+	property name="mailService"    		inject="mailService@cbmailservices";
+	property name="renderer"       		inject="provider:ColdBoxRenderer";
+	property name="CBHelper"       		inject="id:CBHelper@cb";
 
 	function configure(){}
 
 	/**
 	* Listen to when authors are created in the system.
 	*/
-	function cbadmin_postNewAuthorSave( event, interceptData, buffer ){
-		var author 		= arguments.interceptData.author;
-		var settings 	= settingService.getAllSettings( asStruct=true );
+	function cbadmin_postNewAuthorSave( event, data, buffer ){
+		var author   = arguments.data.author;
+		var settings = settingService.getAllSettings( asStruct=true );
 
 		// Only new authors are announced, not updates, and also verify author notifications are online.
 		if( NOT settings.cb_notify_author ){ return; }
@@ -36,13 +36,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			authorName			= author.getName(),
-			authorRole			= author.getRole().getRole(),
-			permissionGroups 	= author.getPermissionGroupsList(),
-			authorEmail			= author.getEmail(),
-			authorURL 			= CBHelper.linkAdmin( event="authors.editor.authorID.#author.getAuthorID()#", ssl=settings.cb_admin_ssl ),
-			currentAuthor		= currentAuthor.getName(),
-			currentAuthorEmail 	= currentAuthor.getEmail()
+			authorName        = author.getName(),
+			authorRole        = author.getRole().getRole(),
+			permissionGroups  = author.getPermissionGroupsList(),
+			authorEmail       = author.getEmail(),
+			authorURL         = CBHelper.linkAdmin( event="authors.editor.authorID.#author.getAuthorID()#", ssl=settings.cb_admin_ssl ),
+			currentAuthor     = currentAuthor.getName(),
+			currentAuthorEmail= currentAuthor.getEmail()
 		};
 		var mail = mailservice.newMail(
 			to         = settings.cb_site_email,
@@ -60,7 +60,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
+			renderer.$get().renderLayout(
 				view   = "/contentbox/email_templates/author_new",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail= currentAuthor.getEmail() }
@@ -74,10 +74,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when authors are removed
 	*/
-	function cbadmin_preAuthorRemove( event, interceptData, buffer ){
-		var author 		= arguments.interceptData.author;
+	function cbadmin_preAuthorRemove( event, data, buffer ){
+		var author   = arguments.data.author;
 		// Get settings
-		var settings 	= settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings(asStruct=true);
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_author ){ return; }
@@ -86,11 +86,11 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			authorName			= author.getName(),
-			authorRole			= author.getRole().getRole(),
-			authorEmail			= author.getEmail(),
-			currentAuthor		= currentAuthor.getName(),
-			currentAuthorEmail 	= currentAuthor.getEmail()
+			authorName        = author.getName(),
+			authorRole        = author.getRole().getRole(),
+			authorEmail       = author.getEmail(),
+			currentAuthor     = currentAuthor.getName(),
+			currentAuthorEmail= currentAuthor.getEmail()
 		};
 		var mail = mailservice.newMail(
 			to         = settings.cb_site_email,
@@ -108,10 +108,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
-				view   	= "/contentbox/email_templates/author_remove",
-				layout 	= "/contentbox/email_templates/layouts/email",
-				args 	= { gravatarEmail= currentAuthor.getEmail() }
+			renderer.$get().renderLayout(
+				view   = "/contentbox/email_templates/author_remove",
+				layout = "/contentbox/email_templates/layouts/email",
+				args   = { gravatarEmail= currentAuthor.getEmail() }
 			)
 		);
 		// send it out
@@ -121,27 +121,27 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when entries are saved
 	*/
-	function cbadmin_postEntrySave( event, interceptData, buffer ){
-		var entry 		= arguments.interceptData.entry;
+	function cbadmin_postEntrySave( event, data, buffer ){
+		var entry    = arguments.data.entry;
 		// Get settings
-		var settings 	= settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings(asStruct=true);
 
 		// Only new entries are announced, not updates, and also verify entry notifications are online.
-		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_entry ){ return; }
+		if( NOT arguments.data.isNew OR NOT settings.cb_notify_entry ){ return; }
 
 		// get current logged in author performing the action
 		var currentAuthor = securityService.getAuthorSession();
 
 		// get mail payload
 		var bodyTokens = {
-			entryTitle			= entry.getTitle(),
-			entryExcerpt		= "",
-			entryURL			= CBHelper.linkEntry( entry=entry, ssl=settings.cb_site_ssl ),
-			entryAuthor			= currentAuthor.getName(),
-			entryAuthorEmail 	= currentAuthor.getEmail(),
-			entryIsPublished	= entry.getIsPublished(),
-			entryPublishedDate	= entry.getDisplayPublishedDate(),
-			entryExpireDate		= entry.getDisplayExpireDate()
+			entryTitle        = entry.getTitle(),
+			entryExcerpt      = "",
+			entryURL          = CBHelper.linkEntry( entry=entry, ssl=settings.cb_site_ssl ),
+			entryAuthor       = currentAuthor.getName(),
+			entryAuthorEmail  = currentAuthor.getEmail(),
+			entryIsPublished  = entry.getIsPublished(),
+			entryPublishedDate= entry.getDisplayPublishedDate(),
+			entryExpireDate   = entry.getDisplayExpireDate()
 		};
 
 		if( entry.hasExcerpt() ){
@@ -166,7 +166,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
+			renderer.$get().renderLayout(
 				view   = "/contentbox/email_templates/entry_new",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail= currentAuthor.getEmail() }
@@ -179,10 +179,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when entries are removed
 	*/
-	function cbadmin_preEntryRemove( event, interceptData, buffer ){
-		var entry 		= arguments.interceptData.entry;
+	function cbadmin_preEntryRemove( event, data, buffer ){
+		var entry    = arguments.data.entry;
 		// Get settings
-		var settings 	= settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings(asStruct=true);
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_entry ){ return; }
@@ -192,11 +192,11 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			entryTitle			= entry.getTitle(),
-			entryExcerpt		= "",
-			entryURL			= CBHelper.linkEntry( entry=entry, ssl=settings.cb_site_ssl ),
-			entryAuthor			= currentAuthor.getName(),
-			entryAuthorEmail 	= currentAuthor.getEmail()
+			entryTitle      = entry.getTitle(),
+			entryExcerpt    = "",
+			entryURL        = CBHelper.linkEntry( entry=entry, ssl=settings.cb_site_ssl ),
+			entryAuthor     = currentAuthor.getName(),
+			entryAuthorEmail= currentAuthor.getEmail()
 		};
 		if( entry.hasExcerpt() ){
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
@@ -220,10 +220,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
-				view	= "/contentbox/email_templates/entry_remove",
-				layout	= "/contentbox/email_templates/layouts/email",
-				args	= { gravatarEmail= currentAuthor.getEmail() }
+			renderer.$get().renderLayout(
+				view  = "/contentbox/email_templates/entry_remove",
+				layout= "/contentbox/email_templates/layouts/email",
+				args  = { gravatarEmail= currentAuthor.getEmail() }
 			)
 		);
 		// send it out
@@ -233,13 +233,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when pages are saved
 	*/
-	function cbadmin_postPageSave( event, interceptData, buffer ){
-		var page 		= arguments.interceptData.page;
+	function cbadmin_postPageSave( event, data, buffer ){
+		var page     = arguments.data.page;
 		// Get settings
-		var settings 	= settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings( asStruct=true );
 
 		// Only new pages are announced, not updates, and also verify page notifications are online.
-		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_page ){
+		if( NOT arguments.data.isNew OR NOT settings.cb_notify_page ){
 			return;
 		}
 
@@ -248,13 +248,13 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			pageTitle			= page.getTitle(),
-			pageURL				= CBHelper.linkPage( page=page, ssl=settings.cb_site_ssl ),
-			pageAuthor			= currentAuthor.getName(),
-			pageAuthorEmail 	= currentAuthor.getEmail(),
-			pageIsPublished		= page.getIsPublished(),
-			pagePublishedDate	= page.getDisplayPublishedDate(),
-			pageExpireDate		= page.getDisplayExpireDate()
+			pageTitle        = page.getTitle(),
+			pageURL          = CBHelper.linkPage( page=page, ssl=settings.cb_site_ssl ),
+			pageAuthor       = currentAuthor.getName(),
+			pageAuthorEmail  = currentAuthor.getEmail(),
+			pageIsPublished  = page.getIsPublished(),
+			pagePublishedDate= page.getDisplayPublishedDate(),
+			pageExpireDate   = page.getDisplayExpireDate()
 		};
 
 		if( page.hasExcerpt() ){
@@ -279,10 +279,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
-				view	= "/contentbox/email_templates/page_new",
-				layout	= "/contentbox/email_templates/layouts/email",
-				args	= { gravatarEmail= currentAuthor.getEmail() }
+			renderer.$get().renderLayout(
+				view  = "/contentbox/email_templates/page_new",
+				layout= "/contentbox/email_templates/layouts/email",
+				args  = { gravatarEmail= currentAuthor.getEmail() }
 			)
 		);
 		// send it out
@@ -292,10 +292,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when pages are removed
 	*/
-	function cbadmin_prePageRemove( event, interceptData, buffer ){
-		var page 		= arguments.interceptData.page;
+	function cbadmin_prePageRemove( event, data, buffer ){
+		var page     = arguments.data.page;
 		// Get settings
-		var settings 	= settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings(asStruct=true);
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_page ){ return; }
@@ -305,11 +305,11 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			pageTitle			= page.getTitle(),
-			pageExcerpt			= "",
-			pageURL				= CBHelper.linkPage( page=page, ssl=settings.cb_site_ssl ),
-			pageAuthor			= currentAuthor.getName(),
-			pageAuthorEmail 	= currentAuthor.getEmail()
+			pageTitle      = page.getTitle(),
+			pageExcerpt    = "",
+			pageURL        = CBHelper.linkPage( page=page, ssl=settings.cb_site_ssl ),
+			pageAuthor     = currentAuthor.getName(),
+			pageAuthorEmail= currentAuthor.getEmail()
 		};
 		if( page.hasExcerpt() ){
 			bodyTokens.pageExcerpt = page.renderExcerpt();
@@ -318,25 +318,25 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		}
 
 		var mail = mailservice.newMail(
-			to         	= settings.cb_site_email,
-			from       	= settings.cb_site_outgoingEmail,
-			subject    	= "#settings.cb_site_name# - Page Removed - #bodyTokens.pageTitle#",
-			bodyTokens 	= bodyTokens,
-			type       	= "html",
-			server     	= settings.cb_site_mail_server,
-			username   	= settings.cb_site_mail_username,
-			password   	= settings.cb_site_mail_password,
-			port       	= settings.cb_site_mail_smtp,
-			useTLS     	= settings.cb_site_mail_tls,
-			useSSL		= settings.cb_site_mail_ssl
+			to        = settings.cb_site_email,
+			from      = settings.cb_site_outgoingEmail,
+			subject   = "#settings.cb_site_name# - Page Removed - #bodyTokens.pageTitle#",
+			bodyTokens= bodyTokens,
+			type      = "html",
+			server    = settings.cb_site_mail_server,
+			username  = settings.cb_site_mail_username,
+			password  = settings.cb_site_mail_password,
+			port      = settings.cb_site_mail_smtp,
+			useTLS    = settings.cb_site_mail_tls,
+			useSSL    = settings.cb_site_mail_ssl
 		);
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
-				view	= "/contentbox/email_templates/page_remove",
-				layout	= "/contentbox/email_templates/layouts/email",
-				args	= { gravatarEmail= currentAuthor.getEmail() }
+			renderer.$get().renderLayout(
+				view  = "/contentbox/email_templates/page_remove",
+				layout= "/contentbox/email_templates/layouts/email",
+				args  = { gravatarEmail= currentAuthor.getEmail() }
 			)
 		);
 		// send it out
@@ -346,28 +346,28 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when contentstore are saved
 	*/
-	function cbadmin_postContentStoreSave( event, interceptData, buffer ){
-		var content 	= arguments.interceptData.content;
+	function cbadmin_postContentStoreSave( event, data, buffer ){
+		var content  = arguments.data.content;
 		// Get settings
-		var settings 	= settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings( asStruct=true );
 
 		// Only new pages are announced, not updates, and also verify page notifications are online.
-		if( NOT arguments.interceptData.isNew OR NOT settings.cb_notify_contentstore ){ return; }
+		if( NOT arguments.data.isNew OR NOT settings.cb_notify_contentstore ){ return; }
 
 		// get current logged in author performing the action
 		var currentAuthor = securityService.getAuthorSession();
 
 		// get mail payload
 		var bodyTokens = {
-			contentTitle			= content.getTitle(),
-			contentDescription		= content.getDescription(),
-			contentAuthor			= currentAuthor.getName(),
-			contentAuthorEmail 		= currentAuthor.getEmail(),
-			contentIsPublished		= content.getIsPublished(),
-			contentPublishedDate	= content.getDisplayPublishedDate(),
-			contentExpireDate		= content.getDisplayExpireDate(),
-			contentURL 				= arguments.event.buildLink( linkto="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
-			contentExcerpt			= content.renderContentSilent( content.getActiveContent().getContent() )
+			contentTitle        = content.getTitle(),
+			contentDescription  = content.getDescription(),
+			contentAuthor       = currentAuthor.getName(),
+			contentAuthorEmail  = currentAuthor.getEmail(),
+			contentIsPublished  = content.getIsPublished(),
+			contentPublishedDate= content.getDisplayPublishedDate(),
+			contentExpireDate   = content.getDisplayExpireDate(),
+			contentURL          = arguments.event.buildLink( to="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
+			contentExcerpt      = content.renderContentSilent( content.getActiveContent().getContent() )
 		};
 
 		var mail = mailservice.newMail(
@@ -386,10 +386,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
-				view	= "/contentbox/email_templates/contentstore_new",
-				layout	= "/contentbox/email_templates/layouts/email",
-				args	= { gravatarEmail= currentAuthor.getEmail() }
+			renderer.$get().renderLayout(
+				view  = "/contentbox/email_templates/contentstore_new",
+				layout= "/contentbox/email_templates/layouts/email",
+				args  = { gravatarEmail= currentAuthor.getEmail() }
 			)
 		);
 		// send it out
@@ -399,10 +399,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	/**
 	* Listen to when content store objects are removed
 	*/
-	function cbadmin_preContentStoreRemove( event, interceptData, buffer ){
-		var content 	= arguments.interceptData.content;
+	function cbadmin_preContentStoreRemove( event, data, buffer ){
+		var content  = arguments.data.content;
 		// Get settings
-		var settings 	= settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings( asStruct=true );
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_contentstore ){ return; }
@@ -412,15 +412,15 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			contentTitle			= content.getTitle(),
-			contentDescription		= content.getDescription(),
-			contentAuthor			= currentAuthor.getName(),
-			contentAuthorEmail 		= currentAuthor.getEmail(),
-			contentIsPublished		= content.getIsPublished(),
-			contentPublishedDate	= content.getDisplayPublishedDate(),
-			contentExpireDate		= content.getDisplayExpireDate(),
-			contentURL 				= arguments.event.buildLink( linkto="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
-			contentExcerpt			= content.renderContentSilent( content.getActiveContent().getContent() )
+			contentTitle        = content.getTitle(),
+			contentDescription  = content.getDescription(),
+			contentAuthor       = currentAuthor.getName(),
+			contentAuthorEmail  = currentAuthor.getEmail(),
+			contentIsPublished  = content.getIsPublished(),
+			contentPublishedDate= content.getDisplayPublishedDate(),
+			contentExpireDate   = content.getDisplayExpireDate(),
+			contentURL          = arguments.event.buildLink( to="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
+			contentExcerpt      = content.renderContentSilent( content.getActiveContent().getContent() )
 		};
 
 		var mail = mailservice.newMail(
@@ -439,10 +439,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.get().renderLayout(
-				view	= "/contentbox/email_templates/contentstore_remove",
-				layout	= "/contentbox/email_templates/layouts/email",
-				args	= { gravatarEmail= currentAuthor.getEmail() }
+			renderer.$get().renderLayout(
+				view  = "/contentbox/email_templates/contentstore_remove",
+				layout= "/contentbox/email_templates/layouts/email",
+				args  = { gravatarEmail= currentAuthor.getEmail() }
 			)
 		);
 		// send it out

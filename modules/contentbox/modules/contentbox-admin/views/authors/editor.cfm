@@ -7,14 +7,14 @@
             <div class="panel-heading">
 
                 <h3 class="panel-title">
-                	#getModel( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="30" )#
+                	#getInstance( "Avatar@cb" ).renderAvatar( email=prc.author.getEmail(), size="30" )#
 					#prc.author.getName()#
                 </h3>
 
                 <div class="actions">
 
                     <!--- Back To Inbox --->
-                    #announceInterception( "cbadmin_onAuthorEditorActions" )#
+                    #announce( "cbadmin_onAuthorEditorActions" )#
 
 					<!--- Back button --->
 					<p class="text-center">
@@ -34,7 +34,7 @@
             <div class="panel-body">
 
             	<!--- Messageboxes --->
-            	#getModel( "messagebox@cbMessagebox" ).renderIt()#
+            	#getInstance( "messagebox@cbMessagebox" ).renderIt()#
 
             	<!--- Vertical Nav --->
                 <div class="tab-wrapper tab-left tab-primary">
@@ -66,7 +66,7 @@
 						</cfif>
 
 						<!--- cbadmin Event --->
-    					#announceInterception( "cbadmin_onAuthorEditorNav" )#
+    					#announce( "cbadmin_onAuthorEditorNav" )#
                     </ul>
 
                     <!--- Tab Content --->
@@ -95,7 +95,7 @@
 						</cfif>
 
 						<!--- cbadmin Event --->
-						#announceInterception( "cbadmin_onAuthorEditorContent" )#
+						#announce( "cbadmin_onAuthorEditorContent" )#
                    	</div>
                    	<!--- End Tab Content--->
                 </div>

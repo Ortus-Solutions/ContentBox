@@ -20,7 +20,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	 * Fired on contentbox requests
 	 */
-	function preProcess( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
+	function preProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 
 		// Verify ContentBox installer has been ran?
 		if( !settingService.isCBReady() ){
@@ -46,7 +46,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on post rendering
 	*/
-	function postRender( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui\:(page|blog)"{
+	function postRender( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui\:(page|blog)"{
 		// Rules to turn off the admin bar
 		if(
 			// Disabled SiteBar Setting
@@ -117,26 +117,26 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function postProcess( event, interceptData, buffer, rc, prc ) eventPattern="^contentbox-ui"{
+	function postProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 		// announce event
-		announceInterception( "cbui_postRequest" );
+		announce( "cbui_postRequest" );
 	}
 
 	/*
 	* Renderer helper injection
 	*/
-	function afterInstanceCreation( event, interceptData, buffer ){
+	function afterInstanceCreation( event, data, buffer ){
 		// check for renderer instance only
-		if( isInstanceOf( arguments.interceptData.target, "coldbox.system.web.Renderer" ) ){
+		if( isInstanceOf( arguments.data.target, "coldbox.system.web.Renderer" ) ){
 			var prc = event.getCollection( private=true );
 			// decorate it
-			arguments.interceptData.target.cb 			= CBHelper;
-			arguments.interceptData.target.$cbInject 	= variables.$cbInject;
-			arguments.interceptData.target.$cbInject();
+			arguments.data.target.cb 			= CBHelper;
+			arguments.data.target.$cbInject 	= variables.$cbInject;
+			arguments.data.target.$cbInject();
 			// re-broadcast event
-			announceInterception(
+			announce(
 				"cbui_onRendererDecoration",
-				{ renderer=arguments.interceptData.target, CBHelper=arguments.interceptData.target.cb }
+				{ renderer=arguments.data.target, CBHelper=arguments.data.target.cb }
 			);
 		}
 	}

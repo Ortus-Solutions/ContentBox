@@ -11,7 +11,7 @@
 
             <div class="panel-body">
             	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
   				<p>#cb.r( "resetpassword.instructions@security" )#</p>
 

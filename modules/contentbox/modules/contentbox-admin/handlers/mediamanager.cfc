@@ -32,23 +32,23 @@ component extends="baseHandler"{
 			}
 			case "customModules" : {
 				prc.cbFileBrowserSettings.title = "Custom Modules Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "ModuleService@cb" ).getCustomModulesPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getInstance( "ModuleService@cb" ).getCustomModulesPath(); break;
 			}
 			case "coreModules" : {
 				prc.cbFileBrowserSettings.title = "Core Modules Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "ModuleService@cb" ).getCoreModulesPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getInstance( "ModuleService@cb" ).getCoreModulesPath(); break;
 			}
 			case "updates" : {
 				prc.cbFileBrowserSettings.title = "Updates Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "UpdateService@cb" ).getPatchesLocation(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getInstance( "UpdateService@cb" ).getPatchesLocation(); break;
 			}
 			case "coreWidgets" : {
 				prc.cbFileBrowserSettings.title = "Core Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCoreWidgetsPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getInstance( "WidgetService@cb" ).getCoreWidgetsPath(); break;
 			}
 			case "customWidgets" : {
 				prc.cbFileBrowserSettings.title = "Custom Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getModel( "WidgetService@cb" ).getCustomWidgetsPath(); break;
+				prc.cbFileBrowserSettings.directoryRoot = getInstance( "WidgetService@cb" ).getCustomWidgetsPath(); break;
 			}
 		}
 

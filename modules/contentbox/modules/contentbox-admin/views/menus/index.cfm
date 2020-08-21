@@ -9,8 +9,8 @@
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
-        
+        #getInstance( "messagebox@cbMessagebox" ).renderit()#
+
         <!---Import Log --->
         <cfif flash.exists( "importLog" )>
             <div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -26,7 +26,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group form-inline no-margin">
-                                #html.textField( 
+                                #html.textField(
                                     name="menuSearch",
                                     class="form-control",
                                     placeholder="Quick Search"
@@ -50,14 +50,14 @@
                                                 <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (linkto=prc.xehMenuExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( linkto=prc.xehMenuExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( to=prc.xehMenuExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
 											</cfif>
                                             <li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
                                         </ul>
                                     </div>
                                 </cfif>
-                                <button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( linkTo=prc.xehMenuEditor)#' );">Create Menu</button>
+                                <button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( to=prc.xehMenuEditor)#' );">Create Menu</button>
                             </div>
                         </div>
                     </div>

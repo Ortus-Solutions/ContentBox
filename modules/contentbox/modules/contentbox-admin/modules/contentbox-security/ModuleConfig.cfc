@@ -1,21 +1,21 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* ContentBox Security module configuration
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * ContentBox Security module configuration
+ */
 component {
 
 	// Module Properties
-	this.title 				= "ContentBox Security";
-	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "https://www.ortussolutions.com";
-	this.description 		= "ContentBox Security Module";
-	this.viewParentLookup 	= true;
-	this.layoutParentLookup = true;
-	this.entryPoint			= "cbadmin/security";
-	this.dependencies 		= [ "contentbox-admin" ];
+	this.title             = "ContentBox Security";
+	this.author            = "Ortus Solutions, Corp";
+	this.webURL            = "https://www.ortussolutions.com";
+	this.description       = "ContentBox Security Module";
+	this.viewParentLookup  = true;
+	this.layoutParentLookup= true;
+	this.entryPoint        = "cbadmin/security";
+	this.dependencies      = [ "contentbox-admin" ];
 
 	function configure(){
 
@@ -25,8 +25,8 @@ component {
 		// i18n
 		i18n = {
 			resourceBundles = {
-		    	"security" = "#moduleMapping#/includes/i18n/security"
-		  	}
+				"security" = "#moduleMapping#/includes/i18n/security"
+			}
 		};
 
 		// SES Routes
@@ -63,18 +63,22 @@ component {
 		interceptors = [
 			// ContentBox security via cbSecurity Module
 			{
-				class 		= "cbsecurity.interceptors.Security",
-			  	name 		= "cbSecurity",
-			  	properties 	= {
-			 		rulesSource 		= "model",
-			 		rulesModel			= "securityRuleService@cb",
-			 		rulesModelMethod 	= "getSecurityRules",
-			 		validatorModel 		= "securityService@cb"
-			 	}
+				class      : "cbsecurity.interceptors.Security",
+				name       : "cbSecurity",
+				properties : {
+					rules                    : [],
+					useRegex                 : true,
+					useSSL                   : false,
+					handlerAnnotationSecurity: true,
+					rulesSource              : "model",
+					rulesModel               : "securityRuleService@cb",
+					rulesModelMethod         : "getSecurityRules",
+					validator                : "securityService@cb"
+				}
 			}
             ,{
-                class = "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
-                name = "CheckForForceTwoFactorEnrollment"
+                class : "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
+                name  : "CheckForForceTwoFactorEnrollment"
 			}
 		];
 

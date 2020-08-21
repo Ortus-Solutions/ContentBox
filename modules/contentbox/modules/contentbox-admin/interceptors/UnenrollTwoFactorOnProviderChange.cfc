@@ -15,8 +15,8 @@ component extends="coldbox.system.Interceptor"{
     /**
      * Unenrolls all users from two-factor authentication on two-factor provider change
      */
-    public void function cbadmin_preSettingsSave( required any event, required struct interceptData ) {
-        if ( interceptData.oldSettings.cb_security_2factorAuth_provider != interceptData.newSettings.cb_security_2factorAuth_provider ) {
+    public void function cbadmin_preSettingsSave( required any event, required struct data ) {
+        if ( data.oldSettings.cb_security_2factorAuth_provider != data.newSettings.cb_security_2factorAuth_provider ) {
             queryExecute( "UPDATE cb_author SET is2FactorAuth = 0" );
         }
     }

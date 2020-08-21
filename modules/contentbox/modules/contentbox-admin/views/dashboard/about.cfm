@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-    	
+
     	<div class="text-center">
     		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="margin10" title="Modular CMS"/>
 		    <h2><span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
@@ -19,7 +19,7 @@
 		    	<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
 						<tr>
-							<th>#$r( "dashboard.about.components.table.head1@admin" )#</th>	
+							<th>#$r( "dashboard.about.components.table.head1@admin" )#</th>
 							<th width="300" class="text-center">#$r( "dashboard.about.components.table.head2@admin" )#</th>
 						</tr>
 					</thead>
@@ -41,7 +41,7 @@
 						</tr>
 						<tr>
 							<th>ColdBox Platform</th>
-							<th class="text-center">v.#getSetting( "Version",1)#</th>
+							<th class="text-center">v.#getColdBoxSetting( "Version")#</th>
 						</tr>
 					</tbody>
 				</table>
@@ -53,14 +53,14 @@
 		        <h3 class="panel-title">#$r( "dashboard.about.shortcuts.title@admin" )#</h3>
 		    </div>
 		    <div class="panel-body">
-		    	<p>#$r( "dashboard.about.shortcuts.body1@admin" )# <code>#$r( "dashboard.about.shortcuts.body2@admin" )#</code> #$r( "dashboard.about.shortcuts.body3@admin" )# <code>&lt;a href="google.com"/&gt;...&lt;/a&gt;</code> #$r( "dashboard.about.shortcuts.body4@admin" )# <code>&lt;a href="google.com" data-keybinding="ctrl+shift+g"/&gt;...&lt;/a&gt;</code>, 
+		    	<p>#$r( "dashboard.about.shortcuts.body1@admin" )# <code>#$r( "dashboard.about.shortcuts.body2@admin" )#</code> #$r( "dashboard.about.shortcuts.body3@admin" )# <code>&lt;a href="google.com"/&gt;...&lt;/a&gt;</code> #$r( "dashboard.about.shortcuts.body4@admin" )# <code>&lt;a href="google.com" data-keybinding="ctrl+shift+g"/&gt;...&lt;/a&gt;</code>,
 				#$r( "dashboard.about.shortcuts.body5@admin" )# <span class="label label-warning">ctrl+shift+g</span> #$r( "dashboard.about.shortcuts.body6@admin" )# <span class="label label-warning">onclick</span> #$r( "dashboard.about.shortcuts.body7@admin" )#
 				</p>
-				
+
 				<table name="settings" id="settings" class="table table-hover table-striped">
 					<thead>
 						<tr>
-							<th>#$r( "dashboard.about.shortcuts.table.head1@admin" )#</th>	
+							<th>#$r( "dashboard.about.shortcuts.table.head1@admin" )#</th>
 							<th width="150" class="text-center">#$r( "dashboard.about.shortcuts.table.head2@admin" )#</th>
 						</tr>
 					</thead>
@@ -167,7 +167,7 @@
 							</th>
 							<th class="text-center">ctrl+shift+e</th>
 						</tr>
-						
+
 					</tbody>
 				</table>
 		    </div>
@@ -179,7 +179,7 @@
 		    </div>
 		    <div class="panel-body">
 		    	#renderView(view="_tags/needhelp", module="contentbox-admin" )#
-				
+
 				<h2>#$r( "dashboard.about.help.links@admin" )#</h2>
 				<ul>
 					<li><a href="https://github.com/Ortus-Solutions/ContentBox" target="_blank">#$r( "dashboard.about.help.sourceCode@admin" )#</a></li>
@@ -188,7 +188,7 @@
 				</ul>
 		    </div>
 		</div>
-		
+
     </div>
 </div>
 </cfoutput>

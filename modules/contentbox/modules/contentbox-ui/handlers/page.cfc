@@ -158,7 +158,7 @@ component extends="content"{
 			// Detect Mobile Device
 			var isMobileDevice 	= mobileDetector.isMobile();
 			// announce event
-			announceInterception( "cbui_onPage", { page=prc.page, isMobile=isMobileDevice } );
+			announce( "cbui_onPage", { page=prc.page, isMobile=isMobileDevice } );
 			// Use the mobile or standard layout
 			var thisLayout = ( isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance() );
 			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
@@ -176,7 +176,7 @@ component extends="content"{
 			prc.missingPage 	 = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
 			// announce event
-			announceInterception( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
+			announce( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
 			// set skin not found
 			event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module )
 				.setView( view="#prc.cbTheme#/views/notfound", module=prc.cbThemeRecord.module )
@@ -202,7 +202,7 @@ component extends="content"{
 		rc.q = HTMLEditFormat( trim( rc.q ) );
 
 		// prepare paging object
-		prc.oPaging 			= getModel( "paging@cb" );
+		prc.oPaging 			= getInstance( "paging@cb" );
 		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
 		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
 
@@ -216,7 +216,7 @@ component extends="content"{
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
-			prc.searchResults 			= getModel( "SearchResults@cb" );
+			prc.searchResults 			= getInstance( "SearchResults@cb" );
 			prc.searchResultsContent 	= "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
 
@@ -225,7 +225,7 @@ component extends="content"{
 			.setView( view="#prc.cbTheme#/views/search", module=prc.cbThemeRecord.module );
 
 		// announce event
-		announceInterception( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
+		announce( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
 	}
 
 

@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #getInstance( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 <div class="row">
@@ -35,10 +35,10 @@
                                             <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped table-hover" width="98%">
                                                 <thead>
                                                     <tr>
-                                                        <th>Content</th>     
+                                                        <th>Content</th>
                                                         <th width="75" class="text-center">Followers</th>
                                                     </tr>
-                                                </thead>                
+                                                </thead>
                                                 <tbody>
                                                     <cfloop array="#prc.commentSubscriptions#" index="subscription">
                                                     <tr>
@@ -48,7 +48,7 @@
                                                     </cfloop>
                                                 </tbody>
                                             </table>
-                                        
+
                                     </div>
                                     <div class="col-md-6">
                                         <h3>Top #prc.maxCommentSubscriptions# Comment Subscriptions</h3>

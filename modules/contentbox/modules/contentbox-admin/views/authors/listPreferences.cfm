@@ -117,7 +117,7 @@
 		</div>
 
 		<!--- Admin Event --->
-		#announceInterception( "cbadmin_UserPreferencePanel" )#
+		#announce( "cbadmin_UserPreferencePanel" )#
 
 		<!--- Action Bar --->
 		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>

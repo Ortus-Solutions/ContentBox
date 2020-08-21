@@ -67,7 +67,7 @@ component extends="baseContentHandler"{
 			.paramValue( "showAll", false );
 
 		// prepare paging object
-		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.oPaging 	= getInstance( "Paging@cb" );
 		prc.paging 			= prc.oPaging.getBoundaries();
 		prc.pagingLink 		= "javascript:contentPaginate(@page@)";
 
@@ -119,7 +119,7 @@ component extends="baseContentHandler"{
 		if( len( rc.contentID ) ){
 			entryService.bulkPublishStatus(contentID=rc.contentID,status=rc.contentStatus);
 			// announce event
-			announceInterception( "cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
+			announce( "cbadmin_onEntryStatusUpdate",{contentID=rc.contentID,status=rc.contentStatus} );
 			// Message
 			cbMessageBox.info( "#listLen(rc.contentID)# Entries where set to '#rc.contentStatus#'" );
 		}
@@ -308,7 +308,7 @@ component extends="baseContentHandler"{
 		// Inflate Related Content into the page
 		entry.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announceInterception( "cbadmin_preEntrySave", {
+		announce( "cbadmin_preEntrySave", {
 			entry=entry,
 			isNew=isNew,
 			originalSlug=originalSlug
@@ -316,7 +316,7 @@ component extends="baseContentHandler"{
 		// save entry
 		entryService.saveEntry( entry );
 		// announce event
-		announceInterception( "cbadmin_postEntrySave", {
+		announce( "cbadmin_postEntrySave", {
 			entry=entry,
 			isNew=isNew,
 			originalSlug=originalSlug
@@ -362,12 +362,12 @@ component extends="baseContentHandler"{
 				var contentID 	= entry.getContentID();
 				var title		= entry.getTitle();
 				// announce event
-				announceInterception( "cbadmin_preEntryRemove", { entry=entry } );
+				announce( "cbadmin_preEntryRemove", { entry=entry } );
 				// Delete it
 				entryService.deleteContent( entry );
 				arrayAppend( messages, "Entry '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postEntryRemove", { contentID=contentID } );
+				announce( "cbadmin_postEntryRemove", { contentID=contentID } );
 			}
 		}
 		// messagebox
@@ -396,7 +396,7 @@ component extends="baseContentHandler"{
 		prc.xehEntryHistory = "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging object
-		prc.pager_oPaging 	= getModel( "Paging@cb" );
+		prc.pager_oPaging 	= getInstance( "Paging@cb" );
 		prc.pager_paging 	  	= prc.pager_oPaging.getBoundaries();
 		prc.pager_pagingLink 	= "javascript:pagerLink(@page@)";
 		prc.pager_pagination	= arguments.pagination;
@@ -436,7 +436,7 @@ component extends="baseContentHandler"{
 		prc.xehEditorSelector	= "#prc.cbAdminEntryPoint#.entries.editorSelector";
 
 		// prepare paging object
-		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.oPaging 	= getInstance( "Paging@cb" );
 		prc.paging 	  		= prc.oPaging.getBoundaries();
 		prc.pagingLink 		= "javascript:pagerLink(@page@)";
 

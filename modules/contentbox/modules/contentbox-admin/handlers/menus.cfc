@@ -189,14 +189,14 @@ component extends="baseHandler" {
 		// populate items from form
 		oMenu.populateMenuItems( rawData=deserializeJSON( rc.menuItems ) );
 		// announce event
-		announceInterception( "cbadmin_preMenuSave", {
+		announce( "cbadmin_preMenuSave", {
 			menu 	= oMenu,
 			menuID 	= rc.menuID
 		} );
 		// save menu
 		menuService.saveMenu( menu=oMenu, originalSlug=originalSlug );
 		// announce event
-		announceInterception( "cbadmin_postMenuSave", {
+		announce( "cbadmin_postMenuSave", {
 			menu 		= oMenu,
 			originalSlug= originalSlug
 		} );
@@ -257,12 +257,12 @@ component extends="baseHandler" {
 				var menuID  = oMenu.getMenuID();
 				var title   = oMenu.getSlug();
 				// announce event
-				announceInterception( "cbadmin_preMenuRemove", { menu=oMenu, menuID=menuID } );
+				announce( "cbadmin_preMenuRemove", { menu=oMenu, menuID=menuID } );
 				// Delete it
 				menuService.delete( oMenu );
 				arrayAppend( messages, "Menu '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postMenuRemove", { menuID=menuID } );
+				announce( "cbadmin_postMenuRemove", { menuID=menuID } );
 			}
 		}
 

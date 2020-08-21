@@ -11,7 +11,7 @@
 
 			<div class="panel-body">
 	        	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
                 <!--- AuthorForm --->
                 #html.startForm(
@@ -63,7 +63,7 @@
                         </cfif>
 
                         <!--- Provider Listener so they can add even more options via events --->
-                        #announceInterception( "cbadmin_onAuthorTwoFactorOptions" )#
+                        #announce( "cbadmin_onAuthorTwoFactorOptions" )#
 
                     </fieldset>
 

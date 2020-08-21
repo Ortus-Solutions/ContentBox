@@ -198,7 +198,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				);
 
                 // generate content for email from template
-                mail.setBody( renderer.get().renderLayout(
+                mail.setBody( renderer.$get().renderLayout(
                     view	= "/contentbox/email_templates/comment_notification",
                     layout	= "/contentbox/email_templates/layouts/email",
                     args 	=  { gravatarEmail = commentAuthorEmail }
@@ -247,7 +247,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// announce it.
 		var iData = { comment = arguments.comment, settings = arguments.settings, allowSave = allowSave };
-		interceptorService.processState( "cbui_onCommentModerationRules", iData );
+		interceptorService.announce( "cbui_onCommentModerationRules", iData );
 
 		// return if allowed save or block
 		return iData.allowSave;
@@ -342,7 +342,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		);
 
 		// generate content for email from template
-		mail.setBody( renderer.get().renderLayout(
+		mail.setBody( renderer.$get().renderLayout(
 			view 	= "/contentbox/email_templates/#template#",
 			layout	= "/contentbox/email_templates/layouts/email",
 			args  	= { gravatarEmail= inComment.getAuthorEmail() }

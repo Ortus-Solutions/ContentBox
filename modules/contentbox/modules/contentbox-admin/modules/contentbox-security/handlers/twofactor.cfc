@@ -74,7 +74,7 @@ component extends="baseHandler"{
 
 		// Check for errors
 		if( results.error ){
-			announceInterception( "cbadmin_onInvalidTwoFactor", { author = prc.oAuthor } );
+			announce( "cbadmin_onInvalidTwoFactor", { author = prc.oAuthor } );
 			// message and redirect
 			messagebox.error( results.messages );
 			flash.keep( "authorData" );
@@ -90,7 +90,7 @@ component extends="baseHandler"{
 			// Set keep me log in remember cookie, if set.
 			securityService.setRememberMe( prc.oAuthor.getUsername(), val( authorData.rememberMe ) );
 			// announce valid two factor
-			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
+			announce( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
 
 			// Are we in enrollment or loging in mode.
 			if( authorData.isEnrollment ){
@@ -104,7 +104,7 @@ component extends="baseHandler"{
 				// Set in session, validations are now complete
 				securityService.setAuthorSession( prc.oAuthor );
 				// announce event
-				announceInterception( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
+				announce( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
 			}
 
 			// check if securedURL came in?

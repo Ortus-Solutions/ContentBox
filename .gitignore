@@ -28,6 +28,7 @@ testbox/*
 **/bower_components/**
 **/app_modules/**
 workbench/app_modules
+.env
 
 # Runtime Properties
 config/runtime.properties.cfm

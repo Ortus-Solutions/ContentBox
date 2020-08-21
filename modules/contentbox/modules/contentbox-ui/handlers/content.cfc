@@ -128,7 +128,7 @@ component{
 		prc.exception   = arguments.exception;
 
 		// announce event
-		announceInterception(
+		announce(
 			"cbui_onError",
 			{
 				faultAction 	= arguments.faultAction,
@@ -372,7 +372,7 @@ component{
 		}
 
 		// announce event
-		announceInterception( "cbui_preCommentPost", {
+		announce( "cbui_preCommentPost", {
 			commentErrors	= commentErrors,
 			content			= arguments.thisContent,
 			contentType		= arguments.thisContent.getContentType()
@@ -408,7 +408,7 @@ component{
 		var results = commentService.saveComment( comment=comment, loggedInUser=prc.oCurrentAuthor );
 
 		// announce event
-		announceInterception( "cbui_onCommentPost", {
+		announce( "cbui_onCommentPost", {
 			comment				= comment,
 			content				= arguments.thisContent,
 			moderationResults	= results,

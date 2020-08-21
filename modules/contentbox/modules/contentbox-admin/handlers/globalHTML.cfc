@@ -25,14 +25,14 @@ component extends="baseHandler"{
 	// save html
 	function save( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preGlobalHTMLSave", { oldSettings=prc.cbSettings, newSettings=rc } );
+		announce( "cbadmin_preGlobalHTMLSave", { oldSettings=prc.cbSettings, newSettings=rc } );
 		// bulk save the options
 		settingsService.bulkSave( rc );
 		// clear caches
 		contentService.clearAllCaches( async=false );
 		settingsService.flushSettingsCache();
 		// announce event
-		announceInterception( "cbadmin_postGlobalHTMLSave" );
+		announce( "cbadmin_postGlobalHTMLSave" );
 		// relocate back to editor
 		cbMessagebox.info( "All Global HTML updated! Yeeehaww!" );
 		// relocate

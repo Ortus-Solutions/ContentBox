@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-12">
        	<!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 

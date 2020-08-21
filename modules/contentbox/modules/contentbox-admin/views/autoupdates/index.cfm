@@ -8,8 +8,8 @@
 	<div class="col-md-8">
 		<div class="panel panel-default">
 			<div class="panel-body">
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
-				
+				#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
 				<p>#$r( "autoUpdates.body@admin" )#</p>
 				<!---Begin Accordion--->
 				<div id="accordion" class="panel-group accordion">
@@ -22,12 +22,12 @@
 						</div>
 						<div id="check" class="panel-collapse collapse in">
 							<div class="panel-body">
-								
+
 								<!--- Update Form --->
 								#html.startForm( name="updateCheckForm", novalidate="novalidate" )#
 
 									<p>#$r( "autoUpdates.checkUpdates.info@admin" )#</p>
-									
+
 									#html.radioButton(
 										name    = "channel",
 										id      = "stable",
@@ -37,29 +37,29 @@
 									)#
 									<label for="stable" class="inline">#$r( "autoUpdates.checkUpdates.stable.title@admin" )#</label> : #$r( "autoUpdates.checkUpdates.stable.info@admin" )#
 									<br/>
-									
+
 									#html.radioButton(
 										name 	= "channel",
 										id 		= "beta",
 										value 	= prc.updateSlugBeta,
-										checked = "false" 
+										checked = "false"
 									)#
 									<label for="beta" class="inline">#$r( "autoUpdates.checkUpdates.bleeding.title@admin" )#</label> : #$r( "autoUpdates.checkUpdates.bleeding.info@admin" )#
-									
+
 									<p>&nbsp;</p>
-									
+
 									#html.button(
 										name 	= "btnUpdates",
 										value 	= $r( "autoUpdates.checkUpdates.button@admin" ),
 										class 	= "btn btn-danger",
 										onclick = "return checkForUpdates()"
 									)#
-								#html.endForm()#    
+								#html.endForm()#
 							</div>
 						</div>
 					</div>
 					<!---End Check--->
-					
+
 					<!---Begin Download--->
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -81,12 +81,12 @@
 										#$r( "autoUpdates.downloadUpdate.info@admin" )#
 										<a href="https://www.ortussolutions.com/products/contentbox##tab_patches" target="_blank">https://www.ortussolutions.com/products/contentbox##tab_patches</a>
 									</p>
-									
+
 									#html.inputfield(
 										type="url",
 										required="required",
 										name="downloadURL",
-										label="Download URL:", 
+										label="Download URL:",
 										class="form-control",
 										size="75",
 										wrapper="div class=controls",
@@ -94,12 +94,12 @@
 										groupWrapper="div class=form-group"
 									)#
 									#html.submitButton( value=$r( "autoUpdates.downloadUpdate.button@admin" ), class="btn btn-danger" )#
-								#html.endForm()#    
+								#html.endForm()#
 							</div>
 						</div>
 					</div>
 					<!---End Download--->
-						
+
 					<!---Begin Upload--->
 					<div class="panel panel-default">
 						<div class="panel-heading">
@@ -118,20 +118,20 @@
 									class="form-vertical"
 								)#
 									<p>#$r( "autoUpdates.uploadUpdate.info@admin" )#</p>
-									#getModel( "BootstrapFileUpload@cbadmin" ).renderIt( 
-										name    = "filePatch", 
+									#getInstance( "BootstrapFileUpload@cbadmin" ).renderIt(
+										name    = "filePatch",
 										label   = "Upload Patch:",
 										required= true
 									)#
 									#html.submitButton(value="#$r( "autoUpdates.uploadUpdate.button@admin" )#",class="btn btn-danger" )#
-								#html.endForm()#    
+								#html.endForm()#
 							</div>
 						</div>
 					</div>
 					<!---End Check--->
 				</div>
-				<!---End Accordion--->  
-				
+				<!---End Accordion--->
+
 				<!--- Logs --->
 				<cfif len(prc.installLog)>
 					<hr/>
@@ -151,11 +151,11 @@
 				<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
 					<thead>
 						<tr>
-							<th>#$r( "autoUpdates.componentsInstalled.table.head1@admin" )#</th> 
+							<th>#$r( "autoUpdates.componentsInstalled.table.head1@admin" )#</th>
 							<th width="100" class="text-center">#$r( "autoUpdates.componentsInstalled.table.head2@admin" )#</th>
 						</tr>
 					</thead>
-					
+
 					<tbody>
 						<tr>
 							<th>
@@ -174,7 +174,7 @@
 						</tr>
 						<tr>
 							<th>ColdBox Platform</th>
-							<th class="text-center">v.#getSetting( "Version",1)#</th>
+							<th class="text-center">v.#getColdBoxSetting( "Version")#</th>
 						</tr>
 					</tbody>
 				</table>

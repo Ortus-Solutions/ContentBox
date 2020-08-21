@@ -3,7 +3,7 @@
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 <div class="breadcrumb">
   <a href="javascript:contentDrilldown()"><i class="fa fa-home fa-lg"></i></a>
-  #getModel( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
+  #getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
 </div>
 </cfif>
 
@@ -80,19 +80,19 @@
 			</td>
 			<td class="text-center">
 				<!---Info Panel --->
-				<a 	class="btn btn-sm btn-info popovers" 
+				<a 	class="btn btn-sm btn-info popovers"
 					data-contentID="#content.getContentID()#"
 					data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
 				<!---Info Panel --->
 				<div id="infoPanel_#content.getContentID()#" class="hide">
 					<!---Creator --->
 					<i class="fa fa-user"></i>
-					Created by <a href="mailto:#content.getCreatorEmail()#">#content.getCreatorName()#</a> on 
+					Created by <a href="mailto:#content.getCreatorEmail()#">#content.getCreatorName()#</a> on
 					#content.getDisplayCreatedDate()#
 					</br>
 					<!--- Last Edit --->
-					<i class="fa fa-calendar"></i> 
-					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on 
+					<i class="fa fa-calendar"></i>
+					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on
 					#content.getActiveContent().getDisplayCreatedDate()#
 				</div>
 				<!--- content Actions --->
@@ -117,8 +117,8 @@
 						</cfif>
 						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
-						<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-						<li><a href="#event.buildLink(linkto=prc.xehContentExport)#/contentID/#content.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+						<li><a href="#event.buildLink(to=prc.xehContentExport)#/contentID/#content.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+						<li><a href="#event.buildLink(to=prc.xehContentExport)#/contentID/#content.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 						</cfif>
 						<!--- History Command --->
 						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
@@ -126,13 +126,13 @@
 			    </div>
 
 			    <!--- Drag Handle --->
-				<a 	href="##" 
-					onclick="return false;" 
-					class="dragHandle btn btn-default btn-sm" 
-					title="Click and drag to change retrieval order" 
+				<a 	href="##"
+					onclick="return false;"
+					class="dragHandle btn btn-default btn-sm"
+					title="Click and drag to change retrieval order"
 					style="padding:5px 15px"
 				>
-					<i class="fa fa-arrows-v"></i> 
+					<i class="fa fa-arrows-v"></i>
 				</a>
 
 			</td>

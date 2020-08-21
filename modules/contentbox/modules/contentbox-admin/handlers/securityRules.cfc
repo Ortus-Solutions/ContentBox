@@ -41,7 +41,7 @@ component extends="baseHandler"{
 		ruleService.resetRules();
 		securityInterceptor.loadRules();
 		// announce event
-		announceInterception( "cbadmin_onResetSecurityRules" );
+		announce( "cbadmin_onResetSecurityRules" );
 		cbMessagebox.info( "Security Rules Re-created and Re-applied!" );
 		relocate(prc.xehsecurityRules);
 	}
@@ -95,11 +95,11 @@ component extends="baseHandler"{
 		var errors = oRule.validate();
 		if( !arrayLen(errors) ){
 			// announce event
-			announceInterception( "cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID} );
+			announce( "cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID} );
 			// save rule
 			ruleService.saveRule( oRule );
 			// announce event
-			announceInterception( "cbadmin_postSecurityRulesSave",{rule=oRule} );
+			announce( "cbadmin_postSecurityRulesSave",{rule=oRule} );
 			// Message
 			cbMessagebox.info( "Security Rule saved! Isn't that awesome!" );
 		}
@@ -117,11 +117,11 @@ component extends="baseHandler"{
 		// check for length
 		if( len(rc.ruleID) ){
 			// announce event
-			announceInterception( "cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID} );
+			announce( "cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// remove using hibernate bulk
 			ruleService.deleteByID( listToArray(rc.ruleID) );
 			// announce event
-			announceInterception( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID} );
+			announce( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID} );
 			// message
 			cbMessagebox.info( "Security Rule Removed!" );
 		}

@@ -6,9 +6,9 @@
             Security Rule Editor
         </h1>
         <!--- messageBox --->
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #getInstance( "messagebox@cbMessagebox" ).renderit()#
     </div>
-</div> 
+</div>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -26,7 +26,7 @@
                         <!--- Usage --->
                         <div class="alert alert-danger">
                             <i class="fa fa-exclamation-triangle fa-lg"></i>
-                            Please remember that the secure and white lists are lists of 
+                            Please remember that the secure and white lists are lists of
                             <a href="http://www.regular-expressions.info/reference.html" target="_blank">regular expressions</a> that will match against an incoming
                             event pattern string or a routed URL string.  So remember the event pattern syntax: <em>[moduleName:][package.]handler[.action]</em> if you will
                             be using event type matching. If you are using URL matching then do NOT start your patterns with <strong>'/'</strong> as it is pre-pended for you.
@@ -43,7 +43,7 @@
                                     name="match",
                                     value='url',
                                     bind=prc.rule
-                                )# URL  
+                                )# URL
                                 #html.radioButton(
                                     name="match",
                                     value='event',
@@ -51,7 +51,7 @@
                                 )# Event
                             </div>
                         </div>
-                        
+
                         #html.textField(
                             name="secureList",
                             label="*Secure List:",
@@ -77,7 +77,7 @@
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
                         )#
-                    
+
                         #html.textField(
                             name="order",
                             label="Firing Order Index:",
@@ -88,9 +88,9 @@
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
                         )#
-                    
+
                     #html.endFieldset()#
-                    
+
                     #html.startFieldset( legend="Security Roles & Permissions" )#
                         #html.textField(
                             name="permissions",
@@ -117,7 +117,7 @@
                             groupWrapper="div class=form-group"
                         )#
                     #html.endFieldset()#
-                    
+
                     #html.startFieldset( legend="Relocation Data" )#
                         <div class="form-group">
                             #html.label(
@@ -130,15 +130,15 @@
                                     name="useSSL",
                                     value=true,
                                     bind=prc.rule
-                                )# Yes  
+                                )# Yes
                                 #html.radioButton(
                                     name="useSSL",
                                     value=false,
                                     bind=prc.rule
-                                )# No  
+                                )# No
                             </div>
                         </div>
-                                            
+
                         #html.textField(
                             name="redirect",
                             label="*Redirect Pattern:",
@@ -152,7 +152,7 @@
                             labelClass="control-label",
                             groupWrapper="div class=form-group"
                         )#
-                        
+
                         #html.select(
                             name="messageType",
                             label="Relocation Message Type:",
@@ -178,7 +178,7 @@
                             groupWrapper="div class=form-group"
                         )#
                     #html.endFieldset()#
-                    
+
                     <!--- Action Bar --->
                     <div class="form-actions">
                         <button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehSecurityRules)#')">Cancel</button>

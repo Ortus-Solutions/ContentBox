@@ -14,7 +14,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 	<!--- Panel Heading: Tool Bar --->
 	<div class="panel-heading" id="FileBrowser-heading">
 	#html.startForm( name="filebrowser", class="form-inline", onkeypress="return event.keyCode != 13;", onsubmit="event.preventDefault();" )#
-		#announceInterception( "fb_preTitleBar" )#
+		#announce( "fb_preTitleBar" )#
 
 		<div class="btn-group btn-group-sm" role="group">
 		  <a href="javascript:fbRefresh()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "refresh@fb" )#">
@@ -82,7 +82,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		#html.hiddenField( name="listFolder", value=prc.fbPreferences.listFolder )#
 
 		<!---event --->
-		#announceInterception( "fb_postTitleBar" )#
+		#announce( "fb_postTitleBar" )#
 	#html.endForm()#
 	</div>
 	<!---/ end panel heading --->
@@ -91,7 +91,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<!--- UploadBar --->
 		<div id="uploadBar">
-			#announceInterception( "fb_preUploadBar" )#
+			#announce( "fb_preUploadBar" )#
 
 			<div class="row">
 				<div class="form-group col-md-6">
@@ -115,7 +115,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 					<span id="file_uploader_button" class="btn btn-primary hidden">Upload</span>
 			    </div>
 			</div>
-			#announceInterception( "fb_postUploadBar" )#
+			#announce( "fb_postUploadBar" )#
 		</div>
 
 		<!--- Uploader Message --->
@@ -130,9 +130,9 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<!---Upload Message Bar --->
 			<div id="fileUploaderMessage">#$r( "dropupload@fb" )#</div>
 
-			#announceInterception( "fb_preFileListing" )#
+			#announce( "fb_preFileListing" )#
 			<!--- Messagebox --->
-			#getModel( "messagebox@cbMessagebox" ).renderit()#
+			#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
 			<!--- Display back links --->
 			<cfif prc.fbCurrentRoot NEQ prc.fbDirRoot>
@@ -277,7 +277,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<cfelse>
 			<em>#$r( "emptydirectory@fb" )#</em>
 			</cfif>
-			#announceInterception( "fb_postFileListing" )#
+			#announce( "fb_postFileListing" )#
 		</div> <!--- end fileListing --->
 
 	</div> <!--- end panel-body --->
@@ -286,7 +286,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<!--- Location Bar --->
 		<div id="locationBar">
-			#announceInterception( "fb_preLocationBar" )#
+			#announce( "fb_preLocationBar" )#
 			<cfset crumbDir = "">
 			<cfset rootPath = replaceNoCase(prc.fbCurrentRoot, prc.fbSettings.directoryRoot, "")>
 			/&nbsp;<cfif rootPath neq "">&nbsp;<i class="fa fa-chevron-right text-info"></i>&nbsp;</cfif>
@@ -302,12 +302,12 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				</cfif>
 			</cfloop>
 			(#prc.fbqListing.recordCount-excludeCounter# #$r( "items@fb" )#)
-			#announceInterception( "fb_postLocationBar" )#
+			#announce( "fb_postLocationBar" )#
 		</div>
 
  		<!--- The Bottom Bar --->
 		<div class="bottomBar">
-			#announceInterception( "fb_preBottomBar" )#
+			#announce( "fb_preBottomBar" )#
 
 			<!--- Loader Bar --->
 			<div id="loaderBar">
@@ -340,7 +340,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				</cfif>
 			</div>
 
-			#announceInterception( "fb_postBottomBar" )#
+			#announce( "fb_postBottomBar" )#
 		</div>
 	</div>
 

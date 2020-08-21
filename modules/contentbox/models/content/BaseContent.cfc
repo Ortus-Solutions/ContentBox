@@ -1353,7 +1353,7 @@ component 	persistent="true"
 			builder = b,
 			content	= this
 		};
-		interceptorService.processState( "cb_onContentRendering", iData);
+		interceptorService.announce( "cb_onContentRendering", iData);
 
 		// return processed content
 		return b.toString();

@@ -190,7 +190,7 @@ component	persistent="true"
 						builder = builder,
 						content	= this
 					};
-					interceptorService.processState( "cb_onContentRendering", iData );
+					interceptorService.announce( "cb_onContentRendering", iData );
 
 					// save content
 					variables.renderedContent = builder.toString();

@@ -1,5 +1,5 @@
 <cfoutput>
-    <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
+    <cfset ETH = getInstance( "EmailTemplateHelper@cb" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@author@</strong> has added a new comment for:<br /> <a href='@contentURL@'>@contentTitle@<a/>
     " )#

@@ -151,10 +151,10 @@ component implements="cbadmin.models.importers.ICBImporter" {
 				}
 
 				var importedBody = q.Body[ x ] & q.moreBody[ x ];
-				interceptorService.processState( "preImportEntry", {post = importedBody} );
+				interceptorService.announce( "preImportEntry", {post = importedBody} );
 				importedBody = findImages(importedBody);
 				importedBody = convertContent(importedBody);
-				interceptorService.processState( "postImportEntry", {post = importedBody} );
+				interceptorService.announce( "postImportEntry", {post = importedBody} );
 
 				var props = {title=q.title[ x ], slug=q.alias[ x ], content = importedBody,
 				                  excerpt = q.Body[ x ], publishedDate = q.posted[ x ], createdDate = q.posted[ x ],

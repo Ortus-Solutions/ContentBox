@@ -5,39 +5,39 @@
 * ---
 * I am a blog entry entity that is amazing
 */
-component 	persistent="true" 
-			entityname="cbEntry" 
-			table="cb_entry" 
-			batchsize="25" 
-			cachename="cbEntry" 
-			cacheuse="read-write" 
-			extends="BaseContent" 
-			joinColumn="contentID" 
+component 	persistent="true"
+			entityname="cbEntry"
+			table="cb_entry"
+			batchsize="25"
+			cachename="cbEntry"
+			cacheuse="read-write"
+			extends="BaseContent"
+			joinColumn="contentID"
 			discriminatorValue="Entry"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="excerpt" 
-				notnull="false" 
-				ormtype="text" 
-				default="" 
+	property 	name="excerpt"
+				notnull="false"
+				ormtype="text"
+				default=""
 				length="8000";
-	
+
 	/* *********************************************************************
-	**							NON PERSISTED PROPERTIES									
+	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
-	
-	property 	name="renderedExcerpt" 
+
+	property 	name="renderedExcerpt"
 				persistent="false";
 
 	/* *********************************************************************
-	**							CONSTRAINTS									
+	**							CONSTRAINTS
 	********************************************************************* */
 
 	/* *********************************************************************
-	**							CONSTRUCTOR									
+	**							CONSTRUCTOR
 	********************************************************************* */
 
 	/**
@@ -52,14 +52,14 @@ component 	persistent="true"
 		renderedExcerpt	= "";
 		createdDate		= now();
 		contentType		= "Entry";
-		
+
 		return this;
 	}
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
-	
+
 	/**
 	* Get a flat representation of this entry but for UI response format which
 	* restricts the data being generated.
@@ -72,7 +72,7 @@ component 	persistent="true"
 	* @showRelatedContent Show related Content in memento or not
 	*/
 	struct function getResponseMemento(
-		required array slugCache=[], 
+		required array slugCache=[],
 		boolean showAuthor=true,
 		boolean showComments=true,
 		boolean showCustomFields=true,
@@ -82,7 +82,7 @@ component 	persistent="true"
 		boolean showRelatedContent=true
 	){
 		var result 	= super.getResponseMemento( argumentCollection=arguments );
-		
+
 		result[ "excerpt" ] = renderExcerpt();
 
 		return result;
@@ -102,8 +102,8 @@ component 	persistent="true"
 	* @showRelatedContent Show related Content in memento or not
 	* @showStats Show stats in memento or not
 	*/
-	function getMemento( 
-		required array slugCache=[], 
+	function getMemento(
+		required array slugCache=[],
 		counter=0,
 		boolean showAuthor=true,
 		boolean showComments=true,
@@ -117,7 +117,7 @@ component 	persistent="true"
 	){
 		// Local Memento Properties
 		var result 	= super.getMemento( argumentCollection=arguments );
-		
+
 		result[ "excerpt" ] = variables.excerpt;
 
 		return result;
@@ -134,7 +134,7 @@ component 	persistent="true"
 	* Render excerpt
 	*/
 	any function renderExcerpt(){
-		
+
 		// Check if we need to translate
 		if( NOT len( renderedExcerpt ) ){
 			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
@@ -146,13 +146,13 @@ component 	persistent="true"
 						builder = b,
 						content	= this
 					};
-					interceptorService.processState( "cb_onContentRendering", iData);
+					interceptorService.announce( "cb_onContentRendering", iData);
 					// store processed content
 					renderedExcerpt = b.toString();
 				}
 			}
 		}
-		
+
 		return renderedExcerpt;
 	}
 
@@ -175,7 +175,7 @@ component 	persistent="true"
 
 		return errors;
 	}
-	
+
 	/**
 	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	* @author.hint The author doing the cloning
@@ -185,9 +185,9 @@ component 	persistent="true"
 	* @originalSlugRoot.hint The original slug that will be replaced in all cloned content
 	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
-	BaseContent function prepareForClone(required any author, 
-										 required any original, 
-										 required any originalService, 
+	BaseContent function prepareForClone(required any author,
+										 required any original,
+										 required any originalService,
 										 required boolean publish,
 										 required any originalSlugRoot,
 										 required any newSlugRoot){

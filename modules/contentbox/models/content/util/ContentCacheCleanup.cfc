@@ -13,21 +13,21 @@ component extends="coldbox.system.Interceptor"{
 	 * Listen when comments are posted.
 	 *
 	 * @event The request context
-	 * @interceptData Intercept data
+	 * @data Intercept data
 	 */
-	function cbui_onCommentPost( event, interceptData ){
-		doCacheCleanup( arguments.interceptData.content.buildContentCacheKey(), arguments.interceptData.content );
+	function cbui_onCommentPost( event, data ){
+		doCacheCleanup( arguments.data.content.buildContentCacheKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when comments are moderated
 	 *
 	 * @event The request context
-	 * @interceptData Intercept data
+	 * @data Intercept data
 	 */
-	function cbadmin_onCommentStatusUpdate( event, interceptData ){
+	function cbadmin_onCommentStatusUpdate( event, data ){
 		commentService
-			.getAll( arguments.interceptData.commentID )
+			.getAll( arguments.data.commentID )
 			.each( function( thisComment ){
 				doCacheCleanup( thisComment.getRelatedContent().buildContentCacheKey(), thisComment.getRelatedContent() );
 			} );
@@ -37,10 +37,10 @@ component extends="coldbox.system.Interceptor"{
 	 * Listen when comments are removed
 	 *
 	 * @event The request context
-	 * @interceptData Intercept data
+	 * @data Intercept data
 	 */
-	function cbadmin_preCommentRemove( event, interceptData ){
-		var oComment = commentService.get( arguments.interceptData.commentID );
+	function cbadmin_preCommentRemove( event, data ){
+		var oComment = commentService.get( arguments.data.commentID );
 		doCacheCleanup( oComment.getRelatedContent().buildContentCacheKey(), oComment.getRelatedContent() );
 	}
 
@@ -48,10 +48,10 @@ component extends="coldbox.system.Interceptor"{
 	 * Listen when entries are saved
 	 *
 	 * @event The request context
-	 * @interceptData Intercept data
+	 * @data Intercept data
 	 */
-	function cbadmin_postEntrySave( event, interceptData ){
-		var entry 	 = arguments.interceptData.entry;
+	function cbadmin_postEntrySave( event, data ){
+		var entry 	 = arguments.data.entry;
 		doCacheCleanup( entry.buildContentCacheKey(), entry );
 		// Rebuild Sitemap caches if entry was published
 		if( entry.isContentPublished() ){
@@ -63,10 +63,10 @@ component extends="coldbox.system.Interceptor"{
 	 * Listen when pages are saved
 	 *
 	 * @event The request context
-	 * @interceptData Intercept data
+	 * @data Intercept data
 	 */
-	function cbadmin_postPageSave( event, interceptData ){
-		var page 	 = arguments.interceptData.page;
+	function cbadmin_postPageSave( event, data ){
+		var page 	 = arguments.data.page;
 		doCacheCleanup( page.buildContentCacheKey(), page );
 		// Rebuild Sitemap caches if entry was published
 		if( page.isContentPublished() ){
@@ -80,8 +80,8 @@ component extends="coldbox.system.Interceptor"{
 	 * @cacheKey
 	 * @content
 	 */
-	function cbadmin_prePageRemove( event, interceptData ){
-		var page 	 = arguments.interceptData.page;
+	function cbadmin_prePageRemove( event, data ){
+		var page 	 = arguments.data.page;
 		doCacheCleanup( page.buildContentCacheKey(), page);
 		// Rebuild Sitemap caches
 		contentService.clearAllSitemapCaches( async=true );
@@ -91,10 +91,10 @@ component extends="coldbox.system.Interceptor"{
 	 * Listen when custom HTML is saved
 	 *
 	 * @event The request context
-	 * @interceptData Intercept data
+	 * @data Intercept data
 	 */
-	function cbadmin_postContentStoreSave( event, interceptData ){
-		var content		= arguments.interceptData.content;
+	function cbadmin_postContentStoreSave( event, data ){
+		var content		= arguments.data.content;
 		doCacheCleanup( content.buildContentCacheKey(), content );
 	}
 

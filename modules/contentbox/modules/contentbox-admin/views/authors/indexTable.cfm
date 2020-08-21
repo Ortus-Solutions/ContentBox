@@ -26,10 +26,10 @@
 			</td>
 			<td>
 				<div class="pull-left" style="margin-right: 10px">
-					#getModel( "Avatar@cb" )
+					#getInstance( "Avatar@cb" )
 						.renderAvatar( email=author.getEmail(), size="40", class="gravatar img-circle" )#
 				</div>
-				
+
 				<!--- Display Link if Admin Or yourself --->
 				<div>
 					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
@@ -50,15 +50,15 @@
 					#author.getEmail()#
 				</div>
 			</td>
-			
+
 			<td>
 				<span class="label label-info">#author.getRole().getRole()#</span>
 			</td>
-			
+
 			<td>
 				#author.getDisplayLastLogin()#
 			</td>
-			
+
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
@@ -70,9 +70,9 @@
 							<!--- Delete Command --->
 							<cfif prc.oCurrentAuthor.getAuthorID() neq author.getAuthorID()>
 								<li>
-									<a 	title="Delete Author" 
-										href="javascript:removeAuthor( '#author.getAuthorID()#' )" 
-										class="confirmIt" 
+									<a 	title="Delete Author"
+										href="javascript:removeAuthor( '#author.getAuthorID()#' )"
+										class="confirmIt"
 										data-title="<i class='fa fa-trash-o'></i> Delete Author?"
 									>
 										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Delete
@@ -80,8 +80,8 @@
 								</li>
 							<cfelse>
 								<li>
-									<a 	title="Can't Delete Yourself" 
-										href="javascript:alert('Can\'t delete yourself buddy!')" 
+									<a 	title="Can't Delete Yourself"
+										href="javascript:alert('Can\'t delete yourself buddy!')"
 										class="textRed"
 									>
 										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Can't Delete
@@ -99,17 +99,17 @@
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
-								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
+								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
 									<i class="fa fa-download"></i> Export as JSON
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
+								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
 									<i class="fa fa-download"></i> Export as XML
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
+								<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
 									title="Email User a password reset token and link to reset password.">
 									<i class="fa fa-lock"></i> Reset Password
 								</a>

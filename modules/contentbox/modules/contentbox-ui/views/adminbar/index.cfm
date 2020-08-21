@@ -79,7 +79,7 @@
 
 	<div id="avatar">
 		<h4>
-			#getModel( "Avatar@cb" )
+			#getInstance( "Avatar@cb" )
 				.renderAvatar( email=args.oCurrentAuthor.getEmail(), size="30", title="Hola" )#
 			ContentBox Admin Bar
 		</h4>

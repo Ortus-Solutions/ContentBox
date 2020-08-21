@@ -110,7 +110,7 @@ component extends="content"{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception(
+		announce(
 			"cbui_onIndex",
 			{
 				entries 	= prc.entries,
@@ -151,7 +151,7 @@ component extends="content"{
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
 		// prepare paging object
-		prc.oPaging 			= getModel( "Paging@cb" );
+		prc.oPaging 			= getInstance( "Paging@cb" );
 		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
 		prc.pagingLink 			= event.getCurrentRoutedURL() & "?page=@page@";
 
@@ -167,7 +167,7 @@ component extends="content"{
 		prc.entriesCount  	= entryResults.count;
 
 		// announce event
-		announceInterception(
+		announce(
 			"cbui_onArchives",
 			{
 				entries 	= prc.entries,
@@ -229,14 +229,14 @@ component extends="content"{
 			prc.comments 		= commentResults.comments;
 			prc.commentsCount 	= commentResults.count;
 			// announce event
-			announceInterception( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug} );
+			announce( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug} );
 			// set skin view
 			event.setLayout( name="#prc.cbTheme#/layouts/blog", module=prc.cbThemeRecord.module )
 				.setView( view="#prc.cbTheme#/views/entry", module=prc.cbThemeRecord.module );
 		}
 		else{
 			// announce event
-			announceInterception( "cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug} );
+			announce( "cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug} );
 			// missing page
 			prc.missingPage = rc.entrySlug;
 			// set 404 headers

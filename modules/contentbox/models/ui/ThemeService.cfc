@@ -192,7 +192,7 @@ component accessors="true" threadSafe singleton{
 		}
 
 		// Announce theme activation
-		variables.interceptorService.processState( "cbadmin_onThemeActivation", iData );
+		variables.interceptorService.announce( "cbadmin_onThemeActivation", iData );
 
 		// Call Theme Callbacks: onActivation
 		if( structKeyExists( oTheme, "onActivation" ) ){
@@ -266,7 +266,7 @@ component accessors="true" threadSafe singleton{
 				themeName 		= oTheme.getValue(),
 				themeRecord 	= themeRecord
 			};
-			interceptorService.processState( "cbadmin_onThemeDeactivation", iData );
+			interceptorService.announce( "cbadmin_onThemeDeactivation", iData );
 
 			// Call Theme Callback: onDeactivation
 			if( structKeyExists( themeRecord.descriptor, "onDeactivation" ) ){

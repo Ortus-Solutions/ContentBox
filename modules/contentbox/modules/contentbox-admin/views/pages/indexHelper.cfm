@@ -11,20 +11,20 @@ $(document).ready(function() {
 	} );
 
 	// Setup content view
-	setupContentView( { 
-		tableContainer	: $( "##pagesTableContainer" ), 
+	setupContentView( {
+		tableContainer	: $( "##pagesTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehPageTable )#',
 		searchField 	: $( "##pageSearch" ),
 		searchName		: 'searchPages',
 		contentForm 	: $( "##pageForm" ),
-		bulkStatusURL 	: '#event.buildlink(linkTo=prc.xehPageBulkStatus)#',
+		bulkStatusURL 	: '#event.buildlink(to=prc.xehPageBulkStatus)#',
 		importDialog 	: $( "##importDialog" ),
 		cloneDialog		: $( "##cloneDialog" )
 	} );
-	
+
 	// load content on startup, using default parents if passed.
 	contentLoad( { parent: '#rc.parent#' } );
-	
+
 } );
 </script>
 </cfoutput>

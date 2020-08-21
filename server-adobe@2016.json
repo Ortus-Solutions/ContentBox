@@ -3,7 +3,7 @@
         "cfengine":"adobe@2016",
         "serverHomeDirectory":".engines/acf2016"
     },
-    "name":"cbcms-adobe2016",
+    "name":"contentbox-adobe2016",
     "JVM":{
         "heapSize":"1024"
     },

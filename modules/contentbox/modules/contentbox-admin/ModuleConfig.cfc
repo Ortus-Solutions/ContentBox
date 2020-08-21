@@ -1,23 +1,23 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* ContentBox Admin Module
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * ContentBox Admin Module
+ */
 component {
 
 	// Module Properties
-	this.title 				= "ContentBox Admin";
-	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "https://www.ortussolutions.com";
-	this.description 		= "ContentBox Administration Module";
-	this.viewParentLookup 	= true;
-	this.layoutParentLookup = true;
-	this.entryPoint			= "cbadmin";
-	this.modelNamespace 	= "cbadmin";
-	this.cfmapping			= "cbadmin";
-	this.dependencies 		= [ "contentbox" ];
+	this.title             = "ContentBox Admin";
+	this.author            = "Ortus Solutions, Corp";
+	this.webURL            = "https://www.ortussolutions.com";
+	this.description       = "ContentBox Administration Module";
+	this.viewParentLookup  = true;
+	this.layoutParentLookup= true;
+	this.entryPoint        = "cbadmin";
+	this.modelNamespace    = "cbadmin";
+	this.cfmapping         = "cbadmin";
+	this.dependencies      = [ "contentbox" ];
 
 	/**
 	* Configure Module
@@ -36,8 +36,8 @@ component {
 		// i18n
 		i18n = {
 			resourceBundles = {
-		    	"admin" = "#moduleMapping#/includes/i18n/admin"
-		  	}
+				"admin" = "#moduleMapping#/includes/i18n/admin"
+			}
 		};
 
 		// Parent Settings
@@ -67,7 +67,7 @@ component {
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints = arrayToList([
+			customInterceptionPoints = [
 				// Admin Layout HTML points
 				"cbadmin_beforeHeadEnd","cbadmin_afterBodyStart","cbadmin_beforeBodyEnd","cbadmin_footer","cbadmin_beforeContent","cbadmin_afterContent","cbadmin_onTagLine", "cbadmin_onTopBar",
 				// Entry Events
@@ -122,7 +122,7 @@ component {
 				"cbadmin_preStaticSiteExport", "cbadmin_postStaticSiteExport",
 				// Two Factor Events
 				"cbadmin_onTwoFactorSettingsPanel", "cbadmin_onAuthorTwoFactorOptions", "cbadmin_onAuthorTwoFactorSaveOptions"
-			])
+			]
 		};
 
 		// Custom Declared Interceptors

@@ -71,7 +71,7 @@
 	</div>
 
 	<!--- Event for Two Factor Modules to Add their settings here --->
-	#announceInterception( "cbadmin_onTwoFactorSettingsPanel" )#
+	#announce( "cbadmin_onTwoFactorSettingsPanel" )#
 
 </fieldset>
 

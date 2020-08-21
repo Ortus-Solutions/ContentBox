@@ -49,7 +49,7 @@ component cache=false {
 	function install( event, rc, prc ){
 		// Verify installed?
 		if ( settingService.isCBReady() ) {
-			getModel( "messagebox@cbMessagebox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
+			getInstance( "messagebox@cbMessagebox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
 			relocate( prc.adminEntryPoint );
 		}
 		// start installation

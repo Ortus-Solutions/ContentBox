@@ -23,13 +23,24 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "testbox":"^3.0.0",
-        "coldbox":"^5.6.0"
+        "testbox":"*",
+        "coldbox":"^6.0.0"
     },
     "installPaths":{
         "testbox":"testbox/",
         "coldbox":"coldbox/"
     },
     "devDependencies":{},
-    "ignores":[]
+    "ignores":[],
+    "scripts":{
+        "format":"cfformat run modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
+        "format:watch":"cfformat watch modules/**/*.cfc,tests/specs/**/*.cfc ./.cfformat.json",
+        "format:check":"cfformat check modules/**/*.cfc,tests/specs/**/*.cfc",
+        "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force",
+        "start:2016":"server start serverConfigFile='server-adobe@2016.json' --force",
+        "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force",
+        "log:lucee":"server log contentbox-lucee@5 --follow",
+        "log:2016":"server log contentbox-adobe@2016 --follow",
+        "log:2018":"server log contentbox-adobe@2018 --follow"
+    }
 }

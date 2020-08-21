@@ -22,7 +22,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Fired on contentbox requests
 	*/
-	function preProcess( event, interceptData, rc, prc ){
+	function preProcess( event, data, rc, prc ){
 		// Only execute for admin or child modules
 		if( !reFindNoCase( "^(contentbox-admin|#variables.childModulesRegex#)", event.getCurrentEvent() ) ){
 			return;
@@ -38,7 +38,7 @@ component extends="coldbox.system.Interceptor"{
 		// store module root
 		prc.cbRoot = getContextRoot() & event.getModuleRoot( "contentbox-admin" );
 		// cb helper
-		prc.CBHelper = getModel( "CBHelper@cb" );
+		prc.CBHelper = getInstance( "CBHelper@cb" );
 		// store admin module entry point
 		prc.cbAdminEntryPoint = getModuleConfig( "contentbox-admin" ).entryPoint;
 		// store site entry point

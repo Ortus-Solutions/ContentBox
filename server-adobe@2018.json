@@ -3,7 +3,7 @@
         "cfengine":"adobe@2018",
         "serverHomeDirectory":".engines/acf2018"
     },
-    "name":"cbcms-adobe2018",
+    "name":"contentbox-adobe2018",
     "JVM":{
         "heapSize":"1024"
     },

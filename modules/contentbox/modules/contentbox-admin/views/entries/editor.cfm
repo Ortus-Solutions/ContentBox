@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
-            #getModel( "messagebox@cbMessagebox" ).renderit()#
+            #getInstance( "messagebox@cbMessagebox" ).renderit()#
 
             <!--- id --->
             #html.hiddenField(	name="contentID",	bind=prc.entry )#
@@ -77,7 +77,7 @@
 						</cfif>
 
 						<!--- Event --->
-						#announceInterception( "cbadmin_entryEditorNav" )#
+						#announce( "cbadmin_entryEditorNav" )#
                     </ul>
                 </div>
 
@@ -211,17 +211,17 @@
 					</cfif>
 
 					<!--- Custom tab content --->
-					#announceInterception( "cbadmin_entryEditorNavContent" )#
+					#announce( "cbadmin_entryEditorNavContent" )#
 
 				</div>
 
                 <!--- Event --->
-				#announceInterception( "cbadmin_entryEditorInBody" )#
+				#announce( "cbadmin_entryEditorInBody" )#
 
             </div>
 
 			<!--- Event --->
-			#announceInterception( "cbadmin_entryEditorFooter" )#
+			#announce( "cbadmin_entryEditorFooter" )#
 
 		</div>
 
@@ -536,16 +536,16 @@
                         <!---End Featured Image--->
 
                         <!--- Event --->
-                        #announceInterception( "cbadmin_entryEditorSidebarAccordion" )#
+                        #announce( "cbadmin_entryEditorSidebarAccordion" )#
                     </div>
                     <!--- End Accordion --->
 
                     <!--- Event --->
-                    #announceInterception( "cbadmin_entryEditorSidebar" )#
+                    #announce( "cbadmin_entryEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception( "cbadmin_entryEditorSidebarFooter" )#
+            #announce( "cbadmin_entryEditorSidebarFooter" )#
         </div>
     </div>
 #html.endForm()#

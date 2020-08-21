@@ -66,11 +66,11 @@ component extends="baseHandler"{
 		// Validation Results
 		if( !vResults.hasErrors() ){
 			// announce event
-			announceInterception( "cbadmin_preCategorySave", { category=oCategory, categoryID=rc.categoryID } );
+			announce( "cbadmin_preCategorySave", { category=oCategory, categoryID=rc.categoryID } );
 			// save category
 			categoryService.save( oCategory );
 			// announce event
-			announceInterception( "cbadmin_postCategorySave",{category=oCategory} );
+			announce( "cbadmin_postCategorySave",{category=oCategory} );
 			// messagebox
 			cbMessagebox.setMessage( "info","Category saved!" );
 		} else {
@@ -113,12 +113,12 @@ component extends="baseHandler"{
 				var categoryID 	= category.getCategoryID();
 				var title		= category.getSlug();
 				// announce event
-				announceInterception( "cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
+				announce( "cbadmin_preCategoryRemove", { category=category, categoryID=categoryID } );
 				// Delete category via service
 				categoryService.deleteCategory( category );
 				arrayAppend( messages, "Category '#title#' removed" );
 				// announce event
-				announceInterception( "cbadmin_postCategoryRemove", { categoryID=categoryID } );
+				announce( "cbadmin_postCategoryRemove", { categoryID=categoryID } );
 			}
 		}
 

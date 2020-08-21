@@ -1,29 +1,29 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* ContentBox Core module configuration
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * ContentBox Core module configuration
+ */
 component {
 
 	// Module Properties
-	this.title 				= "ContentBox Core";
-	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "https://www.ortussolutions.com";
-	this.version 			= "@version.number@+@build.number@";
-	this.description 		= "This is the core module used to power the admin, RESTful and UI modules";
-	this.viewParentLookup 	= true;
-	this.layoutParentLookup = true;
-	this.entryPoint			= "cbcore";
-	this.modelNamespace 	= "cb";
-	this.cfmapping 			= "contentbox";
+	this.title             = "ContentBox Core";
+	this.author            = "Ortus Solutions, Corp";
+	this.webURL            = "https://www.ortussolutions.com";
+	this.version           = "@version.number@+@build.number@";
+	this.description       = "This is the core module used to power the admin, RESTful and UI modules";
+	this.viewParentLookup  = true;
+	this.layoutParentLookup= true;
+	this.entryPoint        = "cbcore";
+	this.modelNamespace    = "cb";
+	this.cfmapping         = "contentbox";
 	// Load ContentBox Dependencies First.
-	this.dependencies 		= [	"contentbox-deps" ];
+	this.dependencies      = [	"contentbox-deps" ];
 
 	/**
-	* Configure Module
-	*/
+	 * Configure Module
+	 */
 	function configure(){
 
 		// Setup a logger for this class
@@ -34,14 +34,14 @@ component {
 
 		// contentbox settings
 		settings = {
-			codename 			= "Psalm 144:1",
-			codenameLink 		= "https://www.bible.com/bible/114/psa.144.1.nkjv",
+			codename         = "Psalm 144:1",
+			codenameLink     = "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Auto Updates
-			updateSlug_stable 	= "contentbox-stable-updates",
-			updateSlug_beta 	= "contentbox-beta-updates",
-			updatesURL			= "https://www.coldbox.org/api/forgebox",
+			updateSlug_stable= "contentbox-stable-updates",
+			updateSlug_beta  = "contentbox-beta-updates",
+			updatesURL       = "https://www.coldbox.org/api/forgebox",
 			// Officially supported languages for modules
-			languages 			= [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
+			languages        = [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
 
 		// i18n
@@ -56,15 +56,15 @@ component {
 		// CB Module Conventions
 		conventions = {
 			layoutsLocation = "themes",
-			viewsLocation 	= "themes"
+			viewsLocation   = "themes"
 		};
 
 		// Parent Affected Settings
 		parentSettings = {
 			// File Browser module name override
-			filebrowser_module_name		= "contentbox-filebrowser",
+			filebrowser_module_name= "contentbox-filebrowser",
 			// The default HTMl template for emitting the messages
-			messagebox = {
+			messagebox             = {
 				template = "#moduleMapping#/models/ui/templates/messagebox.cfm"
 			}
 		};
@@ -134,8 +134,8 @@ component {
 	}
 
 	/**
-	* Fired when the module is unregistered and unloaded
-	*/
+	 * Fired when the module is unregistered and unloaded
+	 */
 	function onUnload(){
 	}
 
@@ -145,7 +145,7 @@ component {
 	 * Listen to when application and all modules are fully loaded.
 	 * We use this interception to startup some services and discoveries.
 	 */
-	function afterConfigurationLoad( event, interceptData, rc, prc ){
+	function afterConfigurationLoad( event, data, rc, prc ){
 		// Discover all widgets
 		wirebox.getInstance( "widgetservice@cb" ).getWidgets();
 	}
@@ -158,8 +158,8 @@ component {
 	 * and issues with new custom approaches.
 	 */
 	private function verifyCustomModule(){
-		var appPath 			= controller.getSetting( "ApplicationPath" );
-		var customModulesPath 	= appPath & "modules_app/contentbox-custom";
+		var appPath           = controller.getSetting( "ApplicationPath" );
+		var customModulesPath = appPath & "modules_app/contentbox-custom";
 
 		// Verify modules_app: just in case
 		if( !directoryExists( appPath & "modules_app" ) ){

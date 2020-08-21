@@ -25,7 +25,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Listen to end of requests to do log rotation for auth logs for login events only.
 	*/
-	function postProcess( event, interceptData ) async="true" eventPattern="security\.doLogin"{
+	function postProcess( event, data ) async="true" eventPattern="security\.doLogin"{
 		// Do log rotation
 		loginTrackerService.rotate();
 	}
@@ -34,7 +34,7 @@ component extends="coldbox.system.Interceptor"{
 	* Before login check if user has been blocked. It will verify login attempts
 	* by username and IP address and block accordingly.
 	*/
-	function cbadmin_preLogin( event, interceptData, buffer ){
+	function cbadmin_preLogin( event, data, buffer ){
 		// if disabled, we do not track logins
 		if( !settingService.getSetting( "cb_security_login_blocker" ) ){ return; }
 		// reset attempts if time has expired for current user.
@@ -82,7 +82,7 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	* Listen to successful logins
 	*/
-	function cbadmin_onLogin( event, interceptData, buffer ){
+	function cbadmin_onLogin( event, data, buffer ){
 		// if disabled, we do not track logins
 		if( !settingService.getSetting( "cb_security_login_blocker" ) ){ return; }
 		// get prc
@@ -116,7 +116,7 @@ component extends="coldbox.system.Interceptor"{
 	* so we can verify later if they will be blocked by username or ip misuses
 	* the blockByIp and blockByUsername entities are prepared on pre-login
 	*/
-	void function cbadmin_onBadLogin( event, interceptData, buffer ){
+	void function cbadmin_onBadLogin( event, data, buffer ){
 		// if disabled, we do not track logins
 		if( !settingService.getSetting( "cb_security_login_blocker" ) ){ return; }
 		// prepare collections

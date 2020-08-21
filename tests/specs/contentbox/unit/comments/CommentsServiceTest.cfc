@@ -33,7 +33,7 @@ component extends="tests.resources.BaseTest"{
 					transaction{
 						arguments.spec.body();
 					}
-				} 
+				}
 				catch( any e ){
 					transactionRollback();
 					rethrow;
@@ -41,7 +41,7 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			beforeEach(function( currentSpec ){
-				commentService = getModel( "CommentService@cb" );
+				commentService = getInstance( "CommentService@cb" );
 			});
 
 			it( "can get approved comment count", function(){
@@ -62,14 +62,14 @@ component extends="tests.resources.BaseTest"{
 				it( "can find by content ID", function(){
 					var r = commentService.findApprovedComments( contentID=0 );
 					expect(	r.count ).toBe( 0 );
-					
+
 					var r = commentService.findApprovedComments( contentID=142 );
 					expect(	r.count ).toBeGT( 0 );
 				});
 				it( "can find by content types", function(){
 					var r = commentService.findApprovedComments(contentType="invalid" );
 					expect(	r.count ).toBe( 0 );
-					
+
 					var r = commentService.findApprovedComments(contentType="Entry" );
 					expect(	r.count ).toBeGT( 0 );
 				});
@@ -79,17 +79,17 @@ component extends="tests.resources.BaseTest"{
 				// test get all
 				var r = commentService.search();
 				expect(	r.count ).toBeGT( 0 );
-				
+
 				// test any approved
 				var r = commentService.search( isApproved="any" );
 				expect(	r.count ).toBeGT( 0 );
-				
+
 				var r = commentService.search( isApproved=false );
 				expect(	r.count ).toBe( 1 );
-				
+
 				var r = commentService.search( contentID=142);
 				expect(	r.count ).toBeGT( 0 );
-				
+
 				// disjunction with content
 				var r = commentService.search( contentID=142, search="awesome" );
 				expect(	r.count ).toBeGTE( 1 );
@@ -100,10 +100,10 @@ component extends="tests.resources.BaseTest"{
 				var r = commentService.search( contentID=142, search="Test" );
 				expect(	r.count ).toBeGTE( 1 );
 			});
-			
+
 
 
 		});
 	}
-	
+
 }

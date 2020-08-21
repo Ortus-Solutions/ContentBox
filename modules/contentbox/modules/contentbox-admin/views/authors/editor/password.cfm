@@ -56,10 +56,10 @@
 		#html.startFieldset( legend="Change Password" )#
 
 		<!--- <p>Issue a Password Reset upon User's next login</p>
-		<p><a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#rc.authorID()#" class="btn btn-danger">Issue Password Reset</a></p>
+		<p><a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#rc.authorID()#" class="btn btn-danger">Issue Password Reset</a></p>
  --->
 		<p>Email the User a Password Reset Token</p>
-		<p><a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#rc.authorID#" class="btn btn-danger">Email Password Reset</a></p>
+		<p><a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#rc.authorID#" class="btn btn-danger">Email Password Reset</a></p>
 
 		#html.endFieldSet()#
 

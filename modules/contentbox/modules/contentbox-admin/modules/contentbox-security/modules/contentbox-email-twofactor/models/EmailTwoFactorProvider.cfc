@@ -145,7 +145,7 @@ component
 			);
 
 			mail.setBody(
-				renderer.get()
+				renderer.$get()
 					.renderLayout(
 						layout 		= "/contentbox/email_templates/layouts/email",
 						view 		= "emails/verification",

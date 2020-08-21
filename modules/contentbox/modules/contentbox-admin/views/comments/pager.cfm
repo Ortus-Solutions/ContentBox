@@ -15,30 +15,30 @@
 		<tr>
 			<th width="200">Author</th>
 			<th>Comment</th>
-			<th width="175" class="text-center">Date</th>			
+			<th width="175" class="text-center">Date</th>
 			<th width="100" class="text-center">Actions</th>
 		</tr>
 	</thead>
-	
+
 	<tbody>
 		<cfloop array="#prc.commentPager_comments#" index="comment">
 		<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
 			<td>
-				#getModel( "Avatar@cb" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
+				#getInstance( "Avatar@cb" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
 				&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 				<br/>
 				<cfif len(comment.getAuthorURL())>
-					<i class="fa fa-cloud"></i> 
+					<i class="fa fa-cloud"></i>
 					<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" target="_blank">
 						#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 					</a>
 					<br />
 				</cfif>
-				<i class="fa fa-laptop"></i> 
+				<i class="fa fa-laptop"></i>
 				<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 			</td>
 			<td>
-				<strong>#comment.getParentTitle()#</strong> 
+				<strong>#comment.getParentTitle()#</strong>
 				<br/>
 				#left( comment.getDisplayContent(), prc.cbSettings.cb_comments_maxDisplayChars )#
 				<cfif len( comment.getDisplayContent() ) gt prc.cbSettings.cb_comments_maxDisplayChars>

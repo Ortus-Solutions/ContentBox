@@ -44,7 +44,7 @@ component extends="baseHandler"{
 		event.paramValue( "isFiltering",false);
 
 		// prepare paging object
-		prc.oPaging 	= getModel( "Paging@cb" );
+		prc.oPaging 	= getInstance( "Paging@cb" );
 		prc.paging 		= prc.oPaging.getBoundaries();
 		prc.pagingLink 	= event.buildLink( '#prc.xehComments#.page.@page@?' );
 
@@ -107,7 +107,7 @@ component extends="baseHandler"{
 		if( len( rc.commentID ) ){
 			commentService.bulkStatus( commentID=rc.commentID, status=rc.commentStatus );
 			// announce event
-			announceInterception( "cbadmin_onCommentStatusUpdate", { commentID=rc.commentID, status=rc.commentStatus } );
+			announce( "cbadmin_onCommentStatusUpdate", { commentID=rc.commentID, status=rc.commentStatus } );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
 			cbMessagebox.info( data.messages );
@@ -192,11 +192,11 @@ component extends="baseHandler"{
 		// populate and get comment
 		var oComment = populateModel( commentService.get( id=rc.commentID ) );
 		// announce event
-		announceInterception( "cbadmin_preCommentSave", { comment=oComment, commentID=rc.commentID } );
+		announce( "cbadmin_preCommentSave", { comment=oComment, commentID=rc.commentID } );
 		// save comment
 		commentService.save( oComment );
 		// announce event
-		announceInterception( "cbadmin_postCommentSave", { comment=oComment } );
+		announce( "cbadmin_postCommentSave", { comment=oComment } );
 		// notice
 		cbMessagebox.info( "Comment Saved!" );
 		// relocate
@@ -215,11 +215,11 @@ component extends="baseHandler"{
 	function removeAllModerated( event, rc, prc ) {
 		var data = { "ERROR" = false, "MESSAGES" = "" };
 		// announce event
-		announceInterception( "cbadmin_preCommentRemoveAllModerated" );
+		announce( "cbadmin_preCommentRemoveAllModerated" );
 		// passing 0 will delete all unapproved...
 		commentService.deleteUnApprovedComments( 0 );
 		// announce event
-		announceInterception( "cbadmin_postCommentRemoveAllModerated" );
+		announce( "cbadmin_postCommentRemoveAllModerated" );
 		// message
 		data.messages = "Moderated Comment(s) Removed!";
 		cbMessagebox.info( data.messages );
@@ -259,12 +259,12 @@ component extends="baseHandler"{
 					arrayAppend( data.messages, "Invalid commentID sent: #thisCommentID#, so skipped removal" );
 				} else {
 					// announce event
-					announceInterception( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
+					announce( "cbadmin_preCommentRemove", { comment=oComment, commentID=thisCommentID } );
 					// remove
 					commentService.delete( oComment );
 					arrayAppend( data.messages, "Comment #thisCommentID# removed" );
 					// announce event
-					announceInterception( "cbadmin_postCommentRemove", { commentID=thisCommentID } );
+					announce( "cbadmin_postCommentRemove", { commentID=thisCommentID } );
 				}
 			} );
 
@@ -329,7 +329,7 @@ component extends="baseHandler"{
 		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// prepare paging object
-		prc.commentPager_oPaging 		= getModel( "Paging@cb" );
+		prc.commentPager_oPaging 		= getInstance( "Paging@cb" );
 		prc.commentPager_paging 	  	= prc.commentPager_oPaging.getBoundaries();
 		prc.commentPager_pagingLink 	= "javascript:commentPagerLink(@page@)";
 		prc.commentPager_pagination		= arguments.pagination;
@@ -369,11 +369,11 @@ component extends="baseHandler"{
 	 */
 	function saveSettings( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
+		announce( "cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
 		// bulk save the options
 		settingsService.bulkSave(rc);
 		// announce event
-		announceInterception( "cbadmin_postCommentSettingsSave" );
+		announce( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor
 		cbMessagebox.info( "All comment settings updated!" );
 		relocate( prc.xehCommentsettings );

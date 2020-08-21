@@ -92,7 +92,7 @@ component accessors=true threadSafe singleton{
 		}
 
 		// Announce export
-		interceptorService.processState( "cbadmin_preStaticSiteExport", { options = arguments } );
+		interceptorService.announce( "cbadmin_preStaticSiteExport", { options = arguments } );
 
 		// Get root pages, we need objects in order to render out the site
 		var aPages = pageService.search(
@@ -159,7 +159,7 @@ component accessors=true threadSafe singleton{
 		zipUtil.addFiles( zipFilePath=results.exportFile, directory=arguments.exportDirectory, recurse=true );
 
 		// Announce export
-		interceptorService.processState( "cbadmin_postStaticSiteExport", { options = arguments, results = results } );
+		interceptorService.announce( "cbadmin_postStaticSiteExport", { options = arguments, results = results } );
 
 		// Remove creation Folder now
 		directoryDelete( arguments.exportDirectory, true );
@@ -191,7 +191,7 @@ component accessors=true threadSafe singleton{
 		var themeName 		= allSettings.cb_site_theme;
 
 		// announce event
-		interceptorService.processState( "cbui_preRequest" );
+		interceptorService.announce( "cbui_preRequest" );
 
 		// Render out entry
 		arguments.event.setView(
@@ -245,7 +245,7 @@ component accessors=true threadSafe singleton{
 		var themeName 		= allSettings.cb_site_theme;
 
 		// announce event
-		interceptorService.processState( "cbui_preRequest" );
+		interceptorService.announce( "cbui_preRequest" );
 
 		// Verify No Layout
 		if( thisLayout eq '-no-layout-' ){

@@ -8,7 +8,7 @@
 <div class="row">
 	<div class="col-md-9">
 		<!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
 		<!--- Import Log --->
 		<cfif flash.exists( "importLog" )>
@@ -22,7 +22,7 @@
 
 				<div class="panel-heading">
 					<div class="row">
-						
+
 						<!--- Quick Search --->
 						<div class="col-md-6">
 							<div class="form-group form-inline no-margin">
@@ -53,18 +53,18 @@
 
 											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
-													<a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank">
+													<a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank">
 														<i class="fa fa-download"></i> Export All as JSON
 													</a>
 												</li>
 												<li>
-													<a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank">
+													<a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank">
 														<i class="fa fa-download"></i> Export All as XML
 													</a>
 												</li>
 
 												<li>
-													<a 	href="#event.buildLink( linkto=prc.xehGlobalPasswordReset )#"
+													<a 	href="#event.buildLink( to=prc.xehGlobalPasswordReset )#"
 														class="confirmIt"
 														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
 														title="Users will be prompted to change their passwords upon login"

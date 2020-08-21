@@ -22,7 +22,7 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
+									<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
 										title="Issue a password reset for the user upon next login.">
 										<i class="fa fa-lock"></i> Reset Password
 									</a>
@@ -37,12 +37,12 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
+									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
 										<i class="fa fa-download"></i> Export as JSON
 									</a>
 								</li>
 								<li>
-									<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
+									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
 										<i class="fa fa-download"></i> Export as XML
 									</a>
 								</li>
@@ -140,6 +140,6 @@
 			</div>
 		</div>
 		<!--- cbadmin Event --->
-		#announceInterception( "cbadmin_onAuthorEditorSidebar" )#
+		#announce( "cbadmin_onAuthorEditorSidebar" )#
     </div>
 </cfoutput>

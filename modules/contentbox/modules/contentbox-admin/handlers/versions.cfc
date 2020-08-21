@@ -38,7 +38,7 @@ component extends="baseHandler"{
 		}
 
 		// Announce event
-		announceInterception( "cbadmin_onVersionIndex" );
+		announce( "cbadmin_onVersionIndex" );
 
 		// Pager with all versions
 		prc.versionsPager = pager( event, rc, prc, rc.contentID, 0, false );
@@ -103,11 +103,11 @@ component extends="baseHandler"{
 		// check for length
 		if( len( rc.versionID ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRemove", { contentVersionID = rc.versionID } );
+			announce( "cbadmin_preContentVersionRemove", { contentVersionID = rc.versionID } );
 			// remove using hibernate bulk
 			contentVersionService.deleteByID( rc.versionID );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRemove", { contentVersionID = rc.versionID } );
+			announce( "cbadmin_postContentVersionRemove", { contentVersionID = rc.versionID } );
 			// results
 			results.messages = "Version removed!";
 		} else {
@@ -128,7 +128,7 @@ component extends="baseHandler"{
 		var oVersion = contentVersionService.get( rc.revertID );
 		if( !isNull( oVersion ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRollback", { contentVersion = oVersion } );
+			announce( "cbadmin_preContentVersionRollback", { contentVersion = oVersion } );
 			// Try to revert this version
 			oVersion.getRelatedContent().addNewContentVersion(
 				content 	= oVersion.getContent(),
@@ -138,7 +138,7 @@ component extends="baseHandler"{
 			// save
 			contentVersionService.save( oVersion );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRollback", { contentVersion = oVersion } );
+			announce( "cbadmin_postContentVersionRollback", { contentVersion = oVersion } );
 			// results
 			results.messages = "Version #oVersion.getVersion()# rollback was successfull!";
 		} else {
@@ -174,7 +174,7 @@ component extends="baseHandler"{
 			prc.maxA = arrayLen( prc.rightA );
 		}
 
-		announceInterception( "cbadmin_onVersionDiff" );
+		announce( "cbadmin_onVersionDiff" );
 
 		// views
 		event.setView( view="versions/diff", layout="ajax" );

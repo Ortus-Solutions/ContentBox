@@ -60,9 +60,9 @@
     <!--- ********************************************************************* --->
     <!--- cbadmin Events --->
     <cfif event.getCurrentLayout() EQ 'simple'>
-        #announceInterception( "cbadmin_beforeLoginHeadEnd" )#
+        #announce( "cbadmin_beforeLoginHeadEnd" )#
     <cfelse>
-        #announceInterception( "cbadmin_beforeHeadEnd" )#
+        #announce( "cbadmin_beforeHeadEnd" )#
     </cfif>
     <!--- ********************************************************************* --->
     <!---                            JS LIBRARIES FOR IN-PAGE JS                --->

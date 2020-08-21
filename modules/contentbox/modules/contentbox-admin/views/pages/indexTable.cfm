@@ -2,8 +2,8 @@
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
-	  	<a href="javascript:contentDrilldown()"><i class="fa fa-home"></i></a> 
-	  	#getModel( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.page )#
+	  	<a href="javascript:contentDrilldown()"><i class="fa fa-home"></i></a>
+	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.page )#
 	</div>
 </cfif>
 
@@ -120,19 +120,19 @@
 				<td class="text-center"><span class="badge badge-info">#page.getNumberOfHits()#</span></td>
 				<td class="text-center">
 					<!---Info Panel --->
-					<a 	class="btn btn-info btn-sm popovers" 
+					<a 	class="btn btn-info btn-sm popovers"
 						data-contentID="#page.getContentID()#"
 						data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
 					<!---Info Panel --->
 					<div id="infoPanel_#page.getContentID()#" class="hide">
 						<!--- creator --->
 						<i class="fa fa-user"></i>
-						Created by <a href="mailto:#page.getCreatorEmail()#">#page.getCreatorName()#</a> on 
+						Created by <a href="mailto:#page.getCreatorEmail()#">#page.getCreatorName()#</a> on
 						#page.getDisplayCreatedDate()#
 						</br>
 						<!--- last edit --->
 						<i class="fa fa-calendar"></i>
-						Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on 
+						Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on
 						#page.getActiveContent().getDisplayCreatedDate()#
 						</br>
 						<!--- Categories --->
@@ -151,7 +151,7 @@
 						<i class="fa fa-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
 						</cfif>
 					</div>
-					
+
 					<!--- Page Actions --->
 					<div class="btn-group btn-group-sm">
 				    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
@@ -173,8 +173,8 @@
 							</cfif>
 							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 							<!--- Export --->
-							<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-							<li><a href="#event.buildLink(linkto=prc.xehPageExport)#/contentID/#page.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+							<li><a href="#event.buildLink(to=prc.xehPageExport)#/contentID/#page.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
+							<li><a href="#event.buildLink(to=prc.xehPageExport)#/contentID/#page.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
 							</cfif>
 							<!--- History Command --->
 							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
@@ -183,8 +183,8 @@
 							<!--- View in Site --->
 							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye fa-lg"></i> Open In Site</a></li>
 				    	</ul>
-				    </div>	
-				    
+				    </div>
+
 				    <!--- Drag Handle --->
 					<a href="##" onclick="return false;" class="dragHandle btn btn-default btn-sm" title="Click and drag to change menu order" style="padding:5px 15px"><i class="fa fa-arrows-v"></i> </a>
 				</td>

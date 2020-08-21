@@ -82,7 +82,7 @@ component extends="baseHandler"{
 	*/
 	function save( event, rc, prc ){
 		// announce event
-		announceInterception(
+		announce(
 			"cbadmin_preSettingsSave",
 			{ oldSettings = prc.cbSettings, newSettings = rc }
 		);
@@ -103,7 +103,7 @@ component extends="baseHandler"{
 		);
 
 		// announce event
-		announceInterception( "cbadmin_postSettingsSave" );
+		announce( "cbadmin_postSettingsSave" );
 
 		// relocate back to editor
 		cbMessagebox.info( "All ContentBox settings updated! Yeeehaww!" );
@@ -147,7 +147,7 @@ component extends="baseHandler"{
 		event.paramValue( "viewAll", false );
 
 		// prepare paging object
-		prc.oPaging = getModel( "Paging@cb" );
+		prc.oPaging = getInstance( "Paging@cb" );
 		prc.paging 		= prc.oPaging.getBoundaries();
 		prc.pagingLink 	= event.buildLink('#prc.xehRawSettings#.page.@page@?');
 		prc.pagingLink 	= "javascript:settingsPaginate(@page@)";
@@ -239,14 +239,14 @@ component extends="baseHandler"{
 	*/
 	function remove( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preSettingRemove",{settingID=rc.settingID} );
+		announce( "cbadmin_preSettingRemove",{settingID=rc.settingID} );
 		// delete by id
 		if( !settingsService.deleteByID( rc.settingID ) ){
 			cbMessagebox.setMessage( "warning","Invalid Setting detected!" );
 		}
 		else{
 			// announce event
-			announceInterception( "cbadmin_postSettingRemove",{settingID=rc.settingID} );
+			announce( "cbadmin_postSettingRemove",{settingID=rc.settingID} );
 			// flush cache
 			settingsService.flushSettingsCache();
 			cbMessagebox.setMessage( "info","Setting Removed!" );

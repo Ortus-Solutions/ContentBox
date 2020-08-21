@@ -9,7 +9,7 @@
             </div>
             <div class="panel-body">
 	        	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
                 #html.startForm(
                 	action		= prc.xehDoLogin,
@@ -24,7 +24,7 @@
 					<cfif len( prc.signInText )>#prc.signInText#</cfif>
 
                 	<!--- Event --->
-					#announceInterception( "cbadmin_beforeLoginForm" )#
+					#announce( "cbadmin_beforeLoginForm" )#
 
 	                <div class="form-group">
 	                    <div class="col-md-12 controls">
@@ -80,7 +80,7 @@
 	                </div>
 
 	                <!--- Event --->
-					#announceInterception( "cbadmin_afterLoginForm" )#
+					#announce( "cbadmin_afterLoginForm" )#
 
                 #html.endForm()#
             </div>

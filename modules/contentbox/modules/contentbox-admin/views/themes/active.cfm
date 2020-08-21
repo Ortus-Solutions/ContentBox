@@ -19,7 +19,7 @@
 		    <div class="panel-body">
 
 		    	<!--- MessageBox --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#getInstance( "messagebox@cbMessagebox" ).renderit()#
 
 				<!---screenshot --->
 				<div id="theme-screenshot" class="pull-right">
@@ -86,7 +86,7 @@
 				</div>
 
 				<!--- Announce display Event --->
-				#announceInterception( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
+				#announce( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
 
 				<!---Theme Settings --->
 				<cfif prc.activeTheme.settings.len()>
@@ -98,7 +98,7 @@
 						#prc.themeService.buildSettingsForm( prc.activeTheme )#
 
 						<!--- Announce display Event --->
-						#announceInterception( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
+						#announce( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
 
 						<div class="form-group">
 							#html.submitButton( value="Save Settings", class="btn btn-danger" )#

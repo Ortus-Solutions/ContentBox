@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #getInstance( "messagebox@cbMessagebox" ).renderit()#
     </div>
 </div>
 
@@ -18,11 +18,11 @@
     <div class="col-md-12">
         #html.startForm(name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate" )#
             #html.anchor(name="top" )#
-            
+
             <div class="panel panel-default">
-                
+
                 <div class="panel-body">
-                    
+
                     <!--- Vertical Nav --->
                     <div class="tab-wrapper tab-left tab-primary">
                         <!--- Tabs --->
@@ -64,7 +64,7 @@
                                 <a href="##rss_options" data-toggle="tab"><i class="fa fa-rss fa-lg"></i> RSS</a>
                             </li>
                             <!--- cbadmin Event --->
-                            #announceInterception( "cbadmin_onSettingsNav" )#
+                            #announce( "cbadmin_onSettingsNav" )#
                         </ul>
                         <!--- End Tabs --->
                         <!--- Tab Content --->
@@ -72,7 +72,7 @@
                             <!--- ********************************************************************* --->
                             <!---                           SITE OPTIONS                                --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane active" id="site_options">
                                 #renderView( "settings/sections/siteOptions" )#
                             </div>
@@ -80,7 +80,7 @@
                             <!--- ********************************************************************* --->
                             <!---                           ADMIN OPTIONS                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="dashboard_options">
                                 #renderView( "settings/sections/adminOptions" )#
                             </div>
@@ -88,7 +88,7 @@
                             <!--- ********************************************************************* --->
                             <!---                           SECURITY OPTIONS                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="security_options">
                                 #renderView( "settings/sections/securityOptions" )#
                             </div>
@@ -96,39 +96,39 @@
                             <!--- ********************************************************************* --->
                             <!---                           LOGIN OPTIONS                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="login_options">
                                 #renderView( "settings/sections/loginOptions" )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           CONTENT OPTIONS                             --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="content_options">
                                 #renderView( "settings/sections/contentOptions" )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           EDITOR OPTIONS                              --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="editor_options">
                                 #renderView( "settings/sections/editorOptions" )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           MEDIA MANAGER                                --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="mediamanager">
                                 #renderView( "settings/sections/mediaManager" )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           GRAVATARS                                   --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="gravatars">
                                 #renderView( "settings/sections/gravatars" )#
                             </div>
@@ -136,15 +136,15 @@
                             <!--- ********************************************************************* --->
                             <!---                           Notifications                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="notifications">
                                 #renderView( "settings/sections/notifications" )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           EMAIL SERVER                                --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="email_server">
                                 #renderView( "settings/sections/mailServer" )#
                             </div>
@@ -152,7 +152,7 @@
                             <!--- ********************************************************************* --->
                             <!---                           SEARCH OPTIONS                              --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="search_options">
                                 #renderView( "settings/sections/searchOptions" )#
                             </div>
@@ -166,7 +166,7 @@
                             </div>
 
                             <!--- cbadmin Event --->
-                            #announceInterception( "cbadmin_onSettingsContent" )#
+                            #announce( "cbadmin_onSettingsContent" )#
 
                             <!--- Button Bar --->
                             <div class="form-actions">

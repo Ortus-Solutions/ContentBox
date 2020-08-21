@@ -26,7 +26,7 @@
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
-            #getModel( "messagebox@cbMessagebox" ).renderit()#
+            #getInstance( "messagebox@cbMessagebox" ).renderit()#
             <!--- form --->
             #html.hiddenField( name="contentID", bind=prc.content)#
             #html.hiddenField( name="contentType", bind=prc.content)#
@@ -62,7 +62,7 @@
 						</cfif>
 
 						<!--- Event --->
-						#announceInterception( "cbadmin_ContentStoreEditorNav" )#
+						#announce( "cbadmin_ContentStoreEditorNav" )#
                     </ul>
                 </div>
 
@@ -147,15 +147,15 @@
 					</cfif>
 
 					<!--- Custom tab content --->
-					#announceInterception( "cbadmin_contentStoreEditorNavContent" )#
+					#announce( "cbadmin_contentStoreEditorNavContent" )#
 
                 </div>
                 <!--- Event --->
-                #announceInterception( "cbadmin_contentStoreEditorInBody" )#
+                #announce( "cbadmin_contentStoreEditorInBody" )#
             </div>
 
             <!--- Event --->
-            #announceInterception( "cbadmin_contentStoreEditorFooter" )#
+            #announce( "cbadmin_contentStoreEditorFooter" )#
         </div>
         <div class="col-md-4" id="main-content-sidebar">
             <div class="panel panel-primary">
@@ -390,16 +390,16 @@
                         <!---End Categories--->
 
                         <!--- Event --->
-                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#
+                        #announce( "cbadmin_contentStoreEditorSidebarAccordion" )#
                     </div>
                     <!--- End Accordion --->
 
                     <!--- Event --->
-                    #announceInterception( "cbadmin_contentStoreEditorSidebar" )#
+                    #announce( "cbadmin_contentStoreEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception( "cbadmin_contentStoreEditorSidebarFooter" )#
+            #announce( "cbadmin_contentStoreEditorSidebarFooter" )#
         </div>
     </div>
 #html.endForm()#

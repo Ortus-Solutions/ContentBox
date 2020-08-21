@@ -64,11 +64,11 @@ component extends="baseHandler"{
 		// Validation Results
 		if( !vResults.hasErrors() ){
 			// announce event
-			announceInterception( "cbadmin_preRoleSave", { role=oRole, roleID=rc.roleID } );
+			announce( "cbadmin_preRoleSave", { role=oRole, roleID=rc.roleID } );
 			// save role
 			roleService.save( oRole );
 			// announce event
-			announceInterception( "cbadmin_postRoleSave", { role=oRole } );
+			announce( "cbadmin_postRoleSave", { role=oRole } );
 			// messagebox
 			cbMessagebox.setMessage( "info", "Role saved!" );
 
@@ -89,13 +89,13 @@ component extends="baseHandler"{
 	 */
 	function remove( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preRoleRemove",{roleID=rc.roleID} );
+		announce( "cbadmin_preRoleRemove",{roleID=rc.roleID} );
 		// Get requested role and remove permissions
 		var oRole = roleService.get( id=rc.roleID ).clearPermissions();
 		// finally delete
 		roleService.delete( oRole );
 		// announce event
-		announceInterception( "cbadmin_postRoleRemove",{roleID=rc.roleID} );
+		announce( "cbadmin_postRoleRemove",{roleID=rc.roleID} );
 		// Message
 		cbMessagebox.setMessage( "info","Role Removed!" );
 		// relocate

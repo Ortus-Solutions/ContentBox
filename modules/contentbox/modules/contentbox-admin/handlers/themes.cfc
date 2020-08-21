@@ -69,7 +69,7 @@ component extends="baseHandler"{
 		}
 
 		// Announce event
-		announceInterception( "cbadmin_preThemeSettingsSave", { name=rc.themeName } );
+		announce( "cbadmin_preThemeSettingsSave", { name=rc.themeName } );
 
 		// Results validated, save settings
 		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
@@ -77,7 +77,7 @@ component extends="baseHandler"{
 		cbMessagebox.info( message="Theme settings saved!" );
 
 		// Announce event
-		announceInterception( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
+		announce( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
 
 		// Relocate
 		relocate( event=prc.xehActiveTheme );

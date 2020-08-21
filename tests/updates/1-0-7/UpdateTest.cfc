@@ -2,8 +2,8 @@ component extends="coldbox.system.testing.BaseTestCase"{
 
 	function setup(){
 		super.setup();
-		update = getMockBox().prepareMock( getModel("root.workbench.patches.1-0-7.Update") );
-		
+		update = getMockBox().prepareMock( getInstance("root.workbench.patches.1-0-7.Update") );
+
 	}
 
 	function testpreInstallation(){
@@ -11,7 +11,7 @@ component extends="coldbox.system.testing.BaseTestCase"{
 			transaction action="begin"{
 
 				update.preInstallation();
-				
+
 				// clear it
 				ormClearSession();
 				transaction action="rollback";

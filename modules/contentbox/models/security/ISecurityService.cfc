@@ -1,16 +1,19 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* This is the ContentBox Security Service needed for security to be implemented in ContentBox
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * This is the ContentBox Security Service needed for security to be implemented in ContentBox
+ */
 interface{
 
 	/**
-	* User validator via security interceptor
-	*/
-	boolean function userValidator( required struct rule, any controller );
+	 * Validates if a user can access an event. Called via the cbSecurity module.
+	 *
+	 * @rule The security rule being tested for
+	 * @controller The ColdBox controller calling the validation
+	 */
+	boolean function validateSecurity( struct rule, securedValue, any controller );
 
 	/**
 	* Get an author from session, or returns a new empty author entity
@@ -31,7 +34,7 @@ interface{
 	* Authenticate an author via ContentBox credentials.
 	* This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
 	* The `author` object which it represents.
-	* 
+	*
 	* @username The username to validate
 	* @password The password to validate
 	*

@@ -56,11 +56,11 @@ component extends="baseHandler"{
 		// Validation Results
 		if( !vResults.hasErrors() ){
 			// announce event
-			announceInterception( "cbadmin_prePermissionGroupSave", { group=oGroup, permissionGroupID=rc.permissionGroupID } );
+			announce( "cbadmin_prePermissionGroupSave", { group=oGroup, permissionGroupID=rc.permissionGroupID } );
 			// save group
 			permissionGroupService.save( oGroup );
 			// announce event
-			announceInterception( "cbadmin_postPermissionGroupSave", { group=oGroup } );
+			announce( "cbadmin_postPermissionGroupSave", { group=oGroup } );
 			// messagebox
 			cbMessagebox.setMessage( "info","Permission Group saved!" );
 
@@ -77,7 +77,7 @@ component extends="baseHandler"{
 	 */
 	function remove( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_prePermissionGroupRemove", { permissionGroupID = rc.permissionGroupID } );
+		announce( "cbadmin_prePermissionGroupRemove", { permissionGroupID = rc.permissionGroupID } );
 		// Get requested role and remove permissions and authors
 		var oGroup = permissionGroupService
 			.get( id=rc.permissionGroupID )
@@ -86,7 +86,7 @@ component extends="baseHandler"{
 		// finally delete
 		permissionGroupService.delete( oGroup );
 		// announce event
-		announceInterception( "cbadmin_postPermissionGroupRemove", { permissionGroupID = rc.permissionGroupID } );
+		announce( "cbadmin_postPermissionGroupRemove", { permissionGroupID = rc.permissionGroupID } );
 		// Message
 		cbMessagebox.setMessage( "info","Permission Group Removed!" );
 		// relocate

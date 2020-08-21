@@ -32,7 +32,7 @@ component extends="coldbox.system.Interceptor"{
     /**
      * Process the check on each request
      */
-    public void function preProcess( required any event, required struct interceptData, buffer, rc, prc ){
+    public void function preProcess( required any event, required struct data, buffer, rc, prc ){
 		// Do not execute on the security module
         if ( reFindNoCase( "^contentbox\-security\:", event.getCurrentEvent() ) ) {
             return;
@@ -42,7 +42,7 @@ component extends="coldbox.system.Interceptor"{
 		if ( ! twoFactorService.isForceTwoFactorAuth() ) {
 			return;
 		}
-		
+
 		// Param Values
 		param prc.oCurrentAuthor	= securityService.getAuthorSession();
 

@@ -1,9 +1,9 @@
 {
     "app": {
-        "cfengine": "lucee@5.3.2",
+        "cfengine": "lucee@5.3",
         "serverHomeDirectory": ".engines/lucee5"
     },
-    "name": "cbcms-lucee5",
+    "name": "contentbox-lucee5",
     "JVM": {
         "heapSize": "768"
     },

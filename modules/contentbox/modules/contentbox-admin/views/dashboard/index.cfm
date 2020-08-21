@@ -13,11 +13,11 @@
 		<p class="lead">#prc.welcomeBody#</p>
 
 		<!--- Messagebox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
-		
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
 		<!--- Event --->
-		#announceInterception( "cbadmin_preDashboardContent" )#
-		
+		#announce( "cbadmin_preDashboardContent" )#
+
 		<!--- Installer Checks --->
 		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" )>
 		<cfif prc.installerCheck.installer>
@@ -37,7 +37,7 @@
 			</div>
 		</cfif>
 		</cfif>
-		
+
 		<div class="tab-wrapper tab-primary">
 			<ul class="nav nav-tabs" id="dashboardTabs">
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
@@ -60,11 +60,11 @@
 					</a>
 				</li>
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_onDashboardTabNav" )#
+				#announce( "cbadmin_onDashboardTabNav" )#
 			</ul>
 			<div class="tab-content">
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_preDashboardTabContent" )#
+				#announce( "cbadmin_preDashboardTabContent" )#
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
 				<!--- ****************************************************************************************** --->
@@ -99,22 +99,22 @@
 					<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
 				</div>
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_postDashboardTabContent" )#
+				#announce( "cbadmin_postDashboardTabContent" )#
 			</div>
 		</div>
-		
+
 		<!--- Event --->
-		#announceInterception( "cbadmin_postDashboardContent" )#
+		#announce( "cbadmin_postDashboardContent" )#
     </div>
     <div class="col-md-4">
         <!--- Event --->
-		#announceInterception( "cbadmin_preDashboardSideBar" )#
-		
+		#announce( "cbadmin_preDashboardSideBar" )#
+
 		<!---Latest Snapshot --->
 		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
 				<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-			</div>	
+			</div>
 		</cfif>
 
 		<!--- Latest Logins --->
@@ -127,7 +127,7 @@
 			    	<div id="latestLogins"><i class="fa fa-spin fa-spinner fa-lg -2x"></i></div>
 			    </div>
 			</div>
-		</cfif> 
+		</cfif>
 
 		<!--- Info Box --->
 		<div class="panel panel-primary">
@@ -139,7 +139,7 @@
 		    </div>
 		</div>
 		<!--- Event --->
-		#announceInterception( "cbadmin_postDashboardSideBar" )#
+		#announce( "cbadmin_postDashboardSideBar" )#
     </div>
 </div>
 </cfoutput>
