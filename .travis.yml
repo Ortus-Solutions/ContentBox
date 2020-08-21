@@ -79,7 +79,7 @@ deploy:
       branch:
         - development
         - master
-      condition: "$ENGINE = lucee@4.5"
+      condition: "$ENGINE = lucee@5"
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET
@@ -94,7 +94,7 @@ deploy:
       branch:
         - development
         - master
-      condition: "$ENGINE = lucee@4.5"
+      condition: "$ENGINE = lucee@5"
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET

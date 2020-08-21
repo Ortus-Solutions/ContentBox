@@ -55,8 +55,8 @@ Blog
 
 ## System Requirements
 
-* Lucee 4.5+
-* ColdFusion 11+
+* Lucee 5+
+* ColdFusion 2016+
 
 # ContentBox Installation
 
@@ -81,11 +81,11 @@ install contentbox-site
 
 If you want to develop and hack at the source, you will need to download [CommandBox](https://www.ortussolutions.com/products/commandbox), and have [NodeJS](https://nodejs.org/en/) installed for UI development.  Then in the root of this project, type `box recipe workbench/setup.boxr`.  This will download the necessary dependencies to develop and test with ContentBox.  
 
-You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  Please note that the default CFML engine is a Lucee 4.5 engine.  You can start any of the following engines:
+You can then go ahead and start an embedded server `box server start` and start hacking around and contributing.  Please note that the default CFML engine is a Lucee 5 engine.  You can start any of the following engines:
 
-* `server start name=cbcms-adobe11` - ACF 11
-* `server start name=cbcms-adobe2016` - ACF 2016
-* `server start name=cbcms-lucee5` - Lucee 5
+* `server start name=contentbox-adobe11` - ACF 11
+* `server start name=contentbox-adobe2016` - ACF 2016
+* `server start name=contentbox-lucee5` - Lucee 5
 
 ### Test Suites
 

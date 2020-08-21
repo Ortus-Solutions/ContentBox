@@ -26,8 +26,8 @@ Blog
 - https://www.ortussolutions.com/blog
 
 ## System Requirements
-- Lucee 4.5+
-- ColdFusion 10+
+- Lucee 5+
+- ColdFusion 2016+
 
 ---
  
