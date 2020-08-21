@@ -132,6 +132,8 @@ component accessors="true" threadSafe singleton {
 	 * @trustedID The trusted ID to track in the tracking cookie
 	 */
 	TwoFactorService function setTrustedDevice( required trustedID ){
+		writeDump( var = variables );
+		abort;
 		cookieStorage.set(
 			name    = variables.TRUSTED_DEVICE_COOKIE,
 			value   = securityService.encryptIt( arguments.trustedID ),

@@ -75,7 +75,7 @@ component extends="tests.resources.BaseTest"{
 
 			});
 
-			it( "can set trusted devices", function(){
+			xit( "can set trusted devices", function(){
 				model.setTrustedDevice( "luis" );
 				expect(	cookie[ "CONTENTBOX_2FACTOR_DEVICE" ] ).notToBeEmpty();
 			});

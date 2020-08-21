@@ -4,7 +4,7 @@
 * Copyright 2012 by Luis Majano and Ortus Solutions, Corp
 * www.ortussolutions.com
 * ---
-* Updater for 4.3.0
+* Updater for 5.0.0
 *
 * DB Structure Changes Comment Below
 *
@@ -43,7 +43,7 @@ component {
 	*/
 	function onDIComplete(){
 		// setup update variables that are used globally
-		variables.version 				= "4.3.0";
+		variables.version 				= "5.0.0";
 		variables.currentVersion 		= replace( variables.coldbox.getSetting( "modules" ).contentbox.version, ".", "", "all" );
 		variables.thisPath				= getDirectoryFromPath( getMetadata( this ).path );
 		variables.appPath 				= coldbox.getSetting( "ApplicationPath" );

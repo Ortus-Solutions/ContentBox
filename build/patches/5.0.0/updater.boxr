@@ -36,8 +36,8 @@ rm modules_app/contentbox-custom/_themes/default --recurse --force
 echo "Now to the fun stuf: Removing previous version of ContentBox `package show version`..."
 uninstall contentbox
 
-echo "Installing ContentBox v4.3.0"
-install contentbox@4.3.0
+echo "Installing ContentBox v5.0.0"
+install contentbox@5.0.0
 
 # Create Module Config According to installed version
 echo "Installing ModuleConfig for custom contentbox module..."

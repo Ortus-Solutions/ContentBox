@@ -26,7 +26,7 @@ component{
 
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
 	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
-										
+
 	this.mappings[ "/root" ]   				= rootPath;
 	this.mappings[ "/cbapp" ]   			= rootPath;
 	this.mappings[ "/tests" ] 				= getDirectoryFromPath( getCurrentTemplatePath() );
@@ -50,7 +50,7 @@ component{
 			this.datasources[ "contentbox" ].class = 'com.mysql.jdbc.Driver';
 		}
 	}
-	
+
 	// ORM Settings
 	loadDatasource();
 	this.ormEnabled = true;
@@ -81,18 +81,23 @@ component{
 		return true;
 	}
 
-	public void function onRequestEnd() { 
-        structDelete( application, "cbController" );
-        structDelete( application, "wirebox" );
-    } 
+	public void function onRequestEnd() {
+
+		if( !isNull( application.cbController ) ){
+			application.cbController.getLoaderService().processShutdown();
+		}
+
+		structDelete( application, "cbController" );
+		structDelete( application, "wirebox" );
+	}
 
     /**
-	 * Load the datasource by convention by looking at `config/runtime.properties.cfm` 
+	 * Load the datasource by convention by looking at `config/runtime.properties.cfm`
 	 * or if not, load by default name of `contentbox` which needs to be registered in the CFML engine
 	 * This is mostly used for baking docker images with seeded datasources.
 	 */
 	private void function loadDatasource(){
-		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties, 
+		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties,
 		// if it does not exist
 		var runtimeProperties = rootPath & 'config/runtime.properties.cfm';
 		if( fileExists( runtimeProperties ) ){
@@ -120,7 +125,7 @@ component{
 				dsn.type 	 	= props.getProperty( "DB_TYPE", "" );
 				// ACF Driver Type
 				dsn.driver 		= props.getProperty( "DB_DRIVER", "" );
-			} 
+			}
 			// Leverages Connection strings
 			else {
 				if( structKeyExists( server, "lucee" ) ){
