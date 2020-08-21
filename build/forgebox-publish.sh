@@ -4,7 +4,7 @@ set -e
 # Only do non-pull requests
 if [ "${TRAVIS_PULL_REQUEST}" = "false" ]; then
 	# Only publish on the first engine, not every engine
-	if [ "${ENGINE}" = "lucee@4.5" ]; then
+	if [ "${ENGINE}" = "lucee@5" ]; then
 		echo Publishing Module - $TRAVIS_BRANCH;
 		cat $TRAVIS_BUILD_DIR/build/build-contentbox/module/box.json;
 		cd $TRAVIS_BUILD_DIR/build/build-contentbox/module && box forgebox publish && cd $TRAVIS_BUILD_DIR;
