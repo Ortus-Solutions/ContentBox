@@ -132,8 +132,6 @@ component accessors="true" threadSafe singleton {
 	 * @trustedID The trusted ID to track in the tracking cookie
 	 */
 	TwoFactorService function setTrustedDevice( required trustedID ){
-		writeDump( var = variables );
-		abort;
 		cookieStorage.set(
 			name    = variables.TRUSTED_DEVICE_COOKIE,
 			value   = securityService.encryptIt( arguments.trustedID ),
@@ -184,7 +182,11 @@ component accessors="true" threadSafe singleton {
 			arguments.author.getIs2FactorAuth()
 		) {
 			// Verify if using trusted device options and if device is trusted
-			if ( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ) {
+			if (
+				oProvider.allowTrustedDevice() AND isTrustedDevice(
+					arguments.author.getAuthorID()
+				)
+			) {
 				results = false;
 			} else {
 				results = true;
