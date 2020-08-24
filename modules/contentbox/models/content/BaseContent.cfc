@@ -6,25 +6,25 @@
  * A mapped super class used for contentbox content: entries and pages
  */
 component 	persistent="true"
-			entityname="cbContent"
-			table="cb_content"
-			extends="contentbox.models.BaseEntityMethods"
-			cachename="cbContent"
-			cacheuse="read-write"
+			entityname         ="cbContent"
+			table              ="cb_content"
+			extends            ="contentbox.models.BaseEntityMethods"
+			cachename          ="cbContent"
+			cacheuse           ="read-write"
 			discriminatorColumn="contentType"{
 
 	/* *********************************************************************
 	**							DI INJECTIONS
 	********************************************************************* */
 
-	property 	name="cachebox" 				inject="cachebox" 					persistent="false";
-	property 	name="settingService"			inject="id:settingService@cb" 		persistent="false";
-	property 	name="interceptorService"		inject="coldbox:interceptorService" persistent="false";
-	property 	name="customFieldService" 	 	inject="customFieldService@cb" 		persistent="false";
-	property 	name="categoryService" 	 		inject="categoryService@cb" 		persistent="false";
-	property 	name="contentService"			inject="contentService@cb"			persistent="false";
-	property 	name="contentVersionService"	inject="contentVersionService@cb"	persistent="false";
-	property 	name="i18n" 					inject="i18n@cbi18n"				persistent="false";
+	property 	name="cachebox"              				inject="cachebox"                   					persistent="false";
+	property 	name="settingService"       			inject="id:settingService@cb"       		persistent="false";
+	property 	name="interceptorService"   		inject="coldbox:interceptorService" persistent="false";
+	property 	name="customFieldService"    	 	inject="customFieldService@cb"      		persistent="false";
+	property 	name="categoryService"       	 		inject="categoryService@cb"         		persistent="false";
+	property 	name="contentService"       			inject="contentService@cb"         			persistent="false";
+	property 	name="contentVersionService"	inject="contentVersionService@cb"  	persistent="false";
+	property 	name="i18n"                  					inject="i18n@cbi18n"               				persistent="false";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
@@ -37,73 +37,73 @@ component 	persistent="true"
 	********************************************************************* */
 
 	property 	name="createdDate"
-				type="date"
+				type   ="date"
 				ormtype="timestamp"
 				notnull="true"
-				update="false"
-				index="idx_createDate";
+				update ="false"
+				index  ="idx_createDate";
 
 	property 	name="modifiedDate"
-				type="date"
+				type   ="date"
 				ormtype="timestamp"
 				notnull="true"
-				index="idx_modifiedDate";
+				index  ="idx_modifiedDate";
 
 	property 	name="isDeleted"
-				ormtype="boolean"
-				sqltype="bit"
-				notnull="true"
-				default="false"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				notnull  ="true"
+				default  ="false"
 				dbdefault="0"
-				index="idx_deleted";
+				index    ="idx_deleted";
 
 	/* *********************************************************************
 	**							PROPERTIES
 	********************************************************************* */
 
 	property 	name="contentID"
-				notnull="true"
+				notnull  ="true"
 				fieldtype="id"
 				generator="native"
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'contentID_seq' }";
+				setter   ="false"
+				params   ="{ allocationSize = 1, sequence = 'contentID_seq' }";
 
 	property 	name="contentType"
-				setter="false"
-				update="false"
-				insert="false"
-				index="idx_discriminator,idx_published"
+				setter ="false"
+				update ="false"
+				insert ="false"
+				index  ="idx_discriminator,idx_published"
 				default="";
 
 	property 	name="title"
 				notnull="true"
-				length="200"
+				length ="200"
 				default=""
-				index="idx_search";
+				index  ="idx_search";
 
 	property 	name="slug"
 				notnull="true"
-				length="200"
+				length ="200"
 				default=""
-				unique="true"
-				index="idx_slug,idx_publishedSlug";
+				unique ="true"
+				index  ="idx_slug,idx_publishedSlug";
 
 	property 	name="publishedDate"
 				notnull="false"
 				ormtype="timestamp"
-				index="idx_publishedDate";
+				index  ="idx_publishedDate";
 
 	property 	name="expireDate"
 				notnull="false"
 				ormtype="timestamp"
 				default=""
-				index="idx_expireDate";
+				index  ="idx_expireDate";
 
 	property 	name="isPublished"
 				notnull="true"
 				ormtype="boolean"
 				default="true"
-				index="idx_published,idx_search,idx_publishedSlug";
+				index  ="idx_published,idx_search,idx_publishedSlug";
 
 	property 	name="allowComments"
 				notnull="true"
@@ -112,69 +112,69 @@ component 	persistent="true"
 
 	property 	name="passwordProtection"
 				notnull="false"
-				length="100"
+				length ="100"
 				default=""
-				index="idx_published";
+				index  ="idx_published";
 
 	property 	name="HTMLKeywords"
 				notnull="false"
-				length="160"
+				length ="160"
 				default="";
 
 	property 	name="HTMLDescription"
 				notnull="false"
-				length="160"
+				length ="160"
 				default="";
 
 	property 	name="HTMLTitle"
 				notnull="false"
-				length="255"
+				length ="255"
 				default="";
 
 	property 	name="cache"
 				notnull="true"
 				ormtype="boolean"
 				default="true"
-				index="idx_cache";
+				index  ="idx_cache";
 
 	property 	name="cacheLayout"
 				notnull="true"
 				ormtype="boolean"
 				default="true"
-				index="idx_cachelayout";
+				index  ="idx_cachelayout";
 
 	property 	name="cacheTimeout"
 				notnull="false"
 				ormtype="integer"
 				default="0"
-				index="idx_cachetimeout";
+				index  ="idx_cachetimeout";
 
 	property 	name="cacheLastAccessTimeout"
 				notnull="false"
 				ormtype="integer"
 				default="0"
-				index="idx_cachelastaccesstimeout";
+				index  ="idx_cachelastaccesstimeout";
 
 	property 	name="markup"
 				notnull="true"
-				length="100"
+				length ="100"
 				default="HTML";
 
 	property 	name="showInSearch"
 				notnull="true"
 				ormtype="boolean"
 				default="true"
-				index="idx_showInSearch";
+				index  ="idx_showInSearch";
 
 	property 	name="featuredImage"
 				notnull="false"
 				default=""
-				length="255";
+				length ="255";
 
 	property 	name="featuredImageURL"
 				notnull="false"
 				default=""
-				length="255";
+				length ="255";
 
 	/* *********************************************************************
 	**							RELATIONSHIPS
@@ -182,141 +182,141 @@ component 	persistent="true"
 
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property 	name="creator"
-				notnull="true"
-				cfc="contentbox.models.security.Author"
+				notnull  ="true"
+				cfc      ="contentbox.models.security.Author"
 				fieldtype="many-to-one"
-				fkcolumn="FK_authorID"
-				lazy="true"
-				fetch="join";
+				fkcolumn ="FK_authorID"
+				lazy     ="true"
+				fetch    ="join";
 
 	// O2M -> Comments
 	property 	name="comments"
 				singularName="comment"
-				fieldtype="one-to-many"
-				type="array"
-				lazy="extra"
-				batchsize="25"
-				orderby="createdDate"
-			  	cfc="contentbox.models.comments.Comment"
+				fieldtype   ="one-to-many"
+				type        ="array"
+				lazy        ="extra"
+				batchsize   ="25"
+				orderby     ="createdDate"
+			  	cfc     ="contentbox.models.comments.Comment"
 			  	fkcolumn="FK_contentID"
-			  	inverse="true"
-			  	cascade="all-delete-orphan";
+			  	inverse ="true"
+			  	cascade ="all-delete-orphan";
 
 	// O2M -> CustomFields
 	property 	name="customFields"
 				singularName="customField"
-				fieldtype="one-to-many"
-				type="array"
-				lazy="extra"
-				batchsize="25"
-			  	cfc="contentbox.models.content.CustomField"
+				fieldtype   ="one-to-many"
+				type        ="array"
+				lazy        ="extra"
+				batchsize   ="25"
+			  	cfc     ="contentbox.models.content.CustomField"
 			  	fkcolumn="FK_contentID"
-			  	inverse="true"
-			  	cascade="all-delete-orphan";
+			  	inverse ="true"
+			  	cascade ="all-delete-orphan";
 
 	// O2M -> ContentVersions
 	property 	name="contentVersions"
 				singularName="contentVersion"
-				fieldtype="one-to-many"
-				type="array"
-				lazy="extra"
-				batchsize="25"
-			  	cfc="contentbox.models.content.ContentVersion"
-			  	orderby="version desc"
+				fieldtype   ="one-to-many"
+				type        ="array"
+				lazy        ="extra"
+				batchsize   ="25"
+			  	cfc     ="contentbox.models.content.ContentVersion"
+			  	orderby ="version desc"
 			  	fkcolumn="FK_contentID"
-			  	inverse="true"
-			  	cascade="all-delete-orphan";
+			  	inverse ="true"
+			  	cascade ="all-delete-orphan";
 
 	// Active Content Pseudo-Collection
 	property 	name="activeContent"
 				fieldtype="one-to-many"
-				type="array"
-				lazy="extra"
-				cascade="save-update"
-				inverse="true"
-			 	cfc="contentbox.models.content.ContentVersion"
+				type     ="array"
+				lazy     ="extra"
+				cascade  ="save-update"
+				inverse  ="true"
+			 	cfc     ="contentbox.models.content.ContentVersion"
 			 	fkcolumn="FK_contentID"
-			 	orderby="modifiedDate desc"
-			 	where="isActive = 1" ;
+			 	orderby ="modifiedDate desc"
+			 	where   ="isActive = 1" ;
 
 	// M20 -> Parent Page loaded as a proxy
 	property 	name="parent"
-				cfc="contentbox.models.content.BaseContent"
+				cfc      ="contentbox.models.content.BaseContent"
 				fieldtype="many-to-one"
-				fkcolumn="FK_parentID"
-				lazy="true";
+				fkcolumn ="FK_parentID"
+				lazy     ="true";
 
 	// O2M -> Sub Content Inverse
 	property 	name="children"
 				singularName="child"
-				fieldtype="one-to-many"
-				type="array"
-				lazy="extra"
-				batchsize="25"
-				orderby="createdDate"
-			 	cfc="contentbox.models.content.BaseContent"
+				fieldtype   ="one-to-many"
+				type        ="array"
+				lazy        ="extra"
+				batchsize   ="25"
+				orderby     ="createdDate"
+			 	cfc     ="contentbox.models.content.BaseContent"
 			 	fkcolumn="FK_parentID"
-			 	inverse="true"
-			 	cascade="all-delete-orphan";
+			 	inverse ="true"
+			 	cascade ="all-delete-orphan";
 
 	// O2M -> Comment Subscribers
 	property 	name="commentSubscriptions"
 				singularName="commentSubscription"
-				fieldtype="one-to-many"
-				type="array"
-				lazy="extra"
-				batchsize="25"
-				cfc="contentbox.models.subscriptions.CommentSubscription"
-				fkcolumn="FK_contentID"
-				inverse="true"
-				cascade="all-delete-orphan";
+				fieldtype   ="one-to-many"
+				type        ="array"
+				lazy        ="extra"
+				batchsize   ="25"
+				cfc         ="contentbox.models.subscriptions.CommentSubscription"
+				fkcolumn    ="FK_contentID"
+				inverse     ="true"
+				cascade     ="all-delete-orphan";
 
 	// M2M -> Categories
 	property 	name="categories"
 				fieldtype="many-to-many"
-				type="array"
-				lazy="extra"
-				orderby="category"
-				cascade="save-update"
-			  	cfc="contentbox.models.content.Category"
-			  	fkcolumn="FK_contentID"
-			  	linktable="cb_contentCategories"
+				type     ="array"
+				lazy     ="extra"
+				orderby  ="category"
+				cascade  ="save-update"
+			  	cfc              ="contentbox.models.content.Category"
+			  	fkcolumn         ="FK_contentID"
+			  	linktable        ="cb_contentCategories"
 			  	inversejoincolumn="FK_categoryID";
 
 	// M2M -> Related Content - Content related from this content to other content
 	property 	name="relatedContent"
 				fieldtype="many-to-many"
-				type="array"
-				lazy="extra"
-				orderby="title"
-				cascade="save-update"
-			 	cfc="contentbox.models.content.BaseContent"
-			 	fkcolumn="FK_contentID"
-			 	linktable="cb_relatedContent"
+				type     ="array"
+				lazy     ="extra"
+				orderby  ="title"
+				cascade  ="save-update"
+			 	cfc              ="contentbox.models.content.BaseContent"
+			 	fkcolumn         ="FK_contentID"
+			 	linktable        ="cb_relatedContent"
 			 	inversejoincolumn="FK_relatedContentID";
 
 	// M2M -> Linked Content - Content related to this content from other content
 	property 	name="linkedContent"
 				fieldtype="many-to-many"
-				type="array"
-				lazy="extra"
-				cascade="save-update"
-				inverse="true"
-				orderby="title"
-			  	cfc="contentbox.models.content.BaseContent"
-			  	fkcolumn="FK_relatedContentID"
-			  	linktable="cb_relatedContent"
+				type     ="array"
+				lazy     ="extra"
+				cascade  ="save-update"
+				inverse  ="true"
+				orderby  ="title"
+			  	cfc              ="contentbox.models.content.BaseContent"
+			  	fkcolumn         ="FK_relatedContentID"
+			  	linktable        ="cb_relatedContent"
 			  	inversejoincolumn="FK_contentID";
 
 	// O2O -> Content Stats
 	property 	name="stats"
-				notnull="true"
-				cfc="contentbox.models.content.Stats"
+				notnull  ="true"
+				cfc      ="contentbox.models.content.Stats"
 				fieldtype="one-to-one"
-				mappedBy="relatedContent"
-				cascade="all-delete-orphan"
-				lazy="true"
-				fetch="join";
+				mappedBy ="relatedContent"
+				cascade  ="all-delete-orphan"
+				lazy     ="true"
+				fetch    ="join";
 
 	/* *********************************************************************
 	**							CALCULATED FIELDS
@@ -353,18 +353,18 @@ component 	persistent="true"
 	this.pk = "contentID";
 
 	this.constraints = {
-		"title" 				= { required = true, size = "1..200" },
-		"slug" 					= { required = true, size = "1..200" },
-		"publishedDate"			= { required = false, type = "date" },
-		"expireDate" 			= { required = false, type = "date" },
-		"passwordProtection" 	= { required = false, size = "1..100" },
-		"HTMLKeywords" 			= { required = false, size = "1..160" },
-		"HTMLDescription"		= { required = false, size = "1..160" },
-		"cacheTimeout"			= { required=false, type="numeric" },
+		"title"                 = { required = true, size = "1..200" },
+		"slug"                  = { required = true, size = "1..200" },
+		"publishedDate"         = { required = false, type = "date" },
+		"expireDate"            = { required = false, type = "date" },
+		"passwordProtection"    = { required = false, size = "1..100" },
+		"HTMLKeywords"          = { required = false, size = "1..160" },
+		"HTMLDescription"       = { required = false, size = "1..160" },
+		"cacheTimeout"          = { required=false, type="numeric" },
 		"cacheLastAccessTimeout"= { required=false, type="numeric" },
-		"markup"				= { required = true, size = "1..100" },
-		"featuredImage"			= { required = false, size = "1..255" },
-		"featuredImageURL"		= { required = false, size = "1..255" }
+		"markup"                = { required = true, size = "1..100" },
+		"featuredImage"         = { required = false, size = "1..255" },
+		"featuredImageURL"      = { required = false, size = "1..255" }
 	};
 
 	// Used for JS controls
@@ -382,16 +382,16 @@ component 	persistent="true"
 	* Base constructor
 	*/
 	function init(){
-		variables.isPublished 				= true;
-		variables.allowComments 			= true;
-		variables.cache 					= true;
-		variables.cacheLayout 				= true;
-		variables.cacheTimeout 				= 0;
-		variables.cacheLastAccessTimeout 	= 0;
-		variables.markup 					= "HTML";
-		variables.contentType 				= "";
-		variables.showInSearch				= true;
-		variables.renderedContent 			= "";
+		variables.isPublished           = true;
+		variables.allowComments         = true;
+		variables.cache                 = true;
+		variables.cacheLayout           = true;
+		variables.cacheTimeout          = 0;
+		variables.cacheLastAccessTimeout= 0;
+		variables.markup                = "HTML";
+		variables.contentType           = "";
+		variables.showInSearch          = true;
+		variables.renderedContent       = "";
 
 		super.init();
 
@@ -420,8 +420,8 @@ component 	persistent="true"
 			// get a new version object
 			var newVersion = contentVersionService.new(
 				properties = {
-					content		= arguments.content,
-					changelog 	= arguments.changelog
+					content  = arguments.content,
+					changelog= arguments.changelog
 				}
 			);
 
@@ -493,7 +493,7 @@ component 	persistent="true"
 		}
 		// iterate over array
 		for( var x=1; x <= arrayLen( arguments.relatedContent ); x++){
-			var id 	= trim( arguments.relatedContent[ x ] );
+			var id            = trim( arguments.relatedContent[ x ] );
 			// get content from id
 			var extantContent = contentService.get( id );
 			// if found, add to array
@@ -653,15 +653,15 @@ component 	persistent="true"
 	* @properties Additional properties to incorporate in the memento
 	*/
 	struct function getResponseMemento(
-		required array slugCache=[],
-		boolean showAuthor=true,
-		boolean showComments=true,
-		boolean showCustomFields=true,
-		boolean showParent=true,
-		boolean showChildren=true,
-		boolean showCategories=true,
+		required array slugCache  =[],
+		boolean showAuthor        =true,
+		boolean showComments      =true,
+		boolean showCustomFields  =true,
+		boolean showParent        =true,
+		boolean showChildren      =true,
+		boolean showCategories    =true,
 		boolean showRelatedContent=true,
-		excludes="",
+		excludes                  ="",
 		array properties
 	){
 		var pList 	= [
@@ -681,10 +681,10 @@ component 	persistent="true"
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
 
 		// Properties
-		result[ "content" ] 		= renderContent();
-		result[ "createdDate" ] 	= getDisplayCreatedDate();
-		result[ "publishedDate" ] 	= getDisplayPublishedDate();
-		result[ "expireDate" ] 		= getDisplayExpireDate();
+		result[ "content" ]       = renderContent();
+		result[ "createdDate" ]   = getDisplayCreatedDate();
+		result[ "publishedDate" ] = getDisplayPublishedDate();
+		result[ "expireDate" ]    = getDisplayExpireDate();
 
 		// Comments
 		if( arguments.showComments && hasComment() ){
@@ -693,10 +693,10 @@ component 	persistent="true"
 				arrayAppend(
 					result[ "comments" ],
 					{
-						"content" 		= thisComment.getContent(),
-						"createdDate" 	= thisComment.getDisplayCreatedDate(),
-						"authorURL" 	= thisComment.getAuthorURL(),
-						"author"		= thisComment.getAuthor()
+						"content"    = thisComment.getContent(),
+						"createdDate"= thisComment.getDisplayCreatedDate(),
+						"authorURL"  = thisComment.getAuthorURL(),
+						"author"     = thisComment.getAuthor()
 					}
 				);
 			}
@@ -714,9 +714,9 @@ component 	persistent="true"
 		// Parent
 		if( arguments.showParent && hasParent() ){
 			result[ "parent" ] = {
-				"slug" 			= getParent().getSlug(),
-				"title" 		= getParent().getTitle(),
-				"contentType"	= getParent().getContentType()
+				"slug"       = getParent().getSlug(),
+				"title"      = getParent().getTitle(),
+				"contentType"= getParent().getContentType()
 			};
 		}
 		// Children
@@ -726,8 +726,8 @@ component 	persistent="true"
 				arrayAppend(
 					result[ "children" ],
 					{
-						"slug" 	= thisChild.getSlug(),
-						"title" 	= thisChild.getTitle()
+						"slug"  = thisChild.getSlug(),
+						"title" = thisChild.getTitle()
 					}
 				);
 			}
@@ -740,8 +740,8 @@ component 	persistent="true"
 			for( var thisCategory in variables.categories ){
 				arrayAppend( result[ "categories" ],
 					{
-						"category" 	= thisCategory.getCategory(),
-						"slug" 		= thisCategory.getSlug()
+						"category" = thisCategory.getCategory(),
+						"slug"     = thisCategory.getSlug()
 					}
 				);
 			}
@@ -758,9 +758,9 @@ component 	persistent="true"
 				arrayAppend(
 					result[ "relatedcontent" ],
 					{
-						"slug" 			= content.getSlug(),
-						"title" 		= content.getTitle(),
-						"contentType"	= content.getContentType()
+						"slug"       = content.getSlug(),
+						"title"      = content.getTitle(),
+						"contentType"= content.getContentType()
 					}
 				);
 			}
@@ -789,19 +789,19 @@ component 	persistent="true"
 	* @properties Additional properties to incorporate in the memento
 	*/
 	function getMemento(
-		required array slugCache=[],
-		counter=0,
-		boolean showAuthor=true,
-		boolean showComments=true,
-		boolean showCustomFields=true,
-		boolean showContentVersions=true,
-		boolean showParent=true,
-		boolean showChildren=true,
-		boolean showCategories=true,
-		boolean showRelatedContent=true,
-		boolean showStats=true,
+		required array slugCache        =[],
+		counter                         =0,
+		boolean showAuthor              =true,
+		boolean showComments            =true,
+		boolean showCustomFields        =true,
+		boolean showContentVersions     =true,
+		boolean showParent              =true,
+		boolean showChildren            =true,
+		boolean showCategories          =true,
+		boolean showRelatedContent      =true,
+		boolean showStats               =true,
 		boolean showCommentSubscriptions=true,
-		excludes="activeContent,linkedContent,commentSubscriptions",
+		excludes                        ="activeContent,linkedContent,commentSubscriptions",
 		array properties
 	){
 		// Do this to convert native Array to CF Array for content properties
@@ -815,11 +815,11 @@ component 	persistent="true"
 		// Do Author Relationship
 		if( arguments.showAuthor && hasCreator() ){
 			result[ "creator" ] = {
-				"creatorID" 	= getCreator().getAuthorID(),
-				"firstname" 	= getCreator().getFirstname(),
-				"lastName" 		= getCreator().getLastName(),
-				"email" 		= getCreator().getEmail(),
-				"username" 		= getCreator().getUsername()
+				"creatorID" = getCreator().getAuthorID(),
+				"firstname" = getCreator().getFirstname(),
+				"lastName"  = getCreator().getLastName(),
+				"email"     = getCreator().getEmail(),
+				"username"  = getCreator().getUsername()
 			};
 		}
 
@@ -861,9 +861,9 @@ component 	persistent="true"
 		// Parent
 		if( arguments.showParent && hasParent() ){
 			result[ "parent" ] = {
-				"contentID" 	= getParent().getContentID(),
-				"slug" 		= getParent().getSlug(),
-				"title" 		= getParent().getTitle()
+				"contentID" = getParent().getContentID(),
+				"slug"      = getParent().getSlug(),
+				"title"     = getParent().getTitle()
 			};
 		}
 		// Children
@@ -1085,38 +1085,38 @@ component 	persistent="true"
 		setPublishedDate( now() );
 
 		// Base Content Properties
-		variables.HTMLKeywords			= arguments.original.getHTMLKeywords();
-		variables.HTMLDescription		= arguments.original.getHTMLDescription();
-		variables.HTMLTitle 			= arguments.original.getHTMLTitle();
-		variables.markup 				= arguments.original.getMarkup();
-		variables.cache 				= arguments.original.getCache();
-		variables.cacheLayout 			= arguments.original.getCacheLayout();
-		variables.cacheTimeout 			= arguments.original.getCacheTimeout();
+		variables.HTMLKeywords          = arguments.original.getHTMLKeywords();
+		variables.HTMLDescription       = arguments.original.getHTMLDescription();
+		variables.HTMLTitle             = arguments.original.getHTMLTitle();
+		variables.markup                = arguments.original.getMarkup();
+		variables.cache                 = arguments.original.getCache();
+		variables.cacheLayout           = arguments.original.getCacheLayout();
+		variables.cacheTimeout          = arguments.original.getCacheTimeout();
 		variables.cacheLastAccessTimeout= arguments.original.getCacheLastAccessTimeout();
-		variables.showInSearch 			= arguments.original.getShowInSearch();
-		variables.featuredImage 		= arguments.original.getFeaturedImage();
-		variables.featuredImageURL		= arguments.original.getFeaturedImageURL();
+		variables.showInSearch          = arguments.original.getShowInSearch();
+		variables.featuredImage         = arguments.original.getFeaturedImage();
+		variables.featuredImageURL      = arguments.original.getFeaturedImageURL();
 		// reset hits
-		variables.numberOfHits = 0;
+		variables.numberOfHits          = 0;
 		// remove all comments
-		variables.comments = [];
+		variables.comments              = [];
 		// get latest content versioning
-		var latestContent = arguments.original.getActiveContent().getContent();
+		var latestContent               = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
-		latestContent = reReplaceNoCase( latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all" );
+		latestContent                   = reReplaceNoCase( latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all" );
 		// reset versioning, and start with one
 		addNewContentVersion(
-			content		= latestContent,
-			changelog	= "Content Cloned!",
-			author		= arguments.author
+			content  = latestContent,
+			changelog= "Content Cloned!",
+			author   = arguments.author
 		);
 
 		// safe clone custom fields
 		var newFields = arguments.original.getCustomFields();
 		for( var thisField in newFields ){
 			var newField = customFieldService.new( {
-				key		= thisField.getKey(),
-				value	= thisField.getValue()
+				key  = thisField.getKey(),
+				value= thisField.getValue()
 			} );
 			newField.setRelatedContent( this );
 			addCustomField( newField );
@@ -1150,12 +1150,12 @@ component 	persistent="true"
 				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
 				// now deep clone until no more child is left behind.
 				newChild.prepareForClone(
-					author				= arguments.author,
-					original			= thisChild,
-					originalService		= originalService,
-					publish				= arguments.publish,
-					originalSlugRoot	= arguments.originalSlugRoot,
-					newSlugRoot			= arguments.newSlugRoot
+					author          = arguments.author,
+					original        = thisChild,
+					originalService = originalService,
+					publish         = arguments.publish,
+					originalSlugRoot= arguments.originalSlugRoot,
+					newSlugRoot     = arguments.newSlugRoot
 				);
 				// now attach it
 				addChild( newChild );
@@ -1304,9 +1304,9 @@ component 	persistent="true"
 		// caching enabled?
 		if( canCacheContent() ){
 			// Build Cache Key
-			var cacheKey = buildContentCacheKey();
+			var cacheKey      = buildContentCacheKey();
 			// Get appropriate cache provider
-			var cache = cacheBox.getCache( settings.cb_content_cacheName );
+			var cache         = cacheBox.getCache( settings.cb_content_cacheName );
 			// Try to get content?
 			var cachedContent = cache.get( cacheKey );
 			// Verify it exists, if it does, return it
@@ -1350,8 +1350,8 @@ component 	persistent="true"
 
 		// announce renderings with data, so content renderers can process them
 		var iData = {
-			builder = b,
-			content	= this
+			builder= b,
+			content= this
 		};
 		interceptorService.announce( "cb_onContentRendering", iData);
 
@@ -1371,8 +1371,8 @@ component 	persistent="true"
 		for( var x=0; x lt arguments.fieldCount; x++ ){
 			// get custom field from incoming data
 			var args = {
-				key 	= arguments.memento["CustomFieldKeys_#x#"],
-				value 	= arguments.memento["CustomFieldValues_#x#"]
+				key   = arguments.memento["CustomFieldKeys_#x#"],
+				value = arguments.memento["CustomFieldValues_#x#"]
 			};
 			// only add if key has value
 			if( len(trim( args.key )) ){

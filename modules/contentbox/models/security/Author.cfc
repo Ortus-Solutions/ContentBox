@@ -7,11 +7,11 @@
  */
 component 	persistent="true"
 			entityname="cbAuthor"
-			table="cb_author"
-			batchsize="25"
-			extends="contentbox.models.BaseEntity"
-			cachename="cbAuthor"
-			cacheuse="read-write"{
+			table     ="cb_author"
+			batchsize ="25"
+			extends   ="contentbox.models.BaseEntity"
+			cachename ="cbAuthor"
+			cacheuse  ="read-write"{
 
 	/* *********************************************************************
 	**							DI
@@ -26,43 +26,43 @@ component 	persistent="true"
 	property 	name="authorID"
 				fieldtype="id"
 				generator="native"
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'authorID_seq' }";
+				setter   ="false"
+				params   ="{ allocationSize = 1, sequence = 'authorID_seq' }";
 
 	property 	name="firstName"
-				length="100"
+				length ="100"
 				notnull="true"
 				default="";
 
 	property 	name="lastName"
-				length="100"
+				length ="100"
 				notnull="true"
 				default="";
 
 	property 	name="email"
-				length="255"
+				length ="255"
 				notnull="true"
-				index="idx_email"
+				index  ="idx_email"
 				default="";
 
 	property 	name="username"
-				length="100"
+				length ="100"
 				notnull="true"
-				index="idx_login"
-				unique="true"
+				index  ="idx_login"
+				unique ="true"
 				default="";
 
 	property 	name="password"
-				length="100"
+				length ="100"
 				notnull="true"
-				index="idx_login"
+				index  ="idx_login"
 				default="";
 
 	property 	name="isActive"
 				ormtype="boolean"
 				notnull="true"
 				default="false"
-				index="idx_login,idx_activeAuthor";
+				index  ="idx_login,idx_activeAuthor";
 
 	property 	name="lastLogin"
 				ormtype="timestamp"
@@ -71,36 +71,36 @@ component 	persistent="true"
 	property 	name="biography"
 				ormtype="text"
 				notnull="false"
-				length="8000"
+				length ="8000"
 				default="";
 
 	property 	name="preferences"
 				ormtype="text"
 				notnull="false"
-				length="8000"
+				length ="8000"
 				default="";
 
 	property 	name="isPasswordReset"
-				ormtype="boolean"
-				sqltype="bit"
-				notnull="true"
-				default="false"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				notnull  ="true"
+				default  ="false"
 				dbdefault="0"
-				index="idx_passwordReset";
+				index    ="idx_passwordReset";
 
 	property 	name="is2FactorAuth"
-				ormtype="boolean"
-				sqltype="bit"
-				notnull="true"
-				default="false"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				notnull  ="true"
+				default  ="false"
 				dbdefault="0"
-				index="idx_2factorauth";
+				index    ="idx_2factorauth";
 
 	property 	name="APIToken"
 				notnull="false"
-				length="255"
-				unique="true"
-				index="idx_apitoken"
+				length ="255"
+				unique ="true"
+				index  ="idx_apitoken"
 				default="";
 
 	/* *********************************************************************
@@ -110,63 +110,63 @@ component 	persistent="true"
 	// O2M -> Entries
 	property 	name="entries"
 				singularName="entry"
-				type="array"
-				fieldtype="one-to-many"
-				cfc="contentbox.models.content.Entry"
-			 	fkcolumn="FK_authorID"
-			 	inverse="true"
-			 	lazy="extra"
-			 	cascade="save-update"
+				type        ="array"
+				fieldtype   ="one-to-many"
+				cfc         ="contentbox.models.content.Entry"
+			 	fkcolumn ="FK_authorID"
+			 	inverse  ="true"
+			 	lazy     ="extra"
+			 	cascade  ="save-update"
 			 	batchsize="10"
-			 	orderby="publishedDate DESC";
+			 	orderby  ="publishedDate DESC";
 
 	// O2M -> Pages
 	property 	name="pages"
 				singularName="page"
-				type="array"
-				fieldtype="one-to-many"
-				cfc="contentbox.models.content.Page"
-				fkcolumn="FK_authorID"
-				inverse="true"
-				lazy="extra"
-				cascade="save-update"
-				batchsize="10"
-				orderby="publishedDate DESC";
+				type        ="array"
+				fieldtype   ="one-to-many"
+				cfc         ="contentbox.models.content.Page"
+				fkcolumn    ="FK_authorID"
+				inverse     ="true"
+				lazy        ="extra"
+				cascade     ="save-update"
+				batchsize   ="10"
+				orderby     ="publishedDate DESC";
 
 	// M20 -> Role
 	property 	name="role"
-				notnull="true"
+				notnull  ="true"
 				fieldtype="many-to-one"
-				cfc="contentbox.models.security.Role"
-				fkcolumn="FK_roleID"
-				lazy="true";
+				cfc      ="contentbox.models.security.Role"
+				fkcolumn ="FK_roleID"
+				lazy     ="true";
 
 	// M2M -> A-la-carte Author Permissions
 	property 	name="permissions"
 				singularName="permission"
-				fieldtype="many-to-many"
-				cascade="save-update"
-				type="array"
-				lazy="extra"
-			 	cfc="contentbox.models.security.Permission"
-			 	fkcolumn="FK_authorID"
-			 	linktable="cb_authorPermissions"
+				fieldtype   ="many-to-many"
+				cascade     ="save-update"
+				type        ="array"
+				lazy        ="extra"
+			 	cfc              ="contentbox.models.security.Permission"
+			 	fkcolumn         ="FK_authorID"
+			 	linktable        ="cb_authorPermissions"
 			 	inversejoincolumn="FK_permissionID"
-			 	orderby="permission";
+			 	orderby          ="permission";
 
 	// M2M -> A-la-carte Author Permission Groups
 	property 	name="permissionGroups"
 				singularName="permissionGroup"
-				fieldtype="many-to-many"
-				type="array"
-				lazy="extra"
-				inverse="true"
-			 	cfc="contentbox.models.security.PermissionGroup"
-			 	cascade="save-update"
-			 	fkcolumn="FK_authorID"
-			 	linktable="cb_authorPermissionGroups"
+				fieldtype   ="many-to-many"
+				type        ="array"
+				lazy        ="extra"
+				inverse     ="true"
+			 	cfc              ="contentbox.models.security.PermissionGroup"
+			 	cascade          ="save-update"
+			 	fkcolumn         ="FK_authorID"
+			 	linktable        ="cb_authorPermissionGroups"
 			 	inversejoincolumn="FK_permissionGroupID"
-			 	orderby="name";
+			 	orderby          ="name";
 
 	/* *********************************************************************
 	**							CALCULATED FIELDS
@@ -192,8 +192,8 @@ component 	persistent="true"
 	// Non-persisted properties
 	property 	name="loggedIn"
 				persistent="false"
-				default="false"
-				type="boolean";
+				default   ="false"
+				type      ="boolean";
 
 	property 	name="permissionList"
 				persistent="false";
@@ -205,11 +205,11 @@ component 	persistent="true"
 	this.pk = "authorID";
 
 	this.constraints ={
-		"firstName" = { required=true, size="1..100" },
-		"lastName" 	= { required=true, size="1..100" },
-		"email" 	= { required=true, size="1..255", type="email" },
-		"username" 	= { required=true, size="1..100", validator: "UniqueValidator@cborm" },
-		"password"	= { required=true, size="1..100" }
+		"firstName"= { required=true, size="1..100" },
+		"lastName" = { required=true, size="1..100" },
+		"email"    = { required=true, size="1..255", type="email" },
+		"username" = { required=true, size="1..100", validator: "UniqueValidator@cborm" },
+		"password" = { required=true, size="1..100" }
 	};
 
 	/* *********************************************************************
@@ -220,13 +220,13 @@ component 	persistent="true"
 	* Constructor
 	*/
 	function init(){
-		variables.permissionList 	= "";
-		variables.loggedIn 			= false;
-		variables.isActive 			= true;
-		variables.permissionGroups 	= [];
-		variables.isPasswordReset 	= false;
-		variables.is2FactorAuth		= false;
-		variables.APIToken 			= "";
+		variables.permissionList  = "";
+		variables.loggedIn        = false;
+		variables.isActive        = true;
+		variables.permissionGroups= [];
+		variables.isPasswordReset = false;
+		variables.is2FactorAuth   = false;
+		variables.APIToken        = "";
 
 		// Setup empty preferences
 		setPreferences( {} );
@@ -264,7 +264,7 @@ component 	persistent="true"
 	boolean function checkPermission( required slug ){
 		// cache permission list
 		if( !len( permissionList ) AND hasPermission() ){
-			var q = entityToQuery( getPermissions() );
+			var q          = entityToQuery( getPermissions() );
 			permissionList = valueList( q.permission );
 		}
 
@@ -306,7 +306,7 @@ component 	persistent="true"
 	* Verify that a passed in list of perms the user can use
 	*/
 	public function inPermissionList( required list ){
-		var aList = listToArray( arguments.list );
+		var aList   = listToArray( arguments.list );
 		var isFound = false;
 
 		for( var thisPerm in aList ){
@@ -419,14 +419,14 @@ component 	persistent="true"
 	* @showPermissionGroups Show permission groups
 	*/
 	function getMemento(
-		excludes="pages,entries",
-		boolean showRole=true,
-		boolean showPermissions=true,
+		excludes                    ="pages,entries",
+		boolean showRole            =true,
+		boolean showPermissions     =true,
 		boolean showPermissionGroups=true
 	){
 		// Do this to convert native Array to CF Array for content properties
-		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
-		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
+		var pList  = listToArray( arrayToList( authorService.getPropertyNames() ) );
+		var result = getBaseMemento( properties=pList, excludes=arguments.excludes );
 
 		// Do Role Relationship
 		if( arguments.showRole && hasRole() ){
@@ -499,7 +499,7 @@ component 	persistent="true"
 		}
 		// exception
 		throw(message="The preference you requested (#arguments.name#) does not exist",
-			  type="User.PreferenceNotFound",
+			  type  ="User.PreferenceNotFound",
 			  detail="Valid preferences are #structKeyList( allPreferences )#" );
 	}
 
@@ -507,7 +507,7 @@ component 	persistent="true"
 	* Set a preference in the user preferences
 	*/
 	Author function setPreference(required name, required value){
-		var allPreferences = getAllPreferences();
+		var allPreferences               = getAllPreferences();
 		allPreferences[ arguments.name ] = arguments.value;
 		// store in lock mode
 		return setPreferences( allPreferences );
