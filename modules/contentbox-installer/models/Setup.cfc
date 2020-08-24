@@ -34,17 +34,17 @@ component accessors="true" {
 	 * Constructor
 	 */
 	function init(){
-		variables.siteKeywords    = "";
-		variables.siteDescription = "";
-		variables.cb_site_mail_server = "";
+		variables.siteKeywords          = "";
+		variables.siteDescription       = "";
+		variables.cb_site_mail_server   = "";
 		variables.cb_site_mail_username = "";
 		variables.cb_site_mail_password = "";
-		variables.cb_site_mail_smtp = "25";
-		variables.cb_site_mail_tls = "false";
-		variables.cb_site_mail_ssl = "false";
-		variables.populateData = true;
-		variables.fullRewrite  = true;
-		variables.rewrite_engine = "mod_rewrite";
+		variables.cb_site_mail_smtp     = "25";
+		variables.cb_site_mail_tls      = "false";
+		variables.cb_site_mail_ssl      = "false";
+		variables.populateData          = true;
+		variables.fullRewrite           = true;
+		variables.rewrite_engine        = "mod_rewrite";
 
 		return this;
 	}

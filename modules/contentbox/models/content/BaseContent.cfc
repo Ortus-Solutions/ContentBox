@@ -17,20 +17,54 @@ component 	persistent="true"
 	**							DI INJECTIONS
 	********************************************************************* */
 
-	property 	name="cachebox"              				inject="cachebox"                   					persistent="false";
-	property 	name="settingService"       			inject="id:settingService@cb"       		persistent="false";
-	property 	name="interceptorService"   		inject="coldbox:interceptorService" persistent="false";
-	property 	name="customFieldService"    	 	inject="customFieldService@cb"      		persistent="false";
-	property 	name="categoryService"       	 		inject="categoryService@cb"         		persistent="false";
-	property 	name="contentService"       			inject="contentService@cb"         			persistent="false";
-	property 	name="contentVersionService"	inject="contentVersionService@cb"  	persistent="false";
-	property 	name="i18n"                  					inject="i18n@cbi18n"               				persistent="false";
+	property
+		name      ="cachebox"
+		inject    ="cachebox"
+		persistent="false";
+
+	property
+		name      ="settingService"
+		inject    ="id:settingService@cb"
+		persistent="false";
+
+	property
+		name      ="interceptorService"
+		inject    ="coldbox:interceptorService"
+		persistent="false";
+
+	property
+		name      ="customFieldService"
+		inject    ="customFieldService@cb"
+		persistent="false";
+
+	property
+		name      ="categoryService"
+		inject    ="categoryService@cb"
+		persistent="false";
+
+	property
+		name      ="contentService"
+		inject    ="contentService@cb"
+		persistent="false";
+
+	property
+		name      ="contentVersionService"
+		inject    ="contentVersionService@cb"
+		persistent="false";
+
+	property
+		name      ="i18n"
+		inject    ="i18n@cbi18n"
+		persistent="false";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
 	********************************************************************* */
 
-	property 	name="renderedContent" persistent="false" default="";
+	property
+		name      ="renderedContent"
+		persistent="false"
+		default   ="";
 
 	/* *********************************************************************
 	**							STUPID PROPERTIES DUE TO ACF BUG
@@ -188,6 +222,16 @@ component 	persistent="true"
 				fkcolumn ="FK_authorID"
 				lazy     ="true"
 				fetch    ="join";
+
+	// M20 -> site loaded as a proxy and fetched immediately
+	property 	name="site"
+				notnull  ="true"
+				cfc      ="contentbox.models.system.Site"
+				fieldtype="many-to-one"
+				fkcolumn ="FK_siteId"
+				lazy     ="true"
+				fetch    ="join"
+				index    = "idxContentSite";
 
 	// O2M -> Comments
 	property 	name="comments"
@@ -353,18 +397,19 @@ component 	persistent="true"
 	this.pk = "contentID";
 
 	this.constraints = {
-		"title"                 = { required = true, size = "1..200" },
-		"slug"                  = { required = true, size = "1..200" },
-		"publishedDate"         = { required = false, type = "date" },
-		"expireDate"            = { required = false, type = "date" },
-		"passwordProtection"    = { required = false, size = "1..100" },
-		"HTMLKeywords"          = { required = false, size = "1..160" },
-		"HTMLDescription"       = { required = false, size = "1..160" },
-		"cacheTimeout"          = { required=false, type="numeric" },
-		"cacheLastAccessTimeout"= { required=false, type="numeric" },
-		"markup"                = { required = true, size = "1..100" },
-		"featuredImage"         = { required = false, size = "1..255" },
-		"featuredImageURL"      = { required = false, size = "1..255" }
+		"title"                 = { required : true, size : "1..200" },
+		"slug"                  = { required : true, size : "1..200" },
+		"publishedDate"         = { required : false, type : "date" },
+		"expireDate"            = { required : false, type : "date" },
+		"passwordProtection"    = { required : false, size : "1..100" },
+		"HTMLKeywords"          = { required : false, size : "1..160" },
+		"HTMLDescription"       = { required : false, size : "1..160" },
+		"cacheTimeout"          = { required : false, type :"numeric" },
+		"cacheLastAccessTimeout"= { required : false, type :"numeric" },
+		"markup"                = { required : true,  size : "1..100" },
+		"featuredImage"         = { required : false, size : "1..255" },
+		"featuredImageURL"      = { required : false, size : "1..255" },
+		"site"                  : { required : true }
 	};
 
 	// Used for JS controls
@@ -1395,6 +1440,27 @@ component 	persistent="true"
 			arrayAppend( catList , variables.categories[ x ].getCategory() );
 		}
 		return replace( arrayToList( catList ), ",", ", ", "all" );
+	}
+
+	/**
+	 * Shortcut to get the site name
+	 */
+	function getSiteName(){
+		return getSite().getName();
+	}
+
+	/**
+	 * Shortcut to get the site slug
+	 */
+	function getSiteSlug(){
+		return getSite().getSlug();
+	}
+
+	/**
+	 * Shortcut to get the site id
+	 */
+	function getSiteId(){
+		return getSite().getSiteId();
 	}
 
 }

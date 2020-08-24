@@ -11,7 +11,7 @@ component{
 		// Configuration
 		setValidExtensions( 'xml,json,jsont,rss,html,htm,cfm,print,pdf,doc,txt' );
 		// Process Full Rewrites then true, else false and an `index.cfm` will always be included in URLs
-		setFullRewrites( false );
+		setFullRewrites( true );
 
 		// Mappings
 		route( ":handler/:action" ).end();

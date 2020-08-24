@@ -8,6 +8,7 @@
 component accessors="true" {
 
 	// DI
+	property name="siteService"         inject="siteService@cb";
 	property name="authorService"       inject="authorService@cb";
 	property name="settingService"      inject="settingService@cb";
 	property name="categoryService"     inject="categoryService@cb";
@@ -25,12 +26,13 @@ component accessors="true" {
 	 * Constructor
 	 */
 	InstallerService function init(){
-		permissions = {};
+		variables.permissions = {};
 		return this;
 	}
 
 	/**
 	 * Execute the installer
+	 *
 	 * @setup The setup object
 	 */
 	function execute( required setup ){
@@ -43,13 +45,15 @@ component accessors="true" {
 			var adminRole = createRoles( arguments.setup );
 			// create Author
 			var author    = createAuthor( arguments.setup, adminRole );
+			// Create the site according to setup
+			var site      = createSite( arguments.setup );
 			// Create settings according to setup
-			createSettings( arguments.setup );
+			createSettings( arguments.setup, site );
 			// create all security rules
 			createSecurityRules( arguments.setup );
 			// Do we create sample data?
 			if ( arguments.setup.getpopulateData() ) {
-				createSampleData( arguments.setup, author );
+				createSampleData( arguments.setup, author, site );
 			}
 			// Remove ORM update from Application.cfc
 			// Commented out for better update procedures.
@@ -57,33 +61,44 @@ component accessors="true" {
 			// Process reinit and debug password security
 			processColdBoxPasswords( arguments.setup );
 			// ContentBox is now online, mark it:
-			settingService.activateCB();
+			variables.settingService.activateCB();
 			// Reload Security Rules
-			coldbox
+			variables.coldbox
 				.getInterceptorService()
 				.getInterceptor( "cbSecurity@contentbox-security" )
-				.loadRules();
+				.configure();
 		}
+	}
+
+	function createSite( required setup ){
+		var oSite = siteService.new( {
+			"name"        : arguments.setup.getSiteName(),
+			"description" : arguments.setup.getSiteDescription(),
+			"slug"        : "default"
+		} );
+		return siteService.save( oSite );
 	}
 
 	/**
 	 * Create settings from setup
+	 *
 	 * @setup The setup object
+	 * @site The site object
 	 */
-	function createSettings( required setup ){
+	function createSettings( required setup, required site ){
 		var settings = {
-			"cb_site_name" : arguments.setup.getSiteName(),
-			"cb_site_tagline" : arguments.setup.getSiteTagLine(),
-			"cb_site_description" : arguments.setup.getSiteDescription(),
-			"cb_site_keywords" : arguments.setup.getSiteKeywords(),
-			"cb_site_email" : arguments.setup.getSiteEmail(),
+			"cb_site_name"          : arguments.setup.getSiteName(),
+			"cb_site_tagline"       : arguments.setup.getSiteTagLine(),
+			"cb_site_description"   : arguments.setup.getSiteDescription(),
+			"cb_site_keywords"      : arguments.setup.getSiteKeywords(),
+			"cb_site_email"         : arguments.setup.getSiteEmail(),
 			"cb_site_outgoingEmail" : arguments.setup.getSiteOutgoingEmail(),
-			"cb_site_mail_server" : arguments.setup.getcb_site_mail_server(),
+			"cb_site_mail_server"   : arguments.setup.getcb_site_mail_server(),
 			"cb_site_mail_username" : arguments.setup.getcb_site_mail_username(),
 			"cb_site_mail_password" : arguments.setup.getcb_site_mail_password(),
-			"cb_site_mail_smtp" : arguments.setup.getcb_site_mail_smtp(),
-			"cb_site_mail_tls" : arguments.setup.getcb_site_mail_tls(),
-			"cb_site_mail_ssl" : arguments.setup.getcb_site_mail_ssl()
+			"cb_site_mail_smtp"     : arguments.setup.getcb_site_mail_smtp(),
+			"cb_site_mail_tls"      : arguments.setup.getcb_site_mail_tls(),
+			"cb_site_mail_ssl"      : arguments.setup.getcb_site_mail_ssl()
 		};
 
 		// Update settings according to setup options
@@ -93,6 +108,7 @@ component accessors="true" {
 			oSetting.setValue( settings[ thisSetting ] );
 			arrayAppend( aSettings, oSetting );
 		}
+
 		// Save all settings
 		settingService.saveAll( aSettings );
 	}
@@ -142,7 +158,11 @@ component accessors="true" {
 		// rewrite on Router
 		var routesPath = appPath & "config/Router.cfc";
 		var c          = fileRead( routesPath );
-		c              = replaceNoCase( c, "setFullRewrites( false )", "setFullRewrites( true )" );
+		c              = replaceNoCase(
+			c,
+			"setFullRewrites( false )",
+			"setFullRewrites( true )"
+		);
 		fileWrite( routesPath, c );
 
 		// determine engine and setup the appropriate file for the rewrite engine
@@ -173,49 +193,50 @@ component accessors="true" {
 	 */
 	function createPermissions( required setup ){
 		var perms = {
-			"SYSTEM_TAB" : "Access to the ContentBox System tools",
-			"SYSTEM_SAVE_CONFIGURATION" : "Ability to update global configuration data",
-			"SYSTEM_RAW_SETTINGS" : "Access to the ContentBox raw geek settings panel",
-			"SYSTEM_AUTH_LOGS" : "Access to the system auth logs",
-			"TOOLS_IMPORT" : "Ability to import data into ContentBox",
-			"ROLES_ADMIN" : "Ability to manage roles, default is view only",
-			"PERMISSIONS_ADMIN" : "Ability to manage permissions, default is view only",
-			"AUTHOR_ADMIN" : "Ability to manage authors, default is view only",
-			"WIDGET_ADMIN" : "Ability to manage widgets, default is view only",
-			"THEME_ADMIN" : "Ability to manage layouts, default is view only",
-			"COMMENTS_ADMIN" : "Ability to manage comments, default is view only",
-			"CONTENTSTORE_ADMIN" : "Ability to manage the content store, default is view only",
-			"PAGES_ADMIN" : "Ability to manage content pages, default is view only",
-			"PAGES_EDITOR" : "Ability to manage content pages but not publish pages",
-			"CATEGORIES_ADMIN" : "Ability to manage categories, default is view only",
-			"ENTRIES_ADMIN" : "Ability to manage blog entries, default is view only",
-			"ENTRIES_EDITOR" : "Ability to manage blog entries but not publish entries",
-			"RELOAD_MODULES" : "Ability to reload modules",
-			"SECURITYRULES_ADMIN" : "Ability to manage the system's security rules, default is view only",
-			"GLOBALHTML_ADMIN" : "Ability to manage the system's global HTML content used on layouts",
-			"MEDIAMANAGER_ADMIN" : "Ability to manage the system's media manager",
-			"VERSIONS_ROLLBACK" : "Ability to rollback content versions",
-			"VERSIONS_DELETE" : "Ability to delete past content versions",
-			"SYSTEM_UPDATES" : "Ability to view and apply ContentBox updates",
-			"MODULES_ADMIN" : "Ability to manage ContentBox Modules",
-			"CONTENTBOX_ADMIN" : "Access to the enter the ContentBox administrator console",
-			"FORGEBOX_ADMIN" : "Ability to manage ForgeBox installations and connectivity.",
-			"EDITORS_DISPLAY_OPTIONS" : "Ability to view the content display options panel",
-			"EDITORS_RELATED_CONTENT" : "Ability to view the related content panel",
-			"EDITORS_MODIFIERS" : "Ability to view the content modifiers panel",
-			"EDITORS_CACHING" : "Ability to view the content caching panel",
-			"EDITORS_CATEGORIES" : "Ability to view the content categories panel",
-			"EDITORS_HTML_ATTRIBUTES" : "Ability to view the content HTML attributes panel",
-			"EDITORS_EDITOR_SELECTOR" : "Ability to change the editor to another registered online editor",
-			"TOOLS_EXPORT" : "Ability to export data from ContentBox",
-			"CONTENTSTORE_EDITOR" : "Ability to manage content store elements but not publish them",
+			"SYSTEM_TAB"                    : "Access to the ContentBox System tools",
+			"SYSTEM_SAVE_CONFIGURATION"     : "Ability to update global configuration data",
+			"SYSTEM_RAW_SETTINGS"           : "Access to the ContentBox raw geek settings panel",
+			"SYSTEM_AUTH_LOGS"              : "Access to the system auth logs",
+			"TOOLS_IMPORT"                  : "Ability to import data into ContentBox",
+			"ROLES_ADMIN"                   : "Ability to manage roles, default is view only",
+			"PERMISSIONS_ADMIN"             : "Ability to manage permissions, default is view only",
+			"AUTHOR_ADMIN"                  : "Ability to manage authors, default is view only",
+			"WIDGET_ADMIN"                  : "Ability to manage widgets, default is view only",
+			"THEME_ADMIN"                   : "Ability to manage layouts, default is view only",
+			"COMMENTS_ADMIN"                : "Ability to manage comments, default is view only",
+			"CONTENTSTORE_ADMIN"            : "Ability to manage the content store, default is view only",
+			"PAGES_ADMIN"                   : "Ability to manage content pages, default is view only",
+			"PAGES_EDITOR"                  : "Ability to manage content pages but not publish pages",
+			"CATEGORIES_ADMIN"              : "Ability to manage categories, default is view only",
+			"ENTRIES_ADMIN"                 : "Ability to manage blog entries, default is view only",
+			"ENTRIES_EDITOR"                : "Ability to manage blog entries but not publish entries",
+			"RELOAD_MODULES"                : "Ability to reload modules",
+			"SECURITYRULES_ADMIN"           : "Ability to manage the system's security rules, default is view only",
+			"GLOBALHTML_ADMIN"              : "Ability to manage the system's global HTML content used on layouts",
+			"MEDIAMANAGER_ADMIN"            : "Ability to manage the system's media manager",
+			"VERSIONS_ROLLBACK"             : "Ability to rollback content versions",
+			"VERSIONS_DELETE"               : "Ability to delete past content versions",
+			"SYSTEM_UPDATES"                : "Ability to view and apply ContentBox updates",
+			"MODULES_ADMIN"                 : "Ability to manage ContentBox Modules",
+			"CONTENTBOX_ADMIN"              : "Access to the enter the ContentBox administrator console",
+			"FORGEBOX_ADMIN"                : "Ability to manage ForgeBox installations and connectivity.",
+			"EDITORS_DISPLAY_OPTIONS"       : "Ability to view the content display options panel",
+			"EDITORS_RELATED_CONTENT"       : "Ability to view the related content panel",
+			"EDITORS_MODIFIERS"             : "Ability to view the content modifiers panel",
+			"EDITORS_CACHING"               : "Ability to view the content caching panel",
+			"EDITORS_CATEGORIES"            : "Ability to view the content categories panel",
+			"EDITORS_HTML_ATTRIBUTES"       : "Ability to view the content HTML attributes panel",
+			"EDITORS_EDITOR_SELECTOR"       : "Ability to change the editor to another registered online editor",
+			"TOOLS_EXPORT"                  : "Ability to export data from ContentBox",
+			"CONTENTSTORE_EDITOR"           : "Ability to manage content store elements but not publish them",
 			"MEDIAMANAGER_LIBRARY_SWITCHER" : "Ability to switch media manager libraries for management",
-			"EDITORS_CUSTOM_FIELDS" : "Ability to manage custom fields in any content editors",
-			"GLOBAL_SEARCH" : "Ability to do global searches in the ContentBox Admin",
-			"EDITORS_LINKED_CONTENT" : "Ability to view the linked content panel",
-			"MENUS_ADMIN" : "Ability to manage the menu builder",
-			"EDITORS_FEATURED_IMAGE" : "Ability to view the featured image panel",
-			"EMAIL_TEMPLATE_ADMIN" : "Ability to admin and preview email templates"
+			"EDITORS_CUSTOM_FIELDS"         : "Ability to manage custom fields in any content editors",
+			"GLOBAL_SEARCH"                 : "Ability to do global searches in the ContentBox Admin",
+			"EDITORS_LINKED_CONTENT"        : "Ability to view the linked content panel",
+			"MENUS_ADMIN"                   : "Ability to manage the menu builder",
+			"EDITORS_FEATURED_IMAGE"        : "Ability to view the featured image panel",
+			"EMAIL_TEMPLATE_ADMIN"          : "Ability to admin and preview email templates",
+			"SITE_ADMIN"                    : "Ability to manage sites"
 		};
 
 		var allperms = [];
@@ -238,7 +259,9 @@ component accessors="true" {
 		createPermissions( arguments.setup );
 
 		// Create Editor
-		var oRole = roleService.new( properties = { role : "Editor", description : "A ContentBox editor" } );
+		var oRole = roleService.new(
+			properties = { role : "Editor", description : "A ContentBox editor" }
+		);
 		// Add Editor Permissions
 		oRole.addPermission( permissions[ "COMMENTS_ADMIN" ] );
 		oRole.addPermission( permissions[ "CONTENTSTORE_EDITOR" ] );
@@ -267,7 +290,10 @@ component accessors="true" {
 
 		// Create Admin
 		var oRole = roleService.new(
-			properties = { role : "Administrator", description : "A ContentBox Administrator" }
+			properties = {
+				role        : "Administrator",
+				description : "A ContentBox Administrator"
+			}
 		);
 		// Add All Permissions To Admin
 		for ( var key in permissions ) {
@@ -295,7 +321,7 @@ component accessors="true" {
 	/**
 	 * Create Sample Data
 	 */
-	function createSampleData( required setup, required author ){
+	function createSampleData( required setup, required author, required site ){
 		// create a few categories
 		categoryService.createCategories( "News, ColdFusion, ColdBox, ContentBox" );
 
@@ -312,12 +338,13 @@ component accessors="true" {
 				HTMLDescription    : "The most amazing ContentBox blog entry in the world"
 			}
 		);
-		entry.setCreator( author );
+		entry.setCreator( arguments.author );
+		entry.setSite( arguments.site );
 		// version content
 		entry.addNewContentVersion(
 			content   = "Hey everybody, this is my first blog entry made from ContentBox.  Isn't this amazing!'",
 			changelog = "Initial creation",
-			author    = author
+			author    = arguments.author
 		);
 
 		// good comment
@@ -365,12 +392,13 @@ component accessors="true" {
 				layout             : "pages"
 			}
 		);
-		page.setCreator( author );
+		page.setCreator( arguments.author );
+		page.setSite( arguments.site );
 		// Add new version
 		page.addNewContentVersion(
 			content   = "<p>Hey welcome to my about page for ContentBox, isn't this great!</p><p>{{{ContentStore slug='contentbox'}}}</p>",
 			changelog = "First creation",
-			author    = author
+			author    = arguments.author
 		);
 		pageService.savePage( page );
 
@@ -386,14 +414,15 @@ component accessors="true" {
 				description        : "Our contact information"
 			}
 		);
-		contentStore.setCreator( author );
+		contentStore.setCreator( arguments.author );
+		contentStore.setSite( arguments.site );
 		contentStore.addNewContentVersion(
 			content = "<p style=""text-align: center;"">
 	<a href=""https://www.ortussolutions.com/products/contentbox""><img alt="""" src=""/index.cfm/__media/ContentBox_300.png"" /></a></p>
 <p style=""text-align: center;"">
 	Created by <a href=""https://www.ortussolutions.com"">Ortus Solutions, Corp</a> and powered by <a href=""http://coldbox.org"">ColdBox Platform</a>.</p>",
 			changelog = "First creation",
-			author    = author
+			author    = arguments.author
 		);
 		contentStoreService.saveContent( contentStore );
 	}

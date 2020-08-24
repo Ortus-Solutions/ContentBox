@@ -46,6 +46,15 @@
 					</a>
 				</div>
 
+				<!-- Site Switcher -->
+				<span class="form-inline hidden-xs" id="div-siteswitcher" data-toggle="tooltip" data-placement="right" title="Site Switcher"/>
+					<select name="siteSwitcher" id="siteSwitcher" class="form-control input-sm">
+						<cfloop array="#prc.allSites#" index="thisSite">
+							<option value="#thisSite[ 'siteId' ]#">#thisSite[ 'name' ]#</option>
+						</cfloop>
+					</select>
+				</span>
+
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
 				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
@@ -53,7 +62,7 @@
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
 					<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
-					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query" size="30"/>
+					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query" size="20"/>
 				</span>
 				</cfif>
 
