@@ -23,14 +23,19 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
+        "coldbox":"^6.0.0",
+		"commandbox-dotenv":"*",
+		"commandbox-cfconfig":"*",
+		"commandbox-migrations":"*"
+	},
+	"devDependencies":{
         "testbox":"*",
-        "coldbox":"^6.0.0"
-    },
+		"commandbox-cfformat":"*"
+	},
     "installPaths":{
         "testbox":"testbox/",
         "coldbox":"coldbox/"
     },
-    "devDependencies":{},
     "ignores":[],
     "scripts":{
         "format":"cfformat run modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
@@ -42,5 +47,17 @@
         "log:lucee":"server log contentbox-lucee@5 --follow",
         "log:2016":"server log contentbox-adobe@2016 --follow",
         "log:2018":"server log contentbox-adobe@2018 --follow"
+	},
+	"cfmigrations":{
+        "schema":"${DB_DATABASE}",
+        "connectionInfo":{
+            "password":"${DB_PASSWORD}",
+            "connectionString":"${DB_CONNECTIONSTRING}",
+            "class":"${DB_CLASS}",
+            "username":"${DB_USER}",
+            "bundleName":"${DB_BUNDLENAME}",
+            "bundleVersion":"${DB_BUNDLEVERSION}"
+        },
+        "defaultGrammar":"AutoDiscover@qb"
     }
 }

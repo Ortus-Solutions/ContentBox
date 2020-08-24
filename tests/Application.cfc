@@ -52,7 +52,6 @@ component{
 	}
 
 	// ORM Settings
-	loadDatasource();
 	this.ormEnabled = true;
 	this.datasource = "contentbox";
 	this.ormSettings = {
@@ -89,53 +88,6 @@ component{
 
 		structDelete( application, "cbController" );
 		structDelete( application, "wirebox" );
-	}
-
-    /**
-	 * Load the datasource by convention by looking at `config/runtime.properties.cfm`
-	 * or if not, load by default name of `contentbox` which needs to be registered in the CFML engine
-	 * This is mostly used for baking docker images with seeded datasources.
-	 */
-	private void function loadDatasource(){
-		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties,
-		// if it does not exist
-		var runtimeProperties = rootPath & 'config/runtime.properties.cfm';
-		if( fileExists( runtimeProperties ) ){
-			var props = createObject( "java", "java.util.Properties" ).init();
-			props.load( createObject( "java", "java.io.FileInputStream" ).init( runtimeProperties ) );
-
-			// Init the datasource with shared engine properties
-			this.datasources[ "contentbox" ] = {
-				username 	= props.getProperty( "DB_USERNAME", "" ),
-				password 	= props.getProperty( "DB_PASSWORD", "" ),
-				storage 	= props.getProperty( "DB_STORAGE", "false" ),
-				clob 		= true,
-				blob 		= true
-			};
-			var dsn = this.datasources[ "contentbox" ];
-
-			// Check for full JDBC Connection strings and classes
-			var connectionString = props.getProperty( "DB_CONNECTIONSTRING", "" );
-			// If no connection string, add required common host/database params
-			if( !len( connectionString ) ){
-				dsn.host     	= props.getProperty( "DB_HOST" );
-				dsn.port     	= props.getProperty( "DB_PORT" );
-				dsn.database 	= props.getProperty( "DB_DATABASE" );
-				// Lucee Driver Type
-				dsn.type 	 	= props.getProperty( "DB_TYPE", "" );
-				// ACF Driver Type
-				dsn.driver 		= props.getProperty( "DB_DRIVER", "" );
-			}
-			// Leverages Connection strings
-			else {
-				if( structKeyExists( server, "lucee" ) ){
-					dsn.connectionString = connectionString;
-					dsn.class 			 = props.getProperty( "DB_CLASS" );
-				} else {
-					dsn.url = connectionString;
-				}
-			}
-		}
 	}
 
 }

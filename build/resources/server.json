@@ -8,12 +8,12 @@
     "JVM": {
         "heapSize": "768"
 	},
-	"openBrowserURL" : "http://localhost:${runwar.port}",
+	"openBrowserURL" : "http://localhost:\\${http.port}",
     "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
     "trayOptions": [{
         "label": "Open ContentBox Admin",
         "action": "openbrowser",
-        "url": "http://\\${runwar.host}:\\${runwar.port}/cbadmin",
+        "url": "http://\\${runwar.host}:\\${http.port}/cbadmin",
         "disabled": false,
         "image": "modules_app/contentbox-custom/_content/ContentBox-Circle_32.png"
     }]

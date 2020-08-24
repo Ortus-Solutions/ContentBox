@@ -16,7 +16,7 @@
             "port":"8589"
         }
     },
-    "openBrowserURL":"http://localhost:${http.port}",
+    "openBrowserURL":"http://localhost:\\${http.port}",
     "trayicon":"modules_app/contentbox-custom/_content/ContentBox_300.png",
     "trayOptions":[
         {
