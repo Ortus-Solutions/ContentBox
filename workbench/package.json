@@ -1,5 +1,5 @@
 {
-    "name": "ContentBoxCMS",
+    "name": "contentbox-cms",
     "version": "0.0.0",
     "description": "ContentBox CMS Admin assets",
     "main": "Gruntfile.js",
@@ -30,7 +30,7 @@
         "@bower_components/ckeditor": "ckeditor/ckeditor-releases#^4.8.0",
         "@bower_components/clockpicker": "weareoutman/clockpicker#^0.0.7",
         "@bower_components/datatables": "DataTables/DataTables#^1.10.16",
-        "@bower_components/eve-raphael": "tomasAlabes/eve#0.5.0",
+        "@bower_components/eve-raphael": "tomasAlabes/eve#v0.5.0",
         "@bower_components/fastclick": "ftlabs/fastclick#v0.6.11",
         "@bower_components/font-awesome-sass": "FortAwesome/font-awesome-sass#*",
         "@bower_components/history.js": "browserstate/history.js#^1.8.0",

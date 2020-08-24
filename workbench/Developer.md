@@ -6,6 +6,7 @@ All assets for this project are compiled using Grunt and managed via Yarn.  Deve
 Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use `Gruntfile.js` to configure your asset distributions.
 
 ## Setup
+
 To setup your development environment, install [NodeJS](https://nodejs.org/en/) and run in the root of the project: `box recipe workbench/setup.boxr` to install all dependencies.  If not you will have to run these manually.
 
 ```
