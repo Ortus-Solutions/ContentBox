@@ -132,18 +132,21 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehSavePreference  = "#prc.cbAdminEntryPoint#.authors.saveSinglePreference";
 
 		// Tools
-		prc.xehToolsImport				= "#prc.cbAdminEntryPoint#.tools.importer";
+		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
 
 		// System
 		prc.xehSettings     = "#prc.cbAdminEntryPoint#.settings";
+		prc.xehSitesManager = "#prc.cbAdminEntryPoint#.sites";
 		prc.xehSecurityRules= "#prc.cbAdminEntryPoint#.securityrules";
 		prc.xehRawSettings  = "#prc.cbAdminEntryPoint#.settings.raw";
 		prc.xehAutoUpdater  = "#prc.cbAdminEntryPoint#.autoupdates";
+
 		// Stats
 		prc.xehSubscribers  = "#prc.cbAdminEntryPoint#.subscribers";
+
 		// Login/Logout
-		prc.xehDoLogout     = "#prc.cbAdminEntryPoint#.security.doLogout";
-		prc.xehLogin        = "#prc.cbAdminEntryPoint#.security.login";
+		prc.xehDoLogout = "#prc.cbAdminEntryPoint#.security.doLogout";
+		prc.xehLogin    = "#prc.cbAdminEntryPoint#.security.login";
 
 		// CK Editor Integration Handlers For usage with the Quick Post
 		prc.xehCKFileBrowserURL     = "#prc.cbAdminEntryPoint#/ckfilebrowser/";

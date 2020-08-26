@@ -10,8 +10,8 @@ component cache=false {
 
 	// DI
 	property name="installerService" inject="installerService@cbi";
-	property name="settingService"   inject="settingService@cb";
-	property name="cb"               inject="cbhelper@cb";
+	property name="settingService" inject="settingService@cb";
+	property name="cb" inject="cbhelper@cb";
 
 	/**
 	 * Pre Handler
@@ -49,7 +49,9 @@ component cache=false {
 	function install( event, rc, prc ){
 		// Verify installed?
 		if ( settingService.isCBReady() ) {
-			getInstance( "messagebox@cbMessagebox" ).warn( cb.r( "validation.alreadyinstalled@installer" ) );
+			getInstance( "messagebox@cbMessagebox" ).warn(
+				cb.r( "validation.alreadyinstalled@installer" )
+			);
 			relocate( prc.adminEntryPoint );
 		}
 		// start installation

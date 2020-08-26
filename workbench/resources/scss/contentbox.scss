@@ -313,6 +313,7 @@ table.diff {
 .floatLeft { float:left!important; }
 .floatRight { float:right!important; }
 .text{ color: #333333}
+.textGray{ color: #c5b4b4 }
 .textGreen{ color: #468847 }
 .textOrange{ color:#C09853 }
 .textRed{ color:#B94A48}
@@ -325,6 +326,8 @@ table.diff {
 .padding10 { padding:10px; }
 .padding0 { padding:0px; }
 .paddingBottom5 { padding-bottom:5px; }
+.ml5{ margin-left: 5px;}
+.mr5{ margin-right: 5px;}
 .margin10 { margin:10px; }
 .margin0 { margin:0px; }
 .marginTop25{ margin-top:25px; }

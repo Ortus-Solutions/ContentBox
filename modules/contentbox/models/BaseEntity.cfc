@@ -36,7 +36,7 @@ component
 		sqltype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_deleted";
 
 }

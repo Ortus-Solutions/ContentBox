@@ -28,9 +28,21 @@ component {
 		// SES Routes
 		routes = [
 			{ pattern : "/", handler : "home", action : "index" },
-			{ pattern : "/language/:lang", handler : "home", action : "changelang" },
-			{ pattern : "/install", handler : "home", action : "install" },
-			{ pattern : "/finished", handler : "home", action : "finished" },
+			{
+				pattern : "/language/:lang",
+				handler : "home",
+				action  : "changelang"
+			},
+			{
+				pattern : "/install",
+				handler : "home",
+				action  : "install"
+			},
+			{
+				pattern : "/finished",
+				handler : "home",
+				action  : "finished"
+			},
 			{ pattern : "/:handler/:action?" }
 		];
 	}

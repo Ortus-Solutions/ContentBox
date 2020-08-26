@@ -419,6 +419,7 @@ component accessors="true" threadSafe singleton {
 
 		// System
 		prc.xehSettings      = "#this.ADMIN_ENTRYPOINT#.settings";
+		prc.xehSitesManager  = "#this.ADMIN_ENTRYPOINT#.sites";
 		prc.xehSecurityRules = "#this.ADMIN_ENTRYPOINT#.securityrules";
 		prc.xehRawSettings   = "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehAuthLogs      = "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
@@ -616,12 +617,19 @@ component accessors="true" threadSafe singleton {
 				permissions = "SYSTEM_RAW_SETTINGS"
 			)
 			.addSubMenu(
+				name        = "sites",
+				label       = "Sites",
+				href        = variables.buildLink,
+				href_to     = prc.xehSitesManager,
+				data        = {},
+				permissions = "SITES_ADMIN"
+			)
+			.addSubMenu(
 				name    = "Settings",
 				label   = "Settings",
 				href    = variables.buildLink,
 				href_to = prc.xehSettings,
-				data    = { "keybinding" : "ctrl+shift+c" },
-				title   = "ctrl+shift+C"
+				data    = { "keybinding" : "ctrl+shift+c" }
 			)
 			.addSubMenu(
 				name        = "SecurityRules",

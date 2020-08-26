@@ -37,22 +37,22 @@ component accessors="true" {
 	 */
 	function execute( required setup ){
 		transaction {
-			// process rerwite
+			// process rewrite rules according to setup install
 			if ( arguments.setup.getFullRewrite() ) {
 				processRewrite( arguments.setup );
 			}
-			// create roles
+			// create global roles
 			var adminRole = createRoles( arguments.setup );
-			// create Author
+			// create the admin author
 			var author    = createAuthor( arguments.setup, adminRole );
-			// Create the site according to setup
+			// Create the default site
 			var site      = createSite( arguments.setup );
-			// Create settings according to setup
+			// Create global settings according to setup
 			createSettings( arguments.setup, site );
-			// create all security rules
+			// Create global security rules
 			createSecurityRules( arguments.setup );
 			// Do we create sample data?
-			if ( arguments.setup.getpopulateData() ) {
+			if ( arguments.setup.getPopulateData() ) {
 				createSampleData( arguments.setup, author, site );
 			}
 			// Remove ORM update from Application.cfc
@@ -70,27 +70,40 @@ component accessors="true" {
 		}
 	}
 
+	/**
+	 * Create the site record
+	 *
+	 * @setup The setup object
+	 *
+	 * @return The site object
+	 */
 	function createSite( required setup ){
 		var oSite = siteService.new( {
-			"name"        : arguments.setup.getSiteName(),
-			"description" : arguments.setup.getSiteDescription(),
-			"slug"        : "default"
+			"name"             : arguments.setup.getSiteName(),
+			"slug"             : "default",
+			"description"      : arguments.setup.getSiteDescription(),
+			"keywords"         : arguments.setup.getSiteKeywords(),
+			"domainRegex"      : ".*",
+			"tagline"          : arguments.setup.getSiteTagLine(),
+			"homepage"         : "cbBlog",
+			"isBlogEnabled"    : true,
+			"isSitemapEnabled" : true,
+			"poweredByHeader"  : true,
+			"adminBar"         : true,
+			"isSSL"            : false,
+			"activeTheme"      : "contentbox-default"
 		} );
 		return siteService.save( oSite );
 	}
 
 	/**
-	 * Create settings from setup
+	 * Create global settings from setup
 	 *
 	 * @setup The setup object
 	 * @site The site object
 	 */
 	function createSettings( required setup, required site ){
 		var settings = {
-			"cb_site_name"          : arguments.setup.getSiteName(),
-			"cb_site_tagline"       : arguments.setup.getSiteTagLine(),
-			"cb_site_description"   : arguments.setup.getSiteDescription(),
-			"cb_site_keywords"      : arguments.setup.getSiteKeywords(),
 			"cb_site_email"         : arguments.setup.getSiteEmail(),
 			"cb_site_outgoingEmail" : arguments.setup.getSiteOutgoingEmail(),
 			"cb_site_mail_server"   : arguments.setup.getcb_site_mail_server(),
@@ -101,16 +114,16 @@ component accessors="true" {
 			"cb_site_mail_ssl"      : arguments.setup.getcb_site_mail_ssl()
 		};
 
-		// Update settings according to setup options
-		var aSettings = [];
-		for ( var thisSetting in settings ) {
-			var oSetting = settingService.findByName( thisSetting );
-			oSetting.setValue( settings[ thisSetting ] );
-			arrayAppend( aSettings, oSetting );
-		}
+		// Inflate and set
+		settings.map( function( key, value ){
+			return variables
+				.settingService
+				.findByName( thisSetting )
+				.setValue( value )
+		} )
 
 		// Save all settings
-		settingService.saveAll( aSettings );
+		settingService.saveAll( settings );
 	}
 
 	/**
@@ -236,7 +249,7 @@ component accessors="true" {
 			"MENUS_ADMIN"                   : "Ability to manage the menu builder",
 			"EDITORS_FEATURED_IMAGE"        : "Ability to view the featured image panel",
 			"EMAIL_TEMPLATE_ADMIN"          : "Ability to admin and preview email templates",
-			"SITE_ADMIN"                    : "Ability to manage sites"
+			"SITES_ADMIN"                   : "Ability to manage sites"
 		};
 
 		var allperms = [];
