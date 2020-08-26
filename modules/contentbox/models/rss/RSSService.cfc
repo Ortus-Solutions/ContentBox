@@ -8,13 +8,13 @@
 component singleton{
 
 	// DI
-	property name="entryService"		inject="id:entryService@cb";
-	property name="pageService"			inject="id:pageService@cb";
+	property name="entryService"  		inject="id:entryService@cb";
+	property name="pageService"   			inject="id:pageService@cb";
 	property name="contentService"		inject="id:contentService@cb";
 	property name="commentService"		inject="id:commentService@cb";
-	property name="CBHelper"			inject="id:CBHelper@cb";
-	property name="feedGenerator" 		inject="feedGenerator@cbfeeds";
-	property name="log"					inject="logbox:logger:{this}";
+	property name="CBHelper"      			inject="id:CBHelper@cb";
+	property name="feedGenerator"  		inject="feedGenerator@cbfeeds";
+	property name="log"           					inject="logbox:logger:{this}";
 
 	/**
  	* Constructor
@@ -24,11 +24,11 @@ component singleton{
 	RSSService function init(required settingService, required cacheBox){
 		// Dependencies
 		variables.settingService = arguments.settingService;
-		variables.cacheBox 		 = arguments.cacheBox;
+		variables.cacheBox       = arguments.cacheBox;
 		// Get all settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings             = settingService.getAllSettings();
 		// setup the user selected cache provider
-		cache = cacheBox.getCache( settings.cb_rss_cacheName );
+		cache                    = cacheBox.getCache( settings.cb_rss_cacheName );
 
 		return this;
 	}
@@ -74,9 +74,9 @@ component singleton{
 	* @contentType.hint The contentType to build an RSS feed on. Empty is for the site. Available content types are [page,entry]
 	*/
 	function getRSS(string slug="", boolean comments=false, category="", contentType="" ){
-		var settings	= settingService.getAllSettings(asStruct=true);
-		var rssFeed  	= "";
-		var cacheKey  	= "";
+		var settings= settingService.getAllSettings();
+		var rssFeed = "";
+		var cacheKey= "";
 
 		// Comments cache Key
 		if( arguments.comments ){
@@ -100,7 +100,7 @@ component singleton{
 				// Building comment feed or content feed
 				if( arguments.comments ){
 					arguments.contentType = "Page";
-					rssfeed = buildCommentFeed(argumentCollection=arguments);
+					rssfeed               = buildCommentFeed(argumentCollection=arguments);
 				}
 				else{
 					rssfeed = buildPageFeed(argumentCollection=arguments);
@@ -112,7 +112,7 @@ component singleton{
 				// Building comment feed or content feed
 				if( arguments.comments ){
 					arguments.contentType = "Entry";
-					rssfeed = buildCommentFeed(argumentCollection=arguments);
+					rssfeed               = buildCommentFeed(argumentCollection=arguments);
 				}
 				else{
 					rssfeed = buildEntryFeed(argumentCollection=arguments);
@@ -148,12 +148,12 @@ component singleton{
 	* @category The category to filter on if needed
 	*/
 	private function buildEntryFeed(category="" ){
-		var settings		= settingService.getAllSettings(asStruct=true);
-		var entryResults 	= entryService.findPublishedEntries(category=arguments.category,max=settings.cb_rss_maxEntries);
-		var myArray 		= [];
-		var feedStruct 		= {};
-		var columnMap 		= {};
-		var qEntries		= entityToQuery( entryResults.entries );
+		var settings    = settingService.getAllSettings();
+		var entryResults= entryService.findPublishedEntries(category=arguments.category,max=settings.cb_rss_maxEntries);
+		var myArray     = [];
+		var feedStruct  = {};
+		var columnMap   = {};
+		var qEntries    = entityToQuery( entryResults.entries );
 
 		// max checks
 		if( settings.cb_rss_maxEntries lt entryResults.count ){
@@ -161,12 +161,12 @@ component singleton{
 		}
 
 		// Create the column maps
-		columnMap.title 		= "title";
-		columnMap.description 	= "content";
-		columnMap.pubDate 		= "publishedDate";
-		columnMap.link 			= "link";
-		columnMap.author		= "author";
-		columnMap.category_tag	= "categories";
+		columnMap.title       = "title";
+		columnMap.description = "content";
+		columnMap.pubDate     = "publishedDate";
+		columnMap.link        = "link";
+		columnMap.author      = "author";
+		columnMap.category_tag= "categories";
 
 		// Add necessary columns to query
 		QueryAddColumn(qEntries, "link", myArray);
@@ -180,12 +180,12 @@ component singleton{
 		// Attach permalinks
 		for(var i = 1; i lte entryResults.count; i++){
 			// build URL to entry
-			qEntries.link[i] 			= CBHelper.linkEntry( qEntries.slug[i] );
-			qEntries.guid_permalink[i]	= false;
-			qEntries.guid_string[i]		= CBHelper.linkEntry( qEntries.slug[i] );;
-			qEntries.author[i]			= "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
-			qEntries.linkComments[i]	= CBHelper.linkComments( entryResults.entries[i] );
-			qEntries.categories[i]		= entryResults.entries[i].getCategoriesList();
+			qEntries.link[i]          = CBHelper.linkEntry( qEntries.slug[i] );
+			qEntries.guid_permalink[i]= false;
+			qEntries.guid_string[i]   = CBHelper.linkEntry( qEntries.slug[i] );;
+			qEntries.author[i]        = "#entryResults.entries[i].getAuthorEmail()# (#entryResults.entries[i].getAuthorName()#)";
+			qEntries.linkComments[i]  = CBHelper.linkComments( entryResults.entries[i] );
+			qEntries.categories[i]    = entryResults.entries[i].getCategoriesList();
 			if( entryResults.entries[i].hasExcerpt() ){
 				qEntries.content[i]	= entryResults.entries[i].renderExcerpt();
 			}
@@ -196,16 +196,16 @@ component singleton{
 		}
 
 		// Generate feed items
-		feedStruct.title 		= "Blog " & settings.cb_rss_title;
-		feedStruct.generator	= settings.cb_rss_generator;
-		feedStruct.copyright	= settings.cb_rss_copyright;
-		feedStruct.description	= settings.cb_rss_description;
+		feedStruct.title      = "Blog " & settings.cb_rss_title;
+		feedStruct.generator  = settings.cb_rss_generator;
+		feedStruct.copyright  = settings.cb_rss_copyright;
+		feedStruct.description= settings.cb_rss_description;
 		if( len( settings.cb_rss_webmaster ) )
 			feedStruct.webmaster	= settings.cb_rss_webmaster;
-		feedStruct.pubDate 		= now();
+		feedStruct.pubDate       = now();
 		feedStruct.lastbuilddate = now();
-		feedStruct.link 		= CBHelper.linkHome();
-		feedStruct.items 		= qEntries;
+		feedStruct.link          = CBHelper.linkHome();
+		feedStruct.items         = qEntries;
 
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
@@ -215,12 +215,12 @@ component singleton{
 	* @category The category to filter on if needed
 	*/
 	private function buildPageFeed(category="" ){
-		var settings		= settingService.getAllSettings(asStruct=true);
-		var pageResults 	= pageService.findPublishedPages(category=arguments.category,max=settings.cb_rss_maxEntries);
-		var myArray 		= [];
-		var feedStruct 		= {};
-		var columnMap 		= {};
-		var qPages			= entityToQuery( pageResults.pages );
+		var settings   = settingService.getAllSettings();
+		var pageResults= pageService.findPublishedPages(category=arguments.category,max=settings.cb_rss_maxEntries);
+		var myArray    = [];
+		var feedStruct = {};
+		var columnMap  = {};
+		var qPages     = entityToQuery( pageResults.pages );
 
 		// max checks
 		if( settings.cb_rss_maxEntries lt pageResults.count ){
@@ -228,12 +228,12 @@ component singleton{
 		}
 
 		// Create the column maps
-		columnMap.title 		= "title";
-		columnMap.description 	= "content";
-		columnMap.pubDate 		= "publishedDate";
-		columnMap.link 			= "link";
-		columnMap.author		= "author";
-		columnMap.category_tag	= "categories";
+		columnMap.title       = "title";
+		columnMap.description = "content";
+		columnMap.pubDate     = "publishedDate";
+		columnMap.link        = "link";
+		columnMap.author      = "author";
+		columnMap.category_tag= "categories";
 
 		// Add necessary columns to query
 		QueryAddColumn(qPages, "link", myArray);
@@ -247,12 +247,12 @@ component singleton{
 		// Attach permalinks
 		for(var i = 1; i lte pageResults.count; i++){
 			// build URL to entry
-			qPages.link[i] 				= CBHelper.linkPage( qPages.slug );
-			qPages.author[i]			= "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
-			qPages.linkComments[i]		= CBHelper.linkComments( pageResults.pages[i] );
-			qPages.categories[i]		= pageResults.pages[i].getCategoriesList();
-			qPages.guid_permalink[i] 	= false;
-			qPages.guid_string[i] 		= CBHelper.linkPage( qPages.slug );
+			qPages.link[i]          = CBHelper.linkPage( qPages.slug );
+			qPages.author[i]        = "#pageResults.pages[i].getAuthorEmail()# (#pageResults.pages[i].getAuthorName()#)";
+			qPages.linkComments[i]  = CBHelper.linkComments( pageResults.pages[i] );
+			qPages.categories[i]    = pageResults.pages[i].getCategoriesList();
+			qPages.guid_permalink[i]= false;
+			qPages.guid_string[i]   = CBHelper.linkPage( qPages.slug );
 			if( pageResults.pages[i].hasExcerpt() ){
 				qPages.content[i]	= pageResults.pages[i].renderExcerpt();
 			} else {
@@ -262,16 +262,16 @@ component singleton{
 		}
 
 		// Generate feed items
-		feedStruct.title 		= "Page " & settings.cb_rss_title;
-		feedStruct.generator	= settings.cb_rss_generator;
-		feedStruct.copyright	= settings.cb_rss_copyright;
-		feedStruct.description	= settings.cb_rss_description;
+		feedStruct.title      = "Page " & settings.cb_rss_title;
+		feedStruct.generator  = settings.cb_rss_generator;
+		feedStruct.copyright  = settings.cb_rss_copyright;
+		feedStruct.description= settings.cb_rss_description;
 		if( len( settings.cb_rss_webmaster ) )
 			feedStruct.webmaster	= settings.cb_rss_webmaster;
-		feedStruct.pubDate 		= now();
+		feedStruct.pubDate       = now();
 		feedStruct.lastbuilddate = now();
-		feedStruct.link 		= CBHelper.linkHome();
-		feedStruct.items 		= qPages;
+		feedStruct.link          = CBHelper.linkHome();
+		feedStruct.items         = qPages;
 
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
@@ -281,12 +281,12 @@ component singleton{
 	* @category The category to filter on if needed
 	*/
 	private function buildContentFeed(category="" ){
-		var settings		= settingService.getAllSettings(asStruct=true);
-		var contentResults 	= contentService.findPublishedContent(category=arguments.category,max=settings.cb_rss_maxEntries);
-		var myArray 		= [];
-		var feedStruct 		= {};
-		var columnMap 		= {};
-		var qContent		= entityToQuery( contentResults.content );
+		var settings      = settingService.getAllSettings();
+		var contentResults= contentService.findPublishedContent(category=arguments.category,max=settings.cb_rss_maxEntries);
+		var myArray       = [];
+		var feedStruct    = {};
+		var columnMap     = {};
+		var qContent      = entityToQuery( contentResults.content );
 
 		// max checks
 		if( settings.cb_rss_maxEntries lt contentResults.count ){
@@ -294,12 +294,12 @@ component singleton{
 		}
 
 		// Create the column maps
-		columnMap.title 		= "title";
-		columnMap.description 	= "content";
-		columnMap.pubDate 		= "publishedDate";
-		columnMap.link 			= "link";
-		columnMap.author		= "author";
-		columnMap.category_tag	= "categories";
+		columnMap.title       = "title";
+		columnMap.description = "content";
+		columnMap.pubDate     = "publishedDate";
+		columnMap.link        = "link";
+		columnMap.author      = "author";
+		columnMap.category_tag= "categories";
 
 		// Add necessary columns to query
 		QueryAddColumn(qContent, "link", myArray);
@@ -314,29 +314,29 @@ component singleton{
 		for(var i = 1; i lte contentResults.count; i++){
 			// Check for empty authors, just in case.
 			var authorEmail = len( contentResults.content[i].getAuthorEmail() ) ? contentResults.content[i].getAuthorEmail() : "nobody@nobody.com";
-			var authorName 	= len( contentResults.content[i].getAuthorName() ) ? contentResults.content[i].getAuthorName() : "nobody";
+			var authorName  = len( contentResults.content[i].getAuthorName() ) ? contentResults.content[i].getAuthorName() : "nobody";
 
 			// build URL to entry
-			qContent.link[i] 			= CBHelper.linkContent( contentResults.content[i] );
-			qContent.author[i]			= "#authorEmail# (#authorName#)";
-			qContent.linkComments[i]	= CBHelper.linkComments( contentResults.content[i] );
-			qContent.categories[i]		= contentResults.content[i].getCategoriesList();
-			qContent.content[i]			= cleanupContent( contentResults.content[i].renderContent() );
-			qContent.guid_permalink[i] 	= false;
-			qContent.guid_string[i] 	= CBHelper.linkContent( contentResults.content[i] );
+			qContent.link[i]          = CBHelper.linkContent( contentResults.content[i] );
+			qContent.author[i]        = "#authorEmail# (#authorName#)";
+			qContent.linkComments[i]  = CBHelper.linkComments( contentResults.content[i] );
+			qContent.categories[i]    = contentResults.content[i].getCategoriesList();
+			qContent.content[i]       = cleanupContent( contentResults.content[i].renderContent() );
+			qContent.guid_permalink[i]= false;
+			qContent.guid_string[i]   = CBHelper.linkContent( contentResults.content[i] );
 		}
 
 		// Generate feed items
-		feedStruct.title 		= "Content " & settings.cb_rss_title;
-		feedStruct.generator	= settings.cb_rss_generator;
-		feedStruct.copyright	= settings.cb_rss_copyright;
-		feedStruct.description	= settings.cb_rss_description;
+		feedStruct.title      = "Content " & settings.cb_rss_title;
+		feedStruct.generator  = settings.cb_rss_generator;
+		feedStruct.copyright  = settings.cb_rss_copyright;
+		feedStruct.description= settings.cb_rss_description;
 		if( len( settings.cb_rss_webmaster ) )
 			feedStruct.webmaster	= settings.cb_rss_webmaster;
-		feedStruct.pubDate 		= now();
+		feedStruct.pubDate       = now();
 		feedStruct.lastbuilddate = now();
-		feedStruct.link 		= CBHelper.linkHome();
-		feedStruct.items 		= qContent;
+		feedStruct.link          = CBHelper.linkHome();
+		feedStruct.items         = qContent;
 
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}
@@ -347,20 +347,20 @@ component singleton{
 	* @contentType.hint The content type discriminator to filter on
 	*/
 	private function buildCommentFeed(string slug="", string contentType="" ){
-		var settings		= settingService.getAllSettings(asStruct=true);
-		var commentResults 	= commentService.findApprovedComments(contentID=contentService.getIDBySlug(arguments.slug),contentType=arguments.contentType,max=settings.cb_rss_maxComments);
-		var myArray 		= [];
-		var feedStruct 		= {};
-		var columnMap 		= {};
-		var qComments		= entityToQuery( commentResults.comments );
+		var settings      = settingService.getAllSettings();
+		var commentResults= commentService.findApprovedComments(contentID=contentService.getIDBySlug(arguments.slug),contentType=arguments.contentType,max=settings.cb_rss_maxComments);
+		var myArray       = [];
+		var feedStruct    = {};
+		var columnMap     = {};
+		var qComments     = entityToQuery( commentResults.comments );
 
 		// Create the column maps
-		columnMap.title 		= "title";
-		columnMap.description 	= "content";
-		columnMap.pubDate 		= "createddate";
-		columnMap.link 			= "link";
-		columnMap.author		= "rssAuthor";
-		columnMap.category_tag	= "categories";
+		columnMap.title       = "title";
+		columnMap.description = "content";
+		columnMap.pubDate     = "createddate";
+		columnMap.link        = "link";
+		columnMap.author      = "rssAuthor";
+		columnMap.category_tag= "categories";
 
 		// Add necessary columns to query
 		QueryAddColumn(qComments, "title", myArray);
@@ -372,25 +372,25 @@ component singleton{
 		// Attach permalinks
 		for(var i = 1; i lte commentResults.count; i++){
 			// build URL to entry
-			qComments.title[i] 			= "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
-			qComments.rssAuthor[i]		= "#qComments.authorEmail# (#qComments.author#)";
-			qComments.linkComments[i]	= CBHelper.linkComment( commentResults.comments[i] );
-			qComments.content[i]		= cleanupContent( qComments.content[i] );
-			qComments.guid_permalink[i]	= false;
-			qComments.guid_string[i]	= CBHelper.linkComment( commentResults.comments[i] );
+			qComments.title[i]         = "Comment by #qComments.author[i]# on #commentResults.comments[i].getParentTitle()#";
+			qComments.rssAuthor[i]     = "#qComments.authorEmail# (#qComments.author#)";
+			qComments.linkComments[i]  = CBHelper.linkComment( commentResults.comments[i] );
+			qComments.content[i]       = cleanupContent( qComments.content[i] );
+			qComments.guid_permalink[i]= false;
+			qComments.guid_string[i]   = CBHelper.linkComment( commentResults.comments[i] );
 		}
 
 		// Generate feed items
-		feedStruct.title 		= "Comments " & settings.cb_rss_title;
-		feedStruct.generator	= settings.cb_rss_generator;
-		feedStruct.copyright	= settings.cb_rss_copyright;
-		feedStruct.description	= settings.cb_rss_description;
+		feedStruct.title      = "Comments " & settings.cb_rss_title;
+		feedStruct.generator  = settings.cb_rss_generator;
+		feedStruct.copyright  = settings.cb_rss_copyright;
+		feedStruct.description= settings.cb_rss_description;
 		if( len( settings.cb_rss_webmaster ) )
 			feedStruct.webmaster	= settings.cb_rss_webmaster;
-		feedStruct.pubDate 		= now();
+		feedStruct.pubDate       = now();
 		feedStruct.lastbuilddate = now();
-		feedStruct.link 		= CBHelper.linkHome();
-		feedStruct.items 		= qComments;
+		feedStruct.link          = CBHelper.linkHome();
+		feedStruct.items         = qComments;
 
 		return feedGenerator.createFeed(feedStruct,columnMap);
 	}

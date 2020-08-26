@@ -8,9 +8,9 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI
-	property name="securityService" 	inject="securityService@cb";
-	property name="settingService" 		inject="settingService@cb";
-	property name="siteService" 		inject="siteService@cb";
+	property name="securityService"    	inject="securityService@cb";
+	property name="settingService"       		inject="settingService@cb";
+	property name="siteService"                		inject="siteService@cb";
 	property name="adminMenuService"	inject="adminMenuService@cb";
 
 	/**
@@ -53,7 +53,8 @@ component extends="coldbox.system.Interceptor"{
 		// Get the current working site object on PRC
 		prc.oCurrentSite            = siteService.getCurrentWorkingSite();
 		// Place global cb options on scope
-		prc.cbSettings              = settingService.getAllSettings( asStruct=true );
+		prc.cbSettings              = settingService.getAllSettings();
+		prc.cbSiteSettings          = settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
 		// Place widgets root location
 		prc.cbWidgetRoot            = getContextRoot() & event.getModuleRoot( "contentbox" ) & "/widgets";
 		// store admin menu service
@@ -74,7 +75,7 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** FORCE PASSWORD RESET *********************************************/
 
 		if(
-		 	!findNoCase( "contentbox-security:security", event.getCurrentEvent() )
+			!findNoCase( "contentbox-security:security", event.getCurrentEvent() )
 			&&
 			prc.oCurrentAuthor.getIsPasswordReset()
 		){
@@ -137,6 +138,7 @@ component extends="coldbox.system.Interceptor"{
 		// System
 		prc.xehSettings     = "#prc.cbAdminEntryPoint#.settings";
 		prc.xehSitesManager = "#prc.cbAdminEntryPoint#.sites";
+		prc.xehChangeSite   = "#prc.cbAdminEntryPoint#.sites.changeSite";
 		prc.xehSecurityRules= "#prc.cbAdminEntryPoint#.securityrules";
 		prc.xehRawSettings  = "#prc.cbAdminEntryPoint#.settings.raw";
 		prc.xehAutoUpdater  = "#prc.cbAdminEntryPoint#.autoupdates";

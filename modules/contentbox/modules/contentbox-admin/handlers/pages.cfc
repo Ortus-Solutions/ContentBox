@@ -93,13 +93,14 @@ component extends="baseContentHandler" {
 
 		// search entries with filters and all
 		var pageResults = pageService.search(
-			search      = rc.searchPages,
-			isPublished = rc.fStatus,
-			category    = rc.fCategories,
-			author      = rc.fAuthors,
-			creator     = rc.fCreators,
-			parent      = ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
-			sortOrder   = "order asc"
+			search     : rc.searchPages,
+			isPublished: rc.fStatus,
+			category   : rc.fCategories,
+			author     : rc.fAuthors,
+			creator    : rc.fCreators,
+			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
+			sortOrder  : "order asc",
+			siteId     : prc.oCurrentSite.getSiteId()
 		);
 		prc.pages      = pageResults.pages;
 		prc.pagesCount = pageResults.count;

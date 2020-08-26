@@ -48,9 +48,19 @@
 
 				<!-- Site Switcher -->
 				<span class="form-inline hidden-xs" id="div-siteswitcher" data-toggle="tooltip" data-placement="right" title="Site Switcher"/>
-					<select name="siteSwitcher" id="siteSwitcher" class="form-control input-sm">
+					<select
+						name="siteSwitcher"
+						id="siteSwitcher"
+						class="form-control input-sm"
+						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteId/' + this.value )"
+					>
 						<cfloop array="#prc.allSites#" index="thisSite">
-							<option value="#thisSite[ 'siteId' ]#">#thisSite[ 'name' ]#</option>
+							<option
+								value="#thisSite[ 'siteId' ]#"
+								<cfif thisSite[ 'siteId' ] == prc.oCurrentSite.getSiteId()>selected="selected"</cfif>
+							>
+								#thisSite[ 'name' ]#
+							</option>
 						</cfloop>
 					</select>
 				</span>

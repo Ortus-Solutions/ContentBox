@@ -4,7 +4,7 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI Injections
-	property name="cachebox" 			inject="cachebox";
+	property name="cachebox"       			inject="cachebox";
 	property name="settingService"		inject="id:settingService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="contentService"		inject="id:contentService@cb";
@@ -110,9 +110,9 @@ component extends="coldbox.system.Interceptor"{
 	 */
 	private function doCacheCleanup(required string cacheKey, any content){
 		// Get settings
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
 
 		// clear internal caches
 		cache.clearByKeySnippet( keySnippet=arguments.cacheKey, async=true );
@@ -126,8 +126,8 @@ component extends="coldbox.system.Interceptor"{
 		//#replacenocase( arguments.content.getSlug(), "/" & listLast( arguments.content.getSlug(), "/" ), "" )#
 		var wrapperKey = "cb-content-wrapper-#cgi.http_host#-#blogPrefix##arguments.content.getSlug()#/";
 		cache.clearByKeySnippet(
-			keySnippet 	= wrapperKey,
-			async 		= true
+			keySnippet = wrapperKey,
+			async      = true
 		);
 		// log
 		if( log.canInfo() ){

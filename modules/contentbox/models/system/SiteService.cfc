@@ -50,7 +50,7 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		return newCriteria().eq( "siteId", getCurrentWorkingSiteId() ).get();
+		return newCriteria().isEq( "siteId", autoCast( "siteId", getCurrentWorkingSiteId() ) ).get();
 	}
 
 	/**
@@ -58,7 +58,7 @@ component
 	 */
 	string function getDefaultSiteId(){
 		return newCriteria()
-			.eq( "slug", "default" )
+			.isEq( "slug", "default" )
 			.withProjections( property: "siteId" )
 			.get();
 	}
@@ -67,7 +67,7 @@ component
 	 * Get the default site object
 	 */
 	Site function getDefaultSite(){
-		return newCriteria().eq( "slug", "default" ).get();
+		return newCriteria().isEq( "slug", "default" ).get();
 	}
 
 	/**

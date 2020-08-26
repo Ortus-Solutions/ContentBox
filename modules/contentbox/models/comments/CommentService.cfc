@@ -8,12 +8,12 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="mailService"			inject="mailService@cbmailservices";
-	property name="renderer" 			inject="provider:ColdBoxRenderer";
-	property name="settingService"		inject="id:settingService@cb";
-	property name="CBHelper"			inject="id:CBHelper@cb";
-	property name="log"					inject="logbox:logger:{this}";
-	property name="interceptorService"	inject="coldbox:interceptorService";
+	property name="mailService"                        			inject="mailService@cbmailservices";
+	property name="renderer"                                  			inject="provider:ColdBoxRenderer";
+	property name="settingService"               		inject="id:settingService@cb";
+	property name="CBHelper"                                 			inject="id:CBHelper@cb";
+	property name="log"                                                					inject="logbox:logger:{this}";
+	property name="interceptorService"   	inject="coldbox:interceptorService";
 	property name="loginTrackerService"	inject="loginTrackerService@cb";
 
 	/**
@@ -52,19 +52,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	struct function findApprovedComments(
 		contentID,
 		contentType,
-		max=0,
-		offset=0,
+		max      =0,
+		offset   =0,
 		sortOrder="desc"
 	){
 		var results = { "count" : 0, "comments" : [] };
-		var c 		= newCriteria();
+		var c       = newCriteria();
 
 		// only approved comments
 		c.isTrue( "isApproved" );
 
 		// By Content?
 		if( !isNull( arguments.contentID ) AND len( arguments.contentID ) ){
-			c.eq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
+			c.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
 		}
 		// By Content Type Discriminator: class is a special hibernate deal
 		if( !isNull( arguments.contentType ) AND len( arguments.contentType ) ){
@@ -73,12 +73,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	 = c.count();
+		results.count    = c.count();
 		results.comments = c.list(
-			offset		= arguments.offset,
-			max			= arguments.max,
-			sortOrder	= "createdDate #arguments.sortOrder#",
-			asQuery		= false
+			offset   = arguments.offset,
+			max      = arguments.max,
+			sortOrder= "createdDate #arguments.sortOrder#",
+			asQuery  = false
 		);
 
 		return results;
@@ -90,8 +90,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @expirationDays Required level of staleness in days to delete (0=all unapproved)
 	 */
 	CommentService function deleteUnApprovedComments( numeric expirationDays=0 ) {
-		var hqlQuery 	= "from cbComment where isApproved = :approved";
-		var params 		= { "approved" = false };
+		var hqlQuery = "from cbComment where isApproved = :approved";
+		var params   = { "approved" = false };
 
 		// if we have an expirationDays setting greater than 0, add it to query for our date filter
 		if( arguments.expirationDays ) {
@@ -115,11 +115,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		transaction{
 			// Comment reference
-			var inComment = arguments.comment;
+			var inComment  = arguments.comment;
 			// get settings
-			var inSettings = settingService.getAllSettings( asStruct=true );
+			var inSettings = settingService.getAllSettings();
 			// results
-			var results = { moderated=true, messages=[] };
+			var results    = { moderated=true, messages=[] };
 
 			// Log the IP Address
 			inComment.setAuthorIP( settingService.getRealIP() );
@@ -166,13 +166,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
      * @comment The comment object
      */
     public void function sendSubscriptionNotifications( required any comment ) {
-        var content = arguments.comment.getRelatedContent();
+        var content            = arguments.comment.getRelatedContent();
         // get subscribers for this content item
-        var subscriptions 		= content.getCommentSubscriptions();
-        var settings 			= settingService.getAllSettings( asStruct=true );
-        var commentAuthorEmail 	= arguments.comment.getAuthorEmail();
+        var subscriptions      = content.getCommentSubscriptions();
+        var settings           = settingService.getAllSettings();
+        var commentAuthorEmail = arguments.comment.getAuthorEmail();
         // get body tokens; can reuse most for all emails
-        var bodyTokens = arguments.comment.getMemento();
+        var bodyTokens         = arguments.comment.getMemento();
         	bodyTokens[ "contentURL" ]    = CBHelper.linkContent( content );
             bodyTokens[ "contentTitle" ]  = arguments.comment.getParentTitle();
         // loop over subscribers
@@ -183,25 +183,25 @@ component extends="cborm.models.VirtualEntityService" singleton{
                 // get mail payload
                 bodyTokens[ "unsubscribeURL" ]= CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
                 // Send it baby!
-                var mail = mailService.newMail(
+                var mail                      = mailService.newMail(
                 	to			= subscriber.getSubscriberEmail(),
-					from		= settings.cb_site_outgoingEmail,
-					subject		= "New comment was added",
-					bodyTokens	= bodyTokens,
-					type		= "html",
-					server		= settings.cb_site_mail_server,
-					username	= settings.cb_site_mail_username,
-					password	= settings.cb_site_mail_password,
-					port		= settings.cb_site_mail_smtp,
-					useTLS		= settings.cb_site_mail_tls,
-					useSSL		= settings.cb_site_mail_ssl
+					from      = settings.cb_site_outgoingEmail,
+					subject   = "New comment was added",
+					bodyTokens= bodyTokens,
+					type      = "html",
+					server    = settings.cb_site_mail_server,
+					username  = settings.cb_site_mail_username,
+					password  = settings.cb_site_mail_password,
+					port      = settings.cb_site_mail_smtp,
+					useTLS    = settings.cb_site_mail_tls,
+					useSSL    = settings.cb_site_mail_ssl
 				);
 
                 // generate content for email from template
                 mail.setBody( renderer.$get().renderLayout(
-                    view	= "/contentbox/email_templates/comment_notification",
-                    layout	= "/contentbox/email_templates/layouts/email",
-                    args 	=  { gravatarEmail = commentAuthorEmail }
+                    view  = "/contentbox/email_templates/comment_notification",
+                    layout= "/contentbox/email_templates/layouts/email",
+                    args  =  { gravatarEmail = commentAuthorEmail }
                 ) );
                 // send it out
                 mailService.send( mail );
@@ -217,9 +217,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	private boolean function runModerationRules( required comment, required settings ){
 		// Comment reference
-		var inComment 	= arguments.comment;
-		var inSettings 	= arguments.settings;
-		var allowSave	= true;
+		var inComment = arguments.comment;
+		var inSettings= arguments.settings;
+		var allowSave = true;
 
 		// Not moderation, just approve and return
 		if( NOT settings.cb_comments_moderation ){
@@ -257,9 +257,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Regex matching of a list of entries against a comment and matching keyword list
 	*/
 	private boolean function anyKeywordMatch(comment,matchList){
-		var inComment 	= arguments.comment;
-		var del 		= chr(13) & chr(10);
-		var inList 		= listToArray(arguments.matchList,del);
+		var inComment = arguments.comment;
+		var del       = chr(13) & chr(10);
+		var inList    = listToArray(arguments.matchList,del);
 
 		for(var x=1; x lte arrayLen(inList); x++){
 
@@ -291,11 +291,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	private void function sendNotificationEmails( required comment, required settings ){
 		// Comment reference
-		var inComment 	= arguments.comment;
-		var inSettings 	= arguments.settings;
-		var outEmails	= inSettings.cb_site_email;
-		var subject		= "";
-		var template	= "";
+		var inComment = arguments.comment;
+		var inSettings= arguments.settings;
+		var outEmails = inSettings.cb_site_email;
+		var subject   = "";
+		var template  = "";
 
 		// Verify if we have active notifications, else just quit notification process
 		if( !inSettings.cb_comments_notify ){
@@ -308,13 +308,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// get mail payload
-		var bodyTokens = inComment.getMemento();
-		bodyTokens["whoisURL"] 		= inSettings.cb_comments_whoisURL;
-		bodyTokens["commentURL"] 	= CBHelper.linkComment( comment=inComment, ssl=settings.cb_site_ssl );
-		bodyTokens["deleteURL"] 	= CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["approveURL"] 	= CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["contentURL"] 	= CBHelper.linkContent( content=inComment.getRelatedContent(), ssl=settings.cb_site_ssl );
-		bodyTokens["contentTitle"] 	= inComment.getParentTitle();
+		var bodyTokens             = inComment.getMemento();
+		bodyTokens["whoisURL"]     = inSettings.cb_comments_whoisURL;
+		bodyTokens["commentURL"]   = CBHelper.linkComment( comment=inComment, ssl=settings.cb_site_ssl );
+		bodyTokens["deleteURL"]    = CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens["approveURL"]   = CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens["contentURL"]   = CBHelper.linkContent( content=inComment.getRelatedContent(), ssl=settings.cb_site_ssl );
+		bodyTokens["contentTitle"] = inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
 		if( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ){
@@ -328,24 +328,24 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// Send it baby!
 		var mail = mailservice.newMail(
-			to			= outEmails,
-			from		= settings.cb_site_outgoingEmail,
-			subject		= subject,
-			bodyTokens	= bodyTokens,
-			type		= "html",
-			server		= settings.cb_site_mail_server,
-			username	= settings.cb_site_mail_username,
-			password	= settings.cb_site_mail_password,
-			port		= settings.cb_site_mail_smtp,
-			useTLS		= settings.cb_site_mail_tls,
-			useSSL		= settings.cb_site_mail_ssl
+			to        = outEmails,
+			from      = settings.cb_site_outgoingEmail,
+			subject   = subject,
+			bodyTokens= bodyTokens,
+			type      = "html",
+			server    = settings.cb_site_mail_server,
+			username  = settings.cb_site_mail_username,
+			password  = settings.cb_site_mail_password,
+			port      = settings.cb_site_mail_smtp,
+			useTLS    = settings.cb_site_mail_tls,
+			useSSL    = settings.cb_site_mail_ssl
 		);
 
 		// generate content for email from template
 		mail.setBody( renderer.$get().renderLayout(
-			view 	= "/contentbox/email_templates/#template#",
-			layout	= "/contentbox/email_templates/layouts/email",
-			args  	= { gravatarEmail= inComment.getAuthorEmail() }
+			view  = "/contentbox/email_templates/#template#",
+			layout= "/contentbox/email_templates/layouts/email",
+			args  = { gravatarEmail= inComment.getAuthorEmail() }
 		));
 
 		// send it out
@@ -357,7 +357,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @text The target
 	 */
 	private function activateURLs( required text ){
-		return REReplaceNoCase( arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href=""\1\3"">\1\3</a> ", "ALL" );
+		return REReplaceNoCase( arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href="" \1\3 "">\1\3</a>
+ ", "ALL" );
 	}
 
 	/**
@@ -376,20 +377,20 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		search="",
 		isApproved,
 		contentID,
-		numeric max=0,
+		numeric max   =0,
 		numeric offset=0,
-		sortOrder = "createdDate DESC"
+		sortOrder     = "createdDate DESC"
 	){
-		var results 	= { "count" : 0, "comments" : [] };
-		var criteria 	= newCriteria();
+		var results  = { "count" : 0, "comments" : [] };
+		var criteria = newCriteria();
 
 		// isApproved filter
 		if( !isNull( arguments.isApproved ) AND arguments.isApproved NEQ "any" ){
-			criteria.eq( "isApproved", javaCast( "boolean", arguments.isApproved ) );
+			criteria.isEq( "isApproved", javaCast( "boolean", arguments.isApproved ) );
 		}
 		// Content Filter
 		if( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ){
-			criteria.eq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
+			criteria.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
 		}
 		// Search Criteria
 		if( len( arguments.search ) ){
@@ -402,7 +403,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	 = criteria.count();
+		results.count    = criteria.count();
 		results.comments = criteria.list(
 			offset    = arguments.offset,
 			max       = arguments.max,

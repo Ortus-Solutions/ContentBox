@@ -54,38 +54,42 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* page search returns struct with keys [pages,count]
-	* @search The search term to search on
-	* @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
-	* @author The authorID to filter on, pass 'all' to ignore filter
-	* @parent The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	* @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	* @category The categorie(s) to filter on. You can also pass 'all' or 'none'
-	* @max The maximum records to return
-	* @offset The offset on the pagination
-	* @sortOrder Sorting of the results, defaults to page title asc
-	* @searchActiveContent If true, it searches title and content on the page, else it just searches on title
-	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	*
-	* @returns struct = [pages,count]
-	*/
+	 * Search for pages according to many filters
+	 *
+	 * @search The search term to search on
+	 * @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
+	 * @author The authorID to filter on, pass 'all' to ignore filter
+	 * @parent The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category The categorie(s) to filter on. You can also pass 'all' or 'none'
+	 * @max The maximum records to return
+	 * @offset The offset on the pagination
+	 * @sortOrder Sorting of the results, defaults to page title asc
+	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
+	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	 * @siteId The site ID to filter on
+	 *
+	 * @returns struct = { pages, count }
+	 */
 	struct function search(
-		string search="",
-		string isPublished="any",
-		string author="all",
-		string creator="all",
+		string search      = "",
+		string isPublished = "any",
+		string author      = "all",
+		string creator     = "all",
 		string parent,
-		string category="all",
-		numeric max=0,
-		numeric offset=0,
-		string sortOrder="",
-		boolean searchActiveContent=true,
-		boolean showInSearch=false
+		string category            = "all",
+		numeric max                = 0,
+		numeric offset             = 0,
+		string sortOrder           = "",
+		boolean searchActiveContent= true,
+		boolean showInSearch       = false,
+		string siteId              = ""
 	){
 
-		var results = {};
+		var results = { "count" : 0, "pages" : [] };
 		// criteria queries
-		var c = newCriteria();
+		var c       = newCriteria();
+
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
 		if(
@@ -95,22 +99,32 @@ component extends="ContentService" singleton{
 		) {
 			c.createAlias( "activeContent", "ac" );
 		}
+
 		// only search shownInSearch bits
 		if( arguments.showInSearch ){
 			c.isTrue( "showInSearch" );
 		}
+
 		// isPublished filter
 		if( arguments.isPublished NEQ "any" ){
-			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
+
 		// Author Filter
 		if( arguments.author NEQ "all" ){
 			c.isEq( "ac.author.authorID", javaCast( "int", arguments.author ) );
 		}
+
 		// Creator Filter
 		if( arguments.creator NEQ "all" ){
 			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
 		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+		}
+
 		// Search Criteria
 		if( len( arguments.search ) ){
 			// Search with active content
@@ -128,10 +142,11 @@ component extends="ContentService" singleton{
 				);
 			}
 		}
+
 		// parent filter
 		if( structKeyExists( arguments, "parent" ) ){
 			if( len( trim( arguments.parent ) ) ){
-				c.eq( "parent.contentID", javaCast( "int",arguments.parent) );
+				c.isEq( "parent.contentID", javaCast( "int",arguments.parent) );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -162,13 +177,13 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "contentID" );
-		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+		results.count = c.count( "contentID" );
+		results.pages = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(
-								offset 		= arguments.offset,
-								max 		= arguments.max,
-								sortOrder 	= arguments.sortOrder,
-								asQuery 	= false
+								offset    = arguments.offset,
+								max       = arguments.max,
+								sortOrder = arguments.sortOrder,
+								asQuery   = false
 							);
 		return results;
 	}
@@ -185,17 +200,17 @@ component extends="ContentService" singleton{
 	* @sortOrder The sort order string, defaults to publisedDate DESC
 	*/
 	function findPublishedPages(
-		numeric max=0,
-		numeric offset=0,
+		numeric max      =0,
+		numeric offset   =0,
 		string searchTerm="",
-		string category="",
-		boolean asQuery=false,
+		string category  ="",
+		boolean asQuery  =false,
 		string parent,
 		boolean showInMenu,
 		string sortOrder="publishedDate DESC"
 	){
 		var results = {};
-		var c = newCriteria();
+		var c       = newCriteria();
 
 		// only published pages
 		c.isTrue( "isPublished" )
@@ -226,7 +241,7 @@ component extends="ContentService" singleton{
 		// parent filter
 		if( structKeyExists( arguments, "parent" ) ){
 			if( len( trim( arguments.parent ) ) ){
-				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+				c.isEq( "parent.contentID", javaCast( "int", arguments.parent ) );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -235,13 +250,13 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "contentID" );
-		results.pages 	= c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+		results.count = c.count( "contentID" );
+		results.pages = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(
-								offset 		= arguments.offset,
-								max 		= arguments.max,
-								sortOrder 	= arguments.sortOrder,
-								asQuery 	= arguments.asQuery
+								offset    = arguments.offset,
+								max       = arguments.max,
+								sortOrder = arguments.sortOrder,
+								asQuery   = arguments.asQuery
 							);
 
 		return results;

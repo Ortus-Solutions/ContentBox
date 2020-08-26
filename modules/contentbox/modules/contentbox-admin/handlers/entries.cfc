@@ -87,14 +87,15 @@ component extends="baseContentHandler" {
 
 		// search entries with filters and all
 		var entryResults = entryService.search(
-			search      = rc.searchEntries,
-			isPublished = rc.fStatus,
-			category    = rc.fCategories,
-			author      = rc.fAuthors,
-			creator     = rc.fCreators,
-			offset      = ( rc.showAll ? 0 : prc.paging.startRow - 1 ),
-			max         = ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
-			sortOrder   = "createdDate desc"
+			search     : rc.searchEntries,
+			isPublished: rc.fStatus,
+			category   : rc.fCategories,
+			author     : rc.fAuthors,
+			creator    : rc.fCreators,
+			offset     : ( rc.showAll ? 0 : prc.paging.startRow - 1 ),
+			max        : ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
+			sortOrder  : "createdDate desc",
+			siteId     : prc.oCurrentSite.getSiteId()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;

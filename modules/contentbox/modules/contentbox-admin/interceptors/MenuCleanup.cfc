@@ -22,7 +22,7 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_postPageSave( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
-		var menuItemsInNeed = criteria.eq( "contentSlug", "#arguments.data.originalSlug#" ).list();
+		var menuItemsInNeed = criteria.isEq( "contentSlug", "#arguments.data.originalSlug#" ).list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setContentSlug( arguments.data.page.getSlug() );
 			menuItemService.save( entity = menuItem );
@@ -34,7 +34,9 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_prePageRemove( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
-		var menuItemsInNeed = criteria.eq( "contentSlug", "#arguments.data.page.getSlug()#" ).list();
+		var menuItemsInNeed = criteria
+			.isEq( "contentSlug", "#arguments.data.page.getSlug()#" )
+			.list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setContentSlug( javacast( "null", "" ) );
 			menuItem.setActive( false );
@@ -47,7 +49,7 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_postEntrySave( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
-		var menuItemsInNeed = criteria.eq( "contentSlug", "#arguments.data.originalSlug#" ).list();
+		var menuItemsInNeed = criteria.isEq( "contentSlug", "#arguments.data.originalSlug#" ).list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setContentSlug( arguments.data.entry.getSlug() );
 			menuItemService.save( entity = menuItem );
@@ -60,7 +62,7 @@ component extends="coldbox.system.Interceptor" {
 	function cbadmin_preEntryRemove( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
 		var menuItemsInNeed = criteria
-			.eq( "contentSlug", "#arguments.data.entry.getSlug()#" )
+			.isEq( "contentSlug", "#arguments.data.entry.getSlug()#" )
 			.list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setContentSlug( javacast( "null", "" ) );
@@ -75,7 +77,7 @@ component extends="coldbox.system.Interceptor" {
 	function cbadmin_postMenuSave( required any event, required struct data ){
 		// Update all affected menuitems if any on slug updates
 		var criteria  = menuItemService.newCriteria();
-		var menuItems = criteria.eq( "menuSlug", "#arguments.data.originalSlug#" ).list();
+		var menuItems = criteria.isEq( "menuSlug", "#arguments.data.originalSlug#" ).list();
 		for ( var item in menuItems ) {
 			item.setMenuSlug( arguments.data.menu.getSlug() );
 			menuItemService.save( entity = item );
@@ -87,7 +89,7 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_preMenuRemove( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
-		var menuItemsInNeed = criteria.eq( "menuSlug", "#arguments.data.menu.getSlug()#" ).list();
+		var menuItemsInNeed = criteria.isEq( "menuSlug", "#arguments.data.menu.getSlug()#" ).list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setMenuSlug( javacast( "null", "" ) );
 			menuItem.setActive( false );
@@ -114,7 +116,7 @@ component extends="coldbox.system.Interceptor" {
 			var matcher   = settings.mediaPath & oldFileName;
 			// Update all affected menuitems if any on slug updates
 			var criteria  = menuItemService.newCriteria();
-			var menuItems = criteria.eq( "mediaPath", "#matcher#" ).list();
+			var menuItems = criteria.isEq( "mediaPath", "#matcher#" ).list();
 			for ( var item in menuItems ) {
 				item.setMediaPath( settings.mediaPath & "/" & arguments.data.newName );
 				menuItemService.save( entity = item );
@@ -126,7 +128,7 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function fb_preFileRemoval( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
-		var menuItemsInNeed = criteria.eq( "mediaPath", "#arguments.data.path#" ).list();
+		var menuItemsInNeed = criteria.isEq( "mediaPath", "#arguments.data.path#" ).list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setMediaPath( javacast( "null", "" ) );
 			menuItem.setActive( false );

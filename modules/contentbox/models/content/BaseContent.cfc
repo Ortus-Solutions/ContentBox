@@ -1328,7 +1328,7 @@ component 	persistent="true"
 	* Verify we can do content caching on this content object using global and local rules
 	*/
 	boolean function canCacheContent(){
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 
 		// check global caching first
 		if( ( getContentType() eq "page" AND settings.cb_content_caching ) OR
@@ -1344,7 +1344,7 @@ component 	persistent="true"
 	* Render content out using translations, caching, etc.
 	*/
 	any function renderContent() profile{
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings();
 
 		// caching enabled?
 		if( canCacheContent() ){

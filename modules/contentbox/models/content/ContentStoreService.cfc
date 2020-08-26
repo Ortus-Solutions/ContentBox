@@ -54,7 +54,7 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	 * Content search returns struct with keys [content,count]
+	 * Search for content store items according to many filters
 	 *
 	 * @search The search term to search on
 	 * @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
@@ -68,27 +68,29 @@ component extends="ContentService" singleton{
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
+	 * @siteId The site ID to filter on
 	 *
-	 * @returns struct = { pages, count }
+	 * @returns struct = { content, count }
 	 */
 	struct function search(
-		string search="",
-		string isPublished="any",
-		string author="all",
-		string creator="all",
+		string search      = "",
+		string isPublished = "any",
+		string author      = "all",
+		string creator     = "all",
 		string parent,
-		string category="all",
-		numeric max=0,
-		numeric offset=0,
-		string sortOrder="",
-		boolean searchActiveContent=true,
-		boolean showInSearch=false,
-		string slugPrefix=""
+		string category            = "all",
+		numeric max                = 0,
+		numeric offset             = 0,
+		string sortOrder           = "",
+		boolean searchActiveContent= true,
+		boolean showInSearch       = false,
+		string slugPrefix          = "",
+		string siteId              = ""
 	){
 
-		var results = { "count" : 0, "pages" : [] };
+		var results = { "count" : 0, "content" : [] };
 		// criteria queries
-		var c = newCriteria();
+		var c       = newCriteria();
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
 		if(
@@ -106,7 +108,7 @@ component extends="ContentService" singleton{
 
 		// isPublished filter
 		if( arguments.isPublished NEQ "any" ){
-			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
 
 		// Author Filter
@@ -117,6 +119,11 @@ component extends="ContentService" singleton{
 		// Creator Filter
 		if( arguments.creator NEQ "all" ){
 			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
+		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
 		}
 
 		// Search Criteria
@@ -142,9 +149,9 @@ component extends="ContentService" singleton{
 		// parent filter
 		if( !isNull( arguments.parent ) ){
 			if( isSimpleValue( arguments.parent ) and len( arguments.parent ) ){
-				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+				c.isEq( "parent.contentID", javaCast( "int", arguments.parent ) );
 			} else if( isObject( arguments.parent ) ){
-				c.eq( "parent", arguments.parent );
+				c.isEq( "parent", arguments.parent );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -180,13 +187,13 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "contentID" );
+		results.count   = c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(
-								offset 		= arguments.offset,
-								max 		= arguments.max,
-								sortOrder 	= arguments.sortOrder,
-								asQuery 	= false
+								offset    : arguments.offset,
+								max       : arguments.max,
+								sortOrder : arguments.sortOrder,
+								asQuery   : false
 							);
 		return results;
 	}

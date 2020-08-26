@@ -1,34 +1,41 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manages blog entry content
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manages blog entry content
+ */
 component extends="ContentService" singleton{
 
 	// Inject generic content service
 	property name="contentService" inject="id:ContentService@cb";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	EntryService function init(){
 		// init it
-		super.init(entityName="cbEntry",useQueryCaching=true);
+		super.init( entityName="cbEntry", useQueryCaching=true );
 
 		return this;
 	}
 
 	/**
-	* Save an entry
-	*
-	* @return EntryService
-	*/
+	 * Save an entry
+	 *
+	 * @entry The entry to save
+	 * @transactional Transactional or not, defaults to true
+	 *
+	 * @return EntryService
+	 */
 	function saveEntry( required any entry, boolean transactional=true ){
 
 		// Verify uniqueness of slug
-		if( !contentService.isSlugUnique( slug=arguments.entry.getSlug(), contentID=arguments.entry.getContentID() ) ){
+		if( !contentService.isSlugUnique(
+				slug      : arguments.entry.getSlug(),
+				contentID : arguments.entry.getContentID()
+			)
+		){
 			// make slug unique
 			arguments.entry.setSlug( getUniqueSlugHash( arguments.entry.getSlug() ) );
 		}
@@ -40,35 +47,38 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* entry search returns struct with keys [entries,count]
-	* @search The search term to search on
-	* @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
-	* @author The authorID to filter on, pass 'all' to ignore filter
-	* @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	* @category The categorie(s) to filter on. You can also pass 'all' or 'none'
-	* @max The maximum records to return
-	* @offset The offset on the pagination
-	* @sortOrder Sorting of the results, defaults to page title asc
-	* @searchActiveContent If true, it searches title and content on the page, else it just searches on title
-	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	*
-	* @returns struct = [entries,count]
-	*/
+	 * Search for blog entries according to many filters
+	 *
+	 * @search The search term to search on
+	 * @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore. Default is `any`
+	 * @author The authorID to filter on, pass 'all' to ignore filter
+	 * @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category The categorie(s) to filter on. You can also pass 'all' or 'none'
+	 * @max The maximum records to return
+	 * @offset The offset on the pagination
+	 * @sortOrder Sorting of the results, defaults to page title asc
+	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
+	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	 * @siteId The site ID to filter on
+	 *
+	 * @returns struct of { entries, count }
+	 */
 	struct function search(
-		string search="",
-		string isPublished="any",
-		string author="all",
-		string creator="all",
-		string category="all",
-		numeric max=0,
-		numeric offset=0,
-		string sortOrder="",
+		string search              ="",
+		string isPublished         ="any",
+		string author              ="all",
+		string creator             ="all",
+		string category            ="all",
+		numeric max                =0,
+		numeric offset             =0,
+		string sortOrder           ="",
 		boolean searchActiveContent=true,
-		boolean showInSearch=false
+		boolean showInSearch       =false,
+		string siteId              = ""
 	){
-		var results = {};
+		var results = { "count" : 0, "entries" : [] };
 		// criteria queries
-		var c = newCriteria();
+		var c       = newCriteria();
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
 		if(
@@ -84,7 +94,7 @@ component extends="ContentService" singleton{
 		}
 		// isPublished filter
 		if( arguments.isPublished NEQ "any" ){
-			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
 		// Author Filter
 		if( arguments.author NEQ "all" ){
@@ -99,8 +109,10 @@ component extends="ContentService" singleton{
 			// Search with active content
 			if( arguments.searchActiveContent ){
 				// like disjunctions
-				c.or( c.restrictions.like( "title", "%#arguments.search#%" ),
-					  c.restrictions.like( "ac.content", "%#arguments.search#%" ) );
+				c.or(
+					c.restrictions.like( "title", "%#arguments.search#%" ),
+					c.restrictions.like( "ac.content", "%#arguments.search#%" )
+				);
 			} else {
 				c.like( "title", "%#arguments.search#%" );
 			}
@@ -118,6 +130,10 @@ component extends="ContentService" singleton{
 					.isIn( "cats.categoryID", JavaCast( "java.lang.Integer[]", [ arguments.category ] ) );
 			}
 		}
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+		}
 
 		// DETERMINE SORT ORDERS
 		// If modified Date
@@ -130,16 +146,17 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "contentID" );
-		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=false );
+		results.count   = c.count( "contentID" );
+		results.entries = c
+			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+			.list( offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=false );
 
 		return results;
 	}
 
 	/**
-	* Get a query report of entries archive
-	*/
+	 * Get a query report of entries archive
+	 */
 	function getArchiveReport(){
 		// we use HQL so we can be DB independent using the map() hql function thanks to John Wish, you rock!
 		var hql = "SELECT new map( count(*) as count, YEAR(publishedDate) as year, MONTH(publishedDate) as month )
@@ -149,7 +166,7 @@ component extends="ContentService" singleton{
 				    AND publishedDate <= :now
 				  GROUP BY YEAR(publishedDate), MONTH(publishedDate)
 				  ORDER BY 2 DESC, 3 DESC";
-		var params = {};
+		var params      = {};
 		params[ "now" ] = now();
 		// run report
 		return executeQuery( query=hql, params=params, asQuery=false );
@@ -159,19 +176,19 @@ component extends="ContentService" singleton{
 	* Find published entries by date filters
 	*/
 	function findPublishedEntriesByDate(
-		numeric year=0,
-		numeric month=0,
-		numeric day=0,
-		numeric max=0,
-		numeric offset=0,
+		numeric year   =0,
+		numeric month  =0,
+		numeric day    =0,
+		numeric max    =0,
+		numeric offset =0,
 		boolean asQuery=false
 	){
 		var results = {};
-		var hql = "FROM cbEntry
+		var hql     = "FROM cbEntry
 				  WHERE isPublished = true
 				    AND passwordProtection = ''
 				    AND publishedDate <= :now";
-		var params = {};
+		var params      = {};
 		params[ "now" ] = now();
 
 		// year lookup mandatory
@@ -194,20 +211,20 @@ component extends="ContentService" singleton{
 
 		// Get Count
 		results.count = executeQuery(
-			query	= "select count( * ) #hql#",
-			params	= params,
-			max		= 1,
-			asQuery	= false
+			query  = "select count( * ) #hql#",
+			params = params,
+			max    = 1,
+			asQuery= false
 		)[1];
 		// Add Ordering
 		hql &= " ORDER BY publishedDate DESC";
 		// find entries
 		results.entries = executeQuery(
-			query	= hql,
-			params	= params,
-			max		= arguments.max,
-			offset	= arguments.offset,
-			asQuery	= arguments.asQuery
+			query  = hql,
+			params = params,
+			max    = arguments.max,
+			offset = arguments.offset,
+			asQuery= arguments.asQuery
 		);
 
 		return results;
@@ -226,16 +243,15 @@ component extends="ContentService" singleton{
 	 * @return struct of { count, entries }
 	 */
 	function findPublishedEntries(
-		numeric max=0,
-		numeric offset=0,
+		numeric max      =0,
+		numeric offset   =0,
 		string searchTerm="",
-		string category="",
-		boolean asQuery=false,
-		string sortOrder="publishedDate DESC"
+		string category  ="",
+		boolean asQuery  =false,
+		string sortOrder ="publishedDate DESC"
 	){
 		var results = {};
-		var c = newCriteria();
-
+		var c       = newCriteria();
 
 
 		// Category Filter
@@ -261,7 +277,7 @@ component extends="ContentService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "contentID" );
+		results.count   = c.count( "contentID" );
 		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(
 								offset    = arguments.offset,

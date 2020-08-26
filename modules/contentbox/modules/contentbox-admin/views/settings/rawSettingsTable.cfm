@@ -5,6 +5,7 @@
 		<tr>
 			<th width="280">Name</th>
 			<th>Value</th>
+			<th width="80">Site</th>
 			<th class="text-center" width="80">Core</th>
 			<th width="80" class="text-center {sorter:false}">Actions</th>
 		</tr>
@@ -31,6 +32,13 @@
 					)#
 				<cfelse>
 					#encodeForHTML( setting.getValue() )#
+				</cfif>
+			</td>
+			<td>
+				<cfif setting.hasSite()>
+					#setting.getSite().getSlug()#
+				<cfelse>
+					---
 				</cfif>
 			</td>
 			<td class="text-center">

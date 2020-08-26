@@ -150,13 +150,16 @@ component {
 		 * ContentBox Runtime Overrides
 		 * --------------------------------------------------------------------------
 		 * You can override any ContentBox site setting by entering them below according
-		 * to site name.
+		 * to site name or top level for global
 		 */
 		"contentbox" = {
-			// Runtime Settings Override by site slug
 			"settings" : {
-				// Default site
-				"default" : {}
+				// Global settings
+				"global" : {},
+				// Site specific settings according to site slug
+				"sites" : {
+					// siteSlug : { ... }
+				}
 			}
 		};
 

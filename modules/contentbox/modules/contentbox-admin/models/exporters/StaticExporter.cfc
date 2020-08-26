@@ -1,22 +1,22 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Static content exporter service
-*/
-component accessors=true threadSafe singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Static content exporter service
+ */
+component accessors=true threadSafe singleton {
 
 	// DI
-	property name="settingService" 		inject="SettingService@cb";
-	property name="pageService" 		inject="PageService@cb";
-	property name="entryService" 		inject="entryService@cb";
-	property name="themeService" 		inject="ThemeService@cb";
-	property name="categoryService" 	inject="CategoryService@cb";
-	property name="uiConfig" 			inject="coldbox:moduleconfig:contentbox-ui";
-	property name="interceptorService" 	inject="coldbox:interceptorService";
-	property name="zipUtil"             inject="zipUtil@cb";
-	property name="Renderer"            inject="Provider:Renderer@coldbox";
+	property name="settingService"     inject="SettingService@cb";
+	property name="pageService"        inject="PageService@cb";
+	property name="entryService"       inject="entryService@cb";
+	property name="themeService"       inject="ThemeService@cb";
+	property name="categoryService"    inject="CategoryService@cb";
+	property name="uiConfig"           inject="coldbox:moduleconfig:contentbox-ui";
+	property name="interceptorService" inject="coldbox:interceptorService";
+	property name="zipUtil"            inject="zipUtil@cb";
+	property name="Renderer"           inject="Provider:Renderer@coldbox";
 
 	/**
 	 * Constructor
@@ -37,24 +37,25 @@ component accessors=true threadSafe singleton{
 	 * @return struct with keys: { exportLog:builder, exportDirectory, exportArchive }
 	 */
 	struct function export(
-		exportDirectory = "#getTempDirectory()#/cbsite",
+		exportDirectory     = "#getTempDirectory()#/cbsite",
 		boolean includeBlog = true,
 		modifiedDate,
 		required event,
 		required rc,
 		required prc
 	){
-		var lb = chr( 13 ) & chr( 10 );
+		var lb      = chr( 13 ) & chr( 10 );
 		var results = {
-			exportLog 		= createObject( "java", "java.lang.StringBuilder" )
-				.init( 'Starting static site generation with the following options: #arguments.toString()#. #lb#' ),
-			exportDirectory = arguments.exportDirectory,
-			exportFile 		= getTempDirectory() & "/" & createUUID() & ".zip"
+			exportLog : createObject( "java", "java.lang.StringBuilder" ).init(
+				"Starting static site generation with the following options: #arguments.toString()#. #lb#"
+			),
+			exportDirectory : arguments.exportDirectory,
+			exportFile      : getTempDirectory() & "/" & createUUID() & ".zip"
 		};
-		var allSettings = variables.settingService.getAllSettings( asStruct=true );
+		var allSettings = variables.settingService.getAllSettings();
 
 		// Create export directory
-		if( directoryExists( arguments.exportDirectory ) ){
+		if ( directoryExists( arguments.exportDirectory ) ) {
 			directoryDelete( arguments.exportDirectory, true );
 		}
 		directoryCreate( arguments.exportDirectory );
@@ -63,103 +64,115 @@ component accessors=true threadSafe singleton{
 
 		// ************ Prepare as if we are doing a UI request ******************
 		// store UI module root
-		arguments.prc.cbRoot = getContextRoot() & arguments.event.getModuleRoot( 'contentbox' );
+		arguments.prc.cbRoot        = getContextRoot() & arguments.event.getModuleRoot( "contentbox" );
 		// store module entry point
-		arguments.prc.cbEntryPoint 	= variables.uiConfig.entryPoint;
+		arguments.prc.cbEntryPoint  = variables.uiConfig.entryPoint;
 		// Place global cb options on scope
-		arguments.prc.cbSettings 	= allSettings;
+		arguments.prc.cbSettings    = allSettings;
 		// Place the default theme
-		arguments.prc.cbTheme 		= arguments.prc.cbSettings.cb_site_theme;
+		arguments.prc.cbTheme       = arguments.prc.cbSettings.cb_site_theme;
 		// Place the default theme record
 		arguments.prc.cbThemeRecord = themeService.getThemeRecord( arguments.prc.cbTheme );
 		// Place theme root location
-		arguments.prc.cbthemeRoot 	= arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
+		arguments.prc.cbthemeRoot   = arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
 		// Place widgets root location
-		arguments.prc.cbWidgetRoot 	= arguments.prc.cbRoot & "/widgets";
+		arguments.prc.cbWidgetRoot  = arguments.prc.cbRoot & "/widgets";
 		// Marker to tell layouts we are in static export mode
-		arguments.prc.staticExport 	= true;
+		arguments.prc.staticExport  = true;
 		/******************************************************************************/
 
 		// Copy over content media
-		directoryCopy( expandPath( allSettings.cb_media_directoryRoot ), arguments.exportDirectory & "/__media", true );
+		directoryCopy(
+			expandPath( allSettings.cb_media_directoryRoot ),
+			arguments.exportDirectory & "/__media",
+			true
+		);
 		// Copy over the theme
-		directoryCopy( arguments.prc.cbThemeRecord.path, arguments.exportDirectory & "/__theme", true );
+		directoryCopy(
+			arguments.prc.cbThemeRecord.path,
+			arguments.exportDirectory & "/__theme",
+			true
+		);
 
 		// Create Blog repository
-		if( arguments.includeBlog ){
+		if ( arguments.includeBlog ) {
 			var blogExportDir = arguments.exportDirectory & "/" & allSettings.cb_site_blog_entrypoint;
 			directoryCreate( blogExportDir );
 		}
 
 		// Announce export
-		interceptorService.announce( "cbadmin_preStaticSiteExport", { options = arguments } );
+		interceptorService.announce( "cbadmin_preStaticSiteExport", { options : arguments } );
 
 		// Get root pages, we need objects in order to render out the site
-		var aPages = pageService.search(
-			parent		= "",
-			sortOrder	= "order asc"
-		);
+		var aPages = pageService.search( parent = "", sortOrder = "order asc" );
 
 		// Process Homepage
 		var oHomePage = pageService.findBySlug( allSettings.cb_site_homepage );
-		if( !isNull( oHomePage ) ){
+		if ( !isNull( oHomePage ) ) {
 			// put in scope for fake access
 			prc.page = oHomePage;
 			// process it
 			processStaticPage(
-				content 	= oHomePage,
-				isHome 		= true,
-				event 		= event,
-				rc 			= rc,
-				prc 		= prc,
-				exportDir 	= arguments.exportDirectory,
-				settings 	= allSettings
+				content   = oHomePage,
+				isHome    = true,
+				event     = event,
+				rc        = rc,
+				prc       = prc,
+				exportDir = arguments.exportDirectory,
+				settings  = allSettings
 			);
 		}
 
 		// Process all Pages
-		for( var thisPage in aPages.pages ){
+		for ( var thisPage in aPages.pages ) {
 			// put in scope for fake access
 			prc.page = thisPage;
 			// process it
 			processStaticPage(
-				content 	= thisPage,
-				isHome 		= false,
-				event 		= event,
-				rc 			= rc,
-				prc 		= prc,
-				exportDir 	= arguments.exportDirectory,
-				settings 	= allSettings
+				content   = thisPage,
+				isHome    = false,
+				event     = event,
+				rc        = rc,
+				prc       = prc,
+				exportDir = arguments.exportDirectory,
+				settings  = allSettings
 			);
 		}
 
 		// Process blog entries
-		if( arguments.includeBlog ){
-			var aEntries = entryService.search();
+		if ( arguments.includeBlog ) {
+			var aEntries   = entryService.search();
 			// Put all categories in prc for processing
-			prc.categories = categoryService.list ( sortOrder="category", asQuery=false );
+			prc.categories = categoryService.list( sortOrder = "category", asQuery = false );
 			// Process all entries
-			for( var thisEntry in aEntries.entries ){
+			for ( var thisEntry in aEntries.entries ) {
 				// put in scope for fake access
-				prc.entry 		= thisEntry;
-				prc.comments 	= prc.entry.getComments();
+				prc.entry    = thisEntry;
+				prc.comments = prc.entry.getComments();
 				// process it
 				processStaticEntry(
-					content 	= thisEntry,
-					event 		= event,
-					rc 			= rc,
-					prc 		= prc,
-					exportDir 	= blogExportDir,
-					settings 	= allSettings
+					content   = thisEntry,
+					event     = event,
+					rc        = rc,
+					prc       = prc,
+					exportDir = blogExportDir,
+					settings  = allSettings
 				);
 			}
 		}
 
 		// zip archive
-		zipUtil.addFiles( zipFilePath=results.exportFile, directory=arguments.exportDirectory, recurse=true );
+		zipUtil.addFiles(
+			zipFilePath = results.exportFile,
+			directory   = arguments.exportDirectory,
+			recurse     = true
+		);
 
 		// Announce export
-		interceptorService.announce( "cbadmin_postStaticSiteExport", { options = arguments, results = results } );
+		interceptorService.announce(
+			"cbadmin_postStaticSiteExport",
+			{ options : arguments, results : results }
+		);
 
 		// Remove creation Folder now
 		directoryDelete( arguments.exportDirectory, true );
@@ -186,38 +199,51 @@ component accessors=true threadSafe singleton{
 		required exportDir,
 		required settings
 	){
-		var allSettings 	= arguments.settings;
-		var outputContent 	= "";
-		var themeName 		= allSettings.cb_site_theme;
+		var allSettings   = arguments.settings;
+		var outputContent = "";
+		var themeName     = allSettings.cb_site_theme;
 
 		// announce event
 		interceptorService.announce( "cbui_preRequest" );
 
 		// Render out entry
 		arguments.event.setView(
-			view = "#themeName#/views/entry",
+			view   = "#themeName#/views/entry",
 			module = arguments.prc.cbThemeRecord.module
 		);
 		outputContent = renderer.renderLayout(
-			layout 		= "#themeName#/layouts/blog",
-			module 		= arguments.prc.cbThemeRecord.module
+			layout = "#themeName#/layouts/blog",
+			module = arguments.prc.cbThemeRecord.module
 		);
 
-		//****** Content Conversions ******
+		// ****** Content Conversions ******
 		// replace base tags
-		outputContent = REReplaceNoCase( outputContent, "<base [^>]+?>", "", "all" );
+		outputContent = reReplaceNoCase( outputContent, "<base [^>]+?>", "", "all" );
 		// replace local server addresses
-		outputContent = replaceNoCase( outputContent, arguments.event.buildLink( '' ), "/", "all" );
+		outputContent = replaceNoCase(
+			outputContent,
+			arguments.event.buildLink( "" ),
+			"/",
+			"all"
+		);
 		// replace theme root to new static locations
-		outputContent = replaceNoCase( outputContent, arguments.prc.cbThemeRoot, "/__theme/#themeName#", "all" );
-		//**********************************
+		outputContent = replaceNoCase(
+			outputContent,
+			arguments.prc.cbThemeRoot,
+			"/__theme/#themeName#",
+			"all"
+		);
+		// **********************************
 
 		// Create child container, just in case
-		if( !directoryExists( exportDir & "/" & arguments.content.getSlug() ) ){
+		if ( !directoryExists( exportDir & "/" & arguments.content.getSlug() ) ) {
 			directoryCreate( exportDir & "/" & arguments.content.getSlug() );
 		}
 		// Write it out
-		fileWrite( arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html", outputContent );
+		fileWrite(
+			arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html",
+			outputContent
+		);
 	};
 
 	/**
@@ -232,69 +258,82 @@ component accessors=true threadSafe singleton{
 	 */
 	private function processStaticPage(
 		required content,
-		boolean isHome=false,
+		boolean isHome = false,
 		required event,
 		required rc,
 		required prc,
 		required exportDir,
 		required settings
 	){
-		var allSettings 	= arguments.settings;
-		var thisLayout 		= arguments.content.getLayoutWithInheritance();
-		var outputContent 	= "";
-		var themeName 		= allSettings.cb_site_theme;
+		var allSettings   = arguments.settings;
+		var thisLayout    = arguments.content.getLayoutWithInheritance();
+		var outputContent = "";
+		var themeName     = allSettings.cb_site_theme;
 
 		// announce event
 		interceptorService.announce( "cbui_preRequest" );
 
 		// Verify No Layout
-		if( thisLayout eq '-no-layout-' ){
+		if ( thisLayout eq "-no-layout-" ) {
 			outputContent = arguments.content.renderContent();
 		} else {
 			arguments.event.setView(
-				view 	= "#themeName#/views/page",
-				module 	= arguments.prc.cbThemeRecord.module
+				view   = "#themeName#/views/page",
+				module = arguments.prc.cbThemeRecord.module
 			);
 			outputContent = renderer.renderLayout(
-				layout 		= "#themeName#/layouts/#thisLayout#",
-				module 		= arguments.prc.cbThemeRecord.module
+				layout = "#themeName#/layouts/#thisLayout#",
+				module = arguments.prc.cbThemeRecord.module
 			);
 		}
 
-		//****** Content Conversions ******
+		// ****** Content Conversions ******
 		// replace base tags
-		outputContent = REReplaceNoCase( outputContent, "<base [^>]+?>", "", "all" );
+		outputContent = reReplaceNoCase( outputContent, "<base [^>]+?>", "", "all" );
 		// replace local server addresses
-		outputContent = replaceNoCase( outputContent, arguments.event.buildLink( '' ), "/", "all" );
+		outputContent = replaceNoCase(
+			outputContent,
+			arguments.event.buildLink( "" ),
+			"/",
+			"all"
+		);
 		// replace theme root to new static locations
-		outputContent = replaceNoCase( outputContent, arguments.prc.cbThemeRoot, "/__theme", "all" );
-		//**********************************
+		outputContent = replaceNoCase(
+			outputContent,
+			arguments.prc.cbThemeRoot,
+			"/__theme",
+			"all"
+		);
+		// **********************************
 
 		// Create child container, just in case
-		if( !directoryExists( exportDir & "/" & arguments.content.getSlug() ) ){
+		if ( !directoryExists( exportDir & "/" & arguments.content.getSlug() ) ) {
 			directoryCreate( exportDir & "/" & arguments.content.getSlug() );
 		}
 
 		// Write out either the home page or normal page
-		if( arguments.isHome ){
+		if ( arguments.isHome ) {
 			fileWrite( arguments.exportDir & "/index.html", outputContent );
 		} else {
-			fileWrite( arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html", outputContent );
+			fileWrite(
+				arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html",
+				outputContent
+			);
 		}
 
 		// Do we have children
-		if( arguments.content.hasChild() ){
+		if ( arguments.content.hasChild() ) {
 			// iterate over children and process them
-			for( var thisChild in arguments.content.getChildren() ){
+			for ( var thisChild in arguments.content.getChildren() ) {
 				// process it
 				processStaticPage(
-					content 	= thisChild,
-					isHome 		= false,
-					event 		= event,
-					rc 			= rc,
-					prc 		= prc,
-					exportDir 	= exportDir,
-					settings 	= allSettings
+					content   = thisChild,
+					isHome    = false,
+					event     = event,
+					rc        = rc,
+					prc       = prc,
+					exportDir = exportDir,
+					settings  = allSettings
 				);
 			}
 		}

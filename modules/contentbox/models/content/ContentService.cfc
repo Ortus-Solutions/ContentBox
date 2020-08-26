@@ -8,23 +8,23 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"				inject="id:settingService@cb";
-	property name="cacheBox"					inject="cachebox";
-	property name="log"							inject="logbox:logger:{this}";
-	property name="customFieldService" 	 		inject="customFieldService@cb";
-	property name="categoryService" 	 		inject="categoryService@cb";
-	property name="commentService" 	 			inject="commentService@cb";
-	property name="contentVersionService"		inject="contentVersionService@cb";
-	property name="authorService"				inject="authorService@cb";
-	property name="contentStoreService"			inject="contentStoreService@cb";
-	property name="pageService"					inject="pageService@cb";
-	property name="entryService"				inject="entryService@cb";
-	property name="populator"					inject="wirebox:populator";
-	property name="systemUtil"					inject="SystemUtil@cb";
-	property name="statsService"				inject="statsService@cb";
-	property name="dateUtil"					inject="DateUtil@cb";
+	property name="settingService"                        				inject="id:settingService@cb";
+	property name="cacheBox"                                    					inject="cachebox";
+	property name="log"                                              							inject="logbox:logger:{this}";
+	property name="customFieldService"                 	 		inject="customFieldService@cb";
+	property name="categoryService"                       	 		inject="categoryService@cb";
+	property name="commentService"                         	 			inject="commentService@cb";
+	property name="contentVersionService"          		inject="contentVersionService@cb";
+	property name="authorService"                          				inject="authorService@cb";
+	property name="contentStoreService"              			inject="contentStoreService@cb";
+	property name="pageService"                              					inject="pageService@cb";
+	property name="entryService"                            				inject="entryService@cb";
+	property name="populator"                                  					inject="wirebox:populator";
+	property name="systemUtil"                                					inject="SystemUtil@cb";
+	property name="statsService"                            				inject="statsService@cb";
+	property name="dateUtil"                                    					inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService" 			inject="subscriberService@cb";
+	property name="subscriberService"                   			inject="subscriberService@cb";
 
 	/**
 	* Constructor
@@ -42,9 +42,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllCaches( boolean async=false ){
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clearByKeySnippet( keySnippet="cb-content", async=arguments.async );
 		return this;
 	}
@@ -54,9 +54,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllSitemapCaches( boolean async=false ){
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clearByKeySnippet( keySnippet="cb-content-sitemap", async=arguments.async );
 		return this;
 	}
@@ -66,9 +66,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearAllPageWrapperCaches( boolean async=false ){
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clearByKeySnippet( keySnippet="cb-content-wrapper", async=arguments.async );
 		return this;
 	}
@@ -79,9 +79,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapperCaches( required any slug, boolean async=false ){
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clearByKeySnippet( keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#", async=arguments.async );
 		return this;
 	}
@@ -92,41 +92,46 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @async Run it asynchronously or not, defaults to false
 	*/
 	function clearPageWrapper( required any slug, boolean async=false ){
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
 		cache.clear( "cb-content-wrapper-#cgi.http_host#-#arguments.slug#/" );
 		return this;
 	}
 
 	/**
-	* Searches published content with cool paramters, remember published content only
-	* @searchTerm The search term to search
-	* @max The maximum number of records to paginate
-	* @offset The offset in the pagination
-	* @asQuery Return as query or array of objects, defaults to array of objects
-	* @sortOrder The sorting of the search results, defaults to publishedDate DESC
-	* @isPublished Search for published, non-published or both content objects [true, false, 'all']
-	* @searchActiveContent Search only content titles or both title and active content. Defaults to both.
-	* @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
-	* @excludeIDs List of IDs to exclude from search
-	* @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
-	*/
+	 * Searches published content with cool paramters, remember published content only
+	 *
+	 * @searchTerm The search term to search
+	 * @max The maximum number of records to paginate
+	 * @offset The offset in the pagination
+	 * @asQuery Return as query or array of objects, defaults to array of objects
+	 * @sortOrder The sorting of the search results, defaults to publishedDate DESC
+	 * @isPublished Search for published, non-published or both content objects [true, false, 'all']
+	 * @searchActiveContent Search only content titles or both title and active content. Defaults to both.
+	 * @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
+	 * @excludeIDs List of IDs to exclude from search
+	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
+	 * @siteId The site ID to filter on
+	 *
+	 * @returns struct = { content, count }
+	 */
 	function searchContent(
-		any searchTerm="",
-		numeric max=0,
-		numeric offset=0,
-		boolean asQuery=false,
-		any sortOrder="publishedDate DESC",
-		any isPublished=true,
-		boolean searchActiveContent=true,
-		string contentTypes="",
-		any excludeIDs="",
-		boolean showInSearch
+		any searchTerm             = "",
+		numeric max                = 0,
+		numeric offset             = 0,
+		boolean asQuery            = false,
+		any sortOrder              = "publishedDate DESC",
+		any isPublished            = true,
+		boolean searchActiveContent= true,
+		string contentTypes        = "",
+		any excludeIDs             = "",
+		boolean showInSearch,
+		string siteId              = ""
 	){
 
-		var results = {};
-		var c = newCriteria();
+		var results = { "count" : 0, "content" : [] };
+		var c       = newCriteria();
 
 		// only published content
 		if( isBoolean( arguments.isPublished ) ){
@@ -158,10 +163,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				c.like( "title", "%#arguments.searchTerm#%" );
 			}
 		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+		}
+
 		// Content Types
 		if( len( arguments.contentTypes ) ) {
 			c.isIn( 'contentType', arguments.contentTypes );
 		}
+
 		// excludeIDs
 		if( len( arguments.excludeIDs ) ) {
 			// if not an array, inflate list
@@ -172,7 +184,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count = c.count( "contentID" );
+		results.count   = c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery);
 
@@ -283,11 +295,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @return struct as { count, content }
 	 */
 	function findPublishedContent(
-		numeric max=0,
-		numeric offset=0,
-		any searchTerm="",
-		any category="",
-		boolean asQuery=false,
+		numeric max     =0,
+		numeric offset  =0,
+		any searchTerm  ="",
+		any category    ="",
+		boolean asQuery =false,
 		string sortOrder="publishedDate DESC",
 		any parent,
 		boolean showInMenu,
@@ -295,7 +307,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	){
 
 		var results = { "count" : 0, "content" : [] };
-		var c = newCriteria();
+		var c       = newCriteria();
 
 		// only published pages
 		c.isTrue( "isPublished" )
@@ -329,9 +341,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// parent filter
 		if( !isNull( arguments.parent ) ){
 			if( isSimpleValue( arguments.parent ) and len( arguments.parent ) ){
-				c.eq( "parent.contentID", javaCast( "int", arguments.parent ) );
+				c.isEq( "parent.contentID", javaCast( "int", arguments.parent ) );
 			} else if( isObject( arguments.parent ) ){
-				c.eq( "parent", arguments.parent );
+				c.isEq( "parent", arguments.parent );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -343,7 +355,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "contentID" );
+		results.count   = c.count( "contentID" );
 		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 							.list(
 								offset    = arguments.offset,
@@ -389,7 +401,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	array function findExpiredContent(
 		any author,
-		numeric max=0,
+		numeric max   =0,
 		numeric offset=0
 	){
 		var c = newCriteria().createAlias( "activeContent", "ac" );
@@ -405,10 +417,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		return c.list(
-			max 		= arguments.max,
-			offset 		= arguments.offset,
-			sortOrder 	= "expireDate desc",
-			asQuery 	= false
+			max       = arguments.max,
+			offset    = arguments.offset,
+			sortOrder = "expireDate desc",
+			asQuery   = false
 		);
 	}
 
@@ -420,7 +432,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	array function findFuturePublishedContent(
 		any author,
-		numeric max=0,
+		numeric max   =0,
 		numeric offset=0
 	){
 		var c = newCriteria().createAlias( "activeContent", "ac" );
@@ -435,10 +447,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		return c.list(
-			max 		= arguments.max,
-			offset 		= arguments.offset,
-			sortOrder 	= "publishedDate desc",
-			asQuery 	= false
+			max       = arguments.max,
+			offset    = arguments.offset,
+			sortOrder = "publishedDate desc",
+			asQuery   = false
 		);
 	}
 
@@ -453,7 +465,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// isPublished filter
 		if( structKeyExists( arguments, "isPublished") ){
-			c.eq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
 		}
 
 		// author filter
@@ -512,8 +524,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* @override Override records or not
 	*/
 	string function importFromFile(required importFile, boolean override=false){
-		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
+		var data      = fileRead( arguments.importFile );
+		var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
 
 		if( !isJSON( data ) ){
 			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
@@ -593,31 +605,31 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	){
 
 		// setup
-		var thisContent 	= arguments.contentData;
+		var thisContent                = arguments.contentData;
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
-		var oContent = findBySlug( slug=thisContent.slug, showUnpublished=true );
+		var oContent                   = findBySlug( slug=thisContent.slug, showUnpublished=true );
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		newContent[ thisContent.slug ] = oContent;
 
 		// date cleanups, just in case.
-		var badDateRegex  	= " -\d{4}$";
-		thisContent.createdDate 	= reReplace( thisContent.createdDate, badDateRegex, "" );
-		thisContent.modifiedDate 	= reReplace( thisContent.modifiedDate, badDateRegex, "" );
-		thisContent.publishedDate 	= reReplace( thisContent.publishedDate, badDateRegex, "" );
-		thisContent.expireDate	 	= reReplace( thisContent.expireDate, badDateRegex, "" );
+		var badDateRegex         = " -\d{4}$";
+		thisContent.createdDate  = reReplace( thisContent.createdDate, badDateRegex, "" );
+		thisContent.modifiedDate = reReplace( thisContent.modifiedDate, badDateRegex, "" );
+		thisContent.publishedDate= reReplace( thisContent.publishedDate, badDateRegex, "" );
+		thisContent.expireDate   = reReplace( thisContent.expireDate, badDateRegex, "" );
 		// Epoch to Local
-		thisContent.createdDate 	= dateUtil.epochToLocal( thisContent.createdDate );
-		thisContent.modifiedDate 	= dateUtil.epochToLocal( thisContent.modifiedDate );
-		thisContent.publishedDate 	= dateUtil.epochToLocal( thisContent.publishedDate );
-		thisContent.expireDate 		= dateUtil.epochToLocal( thisContent.expireDate );
+		thisContent.createdDate  = dateUtil.epochToLocal( thisContent.createdDate );
+		thisContent.modifiedDate = dateUtil.epochToLocal( thisContent.modifiedDate );
+		thisContent.publishedDate= dateUtil.epochToLocal( thisContent.publishedDate );
+		thisContent.expireDate   = dateUtil.epochToLocal( thisContent.expireDate );
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		populator.populateFromStruct(
-			target					= oContent,
-			memento					= thisContent,
-			exclude					= "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
-			composeRelationships	= false,
-			nullEmptyInclude		= "publishedDate,expireDate"
+			target              = oContent,
+			memento             = thisContent,
+			exclude             = "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
+			composeRelationships= false,
+			nullEmptyInclude    = "publishedDate,expireDate"
 		);
 
 		// determine author else ignore import
@@ -674,7 +686,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				for( var thisCF in thisContent.customfields ){
 					// explicitly convert value to string...
 					// ACF doesn't handle string values well when they look like numbers :)
-					var args = { key = thisCF.key, value = toString( thisCF.value ) };
+					var args   = { key = thisCF.key, value = toString( thisCF.value ) };
 					var oField = customFieldService.new(properties=args);
 					oField.setRelatedContent( oContent );
 					oContent.addCustomField( oField );
@@ -687,7 +699,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				var allCategories = [];
 				for( var thisCategory in thisContent.categories ){
 					var oCategory = categoryService.findBySlug( thisCategory.slug );
-					oCategory = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );
+					oCategory     = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );
 					// save category if new only
 					if( !oCategory.isLoaded() ){ categoryService.save( entity=oCategory ); }
 					// append to add.
@@ -720,9 +732,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 					// otherwise, we need to inflate the new instance
 					else {
 						var inflateResults = instanceService.inflateFromStruct(
-							contentData = thisRelatedContent,
-							importLog=arguments.importLog,
-							newContent=newContent
+							contentData= thisRelatedContent,
+							importLog  =arguments.importLog,
+							newContent =newContent
 						);
 						arrayAppend( allRelatedContent, inflateResults.content );
 					}
@@ -738,9 +750,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 					// some conversions
 					thisComment.createdDate = reReplace( thisComment.createdDate, badDateRegex, "" );
 					// population
-					var oComment = populator.populateFromStruct( target=commentService.new(),
-															 	 memento=thisComment,
-															 	 exclude="commentID",
+					var oComment            = populator.populateFromStruct( target=commentService.new(),
+															 	 memento             =thisComment,
+															 	 exclude             ="commentID",
 															 	 composeRelationships=false );
 					oComment.setRelatedContent( oContent );
 					arrayAppend( allComments, oComment );
@@ -755,9 +767,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				for( var thisSubscription in thisContent.commentSubscriptions ){
 					// Subscription
 					var oSubscription = commentSubscriptionService.new( {
-						relatedContent 		= oContent,
-						subscriptionToken 	= thisSubscription.subscriptionToken,
-						type 				= thisSubscription.type
+						relatedContent    = oContent,
+						subscriptionToken = thisSubscription.subscriptionToken,
+						type              = thisSubscription.type
 					} );
 					// Subscriber
 					var oSubscriber = subscriberService.findBySubscriberEmail( thisSubscription.subscriber.subscriberEmail );
@@ -786,8 +798,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 					// population
 					var oVersion = populator.populateFromStruct( target=contentVersionService.new(),
-																 memento=thisVersion,
-																 exclude="contentVersionID,author",
+																 memento             =thisVersion,
+																 exclude             ="contentVersionID,author",
 																 composeRelationships=false );
 					// Get author
 					var oAuthor = authorService.findByUsername( thisVersion.author.username );
@@ -823,8 +835,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			return this;
 		}
 
-		var threadName = "updateHits_#hash( arguments.contentID & now() )#";
-		thread name="#threadName#" contentID="#arguments.contentID#"{
+		var threadName= "updateHits_#hash( arguments.contentID & now() )#";
+		thread name   ="#threadName#" contentID="#arguments.contentID#"{
 			statsService.syncUpdateHits( attributes.contentID );
 		}
 

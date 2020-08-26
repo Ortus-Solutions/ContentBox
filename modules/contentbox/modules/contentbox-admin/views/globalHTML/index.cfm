@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-globe fa-lg"></i> Global HTML</h1>
+        <h1 class="h1"><i class="fab fa-html5 fa-lg"></i> Global HTML</h1>
     </div>
 </div>
 <div class="row">
@@ -27,19 +27,20 @@
                             <a href="##global" data-toggle="tab"><i class="fa fa-globe fa-lg"></i> <span class="hidden-xs">Global Layout</span></a>
                         </li>
                         <li>
-                            <a href="##entry" data-toggle="tab"><i class="fa fa-quote-left fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
+                            <a href="##entry" data-toggle="tab"><i class="fas fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
                         </li>
                         <li>
                             <a href="##comments" data-toggle="tab"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
                         </li>
                         <li>
-                            <a href="##pages" data-toggle="tab"><i class="fa fa-pencil fa-lg"></i> <span class="hidden-xs">Pages</span></a>
+                            <a href="##pages" data-toggle="tab"><i class="fas fa-file-alt fa-lg"></i> <span class="hidden-xs">Pages</span></a>
                         </li>
-                    </ul>
+					</ul>
+
                     #html.startForm(
-                        name="globalHTMLForm",
-                        action=prc.xehSaveHTML,
-                        class="form-vertical"
+                        name   : "globalHTMLForm",
+                        action : prc.xehSaveHTML,
+                        class  : "form-vertical"
                     )#
                         <!-- End Tabs -->
                         <!-- Tab Content -->

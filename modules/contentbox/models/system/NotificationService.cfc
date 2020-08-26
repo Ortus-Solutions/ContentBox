@@ -13,11 +13,11 @@
 component extends="coldbox.system.Interceptor" accessors="true"{
 
 	// DI
-	property name="settingService" 	inject="id:settingService@cb";
+	property name="settingService"   	inject="id:settingService@cb";
 	property name="securityService"	inject="id:securityService@cb";
-	property name="mailService"    		inject="mailService@cbmailservices";
-	property name="renderer"       		inject="provider:ColdBoxRenderer";
-	property name="CBHelper"       		inject="id:CBHelper@cb";
+	property name="mailService"            		inject="mailService@cbmailservices";
+	property name="renderer"                     		inject="provider:ColdBoxRenderer";
+	property name="CBHelper"                     		inject="id:CBHelper@cb";
 
 	function configure(){}
 
@@ -26,7 +26,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	*/
 	function cbadmin_postNewAuthorSave( event, data, buffer ){
 		var author   = arguments.data.author;
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 
 		// Only new authors are announced, not updates, and also verify author notifications are online.
 		if( NOT settings.cb_notify_author ){ return; }
@@ -77,7 +77,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_preAuthorRemove( event, data, buffer ){
 		var author   = arguments.data.author;
 		// Get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings();
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_author ){ return; }
@@ -124,7 +124,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_postEntrySave( event, data, buffer ){
 		var entry    = arguments.data.entry;
 		// Get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings();
 
 		// Only new entries are announced, not updates, and also verify entry notifications are online.
 		if( NOT arguments.data.isNew OR NOT settings.cb_notify_entry ){ return; }
@@ -182,7 +182,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_preEntryRemove( event, data, buffer ){
 		var entry    = arguments.data.entry;
 		// Get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings();
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_entry ){ return; }
@@ -236,7 +236,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_postPageSave( event, data, buffer ){
 		var page     = arguments.data.page;
 		// Get settings
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 
 		// Only new pages are announced, not updates, and also verify page notifications are online.
 		if( NOT arguments.data.isNew OR NOT settings.cb_notify_page ){
@@ -295,7 +295,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_prePageRemove( event, data, buffer ){
 		var page     = arguments.data.page;
 		// Get settings
-		var settings = settingService.getAllSettings(asStruct=true);
+		var settings = settingService.getAllSettings();
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_page ){ return; }
@@ -349,7 +349,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_postContentStoreSave( event, data, buffer ){
 		var content  = arguments.data.content;
 		// Get settings
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 
 		// Only new pages are announced, not updates, and also verify page notifications are online.
 		if( NOT arguments.data.isNew OR NOT settings.cb_notify_contentstore ){ return; }
@@ -402,7 +402,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 	function cbadmin_preContentStoreRemove( event, data, buffer ){
 		var content  = arguments.data.content;
 		// Get settings
-		var settings = settingService.getAllSettings( asStruct=true );
+		var settings = settingService.getAllSettings();
 
 		// Only notify when enabled.
 		if( NOT settings.cb_notify_contentstore ){ return; }

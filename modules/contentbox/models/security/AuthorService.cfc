@@ -8,13 +8,13 @@
 component extends="cborm.models.VirtualEntityService" accessors="true" singleton{
 
 	// DI
-	property name="populator" 				inject="wirebox:populator";
-	property name="permissionService"		inject="permissionService@cb";
+	property name="populator"              				inject="wirebox:populator";
+	property name="permissionService"     		inject="permissionService@cb";
 	property name="permissionGroupService"	inject="permissionGroupService@cb";
-	property name="roleService"				inject="roleService@cb";
-	property name="bCrypt"					inject="BCrypt@BCrypt";
-	property name="dateUtil"				inject="DateUtil@cb";
-	property name="securityService"			inject="securityService@cb";
+	property name="roleService"           				inject="roleService@cb";
+	property name="bCrypt"                					inject="BCrypt@BCrypt";
+	property name="dateUtil"              				inject="DateUtil@cb";
+	property name="securityService"       			inject="securityService@cb";
 
 	/**
 	* Constructor
@@ -30,17 +30,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	 * Get a status report of authors in the system.
 	 */
 	function getStatusReport(){
-		var c 		= newCriteria();
+		var c       = newCriteria();
 		var results = {
-			"active" 		      = 0,
+			"active"              = 0,
 			"deactivated"         = 0,
 			"2FactorAuthEnabled"  = 0,
 			"2FactorAuthDisabled" = 0
 		};
 
 		var statusReport = c.withProjections(
-				count 			= "isActive:authors",
-				groupProperty 	= "isActive"
+				count         = "isActive:authors",
+				groupProperty = "isActive"
 			)
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list();
@@ -54,8 +54,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 
 		var twoFactorAuthReport = c.withProjections(
-				count 			= "is2FactorAuth:authors",
-				groupProperty 	= "is2FactorAuth"
+				count         = "is2FactorAuth:authors",
+				groupProperty = "is2FactorAuth"
 			)
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list();
@@ -177,15 +177,15 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		string searchTerm="",
 		string isActive,
 		string role,
-		numeric max=0,
-		numeric offset=0,
-		boolean asQuery=false,
+		numeric max     =0,
+		numeric offset  =0,
+		boolean asQuery =false,
 		string sortOrder="lastName",
 		string permissionGroups,
 		string twoFactorAuth
 	){
 		var results = {};
-		var c = newCriteria();
+		var c       = newCriteria();
 
 		// Search
 		if( len( arguments.searchTerm ) ){
@@ -198,12 +198,12 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 
 		// isActive filter
 		if( structKeyExists( arguments, "isActive" ) AND arguments.isActive NEQ "any" ){
-			c.eq( "isActive", javaCast( "boolean", arguments.isActive ) );
+			c.isEq( "isActive", javaCast( "boolean", arguments.isActive ) );
 		}
 
 		// twoFactorAuth filter
 		if( structKeyExists( arguments, "twoFactorAuth" ) AND arguments.twoFactorAuth NEQ "any" ){
-			c.eq( "is2FactorAuth", javaCast( "boolean", arguments.twoFactorAuth ) );
+			c.isEq( "is2FactorAuth", javaCast( "boolean", arguments.twoFactorAuth ) );
 		}
 
 		// role filter
@@ -220,15 +220,14 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 
 		// run criteria query and projections count
-		results.count 	= c.count( "authorID" );
+		results.count   = c.count( "authorID" );
 		results.authors = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 			.list(
-				offset    	= arguments.offset,
-				max       	= arguments.max,
-				sortOrder 	= arguments.sortOrder,
-				asQuery   	= arguments.asQuery
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder,
+				asQuery   = arguments.asQuery
 			);
-
 
 
 		return results;
@@ -255,7 +254,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	*/
 	array function getAllForExport(){
 		var result = [];
-		var data = getAll();
+		var data   = getAll();
 
 		for( var thisItem in data ){
 			arrayAppend( result, thisItem.getMemento() );
@@ -268,8 +267,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
 	string function importFromFile(required importFile, boolean override=false){
-		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject( "java", "java.lang.StringBuilder" )
+		var data      = fileRead( arguments.importFile );
+		var importLog = createObject( "java", "java.lang.StringBuilder" )
 			.init( "Starting import with override = #arguments.override#...<br>" );
 
 		if( !isJSON( data ) ){
@@ -295,17 +294,17 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		for( var thisUser in arguments.importData ){
 			// Get new or persisted
 			var oUser = this.findByUsername( thisUser.username );
-			oUser = ( isNull( oUser ) ? new() : oUser );
+			oUser     = ( isNull( oUser ) ? new() : oUser );
 
 			// date cleanups, just in case.
-			var badDateRegex  	= " -\d{4}$";
-			thisUser.createdDate 	= reReplace( thisUser.createdDate, badDateRegex, "" );
-			thisUser.lastLogin 		= reReplace( thisUser.lastLogin, badDateRegex, "" );
-			thisUser.modifiedDate 	= reReplace( thisUser.modifiedDate, badDateRegex, "" );
+			var badDateRegex      = " -\d{4}$";
+			thisUser.createdDate  = reReplace( thisUser.createdDate, badDateRegex, "" );
+			thisUser.lastLogin    = reReplace( thisUser.lastLogin, badDateRegex, "" );
+			thisUser.modifiedDate = reReplace( thisUser.modifiedDate, badDateRegex, "" );
 			// Epoch to Local
-			thisUser.createdDate 	= dateUtil.epochToLocal( thisUser.createdDate );
-			thisUser.lastLogin 		= dateUtil.epochToLocal( thisUser.lastLogin );
-			thisUser.createdDate 	= dateUtil.epochToLocal( thisUser.modifiedDate );
+			thisUser.createdDate  = dateUtil.epochToLocal( thisUser.createdDate );
+			thisUser.lastLogin    = dateUtil.epochToLocal( thisUser.lastLogin );
+			thisUser.createdDate  = dateUtil.epochToLocal( thisUser.modifiedDate );
 
 			// populate content from data
 			populator.populateFromStruct( target=oUser, memento=thisUser, exclude="role,authorID,permissions", composeRelationships=false );
@@ -316,7 +315,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				var allPermissions = [];
 				for( var thisPermission in thisUser.permissions ){
 					var oPerm = permissionService.findByPermission( thisPermission.permission );
-					oPerm = ( isNull( oPerm ) ? populator.populateFromStruct( target=permissionService.new(), memento=thisPermission, exclude="permissionID" ) : oPerm );
+					oPerm     = ( isNull( oPerm ) ? populator.populateFromStruct( target=permissionService.new(), memento=thisPermission, exclude="permissionID" ) : oPerm );
 					// save oPerm if new only
 					if( !oPerm.isLoaded() ){
 						permissionService.save( entity=oPerm );
@@ -334,7 +333,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 				var allGroups = [];
 				for( var thisGroup in thisUser.permissiongroups ){
 					var oGroup = permissionGroupService.findByName( thisGroup.name );
-					oGroup = ( isNull( oGroup ) ? populator.populateFromStruct( target=permissionGroupService.new(), memento=thisGroup, exclude="permissionGroupID,permissions" ) : oGroup );
+					oGroup     = ( isNull( oGroup ) ? populator.populateFromStruct( target=permissionGroupService.new(), memento=thisGroup, exclude="permissionGroupID,permissions" ) : oGroup );
 					// save oGroup if new only
 					if( !oGroup.isLoaded() ){
 						permissionGroupService.save( entity=oGroup );

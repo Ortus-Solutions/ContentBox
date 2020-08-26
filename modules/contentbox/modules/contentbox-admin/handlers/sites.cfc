@@ -4,9 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="siteService" 	inject="siteService@cb";
-	property name="themeService"	inject="id:themeService@cb";
-	property name="pageService"		inject="id:pageService@cb";
+	property name="siteService" inject="siteService@cb";
+	property name="themeService" inject="id:themeService@cb";
+	property name="pageService" inject="id:pageService@cb";
 
 	/**
 	 * Pre handler
@@ -52,11 +52,11 @@ component extends="baseHandler" {
 		prc.tabSystem_sites = true;
 
 		// get new or persisted
-		prc.site 	= siteService.get( event.getValue( "siteId", 0 ) );
+		prc.site   = siteService.get( event.getValue( "siteId", 0 ) );
 		// Get all registered themes
-		prc.themes 	= themeService.getThemes();
+		prc.themes = themeService.getThemes();
 		// pages
-		prc.pages = pageService.search( sortOrder="slug asc", isPublished=true ).pages;
+		prc.pages  = pageService.search( sortOrder = "slug asc", isPublished = true ).pages;
 
 		// exit handlers
 		prc.xehSiteSave = "#prc.cbAdminEntryPoint#.sites.save";
@@ -70,10 +70,10 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		var oSite  = populateModel( siteService.get( id: rc.siteId ) );
+		var oSite    = populateModel( siteService.get( id: rc.siteId ) );
 		// validate it
 		var vResults = validateModel( oSite );
-		if( !vResults.hasErrors() ){
+		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce( "cbadmin_preSiteSave", { site : oSite, siteId : rc.siteId } );
 			// save rule
@@ -84,9 +84,18 @@ component extends="baseHandler" {
 			cbMessagebox.info( "Site saved!" );
 			relocate( prc.xehSitesManager );
 		} else {
-			cbMessagebox.warn( messageArray=vResults.getAllErrors() );
-			return editor( argumentCollection=arguments );
+			cbMessagebox.warn( messageArray = vResults.getAllErrors() );
+			return editor( argumentCollection = arguments );
 		}
+	}
+
+
+	/**
+	 * Change current editing site
+	 */
+	function changeSite( event, rc, prc ){
+		siteService.setCurrentWorkingSiteId( rc.siteId );
+		relocate( prc.xehDashboard );
 	}
 
 }

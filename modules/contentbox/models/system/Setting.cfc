@@ -28,7 +28,6 @@ component  	persistent="true"
 	property
 		name   ="name"
 		notnull="true"
-		unique ="true"
 		length ="100";
 
 	property
@@ -64,7 +63,7 @@ component  	persistent="true"
 	this.pk = "settingID";
 
 	this.constraints ={
-		"name"  = { required=true, size="1..100", validator: "UniqueValidator@cborm" },
+		"name"  = { required=true, size="1..100" },
 		"value" = { required=true }
 	};
 

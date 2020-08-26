@@ -92,13 +92,14 @@ component extends="baseContentHandler" {
 
 		// search content with filters and all
 		var contentResults = contentStoreService.search(
-			search      = rc.searchContent,
-			isPublished = rc.fStatus,
-			category    = rc.fCategories,
-			author      = rc.fAuthors,
-			creator     = rc.fCreators,
-			parent      = ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
-			sortOrder   = "order asc, createdDate desc"
+			search     : rc.searchContent,
+			isPublished: rc.fStatus,
+			category   : rc.fCategories,
+			author     : rc.fAuthors,
+			creator    : rc.fCreators,
+			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
+			sortOrder  : "order asc, createdDate desc",
+			siteId     : prc.oCurrentSite.getSiteId()
 		);
 		prc.content      = contentResults.content;
 		prc.contentCount = contentResults.count;
