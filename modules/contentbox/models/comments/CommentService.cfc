@@ -8,12 +8,12 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="mailService"                                                                                                                                                                                                                        inject="mailService@cbmailservices";
-	property name="renderer"                                                                                                                                                                                                                                                                                                         inject="coldbox:renderer";
-	property name="settingService"                                                                                                                                       inject="id:settingService@cb";
-	property name="CBHelper"                                                                                                                                                                                                                                                                                                         inject="id:CBHelper@cb";
-	property name="log"                                                                                                                                                                                                                                                                                                                                                                                                                                                inject="logbox:logger:{this}";
-	property name="interceptorService"                           inject="coldbox:interceptorService";
+	property name="mailService"                                                                                                                                                                                                                                        inject="mailService@cbmailservices";
+	property name="renderer"                                                                                                                                                                                                                                                                                                                               inject="coldbox:renderer";
+	property name="settingService"                                                                                                                                                 inject="id:settingService@cb";
+	property name="CBHelper"                                                                                                                                                                                                                                                                                                                               inject="id:CBHelper@cb";
+	property name="log"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                inject="logbox:logger:{this}";
+	property name="interceptorService"                             inject="coldbox:interceptorService";
 	property name="loginTrackerService"	inject="loginTrackerService@cb";
 
 	/**
@@ -420,9 +420,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		search="",
 		isApproved,
 		contentID,
-		numeric max   =0,
-		numeric offset=0,
-		sortOrder     = "createdDate DESC"
+		numeric max    = 0,
+		numeric offset = 0,
+		sortOrder      = "createdDate DESC",
+		string siteId  = ""
 	){
 		var results = { "count" : 0, "comments" : [] };
 		var c       = newCriteria();

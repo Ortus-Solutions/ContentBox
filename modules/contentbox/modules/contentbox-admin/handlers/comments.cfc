@@ -8,7 +8,7 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="commentService"       		inject="commentService@cb";
+	property name="commentService"         		inject="commentService@cb";
 	property name="settingsService"		inject="settingService@cb";
 
 	// Public properties
@@ -65,10 +65,11 @@ component extends="baseHandler"{
 
 		// search comments with filters and all
 		var commentResults = commentService.search(
-			search    = rc.searchComments,
-			offset    = prc.paging.startRow-1,
-			max       = prc.cbSettings.cb_paging_maxrows,
-			isApproved= rc.fStatus
+			search     : rc.searchComments,
+			offset     : prc.paging.startRow-1,
+			max        : prc.cbSettings.cb_paging_maxrows,
+			isApproved : rc.fStatus,
+			siteId     : prc.oCurrentSite.getSiteId()
 		);
 
 		prc.comments        = commentResults.comments;
