@@ -423,7 +423,7 @@
                                         </cfif>
 
                                         <!--- Allow Comments --->
-                                        <cfif prc.cbSettings.cb_comments_enabled>
+                                        <cfif prc.cbSiteSettings.cb_comments_enabled>
                                             <div class="form-group">
                                                 <i class="far fa-comments fa-lg"></i>
                                                 #html.label(

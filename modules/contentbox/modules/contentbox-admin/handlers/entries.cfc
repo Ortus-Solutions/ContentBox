@@ -249,7 +249,7 @@ component extends="baseContentHandler" {
 	// save
 	function save( event, rc, prc ){
 		// params
-		event.paramValue( "allowComments", prc.cbSettings.cb_comments_enabled );
+		event.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled );
 		event.paramValue( "newCategories", "" );
 		event.paramValue( "isPublished", true );
 		event.paramValue( "slug", "" );

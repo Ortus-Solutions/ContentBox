@@ -13,7 +13,7 @@
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
 		</cfif>
 		<!--- Info Bar --->
-		<cfif NOT prc.cbSettings.cb_comments_enabled>
+		<cfif NOT prc.cbSiteSettings.cb_comments_enabled>
 			<div class="alert alert-info">
 				<i class="fa fa-exclamation fa-lg"></i>
 				Comments are currently disabled site-wide!
