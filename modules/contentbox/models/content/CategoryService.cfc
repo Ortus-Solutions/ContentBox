@@ -1,32 +1,45 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Category service for contentbox
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Category service for contentbox
+ */
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// Dependencies
-	property name="htmlHelper" 		inject="HTMLHelper@coldbox";
-	property name="populator"  		inject="wirebox:populator";
-	property name="contentService"	inject="contentService@cb";
-	property name="dateUtil"		inject="DateUtil@cb";
-	
+	property name="htmlHelper"        inject="HTMLHelper@coldbox";
+	property name="populator"          inject="wirebox:populator";
+	property name="contentService"inject="contentService@cb";
+	property name="dateUtil"            inject="DateUtil@cb";
+
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	CategoryService function init(){
 		// init it
-		super.init(entityName="cbCategory",useQueryCaching=true);
+		super.init( entityName="cbCategory", useQueryCaching=true );
 
 		return this;
 	}
 
 	/**
-	* Create categories via a comma delimited list and return the entities created
-	*/
-	array function createCategories(categories){
+	 * Get the total category counts
+	 *
+	 * @siteId The site to filter on
+	 */
+	numeric function getTotalCategoryCount( string siteId = "" ){
+		return newCriteria()
+			.when( len( arguments.siteId ), function( c ){
+				//c.isEq( "site.siteId", javaCast( "integer", siteId ) )
+			} )
+			.count();
+	}
+
+	/**
+	 * Create categories via a comma delimited list and return the entities created
+	 */
+	array function createCategories( required categories ){
 		var allCats = [];
 
 		// convert to array
@@ -36,8 +49,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// iterate and create
 		for(var x=1; x lte arrayLen(arguments.categories); x++){
-			var thisCat 	= trim(arguments.categories[ x ]);
-			var properties 	= {category=thisCat, slug=htmlHelper.slugify( thisCat )};
+			var thisCat        = trim(arguments.categories[ x ]);
+			var properties     = {category=thisCat, slug=htmlHelper.slugify( thisCat )};
 			// check that category doesn't exist already
 			var extantCategory = findWhere( criteria = properties );
 			// if no match is found, add to array
@@ -57,11 +70,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Inflate categories from a collection via 'category_X' pattern and returns an array of category objects 
-	* as its representation
-	* 
-	* @return array of categories
-	*/
+	 * Inflate categories from a collection via 'category_X' pattern and returns an array of category objects
+	 * as its representation
+	 *
+	 * @return array of categories
+	 */
 	array function inflateCategories( struct memento ){
 		var categories = [];
 		// iterate all memento keys
@@ -78,11 +91,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Delete a category which also removes itself from all many-to-many relationships
-	* @category.hint The category object to remove from the system
-	*/
+	 * Delete a category which also removes itself from all many-to-many relationships
+	 * @category.hint The category object to remove from the system
+	 */
 	boolean function deleteCategory( required category ){
-		
+
 		transaction{
 			// Remove content relationships
 			var aRelatedContent = removeAllRelatedContent( arguments.category );
@@ -95,7 +108,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			// evict queries
 			ORMEvictQueries( getQueryCacheRegion() );
 		}
-		
+
 		// return results
 		return true;
 	}
@@ -123,11 +136,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	array function getAllForExport(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="categoryID,category,slug,createdDate,modifiedDate,isDeleted" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list(sortOrder="category" );
-			 
+
 	}
 
 	/**
@@ -135,55 +148,55 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	*/
 	array function getAllNames(){
 		var c = newCriteria();
-		
+
 		return c.withProjections( property="category" )
 			//.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder="category" );
 	}
-	
+
 	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
 	string function importFromFile(required importFile, boolean override=false){
-		var data 		= fileRead( arguments.importFile );
-		var importLog 	= createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
-		
+		var data      = fileRead( arguments.importFile );
+		var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
+
 		if( !isJSON( data ) ){
 			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
 		}
-		
+
 		// deserialize packet: Should be array of { settingID, name, value }
 		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
 	}
-	
+
 	/**
-	* Import data from an array of structures of categories or just one structure of categories 
+	* Import data from an array of structures of categories or just one structure of categories
 	*/
 	string function importFromData(required importData, boolean override=false, importLog){
 		var allCategories = [];
-		
+
 		// if struct, inflate into an array
 		if( isStruct( arguments.importData ) ){
 			arguments.importData = [ arguments.importData ];
 		}
-		
+
 		// iterate and import
 		for( var thisCategory in arguments.importData ){
 			// Get new or persisted
 			var oCategory = this.findBySlug( slug=thisCategory.slug);
-			oCategory = ( isNull( oCategory) ? new() : oCategory );
-			
+			oCategory     = ( isNull( oCategory) ? new() : oCategory );
+
 			// date cleanups, just in case.
-			var badDateRegex  	= " -\d{4}$";
-			thisCategory.createdDate 	= reReplace( thisCategory.createdDate, badDateRegex, "" );
-			thisCategory.modifiedDate 	= reReplace( thisCategory.modifiedDate, badDateRegex, "" );
+			var badDateRegex          = " -\d{4}$";
+			thisCategory.createdDate  = reReplace( thisCategory.createdDate, badDateRegex, "" );
+			thisCategory.modifiedDate = reReplace( thisCategory.modifiedDate, badDateRegex, "" );
 			// Epoch to Local
-			thisCategory.createdDate 	= dateUtil.epochToLocal( thisCategory.createdDate );
-			thisCategory.modifiedDate 	= dateUtil.epochToLocal( thisCategory.modifiedDate );
+			thisCategory.createdDate  = dateUtil.epochToLocal( thisCategory.createdDate );
+			thisCategory.modifiedDate = dateUtil.epochToLocal( thisCategory.modifiedDate );
 
 			// populate content from data
 			populator.populateFromStruct( target=oCategory, memento=thisCategory, exclude="categoryID", composeRelationships=false );
-			
+
 			// if new or persisted with override then save.
 			if( !oCategory.isLoaded() ){
 				arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
@@ -206,8 +219,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		else{
 			arguments.importLog.append( "No categories imported as none where found or able to be overriden from the import file." );
 		}
-		
-		return arguments.importLog.toString(); 
+
+		return arguments.importLog.toString();
 	}
 
 }

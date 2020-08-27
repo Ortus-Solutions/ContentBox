@@ -8,7 +8,7 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="commentService"     		inject="commentService@cb";
+	property name="commentService"       		inject="commentService@cb";
 	property name="settingsService"		inject="settingService@cb";
 
 	// Public properties
@@ -337,9 +337,10 @@ component extends="baseHandler"{
 
 		// search entries with filters and all
 		var commentResults = commentService.search(
-			contentID = arguments.contentID,
-			offset    = prc.commentPager_paging.startRow-1,
-			max       = arguments.max
+			contentID : arguments.contentID,
+			offset    : prc.commentPager_paging.startRow-1,
+			max       : arguments.max,
+			siteId    : prc.oCurrentSite.getSiteId()
 		);
 		prc.commentPager_comments      = commentResults.comments;
 		prc.commentPager_commentsCount = commentResults.count;

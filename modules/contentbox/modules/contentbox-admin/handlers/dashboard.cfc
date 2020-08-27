@@ -8,14 +8,14 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="entryService"        	inject="entryService@cb";
-	property name="pageService"         	inject="pageService@cb";
-	property name="contentService"      	inject="contentService@cb";
-	property name="commentService"      	inject="commentService@cb";
-	property name="categoryService"    		inject="categoryService@cb";
-	property name="feedReader"         		inject="FeedReader@cbfeeds";
+	property name="entryService"                                                                                                                 	inject="entryService@cb";
+	property name="pageService"                                                                                                                                 	inject="pageService@cb";
+	property name="contentService"                                                                                 	inject="contentService@cb";
+	property name="commentService"                                                                                 	inject="commentService@cb";
+	property name="categoryService"                                                                		inject="categoryService@cb";
+	property name="feedReader"                                                                                                                                                		inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"		inject="loginTrackerService@cb";
-	property name="markdown"           		inject="Processor@cbmarkdown";
+	property name="markdown"                                                                                                                                                                                		inject="Processor@cbmarkdown";
 
 	/**
 	 * Main dashboard event
@@ -47,21 +47,23 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Produce the latest system snapshots
-	* @return html
-	*/
+	 * Produce the latest system snapshots
+	 *
+	 * @return html
+	 */
 	function latestSnapshot( event, rc, prc ){
-		// Few counts
-		prc.entriesCount           = entryService.count();
-		prc.pagesCount             = pageService.count();
-		prc.commentsCount          = commentService.count();
-		prc.commentsApprovedCount  = commentService.getApprovedCommentCount();
-		prc.commentsUnApprovedCount= commentService.getUnApprovedCommentCount();
-		prc.categoriesCount        = categoryService.count();
+		var siteId = prc.oCurrentSite.getSiteId();
+
+		prc.entriesCount           = variables.entryService.getTotalContentCount( siteId );
+		prc.pagesCount             = variables.pageService.getTotalContentCount( siteId );
+		prc.commentsCount          = variables.commentService.getTotalCommentCount( siteId )
+		prc.commentsApprovedCount  = variables.commentService.getApprovedCommentCount( siteId );
+		prc.commentsUnApprovedCount= variables.commentService.getUnApprovedCommentCount( siteId );
+		prc.categoriesCount        = variables.categoryService.getTotalCategoryCount( siteId );
 
 		// Few Reports
-		prc.topContent   = contentService.getTopVisitedContent();
-		prc.topCommented = contentService.getTopCommentedContent();
+		prc.topContent   = variables.contentService.getTopVisitedContent( siteId );
+		prc.topCommented = variables.contentService.getTopCommentedContent( siteId );
 
 		// convert report to chart data
 		prc.aTopContent          = [];
@@ -159,12 +161,13 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Produce the latest system comments
-	* @return html
-	*/
+	 * Produce the latest system comments
+	 *
+	 * @return html
+	 */
 	function latestComments( event, rc, prc ){
 		// Get Comments viewlet
-		var eArgs           = { max=prc.cbSettings.cb_dashboard_recentComments,pagination=false };
+		var eArgs           = { max : prc.cbSettings.cb_dashboard_recentComments, pagination : false };
 		prc.commentsViewlet = runEvent(
 			event          = "contentbox-admin:comments.pager",
 			eventArguments = eArgs

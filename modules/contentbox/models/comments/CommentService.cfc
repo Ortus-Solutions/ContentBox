@@ -8,12 +8,12 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="mailService"                                                                                                                        inject="mailService@cbmailservices";
-	property name="renderer"                                                                                                                                                                     inject="coldbox:renderer";
-	property name="settingService"                                                                           inject="id:settingService@cb";
-	property name="CBHelper"                                                                                                                                                                     inject="id:CBHelper@cb";
-	property name="log"                                                                                                                                                                                                                                                inject="logbox:logger:{this}";
-	property name="interceptorService"               inject="coldbox:interceptorService";
+	property name="mailService"                                                                                                                                                                                                                        inject="mailService@cbmailservices";
+	property name="renderer"                                                                                                                                                                                                                                                                                                         inject="coldbox:renderer";
+	property name="settingService"                                                                                                                                       inject="id:settingService@cb";
+	property name="CBHelper"                                                                                                                                                                                                                                                                                                         inject="id:CBHelper@cb";
+	property name="log"                                                                                                                                                                                                                                                                                                                                                                                                                                                inject="logbox:logger:{this}";
+	property name="interceptorService"                           inject="coldbox:interceptorService";
 	property name="loginTrackerService"	inject="loginTrackerService@cb";
 
 	/**
@@ -25,17 +25,47 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get the total number of approved comments in the system
-	*/
-	numeric function getApprovedCommentCount(){
-		return this.countWhere( isApproved=true );
+	 * Get the total comment counts
+	 *
+	 * @siteId The site to filter on
+	 */
+	numeric function getTotalCommentCount( string siteId = "" ){
+		return newCriteria()
+			.when( len( arguments.siteId ), function( c ){
+				c.joinTo( "relatedContent", "relatedContent" )
+					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) )
+			} )
+			.count();
 	}
 
 	/**
-	* Get the total number of unapproved comments in the system
-	*/
-	numeric function getUnApprovedCommentCount(){
-		return this.countWhere( isApproved=false );
+	 * Get the total number of approved comments in the system
+	 *
+	 * @siteId The site to filter on
+	 */
+	numeric function getApprovedCommentCount( string siteId = "" ){
+		return newCriteria()
+			.isTrue( "isApproved" )
+			.when( len( arguments.siteId ), function( c ){
+				c.joinTo( "relatedContent", "relatedContent" )
+					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) )
+			} )
+			.count();
+	}
+
+	/**
+	 * Get the total number of unapproved comments in the system
+	 *
+	 * @siteId The site to filter on
+	 */
+	numeric function getUnApprovedCommentCount( string siteId = "" ){
+		return newCriteria()
+			.isFalse( "isApproved" )
+			.when( len( arguments.siteId ), function( c ){
+				c.joinTo( "relatedContent", "relatedContent" )
+					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) )
+			} )
+			.count();
 	}
 
 	/**
@@ -382,6 +412,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @max max records
 	 * @offset offset for pagination
 	 * @sortOrder The sort order, defaults to `createdDate DESC`
+	 * @siteId The site to filter on if needed
 	 *
 	 * @return struct with { comments, count }
 	 */
@@ -393,30 +424,38 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		numeric offset=0,
 		sortOrder     = "createdDate DESC"
 	){
-		var results  = { "count" : 0, "comments" : [] };
-		var criteria = newCriteria();
+		var results = { "count" : 0, "comments" : [] };
+		var c       = newCriteria();
 
 		// isApproved filter
 		if( !isNull( arguments.isApproved ) AND arguments.isApproved NEQ "any" ){
-			criteria.isEq( "isApproved", javaCast( "boolean", arguments.isApproved ) );
+			c.isEq( "isApproved", javaCast( "boolean", arguments.isApproved ) );
 		}
+
 		// Content Filter
 		if( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ){
-			criteria.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
+			c.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
 		}
+
 		// Search Criteria
 		if( len( arguments.search ) ){
 			// OR disjunction on author, authorEmail and content.
-			criteria.or(
-				criteria.restrictions.like( "author", "%#arguments.search#%" ),
-				criteria.restrictions.like( "authorEmail", "%#arguments.search#%" ),
-				criteria.restrictions.like( "content", "%#arguments.search#%" )
+			c.or(
+				c.restrictions.like( "author", "%#arguments.search#%" ),
+				c.restrictions.like( "authorEmail", "%#arguments.search#%" ),
+				c.restrictions.like( "content", "%#arguments.search#%" )
 			);
 		}
 
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.joinTo( "relatedContent", "relatedContent" )
+				.isEq( "relatedContent.site.siteId", javaCast( "integer", arguments.siteId ) );
+		}
+
 		// run criteria query and projections count
-		results.count    = criteria.count();
-		results.comments = criteria.list(
+		results.count    = c.count();
+		results.comments = c.list(
 			offset    = arguments.offset,
 			max       = arguments.max,
 			sortOrder = arguments.sortOrder,

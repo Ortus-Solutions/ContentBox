@@ -8,23 +8,23 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"                                                            				inject="id:settingService@cb";
-	property name="cacheBox"                                                                                          					inject="cachebox";
-	property name="log"                                                                                                                   							inject="logbox:logger:{this}";
-	property name="customFieldService"                                         	 		inject="customFieldService@cb";
-	property name="categoryService"                                                        	 		inject="categoryService@cb";
-	property name="commentService"                                                             	 			inject="commentService@cb";
-	property name="contentVersionService"                         		inject="contentVersionService@cb";
-	property name="authorService"                                                                 				inject="authorService@cb";
-	property name="contentStoreService"                                   			inject="contentStoreService@cb";
-	property name="pageService"                                                                           					inject="pageService@cb";
-	property name="entryService"                                                                      				inject="entryService@cb";
-	property name="populator"                                                                                     					inject="wirebox:populator";
-	property name="systemUtil"                                                                                					inject="SystemUtil@cb";
-	property name="statsService"                                                                      				inject="statsService@cb";
-	property name="dateUtil"                                                                                          					inject="DateUtil@cb";
+	property name="settingService"                                                                                                inject="id:settingService@cb";
+	property name="cacheBox"                                                                                                                                                inject="cachebox";
+	property name="log"                                                                                                                                                                                        inject="logbox:logger:{this}";
+	property name="customFieldService"                                                                inject="customFieldService@cb";
+	property name="categoryService"                                                                                        inject="categoryService@cb";
+	property name="commentService"                                                                                                inject="commentService@cb";
+	property name="contentVersionService"                                        inject="contentVersionService@cb";
+	property name="authorService"                                                                                                        inject="authorService@cb";
+	property name="contentStoreService"                                                        inject="contentStoreService@cb";
+	property name="pageService"                                                                                                                        inject="pageService@cb";
+	property name="entryService"                                                                                                                inject="entryService@cb";
+	property name="populator"                                                                                                                                        inject="wirebox:populator";
+	property name="systemUtil"                                                                                                                                inject="SystemUtil@cb";
+	property name="statsService"                                                                                                                inject="statsService@cb";
+	property name="dateUtil"                                                                                                                                                inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService"                                              			inject="subscriberService@cb";
+	property name="subscriberService"                                                                        inject="subscriberService@cb";
 
 	/**
 	* Constructor
@@ -35,6 +35,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		super.init(entityName=arguments.entityName, useQueryCaching=true);
 
 		return this;
+	}
+
+	/**
+	 * Get the total content counts
+	 *
+	 * @siteId The site to filter on
+	 */
+	numeric function getTotalContentCount( string siteId = "" ){
+		return newCriteria()
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", javaCast( "integer", siteId ) )
+			} )
+			.count();
 	}
 
 	/**
@@ -394,15 +407,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get all the expired content in the system by filters
-	* @author 		The author filtering if passed.
-	* @max 			The maximum number of records to return
-	* @offset 		The pagination offset
-	*/
+	 * Get all the expired content in the system by filters
+	 *
+	 * @author The author filtering if passed.
+	 * @max The maximum number of records to return
+	 * @offset The pagination offset
+	 * @siteId The site to filter on
+	 */
 	array function findExpiredContent(
 		any author,
 		numeric max   =0,
-		numeric offset=0
+		numeric offset=0,
+		string siteId =""
 	){
 		var c = newCriteria().createAlias( "activeContent", "ac" );
 
@@ -410,6 +426,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		c.isTrue( "isPublished" )
 			.isLT( "publishedDate", now() )
 			.isLT( "expireDate", now() );
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+		}
 
 		// author filter
 		if( structKeyExists( arguments, "author") ){
@@ -425,21 +446,29 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get all the future published content in the system by filters
-	* @author 		The author filtering if passed.
-	* @max 			The maximum number of records to return
-	* @offset 		The pagination offset
-	*/
+	 * Get all the future published content in the system by filters
+	 *
+	 * @author The author filtering if passed.
+	 * @max The maximum number of records to return
+	 * @offset The pagination offset
+	 * @siteId The site to filter on
+	 */
 	array function findFuturePublishedContent(
 		any author,
 		numeric max   =0,
-		numeric offset=0
+		numeric offset=0,
+		string siteId =""
 	){
 		var c = newCriteria().createAlias( "activeContent", "ac" );
 
 		// Only non-expired future publishing pages
 		c.isTrue( "isPublished" )
 			.isGT( "publishedDate", now() );
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+		}
 
 		// author filter
 		if( structKeyExists( arguments, "author") ){
@@ -455,17 +484,29 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get latest edits according to criteria
-	* @author 		The author object to use for retrieval
-	* @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
-	* @max 			The maximum number of records to return
-	*/
-	array function getLatestEdits( any author, boolean isPublished, numeric max=25 ){
+	 * Get latest edits according to criteria
+	 *
+	 * @author The author object to use for retrieval
+	 * @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
+	 * @max The maximum number of records to return
+	 * @siteId The site to get edits from
+	 */
+	array function getLatestEdits(
+		any author,
+		boolean isPublished,
+		numeric max  =25,
+		string siteId=""
+	){
 		var c = newCriteria().createAlias( "activeContent", "ac" );
 
 		// isPublished filter
 		if( structKeyExists( arguments, "isPublished") ){
 			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
 		}
 
 		// author filter
@@ -477,21 +518,31 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get the top visited content entries
-	* @max The maximum to retrieve, defaults to 5 entries
-	*/
-	array function getTopVisitedContent( numeric max=5 ){
+	 * Get the top visited content entries
+	 *
+	 * @max The maximum to retrieve, defaults to 5 entries
+	 * @siteId The site to filter on
+	 */
+	array function getTopVisitedContent( numeric max=5, string siteId="" ){
 		var c = newCriteria()
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
 			.list( max=arguments.max, sortOrder="numberOfHits desc", asQuery=false );
 		return c;
 	}
 
 	/**
-	* Get the top commented content entries
-	* @max The maximum to retrieve, defaults to 5 entries
-	*/
-	array function getTopCommentedContent( numeric max=5 ){
+	 * Get the top commented content entries
+	 *
+	 * @max The maximum to retrieve, defaults to 5 entries
+	 * @siteId The site to filter on
+	 */
+	array function getTopCommentedContent( numeric max=5, string siteId="" ){
 		var c = newCriteria()
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
 			.list( max=arguments.max, sortOrder="numberOfComments desc", asQuery=false );
 		return c;
 	}

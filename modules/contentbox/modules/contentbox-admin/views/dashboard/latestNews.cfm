@@ -1,5 +1,5 @@
 <cfoutput>
-#html.anchor(name="recentNews" )#
+#html.anchor( name="recentNews" )#
 <cfif prc.latestNews.items.recordCount>
 	<cfloop query="prc.latestNews.items" endrow="5">
 		<div class="box padding10">
@@ -8,13 +8,13 @@
 					<i class="fa fa-external-link"></i> #prc.latestNews.items.title#
 				</a>
 			</h4>
-			
+
 			<div>
 				<p class="label label-success"><strong>#dateFormat( prc.latestNews.items.datepublished, "full" )#</strong></p>
 			</div>
 
 			<p>
-				#left( cb.stripHTML( prc.latestNews.items.body ), 500 )#...
+				#left( encodeForHTML( prc.latestNews.items.body ), 500 )#...
 			</p>
 		</div>
 	</cfloop>
