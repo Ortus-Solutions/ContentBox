@@ -45,7 +45,7 @@ component
 	this.DEFAULTS = {
 		// Installation security salt
 		"cb_salt"                              : hash( createUUID() & getTickCount() & now(), "SHA-512" ),
-		// Notifications
+		// Global Notifications
 		"cb_site_email"                        : "",
 		"cb_notify_author"                     : "true",
 		"cb_notify_entry"                      : "true",
@@ -56,7 +56,7 @@ component
 		// Blog Entry Point
 		"cb_site_blog_entrypoint"              : "blog",
 		// Caching
-		"cb_site_settings_cache"               : "Template",
+		"cb_site_settings_cache"               : "template",
 		// Security Settings
 		"cb_security_min_password_length"      : "8",
 		"cb_security_login_blocker"            : "true",
@@ -99,6 +99,7 @@ component
 		"cb_dashboard_welcome_body"            : "",
 		// Global Comment Settings
 		"cb_comments_whoisURL"                 : "http://whois.arin.net/ui/query.do?q",
+		"cb_comments_moderation"               : "true",
 		"cb_comments_moderation_whitelist"     : "true",
 		"cb_comments_moderation_blacklist"     : "",
 		"cb_comments_moderation_blockedlist"   : "",
@@ -214,7 +215,6 @@ component
 		"cb_comments_maxDisplayChars"   : "500",
 		"cb_comments_enabled"           : "true",
 		"cb_comments_urltranslations"   : "true",
-		"cb_comments_moderation"        : "true",
 		"cb_comments_notify"            : "true",
 		"cb_comments_moderation_notify" : "true",
 		"cb_comments_notifyemails"      : ""
@@ -568,11 +568,17 @@ component
 		arguments.memento
 			// Only save, saveable keys
 			.filter( function( key, value ){
-				return allSettings.keyExists( key );
+				return settings.keyExists( key );
 			} )
 			// Build out array of settings to save
 			.each( function( key, value ){
 				var thisSetting = findWhere( { name : key } );
+
+				// Maybe it's a new setting :)
+				if ( isNull( thisSetting ) ) {
+					thisSetting = new ( { name : key } );
+				}
+
 				thisSetting.setValue( toString( value ) );
 
 				// Site mapping

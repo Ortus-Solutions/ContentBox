@@ -49,7 +49,7 @@
 								    					class="confirmIt"
 														data-title="Delete Selected Categories?"
 														data-message="This will delete the categories and associations, are you sure?">
-															<i class="fa fa-trash-o"></i> Delete Selected
+															<i class="far fa-trash-alt"></i> Delete Selected
 													</a>
 												</li>
 												<li>

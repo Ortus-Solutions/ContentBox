@@ -147,9 +147,9 @@
 													<a
 														href="javascript:remove( '#site.getSiteId()#' )"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash-o'></i> Delete Site?"
+														data-title="<i class='far fa-trash-alt'></i> Delete Site?"
 													>
-														<i class="fa fa-trash-o fa-lg" id="delete_#site.getSiteId()#"></i> Delete
+														<i class="far fa-trash-alt fa-lg" id="delete_#site.getSiteId()#"></i> Delete
 													</a>
 												</li>
 											</cfif>

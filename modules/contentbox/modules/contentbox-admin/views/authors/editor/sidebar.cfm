@@ -17,7 +17,7 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <i class="fa fa-gears"></i> Actions
+							  <i class="far fa-sliders-h"></i> Actions
 							  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-comments"></i> Comment Moderator
+        	<i class="far fa-comments"></i> Comment Moderator
 		</h1>
     </div>
 </div>

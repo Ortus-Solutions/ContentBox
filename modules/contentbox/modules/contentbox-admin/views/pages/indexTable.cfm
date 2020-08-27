@@ -139,7 +139,7 @@
 						<i class="fa fa-tag"></i> #page.getCategoriesList()#<br/>
 						<!--- comments icon --->
 						<cfif page.getallowComments()>
-							<i class="fa fa-comments"></i> Open Comments
+							<i class="far fa-comments"></i> Open Comments
 						<cfelse>
 							<i class="fa fa-warning"></i> Closed Comments
 						</cfif>
@@ -166,7 +166,7 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Delete Command --->
 							<li><a href="javascript:remove('#page.getContentID()#')" class="confirmIt"
-							  data-title="<i class='fa fa-trash-o'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="fa fa-trash-o fa-lg"></i> Delete</a></li>
+							  data-title="<i class='far fa-trash-alt'></i> Delete Page?" data-message="This will delete the page and all of its sub-pages, are you sure?"><i id="delete_#page.getContentID()#" class="far fa-trash-alt fa-lg"></i> Delete</a></li>
 							</cfif>
 							<!--- Edit Command --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>

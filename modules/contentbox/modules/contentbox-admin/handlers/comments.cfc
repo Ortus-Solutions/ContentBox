@@ -1,15 +1,15 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manage comments
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manage comments
+ */
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="commentService"		inject="id:commentService@cb";
-	property name="settingsService"		inject="id:settingService@cb";
+	property name="commentService"     		inject="commentService@cb";
+	property name="settingsService"		inject="settingService@cb";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -44,9 +44,9 @@ component extends="baseHandler"{
 		event.paramValue( "isFiltering",false);
 
 		// prepare paging object
-		prc.oPaging 	= getInstance( "Paging@cb" );
-		prc.paging 		= prc.oPaging.getBoundaries();
-		prc.pagingLink 	= event.buildLink( '#prc.xehComments#.page.@page@?' );
+		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.paging     = prc.oPaging.getBoundaries();
+		prc.pagingLink = event.buildLink( '#prc.xehComments#.page.@page@?' );
 
 		// Append search to paging link?
 		if( len(rc.searchComments) ){
@@ -65,23 +65,23 @@ component extends="baseHandler"{
 
 		// search comments with filters and all
 		var commentResults = commentService.search(
-			search		= rc.searchComments,
-			offset		= prc.paging.startRow-1,
-			max			= prc.cbSettings.cb_paging_maxrows,
-			isApproved	= rc.fStatus
+			search    = rc.searchComments,
+			offset    = prc.paging.startRow-1,
+			max       = prc.cbSettings.cb_paging_maxrows,
+			isApproved= rc.fStatus
 		);
 
-		prc.comments 	 		= commentResults.comments;
-		prc.commentsCount 		= commentResults.count;
-		prc.countApproved 		= commentService.getApprovedCommentCount();
-		prc.countUnApproved 	= commentService.getUnApprovedCommentCount();
+		prc.comments        = commentResults.comments;
+		prc.commentsCount   = commentResults.count;
+		prc.countApproved   = commentService.getApprovedCommentCount();
+		prc.countUnApproved = commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
-		prc.xehCommentEditor 			 = "#prc.cbAdminEntryPoint#.comments.editor";
-		prc.xehCommentRemove 			 = "#prc.cbAdminEntryPoint#.comments.remove";
-		prc.xehCommentstatus 			 = "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		prc.xehCommentQuickLook			 = "#prc.cbAdminEntryPoint#.comments.quicklook";
-		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
+		prc.xehCommentEditor            = "#prc.cbAdminEntryPoint#.comments.editor";
+		prc.xehCommentRemove            = "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentstatus            = "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentQuickLook         = "#prc.cbAdminEntryPoint#.comments.quicklook";
+		prc.xehCommentRemoveAllModerated= "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// tab
 		prc.tabComments_inbox = true;
@@ -113,7 +113,7 @@ component extends="baseHandler"{
 			cbMessagebox.info( data.messages );
 		} else {
 			data.messages = "No comments selected!";
-			data.error = true;
+			data.error    = true;
 			cbMessagebox.warn( data.messages );
 		}
 
@@ -136,7 +136,7 @@ component extends="baseHandler"{
 	 */
 	function editor( event, rc, prc ){
 		// get new or persisted
-		rc.comment  = commentService.get( event.getValue( "commentID",0) );
+		rc.comment         = commentService.get( event.getValue( "commentID",0) );
 		// exit handlers
 		prc.xehCommentsave = "#prc.cbAdminEntryPoint#.comments.save";
 		// view
@@ -160,7 +160,7 @@ component extends="baseHandler"{
 		}
 		// exit handlers
 		prc.xehCommentstatus = "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		rc.xehCommentRemove = "#prc.cbAdminEntryPoint#.comments.remove";
+		rc.xehCommentRemove  = "#prc.cbAdminEntryPoint#.comments.remove";
 		// view
 		event.setView( "comments/moderate" );
 	}
@@ -298,8 +298,8 @@ component extends="baseHandler"{
 		event,
 		rc,
 		prc,
-		contentID="all",
-		max=0,
+		contentID ="all",
+		max       =0,
 		pagination=true
 	){
 
@@ -322,18 +322,18 @@ component extends="baseHandler"{
 		event.paramValue( "page", 1 );
 
 		// exit handlers
-		prc.xehCommentPager 			= "#prc.cbAdminEntryPoint#.comments.pager";
-		prc.xehCommentPagerQuickLook	= "#prc.cbAdminEntryPoint#.comments.quickLook";
-		prc.xehCommentPagerStatus		= "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
-		prc.xehCommentPagerRemove		= "#prc.cbAdminEntryPoint#.comments.remove";
-		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
+		prc.xehCommentPager             = "#prc.cbAdminEntryPoint#.comments.pager";
+		prc.xehCommentPagerQuickLook    = "#prc.cbAdminEntryPoint#.comments.quickLook";
+		prc.xehCommentPagerStatus       = "#prc.cbAdminEntryPoint#.comments.doStatusUpdate";
+		prc.xehCommentPagerRemove       = "#prc.cbAdminEntryPoint#.comments.remove";
+		prc.xehCommentRemoveAllModerated= "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// prepare paging object
-		prc.commentPager_oPaging 		= getInstance( "Paging@cb" );
-		prc.commentPager_paging 	  	= prc.commentPager_oPaging.getBoundaries();
-		prc.commentPager_pagingLink 	= "javascript:commentPagerLink(@page@)";
-		prc.commentPager_pagination		= arguments.pagination;
-		prc.commentPager_max			= arguments.max;
+		prc.commentPager_oPaging   = getInstance( "Paging@cb" );
+		prc.commentPager_paging    = prc.commentPager_oPaging.getBoundaries();
+		prc.commentPager_pagingLink= "javascript:commentPagerLink(@page@)";
+		prc.commentPager_pagination= arguments.pagination;
+		prc.commentPager_max       = arguments.max;
 
 		// search entries with filters and all
 		var commentResults = commentService.search(
@@ -341,8 +341,8 @@ component extends="baseHandler"{
 			offset    = prc.commentPager_paging.startRow-1,
 			max       = arguments.max
 		);
-		prc.commentPager_comments 	     = commentResults.comments;
-		prc.commentPager_commentsCount   = commentResults.count;
+		prc.commentPager_comments      = commentResults.comments;
+		prc.commentPager_commentsCount = commentResults.count;
 
 		// incoming entry ID
 		prc.commentPager_contentID	= arguments.contentID;
@@ -359,7 +359,7 @@ component extends="baseHandler"{
 	 * @prc
 	 */
 	function settings( event, rc, prc ){
-		rc.xehSaveSettings = "#prc.cbAdminEntryPoint#.comments.saveSettings";
+		rc.xehSaveSettings       = "#prc.cbAdminEntryPoint#.comments.saveSettings";
 		prc.tabComments_settings = true;
 		event.setView( "comments/settings" );
 	}
@@ -369,9 +369,11 @@ component extends="baseHandler"{
 	 */
 	function saveSettings( event, rc, prc ){
 		// announce event
-		announce( "cbadmin_preCommentSettingsSave",{oldSettings=prc.cbSettings,newSettings=rc} );
+		announce( "cbadmin_preCommentSettingsSave", { oldSettings : prc.cbSettings, newSettings : rc } );
 		// bulk save the options
-		settingsService.bulkSave(rc);
+		settingsService.bulkSave( rc.filter( function( key ){
+			return key.findNoCase( "cb_comments" );
+		} ), prc.oCurrentSite );
 		// announce event
 		announce( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor

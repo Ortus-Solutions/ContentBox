@@ -1,7 +1,7 @@
 <cfoutput>
 <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
     <p>
-		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via 
+		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via
 		the CB Helper:
 		<code>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</code>
 	</p>
@@ -9,7 +9,7 @@
 	<div id="customFields">
 		<!--- Counter Of How Many Custom Fields --->
 		#html.hiddenField(name="customFieldsCount",value=arrayLen( args.customFields ))#
-		
+
 		<div>
 			<!--- Add CustomField --->
 			<button class="btn btn-sm btn-primary dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
@@ -17,7 +17,7 @@
 			</button>
 			<!--- Remove All Custom Fields --->
 			<button id="removeCustomFieldsButton" class="btn btn-sm btn-danger" onclick="return cleanCustomFields()">
-				<i class="fa fa-trash-o"></i> Remove All
+				<i class="far fa-trash-alt"></i> Remove All
 			</button>
 		</div>
 
@@ -35,17 +35,17 @@
 						size="30",
 						value=cField.getKey()
 					)#
-				
-					<label class="inline control-label">Value: </label> 
+
+					<label class="inline control-label">Value: </label>
 					#html.textField(
 						name="CustomFieldValues",
 						class="form-control customFieldValue",
 						size="30",
 						value=cField.getValue()
 					)#
-					
-					<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="fa fa-trash-o"></i></button>
-				
+
+					<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="far fa-trash-alt"></i></button>
+
 				</div>
 			</div>
 		</cfloop>
@@ -61,8 +61,8 @@
 				maxsize="255",
 				size="30"
 			)#
-		
-			<label class="inline control-label">Value: </label> 
+
+			<label class="inline control-label">Value: </label>
 			#html.textField(
 				name="CustomFieldValues",
 				class="form-control customFieldValue",
@@ -70,10 +70,10 @@
 			)#
 
 			<button class="btn btn-danger dynamicRemove" onclick="return false;">
-				<i class="fa fa-trash-o"></i>
+				<i class="far fa-trash-alt"></i>
 			</button>
 		</div>
-	</div>	
+	</div>
 	<!--- Custom JS --->
 	<script>
 		$(document).ready(function() {

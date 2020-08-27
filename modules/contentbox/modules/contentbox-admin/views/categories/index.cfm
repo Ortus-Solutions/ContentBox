@@ -51,10 +51,10 @@
 										<li>
 											<a 	href="javascript:bulkRemove()"
 												class="confirmIt"
-												data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?"
+												data-title="<i class='far fa-trash-alt'></i> Delete Selected Categories?"
 												data-message="This will delete the categories and all of its associations, are you sure?"
 											>
-												<i class="fa fa-trash-o"></i> Delete Selected
+												<i class="far fa-trash-alt"></i> Delete Selected
 											</a>
 										</li>
 										</cfif>
@@ -154,7 +154,7 @@
 										data-title="Delete Category?"
 										data-message="Delete the category and all of its associations"
 									>
-										<i class="fa fa-trash-o" id="delete_#category.getCategoryID()#"></i>
+										<i class="far fa-trash-alt" id="delete_#category.getCategoryID()#"></i>
 									</a>
 									</cfif>
 								</div>

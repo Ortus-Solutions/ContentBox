@@ -138,7 +138,7 @@ function contentLoad( criteria ){
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 function removeAuthor( authorID ){
 	$( "##delete_"+ authorID )
-		.removeClass( "fa fa-trash-o" )
+		.removeClass( "far fa-trash-alt" )
 		.addClass( "fa fa-spinner fa-spin" );
 	checkAll( false, '##authorID' );
 	$( "##targetAuthorID" ).val( authorID );

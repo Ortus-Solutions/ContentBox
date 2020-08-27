@@ -73,9 +73,9 @@
 									<a 	title="Delete Author"
 										href="javascript:removeAuthor( '#author.getAuthorID()#' )"
 										class="confirmIt"
-										data-title="<i class='fa fa-trash-o'></i> Delete Author?"
+										data-title="<i class='far fa-trash-alt'></i> Delete Author?"
 									>
-										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Delete
+										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Delete
 									</a>
 								</li>
 							<cfelse>
@@ -84,7 +84,7 @@
 										href="javascript:alert('Can\'t delete yourself buddy!')"
 										class="textRed"
 									>
-										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Can't Delete
+										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Can't Delete
 									</a>
 								</li>
 							</cfif>

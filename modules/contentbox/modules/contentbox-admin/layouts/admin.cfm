@@ -242,7 +242,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
-														<i class="fa fa-trash-o"></i> Delete Installer
+														<i class="far fa-trash-alt"></i> Delete Installer
 													</a>
 												</li>
 											</ul>
@@ -265,7 +265,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteDSNCreator()">
-														<i class="fa fa-trash-o"></i> Delete DSN Creator
+														<i class="far fa-trash-alt"></i> Delete DSN Creator
 													</a>
 												</li>
 											</ul>

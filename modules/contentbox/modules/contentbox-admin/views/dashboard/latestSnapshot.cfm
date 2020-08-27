@@ -65,7 +65,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##discussion">
-                    <i class="fa fa-comments fa-lg"></i> #$r( "dashboard.latestSnapshot.discussionCounts@admin" )#
+                    <i class="far fa-comments fa-lg"></i> #$r( "dashboard.latestSnapshot.discussionCounts@admin" )#
                 </a>
             </div>
             <div id="discussion" class="panel-collapse collapse">
@@ -74,7 +74,7 @@
                         <li><a title="View Comments" href="#event.buildLink(prc.xehComments)#">#prc.commentsCount# Comments</a> </li>
                         <li><a title="View Approved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=true">#prc.commentsApprovedCount# Approved</a></li>
                         <li><a title="View UnApproved Comments" href="#event.buildLink(prc.xehComments)#?fStatus=false">#prc.commentsUnApprovedCount# Pending</a> </li>
-                    </ul>   
+                    </ul>
                 </div>
             </div>
         </div>

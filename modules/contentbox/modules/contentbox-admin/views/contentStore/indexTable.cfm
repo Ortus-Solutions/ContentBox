@@ -109,7 +109,7 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
-							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Content?"><i id="delete_#content.getContentID()#" class="fa fa-trash-o fa-lg" ></i> Delete</a>
+							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Content?"><i id="delete_#content.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->

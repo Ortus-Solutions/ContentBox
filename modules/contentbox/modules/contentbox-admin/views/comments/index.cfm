@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-comments"></i> Comments (#prc.commentsCount#)
+        	<i class="far fa-comments"></i> Comments (#prc.commentsCount#)
 			<cfif len(rc.searchComments)> > Search: #event.getValue( "searchComments" )#</cfif>
 		</h1>
     </div>
@@ -12,7 +12,7 @@
         <!-- MessageBox -->
         #getInstance( "messagebox@cbMessagebox" ).renderit()#
         <!--- Info Bar --->
-		<cfif NOT prc.cbSettings.cb_comments_enabled>
+		<cfif NOT prc.cbSiteSettings.cb_comments_enabled>
 			<div class="alert alert-info">
 				<i class="fa fa-exclamation-triangle fa-lg"></i>
 				Comments are currently disabled site-wide!
@@ -47,7 +47,7 @@
 								    	<ul class="dropdown-menu">
 								    		<li><a href="javascript:changeStatus('approve')"><i class="fa fa-thumbs-up"></i> Approve Selected</a></li>
 											<li><a href="javascript:changeStatus('moderate')"><i class="fa fa-thumbs-down"></i> Moderate Selected</a></li>
-											<li><a href="javascript:removeAllSelected()" class="confirmIt"><i class="fa fa-trash-o"></i> Remove Selected</a></li>
+											<li><a href="javascript:removeAllSelected()" class="confirmIt"><i class="far fa-trash-alt"></i> Remove Selected</a></li>
 											<li><a href="javascript:removeAllModerated()" class="confirmIt" data-message="Are you sure you want to delete all moderated comments?" title="Nuclear: Delete all moderated comments!"><i class="fa fa-times"></i> Remove All Moderated</a></li>
 								    	</ul>
 								    </div>
@@ -81,7 +81,7 @@
 									&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
 									<br/>
 									<cfif len(comment.getAuthorURL())>
-										<i class="fa fa-cloud"></i>
+										<i class="fas fa-globe"></i>
 										<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 											#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 										</a>
@@ -118,12 +118,20 @@
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">
 									    		<!--- Edit Command --->
-												<li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+												<li>
+													<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment">
+														<i class="fa fa-edit fa-lg"></i> Edit
+													</a>
+												</li>
 												<li><!--- Delete Command --->
-													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Comment?"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg"></i> Delete</a>
+													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Comment?">
+														<i id="delete_#comment.getCommentID()#" class="far fa-trash-alt fa-lg"></i> Delete
+													</a>
 												</li>
 												<li>
-													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i> View In Site</a>
+													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
+														<i class="fa fa-eye fa-lg"></i> View In Site
+													</a>
 												</li>
 									    	</ul>
 									    </div>

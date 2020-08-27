@@ -19,7 +19,7 @@
 		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="fa fa-clock-o"></i> Full History</button>
 		</cfif>
 	</div>
-	
+
 	#html.startForm(name="versionsPagerForm" )#
 
 	<table id="versionsHistoryTable" width="100%" class="table table-hover table-condensed table-striped" border="0">
@@ -82,8 +82,8 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>
 						<!--- DELETE VERSION --->
 						<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
-						   data-title="<i class='fa fa-trash-o'></i> Remove Content Version"
-						   data-message="Do you really want to remove this content version?"><i class="fa fa-trash-o fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
+						   data-title="<i class='far fa-trash-alt'></i> Remove Content Version"
+						   data-message="Do you really want to remove this content version?"><i class="far fa-trash-alt fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 					</cfif>
 				</td>

@@ -12,7 +12,7 @@
 			<th>Title</th>
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-comments fa-lg" title="Comments"></i></th>
+			<th width="40" class="text-center"><i class="far fa-comments fa-lg" title="Comments"></i></th>
 			<th width="50" class="text-center">Actions</th>
 		</tr>
 	</thead>

@@ -58,7 +58,7 @@
 							<a class="btn btn-xs btn-info" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 						</cfif>
 						<!--- Delete Command --->
-						<a class="btn btn-xs btn-info" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="fa fa-trash-o fa-lg" ></i></a>
+						<a class="btn btn-xs btn-info" title="Delete Comment Permanently" href="javascript:commentPagerRemove('#comment.getCommentID()#')"><i id="delete_#comment.getCommentID()#" class="far fa-trash-alt fa-lg" ></i></a>
 					</cfif>
 					<!--- View in Site --->
 					<a class="btn btn-xs btn-info" href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank"><i class="fa fa-eye fa-lg"></i></a>

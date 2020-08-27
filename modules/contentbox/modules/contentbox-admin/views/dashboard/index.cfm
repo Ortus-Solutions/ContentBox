@@ -50,7 +50,7 @@
 				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<li>
 						<a href="##latestComments" data-toggle="tab">
-							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
+							<i class="far fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
 						</a>
 					</li>
 				</cfif>

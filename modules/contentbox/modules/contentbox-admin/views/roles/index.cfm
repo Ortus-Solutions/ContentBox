@@ -108,7 +108,7 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 												<!--- Delete Command --->
 												<cfif role.getNumberOfAuthors() eq 0>
-												<li><a href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Role?"><i class="fa fa-trash-o fa-lg" id="delete_#role.getRoleID()#"></i> Delete</a></li>
+												<li><a href="javascript:remove('#role.getRoleID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Role?"><i class="far fa-trash-alt fa-lg" id="delete_#role.getRoleID()#"></i> Delete</a></li>
 												</cfif>
 												<!--- Edit Command --->
 												<li><a href="javascript:edit('#role.getRoleID()#',

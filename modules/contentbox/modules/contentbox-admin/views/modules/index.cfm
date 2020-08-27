@@ -71,7 +71,7 @@
 										&nbsp;
 										<!--- Delete Module --->
 										<a class="btn btn-sm btn-danger" title="Delete Module" href="javascript:remove('#JSStringFormat(module.getName())#')" class="confirmIt"
-											data-title="<i class='fa fa-trash-o'></i> Delete #module.getName()#?"><i class="fa fa-trash-o fa-lg"></i></a>
+											data-title="<i class='far fa-trash-alt'></i> Delete #module.getName()#?"><i class="far fa-trash-alt fa-lg"></i></a>
 									</cfif>
 									</div>
 								</cfif>

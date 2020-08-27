@@ -45,8 +45,8 @@
 								    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
-												data-title="<i class='fa fa-trash-o'></i> Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
-														<i class="fa fa-trash-o"></i> Delete selected
+												data-title="<i class='far fa-trash-alt'></i> Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
+														<i class="far fa-trash-alt"></i> Delete selected
 													</a>
 												</li>
 												<li>

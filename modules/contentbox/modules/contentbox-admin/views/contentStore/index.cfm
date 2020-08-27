@@ -45,8 +45,8 @@
 								    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
-													data-title="<i class='fa fa-trash-o'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
-														<i class="fa fa-trash-o"></i> Delete Selected
+													data-title="<i class='far fa-trash-alt'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
+														<i class="far fa-trash-alt"></i> Delete Selected
 													</a>
 												</li>
 												<li>

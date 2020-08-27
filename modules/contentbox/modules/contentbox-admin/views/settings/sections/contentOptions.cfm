@@ -1,6 +1,6 @@
 <cfoutput>
     <fieldset>
-        <legend><i class="fa fa-file fa-lg"></i>  Content Options</legend>
+        <legend><i class="fas fa-boxes fa-lg"></i>  Content Options</legend>
 
         <!--- Content Max Versions --->
         <div class="form-group">

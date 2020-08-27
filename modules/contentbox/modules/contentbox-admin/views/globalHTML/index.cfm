@@ -30,7 +30,7 @@
                             <a href="##entry" data-toggle="tab"><i class="fas fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
                         </li>
                         <li>
-                            <a href="##comments" data-toggle="tab"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
+                            <a href="##comments" data-toggle="tab"><i class="far fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
                         </li>
                         <li>
                             <a href="##pages" data-toggle="tab"><i class="fas fa-file-alt fa-lg"></i> <span class="hidden-xs">Pages</span></a>
@@ -200,7 +200,7 @@
                             <!--- Comments --->
                             <div class="tab-pane" id="comments">
                                 <fieldset>
-                                    <legend><i class="fa fa-comments fa-lg"></i> Comments</legend>
+                                    <legend><i class="far fa-comments fa-lg"></i> Comments</legend>
                                     #html.textarea(
                                         name="cb_html_preCommentForm",
                                         label="Before The Comment Form: ",

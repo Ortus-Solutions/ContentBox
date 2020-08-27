@@ -72,7 +72,7 @@
 
                                 <li role="presentation">
                                     <a href="##comments" aria-controls="comments" role="tab" data-toggle="tab">
-                                        <i class="fa fa-comments"></i> Comments
+                                        <i class="far fa-comments"></i> Comments
                                     </a>
                                 </li>
                             </cfif>
@@ -425,7 +425,7 @@
                                         <!--- Allow Comments --->
                                         <cfif prc.cbSettings.cb_comments_enabled>
                                             <div class="form-group">
-                                                <i class="fa fa-comments fa-lg"></i>
+                                                <i class="far fa-comments fa-lg"></i>
                                                 #html.label(
                                                     field="allowComments",
                                                     content="Allow Comments:",

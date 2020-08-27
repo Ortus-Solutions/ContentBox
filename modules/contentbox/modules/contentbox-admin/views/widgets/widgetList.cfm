@@ -27,7 +27,7 @@
         </ul>
         <!--- Array to hold all the error messages when generating widgets,output at the bottom of the list, not in the middle --->
         <cfset aWidgetErrors = []>
-        
+
         <!--- ContentBars --->
         <div class="tab-content">
             <div class="widget-store full tab-pane active">
@@ -39,7 +39,7 @@
                         <cfscript>
                             widgetName = prc.widgets.name;
                             widgetSelector = prc.widgets.name;
-                            category = prc.widgets.category;    
+                            category = prc.widgets.category;
                             switch( prc.widgets.widgettype ) {
                                 case 'module':
                                         widgetName &= "@" & prc.widgets.module;
@@ -53,7 +53,7 @@
                             } catch( Any e ){
                                 log.error( 'Error Building #prc.widgets.toString()#. #e.message# #e.detail#', e );
                                 arrayAppend( aWidgetErrors, "<div class='alert alert-danger margin10'>Error building '#prc.widgets.name#' widget: #e.message# <p><a data-toggle='collapse' data-target='##Widget_Error_#prc.widgets.name#'>Toggle Full Error</a></p><div id='Widget_Error_#prc.widgets.name#' class='collapse'>#e.detail#</div></div>" );
-                                
+
                                 continue;
                             }
                             iconName = prc.widgets.icon;
@@ -72,10 +72,10 @@
                         <cfset widgetURL = hasProtocol ? p.getAuthorURL() : "http://" & p.getAuthorURL()>
                         <cfset widgetCursor = args.mode eq "edit" ? "" : "widget-selector ">
                         <div class="col-md-6">
-                            <div    class="#widgetCursor#panel panel-info" 
-                                    name="#widgetName#" 
-                                    category="#category#" 
-                                    type="#prc.widgets.widgettype#" 
+                            <div    class="#widgetCursor#panel panel-info"
+                                    name="#widgetName#"
+                                    category="#category#"
+                                    type="#prc.widgets.widgettype#"
                                     displayname="#p.getName()#"
                                     iconName="#iconName#"
                             >
@@ -90,19 +90,19 @@
                                             <div class="btn-group btn-group-sm actions">
                                                 <!---read docs--->
                                                 <a data-toggle="tooltip" data-container="body" data-placement="left" title="Read Widget Documentation" class="btn btn-sm btn-info" href="javascript:openRemoteModal('#event.buildLink(prc.xehWidgetDocs)#',{widget:'#urlEncodedFormat(widgetName)#',type:'#urlEncodedFormat(prc.widgets.widgettype)#'} )">
-                                                    <i class="fa fa-book fa-lg"></i> 
+                                                    <i class="fa fa-book fa-lg"></i>
                                                 </a>
                                                 <cfif prc.oCurrentAuthor.checkPermission( "WIDGET_ADMIN" )>
                                                     <!--- Test --->
-                                                    <a title="Test Widget" data-container="body" class="btn btn-sm btn-info" 
+                                                    <a title="Test Widget" data-container="body" class="btn btn-sm btn-info"
                                                         href="javascript:testWidgetCode( '#widgetName#', '#prc.widgets.widgetType#' )">
-                                                        <i class="fa fa-bolt fa-lg"></i> 
+                                                        <i class="fa fa-bolt fa-lg"></i>
                                                     </a>
                                                     <!---only allow deletion of custom widgets--->
                                                     <cfif prc.widgets.widgettype eq "custom">
                                                         <!--- Delete Command --->
                                                         <a title="Delete Widget" data-container="body"  href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
-                                                            <i class="fa fa-trash-o fa-lg"></i> 
+                                                            <i class="far fa-trash-alt fa-lg"></i>
                                                         </a>
                                                     </cfif>
                                                 </cfif>
@@ -125,15 +125,15 @@
                             </div> <!--- end widget-content --->
                         </div>
                     </cfloop>
-                    
+
                 </div>
-                
+
                 <div class="row">
                 <cfloop array="#aWidgetErrors#" index="widgetError" >
                 	#widgetError#
-                </cfloop>	
+                </cfloop>
                 </div>
-                    
+
                 <div class="widget-no-preview" style="display:none;">Sorry, no widgets matched your search!</div>
             </div>
         </div>

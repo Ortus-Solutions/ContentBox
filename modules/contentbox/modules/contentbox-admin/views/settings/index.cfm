@@ -29,27 +29,32 @@
                         <ul class="nav nav-tabs">
                             <li class="active">
 								<a href="##site_options" data-toggle="tab">
-									<i class="fas fa-globe fa-lg"></i> All Site Options
+									<i class="fas fa-globe fa-lg"></i> All Sites
+								</a>
+							</li>
+							<li>
+								<a href="##comments" data-toggle="tab">
+									<i class="far fa-comments fa-lg"></i> Comments
 								</a>
                             </li>
                             <li>
 								<a href="##dashboard_options" data-toggle="tab">
-									<i class="fa fa-desktop fa-lg"></i> Admin Options
+									<i class="fa fa-desktop fa-lg"></i> Administrator
 								</a>
                             </li>
                             <li>
 								<a href="##security_options" data-toggle="tab">
-									<i class="fa fa-lock fa-lg"></i> Security Options
+									<i class="fa fa-lock fa-lg"></i> Security
 								</a>
                             </li>
                             <li>
 								<a href="##login_options" data-toggle="tab">
-									<i class="fa fa-sign-in fa-lg"></i> Login Options
+									<i class="fa fa-sign-in fa-lg"></i> Login
 								</a>
                             </li>
                             <li>
 								<a href="##content_options" data-toggle="tab">
-									<i class="fa fa-file fa-lg"></i> Content Options
+									<i class="fas fa-boxes fa-lg"></i> Content
 								</a>
                             </li>
                             <li>
@@ -59,27 +64,27 @@
                             </li>
                             <li>
 								<a href="##mediamanager" data-toggle="tab">
-									<i class="fa fa-th fa-lg"></i> Media Manager
+									<i class="fas fa-photo-video fa-lg"></i> Media Manager
 								</a>
                             </li>
                             <li>
 								<a href="##gravatars" data-toggle="tab">
-									<i class="fa fa-user fa-lg"></i> Gravatars
+									<i class="fas fa-portrait fa-lg"></i> Gravatars
 								</a>
                             </li>
                             <li>
 								<a href="##notifications" data-toggle="tab">
-									<i class="fa fa-bullhorn fa-lg"></i> Notifications
+									<i class="far fa-bell fa-lg"></i> Notifications
 								</a>
                             </li>
                             <li>
 								<a href="##email_server" data-toggle="tab">
-									<i class="fa fa-envelope fa-lg"></i> Mail Server
+									<i class="far fa-envelope-open fa-lg"></i> Mail Server
 								</a>
                             </li>
                             <li>
 								<a href="##search_options" data-toggle="tab">
-									<i class="fa fa-search fa-lg"></i> Search Options
+									<i class="fab fa-searchengin fa-lg"></i> Search Options
 								</a>
                             </li>
                             <li>
@@ -99,6 +104,14 @@
 
                             <div class="tab-pane active" id="site_options">
                                 #renderView( "settings/sections/siteOptions" )#
+							</div>
+
+							<!--- ********************************************************************* --->
+                            <!---                           COMMENT OPTIONS                               --->
+                            <!--- ********************************************************************* --->
+
+                            <div class="tab-pane" id="comments">
+                                #renderView( "settings/sections/comments" )#
                             </div>
 
                             <!--- ********************************************************************* --->

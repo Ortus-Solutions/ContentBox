@@ -233,7 +233,7 @@ component accessors="true" threadSafe singleton {
 			)
 			.addHeaderSubMenu(
 				name   = "forums",
-				label  = "<i class=""fa fa-envelope""></i> Support Forums",
+				label  = "<i class=""far fa-envelope-open""></i> Support Forums",
 				href   = "https://groups.google.com/forum/?fromgroups##!forum/contentbox",
 				target = "_blank"
 			)

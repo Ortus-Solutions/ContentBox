@@ -35,7 +35,7 @@
                             <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li>
-                            <a href="##_events" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> <span class="hidden-xs">Events</span></a>
+                            <a href="##_events" data-toggle="tab"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
 					<!-- End Tabs -->

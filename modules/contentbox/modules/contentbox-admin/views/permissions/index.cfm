@@ -114,7 +114,7 @@
 										</a>
 										<!--- Delete Command --->
 										<a class="btn btn-sm btn-danger confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
-											<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-o fa-lg"></i>
+											<i id="delete_#permission.getPermissionID()#" class="far fa-trash-alt fa-lg"></i>
 										</a>
 									</cfif>
 								</td>

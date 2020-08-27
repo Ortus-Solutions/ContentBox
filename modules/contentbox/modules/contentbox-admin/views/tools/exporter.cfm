@@ -218,7 +218,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-th fa-lg"></i> Media Library</h4>
+								<h4><i class="fas fa-photo-video fa-lg"></i> Media Library</h4>
 								<small class="muted">Export all Media Library content</small>
 							</div>
 							<div class="col-md-9">
@@ -234,7 +234,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-envelope fa-lg"></i> Email Templates</h4>
+								<h4><i class="far fa-envelope-open fa-lg"></i> Email Templates</h4>
 								<small class="muted">Export all Email Templates</small>
 							</div>
 							<div class="col-md-9">

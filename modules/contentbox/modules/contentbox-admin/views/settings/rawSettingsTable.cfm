@@ -72,8 +72,8 @@
 						href="javascript:remove( '#setting.getsettingID()#' )"
 						title="Delete Setting"
 					</cfif>
-						data-title="<i class='fa fa-trash-o'></i> Delete Setting?">
-							<i class="fa fa-trash-o fa-lg" id="delete_#setting.getsettingID()#"></i>
+						data-title="<i class='far fa-trash-alt'></i> Delete Setting?">
+							<i class="far fa-trash-alt fa-lg" id="delete_#setting.getsettingID()#"></i>
 						</a>
 				</div>
 			</td>

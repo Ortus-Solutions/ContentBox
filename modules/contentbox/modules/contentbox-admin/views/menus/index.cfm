@@ -43,7 +43,7 @@
                                         <ul class="dropdown-menu">
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
                                                 <li>
-                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash-o"></i> Delete Selected</a>
+                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="far fa-trash-alt"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>

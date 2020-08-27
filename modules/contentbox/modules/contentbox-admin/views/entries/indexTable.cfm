@@ -8,7 +8,7 @@
 			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-search fa-lg" title="Show in Search"></i></th>
 			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-comments fa-lg" title="Comments"></i></th>
+			<th width="40" class="text-center"><i class="far fa-comments fa-lg" title="Comments"></i></th>
 			<th width="75" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
@@ -85,7 +85,7 @@
 					</br>
 					<!--- comments icon --->
 					<cfif entry.getallowComments()>
-						<i class="fa fa-comments"></i> Open Comments
+						<i class="far fa-comments"></i> Open Comments
 					<cfelse>
 						<i class="fa fa-warning-sign"></i> Closed Comments
 					</cfif>
@@ -103,7 +103,7 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
-							<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-o'></i> Delete Entry?"><i id="delete_#entry.getContentID()#" class="fa fa-trash-o fa-lg" ></i> Delete</a>
+							<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Entry?"><i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->
