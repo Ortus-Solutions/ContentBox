@@ -8,14 +8,14 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="entryService"                                                                                                                 	inject="entryService@cb";
-	property name="pageService"                                                                                                                                 	inject="pageService@cb";
-	property name="contentService"                                                                                 	inject="contentService@cb";
-	property name="commentService"                                                                                 	inject="commentService@cb";
-	property name="categoryService"                                                                		inject="categoryService@cb";
-	property name="feedReader"                                                                                                                                                		inject="FeedReader@cbfeeds";
+	property name="entryService"                                                                                                                        	inject="entryService@cb";
+	property name="pageService"                                                                                                                                         	inject="pageService@cb";
+	property name="contentService"                                                                                      	inject="contentService@cb";
+	property name="commentService"                                                                                      	inject="commentService@cb";
+	property name="categoryService"                                                                    		inject="categoryService@cb";
+	property name="feedReader"                                                                                                                                                         		inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"		inject="loginTrackerService@cb";
-	property name="markdown"                                                                                                                                                                                		inject="Processor@cbmarkdown";
+	property name="markdown"                                                                                                                                                                                           		inject="Processor@cbmarkdown";
 
 	/**
 	 * Main dashboard event
@@ -62,8 +62,8 @@ component extends="baseHandler"{
 		prc.categoriesCount        = variables.categoryService.getTotalCategoryCount( siteId );
 
 		// Few Reports
-		prc.topContent   = variables.contentService.getTopVisitedContent( siteId );
-		prc.topCommented = variables.contentService.getTopCommentedContent( siteId );
+		prc.topContent   = variables.contentService.getTopVisitedContent( max : 5, siteId : siteId );
+		prc.topCommented = variables.contentService.getTopCommentedContent( max : 5, siteId : siteId );
 
 		// convert report to chart data
 		prc.aTopContent          = [];

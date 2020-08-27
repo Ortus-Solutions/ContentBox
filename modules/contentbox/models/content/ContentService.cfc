@@ -1,30 +1,30 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A generic content service for content objects
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A generic content service for content objects
+ */
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"                                                                                                inject="id:settingService@cb";
-	property name="cacheBox"                                                                                                                                                inject="cachebox";
-	property name="log"                                                                                                                                                                                        inject="logbox:logger:{this}";
-	property name="customFieldService"                                                                inject="customFieldService@cb";
-	property name="categoryService"                                                                                        inject="categoryService@cb";
-	property name="commentService"                                                                                                inject="commentService@cb";
-	property name="contentVersionService"                                        inject="contentVersionService@cb";
-	property name="authorService"                                                                                                        inject="authorService@cb";
-	property name="contentStoreService"                                                        inject="contentStoreService@cb";
-	property name="pageService"                                                                                                                        inject="pageService@cb";
-	property name="entryService"                                                                                                                inject="entryService@cb";
-	property name="populator"                                                                                                                                        inject="wirebox:populator";
-	property name="systemUtil"                                                                                                                                inject="SystemUtil@cb";
-	property name="statsService"                                                                                                                inject="statsService@cb";
-	property name="dateUtil"                                                                                                                                                inject="DateUtil@cb";
+	property name="settingService"            inject="id:settingService@cb";
+	property name="cacheBox"                  inject="cachebox";
+	property name="log"                       inject="logbox:logger:{this}";
+	property name="customFieldService"        inject="customFieldService@cb";
+	property name="categoryService"           inject="categoryService@cb";
+	property name="commentService"            inject="commentService@cb";
+	property name="contentVersionService"     inject="contentVersionService@cb";
+	property name="authorService"             inject="authorService@cb";
+	property name="contentStoreService"       inject="contentStoreService@cb";
+	property name="pageService"               inject="pageService@cb";
+	property name="entryService"              inject="entryService@cb";
+	property name="populator"                 inject="wirebox:populator";
+	property name="systemUtil"                inject="SystemUtil@cb";
+	property name="statsService"              inject="statsService@cb";
+	property name="dateUtil"                  inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService"                                                                        inject="subscriberService@cb";
+	property name="subscriberService"         inject="subscriberService@cb";
 
 	/**
 	* Constructor
