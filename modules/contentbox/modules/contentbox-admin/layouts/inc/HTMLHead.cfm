@@ -7,7 +7,7 @@
     <!--- Robots --->
     <meta name="robots" content="noindex,nofollow" />
     <!--- SES --->
-    <base href="#cb.siteBaseURL()#" />
+	<base href="#event.getHTMLBaseURL()#" />
     <!--- Title --->
     <cfif event.privateValueExists( "htmlTitle" )>
         <title>#prc.htmlTitle# &mdash; ContentBox Administrator</title>

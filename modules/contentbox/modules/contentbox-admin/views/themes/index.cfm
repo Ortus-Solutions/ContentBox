@@ -53,13 +53,16 @@
 								<cfset thisTheme = prc.themes[ themeName ]>
 							<tr>
 								<td>
-									<cfif prc.cbSettings.cb_site_theme eq themeName>
-										<i class="fa fa-asterisk fa-lg text-warning" title="Active Theme"></i>
+									<cfif prc.oCurrentSite.getActiveTheme() eq themeName>
+										<i class="fas fa-asterisk fa-lg textOrange" title="Active Theme"></i>
 									</cfif>
+
 									<strong>#thisTheme.themeName#</strong>
-									<br/>
-									Version #thisTheme.version# by
-									<a href="#thisTheme.authorURL#" title="#thisTheme.AuthorURL#" target="_blank">#thisTheme.Author#</a>
+
+									<div>
+										Version #thisTheme.version# by
+										<a href="#thisTheme.authorURL#" title="#thisTheme.AuthorURL#" target="_blank">#thisTheme.Author#</a>
+									</div>
 
 									<p>&nbsp;</p>
 

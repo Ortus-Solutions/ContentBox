@@ -232,11 +232,7 @@ component accessors="true" singleton threadSafe {
 	 * Get the site base SES URL
 	 */
 	function siteBaseURL(){
-		return replaceNoCase(
-			getRequestContext().buildLink( to = "", ssl = getRequestContext().isSSL() ),
-			"index.cfm/",
-			""
-		);
+		return getRequestContext().getHTMLBaseUrl();
 	}
 
 	/**
@@ -433,7 +429,7 @@ component accessors="true" singleton threadSafe {
 			prc.oCurrentSite.getSlug()
 		);
 		// Place the default layout on scope
-		prc.cbTheme        = prc.cbSettings.cb_site_theme;
+		prc.cbTheme        = prc.oCurrentSite.getActiveTheme();
 		prc.cbThemeRecord  = variables.themeService.getThemeRecord( prc.cbTheme );
 		// Place layout root location
 		prc.cbthemeRoot    = prc.cbThemeRecord.includePath;
@@ -458,7 +454,7 @@ component accessors="true" singleton threadSafe {
 
 		/************************************** IDENTITY HEADER *********************************************/
 
-		if ( prc.cbSettings.cb_site_poweredby ) {
+		if ( prc.oCurrentSite.getPoweredByHeader() ) {
 			event.setHTTPHeader( name = "X-Powered-By", value = "ContentBox Modular CMS" );
 		}
 

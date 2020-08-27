@@ -44,27 +44,13 @@ component
 	// Global Setting Defaults
 	this.DEFAULTS = {
 		// Installation security salt
-		"cb_salt"                : hash( createUUID() & getTickCount() & now(), "SHA-512" ),
+		"cb_salt"                              : hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 		// Notifications
-		"cb_site_email"          : "",
-		"cb_notify_author"       : "true",
-		"cb_notify_entry"        : "true",
-		"cb_notify_page"         : "true",
-		"cb_notify_contentstore" : "true",
-		// Site Settings			 Settings   Usage
-		// "cb_site_name"              √		√
-		// "cb_site_tagline"           √		√
-		// "cb_site_description"       √		√
-		// "cb_site_keywords"          √		√
-		// "cb_site_homepage"          √		√
-		// "cb_site_disable_blog"      √		√
-		// "cb_site_ssl"               √		√
-		// "cb_site_poweredby"         √
-		// "cb_site_sitemap"           √
-		// "cb_site_adminbar"          √
-		// "cb_site_theme"
-
-
+		"cb_site_email"                        : "",
+		"cb_notify_author"                     : "true",
+		"cb_notify_entry"                      : "true",
+		"cb_notify_page"                       : "true",
+		"cb_notify_contentstore"               : "true",
 		// Outgoing email
 		"cb_site_outgoingEmail"                : "",
 		// Blog Entry Point

@@ -81,6 +81,16 @@ component
 	}
 
 	/**
+	 * Returns a collection of all the themes that are used in all active sites
+	 */
+	array function getAllSiteThemes(){
+		return newCriteria()
+			.isFalse( "isDeleted" )
+			.withProjections( distinct: "activeTheme" )
+			.list( sortOrder = "activeTheme" );
+	}
+
+	/**
 	 * This method discovers which site you are on and returns it depending on the following markers:
 	 * - incoming `siteSlug` (rc)
 	 * - incoming header: `x-contentbox-site`

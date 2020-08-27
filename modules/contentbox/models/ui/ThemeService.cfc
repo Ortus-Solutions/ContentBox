@@ -1,14 +1,15 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manages ContentBox themes
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manages ContentBox themes
+ */
 component accessors="true" threadSafe singleton{
 
 	// DI
 	property name="settingService"		inject="settingService@cb";
+	property name="siteService"			inject="siteService@cb";
 	// Provide this one in, due to chicken and the egg issues.
 	property name="widgetService"		inject="provider:widgetService@cb";
 	property name="moduleSettings"		inject="coldbox:setting:modules";
@@ -135,54 +136,56 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	 * Startup Active Theme procedures
+	 * This method is called from the UI module to make sure all site themes are online before
+	 * serving requets
+	 */
+	function startupSiteThemes(){
+		variables.siteService
+			.getAllSiteThemes()
+			.each( function( themeName ){
+				startupTheme( arguments.themeName );
+			} );
+	}
+
+	/**
+	 * Startup a theme in the system, processes interceptions, modules, widgets, etc
 	 *
+	 * @name The name of the theme to activate
 	 * @processWidgets Process widget registration on activation, defaults to true.
 	 */
-	function startupActiveTheme( boolean processWidgets=true ){
-		// get theme setting.
-		var thisTheme = settingService.findWhere( { name="cb_site_theme" } );
-		if( isNull( thisTheme ) ){ return; }
-
+	function startupTheme( required name, boolean processWidgets=true ){
 		// Get theme record information
-		var themeName 	= thisTheme.getValue();
-		var themeRecord = getThemeRecord( themeName );
+		var themeRecord = getThemeRecord( arguments.name );
 		var oTheme 		= themeRecord.descriptor;
 
 		// Register description as an interceptor with custom points
 		variables.interceptorService.registerInterceptor(
-			interceptorObject	= oTheme,
-			interceptorName		= "cbtheme-#themeName#",
-			customPoints		= themeRecord.customInterceptionPoints
+			interceptorObject	: oTheme,
+			interceptorName		: "cbtheme-#arguments.name#",
+			customPoints		: themeRecord.customInterceptionPoints
 		);
 
 		// Register theme settings?
 		if( structKeyExists( oTheme, "settings" ) ){
-			registerThemeSettings( name=themeName, settings=oTheme.settings );
+			registerThemeSettings( name : arguments.name, settings : oTheme.settings );
 		}
-
-		// Prepare theme activation event
-		var iData = {
-			themeName 		= themeName,
-			themeRecord 	= themeRecord
-		};
 
 		// build widget cache for active theme
 		for( var thisWidget in themeRecord.widgets.listToArray() ){
 			var widgetName = replaceNoCase( thisWidget, ".cfc", "", "one" );
 			variables.widgetCache[ widgetName ] = {
-				name 			= widgetName,
-				invocationPath 	= "#themeRecord.invocationPath#.widgets.#widgetName#",
-				path 			= "#themeRecord.path#/#themeName#/widgets/#thisWidget#",
-				theme 			= themeName
+				name 			: widgetName,
+				invocationPath 	: "#themeRecord.invocationPath#.widgets.#widgetName#",
+				path 			: "#themeRecord.path#/#arguments.name#/widgets/#thisWidget#",
+				theme 			: arguments.name
 			};
 		}
 
 		// activate theme modules
 		for( var thisModule in themeRecord.modules.listToArray() ){
 			variables.moduleService.registerAndActivateModule(
-				moduleName 		= thisModule,
-				invocationPath 	= "#themeRecord.invocationPath#.modules"
+				moduleName 		: thisModule,
+				invocationPath 	: "#themeRecord.invocationPath#.modules"
 			);
 		}
 
@@ -192,7 +195,10 @@ component accessors="true" threadSafe singleton{
 		}
 
 		// Announce theme activation
-		variables.interceptorService.announce( "cbadmin_onThemeActivation", iData );
+		variables.interceptorService.announce( "cbadmin_onThemeActivation", {
+			themeName 		: arguments.name,
+			themeRecord 	: themeRecord
+		} );
 
 		// Call Theme Callbacks: onActivation
 		if( structKeyExists( oTheme, "onActivation" ) ){
@@ -226,10 +232,10 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	 * Get the current active theme record
+	 * Get the current active theme record for the current working site
 	 */
 	struct function getActiveTheme(){
-		return getThemeRecord( settingService.getSetting( "cb_site_theme" ) );
+		return getThemeRecord( variables.siteService.getCurrentWorkingSite().getActiveTheme() );
 	}
 
 	/**
@@ -242,7 +248,7 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	 * Is active theme check
+	 * Verify if the passed theme name is the currently working site active theme
 	 *
 	 * @themeName The name of the theme to check
 	 */
@@ -251,22 +257,20 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	 * Activate a theme
+	 * Activate a theme by name
 	 *
 	 * @themeName The theme name to activate
 	 */
 	function activateTheme( required themeName ){
 		transaction{
-			// Get the current theme setting
-			var oTheme 		= settingService.findWhere( { name="cb_site_theme" } );
-			var themeRecord = getThemeRecord( oTheme.getValue() );
+			var currentSite = variables.siteService.getCurrentWorkingSite();
+			var themeRecord = getThemeRecord( currentSite.getActiveTheme() );
 
 			// Call deactivation event
-			var iData = {
-				themeName 		= oTheme.getValue(),
-				themeRecord 	= themeRecord
-			};
-			interceptorService.announce( "cbadmin_onThemeDeactivation", iData );
+			variables.interceptorService.announce( "cbadmin_onThemeDeactivation", {
+				themeName 		: currentSite.getActiveTheme(),
+				themeRecord 	: themeRecord
+			} );
 
 			// Call Theme Callback: onDeactivation
 			if( structKeyExists( themeRecord.descriptor, "onDeactivation" ) ){
@@ -275,25 +279,24 @@ component accessors="true" threadSafe singleton{
 
 			// unload theme modules
 			for( var thisModule in themeRecord.modules.listToArray() ){
-				moduleService.unload( thisModule );
+				variables.moduleService.unload( thisModule );
 			}
 
 			// Unregister theme Descriptor Interceptor
-			interceptorService.unregister( interceptorName="cbTheme-#oTheme.getValue()#" );
+			variables.interceptorService.unregister( interceptorName="cbTheme-#currentSite.getActiveTheme()#" );
 
-			// setup the new theme value
-			oTheme.setValue( arguments.themeName );
-			// save the new theme setting
-			settingService.save( oTheme );
+			// Setup the new chosen theme for the site
+			currentSite.setActiveTheme( arguments.themeName );
+			variables.siteService.save( currentSite );
 
-			// Startup active theme
-			startupActiveTheme( processWidgets=false );
+			// Startup the theme
+			startupTheme( name : arguments.themeName, processWidgets=false );
 
 			// Force Recreation of all Widgets, since we need to deactivate the old widgets
-			widgetService.getWidgets( reload=true );
+			variables.widgetService.getWidgets( reload=true );
 
-			// flush the settings
-			settingService.flushSettingsCache();
+			// flush the settings just in case
+			variables.settingService.flushSettingsCache();
 		}
 
 		return this;

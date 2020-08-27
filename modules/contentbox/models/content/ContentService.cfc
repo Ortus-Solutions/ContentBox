@@ -8,23 +8,23 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"                                    				inject="id:settingService@cb";
-	property name="cacheBox"                                                      					inject="cachebox";
-	property name="log"                                                                     							inject="logbox:logger:{this}";
-	property name="customFieldService"                         	 		inject="customFieldService@cb";
-	property name="categoryService"                                  	 		inject="categoryService@cb";
-	property name="commentService"                                     	 			inject="commentService@cb";
-	property name="contentVersionService"               		inject="contentVersionService@cb";
-	property name="authorService"                                       				inject="authorService@cb";
-	property name="contentStoreService"                     			inject="contentStoreService@cb";
-	property name="pageService"                                             					inject="pageService@cb";
-	property name="entryService"                                          				inject="entryService@cb";
-	property name="populator"                                                   					inject="wirebox:populator";
-	property name="systemUtil"                                                					inject="SystemUtil@cb";
-	property name="statsService"                                          				inject="statsService@cb";
-	property name="dateUtil"                                                      					inject="DateUtil@cb";
+	property name="settingService"                                                            				inject="id:settingService@cb";
+	property name="cacheBox"                                                                                          					inject="cachebox";
+	property name="log"                                                                                                                   							inject="logbox:logger:{this}";
+	property name="customFieldService"                                         	 		inject="customFieldService@cb";
+	property name="categoryService"                                                        	 		inject="categoryService@cb";
+	property name="commentService"                                                             	 			inject="commentService@cb";
+	property name="contentVersionService"                         		inject="contentVersionService@cb";
+	property name="authorService"                                                                 				inject="authorService@cb";
+	property name="contentStoreService"                                   			inject="contentStoreService@cb";
+	property name="pageService"                                                                           					inject="pageService@cb";
+	property name="entryService"                                                                      				inject="entryService@cb";
+	property name="populator"                                                                                     					inject="wirebox:populator";
+	property name="systemUtil"                                                                                					inject="SystemUtil@cb";
+	property name="statsService"                                                                      				inject="statsService@cb";
+	property name="dateUtil"                                                                                          					inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService"                            			inject="subscriberService@cb";
+	property name="subscriberService"                                              			inject="subscriberService@cb";
 
 	/**
 	* Constructor
@@ -854,15 +854,20 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
-	* @sortOrder 	The sort ordering of the results
-	* @isPublished	Show all content or true/false published content
-	* @showInSearch Show all content or true/false showInSearch flag
-	*/
+	 * Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	 *
+	 * @sortOrder The sort ordering of the results
+	 * @isPublished	Show all content or true/false published content
+	 * @showInSearch Show all content or true/false showInSearch flag
+	 * @siteId The site id to use to filter on
+	 *
+	 * @return Array of content data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
+	 */
 	array function getAllFlatContent(
 		sortOrder="title asc",
 		boolean isPublished,
-		boolean showInSearch
+		boolean showInSearch,
+		string siteId=""
 	){
 		var c = newCriteria();
 
@@ -878,13 +883,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			if( arguments.isPublished ){
 				c.isLt( "publishedDate", now() )
 				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
-				.isEq( "passwordProtection","" );
+				.isEq( "passwordProtection", "" );
 			}
+		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
 		}
 
 		// Show in Search
 		if(
-			structKeyExists( arguments, "showInSearch")
+			structKeyExists( arguments, "showInSearch" )
 			&&
 			isBoolean( arguments.showInSearch )
 		){
@@ -893,16 +903,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		return c.withProjections( property="contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.asStruct()
 			.list( sortOrder=arguments.sortOrder );
 	}
 
 /********************************************* PRIVATE *********************************************/
 
 	/**
-	* Get a unique slug hash
-	* @slug The slug to unique it
-	*/
+	 * Get a unique slug hash
+	 *
+	 * @slug The slug to unique it
+	 */
 	private function getUniqueSlugHash( required string slug ){
 		return "#arguments.slug#-#lcase( left( hash( now() ), 5 ) )#";
 	}

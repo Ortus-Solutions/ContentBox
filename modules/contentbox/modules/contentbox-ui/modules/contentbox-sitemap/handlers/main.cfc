@@ -23,7 +23,7 @@ component {
 		// Prepare UI Request
 		CBHelper.prepareUIRequest( "pages" );
 		// Verify if sitemap is enabled, else, proxy into the page event
-		if ( !prc.cbSettings.cb_site_sitemap ) {
+		if ( !prc.oCurrentSite.getIsSitemapEnabled() ) {
 			// proxy
 			event.overrideEvent( "contentbox-ui:page.index" );
 			return;
@@ -98,7 +98,8 @@ component {
 		prc.aPages = pageService.getAllFlatPages(
 			sortOrder    = "order asc",
 			isPublished  = true,
-			showInSearch = true
+			showInSearch = true,
+			siteId       = prc.oCurrentSite.getSiteId()
 		);
 
 		// Blog data if enabled
@@ -111,7 +112,8 @@ component {
 			prc.aEntries = entryService.getAllFlatEntries(
 				sortOrder    = "createdDate asc",
 				isPublished  = true,
-				showInSearch = true
+				showInSearch = true,
+				siteId       = prc.oCurrentSite.getSiteId()
 			);
 		}
 

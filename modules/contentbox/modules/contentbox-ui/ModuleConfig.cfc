@@ -8,13 +8,13 @@
 component {
 
 	// Module Properties
-	this.title 				= "contentbox-ui";
-	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "https://www.ortussolutions.com";
-	this.description 		= "ContentBox UI Module";
-	this.viewParentLookup 	= true;
+	this.title              = "contentbox-ui";
+	this.author             = "Ortus Solutions, Corp";
+	this.webURL             = "https://www.ortussolutions.com";
+	this.description        = "ContentBox UI Module";
+	this.viewParentLookup   = true;
 	this.layoutParentLookup = true;
-	this.dependencies 		= [ "contentbox" ];
+	this.dependencies       = [ "contentbox" ];
 
 	// YOUR SES URL ENTRY POINT FOR CONTENTBOX, IF EMPTY IT WILL TAKE OVER THE ENTIRE APPLICATION
 	// IF YOU WANT TO SECTION OFF CONTENTBOX THEN FILL OUT AN SES ENTRY POINT LIKE /site OR /content
@@ -105,7 +105,7 @@ component {
 				// Layout HTML points: A layout must announce them via cb.event( "cbui_footer",{renderer=this} ) make sure you pass in the renderer
 				"cbui_beforeHeadEnd","cbui_afterBodyStart","cbui_beforeBodyEnd","cbui_footer","cbui_beforeContent","cbui_afterContent","cbui_beforeSideBar","cbui_afterSideBar",
 				// Code Interception points
-				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onRendererDecoration","cbui_onContentSearch",
+				"cbui_onPageNotFound","cbui_onEntryNotFound","cbui_onError","cbui_preRequest","cbui_postRequest","cbui_onContentSearch",
 				// Fixed Handler Points
 				"cbui_onIndex","cbui_onArchives","cbui_onEntry","cbui_onPage","cbui_preCommentPost","cbui_onCommentPost","cbui_onCommentModerationRules",
 				// Fixed HTML Points
@@ -142,8 +142,8 @@ component {
 	 * Fired when the module is registered and activated.
 	 */
 	function onLoad(){
-		// Startup the ContentBox theme service and activate the current layout
-		wirebox.getInstance( "themeService@cb" ).startupActiveTheme();
+		// Startup the ContentBox theme service and activate the site themes
+		wirebox.getInstance( "themeService@cb" ).startupSiteThemes();
 
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
@@ -152,9 +152,9 @@ component {
 		if( !len( this.entryPoint ) ){
 
 			// get parent routes so we can re-mix them later
-			var routingService 		= controller.getRoutingService();
-			var parentRoutes 		= routingService.getRoutes();
-			var newRoutes			= [];
+			var routingService= controller.getRoutingService();
+			var parentRoutes  = routingService.getRoutes();
+			var newRoutes     = [];
 
 			// Keep non-convention routing
 			routingService.setRoutes(

@@ -9,8 +9,8 @@ component extends="baseContentHandler" {
 
 	// Dependencies
 	property name="pageService" inject="id:pageService@cb";
-	property name="CKHelper" inject="id:CKHelper@contentbox-ckeditor";
-	property name="HTMLHelper" inject="HTMLHelper@coldbox";
+	property name="CKHelper"    inject="id:CKHelper@contentbox-ckeditor";
+	property name="HTMLHelper"  inject="HTMLHelper@coldbox";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -92,7 +92,7 @@ component extends="baseContentHandler" {
 		}
 
 		// search entries with filters and all
-		var pageResults = pageService.search(
+		var pageResults = variables.pageService.search(
 			search     : rc.searchPages,
 			isPublished: rc.fStatus,
 			category   : rc.fCategories,
@@ -107,7 +107,7 @@ component extends="baseContentHandler" {
 
 		// Do we have a parent?
 		if ( structKeyExists( rc, "parent" ) ) {
-			prc.page = pageService.get( rc.parent );
+			prc.page = variables.pageService.get( rc.parent );
 		}
 
 		// exit handlers
@@ -125,7 +125,7 @@ component extends="baseContentHandler" {
 	// Quick Look
 	function quickLook( event, rc, prc ){
 		// get entry
-		prc.page = pageService.get( event.getValue( "contentID", 0 ) );
+		prc.page = variables.pageService.get( event.getValue( "contentID", 0 ) );
 		event.setView( view = "pages/quickLook", layout = "ajax" );
 	}
 
@@ -151,7 +151,7 @@ component extends="baseContentHandler" {
 		// get all categories for display purposes
 		prc.categories = categoryService.getAll( sortOrder = "category" );
 		// get new page or persisted
-		prc.page       = pageService.get( event.getValue( "contentID", 0 ) );
+		prc.page       = variables.pageService.get( event.getValue( "contentID", 0 ) );
 		// load comments,versions and child pages viewlets if persisted
 		if ( prc.page.isLoaded() ) {
 			var args            = { contentID : rc.contentID };
@@ -174,9 +174,9 @@ component extends="baseContentHandler" {
 			);
 		}
 		// Get all page names for parent drop downs
-		prc.pages            = pageService.getAllFlatPages( sortOrder = "slug asc" );
+		prc.pages            = variables.pageService.getAllFlatPages( sortOrder = "slug asc" );
 		// Get active layout record and available page only layouts
-		prc.themeRecord      = themeService.getActiveTheme();
+		prc.themeRecord      = variables.themeService.getActiveTheme();
 		prc.availableLayouts = reReplaceNoCase( prc.themeRecord.layouts, "blog,?", "" );
 		// Get parent from active page
 		prc.parentcontentID  = prc.page.getParentID();
@@ -241,7 +241,7 @@ component extends="baseContentHandler" {
 		}
 
 		// get new/persisted page and populate it with incoming data.
-		var page         = pageService.get( rc.contentID );
+		var page         = variables.pageService.get( rc.contentID );
 		var originalSlug = page.getSlug();
 		populateModel( page )
 			.addJoinedPublishedtime( rc.publishedTime )
@@ -283,7 +283,7 @@ component extends="baseContentHandler" {
 
 		// attach a parent page if it exists and not the same
 		if ( rc.parentPage neq "null" AND page.getContentID() NEQ rc.parentPage ) {
-			page.setParent( pageService.get( rc.parentPage ) );
+			page.setParent( variables.pageService.get( rc.parentPage ) );
 			// update slug according to hierarchy
 			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
 		}
@@ -312,7 +312,7 @@ component extends="baseContentHandler" {
 		);
 
 		// save entry
-		pageService.savePage( page, originalSlug );
+		variables.pageService.savePage( page, originalSlug );
 
 		// announce event
 		announce(
@@ -350,14 +350,14 @@ component extends="baseContentHandler" {
 		}
 
 		// get the page to clone
-		var original = pageService.get( rc.contentID );
+		var original = variables.pageService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
 		if ( rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 
 		// get a clone
-		var clone = pageService.new( {
+		var clone = variables.pageService.new( {
 			title        : rc.title,
 			slug         : variables.HTMLHelper.slugify( rc.title ),
 			layout       : original.getLayout(),
@@ -387,7 +387,7 @@ component extends="baseContentHandler" {
 		);
 
 		// clone this sucker now!
-		pageService.savePage( clone );
+		variables.pageService.savePage( clone );
 
 		// relocate
 		cbMessageBox.info( "Page Cloned, isn't that cool!" );
@@ -410,7 +410,10 @@ component extends="baseContentHandler" {
 
 		// check if id list has length
 		if ( len( rc.contentID ) ) {
-			pageService.bulkPublishStatus( contentID = rc.contentID, status = rc.contentStatus );
+			variables.pageService.bulkPublishStatus(
+				contentID = rc.contentID,
+				status    = rc.contentStatus
+			);
 			// announce event
 			announce(
 				"cbadmin_onPageStatusUpdate",
@@ -450,7 +453,7 @@ component extends="baseContentHandler" {
 
 		// Iterate and remove pages
 		for ( var thisContentID in rc.contentID ) {
-			var page = pageService.get( thisContentID );
+			var page = variables.pageService.get( thisContentID );
 			if ( isNull( page ) ) {
 				arrayAppend(
 					messages,
@@ -467,7 +470,7 @@ component extends="baseContentHandler" {
 					page.getParent().removeChild( page );
 				}
 				// Send for deletion
-				pageService.deleteContent( page );
+				variables.pageService.deleteContent( page );
 				arrayAppend( messages, "Page '#title#' removed" );
 				// announce event
 				announce( "cbadmin_postPageRemove", { contentID : contentID } );
@@ -502,23 +505,25 @@ component extends="baseContentHandler" {
 		var index  = 1;
 		var aPages = [];
 		for ( var thisPageID in rc.newRulesOrder ) {
-			var oPage = pageService.get( thisPageID );
+			var oPage = variables.pageService.get( thisPageID );
 			if ( !isNull( oPage ) ) {
 				arrayAppend( aPages, oPage );
 				// Update order
 				oPage.setOrder( index++ );
 				// remove caching
-				pageService.clearPageWrapper( oPage.getSlug() );
+				variables.pageService.clearPageWrapper( oPage.getSlug() );
 				// Do we have a parent?
 				if ( oPage.hasParent() ) {
-					pageService.clearPageWrapperCaches( slug = oPage.getParent().getSlug() );
+					variables.pageService.clearPageWrapperCaches(
+						slug = oPage.getParent().getSlug()
+					);
 				}
 			}
 		}
 
 		// save them
 		if ( arrayLen( aPages ) ) {
-			pageService.saveAll( aPages );
+			variables.pageService.saveAll( aPages );
 		}
 
 		// render data back
@@ -582,7 +587,7 @@ component extends="baseContentHandler" {
 		}
 
 		// search entries with filters and all
-		var pageResults = pageService.search(
+		var pageResults = variables.pageService.search(
 			author = arguments.authorID,
 			parent = (
 				structKeyExists( arguments, "parent" ) ? arguments.parent : javacast( "null", "" )
@@ -629,7 +634,7 @@ component extends="baseContentHandler" {
 		prc.pagingLink = "javascript:pagerLink(@page@)";
 
 		// search entries with filters and all
-		var pageResults = pageService.search(
+		var pageResults = variables.pageService.search(
 			search              = rc.search,
 			offset              = prc.paging.startRow - 1,
 			max                 = prc.cbSettings.cb_paging_maxrows,
@@ -655,7 +660,7 @@ component extends="baseContentHandler" {
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get page
-		prc.page = pageService.get( event.getValue( "contentID", 0 ) );
+		prc.page = variables.pageService.get( event.getValue( "contentID", 0 ) );
 
 		// relocate if not existent
 		if ( !prc.page.isLoaded() ) {
@@ -688,7 +693,7 @@ component extends="baseContentHandler" {
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
-		var data = pageService.getAllForExport();
+		var data = variables.pageService.getAllForExport();
 		switch ( rc.format ) {
 			case "xml":
 			case "json": {
@@ -717,7 +722,7 @@ component extends="baseContentHandler" {
 		event.paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = pageService.importFromFile(
+				var importLog = variables.pageService.importFromFile(
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);

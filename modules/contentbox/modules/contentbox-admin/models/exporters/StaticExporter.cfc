@@ -70,8 +70,6 @@ component accessors=true threadSafe singleton {
 		arguments.prc.cbEntryPoint   = variables.uiConfig.entryPoint;
 		// Place global cb options on scope
 		arguments.prc.cbSettings     = allSettings;
-		// Place the default theme
-		arguments.prc.cbTheme        = arguments.prc.cbSettings.cb_site_theme;
 		// Place the default theme record
 		arguments.prc.cbThemeRecord  = themeService.getThemeRecord( arguments.prc.cbTheme );
 		// Place theme root location
@@ -85,6 +83,9 @@ component accessors=true threadSafe singleton {
 		arguments.prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
 			arguments.prc.oCurrentSite.getSlug()
 		);
+		// Place the default theme
+		arguments.prc.cbTheme = arguments.prc.oCurrentSite.getActiveTheme();
+
 		/******************************************************************************/
 
 		// Copy over content media
@@ -190,6 +191,7 @@ component accessors=true threadSafe singleton {
 
 	/**
 	 * Process a static entry export
+	 *
 	 * @content The content object
 	 * @event Request Context
 	 * @rc RC
@@ -207,18 +209,17 @@ component accessors=true threadSafe singleton {
 	){
 		var allSettings   = arguments.settings;
 		var outputContent = "";
-		var themeName     = allSettings.cb_site_theme;
 
 		// announce event
 		interceptorService.announce( "cbui_preRequest" );
 
 		// Render out entry
 		arguments.event.setView(
-			view   = "#themeName#/views/entry",
+			view   = "#arguments.prc.cbTheme#/views/entry",
 			module = arguments.prc.cbThemeRecord.module
 		);
 		outputContent = renderer.renderLayout(
-			layout = "#themeName#/layouts/blog",
+			layout = "#arguments.prc.cbTheme#/layouts/blog",
 			module = arguments.prc.cbThemeRecord.module
 		);
 
@@ -236,7 +237,7 @@ component accessors=true threadSafe singleton {
 		outputContent = replaceNoCase(
 			outputContent,
 			arguments.prc.cbThemeRoot,
-			"/__theme/#themeName#",
+			"/__theme/#arguments.prc.cbTheme#",
 			"all"
 		);
 		// **********************************
@@ -254,6 +255,7 @@ component accessors=true threadSafe singleton {
 
 	/**
 	 * Process a static page export
+	 *
 	 * @content The content object
 	 * @isHome Is this the home page
 	 * @event Request Context
@@ -274,7 +276,6 @@ component accessors=true threadSafe singleton {
 		var allSettings   = arguments.settings;
 		var thisLayout    = arguments.content.getLayoutWithInheritance();
 		var outputContent = "";
-		var themeName     = allSettings.cb_site_theme;
 
 		// announce event
 		interceptorService.announce( "cbui_preRequest" );
@@ -284,11 +285,11 @@ component accessors=true threadSafe singleton {
 			outputContent = arguments.content.renderContent();
 		} else {
 			arguments.event.setView(
-				view   = "#themeName#/views/page",
+				view   = "#arguments.prc.cbTheme#/views/page",
 				module = arguments.prc.cbThemeRecord.module
 			);
 			outputContent = renderer.renderLayout(
-				layout = "#themeName#/layouts/#thisLayout#",
+				layout = "#arguments.prc.cbTheme#/layouts/#thisLayout#",
 				module = arguments.prc.cbThemeRecord.module
 			);
 		}

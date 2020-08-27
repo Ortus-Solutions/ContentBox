@@ -10,11 +10,11 @@ component extends="coldbox.system.Interceptor"{
 	// DI
 	property name="settingService"  inject="id:settingService@cb";
 	property name="contentService"  inject="id:contentService@cb";
-	property name="CBHelper"  		inject="id:CBHelper@cb";
+	property name="CBHelper"                                      		inject="id:CBHelper@cb";
 
 	/**
-	* Configure CB Request
-	*/
+	 * Configure CB Request
+	 */
 	function configure(){}
 
 	/**
@@ -31,9 +31,9 @@ component extends="coldbox.system.Interceptor"{
 				relocate( "cbInstaller" );
 			} else {
 				throw(
-					message = "Oops! ContentBox is not installed and the Installer module cannot be found",
-					detail  = "To install the installer module use CommandBox via 'install contentbox-installer'",
-					type    = "ContentBoxInstallerMissing"
+					message : "Oops! ContentBox is not installed and the Installer module cannot be found",
+					detail  : "To install the installer module use CommandBox via 'install contentbox-installer'",
+					type    : "ContentBoxInstallerMissing"
 				);
 			}
 
@@ -44,13 +44,13 @@ component extends="coldbox.system.Interceptor"{
 	}
 
 	/**
-	* Fired on post rendering
-	*/
+	 * Fired on post rendering
+	 */
 	function postRender( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui\:(page|blog)"{
 		// Rules to turn off the admin bar
 		if(
 			// Disabled SiteBar Setting
-			!prc.cbSettings.cb_site_adminbar
+			!prc.oCurrentSite.getAdminBar()
 			||
 			// Disabled SiteBar per request
 			structKeyExists( prc, "cbAdminBar" ) and !prc.cbAdminBar
@@ -80,7 +80,7 @@ component extends="coldbox.system.Interceptor"{
 				return;
 			}
 			// Inflate content for admin bar
-			local.oContent = contentService.get( prc.contentCacheData.contentID );
+			local.oContent = variables.contentService.get( prc.contentCacheData.contentID );
 		}
 
 		// Determine content via context search
@@ -103,47 +103,37 @@ component extends="coldbox.system.Interceptor"{
 
 		// Render the admin bar out
 		var adminBar = renderView(
-			view 	= "adminbar/index",
-			module 	= "contentbox-ui",
-			args 	= {
-				oContent 		= oContent ?: javaCast( "null", "" ),
-				linkEdit 		= linkEdit,
-				oCurrentAuthor 	= prc.oCurrentAuthor
+			view   = "adminbar/index",
+			module = "contentbox-ui",
+			args   = {
+				oContent       = oContent ?: javaCast( "null", "" ),
+				linkEdit       = linkEdit,
+				oCurrentAuthor = prc.oCurrentAuthor
 			}
 		);
 		cfhtmlhead( text="#adminBar#" );
 	}
 
 	/**
-	* Fired on contentbox requests
-	*/
+	 * Fired on contentbox requests
+	 */
 	function postProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 		// announce event
 		announce( "cbui_postRequest" );
 	}
 
-	/*
-	* Renderer helper injection
-	*/
-	function afterInstanceCreation( event, data, buffer ){
-		// check for renderer instance only
-		if( isInstanceOf( arguments.data.target, "coldbox.system.web.Renderer" ) ){
-			var prc = event.getCollection( private=true );
-			// decorate it
-			arguments.data.target.cb 			= CBHelper;
-			arguments.data.target.$cbInject 	= variables.$cbInject;
-			arguments.data.target.$cbInject();
-			// re-broadcast event
-			announce(
-				"cbui_onRendererDecoration",
-				{ renderer=arguments.data.target, CBHelper=arguments.data.target.cb }
-			);
-		}
+	/**
+	 * Renderer helper injection
+	 */
+	function afterRendererInit( event, data, buffer, rc, prc ){
+		// decorate it
+		arguments.data.variables.cb = CBHelper;
+		arguments.data.this.cb      = CBHelper;
 	}
 
 	/**
-	* private inject
-	*/
+	 * private inject
+	 */
 	function $cbinject(){
 		variables.cb = this.cb;
 	}

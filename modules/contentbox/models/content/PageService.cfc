@@ -263,22 +263,27 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
-	* @sortOrder 	The sort ordering of the results
-	* @isPublished	Show all content or true/false published content
-	* @showInSearch Show all content or true/false showInSearch flag
-	*/
+	 * Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
+	 *
+	 * @sortOrder The sort ordering of the results
+	 * @isPublished	Show all content or true/false published content
+	 * @showInSearch Show all content or true/false showInSearch flag
+	 * @siteId The site id to use to filter on
+	 *
+	 * @return Array of page data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
+	 */
 	array function getAllFlatPages(
 		sortOrder="title asc",
 		boolean isPublished,
-		boolean showInSearch
+		boolean showInSearch,
+		string siteId=""
 	){
 		return super.getAllFlatContent( argumentCollection=arguments );
 	}
 
 	/**
-	* Get all content for export as flat data
-	*/
+	 * Get all content for export as flat data
+	 */
 	array function getAllForExport(){
 		return super.getAllForExport( newCriteria().isNull( "parent" ).list() );
 	}
