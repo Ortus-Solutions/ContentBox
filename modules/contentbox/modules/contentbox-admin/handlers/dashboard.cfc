@@ -1,50 +1,45 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Admin Dashboard
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Admin Dashboard
+ */
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="entryService" 		inject="id:entryService@cb";
-	property name="pageService" 		inject="id:pageService@cb";
-	property name="contentService" 		inject="id:contentService@cb";
-	property name="commentService" 		inject="id:commentService@cb";
-	property name="categoryService"		inject="id:categoryService@cb";
-	property name="feedReader"			inject="FeedReader@cbfeeds";
-	property name="loginTrackerService"	inject="id:loginTrackerService@cb";
-	property name="markdown"			inject="Processor@cbmarkdown";
+	property name="entryService"        	inject="entryService@cb";
+	property name="pageService"         	inject="pageService@cb";
+	property name="contentService"      	inject="contentService@cb";
+	property name="commentService"      	inject="commentService@cb";
+	property name="categoryService"    		inject="categoryService@cb";
+	property name="feedReader"         		inject="FeedReader@cbfeeds";
+	property name="loginTrackerService"		inject="loginTrackerService@cb";
+	property name="markdown"           		inject="Processor@cbmarkdown";
 
 	/**
-	* Pre handler
-	*/
-	function preHandler( event, action, eventArguments, rc, prc ){
-	}
-
-	/**
-	* Main dashboard event
-	* @return html
-	*/
+	 * Main dashboard event
+	 *
+	 * @return html
+	 */
 	function index( event, rc, prc ){
 		// exit Handlers
-		prc.xehDeleteInstaller 		= "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
-		prc.xehDeleteDSNCreator 	= "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
+		prc.xehDeleteInstaller  = "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
+		prc.xehDeleteDSNCreator = "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
 		// Ajax Loaded handlers
-		prc.xehLatestSystemEdits	= "#prc.cbAdminEntryPoint#.dashboard.latestSystemEdits";
-		prc.xehLatestUserDrafts		= "#prc.cbAdminEntryPoint#.dashboard.latestUserDrafts";
-		prc.xehPublishedContent		= "#prc.cbAdminEntryPoint#.dashboard.futurePublishedContent";
-		prc.xehExpiredContent		= "#prc.cbAdminEntryPoint#.dashboard.expiredContent";
-		prc.xehLatestComments		= "#prc.cbAdminEntryPoint#.dashboard.latestComments";
-		prc.xehLatestNews			= "#prc.cbAdminEntryPoint#.dashboard.latestNews";
-		prc.xehLatestSnapshot		= "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
-		prc.xehLatestLogins			= "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
+		prc.xehLatestSystemEdits= "#prc.cbAdminEntryPoint#.dashboard.latestSystemEdits";
+		prc.xehLatestUserDrafts = "#prc.cbAdminEntryPoint#.dashboard.latestUserDrafts";
+		prc.xehPublishedContent = "#prc.cbAdminEntryPoint#.dashboard.futurePublishedContent";
+		prc.xehExpiredContent   = "#prc.cbAdminEntryPoint#.dashboard.expiredContent";
+		prc.xehLatestComments   = "#prc.cbAdminEntryPoint#.dashboard.latestComments";
+		prc.xehLatestNews       = "#prc.cbAdminEntryPoint#.dashboard.latestNews";
+		prc.xehLatestSnapshot   = "#prc.cbAdminEntryPoint#.dashboard.latestSnapshot";
+		prc.xehLatestLogins     = "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
 
 		// Installer Check
 		prc.installerCheck = settingService.isInstallationPresent();
 		// Welcome Body
-		prc.welcomeBody = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
+		prc.welcomeBody    = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
 		// announce event
 		announce( "cbadmin_onDashboard" );
 		// dashboard view
@@ -57,19 +52,19 @@ component extends="baseHandler"{
 	*/
 	function latestSnapshot( event, rc, prc ){
 		// Few counts
-		prc.entriesCount			= entryService.count();
-		prc.pagesCount 				= pageService.count();
-		prc.commentsCount 			= commentService.count();
-		prc.commentsApprovedCount 	= commentService.getApprovedCommentCount();
-		prc.commentsUnApprovedCount = commentService.getUnApprovedCommentCount();
-		prc.categoriesCount 		= categoryService.count();
+		prc.entriesCount           = entryService.count();
+		prc.pagesCount             = pageService.count();
+		prc.commentsCount          = commentService.count();
+		prc.commentsApprovedCount  = commentService.getApprovedCommentCount();
+		prc.commentsUnApprovedCount= commentService.getUnApprovedCommentCount();
+		prc.categoriesCount        = categoryService.count();
 
 		// Few Reports
-		prc.topContent 		= contentService.getTopVisitedContent();
-		prc.topCommented 	= contentService.getTopCommentedContent();
+		prc.topContent   = contentService.getTopVisitedContent();
+		prc.topCommented = contentService.getTopCommentedContent();
 
 		// convert report to chart data
-		prc.aTopContent = [];
+		prc.aTopContent          = [];
 		prc.aTopContentTotalHits = 0;
 
 		for( var thisContent in prc.topContent ){
@@ -78,7 +73,7 @@ component extends="baseHandler"{
 		}
 		prc.aTopContent = serializeJSON( prc.aTopContent );
 
-		prc.aTopCommented = [];
+		prc.aTopCommented          = [];
 		prc.aTopCommentedTotalHits = 0;
 
 		for( var thisContent in prc.topCommented ){
@@ -98,15 +93,15 @@ component extends="baseHandler"{
 	function latestUserDrafts( event, rc, prc ){
 		// Latest Edits
 		prc.latestDraftsViewlet = runEvent(
-			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= {
-				max 				= 10,
-				author 				= prc.oCurrentAuthor,
-				isPublished 		= false,
-				showHits 			= false,
-				colorCodings 		= false,
-				showPublishedStatus = false,
-				showAuthor			= false
+			event          = "contentbox-admin:content.latestContentEdits",
+			eventArguments = {
+				max                = 10,
+				author             = prc.oCurrentAuthor,
+				isPublished        = false,
+				showHits           = false,
+				colorCodings       = false,
+				showPublishedStatus= false,
+				showAuthor         = false
 			}
 		);
 		event.setView( view="dashboard/latestUserDrafts", layout="ajax" );
@@ -119,10 +114,10 @@ component extends="baseHandler"{
 	function latestSystemEdits( event, rc, prc ){
 		// Latest Edits
 		prc.latestEditsViewlet = runEvent(
-			event 			= "contentbox-admin:content.latestContentEdits",
-			eventArguments 	= {
-				max 		= 10,
-				showHits 	= true
+			event          = "contentbox-admin:content.latestContentEdits",
+			eventArguments = {
+				max      = 10,
+				showHits = true
 			}
 		);
 		event.setView( view="dashboard/latestSystemEdits", layout="ajax" );
@@ -135,11 +130,11 @@ component extends="baseHandler"{
 	function futurePublishedContent( event, rc, prc ){
 		// Latest Edits
 		prc.futurePublishedContent = runEvent(
-			event 			= "contentbox-admin:content.contentByPublishedStatus",
-			eventArguments 	= {
-				max 			= 10,
-				showHits 		= false,
-				colorCodings 	= false
+			event          = "contentbox-admin:content.contentByPublishedStatus",
+			eventArguments = {
+				max          = 10,
+				showHits     = false,
+				colorCodings = false
 			}
 		);
 		event.setView( view="dashboard/futurePublishedContent", layout="ajax" );
@@ -152,12 +147,12 @@ component extends="baseHandler"{
 	function expiredContent( event, rc, prc ){
 		// Latest Edits
 		prc.expiredContent = runEvent(
-			event 			= "contentbox-admin:content.contentByPublishedStatus",
-			eventArguments 	= {
-				max 				= 10,
-				showHits 			= true,
-				showExpired 		= true,
-				colorCodings 		= false
+			event          = "contentbox-admin:content.contentByPublishedStatus",
+			eventArguments = {
+				max          = 10,
+				showHits     = true,
+				showExpired  = true,
+				colorCodings = false
 			}
 		);
 		event.setView( view="dashboard/expiredContent", layout="ajax" );
@@ -169,10 +164,10 @@ component extends="baseHandler"{
 	*/
 	function latestComments( event, rc, prc ){
 		// Get Comments viewlet
-		var eArgs = { max=prc.cbSettings.cb_dashboard_recentComments,pagination=false };
+		var eArgs           = { max=prc.cbSettings.cb_dashboard_recentComments,pagination=false };
 		prc.commentsViewlet = runEvent(
-			event 			= "contentbox-admin:comments.pager",
-			eventArguments 	= eArgs
+			event          = "contentbox-admin:comments.pager",
+			eventArguments = eArgs
 		);
 		event.setView( view="dashboard/latestComments", layout="ajax" );
 	}
@@ -186,9 +181,9 @@ component extends="baseHandler"{
 		try{
 			if( len( prc.cbsettings.cb_dashboard_newsfeed ) ){
 				prc.latestNews = feedReader.readFeed(
-					feedURL 	= prc.cbsettings.cb_dashboard_newsfeed,
-					itemsType 	= "query",
-					maxItems 	= prc.cbsettings.cb_dashboard_newsfeed_count
+					feedURL   = prc.cbsettings.cb_dashboard_newsfeed,
+					itemsType = "query",
+					maxItems  = prc.cbsettings.cb_dashboard_newsfeed_count
 				);
 			} else {
 				prc.latestNews = { items = queryNew( "" ) };
@@ -231,7 +226,7 @@ component extends="baseHandler"{
 			settingService.deleteInstaller();
 			results[ "MESSAGE" ] = "The installer module has been successfully deleted.";
 		} catch( Any e ) {
-			results[ "ERROR" ] = true;
+			results[ "ERROR" ]   = true;
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
 		}
 
@@ -249,7 +244,7 @@ component extends="baseHandler"{
 			settingService.deleteDSNCreator();
 			results[ "MESSAGE" ] = "The DSN Creator module has been successfully deleted.";
 		} catch( Any e ) {
-			results[ "ERROR" ] = true;
+			results[ "ERROR" ]   = true;
 			results[ "MESSAGE" ] = "Error removing DSN Creator: #e.message#";
 		}
 

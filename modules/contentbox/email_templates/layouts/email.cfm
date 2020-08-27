@@ -1,17 +1,20 @@
-<cfset settings = getInstance( "settingService@cb" ).getAllSettings()>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <base href="<cfoutput>#event.getHTMLBaseURL()#</cfoutput>/modules/contentbox/email_templates/images/" />
-    <title></title>
+	<base href="<cfoutput>#event.getHTMLBaseURL()#</cfoutput>/modules/contentbox/email_templates/images/" />
+
+	<title>ContentBox Email</title>
     <!--[if gte mso 6]>
       <style>
           table.kmButtonBarContent {width:100% !important;}
       </style>
     <![endif]-->
-    <style type="text/css">
+
+	<style type="text/css">
         @media only screen and (max-width: 480px) {
             body, table, td, p, a, li, blockquote {
                 -webkit-text-size-adjust: none !important;
@@ -120,6 +123,7 @@
         }
     </style>
 </head>
+
 <body style="margin: 0; padding: 0; background-color: #EAEAEA">
 <center>
     <table align="center" border="0" cellpadding="0" cellspacing="0" id="bodyTable" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; padding: 0; background-color: #EAEAEA; height: 100%; margin: 0; width: 100%">
@@ -159,7 +163,7 @@
                                                         <small style="color: gray">
                                                             You're receiving this email because of your account on
                                                             <a href="#event.getHTMLBaseURL()#">
-                                                                <em>#settings.cb_site_name#</em>
+                                                                <em>#getInstance( "siteService@cb" ).getDefaultSite().getName()#</em>
                                                             </a>
                                                             <br>
                                                             If you'd like to receive fewer emails, you can adjust your notification settings.

@@ -4,9 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="siteService" inject="siteService@cb";
+	property name="siteService"  inject="siteService@cb";
 	property name="themeService" inject="id:themeService@cb";
-	property name="pageService" inject="id:pageService@cb";
+	property name="pageService"  inject="id:pageService@cb";
 
 	/**
 	 * Pre handler
@@ -56,7 +56,11 @@ component extends="baseHandler" {
 		// Get all registered themes
 		prc.themes = themeService.getThemes();
 		// pages
-		prc.pages  = pageService.search( sortOrder = "slug asc", isPublished = true ).pages;
+		prc.pages  = pageService.search(
+			sortOrder   = "slug asc",
+			isPublished = true,
+			siteId      = prc.site.getSiteId()
+		).pages;
 
 		// exit handlers
 		prc.xehSiteSave = "#prc.cbAdminEntryPoint#.sites.save";

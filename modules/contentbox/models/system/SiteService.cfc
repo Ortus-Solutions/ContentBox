@@ -80,4 +80,14 @@ component
 			.list( sortOrder = "name" );
 	}
 
+	/**
+	 * This method discovers which site you are on and returns it depending on the following markers:
+	 * - incoming `siteSlug` (rc)
+	 * - incoming header: `x-contentbox-site`
+	 * - cgi.server_name
+	 */
+	function discoverSite(){
+		return getDefaultSite();
+	}
+
 }

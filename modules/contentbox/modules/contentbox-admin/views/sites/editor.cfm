@@ -132,13 +132,28 @@
 							<!--- HomePage --->
 							<cfif prc.site.isLoaded()>
 								<div class="form-group">
-									<label class="control-label" for="cb_site_homepage">Home Page:</label>
+									<label class="control-label" for="homePage">Home Page:</label>
 									<div class="controls">
-										<small>Choose the latest blog entries or a ContentBox page for the home page of your site.</small><br/>
-										<select name="cb_site_homepage" id="cb_site_homepage" class="form-control input-sm">
-											<option value="cbBlog" <cfif prc.cbSettings.cb_site_homepage eq "cbBlog">selected="selected"</cfif>>Latest Blog Entries</option>
+
+										<p>Choose the latest blog entries or a ContentBox page for the home page of your site.</p>
+
+										<select name="homePage" id="homePage" class="form-control">
+											<option
+												value="cbBlog"
+												<cfif prc.site.getHomePage() eq "cbBlog">selected="selected"</cfif>
+											>
+												Latest Blog Entries
+											</option>
 											<cfloop array="#prc.pages#" index="thisPage" >
-											<option value="#thispage.getSlug()#" <cfif prc.cbSettings.cb_site_homepage eq thisPage.getSlug()>selected="selected"</cfif>>#thisPage.getSlug()#</option>
+												<option
+													value="#thispage.getSlug()#"
+													<cfif
+													prc.site.getHomePage()
+													eq
+													thisPage.getSlug()>selected="selected"</cfif>
+												>
+													#thisPage.getSlug()#
+												</option>
 											</cfloop>
 										</select>
 									</div>

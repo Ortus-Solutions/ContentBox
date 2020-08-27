@@ -10,6 +10,7 @@ component accessors=true threadSafe singleton {
 	// DI
 	property name="settingService"     inject="SettingService@cb";
 	property name="pageService"        inject="PageService@cb";
+	property name="siteService"        inject="siteService@cb";
 	property name="entryService"       inject="entryService@cb";
 	property name="themeService"       inject="ThemeService@cb";
 	property name="categoryService"    inject="CategoryService@cb";
@@ -64,21 +65,26 @@ component accessors=true threadSafe singleton {
 
 		// ************ Prepare as if we are doing a UI request ******************
 		// store UI module root
-		arguments.prc.cbRoot        = getContextRoot() & arguments.event.getModuleRoot( "contentbox" );
+		arguments.prc.cbRoot         = getContextRoot() & arguments.event.getModuleRoot( "contentbox" );
 		// store module entry point
-		arguments.prc.cbEntryPoint  = variables.uiConfig.entryPoint;
+		arguments.prc.cbEntryPoint   = variables.uiConfig.entryPoint;
 		// Place global cb options on scope
-		arguments.prc.cbSettings    = allSettings;
+		arguments.prc.cbSettings     = allSettings;
 		// Place the default theme
-		arguments.prc.cbTheme       = arguments.prc.cbSettings.cb_site_theme;
+		arguments.prc.cbTheme        = arguments.prc.cbSettings.cb_site_theme;
 		// Place the default theme record
-		arguments.prc.cbThemeRecord = themeService.getThemeRecord( arguments.prc.cbTheme );
+		arguments.prc.cbThemeRecord  = themeService.getThemeRecord( arguments.prc.cbTheme );
 		// Place theme root location
-		arguments.prc.cbthemeRoot   = arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
+		arguments.prc.cbthemeRoot    = arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
 		// Place widgets root location
-		arguments.prc.cbWidgetRoot  = arguments.prc.cbRoot & "/widgets";
+		arguments.prc.cbWidgetRoot   = arguments.prc.cbRoot & "/widgets";
 		// Marker to tell layouts we are in static export mode
-		arguments.prc.staticExport  = true;
+		arguments.prc.staticExport   = true;
+		// Current Site
+		arguments.prc.oCurrentSite   = variables.siteService.getCurrentWorkingSite();
+		arguments.prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
+			arguments.prc.oCurrentSite.getSlug()
+		);
 		/******************************************************************************/
 
 		// Copy over content media
@@ -107,7 +113,7 @@ component accessors=true threadSafe singleton {
 		var aPages = pageService.search( parent = "", sortOrder = "order asc" );
 
 		// Process Homepage
-		var oHomePage = pageService.findBySlug( allSettings.cb_site_homepage );
+		var oHomePage = pageService.findBySlug( arguments.prc.oCurrentSite.getHomepage() );
 		if ( !isNull( oHomePage ) ) {
 			// put in scope for fake access
 			prc.page = oHomePage;

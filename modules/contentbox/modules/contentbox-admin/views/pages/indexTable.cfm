@@ -81,8 +81,8 @@
 					<cfif page.getSSLOnly()>
 						<i class="fa fa-shield" title="SSL Enabled"></i>
 					</cfif>
-					<!--- Home page?--->
-					<cfif page.getSlug() eq prc.cbSettings.cb_site_homepage>
+					<!--- Home page--->
+					<cfif page.getSlug() eq prc.oCurrentSite.getHomepage()>
 						<i class="fa fa-home text-danger" title="Current Homepage"></i>
 					</cfif>
 				</td>

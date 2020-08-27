@@ -1,19 +1,19 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Service to handle comment operations.
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Service to handle comment operations.
+ */
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="mailService"                        			inject="mailService@cbmailservices";
-	property name="renderer"                                  			inject="provider:ColdBoxRenderer";
-	property name="settingService"               		inject="id:settingService@cb";
-	property name="CBHelper"                                 			inject="id:CBHelper@cb";
-	property name="log"                                                					inject="logbox:logger:{this}";
-	property name="interceptorService"   	inject="coldbox:interceptorService";
+	property name="mailService"                                                                                                                        inject="mailService@cbmailservices";
+	property name="renderer"                                                                                                                                                                     inject="coldbox:renderer";
+	property name="settingService"                                                                           inject="id:settingService@cb";
+	property name="CBHelper"                                                                                                                                                                     inject="id:CBHelper@cb";
+	property name="log"                                                                                                                                                                                                                                                inject="logbox:logger:{this}";
+	property name="interceptorService"               inject="coldbox:interceptorService";
 	property name="loginTrackerService"	inject="loginTrackerService@cb";
 
 	/**
@@ -106,23 +106,24 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Save a comment according to our rules and process it. Returns a structure of information
-	* results = [moderated:boolean,messages:array]
-	* @comment The comment to try to save
-	* @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
-	*/
+	 * Save a comment according to our rules and process it. Returns a structure of information
+	 * results = [moderated:boolean,messages:array]
+	 *
+	 * @comment The comment to try to save
+	 * @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
+	 */
 	struct function saveComment( required comment, required loggedInUser ){
 
 		transaction{
 			// Comment reference
 			var inComment  = arguments.comment;
 			// get settings
-			var inSettings = settingService.getAllSettings();
+			var inSettings = variables.settingService.getAllSettings();
 			// results
-			var results    = { moderated=true, messages=[] };
+			var results    = { "moderated" : true, "messages" : [] };
 
 			// Log the IP Address
-			inComment.setAuthorIP( settingService.getRealIP() );
+			inComment.setAuthorIP( variables.settingService.getRealIP() );
 			// Default moderation unless user is logged in
 			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 
@@ -163,28 +164,34 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 	/**
      * Sends subscription emails to subscribers of the content
+	 *
      * @comment The comment object
      */
     public void function sendSubscriptionNotifications( required any comment ) {
         var content            = arguments.comment.getRelatedContent();
         // get subscribers for this content item
         var subscriptions      = content.getCommentSubscriptions();
-        var settings           = settingService.getAllSettings();
+        var settings           = variables.settingService.getAllSettings();
         var commentAuthorEmail = arguments.comment.getAuthorEmail();
-        // get body tokens; can reuse most for all emails
-        var bodyTokens         = arguments.comment.getMemento();
-        	bodyTokens[ "contentURL" ]    = CBHelper.linkContent( content );
-            bodyTokens[ "contentTitle" ]  = arguments.comment.getParentTitle();
-        // loop over subscribers
+
+		// get body tokens; can reuse most for all emails
+        var bodyTokens               = arguments.comment.getMemento();
+        bodyTokens[ "contentURL" ]   = CBHelper.linkContent( content );
+        bodyTokens[ "contentTitle" ] = arguments.comment.getParentTitle();
+
+		// loop over subscribers
         for( var subscription in subscriptions ) {
-        	var subscriber = subscription.getSubscriber();
-            // don't send email if the comment author is also subscribed...
+			var subscriber = subscription.getSubscriber();
+
+			// don't send email if the comment author is also subscribed...
             if( subscriber.getSubscriberEmail() != commentAuthorEmail ) {
+
                 // get mail payload
-                bodyTokens[ "unsubscribeURL" ]= CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
-                // Send it baby!
-                var mail                      = mailService.newMail(
-                	to			= subscriber.getSubscriberEmail(),
+                bodyTokens[ "unsubscribeURL" ] = CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
+
+				// Send it baby!
+                var mail = variables.mailService.newMail(
+					to        = subscriber.getSubscriberEmail(),
 					from      = settings.cb_site_outgoingEmail,
 					subject   = "New comment was added",
 					bodyTokens= bodyTokens,
@@ -198,13 +205,14 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				);
 
                 // generate content for email from template
-                mail.setBody( renderer.$get().renderLayout(
+                mail.setBody( variables.renderer.renderLayout(
                     view  = "/contentbox/email_templates/comment_notification",
                     layout= "/contentbox/email_templates/layouts/email",
                     args  =  { gravatarEmail = commentAuthorEmail }
-                ) );
+				) );
+
                 // send it out
-                mailService.send( mail );
+                variables.mailService.send( mail );
             }
         }
     }
@@ -285,14 +293,16 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Send a notification email for comments
-	* @comment Comment to moderate check
-	* @settings The contentbox settings to moderate against
-	*/
+	 * Send a notification email for comments
+	 *
+	 * @comment Comment to moderate check
+	 * @settings The contentbox settings to moderate against
+	 */
 	private void function sendNotificationEmails( required comment, required settings ){
 		// Comment reference
 		var inComment = arguments.comment;
 		var inSettings= arguments.settings;
+		var site      = inComment.getRelatedContent().getSite();
 		var outEmails = inSettings.cb_site_email;
 		var subject   = "";
 		var template  = "";
@@ -303,6 +313,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// More notification emails?
+
 		if( len( inSettings.cb_comments_notifyemails ) ){
 			outEmails &= "," & inSettings.cb_comments_notifyemails;
 		}
@@ -310,10 +321,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		// get mail payload
 		var bodyTokens             = inComment.getMemento();
 		bodyTokens["whoisURL"]     = inSettings.cb_comments_whoisURL;
-		bodyTokens["commentURL"]   = CBHelper.linkComment( comment=inComment, ssl=settings.cb_site_ssl );
+		bodyTokens["commentURL"]   = CBHelper.linkComment( comment=inComment, ssl=site.getIsSSL() );
 		bodyTokens["deleteURL"]    = CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
 		bodyTokens["approveURL"]   = CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["contentURL"]   = CBHelper.linkContent( content=inComment.getRelatedContent(), ssl=settings.cb_site_ssl );
+		bodyTokens["contentURL"]   = CBHelper.linkContent( content=inComment.getRelatedContent(), ssl=site.getIsSSL() );
 		bodyTokens["contentTitle"] = inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
@@ -327,7 +338,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// Send it baby!
-		var mail = mailservice.newMail(
+		var mail = variables.mailservice.newMail(
 			to        = outEmails,
 			from      = settings.cb_site_outgoingEmail,
 			subject   = subject,
@@ -342,18 +353,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		);
 
 		// generate content for email from template
-		mail.setBody( renderer.$get().renderLayout(
+		mail.setBody( renderer.renderLayout(
 			view  = "/contentbox/email_templates/#template#",
 			layout= "/contentbox/email_templates/layouts/email",
-			args  = { gravatarEmail= inComment.getAuthorEmail() }
-		));
+			args  = { gravatarEmail : inComment.getAuthorEmail() }
+		) );
 
 		// send it out
-		mailService.send( mail );
+		variables.mailService.send( mail );
 	}
 
 	/**
 	 * Activate URL's from text
+	 *
 	 * @text The target
 	 */
 	private function activateURLs( required text ){

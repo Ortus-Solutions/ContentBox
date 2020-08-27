@@ -11,8 +11,8 @@
     <!--- Title --->
     <cfif event.privateValueExists( "htmlTitle" )>
         <title>#prc.htmlTitle# &mdash; ContentBox Administrator</title>
-    <cfelseif structKeyExists( prc, 'cbSettings' )>
-        <title>#prc.cbSettings.cb_site_name# &mdash; ContentBox Administrator</title>
+    <cfelseif structKeyExists( prc, 'oCurrentSite' )>
+        <title>#prc.oCurrentSite.getName()# &mdash; ContentBox Administrator</title>
     <cfelse>
         <title>ContentBox Administrator</title>
     </cfif>

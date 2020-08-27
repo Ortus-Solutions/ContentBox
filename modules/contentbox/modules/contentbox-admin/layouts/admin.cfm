@@ -81,7 +81,11 @@
 					<ul>
 						<!--- View Site --->
 						<li class="" data-placement="right auto" title="Visit Site">
-							<a class="btn btn-default options toggle" href="#event.buildLink( to=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
+							<a
+								class="btn btn-default options toggle"
+								href="#event.buildLink( to=prc.cbEntryPoint, ssl=prc.oCurrentSite.getIsSSL() )#"
+								target="_blank"
+							>
 								<i class="fa fa-home"></i>
 							</a>
 						</li>
@@ -99,7 +103,7 @@
 										</a>
 									</li>
 								</cfif>
-								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+								<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+b">
 											<i class="fa fa-quote-left"></i> New Entry

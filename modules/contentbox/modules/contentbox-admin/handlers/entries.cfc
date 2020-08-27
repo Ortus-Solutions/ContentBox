@@ -9,8 +9,8 @@ component extends="baseContentHandler" {
 
 	// Dependencies
 	property name="entryService" inject="id:entryService@cb";
-	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
-	property name="HTMLHelper" inject="HTMLHelper@coldbox";
+	property name="CKHelper"     inject="CKHelper@contentbox-ckeditor";
+	property name="HTMLHelper"   inject="HTMLHelper@coldbox";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -25,7 +25,7 @@ component extends="baseContentHandler" {
 		prc.xehEntryRemove = "#prc.cbAdminEntryPoint#.entries.remove";
 
 		// Verify if disabled?
-		if ( prc.cbSettings.cb_site_disable_blog ) {
+		if ( !prc.oCurrentSite.getIsBlogEnabled() ) {
 			cbMessageBox.warn(
 				"The blog has been currently disabled. You can activate it again in your ContentBox settings panel"
 			);

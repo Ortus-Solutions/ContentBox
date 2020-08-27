@@ -278,26 +278,5 @@
 			)#
         </div>
     </div>
-
-	<!--- Site SSL --->
-    <div class="form-group">
-        #html.label(
-            class="control-label",
-            field="cb_site_ssl",
-            content="Site Force SSL (Secure Sockets Layer):"
-        )#
-        <div class="controls">
-            <small>You can enable SSL encryption for the entire site.</small><br /><br />
-            #html.checkbox(
-				name    = "cb_site_ssl_toggle",
-				data	= { toggle: 'toggle', match: 'cb_site_ssl' },
-				checked	= prc.cbSettings.cb_site_ssl
-			)#
-			#html.hiddenField(
-				name	= "cb_site_ssl",
-				value	= prc.cbSettings.cb_site_ssl
-			)#
-        </div>
-    </div>
 </fieldset>
 </cfoutput>

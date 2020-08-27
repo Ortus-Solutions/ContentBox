@@ -123,6 +123,37 @@ component
 		default=""
 		length ="255";
 
+	property
+		name   ="notificationEmails"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="500";
+
+	property
+		name     ="notifyOnEntries"
+		ormtype  ="boolean"
+		sqltype  ="boolean"
+		notnull  ="true"
+		default  ="true"
+		dbdefault="true";
+
+	property
+		name     ="notifyOnPages"
+		ormtype  ="boolean"
+		sqltype  ="boolean"
+		notnull  ="true"
+		default  ="true"
+		dbdefault="true";
+
+	property
+		name     ="notifyOnContentStore"
+		ormtype  ="boolean"
+		sqltype  ="boolean"
+		notnull  ="true"
+		default  ="true"
+		dbdefault="true";
+
 	/* *********************************************************************
 	 **							CALUCLATED FIELDS
 	 ********************************************************************* */

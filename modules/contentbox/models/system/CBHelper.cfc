@@ -8,19 +8,20 @@
 component accessors="true" singleton threadSafe {
 
 	// DI
-	property name="categoryService"     inject="id:categoryService@cb";
-	property name="settingService"      inject="id:settingService@cb";
-	property name="entryService"        inject="id:entryService@cb";
-	property name="pageService"         inject="id:pageService@cb";
-	property name="authorService"       inject="id:authorService@cb";
-	property name="commentService"      inject="id:commentService@cb";
-	property name="contentStoreService" inject="id:contentStoreService@cb";
-	property name="widgetService"       inject="id:widgetService@cb";
-	property name="moduleService"       inject="id:moduleService@cb";
-	property name="themeService"        inject="id:themeService@cb";
-	property name="mobileDetector"      inject="id:mobileDetector@cb";
-	property name="menuService"         inject="id:menuService@cb";
-	property name="menuItemService"     inject="id:menuItemService@cb";
+	property name="categoryService"     inject="categoryService@cb";
+	property name="settingService"      inject="settingService@cb";
+	property name="entryService"        inject="entryService@cb";
+	property name="pageService"         inject="pageService@cb";
+	property name="authorService"       inject="authorService@cb";
+	property name="commentService"      inject="commentService@cb";
+	property name="contentStoreService" inject="contentStoreService@cb";
+	property name="widgetService"       inject="widgetService@cb";
+	property name="moduleService"       inject="moduleService@cb";
+	property name="themeService"        inject="themeService@cb";
+	property name="mobileDetector"      inject="mobileDetector@cb";
+	property name="menuService"         inject="menuService@cb";
+	property name="menuItemService"     inject="menuItemService@cb";
+	property name="siteService"         inject="siteService@cb";
 	property name="requestService"      inject="coldbox:requestService";
 	property name="wirebox"             inject="wirebox";
 	property name="controller"          inject="coldbox";
@@ -84,14 +85,17 @@ component accessors="true" singleton threadSafe {
 		);
 	}
 
-	/************************************** settings *********************************************/
+	/************************************** SETTINGS *********************************************/
 
 	/**
-	 * get contentbox setting value by key or by default value
+	 * Get a global setting value by key or by default value
+	 *
 	 * @key The setting key to get
-	 * @value The default value to return if not found
+	 * @defaultValue The default value to return if not found
+	 *
+	 * @throw InvalidSettingException
 	 */
-	any function setting( required key, value ){
+	any function setting( required key, defaultValue ){
 		var prc = getPrivateRequestCollection();
 
 		// return setting if it exists
@@ -99,14 +103,41 @@ component accessors="true" singleton threadSafe {
 			return prc.cbSettings[ key ];
 		}
 		// default value
-		if ( structKeyExists( arguments, "value" ) ) {
-			return arguments.value;
+		if ( structKeyExists( arguments, "defaultValue" ) ) {
+			return arguments.defaultValue;
 		}
 		// else throw exception
 		throw(
-			message = "Setting requested: #arguments.key# not found",
-			detail  = "Settings keys are #structKeyList( prc.cbSettings )#",
-			type    = "ContentBox.CBHelper.InvalidSetting"
+			message: "Setting requested: #arguments.key# not found",
+			detail : "Settings keys are #structKeyList( prc.cbSettings )#",
+			type   : "InvalidSettingException"
+		);
+	}
+
+	/**
+	 * Get a site setting value by key or by default value
+	 *
+	 * @key The setting key to get
+	 * @defaultValue The default value to return if not found
+	 *
+	 * @throws InvalidSettingException
+	 */
+	any function siteSetting( required key, defaultValue ){
+		var prc = getPrivateRequestCollection();
+
+		// return setting if it exists
+		if ( structKeyExists( prc.cbSiteSettings, arguments.key ) ) {
+			return prc.cbSiteSettings[ key ];
+		}
+		// default value
+		if ( structKeyExists( arguments, "defaultValue" ) ) {
+			return arguments.defaultValue;
+		}
+		// else throw exception
+		throw(
+			message: "Site Setting requested: #arguments.key# not found",
+			detail : "Site Settings keys are #structKeyList( prc.cbSiteSettings )#",
+			type   : "InvalidSettingException"
 		);
 	}
 
@@ -274,29 +305,53 @@ component accessors="true" singleton threadSafe {
 		return themeSetting( argumentCollection = arguments );
 	}
 
-	/************************************** site properties *********************************************/
+	/************************************** Site Methods *********************************************/
 
-	// Retrieve the site name
+	/**
+	 * Get the current site object that you are visiting the UI from via our discovery methods
+	 */
+	function site(){
+		return variables.siteService.discoverSite();
+	}
+
+	/**
+	 * Retrieve the site name
+	 */
 	function siteName(){
-		return setting( "cb_site_name" );
+		return site().getName();
 	}
-	// Retrieve the site tagline
+
+	/**
+	 * Retrieve the site tagline
+	 */
 	function siteTagLine(){
-		return setting( "cb_site_tagline" );
+		return site().getTagLine();
 	}
-	// Retrieve the site description
+
+	/**
+	 * Retrieve the site description
+	 */
 	function siteDescription(){
-		return setting( "cb_site_description" );
+		return site().getDescription();
 	}
-	// Retrieve the site keywords
+
+	/**
+	 * Retrieve the site keywords
+	 */
 	function siteKeywords(){
-		return setting( "cb_site_keywords" );
+		return site().getKeywords();
 	}
-	// Retrieve the site administrator email
+
+	/**
+	 * Retrieve the site administrator email
+	 */
 	function siteEmail(){
-		return setting( "cb_site_email" );
+		return site().getNotificationEmails();
 	}
-	// Retrieve the site outgoing email
+
+	/**
+	 * Retrieve the site outgoing email
+	 */
 	function siteOutgoingEmail(){
 		return setting( "cb_site_outgoingEmail" );
 	}
@@ -370,17 +425,23 @@ component accessors="true" singleton threadSafe {
 		} else {
 			prc.cbAdminEntryPoint = "";
 		}
+		// Place site on request
+		prc.oCurrentSite   = site();
 		// Place global cb options on scope
-		prc.cbSettings     = settingService.getAllSettings( asStruct = true );
+		prc.cbSettings     = variables.settingService.getAllSettings();
+		prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
+			prc.oCurrentSite.getSlug()
+		);
 		// Place the default layout on scope
 		prc.cbTheme        = prc.cbSettings.cb_site_theme;
-		prc.cbThemeRecord  = themeService.getThemeRecord( prc.cbTheme );
+		prc.cbThemeRecord  = variables.themeService.getThemeRecord( prc.cbTheme );
 		// Place layout root location
 		prc.cbthemeRoot    = prc.cbThemeRecord.includePath;
 		// Place widgets root location
 		prc.cbWidgetRoot   = prc.cbRoot & "/widgets";
 		// Place current logged in Author if any
-		prc.oCurrentAuthor = securityService.getAuthorSession();
+		prc.oCurrentAuthor = variables.securityService.getAuthorSession();
+
 		// announce event
 		this.event( "cbui_preRequest" );
 
@@ -391,7 +452,7 @@ component accessors="true" singleton threadSafe {
 
 		/************************************** FORCE SITE WIDE SSL *********************************************/
 
-		if ( prc.cbSettings.cb_site_ssl and !event.isSSL() ) {
+		if ( prc.oCurrentSite.getIsSSL() and !event.isSSL() ) {
 			controller.relocate( event = event.getCurrentRoutedURL(), ssl = true );
 		}
 
@@ -610,8 +671,7 @@ component accessors="true" singleton threadSafe {
 	 * Get the missing page, if any, usually used in a page not found context
 	 */
 	any function getMissingPage(){
-		var event = getRequestContext();
-		return event.getValue(
+		return getRequestContext().getValue(
 			name         = "missingPage",
 			private      = "true",
 			defaultValue = ""
@@ -619,10 +679,10 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Get Home Page slug set up by the administrator settings
+	 * Get the current working site's homepage
 	 */
 	any function getHomePage(){
-		return setting( "cb_site_homepage" );
+		return site().getHomepage();
 	}
 
 	/**

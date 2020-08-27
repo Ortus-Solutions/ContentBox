@@ -18,7 +18,7 @@ component extends="content"{
 	 */
 	function preHandler( event, rc,prc , action, eventArguments ){
 		// Check if disabled?
-		if( prc.cbSettings.cb_site_disable_blog ){
+		if( !prc.oCurrentSite.getIsBlogEnabled() ){
 			event.overrideEvent( "contentbox-ui:blog.disabled" );
 		}
 		// super call
@@ -30,7 +30,7 @@ component extends="content"{
 	 */
 	function disabled( event, rc, prc ){
 		// missing page, the blog as it does not exist
-		prc.missingPage 	 = event.getCurrentRoutedURL();
+		prc.missingPage      = event.getCurrentRoutedURL();
 		prc.missingRoutedURL = event.getCurrentRoutedURL();
 
 		// set 404 headers
@@ -81,13 +81,13 @@ component extends="content"{
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
 		// XSS Cleanup
-		rc.q 		= antiSamy.clean( rc.q );
+		rc.q        = antiSamy.clean( rc.q );
 		rc.category = antiSamy.clean( rc.category );
 
 		// prepare paging object
-		prc.oPaging 			= getInstance( "Paging@cb" );
-		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
-		prc.pagingLink 			= CBHelper.linkBlog() & "?page=@page@";
+		prc.oPaging         = getInstance( "Paging@cb" );
+		prc.pagingBoundaries= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
+		prc.pagingLink      = CBHelper.linkBlog() & "?page=@page@";
 
 		// Search Paging Link Override?
 		if( len( rc.q ) ){
@@ -101,19 +101,19 @@ component extends="content"{
 
 		// get published entries
 		var entryResults = entryService.findPublishedEntries(
-			offset		= prc.pagingBoundaries.startRow - 1,
-			max			= prc.cbSettings.cb_paging_maxentries,
-			category	= rc.category,
-			searchTerm	= rc.q
+			offset    = prc.pagingBoundaries.startRow - 1,
+			max       = prc.cbSettings.cb_paging_maxentries,
+			category  = rc.category,
+			searchTerm= rc.q
 		);
-		prc.entries 		= entryResults.entries;
-		prc.entriesCount  	= entryResults.count;
+		prc.entries      = entryResults.entries;
+		prc.entriesCount = entryResults.count;
 
 		// announce event
 		announce(
 			"cbui_onIndex",
 			{
-				entries 	= prc.entries,
+				entries     = prc.entries,
 				entriesCount= prc.entriesCount
 			}
 		);
@@ -151,26 +151,26 @@ component extends="content"{
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
 		// prepare paging object
-		prc.oPaging 			= getInstance( "Paging@cb" );
-		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
-		prc.pagingLink 			= event.getCurrentRoutedURL() & "?page=@page@";
+		prc.oPaging         = getInstance( "Paging@cb" );
+		prc.pagingBoundaries= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
+		prc.pagingLink      = event.getCurrentRoutedURL() & "?page=@page@";
 
 		// get published entries
 		var entryResults = entryService.findPublishedEntriesByDate(
-			year 	= rc.year,
-			month 	= rc.month,
-			day 	= rc.day,
-			offset 	= prc.pagingBoundaries.startRow-1,
-			max 	= prc.cbSettings.cb_paging_maxentries
+			year   = rc.year,
+			month  = rc.month,
+			day    = rc.day,
+			offset = prc.pagingBoundaries.startRow-1,
+			max    = prc.cbSettings.cb_paging_maxentries
 		);
-		prc.entries 		= entryResults.entries;
-		prc.entriesCount  	= entryResults.count;
+		prc.entries      = entryResults.entries;
+		prc.entriesCount = entryResults.count;
 
 		// announce event
 		announce(
 			"cbui_onArchives",
 			{
-				entries 	= prc.entries,
+				entries     = prc.entries,
 				entriesCount= prc.entriesCount
 			}
 		);
@@ -199,8 +199,8 @@ component extends="content"{
 	function aroundEntry( event, rc, prc , eventArguments ){
 
 		// setup wrap arguments
-		arguments.contentCaching 	= prc.cbSettings.cb_entry_caching;
-		arguments.action 			= variables.entry;
+		arguments.contentCaching = prc.cbSettings.cb_entry_caching;
+		arguments.action         = variables.entry;
 
 		return wrapContentAdvice( argumentCollection=arguments );
 	}
@@ -225,9 +225,9 @@ component extends="content"{
 			entryService.updateHits( prc.entry.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults 	= commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc" );
-			prc.comments 		= commentResults.comments;
-			prc.commentsCount 	= commentResults.count;
+			var commentResults = commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc" );
+			prc.comments       = commentResults.comments;
+			prc.commentsCount  = commentResults.count;
 			// announce event
 			announce( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug} );
 			// set skin view
@@ -258,10 +258,10 @@ component extends="content"{
 
 		// Build out the blog RSS feeds
 		var feed = RSSService.getRSS(
-			comments	= rc.commentRSS,
-			category	= rc.category,
-			slug		= rc.entrySlug,
-			contentType	= "Entry"
+			comments   = rc.commentRSS,
+			category   = rc.category,
+			slug       = rc.entrySlug,
+			contentType= "Entry"
 		);
 
 		// Render out the feed xml

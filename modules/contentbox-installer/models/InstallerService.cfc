@@ -8,19 +8,19 @@
 component accessors="true" {
 
 	// DI
-	property name="siteService"         inject="siteService@cb";
-	property name="authorService"       inject="authorService@cb";
-	property name="settingService"      inject="settingService@cb";
-	property name="categoryService"     inject="categoryService@cb";
-	property name="pageService"         inject="pageService@cb";
-	property name="entryService"        inject="entryService@cb";
-	property name="commentService"      inject="commentService@cb";
+	property name="siteService" inject="siteService@cb";
+	property name="authorService" inject="authorService@cb";
+	property name="settingService" inject="settingService@cb";
+	property name="categoryService" inject="categoryService@cb";
+	property name="pageService" inject="pageService@cb";
+	property name="entryService" inject="entryService@cb";
+	property name="commentService" inject="commentService@cb";
 	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="roleService"         inject="roleService@cb";
-	property name="permissionService"   inject="permissionService@cb";
+	property name="roleService" inject="roleService@cb";
+	property name="permissionService" inject="permissionService@cb";
 	property name="securityRuleService" inject="securityRuleService@cb";
-	property name="appPath"             inject="coldbox:setting:applicationPath";
-	property name="coldbox"             inject="coldbox";
+	property name="appPath" inject="coldbox:setting:applicationPath";
+	property name="coldbox" inject="coldbox";
 
 	/**
 	 * Constructor
@@ -79,19 +79,20 @@ component accessors="true" {
 	 */
 	function createSite( required setup ){
 		var oSite = siteService.new( {
-			"name"             : arguments.setup.getSiteName(),
-			"slug"             : "default",
-			"description"      : arguments.setup.getSiteDescription(),
-			"keywords"         : arguments.setup.getSiteKeywords(),
-			"domainRegex"      : ".*",
-			"tagline"          : arguments.setup.getSiteTagLine(),
-			"homepage"         : "cbBlog",
-			"isBlogEnabled"    : true,
-			"isSitemapEnabled" : true,
-			"poweredByHeader"  : true,
-			"adminBar"         : true,
-			"isSSL"            : false,
-			"activeTheme"      : "contentbox-default"
+			"name"               : arguments.setup.getSiteName(),
+			"slug"               : "default",
+			"description"        : arguments.setup.getSiteDescription(),
+			"keywords"           : arguments.setup.getSiteKeywords(),
+			"domainRegex"        : ".*",
+			"tagline"            : arguments.setup.getSiteTagLine(),
+			"homepage"           : "cbBlog",
+			"isBlogEnabled"      : true,
+			"isSitemapEnabled"   : true,
+			"poweredByHeader"    : true,
+			"adminBar"           : true,
+			"isSSL"              : false,
+			"activeTheme"        : "contentbox-default",
+			"notificationEmails" : arguments.setup.getSiteEmail()
 		} );
 		return siteService.save( oSite );
 	}
@@ -116,10 +117,7 @@ component accessors="true" {
 
 		// Inflate and set
 		settings.map( function( key, value ){
-			return variables
-				.settingService
-				.findByName( thisSetting )
-				.setValue( value )
+			return variables.settingService.findByName( thisSetting ).setValue( value )
 		} )
 
 		// Save all settings

@@ -8,13 +8,14 @@
 component singleton {
 
 	// Dependencies
-	property name="authorService"  inject="id:authorService@cb";
-	property name="settingService" inject="id:settingService@cb";
+	property name="authorService"  inject="authorService@cb";
+	property name="settingService" inject="settingService@cb";
+	property name="siteService"    inject="siteService@cb";
 	property name="cacheStorage"   inject="cacheStorage@cbStorages";
 	property name="cookieStorage"  inject="cookieStorage@cbStorages";
 	property name="mailService"    inject="mailService@cbmailservices";
-	property name="renderer"       inject="provider:ColdBoxRenderer";
-	property name="CBHelper"       inject="id:CBHelper@cb";
+	property name="renderer"       inject="coldbox:renderer";
+	property name="CBHelper"       inject="CBHelper@cb";
 	property name="log"            inject="logbox:logger:{this}";
 	property name="cache"          inject="cachebox:template";
 	property name="bCrypt"         inject="BCrypt@BCrypt";
@@ -309,8 +310,9 @@ component singleton {
 		// Generate security token
 		var token = generateResetToken( arguments.author );
 
-		// get settings
-		var settings = settingService.getAllSettings( asStruct = true );
+		// get settings + default site
+		var settings    = variables.settingService.getAllSettings();
+		var defaultSite = variables.siteService.getDefaultSite();
 
 		// get mail payload
 		var bodyTokens = {
@@ -326,7 +328,7 @@ component singleton {
 				event = "security.lostPassword",
 				ssl   = settings.cb_admin_ssl
 			),
-			siteName    : settings.cb_site_name,
+			siteName    : defaultSite.getName(),
 			issuedBy    : "",
 			issuedEmail : ""
 		};
@@ -335,7 +337,7 @@ component singleton {
 		var mail = mailservice.newMail(
 			to         = arguments.author.getEmail(),
 			from       = settings.cb_site_outgoingEmail,
-			subject    = "#settings.cb_site_name# Account was created for you",
+			subject    = "#defaultSite.getName()# Account was created for you",
 			bodyTokens = bodyTokens,
 			type       = "html",
 			server     = settings.cb_site_mail_server,
@@ -347,12 +349,10 @@ component singleton {
 		);
 
 		mail.setBody(
-			renderer
-				.$get()
-				.renderLayout(
-					view   = "/contentbox/email_templates/author_welcome",
-					layout = "/contentbox/email_templates/layouts/email"
-				)
+			renderer.renderLayout(
+				view   = "/contentbox/email_templates/author_welcome",
+				layout = "/contentbox/email_templates/layouts/email"
+			)
 		);
 
 		// send it out
@@ -377,14 +377,15 @@ component singleton {
 		var token = generateResetToken( arguments.author );
 
 		// get settings
-		var settings = settingService.getAllSettings( asStruct = true );
+		var settings    = variables.settingService.getAllSettings();
+		var defaultSite = variables.siteService.getDefaultSite();
 
 		// get mail payload
 		var bodyTokens = {
 			name        : arguments.author.getName(),
 			ip          : settingService.getRealIP(),
 			linkTimeout : RESET_TOKEN_TIMEOUT,
-			siteName    : settings.cb_site_name,
+			siteName    : defaultSite.getName(),
 			linkToken   : CBHelper.linkAdmin(
 				event = "security.verifyReset",
 				ssl   = settings.cb_admin_ssl
@@ -400,10 +401,10 @@ component singleton {
 		}
 
 		// Build email out
-		var mail = mailservice.newMail(
+		var mail = variables.mailservice.newMail(
 			to         = arguments.author.getEmail(),
 			from       = settings.cb_site_outgoingEmail,
-			subject    = "#settings.cb_site_name# Password Reset Verification",
+			subject    = "#defaultSite.getName()# Password Reset Verification",
 			bodyTokens = bodyTokens,
 			type       = "html",
 			server     = settings.cb_site_mail_server,
@@ -421,12 +422,10 @@ component singleton {
 		}
 
 		mail.setBody(
-			renderer
-				.$get()
-				.renderLayout(
-					view   = "/contentbox/email_templates/#emailTemplate#",
-					layout = "/contentbox/email_templates/layouts/email"
-				)
+			renderer.renderLayout(
+				view   = "/contentbox/email_templates/#emailTemplate#",
+				layout = "/contentbox/email_templates/layouts/email"
+			)
 		);
 
 		// send it out
@@ -441,7 +440,7 @@ component singleton {
 	 * @returns {error, author}
 	 */
 	struct function validateResetToken( required token ){
-		var results  = { error : false, author : "" };
+		var results  = { "error" : false, "author" : "" };
 		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
@@ -467,14 +466,14 @@ component singleton {
 	 * @author 	The author you are reseting the password for
 	 * @password The password you have chosen
 	 *
-	 * @Returns {error:boolean, messages:string}
+	 * @return {error:boolean, messages:string}
 	 */
 	struct function resetUserPassword(
 		required token,
 		required Author author,
 		required password
 	){
-		var results  = { error : false, messages : "" };
+		var results  = { "error" : false, "messages" : "" };
 		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
@@ -496,7 +495,8 @@ component singleton {
 		cache.clear( cacheKey );
 
 		// get settings
-		var settings = settingService.getAllSettings( asStruct = true );
+		var settings    = settingService.getAllSettings();
+		var defaultSite = variables.siteService.getDefaultSite();
 
 		// set it in the user and save reset password
 		arguments.author.setPassword( arguments.password );
@@ -508,13 +508,13 @@ component singleton {
 			name       : arguments.author.getName(),
 			ip         : settingService.getRealIP(),
 			linkLogin  : CBHelper.linkAdminLogin( ssl = settings.cb_admin_ssl ),
-			siteName   : settings.cb_site_name,
+			siteName   : defaultSite.getName(),
 			adminEmail : settings.cb_site_email
 		};
 		var mail = mailservice.newMail(
 			to         = arguments.author.getEmail(),
 			from       = settings.cb_site_outgoingEmail,
-			subject    = "#settings.cb_site_name# Password Reset Completed",
+			subject    = "#defaultSite.getName()# Password Reset Completed",
 			bodyTokens = bodyTokens,
 			type       = "html",
 			server     = settings.cb_site_mail_server,
@@ -526,12 +526,10 @@ component singleton {
 		);
 		// ,body=renderer.$get().renderExternalView(view="/contentbox/email_templates/password_reminder" )
 		mail.setBody(
-			renderer
-				.$get()
-				.renderLayout(
-					view   = "/contentbox/email_templates/password_reset",
-					layout = "/contentbox/email_templates/layouts/email"
-				)
+			renderer.renderLayout(
+				view   = "/contentbox/email_templates/password_reset",
+				layout = "/contentbox/email_templates/layouts/email"
+			)
 		);
 		// send it out
 		mailService.send( mail );
