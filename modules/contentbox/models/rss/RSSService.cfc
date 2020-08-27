@@ -8,13 +8,13 @@
 component singleton{
 
 	// DI
-	property name="entryService"  		inject="id:entryService@cb";
-	property name="pageService"   			inject="id:pageService@cb";
+	property name="entryService"    		inject="id:entryService@cb";
+	property name="pageService"      			inject="id:pageService@cb";
 	property name="contentService"		inject="id:contentService@cb";
 	property name="commentService"		inject="id:commentService@cb";
-	property name="CBHelper"      			inject="id:CBHelper@cb";
-	property name="feedGenerator"  		inject="feedGenerator@cbfeeds";
-	property name="log"           					inject="logbox:logger:{this}";
+	property name="CBHelper"            			inject="id:CBHelper@cb";
+	property name="feedGenerator"   		inject="feedGenerator@cbfeeds";
+	property name="log"                      					inject="logbox:logger:{this}";
 
 	/**
  	* Constructor
@@ -45,9 +45,9 @@ component singleton{
 
 		// compose cache key
 		if( arguments.comments ){
-			cacheKey = "cb-feeds-#cgi.http_host#-content-comments-";
+			cacheKey = "cb-feeds-#cgi.server_name#-content-comments-";
 		} else {
-			cacheKey = "cb-feeds-#cgi.http_host#-content";
+			cacheKey = "cb-feeds-#cgi.server_name#-content";
 		}
 		// clear by snippet
 		cache.clearByKeySnippet(keySnippet=cacheKey,async=false);
@@ -80,11 +80,11 @@ component singleton{
 
 		// Comments cache Key
 		if( arguments.comments ){
-			cacheKey 	= "cb-feeds-#cgi.http_host#-content-comments-#arguments.slug#";
+			cacheKey 	= "cb-feeds-#cgi.server_name#-content-comments-#arguments.slug#";
 		}
 		// Entries cache Key
 		else{
-			cacheKey 	= "cb-feeds-#cgi.http_host#-content-#hash(arguments.category & arguments.contentType)#";
+			cacheKey 	= "cb-feeds-#cgi.server_name#-content-#hash(arguments.category & arguments.contentType)#";
 		}
 
 		// Retrieve via caching? and caching active

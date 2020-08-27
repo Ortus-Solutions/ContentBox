@@ -8,23 +8,23 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"                        				inject="id:settingService@cb";
-	property name="cacheBox"                                    					inject="cachebox";
-	property name="log"                                              							inject="logbox:logger:{this}";
-	property name="customFieldService"                 	 		inject="customFieldService@cb";
-	property name="categoryService"                       	 		inject="categoryService@cb";
-	property name="commentService"                         	 			inject="commentService@cb";
-	property name="contentVersionService"          		inject="contentVersionService@cb";
-	property name="authorService"                          				inject="authorService@cb";
-	property name="contentStoreService"              			inject="contentStoreService@cb";
-	property name="pageService"                              					inject="pageService@cb";
-	property name="entryService"                            				inject="entryService@cb";
-	property name="populator"                                  					inject="wirebox:populator";
-	property name="systemUtil"                                					inject="SystemUtil@cb";
-	property name="statsService"                            				inject="statsService@cb";
-	property name="dateUtil"                                    					inject="DateUtil@cb";
+	property name="settingService"                                    				inject="id:settingService@cb";
+	property name="cacheBox"                                                      					inject="cachebox";
+	property name="log"                                                                     							inject="logbox:logger:{this}";
+	property name="customFieldService"                         	 		inject="customFieldService@cb";
+	property name="categoryService"                                  	 		inject="categoryService@cb";
+	property name="commentService"                                     	 			inject="commentService@cb";
+	property name="contentVersionService"               		inject="contentVersionService@cb";
+	property name="authorService"                                       				inject="authorService@cb";
+	property name="contentStoreService"                     			inject="contentStoreService@cb";
+	property name="pageService"                                             					inject="pageService@cb";
+	property name="entryService"                                          				inject="entryService@cb";
+	property name="populator"                                                   					inject="wirebox:populator";
+	property name="systemUtil"                                                					inject="SystemUtil@cb";
+	property name="statsService"                                          				inject="statsService@cb";
+	property name="dateUtil"                                                      					inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService"                   			inject="subscriberService@cb";
+	property name="subscriberService"                            			inject="subscriberService@cb";
 
 	/**
 	* Constructor
@@ -82,7 +82,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet="cb-content-wrapper-#cgi.http_host#-#arguments.slug#", async=arguments.async );
+		cache.clearByKeySnippet( keySnippet="cb-content-wrapper-#cgi.server_name#-#arguments.slug#", async=arguments.async );
 		return this;
 	}
 
@@ -95,7 +95,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clear( "cb-content-wrapper-#cgi.http_host#-#arguments.slug#/" );
+		cache.clear( "cb-content-wrapper-#cgi.server_name#-#arguments.slug#/" );
 		return this;
 	}
 

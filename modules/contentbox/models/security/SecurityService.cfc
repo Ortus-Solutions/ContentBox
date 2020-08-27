@@ -28,13 +28,14 @@ component singleton {
 	/**
 	 * Constructor
 	 */
-	public SecurityService function init(){
+	SecurityService function init(){
 		variables.encryptionKey = "";
 		return this;
 	}
 
 	/**
 	 * Update an author's last login timestamp
+	 *
 	 * @author The author object
 	 */
 	SecurityService function updateAuthorLoginTimestamp( required author ){
@@ -156,6 +157,8 @@ component singleton {
 
 	/**
 	 * Get an author from session, or returns a new empty author entity
+	 *
+	 * @return Logged in or new user object
 	 */
 	Author function getAuthorSession(){
 		// Check if valid user id in session
@@ -183,7 +186,8 @@ component singleton {
 
 	/**
 	 * Set a new author in session
-	 * @author The author to store
+	 *
+	 * @author The author to login to ContentBox
 	 *
 	 * @return SecurityService
 	 */
@@ -193,7 +197,7 @@ component singleton {
 	}
 
 	/**
-	 * Delete author session
+	 * Delete an author session
 	 *
 	 * @return SecurityService
 	 */
@@ -270,6 +274,7 @@ component singleton {
 
 	/**
 	 * Leverages bcrypt to encrypt a string
+	 *
 	 * @string The string to bcrypt
 	 */
 	string function encryptString( required string ){
@@ -285,7 +290,7 @@ component singleton {
 		// Store Security Token For X minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
 		cache.set(
-			"reset-token-#cgi.http_host#-#token#",
+			"reset-token-#cgi.server_name#-#token#",
 			arguments.author.getAuthorID(),
 			RESET_TOKEN_TIMEOUT,
 			RESET_TOKEN_TIMEOUT
@@ -437,7 +442,7 @@ component singleton {
 	 */
 	struct function validateResetToken( required token ){
 		var results  = { error : false, author : "" };
-		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
+		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
@@ -470,7 +475,7 @@ component singleton {
 		required password
 	){
 		var results  = { error : false, messages : "" };
-		var cacheKey = "reset-token-#cgi.http_host#-#arguments.token#";
+		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back

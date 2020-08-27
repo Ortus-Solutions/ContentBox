@@ -1320,7 +1320,7 @@ component 	persistent="true"
 	* Build content cache keys according to sent content object
 	*/
 	string function buildContentCacheKey(){
-		var inputHash = hash( cgi.http_host & cgi.query_string );
+		var inputHash = hash( cgi.server_name & cgi.query_string );
 		return "cb-content-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#-#inputHash#";
 	}
 

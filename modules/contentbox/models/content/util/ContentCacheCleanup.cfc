@@ -4,7 +4,7 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI Injections
-	property name="cachebox"       			inject="cachebox";
+	property name="cachebox"             			inject="cachebox";
 	property name="settingService"		inject="id:settingService@cb";
 	property name="commentService"		inject="id:commentService@cb";
 	property name="contentService"		inject="id:contentService@cb";
@@ -124,7 +124,7 @@ component extends="coldbox.system.Interceptor"{
 		// clear ancestry caches
 		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
 		//#replacenocase( arguments.content.getSlug(), "/" & listLast( arguments.content.getSlug(), "/" ), "" )#
-		var wrapperKey = "cb-content-wrapper-#cgi.http_host#-#blogPrefix##arguments.content.getSlug()#/";
+		var wrapperKey = "cb-content-wrapper-#cgi.server_name#-#blogPrefix##arguments.content.getSlug()#/";
 		cache.clearByKeySnippet(
 			keySnippet = wrapperKey,
 			async      = true
