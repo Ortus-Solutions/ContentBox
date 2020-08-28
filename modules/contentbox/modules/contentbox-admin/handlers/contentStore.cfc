@@ -95,7 +95,7 @@ component extends="baseContentHandler" {
 		}
 
 		// search content with filters and all
-		var contentResults = contentStoreService.search(
+		var contentResults = variables.contentStoreService.search(
 			search     : rc.searchContent,
 			isPublished: rc.fStatus,
 			category   : rc.fCategories,
@@ -110,7 +110,7 @@ component extends="baseContentHandler" {
 
 		// Do we have a parent?
 		if ( structKeyExists( rc, "parent" ) ) {
-			prc.oParent = contentStoreService.get( rc.parent );
+			prc.oParent = variables.contentStoreService.get( rc.parent );
 		}
 
 		// exit handlers
@@ -147,7 +147,7 @@ component extends="baseContentHandler" {
 		var index         = 1;
 		var aContentItems = [];
 		for ( var thisContentID in rc.newRulesOrder ) {
-			var oContent = contentStoreService.get( thisContentID );
+			var oContent = variables.contentStoreService.get( thisContentID );
 			if ( !isNull( oContent ) ) {
 				arrayAppend( aContentItems, oContent );
 				// Update order
@@ -226,7 +226,7 @@ component extends="baseContentHandler" {
 			);
 		}
 		// Get all page names for parent drop downs
-		prc.allContent    = contentStoreService.getAllFlatEntries( sortOrder = "slug asc" );
+		prc.allContent    = variables.contentStoreService.getAllFlatEntries( sortOrder = "slug asc" );
 		// CK Editor Helper
 		prc.ckHelper      = variables.CKHelper;
 		// Get All registered editors so we can display them
@@ -281,14 +281,14 @@ component extends="baseContentHandler" {
 		}
 
 		// get the content to clone
-		var original = contentStoreService.get( rc.contentID );
+		var original = variables.contentStoreService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
 		if ( rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 
 		// get a clone
-		var clone = contentStoreService.new( {
+		var clone = variables.contentStoreService.new( {
 			title       : rc.title,
 			slug        : variables.HTMLHelper.slugify( rc.title ),
 			description : original.getDescription(),
@@ -368,7 +368,7 @@ component extends="baseContentHandler" {
 		}
 
 		// get new/persisted content and populate it
-		var content = populateModel( contentStoreService.get( rc.contentID ) )
+		var content = populateModel( variables.contentStoreService.get( rc.contentID ) )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( prc.oCurrentSite );
@@ -408,7 +408,7 @@ component extends="baseContentHandler" {
 
 		// attach a parent page if it exists and not the same
 		if ( isNumeric( rc.parentContent ) AND content.getContentID() NEQ rc.parentContent ) {
-			content.setParent( contentStoreService.get( rc.parentContent ) );
+			content.setParent( variables.contentStoreService.get( rc.parentContent ) );
 			// update slug
 			content.setSlug( content.getParent().getSlug() & "/" & content.getSlug() );
 		}
@@ -472,7 +472,7 @@ component extends="baseContentHandler" {
 
 		// Iterate and remove
 		for ( var thisContentID in rc.contentID ) {
-			var content = contentStoreService.get( thisContentID );
+			var content = variables.contentStoreService.get( thisContentID );
 			if ( isNull( content ) ) {
 				arrayAppend(
 					messages,
@@ -546,7 +546,7 @@ component extends="baseContentHandler" {
 		}
 
 		// search content with filters and all
-		var contentResults = contentStoreService.search(
+		var contentResults = variables.contentStoreService.search(
 			author = arguments.authorID,
 			parent = (
 				structKeyExists( arguments, "parent" ) ? arguments.parent : javacast( "null", "" )
@@ -589,12 +589,13 @@ component extends="baseContentHandler" {
 		prc.pagingLink = "javascript:pagerLink(@page@)";
 
 		// search content with filters and all
-		var contentResults = contentStoreService.search(
-			search              = rc.search,
-			offset              = prc.paging.startRow - 1,
-			max                 = prc.cbSettings.cb_paging_maxrows,
-			sortOrder           = "createdDate asc",
-			searchActiveContent = false
+		var contentResults = variables.contentStoreService.search(
+			search             : rc.search,
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			sortOrder          : "createdDate asc",
+			searchActiveContent: false,
+			siteId             : prc.oCurrentSite.getSiteId()
 		);
 
 		prc.content      = contentResults.content;
@@ -616,7 +617,7 @@ component extends="baseContentHandler" {
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get content
-		prc.content = contentStoreService.get( event.getValue( "contentID", 0 ) );
+		prc.content = variables.contentStoreService.get( event.getValue( "contentID", 0 ) );
 
 		// relocate if not existent
 		if ( !prc.content.isLoaded() ) {
@@ -650,7 +651,7 @@ component extends="baseContentHandler" {
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
-		var data = contentStoreService.getAllForExport();
+		var data = variables.contentStoreService.getAllForExport();
 
 		switch ( rc.format ) {
 			case "xml":
@@ -680,7 +681,7 @@ component extends="baseContentHandler" {
 		event.paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = contentStoreService.importFromFile(
+				var importLog = variables.contentStoreService.importFromFile(
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);

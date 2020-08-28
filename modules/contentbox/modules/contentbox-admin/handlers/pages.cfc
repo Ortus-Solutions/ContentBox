@@ -643,11 +643,12 @@ component extends="baseContentHandler" {
 
 		// search entries with filters and all
 		var pageResults = variables.pageService.search(
-			search              = rc.search,
-			offset              = prc.paging.startRow - 1,
-			max                 = prc.cbSettings.cb_paging_maxrows,
-			sortOrder           = "slug asc",
-			searchActiveContent = false
+			search             : rc.search,
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			sortOrder          : "slug asc",
+			searchActiveContent: false,
+			siteId             : prc.oCurrentSite.getSiteId()
 		);
 		// setup data for display
 		prc.pages      = pageResults.pages;

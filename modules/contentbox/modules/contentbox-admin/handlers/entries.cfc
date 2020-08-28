@@ -8,7 +8,7 @@
 component extends="baseContentHandler" {
 
 	// Dependencies
-	property name="entryService" inject="id:entryService@cb";
+	property name="entryService" inject="entryService@cb";
 	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
@@ -90,7 +90,7 @@ component extends="baseContentHandler" {
 		}
 
 		// search entries with filters and all
-		var entryResults = entryService.search(
+		var entryResults = variables.entryService.search(
 			search     : rc.searchEntries,
 			isPublished: rc.fStatus,
 			category   : rc.fCategories,
@@ -118,7 +118,7 @@ component extends="baseContentHandler" {
 	// Quick Look
 	function quickLook( event, rc, prc ){
 		// get entry
-		prc.entry = entryService.get( event.getValue( "contentID", 0 ) );
+		prc.entry = variables.entryService.get( event.getValue( "contentID", 0 ) );
 		event.setView( view = "entries/quickLook", layout = "ajax" );
 	}
 
@@ -222,13 +222,13 @@ component extends="baseContentHandler" {
 		}
 
 		// get the entry to clone
-		var original = entryService.get( rc.contentID );
+		var original = variables.entryService.get( rc.contentID );
 		// Verify new Title, else do a new copy of it
 		if ( rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 		// get a clone
-		var clone = entryService.new( {
+		var clone = variables.entryService.new( {
 			title   : rc.title,
 			slug    : variables.HTMLHelper.slugify( rc.title ),
 			excerpt : original.getExcerpt()
@@ -299,7 +299,7 @@ component extends="baseContentHandler" {
 		}
 
 		// get new/persisted entry and populate it
-		var entry        = entryService.get( rc.contentID );
+		var entry        = variables.entryService.get( rc.contentID );
 		var originalSlug = entry.getSlug();
 		populateModel( entry )
 			.addJoinedPublishedtime( rc.publishedTime )
@@ -401,7 +401,7 @@ component extends="baseContentHandler" {
 
 		// Iterate and remove
 		for ( var thisContentID in rc.contentID ) {
-			var entry = entryService.get( thisContentID );
+			var entry = variables.entryService.get( thisContentID );
 			if ( isNull( entry ) ) {
 				arrayAppend(
 					messages,
@@ -467,7 +467,7 @@ component extends="baseContentHandler" {
 		}
 
 		// search entries with filters and all
-		var entryResults = entryService.search(
+		var entryResults = variables.entryService.search(
 			author    = arguments.authorID,
 			offset    = prc.pager_paging.startRow - 1,
 			max       = arguments.max,
@@ -504,17 +504,18 @@ component extends="baseContentHandler" {
 		prc.pagingLink = "javascript:pagerLink(@page@)";
 
 		// search entries with filters and all
-		var entryResults = entryService.search(
-			search              = rc.search,
-			offset              = prc.paging.startRow - 1,
-			max                 = prc.cbSettings.cb_paging_maxrows,
-			sortOrder           = "publishedDate desc",
-			searchActiveContent = false
+		var entryResults = variables.entryService.search(
+			search             : rc.search,
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			sortOrder          : "publishedDate desc",
+			searchActiveContent: false,
+			siteId             : prc.oCurrentSite.getSiteId()
 		);
 
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
-		prc.CBHelper     = CBHelper;
+		prc.CBHelper     = variables.CBHelper;
 
 		// if ajax and searching, just return tables
 		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
@@ -528,7 +529,7 @@ component extends="baseContentHandler" {
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get entry
-		prc.entry = entryService.get( event.getValue( "contentID", 0 ) );
+		prc.entry = variables.entryService.get( event.getValue( "contentID", 0 ) );
 
 		// relocate if not existent
 		if ( !prc.entry.isLoaded() ) {
@@ -562,7 +563,7 @@ component extends="baseContentHandler" {
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
-		var data = entryService.getAllForExport();
+		var data = variables.entryService.getAllForExport();
 
 		switch ( rc.format ) {
 			case "xml":
@@ -592,7 +593,7 @@ component extends="baseContentHandler" {
 		event.paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = entryService.importFromFile(
+				var importLog = variables.entryService.importFromFile(
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
