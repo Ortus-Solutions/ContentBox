@@ -1986,26 +1986,30 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Build out a menu
+	 *
 	 * @slug The menu slug to build
 	 * @type The type either 'html' or 'data'
 	 * @slugCache The cache of menu slugs already used in this request
 	 *
 	 * @return HTML of the menu or a struct representing the menu
 	 */
-	public any function menu(
+	any function menu(
 		required string slug,
 		required type            = "html",
 		required array slugCache = []
 	){
 		var result = "";
-		var menu   = menuService.findBySlug( arguments.slug );
-		if ( !isNull( menu ) ) {
+		var menu   = variables.menuService.findBySlug( arguments.slug, site().getSiteId() );
+
+		if ( menu.isLoaded() ) {
 			if ( arguments.type == "data" ) {
 				return menu.getMemento();
 			} else {
 				return buildProviderMenu( menu = menu, slugCache = arguments.slugCache );
 			}
 		}
+
+		return "";
 	}
 
 	/**
