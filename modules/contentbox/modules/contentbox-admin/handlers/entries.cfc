@@ -9,8 +9,8 @@ component extends="baseContentHandler" {
 
 	// Dependencies
 	property name="entryService" inject="id:entryService@cb";
-	property name="CKHelper"     inject="CKHelper@contentbox-ckeditor";
-	property name="HTMLHelper"   inject="HTMLHelper@coldbox";
+	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
+	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -38,7 +38,11 @@ component extends="baseContentHandler" {
 		// get all authors
 		prc.authors    = authorService.getAll( sortOrder = "lastName" );
 		// get all categories
-		prc.categories = categoryService.getAll( sortOrder = "category" );
+		prc.categories = variables.categoryService.list(
+			"criteria"  : { "site" : prc.oCurrentSite },
+			"sortOrder" : "category",
+			"asQuery"   : false
+		);
 
 		// exit handlers
 		prc.xehEntrySearch     = "#prc.cbAdminEntryPoint#.entries";
@@ -146,11 +150,15 @@ component extends="baseContentHandler" {
 	// editor
 	function editor( event, rc, prc ){
 		// cb helper
-		prc.cbHelper   = CBHelper;
+		prc.cbHelper   = variables.CBHelper;
 		// get all categories
-		prc.categories = categoryService.getAll( sortOrder = "category" );
+		prc.categories = variables.categoryService.list(
+			"criteria"  : { "site" : prc.oCurrentSite },
+			"sortOrder" : "category",
+			"asQuery"   : false
+		);
 		// get new or persisted
-		prc.entry      = entryService.get( event.getValue( "contentID", 0 ) );
+		prc.entry = variables.entryService.get( event.getValue( "contentID", 0 ) );
 		// load comments viewlet if persisted
 		if ( prc.entry.isLoaded() ) {
 			var args            = { contentID : rc.contentID };
@@ -169,22 +177,22 @@ component extends="baseContentHandler" {
 		prc.ckHelper = variables.CKHelper;
 
 		// Get All registered editors so we can display them
-		prc.editors       = editorService.getRegisteredEditorsMap();
+		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Get the editor driver object
-		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
+		prc.oEditorDriver = variables.editorService.getEditor( prc.defaultEditor );
 
 		// Get All registered markups so we can display them
-		prc.markups       = editorService.getRegisteredMarkups();
+		prc.markups       = variables.editorService.getRegisteredMarkups();
 		// Get User's default markup
 		prc.defaultMarkup = prc.oCurrentAuthor.getPreference(
 			"markup",
-			editorService.getDefaultMarkup()
+			variables.editorService.getDefaultMarkup()
 		);
 
 		// get all authors
-		prc.authors                       = authorService.getAll( sortOrder = "lastName" );
+		prc.authors                       = variables.authorService.getAll( sortOrder = "lastName" );
 		// get related content
 		prc.relatedContent                = prc.entry.hasRelatedContent() ? prc.entry.getRelatedContent() : [];
 		prc.linkedContent                 = prc.entry.hasLinkedContent() ? prc.entry.getLinkedContent() : [];

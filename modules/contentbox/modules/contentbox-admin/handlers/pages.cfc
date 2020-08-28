@@ -9,8 +9,8 @@ component extends="baseContentHandler" {
 
 	// Dependencies
 	property name="pageService" inject="id:pageService@cb";
-	property name="CKHelper"    inject="id:CKHelper@contentbox-ckeditor";
-	property name="HTMLHelper"  inject="HTMLHelper@coldbox";
+	property name="CKHelper" inject="id:CKHelper@contentbox-ckeditor";
+	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -36,7 +36,11 @@ component extends="baseContentHandler" {
 		// get all authors
 		prc.authors    = authorService.getAll( sortOrder = "lastName" );
 		// get all categories
-		prc.categories = categoryService.getAll( sortOrder = "category" );
+		prc.categories = variables.categoryService.list(
+			"criteria"  : { "site" : prc.oCurrentSite },
+			"sortOrder" : "category",
+			"asQuery"   : false
+		);
 
 		// exit handlers
 		prc.xehPageSearch     = "#prc.cbAdminEntryPoint#.pages";
@@ -132,26 +136,30 @@ component extends="baseContentHandler" {
 	// editor
 	function editor( event, rc, prc ){
 		// cb helper reference
-		prc.cbHelper      = CBHelper;
+		prc.cbHelper      = variables.CBHelper;
 		// CK Editor Helper
 		prc.ckHelper      = variables.CKHelper;
 		// Get All registered editors so we can display them
-		prc.editors       = editorService.getRegisteredEditorsMap();
+		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Get the editor driver object
-		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
+		prc.oEditorDriver = variables.editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
-		prc.markups       = editorService.getRegisteredMarkups();
+		prc.markups       = variables.editorService.getRegisteredMarkups();
 		// Get User's default markup
 		prc.defaultMarkup = prc.oCurrentAuthor.getPreference(
 			"markup",
-			editorService.getDefaultMarkup()
+			variables.editorService.getDefaultMarkup()
 		);
 		// get all categories for display purposes
-		prc.categories = categoryService.getAll( sortOrder = "category" );
+		prc.categories = variables.categoryService.list(
+			"criteria"  : { "site" : prc.oCurrentSite },
+			"sortOrder" : "category",
+			"asQuery"   : false
+		);
 		// get new page or persisted
-		prc.page       = variables.pageService.get( event.getValue( "contentID", 0 ) );
+		prc.page = variables.pageService.get( event.getValue( "contentID", 0 ) );
 		// load comments,versions and child pages viewlets if persisted
 		if ( prc.page.isLoaded() ) {
 			var args            = { contentID : rc.contentID };
@@ -185,7 +193,7 @@ component extends="baseContentHandler" {
 			prc.parentcontentID = rc.parentID;
 		}
 		// get all authors
-		prc.authors                       = authorService.getAll( sortOrder = "lastName" );
+		prc.authors                       = variables.authorService.getAll( sortOrder = "lastName" );
 		// get related content
 		prc.relatedContent                = prc.page.hasRelatedContent() ? prc.page.getRelatedContent() : [];
 		prc.linkedContent                 = prc.page.hasLinkedContent() ? prc.page.getLinkedContent() : [];

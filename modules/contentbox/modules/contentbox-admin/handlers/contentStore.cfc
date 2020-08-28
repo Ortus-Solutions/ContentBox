@@ -33,9 +33,13 @@ component extends="baseContentHandler" {
 		event.paramValue( "parent", "" );
 
 		// get all authors
-		prc.authors    = authorService.getAll( sortOrder = "lastName" );
+		prc.authors    = variables.authorService.getAll( sortOrder = "lastName" );
 		// get all categories
-		prc.categories = categoryService.getAll( sortOrder = "category" );
+		prc.categories = variables.categoryService.list(
+			"criteria"  : { "site" : prc.oCurrentSite },
+			"sortOrder" : "category",
+			"asQuery"   : false
+		);
 
 		// exit handlers
 		prc.xehContentSearch     = "#prc.cbAdminEntryPoint#.contentStore";
@@ -196,11 +200,15 @@ component extends="baseContentHandler" {
 	// editor
 	function editor( event, rc, prc ){
 		// cb helper
-		prc.cbHelper   = CBHelper;
+		prc.cbHelper   = variables.CBHelper;
 		// get all categories
-		prc.categories = categoryService.getAll( sortOrder = "category" );
+		prc.categories = variables.categoryService.list(
+			"criteria"  : { "site" : prc.oCurrentSite },
+			"sortOrder" : "category",
+			"asQuery"   : false
+		);
 		// get new or persisted
-		prc.content    = contentStoreService.get( event.getValue( "contentID", 0 ) );
+		prc.content = variables.contentStoreService.get( event.getValue( "contentID", 0 ) );
 		// load comments viewlet if persisted
 		if ( prc.content.isLoaded() ) {
 			var args         = { contentID : rc.contentID };
