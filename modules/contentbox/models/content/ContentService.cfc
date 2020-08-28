@@ -248,7 +248,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @siteId The site to filter on
 	 */
 	function isSlugUnique( required any slug, any contentID="", string siteId="" ){
-		retur newCriteria()
+		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
 				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
