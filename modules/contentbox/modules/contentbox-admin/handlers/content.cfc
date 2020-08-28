@@ -8,14 +8,15 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="contentService"                                   		inject="id:contentService@cb";
-	property name="statsService"                                                 		inject="id:statsService@cb";
-	property name="contentStoreService"	inject="id:contentStoreService@cb";
-	property name="authorService"                                          		inject="id:authorService@cb";
-	property name="CBHelper"                                                                             			inject="id:CBHelper@cb";
+	property name="contentService"                                                       inject="contentService@cb";
+	property name="statsService"                                                                             inject="statsService@cb";
+	property name="contentStoreService"	inject="contentStoreService@cb";
+	property name="authorService"                                                                  inject="authorService@cb";
+	property name="CBHelper"                                                                                                                         inject="CBHelper@cb";
 
 	/**
 	 * Quick Content Preview from editors
+	 *
 	 * @return html
 	 */
 	function preview( event, rc, prc ){
@@ -53,9 +54,10 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Global Content Search
-	* @return html
-	*/
+	 * Global Content Search
+	 *
+	 * @return html
+	 */
 	function search( event, rc, prc ){
 		// Params
 		event.paramValue( "search", "" );
@@ -71,30 +73,30 @@ component extends="baseHandler"{
 		// Determine search via context or none at all
 		if( !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context ) ){
 			// Search for content
-			prc.results = contentService.searchContent(
-				searchTerm         = rc.search,
-				max                = prc.cbSettings.cb_admin_quicksearch_max,
-				sortOrder          = "title",
-				isPublished        = "all",
-				searchActiveContent= false,
-				contentTypes       = prc.context
+			prc.results = variables.contentService.searchContent(
+				searchTerm         :  rc.search,
+				max                :  prc.cbSettings.cb_admin_quicksearch_max,
+				sortOrder          :  "title",
+				isPublished        :  "all",
+				searchActiveContent:  false,
+				contentTypes       :  prc.context,
+				siteId             :  prc.oCurrentSite.getSiteId()
 			);
 			prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		} else {
-			prc.results         = { count=0, content=[] };
+			prc.results         = { "count" : 0, "content" : [] };
 			prc.minContentCount = 0;
 		}
-
 
 		// Search for Authors
 		if( !len( prc.context ) || listFindNoCase( "author", prc.context ) ){
 			prc.authors = authorService.search(
-				searchTerm = rc.search,
-				max        = prc.cbSettings.cb_admin_quicksearch_max
+				searchTerm : rc.search,
+				max        : prc.cbSettings.cb_admin_quicksearch_max
 			);
 			prc.minAuthorCount 	= ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
 		} else {
-			prc.authors        = { count=0, authors=[] };
+			prc.authors        = { "count" : 0, "authors" : [] };
 			prc.minAuthorCount = 0;
 		}
 
@@ -107,9 +109,10 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Check if a slug is unique
-	* @return json
-	*/
+	 * Check if a slug is unique
+	 *
+	 * @return json
+	 */
 	function slugUnique( event, rc, prc ){
 		// Params
 		event.paramValue( "slug", "" )
@@ -120,16 +123,21 @@ component extends="baseHandler"{
 		};
 
 		if( len( rc.slug ) ){
-			data[ "UNIQUE" ] = contentService.isSlugUnique( trim( rc.slug ), trim( rc.contentID ) );
+			data[ "UNIQUE" ] = variables.contentService.isSlugUnique(
+				rc.slug,
+				rc.contentID,
+				prc.oCurrentSite.getSiteId()
+			);
 		}
 
 		event.renderData( data=data, type="json" );
 	}
 
 	/**
-	* Render the content selector from editors
-	* @return html
-	*/
+	 * Render the content selector from editors
+	 *
+	 * @return html
+	 */
 	function relatedContentSelector( event, rc, prc ){
 		// paging default
 		event.paramValue( "page", 1 )
@@ -147,61 +155,71 @@ component extends="baseHandler"{
 		prc.pagingLink = "javascript:pagerLink( @page@, '#rc.contentType#' )";
 
 		// search entries with filters and all
-		var contentResults = contentService.searchContent(
-			searchTerm         = rc.search,
-			offset             = prc.paging.startRow-1,
-			max                = prc.cbSettings.cb_paging_maxrows,
-			sortOrder          = ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
-			searchActiveContent= false,
-			contentTypes       = rc.contentType,
-			excludeIDs         = rc.excludeIDs
+		var contentResults = variables.contentService.searchContent(
+			searchTerm          : rc.search,
+			offset              : prc.paging.startRow-1,
+			max                 : prc.cbSettings.cb_paging_maxrows,
+			sortOrder           : ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
+			searchActiveContent : false,
+			contentTypes        : rc.contentType,
+			excludeIDs          : rc.excludeIDs,
+			siteId              : prc.oCurrentSite.getSiteId()
 		);
+
 		// setup data for display
 		prc.content      = contentResults.content;
 		prc.contentCount = contentResults.count;
-		prc.CBHelper     = CBHelper;
+		prc.CBHelper     = variables.CBHelper;
 
 		// if ajax and searching, just return tables
 		return renderView( view="content/relatedContentResults", module="contentbox-admin" );
 	}
 
 	/**
-	* Show the related content panel
-	* @return html
-	*/
+	 * Show the related content panel
+	 *
+	 * @return html
+	 */
 	function showRelatedContentSelector( event, rc, prc ) {
 		event.paramValue( "search", "" )
 			.paramValue( "clear", false )
 			.paramValue( "excludeIDs", "" )
 			.paramValue( "contentType", "Page,Entry,ContentStore" );
+
 		// exit handlers
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
-		prc.CBHelper                  = CBHelper;
+		prc.CBHelper                  = variables.CBHelper;
+
 		event.setView( view="content/relatedContentSelector", layout="ajax" );
 	}
 
 	/**
-	* Break related content links
-	* @return json
-	*/
+	 * Break related content links
+	 *
+	 * @return json
+	 */
 	function breakContentLink( event, rc, prc ) {
 		event.paramValue( "contentID", "" )
 			.paramValue( "linkedID", "" );
+
 		var data = {};
 		if( len( rc.contentID ) && len( rc.linkedID ) ) {
-			var currentContent = ContentService.get( rc.contentID );
-			var linkedContent  = ContentService.get( rc.linkedID );
+			var currentContent = variables.contentService.get( rc.contentID );
+			var linkedContent  = variables.contentService.get( rc.linkedID );
+
 			linkedContent.removeRelatedContent( currentContent );
-			contentService.save( linkedContent );
+			variables.contentService.save( linkedContent );
+
 			data[ "SUCCESS" ] = true;
 		}
 		event.renderData( data=data, type="json" );
 	}
 
 	/**
-	* Reset Content Hits on one or more content items
-	* @return json
-	*/
+	 * Reset Content Hits on one or more content items
+	 *
+	 * @return json
+	 */
 	any function resetHits( event, rc, prc ){
 		event.paramValue( "contentID", 0 );
 		var response = {
@@ -212,7 +230,7 @@ component extends="baseHandler"{
 		// build to array and iterate
 		rc.contentID = listToArray( rc.contentID );
 		for( var thisID in rc.contentID ){
-			var oContent = contentService.get( thisID );
+			var oContent = variables.contentService.get( thisID );
 			// check if loaded
 			if( !isNull( oContent ) and oContent.isLoaded() ){
 				// Only update if it has stats
@@ -238,18 +256,18 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* This viewlet shows latest content edits via arguments
-	* @author 				The optional author to look for latest edits only
-	* @author.generic 		contentbox.models.security.Author
-	* @isPublished 			Boolean indicator if you need to search on all published states, only published, or only draft
-	* @max 					The maximum number of records, capped at 25 by default
-	* @showHits 			Show hit count on content item, defaults to true
-	* @colorCodings 		Show content row color codings
-	* @showPublishedStatus 	Show published status columns
-	* @showAuthor 			Show the author in the table
-	*
-	* @return html
-	*/
+	 * This viewlet shows latest content edits via arguments
+	 * @author 				The optional author to look for latest edits only
+	 * @author.generic 		contentbox.models.security.Author
+	 * @isPublished 			Boolean indicator if you need to search on all published states, only published, or only draft
+	 * @max 					The maximum number of records, capped at 25 by default
+	 * @showHits 			Show hit count on content item, defaults to true
+	 * @colorCodings 		Show content row color codings
+	 * @showPublishedStatus 	Show published status columns
+	 * @showAuthor 			Show the author in the table
+	 *
+	 * @return html
+	 */
 	function latestContentEdits(
 		event,
 		rc,
@@ -266,6 +284,11 @@ component extends="baseHandler"{
 		var args = { max = arguments.max, siteId = prc.oCurrentSite.getSiteId() };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
 		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
+
+		// Add Site context if `author` is not passed
+		if( isNull( args.author ) ){
+			args.siteId = prc.oCurrentSite.getSiteId();
+		}
 
 		// Get latest content edits with criteria
 		var aLatestEdits = variables.contentService.getLatestEdits( argumentCollection = args );

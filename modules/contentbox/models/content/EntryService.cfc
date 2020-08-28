@@ -173,8 +173,8 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Find published entries by date filters
-	*/
+	 * Find published entries by date filters
+	 */
 	function findPublishedEntriesByDate(
 		numeric year   =0,
 		numeric month  =0,
@@ -239,18 +239,20 @@ component extends="ContentService" singleton{
 	 * @category Pass a list of categories to narrow down results by using an OR, or delimit the list with a `+` to narrow down result by using an AND operation on the categories
 	 * @asQuery Return results as array of objects or query, default is array of objects
 	 * @sortOrder The sort order string, defaults to publisedDate DESC
+	 * @siteId The siteId to filter on
 	 *
 	 * @return struct of { count, entries }
 	 */
 	function findPublishedEntries(
-		numeric max      =0,
-		numeric offset   =0,
-		string searchTerm="",
-		string category  ="",
-		boolean asQuery  =false,
-		string sortOrder ="publishedDate DESC"
+		numeric max      = 0,
+		numeric offset   = 0,
+		string searchTerm= "",
+		string category  = "",
+		boolean asQuery  = false,
+		string sortOrder = "publishedDate DESC",
+		string siteId    = ""
 	){
-		var results = {};
+		var results = { "count" : 0, "entries" : [] };
 		var c       = newCriteria();
 
 
@@ -272,13 +274,20 @@ component extends="ContentService" singleton{
 		if( len( arguments.searchTerm ) ){
 			// like disjunctions
 			c.createAlias( "activeContent", "ac" );
-			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
-				  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
+			c.or(
+				c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+				c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
+			);
+		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
 		}
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );
-		results.entries = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+		results.entries = c.asDistinct()
 							.list(
 								offset    = arguments.offset,
 								max       = arguments.max,

@@ -6,23 +6,24 @@
 * This is the base class for contentbox widgets which gives them access to ContentBox and ColdBox.
 */
 component accessors="true" extends="coldbox.system.FrameworkSupertype"{
-	
+
 	// Shared DI all widgets receive
-	property name="categoryService"			inject="id:categoryService@cb";
-	property name="entryService"			inject="id:entryService@cb";
-	property name="pageService"				inject="id:pageService@cb";
-	property name="contentService"			inject="id:contentService@cb";
-	property name="contentVersionService"	inject="id:contentVersionService@cb";
-	property name="authorService"			inject="id:authorService@cb";
-	property name="commentService"			inject="id:commentService@cb";
-	property name="contentStoreService"		inject="id:contentStoreService@cb";
-	property name="menuService"				inject="id:menuService@cb";
-	property name="cb"						inject="id:CBHelper@cb";
-	property name="securityService" 		inject="id:securityService@cb";
+	property name="siteService"				inject="siteService@cb";
+	property name="categoryService"			inject="categoryService@cb";
+	property name="entryService"			inject="entryService@cb";
+	property name="pageService"				inject="pageService@cb";
+	property name="contentService"			inject="contentService@cb";
+	property name="contentVersionService"	inject="contentVersionService@cb";
+	property name="authorService"			inject="authorService@cb";
+	property name="commentService"			inject="commentService@cb";
+	property name="contentStoreService"		inject="contentStoreService@cb";
+	property name="menuService"				inject="menuService@cb";
+	property name="cb"						inject="CBHelper@cb";
+	property name="securityService" 		inject="securityService@cb";
 	property name="html"					inject="HTMLHelper@coldbox";
 	property name="controller"				inject="coldbox";
 	property name="log"						inject="logbox:logger:{this}";
-	
+
 	// Local Properties
 	property name="name"					type="string" default="";
 	property name="version"					type="string" default="";
@@ -37,13 +38,13 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 	* Base Constructor
 	*/
 	function init(){
-		variables.name 			= '';
-		variables.version 		= '';
-		variables.description 	= '';
-		variables.author 		= '';
-		variables.authorURL 	= '';
-		variables.category 		= "";
-		variables.icon 			= "";
+		variables.name        = '';
+		variables.version     = '';
+		variables.description = '';
+		variables.author      = '';
+		variables.authorURL   = '';
+		variables.category    = "";
+		variables.icon        = "";
 
 		return this;
 	}
@@ -60,10 +61,10 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype"{
      * @return array
      */
 	array function getPublicMethods() {
-		var publicMethods 	= [];
-		var meta 			= getMetadata( this );
-		var method 			= "";
-		
+		var publicMethods = [];
+		var meta          = getMetadata( this );
+		var method        = "";
+
 		for( var i=1; i <= arrayLen( meta.functions ); i++ ){
 			method = meta.functions[ i ];
 			// ignores?
@@ -79,4 +80,16 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 		}
 		return publicMethods;
 	}
+
+	/**
+	 * Detect if we are in admin mode or in the UI, and retrieve the site accordingly
+	 */
+	function getSite(){
+		if( findNoCase( variables.cb.adminRoot(), getRequestContext().getCurrentRoutedUrl() ) ){
+			return variables.siteService.getCurrentWorkingSite();
+		}
+
+		return variables.cb.site();
+	}
+
 }

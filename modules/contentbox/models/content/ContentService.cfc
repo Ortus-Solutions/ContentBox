@@ -8,31 +8,32 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// DI
-	property name="settingService"            inject="id:settingService@cb";
-	property name="cacheBox"                  inject="cachebox";
-	property name="log"                       inject="logbox:logger:{this}";
-	property name="customFieldService"        inject="customFieldService@cb";
-	property name="categoryService"           inject="categoryService@cb";
-	property name="commentService"            inject="commentService@cb";
-	property name="contentVersionService"     inject="contentVersionService@cb";
-	property name="authorService"             inject="authorService@cb";
-	property name="contentStoreService"       inject="contentStoreService@cb";
-	property name="pageService"               inject="pageService@cb";
-	property name="entryService"              inject="entryService@cb";
-	property name="populator"                 inject="wirebox:populator";
-	property name="systemUtil"                inject="SystemUtil@cb";
-	property name="statsService"              inject="statsService@cb";
-	property name="dateUtil"                  inject="DateUtil@cb";
+	property name="settingService"              inject="id:settingService@cb";
+	property name="cacheBox"                    inject="cachebox";
+	property name="log"                         inject="logbox:logger:{this}";
+	property name="customFieldService"          inject="customFieldService@cb";
+	property name="categoryService"             inject="categoryService@cb";
+	property name="commentService"              inject="commentService@cb";
+	property name="contentVersionService"       inject="contentVersionService@cb";
+	property name="authorService"               inject="authorService@cb";
+	property name="contentStoreService"         inject="contentStoreService@cb";
+	property name="pageService"                 inject="pageService@cb";
+	property name="entryService"                inject="entryService@cb";
+	property name="populator"                   inject="wirebox:populator";
+	property name="systemUtil"                  inject="SystemUtil@cb";
+	property name="statsService"                inject="statsService@cb";
+	property name="dateUtil"                    inject="DateUtil@cb";
 	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService"         inject="subscriberService@cb";
+	property name="subscriberService"           inject="subscriberService@cb";
 
 	/**
-	* Constructor
-	* @entityName The content entity name to bind this service to.
-	*/
-	ContentService function init(entityName="cbContent" ){
+	 * Constructor
+	 *
+	 * @entityName The content entity name to bind this service to.
+	 */
+	ContentService function init( entityName="cbContent" ){
 		// init it
-		super.init(entityName=arguments.entityName, useQueryCaching=true);
+		super.init( entityName=arguments.entityName, useQueryCaching=true );
 
 		return this;
 	}
@@ -240,19 +241,22 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Verify an incoming slug is unique or not
-	* @slug The slug to search for uniqueness
-	* @contentID Limit the search to the passed contentID usually for updates
-	*/
-	function isSlugUnique(required any slug, any contentID="" ){
-		var c = newCriteria()
-			.isEq( "slug", arguments.slug );
-
-		if( len( arguments.contentID ) ){
-			c.ne( "contentID", javaCast( "int", arguments.contentID ) );
-		}
-
-		return ( c.count() gt 0 ? false : true );
+	 * Verify an incoming slug is unique or not
+	 *
+	 * @slug The slug to search for uniqueness
+	 * @contentID Limit the search to the passed contentID usually for updates
+	 * @siteId The site to filter on
+	 */
+	function isSlugUnique( required any slug, any contentID="", string siteId="" ){
+		retur newCriteria()
+			.isEq( "slug", arguments.slug )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
+			.when( len( arguments.contentId ), function( c ){
+				c.ne( "contentID", autoCast( "contentID", contentId ) );
+			} )
+			.count() > 0 ? false : true;
 	}
 
 	/**
@@ -304,6 +308,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
 	 * @showInMenu Whether to filter with the show in menu bit or not
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
+	 * @siteId If passed, filter by site id
 	 *
 	 * @return struct as { count, content }
 	 */
@@ -316,7 +321,8 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		string sortOrder="publishedDate DESC",
 		any parent,
 		boolean showInMenu,
-		slugPrefix=""
+		string slugPrefix="",
+		string siteId    = ""
 	){
 
 		var results = { "count" : 0, "content" : [] };
@@ -327,7 +333,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			.isLT( "publishedDate", Now())
 			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 			// only non-password pages
-			.isEq( "passwordProtection","" );
+			.isEq( "passwordProtection", "" );
 
 		// Show only pages with showInMenu criteria?
 		if( structKeyExists(arguments,"showInMenu" ) ){
@@ -335,13 +341,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// Category Filter
-		if( len(arguments.category) ){
+		if( len( arguments.category ) ){
 			// create association with categories by slug.
 			c.createAlias( "categories","cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+		}
+
 		// Search Criteria
-		if( len(arguments.searchTerm) ){
+		if( len( arguments.searchTerm ) ){
 			// like disjunctions
 			c.createAlias( "activeContent","ac" );
 			c.or(
@@ -369,22 +380,23 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );
-		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+		results.content = c.asDistinct()
 							.list(
-								offset    = arguments.offset,
-								max       = arguments.max,
-								sortOrder = arguments.sortOrder,
-								asQuery   = arguments.asQuery
+								offset    : arguments.offset,
+								max       : arguments.max,
+								sortOrder : arguments.sortOrder,
+								asQuery   : arguments.asQuery
 							);
 
 		return results;
 	}
 
 	/**
-	* Bulk Publish Status Updates
-	* @contentID The list or array of ID's to bulk update
-	* @status The status either 'publish' or 'draft'
-	*/
+	 * Bulk Publish Status Updates
+	 *
+	 * @contentID The list or array of ID's to bulk update
+	 * @status The status either 'publish' or 'draft'
+	 */
 	any function bulkPublishStatus( required any contentID, required any status ){
 		var publish = false;
 
@@ -551,7 +563,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get all content for export as flat data
 	* @inData The data to use for exporting, usually concrete implementtions can override this.
 	*/
-	array function getAllForExport(any inData){
+	array function getAllForExport( any inData ){
 		var result = [];
 
 		if( !structKeyExists( arguments, "inData" ) ){
@@ -570,16 +582,21 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Import data from a ContentBox JSON file. Returns the import log
-	* @importFile The absolute file path to use for importing
-	* @override Override records or not
-	*/
-	string function importFromFile(required importFile, boolean override=false){
+	 * Import data from a ContentBox JSON file. Returns the import log
+	 *
+	 * @importFile The absolute file path to use for importing
+	 * @override Override records or not
+	 */
+	string function importFromFile( required importFile, boolean override=false ){
 		var data      = fileRead( arguments.importFile );
-		var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
+		var importLog = createObject( "java", "java.lang.StringBuilder" )
+			.init( "Starting import with override = #arguments.override#...<br>" );
 
 		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
+			throw(
+				message : "Cannot import file as the contents is not JSON",
+				type    : "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }

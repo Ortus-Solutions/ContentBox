@@ -317,24 +317,32 @@ component accessors="true" {
 
 	/**
 	 * Create author
+	 *
 	 * @setup The setup object
 	 * @adminRole The role of the admin string
 	 */
 	function createAuthor( required setup, required adminRole ){
-		var oAuthor = authorService.new( properties = arguments.setup.getUserData() );
-		oAuthor.setIsActive( true );
-		oAuthor.setRole( adminRole );
-		authorService.saveAuthor( oAuthor );
+		var oAuthor = variables.authorService
+			.new( properties = arguments.setup.getUserData() )
+			.setIsActive( true );
+			.setRole( arguments.adminRole );
 
-		return oAuthor;
+		return variables.authorService.saveAuthor( oAuthor );
 	}
 
 	/**
 	 * Create Sample Data
+	 *
+	 * @setup The setup object
+	 * @author The author created
+	 * @site The default site
 	 */
 	function createSampleData( required setup, required author, required site ){
 		// create a few categories
-		categoryService.createCategories( "News, ColdFusion, ColdBox, ContentBox" );
+		variables.categoryService.createCategories(
+			"News, ColdFusion, ColdBox, ContentBox",
+			arguments.site
+		);
 
 		// create some blog entries
 		var entry = entryService.new(

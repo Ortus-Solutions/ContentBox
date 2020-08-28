@@ -189,16 +189,20 @@ component extends="ContentService" singleton{
 	}
 
 	/**
-	* Find published pages in ContentBox that have no passwords
-	* @max The max number of pages to return, defaults to 0=all
-	* @offset The pagination offset
-	* @searchTerm Pass a search term to narrow down results
-	* @category Pass a list of categories to narrow down results
-	* @asQuery Return results as array of objects or query, default is array of objects
-	* @parent The parent ID to restrict the search on
-	* @showInMenu If passed, it limits the search to this content property
-	* @sortOrder The sort order string, defaults to publisedDate DESC
-	*/
+	 * Find published pages in ContentBox that have no passwords
+	 *
+	 * @max The max number of pages to return, defaults to 0=all
+	 * @offset The pagination offset
+	 * @searchTerm Pass a search term to narrow down results
+	 * @category Pass a list of categories to narrow down results
+	 * @asQuery Return results as array of objects or query, default is array of objects
+	 * @parent The parent ID to restrict the search on
+	 * @showInMenu If passed, it limits the search to this content property
+	 * @sortOrder The sort order string, defaults to publisedDate DESC
+	 * @siteId The siteId to filter on
+	 *
+	 * @return struct of { count, pages }
+	 */
 	function findPublishedPages(
 		numeric max      =0,
 		numeric offset   =0,
@@ -207,9 +211,10 @@ component extends="ContentService" singleton{
 		boolean asQuery  =false,
 		string parent,
 		boolean showInMenu,
-		string sortOrder="publishedDate DESC"
+		string sortOrder="publishedDate DESC",
+		string siteId   = ""
 	){
-		var results = {};
+		var results = { "count" : 0, "pages" : [] };
 		var c       = newCriteria();
 
 		// only published pages
@@ -234,8 +239,15 @@ component extends="ContentService" singleton{
 		if( len( arguments.searchTerm ) ){
 			// like disjunctions
 			c.createAlias( "activeContent", "ac" );
-			c.or( c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
-				  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
+			c.or(
+				c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+				c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
+			);
+		}
+
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
 		}
 
 		// parent filter
@@ -251,12 +263,12 @@ component extends="ContentService" singleton{
 
 		// run criteria query and projections count
 		results.count = c.count( "contentID" );
-		results.pages = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+		results.pages = c.asDistinct()
 							.list(
-								offset    = arguments.offset,
-								max       = arguments.max,
-								sortOrder = arguments.sortOrder,
-								asQuery   = arguments.asQuery
+								offset    : arguments.offset,
+								max       : arguments.max,
+								sortOrder : arguments.sortOrder,
+								asQuery   : arguments.asQuery
 							);
 
 		return results;

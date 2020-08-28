@@ -1,24 +1,24 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Service to handle user operations.
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Service to handle user operations.
+ */
 component extends="cborm.models.VirtualEntityService" accessors="true" singleton{
 
 	// DI
-	property name="populator"              				inject="wirebox:populator";
-	property name="permissionService"     		inject="permissionService@cb";
+	property name="populator"             inject="wirebox:populator";
+	property name="permissionService"     inject="permissionService@cb";
 	property name="permissionGroupService"	inject="permissionGroupService@cb";
-	property name="roleService"           				inject="roleService@cb";
-	property name="bCrypt"                					inject="BCrypt@BCrypt";
-	property name="dateUtil"              				inject="DateUtil@cb";
-	property name="securityService"       			inject="securityService@cb";
+	property name="roleService"           inject="roleService@cb";
+	property name="bCrypt"                inject="BCrypt@BCrypt";
+	property name="dateUtil"              inject="DateUtil@cb";
+	property name="securityService"       inject="securityService@cb";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	AuthorService function init(){
 		// init it
 		super.init( entityName="cbAuthor" );
@@ -39,10 +39,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		};
 
 		var statusReport = c.withProjections(
-				count         = "isActive:authors",
-				groupProperty = "isActive"
+				count         : "isActive:authors",
+				groupProperty : "isActive"
 			)
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.asStruct()
 			.list();
 
 		for( var row in statusReport ){
@@ -54,10 +54,10 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		}
 
 		var twoFactorAuthReport = c.withProjections(
-				count         = "is2FactorAuth:authors",
-				groupProperty = "is2FactorAuth"
+				count         : "is2FactorAuth:authors",
+				groupProperty : "is2FactorAuth"
 			)
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+			.asStruct()
 			.list();
 
 		for( var row in twoFactorAuthReport ){
@@ -72,75 +72,65 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	/**
-	* Validate that the sent API Token is valid and active
-	*/
-	boolean function isValidAPIToken( required APIToken ){
-		var c = newCriteria()
-			.isEq( "APIToken", arguments.APIToken )
-			.isTrue( "isActive" );
-
-		return ( c.count() ? true : false );
-	}
-
-	/**
-	* Get Author for corresponding API Token
-	* @returns Populated User object.  If APIToken isn't found, returns new Author.
-	*/
-	any function getAuthorizedAuthor( required APIToken ){
-		var oUser = newCriteria()
-			.isEq( "APIToken", arguments.APIToken )
-			.isTrue( "isActive" )
-			.get();
-
-		return ( !isNull( oUser ) ? oUser : this.new() );
-	}
-
-	/**
 	 * Delete an author from the system
+	 *
 	 * @author 			The author object
 	 * @transactional 	Auto transactions
 	 */
 	function deleteAuthor( required author, boolean transactional=true ){
 		// Clear permissions, just in case
 		arguments.author.clearPermissions();
+
 		// send for deletion
 		delete( entity=arguments.author, transactional=arguments.transactional );
 	}
 
 	/**
-	* This function will encrypt an incoming target string using bcrypt and compare it with another bcrypt string
-	*/
+	 * This function will encrypt an incoming target string using bcrypt and compare it with another bcrypt string
+	 *
+	 * @incoming Incoming string
+	 * @target Target check
+	 *
+	 * @return true if they match
+	 */
 	boolean function isSameHash( required incoming, required target ){
 		return variables.bcrypt.checkPassword( arguments.incoming, arguments.target );
 	}
 
 	/**
-	* Create a new author in ContentBox and sends them their email confirmations.
-	*
-	* @author The target author object to create
-	*
-	* @returns error:boolean,errorArray
-	*/
-	struct function createNewAuthor( required author ){
+	 * Create a new author in ContentBox and sends them their email confirmations.
+	 *
+	 * @author The target author object to create
+	 *
+	 * @return The created author
+	 */
+	Author function createNewAuthor( required author ){
 
 		// Save it
 		saveAuthor( author=arguments.author );
 
 		// Send Account Creation
 		var mailResults = securityService.sendNewAuthorReminder( arguments.author );
+		if( mailResults.error ){
+			variables.logger.error( "Error sending author created email", mailResults.errorArray );
+		}
 
-		return mailResults;
+		return arguments.author;
 	}
 
 	/**
-	* Save an author with extra pizazz!
-	* @author The author object
-	* @passwordChange Are we changing the password
-	* @transaactional Auto transactions
-	*
-	* @returns AuthorService
-	*/
-	function saveAuthor( required author, boolean passwordChange=false, boolean transactional=true ){
+	 * Save an author with extra pizazz!
+	 * @author The author object
+	 * @passwordChange Are we changing the password
+	 * @transaactional Auto transactions
+	 *
+	 * @return Author
+	 */
+	Author function saveAuthor(
+		required author,
+		boolean passwordChange=false,
+		boolean transactional =true
+	){
 
 		// bcrypt password if new author
 		if( !arguments.author.isLoaded() OR arguments.passwordChange ){
@@ -148,31 +138,25 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 			arguments.author.setPassword( variables.bcrypt.hashPassword( arguments.author.getPassword() ) );
 		}
 
-		// Verify if the author has already an API Token, else generate one for them.
-		if( !len( arguments.author.getAPIToken() ) ){
-			arguments.author.generateAPIToken();
-		}
-
 		// save the author
-		save( entity=arguments.author, transactional=arguments.transactional );
-		return this;
+		return save( entity=arguments.author, transactional=arguments.transactional );
 	}
 
 	/**
-	* Author search by many criteria.
-	*
-	* @searchTerm		 	Search in firstname, lastname and email fields
-	* @isActive  		 	Search with active bit
-	* @role      		 	Apply a role filter
-	* @max       		 	The max returned objects
-	* @offset    		 	The offset for pagination
-	* @asQuery   		 	Query or objects
-	* @sortOrder 		 	The sort order to apply
-	* @permissionGroups 	Single or list of permissiong groups to search on
-	* @twoFactorAuth 		Two factor auth or any
-	*
-	* @return {authors:array, count:numeric}
-	*/
+	 * Author search by many criteria.
+	 *
+	 * @searchTerm		 	Search in firstname, lastname and email fields
+	 * @isActive  		 	Search with active bit
+	 * @role      		 	Apply a role filter
+	 * @max       		 	The max returned objects
+	 * @offset    		 	The offset for pagination
+	 * @asQuery   		 	Query or objects
+	 * @sortOrder 		 	The sort order to apply
+	 * @permissionGroups 	Single or list of permissiong groups to search on
+	 * @twoFactorAuth 		Two factor auth or any
+	 *
+	 * @return {authors:array, count:numeric}
+	 */
 	function search(
 		string searchTerm="",
 		string isActive,
@@ -184,7 +168,7 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 		string permissionGroups,
 		string twoFactorAuth
 	){
-		var results = {};
+		var results = { "count" : 0, "authors" : [] };
 		var c       = newCriteria();
 
 		// Search
@@ -234,24 +218,28 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	/**
-	* Username checks for authors
-	*/
+	 * Username checks for authors
+	 *
+	 * @username The username to check if it exists already
+	 */
 	boolean function usernameFound( required username ){
 		var args = { "username" = arguments.username };
 		return ( countWhere( argumentCollection = args ) GT 0 );
 	}
 
 	/**
-	* Email checks for authors
-	*/
+	 * Email checks for authors
+	 *
+	 * @email The email to check if it exists already
+	 */
 	boolean function emailFound( required email ){
 		var args = { "email" = arguments.email };
 		return ( countWhere( argumentCollection = args ) GT 0 );
 	}
 
 	/**
-	* Get all data prepared for export
-	*/
+	 * Get all data prepared for export
+	 */
 	array function getAllForExport(){
 		var result = [];
 		var data   = getAll();
@@ -264,8 +252,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	/**
-	* Import data from a ContentBox JSON file. Returns the import log
-	*/
+	 * Import data from a ContentBox JSON file. Returns the import log
+	 */
 	string function importFromFile(required importFile, boolean override=false){
 		var data      = fileRead( arguments.importFile );
 		var importLog = createObject( "java", "java.lang.StringBuilder" )
@@ -280,8 +268,8 @@ component extends="cborm.models.VirtualEntityService" accessors="true" singleton
 	}
 
 	/**
-	* Import data from an array of structures of authors or just one structure of author
-	*/
+	 * Import data from an array of structures of authors or just one structure of author
+	 */
 	string function importFromData( required importData, boolean override=false, importLog ){
 		var allUsers 		= [];
 

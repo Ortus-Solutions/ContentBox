@@ -8,14 +8,14 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="entryService"                                                                                                                        	inject="entryService@cb";
-	property name="pageService"                                                                                                                                         	inject="pageService@cb";
-	property name="contentService"                                                                                      	inject="contentService@cb";
-	property name="commentService"                                                                                      	inject="commentService@cb";
-	property name="categoryService"                                                                    		inject="categoryService@cb";
-	property name="feedReader"                                                                                                                                                         		inject="FeedReader@cbfeeds";
+	property name="entryService"                                                                                                                               	inject="entryService@cb";
+	property name="pageService"                                                                                                                                                 	inject="pageService@cb";
+	property name="contentService"                                                                                           	inject="contentService@cb";
+	property name="commentService"                                                                                           	inject="commentService@cb";
+	property name="categoryService"                                                                        		inject="categoryService@cb";
+	property name="feedReader"                                                                                                                                                                  		inject="FeedReader@cbfeeds";
 	property name="loginTrackerService"		inject="loginTrackerService@cb";
-	property name="markdown"                                                                                                                                                                                           		inject="Processor@cbmarkdown";
+	property name="markdown"                                                                                                                                                                                                      		inject="Processor@cbmarkdown";
 
 	/**
 	 * Main dashboard event
@@ -110,9 +110,10 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Produce the latest system content edits
-	* @return html
-	*/
+	 * Produce the latest system content edits
+	 *
+	 * @return html
+	 */
 	function latestSystemEdits( event, rc, prc ){
 		// Latest Edits
 		prc.latestEditsViewlet = runEvent(

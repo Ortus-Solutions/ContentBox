@@ -8,10 +8,10 @@
 component extends="cborm.models.VirtualEntityService" singleton{
 
 	// Dependencies
-	property name="htmlHelper"        inject="HTMLHelper@coldbox";
-	property name="populator"          inject="wirebox:populator";
+	property name="htmlHelper"                                inject="HTMLHelper@coldbox";
+	property name="populator"                                        inject="wirebox:populator";
 	property name="contentService"inject="contentService@cb";
-	property name="dateUtil"            inject="DateUtil@cb";
+	property name="dateUtil"                                                inject="DateUtil@cb";
 
 	/**
 	 * Constructor
@@ -31,37 +31,41 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	numeric function getTotalCategoryCount( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				//c.isEq( "site.siteId", javaCast( "integer", siteId ) )
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
 			} )
 			.count();
 	}
 
 	/**
 	 * Create categories via a comma delimited list and return the entities created
+	 *
+	 * @categories A list or array of categories to create
+	 * @site The site to attach them to, this must be a site object
 	 */
-	array function createCategories( required categories ){
-		var allCats = [];
-
+	array function createCategories( required categories, required site ){
 		// convert to array
-		if( isSimpleValue(arguments.categories) ){
+		if( isSimpleValue( arguments.categories ) ){
 			arguments.categories = listToArray( arguments.categories );
 		}
 
-		// iterate and create
-		for(var x=1; x lte arrayLen(arguments.categories); x++){
-			var thisCat        = trim(arguments.categories[ x ]);
-			var properties     = {category=thisCat, slug=htmlHelper.slugify( thisCat )};
-			// check that category doesn't exist already
-			var extantCategory = findWhere( criteria = properties );
-			// if no match is found, add to array
-			if( isNull( extantCategory ) ) {
-				// append to array all new categories populate with sent cat and slug
-				arrayAppend( allCats, new(properties=properties) );
-			}
-		}
+		var allCats = arguments.categories
+			// Only create categories that do not exist already
+			.filter( function( thisCategory ){
+				return newCriteria()
+					.isEq( "category", arguments.thisCategory )
+					.isEq( "site.siteId", autoCast( "site.siteId", site.getSiteId() ) )
+					.count() == 0;
+			})
+			.map( function( thisCategory ){
+				return new( {
+					"category" : thisCategory,
+					"slug"     : variables.htmlHelper.slugify( thisCategory ),
+					"site"     : site
+				} );
+			} );
 
 		// Save all cats
-		if( arrayLen(allCats) ){
+		if( arrayLen( allCats ) ){
 			saveAll( allCats );
 		}
 
@@ -135,23 +139,23 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	* Get all data prepared for export
 	*/
 	array function getAllForExport(){
-		var c = newCriteria();
-
-		return c.withProjections( property="categoryID,category,slug,createdDate,modifiedDate,isDeleted" )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list(sortOrder="category" );
+		return newCriteria()
+			.withProjections( property : "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteId:site" )
+			.asStruct()
+			.list( sortOrder : "category" );
 
 	}
 
 	/**
-	* Get an array of names of all categories in the system
-	*/
-	array function getAllNames(){
-		var c = newCriteria();
-
-		return c.withProjections( property="category" )
-			//.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder="category" );
+	 * Get an array of names of all categories in the system
+	 */
+	array function getAllNames( string siteId="" ){
+		return newCriteria()
+			.withProjections( property : "category" )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
+			.list( sortOrder : "category" );
 	}
 
 	/**

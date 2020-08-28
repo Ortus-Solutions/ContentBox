@@ -1,26 +1,27 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Handles RSS Feeds
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Handles RSS Feeds
+ */
 component extends="content"{
 
 	/**
-	* Display the RSS feeds for the ContentBox
-	*/
+	 * Display the RSS feeds for the ContentBox
+	 */
 	function index( event, rc, prc ){
 		// params
-		event.paramValue( "category","" );
-		event.paramValue( "contentSlug","" );
-		event.paramValue( "commentRSS",false);
+		event.paramValue( "category", "" );
+		event.paramValue( "contentSlug", "" );
+		event.paramValue( "commentRSS", false );
 
 		// Build out the site RSS feeds
-		var feed = RSSService.getRSS(
-			comments	= rc.commentRSS,
-			category	= rc.category,
-			slug		= rc.contentSlug
+		var feed = variables.RSSService.getRSS(
+			comments : rc.commentRSS,
+			category : rc.category,
+			slug     : rc.contentSlug,
+			siteId   : prc.oCurrentSite.getSiteId()
 		);
 
 		// Render out the feed xml
@@ -29,8 +30,8 @@ component extends="content"{
 	}
 
 	/**
-	* Display the RSS feeds for the pages
-	*/
+	 * Display the RSS feeds for the pages
+	 */
 	function pages( event, rc, prc ){
 		// params
 		event.paramValue( "category","" );
@@ -38,11 +39,12 @@ component extends="content"{
 		event.paramValue( "slug","" );
 
 		// Build out the site RSS feeds
-		var feed = RSSService.getRSS(
-			category	= rc.category,
-			slug		= rc.slug,
-			comments	= rc.commentRSS,
-			contentType	= "Page" 
+		var feed = variables.RSSService.getRSS(
+			category    : rc.category,
+			slug        : rc.slug,
+			comments    : rc.commentRSS,
+			contentType : "Page",
+			siteId      : prc.oCurrentSite.getSiteId()
 		);
 
 		// Render out the feed xml

@@ -76,15 +76,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @max The maximum number of records to return, 0 means all
 	 * @offset The offset in the paging, 0 means 0
 	 * @sortOrder Sort the comments asc or desc, by default it is desc
+	 * @siteId The site to filter on if needed
 	 *
 	 * @return struct with { comments, count }
 	 */
 	struct function findApprovedComments(
 		contentID,
 		contentType,
-		max      =0,
-		offset   =0,
-		sortOrder="desc"
+		max             = 0,
+		offset          = 0,
+		string sortOrder= "desc",
+		string siteId   = ""
 	){
 		var results = { "count" : 0, "comments" : [] };
 		var c       = newCriteria();
@@ -96,19 +98,26 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( !isNull( arguments.contentID ) AND len( arguments.contentID ) ){
 			c.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
 		}
+
 		// By Content Type Discriminator: class is a special hibernate deal
 		if( !isNull( arguments.contentType ) AND len( arguments.contentType ) ){
 			c.createCriteria( "relatedContent" )
 				.isEq( "class", arguments.contentType );
 		}
 
+		// Site Filter
+		if( len( arguments.siteId ) ){
+			c.joinTo( "relatedContent", "relatedContent" )
+				.isEq( "relatedContent.site.siteId", javaCast( "integer", arguments.siteId ) );
+		}
+
 		// run criteria query and projections count
 		results.count    = c.count();
 		results.comments = c.list(
-			offset   = arguments.offset,
-			max      = arguments.max,
-			sortOrder= "createdDate #arguments.sortOrder#",
-			asQuery  = false
+			offset    : arguments.offset,
+			max       : arguments.max,
+			sortOrder : "createdDate #arguments.sortOrder#",
+			asQuery   : false
 		);
 
 		return results;

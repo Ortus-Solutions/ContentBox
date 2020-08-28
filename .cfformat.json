@@ -6,7 +6,7 @@
 	"array.multiline.leading_comma.padding": true,
 	"array.multiline.leading_comma": false,
 	"alignment.consecutive.assignments": true,
-	"alignment.consecutive.properties": true,
+	"alignment.consecutive.properties": false,
 	"alignment.consecutive.params": true,
 	"brackets.padding": true,
 	"comment.asterisks": "align",

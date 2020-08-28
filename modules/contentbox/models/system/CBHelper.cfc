@@ -8,26 +8,26 @@
 component accessors="true" singleton threadSafe {
 
 	// DI
-	property name="categoryService"     inject="categoryService@cb";
-	property name="settingService"      inject="settingService@cb";
-	property name="entryService"        inject="entryService@cb";
-	property name="pageService"         inject="pageService@cb";
-	property name="authorService"       inject="authorService@cb";
-	property name="commentService"      inject="commentService@cb";
+	property name="categoryService" inject="categoryService@cb";
+	property name="settingService" inject="settingService@cb";
+	property name="entryService" inject="entryService@cb";
+	property name="pageService" inject="pageService@cb";
+	property name="authorService" inject="authorService@cb";
+	property name="commentService" inject="commentService@cb";
 	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="widgetService"       inject="widgetService@cb";
-	property name="moduleService"       inject="moduleService@cb";
-	property name="themeService"        inject="themeService@cb";
-	property name="mobileDetector"      inject="mobileDetector@cb";
-	property name="menuService"         inject="menuService@cb";
-	property name="menuItemService"     inject="menuItemService@cb";
-	property name="siteService"         inject="siteService@cb";
-	property name="requestService"      inject="coldbox:requestService";
-	property name="wirebox"             inject="wirebox";
-	property name="controller"          inject="coldbox";
-	property name="resourceService"     inject="resourceService@cbi18n";
-	property name="securityService"     inject="securityService@cb";
-	property name="markdown"            inject="Processor@cbmarkdown";
+	property name="widgetService" inject="widgetService@cb";
+	property name="moduleService" inject="moduleService@cb";
+	property name="themeService" inject="themeService@cb";
+	property name="mobileDetector" inject="mobileDetector@cb";
+	property name="menuService" inject="menuService@cb";
+	property name="menuItemService" inject="menuItemService@cb";
+	property name="siteService" inject="siteService@cb";
+	property name="requestService" inject="coldbox:requestService";
+	property name="wirebox" inject="wirebox";
+	property name="controller" inject="coldbox";
+	property name="resourceService" inject="resourceService@cbi18n";
+	property name="securityService" inject="securityService@cb";
+	property name="markdown" inject="Processor@cbmarkdown";
 
 	/**
 	 * Constructor
@@ -2100,7 +2100,11 @@ component accessors="true" singleton threadSafe {
 	){
 		arguments.showNone    = false;
 		// get root pages
-		arguments.pageRecords = pageService.findPublishedPages( parent = "", showInMenu = true );
+		arguments.pageRecords = pageService.findPublishedPages(
+			parent    : "",
+			showInMenu: true,
+			siteId    : site().getSiteId()
+		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
 	}
@@ -2145,8 +2149,9 @@ component accessors="true" singleton threadSafe {
 
 		// get child pages
 		arguments.pageRecords = pageService.findPublishedPages(
-			parent     = page.getContentID(),
-			showInMenu = true
+			parent    : page.getContentID(),
+			showInMenu: true,
+			siteId    : site().getSiteId()
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2347,8 +2352,9 @@ component accessors="true" singleton threadSafe {
 						b.append(
 							buildMenu(
 								pageRecords = pageService.findPublishedPages(
-									parent     = pageResults.pages[ x ].getContentID(),
-									showInMenu = true
+									parent    : pageResults.pages[ x ].getContentID(),
+									showInMenu: true,
+									siteId    : site().getSiteId()
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2377,8 +2383,9 @@ component accessors="true" singleton threadSafe {
 						b.append(
 							buildMenu(
 								pageRecords = pageService.findPublishedPages(
-									parent     = pageResults.pages[ x ].getContentID(),
-									showInMenu = true
+									parent    : pageResults.pages[ x ].getContentID(),
+									showInMenu: true,
+									siteId    : site().getSiteId()
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2407,8 +2414,9 @@ component accessors="true" singleton threadSafe {
 					if ( doNesting ) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedPages(
-								parent     = pageResults.pages[ x ].getContentID(),
-								showInMenu = true
+								parent    : pageResults.pages[ x ].getContentID(),
+								showInMenu: true,
+								siteId    : site().getSiteId()
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
@@ -2426,8 +2434,9 @@ component accessors="true" singleton threadSafe {
 					) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedPages(
-								parent     = pageResults.pages[ x ].getContentID(),
-								showInMenu = true
+								parent    : pageResults.pages[ x ].getContentID(),
+								showInMenu: true,
+								siteId    : site().getSiteId()
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
