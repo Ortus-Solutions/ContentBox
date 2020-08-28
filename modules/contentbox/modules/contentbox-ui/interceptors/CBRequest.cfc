@@ -8,14 +8,21 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI
-	property name="settingService"  inject="id:settingService@cb";
-	property name="contentService"  inject="id:contentService@cb";
-	property name="CBHelper"                                      		inject="id:CBHelper@cb";
+	property name="settingService"  inject="settingService@cb";
+	property name="contentService"  inject="contentService@cb";
+	property name="CBHelper" inject="id:CBHelper@cb";
 
 	/**
 	 * Configure CB Request
 	 */
-	function configure(){}
+	function configure(){
+		// Make sure we attach ourselves to the singleton renderer in ColdBox 6
+		var renderer = variables.controller.getRenderer();
+
+		renderer.cb        = variables.CBHelper;
+		renderer.$cbinject = variables.$cbinject;
+		renderer.$cbinject();
+	}
 
 	/**
 	 * Fired on contentbox requests
@@ -40,7 +47,7 @@ component extends="coldbox.system.Interceptor"{
 		}
 
 		// Prepare UI Request
-		CBHelper.prepareUIRequest();
+		variables.CBHelper.prepareUIRequest();
 	}
 
 	/**
@@ -120,15 +127,6 @@ component extends="coldbox.system.Interceptor"{
 	function postProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui"{
 		// announce event
 		announce( "cbui_postRequest" );
-	}
-
-	/**
-	 * Renderer helper injection
-	 */
-	function afterRendererInit( event, data, buffer, rc, prc ){
-		// decorate it
-		arguments.data.variables.cb = CBHelper;
-		arguments.data.this.cb      = CBHelper;
 	}
 
 	/**
