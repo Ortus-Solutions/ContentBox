@@ -82,7 +82,7 @@ component extends="coldbox.system.Interceptor"{
 	}
 
 	private function getSettings( event ){
-		return event.getPrivateValue( name="cbSettings" );
+		return event.getPrivateValue( name="cbSiteSettings" );
 	}
 
 }

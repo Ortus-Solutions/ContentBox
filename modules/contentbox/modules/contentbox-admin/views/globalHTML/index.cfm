@@ -54,7 +54,7 @@
                                         label="Before Head End: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_beforeHeadEnd,
+                                        value=prc.cbSiteSettings.cb_html_beforeHeadEnd,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -64,7 +64,7 @@
                                         label="After Body Start: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_afterBodyStart,
+                                        value=prc.cbSiteSettings.cb_html_afterBodyStart,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -74,7 +74,7 @@
                                         label="Before Body End: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_beforeBodyEnd,
+                                        value=prc.cbSiteSettings.cb_html_beforeBodyEnd,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -84,7 +84,7 @@
                                         label="Before Any Content: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_beforeContent,
+                                        value=prc.cbSiteSettings.cb_html_beforeContent,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -94,7 +94,7 @@
                                         label="After Any Content: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_afterContent,
+                                        value=prc.cbSiteSettings.cb_html_afterContent,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -104,7 +104,7 @@
                                         label="Before SideBar: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_beforeSideBar,
+                                        value=prc.cbSiteSettings.cb_html_beforeSideBar,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -114,7 +114,7 @@
                                         label="After SideBar: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_afterSideBar,
+                                        value=prc.cbSiteSettings.cb_html_afterSideBar,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -124,7 +124,7 @@
                                         label="After Footer: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_afterFooter,
+                                        value=prc.cbSiteSettings.cb_html_afterFooter,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -140,7 +140,7 @@
                                         label="Before A Blog Entry: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_preEntryDisplay,
+                                        value=prc.cbSiteSettings.cb_html_preEntryDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -150,7 +150,7 @@
                                         label="After A Blog Entry: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_postEntryDisplay,
+                                        value=prc.cbSiteSettings.cb_html_postEntryDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -160,7 +160,7 @@
                                         label="Before Blog Index: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_preIndexDisplay,
+                                        value=prc.cbSiteSettings.cb_html_preIndexDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -170,7 +170,7 @@
                                         label="After Blog Index: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_postIndexDisplay,
+                                        value=prc.cbSiteSettings.cb_html_postIndexDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -180,7 +180,7 @@
                                         label="Before Blog Archives: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_preArchivesDisplay,
+                                        value=prc.cbSiteSettings.cb_html_preArchivesDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -190,7 +190,7 @@
                                         label="After Blog Archives: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_postArchivesDisplay,
+                                        value=prc.cbSiteSettings.cb_html_postArchivesDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -206,7 +206,7 @@
                                         label="Before The Comment Form: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_preCommentForm,
+                                        value=prc.cbSiteSettings.cb_html_preCommentForm,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -216,7 +216,7 @@
                                         label="After The Comment Form: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_postCommentForm,
+                                        value=prc.cbSiteSettings.cb_html_postCommentForm,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -232,7 +232,7 @@
                                         label="Before Any Page: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_prePageDisplay,
+                                        value=prc.cbSiteSettings.cb_html_prePageDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
@@ -242,7 +242,7 @@
                                         label="After Any Page: ",
                                         rows="6",
                                         class="form-control",
-                                        value=prc.cbSettings.cb_html_postPageDisplay,
+                                        value=prc.cbSiteSettings.cb_html_postPageDisplay,
                                         wrapper="div class=controls",
                                         labelClass="control-label",
                                         groupWrapper="div class=form-group"
