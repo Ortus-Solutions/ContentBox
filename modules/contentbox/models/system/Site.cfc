@@ -56,6 +56,13 @@ component
 		length ="255";
 
 	property
+		name   ="domain"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="255";
+
+	property
 		name   ="domainRegex"
 		ormtype="string"
 		notnull="false"
@@ -177,6 +184,7 @@ component
 		},
 		"description"      : { required : false, size : "0..500" },
 		"keywords"         : { required : false, size : "0..255" },
+		"domain"           : { required : true, size : "1..255" },
 		"domainRegex"      : { required : true, size : "1..255" },
 		"tagline"          : { required : false, size : "0..255" },
 		"homepage"         : { required : false, size : "0..255" },
@@ -206,7 +214,22 @@ component
 	 * @excludes Property excludes
 	 */
 	function getMemento( excludes = "" ){
-		var pList  = listToArray( "name,slug,description,domainRegex" );
+		var pList = [
+			"name",
+			"slug",
+			"description",
+			"keywords",
+			"domain",
+			"domainRegex",
+			"tagline",
+			"homepage",
+			"isBlogEnabled",
+			"isSitemapEnabled",
+			"poweredByHeader",
+			"adminBar",
+			"isSSL",
+			"activeTheme"
+		];
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 
 		return result;

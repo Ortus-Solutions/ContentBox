@@ -125,6 +125,20 @@
 								placeholder 	= "mycoolsite.com"
 							)#
 
+							#html.textField(
+								name    		= "domain",
+								bind    		= prc.site,
+								label   		= "*Qualified Domain:",
+								required		= "required",
+								size    		= "255",
+								title 			= "The fully qualified domain used to access it (www.mysite.com)",
+								class   		= "form-control",
+								wrapper 		= "div class=controls",
+								labelClass 		= "control-label",
+								groupWrapper 	= "div class=form-group",
+								placeholder 	= "www.mysite.com"
+							)#
+
 						#html.endFieldSet()#
 
 						#html.startFieldset( legend="Site Features" )#
