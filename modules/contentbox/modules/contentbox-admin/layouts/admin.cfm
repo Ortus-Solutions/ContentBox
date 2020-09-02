@@ -34,14 +34,28 @@
 
 				<!--Branding-->
 				<div class="brand text-center">
-					<a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="left auto">
+					<a
+						data-keybinding="ctrl+shift+d"
+						href="#event.buildLink( prc.xehDashboard )#"
+						class="logo"
+						title="Dashboard ctrl+shift+d"
+						data-placement="left auto"
+					>
 						<img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
 					</a>
 				</div>
 
 				<!-- Toggle Navigation Button -->
 				<div class="toggle-navigation toggle-left">
-					<a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+					<a
+						onclick="null"
+						class="btn btn-default options toggle"
+						id="toggle-left"
+						data-toggle="tooltip"
+						data-placement="right"
+						title="Toggle Navigation (ctrl+shift+n)"
+						data-keybinding="ctrl+shift+n"
+					>
 						<i class="fa fa-bars"></i>
 					</a>
 				</div>

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-signal fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fas fa-tv fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>

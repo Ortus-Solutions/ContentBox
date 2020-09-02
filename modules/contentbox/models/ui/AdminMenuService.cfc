@@ -263,6 +263,7 @@ component accessors="true" threadSafe singleton {
 				class   = "last"
 			);
 
+
 		// Register Profile Menu
 		addHeaderMenu(
 			name  = "profile",
@@ -429,7 +430,7 @@ component accessors="true" threadSafe singleton {
 		prc.xehSubscribers = "#this.ADMIN_ENTRYPOINT#.subscribers";
 
 		// Dashboard
-		addTopMenu( name = this.DASHBOARD, label = "<i class='fa fa-dashboard'></i> Dashboard" )
+		addTopMenu( name = this.DASHBOARD, label = "<i class='fas fa-tv'></i> Dashboard" )
 			.addSubMenu(
 				name    = "home",
 				label   = "Home",

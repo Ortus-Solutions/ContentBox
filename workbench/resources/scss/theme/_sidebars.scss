@@ -87,13 +87,13 @@
 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus, .sidebar .nav>li>a:focus {
     color: #fff;
     border-left: solid 4px #293949;
-    background-color: #293949; 
+    background-color: #293949;
 }
 .nav-pills>li>a {
     border-radius: 0;
 }
 .nav-dropdown.open>a:after {
-    content: "\f107";
+	content: "\f078";
 }
 .sidebar-left a {
     color: #8f939e
@@ -123,13 +123,13 @@
 .sidebar+.main-content-wrapper {
     width: 100%
 }
-.nav-dropdown>a:after {
+.nav-dropdown > a:after {
     margin-top: -2px;
-    float: right;
-    content: "\f105";
-    font-family: FontAwesome;
+	float: right;
+    content: "\f054";
+    font-family: "Font Awesome 5 Free";
     font-size: 16px;
-    font-weight: 300;
+    font-weight: 900;
     height: auto;
     text-shadow: none;
 }
