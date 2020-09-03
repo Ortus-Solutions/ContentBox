@@ -175,7 +175,7 @@
 
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "dashboard.about.help.title@admin" )#</h3>
+		        <h3 class="panel-title"><i class="fab fa-medrt"></i> #$r( "dashboard.about.help.title@admin" )#</h3>
 		    </div>
 		    <div class="panel-body">
 		    	#renderView(view="_tags/needhelp", module="contentbox-admin" )#

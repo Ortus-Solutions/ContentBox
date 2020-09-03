@@ -174,6 +174,17 @@
 						</cfif>
 					</div>
 
+					<!--- Drag Handle --->
+					<a
+						href="##"
+						onclick="return false;"
+						class="dragHandle btn btn-default btn-sm"
+						title="Click and drag to change menu order"
+						style="padding:5px 15px"
+					>
+						<i class="fas fa-sort fa-lg"></i>
+					</a>
+
 					<!--- Page Actions --->
 					<div class="btn-group btn-group-sm">
 						<a
@@ -281,18 +292,6 @@
 							</li>
 				    	</ul>
 				    </div>
-
-					<!--- Drag Handle --->
-					<a
-						href="##"
-						onclick="return false;"
-						class="dragHandle btn btn-default btn-sm"
-						title="Click and drag to change menu order"
-						style="padding:5px 15px"
-					>
-						<!--- <i class="fa fa-arrows-v"></i> --->
-						<i class="fas fa-sort fa-lg"></i>
-					</a>
 				</td>
 			</tr>
 		</cfloop>

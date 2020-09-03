@@ -33,7 +33,7 @@
 						<div class="form-group form-inline no-margin">
 							#html.textField(
 								name		= "categorySearch",
-								class		= "form-control",
+								class		= "form-control rounded",
 								placeholder	= "Quick Search"
 							)#
 						</div>
@@ -61,7 +61,7 @@
 
 										<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 										<li>
-											<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a>
+											<a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a>
 										</li>
 										</cfif>
 

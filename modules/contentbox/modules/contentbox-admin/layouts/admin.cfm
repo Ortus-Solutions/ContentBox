@@ -61,11 +61,16 @@
 				</div>
 
 				<!-- Site Switcher -->
-				<span class="form-inline hidden-xs" id="div-siteswitcher" data-toggle="tooltip" data-placement="right" title="Site Switcher"/>
+				<span
+					class="form-inline hidden-xs"
+					id="div-siteswitcher"
+					data-toggle="tooltip"
+					data-placement="right"
+					title="Site Switcher">
 					<select
 						name="siteSwitcher"
 						id="siteSwitcher"
-						class="form-control input-sm"
+						class="form-control input-sm rounded"
 						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteId/' + this.value )"
 					>
 						<cfloop array="#prc.allSites#" index="thisSite">
@@ -81,12 +86,28 @@
 
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
+				<span
+					class="navbar-search hidden-xs"
+					id="div-search"
+					title="Press '\' to focus"
+					data-toggle="tooltip"
+					data-placement="right"
+				>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
-					<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
-					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query" size="20"/>
+					<input
+						type="hidden"
+						value="#event.buildLink( prc.xehSearchGlobal )#"
+						id="nav-search-url">
+					<input
+						type="text"
+						placeholder="Global Search"
+						name="nav-search"
+						id="nav-search"
+						autocomplete="off"
+						class="search-query"
+						size="20" />
 				</span>
 				</cfif>
 
@@ -148,7 +169,7 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
 									<li>
 										<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
-											<i class="fa fa-list"></i> New Menu
+											<i class="fas fa-list"></i> New Menu
 										</a>
 									</li>
 								</cfif>

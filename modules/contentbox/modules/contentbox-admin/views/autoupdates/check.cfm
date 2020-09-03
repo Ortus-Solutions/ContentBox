@@ -63,7 +63,7 @@
 							type 	= "submit",
 							name 	= "submitUpdate",
 							class 	= "btn btn-danger btn-lg",
-							value 	= "<i class='fa fa-check'></i> #$r( "autoUpdates.check.applyUpdate@admin" )#",
+							value 	= "<i class='far fa-check-circle'></i> #$r( "autoUpdates.check.applyUpdate@admin" )#",
 							onclick = "return confirm('#$r( "autoUpdates.check.confirm@admin" )#')"
 						)#
 					</div>

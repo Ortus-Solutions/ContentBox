@@ -36,7 +36,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		  	<i class="fa fa-times"></i>
 		  </a>
 		  <a onclick="javascript:fbUpload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "upload@fb" )#">
-		  	<i class="fa fa-upload"></i>
+		  	<i class="fas fa-file-import"></i>
 		  </a>
 		  <a onclick="javascript:fbDownload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "download@fb" )#">
 		  	<i class="fas fa-file-export"></i>
@@ -50,7 +50,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<div class="btn-group btn-group-sm" role="group">
 		  <a href="javascript:fbListTypeChange('listing','all')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "filelisting@fb" )#">
-		  	<i class="fa fa-list-ul"></i>
+		  	<i class="fas fa-list-ul"></i>
 		  </a>
 		  <a href="javascript:fbListTypeChange('grid','all')" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "gridlisting@fb" )#">
 		  	<i class="fa fa-th"></i>

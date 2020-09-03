@@ -120,9 +120,9 @@ $(document).ready(function() {
 
     // Nav Search Shortcut
     jwerty.key(
-        "ctrl+shift+s",
+        "\\",
         function() {
-            $("#nav-search").focus();
+            $( "#nav-search" ).focus();
             return false;
         }
     );

@@ -28,7 +28,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "userSearch",
-									class 		= "form-control",
+									class 		= "form-control rounded",
 									placeholder	= "Quick Search"
 								)#
 							</div>
@@ -48,7 +48,7 @@
 								    	<ul class="dropdown-menu">
 
 								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-								    			<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+								    			<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
 											</cfif>
 
 											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
@@ -74,7 +74,7 @@
 												</li>
 											</cfif>
 
-											<li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
+											<li><a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All</a></li>
 								    	</ul>
 								    </div>
 								</cfif>
@@ -106,7 +106,7 @@
 		<div class="panel panel-primary">
 
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
 			</div>
 
 			<div class="panel-body">
@@ -168,7 +168,7 @@
 							</select>
 						</div>
 
-						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply Filters</a>
+						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply</a>
 						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
 					#html.endForm()#
 				</div>

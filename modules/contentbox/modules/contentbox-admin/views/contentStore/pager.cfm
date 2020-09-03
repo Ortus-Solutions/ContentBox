@@ -42,7 +42,7 @@
 					<i class="fa fa-circle fa-lg textGreen" title="Content Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="fa fa-check fa-lg textRed" title="Content Draft!"></i>
+					<i class="far fa-check-circle fa-lg textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>

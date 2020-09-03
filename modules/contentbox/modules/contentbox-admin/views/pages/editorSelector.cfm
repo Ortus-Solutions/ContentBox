@@ -14,8 +14,17 @@
 
 				<!--- Content Bar --->
 			    <div class="form-group well">
-			        #html.label(field="pageSearch",content="Quick Search:",class="control-label" )#
-			        #html.textField(name="pageSearch",size="30",class="form-control",value=rc.search)#
+			        #html.label(
+						field="pageSearch",
+						content="Quick Search:",
+						class="control-label" 
+					)#
+			        #html.textField(
+						name="pageSearch",
+						size="30",
+						class="form-control rounded",
+						value=rc.search
+					)#
 			    </div>
 
 				<!--- Render tables out --->

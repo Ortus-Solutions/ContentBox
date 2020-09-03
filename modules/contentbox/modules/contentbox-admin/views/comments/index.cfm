@@ -32,7 +32,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name="commentSearch",
-									class="form-control",
+									class="form-control rounded",
 									placeholder="Quick Search"
 								)#
 							</div>
@@ -176,7 +176,7 @@
 		</div>
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
+		        <h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
 		    </div>
 		    <div class="panel-body<cfif rc.isFiltering> selected</cfif>">
 		    	#html.startForm( name="commentFilterForm",action=prc.xehComments, class="form-vertical", method="get" )#
@@ -189,7 +189,7 @@
 							<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#prc.countUnApproved#)</option>
 						</select>
 			    	</div>
-					<button type="submit" class="btn btn-danger">Apply Filters</button>
+					<button type="submit" class="btn btn-danger">Apply</button>
 					<button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>
 				#html.endForm()#
 		    </div>

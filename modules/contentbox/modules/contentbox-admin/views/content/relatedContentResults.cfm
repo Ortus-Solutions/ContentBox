@@ -36,7 +36,7 @@
                 <td class="text-center">
                     <div class="btn-group">
                         <button class="btn btn-sm btn-success" onclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )" title="Link">
-                            <i class="fa fa-check fa-lg"></i>
+                            <i class="far fa-check-circle fa-lg"></i>
                         </button>
                     </div>
                 </td>

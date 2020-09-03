@@ -29,7 +29,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name="entrySearch",
-									class="form-control",
+									class="form-control rounded",
 									placeholder="Quick Search"
 								)#
 							</div>
@@ -50,17 +50,17 @@
 													</a>
 												</li>
 												<li>
-													<a href="javascript:bulkChangeStatus('draft')"><i class="fa fa-ban"></i> Draft Selected
+													<a href="javascript:bulkChangeStatus('draft')"><i class="fas fa-ban"></i> Draft Selected
 													</a>
 												</li>
 												<li>
-													<a href="javascript:bulkChangeStatus('publish')"><i class="fa fa-check"></i> Publish Selected
+													<a href="javascript:bulkChangeStatus('publish')"><i class="far fa-check-circle"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
 												<li>
-													<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import
+													<a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import
 													</a>
 												</li>
 												</cfif>
@@ -76,7 +76,7 @@
 											</cfif>
 											<li><a href="javascript:resetBulkHits()"><i class="fas fa-recycle"></i> Reset Hits Selected</a></li>
 											<li>
-												<a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All
+												<a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All
 												</a>
 											</li>
 								    	</ul>
@@ -99,7 +99,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
@@ -150,7 +150,7 @@
 								</select>
 					        </div>
 					    </div>
-						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply Filters</a>
+						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply</a>
 						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
 					#html.endForm()#
 				</div>
@@ -158,11 +158,11 @@
 		</div>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medkit"></i> Help Tips</h3>
+		        <h3 class="panel-title"><i class="fab fa-medrt"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="fa fa-lightbulb-o"></i> Right click on a row to activate quick look!</li>
+					<li><i class="far fa-lightbulb"></i> Right click on a row to activate quick look!</li>
 				</ul>
 		    </div>
 		</div>

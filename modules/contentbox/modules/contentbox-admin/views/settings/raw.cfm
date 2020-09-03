@@ -59,7 +59,7 @@
                                         <div class="form-group form-inline no-margin">
                                             #html.textField(
                                                 name        = "settingSearch",
-                                                class       = "form-control",
+                                                class       = "form-control rounded",
                                                 placeholder = "Quick Search",
                                                 value       = event.getValue( "search", "" )
                                             )#
@@ -79,7 +79,7 @@
                                                     <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
                                                     <li><a href="javascript:flushSettingsCache()"><i class="fas fa-recycle"></i> Flush Settings Cache</a></li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
-                                                    <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import Settings</a></li>
+                                                    <li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import Settings</a></li>
                                                     </cfif>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>

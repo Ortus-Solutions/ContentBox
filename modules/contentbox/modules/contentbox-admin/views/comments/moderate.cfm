@@ -74,7 +74,7 @@
 					<div class="form-actions">
 						<!--- Buttons --->
 						<button type="submit" class="btn btn-primary" onclick="removeComment()"><i class="fa fa-trash"></i> Delete</button>
-						<button type="submit" class="btn btn-danger" /><i class="fa fa-check"></i> Approve</button>
+						<button type="submit" class="btn btn-danger" /><i class="far fa-check-circle"></i> Approve</button>
 					</div>
 				#html.endForm()#
 

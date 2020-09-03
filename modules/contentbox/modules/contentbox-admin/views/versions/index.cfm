@@ -77,8 +77,8 @@
 
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="fa fa-lightbulb-o"></i> Right click on a row to activate quick look!</li>
-					<li><i class="fa fa-lightbulb-o"></i> Rollback will create a new version with the rollbacked content.</li>
+					<li><i class="far fa-lightbulb"></i> Right click on a row to activate quick look!</li>
+					<li><i class="far fa-lightbulb"></i> Rollback will create a new version with the rollbacked content.</li>
 				</ul>
 		    </div>
 		</div>

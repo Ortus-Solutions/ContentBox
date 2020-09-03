@@ -104,7 +104,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##upload">
-								<i class="fa fa-upload fa-lg"></i> #$r( "autoUpdates.uploadUpdate.title@admin" )#
+								<i class="fas fa-file-import fa-lg"></i> #$r( "autoUpdates.uploadUpdate.title@admin" )#
 							</a>
 						</div>
 						<div id="upload" class="panel-collapse collapse">
@@ -182,7 +182,7 @@
 		</div>
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "autoUpdates.needHelp@admin" )#</h3>
+				<h3 class="panel-title"><i class="fab fa-medrt"></i> #$r( "autoUpdates.needHelp@admin" )#</h3>
 			</div>
 			<div class="panel-body">
 				<!--- need help --->

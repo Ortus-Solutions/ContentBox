@@ -37,7 +37,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name		= "permissionFilter",
-									class		= "form-control",
+									class		= "form-control rounded",
 									placeholder	= "Quick Search"
 								)#
 							</div>
@@ -52,7 +52,7 @@
 										</a>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>

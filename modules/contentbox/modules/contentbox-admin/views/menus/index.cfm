@@ -28,7 +28,7 @@
                             <div class="form-group form-inline no-margin">
                                 #html.textField(
                                     name="menuSearch",
-                                    class="form-control",
+                                    class="form-control rounded",
                                     placeholder="Quick Search"
                                 )#
                             </div>
@@ -47,13 +47,13 @@
                                                 </li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-                                                <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+                                                <li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li><a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
 												<li><a href="#event.buildLink( to=prc.xehMenuExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 											</cfif>
-                                            <li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
+                                            <li><a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All</a></li>
                                         </ul>
                                     </div>
                                 </cfif>

@@ -128,7 +128,7 @@
 </fieldset>
 
 <fieldset>
-	<legend><i class="fa fa-filter"></i> <strong>Rate Limiter</strong></legend>
+	<legend><i class="fas fa-filter"></i> <strong>Rate Limiter</strong></legend>
 	<!--- Rate Limiter --->
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter", content="Enable Rate Limiter:" )#

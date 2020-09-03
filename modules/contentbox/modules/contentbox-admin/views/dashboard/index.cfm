@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-tv fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fas fa-tv"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>
@@ -132,7 +132,7 @@
 		<!--- Info Box --->
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "dashboard.index.needHelp@admin" )#</h3>
+		        <h3 class="panel-title"><i class="fab fa-medrt"></i> #$r( "dashboard.index.needHelp@admin" )#</h3>
 		    </div>
 		    <div class="panel-body">
 		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#

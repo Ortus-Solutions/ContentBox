@@ -445,7 +445,7 @@ component accessors="true" threadSafe singleton {
 			);
 
 		// Content
-		addTopMenu( name = this.CONTENT, label = "<i class='fa fa-pencil'></i> Content" )
+		addTopMenu( name = this.CONTENT, label = "<i class='fas fa-box'></i> Content" )
 			.addSubMenu(
 				topMenu     = this.CONTENT,
 				name        = "Blog",
