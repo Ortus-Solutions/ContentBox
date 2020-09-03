@@ -527,19 +527,18 @@ function attachModalListeners() {
  */
 function activateToggleCheckboxes() {
     // toggle checkboxes
-    $('.tab-content').find('input[data-toggle="toggle"]').change(function() {
-        var inputMatch = $(this).data('match');
-        $("#" + inputMatch).val($(this).prop('checked'));
-
+    $( 'input[data-toggle="toggle"]' ).change( function() {
+        var inputMatch = $( this ).data( 'match' );
+        $( "#" + inputMatch ).val( $( this ).prop( 'checked' ) );
         //console.log( $( this ).prop( 'checked' ) + " input match :" + inputMatch );
-    });
+    } );
 }
 
 /**
  * Close confirmation modal
  */
 function closeConfirmations() {
-    $confirmIt.modal('hide');
+    $confirmIt.modal( 'hide' );
 }
 
 /**

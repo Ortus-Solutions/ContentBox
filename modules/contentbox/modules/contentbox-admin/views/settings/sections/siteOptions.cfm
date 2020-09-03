@@ -36,8 +36,7 @@
 						id="cb_site_blog_entrypoint"
 						type="text"
 						class="form-control"
-						value="#prc.cbSettings.cb_site_blog_entrypoint#"
-						aria-describedby="basic-addon3">
+						value="#prc.cbSettings.cb_site_blog_entrypoint#">
 				</div>
 			</div>
 		</div>

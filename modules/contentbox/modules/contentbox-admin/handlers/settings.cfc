@@ -8,15 +8,15 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="settingsService"     inject="id:settingService@cb";
-	property name="pageService"         inject="id:pageService@cb";
-	property name="CBHelper"            inject="id:CBHelper@cb";
-	property name="editorService"       inject="id:editorService@cb";
-	property name="mediaService"        inject="id:mediaService@cb";
+	property name="settingsService" inject="id:settingService@cb";
+	property name="pageService" inject="id:pageService@cb";
+	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="editorService" inject="id:editorService@cb";
+	property name="mediaService" inject="id:mediaService@cb";
 	property name="LoginTrackerService" inject="id:LoginTrackerService@cb";
-	property name="mailService"         inject="id:mailservice@cbMailservices";
-	property name="markdownEditor"      inject="id:markdownEditor@contentbox-markdowneditor";
-	property name="twoFactorService"    inject="id:twoFactorService@cb";
+	property name="mailService" inject="id:mailservice@cbMailservices";
+	property name="markdownEditor" inject="id:markdownEditor@contentbox-markdowneditor";
+	property name="twoFactorService" inject="id:twoFactorService@cb";
 
 	/**
 	 * Settings manager
@@ -84,6 +84,7 @@ component extends="baseHandler" {
 		// Do blog entry point change
 		var routingService = controller.getRoutingService();
 
+		// Reroute using passed cb_site_blog_entryPoint just in case
 		routingService.setRoutes(
 			routingService
 				.getRoutes()

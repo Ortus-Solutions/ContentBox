@@ -125,19 +125,28 @@
 								placeholder 	= "mycoolsite.com"
 							)#
 
-							#html.textField(
-								name    		= "domain",
-								bind    		= prc.site,
-								label   		= "*Qualified Domain:",
-								required		= "required",
-								size    		= "255",
-								title 			= "The fully qualified domain used to access it (www.mysite.com)",
-								class   		= "form-control",
-								wrapper 		= "div class=controls",
-								labelClass 		= "control-label",
-								groupWrapper 	= "div class=form-group",
-								placeholder 	= "www.mysite.com"
-							)#
+							<!--- Domain Name --->
+							<div class="form-group">
+								#html.label(
+									class   = "control-label",
+									field   = "domain",
+									content = "*Qualified Domain:"
+								)#
+
+								<p>
+									The actual domain name so we can construct URLs to this site.
+								</p>
+
+								<div class="input-group">
+									<span class="input-group-addon">https://</span>
+									<input
+										name="domain"
+										id="domain"
+										type="text"
+										class="form-control"
+										value="#prc.site.getDomain()#">
+								</div>
+							</div>
 
 						#html.endFieldSet()#
 
@@ -212,7 +221,6 @@
 								</p>
 
 								<div class="controls">
-
 									#html.checkbox(
 										name    = "isBlogEnabled_toggle",
 										data	= { toggle: 'toggle', match: 'isBlogEnabled' },
@@ -220,7 +228,7 @@
 									)#
 									#html.hiddenField(
 										name	= "isBlogEnabled",
-										bind 	= prc.site
+										value 	= prc.site.getIsBlogEnabled()
 									)#
 								</div>
 							</div>
@@ -245,7 +253,7 @@
 									)#
 									#html.hiddenField(
 										name	= "isSitemapEnabled",
-										bind 	= prc.site
+										value 	= prc.site.getIsSitemapEnabled()
 									)#
 								</div>
 							</div>
