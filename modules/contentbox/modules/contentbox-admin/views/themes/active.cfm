@@ -5,7 +5,7 @@
 		<div class="pull-right">
 	    	<button class="btn btn-success btn-sm"
 	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#encodeForJavaScript( prc.activeTheme.name )#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
-				<i class="fa fa-eye"></i> Preview
+				<i class="far fa-eye"></i> Preview
 			</button>
 		</div>
 
@@ -40,7 +40,7 @@
 				</div>
 				<!--- Version --->
 				<div id="theme-version>">
-					<i class="fa fa-clock-o"></i>
+					<i class="fas fa-history"></i>
 					<strong>Version: </strong>
 					#encodeForHTML( prc.activeTheme.version )#
 				</div>

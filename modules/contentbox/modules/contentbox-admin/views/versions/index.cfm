@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-clock-o"></i> #prc.content.getTitle()# History</h1>
+        <h1 class="h1"><i class="fas fa-history"></i> #prc.content.getTitle()# History</h1>
     </div>
 </div>
 
@@ -60,7 +60,7 @@
 							class="btn btn-primary btn-sm"
 							onclick="window.open( '#prc.xehOpenContent#' );return false;"
 						>
-							<i class="fa fa-eye"></i> Open
+							<i class="far fa-eye"></i> Open
 						</button>
 					</cfif>
 				</div>

@@ -260,9 +260,13 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get the current site object that you are visiting the UI from via our discovery methods
+	 *
+	 * @siteId The site id to get the root from, by default we use the current site you are on
 	 */
-	function site(){
-		return variables.siteService.discoverSite();
+	function site( string siteId = "" ){
+		return (
+			len( arguments.siteId ) ? variables.siteService.getOrFail( arguments.siteId ) : variables.siteService.discoverSite()
+		);
 	}
 
 	/**
@@ -274,10 +278,12 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get the site root location using your configured module's entry point and the discovered site
+	 *
+	 * @siteId The site id to get the root from, by default we use the current site you are on
 	 */
-	function siteRoot(){
+	function siteRoot( string siteId = "" ){
 		// Discover the right site object
-		var oSite = site();
+		var oSite = site( arguments.siteId );
 		// Return the appropriate site Uri
 		return "http"
 		& ( oSite.getIsSSL() ? "s" : "" ) // SSL or not
@@ -670,9 +676,11 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get the current working site's homepage
+	 *
+	 * @siteId The site id to get it from
 	 */
-	any function getHomePage(){
-		return site().getHomepage();
+	any function getHomePage( string siteId = "" ){
+		return site( arguments.siteId ).getHomepage();
 	}
 
 	/**
@@ -684,7 +692,7 @@ component accessors="true" singleton threadSafe {
 		if ( !structKeyExists( prc, "page" ) ) {
 			return false;
 		}
-		return ( prc.page.getSlug() == getHomePage() ? true : false );
+		return prc.page.isHomePage();
 	}
 
 	/**
@@ -1172,6 +1180,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Build out ContentBox module links
+	 *
 	 * @module The module to link this URL to
 	 * @linkTo The handler action combination to link to
 	 * @queryString The query string to append in SES format
@@ -1191,7 +1200,28 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * SetNextEvent For ContentBox Modules
+	 * @deprecated Please use moduleRelocate()
+	 */
+	function setNextModuleEvent(
+		required string module,
+		required string event,
+		string URL,
+		string URI,
+		string queryString = "",
+		persist,
+		struct persistStruct
+		boolean addToken,
+		boolean ssl,
+		baseURL,
+		boolean postProcessExempt,
+		numeric statusCode
+	){
+		return moduleRelocate( argumentCollection = arguments );
+	}
+
+	/**
+	 * Relocate to a ContentBox module event
+	 *
 	 * @module The module to link this URL to
 	 * @event The name of the event to run, if not passed, then it will use the default event found in your configuration file
 	 * @URL The full URL you would like to relocate to instead of an event: ex: URL='http://www.google.com'
@@ -1205,7 +1235,7 @@ component accessors="true" singleton threadSafe {
 	 * @postProcessExempt Do not fire the postProcess interceptors
 	 * @statusCode The status code to use in the relocation
 	 */
-	function setNextModuleEvent(
+	function moduleRelocate(
 		required string module,
 		required string event,
 		string URL,
@@ -1225,8 +1255,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to the admin
+	 *
 	 * @event An optional event to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl	Use SSL or not, defaults to event context.
 	 */
 	function linkAdmin( event = "", boolean ssl = getRequestContext().isSSL() ){
 		return getRequestContext().buildLink(
@@ -1237,7 +1268,8 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to the admin logout
-	 * @ssl	Use SSL or not, defaults to false.
+	 *
+	 * @ssl	Use SSL or not, defaults to event context.
 	 */
 	function linkAdminLogout( boolean ssl = getRequestContext().isSSL() ){
 		return getRequestContext().buildLink(
@@ -1248,7 +1280,8 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to the admin login
-	 * @ssl	Use SSL or not, defaults to false.
+	 *
+	 * @ssl	Use SSL or not, defaults to event context.
 	 */
 	function linkAdminLogin( boolean ssl = getRequestContext().isSSL() ){
 		return getRequestContext().buildLink(
@@ -1258,39 +1291,35 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Create a link to your site root or home page entry point for your blog.
-	 * @ssl	Use SSL or not, defaults to false.
+	 * Create a link to your site homepage
+	 *
+	 * @siteId The site id to link to or use the default
 	 */
-	function linkHome( boolean ssl = getRequestContext().isSSL() ){
-		return getRequestContext().buildLink( to = siteRoot(), ssl = arguments.ssl );
+	function linkHome( string siteId = "" ){
+		return siteRoot( arguments.siteId );
 	}
 
 	/**
 	 * Create a link to your site blog
-	 * @ssl	Use SSL or not, defaults to false.
+	 *
+	 * @siteId The site id to link to or use the default
 	 */
-	function linkBlog( boolean ssl = getRequestContext().isSSL() ){
-		return getRequestContext().buildLink(
-			to  = "#siteRoot()##sep()##getBlogEntryPoint()#",
-			ssl = arguments.ssl
-		);
+	function linkBlog( string siteId = "" ){
+		return "#siteRoot( arguments.siteId )##sep()##getBlogEntryPoint()#";
 	}
 
 	/**
 	 * Create a link to the current page/entry you are on
 	 */
 	function linkSelf(){
-		return "#cgi.script_name##cgi.path_info#";
+		return "#siteRoot()##sep()##cgi.script_name##cgi.path_info#";
 	}
 
 	/**
-	 * Get the site URL separator
+	 * Get the site URL separator depending if you have an entry point or not
 	 */
 	private function sep(){
-		if ( len( siteRoot() ) ) {
-			return ".";
-		}
-		return "";
+		return ( len( getPrivateRequestCollection().cbEntryPoint ) ? "/" : "" );
 	}
 
 	/**
@@ -1310,8 +1339,7 @@ component accessors="true" singleton threadSafe {
 
 		// do we have a category?
 		if ( structKeyExists( arguments, "category" ) ) {
-			xehRSS &= ".category.#arguments.category.getSlug()#";
-			return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
+			return xehRSS &= ".category.#arguments.category.getSlug()#";
 		}
 
 		// comments feed?
@@ -1321,15 +1349,15 @@ component accessors="true" singleton threadSafe {
 			if ( structKeyExists( arguments, "entry" ) ) {
 				xehRSS &= ".#arguments.entry.getSlug()#";
 			}
-			return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
 		}
 
 		// build link to regular RSS feed
-		return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
+		return xehRss;
 	}
 
 	/**
 	 * Link to the ContentBox Site RSS Feeds
+	 *
 	 * @category The category to filter on
 	 * @comments Do comments RSS feeds
 	 * @slug The content slug to filter on when using comments
@@ -1350,8 +1378,7 @@ component accessors="true" singleton threadSafe {
 			} else {
 				xehRSS &= "/category/#arguments.category.getSlug()#";
 			}
-
-			return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
+			return xehRSS;
 		}
 
 		// comments feed?
@@ -1361,11 +1388,9 @@ component accessors="true" singleton threadSafe {
 			if ( structKeyExists( arguments, "slug" ) ) {
 				xehRSS &= "/#arguments.slug#";
 			}
-			return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
 		}
 
-		// build link to regular ContentBox RSS feed
-		return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
+		return xehRSS;
 	}
 
 	/**
@@ -1390,8 +1415,7 @@ component accessors="true" singleton threadSafe {
 			} else {
 				xehRSS &= "/category/#arguments.category.getSlug()#";
 			}
-
-			return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
+			return xehRSS;
 		}
 
 		// comments feed?
@@ -1401,15 +1425,14 @@ component accessors="true" singleton threadSafe {
 			if ( structKeyExists( arguments, "page" ) ) {
 				xehRSS &= "/#arguments.page.getSlug()#";
 			}
-			return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
 		}
 
-		// build link to regular ContentBox RSS feed
-		return getRequestContext().buildLink( to = xehRSS, ssl = arguments.ssl );
+		return xehRSS;
 	}
 
 	/**
 	 * Link to a specific filtered category view of blog entries
+	 *
 	 * @category The category object or slug to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
@@ -1426,6 +1449,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to a specific filtered category view of blog entries
+	 *
 	 * @categorySlug The category slug as a string to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
@@ -1433,12 +1457,12 @@ component accessors="true" singleton threadSafe {
 		required string categorySlug,
 		boolean ssl = getRequestContext().isSSL()
 	){
-		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl );
+		return siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
 	}
 
 	/**
 	 * Link to a specific filtered archive of entries
+	 *
 	 * @year The year of the archive
 	 * @month The month of the archive
 	 * @day The day of the archive
@@ -1451,6 +1475,7 @@ component accessors="true" singleton threadSafe {
 		boolean ssl = getRequestContext().isSSL()
 	){
 		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
+
 		if ( structKeyExists( arguments, "year" ) ) {
 			xeh &= "/#arguments.year#";
 		}
@@ -1460,34 +1485,35 @@ component accessors="true" singleton threadSafe {
 		if ( structKeyExists( arguments, "day" ) ) {
 			xeh &= "/#arguments.day#";
 		}
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl );
+
+		return xeh;
 	}
 
 	/**
 	 * Link to the search route for this blog
+	 *
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
 	function linkSearch( boolean ssl = getRequestContext().isSSL() ){
-		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.search";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl );
+		return siteRoot() & sep() & "#getBlogEntryPoint()#.search";
 	}
 
 	/**
 	 * Link to the content search route
+	 *
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
 	function linkContentSearch( boolean ssl = getRequestContext().isSSL() ){
-		var xeh = siteRoot() & sep() & "__search";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl );
+		return siteRoot() & sep() & "__search";
 	}
 
 	/**
 	 * Link to the content subscription route
+	 *
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
 	function linkContentSubscription( boolean ssl = getRequestContext().isSSL() ){
-		var xeh = siteRoot() & sep() & "__subscribe";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl );
+		return siteRoot() & sep() & "__subscribe";
 	}
 
 	/**
@@ -1498,12 +1524,12 @@ component accessors="true" singleton threadSafe {
 		required string token,
 		boolean ssl = getRequestContext().isSSL()
 	){
-		var xehUnsubscribe = siteRoot() & sep() & "__unsubscribe/#arguments.token#";
-		return getRequestContext().buildLink( to = xehUnsubscribe, ssl = arguments.ssl );
+		return siteRoot() & sep() & "__unsubscribe/#arguments.token#";
 	}
 
 	/**
 	 * Link to a specific blog entry's page
+	 *
 	 * @entry The entry to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML bu you can pass pdf,print or doc.
@@ -1515,15 +1541,21 @@ component accessors="true" singleton threadSafe {
 	){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+
 		if ( isSimpleValue( arguments.entry ) ) {
-			return linkEntrywithslug( arguments.entry, arguments.ssl );
+			return linkEntrywithslug(
+				arguments.entry,
+				arguments.ssl,
+				arguments.format
+			);
 		}
-		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.entry.getSlug()#";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl ) & outputFormat;
+
+		return linkBlog( entry.getSiteId() ) & sep() & arguments.entry.getSlug() & outputFormat;
 	}
 
 	/**
 	 * Link to a specific entry's page using a slug only
+	 *
 	 * @slug The entry slug to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML bu you can pass pdf,print or doc.
@@ -1535,13 +1567,15 @@ component accessors="true" singleton threadSafe {
 	){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		// Cleanup
 		arguments.slug   = reReplace( arguments.slug, "^/", "" );
-		var xeh          = siteRoot() & sep() & "#getBlogEntryPoint()#.#arguments.slug#";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl ) & outputFormat;
+		// link
+		return linkBlog() & sep() & arguments.slug & outputFormat;
 	}
 
 	/**
 	 * Link to a specific content object
+	 *
 	 * @content The content object to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML but you can pass pdf,print or doc.
@@ -1569,9 +1603,12 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to a specific page
+	 *
 	 * @page The page to link to. This can be a simple value or a page object
 	 * @ssl	Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML but you can pass pdf,print or doc.
+	 *
+	 * @return The link to this page
 	 */
 	function linkPage(
 		required page,
@@ -1580,6 +1617,7 @@ component accessors="true" singleton threadSafe {
 	){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+
 		// link directly or with slug
 		if ( isSimpleValue( arguments.page ) ) {
 			return linkPageWithSlug(
@@ -1588,15 +1626,18 @@ component accessors="true" singleton threadSafe {
 				arguments.format
 			);
 		}
-		if ( arguments.page.getSlug() eq getHomePage() ) {
-			return linkHome();
+
+		// Is this page the home page
+		if ( arguments.page.isHomePage() ) {
+			return linkHome( arguments.page.getSiteId() );
 		}
-		var xeh = siteRoot() & sep() & arguments.page.getSlug();
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl ) & outputFormat;
+
+		return siteRoot( arguments.page.getSiteId() ) & sep() & arguments.page.getSlug() & outputFormat;
 	}
 
 	/**
 	 * Link to a specific page using a slug only
+	 *
 	 * @slug The page slug to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML bu you can pass pdf,print or doc.
@@ -1608,16 +1649,19 @@ component accessors="true" singleton threadSafe {
 	){
 		// format?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
+		// cleanup
 		arguments.slug   = reReplace( arguments.slug, "^/", "" );
+		// homepage discovery
 		if ( arguments.slug eq getHomePage() ) {
 			return linkHome();
 		}
-		var xeh = siteRoot() & sep() & "#arguments.slug#";
-		return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl ) & outputFormat;
+
+		return siteRoot() & sep() & arguments.slug & outputFormat;
 	}
 
 	/**
 	 * Create a link to a specific comment in a page or in an entry
+	 *
 	 * @comment The comment to link to
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
@@ -1628,8 +1672,8 @@ component accessors="true" singleton threadSafe {
 		} else {
 			xeh = linkEntry( arguments.comment.getRelatedContent(), arguments.ssl );
 		}
-		xeh &= "##comment_#arguments.comment.getCommentID()#";
-		return xeh;
+
+		return xeh &= "##comment_#arguments.comment.getCommentID()#";
 	}
 
 	/**
@@ -1644,8 +1688,7 @@ component accessors="true" singleton threadSafe {
 		} else {
 			xeh = linkEntry( arguments.content, arguments.ssl );
 		}
-		xeh &= "##comments";
-		return xeh;
+		return xeh &= "##comments";
 	}
 
 	/**
@@ -1658,8 +1701,7 @@ component accessors="true" singleton threadSafe {
 	 */
 	function linkCommentPost( required content, boolean ssl = getRequestContext().isSSL() ){
 		if ( arguments.content.getContentType() eq "page" ) {
-			var xeh = siteRoot() & sep() & "__pageCommentPost";
-			return getRequestContext().buildLink( to = xeh, ssl = arguments.ssl );
+			return siteRoot() & sep() & "__pageCommentPost";
 		}
 
 		return linkEntry( arguments.content, arguments.ssl ) & "/commentPost";

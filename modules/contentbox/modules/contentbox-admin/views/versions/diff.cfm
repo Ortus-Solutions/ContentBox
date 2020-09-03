@@ -8,7 +8,7 @@
                 <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="diffTitle">
-                	<i class="fa fa-clock-o fa-lg"></i>
+                	<i class="fas fa-history fa-lg"></i>
 					Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
 				</h4>
             </div>
@@ -27,7 +27,7 @@
 						<td><strong>Author</strong></td>
 						<td><a href="mailto:#prc.oldContent.getAuthorEmail()#">#prc.oldContent.getAuthorName()#</a></td>
 						<td><a href="mailto:#prc.currentContent.getAuthorEmail()#">#prc.currentContent.getAuthorName()#</a></td>
-						
+
 					</tr>
 					<tr>
 						<td><strong>Created Date</strong></td>
@@ -76,7 +76,7 @@
 										</cfif>
 									</div>
 								</td>
-								
+
 								<!--- Right --->
 								<td class="linenum"><cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif></td>
 								<td width="50%" class="code#codeCSS#">

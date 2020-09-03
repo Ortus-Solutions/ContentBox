@@ -13,7 +13,7 @@
 			<div class="modal-header">
 				<!--if dismissable-->
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title" id="importTitle"><i class="fa fa-copy"></i> #args.title#</h4>
+				<h4 class="modal-title" id="importTitle"><i class="far fa-clone"></i> #args.title#</h4>
 			</div>
 
 			#html.startForm(

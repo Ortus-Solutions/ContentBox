@@ -34,7 +34,7 @@ component extends="baseHandler" {
 		prc.xehImportAll  = "#prc.cbAdminEntryPoint#.sites.importAll";
 
 		// get content pieces
-		prc.sites = siteService.getAll( sortOrder = "name asc" );
+		prc.sites = variables.siteService.getAll( sortOrder = "name asc" );
 
 		// tab
 		prc.tabSystem_sites = true;
@@ -52,11 +52,11 @@ component extends="baseHandler" {
 		prc.tabSystem_sites = true;
 
 		// get new or persisted
-		prc.site   = siteService.get( event.getValue( "siteId", 0 ) );
+		prc.site   = variables.siteService.get( event.getValue( "siteId", 0 ) );
 		// Get all registered themes
-		prc.themes = themeService.getThemes();
+		prc.themes = variables.themeService.getThemes();
 		// pages
-		prc.pages  = pageService.search(
+		prc.pages  = variables.pageService.search(
 			sortOrder   = "slug asc",
 			isPublished = true,
 			siteId      = prc.site.getSiteId()
@@ -81,7 +81,9 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_preSiteSave", { site : oSite, siteId : rc.siteId } );
 			// save rule
-			siteService.save( oSite );
+			variables.siteService.save( oSite );
+			// flush cache to rebuild site settings
+			variables.settingService.flushSettingsCache();
 			// announce event
 			announce( "cbadmin_postSiteSave", { site : oSite } );
 			// Message

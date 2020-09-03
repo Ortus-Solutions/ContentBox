@@ -59,7 +59,7 @@
                             </li>
                             <li>
 								<a href="##editor_options" data-toggle="tab">
-									<i class="fa fa-edit fa-lg"></i> Editor Options
+									<i class="far fa-keyboard fa-lg"></i> Editor Options
 								</a>
                             </li>
                             <li>

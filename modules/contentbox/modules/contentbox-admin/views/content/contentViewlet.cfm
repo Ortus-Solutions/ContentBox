@@ -82,7 +82,7 @@
 			<cfif args.showPublishedStatus>
 			<td class="text-center">
 				<cfif thisContent.isExpired()>
-					<i 	class="fa fa-clock-o fa-lg textRed"
+					<i 	class="fas fa-history fa-lg textRed"
 						title="Content has expired on (#thisContent.getDisplayExpireDate()#)"></i>
 					<span class="hidden">expired</span>
 				<cfelseif thisContent.isPublishedInFuture()>
@@ -123,14 +123,14 @@
 							target="_blank"
 							title="View in Site"
 						>
-							<i class="fa fa-eye fa-lg"></i>
+							<i class="far fa-eye fa-lg"></i>
 						</a>
 					<cfelse>
 						<a 	class="btn btn-primary btn-sm"
 							href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#"
 							title="Edit Page"
 						>
-							<i class="fa fa-edit fa-lg"></i>
+							<i class="far fa-keyboard fa-lg"></i>
 						</a>
 					</cfif>
 			    </div>

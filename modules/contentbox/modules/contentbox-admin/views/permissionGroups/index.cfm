@@ -63,12 +63,12 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (linkto = prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-download"></i> Export All as JSON
+														<i class="fas fa-file-export"></i> Export All as JSON
 													</a>
 												</li>
 												<li>
 													<a href="#event.buildLink( linkto = prc.xehExportAll )#.xml" target="_blank">
-														<i class="fa fa-download"></i> Export All as XML
+														<i class="fas fa-file-export"></i> Export All as XML
 													</a>
 												</li>
 											</cfif>
@@ -144,7 +144,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
-											<i class="fa fa-cogs fa-lg"></i>
+											<i class="fas fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
@@ -166,7 +166,7 @@
 											   			'#HTMLEditFormat( jsstringFormat( group.getName() ) )#',
 											   			'#HTMLEditFormat( jsstringFormat( group.getDescription() ) )#')"
 											   		>
-											   			<i class="fa fa-edit fa-lg"></i> Edit
+											   			<i class="far fa-keyboard fa-lg"></i> Edit
 											   		</a>
 											   	</li>
 
@@ -176,14 +176,14 @@
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
-															<i class="fa fa-download"></i> Export as JSON
+															<i class="fas fa-file-export"></i> Export as JSON
 														</a>
 													</li>
 													<li>
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml"
 															target="_blank"
 														>
-															<i class="fa fa-download"></i> Export as XML
+															<i class="fas fa-file-export"></i> Export as XML
 														</a>
 													</li>
 												</cfif>

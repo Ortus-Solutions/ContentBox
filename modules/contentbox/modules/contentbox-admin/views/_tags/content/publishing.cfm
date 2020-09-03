@@ -1,17 +1,17 @@
 <cfoutput>
     <div class="#args.content.getIsPublished() ? '' : 'selected'#">
-        
+
         <!--- is Published --->
         #html.hiddenField( name="isPublished", bind=args.content )#
 
         <!--- Publishing Bar --->
         <div id="publishingBar" style="display: none;" class="well well-sm">
 
-            <h4><i class="fa fa-calendar"></i> Publishing Details</h4> 
+            <h4><i class="fa fa-calendar"></i> Publishing Details</h4>
 
             <!--- publish date --->
             <div class="form-group">
-                
+
                 #html.label(
                     class       = "control-label",
                     field       = "publishedDate",
@@ -21,11 +21,11 @@
                 <div class="controls row">
                     <div class="col-md-6">
                         <div class="input-group">
-                            
+
                             #html.inputField(
-                                size    = "9", 
+                                size    = "9",
                                 name    = "publishedDate",
-                                value   = args.content.getPublishedDateForEditor(), 
+                                value   = args.content.getPublishedDateForEditor(),
                                 class   = "form-control datepicker"
                             )#
 
@@ -48,7 +48,7 @@
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
                             <input type="text" class="form-control inline" value="#theTime#" name="publishedTime">
                             <span class="input-group-addon">
-                                <span class="fa fa-clock-o"></span>
+                                <span class="fas fa-history"></span>
                             </span>
                         </div>
                     </div>
@@ -57,17 +57,17 @@
 
             <!--- expire date --->
             <div class="form-group">
-                
+
                 #html.label( class="control-label", field="expireDate", content="Expiration Date" )#
 
                 <div class="controls row">
                     <div class="col-md-6">
                         <div class="input-group">
-                            
+
                             #html.inputField(
-                                size    = "9", 
+                                size    = "9",
                                 name    = "expireDate",
-                                value   = args.content.getExpireDateForEditor(), 
+                                value   = args.content.getExpireDateForEditor(),
                                 class   = "form-control datepicker"
                             )#
 
@@ -76,7 +76,7 @@
                             </span>
                         </div>
                     </div>
-                   
+
                     <cfscript>
                         theTime = "";
                         hour = prc.ckHelper.ckHour( args.content.getExpireDateForEditor(showTime=true) );
@@ -90,12 +90,12 @@
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
                             <input type="text" class="form-control inline" value="#theTime#" name="expireTime">
                             <span class="input-group-addon">
-                                <span class="fa fa-clock-o"></span>
+                                <span class="fas fa-history"></span>
                             </span>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
 
             <!--- Changelog --->
             #html.textField(
@@ -127,7 +127,7 @@
             </div>
 
         </div>
-    
+
         <!--- Action Bar --->
         <div class="actionBar" id="actionBar">
 
@@ -140,7 +140,7 @@
                         <cfelse>
                             <i class="fa fa-thumbs-up"></i> This content is published!
                         </cfif>
-                    </div>                
+                    </div>
                 <cfelse>
                     <div class="alert alert-warning">
                         <i class="fa fa-exclamation-triangle"></i> This content is in draft!
@@ -150,7 +150,7 @@
             </cfif>
 
             <div class="btn-group">
-                
+
                 <button type="button" class="btn btn-info" onclick="quickSave()" title="Save and continue editing">
                     Save
                 </button>
@@ -166,7 +166,7 @@
             </div>
 
             <div class="btn-group">
-                <button class="btn btn-success" 
+                <button class="btn btn-success"
                         onclick="togglePublishingBar()"
                         type="button"
                         title="Open Publishing Details"

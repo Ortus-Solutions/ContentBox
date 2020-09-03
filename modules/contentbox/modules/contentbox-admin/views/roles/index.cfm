@@ -49,8 +49,8 @@
 								    		<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 											</cfif>
 								    	</ul>
 								    </div>
@@ -102,7 +102,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-											<i class="fa fa-cogs fa-lg"></i>
+											<i class="fas fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
 											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
@@ -113,12 +113,12 @@
 												<!--- Edit Command --->
 												<li><a href="javascript:edit('#role.getRoleID()#',
 											   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
-											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
 
 												<!--- Export --->
 												<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
-													<li><a href="#event.buildLink(to=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-													<li><a href="#event.buildLink(to=prc.xehExport)#/roleID/#role.getRoleID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+													<li><a href="#event.buildLink(to=prc.xehExport)#/roleID/#role.getRoleID()#.json" target="_blank"><i class="fas fa-file-export"></i> Export as JSON</a></li>
+													<li><a href="#event.buildLink(to=prc.xehExport)#/roleID/#role.getRoleID()#.xml" target="_blank"><i class="fas fa-file-export"></i> Export as XML</a></li>
 												</cfif>
 											</cfif>
 								    	</ul>

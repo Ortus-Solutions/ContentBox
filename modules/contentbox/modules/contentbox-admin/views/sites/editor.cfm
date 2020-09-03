@@ -158,15 +158,22 @@
 									<label class="control-label" for="homePage">Home Page:</label>
 									<div class="controls">
 
-										<p>Choose the latest blog entries or a ContentBox page for the home page of your site.</p>
+										<p>
+											Choose what to show on the homepage of your site:
+										</p>
 
 										<select name="homePage" id="homePage" class="form-control">
-											<option
-												value="cbBlog"
-												<cfif prc.site.getHomePage() eq "cbBlog">selected="selected"</cfif>
-											>
-												Latest Blog Entries
-											</option>
+											<!--- Only show blog if this is a new site or the blog is enabled --->
+											<cfif !prc.site.isLoaded() || prc.site.getIsBlogEnabled()>
+												<option
+													value="cbBlog"
+													<cfif prc.site.getHomePage() eq "cbBlog">selected="selected"</cfif>
+												>
+													Latest Blog Entries
+												</option>
+											</cfif>
+
+											<!--- The pages list --->
 											<cfloop array="#prc.pages#" index="thisPage" >
 												<option
 													value="#thispage.getSlug()#"

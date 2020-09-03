@@ -69,11 +69,11 @@
 								    			</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehPageExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehPageExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink (to=prc.xehPageExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( to=prc.xehPageExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 											</cfif>
 											<li>
-												<a href="javascript:resetBulkHits()"><i class="fa fa-refresh"></i> Reset Hits Selected</a>
+												<a href="javascript:resetBulkHits()"><i class="fas fa-recycle"></i> Reset Hits Selected</a>
 											</li>
 											<li>
 												<a href="javascript:contentShowAll()">

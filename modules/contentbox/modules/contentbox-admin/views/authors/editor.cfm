@@ -43,7 +43,7 @@
                     <ul class="nav nav-tabs">
 
                     	<li class="active">
-                    		<a href="##details" data-toggle="tab"><i class="fa fa-eye"></i> Details</a>
+                    		<a href="##details" data-toggle="tab"><i class="far fa-eye"></i> Details</a>
                     	</li>
 						<li>
 							<a href="##change-password" data-toggle="tab"><i class="fa fa-key"></i> Password</a>
@@ -58,7 +58,7 @@
 						</li>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 						<li>
-							<a href="##latestEdits" data-toggle="tab"><i class="fa fa-clock-o"></i> Latest Edits</a>
+							<a href="##latestEdits" data-toggle="tab"><i class="fas fa-history"></i> Latest Edits</a>
 						</li>
 						<li>
 							<a href="##latestDrafts" data-toggle="tab"><i class="fa fa-pencil"></i> Latest Drafts</a>

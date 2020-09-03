@@ -91,12 +91,12 @@
 		<cfif prc.oCurrentAuthor.checkPermission( "MODULES_ADMIN" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
-			        <h3 class="panel-title"><i class="fa fa-cogs"></i> Module Admin Actions</h3>
+			        <h3 class="panel-title"><i class="fas fa-ellipsis-v"></i> Module Admin Actions</h3>
 			    </div>
 			    <div class="panel-body">
 			    	<div class="btn-group text-center">
 						<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivate + Rescan" class="btn btn-info"><i class="fa fa-hdd-o"></i> Reset</a>
-						<a href="#event.buildLink(prc.xehModuleRescan)#" title="Scans For New Modules" class="btn btn-info"><i class="fa fa-refresh"></i> Rescan</a>
+						<a href="#event.buildLink(prc.xehModuleRescan)#" title="Scans For New Modules" class="btn btn-info"><i class="fas fa-recycle"></i> Rescan</a>
 					</div>
 			    </div>
 			</div>

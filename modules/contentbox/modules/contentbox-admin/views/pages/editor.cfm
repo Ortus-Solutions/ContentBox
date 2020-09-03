@@ -13,7 +13,7 @@
             <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
             <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
             <cfif prc.page.isLoaded()>
-                <li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="fa fa-eye"></i> Open In Site</a></li>
+                <li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="far fa-eye"></i> Open In Site</a></li>
             </cfif>
         </ul>
     </div>
@@ -42,7 +42,7 @@
 
                             <li role="presentation" class="active">
                                 <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-                                    <i class="fa fa-edit"></i> Editor
+                                    <i class="far fa-keyboard"></i> Editor
                                 </a>
                             </li>
 
@@ -355,7 +355,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                            <i class="fa fa-sitemap fa-lg"></i> Related Content
+                                            <i class="fas fa-sitemap fa-lg"></i> Related Content
                                         </a>
 
                                     </h4>
@@ -399,7 +399,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                            <i class="fa fa-cogs fa-lg"></i> Modifiers
+                                            <i class="fas fa-ellipsis-v fa-lg"></i> Modifiers
                                         </a>
                                     </h4>
                                 </div>

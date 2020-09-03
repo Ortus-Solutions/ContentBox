@@ -35,7 +35,7 @@
 				</td>
 				<td class="text-center">
 					<cfif page.isExpired()>
-						<i class="fa fa-clock-o fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
+						<i class="fas fa-history fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif page.isPublishedInFuture()>
 						<i class="fa fa-fighter-jet fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
@@ -53,19 +53,19 @@
 					<!--- Page Actions --->
 					<div class="btn-group btn-xs">
 				    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
-							<i class="fa fa-cogs fa-lg"></i>
+							<i class="fas fa-ellipsis-v fa-lg"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
 				    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR" ) OR prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Edit Command --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
 							<!--- Create Child --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fa fa-sitemap fa-lg"></i> Create Child</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
 							</cfif>
 							<!--- History Command --->
-							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
+							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 							<!--- View in Site --->
-							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="fa fa-eye fa-lg"></i> View Page</a></li>
+							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="far fa-eye fa-lg"></i> View Page</a></li>
 				    	</ul>
 				    </div>
 				</td>
@@ -73,7 +73,7 @@
 			</cfloop>
 		</tbody>
 	</table>
-	
+
 	<!--- Paging --->
 	<cfif prc.pagePager_pagination>
 		#prc.pagepager_oPaging.renderit(foundRows=prc.pager_pagesCount, link=prc.pagePager_pagingLink, asList=true)#

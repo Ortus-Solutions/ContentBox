@@ -114,13 +114,13 @@
 										</cfif>
 										<div class="btn-group">
 											<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-												<i class="fa fa-cogs fa-lg"></i>
+												<i class="fas fa-ellipsis-v fa-lg"></i>
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">
 									    		<!--- Edit Command --->
 												<li>
 													<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment">
-														<i class="fa fa-edit fa-lg"></i> Edit
+														<i class="far fa-keyboard fa-lg"></i> Edit
 													</a>
 												</li>
 												<li><!--- Delete Command --->
@@ -130,7 +130,7 @@
 												</li>
 												<li>
 													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
-														<i class="fa fa-eye fa-lg"></i> View In Site
+														<i class="far fa-eye fa-lg"></i> View In Site
 													</a>
 												</li>
 									    	</ul>

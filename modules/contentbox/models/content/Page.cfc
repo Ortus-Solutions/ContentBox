@@ -6,13 +6,13 @@
 * I am a cms page entity that totally rocks
 */
 component 	persistent="true"
-			entityname="cbPage"
-			table="cb_page"
-			batchsize="25"
-			cachename="cbPage"
-			cacheuse="read-write"
-			extends="BaseContent"
-			joinColumn="contentID"
+			entityname        ="cbPage"
+			table             ="cb_page"
+			batchsize         ="25"
+			cachename         ="cbPage"
+			cacheuse          ="read-write"
+			extends           ="BaseContent"
+			joinColumn        ="contentID"
 			discriminatorValue="Page"{
 
 	/* *********************************************************************
@@ -21,12 +21,12 @@ component 	persistent="true"
 
 	property 	name="layout"
 				notnull="false"
-				length="200"
+				length ="200"
 				default="";
 
 	property 	name="mobileLayout"
 				notnull="false"
-				length="200"
+				length ="200"
 				default="";
 
 	property 	name="order"
@@ -38,19 +38,19 @@ component 	persistent="true"
 				notnull="true"
 				ormtype="boolean"
 				default="true"
-				index="idx_showInMenu";
+				index  ="idx_showInMenu";
 
 	property 	name="excerpt"
 				notnull="false"
 				ormtype="text"
 				default=""
-				length="8000";
+				length ="8000";
 
 	property 	name="SSLOnly"
 				notnull="true"
 				ormtype="boolean"
 				default="false"
-				index="idx_ssl";
+				index  ="idx_ssl";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
@@ -63,9 +63,9 @@ component 	persistent="true"
 	**							CONSTRAINTS
 	********************************************************************* */
 
-	this.constraints[ "layout" ]		= { required = false, size = "1..200" };
-	this.constraints[ "mobileLayout" ]	= { required = false, size = "1..200" };
-	this.constraints[ "order" ]			= { required = true, type="numeric" };
+	this.constraints[ "layout" ]      = { required = false, size = "1..200" };
+	this.constraints[ "mobileLayout" ]= { required = false, size = "1..200" };
+	this.constraints[ "order" ]       = { required = true, type="numeric" };
 
 	/* *********************************************************************
 	**							CONSTRUCTOR
@@ -77,18 +77,18 @@ component 	persistent="true"
 	function init(){
 		super.init();
 
-		categories 		= [];
-		customFields	= [];
-		renderedContent = "";
-		renderedExcerpt	= "";
-		allowComments 	= false;
-		createdDate		= now();
-		layout 			= "pages";
-		mobileLayout	= "";
-		contentType		= "Page";
-		order 			= 0;
-		showInMenu 		= true;
-		SSLOnly			= false;
+		categories     = [];
+		customFields   = [];
+		renderedContent= "";
+		renderedExcerpt= "";
+		allowComments  = false;
+		createdDate    = now();
+		layout         = "pages";
+		mobileLayout   = "";
+		contentType    = "Page";
+		order          = 0;
+		showInMenu     = true;
+		SSLOnly        = false;
 
 		// INHERITANCE LAYOUT STATIC
 		LAYOUT_INHERITANCE_KEY = "-inherit-";
@@ -116,11 +116,11 @@ component 	persistent="true"
 			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len( renderedExcerpt ) ){
 					// render excerpt out, prepare builder
-					var b = createObject( "java","java.lang.StringBuilder" ).init( getExcerpt() );
+					var b     = createObject( "java","java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					var iData = {
-						builder = b,
-						content	= this
+						builder= b,
+						content= this
 					};
 					interceptorService.announce( "cb_onContentRendering", iData);
 					// store processed content
@@ -144,13 +144,13 @@ component 	persistent="true"
 	* @showRelatedContent Show related Content in memento or not
 	*/
 	struct function getResponseMemento(
-		required array slugCache=[],
-		boolean showAuthor=true,
-		boolean showComments=true,
-		boolean showCustomFields=true,
-		boolean showParent=true,
-		boolean showChildren=true,
-		boolean showCategories=true,
+		required array slugCache  =[],
+		boolean showAuthor        =true,
+		boolean showComments      =true,
+		boolean showCustomFields  =true,
+		boolean showParent        =true,
+		boolean showChildren      =true,
+		boolean showCategories    =true,
 		boolean showRelatedContent=true
 	){
 		arguments.properties = [
@@ -178,17 +178,17 @@ component 	persistent="true"
 	* @showStats Show stats in memento or not
 	*/
 	function getMemento(
-		required array slugCache=[],
-		counter=0,
-		boolean showAuthor=true,
-		boolean showComments=true,
-		boolean showCustomFields=true,
+		required array slugCache   =[],
+		counter                    =0,
+		boolean showAuthor         =true,
+		boolean showComments       =true,
+		boolean showCustomFields   =true,
 		boolean showContentVersions=true,
-		boolean showParent=true,
-		boolean showChildren=true,
-		boolean showCategories=true,
-		boolean showRelatedContent=true,
-		boolean showStats=true
+		boolean showParent         =true,
+		boolean showChildren       =true,
+		boolean showCategories     =true,
+		boolean showRelatedContent =true,
+		boolean showStats          =true
 	){
 		arguments.properties 	= [
 			"layout",
@@ -271,17 +271,27 @@ component 	persistent="true"
 		var errors = [];
 
 		// limits
-		HTMLKeyWords 		= left( HTMLKeywords, 160 );
-		HTMLDescription 	= left( HTMLDescription, 160 );
-		passwordProtection 	= left( passwordProtection, 100 );
-		title				= left( title, 200 );
-		slug				= left( slug, 200 );
+		HTMLKeyWords      = left( HTMLKeywords, 160 );
+		HTMLDescription   = left( HTMLDescription, 160 );
+		passwordProtection= left( passwordProtection, 100 );
+		title             = left( title, 200 );
+		slug              = left( slug, 200 );
 
 		// Required
 		if( !len( title ) ){ arrayAppend( errors, "Title is required" ); }
 		if( !len( layout ) ){ arrayAppend( errors, "Layout is required" ); }
 
 		return errors;
+	}
+
+	/**
+	 * Verifies if the current page is the current site homepage
+	 */
+	boolean function isHomepage(){
+		if( !hasSite() ){
+			return false;
+		}
+		return ( getSite().getHomePage() eq getSlug() );
 	}
 
 }

@@ -1,7 +1,7 @@
 <cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-download fa-lg"></i> Export Tools</h1>
+		<h1 class="h1"><i class="fas fa-file-export fa-lg"></i> Export Tools</h1>
 	</div>
 </div>
 
@@ -428,7 +428,7 @@
 						)#
 						#html.button(
 							type    = "button",
-							value   = "<i class='fa fa-download' id='export-icon'></i> Start Export",
+							value   = "<i class='fas fa-file-export' id='export-icon'></i> Start Export",
 							class   = "btn btn-danger btn-lg",
 							onclick = "doExport()"
 						)#
@@ -461,7 +461,7 @@
 					<div class="actionBar" id="siteGeneratorBar">
 						#html.button(
 							type    = "button",
-							value   = "<i class='fa fa-download' id='export-icon'></i> Start Generation",
+							value   = "<i class='fas fa-file-export' id='export-icon'></i> Start Generation",
 							class   = "btn btn-danger btn-lg",
 							onclick = "doSiteExport()"
 						)#

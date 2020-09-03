@@ -60,7 +60,7 @@
 							#setting.getIsCore() ? 'true' : 'false'#
 						)"
 						title="Edit Setting">
-						<i class="fa fa-edit fa-lg"></i>
+						<i class="far fa-keyboard fa-lg"></i>
 					</a>
 
 					<!--- Delete Command --->

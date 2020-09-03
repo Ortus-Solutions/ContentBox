@@ -44,7 +44,7 @@
 			</td>
 			<td class="text-center">
 				<cfif entry.isExpired()>
-					<i class="fa fa-clock-o fa-lg textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
+					<i class="fas fa-history fa-lg textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
 					<span class="hidden">expired</span>
 				<cfelseif entry.isPublishedInFuture()>
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
@@ -94,12 +94,12 @@
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
-						<i class="fa fa-cogs fa-lg"></i>
+						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
-						<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="fa fa-copy fa-lg"></i> Clone</a></li>
+						<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="far fa-clone fa-lg"></i> Clone</a></li>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
@@ -107,19 +107,19 @@
 						</li>
 						</cfif>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
 						</cfif>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
-						<li><a href="#event.buildLink(to=prc.xehEntryExport)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-						<li><a href="#event.buildLink(to=prc.xehEntryExport)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+						<li><a href="#event.buildLink(to=prc.xehEntryExport)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="fas fa-file-export"></i> Export as JSON</a></li>
+						<li><a href="#event.buildLink(to=prc.xehEntryExport)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="fas fa-file-export"></i> Export as XML</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 						<!-- Reset hits --->
-						<li><a href="javascript:resetHits( '#entry.getContentID()#' )"><i class="fa fa-refresh fa-lg"></i> Reset Hits</a></li>
+						<li><a href="javascript:resetHits( '#entry.getContentID()#' )"><i class="fas fa-recycle fa-lg"></i> Reset Hits</a></li>
 						<!--- View in Site --->
-						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="fa fa-eye fa-lg"></i> Open In Site</a></li>
+						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="far fa-eye fa-lg"></i> Open In Site</a></li>
 			    	</ul>
 			    </div>
 

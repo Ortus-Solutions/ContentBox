@@ -77,12 +77,12 @@
 											<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 											<li><a href="#event.buildLink(prc.xehResetRules)#"
-												data-title="<i class='fa fa-refresh'></i> Really Reset All Rules?" class="confirmIt"
+												data-title="<i class='fas fa-recycle'></i> Really Reset All Rules?" class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
 												<i class="fa fa-eraser"></i> Reset Rules
 												</a>

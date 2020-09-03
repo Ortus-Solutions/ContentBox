@@ -629,7 +629,7 @@ component accessors="true" threadSafe singleton{
 
 					// write out field description
 					if( len( thisSettingMD.fieldDescription ) ){
-						writeOutput( '<div class="paddingBottom5">' & thisSettingMD.fieldDescription & '</div>' );
+						writeOutput( '<div class="pb5">' & thisSettingMD.fieldDescription & '</div>' );
 					}
 
     				// write out control

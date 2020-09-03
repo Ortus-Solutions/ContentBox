@@ -251,7 +251,7 @@ component accessors="true" threadSafe singleton {
 			)
 			.addHeaderSubMenu(
 				name    = "updates",
-				label   = "<i class=""fa fa-download""></i> Check for Updates",
+				label   = "<i class=""fas fa-file-export""></i> Check for Updates",
 				href    = variables.buildLink,
 				href_to = xehAutoUpdates
 			)

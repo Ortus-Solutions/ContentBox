@@ -23,7 +23,7 @@
 				<!--- Comment Details --->
 				<fieldset>
 
-					<legend><i class="fa fa-eye fa-lg"></i> Comment Details</legend>
+					<legend><i class="far fa-eye fa-lg"></i> Comment Details</legend>
 
 						<div class="form-group pull-right">
 							#getInstance( "Avatar@cb" ).renderAvatar( email=rc.comment.getAuthorEmail() )#

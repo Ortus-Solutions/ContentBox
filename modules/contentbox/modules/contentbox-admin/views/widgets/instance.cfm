@@ -155,7 +155,7 @@
             <div class="widget-preview col-md-9">
                 <div class="well well-sm">
                     <h4>Widget Preview</h4>
-                    <a href="javascript:void( 0 );" class="widget-preview-refresh btn btn-mini btn-default"><i class="fa fa-refresh"></i> Refresh</a>
+                    <a href="javascript:void( 0 );" class="widget-preview-refresh btn btn-mini btn-default"><i class="fas fa-recycle"></i> Refresh</a>
                 </div>
                 <div id="widget-preview-content" class="widget-preview-content"></div>
             </div>

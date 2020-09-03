@@ -63,7 +63,7 @@
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
-						<i class="fa fa-cogs fa-lg"></i>
+						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
@@ -92,7 +92,7 @@
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">
-									<i class="fa fa-edit fa-lg"></i> Edit
+									<i class="far fa-keyboard fa-lg"></i> Edit
 								</a>
 							</li>
 
@@ -100,12 +100,12 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fa fa-download"></i> Export as JSON
+									<i class="fas fa-file-export"></i> Export as JSON
 								</a>
 							</li>
 							<li>
 								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
-									<i class="fa fa-download"></i> Export as XML
+									<i class="fas fa-file-export"></i> Export as XML
 								</a>
 							</li>
 							<li>

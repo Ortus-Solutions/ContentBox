@@ -1,7 +1,7 @@
 <cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3><i class="fa fa-copy"></i> Import Preview</h3>
+    <h3><i class="far fa-clone"></i> Import Preview</h3>
 </div>
 <cfif not structKeyExists( prc, "contents" )>
     <div class="modal-body" id="modal-body">

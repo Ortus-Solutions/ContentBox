@@ -18,7 +18,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<div class="btn-group btn-group-sm" role="group">
 		  <a href="javascript:fbRefresh()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "refresh@fb" )#">
-		  	<i class="fa fa-refresh"></i>
+		  	<i class="fas fa-recycle"></i>
 		  </a>
 		  <a href="javascript:fbDrilldown()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "home@fb" )#">
 		  	<i class="fa fa-home"></i>
@@ -39,7 +39,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		  	<i class="fa fa-upload"></i>
 		  </a>
 		  <a onclick="javascript:fbDownload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "download@fb" )#">
-		  	<i class="fa fa-download"></i>
+		  	<i class="fas fa-file-export"></i>
 		  </a>
 		  <a onclick="javascript:fbQuickView()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "quickview@fb" )#">
 		  	<i class="fa fa-camera"></i>

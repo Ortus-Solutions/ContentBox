@@ -40,7 +40,7 @@
 
                         <li role="presentation" class="active">
                             <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-                                <i class="fa fa-edit"></i> Editor
+                                <i class="far fa-keyboard"></i> Editor
                             </a>
                         </li>
 
@@ -184,7 +184,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap fa-lg"></i> Related Content
+                                        <i class="fas fa-sitemap fa-lg"></i> Related Content
                                     </a>
                                 </h4>
                             </div>
@@ -225,7 +225,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fa fa-cogs fa-lg"></i> Modifiers
+                                        <i class="fas fa-ellipsis-v fa-lg"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -234,7 +234,7 @@
 
 									<!--- Parent Content --->
 									<div class="form-group">
-										<i class="fa fa-sitemap fa-lg"></i>
+										<i class="fas fa-sitemap fa-lg"></i>
 		         						#html.label( field="parentContent",content='Parent:' )#
 		         						<select name="parentContent" id="parentContent" class="form-control input-sm">
 		         							<option value="null">No Parent</option>

@@ -32,18 +32,18 @@
 
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <i class="fa fa-download"></i> Export
+							  <i class="fas fa-file-export"></i> Export
 							  <span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										<i class="fa fa-download"></i> Export as JSON
+										<i class="fas fa-file-export"></i> Export as JSON
 									</a>
 								</li>
 								<li>
 									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
-										<i class="fa fa-download"></i> Export as XML
+										<i class="fas fa-file-export"></i> Export as XML
 									</a>
 								</li>
 							</ul>

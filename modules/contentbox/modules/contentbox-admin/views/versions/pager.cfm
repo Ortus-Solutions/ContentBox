@@ -16,7 +16,7 @@
 		<button class="btn btn-sm btn-danger" onclick="return versionsPagerDiff();"><i class="fa fa-exchange"></i> Compare Versions</button>
 		</cfif>
 		<cfif prc.versionsPager_viewFullHistory>
-		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="fa fa-clock-o"></i> Full History</button>
+		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="fas fa-history"></i> Full History</button>
 		</cfif>
 	</div>
 
@@ -76,7 +76,7 @@
 						<!--- ROLLBACK BUTTON --->
 						<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
 						   class="confirmIt"
-						   data-message="Do you really want to rollback to this version?"><i class="fa fa-refresh fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
+						   data-message="Do you really want to rollback to this version?"><i class="fas fa-recycle fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
 						</cfif>
 
 						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>

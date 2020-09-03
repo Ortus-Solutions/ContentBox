@@ -33,7 +33,7 @@
 			</td>
 			<td class="text-center">
 				<cfif content.isExpired()>
-					<i class="fa fa-clock-o fa-lg textRed" title="Content has expired!"></i>
+					<i class="fas fa-history fa-lg textRed" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif content.isPublishedInFuture()>
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future!"></i>
@@ -50,17 +50,17 @@
 				<!--- content Actions --->
 				<div class="btn-group btn-group-xs">
 			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
-						<i class="fa fa-cogs fa-lg"></i>
+						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
 						<!--- Create Child --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fa fa-sitemap fa-lg"></i> Create Child</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 			    	</ul>
 			    </div>
 			</td>

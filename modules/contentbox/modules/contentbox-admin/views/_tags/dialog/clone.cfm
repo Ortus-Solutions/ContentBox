@@ -6,7 +6,7 @@
             <div class="modal-header">
                 <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="cloneTitle"><i class="fa fa-copy"></i> #args.title#</h4>
+                <h4 class="modal-title" id="cloneTitle"><i class="far fa-clone"></i> #args.title#</h4>
             </div>
             <div class="modal-body" id="remoteModelContent">
                 <!--body-->
@@ -15,10 +15,10 @@
                         <p>#args.infoMsg#</p>
                         #html.hiddenField(name="contentID" )#
                         #html.textfield(
-                            name="title", 
-                            label="#args.titleLabel#", 
-                            class="form-control", 
-                            required="required", 
+                            name="title",
+                            label="#args.titleLabel#",
+                            class="form-control",
+                            required="required",
                             size="50",
                             wrapper="div class=controls",
                             labelClass="control-label",
@@ -27,9 +27,9 @@
                         <label for="contentStatus">#args.publishLabel#</label>
                         <small>#args.publishInfo#</small><br>
                         #html.select(
-                            options="true,false", 
-                            name="#args.statusName#", 
-                            selectedValue="false", 
+                            options="true,false",
+                            name="#args.statusName#",
+                            selectedValue="false",
                             class="form-control input-sm valid",
                             wrapper="div class=controls",
                             labelClass="control-label",

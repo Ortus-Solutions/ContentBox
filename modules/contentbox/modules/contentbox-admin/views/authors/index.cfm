@@ -54,12 +54,12 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-download"></i> Export All as JSON
+														<i class="fas fa-file-export"></i> Export All as JSON
 													</a>
 												</li>
 												<li>
 													<a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank">
-														<i class="fa fa-download"></i> Export All as XML
+														<i class="fas fa-file-export"></i> Export All as XML
 													</a>
 												</li>
 

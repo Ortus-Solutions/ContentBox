@@ -325,12 +325,29 @@ table.diff {
 .center { text-align:center!important; margin:auto!important; }
 .padding10 { padding:10px; }
 .padding0 { padding:0px; }
-.paddingBottom5 { padding-bottom:5px; }
+
+.pl5{ padding-left: 5px;}
+.pr5{ padding-right: 5px;}
+.pt5{ padding-top: 5px;}
+.pb5{ padding-top: 5px;}
+.pl10{ padding-left: 10px;}
+.pr10{ padding-right: 10px;}
+.pt10{ padding-top: 10px;}
+.pb10{ padding-top: 10px;}
+
 .ml5{ margin-left: 5px;}
 .mr5{ margin-right: 5px;}
+.mt5{ margin-top: 5px;}
+.mb5{ margin-top: 5px;}
+.ml10{ margin-left: 10px;}
+.mr10{ margin-right: 10px;}
+.mt10{ margin-top: 10px;}
+.mb10{ margin-top: 10px;}
+
 .margin10 { margin:10px; }
 .margin0 { margin:0px; }
 .marginTop25{ margin-top:25px; }
+
 .width98{ width: 98%; }
 .width96{ width: 96%; }
 .width95{ width: 95%; }

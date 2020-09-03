@@ -56,7 +56,7 @@
         <!--- Preview Panel --->
         <div class="pull-right">
             <a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-                <i class="fa fa-eye fa-lg"></i>
+                <i class="far fa-eye fa-lg"></i>
             </a>
         </div>
     </div>

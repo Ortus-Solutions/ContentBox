@@ -35,7 +35,7 @@
 			</td>
 			<td class="text-center">
 				<cfif entry.isExpired()>
-					<i class="fa fa-clock-o fa-lg textRed" title="Entry has expired!"></i>
+					<i class="fas fa-history fa-lg textRed" title="Entry has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif entry.isPublishedInFuture()>
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future!"></i>
@@ -54,17 +54,17 @@
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-xs">
 			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
-						<i class="fa fa-cogs fa-lg"></i>
+						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR" ) OR prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fa fa-edit fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fa fa-clock-o fa-lg"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 						<!--- View in Site --->
-						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="fa fa-eye fa-lg"></i> Open In Site</a></li>
+						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="far fa-eye fa-lg"></i> Open In Site</a></li>
 			    	</ul>
 			    </div>
 			</td>

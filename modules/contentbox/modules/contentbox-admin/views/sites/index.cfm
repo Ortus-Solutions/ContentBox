@@ -50,8 +50,8 @@
 											<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 											</cfif>
 										</ul>
 									</div>
@@ -137,7 +137,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 										<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fa fa-cogs fa-lg"></i>
+											<i class="fas fa-ellipsis-v fa-lg"></i>
 										</a>
 										<ul class="dropdown-menu text-left pull-right">
 
@@ -157,7 +157,7 @@
 											<!--- Edit Command --->
 											<li>
 												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getSiteId()#' )#">
-													<i class="fa fa-edit fa-lg"></i> Edit
+													<i class="far fa-keyboard fa-lg"></i> Edit
 												</a>
 											</li>
 
@@ -168,7 +168,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteId/#site.getSiteId()#.json"
 														target="_blank"
 													>
-														<i class="fa fa-download"></i> Export as JSON
+														<i class="fas fa-file-export"></i> Export as JSON
 													</a>
 												</li>
 												<li>
@@ -176,7 +176,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteId/#site.getSiteId()#.xml"
 														target="_blank"
 													>
-														<i class="fa fa-download"></i> Export as XML
+														<i class="fas fa-file-export"></i> Export as XML
 													</a>
 												</li>
 											</cfif>

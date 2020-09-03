@@ -1,14 +1,14 @@
 <cfoutput>
 <fieldset>
-	<legend><i class="fa fa-edit fa-lg"></i> Editor Options</legend>
-		
+	<legend><i class="far fa-keyboard fa-lg"></i> Editor Options</legend>
+
 		<!--- Default Editor --->
 		<div class="form-group">
 			<label class="control-label" for="cb_editors_default">Default Editor:</label>
 			<div class="controls">
 				<small>Choose the default editor that all users will use for pages, blogs, custom HTML, etc.</small><br/>
 				#html.select(
-					name            = "cb_editors_default", 
+					name            = "cb_editors_default",
 					options         = prc.editors,
 					column          = "name",
 					nameColumn      = "displayName",
@@ -16,15 +16,15 @@
 					selectedValue   = prc.cbSettings.cb_editors_default
 				)#
 			</div>
-		</div>  
-		
+		</div>
+
 		<!--- Default Markup --->
 		<div class="form-group">
 			<label class="control-label" for="cb_editors_markup">Default Markup:</label>
 			<div class="controls">
 				<small>Choose the default markup to use for content.</small><br/>
 				#html.select(
-					name            = "cb_editors_markup", 
+					name            = "cb_editors_markup",
 					options         = prc.markups,
 					class           = "form-control input-sm",
 					selectedValue   = prc.cbSettings.cb_editors_markup
@@ -68,7 +68,7 @@
 					rows	= "10"
 				)#
 			</div>
-		</div>  
+		</div>
 
 		<!--- CKEditor Extra Plugins --->
 		<div class="form-group">

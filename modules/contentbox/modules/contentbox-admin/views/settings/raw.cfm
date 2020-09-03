@@ -77,13 +77,13 @@
 												</a>
                                                 <ul class="dropdown-menu">
                                                     <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
-                                                    <li><a href="javascript:flushSettingsCache()"><i class="fa fa-refresh"></i> Flush Settings Cache</a></li>
+                                                    <li><a href="javascript:flushSettingsCache()"><i class="fas fa-recycle"></i> Flush Settings Cache</a></li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
                                                     <li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import Settings</a></li>
                                                     </cfif>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-														<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-														<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
+														<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+														<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 													</cfif>
                                                 </ul>
                                             </div>
@@ -112,7 +112,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title"><i class="fa fa-cogs"></i> Setting Editor</h4>
+                                            <h4 class="modal-title"><i class="fas fa-ellipsis-v"></i> Setting Editor</h4>
                                         </div>
                                         <div class="modal-body">
                                             <!--- Create/Edit form --->

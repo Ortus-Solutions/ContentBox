@@ -30,7 +30,7 @@
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
                         <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
-                            <i class="fa fa-cogs fa-lg"></i>
+                            <i class="fas fa-ellipsis-v fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu text-left pull-right">
                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
@@ -40,12 +40,12 @@
                                 </li>
                                 <!--- Edit Command --->
                                 <li>
-                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fa fa-edit fa-lg"></i> Edit</a>
+                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a>
                                 </li>
                                 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
-                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fa fa-download"></i> Export as JSON</a></li>
-                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fa fa-download"></i> Export as XML</a></li>
+                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fas fa-file-export"></i> Export as JSON</a></li>
+                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fas fa-file-export"></i> Export as XML</a></li>
                                 </cfif>
                             </cfif>
                         </ul>

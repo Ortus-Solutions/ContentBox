@@ -64,7 +64,7 @@
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##download">
-								<i class="fa fa-download fa-lg"></i> #$r( "autoUpdates.downloadUpdate.title@admin" )#
+								<i class="fas fa-file-export fa-lg"></i> #$r( "autoUpdates.downloadUpdate.title@admin" )#
 							</a>
 						</div>
 						<div id="download" class="panel-collapse collapse">
