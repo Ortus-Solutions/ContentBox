@@ -206,38 +206,58 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get an id from a slug of a content object
-	* @slug The slug to search an ID for.
-	*/
-	function getIDBySlug(required any slug){
+	 * Get an id from a slug of a content object
+	 *
+	 * @slug The slug to search an ID for.
+	 * @siteId The site this slug belongs to
+	 *
+	 * @return The id of the content object or empty string if not found
+	 */
+	function getIdBySlug( required any slug, string siteId = "" ){
 		var results = newCriteria()
 			.isEq( "slug", arguments.slug)
-			.withProjections(property="contentID" )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
+			.withProjections( property : "contentID" )
 			.get();
+
 		// verify results
-		if( isNull( results ) ){ return "";}
-		return results;
+		return ( isNull( results ) ? "" : results );
 	}
 
 	/**
-	* Find a published content object by slug and published unpublished flags, if not found it returns
-	* a new content object
-	* @slug The slug to search
-	* @showUnpublished To also show unpublished content, defaults to false.
-	*/
-	function findBySlug(required any slug, required boolean showUnpublished=false){
-		var c = newCriteria();
-		// Override usually for admins
-		if( !showUnpublished ){
-			c.isTrue( "isPublished" )
-				.isLT( "publishedDate", now())
-				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) );
-		}
-		// By criteria now
-		var content = c.isEq( "slug", arguments.slug ).get();
+	 * Find a published content object by slug and published unpublished flags, if not found it returns
+	 * a new content object
+	 *
+	 * @slug The slug to search
+	 * @showUnpublished To also show unpublished content, defaults to false.
+	 * @siteId The site this slug belongs to
+	 *
+	 * @return The content object or a new unpersisted content object
+	 */
+	function findBySlug(
+		required any slug,
+		required boolean showUnpublished=false,
+		string siteId                   = ""
+	){
+		var oContent = newCriteria()
+			.isEq( "slug", arguments.slug )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
+			.when( !showUnpublished, function( c ){
+				c.isTrue( "isPublished" )
+					.isLT( "publishedDate", now() )
+					.$or(
+						c.restrictions.isNull( "expireDate" ),
+						c.restrictions.isGT( "expireDate", now() )
+					);
+			} )
+			.get();
 
 		// return accordingly
-		return ( isNull( content ) || isSimpleValue( content ) ? new() : content );
+		return isNull( oContent ) ? new() : oContent;
 	}
 
 	/**
@@ -246,8 +266,10 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @slug The slug to search for uniqueness
 	 * @contentID Limit the search to the passed contentID usually for updates
 	 * @siteId The site to filter on
+	 *
+	 * @return True if the slug is unique or false if it's already used
 	 */
-	function isSlugUnique( required any slug, any contentID="", string siteId="" ){
+	boolean function isSlugUnique( required any slug, any contentID="", string siteId="" ){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){

@@ -94,10 +94,10 @@
 				<div class="user-nav">
 					<ul>
 						<!--- View Site --->
-						<li class="" data-placement="right auto" title="Visit Site">
+						<li data-placement="right auto" title="Visit Site">
 							<a
 								class="btn btn-default options toggle"
-								href="#event.buildLink( to=prc.cbEntryPoint, ssl=prc.oCurrentSite.getIsSSL() )#"
+								href="#prc.cbHelper.siteRoot()#"
 								target="_blank"
 							>
 								<i class="fa fa-home"></i>

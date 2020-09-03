@@ -39,7 +39,8 @@ component accessors="true" singleton threadSafe {
 	/************************************** coldbox bridge *********************************************/
 
 	/**
-	 * Get the current request context
+	 * Get the current ColdBox request context
+	 *
 	 * @return coldbox.system.web.context.RequestContext
 	 */
 	function getRequestContext(){
@@ -48,6 +49,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get the RC or PRC collection reference
+	 *
 	 * @private The boolean bit that says give me the RC by default or true for the private collection (PRC)
 	 */
 	struct function getRequestCollection( boolean private = false ){
@@ -63,6 +65,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get a module's settings structure
+	 *
 	 * @module The module to retrieve the configuration settings from
 	 */
 	struct function getModuleSettings( required module ){
@@ -71,6 +74,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get a module's configuration structure
+	 *
 	 * @module The module to retrieve the configuration structure from
 	 */
 	struct function getModuleConfig( required module ){
@@ -79,9 +83,9 @@ component accessors="true" singleton threadSafe {
 			return mConfig[ arguments.module ];
 		}
 		throw(
-			message = "The module you passed #arguments.module# is invalid.",
-			detail  = "The loaded modules are #structKeyList( mConfig )#",
-			type    = "FrameworkSuperType.InvalidModuleException"
+			message: "The module you passed #arguments.module# is invalid.",
+			detail : "The loaded modules are #structKeyList( mConfig )#",
+			type   : "FrameworkSuperType.InvalidModuleException"
 		);
 	}
 
@@ -97,7 +101,6 @@ component accessors="true" singleton threadSafe {
 	 */
 	any function setting( required key, defaultValue ){
 		var prc = getPrivateRequestCollection();
-
 		// return setting if it exists
 		if ( structKeyExists( prc.cbSettings, arguments.key ) ) {
 			return prc.cbSettings[ key ];
@@ -142,28 +145,28 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * get contentbox version
+	 * The ContentBox version
 	 */
 	function getContentBoxVersion(){
 		return getModuleConfig( "contentbox" ).version;
 	}
 
 	/**
-	 * get contentbox codename
+	 * The ContentBox Codename
 	 */
 	function getContentBoxCodeName(){
 		return getModuleSettings( "contentbox" ).codename;
 	}
 
 	/**
-	 * get contentbox codename URL
+	 * The ContentBox codename Uri
 	 */
 	function getContentBoxCodeNameURL(){
 		return getModuleSettings( "contentbox" ).codenameLink;
 	}
 
 	/**
-	 * Get the blog entry point as specified in the settings
+	 * Get the blog entry point as specified in the global settings
 	 */
 	function getBlogEntryPoint(){
 		return setting( "cb_site_blog_entrypoint", "blog" );
@@ -173,67 +176,46 @@ component accessors="true" singleton threadSafe {
 	 * Get the maintenance message from the ContentBox settings in rendering condition.
 	 */
 	function getMaintenanceMessage(){
-		return markdown.toHTML( setting( "cb_site_maintenance_message" ) );
-	}
-
-	/**
-	 * Get a published custom HTML content pieces by slug: DEPRECATED, use contentStore() instead
-	 * @see contentStore()
-	 * @deprecated
-	 */
-	function customHTML( required slug, defaultValue = "" ){
-		return contentStore( argumentCollection = arguments );
+		return variables.markdown.toHTML( setting( "cb_site_maintenance_message", "" ) );
 	}
 
 	/**
 	 * Get a published content store and return its latest active content
+	 *
 	 * @slug The content slug to retrieve
 	 * @defaultValue The default value to use if the content element not found.
+	 * @siteId The site to get it from, defaults to current site
 	 */
-	function contentStore( required slug, defaultValue = "" ){
-		var content = contentStoreService.findBySlug( arguments.slug );
+	function contentStore(
+		required slug,
+		defaultValue  = "",
+		string siteId = site().getSiteId()
+	){
+		var content = variables.contentStoreService.findBySlug(
+			slug  : arguments.slug,
+			siteId: arguments.siteId
+		);
+
+		// Render if the object is loaded
 		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
 	}
 
 	/**
-	 * Get a content store object by slug, if not found it returns null.
+	 * Get a content store object by slug
+	 *
 	 * @slug The content slug to retrieve
+	 *
+	 * @return The content object or a new empty content object
 	 */
-	function contentStoreObject( required slug ){
-		return contentStoreService.findBySlug( slug = arguments.slug, showUnpublished = true );
+	function contentStoreObject( required slug, string siteId = site().getSiteId() ){
+		return contentStoreService.findBySlug(
+			slug           : arguments.slug,
+			showUnpublished: true,
+			siteId         : arguments.siteId
+		);
 	}
 
-	/************************************** root methods *********************************************/
-
-	/**
-	 * Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
-	 */
-	function themeRoot(){
-		var prc = getRequestCollection( private = true );
-		return prc.cbthemeRoot;
-	}
-	/**
-	 * Layout Location. DO NOT USE, DEPRECATED. Use themeRoot instead.
-	 * @deprecated
-	 */
-	function layoutRoot(){
-		return themeRoot();
-	}
-
-	/**
-	 * Get the site root location using your configured module's entry point
-	 */
-	function siteRoot(){
-		var prc = getRequestCollection( private = true );
-		return prc.cbEntryPoint;
-	}
-
-	/**
-	 * Get the site base SES URL
-	 */
-	function siteBaseURL(){
-		return getRequestContext().getHTMLBaseUrl();
-	}
+	/************************************** root and pathing methods *********************************************/
 
 	/**
 	 * Verifies if the admin module is loaded
@@ -246,59 +228,32 @@ component accessors="true" singleton threadSafe {
 	 * Get the admin site root location using the configured module's entry point
 	 */
 	function adminRoot(){
-		var prc = getRequestCollection( private = true );
-		return prc.cbAdminEntryPoint;
+		return getPrivateRequestCollection().cbAdminEntryPoint;
 	}
 
 	/**
 	 * Get the name of the current set and active theme
 	 */
 	function themeName(){
-		var prc = getRequestCollection( private = true );
-		return prc.cbTheme;
+		return getPrivateRequestCollection().cbTheme;
 	}
 
 	/**
 	 * Get the theme record of the current set and active theme
 	 */
 	function themeRecord(){
-		var prc = getRequestCollection( private = true );
-		return prc.cbThemeRecord;
-	}
-
-	/**
-	 * Get the layout name. DO NOT USE, DEPRECATED. Use themeName() instead.
-	 * @deprecated
-	 */
-	function layoutName(){
-		return themeName();
-	}
-
-	/**
-	 * DEPRECATED: Please use widget services now for path discovery
-	 * Get the location of the widgets in the application, great for assets, cfincludes, etc
-	 */
-	function widgetRoot(){
-		var prc = getRequestCollection( private = true );
-		return prc.cbWidgetRoot;
+		return getPrivateRequestCollection().cbThemeRecord;
 	}
 
 	/**
 	 * Get a theme setting
+	 *
 	 * @key The name of the theme setting
-	 * @value The default value if the layout setting does not exist
+	 * @defaultValue The default value if the layout setting does not exist
 	 */
-	function themeSetting( required key, value ){
+	function themeSetting( required key, defaultValue ){
 		arguments.key = "cb_theme_#themeName()#_#arguments.key#";
 		return setting( argumentCollection = arguments );
-	}
-
-	/**
-	 * Get a theme setting. PLEASE DO NOT USE ANYMORE, USE themeSetting()
-	 * @deprecated
-	 */
-	function layoutSetting(){
-		return themeSetting( argumentCollection = arguments );
 	}
 
 	/************************************** Site Methods *********************************************/
@@ -308,6 +263,35 @@ component accessors="true" singleton threadSafe {
 	 */
 	function site(){
 		return variables.siteService.discoverSite();
+	}
+
+	/**
+	 * Get the location of your currently defined theme in the application, great for assets, cfincludes, etc
+	 */
+	function themeRoot(){
+		return getPrivateRequestCollection().cbThemeRoot;
+	}
+
+	/**
+	 * Get the site root location using your configured module's entry point and the discovered site
+	 */
+	function siteRoot(){
+		// Discover the right site object
+		var oSite = site();
+		// Return the appropriate site Uri
+		return "http"
+		& ( oSite.getIsSSL() ? "s" : "" ) // SSL or not
+		& "://"
+		& oSite.getDomain() // Site Domain
+		& ( cgi.server_port != 80 ? ":#cgi.server_port#" : "" ) // The right port
+		& getPrivateRequestCollection().cbEntryPoint; // The entry point if any
+	}
+
+	/**
+	 * Get the site base html ref URL
+	 */
+	function siteBaseURL(){
+		return getRequestContext().getHTMLBaseUrl();
 	}
 
 	/**
@@ -354,27 +338,36 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Determines if site comments are enabled and if the entry accepts comments
+	 *
 	 * @content The entry or page content to validate comments also with
 	 */
 	boolean function isCommentsEnabled( content ){
-		if ( structKeyExists( arguments, "content" ) ) {
-			return ( arguments.content.getAllowComments() AND setting( "cb_comments_enabled" ) );
+		if ( !isNull( arguments.content ) ) {
+			return ( arguments.content.getAllowComments() AND siteSetting( "cb_comments_enabled" ) );
 		}
-		return ( setting( "cb_comments_enabled" ) );
+		return ( siteSetting( "cb_comments_enabled" ) );
 	}
 
-	// determines if a comment form error has ocurred
+	/**
+	 * Determines if a comment form error has ocurred
+	 */
 	boolean function isCommentFormError(){
 		return getFlash().exists( "commentErrors" );
 	}
 
-	// Determine if you are in printing or exporting format
+	/**
+	 * Determine if you are in printing or exporting format
+	 */
 	boolean function isPrintFormat(){
 		var currentFormat = getRequestContext().getValue( "format", "contentbox" );
 		return ( listFindNoCase( "contentbox,html", currentFormat ) ? false : true );
 	}
 
-	// get comment errors array, usually when the form elements did not validate
+	/**
+	 * Get comment errors array, usually when the form elements did not validate
+	 *
+	 * @return The errors array or an empty array
+	 */
 	array function getCommentErrors(){
 		return getFlash().get( "commentErrors", [] );
 	}
@@ -385,6 +378,7 @@ component accessors="true" singleton threadSafe {
 	 * Prepare a ContentBox UI request. This sets ups settings, theme, etc. This method is usualy called
 	 * automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	 * ajax or module extensions
+	 *
 	 * @layout An optional layout to set for you in the request.
 	 * @title Optional request page metadata title
 	 * @description Optional request page metadata description
@@ -397,7 +391,7 @@ component accessors="true" singleton threadSafe {
 		string keywords
 	){
 		var event = getRequestContext();
-		var prc   = getRequestCollection( private = true );
+		var prc   = getPrivateRequestCollection();
 		var rc    = getRequestCollection();
 
 		// Request Metadata

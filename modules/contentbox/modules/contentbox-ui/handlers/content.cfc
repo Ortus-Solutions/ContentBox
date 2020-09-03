@@ -8,17 +8,17 @@
 component {
 
 	// DI
-	property name="authorService"   inject="id:authorService@cb";
+	property name="authorService" inject="id:authorService@cb";
 	property name="categoryService" inject="id:categoryService@cb";
-	property name="contentService"  inject="id:contentService@cb";
-	property name="commentService"  inject="id:commentService@cb";
-	property name="CBHelper"        inject="id:CBHelper@cb";
-	property name="rssService"      inject="id:rssService@cb";
-	property name="themeService"    inject="id:themeService@cb";
-	property name="antiSamy"        inject="antisamy@cbantisamy";
-	property name="messagebox"      inject="id:messagebox@cbMessageBox";
-	property name="dataMarshaller"  inject="DataMarshaller@coldbox";
-	property name="markdown"        inject="Processor@cbmarkdown";
+	property name="contentService" inject="id:contentService@cb";
+	property name="commentService" inject="id:commentService@cb";
+	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="rssService" inject="id:rssService@cb";
+	property name="themeService" inject="id:themeService@cb";
+	property name="antiSamy" inject="antisamy@cbantisamy";
+	property name="messagebox" inject="id:messagebox@cbMessageBox";
+	property name="dataMarshaller" inject="DataMarshaller@coldbox";
+	property name="markdown" inject="Processor@cbmarkdown";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -45,11 +45,11 @@ component {
 		// Blog routes are in the blog namespace
 		if (
 			event.getCurrentRoute() eq "/" AND
-			prc.oCurrentSite().getHomepage() neq "cbBlog" AND
+			prc.oCurrentSite.getHomepage() neq "cbBlog" AND
 			event.getCurrentRoutedNamespace() neq "blog"
 		) {
 			event.overrideEvent( "contentbox-ui:page.index" );
-			prc.pageOverride = prc.oCurrentSite().getHomepage();
+			prc.pageOverride = prc.oCurrentSite.getHomepage();
 		}
 
 		// If UI export is disabled, default to contentbox
@@ -91,7 +91,7 @@ component {
 			if ( prc.oCurrentSite.getHomepage() NEQ "cbBlog" ) {
 				// Override event and incoming page.
 				event.overrideEvent( "contentbox-ui:page.index" );
-				prc.pageOverride = prc.oCurrentSite().getHomepage();
+				prc.pageOverride = prc.oCurrentSite.getHomepage();
 				// run it
 				var eArgs        = { noCache : true };
 				runEvent( event = "contentbox-ui:page.index", eventArguments = eArgs );

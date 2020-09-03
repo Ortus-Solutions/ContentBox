@@ -14,6 +14,8 @@ component
 
 	// DI
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
+	property name="loadedModules" inject="coldbox:setting:modules";
+	property name="requestService" inject="coldbox:requestService";
 
 	/**
 	 * Constructor
@@ -91,12 +93,71 @@ component
 	}
 
 	/**
+	 * Get an id or fail
+	 *
+	 * @id The identifier
+	 *
+	 * @throws EntityNotFound
+	 */
+	function getOrFail( required siteId ){
+		var site = newCriteria().isEq( "siteId", autoCast( "siteId", arguments.siteId ) ).get();
+
+		return (
+			!isNull( site ) ? site : throw(
+				type   : "EntityNotFound",
+				message= "No site with ID #arguments.siteId.toString()# found"
+			)
+		)
+	}
+
+	/**
 	 * This method discovers which site you are on and returns it depending on the following markers:
+	 *
+	 * - Are we in the admin, use the current working site
+	 * - incoming `siteId` (rc)
 	 * - incoming `siteSlug` (rc)
 	 * - incoming header: `x-contentbox-site`
 	 * - cgi.server_name
+	 *
+	 * @return The site object
 	 */
-	function discoverSite(){
+	Site function discoverSite(){
+		var event = variables.requestService.getContext();
+
+		// Are we in the admin?
+		if (
+			structKeyExists( variables.loadedModules, "contentbox-admin" )
+			&&
+			findNoCase(
+				variables.loadedModules[ "contentbox-admin" ].entryPoint,
+				event.getCurrentRoutedUrl()
+			)
+		) {
+			return getCurrentWorkingSite();
+		}
+
+		// Do we have an incoming site header, which should contain the siteId
+		var siteId = event.getValue( "siteId", event.getHTTPHeader( "x-contentbox-site", "" ) );
+		if ( len( siteId ) ) {
+			return getOrFail( siteId );
+		}
+
+		// Do we have an incoming siteSlug in the RC
+		if ( event.valueExists( "siteSlug" ) ) {
+			return newCriteria().isEq( "slug", event.getValue( "siteSlug" ) ).get();
+		}
+
+		// Try to discover using the cgi.server_name
+		var matchedSite = getAllFlat().filter( function( thisSite ){
+			return reFindNoCase( thisSite[ "domainRegex" ], cgi.SERVER_NAME );
+		} );
+
+		// Return the first matched site
+		if ( arrayLen( matchedSite ) ) {
+			return getOrFail( matchedSite[ 1 ][ "siteId" ] );
+		}
+
+		// Default to the default site
 		return getDefaultSite();
 	}
 
