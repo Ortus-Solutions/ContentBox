@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-picture-o"></i> Media Manager
+			<i class="fas fa-photo-video"></i> Media Manager
 		</h1>
 		<span class="label label-warning">#rc.library#</span>
 

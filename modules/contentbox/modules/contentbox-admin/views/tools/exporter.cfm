@@ -74,7 +74,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-quote-left fa-lg"></i> Entries</h4>
+								<h4><i class="fas fa-blog fa-lg"></i> Entries</h4>
 								<small class="muted">Export blog entries with comments</small>
 							</div>
 							<div class="col-md-9">
@@ -90,7 +90,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-tags fa-lg"></i> Categories</h4>
+								<h4><i class="fas fa-tags fa-lg"></i> Categories</h4>
 								<small class="muted">Export categories</small>
 							</div>
 							<div class="col-md-9">
@@ -106,7 +106,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-hdd-o fa-lg"></i> Content Store</h4>
+								<h4><i class="far fa-hdd fa-lg"></i> Content Store</h4>
 								<small class="muted">Export the Content Store</small>
 							</div>
 							<div class="col-md-9">
@@ -122,7 +122,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-sort-amount-desc fa-lg"></i> Menus</h4>
+								<h4><i class="fas fa-bars fa-lg"></i> Menus</h4>
 								<small class="muted">Export menus</small>
 							</div>
 							<div class="col-md-9">
@@ -154,7 +154,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-lock fa-lg"></i> Permission</h4>
+								<h4><i class="fas fa-key fa-lg"></i> Permission</h4>
 								<small class="muted">Export all author permissions</small>
 							</div>
 							<div class="col-md-9">

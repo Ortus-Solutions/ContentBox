@@ -62,7 +62,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_entry",
-            content="<i class='fa fa-quote-left'></i> Send a notification when a blog entry has been created or removed:"
+            content="<i class='fas fa-blog'></i> Send a notification when a blog entry has been created or removed:"
         )#
         <div class="controls">
         	#html.checkbox(
@@ -100,7 +100,7 @@
         #html.label(
             class="control-label",
             field="cb_notify_contentstore",
-            content="<i class='fa fa-hdd-o'></i> Send a notification when a content store object has been created or removed:"
+            content="<i class='far fa-hdd'></i> Send a notification when a content store object has been created or removed:"
         )#
         <div class="controls">
         	#html.checkbox(

@@ -34,7 +34,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-9 pull-left">
-				<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks(entry)#
+				<i class="fas fa-tags"></i> Tags: #cb.quickCategoryLinks(entry)#
 			</div>
 			<div class="col-xs-3 pull-right text-right">
 				<i class="fa fa-comment"></i> <a href="#cb.linkEntry(entry)###comments" title="View Comments"> #entry.getNumberOfApprovedComments()# Comments</a>

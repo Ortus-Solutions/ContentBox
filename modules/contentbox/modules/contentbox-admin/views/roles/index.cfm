@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-group fa-lg"></i> Roles
+        	<i class="fas fa-user-shield fa-lg"></i> Roles
         </h1>
     </div>
 </div>
@@ -98,7 +98,7 @@
 									<!--- Actions --->
 
 									<!--- permissions --->
-									<a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="fa fa-lock fa-lg"></i></a>
+									<a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="fas fa-key fa-lg"></i></a>
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">

@@ -1,37 +1,61 @@
 ﻿<cfoutput>
-<div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehentries)#';return false;">
-        <i class="fa fa-reply"></i> Back
-    </button>
-    <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-        <span class="fa fa-cog"></span>
-    </button>
-    <ul class="dropdown-menu">
-        <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
-        <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
-        <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
-        <cfif prc.entry.isLoaded()>
-        <li><a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank"><i class="far fa-eye"></i> Open In Site</a></li>
-        </cfif>
-    </ul>
-</div>
+	<div class="btn-group btn-group-sm">
+		<button
+			class="btn btn-sm btn-primary"
+			onclick="window.location.href='#event.buildLink( prc.xehentries )#';return false;">
+			<i class="fas fa-chevron-left"></i> Back
+		</button>
+		
+		<button
+			class="btn btn-sm btn-primary dropdown-toggle"
+			data-toggle="dropdown"
+			title="Quick Actions">
+			<span class="fas fa-ellipsis-v"></span>
+		</button>
+		
+		<ul class="dropdown-menu">
+			<li>
+				<a href="javascript:quickPublish( false )">
+					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickPublish( true )">
+					<i class="fas fa-eraser fa-lg"></i> Save as Draft
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickSave()">
+					<i class="far fa-save fa-lg"></i> Quick Save
+				</a>
+			</li>
+            <cfif prc.entry.isLoaded()>
+				<li>
+					<a href="#prc.CBHelper.linkEntry( prc.entry )#" target="_blank">
+						<i class="far fa-eye fa-lg"></i> Open In Site
+					</a>
+				</li>
+            </cfif>
+        </ul>
+	</div>
 
-<!--- Entry Form  --->
-#html.startForm(
-    action=prc.xehEntrySave,
-    name="entryForm",
-    novalidate="novalidate",
-    class="form-vertical"
-)#
+	<!--- Entry Form  --->
+	#html.startForm(
+        action      = prc.xehEntrySave,
+        name        = "entryForm",
+        novalidate  = "novalidate",
+        class       = "form-vertical mt5"
+	)#
+	
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
             #getInstance( "messagebox@cbMessagebox" ).renderit()#
 
             <!--- id --->
-            #html.hiddenField(	name="contentID",	bind=prc.entry )#
-            #html.hiddenField(	name="contentType",	bind=prc.entry )#
-            #html.hiddenField(	name="sluggerURL",	value=event.buildLink( prc.xehSlugify ) )#
+            #html.hiddenField( name="contentID",	bind=prc.entry )#
+            #html.hiddenField( name="contentType",	bind=prc.entry )#
+            #html.hiddenField( name="sluggerURL",	value=event.buildLink( prc.xehSlugify ) )#
 
             <div class="panel panel-default">
 
@@ -48,7 +72,7 @@
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                             <li role="presentation">
                                 <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-                                    <i class="fa fa-truck"></i> Custom Fields
+                                    <i class="fas fa-microchip"></i> Custom Fields
                                 </a>
                             </li>
                         </cfif>
@@ -307,8 +331,12 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fas fa-ellipsis-v fa-lg"></i> Modifiers
+                                    <a
+                                    	class="accordion-toggle collapsed"
+                                    	data-toggle="collapse"
+                                    	data-parent="##accordion"
+                                    	href="##modifiers">
+                                        <i class="fas fa-toolbox fa-lg"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -317,15 +345,20 @@
                                     <!--- Creator --->
                                     <cfif prc.entry.isLoaded() and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                         <div class="form-group">
-                                            <i class="fa fa-user fa-lg"></i>
+                                            <i class="fas fa-user-astronaut fa-lg"></i>
                                             #html.label(
-                                                field="creatorID",
-                                                content="Creator:",
-                                                class="inline"
+                                                field   = "creatorID",
+                                                content = "Creator:",
+                                                class   = "inline"
                                             )#
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
-                                                <option value="#author.getAuthorID()#" <cfif prc.entry.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+                                                <option
+                                                	value="#author.getAuthorID()#"
+													<cfif prc.entry.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>
+												>
+													#author.getName()#
+												</option>
                                                 </cfloop>
                                             </select>
                                         </div>
@@ -336,39 +369,43 @@
                                         <div class="form-group">
                                             <i class="far fa-comments fa-lg"></i>
                                             #html.label(
-                                                field="allowComments",
-                                                content="Allow Comments:",
-                                                class="inline"
+                                                field   = "allowComments",
+                                                content = "Allow Comments:",
+                                                class   = "inline"
                                             )#
                                             #html.select(
-                                                name="allowComments",
-                                                options="Yes,No",
-                                                selectedValue=yesNoFormat( prc.entry.getAllowComments() ),
-                                                class="form-control input-sm"
+                                                name          = "allowComments",
+                                                options       = "Yes,No",
+                                                selectedValue = yesNoFormat( prc.entry.getAllowComments() ),
+                                                class         = "form-control input-sm"
                                             )#
                                         </div>
                                     </cfif>
 
-                                    <div class="form-group">
+									<div class="form-group">
+										<label for="showInSearch">
+											<i class="fab fa-searchengin fa-lg"></i> Show in Search:
+										</label>
                                         <!--- Show in Search --->
                                         #html.select(
-                                            name="showInSearch",
-                                            label="Show In Search:",
-                                            class="form-control input-sm",
-                                            options="Yes,No",
-                                            selectedValue=yesNoFormat( prc.entry.getShowInSearch() )
+                                            name          = "showInSearch",
+                                            class         = "form-control input-sm",
+                                            options       = "Yes,No",
+                                            selectedValue = yesNoFormat( prc.entry.getShowInSearch() )
                                         )#
                                     </div>
 
                                     <!--- Password Protection --->
                                     <div class="form-group">
-                                        <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
+										<label for="passwordProtection">
+											<i class="fas fa-key fa-lg"></i> Password Protection:
+										</label>
                                         #html.textfield(
-                                            name="passwordProtection",
-                                            bind=prc.entry,
-                                            title="Password protect your entry, leave empty for none",
-                                            class="form-control",
-                                            maxlength="100"
+                                            name      = "passwordProtection",
+                                            bind      = prc.entry,
+                                            title     = "Password protect your entry, leave empty for none",
+                                            class     = "form-control",
+                                            maxlength = "100"
                                         )#
                                     </div>
                                 </div>
@@ -383,7 +420,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa fa-rocket fa-lg"></i> Cache Settings
+                                        <i class="fas fa-database fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -457,7 +494,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fa fa-tags fa-lg"></i> Categories
+                                        <i class="fas fa-tags fa-lg"></i> Categories
                                     </a>
                                 </h4>
                             </div>
@@ -497,7 +534,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
-                                        <i class="fa fa-picture-o fa-lg"></i> Featured Image
+                                        <i class="fas fa-photo-video fa-lg"></i> Featured Image
                                     </a>
                                 </h4>
                             </div>
@@ -505,20 +542,26 @@
                                 <div class="panel-body">
                                     <div class="form-group text-center">
                                         <!--- Select and Cancel Buttons --->
-                                        <a class="btn btn-primary" href="javascript:loadAssetChooser( 'featuredImageCallback' )">Select Image</a>
-                                        <a class="featured-image <cfif !len( prc.entry.getFeaturedImageURL() )>hide</cfif> btn btn-danger" href="javascript:cancelFeaturedImage()">Clear</a>
+                                        <a
+                                        	class="btn btn-primary"
+											href="javascript:loadAssetChooser( 'featuredImageCallback' )"
+										>
+											Select Image
+										</a>
                                         <!--- Featured Image Selection --->
                                         <div class="<cfif !len( prc.entry.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
-                                            #html.textField(
+											#html.textField(
                                             	name 		= "featuredImage",
                                             	bind 		= prc.entry,
                                             	class 		= "form-control",
-                                            	readonly 	= true
+												readonly 	= true,
+												title 		= "The actual image path to deliver"
                                             )#
                                             #html.hiddenField(
                                             	name = "featuredImageURL",
                                             	bind = prc.entry
-                                            )#
+											)#
+											
                                             <!--- Image Preview --->
                                             <div class="margin10">
                                             	<cfif len( prc.entry.getFeaturedImageURL() )>
@@ -526,7 +569,10 @@
                                             	<cfelse>
                                             		<img id="featuredImagePreview" class="img-thumbnail" height="75">
                                             	</cfif>
-                                            </div>
+											</div>
+											
+											<!--- Clear Image --->
+											<a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
                                         </div>
                                     </div>
                                 </div>

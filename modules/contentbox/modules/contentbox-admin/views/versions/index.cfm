@@ -53,7 +53,7 @@
 							onclick="to( '#event.buildLink( prc.xehBackTrack )#' );return false;"
 						</cfif>
 					>
-						<i class="fa fa-reply"></i> Back
+						<i class="fas fa-chevron-left"></i> Back
 					</button>
 					<cfif len( prc.xehOpenContent )>
 						<button

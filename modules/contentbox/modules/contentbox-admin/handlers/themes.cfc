@@ -4,7 +4,7 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="themeService"   inject="id:themeService@cb";
+	property name="themeService" inject="id:themeService@cb";
 	property name="contentService" inject="id:contentService@cb";
 
 	/**
@@ -65,6 +65,7 @@ component extends="baseHandler" {
 			target      = rc,
 			constraints = variables.themeService.getSettingsConstraints( rc.themeName )
 		);
+
 		// Validate results
 		if ( vResults.hasErrors() ) {
 			variables.cbMessagebox.error( messageArray = vResults.getAllErrors() );

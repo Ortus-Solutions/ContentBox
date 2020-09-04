@@ -1,9 +1,11 @@
 ﻿<cfoutput>
+	
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-quote-left"></i> Blog Entries</h1>
+		<h1 class="h1"><i class="fas fa-blog"></i> Blog Entries</h1>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-9">
 		<!--- MessageBox --->
@@ -44,45 +46,64 @@
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 												<li>
-													<a href="javascript:bulkRemove()" class="confirmIt"
-												data-title="<i class='far fa-trash-alt'></i> Delete Selected Entries?" data-message="This will delete the entries, are you sure?">
-														<i class="far fa-trash-alt"></i> Delete selected
+													<a 
+														href="javascript:bulkRemove()" 
+														class="confirmIt" 
+														data-title="<i class='far fa-trash-alt'></i> Delete Selected Entries?" 
+														data-message="This will delete the entries, are you sure?"
+													>
+														<i class="far fa-trash-alt fa-lg"></i> Delete selected
 													</a>
 												</li>
 												<li>
-													<a href="javascript:bulkChangeStatus('draft')"><i class="fas fa-ban"></i> Draft Selected
+													<a href="javascript:bulkChangeStatus('draft')">
+														<i class="fas fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 												<li>
-													<a href="javascript:bulkChangeStatus('publish')"><i class="far fa-check-circle"></i> Publish Selected
+													<a href="javascript:bulkChangeStatus('publish')">
+														<i class="far fa-check-circle fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
 												<li>
-													<a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import
+													<a href="javascript:importContent()">
+														<i class="fas fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 												</cfif>
 												<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
-													<a href="#event.buildLink(to=prc.xehEntryExportAll)#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON
+													<a href="#event.buildLink(to=prc.xehEntryExportAll)#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
 													</a>
 												</li>
 												<li>
-													<a href="#event.buildLink(to=prc.xehEntryExportAll)#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML
+													<a href="#event.buildLink(to=prc.xehEntryExportAll)#.xml" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export All as XML
 													</a>
 												</li>
 											</cfif>
-											<li><a href="javascript:resetBulkHits()"><i class="fas fa-recycle"></i> Reset Hits Selected</a></li>
 											<li>
-												<a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All
+												<a href="javascript:resetBulkHits()">
+													<i class="fas fa-recycle fa-lg"></i> Reset Hits Selected
+												</a>
+											</li>
+											<li>
+												<a href="javascript:contentShowAll()">
+													<i class="fas fa-list fa-lg"></i> Show All
 												</a>
 											</li>
 								    	</ul>
 								    </div>
 								</cfif>
-								<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(to=prc.xehEntryEditor)#');">Create Entry</button>
+								<button 
+									class="btn btn-primary btn-sm" 
+									onclick="return to( '#event.buildLink(to=prc.xehEntryEditor)#' );"
+								>
+									Create Entry
+								</button>
 							</div>
 						</div>
 					</div>

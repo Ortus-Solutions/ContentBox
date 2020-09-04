@@ -30,7 +30,7 @@
                             	placeholder  = cb.r( "common.email@security" ),
                             	autocomplete = "off"
                             )#
-                            <i class="fa fa-lock"></i>
+                            <i class="fas fa-key"></i>
                         </div>
                     </div>
 

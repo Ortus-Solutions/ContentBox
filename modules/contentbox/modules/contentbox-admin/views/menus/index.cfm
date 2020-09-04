@@ -2,10 +2,11 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-sort-amount-desc"></i> Menu Manager
+            <i class="fas fa-bars fa-lg"></i> Menu Manager
         </h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
@@ -17,10 +18,11 @@
         </cfif>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
-        #html.startForm( name="menuForm",action=prc.xehMenuRemove )#
-            #html.hiddenField( name="menuID",value="" )#
+        #html.startForm( name="menuForm", action=prc.xehMenuRemove )#
+            #html.hiddenField( name="menuID", value="" )#
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">

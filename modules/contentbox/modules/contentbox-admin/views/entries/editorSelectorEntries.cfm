@@ -27,7 +27,7 @@
 				</cfif>
 			</td>
 			<td class="text-center">
-				<button class="btn btn-default" onclick="return selectCBContent( '#JSStringFormat( entry.getSlug() )#', '#JSStringFormat( entry.getTitle() )#', 'entryssl' )" title="SSL Link"><i class="fa fa-lock"></i></button>
+				<button class="btn btn-default" onclick="return selectCBContent( '#JSStringFormat( entry.getSlug() )#', '#JSStringFormat( entry.getTitle() )#', 'entryssl' )" title="SSL Link"><i class="fas fa-key"></i></button>
 				<button class="btn btn-default" onclick="return selectCBContent( '#JSStringFormat( entry.getSlug() )#','#JSStringFormat( entry.getTitle() )#','entry' )" title="Link"><i class="fa fa-link"></i></button>
 			</td>
 		</tr>

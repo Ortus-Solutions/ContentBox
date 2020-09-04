@@ -1,76 +1,81 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* SimpleMDE Implementation
-*/
-component implements="contentbox.models.ui.editors.IEditor" accessors="true" singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * SimpleMDE Implementation
+ */
+component
+	implements="contentbox.models.ui.editors.IEditor"
+	accessors ="true"
+	singleton
+{
 
 	// DI
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
-	* Constructor
-	* @coldbox.inject coldbox
-	* @settingService.inject settingService@cb
-	* @html.inject HTMLHelper@coldbox
-	*/
+	 * Constructor
+	 * @coldbox.inject coldbox
+	 * @settingService.inject settingService@cb
+	 * @html.inject HTMLHelper@coldbox
+	 */
 	function init(
 		required coldbox,
 		required settingService,
 		required html
 	){
-
 		// register dependencies
 		variables.interceptorService = arguments.coldbox.getInterceptorService();
-		variables.requestService	 = arguments.coldbox.getRequestService();
-		variables.coldbox 			 = arguments.coldbox;
-		variables.settingService	 = arguments.settingService;
-		variables.html 				 = arguments.html;
+		variables.requestService     = arguments.coldbox.getRequestService();
+		variables.coldbox            = arguments.coldbox;
+		variables.settingService     = arguments.settingService;
+		variables.html               = arguments.html;
 
 		// Store admin entry point and base URL settings
-		ADMIN_ENTRYPOINT 	= arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
-		EDITOR_ROOT 		= arguments.coldbox.getSetting( "modules" )[ "contentbox-markdowneditor" ].mapping;
-		HTML_BASE_URL	 	= variables.requestService.getContext().getHTMLBaseURL();
+		ADMIN_ENTRYPOINT = arguments.coldbox.getSetting( "modules" )[ "contentbox-admin" ].entryPoint;
+		EDITOR_ROOT      = arguments.coldbox.getSetting( "modules" )[ "contentbox-markdowneditor" ].mapping;
+		HTML_BASE_URL    = variables.requestService.getContext().getHTMLBaseURL();
 
 		// Store Toolbars
-		variables.toolbarJS 		= buildToolbarJS( 'content' );
-		variables.toolbarExcerptJS 	= buildToolbarJS( 'excerpt' );
+		variables.toolbarJS        = buildToolbarJS( "content" );
+		variables.toolbarExcerptJS = buildToolbarJS( "excerpt" );
 
 		// Register our Editor events
-		interceptorService.appendInterceptionPoints( "cbadmin_mdEditorToolbar,cbadmin_mdEditorExtraConfig" );
+		interceptorService.appendInterceptionPoints(
+			"cbadmin_mdEditorToolbar,cbadmin_mdEditorExtraConfig"
+		);
 
 		return this;
 	}
 
 	/**
-	* Get the internal name of an editor
-	*/
+	 * Get the internal name of an editor
+	 */
 	function getName(){
 		return "simplemde";
 	}
 
 	/**
-	* Get the display name of an editor
-	*/
+	 * Get the display name of an editor
+	 */
 	function getDisplayName(){
 		return "Code Editor (Markdown+HTML)";
 	};
 
 	/**
-	* Startup the editor(s) on a page
-	*/
+	 * Startup the editor(s) on a page
+	 */
 	function startup(){
 		// prepare toolbar announcement on startup
 		var iData = {
-			toolbar 		= variables.toolbarJS,
-			excerptToolbar 	= variables.toolbarExcerptJS
+			toolbar        : variables.toolbarJS,
+			excerptToolbar : variables.toolbarExcerptJS
 		};
 		// Announce the editor toolbar is about to be processed
 		interceptorService.announce( "cbadmin_mdEditorToolbar", iData );
 		// Load extra configuration
-		var iData2 = { extraConfig = "" };
+		var iData2 = { extraConfig : "" };
 		// Announce extra configuration
 		interceptorService.announce( "cbadmin_mdEditorExtraConfig", iData2 );
 		// Now prepare our JavaScript and load it.
@@ -78,9 +83,9 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	}
 
 	/**
-	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc.
-	* return the appropriate JavaScript
-	*/
+	 * This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc.
+	 * return the appropriate JavaScript
+	 */
 	function loadAssets(){
 		var js = "";
 
@@ -88,7 +93,8 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.css" );
 		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.js" );
 		// Custom Styles
-		html.addStyleContent( "
+		html.addStyleContent(
+			"
 			.CodeMirror{
 			    height: 400px;
 			}
@@ -98,10 +104,13 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			div.fullscreen{
 				z-index: 1000 !important;
 			}
-		", true );
+		",
+			true
+		);
 
-		savecontent variable="js"{
-			writeOutput( "
+		savecontent variable="js" {
+			writeOutput(
+				"
 			function getContentEditor(){
 				return simpleMDE_content.codemirror;
 			}
@@ -181,26 +190,28 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 				insertEditorContent( simpleMDETargetEditor, link );
 				closeRemoteModal();
 			}
-			" );
+			"
+			);
 		}
 
 		return js;
 	};
 
 	/**
-	* Compile the needed JS to display into the screen
-	*/
+	 * Compile the needed JS to display into the screen
+	 */
 	private function compileJS( required iData, required iData2 ){
-		var js 					= "";
+		var js = "";
 
 		// Determine Extra Configuration
 		var extraConfig = "";
-		if( len( arguments.iData2.extraConfig ) ){
+		if ( len( arguments.iData2.extraConfig ) ) {
 			extraConfig = "#arguments.iData2.extraConfig#,";
 		}
 
-		savecontent variable="js"{
-			writeOutput( "
+		savecontent variable="js" {
+			writeOutput(
+				"
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( {
 				#extraConfig#
@@ -238,19 +249,21 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			simpleMDE_content.codemirror.on( 'change', function(){
 			    simpleMDE_content.isDirty = true;
 			} );
-			" );
+			"
+			);
 		}
 
 		return js;
 	}
 
 	/**
-	* Shutdown the editor(s) on a page
-	*/
+	 * Shutdown the editor(s) on a page
+	 */
 	function shutdown(){
-		var js = "";
-		savecontent variable="js"{
-			writeOutput( "
+		var js              = "";
+		savecontent variable="js" {
+			writeOutput(
+				"
 			// Activate on content object
 			simpleMDE_content.toTextArea();
 			simpleMDE_content = null;
@@ -261,22 +274,23 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			} catch( error ){
 				// ignore.
 			}
-			" );
+			"
+			);
 		}
 
 		return js;
 	}
 
 	/**
-	* Build the toolbar JS according to editor name
-	* @editor The editor name to bind the toolbar to
-	*/
+	 * Build the toolbar JS according to editor name
+	 * @editor The editor name to bind the toolbar to
+	 */
 	private function buildToolbarJS( required editor ){
 		return "[
 			{
 				name : 'cbSave',
 				action : function(){ quickSave(); },
-				className : 'fa fa-save',
+				className : 'far fa-save',
 				title : 'ContentBox Quick Save'
 			},
 			{
@@ -312,13 +326,13 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			{
 				name : 'cbContentStore',
 				action : function(){ $insertCBContentStore( '#arguments.editor#' ); },
-				className : 'fa fa-hdd-o',
+				className : 'far fa-hdd',
 				title : 'Insert ContentBox Content Store Item'
 			},
 			{
 				name : 'cbEntryLink',
 				action : function(){ $insertCBEntryLink( '#arguments.editor#' ); },
-				className : 'fa fa-quote-left',
+				className : 'fas fa-blog',
 				title : 'Insert ContentBox Entry Link'
 			},
 			{

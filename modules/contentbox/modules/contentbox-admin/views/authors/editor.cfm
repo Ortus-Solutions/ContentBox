@@ -20,11 +20,11 @@
 					<p class="text-center">
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehAuthors )#')">
-								<i class="fa fa-reply"></i> Back To Listing
+								<i class="fas fa-chevron-left"></i> Back To Listing
 							</button>
 						<cfelse>
 							<button class="btn btn-sm btn-info" onclick="return to('#event.buildLink( prc.xehDashboard )#')">
-								<i class="fa fa-reply"></i> Back To Dashboard
+								<i class="fas fa-chevron-left"></i> Back To Dashboard
 							</button>
 						</cfif>
 					</p>
@@ -54,7 +54,7 @@
 						<li>
 							<a href="##preferences" data-toggle="tab"><i class="fa fa-briefcase"></i> Preferences</a></li>
 						<li>
-							<a href="##permissions" onclick="loadPermissions();" data-toggle="tab"><i class="fa fa-lock"></i> Permissions</a>
+							<a href="##permissions" onclick="loadPermissions();" data-toggle="tab"><i class="fas fa-key"></i> Permissions</a>
 						</li>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 						<li>

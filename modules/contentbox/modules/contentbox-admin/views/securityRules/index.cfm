@@ -84,7 +84,7 @@
 											<li><a href="#event.buildLink(prc.xehResetRules)#"
 												data-title="<i class='fas fa-recycle'></i> Really Reset All Rules?" class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
-												<i class="fa fa-eraser"></i> Reset Rules
+												<i class="fas fa-eraser"></i> Reset Rules
 												</a>
 											</li>
 											</cfif>

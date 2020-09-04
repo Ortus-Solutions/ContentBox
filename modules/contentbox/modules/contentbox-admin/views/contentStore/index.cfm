@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-hdd-o"></i> Content Store</h1>
+		<h1 class="h1"><i class="far fa-hdd"></i> Content Store</h1>
 	</div>
 </div>
 <div class="row">

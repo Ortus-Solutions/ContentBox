@@ -111,7 +111,7 @@
 							<li>
 								<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
 									title="Email User a password reset token and link to reset password.">
-									<i class="fa fa-lock"></i> Reset Password
+									<i class="fas fa-key"></i> Reset Password
 								</a>
 							</li>
 							</cfif>

@@ -1,19 +1,40 @@
 ﻿<cfoutput>
-    <div class="btn-group btn-group-xs">
-        <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/?parent=#prc.parentcontentID#';return false;">
-            <i class="fa fa-reply"></i> Back
+    <div class="btn-group btn-group-sm">
+        <button
+			class="btn btn-sm btn-primary"
+			onclick="window.location.href='#event.buildLink( prc.xehPages )#/?parent=#prc.parentcontentID#';return false;">
+			<i class="fas fa-chevron-left"></i> Back
         </button>
 
-        <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-            <span class="fa fa-cog"></span>
+        <button
+			class="btn btn-sm btn-primary dropdown-toggle"
+			data-toggle="dropdown"
+			title="Quick Actions">
+			<span class="fas fa-ellipsis-v"></span>
         </button>
 
         <ul class="dropdown-menu">
-            <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
-            <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
-            <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
+			<li>
+				<a href="javascript:quickPublish( false )">
+					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickPublish( true )">
+					<i class="fas fa-eraser fa-lg"></i> Save as Draft
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickSave()">
+					<i class="far fa-save fa-lg"></i> Quick Save
+				</a>
+			</li>
             <cfif prc.page.isLoaded()>
-                <li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="far fa-eye"></i> Open In Site</a></li>
+				<li>
+					<a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank">
+						<i class="far fa-eye fa-lg"></i> Open In Site
+					</a>
+				</li>
             </cfif>
         </ul>
     </div>
@@ -23,7 +44,7 @@
         action      = prc.xehPageSave,
         name        = "pageForm",
         novalidate  = "novalidate",
-        class       = "form-vertical"
+        class       = "form-vertical mt5"
     )#
 
         <div class="row">
@@ -49,7 +70,7 @@
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                                 <li role="presentation">
                                     <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-                                        <i class="fa fa-truck"></i> Custom Fields
+                                        <i class="fas fa-microchip"></i> Custom Fields
                                     </a>
                                 </li>
                             </cfif>
@@ -228,7 +249,9 @@
                 <div class="panel panel-primary">
 
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-info-circle"></i> Details</h3>
+						<h3 class="panel-title">
+							<i class="fa fa-info-circle"></i> Details
+						</h3>
                     </div>
 
                     <div class="panel-body">
@@ -255,7 +278,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##displayoptions">
-                                        <i class="fa fa-picture-o fa-lg"></i> Display Options
+                                        <i class="fas fa-photo-video fa-lg"></i> Display Options
                                         </a>
                                     </h4>
                                 </div>
@@ -399,7 +422,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                            <i class="fas fa-ellipsis-v fa-lg"></i> Modifiers
+                                            <i class="fas fa-toolbox fa-lg"></i> Modifiers
                                         </a>
                                     </h4>
                                 </div>
@@ -434,7 +457,7 @@
                                                 #html.select(
                                                     name="allowComments",
                                                     options="Yes,No",
-                                                    selectedValue=yesNoFormat(prc.page.getAllowComments()),
+                                                    selectedValue=yesNoFormat( prc.page.getAllowComments() ),
                                                     class="form-control input-sm"
                                                 )#
                                             </div>
@@ -442,7 +465,7 @@
 
                                         <!--- SSL Only --->
                                         <div class="form-group">
-                                            <i class="icon-shield icon-large"></i>
+                                            <i class="fas fa-user-shield"></i>
                                             #html.label(
                                                 field="sslOnly",
                                                 content="SSL Only:",
@@ -458,7 +481,7 @@
 
                                         <!--- Password Protection --->
                                         <div class="form-group">
-                                            <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
+                                            <label for="passwordProtection"><i class="fas fa-key fa-lg"></i> Password Protection:</label>
                                             #html.textfield(
                                                 name="passwordProtection",
                                                 bind=prc.page,
@@ -479,7 +502,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                            <i class="fa fa-rocket fa-lg"></i> Cache Settings
+                                            <i class="fas fa-database fa-lg"></i> Cache Settings
                                         </a>
                                     </h4>
 								</div>
@@ -555,7 +578,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                            <i class="fa fa-tags fa-lg"></i> Categories
+                                            <i class="fas fa-tags fa-lg"></i> Categories
                                         </a>
                                     </h4>
                                 </div>
@@ -597,7 +620,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
-                                            <i class="fa fa-picture-o fa-lg"></i> Featured Image
+                                            <i class="fas fa-photo-video fa-lg"></i> Featured Image
                                         </a>
                                     </h4>
                                 </div>
@@ -605,18 +628,27 @@
                                     <div class="panel-body">
                                         <div class="form-group text-center">
                                             <!--- Select and Cancel Buttons --->
-                                            <a class="btn btn-primary" href="javascript:loadAssetChooser( 'featuredImageCallback' )">Select Image</a>
+                                            <a
+                                            	class="btn btn-primary"
+												href="javascript:loadAssetChooser( 'featuredImageCallback' )"
+											>
+												Select Image
+											</a>
+
                                             <!--- Featured Image Selection --->
                                             <div class="<cfif !len( prc.page.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
-                                                <a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
-                                                #html.hiddenField(
+												#html.hiddenField(
                                                     name 		= "featuredImage",
-                                                    bind 		= prc.page
+													bind 		= prc.page,
+													class 		= "form-control",
+													readonly 	= true,
+													title 		= "The actual image path to deliver"
                                                 )#
                                                 #html.hiddenField(
                                                     name = "featuredImageURL",
                                                     bind = prc.page
-                                                )#
+												)#
+												
                                                 <!--- Image Preview --->
                                                 <div class="margin10">
                                                     <cfif len( prc.page.getFeaturedImageURL() )>
@@ -624,7 +656,10 @@
                                                     <cfelse>
                                                         <img id="featuredImagePreview" class="img-thumbnail" height="75">
                                                     </cfif>
-                                                </div>
+												</div>
+												
+												<!--- Clear Image --->
+												<a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
                                             </div>
                                         </div>
                                     </div>

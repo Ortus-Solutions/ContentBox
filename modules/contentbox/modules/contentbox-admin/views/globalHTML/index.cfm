@@ -134,7 +134,7 @@
                             <!--- Entry --->
                             <div class="tab-pane" id="entry">
                                 <fieldset>
-                                    <legend><i class="fa fa-quote-left fa-lg"></i> Blog Entries</legend>
+                                    <legend><i class="fas fa-blog fa-lg"></i> Blog Entries</legend>
                                     #html.textarea(
                                         name="cb_html_preEntryDisplay",
                                         label="Before A Blog Entry: ",

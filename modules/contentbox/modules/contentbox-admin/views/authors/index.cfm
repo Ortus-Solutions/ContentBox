@@ -69,7 +69,7 @@
 														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
 														title="Users will be prompted to change their passwords upon login"
 													>
-														<i class="fa fa-lock"></i> Reset All Passwords
+														<i class="fas fa-key"></i> Reset All Passwords
 													</a>
 												</li>
 											</cfif>

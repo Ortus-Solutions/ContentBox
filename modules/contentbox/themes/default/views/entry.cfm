@@ -55,7 +55,7 @@
 						<!---<p>Posted by <i class="icon-user"></i> <a href="##">#prc.entry.getAuthorName()#</a>
 							on <i class="fa fa-calendar"></i> #prc.entry.getDisplayPublishedDate()#
 						 	| <i class="fa fa-comment"></i> <a href="#cb.linkEntry(prc.entry)###comments" title="View Comments"> #prc.entry.getNumberOfApprovedComments()# Comments</a>
-							<i class="fa fa-tag"></i> #cb.quickCategoryLinks(prc.entry)#
+							<i class="fas fa-tags"></i> #cb.quickCategoryLinks(prc.entry)#
 						</p>--->
 						<div class="row">
 							<div class="col-sm-7 pull-left"><span class="text-muted">Posted by</span> <i class="icon-user"></i> <a href="##">#prc.entry.getAuthorName()#</a></div>
@@ -69,7 +69,7 @@
 
 						<div class="row">
 							<div class="col-xs-9 pull-left">
-								<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks(prc.entry)#
+								<i class="fas fa-tags"></i> Tags: #cb.quickCategoryLinks(prc.entry)#
 							</div>
 							<div class="col-xs-3 pull-right text-right">
 								<i class="fa fa-comment"></i> <a href="#cb.linkEntry(prc.entry)###comments" title="View Comments"> #prc.entry.getNumberOfApprovedComments()# Comments</a>

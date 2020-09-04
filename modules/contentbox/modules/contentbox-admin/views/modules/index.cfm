@@ -95,7 +95,7 @@
 			    </div>
 			    <div class="panel-body">
 			    	<div class="btn-group text-center">
-						<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivate + Rescan" class="btn btn-info"><i class="fa fa-hdd-o"></i> Reset</a>
+						<a href="#event.buildLink(prc.xehModuleReset)#" title="Deactivate + Rescan" class="btn btn-info"><i class="far fa-hdd"></i> Reset</a>
 						<a href="#event.buildLink(prc.xehModuleRescan)#" title="Scans For New Modules" class="btn btn-info"><i class="fas fa-recycle"></i> Rescan</a>
 					</div>
 			    </div>

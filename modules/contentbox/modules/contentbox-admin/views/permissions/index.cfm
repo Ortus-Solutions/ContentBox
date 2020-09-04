@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-lock fa-lg"></i>
+        	<i class="fas fa-key fa-lg"></i>
 			Permissions
         </h1>
     </div>
@@ -134,7 +134,7 @@
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4><i class="fa fa-lock"></i> Permission Editor</h4>
+					<h4><i class="fas fa-key"></i> Permission Editor</h4>
 				</div>
 				<!--- Create/Edit form --->
 				#html.startForm(

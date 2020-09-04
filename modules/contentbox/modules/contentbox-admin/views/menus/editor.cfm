@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-sort-amount-desc fa-lg"></i> Menu Designer
+            <i class="fas fa-bars fa-lg"></i> Menu Designer
         </h1>
     </div>
 </div>
@@ -21,7 +21,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="actions">
-                    <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-reply"></i> Back</a>
+                    <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fas fa-chevron-left"></i> Back</a>
                 </div>
             </div>
             <div class="panel-body">

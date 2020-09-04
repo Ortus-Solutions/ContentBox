@@ -213,31 +213,39 @@ function isMainSidebarOpen() {
  * main-content-slot (col) main-content-sidebar (col)
  */
 function toggleSidebar() {
-    var sidebar = $("#main-content-sidebar");
-    var type = sidebar.css("display");
-    var sidebarState = false;
+    var sidebar 		= $( "#main-content-sidebar" );
+    var type 			= sidebar.css( "display" );
+    var sidebarState 	= false;
 
     // nosidebar exit
-    if (type === undefined) { return; }
+    if ( type === undefined ) { return; }
 
     // toggles
-    if (type === "block") {
+    if ( type === "block" ) {
         sidebar.fadeOut();
-        $("#main-content-sidebar-trigger i").removeClass("fa-minus-square-o").addClass("fa-plus-square-o");
-        $("#main-content-slot").removeClass("col-md-8").addClass("col-md-12");
+		$( "#main-content-sidebar-trigger i" )
+			.removeClass( "fa-minus-square" )
+			.addClass( "fa-plus-square" );
+		$( "#main-content-slot" )
+			.removeClass("col-md-8")
+			.addClass("col-md-12");
     } else {
-        $("#main-content-sidebar-trigger i").removeClass("fa-plus-square-o").addClass("fa-minus-square-o");
+		$( "#main-content-sidebar-trigger i" )
+			.removeClass( "fa-plus-square" )
+			.addClass( "fa-minus-square" );
         sidebar.fadeIn();
-        $("#main-content-slot").removeClass("col-md-12").addClass("col-md-8");
+		$( "#main-content-slot" )
+			.removeClass( "col-md-12" )
+			.addClass( "col-md-8" );
         sidebarState = true;
     }
 
     // Call change user editor preference
-    $.ajax({
-        url: $("body").attr("data-preferenceURL"),
-        data: { value: sidebarState, preference: "sidebarstate" },
-        async: true
-    });
+    $.ajax( {
+        url 	: $( "body" ).attr( "data-preferenceURL" ),
+        data 	: { value: sidebarState, preference: "sidebarstate" },
+        async 	: true
+    } );
 }
 /**
  * Run an admin action async

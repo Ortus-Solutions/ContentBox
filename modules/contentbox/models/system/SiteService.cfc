@@ -105,9 +105,9 @@ component
 		return (
 			!isNull( site ) ? site : throw(
 				type   : "EntityNotFound",
-				message= "No site with ID #arguments.siteId.toString()# found"
+				message: "No site with ID #arguments.siteId.toString()# found"
 			)
-		)
+		);
 	}
 
 	/**

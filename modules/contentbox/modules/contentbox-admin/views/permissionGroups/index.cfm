@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-group fa-lg"></i> Permission Groups
+        	<i class="fas fa-users fa-lg"></i> Permission Groups
         </h1>
     </div>
 </div>
@@ -138,7 +138,7 @@
 											{ permissionGroupID: '#group.getPermissionGroupID()#'}
 										);"
 										title="Manage Permissions">
-										<i class="fa fa-lock fa-lg"></i>
+										<i class="fas fa-key fa-lg"></i>
 									</a>
 
 									<!--- Actions --->

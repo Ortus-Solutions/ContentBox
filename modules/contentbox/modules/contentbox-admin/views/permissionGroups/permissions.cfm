@@ -6,7 +6,7 @@
 	
 		<div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-		    <h4><i class="fa fa-lock"></i> Permissions Manager for '#prc.oGroup.getName()#'</h4>
+		    <h4><i class="fas fa-key"></i> Permissions Manager for '#prc.oGroup.getName()#'</h4>
 		</div>
 	
 		<div class="modal-body">

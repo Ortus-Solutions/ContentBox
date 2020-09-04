@@ -3,21 +3,21 @@
     <p>
 		You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via
 		the CB Helper:
-		<code>cb.quickCustomFields() or cb.getCustomField(key,[defaultValue])</code>
+		<code>cb.quickCustomFields() or cb.getCustomField( key, [defaultValue] )</code>
 	</p>
 	<!--- CustomFields Holder --->
 	<div id="customFields">
 		<!--- Counter Of How Many Custom Fields --->
-		#html.hiddenField(name="customFieldsCount",value=arrayLen( args.customFields ))#
+		#html.hiddenField( name="customFieldsCount", value=arrayLen( args.customFields ))#
 
 		<div>
 			<!--- Add CustomField --->
 			<button class="btn btn-sm btn-primary dynamicAdd" title="Add Custom Field" id="addCustomFieldButton" onclick="return false;">
-				<i class="fa fa-plus"></i> Add
+				<i class="fa fa-plus fa-lg"></i> Add
 			</button>
 			<!--- Remove All Custom Fields --->
 			<button id="removeCustomFieldsButton" class="btn btn-sm btn-danger" onclick="return cleanCustomFields()">
-				<i class="far fa-trash-alt"></i> Remove All
+				<i class="far fa-trash-alt fa-lg"></i> Remove All
 			</button>
 		</div>
 

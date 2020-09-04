@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-bar-chart-o fa-lg"></i>
+            <i class="fas fa-laptop-code fa-lg"></i>
             Authentication Logs
         </h1>
     </div>

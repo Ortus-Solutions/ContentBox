@@ -84,7 +84,7 @@
 
 					<!--- password protected --->
 					<cfif page.isPasswordProtected()>
-						<i class="fa fa-lock" title="Password Protected Content"></i>
+						<i class="fas fa-key" title="Password Protected Content"></i>
 					</cfif>
 
 					<!--- ssl protected --->
@@ -158,7 +158,7 @@
 						#page.getActiveContent().getDisplayCreatedDate()#
 						</br>
 						<!--- Categories --->
-						<i class="fa fa-tag"></i> #page.getCategoriesList()#<br/>
+						<i class="fas fa-tags"></i> #page.getCategoriesList()#<br/>
 						<!--- comments icon --->
 						<cfif page.getallowComments()>
 							<i class="far fa-comments"></i> Open Comments
@@ -167,7 +167,7 @@
 						</cfif>
 						<!---Layouts --->
 						<br/>
-						<i class="fa fa-picture-o"></i> Layout: <strong>#page.getLayout()#</strong>
+						<i class="fas fa-photo-video"></i> Layout: <strong>#page.getLayout()#</strong>
 						<cfif len( page.getMobileLayout() )>
 						<br/>
 						<i class="fa fa-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>

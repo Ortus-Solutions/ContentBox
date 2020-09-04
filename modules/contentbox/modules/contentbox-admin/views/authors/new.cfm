@@ -19,7 +19,7 @@
 					<!--- Back button --->
 					<p class="text-center">
 						<button class="btn btn-sm btn-default" onclick="return to('#event.buildLink( prc.xehAuthors )#')">
-							<i class="fa fa-reply"></i> Cancel
+							<i class="fas fa-chevron-left"></i> Cancel
 						</button>
 					</p>
                 </div>

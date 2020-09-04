@@ -17,7 +17,7 @@
 								class="btn btn-sm btn-default"
 								onclick="return to( '#event.buildLink( prc.xehSitesManager )#' )"
 							>
-									<i class="fa fa-reply"></i> Cancel
+									<i class="fas fa-chevron-left"></i> Cancel
 							</button>
 						</p>
 					</div>

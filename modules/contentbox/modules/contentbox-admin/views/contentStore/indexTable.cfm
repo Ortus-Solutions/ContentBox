@@ -61,7 +61,7 @@
 			</td>
 			<td>
 				<div class="label label-info">#content.getSlug()#</div>
-				<br/><small><i class="fa fa-tag"></i> #content.getCategoriesList()#</small>
+				<br/><small><i class="fas fa-tags"></i> #content.getCategoriesList()#</small>
 			</td>
 			<td class="text-center">
 				<cfif content.isExpired()>
@@ -95,6 +95,17 @@
 					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on
 					#content.getActiveContent().getDisplayCreatedDate()#
 				</div>
+				
+				<!--- Drag Handle --->
+				<a 	href="##"
+					onclick="return false;"
+					class="dragHandle btn btn-default btn-sm"
+					title="Click and drag to change retrieval order"
+					style="padding:5px 15px"
+				>
+					<i class="fas fa-sort fa-lg"></i>
+				</a>
+				
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
@@ -102,39 +113,54 @@
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
-						<!--- Clone Command --->
-						<li><a href="javascript:openCloneDialog('#content.getContentID()#','#URLEncodedFormat(content.getTitle())#')"><i class="far fa-clone fa-lg"></i> Clone</a></li>
-						<!--- Create Child --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
-						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
-						<!--- Delete Command --->
-						<li>
-							<a href="javascript:remove('#content.getContentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Content?"><i id="delete_#content.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete</a>
-						</li>
-						</cfif>
-						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
+							<!--- Clone Command --->
+							<li>
+								<a href="javascript:openCloneDialog( '#content.getContentID()#', '#URLEncodedFormat( content.getTitle() )#' )">
+									<i class="far fa-clone fa-lg"></i> Clone
+								</a>
+							</li>
+							<!--- Create Child --->
+							<li>
+								<a href="#event.buildLink( prc.xehContentEditor )#/parentID/#content.getContentID()#">
+									<i class="fas fa-sitemap fa-lg"></i> Create Child
+								</a>
+							</li>
+							<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+								<!--- Delete Command --->
+								<li>
+									<a href="javascript:remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Content?">
+										<i id="delete_#content.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+									</a>
+								</li>
+							</cfif>
+							<!--- Edit Command --->
+							<li>
+								<a href="#event.buildLink( prc.xehContentEditor )#/contentID/#content.getContentID()#">
+									<i class="far fa-keyboard fa-lg"></i> Edit
+								</a>
+							</li>
 						</cfif>
 						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
-						<li><a href="#event.buildLink(to=prc.xehContentExport)#/contentID/#content.getContentID()#.json" target="_blank"><i class="fas fa-file-export"></i> Export as JSON</a></li>
-						<li><a href="#event.buildLink(to=prc.xehContentExport)#/contentID/#content.getContentID()#.xml" target="_blank"><i class="fas fa-file-export"></i> Export as XML</a></li>
+							<li>
+								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">
+									<i class="fas fa-file-export"></i> Export as JSON
+								</a>
+							</li>
+							<li>
+								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.xml" target="_blank">
+									<i class="fas fa-file-export"></i> Export as XML
+								</a>
+							</li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
+						<li>
+							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#content.getContentID()#">
+								<i class="fas fa-history fa-lg"></i> History
+							</a>
+						</li>
 			    	</ul>
 			    </div>
-
-			    <!--- Drag Handle --->
-				<a 	href="##"
-					onclick="return false;"
-					class="dragHandle btn btn-default btn-sm"
-					title="Click and drag to change retrieval order"
-					style="padding:5px 15px"
-				>
-					<i class="fa fa-arrows-v"></i>
-				</a>
-
 			</td>
 		</tr>
 		</cfloop>

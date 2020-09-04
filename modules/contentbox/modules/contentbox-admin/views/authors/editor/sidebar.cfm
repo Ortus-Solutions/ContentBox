@@ -24,7 +24,7 @@
 								<li>
 									<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
 										title="Issue a password reset for the user upon next login.">
-										<i class="fa fa-lock"></i> Reset Password
+										<i class="fas fa-key"></i> Reset Password
 									</a>
 								</li>
 							</ul>

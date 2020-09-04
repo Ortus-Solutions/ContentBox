@@ -141,14 +141,14 @@
 								<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+b">
-											<i class="fa fa-quote-left"></i> New Entry
+											<i class="fas fa-blog"></i> New Entry
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 									<li>
 										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-											<i class="fa fa-hdd-o"></i> New Content Store
+											<i class="far fa-hdd"></i> New Content Store
 										</a>
 									</li>
 								</cfif>
@@ -162,7 +162,7 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
 									<li>
 										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-											<i class="fa fa-picture-o"></i> New Media
+											<i class="fas fa-photo-video"></i> New Media
 										</a>
 									</li>
 								</cfif>
@@ -231,16 +231,19 @@
 					#announce( "cbadmin_beforeContent" )#
 
 					<!--- Side Bar Trigger --->
-					<div 	class="pull-right"
-							id="main-content-sidebar-trigger"
-							style="display: none;"
+					<div 	
+						class="pull-right"
+						id="main-content-sidebar-trigger"
+						style="display: none;"
 					>
 						<button type="button"
-								class="btn btn-primary btn-xs"
+								class="btn btn-primary btn-sm"
 								title="Toggle Right Sidebar (ctrl+shift+e)"
 								data-keybinding="ctrl+shift+e"
 								onclick="toggleSidebar()"
-						><i class="fa fa-minus-square-o"></i> Sidebar</button>
+							>
+							<i class="far fa-minus-square"></i> Sidebar
+						</button>
 					</div>
 
 					<!--- Main Content --->

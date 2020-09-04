@@ -151,7 +151,7 @@
     </fieldset>
 
     <fieldset>
-        <legend><i class="fa fa-hdd-o fa-lg"></i>  Content Caching</legend>
+        <legend><i class="far fa-hdd fa-lg"></i>  Content Caching</legend>
 
         <!--- Content Caching --->
         <div class="form-group">

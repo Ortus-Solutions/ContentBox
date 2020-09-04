@@ -1,28 +1,45 @@
 ﻿<cfoutput>
-<div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
-        <i class="fa fa-reply"></i> Back
-    </button>
+	<div class="btn-group btn-group-sm">
+        <button
+			class="btn btn-sm btn-primary"
+			onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
+			<i class="fas fa-chevron-left"></i> Back
+        </button>
 
-    <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-        <span class="fa fa-cog"></span>
-    </button>
+        <button
+			class="btn btn-sm btn-primary dropdown-toggle"
+			data-toggle="dropdown"
+			title="Quick Actions">
+			<span class="fas fa-ellipsis-v"></span>
+        </button>
 
-    <ul class="dropdown-menu">
-        <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
-        <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
-        <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
-    </ul>
-</div>
-
-<!--- content Form  --->
-#html.startForm(
-    action      = prc.xehContentSave,
-    name        = "contentForm",
-    novalidate  = "novalidate",
-    class       = "form-vertical",
-    role        = "form"
-)#
+        <ul class="dropdown-menu">
+			<li>
+				<a href="javascript:quickPublish( false )">
+					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickPublish( true )">
+					<i class="fas fa-eraser fa-lg"></i> Save as Draft
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickSave()">
+					<i class="far fa-save fa-lg"></i> Quick Save
+				</a>
+			</li>
+        </ul>
+	</div>
+	
+	<!--- content Form  --->
+	#html.startForm(
+		action      = prc.xehContentSave,
+		name        = "contentForm",
+		novalidate  = "novalidate",
+		class       = "form-vertical mt5",
+		role        = "form"
+	)#
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
@@ -47,7 +64,7 @@
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                             <li role="presentation">
                                 <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-                                    <i class="fa fa-truck"></i> Custom Fields
+                                    <i class="fas fa-microchip"></i> Custom Fields
                                 </a>
                             </li>
                         </cfif>
@@ -225,7 +242,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fas fa-ellipsis-v fa-lg"></i> Modifiers
+                                        <i class="fas fa-toolbox fa-lg"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -297,7 +314,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa fa-rocket fa-lg"></i> Cache Settings
+                                        <i class="fas fa-database fa-lg"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -353,7 +370,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fa fa-tags fa-lg"></i> Categories
+                                        <i class="fas fa-tags fa-lg"></i> Categories
                                     </a>
                                 </h4>
                             </div>

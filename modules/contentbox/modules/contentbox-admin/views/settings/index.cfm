@@ -44,7 +44,7 @@
                             </li>
                             <li>
 								<a href="##security_options" data-toggle="tab">
-									<i class="fa fa-lock fa-lg"></i> Security
+									<i class="fas fa-key fa-lg"></i> Security
 								</a>
                             </li>
                             <li>

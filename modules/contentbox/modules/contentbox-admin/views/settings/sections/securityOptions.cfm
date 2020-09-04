@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-	<legend><i class="fa fa-lock fa-lg"></i> Password Options</legend>
+	<legend><i class="fas fa-key fa-lg"></i> Password Options</legend>
 
 	<!--- Min Password Length --->
 	<div class="form-group">
@@ -257,7 +257,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><i class="fa fa-lock fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
+    <legend><i class="fas fa-key fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
 	<!--- Admin SSL --->
     <div class="form-group">
         #html.label(

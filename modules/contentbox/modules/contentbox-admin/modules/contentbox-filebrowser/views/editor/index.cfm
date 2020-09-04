@@ -220,7 +220,7 @@
                 <div class="widget-footer-right">
                         <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Cancel</a>
                         <button type="button" class="btn btn-primary" disabled="disabled"
-                                                    id="revert_btn" value="Undo"><i class="fa fa-reply"></i> Undo</button>
+                                                    id="revert_btn" value="Undo"><i class="fas fa-chevron-left"></i> Undo</button>
                         <button class="btn btn-info" disabled="disabled" id="imagesave">Save image</button>
                 </div>
             </div>

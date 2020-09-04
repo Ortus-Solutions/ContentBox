@@ -32,7 +32,7 @@
                             <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
                         </li>
                         <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd-o fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
+                            <a href="##cachebox" data-toggle="tab"><i class="far fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li>
                             <a href="##_events" data-toggle="tab"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
@@ -76,7 +76,7 @@
                                                     <span class="caret"></span>
 												</a>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="fa fa-hdd-o"></i> View Cached Settings</a></li>
+                                                    <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="far fa-hdd"></i> View Cached Settings</a></li>
                                                     <li><a href="javascript:flushSettingsCache()"><i class="fas fa-recycle"></i> Flush Settings Cache</a></li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
                                                     <li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import Settings</a></li>
@@ -94,7 +94,7 @@
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:viewAllSettings()"><i class="fa fa-truck"></i> View All</a></li>
+                                                    <li><a href="javascript:viewAllSettings()"><i class="fas fa-microchip"></i> View All</a></li>
                                                 </ul>
                                             </div>
                                         </div>

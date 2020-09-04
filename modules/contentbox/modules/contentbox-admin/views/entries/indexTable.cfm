@@ -38,9 +38,9 @@
 				</cfif>
 				<!--- password protect --->
 				<cfif entry.isPasswordProtected()>
-					<i class="fa fa-lock" title="Password Protected Content"></i>
+					<i class="fas fa-key" title="Password Protected Content"></i>
 				</cfif>
-				<br/><small><i class="fa fa-tag"></i> #entry.getCategoriesList()#</small>
+				<br/><small><i class="fas fa-tags"></i> #entry.getCategoriesList()#</small>
 			</td>
 			<td class="text-center">
 				<cfif entry.isExpired()>

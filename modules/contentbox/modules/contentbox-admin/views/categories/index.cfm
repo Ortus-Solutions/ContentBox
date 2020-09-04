@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-tag"></i> Content Categories
+			<i class="fas fa-tags"></i> Content Categories
 		</h1>
 	</div>
 </div>
@@ -54,26 +54,26 @@
 												data-title="<i class='far fa-trash-alt'></i> Delete Selected Categories?"
 												data-message="This will delete the categories and all of its associations, are you sure?"
 											>
-												<i class="far fa-trash-alt"></i> Delete Selected
+												<i class="far fa-trash-alt fa-lg"></i> Delete Selected
 											</a>
 										</li>
 										</cfif>
 
 										<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 										<li>
-											<a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a>
+											<a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a>
 										</li>
 										</cfif>
 
 							    		<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 											<li>
 												<a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank">
-													<i class="fas fa-file-export"></i> Export All as JSON
+													<i class="fas fa-file-export fa-lg"></i> Export All as JSON
 												</a>
 											</li>
 											<li>
 												<a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank">
-													<i class="fas fa-file-export"></i> Export All as XML
+													<i class="fas fa-file-export fa-lg"></i> Export All as XML
 												</a>
 											</li>
 										</cfif>
@@ -144,7 +144,7 @@
 									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
 										title="Edit #category.getCategory()#"
 										>
-											<i class="far fa-keyboard"></i>
+											<i class="far fa-keyboard fa-lg"></i>
 									</button>
 
 									<!--- Delete Command --->
@@ -154,7 +154,7 @@
 										data-title="Delete Category?"
 										data-message="Delete the category and all of its associations"
 									>
-										<i class="far fa-trash-alt" id="delete_#category.getCategoryID()#"></i>
+										<i class="far fa-trash-alt fa-lg" id="delete_#category.getCategoryID()#"></i>
 									</a>
 									</cfif>
 								</div>
@@ -177,7 +177,7 @@
 	        <div class="modal-content" id="modalContent">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-tag"></i> Category Editor</h4>
+	                <h4 class="modal-title" id="categoryLabel"><i class="fas fa-tags"></i> Category Editor</h4>
 			    </div>
 				<!--- Create/Edit form --->
 				#html.startForm(

@@ -48,7 +48,7 @@
 	                        	placeholder		= cb.r( "common.password@security" ),
 	                        	autocomplete	= "off"
 	                        )#
-	                        <i class="fa fa-lock"></i>
+	                        <i class="fas fa-key"></i>
 
 	                    </div>
 	                    <div class="col-md-12">

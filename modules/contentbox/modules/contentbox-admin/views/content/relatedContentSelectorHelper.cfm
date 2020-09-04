@@ -6,10 +6,10 @@
                 iconCls = "fa fa-file";
                 break;
             case 'Entry':
-                iconCls = "fa fa-quote-left";
+                iconCls = "fas fa-blog";
                 break;
             case 'ContentStore':
-                iconCls = "fa fa-hdd-o";
+                iconCls = "far fa-hdd";
                 break;
             default:
                 break;

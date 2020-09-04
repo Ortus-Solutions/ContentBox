@@ -61,8 +61,11 @@
 	background-color: #16a086;
 	color: #fff;
 }
-.main-content-wrapper #main-content .h1 {
-	padding: 0px 10px 20px 10px;
+.main-content-wrapper #main-content {
+	padding: 10px;
+	.h1 {
+		padding: 0px 10px 20px 10px;
+	}
 }
 
 /** Section Overrides */
@@ -92,6 +95,9 @@ a.btn.btn-danger:visited {
 }
 .nav-tabs > li > a{
 	padding: 15px;
+}
+.nav-tabs > li.active > a {
+	border-radius: 10px 10px 0px 0px;
 }
 .nav-tabs > li > a:hover{
 	background-color: #eaeaea;

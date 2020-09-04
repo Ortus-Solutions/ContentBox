@@ -3,7 +3,7 @@
 	<div class="modal-content">
 		<div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3><i class="fa fa-quote-left"></i> Link To A ContentBox Entry</h3>
+			<h3><i class="fas fa-blog"></i> Link To A ContentBox Entry</h3>
 		</div>
 		<div class="modal-body">
 			#html.startForm(name="entryEditorSelectorForm" )#

@@ -44,7 +44,7 @@
 		<!--- Auto Save Operations --->
         <div class="btn-group btn-group-sm" id="contentAutoSave">
             <a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
-                <i class="fa fa-save"></i>
+                <i class="far fa-save"></i>
                 Auto Saved
                 <span class="caret"></span>
             </a>

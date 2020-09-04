@@ -143,7 +143,7 @@ component accessors="true" threadSafe singleton{
 		variables.siteService
 			.getAllSiteThemes()
 			.each( function( themeName ){
-				startupTheme( arguments.themeName );
+				startupTheme( name : arguments.themeName );
 			} );
 	}
 
@@ -209,23 +209,31 @@ component accessors="true" threadSafe singleton{
 	/**
 	 * Save theme settings as they are coming from form submissions as a struct with a common prefix
 	 * cb_theme_{themeName}_{settingName}
+	 * 
 	 * @name 		The theme name
 	 * @settings 	The settings struct
 	 *
 	 * @return ThemeService
 	 */
 	function saveThemeSettings( required name, required struct settings ){
-		transaction{
+		var site = variables.siteService.getCurrentWorkingSite();
 
-			// Filter out settings
+		transaction{
+			// Filter out settings that are not theme based
 			arguments.settings.filter( function( key, value ){
 				return ( findNoCase( "cb_theme_#name#_", key ) ? true : false );
 			} ).each( function( key, value ){
-				var oSetting = settingService.findWhere( { name=key } );
-				oSetting.setValue( value );
-				settingService.save( oSetting );
-			} );
+				var oSetting = variables.settingService.findWhere( { name : key } );
 
+				if( isNull( oSetting ) ){
+					oSetting = variables.settingService.new( { name : key } );
+				}
+
+				oSetting.setValue( value );
+				oSetting.setSite( site );
+
+				variables.settingService.save( oSetting );
+			} );
 		}
 
 		return this;
