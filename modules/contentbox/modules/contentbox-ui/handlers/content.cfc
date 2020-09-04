@@ -118,7 +118,9 @@ component {
 	function maintenance( event, rc, prc ){
 		// If no maintenance view exists, just output data
 		if ( !themeService.themeMaintenanceViewExists() ) {
-			event.renderData( data = markdown.toHTML( prc.cbSettings.cb_site_maintenance_message ) );
+			event.renderData(
+				data = variables.markdown.toHTML( prc.cbSettings.cb_site_maintenance_message )
+			);
 		} else {
 			// output maintenance view
 			event
@@ -227,7 +229,7 @@ component {
 						.setHTTPHeader( name = "x-contentbox-cached-content", value = "true" );
 				}
 				// Store hits
-				contentService.updateHits( prc.contentCacheData.contentID );
+				variables.contentService.updateHits( prc.contentCacheData.contentID );
 				// return cache content to be displayed
 				event.renderData(
 					data        = prc.contentCacheData.content,

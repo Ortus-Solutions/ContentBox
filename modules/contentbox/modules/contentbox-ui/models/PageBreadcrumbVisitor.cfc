@@ -7,16 +7,16 @@
 */
 component singleton{
 
-	// DI	
+	// DI
 	property name="CBHelper" inject="CBHelper@cb";
-	
+
 	/**
 	* Constructor
 	*/
 	PageBreadcrumbVisitor function init(){
 		return this;
 	}
-	
+
 	/**
 	* Visit and build out bread crumbs
 	* @page The page object
@@ -28,13 +28,14 @@ component singleton{
 		if( arguments.page.hasParent() ){
 			bc &= visit( arguments.page.getParent(), arguments.separator );
 		}
-		
+
 		// check if page slug is home, to ignore it
 		if( arguments.page.getSlug() NEQ CBHelper.getHomePage() ){
-			bc &= '#arguments.separator# <a href="#CBHelper.linkPage(arguments.page)#">#arguments.page.getTitle()#</a> ';
+			bc &= '#arguments.separator# <a href="#CBHelper.linkPage( arguments.page )#">#arguments.page.getTitle()#</a>
+ ';
 		}
-		
+
 		return bc;
 	}
-	
+
 }

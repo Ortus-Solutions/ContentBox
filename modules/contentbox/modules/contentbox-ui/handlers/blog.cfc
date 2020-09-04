@@ -81,30 +81,31 @@ component extends="content"{
 		if( !isNumeric( rc.page ) ){ rc.page = 1; }
 
 		// XSS Cleanup
-		rc.q        = antiSamy.clean( rc.q );
-		rc.category = antiSamy.clean( rc.category );
+		rc.q        = variables.antiSamy.clean( rc.q );
+		rc.category = variables.antiSamy.clean( rc.category );
 
 		// prepare paging object
 		prc.oPaging         = getInstance( "Paging@cb" );
-		prc.pagingBoundaries= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_paging_maxentries );
-		prc.pagingLink      = CBHelper.linkBlog() & "?page=@page@";
+		prc.pagingBoundaries= prc.oPaging.getBoundaries( pagingMaxRows : prc.cbSettings.cb_paging_maxentries );
+		prc.pagingLink      = variables.CBHelper.linkBlog() & "?page=@page@";
 
 		// Search Paging Link Override?
 		if( len( rc.q ) ){
-			prc.pagingLink = CBHelper.linkBlog() & "/search/#rc.q#/@page@?";
+			prc.pagingLink = variables.CBHelper.linkBlog() & "/search/#rc.q#/@page@?";
 		}
 
 		// Category Filter Link Override
 		if( len( rc.category ) ){
-			prc.pagingLink = CBHelper.linkBlog() & "/category/#rc.category#/@page@?";
+			prc.pagingLink = variables.CBHelper.linkBlog() & "/category/#rc.category#/@page@?";
 		}
 
 		// get published entries
-		var entryResults = entryService.findPublishedEntries(
-			offset    = prc.pagingBoundaries.startRow - 1,
-			max       = prc.cbSettings.cb_paging_maxentries,
-			category  = rc.category,
-			searchTerm= rc.q
+		var entryResults = variables.entryService.findPublishedEntries(
+			offset     : prc.pagingBoundaries.startRow - 1,
+			max        : prc.cbSettings.cb_paging_maxentries,
+			category   : rc.category,
+			searchTerm : rc.q,
+			siteId     : prc.oCurrentSite.getSiteId()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
@@ -156,12 +157,13 @@ component extends="content"{
 		prc.pagingLink      = event.getCurrentRoutedURL() & "?page=@page@";
 
 		// get published entries
-		var entryResults = entryService.findPublishedEntriesByDate(
+		var entryResults = variables.entryService.findPublishedEntriesByDate(
 			year   = rc.year,
 			month  = rc.month,
 			day    = rc.day,
 			offset = prc.pagingBoundaries.startRow-1,
-			max    = prc.cbSettings.cb_paging_maxentries
+			max    = prc.cbSettings.cb_paging_maxentries,
+			siteId = prc.oCurrentSite.getSiteId()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
@@ -217,26 +219,33 @@ component extends="content"{
 		if( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ){
 			var showUnpublished = true;
 		}
-		prc.entry = entryService.findBySlug(rc.entrySlug,showUnpublished);
+		prc.entry = variables.entryService.findBySlug(
+			slug            : rc.entrySlug,
+			showUnpublished : showUnpublished,
+			siteId          : prc.oCurrentSite.getSiteId()
+		);
 
 		// Check if loaded, else not found
 		if( prc.entry.isLoaded() ){
 			// Record hit
-			entryService.updateHits( prc.entry.getContentID() );
+			variables.entryService.updateHits( prc.entry.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
-			var commentResults = commentService.findApprovedComments(contentID=prc.entry.getContentID(),sortOrder="asc" );
-			prc.comments       = commentResults.comments;
-			prc.commentsCount  = commentResults.count;
+			var commentResults = variables.commentService.findApprovedComments(
+				contentID : prc.entry.getContentID(),
+				sortOrder : "asc"
+			);
+			prc.comments      = commentResults.comments;
+			prc.commentsCount = commentResults.count;
 			// announce event
-			announce( "cbui_onEntry",{entry=prc.entry,entrySlug=rc.entrySlug} );
+			announce( "cbui_onEntry", {entry=prc.entry, entrySlug=rc.entrySlug } );
 			// set skin view
 			event.setLayout( name="#prc.cbTheme#/layouts/blog", module=prc.cbThemeRecord.module )
 				.setView( view="#prc.cbTheme#/views/entry", module=prc.cbThemeRecord.module );
 		}
 		else{
 			// announce event
-			announce( "cbui_onEntryNotFound",{entry=prc.entry,entrySlug=rc.entrySlug} );
+			announce( "cbui_onEntryNotFound",{ entry=prc.entry, entrySlug=rc.entrySlug } );
 			// missing page
 			prc.missingPage = rc.entrySlug;
 			// set 404 headers
@@ -248,8 +257,8 @@ component extends="content"{
 	}
 
 	/**
-	* Display the RSS feeds for the blog
-	*/
+	 * Display the RSS feeds for the blog
+	 */
 	function rss( event, rc, prc ){
 		// params
 		event.paramValue( "category", "" )
@@ -257,11 +266,12 @@ component extends="content"{
 			.paramValue( "commentRSS", false );
 
 		// Build out the blog RSS feeds
-		var feed = RSSService.getRSS(
-			comments   = rc.commentRSS,
-			category   = rc.category,
-			slug       = rc.entrySlug,
-			contentType= "Entry"
+		var feed = variables.RSSService.getRSS(
+			comments    : rc.commentRSS,
+			category    : rc.category,
+			slug        : rc.entrySlug,
+			contentType : "Entry",
+			siteId      : prc.oCurrentSite.getSiteId()
 		);
 
 		// Render out the feed xml
@@ -276,7 +286,7 @@ component extends="content"{
 		// incoming params
 		event.paramValue( "entrySlug", "" );
 		// Try to retrieve entry by slug
-		var thisEntry = entryService.findBySlug( rc.entrySlug );
+		var thisEntry = variables.entryService.findBySlug( slug : rc.entrySlug, siteId : prc.oCurrentSite.getSiteId() );
 		// If null, kick them out
 		if( isNull( thisEntry ) ){
 			relocate( prc.cbEntryPoint );

@@ -174,6 +174,16 @@ component extends="ContentService" singleton{
 
 	/**
 	 * Find published entries by date filters
+	 *
+	 * @year The year to filter on
+	 * @month The month to filter on
+	 * @day The day to filter on
+	 * @max The maximum records to return
+	 * @offset The offset on the pagination
+	 * @asQuery Return query or array of structs
+	 * @siteId The site ID to filter on
+	 *
+	 * @returns struct of { entries, count }
 	 */
 	function findPublishedEntriesByDate(
 		numeric year   =0,
@@ -181,7 +191,8 @@ component extends="ContentService" singleton{
 		numeric day    =0,
 		numeric max    =0,
 		numeric offset =0,
-		boolean asQuery=false
+		boolean asQuery=false,
+		string siteId  = ""
 	){
 		var results = {};
 		var hql     = "FROM cbEntry
@@ -190,6 +201,12 @@ component extends="ContentService" singleton{
 				    AND publishedDate <= :now";
 		var params      = {};
 		params[ "now" ] = now();
+
+		// Site
+		if( len( arguments.siteId ) ){
+			params[ "siteId" ] = arguments.siteId;
+			hql &= " AND site.siteId = :siteId";
+		}
 
 		// year lookup mandatory
 		if( arguments.year NEQ 0 ){
@@ -216,8 +233,10 @@ component extends="ContentService" singleton{
 			max    = 1,
 			asQuery= false
 		)[1];
+
 		// Add Ordering
 		hql &= " ORDER BY publishedDate DESC";
+
 		// find entries
 		results.entries = executeQuery(
 			query  = hql,

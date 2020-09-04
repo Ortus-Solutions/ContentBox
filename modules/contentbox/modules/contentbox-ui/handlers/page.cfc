@@ -64,7 +64,7 @@ component extends="content"{
 
 			// Do we have a parent?
 		if( len( rc.parentPage ) && isNumeric( rc.parentPage ) ){
-			var parent = contentService.get( rc.parentPage );
+			var parent = variables.contentService.get( rc.parentPage );
 			if( !isNull( parent ) ){
 				prc.page.setParent( parent );
 			}
@@ -95,8 +95,8 @@ component extends="content"{
 	 */
 	function aroundIndex( event, rc, prc , eventArguments ){
 		// setup wrap arguments
-		arguments.contentCaching 	= prc.cbSettings.cb_content_caching;
-		arguments.action 			= variables.index;
+		arguments.contentCaching = prc.cbSettings.cb_content_caching;
+		arguments.action         = variables.index;
 
 		return wrapContentAdvice( argumentCollection = arguments );
 	}
@@ -133,7 +133,11 @@ component extends="content"{
 		}
 
 		// Try to get the page using the incoming URI
-		prc.page = contentService.findBySlug( incomingURL, showUnpublished );
+		prc.page = variables.contentService.findBySlug(
+			slug            : incomingURL,
+			showUnpublished : showUnpublished,
+			siteId          : prc.oCurrentSite.getSiteId()
+		);
 
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if( prc.page.isLoaded() ){
@@ -144,16 +148,16 @@ component extends="content"{
 				return;
 			}
 			// Record hit
-			contentService.updateHits( prc.page.getContentID() );
+			variables.contentService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
 			if(prc.page.getAllowComments()){
-				var commentResults 	= commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
-				prc.comments 		= commentResults.comments;
-				prc.commentsCount 	= commentResults.count;
+				var commentResults = commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
+				prc.comments       = commentResults.comments;
+				prc.commentsCount  = commentResults.count;
 			} else {
-				prc.comments 		= [];
-				prc.commentsCount 	= 0;
+				prc.comments      = [];
+				prc.commentsCount = 0;
 			}
 			// Detect Mobile Device
 			var isMobileDevice 	= mobileDetector.isMobile();
@@ -173,7 +177,7 @@ component extends="content"{
 			}
 		} else {
 			// missing page
-			prc.missingPage 	 = incomingURL;
+			prc.missingPage      = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
 			// announce event
 			announce( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
@@ -202,22 +206,23 @@ component extends="content"{
 		rc.q = HTMLEditFormat( trim( rc.q ) );
 
 		// prepare paging object
-		prc.oPaging 			= getInstance( "paging@cb" );
-		prc.pagingBoundaries	= prc.oPaging.getBoundaries( pagingMaxRows=prc.cbSettings.cb_search_maxResults );
-		prc.pagingLink 			= CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
+		prc.oPaging         = getInstance( "paging@cb" );
+		prc.pagingBoundaries= prc.oPaging.getBoundaries( pagingMaxRows : prc.cbSettings.cb_search_maxResults );
+		prc.pagingLink      = variables.CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
 
 		// get search results
 		if( len( rc.q ) ){
-			var searchAdapter = searchService.getSearchAdapter();
+			var searchAdapter = variables.searchService.getSearchAdapter();
 			prc.searchResults = searchAdapter.search(
-				offset 		= prc.pagingBoundaries.startRow-1,
-				max 		= prc.cbSettings.cb_search_maxResults,
-				searchTerm	= rc.q
+				offset    = prc.pagingBoundaries.startRow-1,
+				max       = prc.cbSettings.cb_search_maxResults,
+				searchTerm= rc.q
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
-			prc.searchResults 			= getInstance( "SearchResults@cb" );
-			prc.searchResultsContent 	= "<div class='alert alert-info'>Please enter a search term to search on.</div>";
+			prc.searchResults        = getInstance( "SearchResults@cb" );
+			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>
+";
 		}
 
 		// set skin search
@@ -260,7 +265,7 @@ component extends="content"{
 		// incoming params
 		event.paramValue( "contentID", "" );
 		// Try to retrieve page by contentID
-		var page = contentService.get( rc.contentID );
+		var page = variables.contentService.get( rc.contentID );
 		// If null, kick them out
 		if( isNull( page ) ){
 			relocate( prc.cbEntryPoint );

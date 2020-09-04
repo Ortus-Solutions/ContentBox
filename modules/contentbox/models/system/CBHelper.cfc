@@ -5,7 +5,7 @@
  * ---
  * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
  */
-component accessors="true" singleton threadSafe {
+component accessors="true" threadSafe {
 
 	// DI
 	property name="categoryService" inject="categoryService@cb";
@@ -265,7 +265,7 @@ component accessors="true" singleton threadSafe {
 	 */
 	function site( string siteId = "" ){
 		return (
-			len( arguments.siteId ) ? variables.siteService.getOrFail( arguments.siteId ) : variables.siteService.discoverSite()
+			len( arguments.siteId ) ? variables.siteService.getOrFail( arguments.siteId ) : getPrivateRequestCollection().oCurrentSite
 		);
 	}
 
@@ -422,7 +422,7 @@ component accessors="true" singleton threadSafe {
 			prc.cbAdminEntryPoint = "";
 		}
 		// Place site on request
-		prc.oCurrentSite   = site();
+		prc.oCurrentSite   = variables.siteService.discoverSite();
 		// Place global cb options on scope
 		prc.cbSettings     = variables.settingService.getAllSettings();
 		prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
@@ -1305,7 +1305,7 @@ component accessors="true" singleton threadSafe {
 	 * @siteId The site id to link to or use the default
 	 */
 	function linkBlog( string siteId = "" ){
-		return "#siteRoot( arguments.siteId )##sep()##getBlogEntryPoint()#";
+		return "#siteRoot( arguments.siteId )#/#getBlogEntryPoint()#";
 	}
 
 	/**
@@ -1550,7 +1550,7 @@ component accessors="true" singleton threadSafe {
 			);
 		}
 
-		return linkBlog( entry.getSiteId() ) & sep() & arguments.entry.getSlug() & outputFormat;
+		return linkBlog( arguments.entry.getSiteId() ) & "/" & arguments.entry.getSlug() & outputFormat;
 	}
 
 	/**
