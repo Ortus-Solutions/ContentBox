@@ -18,14 +18,14 @@ component
 {
 
 	// DI properties
-	property name="siteService"    inject="siteService@cb";
-	property name="cachebox"       inject="cachebox";
+	property name="siteService" inject="siteService@cb";
+	property name="cachebox" inject="cachebox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
-	property name="appMapping"     inject="coldbox:setting:appMapping";
+	property name="appMapping" inject="coldbox:setting:appMapping";
 	property name="requestService" inject="coldbox:requestService";
-	property name="coldbox"        inject="coldbox";
-	property name="dateUtil"       inject="DateUtil@cb";
-	property name="log"            inject="logbox:logger:{this}";
+	property name="coldbox" inject="coldbox";
+	property name="dateUtil" inject="DateUtil@cb";
+	property name="log" inject="logbox:logger:{this}";
 
 	/**
 	 * The cache provider name to use for settings caching. Defaults to 'template' cache.
@@ -482,6 +482,18 @@ component
 			},
 			7200
 		);
+	}
+
+	/**
+	 * Try to find a setting object by site and name
+	 *
+	 * @return The setting or null
+	 */
+	Setting function findSiteSetting( required site, required name ){
+		return newCriteria()
+			.isEq( "site", arguments.site )
+			.isEq( "name", arguments.name )
+			.get();
 	}
 
 	/**

@@ -84,12 +84,15 @@ component
 
 	/**
 	 * Returns a collection of all the themes that are used in all active sites
+	 *
+	 * @return array of { activeTheme:string, siteId:numeric }
 	 */
 	array function getAllSiteThemes(){
 		return newCriteria()
 			.isFalse( "isDeleted" )
-			.withProjections( distinct: "activeTheme" )
-			.list( sortOrder = "activeTheme" );
+			.withProjections( distinct: "activeTheme,siteId" )
+			.asStruct()
+			.list( sortOrder = "siteId" );
 	}
 
 	/**

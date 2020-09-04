@@ -253,7 +253,7 @@ component accessors="true" singleton threadSafe {
 	 */
 	function themeSetting( required key, defaultValue ){
 		arguments.key = "cb_theme_#themeName()#_#arguments.key#";
-		return setting( argumentCollection = arguments );
+		return siteSetting( argumentCollection = arguments );
 	}
 
 	/************************************** Site Methods *********************************************/

@@ -142,8 +142,11 @@ component accessors="true" threadSafe singleton{
 	function startupSiteThemes(){
 		variables.siteService
 			.getAllSiteThemes()
-			.each( function( themeName ){
-				startupTheme( name : arguments.themeName );
+			.each( function( record ){
+				startupTheme(
+					name : arguments.record[ "activeTheme"],
+					siteId : arguments.record[ "siteId" ]
+				);
 			} );
 	}
 
@@ -152,22 +155,28 @@ component accessors="true" threadSafe singleton{
 	 *
 	 * @name The name of the theme to activate
 	 * @processWidgets Process widget registration on activation, defaults to true.
+	 * @siteId The site we are starting up this theme for
 	 */
-	function startupTheme( required name, boolean processWidgets=true ){
+	function startupTheme( required name, boolean processWidgets=true, string siteId = "" ){
 		// Get theme record information
 		var themeRecord = getThemeRecord( arguments.name );
 		var oTheme 		= themeRecord.descriptor;
+		var oSite 		= variables.siteService.getOrFail( arguments.siteId );
 
 		// Register description as an interceptor with custom points
 		variables.interceptorService.registerInterceptor(
 			interceptorObject	: oTheme,
-			interceptorName		: "cbtheme-#arguments.name#",
+			interceptorName		: "cbtheme-#arguments.name#-#arguments.siteId#",
 			customPoints		: themeRecord.customInterceptionPoints
 		);
 
 		// Register theme settings?
 		if( structKeyExists( oTheme, "settings" ) ){
-			registerThemeSettings( name : arguments.name, settings : oTheme.settings );
+			registerThemeSettings(
+				name 		: arguments.name,
+				settings 	: oTheme.settings,
+				site 		: oSite
+			);
 		}
 
 		// build widget cache for active theme
@@ -197,7 +206,8 @@ component accessors="true" threadSafe singleton{
 		// Announce theme activation
 		variables.interceptorService.announce( "cbadmin_onThemeActivation", {
 			themeName 		: arguments.name,
-			themeRecord 	: themeRecord
+			themeRecord 	: themeRecord,
+			site 			: oSite
 		} );
 
 		// Call Theme Callbacks: onActivation
@@ -209,28 +219,28 @@ component accessors="true" threadSafe singleton{
 	/**
 	 * Save theme settings as they are coming from form submissions as a struct with a common prefix
 	 * cb_theme_{themeName}_{settingName}
-	 * 
+	 *
 	 * @name 		The theme name
 	 * @settings 	The settings struct
 	 *
 	 * @return ThemeService
 	 */
 	function saveThemeSettings( required name, required struct settings ){
-		var site = variables.siteService.getCurrentWorkingSite();
+		var oSite = variables.siteService.getCurrentWorkingSite();
 
 		transaction{
 			// Filter out settings that are not theme based
 			arguments.settings.filter( function( key, value ){
 				return ( findNoCase( "cb_theme_#name#_", key ) ? true : false );
 			} ).each( function( key, value ){
-				var oSetting = variables.settingService.findWhere( { name : key } );
+				var oSetting = variables.settingService.findSiteSetting( oSite, key );
 
 				if( isNull( oSetting ) ){
 					oSetting = variables.settingService.new( { name : key } );
 				}
 
 				oSetting.setValue( value );
-				oSetting.setSite( site );
+				oSetting.setSite( oSite );
 
 				variables.settingService.save( oSetting );
 			} );
@@ -277,7 +287,8 @@ component accessors="true" threadSafe singleton{
 			// Call deactivation event
 			variables.interceptorService.announce( "cbadmin_onThemeDeactivation", {
 				themeName 		: currentSite.getActiveTheme(),
-				themeRecord 	: themeRecord
+				themeRecord 	: themeRecord,
+				site 			: currentSite
 			} );
 
 			// Call Theme Callback: onDeactivation
@@ -291,14 +302,20 @@ component accessors="true" threadSafe singleton{
 			}
 
 			// Unregister theme Descriptor Interceptor
-			variables.interceptorService.unregister( interceptorName="cbTheme-#currentSite.getActiveTheme()#" );
+			variables.interceptorService.unregister(
+				interceptorName="cbTheme-#currentSite.getActiveTheme()#-#currentSite.getSiteId()#"
+			);
 
 			// Setup the new chosen theme for the site
 			currentSite.setActiveTheme( arguments.themeName );
 			variables.siteService.save( currentSite );
 
 			// Startup the theme
-			startupTheme( name : arguments.themeName, processWidgets=false );
+			startupTheme(
+				name 			: arguments.themeName,
+				processWidgets 	: false,
+				siteId 			: currentSite.getSiteId()
+			);
 
 			// Force Recreation of all Widgets, since we need to deactivate the old widgets
 			variables.widgetService.getWidgets( reload=true );
@@ -491,7 +508,9 @@ component accessors="true" threadSafe singleton{
 
 		// Remove settings
 		if( structKeyExists( themeRecord.descriptor, "settings" ) ){
-			unregisterThemeSettings( name=arguments.themeName, settings=themeRecord.descriptor.settings );
+			unregisterThemeSettings(
+				settings : themeRecord.descriptor.settings
+			);
 		}
 
 		// Remove from registry
@@ -537,15 +556,21 @@ component accessors="true" threadSafe singleton{
 
 	/**
 	 * Build out the settings form HTML
+	 *
 	 * @activeTheme The active theme struct
 	 */
 	function buildSettingsForm( required struct activeTheme ){
 		// Get theme CFC
 		var oTheme 		= variables.themeRegistry[ arguments.activeTheme.name ].descriptor;
+		var oSite 		= variables.siteService.getCurrentWorkingSite();
 		var settingForm = "";
 
 		// Build Form by iteration over items
-		if( !structKeyExists( oTheme, "settings" ) OR !arrayLen( oTheme.settings ) ){ return settingForm; }
+		if( !structKeyExists( oTheme, "settings" ) OR !arrayLen( oTheme.settings ) ){
+			return settingForm;
+		}
+
+		// cfformat-ignore-start
 
 		savecontent variable="settingForm"{
 
@@ -562,7 +587,8 @@ component accessors="true" threadSafe singleton{
 
 				// get actual setting value which should be guaranteed to exist
 				var settingName = "cb_theme_#arguments.activeTheme.name#_#thisSettingMD.name#";
-				var oSetting 	= settingService.findWhere( { name=settingName } );
+				var oSetting 	= settingService.findSiteSetting( oSite, settingName );
+
 				thisSettingMD.defaultValue = oSetting.getValue();
 
 				// Default values for settings
@@ -586,7 +612,7 @@ component accessors="true" threadSafe singleton{
 
 					// Close out previous group panel-body
 					if ( lastGroup != "NeverHadAGroup" ){
-						writeOutput( '</div></div></div>' );
+						writeOutput( "</div></div></div>" );
 					}
 
 					// Write out group panel header
@@ -626,96 +652,96 @@ component accessors="true" threadSafe singleton{
 				// writeout control wrapper
 				writeOutput( '<div class="form-group marginTop25">' );
 
-					// write out label
-					writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
+				// write out label
+				writeOutput( html.label( field=settingName, content="#thisSettingMD.label# #requiredText#" ) );
 
-					// Generate question mark icon for field Help to open modal
-					if( len( thisSettingMD.fieldHelp ) ){
-						writeOutput( ' <a data-toggle="modal" data-target="##help_#settingName#"><i class="fa fa-question-circle"></i></a>' );
+				// Generate question mark icon for field Help to open modal
+				if( len( thisSettingMD.fieldHelp ) ){
+					writeOutput( ' <a data-toggle="modal" data-target="##help_#settingName#"><i class="fa fa-question-circle"></i></a>' );
+				}
+
+
+				// write out field description
+				if( len( thisSettingMD.fieldDescription ) ){
+					writeOutput( '<div class="pb5">' & thisSettingMD.fieldDescription & '</div>' );
+				}
+
+				// write out control
+				switch( thisSettingMD.type ){
+					case "boolean" : {
+						writeOutput(
+							html.select(
+								name			= settingName,
+								options			= "true,false",
+								selectedValue	= thisSettingMD.defaultValue,
+								title			= thisSettingMD.title,
+								class 			= "form-control input-lg"
+							)
+						);
+						break;
 					}
-
-
-					// write out field description
-					if( len( thisSettingMD.fieldDescription ) ){
-						writeOutput( '<div class="pb5">' & thisSettingMD.fieldDescription & '</div>' );
+					case "select" : {
+						var options = "";
+						// Check options UDF
+						if( structKeyExists( thisSettingMD, "optionsUDF" ) ){
+							options = invoke( oTheme, thisSettingMD.optionsUDF );
+						} else if( structKeyExists( thisSettingMD, "options" ) ){
+							options = thisSettingMD.options;
+						}
+						writeOutput(
+							html.select(
+								name 			= settingName,
+								options			= options,
+								selectedValue	= thisSettingMD.defaultValue,
+								title			= thisSettingMD.title,
+								class 			= "form-control input-lg"
+							)
+						);
+						break;
 					}
-
-    				// write out control
-    				switch( thisSettingMD.type ){
-    					case "boolean" : {
-    						writeOutput(
-    							html.select(
-	    							name			= settingName,
-	    							options			= "true,false",
-	    							selectedValue	= thisSettingMD.defaultValue,
-	    							title			= thisSettingMD.title,
-	    							class 			= "form-control input-lg"
-	    						)
-    						);
-    						break;
-    					}
-    					case "select" : {
-    						var options = "";
-    						// Check options UDF
-    						if( structKeyExists( thisSettingMD, "optionsUDF" ) ){
-								options = invoke( oTheme, thisSettingMD.optionsUDF );
-    						} else if( structKeyExists( thisSettingMD, "options" ) ){
-    							options = thisSettingMD.options;
-    						}
-    						writeOutput(
-    							html.select(
-    								name 			= settingName,
-    								options			= options,
-    								selectedValue	= thisSettingMD.defaultValue,
-    								title			= thisSettingMD.title,
-    								class 			= "form-control input-lg"
-    							)
-    						);
-    						break;
-    					}
-    					case "textarea" : {
-    						writeOutput(
-    							html.textarea(
-    								name		= settingName,
-    								required	= requiredValidator,
-    								title		= thisSettingMD.title,
-    								value		= thisSettingMD.defaultValue,
-    								class 		= "form-control",
-    								rows		= 5
-    							)
-    						);
-    						break;
-    					}
-    					case "color" : {
-    						writeOutput(
-    							html.inputField(
-    								name		= settingName,
-    								class		= "textfield",
-    								required	= requiredValidator,
-    								title		= thisSettingMD.title,
-    								value		= thisSettingMD.defaultValue,
-    								class 		= "form-control",
-    								type		= "color"
-    							)
-    						);
-    						break;
-    					}
-    					default:{
-    						writeOutput(
-    							html.textfield(
-    								name		= settingName,
-    								class		= "textfield",
-    								required	= requiredValidator,
-    								title		= thisSettingMD.title,
-    								value		= thisSettingMD.defaultValue,
-    								class 		= "form-control"
-    							)
-    						);
-    					}
-    				}
+					case "textarea" : {
+						writeOutput(
+							html.textarea(
+								name		= settingName,
+								required	= requiredValidator,
+								title		= thisSettingMD.title,
+								value		= thisSettingMD.defaultValue,
+								class 		= "form-control",
+								rows		= 5
+							)
+						);
+						break;
+					}
+					case "color" : {
+						writeOutput(
+							html.inputField(
+								name		= settingName,
+								class		= "textfield",
+								required	= requiredValidator,
+								title		= thisSettingMD.title,
+								value		= thisSettingMD.defaultValue,
+								class 		= "form-control",
+								type		= "color"
+							)
+						);
+						break;
+					}
+					default:{
+						writeOutput(
+							html.textfield(
+								name		= settingName,
+								class		= "textfield",
+								required	= requiredValidator,
+								title		= thisSettingMD.title,
+								value		= thisSettingMD.defaultValue,
+								class 		= "form-control"
+							)
+						);
+					}
+				}
 
     			// End form group
-    			writeOutput( '</div>');
+    			writeOutput( '</div>' );
 
 				// Generate modal for field Help
 				if( len( thisSettingMD.fieldHelp ) ){
@@ -733,6 +759,8 @@ component accessors="true" threadSafe singleton{
 			writeOutput( "</div>" );
 		}
 
+		// cfformat-ignore-end
+
 		return settingForm;
 	}
 
@@ -742,6 +770,7 @@ component accessors="true" threadSafe singleton{
 	* @thisSettingMD - The setting struct itself
 	*/
 	function generateModal( required settingName, required thisSettingMD ){
+		// cfformat-ignore-start
 		return '<div class="modal fade" tabindex="-1" role="dialog" id="help_#arguments.settingName#">
 				  <div class="modal-dialog" role="document">
 				    <div class="modal-content">
@@ -758,6 +787,7 @@ component accessors="true" threadSafe singleton{
 				    </div><!-- /.modal-content -->
 				  </div><!-- /.modal-dialog -->
 				</div><!-- /.modal -->';
+		// cfformat-ignore-end
 	}
 
 	/************************************ PRIVATE ************************************************/
@@ -780,20 +810,25 @@ component accessors="true" threadSafe singleton{
 	}
 
 	/**
-	* Unregister theme settings
-	* @settings The settings to unregister
-	*
-	* @return ThemeService
-	*/
+	 * Unregister theme settings
+	 *
+	 * @settings The settings to unregister
+	 *
+	 * @return ThemeService
+	 */
 	private function unregisterThemeSettings( required array settings ){
 		transaction{
 			// iterate and register theme settings
 			for( var thisSetting in arguments.settings ){
-				// try to retrieve it first
-				var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
-				// If not found, then register it
-				if( !isNull( oSetting ) ){
-					settingService.delete( oSetting );
+				// try to retrieve the collection
+				var aSettings = variables.settingService
+					.newCriteria()
+					.isEq( "name", "cb_theme_#arguments.name#_#thisSetting.name#" )
+					.list();
+
+				// If not found, then unregister it
+				if( arrayLen( aSettings ) ){
+					variables.settingService.delete( aSettings );
 				}
 			}
 		}
@@ -806,23 +841,33 @@ component accessors="true" threadSafe singleton{
 	 *
 	 * @name The theme name
 	 * @settings The settings struct
+	 * @site The site this theme is activated on
 	 *
 	 * @return ThemeService
 	 */
-	private any function registerThemeSettings( required name, required array settings ){
+	private any function registerThemeSettings( required name, required array settings, required site ){
 		transaction{
 			// iterate and register theme settings
 			for( var thisSetting in arguments.settings ){
+
 				// try to retrieve it first
-				var oSetting = settingService.findWhere( { name="cb_theme_#arguments.name#_#thisSetting.name#" } );
-				// If not found, then register it
+				var oSetting = variables.settingService.findSiteSetting( arguments.site, "cb_theme_#arguments.name#_#thisSetting.name#" );
+
+				// If not found, then register it, else ignore it
 				if( isNull( oSetting ) ){
-					var args = { name="cb_theme_#arguments.name#_#thisSetting.name#", value=thisSetting.defaultValue };
-					settingService.save( settingService.new( properties=args ) );
+					variables.settingService.save(
+						variables.settingService
+						.new( {
+							name 	: "cb_theme_#arguments.name#_#thisSetting.name#",
+							value 	: thisSetting.defaultValue
+						} )
+						.setSite( arguments.site )
+					);
 				}
 			}
-			settingService.flushSettingsCache();
 		}
+
+		variables.settingService.flushSettingsCache();
 
 		return this;
 	}
