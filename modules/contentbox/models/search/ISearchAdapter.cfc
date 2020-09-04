@@ -9,14 +9,16 @@ interface {
 
 	/**
 	 * Search content and return an standardized ContentBox Results object.
-	 * @searchTerm.hint The search term to search on
-	 * @max.hint The max results to return if paging
-	 * @offset.hint The offset to use in the search results if paging
+	 * @searchTerm The search term to search on
+	 * @max The max results to return if paging
+	 * @offset The offset to use in the search results if paging
+	 * @siteId The site id to search on if passed
 	 */
 	contentbox.models.search.SearchResults function search(
 		required string searchTerm,
 		numeric max    = 0,
-		numeric offset = 0
+		numeric offset = 0,
+		string siteId  = ""
 	);
 
 	/**
@@ -26,9 +28,9 @@ interface {
 
 	/**
 	 * Render the search results according to the adapter and return HTML
-	 * @searchTerm.hint The search term to search on
-	 * @max.hint The max results to return if paging
-	 * @offset.hint The offset to use in the search results if paging
+	 * @searchTerm The search term to search on
+	 * @max The max results to return if paging
+	 * @offset The offset to use in the search results if paging
 	 */
 	any function renderSearch(
 		required string searchTerm,
@@ -38,7 +40,7 @@ interface {
 
 	/**
 	 * Render the search results according the passed in search results object
-	 * @searchResults.hint The search results object
+	 * @searchResults The search results object
 	 */
 	any function renderSearchWithResults(
 		required contentbox.models.search.SearchResults searchResults

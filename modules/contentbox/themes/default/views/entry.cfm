@@ -69,7 +69,7 @@
 
 						<div class="row">
 							<div class="col-xs-9 pull-left">
-								<i class="fas fa-tags"></i> Tags: #cb.quickCategoryLinks(prc.entry)#
+								<i class="fa fa-tags"></i> Tags: #cb.quickCategoryLinks(prc.entry)#
 							</div>
 							<div class="col-xs-3 pull-right text-right">
 								<i class="fa fa-comment"></i> <a href="#cb.linkEntry(prc.entry)###comments" title="View Comments"> #prc.entry.getNumberOfApprovedComments()# Comments</a>
@@ -88,7 +88,7 @@
 							Comments are currently closed
 							<cfelse>
 								<p>
-									<button class="btn btn-primary" onclick="toggleCommentForm()"><i class="far fa-comments"></i> Add Comment (#prc.entry.getNumberOfApprovedComments()#)</button>
+									<button class="btn btn-primary" onclick="toggleCommentForm()"><i class="fa fa-comments"></i> Add Comment (#prc.entry.getNumberOfApprovedComments()#)</button>
 								</p>
 							</cfif>
 						</div>

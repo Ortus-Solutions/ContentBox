@@ -33,16 +33,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @sortOrder.options Most Recent,Most Popular,Most Commented
 	*/
 	any function renderIt(
-		numeric max=5,
-		title="",
+		numeric max      =5,
+		title            ="",
 		string titleLevel="2",
-		string category="",
+		string category  ="",
 		string searchTerm="",
-		string sortOrder="Most Recent"
+		string sortOrder ="Most Recent"
 	){
-		var event 			= getRequestContext();
-		var cbSettings 		= event.getValue( name="cbSettings", private=true );
-		
+		var event      = getRequestContext();
+		var cbSettings = event.getValue( name="cbSettings", private=true );
+
 		// Determine Sort Order
 		switch( arguments.sortOrder ){
 			case "Most Popular" 	: { arguments.sortOrder = "hits DESC";break; }
@@ -50,10 +50,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 			default : { arguments.sortOrder = "publishedDate DESC"; }
 		}
 
-		var entryResults 	= entryService.findPublishedEntries( max=arguments.max,
-											   					 category=arguments.category,
-											   				 	 searchTerm=arguments.searchTerm,
-											   				 	 sortOrder=arguments.sortOrder );
+		var entryResults 	= entryService.findPublishedEntries(
+			max        : arguments.max,
+			category   : arguments.category,
+			searchTerm : arguments.searchTerm,
+			sortOrder  : arguments.sortOrder,
+			siteId     : getSite().getSiteId()
+		);
 		var rString			= "";
 
 		// iteration cap
@@ -64,15 +67,22 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+" ); }
 			// UL start
-			writeOutput('<ul id="recentEntries">');
+			writeOutput('<ul id="recentEntries">
+	');
 			// iterate and create
 			for(var x=1; x lte arguments.max; x++){
-				writeOutput('<li class="recentEntries"><a href="#cb.linkEntry(entryResults.entries[ x ])#">#entryResults.entries[ x ].getTitle()#</a></li>');
+				writeOutput('<li class="recentEntries">
+		<a href="#cb.linkEntry(entryResults.entries[ x ])#">#entryResults.entries[ x ].getTitle()#</a>
+	</li>
+	');
 			}
 			// close ul
-			writeOutput( "</ul>" );
+			writeOutput( "
+</ul>
+" );
 		}
 
 		return rString;

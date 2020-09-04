@@ -29,13 +29,15 @@ component
 	 * @searchTerm The search term to search on
 	 * @max The max results to return if paging
 	 * @offset The offset to use in the search results if paging
+	 * @siteId The site to filter on if passed
 	 *
 	 * @return contentbox.models.search.SearchResults Object
 	 */
 	contentbox.models.search.SearchResults function search(
 		required string searchTerm,
 		numeric max    = 0,
-		numeric offset = 0
+		numeric offset = 0,
+		string siteId  = ""
 	){
 		// get new search results object
 		var searchResults = variables.wirebox.getInstance( "SearchResults@cb" );
@@ -48,7 +50,7 @@ component
 				searchTerm  : arguments.searchTerm,
 				showInSearch: true,
 				contentTypes: "Page,Entry",
-				siteId      : variables.cb.getPrivateRequestCollection( "oCurrentsite" ).getSiteId()
+				siteId      : arguments.siteId
 			);
 
 			// populate the search results
@@ -125,7 +127,7 @@ component
 
 				if ( item.hasCategories() ) {
 					writeOutput( "<div class=""panel-footer""><cite>Categories: " );
-					for ( var categoryItem in       #item.getCategoriesList()# ) {
+					for ( var categoryItem in          #item.getCategoriesList()# ) {
 						writeOutput( " <span class=""label label-primary"">#categoryItem#</span>" );
 					}
 					writeOutput( "</cite></div>" );

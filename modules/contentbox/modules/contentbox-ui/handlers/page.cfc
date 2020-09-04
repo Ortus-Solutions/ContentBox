@@ -214,9 +214,10 @@ component extends="content"{
 		if( len( rc.q ) ){
 			var searchAdapter = variables.searchService.getSearchAdapter();
 			prc.searchResults = searchAdapter.search(
-				offset    = prc.pagingBoundaries.startRow-1,
-				max       = prc.cbSettings.cb_search_maxResults,
-				searchTerm= rc.q
+				offset     : prc.pagingBoundaries.startRow-1,
+				max        : prc.cbSettings.cb_search_maxResults,
+				searchTerm : rc.q,
+				siteId     : prc.oCurrentSite.getSiteId()
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {

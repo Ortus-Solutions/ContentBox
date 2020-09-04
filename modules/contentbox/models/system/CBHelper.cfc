@@ -5,7 +5,7 @@
  * ---
  * This is the ContentBox UI helper class that is injected by the CBRequest interceptor
  */
-component accessors="true" threadSafe {
+component accessors="true" singleton threadSafe {
 
 	// DI
 	property name="categoryService" inject="categoryService@cb";
@@ -1319,7 +1319,7 @@ component accessors="true" threadSafe {
 	 * Get the site URL separator depending if you have an entry point or not
 	 */
 	private function sep(){
-		return ( len( getPrivateRequestCollection().cbEntryPoint ) ? "/" : "" );
+		return "/";
 	}
 
 	/**
@@ -1335,19 +1335,19 @@ component accessors="true" threadSafe {
 		entry,
 		boolean ssl = getRequestContext().isSSL()
 	){
-		var xehRSS = siteRoot() & sep() & "#getBlogEntryPoint()#.rss";
+		var xehRSS = linkBlog() & "/rss";
 
 		// do we have a category?
 		if ( structKeyExists( arguments, "category" ) ) {
-			return xehRSS &= ".category.#arguments.category.getSlug()#";
+			return xehRSS &= "/category/#arguments.category.getSlug()#";
 		}
 
 		// comments feed?
 		if ( arguments.comments ) {
-			xehRSS &= ".comments";
+			xehRSS &= "/comments";
 			// do we have entry filter
 			if ( structKeyExists( arguments, "entry" ) ) {
-				xehRSS &= ".#arguments.entry.getSlug()#";
+				xehRSS &= "/#arguments.entry.getSlug()#";
 			}
 		}
 
@@ -1457,7 +1457,7 @@ component accessors="true" threadSafe {
 		required string categorySlug,
 		boolean ssl = getRequestContext().isSSL()
 	){
-		return siteRoot() & sep() & "#getBlogEntryPoint()#.category/#arguments.categorySlug#";
+		return linkBlog() & "/category/#arguments.categorySlug#";
 	}
 
 	/**
@@ -1474,7 +1474,7 @@ component accessors="true" threadSafe {
 		day,
 		boolean ssl = getRequestContext().isSSL()
 	){
-		var xeh = siteRoot() & sep() & "#getBlogEntryPoint()#.archives";
+		var xeh = linkBlog() & "/archives";
 
 		if ( structKeyExists( arguments, "year" ) ) {
 			xeh &= "/#arguments.year#";
@@ -1495,7 +1495,7 @@ component accessors="true" threadSafe {
 	 * @ssl	Use SSL or not, defaults to false.
 	 */
 	function linkSearch( boolean ssl = getRequestContext().isSSL() ){
-		return siteRoot() & sep() & "#getBlogEntryPoint()#.search";
+		return linkBlog() & "/search";
 	}
 
 	/**
