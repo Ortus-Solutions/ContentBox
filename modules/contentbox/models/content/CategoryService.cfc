@@ -37,6 +37,54 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
+	 * Save a category in the system
+	 *
+	 * @category The category object
+	 *
+	 * @throws UniqueCategoryException
+	 * @return The category sent for saving
+	 */
+	function save( required category ){
+		// Verify uniqueness of slug
+		if( !isSlugUnique(
+				slug      : arguments.category.getSlug(),
+				contentID : arguments.category.getCategoryId(),
+				siteId    : arguments.category.getSiteId()
+			)
+		){
+			// Throw exception
+			throw(
+				message : "The incoming category #arguments.category.getSlug()# already exists",
+				type    : "UniqueCategoryException"
+			);
+		}
+
+		// Save the category
+		return super.save( arguments.category );
+	}
+
+	/**
+	 * Verify an incoming slug is unique or not
+	 *
+	 * @slug The slug to search for uniqueness
+	 * @categoryId Limit the search to the passed categoryId usually for updates
+	 * @siteId The site to filter on
+	 *
+	 * @return True if the slug is unique or false if it's already used
+	 */
+	boolean function isSlugUnique( required any slug, any categoryID="", string siteId="" ){
+		return newCriteria()
+			.isEq( "slug", arguments.slug )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
+			.when( len( arguments.categoryID ), function( c ){
+				c.ne( "categoryID", autoCast( "categoryID", categoryID ) );
+			} )
+			.count() > 0 ? false : true;
+	}
+
+	/**
 	 * Create categories via a comma delimited list and return the entities created
 	 *
 	 * @categories A list or array of categories to create

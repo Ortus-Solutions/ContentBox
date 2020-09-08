@@ -32,7 +32,12 @@ component extends="ContentService" singleton{
 
 		transaction{
 			// Verify uniqueness of slug
-			if( !contentService.isSlugUnique( slug=arguments.content.getSlug(), contentID=arguments.content.getContentID() ) ){
+			if( !variables.contentService.isSlugUnique(
+					slug      : arguments.content.getSlug(),
+					contentID : arguments.content.getContentID(),
+					siteId    : arguments.content.getSiteId()
+				)
+			){
 				// make slug unique
 				arguments.content.setSlug( getUniqueSlugHash( arguments.content.getSlug() ) );
 			}
@@ -50,7 +55,7 @@ component extends="ContentService" singleton{
 			}
 		}
 
-		return this;
+		return arguments.content;
 	}
 
 	/**

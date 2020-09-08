@@ -253,4 +253,25 @@ component
 		return items;
 	}
 
+	/**
+	 * Shortcut to get the site name
+	 */
+	function getSiteName(){
+		return getSite().getName();
+	}
+
+	/**
+	 * Shortcut to get the site slug
+	 */
+	function getSiteSlug(){
+		return getSite().getSlug();
+	}
+
+	/**
+	 * Shortcut to get the site id
+	 */
+	function getSiteId(){
+		return getSite().getSiteId();
+	}
+
 }

@@ -119,7 +119,6 @@ component 	persistent="true"
 				notnull="true"
 				length ="200"
 				default=""
-				unique ="true"
 				index  ="idx_slug,idx_publishedSlug";
 
 	property 	name="publishedDate"

@@ -19,16 +19,16 @@ component
 	 ********************************************************************* */
 
 	property
-		name      ="categoryService"    
-		inject    ="categoryService@cb"    
+		name      ="categoryService"
+		inject    ="categoryService@cb"
 		persistent="false";
 	property
-		name      ="pageService"        
-		inject    ="pageService@cb"        
+		name      ="pageService"
+		inject    ="pageService@cb"
 		persistent="false";
 	property
-		name      ="entryService"       
-		inject    ="entryService@cb"       
+		name      ="entryService"
+		inject    ="entryService@cb"
 		persistent="false";
 	property
 		name      ="contentStoreService"
@@ -56,7 +56,6 @@ component
 		name   ="slug"
 		notnull="true"
 		length ="200"
-		unique ="true"
 		index  ="idx_categorySlug";
 
 	/* *********************************************************************

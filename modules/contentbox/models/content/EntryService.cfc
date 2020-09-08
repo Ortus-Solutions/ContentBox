@@ -33,7 +33,8 @@ component extends="ContentService" singleton{
 		// Verify uniqueness of slug
 		if( !contentService.isSlugUnique(
 				slug      : arguments.entry.getSlug(),
-				contentID : arguments.entry.getContentID()
+				contentID : arguments.entry.getContentID(),
+				siteId    : arguments.entry.getSiteId()
 			)
 		){
 			// make slug unique
@@ -43,7 +44,7 @@ component extends="ContentService" singleton{
 		// save entry
 		save( entity=arguments.entry, transactional=arguments.transactional );
 
-		return this;
+		return arguments.entry;
 	}
 
 	/**

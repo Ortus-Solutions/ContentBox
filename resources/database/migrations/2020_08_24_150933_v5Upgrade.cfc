@@ -16,6 +16,12 @@ component {
 			// Remove Content Unique Constraint
 			schema.alter( "cb_content", ( table ) => table.dropConstraint( "slug" ) );
 			systemOutput( "√ - Content slug unique constraint dropped", true );
+			// Remove category unique constraint
+			schema.alter( "cb_category", ( table ) => table.dropConstraint( "slug" ) );
+			systemOutput( "√ - Content Category slug unique constraint dropped", true );
+			// Remove menu unique constraint
+			schema.alter( "cb_menu", ( table ) => table.dropConstraint( "slug" ) );
+			systemOutput( "√ - Menu slug unique constraint dropped", true );
 		}
     }
 

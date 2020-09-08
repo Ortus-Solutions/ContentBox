@@ -36,8 +36,9 @@ component
 			// Verify uniqueness of slug
 			if (
 				!isSlugUnique(
-					slug   = arguments.menu.getSlug(),
-					menuID = arguments.menu.getMenuID()
+					slug  : arguments.menu.getSlug(),
+					menuID: arguments.menu.getMenuID(),
+					siteId: arguments.menu.getSiteId()
 				)
 			) {
 				// make slug unique
@@ -287,17 +288,25 @@ component
 
 	/**
 	 * Verify an incoming slug is unique or not
+	 *
 	 * @slug The slug to search for uniqueness
 	 * @menuID Limit the search to the passed menuID usually for updates
+	 * @siteId The site to filter on
 	 */
-	function isSlugUnique( required any slug, any menuID = "" ){
-		var c = newCriteria().isEq( "slug", arguments.slug );
-
-		if ( len( arguments.menuID ) ) {
-			c.ne( "menuID", javacast( "int", arguments.menuID ) );
-		}
-
-		return ( c.count() gt 0 ? false : true );
+	function isSlugUnique(
+		required any slug,
+		any menuID    = "",
+		string siteId = ""
+	){
+		return newCriteria()
+			.isEq( "slug", arguments.slug )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", autoCast( "site.siteId", siteId ) );
+			} )
+			.when( len( arguments.menuID ), function( c ){
+				c.ne( "menuID", autoCast( "menuID", menuID ) );
+			} )
+			.count() > 0 ? false : true;
 	}
 
 	/**
