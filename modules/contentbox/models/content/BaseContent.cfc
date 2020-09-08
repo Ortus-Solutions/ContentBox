@@ -133,15 +133,19 @@ component 	persistent="true"
 				index  ="idx_expireDate";
 
 	property 	name="isPublished"
-				notnull="true"
-				ormtype="boolean"
-				default="true"
-				index  ="idx_published,idx_search,idx_publishedSlug";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				dbdefault="true"
+				default  ="true"
+				index    ="idx_published,idx_search,idx_publishedSlug";
 
 	property 	name="allowComments"
-				notnull="true"
-				ormtype="boolean"
-				default="true";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="true"
+				dbdefault="true";
 
 	property 	name="passwordProtection"
 				notnull="false"
@@ -165,16 +169,20 @@ component 	persistent="true"
 				default="";
 
 	property 	name="cache"
-				notnull="true"
-				ormtype="boolean"
-				default="true"
-				index  ="idx_cache";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="true"
+				dbdefault="true"
+				index    ="idx_cache";
 
 	property 	name="cacheLayout"
-				notnull="true"
-				ormtype="boolean"
-				default="true"
-				index  ="idx_cachelayout";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="true"
+				dbdefault="true"
+				index    ="idx_cachelayout";
 
 	property 	name="cacheTimeout"
 				notnull="false"
@@ -194,10 +202,12 @@ component 	persistent="true"
 				default="HTML";
 
 	property 	name="showInSearch"
-				notnull="true"
-				ormtype="boolean"
-				default="true"
-				index  ="idx_showInSearch";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="true"
+				dbdefault="true"
+				index    ="idx_showInSearch";
 
 	property 	name="featuredImage"
 				notnull="false"

@@ -325,7 +325,7 @@ component accessors="true" {
 	function createAuthor( required setup, required adminRole ){
 		var oAuthor = variables.authorService
 			.new( properties = arguments.setup.getUserData() )
-			.setIsActive( true );
+			.setIsActive( true )
 			.setRole( arguments.adminRole );
 
 		return variables.authorService.saveAuthor( oAuthor );

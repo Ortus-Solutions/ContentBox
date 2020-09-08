@@ -35,10 +35,12 @@ component 	persistent="true"
 				default="0";
 
 	property 	name="showInMenu"
-				notnull="true"
-				ormtype="boolean"
-				default="true"
-				index  ="idx_showInMenu";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="true"
+				dbdefault="true"
+				index    ="idx_showInMenu";
 
 	property 	name="excerpt"
 				notnull="false"
@@ -47,10 +49,12 @@ component 	persistent="true"
 				length ="8000";
 
 	property 	name="SSLOnly"
-				notnull="true"
-				ormtype="boolean"
-				default="false"
-				index  ="idx_ssl";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="false"
+				dbdefault="false"
+				index    ="idx_ssl";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES

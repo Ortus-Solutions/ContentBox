@@ -7,11 +7,11 @@
 */
 component	persistent="true"
 			entityname="cbContentVersion"
-			table="cb_contentVersion"
-			batchsize="25"
-			extends="contentbox.models.BaseEntity"
-			cachename="cbContentVersion"
-			cacheuse="read-write"{
+			table     ="cb_contentVersion"
+			batchsize ="25"
+			extends   ="contentbox.models.BaseEntity"
+			cachename ="cbContentVersion"
+			cacheuse  ="read-write"{
 
 	/* *********************************************************************
 	**							DI
@@ -26,32 +26,34 @@ component	persistent="true"
 	property 	name="contentVersionID"
 				fieldtype="id"
 				generator="native"
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
+				setter   ="false"
+				params   ="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
 
 	property 	name="content"
 				notnull="true"
 				ormtype="text"
-				length="8000"
+				length ="8000"
 				default="";
 
 	property 	name="changelog"
 				notnull="false"
 				ormtype="text"
-				length="8000"
+				length ="8000"
 				default="";
 
 	property 	name="version"
 				notnull="true"
 				ormtype="integer"
 				default="1"
-				index="idx_version";
+				index  ="idx_version";
 
 	property 	name="isActive"
-				notnull="true"
-				ormtype="boolean"
-				default="false"
-				index="idx_activeContentVersion,idx_contentVersions";
+				notnull  ="true"
+				ormtype  ="boolean"
+				sqltype  ="boolean"
+				default  ="false"
+				dbdefault="false"
+				index    ="idx_activeContentVersion,idx_contentVersions";
 
 	/* *********************************************************************
 	**							RELATIONSHIPS
@@ -59,22 +61,22 @@ component	persistent="true"
 
 	// M20 -> Author loaded as a proxy and fetched immediately
 	property 	name="author"
-				notnull="true"
-				cfc="contentbox.models.security.Author"
+				notnull  ="true"
+				cfc      ="contentbox.models.security.Author"
 				fieldtype="many-to-one"
-				fkcolumn="FK_authorID"
-				lazy="true"
-				fetch="join";
+				fkcolumn ="FK_authorID"
+				lazy     ="true"
+				fetch    ="join";
 
 	// M20 -> relatedContent
 	property 	name="relatedContent"
-				notnull="true"
-				cfc="contentbox.models.content.BaseContent"
+				notnull  ="true"
+				cfc      ="contentbox.models.content.BaseContent"
 				fieldtype="many-to-one"
-				fkcolumn="FK_contentID"
-				lazy="true"
-				fetch="join"
-				index="idx_contentVersions";
+				fkcolumn ="FK_contentID"
+				lazy     ="true"
+				fetch    ="join"
+				index    ="idx_contentVersions";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
@@ -102,12 +104,12 @@ component	persistent="true"
 	* constructor
 	*/
 	function init(){
-		variables.createdDate 		= now();
-		variables.isActive 			= false;
-		variables.version 			= 1;
-		variables.content 			= "";
-		variables.changelog 		= "";
-		variables.renderedContent 	= "";
+		variables.createdDate     = now();
+		variables.isActive        = false;
+		variables.version         = 1;
+		variables.content         = "";
+		variables.changelog       = "";
+		variables.renderedContent = "";
 
 		super.init();
 
@@ -122,16 +124,16 @@ component	persistent="true"
 	* Get memento representation
 	*/
 	function getMemento( excludes="" ){
-		var pList 	= listToArray( "content,changelog,version,isActive" );
-		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
+		var pList  = listToArray( "content,changelog,version,isActive" );
+		var result = getBaseMemento( properties=pList, excludes=arguments.excludes );
 
 		result[ "author" ] = {
-			"authorID" 	= getAuthor().getAuthorID(),
+			"authorID"  = getAuthor().getAuthorID(),
 			"firstname" = getAuthor().getFirstname(),
-			"lastName" 	= getAuthor().getLastName(),
-			"email" 	= getAuthor().getEmail(),
-			"username" 	= getAuthor().getUsername(),
-			"role" 		= getAuthor().getRole().getRole()
+			"lastName"  = getAuthor().getLastName(),
+			"email"     = getAuthor().getEmail(),
+			"username"  = getAuthor().getUsername(),
+			"role"      = getAuthor().getRole().getRole()
 		};
 
 		return result;
@@ -187,8 +189,8 @@ component	persistent="true"
 
 					// announce renderings with data, so content renderers can process them
 					var iData = {
-						builder = builder,
-						content	= this
+						builder= builder,
+						content= this
 					};
 					interceptorService.announce( "cb_onContentRendering", iData );
 
