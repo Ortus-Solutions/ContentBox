@@ -146,7 +146,7 @@ component {
 			} else {
 				// Add site id relationship
 				schema.alter( thisTable, ( table ) => {
-					table.addColumn( table.unsignedInteger( "FK_siteId" ) );
+					table.addColumn( table.unsignedInteger( "FK_siteId" ).nullable() );
 				} );
 				systemOutput( "√ - Created site column on '#thisTable#'", true );
 			}
