@@ -242,26 +242,34 @@ component
 	 */
 	SettingService function preFlightCheck(){
 		var missingSettings = false;
-		var loadedSettings  = getAllSettings( force: true );
 
 		// Iterate over default core settings and check they exist
-		transaction {
-			this.DEFAULTS
-				// only load defaults that do not exist
-				.filter( function( key, value ){
-					return !loadedSettings.keyExists( key );
-				} )
-				// Create the missing setting
-				.each( function( key, value ){
-					log.info( "Missing setting in pre-flight: #key#, adding it!" );
-					missingSettings = true;
-					save( new ( { name : key, value : trim( value ), isCore : true } ) );
-				} );
-		}
+		lock
+			name = "contentbox-pre-flight",
+			timeout="10"
+			throwOnTimeout="true"
+			type="exclusive"
+		{
+			var loadedSettings  = getAllSettings( force: true );
 
-		// if we added new ones, flush caches
-		if ( missingSettings ) {
-			flushSettingsCache();
+			transaction {
+				this.DEFAULTS
+					// only load defaults that do not exist
+					.filter( function( key, value ){
+						return !loadedSettings.keyExists( key );
+					} )
+					// Create the missing setting
+					.each( function( key, value ){
+						log.info( "Missing setting in pre-flight: #key#, adding it!" );
+						missingSettings = true;
+						save( new ( { name : key, value : trim( value ), isCore : true } ) );
+					} );
+			}
+
+			// if we added new ones, flush caches
+			if ( missingSettings ) {
+				flushSettingsCache();
+			}
 		}
 
 		log.info( "ContentBox Global Settings pre-flight checks passed!" );

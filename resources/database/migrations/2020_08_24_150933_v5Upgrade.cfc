@@ -186,6 +186,11 @@ component {
 		arguments.schema.alter( "cb_author", ( table ) => {
 			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
 			table.modifyColumn( "isActive", table.tinyInteger( "isActive" ).default( 1 ) );
+			table.modifyColumn(
+				"isPasswordReset",
+				table.tinyInteger( "isPasswordReset" ).default( 0 )
+			);
+			table.modifyColumn( "is2FactorAuth", table.tinyInteger( "is2FactorAuth" ).default( 0 ) );
 		} );
 		systemOutput( "√ - Author boolean bits updated", true );
 
