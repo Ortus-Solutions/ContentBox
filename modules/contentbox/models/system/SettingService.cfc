@@ -487,9 +487,9 @@ component
 	/**
 	 * Try to find a setting object by site and name
 	 *
-	 * @return The setting or null
+	 * @return The setting object or null
 	 */
-	Setting function findSiteSetting( required site, required name ){
+	function findSiteSetting( required site, required name ){
 		return newCriteria()
 			.isEq( "site", arguments.site )
 			.isEq( "name", arguments.name )

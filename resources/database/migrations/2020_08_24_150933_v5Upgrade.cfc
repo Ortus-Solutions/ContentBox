@@ -152,14 +152,16 @@ component {
 			}
 
 			// Seed with site id
-			query
-				.newQuery()
-				.from( thisTable )
-				.whereNull( "FK_siteId" )
-				.orWhere( "FK_siteId", 0 )
-				.update( { "FK_siteId" : siteId } );
+			if ( thisTable != "cb_setting" ) {
+				query
+					.newQuery()
+					.from( thisTable )
+					.whereNull( "FK_siteId" )
+					.orWhere( "FK_siteId", 0 )
+					.update( { "FK_siteId" : siteId } );
 
-			systemOutput( "√ - Populated '#thisTable#' with default site data", true );
+				systemOutput( "√ - Populated '#thisTable#' with default site data", true );
+			}
 
 			// Add foreign key
 			if ( !isSiteColumnCreated ) {
@@ -418,25 +420,39 @@ component {
 			.first();
 
 		if ( defaultSiteRecord.isEmpty() ) {
+			var allSettings = arguments.query
+				.newQuery()
+				.from( "cb_setting" )
+				.whereNull( "FK_siteId" )
+				.get()
+				.reduce( ( results, thisSetting ) => {
+					results[ thisSetting.name ] = thisSetting.value;
+					return results;
+				}, {} );
+
 			var qResults = arguments.query
 				.newQuery()
 				.from( "cb_site" )
 				.insert( {
-					"siteId"           : 1,
-					"createdDate"      : today,
-					"modifiedDate"     : today,
-					"isDeleted"        : 0,
-					"name"             : "Default Site",
-					"slug"             : "default",
-					"description"      : "The default site",
-					"domainRegex"      : ".*",
-					"isBlogEnabled"    : 1,
-					"isSitemapEnabled" : 1,
-					"poweredByHeader"  : 1,
-					"adminBar"         : 1,
-					"isSSL"            : 0,
-					"activeTheme"      : "default",
-					"domain"           : "127.0.0.1"
+					"siteId"             : 1,
+					"createdDate"        : today,
+					"modifiedDate"       : today,
+					"isDeleted"          : 0,
+					"name"               : allSettings.cb_site_name,
+					"slug"               : "default",
+					"homepage"           : allSettings.cb_site_homepage,
+					"description"        : allSettings.cb_site_description,
+					"keywords"           : allSettings.cb_site_keywords,
+					"tagline"            : allSettings.cb_site_tagline,
+					"domainRegex"        : ".*",
+					"isBlogEnabled"      : 1,
+					"isSitemapEnabled"   : 1,
+					"poweredByHeader"    : 1,
+					"adminBar"           : 1,
+					"isSSL"              : 0,
+					"activeTheme"        : "default",
+					"domain"             : "127.0.0.1",
+					"notificationEmails" : allSettings.cb_site_email
 				} );
 			systemOutput( "√ - Default site created", true );
 			return qResults.result.generatedKey;
