@@ -1432,7 +1432,7 @@ CREATE TABLE `cb_site` (
   `domain` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`siteId`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_site` WRITE;
 /*!40000 ALTER TABLE `cb_site` DISABLE KEYS */;
