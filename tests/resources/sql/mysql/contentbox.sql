@@ -59,7 +59,7 @@ CREATE TABLE `cb_author` (
   KEY `idx_apitoken` (`APIToken`),
   KEY `idx_2factorauth` (`is2FactorAuth`),
   CONSTRAINT `FK6847396B9724FA40` FOREIGN KEY (`FK_roleID`) REFERENCES `cb_role` (`roleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_author` WRITE;
 /*!40000 ALTER TABLE `cb_author` DISABLE KEYS */;
@@ -88,7 +88,7 @@ CREATE TABLE `cb_authorPermissionGroups` (
   KEY `FK7443FC0EF4497DC2` (`FK_permissionGroupID`),
   CONSTRAINT `FK7443FC0EAA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
   CONSTRAINT `FK7443FC0EF4497DC2` FOREIGN KEY (`FK_permissionGroupID`) REFERENCES `cb_permissionGroup` (`permissionGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_authorPermissionGroups` WRITE;
 /*!40000 ALTER TABLE `cb_authorPermissionGroups` DISABLE KEYS */;
@@ -115,7 +115,7 @@ CREATE TABLE `cb_authorPermissions` (
   KEY `FKE167E21937C1A3F2` (`FK_permissionID`),
   CONSTRAINT `FKE167E21937C1A3F2` FOREIGN KEY (`FK_permissionID`) REFERENCES `cb_permission` (`permissionID`),
   CONSTRAINT `FKE167E219AA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_authorPermissions` WRITE;
 /*!40000 ALTER TABLE `cb_authorPermissions` DISABLE KEYS */;
@@ -154,7 +154,7 @@ CREATE TABLE `cb_category` (
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_category_FK_siteId` (`FK_siteId`),
   CONSTRAINT `fk_cb_category_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_category` WRITE;
 /*!40000 ALTER TABLE `cb_category` DISABLE KEYS */;
@@ -196,7 +196,7 @@ CREATE TABLE `cb_comment` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKFFCED27F91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_comment` WRITE;
 /*!40000 ALTER TABLE `cb_comment` DISABLE KEYS */;
@@ -228,7 +228,7 @@ CREATE TABLE `cb_commentSubscriptions` (
   KEY `idx_contentCommentSubscription` (`FK_contentID`),
   CONSTRAINT `FK41716EB71D33B614` FOREIGN KEY (`subscriptionID`) REFERENCES `cb_subscriptions` (`subscriptionID`),
   CONSTRAINT `FK41716EB791F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_commentSubscriptions` WRITE;
 /*!40000 ALTER TABLE `cb_commentSubscriptions` DISABLE KEYS */;
@@ -298,7 +298,7 @@ CREATE TABLE `cb_content` (
   CONSTRAINT `FKFFE018996FDC2C99` FOREIGN KEY (`FK_parentID`) REFERENCES `cb_content` (`contentID`),
   CONSTRAINT `FKFFE01899AA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
   CONSTRAINT `fk_cb_content_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_content` WRITE;
 /*!40000 ALTER TABLE `cb_content` DISABLE KEYS */;
@@ -369,7 +369,7 @@ CREATE TABLE `cb_contentCategories` (
   KEY `FKD96A0F9591F58374` (`FK_contentID`),
   CONSTRAINT `FKD96A0F9591F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`),
   CONSTRAINT `FKD96A0F95F10ECD0` FOREIGN KEY (`FK_categoryID`) REFERENCES `cb_category` (`categoryID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_contentCategories` WRITE;
 /*!40000 ALTER TABLE `cb_contentCategories` DISABLE KEYS */;
@@ -402,7 +402,7 @@ CREATE TABLE `cb_contentStore` (
   PRIMARY KEY (`contentID`),
   KEY `FKEA4C67C8C960893B` (`contentID`),
   CONSTRAINT `FKEA4C67C8C960893B` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_contentStore` WRITE;
 /*!40000 ALTER TABLE `cb_contentStore` DISABLE KEYS */;
@@ -454,7 +454,7 @@ CREATE TABLE `cb_contentVersion` (
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKE166DFF91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`),
   CONSTRAINT `FKE166DFFAA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_contentVersion` WRITE;
 /*!40000 ALTER TABLE `cb_contentVersion` DISABLE KEYS */;
@@ -603,7 +603,7 @@ CREATE TABLE `cb_customField` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FK1844684991F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_customField` WRITE;
 /*!40000 ALTER TABLE `cb_customField` DISABLE KEYS */;
@@ -628,7 +628,7 @@ CREATE TABLE `cb_entry` (
   PRIMARY KEY (`contentID`),
   KEY `FK141674927FFF6A7` (`contentID`),
   CONSTRAINT `FK141674927FFF6A7` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_entry` WRITE;
 /*!40000 ALTER TABLE `cb_entry` DISABLE KEYS */;
@@ -667,7 +667,7 @@ CREATE TABLE `cb_groupPermissions` (
   KEY `FK72ECB06537C1A3F2` (`FK_permissionID`),
   CONSTRAINT `FK72ECB06537C1A3F2` FOREIGN KEY (`FK_permissionID`) REFERENCES `cb_permission` (`permissionID`),
   CONSTRAINT `FK72ECB065F4497DC2` FOREIGN KEY (`FK_permissionGroupID`) REFERENCES `cb_permissionGroup` (`permissionGroupID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_groupPermissions` WRITE;
 /*!40000 ALTER TABLE `cb_groupPermissions` DISABLE KEYS */;
@@ -704,7 +704,7 @@ CREATE TABLE `cb_loginAttempts` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_loginAttempts` WRITE;
 /*!40000 ALTER TABLE `cb_loginAttempts` DISABLE KEYS */;
@@ -744,7 +744,7 @@ CREATE TABLE `cb_menu` (
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_menu_FK_siteId` (`FK_siteId`),
   CONSTRAINT `fk_cb_menu_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_menu` WRITE;
 /*!40000 ALTER TABLE `cb_menu` DISABLE KEYS */;
@@ -792,7 +792,7 @@ CREATE TABLE `cb_menuItem` (
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKF9F1DCF28E0E8DD2` FOREIGN KEY (`FK_menuID`) REFERENCES `cb_menu` (`menuID`),
   CONSTRAINT `FKF9F1DCF2D3B42410` FOREIGN KEY (`FK_parentID`) REFERENCES `cb_menuItem` (`menuItemID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_menuItem` WRITE;
 /*!40000 ALTER TABLE `cb_menuItem` DISABLE KEYS */;
@@ -835,7 +835,7 @@ CREATE TABLE `cb_module` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_moduleType` (`moduleType`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_module` WRITE;
 /*!40000 ALTER TABLE `cb_module` DISABLE KEYS */;
@@ -866,7 +866,7 @@ CREATE TABLE `cb_page` (
   KEY `idx_showInMenu` (`showInMenu`),
   KEY `idx_ssl` (`SSLOnly`),
   CONSTRAINT `FK21B2F26F9636A2E2` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_page` WRITE;
 /*!40000 ALTER TABLE `cb_page` DISABLE KEYS */;
@@ -915,7 +915,7 @@ CREATE TABLE `cb_permission` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_permission` WRITE;
 /*!40000 ALTER TABLE `cb_permission` DISABLE KEYS */;
@@ -988,7 +988,7 @@ CREATE TABLE `cb_permissionGroup` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_permissionGroup` WRITE;
 /*!40000 ALTER TABLE `cb_permissionGroup` DISABLE KEYS */;
@@ -1014,7 +1014,7 @@ CREATE TABLE `cb_relatedContent` (
   KEY `FK9C2F71AE91F58374` (`FK_contentID`),
   CONSTRAINT `FK9C2F71AE91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`),
   CONSTRAINT `FK9C2F71AEDF61AADD` FOREIGN KEY (`FK_relatedContentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_relatedContent` WRITE;
 /*!40000 ALTER TABLE `cb_relatedContent` DISABLE KEYS */;
@@ -1044,7 +1044,7 @@ CREATE TABLE `cb_role` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_role` WRITE;
 /*!40000 ALTER TABLE `cb_role` DISABLE KEYS */;
@@ -1072,7 +1072,7 @@ CREATE TABLE `cb_rolePermissions` (
   KEY `FKDCCC1A4E37C1A3F2` (`FK_permissionID`),
   CONSTRAINT `FKDCCC1A4E37C1A3F2` FOREIGN KEY (`FK_permissionID`) REFERENCES `cb_permission` (`permissionID`),
   CONSTRAINT `FKDCCC1A4E9724FA40` FOREIGN KEY (`FK_roleID`) REFERENCES `cb_role` (`roleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_rolePermissions` WRITE;
 /*!40000 ALTER TABLE `cb_rolePermissions` DISABLE KEYS */;
@@ -1205,7 +1205,7 @@ CREATE TABLE `cb_securityRule` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_securityRule` WRITE;
 /*!40000 ALTER TABLE `cb_securityRule` DISABLE KEYS */;
@@ -1262,7 +1262,7 @@ CREATE TABLE `cb_setting` (
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_setting_FK_siteId` (`FK_siteId`),
   CONSTRAINT `fk_cb_setting_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_setting` WRITE;
 /*!40000 ALTER TABLE `cb_setting` DISABLE KEYS */;
@@ -1432,7 +1432,7 @@ CREATE TABLE `cb_site` (
   `domain` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`siteId`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4mb4;
 
 LOCK TABLES `cb_site` WRITE;
 /*!40000 ALTER TABLE `cb_site` DISABLE KEYS */;
@@ -1464,7 +1464,7 @@ CREATE TABLE `cb_stats` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FK14DE30BF91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_stats` WRITE;
 /*!40000 ALTER TABLE `cb_stats` DISABLE KEYS */;
@@ -1506,7 +1506,7 @@ CREATE TABLE `cb_subscribers` (
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_subscribers` WRITE;
 /*!40000 ALTER TABLE `cb_subscribers` DISABLE KEYS */;
@@ -1542,7 +1542,7 @@ CREATE TABLE `cb_subscriptions` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKE92A1716F2A66EE4` FOREIGN KEY (`FK_subscriberID`) REFERENCES `cb_subscribers` (`subscriberID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_subscriptions` WRITE;
 /*!40000 ALTER TABLE `cb_subscriptions` DISABLE KEYS */;
