@@ -311,7 +311,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<!--- Loader Bar --->
 			<div id="loaderBar">
-				<i class="fa fa-circle-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
+				<i class="far fa-dot-circle-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
 			</div>
 
 			<!--- Status Text --->

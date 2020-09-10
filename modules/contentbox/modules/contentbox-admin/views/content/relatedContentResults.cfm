@@ -26,7 +26,7 @@
                 </td>
                 <td class="text-center">
                     <cfif content.getIsPublished()>
-                        <i class="fa fa-circle fa-lg textGreen"></i>
+                        <i class="far fa-dot-circle fa-lg textGreen"></i>
                         <span class="hidden">published</span>
                     <cfelse>
                         <i class="fa fa-remove fa-lg textRed"></i>

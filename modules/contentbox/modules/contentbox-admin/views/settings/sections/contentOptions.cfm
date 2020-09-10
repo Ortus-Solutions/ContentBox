@@ -90,7 +90,7 @@
     </fieldset>
 
 	<fieldset>
-    	<legend><i class="fa fa-bar-chart-o fa-lg"></i> Content Stats Tracking</legend>
+    	<legend><i class="far fa-chart-bar fa-lg"></i> Content Stats Tracking</legend>
 
         <!--- Hit Count --->
         <div class="form-group">

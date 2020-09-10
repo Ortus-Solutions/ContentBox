@@ -50,18 +50,18 @@
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif entry.isContentPublished()>
-					<i class="fa fa-circle fa-lg textGreen" title="Entry Published!"></i>
+					<i class="far fa-dot-circle fa-lg textGreen" title="Entry Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-circle fa-lg textRed" title="Entry Draft!"></i>
+					<i class="far fa-dot-circle fa-lg textRed" title="Entry Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
 			<td class="text-center">
 				<cfif entry.getShowInSearch()>
-					<i class="fa fa-circle fa-lg textGreen" title="Searchable!"></i>
+					<i class="far fa-dot-circle fa-lg textGreen" title="Searchable!"></i>
 				<cfelse>
-					<i class="fa fa-circle fa-lg textRed" title="Excluded!"></i>
+					<i class="far fa-dot-circle fa-lg textRed" title="Excluded!"></i>
 				</cfif>
 			</td>
 			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfHits()#</span></td>

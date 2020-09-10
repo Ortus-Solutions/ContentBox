@@ -8,21 +8,21 @@ $(document).ready(function() {
 	$( "##uploadNowForm" ).validate();
 } );
 function checkForUpdates(){
-	var icon 			= '<i class="fa fa-circle-notch fa-spin"></i>';
+	var icon 			= '<i class="far fa-dot-circle-notch fa-spin"></i>';
 	var $btn 			= $( "##btnUpdates" );
 	var originalValue 	= $btn.html();
 
 	$btn.html( icon + originalValue );
 	var channel = $updateCheckForm.find( "input[name='channel']:checked" ).val();
 	// open update modal
-	openRemoteModal( 
+	openRemoteModal(
 		'#event.buildLink(prc.xehUpdateCheck)#',
 		{ channel:channel },
 		function( data ){
 			$btn.html( originalValue );
-		} 
+		}
 	);
-	
+
 	return false;
 }
 </script>

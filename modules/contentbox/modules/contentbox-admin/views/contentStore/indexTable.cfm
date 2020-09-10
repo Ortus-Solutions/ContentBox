@@ -48,7 +48,7 @@
 				<cfif content.getNumberOfChildren()>
 					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="fa fa-plus-square text"></i></a>
 				<cfelse>
-					<i class="fa fa-circle-thin"></i>
+					<i class="far fa-dot-circle-thin"></i>
 				</cfif>
 				<!--- Title --->
 				<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
@@ -71,10 +71,10 @@
 					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future (#content.getDisplayPublishedDate()#)"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="fa fa-circle fa-lg textGreen" title="Content Published!"></i>
+					<i class="far fa-dot-circle fa-lg textGreen" title="Content Published!"></i>
 					<span class="hidden">published</span>
 				<cfelse>
-					<i class="fa fa-circle fa-lg textRed" title="Content Draft!"></i>
+					<i class="far fa-dot-circle fa-lg textRed" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>
@@ -95,7 +95,7 @@
 					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on
 					#content.getActiveContent().getDisplayCreatedDate()#
 				</div>
-				
+
 				<!--- Drag Handle --->
 				<a 	href="##"
 					onclick="return false;"
@@ -105,7 +105,7 @@
 				>
 					<i class="fas fa-sort fa-lg"></i>
 				</a>
-				
+
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">

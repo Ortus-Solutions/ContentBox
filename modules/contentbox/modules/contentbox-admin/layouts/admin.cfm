@@ -72,6 +72,7 @@
 						id="siteSwitcher"
 						class="form-control input-sm rounded"
 						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteId/' + this.value )"
+						style="width: 175px"
 					>
 						<cfloop array="#prc.allSites#" index="thisSite">
 							<option
@@ -132,44 +133,44 @@
 							</button>
 							<ul class="dropdown-menu">
 								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-									<li>
+									<li class="mb10">
 										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
-											<i class="fa fa-file-o"></i> New Page
+											<i class="far fa-file-alt fa-lg width25"></i> New Page
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-									<li>
+									<li class="mb10">
 										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+b">
-											<i class="fas fa-blog"></i> New Entry
+											<i class="fas fa-blog fa-lg width25"></i> New Entry
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-									<li>
+									<li class="mb10">
 										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-											<i class="far fa-hdd"></i> New Content Store
+											<i class="far fa-hdd fa-lg width25"></i> New Content Store
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<li>
+									<li class="mb10">
 										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
-											<i class="fa fa-user"></i> New User
+											<i class="fa fa-user fa-lg width25"></i> New User
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
-									<li>
+									<li class="mb10">
 										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-											<i class="fas fa-photo-video"></i> New Media
+											<i class="fas fa-photo-video fa-lg width25"></i> New Media
 										</a>
 									</li>
 								</cfif>
 								<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
-									<li>
+									<li class="mb10">
 										<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
-											<i class="fas fa-list"></i> New Menu
+											<i class="fas fa-list fa-lg width25"></i> New Menu
 										</a>
 									</li>
 								</cfif>
@@ -231,7 +232,7 @@
 					#announce( "cbadmin_beforeContent" )#
 
 					<!--- Side Bar Trigger --->
-					<div 	
+					<div
 						class="pull-right"
 						id="main-content-sidebar-trigger"
 						style="display: none;"

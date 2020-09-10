@@ -104,18 +104,18 @@ a.btn.btn-danger:visited {
 	border: 1px solid transparent;
 }
 
-
-/**============================== ADMIN MAIN ELEMENTS ==============================**/
-
-legend{
-	padding: 10px 0px;
+.panel-default > .panel-heading + .panel-collapse > .panel-body {
+	border-top-color: white;
 }
-.actionBar, .form-actions{ text-align: center; margin: 5px; }
-img{ height: inherit; }
-img.img-screenshot{ height: 200px; }
-.gravatar{ height: auto; }
 
-.no-margin{ margin: 0!important; }
+.label{
+	border-radius: 10px;
+}
+
+.btn-toggle.radio {padding-left:30px;}
+.btn{ border-radius: 10px; }
+.btn-group .btn{ border-radius: 10px; }
+
 .dropdown-menu > li > a > i{ color: #797979 !important;}
 
 .panel { border-radius: 20px }
@@ -126,14 +126,20 @@ img.img-screenshot{ height: 200px; }
     color:#fff;
 }
 
+/**============================== ADMIN MAIN ELEMENTS ==============================**/
+
+.actionBar, .form-actions{ text-align: center; margin: 5px; }
+legend{
+	padding: 10px 0px;
+}
+img{ height: inherit; }
+img.img-screenshot{ height: 200px; }
+.gravatar{ height: auto; }
+.no-margin{ margin: 0!important; }
 .actions{ top: 10px!important; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
 .checkbox-spacer {margin-top:5px;}
-
-.btn-toggle.radio {padding-left:30px;}
-.btn{ border-radius: 10px; }
-.btn-group .btn{ border-radius: 10px; }
 
 /**============================== WIDGETS ==============================**/
 
@@ -345,19 +351,25 @@ table.diff {
 .padding10 { padding:10px; }
 .padding0 { padding:0px; }
 
+.p5{ padding: 5px;}
 .pl5{ padding-left: 5px;}
 .pr5{ padding-right: 5px;}
 .pt5{ padding-top: 5px;}
 .pb5{ padding-top: 5px;}
+
+.p10{ padding: 10px;}
 .pl10{ padding-left: 10px;}
 .pr10{ padding-right: 10px;}
 .pt10{ padding-top: 10px;}
 .pb10{ padding-top: 10px;}
 
+.m5{ margin: 5px;}
 .ml5{ margin-left: 5px;}
 .mr5{ margin-right: 5px;}
 .mt5{ margin-top: 5px;}
 .mb5{ margin-top: 5px;}
+
+.m10{ margin: 10px;}
 .ml10{ margin-left: 10px;}
 .mr10{ margin-right: 10px;}
 .mt10{ margin-top: 10px;}
@@ -367,6 +379,8 @@ table.diff {
 .margin0 { margin:0px; }
 .marginTop25{ margin-top:25px; }
 
+.width20{ width: 20px }
+.width25{ width: 25px }
 .width98{ width: 98%; }
 .width96{ width: 96%; }
 .width95{ width: 95%; }

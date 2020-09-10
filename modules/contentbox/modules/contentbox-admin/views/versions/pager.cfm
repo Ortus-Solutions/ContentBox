@@ -54,9 +54,9 @@
 				</td>
 				<td class="text-center">
 					<cfif thisVersion.getIsActive()>
-						<i class="fa fa-circle fa-lg textGreen"></i>
+						<i class="far fa-dot-circle fa-lg textGreen"></i>
 					<cfelse>
-						<i class="fa fa-circle fa-lg textRed"></i>
+						<i class="far fa-dot-circle fa-lg textRed"></i>
 					</cfif>
 				</td>
 				<td class="text-center">#thisVersion.getDisplayCreatedDate()#</td>
