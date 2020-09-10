@@ -23,12 +23,14 @@ env:
     - ENGINE=adobe@2016
     - ENGINE=adobe@2018
 
-addons:
-  apt:
-    packages:
-    - mysql-server-5.7
-    - mysql-client-core-5.7
-    - mysql-client-5.7
+services:
+  - mysql
+#addons:
+#  apt:
+#    packages:
+#    - mysql-server-5.7
+#    - mysql-client-core-5.7
+#    - mysql-client-5.7
 
 before_install:
   # CommandBox Keys
