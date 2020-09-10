@@ -94,6 +94,8 @@ component
 	property
 		name   ="active"
 		ormtype="boolean"
+		sqltype  ="boolean"
+		dbdefault="true"
 		default="true";
 
 	property

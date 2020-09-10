@@ -1,16 +1,4 @@
 component extends="tests.resources.BaseTest"{
-	
-/*********************************** LIFE CYCLE Methods ***********************************/
-
-	// executes before all suites+specs in the run() method
-	function beforeAll(){
-		super.beforeAll();
-	}
-
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
 
 /*********************************** BDD SUITES ***********************************/
 
@@ -32,6 +20,6 @@ component extends="tests.resources.BaseTest"{
 
 		});
 	}
-	
+
 }
 

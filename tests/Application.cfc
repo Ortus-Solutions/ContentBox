@@ -56,7 +56,7 @@ component{
 	this.datasource = "contentbox";
 	this.ormSettings = {
 		cfclocation			= [ rootPath & "/modules" ],
-		//logSQL 				= true, Uncomment when needed
+		//logSQL 				= true, //Uncomment when needed
 		logSQL 				= false,
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,

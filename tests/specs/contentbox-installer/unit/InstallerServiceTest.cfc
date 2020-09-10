@@ -1,5 +1,5 @@
-﻿component extends="coldbox.system.testing.BaseTestCase" appMapping='/root'{
-	
+﻿component extends="tests.resources.BaseTest"{
+
 /*********************************** LIFE CYCLE Methods ***********************************/
 
 	// executes before all suites+specs in the run() method
@@ -10,10 +10,6 @@
 		resourcesPath 	= expandPath( "/tests/resources" ) & "/";
 	}
 
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
 
 /*********************************** BDD SUITES ***********************************/
 
@@ -39,5 +35,5 @@
 
 		});
 	}
-	
+
 }

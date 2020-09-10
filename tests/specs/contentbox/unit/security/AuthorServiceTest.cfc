@@ -12,11 +12,6 @@ component extends="tests.resources.BaseTest"{
 		authorService = getInstance( "authorService@cb" );
 	}
 
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
-
 /*********************************** BDD SUITES ***********************************/
 
 	function run( testResults, testBox ){
@@ -39,25 +34,6 @@ component extends="tests.resources.BaseTest"{
 
 			it( "can be created", function(){
 				expect(	isObject( authorService ) ).toBeTrue();
-			});
-
-			it( "can validate API Tokens", function(){
-				var isValid = authorService.isValidAPIToken( "bogus" );
-				expect(	isValid ).toBeFalse();
-
-				// Get fixture
-				var user = authorService.findByUsername( "lmajano" );
-				var isValid = authorService.isValidAPIToken( user.getAPIToken() );
-				expect(	isValid ).toBeTrue();
-			});
-
-			it( "can retrieve users via API Tokens", function(){
-				var bad = authorService.getAuthorizedAuthor( "bogus" );
-				expect(	bad.isLoaded() ).toBeFalse();
-
-				var user = authorService.findByUsername( "lmajano" );
-				var good = authorService.getAuthorizedAuthor( user.getAPIToken() );
-				expect(	good.getAuthorId() ).toBe( user.getAuthorId() );
 			});
 
 			it( "can get status author reports", function(){

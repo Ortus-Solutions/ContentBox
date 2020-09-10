@@ -6,25 +6,13 @@
 */
 component extends="tests.resources.BaseTest"{
 
-/*********************************** LIFE CYCLE Methods ***********************************/
-
-	// executes before all suites+specs in the run() method
-	function beforeAll(){
-		super.beforeAll();
-	}
-
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
-
-/*********************************** BDD SUITES ***********************************/
+	property name="categoryService" inject="categoryService@cb";
 
 	function run( testResults, testBox ){
 		describe( "Categories", function(){
 
 			beforeEach(function( currentSpec ){
-				model = getInstance( "categoryService@cb" ).new( {
+				model = categoryService.new( {
 					category 	= "unittest",
 					slug 		= "unittest"
 				} );
@@ -39,20 +27,20 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			it( "can get published pages count", function(){
-				var populatedCategory = getInstance( "categoryService@cb" ).findBySlug( "coldbox" );
-				var count = populatedCategory.getNumberOfPublishedPages();
+				var thisCategory = categoryService.findBySlug( "coldbox" );
+				var count = thisCategory.getNumberOfPublishedPages();
 				expect(	count ).toBeGTE( 1 );
 			});
 
 			it( "can get published entries count", function(){
-				var populatedCategory = getInstance( "categoryService@cb" ).findBySlug( "coldfusion" );
-				var count = populatedCategory.getNumberOfPublishedEntries();
+				var thisCategory = categoryService.findBySlug( "coldfusion" );
+				var count = thisCategory.getNumberOfPublishedEntries();
 				expect(	count ).toBeGTE( 1 );
 			});
 
 			it( "can get published content store count", function(){
-				var populatedCategory = getInstance( "categoryService@cb" ).findBySlug( "coldfusion" );
-				var count = populatedCategory.getNumberOfPublishedContentStore();
+				var thisCategory = categoryService.findBySlug( "coldfusion" );
+				var count = thisCategory.getNumberOfPublishedContentStore();
 				expect(	count ).toBeGTE( 1 );
 			});
 

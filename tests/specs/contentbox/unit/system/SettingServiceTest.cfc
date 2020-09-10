@@ -6,17 +6,6 @@
 */
 component extends="tests.resources.BaseTest"{
 
-/*********************************** LIFE CYCLE Methods ***********************************/
-
-	// executes before all suites+specs in the run() method
-	function beforeAll(){
-		super.beforeAll();
-	}
-
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
 
 /*********************************** BDD SUITES ***********************************/
 
@@ -28,14 +17,17 @@ component extends="tests.resources.BaseTest"{
 			});
 
 			it( "can flush settings", function(){
-				model.storeSettings( {} );
+				model.storeSettings( {
+					global : {},
+					sites : {}
+				} );
 				expect( model.getAllSettings() ).toBeEmpty();
 				model.flushSettingsCache();
 				expect( model.getAllSettings() ).notToBeEmpty();
 			});
 
 			it( "can get all settings", function(){
-				var r = model.getAllSettings( asStruct=true );
+				var r = model.getAllSettings();
 				expect(	r ).toBeStruct()
 					.notToBeEmpty();
 			});

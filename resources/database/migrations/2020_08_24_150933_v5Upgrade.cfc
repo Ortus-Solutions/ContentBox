@@ -238,6 +238,7 @@ component {
 
 		arguments.schema.alter( "cb_menuItem", ( table ) => {
 			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
+			table.modifyColumn( "active", table.tinyInteger( "active" ).default( 1 ) );
 		} );
 		systemOutput( "√ - Menu Items boolean bits updated", true );
 

@@ -17,11 +17,6 @@ component extends="tests.resources.BaseTest"{
 			cbHelper.prepareUIRequest();
 		}
 
-		// executes after all suites+specs in the run() method
-		function afterAll(){
-			super.afterAll();
-		}
-
 	/*********************************** BDD SUITES ***********************************/
 
 		function run( testResults, testBox ){

@@ -6,24 +6,12 @@
 */
 component extends="tests.resources.BaseTest"{
 
-/*********************************** LIFE CYCLE Methods ***********************************/
-
-	// executes before all suites+specs in the run() method
-	function beforeAll(){
-		super.beforeAll();
-	}
-
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
-
 /*********************************** BDD SUITES ***********************************/
 
 	function run( testResults, testBox ){
 		describe( "Site", function(){
 			beforeEach(function( currentSpec ){
-				model = prepareMock( getInstance( "cbSite" ) );
+				model = prepareMock( getInstance( "siteService@cb" ).new() );
 			});
 
 			it( "can be created", function(){

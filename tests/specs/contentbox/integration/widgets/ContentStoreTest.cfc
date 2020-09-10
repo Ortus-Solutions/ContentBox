@@ -15,11 +15,6 @@ component extends="tests.resources.BaseTest"{
 			widgetService = getInstance( "widgetService@cb" );
 		}
 
-		// executes after all suites+specs in the run() method
-		function afterAll(){
-			super.afterAll();
-		}
-
 	/*********************************** BDD SUITES ***********************************/
 
 		function run( testResults, testBox ){

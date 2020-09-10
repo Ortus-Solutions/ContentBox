@@ -80,26 +80,26 @@ component
 	property
 		name   ="numberOfContentStore"
 		formula="select count(*)
-						from cb_contentCategories as contentCategories, cb_contentStore as contentStore, cb_content as content
-						where contentCategories.FK_categoryID=categoryID
-							and contentCategories.FK_contentID = contentStore.contentID
-							and contentStore.contentID = content.contentID";
+				from cb_contentCategories as contentCategories, cb_contentStore as contentStore, cb_content as content
+				where contentCategories.FK_categoryID=categoryID
+					and contentCategories.FK_contentID = contentStore.contentID
+					and contentStore.contentID = content.contentID";
 
 	property
 		name   ="numberOfEntries"
 		formula="select count(*)
-						from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
-						where contentCategories.FK_categoryID=categoryID
-							and contentCategories.FK_contentID = entry.contentID
-							and entry.contentID = content.contentID";
+				from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
+				where contentCategories.FK_categoryID=categoryID
+					and contentCategories.FK_contentID = entry.contentID
+					and entry.contentID = content.contentID";
 
 	property
 		name   ="numberOfPages"
 		formula="select count(*)
-						from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
-						where contentCategories.FK_categoryID=categoryID
-							and contentCategories.FK_contentID = page.contentID
-							and page.contentID = content.contentID";
+				from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
+				where contentCategories.FK_categoryID=categoryID
+					and contentCategories.FK_contentID = page.contentID
+					and page.contentID = content.contentID";
 
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS
@@ -122,9 +122,9 @@ component
 	function init(){
 		variables.category                      = "";
 		variables.slug                          = "";
-		variables.numberOfPublishedPages        = 0;
-		variables.numberOfPublishedEntries      = 0;
-		variables.numberOfPublishedContentStore = 0;
+		variables.numberOfPublishedPages        = "";
+		variables.numberOfPublishedEntries      = "";
+		variables.numberOfPublishedContentStore = "";
 
 		return this;
 	}
@@ -172,7 +172,7 @@ component
 	 * @excludes properties to exclude
 	 */
 	struct function getMemento( excludes = "" ){
-		var pList  = listToArray( "category,slug" );
+		var pList  = listToArray( "category,slug,numberOfPages,numberOfEntries,numberOfContentStore" );
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 
 		return result;
@@ -188,17 +188,16 @@ component
 	private numeric function getNumberOfPublishedContent( required service ){
 		var c = arguments.service.newCriteria();
 
-		c.createAlias( "categories", "categories" )
-			.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
-			.isTrue( "isPublished" )
-			.isLE( "publishedDate", now() )
-			.isEq( "passwordProtection", "" )
-			.$or(
-				c.restrictions.isNull( "expireDate" ),
-				c.restrictions.isGT( "expireDate", now() )
-			);
-
-		return c.count( "contentID" );
+		return c.createAlias( "categories", "categories" )
+				.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
+				.isTrue( "isPublished" )
+				.isLE( "publishedDate", now() )
+				.isEq( "passwordProtection", "" )
+				.$or(
+					c.restrictions.isNull( "expireDate" ),
+					c.restrictions.isGT( "expireDate", now() )
+				)
+				.count( "contentID" );
 	}
 
 }
