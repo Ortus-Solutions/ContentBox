@@ -1291,7 +1291,7 @@ VALUES
 	(23,'cb_notify_author','true',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
 	(24,'cb_dashboard_welcome_title','Dashboard',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
 	(25,'cb_page_excerpts','true',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
-	(26,'cb_site_outgoingEmail','',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
+	(26,'cb_site_outgoingEmail','info@ortussolutions.com',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
 	(27,'cb_dashboard_newsfeed','https://www.ortussolutions.com/blog/rss',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
 	(28,'cb_media_createFolders','true',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
 	(29,'cb_security_min_password_length','8',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
