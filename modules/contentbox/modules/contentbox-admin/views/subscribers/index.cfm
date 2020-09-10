@@ -1,7 +1,9 @@
 <cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-star fa-lg"></i> Subscribers</h1>
+		<h1 class="h1">
+			<i class="far fa-star fa-lg"></i> Subscribers
+		</h1>
     </div>
 </div>
 <div class="row">
@@ -69,7 +71,7 @@
     <div class="col-md-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Quick Stats</h3>
+                <h3 class="panel-title"><i class="fas fa-sort-amount-down fa-lg"></i> Quick Stats</h3>
             </div>
             <div class="panel-body">
                 <table class="table table-striped">
