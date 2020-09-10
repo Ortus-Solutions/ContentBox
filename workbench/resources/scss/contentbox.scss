@@ -77,7 +77,15 @@
 	display: none;
 }
 
+.table > thead > tr > th {
+	border-bottom: 0px solid #ddd;
+}
+
 /**============================== BOOTSTRAP OVERRIDES ==============================**/
+
+.form-control{
+	border-radius: 10px;
+}
 
 .input-group .form-control{
 	z-index:0;
@@ -96,9 +104,15 @@ a.btn.btn-danger:visited {
 .nav-tabs > li > a{
 	padding: 15px;
 }
-.nav-tabs > li.active > a {
+
+.tab-wrapper > .nav-tabs > li.active > a {
 	border-radius: 10px 10px 0px 0px;
 }
+
+.tab-left > .nav-tabs > li.active > a {
+	border-radius: 10px 0px 0px 10px;
+}
+
 .nav-tabs > li > a:hover{
 	background-color: #eaeaea;
 	border: 1px solid transparent;

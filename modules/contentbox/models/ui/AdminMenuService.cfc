@@ -648,7 +648,7 @@ component accessors="true" threadSafe singleton {
 			);
 
 		// STATS
-		addTopMenu( name = this.STATS, label = "<i class='fa fa-bar-chart-o'></i> Stats" ).addSubMenu(
+		addTopMenu( name = this.STATS, label = "<i class='fas fa-bell'></i> Stats" ).addSubMenu(
 			name    = "Subscribers",
 			label   = "Subscribers",
 			href    = variables.buildLink,

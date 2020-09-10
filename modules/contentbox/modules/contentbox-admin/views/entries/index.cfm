@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-	
+
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1"><i class="fas fa-blog"></i> Blog Entries</h1>
@@ -46,10 +46,10 @@
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 												<li>
-													<a 
-														href="javascript:bulkRemove()" 
-														class="confirmIt" 
-														data-title="<i class='far fa-trash-alt'></i> Delete Selected Entries?" 
+													<a
+														href="javascript:bulkRemove()"
+														class="confirmIt"
+														data-title="<i class='far fa-trash-alt'></i> Delete Selected Entries?"
 														data-message="This will delete the entries, are you sure?"
 													>
 														<i class="far fa-trash-alt fa-lg"></i> Delete selected
@@ -98,8 +98,8 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<button 
-									class="btn btn-primary btn-sm" 
+								<button
+									class="btn btn-primary btn-sm"
 									onclick="return to( '#event.buildLink(to=prc.xehEntryEditor)#' );"
 								>
 									Create Entry
@@ -183,7 +183,7 @@
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="far fa-lightbulb"></i> Right click on a row to activate quick look!</li>
+					<li><i class="far fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
 				</ul>
 		    </div>
 		</div>

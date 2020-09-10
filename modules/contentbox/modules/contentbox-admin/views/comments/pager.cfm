@@ -40,8 +40,8 @@
 			<td>
 				<strong>#comment.getParentTitle()#</strong>
 				<br/>
-				#left( comment.getDisplayContent(), prc.cbSettings.cb_comments_maxDisplayChars )#
-				<cfif len( comment.getDisplayContent() ) gt prc.cbSettings.cb_comments_maxDisplayChars>
+				#left( comment.getDisplayContent(), prc.cbSiteSettings.cb_comments_maxDisplayChars )#
+				<cfif len( comment.getDisplayContent() ) gt prc.cbSiteSettings.cb_comments_maxDisplayChars>
 				....<strong>more</strong>
 				</cfif>
 			</td>
