@@ -103,13 +103,15 @@ component
 	 * @throws EntityNotFound
 	 */
 	function getOrFail( required siteId ){
-		var site = newCriteria().isEq( "siteId", autoCast( "siteId", arguments.siteId ) ).get();
+		var site = newCriteria().isEq( "siteId", javacast( "int", arguments.siteId ) ).get();
 
-		return (
-			!isNull( site ) ? site : throw(
-				type   : "EntityNotFound",
-				message: "No site with ID #arguments.siteId.toString()# found"
-			)
+		if ( !isNull( site ) ) {
+			return site;
+		}
+
+		throw(
+			type   : "EntityNotFound",
+			message: "No site with ID #arguments.siteId.toString()# found"
 		);
 	}
 

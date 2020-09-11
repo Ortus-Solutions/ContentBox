@@ -33,7 +33,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) )
+					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) );
 			} )
 			.count();
 	}
@@ -48,7 +48,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			.isTrue( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) )
+					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) );
 			} )
 			.count();
 	}
@@ -63,7 +63,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			.isFalse( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) )
+					.isEq( "relatedContent.site.siteId", javaCast( "integer", siteId ) );
 			} )
 			.count();
 	}

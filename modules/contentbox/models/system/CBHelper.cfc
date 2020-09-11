@@ -1339,7 +1339,8 @@ component accessors="true" singleton threadSafe {
 
 		// do we have a category?
 		if ( structKeyExists( arguments, "category" ) ) {
-			return xehRSS &= "/category/#arguments.category.getSlug()#";
+			xehRSS &= "/category/#arguments.category.getSlug()#";
+			return xehRSS;
 		}
 
 		// comments feed?
@@ -1673,7 +1674,8 @@ component accessors="true" singleton threadSafe {
 			xeh = linkEntry( arguments.comment.getRelatedContent(), arguments.ssl );
 		}
 
-		return xeh &= "##comment_#arguments.comment.getCommentID()#";
+		xeh &= "##comment_#arguments.comment.getCommentID()#";
+		return xeh;
 	}
 
 	/**
@@ -1688,7 +1690,8 @@ component accessors="true" singleton threadSafe {
 		} else {
 			xeh = linkEntry( arguments.content, arguments.ssl );
 		}
-		return xeh &= "##comments";
+		xeh &= "##comments";
+		return xeh;
 	}
 
 	/**

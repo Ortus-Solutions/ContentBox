@@ -127,7 +127,7 @@ component extends="ContentService" singleton{
 
 		// Site Filter
 		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
 		}
 
 		// Search Criteria
@@ -252,7 +252,7 @@ component extends="ContentService" singleton{
 
 		// Site Filter
 		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
 		}
 
 		// parent filter

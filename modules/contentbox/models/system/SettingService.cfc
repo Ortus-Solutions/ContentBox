@@ -245,12 +245,11 @@ component
 
 		// Iterate over default core settings and check they exist
 		lock
-			name = "contentbox-pre-flight",
-			timeout="10"
-			throwOnTimeout="true"
-			type="exclusive"
-		{
-			var loadedSettings  = getAllSettings( force: true );
+			name              ="contentbox-pre-flight",
+			timeout           = "10"
+			throwOnTimeout    ="true"
+			type              ="exclusive" {
+			var loadedSettings= getAllSettings( force: true );
 
 			transaction {
 				this.DEFAULTS
@@ -685,7 +684,7 @@ component
 
 		// Site
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// run criteria query and projections count

@@ -133,7 +133,7 @@ component extends="ContentService" singleton{
 		}
 		// Site Filter
 		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
 		}
 
 		// DETERMINE SORT ORDERS
@@ -302,7 +302,7 @@ component extends="ContentService" singleton{
 
 		// Site Filter
 		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", autoCast( "site.siteId", arguments.siteId ) );
+			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
 		}
 
 		// run criteria query and projections count
