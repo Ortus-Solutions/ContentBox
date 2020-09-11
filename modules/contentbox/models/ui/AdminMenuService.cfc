@@ -648,7 +648,10 @@ component accessors="true" threadSafe singleton {
 			);
 
 		// STATS
-		addTopMenu( name = this.STATS, label = "<i class='fas fa-sort-amount-down fa-lg'></i> Stats" ).addSubMenu(
+		addTopMenu(
+			name  = this.STATS,
+			label = "<i class='fas fa-sort-amount-down fa-lg'></i> Stats"
+		).addSubMenu(
 			name    = "Subscribers",
 			label   = "Subscribers",
 			href    = variables.buildLink,
@@ -661,20 +664,25 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Build out ContentBox module links
+	 *
 	 * @module The module name
-	 * @linkTo The link
+	 * @to The link
 	 * @queryString The query string
 	 * @ssl Using ssl or not
 	 */
 	function buildModuleLink(
 		required string module,
-		required string linkTo,
+		required string to,
 		queryString = "",
 		boolean ssl = false
 	){
 		var event = requestService.getContext();
+		// Remove by 6.x
+		if ( !isNull( arguments, "linkTo" ) ) {
+			arguments.to = arguments.linkTo;
+		}
 		return event.buildLink(
-			linkto      = "#this.ADMIN_ENTRYPOINT#.module.#arguments.module#.#arguments.linkTo#",
+			to          = "#this.ADMIN_ENTRYPOINT#.module.#arguments.module#.#arguments.to#",
 			queryString = arguments.queryString,
 			ssl         = arguments.ssl
 		);

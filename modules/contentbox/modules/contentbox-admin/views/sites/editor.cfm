@@ -63,7 +63,7 @@
 								wrapper 		= "div class=controls",
 								labelClass 		= "control-label",
 								groupWrapper 	= "div class=form-group",
-								disabled 		= prc.site.getSlug() == 'default' ? true : false
+								disabled 		= prc.site.getSlug() eq 'default' ? true : false
 							)#
 
 							#html.textField(

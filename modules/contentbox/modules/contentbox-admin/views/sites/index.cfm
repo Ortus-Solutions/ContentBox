@@ -91,7 +91,7 @@
 									<a
 										href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getSiteId()#' )#"
 									>
-										<cfif site.getSlug() == 'default'>
+										<cfif site.getSlug() eq 'default'>
 											<i class="fa fa-star textOrange" title="Default Site"></i>
 										</cfif>
 										#site.getName()#

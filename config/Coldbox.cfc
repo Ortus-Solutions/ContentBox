@@ -209,7 +209,11 @@ component {
 		coldbox.handlersIndexAutoReload = true;
 		coldbox.handlerCaching          = false;
 		coldbox.reinitpassword          = "";
-		coldbox.customErrorTemplate     = "/coldbox/system/exceptions/Whoops.cfm";
+		if( structKeyExists( server, "lucee" ) ){
+			coldbox.customErrorTemplate     = "/coldbox/system/exceptions/Whoops.cfm";
+		} else {
+			coldbox.customErrorTemplate = "/coldbox/system/exceptions/BugReport.cfm";
+		}
 
 		// debugging file
 		logbox.appenders.files = {

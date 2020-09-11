@@ -9,7 +9,7 @@ component extends="baseHandler" {
 
 	// Dependencies
 	property name="categoryService" inject="id:categoryService@cb";
-	property name="HTMLHelper"      inject="HTMLHelper@coldbox";
+	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	/**
 	 * Pre handler
@@ -40,9 +40,9 @@ component extends="baseHandler" {
 		prc.xehImportAll      = "#prc.cbAdminEntryPoint#.Categories.importAll";
 		// Get all categories
 		prc.categories        = variables.categoryService.list(
-			"criteria"  : { "site" : prc.oCurrentSite },
-			"sortOrder" : "category",
-			"asQuery"   : false
+			criteria : { "site" : prc.oCurrentSite },
+			sortOrder: "category",
+			asQuery  : false
 		);
 		// Tab
 		prc.tabContent_categories = true;

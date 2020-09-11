@@ -36,12 +36,13 @@ component extends="baseContentHandler" {
 	// index
 	function index( event, rc, prc ){
 		// get all authors
-		prc.authors    = authorService.getAll( sortOrder = "lastName" );
+		prc.authors = authorService.getAll( sortOrder = "lastName" );
+
 		// get all categories
 		prc.categories = variables.categoryService.list(
-			"criteria"  : { "site" : prc.oCurrentSite },
-			"sortOrder" : "category",
-			"asQuery"   : false
+			criteria  = { "site" : prc.oCurrentSite },
+			sortOrder = "category",
+			asQuery   = false
 		);
 
 		// exit handlers
@@ -153,9 +154,9 @@ component extends="baseContentHandler" {
 		prc.cbHelper   = variables.CBHelper;
 		// get all categories
 		prc.categories = variables.categoryService.list(
-			"criteria"  : { "site" : prc.oCurrentSite },
-			"sortOrder" : "category",
-			"asQuery"   : false
+			criteria : { "site" : prc.oCurrentSite },
+			sortOrder: "category",
+			asQuery  : false
 		);
 		// get new or persisted
 		prc.entry = variables.entryService.get( event.getValue( "contentID", 0 ) );

@@ -46,7 +46,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	numeric function getTotalContentCount( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "integer", siteId ) );
+				c.isEq( "site.siteId", javaCast( "int", siteId ) );
 			} )
 			.count();
 	}

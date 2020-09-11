@@ -164,10 +164,17 @@
                         <!--- CacheBox Pane --->
                         <div class="tab-pane" id="cachebox">
                             <br>
-                            <cfimport prefix="cachebox" taglib="/coldbox/system/cache/report">
-                            <cachebox:monitor cacheFactory="#controller.getCacheBox()#"
-                                              baseURL="#event.buildLink(prc.xehRawSettings)#"
-                                              enableMonitor=false/>
+							<cftry>
+								<cfimport prefix = "cachebox" taglib = "/coldbox/system/cache/report">
+									<cachebox:monitor
+										cacheFactory = "#controller.getCacheBox()#"
+										baseURL = "#event.buildLink( prc.xehRawSettings )#"
+										enableMonitor = false />
+								<cfcatch type = "any" >
+									Can't render charting: #cfcatch.message# #cfcatch.detail#
+								</cfcatch>
+							</cftry>
+
 						</div>
 
                         <!--- ContentBox Events Docs --->

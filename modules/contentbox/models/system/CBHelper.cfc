@@ -1182,20 +1182,24 @@ component accessors="true" singleton threadSafe {
 	 * Build out ContentBox module links
 	 *
 	 * @module The module to link this URL to
-	 * @linkTo The handler action combination to link to
+	 * @to The handler action combination to link to
 	 * @queryString The query string to append in SES format
 	 * @ssl Create the link in SSL or not
 	 */
 	function buildModuleLink(
 		required string module,
-		required string linkTo,
+		required string to,
 		queryString = "",
 		boolean ssl = getRequestContext().isSSL()
 	){
+		// Remove by 6.x
+		if ( !isNull( arguments, "linkTo" ) ) {
+			arguments.to = arguments.linkTo;
+		}
 		return getRequestContext().buildLink(
-			linkto      = adminRoot() & ".module.#arguments.module#.#arguments.linkTo#",
-			queryString = arguments.queryString,
-			ssl         = arguments.ssl
+			to         : adminRoot() & ".module.#arguments.module#.#arguments.to#",
+			queryString: arguments.queryString,
+			ssl        : arguments.ssl
 		);
 	}
 
