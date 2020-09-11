@@ -1193,7 +1193,7 @@ component accessors="true" singleton threadSafe {
 		boolean ssl = getRequestContext().isSSL()
 	){
 		// Remove by 6.x
-		if ( !isNull( arguments, "linkTo" ) ) {
+		if ( !isNull( arguments.linkTo ) ) {
 			arguments.to = arguments.linkTo;
 		}
 		return getRequestContext().buildLink(
