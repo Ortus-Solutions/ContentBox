@@ -8,14 +8,14 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="entryService"                                                                                                                               	inject="entryService@cb";
-	property name="pageService"                                                                                                                                                 	inject="pageService@cb";
-	property name="contentService"                                                                                           	inject="contentService@cb";
-	property name="commentService"                                                                                           	inject="commentService@cb";
-	property name="categoryService"                                                                        		inject="categoryService@cb";
-	property name="feedReader"                                                                                                                                                                  		inject="FeedReader@cbfeeds";
-	property name="loginTrackerService"		inject="loginTrackerService@cb";
-	property name="markdown"                                                                                                                                                                                                      		inject="Processor@cbmarkdown";
+	property name="entryService"        inject="entryService@cb";
+	property name="pageService"         inject="pageService@cb";
+	property name="contentService"      inject="contentService@cb";
+	property name="commentService"      inject="commentService@cb";
+	property name="categoryService"     inject="categoryService@cb";
+	property name="feedReader"          inject="FeedReader@cbfeeds";
+	property name="loginTrackerService" inject="loginTrackerService@cb";
+	property name="markdown"            inject="Processor@cbmarkdown";
 
 	/**
 	 * Main dashboard event
@@ -56,7 +56,7 @@ component extends="baseHandler"{
 
 		prc.entriesCount           = variables.entryService.getTotalContentCount( siteId );
 		prc.pagesCount             = variables.pageService.getTotalContentCount( siteId );
-		prc.commentsCount          = variables.commentService.getTotalCommentCount( siteId )
+		prc.commentsCount          = variables.commentService.getTotalCommentCount( siteId );
 		prc.commentsApprovedCount  = variables.commentService.getApprovedCommentCount( siteId );
 		prc.commentsUnApprovedCount= variables.commentService.getUnApprovedCommentCount( siteId );
 		prc.categoriesCount        = variables.categoryService.getTotalCategoryCount( siteId );
