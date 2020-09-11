@@ -52,7 +52,7 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		return newCriteria().isEq( "siteId", autoCast( "siteId", getCurrentWorkingSiteId() ) ).get();
+		return newCriteria().isEq( "siteId", javacast( "int", getCurrentWorkingSiteId() ) ).get();
 	}
 
 	/**
