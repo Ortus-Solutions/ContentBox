@@ -6,7 +6,7 @@
 </div>
 
 <!--- entries --->
-<table name="entries_pager" id="entries_pager" class="table table-hover table-condensed table-striped" width="100%">
+<table name="entries_pager" id="entries_pager" class="table table-hover  table-striped" width="100%">
 	<thead>
 		<tr>
 			<th>Title</th>
@@ -53,7 +53,7 @@
 			<td class="text-center">
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-xs">
-			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+			    	<a class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

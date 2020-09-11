@@ -27,7 +27,7 @@
 				<cfif prc.featureEnabled>
 
 					<!--- templates --->
-					<table name="templates" id="templates" class="table table-striped table-hover table-condensed">
+					<table name="templates" id="templates" class="table table-striped table-hover ">
 						<thead>
 							<tr>
 								<th>Username / IP</th>

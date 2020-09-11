@@ -7,7 +7,7 @@
         </button>
 
         <button
-			class="btn btn-sm btn-primary dropdown-toggle"
+			class="btn btn-sm btn-default dropdown-toggle"
 			data-toggle="dropdown"
 			title="Quick Actions">
 			<span class="fas fa-ellipsis-v"></span>
@@ -648,7 +648,7 @@
                                                     name = "featuredImageURL",
                                                     bind = prc.page
 												)#
-												
+
                                                 <!--- Image Preview --->
                                                 <div class="margin10">
                                                     <cfif len( prc.page.getFeaturedImageURL() )>
@@ -657,7 +657,7 @@
                                                         <img id="featuredImagePreview" class="img-thumbnail" height="75">
                                                     </cfif>
 												</div>
-												
+
 												<!--- Clear Image --->
 												<a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
                                             </div>

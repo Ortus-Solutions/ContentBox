@@ -16,7 +16,7 @@
             <div class="modal-body">
                 <h3>Version Info Comparison</h3>
 				<!--- Info Table --->
-				<table class="table table-hover table-condensed table-bordered">
+				<table class="table table-hover  table-bordered">
 					<tbody>
 					<tr class="info">
 						<th class="text-center" width="150">Info</th>
@@ -55,7 +55,7 @@
 				</div>
 
 				<!--- Simple Comparisons --->
-				<table class="diff table table-condensed">
+				<table class="diff table ">
 					<thead>
 						<tr>
 							<th colspan="2" class="text-center">Version #prc.oldVersion#</th>

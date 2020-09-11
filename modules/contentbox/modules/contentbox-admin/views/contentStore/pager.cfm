@@ -6,7 +6,7 @@
 </div>
 
 <!--- content --->
-<table name="content_pager" id="content_pager" class="table table-hover table-condensed table-striped" width="100%">
+<table name="content_pager" id="content_pager" class="table table-hover  table-striped" width="100%">
 	<thead>
 		<tr>
 			<th>Title</th>
@@ -49,7 +49,7 @@
 			<td class="text-center">
 				<!--- content Actions --->
 				<div class="btn-group btn-group-xs">
-			    	<a class="btn btn-xs btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
+			    	<a class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

@@ -5,14 +5,14 @@
 			onclick="window.location.href='#event.buildLink( prc.xehentries )#';return false;">
 			<i class="fas fa-chevron-left"></i> Back
 		</button>
-		
+
 		<button
-			class="btn btn-sm btn-primary dropdown-toggle"
+			class="btn btn-sm btn-default dropdown-toggle"
 			data-toggle="dropdown"
 			title="Quick Actions">
 			<span class="fas fa-ellipsis-v"></span>
 		</button>
-		
+
 		<ul class="dropdown-menu">
 			<li>
 				<a href="javascript:quickPublish( false )">
@@ -46,7 +46,7 @@
         novalidate  = "novalidate",
         class       = "form-vertical mt5"
 	)#
-	
+
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
@@ -561,7 +561,7 @@
                                             	name = "featuredImageURL",
                                             	bind = prc.entry
 											)#
-											
+
                                             <!--- Image Preview --->
                                             <div class="margin10">
                                             	<cfif len( prc.entry.getFeaturedImageURL() )>
@@ -570,7 +570,7 @@
                                             		<img id="featuredImagePreview" class="img-thumbnail" height="75">
                                             	</cfif>
 											</div>
-											
+
 											<!--- Clear Image --->
 											<a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
                                         </div>

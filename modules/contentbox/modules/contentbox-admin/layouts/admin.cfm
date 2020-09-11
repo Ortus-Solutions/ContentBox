@@ -62,7 +62,7 @@
 
 				<!-- Site Switcher -->
 				<span
-					class="form-inline hidden-xs"
+					class="form-inline hidden-xs ml10"
 					id="div-siteswitcher"
 					data-toggle="tooltip"
 					data-placement="right"
@@ -218,7 +218,6 @@
 			<!---                               MAIN NAVBAR					                                      --->
 			<!--- ************************************************************************************************--->
 			<nav class="sidebar sidebar-left" id="main-navbar">
-				<h5 class="sidebar-header">#$r( "global.navigation@admin" )#</h5>
 				<!--- Main Generated Menu --->
 				#prc.adminMenuService.generateMenu()#
 			</nav>

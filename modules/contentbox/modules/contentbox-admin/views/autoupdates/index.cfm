@@ -148,7 +148,7 @@
 				<h3 class="panel-title"><i class="fa fa-info-circle"></i> #$r( "autoUpdates.componentsInstalled.title@admin" )#</h3>
 			</div>
 			<div class="panel-body">
-				<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
+				<table name="settings" id="settings" class="table table-striped table-hover " width="98%">
 					<thead>
 						<tr>
 							<th>#$r( "autoUpdates.componentsInstalled.table.head1@admin" )#</th>

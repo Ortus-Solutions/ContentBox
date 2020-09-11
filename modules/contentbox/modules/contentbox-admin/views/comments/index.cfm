@@ -58,7 +58,7 @@
 				</div>
 				<div class="panel-body">
 					<!--- comments --->
-					<table name="comments" id="comments" class="table table-striped table-hover table-condensed" width="98%">
+					<table name="comments" id="comments" class="table table-striped table-hover " width="98%">
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
@@ -113,7 +113,7 @@
 											<a class="btn btn-sm btn-info" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
 										<div class="btn-group">
-											<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+											<a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
 												<i class="fas fa-ellipsis-v fa-lg"></i>
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">

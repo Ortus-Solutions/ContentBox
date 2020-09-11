@@ -211,7 +211,7 @@ component accessors="true" threadSafe singleton {
 		// Register About Menu
 		addHeaderMenu(
 			name        = "about",
-			label       = "<i class=""fa fa-info""></i>",
+			label       = "<i class=""fas fa-info fa-lg width20""></i>",
 			permissions = "SYSTEM_TAB",
 			class       = "dropdown settings",
 			itemType    = "button",
@@ -221,39 +221,33 @@ component accessors="true" threadSafe singleton {
 			title       = "About ContentBox"
 		).addHeaderSubMenu(
 				name   = "support",
-				label  = "<i class=""fa fa-ambulance""></i> Professional Support",
+				label  = "<i class=""fab fa-medrt fa-lg width20""></i> Professional Support",
 				href   = "https://www.ortussolutions.com/services/support",
 				target = "_blank"
 			)
 			.addHeaderSubMenu(
 				name   = "docs",
-				label  = "<i class=""fa fa-book""></i> Documentation",
+				label  = "<i class=""fas fa-book-open fa-lg width20""></i> Documentation",
 				href   = "http://contentbox.ortusbooks.com",
 				target = "_blank"
 			)
 			.addHeaderSubMenu(
 				name   = "forums",
-				label  = "<i class=""far fa-envelope-open""></i> Support Forums",
+				label  = "<i class=""far fa-discord fa-lg width20""></i> Support Forums",
 				href   = "https://groups.google.com/forum/?fromgroups##!forum/contentbox",
 				target = "_blank"
 			)
 			.addHeaderSubMenu(
 				name   = "twitter",
-				label  = "<i class=""fa fa-twitter""></i> Twitter",
-				href   = "https://www.twitter.com/gocontentbox",
+				label  = "<i class=""fas fa-twitter fa-lg width20""></i> Twitter",
+				href   = "https://www.twitter.com/ortussolutions",
 				target = "_blank"
 			)
 			.addHeaderSubMenu(
 				name   = "facebook",
-				label  = "<i class=""fa fa-facebook""></i> Facebook",
-				href   = "https://www.facebook.com/gocontentbox",
+				label  = "<i class=""fas facebook-square fa-lg width20""></i> Facebook",
+				href   = "https://www.facebook.com/ortussolutions",
 				target = "_blank"
-			)
-			.addHeaderSubMenu(
-				name    = "updates",
-				label   = "<i class=""fas fa-file-export""></i> Check for Updates",
-				href    = variables.buildLink,
-				href_to = xehAutoUpdates
 			)
 			.addHeaderSubMenu(
 				name    = "buildid",
@@ -272,7 +266,7 @@ component accessors="true" threadSafe singleton {
 		).addHeaderSubMenu(
 				name    = "myprofile",
 				title   = "ctrl+shift+A",
-				label   = "<i class='far fa-id-badge'></i> My Profile",
+				label   = "<i class='far fa-id-badge fa-lg width20'></i> My Profile",
 				href    = variables.buildLink,
 				href_to = xehMyProfile,
 				data    = { keybinding : "ctrl+shift+a" }
@@ -280,7 +274,7 @@ component accessors="true" threadSafe singleton {
 			.addHeaderSubMenu(
 				name    = "logout",
 				title   = "ctrl+shift+L",
-				label   = "<i class='fa fa-power-off'></i> Logout",
+				label   = "<i class='fa fa-power-off fa-lg width20'></i> Logout",
 				href    = variables.buildLink,
 				href_to = xehDoLogout,
 				data    = { keybinding : "ctrl+shift+l" }

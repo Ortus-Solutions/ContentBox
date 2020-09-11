@@ -69,7 +69,7 @@
 
 				<div class="panel-body">
 					<!--- permissions --->
-					<table name="permissions" id="permissions" class="table table-striped table-hover table-condensed" width="100%">
+					<table name="permissions" id="permissions" class="table table-striped table-hover " width="100%">
 						<thead>
 							<tr>
 								<th>Permission</th>

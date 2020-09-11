@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- settings --->
-<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="100%">
+<table name="settings" id="settings" class="table table-striped table-hover " width="100%">
 	<thead>
 		<tr>
 			<th width="280">Name</th>

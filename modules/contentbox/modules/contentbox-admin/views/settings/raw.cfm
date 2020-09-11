@@ -90,7 +90,7 @@
 
                                             <div class="btn-group btn-group-sm">
                                                 <a href="##" onclick="return createSetting();" class="btn btn-primary btn-sm">Create Setting</a>
-                                                <button class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown">
+                                                <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu">
@@ -112,7 +112,9 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title"><i class="fas fa-ellipsis-v"></i> Setting Editor</h4>
+											<h4 class="modal-title">
+												<i class="fas fa-pen fa-lg"></i> Setting Editor
+											</h4>
                                         </div>
                                         <div class="modal-body">
                                             <!--- Create/Edit form --->
@@ -200,7 +202,7 @@
                             <!---Event Forms --->
                             #html.startForm(name="eventsForm" )#
                                 <!--- events --->
-                                <table name="eventsList" id="eventsList" class="table table-striped table-hover table-condensed" width="100%">
+                                <table name="eventsList" id="eventsList" class="table table-striped table-hover " width="100%">
                                     <thead>
                                         <tr>
                                             <th width="30" class="{sorter:none}">No.</th>

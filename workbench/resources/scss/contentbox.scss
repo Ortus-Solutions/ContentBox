@@ -2,6 +2,31 @@
 
 /**============================== THEME OVERRIDES ==============================**/
 
+body{
+	position: inherit;
+	font-family: 'Source Sans Pro',Arial,sans-serif;
+	letter-spacing: 0.5px;
+	font-size: 15px;
+}
+
+p{
+	margin: 10px 0px !important;
+}
+
+.sidebar .nav {
+	a {
+		font-size: 16px !important;
+	}
+	i {
+		margin-right: 15px;
+		font-size: 18px;
+	}
+	li > .nav-sub > li > a{
+		padding-left: 55px;
+	}
+}
+
+
 .loaders {
 	margin: 10px;
 	display: none;
@@ -45,6 +70,9 @@
 	line-height: 39px;
 	margin: 0px 5px;
 	padding: 0px;
+	a{
+		font-size: 14px !important;
+	}
 }
 #header .user-nav ul li.dropdown.settings .dropdown-menu:after {
 	left: 43%;
@@ -62,7 +90,7 @@
 	color: #fff;
 }
 .main-content-wrapper #main-content {
-	padding: 10px;
+	padding: 20px;
 	.h1 {
 		padding: 0px 10px 20px 10px;
 	}
@@ -72,9 +100,16 @@
 #simple-container{
 	padding-top:10px;
 }
+
 /** Sidebar Mini */
 .sidebar-mini > .sidebar > #profileSidebar{
 	display: none;
+}
+.sidebar-mini .sidebar {
+	width: 60px;
+}
+.sidebar-mini .sidebar+.main-content-wrapper{
+	margin-left: 60px
 }
 
 .table > thead > tr > th {
@@ -85,6 +120,11 @@
 
 .form-control{
 	border-radius: 10px;
+	font-size: 14px !important;
+}
+#main-content .form-control{
+	font-size: 16px !important;
+	padding: 20px 11px;
 }
 
 .input-group .form-control{
@@ -132,8 +172,13 @@ a.btn.btn-danger:visited {
 
 .dropdown-menu > li > a > i{ color: #797979 !important;}
 
-.panel { border-radius: 20px }
-.panel-heading{ min-height: 48px; border-radius: 20px; text-transform: none !important; }
+.panel, .alert { border-radius: 20px }
+.panel-heading{
+	padding: 15px 15px 9px 15px !important;
+	min-height: 48px;
+	border-radius: 20px;
+	text-transform: none !important;
+}
 .panel-default .actions i{ color: #fff; }
 .panel-default .actions i:hover {
     cursor:pointer;

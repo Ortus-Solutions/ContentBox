@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- authors --->
-<table name="authors" id="authors" class="table table-striped table-hover table-condensed" width="100%">
+<table name="authors" id="authors" class="table table-striped table-hover " width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
@@ -62,7 +62,7 @@
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
+			    	<a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

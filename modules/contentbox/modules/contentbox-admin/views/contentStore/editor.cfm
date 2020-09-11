@@ -7,7 +7,7 @@
         </button>
 
         <button
-			class="btn btn-sm btn-primary dropdown-toggle"
+			class="btn btn-sm btn-default dropdown-toggle"
 			data-toggle="dropdown"
 			title="Quick Actions">
 			<span class="fas fa-ellipsis-v"></span>
@@ -31,7 +31,7 @@
 			</li>
         </ul>
 	</div>
-	
+
 	<!--- content Form  --->
 	#html.startForm(
 		action      = prc.xehContentSave,

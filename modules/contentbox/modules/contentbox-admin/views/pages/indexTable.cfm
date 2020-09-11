@@ -11,7 +11,7 @@
 #html.hiddenField( name="parent", value=event.getValue( "parent","" ) )#
 
 <!--- pages --->
-<table id="pages" name="pages" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
+<table id="pages" name="pages" class="table table-striped table-hover " cellspacing="0" width="100%">
     <thead>
         <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
@@ -188,7 +188,7 @@
 					<!--- Page Actions --->
 					<div class="btn-group btn-group-sm">
 						<a
-							class="btn btn-primary dropdown-toggle"
+							class="btn btn-default dropdown-toggle"
 							data-toggle="dropdown"
 							href="##"
 							title="Page Actions"

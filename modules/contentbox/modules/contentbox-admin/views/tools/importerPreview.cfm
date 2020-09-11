@@ -28,7 +28,7 @@
             <div class="col-md-7">
                 <h4><strong>Import Summary</strong></h4>
                 <div id="import-preview">
-                    <table class="table table-bordered table-condensed table-hover">
+                    <table class="table table-bordered  table-hover">
                         <tr>
                             <td width="150" class="success">Exported By:</td>
                             <td>#prc.contents.exportedBy#</td>

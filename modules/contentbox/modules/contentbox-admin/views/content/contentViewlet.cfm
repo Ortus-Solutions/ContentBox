@@ -3,7 +3,7 @@
 <table
 	name="contentTable-#args.viewletID#"
 	id="contentTable-#args.viewletID#"
-	class="table table-hover table-condensed table-striped"
+	class="table table-hover  table-striped"
 	width="100%"
 >
 	<thead>

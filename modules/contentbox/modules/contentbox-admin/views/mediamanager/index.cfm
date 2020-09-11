@@ -9,7 +9,7 @@
 		<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
 			<div class="pull-right">
 				<div class="btn-group btn-group-sm">
-				    <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##">
+				    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##">
 				    	<i class="fa fa-exchange"></i> Switch Library
 				    	<span class="caret"></span>
 				    </a>

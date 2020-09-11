@@ -11,7 +11,7 @@
 #html.hiddenField( name="parent", value=event.getValue( "parent", "" ) )#
 
 <!--- content --->
-<table name="content" id="content" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
+<table name="content" id="content" class="table table-striped table-hover " cellspacing="0" width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
@@ -108,7 +108,7 @@
 
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
+			    	<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

@@ -15,7 +15,7 @@
 
 				<cfif prc.updateFound>
 					#html.startFieldSet( legend="Version Information" )#
-						<table name="settings" id="settings" class="table table-striped table-hover table-condensed" width="98%">
+						<table name="settings" id="settings" class="table table-striped table-hover " width="98%">
 							<thead>
 								<tr class="">
 									<th width="150">#$r( "autoUpdates.check.yourVersion@admin" )#</th>

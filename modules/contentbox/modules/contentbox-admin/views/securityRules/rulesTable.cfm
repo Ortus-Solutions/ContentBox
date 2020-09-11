@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- rules --->
-<table name="rules" id="rules" class="table table-hover table-striped table-condensed" width="100%">
+<table name="rules" id="rules" class="table table-hover table-striped " width="100%">
 	<thead>
 		<tr>
 			<th>Security Rule</th>
@@ -29,7 +29,7 @@
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
+			    	<a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

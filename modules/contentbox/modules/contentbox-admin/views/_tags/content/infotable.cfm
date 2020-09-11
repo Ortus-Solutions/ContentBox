@@ -1,6 +1,6 @@
 <cfoutput>
 <div class="panel panel-default">
-                        
+
     <div class="panel-heading">
         <h4 class="panel-title">
             <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
@@ -12,7 +12,7 @@
     <div id="pageinfo" class="panel-collapse collapse in">
         <div class="panel-body">
             <!--- Persisted Info --->
-            <table class="table table-hover table-condensed table-striped size12">
+            <table class="table table-hover  table-striped size12">
                 <tr>
                     <th class="col-md-4">Created By:</th>
                     <td class="col-md-8">

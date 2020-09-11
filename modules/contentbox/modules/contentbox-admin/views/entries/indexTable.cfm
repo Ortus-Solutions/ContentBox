@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- entries --->
-<table name="entries" id="entries" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
+<table name="entries" id="entries" class="table table-striped table-hover " cellspacing="0" width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
@@ -93,7 +93,7 @@
 
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+			    	<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

@@ -32,7 +32,7 @@
 					</div>
 
 					<!--- modules --->
-					<table name="modules" id="modules" class="table table-striped table-hover table-condensed" width="100%">
+					<table name="modules" id="modules" class="table table-striped table-hover " width="100%">
 						<thead>
 							<tr>
 								<th>Module</th>
@@ -91,7 +91,9 @@
 		<cfif prc.oCurrentAuthor.checkPermission( "MODULES_ADMIN" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
-			        <h3 class="panel-title"><i class="fas fa-ellipsis-v"></i> Module Admin Actions</h3>
+					<h3 class="panel-title">
+						<i class="fas fa-users-cog"></i> Module Admin Actions
+					</h3>
 			    </div>
 			    <div class="panel-body">
 			    	<div class="btn-group text-center">

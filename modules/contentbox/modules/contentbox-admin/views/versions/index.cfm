@@ -24,7 +24,7 @@
 			</div>
 
 		    <div class="panel-body">
-		    	<table class="table table-hover table-condensed table-striped" width="100%">
+		    	<table class="table table-hover  table-striped" width="100%">
 					<tr>
 						<th class="textRight">Published:</th>
 						<td>

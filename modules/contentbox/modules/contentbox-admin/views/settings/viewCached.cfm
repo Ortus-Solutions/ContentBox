@@ -8,7 +8,7 @@
         <div class="modal-body">
             <h2>Cached Metadata</h2>
             <!--- settings --->
-            <table class="table table-hover table-condensed table-striped" width="98%">
+            <table class="table table-hover  table-striped" width="98%">
             	<thead>
             		<tr>
             			<th>Hits</th>
@@ -30,10 +30,10 @@
             		</tr>
             	</tbody>
             </table>
-            
+
             <h2>Cached Data</h2>
             <!--- settings --->
-            <table name="settings" id="settings" class="table table-hover table-condensed table-striped" width="98%">
+            <table name="settings" id="settings" class="table table-hover  table-striped" width="98%">
             	<thead>
             		<tr>
             			<th width="250">Name</th>
