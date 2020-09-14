@@ -201,7 +201,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fas fa-sitemap fa-lg"></i> Related Content
+                                        <i class="fas fa-sitemap"></i> Related Content
                                     </a>
                                 </h4>
                             </div>
@@ -222,7 +222,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link fa-lg"></i> Linked Content
+                                        <i class="fa fa-link"></i> Linked Content
                                     </a>
                                 </h4>
                             </div>
@@ -242,7 +242,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fas fa-toolbox fa-lg"></i> Modifiers
+                                        <i class="fas fa-toolbox"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -251,7 +251,7 @@
 
 									<!--- Parent Content --->
 									<div class="form-group">
-										<i class="fas fa-sitemap fa-lg"></i>
+										<i class="fas fa-sitemap"></i>
 		         						#html.label( field="parentContent",content='Parent:' )#
 		         						<select name="parentContent" id="parentContent" class="form-control input-sm">
 		         							<option value="null">No Parent</option>
@@ -273,7 +273,7 @@
                                     <!--- Creator --->
                                     <cfif prc.content.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
                                         <div class="form-group">
-                                            <i class="fa fa-user fa-lg"></i>
+                                            <i class="fa fa-user"></i>
                                             #html.label(field="creatorID",content="Creator:",class="inline" )#
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
@@ -285,7 +285,7 @@
 
                                     <!--- Retrieval Order --->
                                     <div class="form-group">
-                                        <i class="fa fa-sort fa-lg"></i>
+                                        <i class="fa fa-sort"></i>
                                         <!--- menu order --->
                                         #html.inputfield(
                                             type        = "number",
@@ -314,7 +314,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fas fa-database fa-lg"></i> Cache Settings
+                                        <i class="fas fa-database"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -370,7 +370,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fas fa-tags fa-lg"></i> Categories
+                                        <i class="fas fa-tags"></i> Categories
                                     </a>
                                 </h4>
                             </div>

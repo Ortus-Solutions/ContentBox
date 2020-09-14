@@ -278,7 +278,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##displayoptions">
-                                        <i class="fas fa-photo-video fa-lg"></i> Display Options
+                                        <i class="fas fa-photo-video"></i> Display Options
                                         </a>
                                     </h4>
                                 </div>
@@ -378,7 +378,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                            <i class="fas fa-sitemap fa-lg"></i> Related Content
+                                            <i class="fas fa-sitemap"></i> Related Content
                                         </a>
 
                                     </h4>
@@ -401,7 +401,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                            <i class="fa fa-link fa-lg"></i> Linked Content
+                                            <i class="fa fa-link"></i> Linked Content
                                         </a>
 
                                     </h4>
@@ -422,7 +422,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                            <i class="fas fa-toolbox fa-lg"></i> Modifiers
+                                            <i class="fas fa-toolbox"></i> Modifiers
                                         </a>
                                     </h4>
                                 </div>
@@ -431,7 +431,7 @@
                                         <!--- Creator --->
                                         <cfif prc.page.isLoaded() and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                             <div class="form-group">
-                                                <i class="fa fa-user fa-lg"></i>
+                                                <i class="fa fa-user"></i>
                                                 #html.label(
                                                     field="creatorID",
                                                     content="Creator:",
@@ -448,7 +448,7 @@
                                         <!--- Allow Comments --->
                                         <cfif prc.cbSiteSettings.cb_comments_enabled>
                                             <div class="form-group">
-                                                <i class="far fa-comments fa-lg"></i>
+                                                <i class="far fa-comments"></i>
                                                 #html.label(
                                                     field="allowComments",
                                                     content="Allow Comments:",
@@ -481,7 +481,7 @@
 
                                         <!--- Password Protection --->
                                         <div class="form-group">
-                                            <label for="passwordProtection"><i class="fas fa-key fa-lg"></i> Password Protection:</label>
+                                            <label for="passwordProtection"><i class="fas fa-key"></i> Password Protection:</label>
                                             #html.textfield(
                                                 name="passwordProtection",
                                                 bind=prc.page,
@@ -502,7 +502,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                            <i class="fas fa-database fa-lg"></i> Cache Settings
+                                            <i class="fas fa-database"></i> Cache Settings
                                         </a>
                                     </h4>
 								</div>
@@ -578,7 +578,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                            <i class="fas fa-tags fa-lg"></i> Categories
+                                            <i class="fas fa-tags"></i> Categories
                                         </a>
                                     </h4>
                                 </div>
@@ -620,7 +620,7 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
-                                            <i class="fas fa-photo-video fa-lg"></i> Featured Image
+                                            <i class="fas fa-photo-video"></i> Featured Image
                                         </a>
                                     </h4>
                                 </div>
