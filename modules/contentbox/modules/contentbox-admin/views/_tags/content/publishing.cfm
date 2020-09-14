@@ -1,5 +1,5 @@
 <cfoutput>
-    <div class="#args.content.getIsPublished() ? '' : 'selected'#">
+    <div class="mb10 #args.content.getIsPublished() ? '' : 'selected'#">
 
         <!--- is Published --->
         #html.hiddenField( name="isPublished", bind=args.content )#
@@ -150,7 +150,6 @@
             </cfif>
 
             <div class="btn-group">
-
                 <button type="button" class="btn btn-info" onclick="quickSave()" title="Save and continue editing">
                     Save
                 </button>
@@ -165,15 +164,13 @@
                 </ul>
             </div>
 
-            <div class="btn-group">
-                <button class="btn btn-success"
-                        onclick="togglePublishingBar()"
-                        type="button"
-                        title="Open Publishing Details"
-                >
-                        Publish
-                </button>
-            </div>
+			<button class="btn btn-success"
+					onclick="togglePublishingBar()"
+					type="button"
+					title="Open Publishing Details"
+			>
+					Publish
+			</button>
         </div>
 
         <!--- Loader --->

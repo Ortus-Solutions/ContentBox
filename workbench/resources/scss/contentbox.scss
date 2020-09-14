@@ -104,10 +104,13 @@ p{
 
 /******************** MAIN CONTENT Wrappers ****************************/
 
-.main-content-wrapper #main-content {
-	padding: 20px;
-	.h1 {
-		padding: 0px 10px 20px 10px;
+.main-content-wrapper {
+	#main-content {
+		padding: 20px;
+		background-color: #F4F5F7 !important;
+		.h1 {
+			padding: 0px 10px 20px 10px;
+		}
 	}
 }
 
@@ -247,8 +250,11 @@ a.btn.btn-danger:visited {
 .nav-tabs > li > a{
 	padding: 15px;
 }
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:active{
+	color: black;
+}
 .nav-tabs > li > a:hover{
-	background-color: #eaeaea;
+	background-color: #8ad3f0;
 	border: 1px solid transparent;
 }
 .tab-content{
@@ -562,25 +568,25 @@ table.diff {
 .pl5{ padding-left: 5px;}
 .pr5{ padding-right: 5px;}
 .pt5{ padding-top: 5px;}
-.pb5{ padding-top: 5px;}
+.pb5{ padding-bottom: 5px;}
 
 .p10{ padding: 10px;}
 .pl10{ padding-left: 10px;}
 .pr10{ padding-right: 10px;}
 .pt10{ padding-top: 10px;}
-.pb10{ padding-top: 10px;}
+.pb10{ padding-bottom: 10px;}
 
 .m5{ margin: 5px;}
 .ml5{ margin-left: 5px;}
 .mr5{ margin-right: 5px;}
 .mt5{ margin-top: 5px;}
-.mb5{ margin-top: 5px;}
+.mb5{ margin-bottom: 5px;}
 
 .m10{ margin: 10px;}
 .ml10{ margin-left: 10px;}
 .mr10{ margin-right: 10px;}
 .mt10{ margin-top: 10px;}
-.mb10{ margin-top: 10px;}
+.mb10{ margin-bottom: 10px;}
 
 .margin10 { margin:10px; }
 .margin0 { margin:0px; }
