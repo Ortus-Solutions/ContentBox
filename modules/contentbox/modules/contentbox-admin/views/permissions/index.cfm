@@ -110,7 +110,7 @@
 										   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
 										   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#');"
 										   title="Edit #permission.getPermission()#">
-										   	<i class="far fa-keyboard fa-lg"></i>
+										   	<i class="fas fa-pen fa-lg"></i>
 										</a>
 										<!--- Delete Command --->
 										<a class="btn btn-sm btn-danger confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">

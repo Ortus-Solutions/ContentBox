@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-	<legend><i class="far fa-keyboard fa-lg"></i> Editor Options</legend>
+	<legend><i class="fas fa-pen fa-lg"></i> Editor Options</legend>
 
 		<!--- Default Editor --->
 		<div class="form-group">

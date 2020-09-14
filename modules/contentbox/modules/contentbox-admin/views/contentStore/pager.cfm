@@ -55,7 +55,7 @@
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 						<!--- Create Child --->
 						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
 						</cfif>

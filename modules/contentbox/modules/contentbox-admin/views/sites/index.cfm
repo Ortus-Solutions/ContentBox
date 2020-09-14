@@ -157,7 +157,7 @@
 											<!--- Edit Command --->
 											<li>
 												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getSiteId()#' )#">
-													<i class="far fa-keyboard fa-lg"></i> Edit
+													<i class="fas fa-pen fa-lg"></i> Edit
 												</a>
 											</li>
 

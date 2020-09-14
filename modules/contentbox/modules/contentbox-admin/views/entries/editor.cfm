@@ -65,7 +65,7 @@
 
                         <li role="presentation" class="active">
                             <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-                                <i class="far fa-keyboard"></i> Editor
+                                <i class="fas fa-pen"></i> Editor
                             </a>
                         </li>
 

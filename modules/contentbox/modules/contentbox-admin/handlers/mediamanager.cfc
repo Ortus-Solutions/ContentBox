@@ -23,67 +23,8 @@ component extends="baseHandler" {
 		event.paramValue( "library", "content" );
 		// get settings according to contentbox
 		prc.cbFileBrowserSettings = settingService.buildFileBrowserSettings();
-		// set root according to library root
-		switch ( rc.library ) {
-			case "content": {
-				// this is the default, so ignore
-				prc.cbFileBrowserSettings.title = "Content Library";
-				break;
-			}
-			case "customModules": {
-				prc.cbFileBrowserSettings.title         = "Custom Modules Library";
-				prc.cbFileBrowserSettings.directoryRoot = getInstance( "ModuleService@cb" ).getCustomModulesPath();
-				break;
-			}
-			case "coreModules": {
-				prc.cbFileBrowserSettings.title         = "Core Modules Library";
-				prc.cbFileBrowserSettings.directoryRoot = getInstance( "ModuleService@cb" ).getCoreModulesPath();
-				break;
-			}
-			case "updates": {
-				prc.cbFileBrowserSettings.title         = "Updates Library";
-				prc.cbFileBrowserSettings.directoryRoot = getInstance( "UpdateService@cb" ).getPatchesLocation();
-				break;
-			}
-			case "coreWidgets": {
-				prc.cbFileBrowserSettings.title         = "Core Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getInstance( "WidgetService@cb" ).getCoreWidgetsPath();
-				break;
-			}
-			case "customWidgets": {
-				prc.cbFileBrowserSettings.title         = "Custom Widgets Library";
-				prc.cbFileBrowserSettings.directoryRoot = getInstance( "WidgetService@cb" ).getCustomWidgetsPath();
-				break;
-			}
-		}
-
-		// options
-		prc.libraryOptions = [
-			{
-				name  : "<i class='fa fa-pencil'></i> Content",
-				value : "Content"
-			},
-			{
-				name  : "<i class='fa fa-bolt'></i> Core Modules",
-				value : "CoreModules"
-			},
-			{
-				name  : "<i class='fa fa-bolt'></i> Custom Modules",
-				value : "CustomModules"
-			},
-			{
-				name  : "<i class='fas fa-file-export'></i> Updates",
-				value : "Updates"
-			},
-			{
-				name  : "<i class='fa fa-magic'></i> Core Widgets",
-				value : "CoreWidgets"
-			},
-			{
-				name  : "<i class='fa fa-magic'></i> Custom Widgets",
-				value : "CustomWidgets"
-			}
-		];
+		// this is the default, so ignore
+		prc.cbFileBrowserSettings.title = "Content Library";
 
 		// build argument list for widget
 		prc.fbArgs = { widget : true, settings : prc.cbFileBrowserSettings };

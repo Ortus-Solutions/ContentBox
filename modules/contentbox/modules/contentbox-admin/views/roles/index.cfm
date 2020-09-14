@@ -113,7 +113,7 @@
 												<!--- Edit Command --->
 												<li><a href="javascript:edit('#role.getRoleID()#',
 											   					 '#HTMLEditFormat( jsstringFormat( role.getRole() ) )#',
-											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
+											   					 '#HTMLEditFormat( jsstringFormat( role.getDescription() ) )#')"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 
 												<!--- Export --->
 												<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>

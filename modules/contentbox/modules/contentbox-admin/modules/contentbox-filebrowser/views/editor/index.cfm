@@ -49,7 +49,7 @@
 
                                     <li role="presentation">
                                         <a href="##transform" aria-controls="history" role="tab" data-toggle="tab">
-                                            <i class="far fa-keyboard"></i> Transform
+                                            <i class="fas fa-pen"></i> Transform
                                         </a>
                                     </li>
 

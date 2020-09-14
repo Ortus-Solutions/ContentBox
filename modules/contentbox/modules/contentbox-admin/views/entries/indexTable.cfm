@@ -107,7 +107,7 @@
 						</li>
 						</cfif>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 						</cfif>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->

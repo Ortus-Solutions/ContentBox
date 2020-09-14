@@ -58,7 +58,7 @@
 				    	<ul class="dropdown-menu text-left pull-right">
 				    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR" ) OR prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Edit Command --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 							<!--- Create Child --->
 							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
 							</cfif>

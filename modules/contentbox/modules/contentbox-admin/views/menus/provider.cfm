@@ -102,7 +102,7 @@
 	</div>
 
 	<a class="dd3-expand btn" title="Edit Details">
-		<i class="far fa-keyboard fa-lg"></i>
+		<i class="fas fa-pen fa-lg"></i>
 	</a>
 	<a 	class="dd3-delete btn btn-danger confirmIt"
 		data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."

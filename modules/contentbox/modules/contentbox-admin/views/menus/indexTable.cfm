@@ -29,7 +29,7 @@
                 <td class="text-center">#arrayLen( menu.getMenuItems() )#</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
-                        <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
+                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
                             <i class="fas fa-ellipsis-v fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu text-left pull-right">
@@ -40,7 +40,7 @@
                                 </li>
                                 <!--- Edit Command --->
                                 <li>
-                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a>
+                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fas fa-pen fa-lg"></i> Edit</a>
                                 </li>
                                 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->

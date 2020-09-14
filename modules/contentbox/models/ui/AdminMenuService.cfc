@@ -204,7 +204,6 @@ component accessors="true" threadSafe singleton {
 		// Exit Handlers
 		var xehMyProfile   = "#this.ADMIN_ENTRYPOINT#.authors.myprofile";
 		var xehDoLogout    = "#this.ADMIN_ENTRYPOINT#.security.doLogout";
-		var xehAutoUpdates = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 		var xehAbout       = "#this.ADMIN_ENTRYPOINT#.dashboard.about";
 		var xehAdminAction = "#this.ADMIN_ENTRYPOINT#.dashboard.reload";
 
@@ -233,19 +232,19 @@ component accessors="true" threadSafe singleton {
 			)
 			.addHeaderSubMenu(
 				name   = "forums",
-				label  = "<i class=""far fa-discord fa-lg width20""></i> Support Forums",
+				label  = "<i class=""fas fa-comments fa-lg width20""></i> Support Forums",
 				href   = "https://groups.google.com/forum/?fromgroups##!forum/contentbox",
 				target = "_blank"
 			)
 			.addHeaderSubMenu(
 				name   = "twitter",
-				label  = "<i class=""fas fa-twitter fa-lg width20""></i> Twitter",
+				label  = "<i class=""fab fa-twitter fa-lg width20""></i> Twitter",
 				href   = "https://www.twitter.com/ortussolutions",
 				target = "_blank"
 			)
 			.addHeaderSubMenu(
 				name   = "facebook",
-				label  = "<i class=""fas facebook-square fa-lg width20""></i> Facebook",
+				label  = "<i class=""fab fa-facebook-square fa-lg width20""></i> Facebook",
 				href   = "https://www.facebook.com/ortussolutions",
 				target = "_blank"
 			)
@@ -418,7 +417,6 @@ component accessors="true" threadSafe singleton {
 		prc.xehSecurityRules = "#this.ADMIN_ENTRYPOINT#.securityrules";
 		prc.xehRawSettings   = "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehAuthLogs      = "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
-		prc.xehAutoUpdater   = "#this.ADMIN_ENTRYPOINT#.autoupdates";
 
 		// Stats
 		prc.xehSubscribers = "#this.ADMIN_ENTRYPOINT#.subscribers";
@@ -632,13 +630,6 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehSecurityRules,
 				permissions = "SECURITYRULES_ADMIN"
-			)
-			.addSubMenu(
-				name        = "updates",
-				label       = "Updates",
-				href        = variables.buildLink,
-				href_to     = prc.xehAutoUpdater,
-				permissions = "SYSTEM_UPDATES"
 			);
 
 		// STATS

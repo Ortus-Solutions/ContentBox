@@ -237,7 +237,7 @@
 									<a
 										href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"
 									>
-										<i class="far fa-keyboard fa-lg"></i> Edit
+										<i class="fas fa-pen fa-lg"></i> Edit
 									</a>
 								</li>
 							</cfif>

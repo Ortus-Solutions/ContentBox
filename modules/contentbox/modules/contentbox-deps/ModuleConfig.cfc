@@ -26,8 +26,7 @@ component {
         "cbfeeds",
         "cbmessagebox",
         "cbantisamy",
-        "cbmarkdown",
-        "forgeboxsdk"
+        "cbmarkdown"
 	];
 
 	/**

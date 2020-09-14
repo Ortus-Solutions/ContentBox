@@ -130,7 +130,7 @@
 							href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#"
 							title="Edit Page"
 						>
-							<i class="far fa-keyboard fa-lg"></i>
+							<i class="fas fa-pen fa-lg"></i>
 						</a>
 					</cfif>
 			    </div>

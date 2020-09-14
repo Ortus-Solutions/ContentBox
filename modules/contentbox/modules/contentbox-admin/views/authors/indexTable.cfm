@@ -92,7 +92,7 @@
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">
-									<i class="far fa-keyboard fa-lg"></i> Edit
+									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 

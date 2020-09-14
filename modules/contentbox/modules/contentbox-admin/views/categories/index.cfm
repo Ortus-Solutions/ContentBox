@@ -144,7 +144,7 @@
 									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
 										title="Edit #category.getCategory()#"
 										>
-											<i class="far fa-keyboard fa-lg"></i>
+											<i class="fas fa-pen fa-lg"></i>
 									</button>
 
 									<!--- Delete Command --->

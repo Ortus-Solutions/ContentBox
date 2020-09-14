@@ -5,23 +5,6 @@
 			<i class="fas fa-photo-video"></i> Media Manager
 		</h1>
 		<span class="label label-warning">#rc.library#</span>
-
-		<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_LIBRARY_SWITCHER" )>
-			<div class="pull-right">
-				<div class="btn-group btn-group-sm">
-				    <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##">
-				    	<i class="fa fa-exchange"></i> Switch Library
-				    	<span class="caret"></span>
-				    </a>
-					<ul class="dropdown-menu pull-right">
-						<cfloop array="#prc.libraryOptions#" index="thisCollection">
-						<li><a href="javascript:switchLibrary( '#thisCollection.value#' )">#thisCollection.name#</a>
-						</cfloop>
-					</ul>
-			    </div>
-			</div>
-	    </cfif>
-
 	</div>
 </div>
 <div class="row">

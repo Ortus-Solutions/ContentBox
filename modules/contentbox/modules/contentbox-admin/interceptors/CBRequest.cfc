@@ -95,7 +95,6 @@ component extends="coldbox.system.Interceptor"{
 		// Global Admin Exit Handlers
 		prc.xehDashboard  = "#prc.cbAdminEntryPoint#.dashboard";
 		prc.xehAbout      = "#prc.cbAdminEntryPoint#.dashboard.about";
-		prc.xehAutoUpdates= "#prc.cbAdminEntryPoint#.autoupdates";
 
 		// Entries Tab
 		prc.xehEntries   = "#prc.cbAdminEntryPoint#.entries";
@@ -141,7 +140,6 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehChangeSite   = "#prc.cbAdminEntryPoint#.sites.changeSite";
 		prc.xehSecurityRules= "#prc.cbAdminEntryPoint#.securityrules";
 		prc.xehRawSettings  = "#prc.cbAdminEntryPoint#.settings.raw";
-		prc.xehAutoUpdater  = "#prc.cbAdminEntryPoint#.autoupdates";
 
 		// Stats
 		prc.xehSubscribers  = "#prc.cbAdminEntryPoint#.subscribers";

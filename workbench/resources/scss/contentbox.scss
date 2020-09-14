@@ -2,30 +2,28 @@
 
 /**============================== THEME OVERRIDES ==============================**/
 
+
+/******************** MAIN HTML ELEMENTS ****************************/
+
 body{
 	position: inherit;
 	font-family: 'Source Sans Pro',Arial,sans-serif;
 	letter-spacing: 0.5px;
-	font-size: 15px;
+	font-size: 14px;
+	font-weight: 400;
+	color: black;
+	background: #F4F5F7;
 }
 
 p{
 	margin: 10px 0px !important;
 }
 
-.sidebar .nav {
-	a {
-		font-size: 16px !important;
-	}
-	i {
-		margin-right: 15px;
-		font-size: 18px;
-	}
-	li > .nav-sub > li > a{
-		padding-left: 55px;
-	}
+.table > thead > tr > th {
+	border-bottom: 0px solid #ddd;
 }
 
+/******************** LOADERS ****************************/
 
 .loaders {
 	margin: 10px;
@@ -33,62 +31,75 @@ p{
 	text-align: center;
 }
 
+/******************** TIP LISTS ****************************/
+
 .tipList li {
 	padding: 10px 0px 0px 0px;
 }
 
-/** Header */
-#header .brand{
-	background-color: white!important;
-}
-#header .logo{
-	padding: 15px 0 0 0px !important;
-	background: none !important;
-}
-#header .user-nav {
-	padding-right: 60px;
-}
+/******************** HEADER ELEMENTS ****************************/
 
-/* vertical align */
-#header a.btn-default{
-	vertical-align: middle;
-}
-/* Overrides due to toggles conflict */
-#header .btn-default{
-	min-height: 35px;
-	min-width: 35px;
-}
-/* close gap between li's */
-#header .user-nav ul li{
-	margin: 0px 5px;
-}
-#header .user-nav ul li.dropdown.settings .dropdown-menu {
-	width: 230px;
-	left: -80px;
-}
-#header .user-nav ul li.dropdown.settings {
-	line-height: 39px;
-	margin: 0px 5px;
-	padding: 0px;
-	a{
-		font-size: 14px !important;
+/** Header */
+#header{
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+	.brand{
+		background-color: white!important;
+	}
+	.logo{
+		padding: 15px 0 0 0px !important;
+		background: none !important;
+	}
+	.user-nav {
+		padding-right: 60px;
+	}
+	a.btn-default{
+		vertical-align: middle;
+	}
+	.btn-default{
+		min-height: 35px;
+		min-width: 35px;
+	}
+	.user-nav ul li{
+		margin: 0px 5px;
+	}
+	/* close gap between li's */
+	.user-nav ul li.dropdown.settings .dropdown-menu {
+		width: 230px;
+		left: -80px;
+	}
+	.user-nav ul li.dropdown.settings {
+		line-height: 39px;
+		margin: 0px 5px;
+		padding: 0px;
+		a{
+			font-size: 14px !important;
+		}
+	}
+	.user-nav ul li.dropdown.settings .dropdown-menu:after {
+		left: 43%;
+	}
+	.user-nav ul li.dropdown.settings .dropdown-menu:before {
+		left: 43%;
+	}
+	#siteSwitcher{
+		padding-top: 8px;
+		padding-bottom: 5px;
 	}
 }
-#header .user-nav ul li.dropdown.settings .dropdown-menu:after {
-	left: 43%;
-}
-#header .user-nav ul li.dropdown.settings .dropdown-menu:before {
-	left: 43%;
-}
+
+/******************** LOGIN WRAPPERS ****************************/
+
 #login-wrapper{
 	#username, #twofactorcode{
 		padding-left: 32px;
 	}
 }
-.main-content-wrapper .dropdown-menu > li > a:hover, .main-content-wrapper .dropdown-menu > li > a:active {
-	background-color: #16a086;
-	color: #fff;
+#login-container{
+	position: relative;
 }
+
+/******************** MAIN CONTENT Wrappers ****************************/
+
 .main-content-wrapper #main-content {
 	padding: 20px;
 	.h1 {
@@ -96,9 +107,61 @@ p{
 	}
 }
 
-/** Section Overrides */
 #simple-container{
 	padding-top:10px;
+}
+
+/******************** SIDEBAR ****************************/
+
+.sidebar {
+	color: white;
+	min-height: auto;
+	padding-bottom: 15px;
+	.nav {
+		a {
+			font-size: 15px !important;
+		}
+		i {
+			margin-right: 15px;
+			font-size: 17px;
+		}
+		li > .nav-sub > li > a{
+			padding-left: 55px;
+		}
+	}
+}
+.sidebar-left{
+	box-shadow: 5px 8px 8px 1px #c6c3c3 !important;
+	background: white !important;
+	border-top: 1px solid #c6c3c3 !important;
+	border-right: 1px solid #c6c3c3 !important;
+	border-bottom-right-radius: 15px;
+	.nav-sub{
+		background: #d5dbe1 !important;
+	}
+	//a, a:active{
+	//	color: black;
+	//}
+	a:hover{
+		color: #32a644;
+	}
+	li > .nav-sub > li > a{
+		padding-left: 55px;
+	}
+	.nav-pills{
+		li{
+			a{
+				border-left: none;
+				padding-left: 20px;
+			}
+		}
+		li.active > a.dropdown-toggle, li.active > a.dropdown-toggle:focus, li.active > a.dropdown-toggle:hover{
+			border-left: solid 4px #1abc9c;
+		}
+	}
+	.active > a, .active > a:hover, .active > a:focus  {
+		color: #32a644;
+	}
 }
 
 /** Sidebar Mini */
@@ -106,77 +169,122 @@ p{
 	display: none;
 }
 .sidebar-mini .sidebar {
-	width: 60px;
+	width: 50px;
 }
 .sidebar-mini .sidebar+.main-content-wrapper{
 	margin-left: 60px
 }
 
-.table > thead > tr > th {
-	border-bottom: 0px solid #ddd;
-}
-
 /**============================== BOOTSTRAP OVERRIDES ==============================**/
 
+/******************** FORM CONTROLS ****************************/
+
 .form-control{
-	border-radius: 10px;
-	font-size: 14px !important;
+	border-radius: 5px;
+	font-size: 13px !important;
+	background-color: #fff;
+	border-color: #d2d6dc;
+	color: black;
 }
-#main-content .form-control{
-	font-size: 16px !important;
-	padding: 20px 11px;
+.form-control:focus{
+	box-shadow: 0 0 2px 0px #1ABC9C !important;
+	border-color: #1ABC9C;
+}
+
+select.form-control{
+	padding-top: 11px;
+	padding-bottom: 11px;
 }
 
 .input-group .form-control{
 	z-index:0;
 }
-.tab-content{
-	background: white;
+
+#main-content, #loginForm{
+	input[type=text], input[type=password], input[type=email], textarea{
+		font-size: 13px !important;
+		padding: 20px 11px;
+	}
 }
-.tab-pane .row.well.well-sm {
-  margin: 0 1px 10px;
+
+label{
+	font-weight: 500;
 }
+
+
+/******************** LINKS ****************************/
 
 a.btn.btn-danger:link,
 a.btn.btn-danger:visited {
-  color: white !important;
+	color: white !important;
 }
+
+/******************** TABS ****************************/
+
 .nav-tabs > li > a{
 	padding: 15px;
 }
-
-.tab-wrapper > .nav-tabs > li.active > a {
-	border-radius: 10px 10px 0px 0px;
-}
-
-.tab-left > .nav-tabs > li.active > a {
-	border-radius: 10px 0px 0px 10px;
-}
-
 .nav-tabs > li > a:hover{
 	background-color: #eaeaea;
 	border: 1px solid transparent;
 }
-
-.panel > .panel-heading + .panel-collapse > .panel-body {
-	border-top-color: white;
+.tab-content{
+	background: white;
 }
+.tab-pane .row.well.well-sm {
+	margin: 0 1px 10px;
+}
+.tab-wrapper > .nav-tabs > li.active > a {
+	border-radius: 10px 10px 0px 0px;
+}
+.tab-left > .nav-tabs > li.active > a {
+	border-radius: 10px 0px 0px 10px;
+}
+
+/******************** LABELS ****************************/
 
 .label{
 	border-radius: 10px;
 }
 
+/******************** BUTTONS ****************************/
+
 .btn-toggle.radio {padding-left:30px;}
-.btn{ border-radius: 10px; }
-.btn-group .btn{ border-radius: 10px; }
+.btn{ border-radius: 5px; }
+.btn-group .btn{ border-radius: 5px; }
 
-.dropdown-menu > li > a > i{ color: #797979 !important;}
+/******************** DROPDOWN MENUS ****************************/
 
-.panel, .alert { border-radius: 20px }
+.dropdown-menu{
+	border-radius: 10px;
+	background-color: white;
+	padding: 9px;
+	li > a{
+		color: #0a1d30;
+		padding: 5px 10px;
+		i{
+			margin-right: 5px;
+		}
+	}
+	li > a:hover, li > a:active {
+		color: #0a1d30 !important;
+		background-color: #8ad3f0 !important;
+	}
+}
+
+/******************** PANELS ****************************/
+
+.panel > .panel-heading + .panel-collapse > .panel-body {
+	border-top-color: white;
+}
+.panel, .alert {
+	border-radius: 15px !important;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important
+}
 .panel-heading{
 	padding: 15px 15px 9px 15px !important;
 	min-height: 48px;
-	border-radius: 20px;
+	border-radius: 15px;
 	text-transform: none !important;
 }
 .panel-default .actions i{ color: #fff; }
@@ -287,7 +395,7 @@ widgetinfobar::-moz-selection {
 #div-search { padding: 6px 14px 2px 14px; }
 #div-search input{
 	background-color: #fafafa;
-	border-radius: 10px;
+	border-radius: 5px;
 	box-shadow: none !important;
 	color: #717171;
 	font-size: 13px;
@@ -310,11 +418,11 @@ widgetinfobar::-moz-selection {
 	min-height: 100px;
 	z-index: 9999;
 	box-shadow:0 0 6px #ccc;
-	border-radius:6px;
+	border-radius:5px;
 	-moz-box-shadow:0 0 6px #ccc;
 	-webkit-box-shadow:0 0 6px #ccc;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
 }
 #div-search-results h2{ color: #31ADE8; font-size: 16px; font-weight: normal;}
 #div-search-results ul{ font-size: 12px}
@@ -337,6 +445,7 @@ widgetinfobar::-moz-selection {
 .themeGroupInfo { padding:5px 0px 5px;border-bottom: 1px solid #ddd;margin-bottom:20px; }
 
 /**============================== DIFF CSS ==============================**/
+
 /* LEGEND */
 #legend {
 	font-size:9px;
@@ -353,6 +462,7 @@ widgetinfobar::-moz-selection {
 		border:1px solid #999999;float:left;height:0.8em;margin:0.1em 0.5em 0.1em 2em;overflow:hidden;width:0.8em;
 	}
 }
+
 /* DIFF */
 table.diff {
 	width: 100%;
@@ -472,9 +582,9 @@ table.diff {
 	}
 }
 @media only screen and (max-width: 853px) {
-	#header div.brand{
-		display: none;
-	}
+	//#header div.brand{
+	//	display: none;
+	//}
 	.main-content-wrapper {
 		margin-left: 0;
 	}

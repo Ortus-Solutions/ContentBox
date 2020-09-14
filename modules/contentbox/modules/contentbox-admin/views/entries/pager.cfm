@@ -59,7 +59,7 @@
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR" ) OR prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="far fa-keyboard fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 						</cfif>
 						<!--- History Command --->
 						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
