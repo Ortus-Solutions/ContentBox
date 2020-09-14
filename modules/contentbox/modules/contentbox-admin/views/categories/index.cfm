@@ -29,20 +29,20 @@
 
 				<div class="row">
 
-					<div class="col-md-6">
+					<div class="col-md-6 col-xs-4">
 						<div class="form-group form-inline no-margin">
 							#html.textField(
 								name		= "categorySearch",
-								class		= "form-control rounded",
+								class		= "form-control rounded quicksearch",
 								placeholder	= "Quick Search"
 							)#
 						</div>
 					</div>
 
-					<div class="col-md-6">
-						<div class="pull-right">
+					<div class="col-md-6 col-xs-8">
+						<div class="text-right">
 							<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-								<div class="btn-group btn-group-sm">
+								<div class="btn-group">
 							    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 										Bulk Actions <span class="caret"></span>
 									</button>
@@ -85,7 +85,7 @@
 								<!--- Create --->
 								<button
 									onclick="return createCategory()"
-									class="btn btn-primary btn-sm"
+									class="btn btn-primary"
 								>
 									Create Category
 								</button>

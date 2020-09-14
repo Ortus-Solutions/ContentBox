@@ -27,38 +27,43 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-md-6">
+
+						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name        = "siteFilter",
-									class       = "form-control rounded",
+									class       = "form-control rounded quicksearch",
 									placeholder = "Quick Search"
 								)#
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="pull-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-								<div class="pull-right">
-									<!---Global --->
-									<div class="btn-group btn-group-sm">
-										<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
-											Bulk Actions <span class="caret"></span>
-										</a>
-										<ul class="dropdown-menu">
-											<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
-											<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
-											</cfif>
-										</ul>
-									</div>
-									<a href="#event.buildLink( prc.xehSiteEditor )#" class="btn btn-sm btn-primary">Create Site</a>
+
+						<div class="col-md-6 col-xs-8">
+							<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+							<div class="text-right">
+								<!---Global --->
+								<div class="btn-group">
+									<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+										Bulk Actions <span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
+										<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
+											<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+											<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
+										</cfif>
+									</ul>
 								</div>
-								</cfif>
+								<a
+									href="#event.buildLink( prc.xehSiteEditor )#"
+									class="btn btn-primary"
+									>
+									Create Site
+								</a>
 							</div>
+							</cfif>
 						</div>
 					</div>
 				</div>

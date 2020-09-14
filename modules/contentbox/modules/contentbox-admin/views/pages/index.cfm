@@ -29,19 +29,21 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-md-6">
+
+						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
-									name="pageSearch",
-									class="form-control rounded",
-									placeholder="Quick Search"
+									name        = "pageSearch",
+									class       = "form-control rounded quicksearch",
+									placeholder = "Quick Search"
 								)#
 							</div>
 						</div>
-						<div class="col-md-6">
-							<div class="pull-right">
+
+						<div class="col-md-6 col-xs-8">
+							<div class="text-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-									<div class="btn-group btn-group-sm">
+									<div class="btn-group">
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
@@ -105,7 +107,7 @@
 								    	</ul>
 								    </div>
 									<button
-										class="btn btn-primary btn-sm"
+										class="btn btn-primary"
 										onclick="return to( '#event.buildLink( prc.xehPageEditor )#/parentID/' + getParentContentID() )"
 										>
 										Create Page

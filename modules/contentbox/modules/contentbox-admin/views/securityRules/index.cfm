@@ -61,7 +61,7 @@
 								<div class="buttonBar">
 									<!---Global --->
 									<div class="btn-group btn-group-sm">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">

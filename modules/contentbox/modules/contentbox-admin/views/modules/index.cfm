@@ -25,7 +25,7 @@
 							#html.textField(
 								name        = "moduleFilter",
 								size        = "30",
-								class       = "form-control rounded",
+								class       = "form-control rounded quicksearch",
 								placeholder = "Quick Search"
 							)#
 						</div>

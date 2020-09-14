@@ -37,23 +37,22 @@
 
 					<div class="row">
 
-						<div class="col-md-6">
+						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name		= "groupFilter",
-									class		= "form-control rounded",
+									class		= "form-control rounded quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>
 						</div>
 
-						<div class="col-md-6">
-							<div class="pull-right">
+						<div class="col-md-6 col-xs-8">
+							<div class="text-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-								<div class="pull-right">
 									<!---Global --->
-									<div class="btn-group btn-group-sm">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+									<div class="btn-group">
+								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
@@ -74,8 +73,7 @@
 											</cfif>
 								    	</ul>
 								    </div>
-									<button onclick="return createGroup();" class="btn btn-sm btn-primary">Create Group</button>
-								</div>
+									<button onclick="return createGroup();" class="btn btn-primary">Create Group</button>
 								</cfif>
 							</div>
 						</div>

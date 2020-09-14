@@ -26,19 +26,21 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-md-6">
+
+						<div class="col-md-6 col-xs-4">
                             <div class="form-group form-inline no-margin">
                                 #html.textField(
-                                    name="menuSearch",
-                                    class="form-control rounded",
-                                    placeholder="Quick Search"
+                                    name        = "menuSearch",
+                                    class       = "form-control rounded quicksearch",
+                                    placeholder = "Quick Search"
                                 )#
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="pull-right">
+						</div>
+
+                        <div class="col-md-6 col-xs-8">
+                            <div class="text-right">
                                 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-                                    <div class="btn-group btn-group-sm">
+                                    <div class="btn-group">
                                         <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
                                             Bulk Actions <span class="caret"></span>
                                         </a>
@@ -59,7 +61,7 @@
                                         </ul>
                                     </div>
                                 </cfif>
-                                <button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( to=prc.xehMenuEditor)#' );">Create Menu</button>
+                                <button class="btn btn-primary" onclick="return to('#event.buildLink( to=prc.xehMenuEditor)#' );">Create Menu</button>
                             </div>
                         </div>
                     </div>

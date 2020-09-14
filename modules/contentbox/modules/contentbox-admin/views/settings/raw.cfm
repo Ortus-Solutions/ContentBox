@@ -55,46 +55,68 @@
                                 <input type="hidden" name="settingID" id="settingID" value="" />
                                 <div class="row well well-sm">
 
-									<div class="col-md-6">
+									<div class="col-md-6 col-xs-4">
                                         <div class="form-group form-inline no-margin">
                                             #html.textField(
                                                 name        = "settingSearch",
-                                                class       = "form-control rounded",
+                                                class       = "form-control rounded quicksearch",
                                                 placeholder = "Quick Search",
                                                 value       = event.getValue( "search", "" )
                                             )#
                                         </div>
 									</div>
 
-                                    <div class="col-md-6">
-										<div class="pull-right">
+                                    <div class="col-md-6 col-xs-8">
+										<div class="text-right">
 
-											<div class="btn-group btn-group-sm">
-                                                <a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+											<div class="btn-group">
+
+												<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
                                                     <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
 												</a>
+
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="far fa-hdd"></i> View Cached Settings</a></li>
-                                                    <li><a href="javascript:flushSettingsCache()"><i class="fas fa-recycle"></i> Flush Settings Cache</a></li>
+													<li>
+														<a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="far fa-hdd"></i> View Cached Settings</a>
+													</li>
+													<li>
+														<a href="javascript:flushSettingsCache()"><i class="fas fa-recycle"></i> Flush Settings Cache</a>
+													</li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
-                                                    <li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import Settings</a></li>
+														<li>
+															<a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import Settings</a>
+														</li>
                                                     </cfif>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-														<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
-														<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
+														<li>
+															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a>
+														</li>
+														<li>
+															<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a>
+														</li>
 													</cfif>
                                                 </ul>
                                             </div>
 
                                             <div class="btn-group btn-group-sm">
-                                                <a href="##" onclick="return createSetting();" class="btn btn-primary btn-sm">Create Setting</a>
-                                                <button class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                                                <a
+                                                	href="##"
+                                                	onclick="return createSetting();"
+													class="btn btn-primary">
+													Create Setting
+												</a>
+                                                <button
+                                                	class="btn btn-default dropdown-toggle"
+													data-toggle="dropdown"
+												>
                                                     <span class="caret"></span>
                                                 </button>
                                                 <ul class="dropdown-menu">
-                                                    <li><a href="javascript:viewAllSettings()"><i class="fas fa-microchip"></i> View All</a></li>
+													<li>
+														<a href="javascript:viewAllSettings()"><i class="fas fa-microchip"></i> View All</a>
+													</li>
                                                 </ul>
                                             </div>
                                         </div>

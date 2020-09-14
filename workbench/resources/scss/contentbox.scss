@@ -59,6 +59,10 @@ p{
 		min-height: 35px;
 		min-width: 35px;
 	}
+	a.btn-default:hover, .btn-default:hover{
+		box-shadow: 0 0 2px 0px #1ABC9C !important;
+		border-color: #1ABC9C;
+	}
 	.user-nav ul li{
 		margin: 0px 5px;
 	}
@@ -200,6 +204,14 @@ p{
 .form-control:focus{
 	box-shadow: 0 0 2px 0px #1ABC9C !important;
 	border-color: #1ABC9C;
+}
+
+.quicksearch{
+	width: 100px !important;
+}
+.quicksearch:focus{
+	width: 250px !important;
+	transition: width 1s !important;
 }
 
 select.form-control{
@@ -411,21 +423,28 @@ widgetinfobar::-moz-selection {
 
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
 
-#div-search { padding: 6px 14px 2px 14px; }
-#div-search input{
-	background-color: #fafafa;
-	border-radius: 5px;
-	box-shadow: none !important;
-	color: #717171;
-	font-size: 13px;
-	height: 18px;
-	line-height: 18px;
-	min-height: 36px;
-	outline: 0 none;
-	padding: 6px 11px;
-	border: 1px solid #ccc;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+#div-search {
+	padding: 6px 14px 2px 14px;
+
+	input {
+		background-color: #fafafa;
+		border-radius: 5px;
+		color: #717171;
+		font-size: 13px;
+		height: 18px;
+		line-height: 18px;
+		min-height: 36px;
+		outline: 0 none;
+		padding: 6px 11px;
+		border: 1px solid #ccc;
+	}
+
+	input:focus{
+		box-shadow: 0 0 2px 0px #1ABC9C !important;
+		border-color: #1ABC9C;
+	}
 }
+
 #div-search-results{
 	display: none;
 	top: 60px;

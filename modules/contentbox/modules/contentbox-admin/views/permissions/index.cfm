@@ -33,21 +33,21 @@
 				<div class="panel-heading">
 					<div class="row">
 
-						<div class="col-md-6">
+						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name		= "permissionFilter",
-									class		= "form-control rounded",
+									class		= "form-control rounded quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>
 						</div>
 
-						<div class="col-md-6">
-							<div class="pull-right">
+						<div class="col-md-6 col-xs-8">
+							<div class="text-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-									<div class="btn-group btn-group-sm">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+									<div class="btn-group">
+								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
@@ -55,12 +55,16 @@
 								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
 											</cfif>
 								    	</ul>
 								    </div>
-									<button onclick="return createPermission();" class="btn btn-sm btn-primary">Create Permission</button>
+									<button
+										onclick="return createPermission();"
+										class="btn btn-primary">
+										Create Permission
+									</button>
 								</cfif>
 							</div>
 						</div>

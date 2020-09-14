@@ -28,20 +28,22 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-md-6">
+
+						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
-									name="commentSearch",
-									class="form-control rounded",
-									placeholder="Quick Search"
+									name 		= "commentSearch",
+									class		= "form-control rounded quicksearch",
+									placeholder ="Quick Search"
 								)#
 							</div>
 						</div>
-						<div class="col-md-6">
+
+						<div class="col-md-6 col-xs-8">
 							<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
-								<div class="pull-right">
-									<div class="btn-group btn-sm">
-								    	<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+								<div class="text-right">
+									<div class="btn-group">
+								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
 											Bulk Actions <span class="caret"></span>
 										</a>
 								    	<ul class="dropdown-menu">
