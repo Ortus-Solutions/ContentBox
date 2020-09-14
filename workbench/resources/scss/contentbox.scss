@@ -114,7 +114,6 @@ p{
 /******************** SIDEBAR ****************************/
 
 .sidebar {
-	color: white;
 	min-height: auto;
 	padding-bottom: 15px;
 	.nav {
@@ -139,9 +138,9 @@ p{
 	.nav-sub{
 		background: #d5dbe1 !important;
 	}
-	//a, a:active{
-	//	color: black;
-	//}
+	a, a:active{
+		color: rgb(100, 100, 100);
+	}
 	a:hover{
 		color: #32a644;
 	}
@@ -165,6 +164,18 @@ p{
 }
 
 /** Sidebar Mini */
+.sidebar-mini{
+	.nav > li.nav-dropdown-open a,  .nav > li:hover a{
+		color: white;
+	}
+
+	.nav-sub > li > a, .nav-sub > li > a:active{
+		color: white !important;
+	}
+	.nav-sub > li > a:hover{
+		color: #32a644 !important;
+	}
+}
 .sidebar-mini > .sidebar > #profileSidebar{
 	display: none;
 }
