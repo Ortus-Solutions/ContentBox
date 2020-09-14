@@ -143,7 +143,7 @@
 
 									<!--- Actions --->
 									<div class="btn-group">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
+								    	<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
 											<i class="fas fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">

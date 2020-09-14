@@ -52,7 +52,7 @@
 				<td class="text-center">
 					<!--- Page Actions --->
 					<div class="btn-group btn-xs">
-				    	<a class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
+				    	<a class="btn btn-xs btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Page Actions">
 							<i class="fas fa-ellipsis-v fa-lg"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">

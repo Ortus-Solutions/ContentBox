@@ -29,7 +29,7 @@
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
+			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

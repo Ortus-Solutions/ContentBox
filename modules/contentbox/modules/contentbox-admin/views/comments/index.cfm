@@ -113,7 +113,7 @@
 											<a class="btn btn-sm btn-info" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
 										<div class="btn-group">
-											<a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+											<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
 												<i class="fas fa-ellipsis-v fa-lg"></i>
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">

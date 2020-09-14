@@ -53,7 +53,7 @@
 			<td class="text-center">
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-xs">
-			    	<a class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+			    	<a class="btn btn-xs btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

@@ -136,7 +136,7 @@
 								<td class="text-center">
 									<!--- Actions --->
 									<div class="btn-group">
-										<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
+										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
 											<i class="fas fa-ellipsis-v fa-lg"></i>
 										</a>
 										<ul class="dropdown-menu text-left pull-right">

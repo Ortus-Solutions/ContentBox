@@ -263,6 +263,13 @@ a.btn.btn-danger:visited {
 .btn-toggle.radio {padding-left:30px;}
 .btn{ border-radius: 5px; }
 .btn-group .btn{ border-radius: 5px; }
+.btn-more{
+	color: #444242 !important;
+	background-color: transparent !important;
+}
+.btn-more:hover{
+	background-color: rgb(199, 199, 199) !important;
+}
 
 /******************** DROPDOWN MENUS ****************************/
 
@@ -293,8 +300,9 @@ a.btn.btn-danger:visited {
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important
 }
 .panel-heading{
-	padding: 15px 15px 9px 15px !important;
-	min-height: 48px;
+	//padding: 15px 15px 9px 15px !important;
+	padding: 10px 15px 7px 15px !important;
+	//min-height: 48px;
 	border-radius: 15px;
 	text-transform: none !important;
 }

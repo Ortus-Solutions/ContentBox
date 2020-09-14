@@ -29,7 +29,7 @@
                 <td class="text-center">#arrayLen( menu.getMenuItems() )#</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
-                        <a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
+                        <a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
                             <i class="fas fa-ellipsis-v fa-lg"></i>
                         </a>
                         <ul class="dropdown-menu text-left pull-right">

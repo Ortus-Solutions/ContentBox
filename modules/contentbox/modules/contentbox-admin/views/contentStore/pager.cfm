@@ -49,7 +49,7 @@
 			<td class="text-center">
 				<!--- content Actions --->
 				<div class="btn-group btn-group-xs">
-			    	<a class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
+			    	<a class="btn btn-xs btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

@@ -62,7 +62,7 @@
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
+			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">

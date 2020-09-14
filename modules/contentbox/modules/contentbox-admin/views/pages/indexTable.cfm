@@ -188,7 +188,7 @@
 					<!--- Page Actions --->
 					<div class="btn-group btn-group-sm">
 						<a
-							class="btn btn-default dropdown-toggle"
+							class="btn btn-default btn-more dropdown-toggle"
 							data-toggle="dropdown"
 							href="##"
 							title="Page Actions"

@@ -101,7 +101,7 @@
 									<a class="btn btn-sm btn-primary" href="javascript:openRemoteModal('#event.buildLink(prc.xehRolePermissions)#', {roleID: '#role.getRoleID()#'} );" title="Manage Permissions"><i class="fas fa-key fa-lg"></i></a>
 									<!--- Actions --->
 									<div class="btn-group">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
+								    	<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
 											<i class="fas fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
