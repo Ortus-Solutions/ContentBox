@@ -100,7 +100,7 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="btn-group btn-group-sm">
+                                            <div class="btn-group">
                                                 <a
                                                 	href="##"
                                                 	onclick="return createSetting();"

@@ -10,7 +10,7 @@
 			class="btn btn-sm btn-default dropdown-toggle"
 			data-toggle="dropdown"
 			title="Quick Actions">
-			<span class="fas fa-ellipsis-v"></span>
+			<span class="caret"></span>
 		</button>
 
 		<ul class="dropdown-menu">
