@@ -3,6 +3,7 @@
 	<div class="col-md-12">
 		<h1 class="h1">
 			<i class="fa fa-sitemap"></i> #prc.oCurrentSite.getName()#
+			<span id="pagesCountContainer"></span>
 		</h1>
 	</div>
 </div>

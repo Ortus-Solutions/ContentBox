@@ -1,4 +1,7 @@
 <cfoutput>
+	<!--- Entries Count --->
+	<input type="hidden" name="menusCount" id="menusCount" value="#prc.menuCount#">
+
     <!--- menus --->
     <table name="menu" id="menu" class="table table-striped-removed table-hover " width="100%" cellspacing="0">
         <thead>

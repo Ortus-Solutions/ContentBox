@@ -1,14 +1,18 @@
 <cfoutput>
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
-<div class="breadcrumb">
-  <a href="javascript:contentDrilldown()"><i class="fa fa-home fa-lg"></i></a>
-  #getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
-</div>
+	<div class="breadcrumb">
+		<a href="javascript:contentDrilldown()" title="Go Home!">
+			<i class="fas fa-home fa-lg"></i>
+		</a>
+		#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
+	</div>
 </cfif>
 
 <!--- Hidden Elements --->
 #html.hiddenField( name="parent", value=event.getValue( "parent", "" ) )#
+<!--- Content Count --->
+#html.hiddenField( name="contenCount", value=prc.contentCount )#
 
 <!--- content --->
 <table name="content" id="content" class="table table-striped-removed table-hover " cellspacing="0" width="100%">

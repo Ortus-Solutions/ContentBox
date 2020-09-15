@@ -2,7 +2,8 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fas fa-bars fa-lg"></i> Menu Manager
+			<i class="fas fa-bars fa-lg"></i> Menu Manager
+			<span id="menusCountContainer"></span>
         </h1>
     </div>
 </div>
@@ -69,13 +70,17 @@
                 <div class="panel-body">
                     <!--- entries container --->
                     <div id="menuTableContainer">
-                        <p class="text-center"><i id="contentLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
+						<p class="text-center">
+							<i id="contentLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i>
+						</p>
                     </div>
                 </div>
             </div>
         #html.endForm()#
     </div>
 </div>
+
+<!--- Import --->
 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
     <cfscript>
         dialogArgs = {

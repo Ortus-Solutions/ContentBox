@@ -1,6 +1,7 @@
 <cfoutput>
 <!--- Entries Count --->
 <input type="hidden" name="entriesCount" id="entriesCount" value="#prc.entriesCount#">
+
 <!--- entries --->
 <table name="entries" id="entries" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
 	<thead>

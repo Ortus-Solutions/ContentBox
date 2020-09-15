@@ -1,17 +1,23 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="far fa-hdd"></i> Content Store</h1>
+		<h1 class="h1">
+			<i class="far fa-hdd"></i> Content Store
+			<span id="contentCountContainer"></span>
+		</h1>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-9">
 		<!--- MessageBox --->
 		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
 		</cfif>
+
 		<!--- Info Bar --->
 		<cfif NOT prc.cbSiteSettings.cb_comments_enabled>
 			<div class="alert alert-info">
@@ -19,9 +25,19 @@
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
-		#html.startForm(name="contentForm",action=prc.xehContentRemove)#
-			#html.hiddenField(name="contentStatus",value="" )#
-			#html.hiddenField(name="contentID",value="" )#
+
+		#html.startForm(
+			name   = "contentForm",
+			action = prc.xehContentRemove
+		)#
+			#html.hiddenField(
+				name	= "contentStatus",
+				value	= ""
+			)#
+			#html.hiddenField(
+				name	= "contentID",
+				value	= ""
+			)#
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">

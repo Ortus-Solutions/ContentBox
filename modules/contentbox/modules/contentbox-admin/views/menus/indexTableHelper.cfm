@@ -15,7 +15,9 @@ $( document ).ready(function() {
             }
         ],
         "order": []
-    } );
+	} );
+	// Setup Count Container
+	$( "##menusCountContainer" ).html( "(" + $( "##menusCount" ).val() + ")" );
     // activate confirmations
     activateConfirmations();
     // activate tooltips

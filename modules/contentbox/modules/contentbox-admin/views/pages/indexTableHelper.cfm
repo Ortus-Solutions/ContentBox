@@ -16,6 +16,8 @@ $( document ).ready(function() {
   		],
   		"order": []
 	} );
+	// Setup Count Container
+	$( "##pagesCountContainer" ).html( "(" + $( "##pagesCount" ).val() + ")" );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips

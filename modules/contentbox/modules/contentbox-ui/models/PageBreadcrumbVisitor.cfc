@@ -32,7 +32,7 @@ component singleton{
 		// check if page slug is home, to ignore it
 		if( arguments.page.getSlug() NEQ CBHelper.getHomePage() ){
 			bc &= '#arguments.separator# <a href="#CBHelper.linkPage( arguments.page )#">#arguments.page.getTitle()#</a>
- ';
+';
 		}
 
 		return bc;

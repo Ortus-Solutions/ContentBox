@@ -2,13 +2,16 @@
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
-	  	<a href="javascript:contentDrilldown()"><i class="fa fa-home"></i></a>
+		<a href="javascript:contentDrilldown()" title="Go Home!">
+			<i class="fa fa-home fa-lg"></i>
+		</a>
 	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.page )#
 	</div>
 </cfif>
 
 <!--- Hidden Elements --->
 #html.hiddenField( name="parent", value=event.getValue( "parent","" ) )#
+#html.hiddenField( name="pagesCount", value=prc.pagesCount )#
 
 <!--- pages --->
 <table id="pages" name="pages" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
