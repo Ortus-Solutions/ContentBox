@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-road fa-lg"></i>
+            <i class="fas fa-passport fa-lg"></i>
             Security Rule Editor
         </h1>
         <!--- messageBox --->

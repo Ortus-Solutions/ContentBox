@@ -1,4 +1,6 @@
 <cfoutput>
+<!--- count --->
+<input type="hidden" name="authorCount" id="authorCount" value="#prc.authorCount#">
 <!--- authors --->
 <table name="authors" id="authors" class="table table-striped-removed table-hover " width="100%">
 	<thead>

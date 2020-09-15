@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <h1 class="h1">
         	<i class="fas fa-key fa-lg"></i>
-			Permissions
+			Permissions (#arrayLen( prc.permissions )#)
         </h1>
     </div>
 </div>

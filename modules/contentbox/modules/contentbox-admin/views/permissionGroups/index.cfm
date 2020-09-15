@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-users fa-lg"></i> Permission Groups
+        	<i class="fas fa-users fa-lg"></i> Permission Groups (#arrayLen( prc.aGroups )#)
         </h1>
     </div>
 </div>

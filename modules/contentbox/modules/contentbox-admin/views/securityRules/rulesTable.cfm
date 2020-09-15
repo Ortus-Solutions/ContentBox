@@ -1,4 +1,6 @@
 <cfoutput>
+<!--- Count --->
+<input type="hidden" name="rulesCount" id="rulesCount" value="#arrayLen( prc.rules )#">
 <!--- rules --->
 <table name="rules" id="rules" class="table table-hover table-striped-removed " width="100%">
 	<thead>

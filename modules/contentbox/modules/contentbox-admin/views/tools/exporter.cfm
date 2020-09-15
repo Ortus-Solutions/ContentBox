@@ -186,7 +186,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-road fa-lg"></i> Security Rules</h4>
+								<h4><i class="fas fa-passport fa-lg"></i> Security Rules</h4>
 								<small class="muted">Export configured site security rules</small>
 							</div>
 							<div class="col-md-9">

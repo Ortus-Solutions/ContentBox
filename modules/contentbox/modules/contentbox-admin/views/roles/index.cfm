@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-user-shield fa-lg"></i> Roles
+        	<i class="fas fa-user-shield fa-lg"></i> Roles (#arrayLen( prc.roles )#)
         </h1>
     </div>
 </div>

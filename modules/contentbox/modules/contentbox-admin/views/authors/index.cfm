@@ -1,7 +1,10 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-user"></i> User Management</h1>
+		<h1 class="h1">
+			<i class="fas fa-user"></i> Users
+			<span id="authorCountContainer"></span>
+		</h1>
 	</div>
 </div>
 

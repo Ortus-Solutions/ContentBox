@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-globe fa-lg"></i> Sites
+			<i class="fa fa-globe fa-lg"></i> Sites (#arrayLen( prc.sites )#)
 		</h1>
 	</div>
 </div>

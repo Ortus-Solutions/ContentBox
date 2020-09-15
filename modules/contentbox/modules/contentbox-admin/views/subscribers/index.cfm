@@ -13,7 +13,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
@@ -65,25 +65,6 @@
                     <!-- End Tab Content -->
                 </div>
                 <!-- End Vertical Nav -->
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fas fa-sort-amount-down fa-lg"></i> Quick Stats</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table table-striped-removed">
-                    <tr>
-                        <td><strong>Comment Subscriptions:</strong></td>
-                        <td><span class="label label-info">#prc.commentSubscriptionCount#</span></td>
-                    </tr>
-                    <tr class="info">
-                        <td><strong>Unique Subscribers:</strong></td>
-                        <td><span class="label label-info">#prc.uniqueSubscriberCount#</span></td>
-                    </tr>
-                </table>
             </div>
         </div>
     </div>

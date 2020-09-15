@@ -2,11 +2,14 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-road fa-lg"></i>
+        	<i class="fas fa-passport fa-lg"></i>
 			Security Rules
-        </h1>
+			<span id="rulesCountContainer"></span>
+		</h1>
+
         <!--- messageBox --->
 		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -49,9 +52,9 @@
 					<div class="col-md-7">
 						<div class="form-group form-inline no-margin">
 							#html.textField(
-								name="ruleFilter",
-								class="form-control",
-								placeholder="Quick Filter"
+								name        = "ruleFilter",
+								class       = "form-control",
+								placeholder = "Quick Filter"
 							)#
 						</div>
 					</div>
