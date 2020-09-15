@@ -41,16 +41,19 @@ p{
 
 /** Header */
 #header{
+
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+
 	.brand{
 		background-color: white!important;
+		width: 130px !important;
 	}
 	.logo{
 		padding: 15px 0 0 0px !important;
 		background: none !important;
 	}
 	.user-nav {
-		padding-right: 60px;
+		padding-right: 15px;
 	}
 	a.btn-default{
 		vertical-align: middle;
@@ -85,9 +88,15 @@ p{
 	.user-nav ul li.dropdown.settings .dropdown-menu:before {
 		left: 43%;
 	}
+	#div-siteswitcher{
+		display: inline-block;
+	}
 	#siteSwitcher{
 		padding-top: 8px;
 		padding-bottom: 5px;
+	}
+	#header-profile-slot{
+		margin-top: -10px;
 	}
 }
 
@@ -174,7 +183,8 @@ p{
 .sidebar-mini{
 
 	.sidebar{
-		opacity: 50%;
+		opacity: 40%;
+		width: 50px;
 	}
 	.sidebar:hover, .sidebar:active, .sidebar:focus{
 		opacity: 100%;
@@ -193,9 +203,6 @@ p{
 }
 .sidebar-mini > .sidebar > #profileSidebar{
 	display: none;
-}
-.sidebar-mini .sidebar {
-	width: 50px;
 }
 .sidebar-mini .sidebar+.main-content-wrapper{
 	margin-left: 60px
@@ -641,15 +648,23 @@ table.diff {
 	}
 }
 @media only screen and (max-width: 853px) {
-	//#header div.brand{
-	//	display: none;
-	//}
 	.main-content-wrapper {
-		margin-left: 0;
+		margin-left: 40px !important
+	}
+}
+@media only screen and (max-width: 766px) {
+	.main-content-wrapper {
+		margin-left: 0px !important
 	}
 }
 @media only screen and (max-width: 660px) {
+	.main-content-wrapper {
+		margin-left: 0 !important;
+	}
     #header{
+		.toggle-navigation.toggle-left{
+			float: none !important;
+		}
     	height: 60px;
     	.user-nav{
     		padding-right: 5px;

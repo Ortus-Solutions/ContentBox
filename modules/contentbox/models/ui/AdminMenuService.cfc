@@ -209,9 +209,10 @@ component accessors="true" threadSafe singleton {
 
 		// Register Profile Menu
 		addHeaderMenu(
-			name  = "profile",
-			label = variables.buildProfileLabel,
-			class = "dropdown settings"
+			name  	= "profile",
+			label 	= variables.buildProfileLabel,
+			class 	= "dropdown settings",
+			id 		= "header-profile-slot"
 		).addHeaderSubMenu(
 				name    = "myprofile",
 				title   = "ctrl+shift+A",
@@ -308,7 +309,12 @@ component accessors="true" threadSafe singleton {
 		var prc   = event.getCollection( private = true );
 
 		savecontent variable="profileLabel" {
-			writeOutput( "#prc.oCurrentAuthor.getName()# <b class=""caret""></b>" );
+			writeOutput( variables.avatar.renderAvatar(
+				email = prc.oCurrentAuthor.getEmail(),
+				size  = "35",
+				class = "img-circle"
+			) );
+			writeOutput( '<i class="fa fa-sort-down fa-lg ml10"></i>' );
 		}
 
 		return profileLabel;

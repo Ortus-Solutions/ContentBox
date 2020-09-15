@@ -33,7 +33,7 @@
 			<header id="header">
 
 				<!--Branding-->
-				<div class="brand text-center">
+				<div class="brand text-center hidden-xs">
 					<a
 						data-keybinding="ctrl+shift+d"
 						href="#event.buildLink( prc.xehDashboard )#"
@@ -62,11 +62,12 @@
 
 				<!-- Site Switcher -->
 				<span
-					class="form-inline hidden-xs ml10"
+					class="form-inline ml10"
 					id="div-siteswitcher"
 					data-toggle="tooltip"
 					data-placement="right"
-					title="Site Switcher">
+					title="Site Switcher"
+				>
 					<select
 						name="siteSwitcher"
 						id="siteSwitcher"
@@ -88,7 +89,7 @@
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
 				<span
-					class="navbar-search hidden-xs"
+					class="navbar-search hidden-sm hidden-xs"
 					id="div-search"
 					title="Press '\' to focus"
 					data-toggle="tooltip"
@@ -189,9 +190,6 @@
 						</li>
 
 						<!--- Profile --->
-						<li class="profile-photo hidden-xs">
-							#getInstance( "Avatar@cb" ).renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="35", class="img-circle" )#
-						</li>
 						#prc.adminMenuService.generateProfileMenu()#
 
 						<!--- Notifications :
