@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- pages --->
-<table name="pages" id="pages" class="table  table-striped table-hover" width="100%">
+<table name="pages" id="pages" class="table  table-striped-removed table-hover" width="100%">
 	<thead>
 		<tr>
 			<th>Page Name</th>

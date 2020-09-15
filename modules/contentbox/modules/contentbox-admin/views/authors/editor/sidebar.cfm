@@ -53,7 +53,7 @@
 				</div>
 
 				<!--- Persisted Info --->
-				<table class="table  table-hover table-striped size12" width="100%">
+				<table class="table  table-hover table-striped-removed size12" width="100%">
 					<tr>
 						<th width="125" class="textRight">Last Login</th>
 						<td>

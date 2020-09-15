@@ -24,7 +24,7 @@
                             		<li><strong>Arguments: </strong>
                             			<cfif ArrayLen( method.parameters )>
                                             <br /><br />
-                            				<table class="table table-hover  table-striped" width="100%">
+                            				<table class="table table-hover  table-striped-removed" width="100%">
                             					<thead>
                             						<tr class="info">
                 	            						<th>Argument</th>

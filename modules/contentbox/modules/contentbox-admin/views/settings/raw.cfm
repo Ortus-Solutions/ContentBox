@@ -224,7 +224,7 @@
                             <!---Event Forms --->
                             #html.startForm(name="eventsForm" )#
                                 <!--- events --->
-                                <table name="eventsList" id="eventsList" class="table table-striped table-hover " width="100%">
+                                <table name="eventsList" id="eventsList" class="table table-striped-removed table-hover " width="100%">
                                     <thead>
                                         <tr>
                                             <th width="30" class="{sorter:none}">No.</th>

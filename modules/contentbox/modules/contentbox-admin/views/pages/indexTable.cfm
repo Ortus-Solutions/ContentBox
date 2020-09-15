@@ -11,7 +11,7 @@
 #html.hiddenField( name="parent", value=event.getValue( "parent","" ) )#
 
 <!--- pages --->
-<table id="pages" name="pages" class="table table-striped table-hover " cellspacing="0" width="100%">
+<table id="pages" name="pages" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
     <thead>
         <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">

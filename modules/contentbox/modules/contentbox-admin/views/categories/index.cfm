@@ -97,7 +97,7 @@
 			</div> <!--- end panel-heading --->
 
 			<div class="panel-body">
-				<table id="categories" class="table table-striped table-hover " cellspacing="0" width="100%">
+				<table id="categories" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
@@ -117,12 +117,19 @@
 								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
 							</td>
 							<td>
-								<a href="javascript:edit( '#category.getCategoryID()#',
-								   						  '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-								   						  '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
-								   	title="Edit #category.getCategory()#">#category.getCategory()#</a>
+								<a href="javascript:edit(
+									'#category.getCategoryID()#',
+									'#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#'
+									)"
+								   title="Edit #category.getCategory()#"
+								>
+									#category.getCategory()#
+								</a>
 							</td>
-							<td>#category.getSlug()#</td>
+							<td>
+								#category.getSlug()#
+							</td>
 							<td class="text-center">
 								<span class="badge badge-info">#category.getNumberOfPages()#</span>
 							</td>
@@ -136,26 +143,34 @@
 								<div class="btn-group">
 									<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 
-									<!--- Edit Command --->
-									<button
-										type="button"
-										class="btn btn-primary btn-sm"
-										onclick="javascript:edit( '#category.getCategoryID()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
-										title="Edit #category.getCategory()#"
-										>
-											<i class="fas fa-pen fa-lg"></i>
-									</button>
+									<div class="btn-group btn-group-sm">
+										<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+											<i class="fas fa-ellipsis-v fa-lg"></i>
+										</a>
+										<ul class="dropdown-menu text-left pull-right">
+											<!--- Edit Command --->
+											<li>
+												<a
+													href="javascript:edit( '#category.getCategoryID()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+													'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
+													>
+														<i class="fas fa-pen fa-lg"></i> Edit
+												</a>
+											</li>
 
-									<!--- Delete Command --->
-									<a 	class="btn btn-danger btn-sm confirmIt"
-										href="javascript:removeCategory( '#category.getcategoryID()#' )"
-										title="Delete Category"
-										data-title="Delete Category?"
-										data-message="Delete the category and all of its associations"
-									>
-										<i class="far fa-trash-alt fa-lg" id="delete_#category.getCategoryID()#"></i>
-									</a>
+											<li>
+												<!--- Delete Command --->
+												<a
+													class="confirmIt"
+													href="javascript:removeCategory( '#category.getcategoryID()#' )"
+													data-title="Delete Category?"
+													data-message="Delete the category and all of its associations"
+												>
+													<i class="far fa-trash-alt fa-lg" id="delete_#category.getCategoryID()#"></i> Delete
+												</a>
+											</li>
+										</ul>
+									</div>
 									</cfif>
 								</div>
 							</td>

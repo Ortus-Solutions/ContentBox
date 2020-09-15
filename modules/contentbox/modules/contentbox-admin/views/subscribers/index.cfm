@@ -34,7 +34,7 @@
                                     <div class="col-md-6">
                                         <h3>All Subscriptions</h3>
                                             <!--- comment subscriptions --->
-                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped table-hover" width="98%">
+                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped-removed table-hover" width="98%">
                                                 <thead>
                                                     <tr>
                                                         <th>Content</th>
@@ -74,7 +74,7 @@
                 <h3 class="panel-title"><i class="fas fa-sort-amount-down fa-lg"></i> Quick Stats</h3>
             </div>
             <div class="panel-body">
-                <table class="table table-striped">
+                <table class="table table-striped-removed">
                     <tr>
                         <td><strong>Comment Subscriptions:</strong></td>
                         <td><span class="label label-info">#prc.commentSubscriptionCount#</span></td>

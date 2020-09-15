@@ -90,7 +90,7 @@
 					</div>
 
 					<!--- groups --->
-					<table name="groups" id="groups" class="table table-striped table-hover " width="98%">
+					<table name="groups" id="groups" class="table table-striped-removed table-hover " width="98%">
 
 						<thead>
 							<tr>

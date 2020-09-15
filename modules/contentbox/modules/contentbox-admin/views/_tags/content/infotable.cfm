@@ -12,7 +12,7 @@
     <div id="pageinfo" class="panel-collapse collapse in">
         <div class="panel-body">
             <!--- Persisted Info --->
-            <table class="table table-hover table-condensed table-striped">
+            <table class="table table-hover table-condensed table-striped-removed">
                 <tr>
                     <th class="col-md-4">Created By:</th>
                     <td class="col-md-8">

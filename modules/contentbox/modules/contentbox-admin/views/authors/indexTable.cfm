@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- authors --->
-<table name="authors" id="authors" class="table table-striped table-hover " width="100%">
+<table name="authors" id="authors" class="table table-striped-removed table-hover " width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">

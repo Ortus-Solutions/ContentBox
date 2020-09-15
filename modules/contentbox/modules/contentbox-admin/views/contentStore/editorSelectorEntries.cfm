@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- content --->
-<table name="content" id="content" class="table  table-striped table-hover" width="100%">
+<table name="content" id="content" class="table  table-striped-removed table-hover" width="100%">
 	<thead>
 		<tr>
 			<th>Title</th>

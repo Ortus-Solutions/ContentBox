@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- rules --->
-<table name="rules" id="rules" class="table table-hover table-striped " width="100%">
+<table name="rules" id="rules" class="table table-hover table-striped-removed " width="100%">
 	<thead>
 		<tr>
 			<th>Security Rule</th>

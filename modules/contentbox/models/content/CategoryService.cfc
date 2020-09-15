@@ -49,7 +49,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		if( !isSlugUnique(
 				slug      : arguments.category.getSlug(),
 				contentID : arguments.category.getCategoryId(),
-				siteId    : arguments.category.getSiteId()
+				siteId    : arguments.category.getSite().getSiteId()
 			)
 		){
 			// Throw exception

@@ -6,7 +6,7 @@
 </div>
 
 <!--- content --->
-<table name="content_pager" id="content_pager" class="table table-hover  table-striped" width="100%">
+<table name="content_pager" id="content_pager" class="table table-hover  table-striped-removed" width="100%">
 	<thead>
 		<tr>
 			<th>Title</th>

@@ -1,6 +1,6 @@
 <cfoutput>
 <!--- entries --->
-<table name="entries" id="entries" class="table table-striped table-hover " cellspacing="0" width="100%">
+<table name="entries" id="entries" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
@@ -99,27 +99,66 @@
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
-						<li><a href="javascript:openCloneDialog('#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')"><i class="far fa-clone fa-lg"></i> Clone</a></li>
+						<li>
+							<a href="javascript:openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
+								<i class="far fa-clone fa-lg"></i> Clone
+							</a>
+						</li>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
-							<a href="javascript:remove('#entry.getContentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Entry?"><i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete</a>
+							<a
+								href="javascript:remove( '#entry.getContentID()#' )"
+								class="confirmIt"
+								data-title="<i class='far fa-trash-alt'></i> Delete Entry?">
+								<i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+							</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
+						<li>
+							<a href="#event.buildLink( prc.xehEntryEditor )#/contentID/#entry.getContentID()#">
+								<i class="fas fa-pen fa-lg"></i> Edit
+							</a>
+						</li>
 						</cfif>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
-						<li><a href="#event.buildLink(to=prc.xehEntryExport)#/contentID/#entry.getContentID()#.json" target="_blank"><i class="fas fa-file-export"></i> Export as JSON</a></li>
-						<li><a href="#event.buildLink(to=prc.xehEntryExport)#/contentID/#entry.getContentID()#.xml" target="_blank"><i class="fas fa-file-export"></i> Export as XML</a></li>
+						<li>
+							<a
+								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.json"
+								target="_blank">
+								<i class="fas fa-file-export"></i> Export as JSON
+							</a>
+						</li>
+						<li>
+							<a
+								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.xml"
+								target="_blank">
+								<i class="fas fa-file-export"></i> Export as XML
+							</a>
+						</li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
-						<!-- Reset hits --->
-						<li><a href="javascript:resetHits( '#entry.getContentID()#' )"><i class="fas fa-recycle fa-lg"></i> Reset Hits</a></li>
+						<li>
+							<a href="#event.buildLink( prc.xehEntryHistory )#/contentID/#entry.getContentID()#">
+								<i class="fas fa-history fa-lg"></i> History
+							</a>
+						</li>
+						<!-- Reset hits -->
+						<li>
+							<a href="javascript:resetHits( '#entry.getContentID()#' )">
+								<i class="fas fa-recycle fa-lg"></i> Reset Hits
+							</a>
+						</li>
 						<!--- View in Site --->
-						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="far fa-eye fa-lg"></i> Open In Site</a></li>
+						<li>
+							<a
+								href="#prc.CBHelper.linkEntry( entry )#"
+								target="_blank">
+								<i class="far fa-eye fa-lg"></i> Open In Site
+							</a>
+						</li>
 			    	</ul>
 			    </div>
 

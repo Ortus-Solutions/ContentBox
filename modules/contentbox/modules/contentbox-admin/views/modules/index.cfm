@@ -32,7 +32,7 @@
 					</div>
 
 					<!--- modules --->
-					<table name="modules" id="modules" class="table table-striped table-hover " width="100%">
+					<table name="modules" id="modules" class="table table-striped-removed table-hover " width="100%">
 						<thead>
 							<tr>
 								<th>Module</th>
