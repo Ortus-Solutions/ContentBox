@@ -172,6 +172,14 @@ p{
 
 /** Sidebar Mini */
 .sidebar-mini{
+
+	.sidebar{
+		opacity: 50%;
+	}
+	.sidebar:hover, .sidebar:active, .sidebar:focus{
+		opacity: 100%;
+	}
+
 	.nav > li.nav-dropdown-open a,  .nav > li:hover a{
 		color: white;
 	}
@@ -329,6 +337,12 @@ a.btn.btn-danger:visited {
 .panel-default .actions i:hover {
     cursor:pointer;
     color:#fff;
+}
+
+/******************** ALERTS ****************************/
+
+.alert > i {
+	margin-right: 10px;
 }
 
 /**============================== ADMIN MAIN ELEMENTS ==============================**/

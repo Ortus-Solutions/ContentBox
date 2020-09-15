@@ -181,11 +181,6 @@
 						<!--- Utils --->
 						#prc.adminMenuService.generateUtilsMenu()#
 
-						<!--- Support Menu --->
-						<span class="hidden-xs hidden-sm">
-							#prc.adminMenuService.generateSupportMenu()#
-						</span>
-
 						<!--- FullScreen --->
 						<li class="hidden-xs hidden-sm" data-placement="right auto" title="Fullscreen">
 							<a class="btn btn-default options toggle" href="javascript:void( 0 )" onclick="toggleFullScreen()">

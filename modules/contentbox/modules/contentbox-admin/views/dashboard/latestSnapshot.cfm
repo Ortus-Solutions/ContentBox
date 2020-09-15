@@ -3,7 +3,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
 		<h3 class="panel-title">
-			<i class="fas fa-table fa-lg"></i> #$r( "dashboard.latestSnapshot.title@admin" )#
+			<i class="fas fa-flag-checkered fa-lg"></i> #$r( "dashboard.latestSnapshot.title@admin" )#
 		</h3>
 	</div>
 

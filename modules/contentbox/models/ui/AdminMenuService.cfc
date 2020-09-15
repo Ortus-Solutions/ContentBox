@@ -207,56 +207,6 @@ component accessors="true" threadSafe singleton {
 		var xehAbout       = "#this.ADMIN_ENTRYPOINT#.dashboard.about";
 		var xehAdminAction = "#this.ADMIN_ENTRYPOINT#.dashboard.reload";
 
-		// Register About Menu
-		addHeaderMenu(
-			name        = "about",
-			label       = "<i class=""fas fa-info fa-lg width20""></i>",
-			permissions = "SYSTEM_TAB",
-			class       = "dropdown settings",
-			itemType    = "button",
-			itemClass   = "btn btn-default options toggle",
-			href        = "javascript:void(0)",
-			data        = { placement : "right" },
-			title       = "About ContentBox"
-		).addHeaderSubMenu(
-				name   = "support",
-				label  = "<i class=""fab fa-medrt fa-lg width20""></i> Professional Support",
-				href   = "https://www.ortussolutions.com/services/support",
-				target = "_blank"
-			)
-			.addHeaderSubMenu(
-				name   = "docs",
-				label  = "<i class=""fas fa-book-open fa-lg width20""></i> Documentation",
-				href   = "http://contentbox.ortusbooks.com",
-				target = "_blank"
-			)
-			.addHeaderSubMenu(
-				name   = "forums",
-				label  = "<i class=""fas fa-comments fa-lg width20""></i> Support Forums",
-				href   = "https://groups.google.com/forum/?fromgroups##!forum/contentbox",
-				target = "_blank"
-			)
-			.addHeaderSubMenu(
-				name   = "twitter",
-				label  = "<i class=""fab fa-twitter fa-lg width20""></i> Twitter",
-				href   = "https://www.twitter.com/ortussolutions",
-				target = "_blank"
-			)
-			.addHeaderSubMenu(
-				name   = "facebook",
-				label  = "<i class=""fab fa-facebook-square fa-lg width20""></i> Facebook",
-				href   = "https://www.facebook.com/ortussolutions",
-				target = "_blank"
-			)
-			.addHeaderSubMenu(
-				name    = "buildid",
-				label   = "ContentBox v.#variables.moduleConfig.version# <br /><span class=""label label-warning"">(Codename: #variables.moduleConfig.settings.codename#)</span>",
-				href    = variables.buildLink,
-				href_to = xehAbout,
-				class   = "last"
-			);
-
-
 		// Register Profile Menu
 		addHeaderMenu(
 			name  = "profile",
@@ -1016,23 +966,6 @@ component accessors="true" threadSafe singleton {
 
 		savecontent variable="genMenu" {
 			include "templates/nav.cfm";
-		}
-
-		// return it
-		return genMenu;
-	}
-
-	/**
-	 * Generate support menu: about
-	 */
-	any function generateSupportMenu(){
-		var event    = requestService.getContext();
-		var prc      = event.getCollection( private = true );
-		var genMenu  = "";
-		var thisMenu = variables.headerMenuMap[ "about" ];
-
-		savecontent variable="genMenu" {
-			include "templates/subNav.cfm";
 		}
 
 		// return it
