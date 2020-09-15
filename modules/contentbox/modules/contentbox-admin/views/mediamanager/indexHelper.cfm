@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 
 } );
 function switchLibrary(library){

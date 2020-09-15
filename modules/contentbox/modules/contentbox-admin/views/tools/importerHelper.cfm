@@ -1,12 +1,12 @@
 ﻿<cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$importForm	 	= $( "##importerForm" );
 	$importDialog 	= $( "##importDialog" );
 	$tabs 			= $( "##import_tabs" );
 	$button 		= $( "##import_button" );
 	$validator 		= $importForm.validate();
-	
+
 	// form validation handler
 	$importForm.submit( function( e ){
 		var formvals 	= $importForm.collect();

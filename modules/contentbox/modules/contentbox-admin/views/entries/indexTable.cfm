@@ -1,4 +1,6 @@
 <cfoutput>
+<!--- Entries Count --->
+<input type="hidden" name="entriesCount" id="entriesCount" value="#prc.entriesCount#">
 <!--- entries --->
 <table name="entries" id="entries" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
 	<thead>
@@ -64,8 +66,12 @@
 					<i class="far fa-dot-circle fa-lg textRed" title="Excluded!"></i>
 				</cfif>
 			</td>
-			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfHits()#</span></td>
-			<td class="text-center"><span class="badge badge-info">#entry.getNumberOfComments()#</span></td>
+			<td class="text-center">
+				<span class="badge badge-info">#entry.getNumberOfHits()#</span>
+			</td>
+			<td class="text-center">
+				<span class="badge badge-info">#entry.getNumberOfComments()#</span>
+			</td>
 			<td class="text-center">
 				<!---Info Panel --->
 				<a 	class="btn btn-sm btn-info popovers"
@@ -170,9 +176,13 @@
 
 <!--- Paging --->
 <cfif !rc.showAll>
-#prc.oPaging.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
+	#prc.oPaging.renderit(
+		foundRows = prc.entriesCount,
+		link      = prc.pagingLink,
+		asList    = true
+	)#
 <cfelse>
-<span class="label label-info">Total Records: #prc.entriesCount#</span>
+	<span class="label label-info">Total Records: #prc.entriesCount#</span>
 </cfif>
 
 </cfoutput>

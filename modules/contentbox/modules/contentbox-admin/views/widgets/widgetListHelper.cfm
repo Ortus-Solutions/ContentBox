@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
     // table sorting + filtering
     $( "##widgetFilter" ).keyup(
         _.debounce(
@@ -42,10 +42,10 @@ $(document).ready(function() {
                     $( '.widget-no-preview' ).hide();
                 }
                 if( originalValue != '' ) {
-                    $( '##widget-total-bar' ).html( 'Search for <strong>' + originalValue + '</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) )   
+                    $( '##widget-total-bar' ).html( 'Search for <strong>' + originalValue + '</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) )
                 }
                 else {
-                    $( '##widget-total-bar' ).html( 'Category: <strong>All</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) )   
+                    $( '##widget-total-bar' ).html( 'Category: <strong>All</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) )
                 }
             },
             300
@@ -82,7 +82,7 @@ $(document).ready(function() {
                 }
                 else {
                     wrapper.hide();
-                }    
+                }
             }
         } );
         if( !widgetCount ) {
@@ -91,8 +91,8 @@ $(document).ready(function() {
         else {
             $( '.widget-no-preview' ).hide();
         }
-        $( '##widget-total-bar' ).html( 'Category: <strong>' + originalValue + '</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) ) 
-    } ); 
+        $( '##widget-total-bar' ).html( 'Category: <strong>' + originalValue + '</strong> (' + widgetCount + ( widgetCount==1 ? ' Widget)' : ' Widgets)' ) )
+    } );
 } );
 function updateWidgetCSS( widget, count ) {
     if( count % 3 != 1 ) {

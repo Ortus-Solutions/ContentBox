@@ -3,7 +3,7 @@
 #renderView( view="_tags/contentListViewer", prePostExempt=true )#
 <!--- page JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	// Create history Listener
 	History.Adapter.bind( window, 'statechange', function(){
 		//console.log( "called history: " + data.parent );

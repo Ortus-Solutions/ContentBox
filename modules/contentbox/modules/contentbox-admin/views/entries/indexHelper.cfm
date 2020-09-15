@@ -1,9 +1,12 @@
 ﻿<cfoutput>
 <!--- Load Content List Viewer UI --->
-#renderView(view="_tags/contentListViewer", prePostExempt=true)#
+#renderView(
+	view          = "_tags/contentListViewer",
+	prePostExempt = true
+)#
 <!--- page JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready( function() {
 	// Setup content view
 	setupContentView( {
 		tableContainer	: $( "##entriesTableContainer" ),
@@ -11,7 +14,7 @@ $(document).ready(function() {
 		searchField 	: $( "##entrySearch" ),
 		searchName		: 'searchEntries',
 		contentForm 	: $( "##entryForm" ),
-		bulkStatusURL 	: '#event.buildlink(to=prc.xehEntryBulkStatus)#',
+		bulkStatusURL 	: '#event.buildlink( prc.xehEntryBulkStatus )#',
 		importDialog 	: $( "##importDialog" ),
 		cloneDialog		: $( "##cloneDialog" )
 	} );

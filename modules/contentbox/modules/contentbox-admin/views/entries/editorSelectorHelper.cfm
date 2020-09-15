@@ -3,7 +3,7 @@
 #renderView(view="_tags/contentSelector",prePostExempt=true)#
 <!--- Custom Javascript --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
  	// Shared Pointers
 	$entryEditorSelectorForm 	= $( "##entryEditorSelectorForm" );
 	$entryEditorSelectorLoader 	= $entryEditorSelectorForm.find( "##entryLoader" );
@@ -14,8 +14,8 @@ $(document).ready(function() {
               	var $this = $(this);
 				var clearIt = ( $this.val().length > 0 ? false : true );
 				// ajax search
-				$('##entriesContainer').load( '#event.buildLink( prc.xehEditorSelector )#', 
-					{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt }, 
+				$('##entriesContainer').load( '#event.buildLink( prc.xehEditorSelector )#',
+					{ search: $this.val(), editorName : "#rc.editorName#", clear: clearIt },
 					function(){
 						$entryEditorSelectorLoader.fadeOut();
 				} );

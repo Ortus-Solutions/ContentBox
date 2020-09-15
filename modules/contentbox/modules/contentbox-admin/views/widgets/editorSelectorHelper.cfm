@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom Javascript --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
     // Handle clicks on widgets
     $( '.widget-selector' ).click( function(){
         var me = $( this );

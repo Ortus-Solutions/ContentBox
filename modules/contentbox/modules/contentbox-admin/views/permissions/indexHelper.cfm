@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$importDialog = $( "##importDialog" );
 	// table sorting + filtering
 	$( "##permissions" ).dataTable( {
@@ -9,9 +9,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []

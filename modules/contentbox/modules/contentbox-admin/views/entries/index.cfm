@@ -2,7 +2,10 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fas fa-blog"></i> Blog Entries</h1>
+		<h1 class="h1">
+			<i class="fas fa-blog"></i> Blog Entries
+			<span id="entriesCountContainer"></span>
+		</h1>
 	</div>
 </div>
 
@@ -10,10 +13,12 @@
 	<div class="col-md-9">
 		<!--- MessageBox --->
 		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
 		</cfif>
+
 		<!--- Info Bar --->
 		<cfif NOT prc.cbSiteSettings.cb_comments_enabled>
 			<div class="alert alert-info">
@@ -21,9 +26,12 @@
 				Comments are currently disabled site-wide!
 			</div>
 		</cfif>
-		#html.startForm(name="entryForm",action=prc.xehEntryRemove)#
-			#html.hiddenField(name="contentStatus",value="" )#
-			#html.hiddenField(name="contentID",value="" )#
+
+		#html.startForm( name="entryForm", action=prc.xehEntryRemove )#
+
+			#html.hiddenField( name="contentStatus", value="" )#
+			#html.hiddenField( name="contentID", value="" )#
+
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -119,6 +127,7 @@
 			</div>
 		#html.endForm()#
 	</div>
+
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
@@ -126,7 +135,12 @@
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
-					#html.startForm(name="entryFilterForm", action=prc.xehEntrySearch, class="form-vertical",role="form" )#
+					#html.startForm(
+						name    = "entryFilterForm",
+						action  = prc.xehEntrySearch,
+						class   = "form-vertical",
+						role    = "form"
+					)#
 						<!--- Authors --->
 						<div class="form-group">
 					        <label for="fAuthors" class="control-label">Authors:</label>
@@ -138,7 +152,8 @@
 									</cfloop>
 								</select>
 							</div>
-					    </div>
+						</div>
+
 					    <!--- Creators --->
 					    <div class="form-group">
 							<label for="fCreators" class="control-label">Creators: </label>
@@ -149,6 +164,7 @@
 								</cfloop>
 							</select>
 						</div>
+
 						<!--- Categories --->
 						<div class="form-group">
 					        <label for="fCategories" class="control-label">Categories:</label>
@@ -161,7 +177,8 @@
 									</cfloop>
 								</select>
 					        </div>
-					    </div>
+						</div>
+
 						<!--- Status --->
 						<div class="form-group">
 					        <label for="fStatus" class="control-label">Status:</label>
@@ -172,13 +189,17 @@
 									<option value="false">Draft</option>
 								</select>
 					        </div>
-					    </div>
+						</div>
+
 						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply</a>
 						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+
 					#html.endForm()#
 				</div>
 			</div>
 		</div>
+
+		<!--- Help Tips --->
 		<div class="panel panel-default">
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fab fa-medrt"></i> Help Tips</h3>
@@ -194,30 +215,32 @@
 
 <!--- Clone Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Entry Cloning",
-			infoMsg = "By default, all internal links are updated for you as part of the cloning process.",
-			action = prc.xehEntryClone,
-			titleLabel = "Please enter the new entry title",
-			publishLabel="Publish entry?",
-			publishInfo = "By default all cloned entries are published as drafts.",
-			statusName = "entryStatus"
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
+	#renderView(
+		view = "_tags/dialog/clone",
+		args = {
+			title        : "Entry Cloning",
+			infoMsg      : "By default, all internal links are updated for you as part of the cloning process.",
+			action       : prc.xehEntryClone,
+			titleLabel   : "Please enter the new entry title",
+			publishLabel : "Publish entry?",
+			publishInfo  : "By default all cloned entries are published as drafts.",
+			statusName   : "entryStatus"
+		}
+	)#
 </cfif>
+
+<!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Blog Entries",
-			contentArea = "entry",
-			action = prc.xehEntryImport,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> entries file to import. The creator of the entry is matched via their <strong>username</strong> and
+	#renderView(
+		view = "_tags/dialog/import",
+		args = {
+			title       : "Import Blog Entries",
+			contentArea : "entry",
+			action      : prc.xehEntryImport,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> entries file to import. The creator of the entry is matched via their <strong>username</strong> and
                 entry overrides are matched via their <strong>slug</strong>.
                 If the importer cannot find the username from the import file in your installation, then it will ignore the record."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+		}
+	)#
 </cfif>
 </cfoutput>

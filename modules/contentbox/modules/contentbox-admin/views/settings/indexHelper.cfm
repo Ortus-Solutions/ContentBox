@@ -6,7 +6,7 @@
 }
 </style>
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	// form validators
 	$( "##settingsForm" ).validate();
 	// Slider Label Binders by convention, expecting an ID_label field
@@ -16,7 +16,7 @@ $(document).ready(function() {
 	// Load all MDEditors for .mde classes
 	var mdEditors =  {};
 	$( ".mde" ).each( function(){
-		mdEditors[ $( this ).prop( "id" ) ] = new SimpleMDE( { 
+		mdEditors[ $( this ).prop( "id" ) ] = new SimpleMDE( {
 			element 		: this,
 			autosave 		: { enabled : false },
 			promptURLs 		: true,

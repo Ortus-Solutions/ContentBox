@@ -1,15 +1,15 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$( "##roles" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []

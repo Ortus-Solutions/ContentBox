@@ -1,23 +1,23 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$permissionForm = $( "##permissionForm" );
 } );
 function addPermission(){
 	// loader
 	$( "##permissionLoader" ).slideDown();
 	// Assign it
-	$.post('#event.buildLink(prc.xehPermissionSave)#',{roleID:'#prc.role.getRoleID()#',permissionID:$permissionForm.find( "##permissionID" ).val() },function(){ 
+	$.post('#event.buildLink(prc.xehPermissionSave)#',{roleID:'#prc.role.getRoleID()#',permissionID:$permissionForm.find( "##permissionID" ).val() },function(){
 		$( "##permissionLoader" ).slideUp();
-		reloadPerms(); 
+		reloadPerms();
 	} );
 }
 function removePermission(permissionID){
 	// loader
 	$( "##permissionLoader" ).slideDown();
 	// Assign it
-	$.post('#event.buildLink(prc.xehPermissionRemove)#',{roleID:'#prc.role.getRoleID()#',permissionID:permissionID },function(){ 
+	$.post('#event.buildLink(prc.xehPermissionRemove)#',{roleID:'#prc.role.getRoleID()#',permissionID:permissionID },function(){
 		$( "##permissionLoader" ).slideUp();
 		reloadPerms();
 	} );

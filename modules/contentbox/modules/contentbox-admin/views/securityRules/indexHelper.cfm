@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$importDialog = $( "##importDialog" );
 	$ruleForm = $( "##ruleForm" );
 	$rulesTable = $ruleForm.find( "##rulesTable" );
@@ -9,9 +9,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
