@@ -24,18 +24,18 @@
 				Name
 			</th>
 			<th width="40" class="text-center">
-				<i class="fa fa-th-list fa-lg" title="Show in Menu"></i>
+				Status
 			</th>
 			<th width="40" class="text-center">
-				<i class="fa fa-globe fa-lg" title="Published"></i>
+				Menu
 			</th>
 			<th width="40" class="text-center">
-				<i class="fa fa-search fa-lg" title="Show in Search"></i>
+				Search
 			</th>
-			<th width="40" class="text-center">
-				<i class="fa fa-signal fa-lg" title="Hits"></i>
+			<th width="40" class="text-center hidden-sm hidden-xs">
+				Hits
 			</th>
-			<th width="115" class="text-center {sorter:false}">
+			<th width="100" class="text-center {sorter:false}">
 				Actions
 			</th>
         </tr>
@@ -59,15 +59,21 @@
 				<td class="text-center">
 					<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
 				</td>
+
 				<td>
+					<!--- Home page--->
+					<cfif page.getSlug() eq prc.oCurrentSite.getHomepage()>
+						<i class="fa fa-home textMuted" title="Current Homepage"></i>
+					</cfif>
+
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
 						<a
 							href="javascript:contentDrilldown( '#page.getContentID()#' )"
-							class="hand-cursor"
+							class="hand-cursor textMuted"
 							title="View Child Pages (#page.getNumberOfChildren()#)"
 						>
-							<i class="fa fa-plus-square text"></i>
+							<i class="fa fa-plus-square"></i>
 						</a>
 					<cfelse>
 						<i class="far fa-dot-circle-thin"></i>
@@ -75,30 +81,48 @@
 
 					<!--- Title --->
 					<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
-						<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#" title="Edit #page.getTitle()#">#page.getTitle()#</a>
+						<a
+							href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"
+							title="Edit #page.getTitle()#"
+							class="size18"
+						>
+							#page.getTitle()#
+						</a>
 					<cfelse>
-						#page.getTitle()#
-					</cfif>
-
-					<!--- Search Label --->
-					<cfif len( rc.searchPages ) or prc.isFiltering>
-						<br/><span class="label label-success">#page.getSlug()#</span>
+						<span class="size18">#page.getTitle()#</span>
 					</cfif>
 
 					<!--- password protected --->
 					<cfif page.isPasswordProtected()>
-						<i class="fas fa-key" title="Password Protected Content"></i>
+						<i class="fas fa-key textOrange" title="Password Protected Content"></i>
 					</cfif>
 
 					<!--- ssl protected --->
 					<cfif page.getSSLOnly()>
-						<i class="fa fa-shield" title="SSL Enabled"></i>
+						<i class="fas fa-shield-alt textOrange" title="SSL Enabled"></i>
 					</cfif>
 
-					<!--- Home page--->
-					<cfif page.getSlug() eq prc.oCurrentSite.getHomepage()>
-						<i class="fa fa-home text-danger" title="Current Homepage"></i>
+					<!--- Search Label --->
+					<cfif len( rc.searchPages ) or prc.isFiltering>
+						<div class="mt5" title="Root Path">
+							<div class="label label-success">#page.getSlug()#</div>
+						</div>
 					</cfif>
+
+					<!--- Content Info --->
+					#renderView(
+						view : "_components/content/TableCreationInfo",
+						args : { content : page },
+						module : "contentbox-admin"
+					)#
+				</td>
+
+				<td class="text-center">
+					#renderView(
+						view : "_components/content/TableStatus",
+						args : { content : page },
+						module : "contentbox-admin"
+					)#
 				</td>
 
 				<td class="text-center">
@@ -106,77 +130,24 @@
 						<i class="far fa-dot-circle fa-lg textGreen"></i>
 						<span class="hidden">yes</span>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg textRed"></i>
+						<i class="far fa-dot-circle fa-lg textGray"></i>
 						<span class="hidden">no</span>
 					</cfif>
 				</td>
 
 				<td class="text-center">
-					<cfif page.isExpired()>
-						<i class="fas fa-history fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
-						<span class="hidden">expired</span>
-					<cfelseif page.isPublishedInFuture()>
-						<i class="fa fa-space-shuttle fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
-						<span class="hidden">published in future</span>
-					<cfelseif page.isContentPublished()>
-						<i class="far fa-dot-circle fa-lg textGreen" title="Page Published"></i>
-						<span class="hidden">published in future</span>
-					<cfelse>
-						<i class="far fa-dot-circle fa-lg textRed" title="Page Draft"></i>
-						<span class="hidden">draft</span>
-					</cfif>
+					#renderView(
+						view : "_components/content/TableSearchStatus",
+						args : { content : page },
+						module : "contentbox-admin"
+					)#
 				</td>
 
-				<td class="text-center">
-					<cfif page.getShowInSearch()>
-						<i class="far fa-dot-circle fa-lg textGreen" title="Searchable!"></i>
-					<cfelse>
-						<i class="far fa-dot-circle fa-lg textRed" title="Excluded!"></i>
-					</cfif>
-				</td>
-
-				<td class="text-center">
+				<td class="text-center hidden-sm hidden-xs">
 					<span class="badge badge-info">#page.getNumberOfHits()#</span>
 				</td>
 
 				<td class="text-center">
-					<!---Info Panel --->
-					<a 	class="btn btn-info btn-sm popovers"
-						data-contentID="#page.getContentID()#"
-						data-toggle="popover"
-						>
-						<i class="fa fa-info-circle fa-lg"></i>
-					</a>
-
-					<!---Info Panel --->
-					<div id="infoPanel_#page.getContentID()#" class="hide">
-						<!--- creator --->
-						<i class="fa fa-user"></i>
-						Created by <a href="mailto:#page.getCreatorEmail()#">#page.getCreatorName()#</a> on
-						#page.getDisplayCreatedDate()#
-						</br>
-						<!--- last edit --->
-						<i class="fa fa-calendar"></i>
-						Last edit by <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on
-						#page.getActiveContent().getDisplayCreatedDate()#
-						</br>
-						<!--- Categories --->
-						<i class="fas fa-tags"></i> #page.getCategoriesList()#<br/>
-						<!--- comments icon --->
-						<cfif page.getallowComments()>
-							<i class="far fa-comments"></i> Open Comments
-						<cfelse>
-							<i class="fa fa-warning"></i> Closed Comments
-						</cfif>
-						<!---Layouts --->
-						<br/>
-						<i class="fas fa-photo-video"></i> Layout: <strong>#page.getLayout()#</strong>
-						<cfif len( page.getMobileLayout() )>
-						<br/>
-						<i class="fa fa-tablet"></i> Mobile Layout: <strong>#page.getMobileLayout()#</strong>
-						</cfif>
-					</div>
-
 					<!--- Drag Handle --->
 					<a
 						href="##"

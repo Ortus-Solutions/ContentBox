@@ -18,11 +18,18 @@
 <table name="content" id="content" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
-			<th>Name</th>
-			<th>Slug/Categories</th>
-			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
-			<th width="115" class="text-center {sorter:false}">Actions</th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
+				<input type="checkbox" onClick="checkAll(this.checked,'contentID')"/>
+			</th>
+			<th>
+				Name
+			</th>
+			<th width="40" class="text-center">
+				Status
+			</th>
+			<th width="100" class="text-center {sorter:false}">
+				Actions
+			</th>
 		</tr>
 	</thead>
 
@@ -50,56 +57,47 @@
 			<td>
 				<!--- Children Dig Deeper --->
 				<cfif content.getNumberOfChildren()>
-					<a href="javascript:contentDrilldown( '#content.getContentID()#' )" class="hand-cursor" title="View Children (#content.getNumberOfChildren()#)"><i class="fa fa-plus-square text"></i></a>
+					<a
+						href="javascript:contentDrilldown( '#content.getContentID()#' )"
+						class="hand-cursor textMuted"
+						title="View Children (#content.getNumberOfChildren()#)"
+					>
+						<i class="fa fa-plus-square"></i>
+					</a>
 				<cfelse>
 					<i class="far fa-dot-circle-thin"></i>
 				</cfif>
+
 				<!--- Title --->
 				<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
-					<a href="#event.buildLink(prc.xehContentStoreEditor)#/contentID/#content.getContentID()#" title="Edit content">#content.getTitle()#</a>
+					<a
+						href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#content.getContentID()#"
+						title="Edit content"
+					>
+						<span class="size18">#content.getTitle()#</span>
+					</a>
 				<cfelse>
-					#content.getTitle()#
+					<span class="size18">#content.getTitle()#</span>
 				</cfif>
-				<br>
-				#content.getDescription()#
-			</td>
-			<td>
-				<div class="label label-info">#content.getSlug()#</div>
-				<br/><small><i class="fas fa-tags"></i> #content.getCategoriesList()#</small>
-			</td>
-			<td class="text-center">
-				<cfif content.isExpired()>
-					<i class="fas fa-history fa-lg textRed" title="Content has expired on ( (#content.getDisplayExpireDate()#))"></i>
-					<span class="hidden">expired</span>
-				<cfelseif content.isPublishedInFuture()>
-					<i class="fa fa-space-shuttle fa-lg textBlue" title="Content Publishes in the future (#content.getDisplayPublishedDate()#)"></i>
-					<span class="hidden">published in future</span>
-				<cfelseif content.isContentPublished()>
-					<i class="far fa-dot-circle fa-lg textGreen" title="Content Published!"></i>
-					<span class="hidden">published</span>
-				<cfelse>
-					<i class="far fa-dot-circle fa-lg textRed" title="Content Draft!"></i>
-					<span class="hidden">draft</span>
-				</cfif>
-			</td>
-			<td class="text-center">
-				<!---Info Panel --->
-				<a 	class="btn btn-sm btn-info popovers"
-					data-contentID="#content.getContentID()#"
-					data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
-				<!---Info Panel --->
-				<div id="infoPanel_#content.getContentID()#" class="hide">
-					<!---Creator --->
-					<i class="fa fa-user"></i>
-					Created by <a href="mailto:#content.getCreatorEmail()#">#content.getCreatorName()#</a> on
-					#content.getDisplayCreatedDate()#
-					</br>
-					<!--- Last Edit --->
-					<i class="fa fa-calendar"></i>
-					Last edit by <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on
-					#content.getActiveContent().getDisplayCreatedDate()#
-				</div>
 
+				<!--- Content Info --->
+				#renderView(
+					view : "_components/content/TableCreationInfo",
+					args : { content : content, showDescription : true },
+					module : "contentbox-admin"
+				)#
+
+			</td>
+
+			<td class="text-center">
+				#renderView(
+					view : "_components/content/TableStatus",
+					args : { content : content },
+					module : "contentbox-admin"
+				)#
+			</td>
+
+			<td class="text-center">
 				<!--- Drag Handle --->
 				<a 	href="##"
 					onclick="return false;"

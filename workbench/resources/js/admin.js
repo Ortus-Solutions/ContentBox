@@ -685,6 +685,15 @@ function importContent(){
 }
 
 /**
+ * Toggle More info panels
+ */
+function toggleMoreInfoPanel( contentId ){
+	$( "#moreInfo-" + contentId ).toggleClass( "hidden" );
+	$( "#moreInfoOpenButton-" + contentId ).toggleClass( "hidden" );
+	$( "#moreInfoCloseButton-" + contentId ).toggleClass( "hidden" );
+}
+
+/**
  * Password meter event closure used to monitor password changes for the meter rules to activate.
  * This expects the following ID's to be in DOM: pw_rule_lower, upper, digit, symbol and count.
  * It also expects the passwordRules element to contain the min length data element

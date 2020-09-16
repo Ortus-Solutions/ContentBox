@@ -21,13 +21,13 @@
 				Status
 			</th>
 			<th width="40" class="text-center">
-				<i class="fa fa-search fa-lg" title="Show in Search"></i>
+				Search
 			</th>
-			<th width="40" class="text-center">
-				<i class="fa fa-signal fa-lg" title="Hits"></i>
+			<th width="40" class="text-center hidden-sm hidden-xs">
+				Hits
 			</th>
-			<th width="40" class="text-center">
-				<i class="far fa-comments fa-lg" title="Comments"></i>
+			<th width="40" class="text-center hidden-sm hidden-xs">
+				Comments
 			</th>
 			<th width="50" class="text-center {sorter:false}">
 				Actions
@@ -65,7 +65,7 @@
 						#entry.getTitle()#
 					</a>
 				<cfelse>
-					#entry.getTitle()#
+					<span class="size18">#entry.getTitle()#</span>
 				</cfif>
 
 				<!--- password protect --->
@@ -100,12 +100,12 @@
 			</td>
 
 			<!--- hits --->
-			<td class="text-center">
+			<td class="text-center hidden-sm hidden-xs">
 				<span class="badge badge-info">#entry.getNumberOfHits()#</span>
 			</td>
 
 			<!--- Comments --->
-			<td class="text-center">
+			<td class="text-center hidden-sm hidden-xs">
 				<span class="badge badge-info">#entry.getNumberOfComments()#</span>
 			</td>
 

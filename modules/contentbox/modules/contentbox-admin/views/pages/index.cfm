@@ -181,8 +181,11 @@
 								</select>
 					        </div>
 					    </div>
-						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply</a>
-						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+
+						<div class="text-center">
+							<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+							<a class="btn btn-primary btn-sm" href="javascript:contentFilter()">Apply</a>
+						</div>
 					#html.endForm()#
 				</div>
 			</div>

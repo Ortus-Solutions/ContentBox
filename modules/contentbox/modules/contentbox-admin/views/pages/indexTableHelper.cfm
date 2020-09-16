@@ -23,10 +23,9 @@ $( document ).ready(function() {
 	// activate tooltips
 	activateTooltips();
 	// quick look
-	activateQuickLook( $pages, '#event.buildLink(prc.xehPageQuickLook)#/contentID/' );
+	activateQuickLook( $pages, '#event.buildLink( prc.xehPageQuickLook )#/contentID/' );
 	// Popovers
 	activateInfoPanels();
-
 	<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 	// Drag and drop hierarchies
 	$pages.tableDnD( {
