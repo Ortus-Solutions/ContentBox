@@ -3,7 +3,7 @@
     <div class="col-md-12">
         <h1 class="h1">
         	<i class="far fa-comments"></i> Comments (#prc.commentsCount#)
-			<cfif len(rc.searchComments)>
+			<cfif len( rc.searchComments )>
 				<i class="fas fa-chevron-right fa-sm"></i> Search:
 				#encodeForHTML( searchComments )#
 			</cfif>
@@ -45,7 +45,7 @@
 								#html.textField(
 									name 		= "commentSearch",
 									class		= "form-control rounded quicksearch",
-									placeholder = "Quick Search"
+									placeholder = "Quick Filter"
 								)#
 							</div>
 						</div>
@@ -129,24 +129,29 @@
 								</td>
 
 								<td>
-									<!--- Entry Or Page --->
-									<strong>
-										<a title="Open in Site" href="#prc.CBHelper.linkComment(comment)#">#comment.getParentTitle()#</a>
-									</strong>
-									<br/>
-									#left( comment.getDisplayContent(), prc.cbSiteSettings.cb_comments_maxDisplayChars )#
+									<a
+										title="Open in Site"
+										href="#prc.CBHelper.linkComment(comment)#"
+										target="_blank"
+									>
+										#comment.getParentTitle()#
+									</a>
+
+									<div class="mt10">
+										#left( comment.getDisplayContent(), prc.cbSiteSettings.cb_comments_maxDisplayChars )#
 									<cfif len( comment.getDisplayContent() ) gt prc.cbSiteSettings.cb_comments_maxDisplayChars>
 									....<strong>more</strong>
 									</cfif>
+									</div>
 								</td>
 
 								<td class="text-center">
 									<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
-											<a class="btn btn-sm btn-danger" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
+											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
 										<cfelse>
-											<a class="btn btn-sm btn-info" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
+											<a class="btn btn-sm btn-default" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
 										<div class="btn-group">
 											<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
@@ -205,8 +210,11 @@
 							value=event.getValue( "searchComments","" )
 						)#
 					</div>
-					<button type="submit" class="btn btn-danger">Search</button>
-					<button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>
+
+					<div class="text-center">
+						<button class="btn btn-default btn-sm" onclick="return to('#event.buildLink(prc.xehComments)#')">Clear</button>
+						<button type="submit" class="btn btn-primary btn-sm">Search</button>
+					</div>
 				#html.endForm()#
 		    </div>
 		</div>
@@ -225,8 +233,11 @@
 							<option value="false" <cfif rc.fStatus eq "false">selected="selected"</cfif>>Moderated (#prc.countUnApproved#)</option>
 						</select>
 			    	</div>
-					<button type="submit" class="btn btn-danger">Apply</button>
-					<button class="btn btn-default" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>
+
+					<div class="text-center">
+						<button class="btn btn-default btn-sm" onclick="return to('#event.buildLink(prc.xehComments)#')">Reset</button>
+						<button type="submit" class="btn btn-primary btn-sm">Apply</button>
+					</div>
 				#html.endForm()#
 		    </div>
 		</div>
