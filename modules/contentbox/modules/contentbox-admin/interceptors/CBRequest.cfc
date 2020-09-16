@@ -8,10 +8,10 @@
 component extends="coldbox.system.Interceptor"{
 
 	// DI
-	property name="securityService"    	inject="securityService@cb";
-	property name="settingService"       		inject="settingService@cb";
-	property name="siteService"                		inject="siteService@cb";
-	property name="adminMenuService"	inject="adminMenuService@cb";
+	property name="securityService"  inject="securityService@cb";
+	property name="settingService"   inject="settingService@cb";
+	property name="siteService"      inject="siteService@cb";
+	property name="adminMenuService" inject="adminMenuService@cb";
 
 	/**
 	 * Configure CB Request
@@ -93,13 +93,13 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 
 		// Global Admin Exit Handlers
-		prc.xehDashboard  = "#prc.cbAdminEntryPoint#.dashboard";
-		prc.xehAbout      = "#prc.cbAdminEntryPoint#.dashboard.about";
+		prc.xehDashboard = "#prc.cbAdminEntryPoint#.dashboard";
+		prc.xehAbout     = "#prc.cbAdminEntryPoint#.dashboard.about";
 
 		// Entries Tab
-		prc.xehEntries   = "#prc.cbAdminEntryPoint#.entries";
-		prc.xehBlogEditor= "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehCategories= "#prc.cbAdminEntryPoint#.categories";
+		prc.xehEntries      = "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntriesEditor= "#prc.cbAdminEntryPoint#.entries.editor";
+		prc.xehCategories   = "#prc.cbAdminEntryPoint#.categories";
 
 		// Content Tab
 		prc.xehPages             = "#prc.cbAdminEntryPoint#.pages";

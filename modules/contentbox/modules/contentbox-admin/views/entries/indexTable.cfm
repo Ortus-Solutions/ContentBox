@@ -58,7 +58,7 @@
 				<!--- Title --->
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 					<a
-						href="#event.buildLink( prc.xehBlogEditor )#/contentID/#entry.getContentID()#"
+						href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#entry.getContentID()#"
 						title="Edit"
 						class="size18"
 					>

@@ -10,13 +10,15 @@
                 <h4 class="modal-title" id="diffTitle">
                 	<i class="fas fa-history fa-lg"></i>
 					Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
+					> #prc.currentContent.getRelatedContent().getTitle()#
 				</h4>
-            </div>
+			</div>
+
             <!--body-->
             <div class="modal-body">
                 <h3>Version Info Comparison</h3>
 				<!--- Info Table --->
-				<table class="table table-hover  table-bordered">
+				<table class="table table-hover table-bordered">
 					<tbody>
 					<tr class="info">
 						<th class="text-center" width="150">Info</th>

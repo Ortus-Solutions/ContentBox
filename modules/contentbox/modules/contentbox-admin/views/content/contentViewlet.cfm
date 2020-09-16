@@ -54,7 +54,7 @@
 					<br>
 					<span class="label label-info">#thisContent.getContentType()#</span>
 				<cfelse>
-					<a href="#event.buildLink( prc.xehBlogEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry">#thisContent.getTitle()#</a>
+					<a href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry">#thisContent.getTitle()#</a>
 					<br>
 					<span class="label label-primary">#thisContent.getContentType()#</span>
 				</cfif>

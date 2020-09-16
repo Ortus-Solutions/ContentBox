@@ -6,6 +6,7 @@
 		</h1>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
 		#getInstance( "messagebox@cbMessagebox" ).renderit()#
@@ -15,6 +16,7 @@
 		</cfif>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
 		#html.startForm(

@@ -40,7 +40,7 @@
 			</a>
 		<cfelse>
 			<a 	title="Edit Entry"
-				href="#event.buildLink( prc.xehBlogEditor )#/contentID/#thisContent.getContentID()#"
+				href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getContentID()#"
 			>
 				#thisContent.getTitle()#
 			</a>
