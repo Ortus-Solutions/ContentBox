@@ -3,14 +3,19 @@
     <div class="col-md-12">
         <h1 class="h1">
         	<i class="far fa-comments"></i> Comments (#prc.commentsCount#)
-			<cfif len(rc.searchComments)> > Search: #event.getValue( "searchComments" )#</cfif>
+			<cfif len(rc.searchComments)>
+				<i class="fas fa-chevron-right fa-sm"></i> Search:
+				#encodeForHTML( searchComments )#
+			</cfif>
 		</h1>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12">
         <!-- MessageBox -->
-        #getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
         <!--- Info Bar --->
 		<cfif NOT prc.cbSiteSettings.cb_comments_enabled>
 			<div class="alert alert-info">
@@ -20,11 +25,17 @@
 		</cfif>
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-9">
-        #html.startForm(name="commentForm", action=prc.xehCommentRemove, class="form-vertical" )#
-        	#html.hiddenField(name="commentStatus",value="" )#
-			#html.hiddenField(name="page",value=rc.page)#
+        #html.startForm(
+			name   = "commentForm",
+			action = prc.xehCommentRemove,
+			class  = "form-vertical"
+		)#
+        	#html.hiddenField( name="commentStatus", value="" )#
+			#html.hiddenField( name="page", value=rc.page )#
+
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<div class="row">
@@ -34,7 +45,7 @@
 								#html.textField(
 									name 		= "commentSearch",
 									class		= "form-control rounded quicksearch",
-									placeholder ="Quick Search"
+									placeholder = "Quick Search"
 								)#
 							</div>
 						</div>
@@ -58,15 +69,19 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="panel-body">
 					<!--- comments --->
-					<table name="comments" id="comments" class="table table-striped-removed table-hover " width="98%">
+					<table
+						name="comments"
+						id="comments"
+						class="table table-striped-removed table-hover"
+					>
 						<thead>
 							<tr>
 								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
 								<th width="200">Author</th>
-								<th>Comment</th>
-								<th width="150" class="text-center">Date</th>
+								<th class="{sorter:false}">Comment</th>
 								<th width="75" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
@@ -79,9 +94,18 @@
 									<input type="checkbox" name="commentID" id="commentID" value="#comment.getCommentID()#" />
 								</td>
 								<td>
-									#getInstance( "Avatar@cb" ).renderAvatar(email=comment.getAuthorEmail(),size="30" )#
-									&nbsp;<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
+
+									#getInstance( "Avatar@cb" ).renderAvatar(
+										email = comment.getAuthorEmail(),
+										size  = "30",
+										class = "img img-circle"
+									)#
+
+									&nbsp;
+									<a href="mailto:#comment.getAUthorEmail()#" title="#comment.getAUthorEmail()#">#comment.getAuthor()#</a>
+
 									<br/>
+
 									<cfif len(comment.getAuthorURL())>
 										<i class="fas fa-globe"></i>
 										<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
@@ -89,9 +113,21 @@
 										</a>
 										<br />
 									</cfif>
-									<i class="fa fa-laptop"></i>
-									<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
+
+									<div class="ml5 mt10">
+										<i class="far fa-calendar mr5"></i>
+										#comment.getDisplayCreatedDate()#
+									</div>
+
+									<cfif len( comment.getauthorIP() )>
+										<div class="ml5 mt10">
+											<i class="fas fa-laptop"></i>
+											<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
+										</div>
+									</cfif>
+
 								</td>
+
 								<td>
 									<!--- Entry Or Page --->
 									<strong>
@@ -103,9 +139,7 @@
 									....<strong>more</strong>
 									</cfif>
 								</td>
-								<td class="text-center">
-									#comment.getDisplayCreatedDate()#
-								</td>
+
 								<td class="text-center">
 									<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->

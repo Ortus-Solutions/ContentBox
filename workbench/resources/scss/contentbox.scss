@@ -19,6 +19,9 @@ p{
 	margin: 10px 0px !important;
 }
 
+.table > thead > tr {
+	color: #999595;
+}
 .table > thead > tr > th {
 	border-bottom: 0px solid #ddd;
 }
@@ -579,26 +582,33 @@ table.diff {
 
 /**============================== Utility Classes ==============================**/
 
-.consoleLog{ border:2px solid #eaeaea;padding:5px;font-size:11px;font-family: courier;background-color:black;color:#66E10D}
+.consoleLog{
+	border:2px solid #eaeaea;
+	padding:5px;
+	font-size:11px;
+	font-family: courier;
+	background-color:black;
+	color:#66E10D
+}
 
-.floatLeft { float:left!important; }
-.floatRight { float:right!important; }
+.floatLeft { float:left !important; }
+.floatRight { float:right !important; }
 
-.text{ color: #333333}
-.textGray{ color: #c5b4b4 }
-.textGreen{ color: #468847 }
-.textOrange{ color:#C09853 }
-.textRed{ color:#B94A48}
-.textBlue{ color:#3A87AD}
-.textWhite{ color:white}
+.text{ color: #333333 !important}
+.textGray{ color: #c4c4c4  !important }
+.textGreen{ color: #468847 !important}
+.textOrange{ color:#C09853 !important }
+.textRed{ color:#B94A48 !important}
+.textBlue{ color:#3A87AD !important}
+.textWhite{ color:white !important}
 
-.textRight { text-align:right!important; }
-.textLeft { text-align:left!important; }
-.textCenter { text-align:center!important; }
+.textRight { text-align:right !important; }
+.textLeft { text-align:left !important; }
+.textCenter { text-align:center !important; }
 
-.center { text-align:center!important; margin:auto!important; }
-.padding10 { padding:10px; }
-.padding0 { padding:0px; }
+.center { text-align:center !important; margin:auto !important; }
+
+.p0{ padding: 0px; }
 
 .p5{ padding: 5px;}
 .pl5{ padding-left: 5px;}
@@ -612,6 +622,8 @@ table.diff {
 .pt10{ padding-top: 10px;}
 .pb10{ padding-bottom: 10px;}
 
+.m0{ margin: 0px; }
+
 .m5{ margin: 5px;}
 .ml5{ margin-left: 5px;}
 .mr5{ margin-right: 5px;}
@@ -624,17 +636,13 @@ table.diff {
 .mt10{ margin-top: 10px;}
 .mb10{ margin-bottom: 10px;}
 
-.margin10 { margin:10px; }
-.margin0 { margin:0px; }
-.marginTop25{ margin-top:25px; }
-
 .width20{ width: 20px }
 .width25{ width: 25px }
+.width100{ width: 100%; }
 .width98{ width: 98%; }
 .width96{ width: 96%; }
 .width95{ width: 95%; }
 .width94{ width: 94%; }
-.marginRight5{ margin-right:5px}
 
 .rounded-sm{ border-radius: 5px }
 .rounded{ border-radius: 10px }
@@ -645,10 +653,17 @@ table.diff {
 .show{ display: block; }
 
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 url(../images/iinfo_icon.png) no-repeat 2% 50%; }
+
 .cachebox_debugContentCell{clear: none !important;}
+
 .grabCursors{cursor:grab !important;cursor:-moz-grab !important;cursor:-webkit-grab !important;}
 .hand-cursor{cursor:pointer !important;}
+
 .size12{ font-size: 12px; }
+.size14{ font-size: 14px; }
+.size16{ font-size: 16px; }
+.size18{ font-size: 18px; }
+.size20{ font-size: 20px; }
 
 /**============================== MEDIA QUERIES ==============================**/
 

@@ -9,7 +9,7 @@
 
 			<div class="panel-body">
 
-				<div class="text-center margin10" id="author_actions">
+				<div class="text-center m10" id="author_actions">
 					<div class="btn-group" role="group" aria-label="...">
 						<!--- <button type="button" class="btn btn-default">1</button> --->
 

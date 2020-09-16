@@ -60,7 +60,7 @@
         </label>
         <div class="controls">
             <small>The number of recent content items to show on the syndication feeds.</small><br/>
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_rss_maxEntries"
                     name="cb_rss_maxEntries"
@@ -72,7 +72,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
 
         </div>
     </div>
@@ -85,7 +85,7 @@
         </label>
         <div class="controls">
             <small>The number of recent comments to show on the syndication feeds.</small><br/>
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_rss_maxComments"
                     name="cb_rss_maxComments"
@@ -97,7 +97,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
 
         </div>
     </div>
@@ -146,7 +146,7 @@
         </label>
         <div class="controls">
             <small>The number of minutes a feed XML is cached per permutation of feed type.</small><br/>
-            <strong class="margin10">5</strong>
+            <strong class="m10">5</strong>
             <input 	type="text"
                     id="cb_rss_cachingTimeout"
                     name="cb_rss_cachingTimeout"
@@ -159,7 +159,7 @@
                     data-slider-tooltip="hide"
                     data-slider-scale="logarithmic"
             >
-            <strong class="margin10">500</strong>
+            <strong class="m10">500</strong>
         </div>
     </div>
 
@@ -171,7 +171,7 @@
         </label>
         <div class="controls">
             <small>The number of idle minutes allowed for cached RSS feeds to live. Usually this is less than the timeout you selected above</small><br/>
-            <strong class="margin10">5</strong>
+            <strong class="m10">5</strong>
             <input 	type="text"
                     id="cb_rss_cachingTimeoutIdle"
                     name="cb_rss_cachingTimeoutIdle"
@@ -184,7 +184,7 @@
                     data-slider-tooltip="hide"
                     data-slider-scale="logarithmic"
             >
-            <strong class="margin10">500</strong>
+            <strong class="m10">500</strong>
 
         </div>
     </div>

@@ -68,7 +68,7 @@
 
 												<li class="mb5">
 													<a href="javascript:bulkChangeStatus( 'publish' )">
-														<i class="far fa-check-circle fa-lg"></i> Publish Selected
+														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>

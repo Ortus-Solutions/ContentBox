@@ -97,7 +97,7 @@
 			<strong>#group.getName()#</strong>
 
 			<!--- Permissions --->
-			<div class="well well-sm margin10">
+			<div class="well well-sm m10">
 			<cfloop array="#group.getPermissions()#" index="perm">
 			<div>
 				<!--- Assigned --->

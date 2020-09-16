@@ -72,7 +72,7 @@
 												</li>
 												<li>
 													<a href="javascript:bulkChangeStatus('publish')">
-														<i class="far fa-check-circle fa-lg"></i> Publish Selected
+														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
@@ -191,8 +191,10 @@
 					        </div>
 						</div>
 
-						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply</a>
-						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+						<div class="text-center">
+							<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+							<a class="btn btn-primary btn-sm" href="javascript:contentFilter()">Apply</a>
+						</div>
 
 					#html.endForm()#
 				</div>

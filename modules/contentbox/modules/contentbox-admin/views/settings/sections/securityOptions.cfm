@@ -12,7 +12,7 @@
 			<small>The minimum length for user passwords. ContentBox limits the minimum to 8 characters.</small>
 
 			<div>
-				<strong class="margin10">8</strong>
+				<strong class="m10">8</strong>
 				<input 	type="text"
 						class="form-control slider"
 						id="cb_security_min_password_length"
@@ -24,7 +24,7 @@
 						data-slider-step="1"
 						data-slider-tooltip="hide"
 				>
-				<strong class="margin10">100</strong>
+				<strong class="m10">100</strong>
 			</div>
 		</div>
 	</div>
@@ -60,7 +60,7 @@
 		</label>
         <div class="controls">
             <small>The number of invalid login attempts before a user is blocked.</small><br/>
-			<strong class="margin10">5</strong>
+			<strong class="m10">5</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_max_attempts"
@@ -72,7 +72,7 @@
 					data-slider-step="5"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">50</strong>
+			<strong class="m10">50</strong>
         </div>
     </div>
 
@@ -84,7 +84,7 @@
 		</label>
         <div class="controls">
             <small>The number of minutes a user will be blocked if max attempts is triggered.</small><br/>
-			<strong class="margin10">5</strong>
+			<strong class="m10">5</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_blocktime"
@@ -96,7 +96,7 @@
 					data-slider-step="5"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">60</strong>
+			<strong class="m10">60</strong>
         </div>
     </div>
 
@@ -108,7 +108,7 @@
 		</label>
         <div class="controls">
             <small>The number of log entries to keep before rotating logs.</small><br/>
-			<strong class="margin10">100</strong>
+			<strong class="m10">100</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_max_auth_logs"
@@ -121,7 +121,7 @@
 					data-slider-tooltip="hide"
 					data-slider-scale="logarithmic"
 			>
-			<strong class="margin10">5000</strong>
+			<strong class="m10">5000</strong>
         </div>
     </div>
 
@@ -188,7 +188,7 @@
 		</label>
         <div class="controls">
             <small>Throttle requests made more than this count in the duration specified.</small><br/>
-			<strong class="margin10">1</strong>
+			<strong class="m10">1</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_rate_limiter_count"
@@ -200,7 +200,7 @@
 					data-slider-step="1"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">25</strong>
+			<strong class="m10">25</strong>
         </div>
 	</div>
 
@@ -212,7 +212,7 @@
 		</label>
         <div class="controls">
             <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
-			<strong class="margin10">1</strong>
+			<strong class="m10">1</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_rate_limiter_duration"
@@ -224,7 +224,7 @@
 					data-slider-step="1"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">60</strong>
+			<strong class="m10">60</strong>
         </div>
 	</div>
 

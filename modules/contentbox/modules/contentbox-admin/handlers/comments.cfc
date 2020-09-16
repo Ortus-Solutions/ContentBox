@@ -64,7 +64,7 @@ component extends="baseHandler"{
 		}
 
 		// search comments with filters and all
-		var commentResults = commentService.search(
+		var commentResults = variables.commentService.search(
 			search     : rc.searchComments,
 			offset     : prc.paging.startRow-1,
 			max        : prc.cbSettings.cb_paging_maxrows,
@@ -74,8 +74,8 @@ component extends="baseHandler"{
 
 		prc.comments        = commentResults.comments;
 		prc.commentsCount   = commentResults.count;
-		prc.countApproved   = commentService.getApprovedCommentCount();
-		prc.countUnApproved = commentService.getUnApprovedCommentCount();
+		prc.countApproved   = variables.commentService.getApprovedCommentCount();
+		prc.countUnApproved = variables.commentService.getUnApprovedCommentCount();
 
 		// exit Handlers
 		prc.xehCommentEditor            = "#prc.cbAdminEntryPoint#.comments.editor";

@@ -36,7 +36,7 @@
 					<i class="fas fa-history fa-lg textRed" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif content.isPublishedInFuture()>
-					<i class="fa fa-fighter-jet fa-lg textBlue" title="Content Publishes in the future!"></i>
+					<i class="fa fa-space-shuttle fa-lg textBlue" title="Content Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
 					<i class="far fa-dot-circle fa-lg textGreen" title="Content Published!"></i>

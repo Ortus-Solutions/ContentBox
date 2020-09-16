@@ -38,7 +38,7 @@
 						<i class="fas fa-history fa-lg textRed" title="Page has expired on ( (#page.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif page.isPublishedInFuture()>
-						<i class="fa fa-fighter-jet fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
+						<i class="fa fa-space-shuttle fa-lg textBlue" title="Page Publishes in the future (#page.getDisplayPublishedDate()#)"></i>
 						<span class="hidden">published in future</span>
 					<cfelseif page.isContentPublished()>
 						<i class="far fa-dot-circle fa-lg textGreen" title="Page Published"></i>

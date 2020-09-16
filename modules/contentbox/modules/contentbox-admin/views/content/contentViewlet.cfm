@@ -86,7 +86,7 @@
 						title="Content has expired on (#thisContent.getDisplayExpireDate()#)"></i>
 					<span class="hidden">expired</span>
 				<cfelseif thisContent.isPublishedInFuture()>
-					<i 	class="fa fa-fighter-jet fa-lg textBlue"
+					<i 	class="fa fa-space-shuttle fa-lg textBlue"
 						title="Content Publishes in the future (#thisContent.getDisplayPublishedDate()#)"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif thisContent.isContentPublished()>

@@ -52,7 +52,7 @@
             <div class="panel panel-default">
 
                 <!-- Nav tabs -->
-                <div class="tab-wrapper margin0">
+                <div class="tab-wrapper m0">
                     <ul class="nav nav-tabs" role="tablist">
 
                         <li role="presentation" class="active">

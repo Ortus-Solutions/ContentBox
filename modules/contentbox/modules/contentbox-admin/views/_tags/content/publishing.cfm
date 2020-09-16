@@ -136,7 +136,7 @@
                 <cfif args.content.getIsPublished()>
                     <div class="alert alert-info">
                         <cfif dateCompare( args.content.getPublishedDate(), now() ) eq 1>
-                            <i class="fa fa-fighter-jet"></i> This content publishes in the future: #args.content.getDisplayPublishedDate()#
+                            <i class="fa fa-space-shuttle"></i> This content publishes in the future: #args.content.getDisplayPublishedDate()#
                         <cfelse>
                             <i class="fa fa-thumbs-up"></i> This content is published!
                         </cfif>

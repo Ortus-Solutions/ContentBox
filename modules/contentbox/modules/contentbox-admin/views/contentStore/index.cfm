@@ -63,35 +63,43 @@
 								    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:bulkRemove()" class="confirmIt"
-													data-title="<i class='far fa-trash-alt'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
-														<i class="far fa-trash-alt"></i> Delete Selected
+													data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
+														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:bulkChangeStatus('draft')">
-														<i class="fas fa-ban"></i> Draft Selected
+														<i class="fas fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:bulkChangeStatus('publish')">
-														<i class="far fa-check-circle"></i> Publish Selected
+														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import"></i> Import
+														<i class="fas fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehContentExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehContentExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
+												<li>
+													<a href="#event.buildLink (to=prc.xehContentExportAll )#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
+													</a>
+												</li>
+												<li>
+													<a href="#event.buildLink( to=prc.xehContentExportAll )#.xml" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export All as XML
+													</a>
+												</li>
 											</cfif>
 											<li>
 												<a href="javascript:contentShowAll()">
-													<i class="fas fa-list"></i> Show All
+													<i class="fas fa-list fa-lg"></i> Show All
 												</a>
 											</li>
 								    	</ul>

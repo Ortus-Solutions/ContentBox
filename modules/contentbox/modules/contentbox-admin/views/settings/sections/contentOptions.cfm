@@ -10,7 +10,7 @@
             </label>
             <div class="controls">
                 <small>The number of versions to keep before older versions are removed.</small><br/>
-                <strong class="margin10">10</strong>
+                <strong class="m10">10</strong>
                 <input 	type="text"
                         id="cb_versions_max_history"
                         name="cb_versions_max_history"
@@ -23,7 +23,7 @@
                         data-scale="logarithmic"
                         data-slider-tooltip="hide"
                 >
-                <strong class="margin10">500</strong>
+                <strong class="m10">500</strong>
             </div>
         </div>
 
@@ -257,7 +257,7 @@
             </label>
             <div class="controls">
                 <small>The number of minutes a rendered content (blog,page,contentStore) is cached for.</small><br/>
-                <strong class="margin10">5</strong>
+                <strong class="m10">5</strong>
                 <input 	type="text"
                         id="cb_content_cachingTimeout"
                         name="cb_content_cachingTimeout"
@@ -270,7 +270,7 @@
                         data-slider-tooltip="hide"
                         data-slider-scale="logarithmic"
                 >
-                <strong class="margin10">1440</strong>
+                <strong class="m10">1440</strong>
 
             </div>
         </div>
@@ -283,7 +283,7 @@
             </label>
             <div class="controls">
                 <small>The number of idle minutes allowed for cached rendered content (blog,page,contentStore) to live if not used. Usually this is less than the timeout you selected above</small><br/>
-                <strong class="margin10">5</strong>
+                <strong class="m10">5</strong>
                 <input 	type="text"
                         id="cb_content_cachingTimeoutIdle"
                         name="cb_content_cachingTimeoutIdle"
@@ -296,7 +296,7 @@
                         data-slider-tooltip="hide"
                         data-slider-scale="logarithmic"
                 >
-                <strong class="margin10">500</strong>
+                <strong class="m10">500</strong>
 
             </div>
         </div>

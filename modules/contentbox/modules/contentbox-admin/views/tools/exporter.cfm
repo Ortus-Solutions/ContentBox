@@ -25,7 +25,7 @@
 
 					<p>From this panel you can choose to export your entire site or parts of it as a <strong>*.box</strong> archive package.</p>
 
-					<div class="row margin10">
+					<div class="row m10">
 						<div class="col-md-6 well well-sm text-center alert-success">
 							<h2>Option ##1: Everything!</h2>
 							<small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />

@@ -3,7 +3,7 @@
     <div class="col-md-12">
 
     	<div class="text-center">
-    		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="margin10" title="Modular CMS"/>
+    		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="m10" title="Modular CMS"/>
 		    <h2><span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
 	        <blockquote class="clearfix">
 				<strong>ContentBox</strong> #$r( "dashboard.about.blockquote1.1@admin" )#<a href="https://www.ortussolutions.com">Ortus Solutions</a> #$r( "dashboard.about.blockquote1.2@admin" )# <a href="http://www.coldbox.org">ColdBox Platform</a> #$r( "dashboard.about.blockquote1.3@admin" )#

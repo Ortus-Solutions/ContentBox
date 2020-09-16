@@ -25,7 +25,7 @@
 
 		<!--- Render out Fields --->
 		<cfloop array="#args.customFields#" index="cField" >
-			<div class="margin0 template">
+			<div class="m0 template">
 				<div class="form-group form-inline">
 					<label class="inline control-label">Key: </label>
 					#html.textField(
@@ -52,7 +52,7 @@
 		<div id="beacon"></div>
 	</div>
 	<!--- CustomFields Template --->
-	<div id="customFieldsTemplate" class="margin0 template" style="display:none;">
+	<div id="customFieldsTemplate" class="m0 template" style="display:none;">
 		<div class="form-group form-inline">
 			<label class="inline control-label">Key: </label>
 			#html.textField(

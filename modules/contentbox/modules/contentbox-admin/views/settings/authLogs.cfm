@@ -18,7 +18,7 @@
     		<div class="panel-body">
 
     			<!-- Buttons -->
-				<div class="pull-right padding10">
+				<div class="pull-right p10">
 					<a href="#event.buildLink( prc.xehSettings )###security_options" class="btn btn-primary">Configure Tracker</a>
 					<a href="#event.buildLink( prc.xehTruncate )#" class="btn btn-danger confirmIt">Truncate Logs</a>
 				</div>

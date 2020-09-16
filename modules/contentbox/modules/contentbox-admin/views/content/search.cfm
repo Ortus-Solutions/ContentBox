@@ -18,10 +18,10 @@
 			<cfif thisContent.getContentType() eq "contentStore">
 			disabled="true"
 			onclick="return false"
-			class="btn btn-xs pull-left marginRight5"
+			class="btn btn-xs pull-left mr5"
 			<cfelse>
 			title="Open in Site"
-			class="btn btn-primary btn-xs pull-left marginRight5"
+			class="btn btn-primary btn-xs pull-left mr5"
 			</cfif>
 		>
 			<i class="fa fa-external-link"></i>
@@ -62,7 +62,7 @@
 <ul class="list-group">
 <cfloop array="#prc.authors.authors#" index="thisAuthor">
 	<li class="list-group-item">
-		<span class="pull-left marginRight5">
+		<span class="pull-left mr5">
 			#getInstance( "Avatar@cb" ).renderAvatar( email=thisAuthor.getEmail(), size="30" )#
 		</span>
 		<span class="label label-info pull-right">#thisAuthor.getRole().getRole()#</span>

@@ -60,7 +60,7 @@
             <div class="panel panel-default">
 
                 <!-- Nav tabs -->
-                <div class="tab-wrapper margin0">
+                <div class="tab-wrapper m0">
                     <ul class="nav nav-tabs" role="tablist">
 
                         <li role="presentation" class="active">
@@ -563,7 +563,7 @@
 											)#
 
                                             <!--- Image Preview --->
-                                            <div class="margin10">
+                                            <div class="m10">
                                             	<cfif len( prc.entry.getFeaturedImageURL() )>
                                             		<img id="featuredImagePreview" src="#prc.entry.getFeaturedImageURL()#" class="img-thumbnail" height="75">
                                             	<cfelse>

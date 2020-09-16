@@ -29,7 +29,7 @@
 				</ul>
 
 				<!--- Tab Panes --->
-				<div class="tab-content margin10">
+				<div class="tab-content m10">
 					<div role="tabpanel" class="tab-pane active" id="preview">
 						#prc.contentVersion.renderContent()#
 					</div>

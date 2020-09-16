@@ -21,7 +21,7 @@
 			<div class="panel-body">
 				<p>Import content into your ContentBox site with only a few clicks!</p>
 
-				<div class="row margin10">
+				<div class="row m10">
 					<div class="col-md-6 well well-sm text-center">
 						<h2>ContentBox Package (.cbox)</h2>
 						<small>

@@ -35,7 +35,7 @@
 			<small>The number of days to trust a device if the two-factor authentication is valid. This is done via an encrypted browser tracking cookie. Once the cookie expires, two-factor authentication will need to be revalidated. Set to <code>0</code> if not used.</small>
 
 			<div>
-				<strong class="margin10">0</strong>
+				<strong class="m10">0</strong>
 				<input 	type="text"
 						class="form-control slider"
 						id="cb_security_2factorAuth_trusted_days"
@@ -47,7 +47,7 @@
 						data-slider-step="1"
 						data-slider-tooltip="hide"
 				>
-				<strong class="margin10">30</strong>
+				<strong class="m10">30</strong>
 			</div>
 		</div>
 	</div>

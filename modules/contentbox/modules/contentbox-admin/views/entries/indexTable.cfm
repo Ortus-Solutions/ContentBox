@@ -3,16 +3,35 @@
 <input type="hidden" name="entriesCount" id="entriesCount" value="#prc.entriesCount#">
 
 <!--- entries --->
-<table name="entries" id="entries" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
+<table
+	name="entries"
+	id="entries"
+	class="table table-striped-removed table-hover "
+	cellspacing="0"
+	width="100%">
 	<thead>
 		<tr>
-			<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'contentID')"/></th>
-			<th>Name</th>
-			<th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published Status"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-search fa-lg" title="Show in Search"></i></th>
-			<th width="40" class="text-center"><i class="fa fa-signal fa-lg" title="Hits"></i></th>
-			<th width="40" class="text-center"><i class="far fa-comments fa-lg" title="Comments"></i></th>
-			<th width="75" class="text-center {sorter:false}">Actions</th>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
+				<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
+			</th>
+			<th>
+				Name
+			</th>
+			<th width="40" class="text-center">
+				Status
+			</th>
+			<th width="40" class="text-center">
+				<i class="fa fa-search fa-lg" title="Show in Search"></i>
+			</th>
+			<th width="40" class="text-center">
+				<i class="fa fa-signal fa-lg" title="Hits"></i>
+			</th>
+			<th width="40" class="text-center">
+				<i class="far fa-comments fa-lg" title="Comments"></i>
+			</th>
+			<th width="50" class="text-center {sorter:false}">
+				Actions
+			</th>
 		</tr>
 	</thead>
 
@@ -33,71 +52,65 @@
 			<td class="text-center">
 				<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
 			</td>
+
 			<td>
+
+				<!--- Title --->
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
-					<a href="#event.buildLink(prc.xehBlogEditor)#/contentID/#entry.getContentID()#" title="Edit Entry">#entry.getTitle()#</a>
+					<a
+						href="#event.buildLink( prc.xehBlogEditor )#/contentID/#entry.getContentID()#"
+						title="Edit"
+						class="size18"
+					>
+						#entry.getTitle()#
+					</a>
 				<cfelse>
 					#entry.getTitle()#
 				</cfif>
+
 				<!--- password protect --->
 				<cfif entry.isPasswordProtected()>
-					<i class="fas fa-key" title="Password Protected Content"></i>
+					<i class="fas fa-key textOrange" title="Password Protected Content"></i>
 				</cfif>
-				<br/><small><i class="fas fa-tags"></i> #entry.getCategoriesList()#</small>
+
+				<!--- Content Info --->
+				#renderView(
+					view : "_components/content/TableCreationInfo",
+					args : { content : entry },
+					module : "contentbox-admin"
+				)#
 			</td>
+
+			<!--- Status --->
 			<td class="text-center">
-				<cfif entry.isExpired()>
-					<i class="fas fa-history fa-lg textRed" title="Entry has expired on ( (#entry.getDisplayExpireDate()#))"></i>
-					<span class="hidden">expired</span>
-				<cfelseif entry.isPublishedInFuture()>
-					<i class="fa fa-fighter-jet fa-lg textBlue" title="Entry Publishes in the future (#entry.getDisplayPublishedDate()#)"></i>
-					<span class="hidden">published in future</span>
-				<cfelseif entry.isContentPublished()>
-					<i class="far fa-dot-circle fa-lg textGreen" title="Entry Published!"></i>
-					<span class="hidden">published</span>
-				<cfelse>
-					<i class="far fa-dot-circle fa-lg textRed" title="Entry Draft!"></i>
-					<span class="hidden">draft</span>
-				</cfif>
+				#renderView(
+					view : "_components/content/TableStatus",
+					args : { content : entry },
+					module : "contentbox-admin"
+				)#
 			</td>
+
+			<!--- Show in Search --->
 			<td class="text-center">
-				<cfif entry.getShowInSearch()>
-					<i class="far fa-dot-circle fa-lg textGreen" title="Searchable!"></i>
-				<cfelse>
-					<i class="far fa-dot-circle fa-lg textRed" title="Excluded!"></i>
-				</cfif>
+				#renderView(
+					view : "_components/content/TableSearchStatus",
+					args : { content : entry },
+					module : "contentbox-admin"
+				)#
 			</td>
+
+			<!--- hits --->
 			<td class="text-center">
 				<span class="badge badge-info">#entry.getNumberOfHits()#</span>
 			</td>
+
+			<!--- Comments --->
 			<td class="text-center">
 				<span class="badge badge-info">#entry.getNumberOfComments()#</span>
 			</td>
-			<td class="text-center">
-				<!---Info Panel --->
-				<a 	class="btn btn-sm btn-info popovers"
-					data-contentID="#entry.getContentID()#"
-					data-toggle="popover"><i class="fa fa-info-circle fa-lg"></i></a>
-				<!---Info Panel --->
-				<div id="infoPanel_#entry.getContentID()#" class="hide">
-					<!---Creator --->
-					<i class="fa fa-user"></i>
-					Created by <a href="mailto:#entry.getCreatorEmail()#">#entry.getCreatorName()#</a> on
-					#entry.getDisplayCreatedDate()#
-					</br>
-					<!--- Last Edit --->
-					<i class="fa fa-calendar"></i>
-					Last edit by <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on
-					#entry.getActiveContent().getDisplayCreatedDate()#
-					</br>
-					<!--- comments icon --->
-					<cfif entry.getallowComments()>
-						<i class="far fa-comments"></i> Open Comments
-					<cfelse>
-						<i class="fa fa-warning-sign"></i> Closed Comments
-					</cfif>
-				</div>
 
+			<!--- Actions --->
+			<td class="text-center">
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
