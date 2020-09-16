@@ -153,7 +153,7 @@ component extends="baseHandler"{
 	 */
 	function moderate( event, rc, prc ){
 		// get new or persisted
-		rc.comment  = commentService.get( event.getValue( "commentID",0) );
+		rc.comment  = commentService.get( event.getValue( "commentID", 0 ) );
 		if( isNull(rc.Comment) ){
 			cbMessagebox.error( "The commentID #rc.commentID# is invalid." );
 			relocate(prc.xehComments);

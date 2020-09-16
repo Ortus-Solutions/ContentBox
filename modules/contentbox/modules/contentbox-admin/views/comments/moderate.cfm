@@ -23,7 +23,7 @@
 				<!--- Comment Details --->
 				<fieldset>
 
-					<legend><i class="far fa-eye fa-lg"></i> Comment Details</legend>
+					<legend><i class="far fa-eye fa-lg"></i> Details</legend>
 
 						<div class="form-group pull-right">
 							#getInstance( "Avatar@cb" ).renderAvatar( email=rc.comment.getAuthorEmail() )#
@@ -33,7 +33,21 @@
 							>#rc.comment.getAuthor()#</a>
 						</div>
 
-						<cfif len(rc.comment.getAuthorURL())>
+						<!--- Content Object --->
+						<div class="form-group">
+							<i class="fas fa-box"></i>
+							Created on <strong>#rc.comment.getRelatedContent().getTitle()#</strong>
+							<a
+								href="#prc.CBHelper.linkComment( comment )#"
+								title="View Comment In Site"
+								target="_blank"
+							>
+								<i class="fas fa-external-link-alt"></i>
+							</a>
+						</div>
+
+						<!--- Author URL --->
+						<cfif !len( rc.comment.getAuthorURL() )>
 							<div class="form-group">
 								<i class="fa fa-cloud"></i>
 								<label>Author URL: </label>
@@ -73,8 +87,8 @@
 					#html.hiddenField( name="commentStatus", value="approve" )#
 					<div class="form-actions">
 						<!--- Buttons --->
-						<button type="submit" class="btn btn-primary" onclick="removeComment()"><i class="fa fa-trash"></i> Delete</button>
-						<button type="submit" class="btn btn-danger" /><i class="far fa-check-circle"></i> Approve</button>
+						<button type="submit" class="btn btn-danger btn-lg" onclick="removeComment()"><i class="fa fa-trash"></i> Delete</button>
+						<button type="submit" class="btn btn-primary btn-lg" /><i class="far fa-check-circle"></i> Approve</button>
 					</div>
 				#html.endForm()#
 
