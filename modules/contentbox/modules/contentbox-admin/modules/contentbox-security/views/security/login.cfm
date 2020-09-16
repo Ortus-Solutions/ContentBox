@@ -1,12 +1,14 @@
 ﻿<cfoutput>
 <div>
     <div class="col-md-4" id="login-wrapper">
-        <div class="panel panel-primary animated fadeInDown">
+		<div class="panel panel-primary animated fadeInDown">
+
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel-title p5">
                    <i class="fa fa-key"></i> Login
                 </h3>
-            </div>
+			</div>
+
             <div class="panel-body">
 	        	<!--- Render Messagebox. --->
 				#getInstance( "messagebox@cbMessagebox" ).renderit()#
@@ -49,14 +51,11 @@
 	                        	autocomplete	= "off"
 	                        )#
 	                        <i class="fas fa-key"></i>
-
 	                    </div>
-	                    <div class="col-md-12">
-							<a href="#event.buildLink( prc.xehLostPassword )#" class="help-block">#cb.r( "lostpassword@security" )#?</a>
-						</div>
+
 	                </div>
 	                <div class="form-group">
-	                	<div class="col-md-12">
+	                	<div class="col-md-12 controls">
 							<label class="checkbox">
 								#cb.r( "rememberme@security" )#<br>
 	                            #html.select(
@@ -71,13 +70,24 @@
 							</label>
 						</div>
 					</div>
+
 	                <div class="form-group">
 	                   <div class="col-md-12 text-center">
-	                   		<button type="submit" class="btn btn-primary">
+	                   		<button type="submit" class="btn btn-primary btn-lg">
 	                   			#cb.r( "common.login@security" )#
 	                   		</button>
 	                    </div>
-	                </div>
+					</div>
+
+					<div class="text-right">
+						<a
+							href="#event.buildLink( prc.xehLostPassword )#"
+							class="help-block"
+						>
+							<i class="far fa-question-circle"></i>
+							#cb.r( "lostpassword@security" )#?
+						</a>
+					</div>
 
 	                <!--- Event --->
 					#announce( "cbadmin_afterLoginForm" )#

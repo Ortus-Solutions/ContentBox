@@ -4,7 +4,7 @@
         <div class="panel panel-primary animated fadeInDown">
 
 			<div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel-title p5">
                    <i class="fa fa-key"></i> Enroll in Two Factor Authentication
                 </h3>
             </div>

@@ -84,7 +84,8 @@
 				#renderView(
 					view : "_components/content/TableCreationInfo",
 					args : { content : content, showDescription : true },
-					module : "contentbox-admin"
+					module : "contentbox-admin",
+					prepostExempt : true
 				)#
 
 			</td>
@@ -93,7 +94,8 @@
 				#renderView(
 					view : "_components/content/TableStatus",
 					args : { content : content },
-					module : "contentbox-admin"
+					module : "contentbox-admin",
+					prepostExempt : true
 				)#
 			</td>
 

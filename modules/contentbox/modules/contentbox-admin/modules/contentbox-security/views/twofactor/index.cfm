@@ -5,8 +5,8 @@
         <div class="panel panel-primary animated fadeInDown">
 
             <div class="panel-heading">
-                <h3 class="panel-title">
-                   <i class="fa fa-mobile fa-lg"></i> Two-Factor Authentication
+                <h3 class="panel-title p5">
+                   <i class="fas fa-user-shield fa-lg"></i> Two-Factor Authentication
                 </h3>
             </div>
 
@@ -53,14 +53,14 @@
 
 	                <div class="form-group">
 	                   <div class="col-md-12 text-center">
-	                   		<button type="submit" class="btn btn-primary btn-block">
+	                   		<button type="submit" class="btn btn-primary btn-block btn-lg">
 	                   			#cb.r( "common.validate@security" )#
 	                   		</button>
 	                    </div>
 	                </div>
 
 	                <a href="#event.buildLink( prc.xehResend )#">
-               			<i class="fa fa-repeat"></i> #cb.r( "twofactor.resendcode@security" )#
+               			<i class="fas fa-redo"></i> #cb.r( "twofactor.resendcode@security" )#
                		</a>
 
 	                <!--- Event --->
