@@ -4,7 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="ruleService" inject="id:securityRuleService@cb";
+	property name="ruleService" inject="securityRuleService@cb";
+	property name="permissionService" inject="permissionService@cb";
+	property name="roleService" inject="roleService@cb";
 	property name="securityInterceptor" inject="coldbox:interceptor:cbSecurity@contentbox-security";
 
 	// index
@@ -75,7 +77,14 @@ component extends="baseHandler" {
 		prc.tabSystem_securityRules = true;
 
 		// get new or persisted
-		prc.rule = ruleService.get( event.getValue( "ruleID", 0 ) );
+		prc.rule         = ruleService.get( event.getValue( "ruleID", 0 ) );
+		// Load permissions
+		prc.aPermissions = variables.permissionService.list(
+			sortOrder = "permission",
+			asQuery   = false
+		);
+		// Load roles
+		prc.aRoles = variables.roleService.list( sortOrder = "role", asQuery = false );
 
 		// exit handlers
 		prc.xehRuleSave = "#prc.cbAdminEntryPoint#.securityRules.save";
