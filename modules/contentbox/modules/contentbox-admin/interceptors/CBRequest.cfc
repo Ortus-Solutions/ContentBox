@@ -120,7 +120,7 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehGlobalHTML= "#prc.cbAdminEntryPoint#.globalHTML";
 
 		// Modules
-		prc.xehModules					= "#prc.cbAdminEntryPoint#.modules";
+		prc.xehModules	= "#prc.cbAdminEntryPoint#.modules";
 
 		// Authors Tab
 		prc.xehAuthors         = "#prc.cbAdminEntryPoint#.authors";
@@ -154,10 +154,10 @@ component extends="coldbox.system.Interceptor"{
 		prc.xehCKFileBrowserURLFlash= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 
 		// Search global
-		prc.xehSearchGlobal 			= "#prc.cbAdminEntryPoint#.content.search";
+		prc.xehSearchGlobal = "#prc.cbAdminEntryPoint#.content.search";
 
 		// Prepare Admin Actions
-		prc.xehAdminActionData 			= [
+		prc.xehAdminActionData = [
 			{ name="Clear RSS Caches",          value="rss-purge" },
 			{ name="Clear Content Caches",      value="content-purge" },
 			{ name="Reload Application",        value="app" },
@@ -167,9 +167,9 @@ component extends="coldbox.system.Interceptor"{
 			{ name="Reload Security Module",    value="contentbox-security" },
 			{ name="Reload Site Module",        value="contentbox-ui" }
 		];
-		prc.xehAdminAction= "#prc.cbAdminEntryPoint#.dashboard.reload";
+		prc.xehAdminAction = "#prc.cbAdminEntryPoint#.dashboard.reload";
 		// Installer Check
-		prc.installerCheck= settingService.isInstallationPresent();
+		prc.installerCheck = settingService.isInstallationPresent();
 	}
 
 }

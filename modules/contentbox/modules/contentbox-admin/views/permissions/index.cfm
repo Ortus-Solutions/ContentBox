@@ -9,8 +9,10 @@
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        #getInstance( "messagebox@cbMessagebox" ).renderit()#
+	<div class="col-md-12">
+		<!--- MessageBox --->
+		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+
         <!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -77,7 +79,6 @@
 						<thead>
 							<tr>
 								<th>Permission</th>
-								<th>Description</th>
 								<th class="text-center">Roles Assigned</th>
 								<th class="text-center">Groups Assigned</th>
 								<th width="100" class="text-center {sorter:false}">Actions</th>
@@ -95,9 +96,11 @@
 									<cfelse>
 										#permission.getPermission()#
 									</cfif>
-								</td>
 
-								<td>#permission.getDescription()#</td>
+									<div class="mt5 textMuted">
+										#permission.getDescription()#
+									</div>
+								</td>
 
 								<td class="text-center">
 									<span class="badge badge-info">#permission.getNumberOfRoles()#</span>
@@ -109,17 +112,30 @@
 
 								<td class="text-center">
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
-										<!--- Edit Command --->
-										<a class="btn btn-sm btn-primary" href="javascript:edit('#permission.getPermissionID()#',
-										   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-										   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#');"
-										   title="Edit #permission.getPermission()#">
-										   	<i class="fas fa-pen fa-lg"></i>
-										</a>
-										<!--- Delete Command --->
-										<a class="btn btn-sm btn-danger confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
-											<i id="delete_#permission.getPermissionID()#" class="far fa-trash-alt fa-lg"></i>
-										</a>
+										<div class="btn-group">
+											<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+												<i class="fas fa-ellipsis-v fa-lg"></i>
+											</a>
+									    	<ul class="dropdown-menu text-left pull-right">
+									    		<!--- Edit Command --->
+												<li>
+													<a
+														class=""
+														href="javascript:edit( '#permission.getPermissionID()#',
+																			'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+																			'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#' );"
+														title="Edit #permission.getPermission()#">
+														<i class="fas fa-pen fa-lg"></i> Edit
+													</a>
+												</li>
+												<!--- Delete Command --->
+												<li>
+													<a class="confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
+														<i id="delete_#permission.getPermissionID()#" class="far fa-trash-alt fa-lg"></i> Delete
+													</a>
+												</li>
+									    	</ul>
+										</div>
 									</cfif>
 								</td>
 							</tr>

@@ -11,6 +11,7 @@
 <div class="row">
     <div class="col-md-12">
 
+		<!--- MessageBox --->
         #getInstance( "messagebox@cbMessagebox" ).renderit()#
 
         <!---Import Log --->
@@ -73,7 +74,12 @@
 											</cfif>
 								    	</ul>
 								    </div>
-									<button onclick="return createGroup();" class="btn btn-primary">Create Group</button>
+									<a
+										class="btn btn-primary"
+										href="#event.buildLink( prc.xehGroupEditor )#"
+									>
+										Create Group
+									</a>
 								</cfif>
 							</div>
 						</div>
@@ -95,10 +101,9 @@
 						<thead>
 							<tr>
 								<th>Group</th>
-								<th>Description</th>
 								<th width="95" class="text-center">Permissions</th>
 								<th width="95" class="text-center">Authors</th>
-								<th width="100" class="text-center {sorter:false}">Actions</th>
+								<th width="50" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
 
@@ -108,17 +113,20 @@
 
 								<td>
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
-									<a href="javascript:edit(
-										'#group.getPermissionGroupID()#',
-									   	'#HTMLEditFormat( jsstringFormat( group.getName() ) )#',
-									   	'#HTMLEditFormat( jsstringFormat( group.getDescription() ) )#')"
-									   title="Edit #group.getName()#">#group.getName()#</a>
+									<a
+										href="#event.buildLink( prc.xehGroupEditor & "/permissionGroupID/#group.getPermissionGroupId()#")#"
+										title="Edit #group.getName()#"
+										>
+										#group.getName()#
+									</a>
 									<cfelse>
 										#group.getName()#
 									</cfif>
-								</td>
 
-								<td>#group.getDescription()#</td>
+									<div class="mt5 textMuted">
+										#group.getDescription()#
+									</div>
+								</td>
 
 								<td class="text-center">
 									<span class="badge badge-info">#group.getNumberOfPermissions()#</span>
@@ -129,16 +137,6 @@
 								</td>
 
 								<td class="text-center">
-									<!--- permissions --->
-									<a 	class="btn btn-sm btn-primary"
-										href="javascript:openRemoteModal(
-											'#event.buildLink( prc.xehGroupPermissions )#',
-											{ permissionGroupID: '#group.getPermissionGroupID()#'}
-										);"
-										title="Manage Permissions">
-										<i class="fas fa-key fa-lg"></i>
-									</a>
-
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
@@ -159,10 +157,8 @@
 
 												<!--- Edit Command --->
 												<li>
-													<a href="javascript:edit(
-														'#group.getPermissionGroupID()#',
-											   			'#HTMLEditFormat( jsstringFormat( group.getName() ) )#',
-											   			'#HTMLEditFormat( jsstringFormat( group.getDescription() ) )#')"
+													<a
+														href="#event.buildLink( prc.xehGroupEditor & "/permissionGroupID/#group.getPermissionGroupId()#")#"
 											   		>
 											   			<i class="fas fa-pen fa-lg"></i> Edit
 											   		</a>
@@ -201,75 +197,7 @@
 
 </div>
 
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
-	<!--- Permission Group Editor --->
-	<div id="groupEditorContainer" class="modal fade" tabindex="-1" role="dialog">
-		<div class="modal-dialog" role="document" >
-			<div class="modal-content">
-
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4><i class="fa fa-group"></i> Group Editor</h4>
-			    </div>
-
-				<!--- Create/Edit form --->
-				#html.startForm(
-					action		= prc.xehGroupSave,
-					name		= "groupEditor",
-					novalidate	= "novalidate",
-					class		= "form-vertical"
-				)#
-
-				<div class="modal-body">
-					#html.hiddenField( name="permissionGroupID", value="" )#
-
-					#html.textField(
-						name			= "name",
-						label			= "Permission Group:",
-						required		= "required",
-						maxlength		= "255",
-						size			= "30",
-						class			= "form-control",
-						title			= "A unique group name",
-						wrapper			= "div class=controls",
-						labelClass 		= "control-label",
-						groupWrapper 	= "div class=form-group"
-					)#
-
-					#html.textArea(
-						name			= "description",
-						label			= "Description:",
-						cols			= "20",
-						rows			= "3",
-						class			= "form-control",
-						title			= "A short group description",
-						wrapper			= "div class=controls",
-						labelClass	 	= "control-label",
-						groupWrapper 	= "div class=form-group"
-					)#
-				</div>
-				<!--- Footer --->
-				<div class="modal-footer">
-					#html.resetButton(
-						name	= "btnReset",
-						value	= "Cancel",
-						class	= "btn btn-default",
-						onclick	= "closeModal( $('##groupEditorContainer') )"
-					)#
-
-					#html.submitButton(
-						name	= "btnSave",
-						value	= "Save",
-						class	= "btn btn-danger"
-					)#
-				</div>
-				#html.endForm()#
-				</div>
-			</div>
-		</div>
-	</div>
-</cfif>
-
+<!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 	#renderView(
 		view = "_tags/dialog/import",
