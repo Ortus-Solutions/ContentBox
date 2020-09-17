@@ -19,7 +19,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-info">
 
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fa fa-info-circle"></i> About Security Rules</h3>
@@ -45,61 +45,93 @@
 
 <div class="row">
 	<div class="col-md-12">
+		#html.startForm( name="ruleForm", action=prc.xehRemoveRule )#
+
 		<div class="panel panel-default">
-			#html.startForm( name="ruleForm", action=prc.xehRemoveRule )#
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-md-7">
+
+					<!--- Quick Search --->
+					<div class="col-md-6 col-xs-4">
 						<div class="form-group form-inline no-margin">
 							#html.textField(
 								name        = "ruleFilter",
-								class       = "form-control",
+								class       = "form-control rounded quicksearch",
 								placeholder = "Quick Filter"
 							)#
 						</div>
 					</div>
-					<div class="col-md-5">
-						<div class="pull-right">
-							<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
-								<div class="buttonBar">
-									<!---Global --->
-									<div class="btn-group btn-group-sm">
-								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
-											Bulk Actions <span class="caret"></span>
-										</a>
-								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
-											<li><a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt"
-												data-title="Really Apply Rules?"
-												data-message="Please be aware that you could be locked out of application if your rules are not correct.">
-												<i class="fa fa-bolt fa-lg"></i> Apply Rules
-												</a>
-											</li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
-											<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as XML</a></li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
-											<li><a href="#event.buildLink(prc.xehResetRules)#"
-												data-title="<i class='fas fa-recycle'></i> Really Reset All Rules?" class="confirmIt"
-												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
-												<i class="fas fa-eraser"></i> Reset Rules
-												</a>
-											</li>
-											</cfif>
-								    	</ul>
-								    </div>
-									<a href="#event.buildLink(prc.xehEditorRule)#" class="btn btn-sm btn-danger">
-										Create Rule
+
+					<div class="col-md-6 col-xs-8">
+						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
+							<div class="text-right">
+								<!---Global --->
+								<div class="btn-group">
+									<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+										Bulk Actions <span class="caret"></span>
 									</a>
+									<ul class="dropdown-menu">
+										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+										<li>
+											<a
+												href="#event.buildLink( prc.xehApplyRules )#"
+												class="confirmIt"
+												data-title="Really Apply Rules?"
+												data-message="Please be aware that you could be locked out of application if your rules are not correct."
+											>
+												<i class="fas fa-bolt fa-lg"></i> Apply Rules
+											</a>
+										</li>
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
+											<li>
+												<a href="javascript:importContent()">
+													<i class="fas fa-file-import fa-lg"></i> Import
+												</a>
+											</li>
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+											<li>
+												<a
+													href="#event.buildLink ( prc.xehExportAll )#.json"
+													target="_blank"
+												>
+													<i class="fas fa-file-export fa-lg"></i> Export All as JSON
+												</a>
+											</li>
+											<li>
+												<a
+													href="#event.buildLink( prc.xehExportAll )#.xml"
+													target="_blank"
+												>
+													<i class="fas fa-file-export fa-lg"></i> Export All as XML
+												</a>
+											</li>
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+										<li>
+											<a
+												href="#event.buildLink( prc.xehResetRules )#"
+												data-title="<i class='fas fa-recycle'></i> Really Reset All Rules?"
+												class="confirmIt"
+												data-message="We will remove all rules and re-create them to ContentBox factory defaults."
+											>
+												<i class="fas fa-eraser"></i> Reset Rules
+											</a>
+										</li>
+										</cfif>
+									</ul>
 								</div>
-							</cfif>
-						</div>
+								<a
+									href="#event.buildLink( prc.xehEditorRule )#"
+									class="btn btn-primary"
+								>
+									Create Rule
+								</a>
+							</div>
+						</cfif>
 					</div>
+
 				</div>
 			</div>
 
@@ -107,10 +139,9 @@
 				#html.hiddenField( name="ruleID" )#
 				<div id="rulesTable">#renderView( "securityRules/rulesTable" )#</div>
 			</div>
-
-			#html.endForm()#
-
 		</div>
+
+		#html.endForm()#
 	</div>
 </div>
 

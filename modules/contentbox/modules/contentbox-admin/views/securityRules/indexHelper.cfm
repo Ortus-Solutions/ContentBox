@@ -2,8 +2,8 @@
 <script>
 $( document ).ready(function() {
 	$importDialog = $( "##importDialog" );
+
 	$ruleForm = $( "##ruleForm" );
-	$rulesTable = $ruleForm.find( "##rulesTable" );
 	$ruleForm.find( "##rules" ).dataTable( {
 		"paging": false,
 		"info": false,
@@ -16,7 +16,8 @@ $( document ).ready(function() {
 	    ],
 	    "order": []
 	} );
-	$ruleForm.find( "##ruleFilter" ).keyup(
+
+	$( "##ruleFilter" ).keyup(
 		_.debounce(
             function(){
                 $.uiTableFilter( $( "##rules" ), this.value );
@@ -24,15 +25,16 @@ $( document ).ready(function() {
             300
         )
 	);
+
 	<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 	$ruleForm.find( "##rules" ).tableDnD( {
-		onDragClass: "selected",
+		onDragClass : "selected",
 		onDragStart : function(table,row){
 			$(row).css( "cursor","grab" );
 			$(row).css( "cursor","-moz-grabbing" );
 			$(row).css( "cursor","-webkit-grabbing" );
 		},
-		onDrop: function(table, row){
+		onDrop 		: function(table, row){
 			$(row).css( "cursor","progress" );
 			var newRulesOrder  =  $(table).tableDnDSerialize();
 			var rows = table.tBodies[0].rows;
@@ -47,6 +49,7 @@ $( document ).ready(function() {
 	} );
 	</cfif>
 } );
+
 <cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 function remove(recordID){
 	if( recordID != null ){

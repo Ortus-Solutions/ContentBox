@@ -26,6 +26,11 @@ p{
 	border-bottom: 0px solid #ddd;
 }
 
+.breakCellWords{
+	max-width: 1px;
+	word-wrap: break-word;
+}
+
 /******************** LOADERS ****************************/
 
 .loaders {

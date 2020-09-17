@@ -6,28 +6,69 @@
 	<thead>
 		<tr>
 			<th>Security Rule</th>
-			<th class="text-center"><i class="fa fa-arrows fa-lg"></i></th>
-			<th class="text-center {sorter:false}">Actions</th>
+			<th width="50" class="text-center">Order Index</th>
+			<th width="50" class="text-center {sorter:false}">Actions</th>
 		</tr>
 	</thead>
 
 	<tbody>
 		<cfloop array="#prc.rules#" index="rule">
 		<tr id="ruleid-#rule.getRuleID()#">
-			<td>
-				<strong>Match:</strong> #rule.getMatch()#<br/>
-				<strong>SecureList:</strong> #rule.getSecureList()#<br/>
-				<strong>WhiteList:</strong> #rule.getWhiteList()#<br/>
-				<strong>Redirect To:</strong>#rule.getRedirect()# (SSL: #yesNoFormat( rule.getUseSSL() )#)<br>
-				<strong>Permissions:</strong>#rule.getPermissions()#<br/>
-				<strong>Roles:</strong>#rule.getRoles()#
-				<strong>Message:</strong>#rule.getMessageType()#:#rule.getMessage()#
+			<td class="breakCellWords">
+				<cfif rule.getMatch() eq "event">
+					<span class="badge badge-info" title="Matches an event string">#rule.getMatch()#</span>
+				<cfelse>
+					<span class="badge badge-warning" title="Matches a URI">#rule.getMatch()#</span>
+				</cfif>
+
+				<cfif rule.getUseSSL()>
+					<span class="label label-danger">
+						<i class="fas fa-key"></i> SSL
+					</span>
+				</cfif>
+
+				<div class="mt10">
+					<span title="Securelist">
+						<i class="fas fa-lock"></i>
+						<code>#rule.getSecureList()#</code>
+					</span>
+				</div>
+
+				<cfif len( rule.getWhiteList() )>
+					<div class="mt10">
+						<span title="Whitelist">
+							<i class="fas fa-unlock textGreen"></i>
+							<code>#rule.getWhiteList()#</code>
+						</span>
+					</div>
+				</cfif>
+
+				<div class="mt10">
+					<span title="Redirect Link">
+						<i class="fas fa-external-link-alt"></i>
+						<code>#rule.getRedirect()#</code>
+					</span>
+				</div>
+
+				<cfif len( rule.getPermissions() )>
+					<div class="mt10">
+						<strong>Permissions:</strong> #rule.getPermissions()#
+					</div>
+				</cfif>
+
+				<cfif len( rule.getRoles() )>
+					<div class="mt10">
+						<strong>Roles:</strong> #rule.getRoles()#
+					</div>
+				</cfif>
 			</td>
+
 			<td class="text-center">
 				<div id="ruleid-#rule.getRuleID()#_order">
 					<span class="badge badge-info">#rule.getOrder()#</span>
 				</div>
 			</td>
+
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
