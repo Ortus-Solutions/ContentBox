@@ -1,7 +1,7 @@
 <cfoutput>
 <cfif arrayLen( prc.content )>
     <!--- matches --->
-    <table name="content" id="#rc.contentType#" class="table table-hover table-striped-removed " width="98%">
+    <table name="content" id="#rc.contentType#" class="table table-hover table-striped-removed " >
         <thead>
             <tr>
                 <th>Content Title</th>

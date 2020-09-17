@@ -77,11 +77,11 @@
 											</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
-											<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
+											<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
+												<li><a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as JSON</a></li>
+												<li><a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as XML</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 											<li><a href="#event.buildLink(prc.xehResetRules)#"

@@ -151,14 +151,14 @@
 							<a
 								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.json"
 								target="_blank">
-								<i class="fas fa-file-export"></i> Export as JSON
+								<i class="fas fa-file-export fa-lg"></i> Export as JSON
 							</a>
 						</li>
 						<li>
 							<a
 								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.xml"
 								target="_blank">
-								<i class="fas fa-file-export"></i> Export as XML
+								<i class="fas fa-file-export fa-lg"></i> Export as XML
 							</a>
 						</li>
 						</cfif>

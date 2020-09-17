@@ -50,11 +50,11 @@
 									</a>
 									<ul class="dropdown-menu">
 										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
-										<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
+										<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
 										</cfif>
 										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
-											<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export"></i> Export All as JSON</a></li>
-											<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export"></i> Export All as XML</a></li>
+											<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as JSON</a></li>
+											<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as XML</a></li>
 										</cfif>
 									</ul>
 								</div>
@@ -80,7 +80,7 @@
 					</div>
 
 					<!--- sites --->
-					<table name="sites" id="sites" class="table table-striped-removed table-hover " width="98%">
+					<table name="sites" id="sites" class="table table-striped-removed table-hover " >
 						<thead>
 							<tr>
 								<th>Site</th>
@@ -175,7 +175,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteId/#site.getSiteId()#.json"
 														target="_blank"
 													>
-														<i class="fas fa-file-export"></i> Export as JSON
+														<i class="fas fa-file-export fa-lg"></i> Export as JSON
 													</a>
 												</li>
 												<li>
@@ -183,7 +183,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteId/#site.getSiteId()#.xml"
 														target="_blank"
 													>
-														<i class="fas fa-file-export"></i> Export as XML
+														<i class="fas fa-file-export fa-lg"></i> Export as XML
 													</a>
 												</li>
 											</cfif>

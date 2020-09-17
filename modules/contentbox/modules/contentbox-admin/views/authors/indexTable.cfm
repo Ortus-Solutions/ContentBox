@@ -102,12 +102,12 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fas fa-file-export"></i> Export as JSON
+									<i class="fas fa-file-export fa-lg"></i> Export as JSON
 								</a>
 							</li>
 							<li>
 								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
-									<i class="fas fa-file-export"></i> Export as XML
+									<i class="fas fa-file-export fa-lg"></i> Export as XML
 								</a>
 							</li>
 							<li>

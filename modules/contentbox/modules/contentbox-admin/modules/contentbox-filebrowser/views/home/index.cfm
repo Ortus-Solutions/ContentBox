@@ -36,10 +36,10 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		  	<i class="fa fa-times"></i>
 		  </a>
 		  <a onclick="javascript:fbUpload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "upload@fb" )#">
-		  	<i class="fas fa-file-import"></i>
+		  	<i class="fas fa-file-import fa-lg"></i>
 		  </a>
 		  <a onclick="javascript:fbDownload()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "download@fb" )#">
-		  	<i class="fas fa-file-export"></i>
+		  	<i class="fas fa-file-export fa-lg"></i>
 		  </a>
 		  <a onclick="javascript:fbQuickView()" class="btn btn-info"  data-toggle="tooltip"  data-container="body" title="#$r( "quickview@fb" )#">
 		  	<i class="fa fa-camera"></i>

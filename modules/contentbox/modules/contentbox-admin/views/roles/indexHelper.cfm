@@ -14,16 +14,11 @@ $( document ).ready(function() {
 	    ],
 	    "order": []
 	} );
+
 	<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
 	$importDialog = $( "##importDialog" );
-	$roleEditor = $( "##roleEditor" );
-	// form validator
-	$roleEditor.validate();
-	// reset
-	$('##btnReset').click(function() {
-		$roleEditor.find( "##roleID" ).val( '' );
-	} );
 	</cfif>
+
 	// table sorting + filtering
 	$( "##roleFilter" ).keyup(
 		_.debounce(
@@ -35,24 +30,11 @@ $( document ).ready(function() {
 	);
 } );
 <cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
-function edit(roleID,role,description){
-	openModal( $( "##roleEditorContainer" ), 500, 200 );
-	$roleEditor.find( "##roleID" ).val( roleID );
-	$roleEditor.find( "##role" ).val( role );
-	$roleEditor.find( "##description" ).val( description );
-}
 function remove(roleID){
 	var $roleForm = $( "##roleForm" );
 	$( "##delete_"+ roleID).removeClass( "fa-trash-o" ).addClass( "fa fa-spinner fa-spin" );
 	$roleForm.find( "##roleID" ).val( roleID );
 	$roleForm.submit();
-}
-function createRole(){
-	openModal( $( "##roleEditorContainer" ), 500, 200 );
-	$roleEditor.find( "##roleID" ).val( '' );
-	$roleEditor.find( "##role" ).val( '' );
-	$roleEditor.find( "##description" ).val( '' );
-	return false;
 }
 </cfif>
 </script>

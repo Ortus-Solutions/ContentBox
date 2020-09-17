@@ -34,7 +34,7 @@
                                     <div class="col-md-6">
                                         <h3>All Subscriptions</h3>
                                             <!--- comment subscriptions --->
-                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped-removed table-hover" width="98%">
+                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped-removed table-hover" >
                                                 <thead>
                                                     <tr>
                                                         <th>Content</th>

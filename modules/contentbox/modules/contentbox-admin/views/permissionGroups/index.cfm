@@ -58,17 +58,17 @@
 										</a>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import"></i> Import</a></li>
+								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export"></i> Export All as JSON
+														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
 													</a>
 												</li>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank">
-														<i class="fas fa-file-export"></i> Export All as XML
+														<i class="fas fa-file-export fa-lg"></i> Export All as XML
 													</a>
 												</li>
 											</cfif>
@@ -91,12 +91,12 @@
 
 					<!--- Info Bar --->
 					<div class="alert alert-warning">
-						<i class="fa fa-warning fa-lg"></i>
+						<i class="fas fa-exclamation-circle fa-lg"></i>
 						Once you delete a permission group all assigned permissions and authors will be unassigned.
 					</div>
 
 					<!--- groups --->
-					<table name="groups" id="groups" class="table table-striped-removed table-hover " width="98%">
+					<table name="groups" id="groups" class="table table-striped-removed table-hover">
 
 						<thead>
 							<tr>
@@ -170,14 +170,14 @@
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
-															<i class="fas fa-file-export"></i> Export as JSON
+															<i class="fas fa-file-export fa-lg"></i> Export as JSON
 														</a>
 													</li>
 													<li>
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml"
 															target="_blank"
 														>
-															<i class="fas fa-file-export"></i> Export as XML
+															<i class="fas fa-file-export fa-lg"></i> Export as XML
 														</a>
 													</li>
 												</cfif>

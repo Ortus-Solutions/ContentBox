@@ -11,7 +11,7 @@
 						<!--- Back button --->
 						<a
 							class="btn btn-sm btn-default"
-							href="#event.buildLink( prc.xehPermissionGroups )#"
+							href="#event.buildLink( prc.xehRoles )#"
 							title="Back to listing"
 						>
 							<i class="fas fa-chevron-left"></i> Cancel
@@ -20,13 +20,13 @@
 
 					<!--- Panel Title --->
 					<div class="size16 p10">
-						<i class="fas fa-users"></i>
-						<cfif prc.oGroup.isLoaded()>
+						<i class="fas fa-user-shield"></i>
+						<cfif prc.oRole.isLoaded()>
 							Update
 						<cfelse>
 							Create
 						</cfif>
-						Permission Group
+						Role
 					</div>
 				</div>
 
@@ -36,21 +36,21 @@
 					<!--- Messageboxes --->
 					#getInstance( "messagebox@cbMessagebox" ).renderIt()#
 
-					<!--- groupForm --->
+					<!--- roleForm --->
 					#html.startForm(
-						name 		= "groupForm",
-						action 		= prc.xehGroupSave,
+						name 		= "roleForm",
+						action 		= prc.xehRoleSave,
 						novalidate 	= "novalidate",
 						class 		= "form-vertical"
 					)#
 
 						<!--- Group Info --->
-						#html.hiddenField( name="permissionGroupId", bind=prc.oGroup )#
+						#html.hiddenField( name="roleId", bind=prc.oRole )#
 
 						#html.textField(
 							name    		= "name",
-							bind    		= prc.oGroup,
-							label   		= "*Group Name:",
+							bind    		= prc.oRole,
+							label   		= "*Role Name:",
 							required		= "required",
 							size    		= "255",
 							class   		= "form-control",
@@ -63,10 +63,10 @@
 						#html.textarea(
 							name            = "description",
 							label           = "Description:",
-							bind    		= prc.oGroup,
+							bind    		= prc.oRole,
 							rows            = "3",
 							class           = "form-control mde",
-							title           = "A nice description of your group",
+							title           = "A nice description of your role",
 							wrapper         = "div class=controls",
 							labelClass      = "control-label",
 							groupWrapper    = "div class=form-group"
@@ -85,8 +85,8 @@
 									class="form-control"
 									placeholder="Quick Filter"
 									aria-describedby="sizing-addon3"
-									name="permissionFilter"
-									id="permissionFilter"
+									name="roleFilter"
+									id="roleFilter"
 								>
 								<span
 									class="input-group-addon hand-cursor"
@@ -113,7 +113,7 @@
 									#html.checkbox(
 										name    = "permissions_#thisPerm.getPermissionId()#_toggle",
 										data	= { toggle: 'toggle', match: 'permissions_#thisPerm.getPermissionId()#' },
-										checked	= prc.oGroup.hasPermission( thisPerm )
+										checked	= prc.oRole.hasPermission( thisPerm )
 									)#
 									#html.hiddenField(
 										id 		= "permissions_" & thisPerm.getPermissionId()
