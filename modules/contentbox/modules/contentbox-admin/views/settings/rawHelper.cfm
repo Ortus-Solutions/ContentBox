@@ -98,7 +98,7 @@ function viewAllSettings(){
 	$( '##settingsTableContainer' ).fadeOut();
 	settingsLoad( "", true );
 }
-function edit( settingID, name, value, isCore ){
+function edit( settingID, name, value, isCore, siteId ){
 	openModal( $( "##settingEditorContainer" ), 500, 300 );
 	$settingEditor.find( "##settingID" ).val( settingID );
 	$settingEditor.find( "##name" ).val( name );
@@ -106,6 +106,7 @@ function edit( settingID, name, value, isCore ){
 	if( isCore === true ){
 		$settingEditor.find( "##isCore" ).attr( "checked", true );
 	}
+	$settingEditor.find( "##site" ).val( siteId );
 	$settingEditor.find( "##btnSave" ).val( "Update" );
 	$settingEditor.find( "##btnReset" ).val( "Cancel" );
 }
@@ -120,6 +121,7 @@ function createSetting(){
 	$settingEditor.find( "##name" ).val( '' );
 	$settingEditor.find( "##value" ).val( '' );
 	$settingEditor.find( "##isCore" ).attr( "checked", false );
+	$settingEditor.find( "##site" ).val( "" );
 	$settingEditor.find( "##btnSave" ).val( "Save" );
 	openModal( $( "##settingEditorContainer" ), 500, 350 );
 	return false;

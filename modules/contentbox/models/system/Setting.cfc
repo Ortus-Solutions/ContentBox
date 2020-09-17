@@ -94,4 +94,16 @@ component  	persistent="true"
 		return result;
 	}
 
+	/**
+	 * Shortcut to get the site id associated with this setting
+	 *
+	 * @return The associated site id or empty if none
+	 */
+	function getSiteId(){
+		if( hasSite() ){
+			return getSite().getSiteId();
+		}
+		return "";
+	}
+
 }

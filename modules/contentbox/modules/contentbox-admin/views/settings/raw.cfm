@@ -6,7 +6,7 @@
             <img src="#prc.cbroot#/includes/images/face-glasses.png" alt="geek" height="30"/>
             Geek Panel
         </h1>
-        <div class="label label-warning">Environment: #getSetting('Environment')#</div>
+        <div class="label label-info" title="Environment">#getSetting( 'Environment' )#</div>
 	</div>
 
     <div class="col-md-12">
@@ -24,7 +24,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
-				<div class="tab-wrapper tab-left tab-primary">
+				<div class="tab-wrapper tab-primary">
 
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
@@ -43,13 +43,15 @@
                     <!-- Tab Content -->
                     <div class="tab-content">
                         <!--- Raw Settings Pane --->
-                        <div class="tab-pane active" id="raw">
+						<div class="tab-pane active" id="raw">
+
                             <p>
                                 Below are all the ContentBox settings in your installation. Modify at your own risk.
-                                <div class="alert alert-warning">
+                                <div class="alert alert-info">
                                     <i class="fa fa-info-circle"></i> Please note that core settings cannot be deleted from this panel.
                                 </div>
-                            </p>
+							</p>
+
                             <!---settings form--->
                             #html.startForm( name="settingForm", action=prc.xehSettingRemove )#
                                 <input type="hidden" name="settingID" id="settingID" value="" />
@@ -79,22 +81,32 @@
 
                                                 <ul class="dropdown-menu">
 													<li>
-														<a href="javascript:openRemoteModal('#event.buildLink(prc.xehViewCached)#');"><i class="far fa-hdd"></i> View Cached Settings</a>
+														<a href="javascript:openRemoteModal('#event.buildLink( prc.xehViewCached )#');">
+															<i class="far fa-hdd fa-lg"></i> View Cached Settings
+														</a>
 													</li>
 													<li>
-														<a href="javascript:flushSettingsCache()"><i class="fas fa-recycle"></i> Flush Settings Cache</a>
+														<a href="javascript:flushSettingsCache()">
+															<i class="fas fa-recycle fa-lg"></i> Flush Settings Cache
+														</a>
 													</li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
 														<li>
-															<a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import Settings</a>
+															<a href="javascript:importContent()">
+																<i class="fas fa-file-import fa-lg"></i> Import Settings
+															</a>
 														</li>
                                                     </cfif>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
-															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as JSON</a>
+															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
+																<i class="fas fa-file-export fa-lg"></i> Export All as JSON
+															</a>
 														</li>
 														<li>
-															<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as XML</a>
+															<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank">
+																<i class="fas fa-file-export fa-lg"></i> Export All as XML
+															</a>
 														</li>
 													</cfif>
                                                 </ul>
@@ -108,7 +120,7 @@
 													Create Setting
 												</a>
                                                 <button
-                                                	class="btn btn-default dropdown-toggle"
+                                                	class="btn btn-primary dropdown-toggle"
 													data-toggle="dropdown"
 												>
                                                     <span class="caret"></span>
@@ -146,22 +158,42 @@
                                                 novalidate  = "novalidate",
                                                 class       = "vertical-form"
                                             )#
-                                                <input type="hidden" name="settingID" id="settingID" value="" />
+												<input type="hidden" name="settingID" id="settingID" value="" />
+
                                                 <div class="form-group">
-                                                    <label for="name" class="control-label">Setting:</label>
+                                                    <label for="name" class="control-label">*Setting:</label>
                                                     <div class="controls">
                                                         <input name="name" id="name" type="text" required="required" maxlength="100" size="30" class="form-control"/>
                                                     </div>
-                                                </div>
+												</div>
+
+												<div class="form-group">
+													<label for="name" class="control-label">Site:</label>
+													<select name="site" id="site" class="form-control">
+														<option value="" selected="selected">GLOBAL</option>
+														<cfloop array=#prc.allSites# index="thisSite">
+															<option value="#thisSite[ 'siteId' ]#">
+																#thisSite[ 'name' ]#
+															</option>
+														</cfloop>
+													</select>
+												</div>
+
                                                 <div class="checkbox">
                                                     <label>
-                                                      <input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
+                                                    	<input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
                                                     </label>
-                                                </div>
+												</div>
+
                                                 <div class="form-group">
-                                                    <label for="value" class="control-label">Value:</label>
+                                                    <label for="value" class="control-label">*Value:</label>
                                                     <div class="controls">
-                                                        <textarea name="value" id="value" rows="7" class="form-control"></textarea>
+                                                        <textarea
+                                                        	name="value"
+                                                        	id="value"
+															rows="5"
+															required="required"
+                                                        	class="form-control"></textarea>
                                                     </div>
                                                 </div>
                                             #html.endForm()#
@@ -176,7 +208,7 @@
                                             #html.button(
                                                 name="btnSave",
                                                 value="Save",
-                                                class="btn btn-danger",
+                                                class="btn btn-primary",
                                                 onclick="submitSettingForm()"
                                             )#
                                         </div>

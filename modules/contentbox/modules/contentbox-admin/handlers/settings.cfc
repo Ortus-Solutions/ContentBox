@@ -8,15 +8,16 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="settingsService" inject="id:settingService@cb";
-	property name="pageService" inject="id:pageService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
-	property name="editorService" inject="id:editorService@cb";
-	property name="mediaService" inject="id:mediaService@cb";
-	property name="LoginTrackerService" inject="id:LoginTrackerService@cb";
-	property name="mailService" inject="id:mailservice@cbMailservices";
-	property name="markdownEditor" inject="id:markdownEditor@contentbox-markdowneditor";
-	property name="twoFactorService" inject="id:twoFactorService@cb";
+	property name="settingsService" inject="settingService@cb";
+	property name="siteService" inject="siteService@cb";
+	property name="pageService" inject="pageService@cb";
+	property name="CBHelper" inject="CBHelper@cb";
+	property name="editorService" inject="editorService@cb";
+	property name="mediaService" inject="mediaService@cb";
+	property name="LoginTrackerService" inject="LoginTrackerService@cb";
+	property name="mailService" inject="mailservice@cbMailservices";
+	property name="markdownEditor" inject="markdownEditor@contentbox-markdowneditor";
+	property name="twoFactorService" inject="twoFactorService@cb";
 
 	/**
 	 * Settings manager
@@ -159,7 +160,12 @@ component extends="baseHandler" {
 		}
 
 		// Get settings
-		var results       = settingsService.search( search = rc.search, offset = offset, max = max );
+		var results = settingsService.search(
+			search   : rc.search,
+			offset   : offset,
+			max      : max,
+			sortOrder: "name asc, site asc"
+		);
 		prc.settings      = results.settings;
 		prc.settingsCount = results.count;
 
@@ -235,7 +241,12 @@ component extends="baseHandler" {
 		event.paramValue( "page", 1 ).paramValue( "isCore", false );
 
 		// populate and get setting
-		var setting = populateModel( settingsService.get( id = rc.settingID ) );
+		var setting = populateModel(
+			model               : settingsService.get( id = rc.settingID ),
+			composeRelationships: true,
+			nullEmptyInclude    : "site"
+		);
+
 		// save new setting
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();

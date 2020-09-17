@@ -4,23 +4,27 @@
 
 			<div class="panel panel-default">
 
+				<!--- Heading --->
 				<div class="panel-heading">
 
-					<h3 class="panel-title">
-						<i class="fa fa-globe"></i>
-						#prc.site.isLoaded() ? 'Update' : 'Create'# Site
-					</h3>
-
-					<div class="actions">
-						<p class="text-center">
-							<button
-								class="btn btn-sm btn-default"
-								onclick="return to( '#event.buildLink( prc.xehSitesManager )#' )"
-							>
-									<i class="fas fa-chevron-left"></i> Cancel
-							</button>
-						</p>
+					<!--- Top Actions --->
+					<div class="floatRight mt10">
+						<!--- Back button --->
+						<a
+							class="btn btn-sm btn-default"
+							href="#event.buildLink( prc.xehSitesManager )#"
+							title="Back to listing"
+						>
+							<i class="fas fa-chevron-left"></i> Cancel
+						</a>
 					</div>
+
+					<!--- Title --->
+					<div class="size16 p10">
+						<i class="fas fa-globe"></i>
+						#prc.site.isLoaded() ? 'Update' : 'Create'# Site
+					</div>
+
 				</div>
 
 				<div class="panel-body">
