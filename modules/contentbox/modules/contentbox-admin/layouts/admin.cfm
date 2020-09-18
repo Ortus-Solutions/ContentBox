@@ -119,7 +119,7 @@
 						<!--- View Site --->
 						<li data-placement="right auto" title="Visit Site">
 							<a
-								class="btn btn-default options toggle"
+								class="btn btn-default options toggle btn-more"
 								href="#prc.cbHelper.siteRoot()#"
 								target="_blank"
 							>
@@ -128,55 +128,59 @@
 						</li>
 						<!--- New Quick Links --->
 						<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
-						<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
-							<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
-								<i class="fa fa-plus"></i>
-							</button>
-							<ul class="dropdown-menu">
-								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-									<li class="mb10">
-										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
-											<i class="far fa-file-alt fa-lg width25"></i> New Page
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-									<li class="mb10">
-										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
-											<i class="fas fa-blog fa-lg width25"></i> New Entry
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-									<li class="mb10">
-										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-											<i class="far fa-hdd fa-lg width25"></i> New Content Store
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<li class="mb10">
-										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
-											<i class="fa fa-user fa-lg width25"></i> New User
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
-									<li class="mb10">
-										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-											<i class="fas fa-photo-video fa-lg width25"></i> New Media
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
-									<li class="mb10">
-										<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
-											<i class="fas fa-list fa-lg width25"></i> New Menu
-										</a>
-									</li>
-								</cfif>
-							</ul>
-						</li>
+							<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
+								<button
+									data-toggle="dropdown"
+									class="dropdown-toggle btn btn-default btn-more options toggle"
+									onclick="javascript:void( null )"
+								>
+									<i class="fa fa-plus"></i>
+								</button>
+								<ul class="dropdown-menu">
+									<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
+												<i class="far fa-file-alt fa-lg width25"></i> New Page
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
+												<i class="fas fa-blog fa-lg width25"></i> New Entry
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
+												<i class="far fa-hdd fa-lg width25"></i> New Content Store
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
+												<i class="fa fa-user fa-lg width25"></i> New User
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
+												<i class="fas fa-photo-video fa-lg width25"></i> New Media
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
+												<i class="fas fa-list fa-lg width25"></i> New Menu
+											</a>
+										</li>
+									</cfif>
+								</ul>
+							</li>
 						</cfif>
 
 						<!--- Utils --->
@@ -184,7 +188,7 @@
 
 						<!--- FullScreen --->
 						<li class="hidden-xs hidden-sm" data-placement="right auto" title="Fullscreen">
-							<a class="btn btn-default options toggle" href="javascript:void( 0 )" onclick="toggleFullScreen()">
+							<a class="btn btn-default btn-more options toggle" href="javascript:void( 0 )" onclick="toggleFullScreen()">
 								<i class="fa fa-arrows-alt"></i>
 							</a>
 						</li>

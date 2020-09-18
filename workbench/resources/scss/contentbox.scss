@@ -74,6 +74,9 @@ p{
 		box-shadow: 0 0 2px 0px #1ABC9C !important;
 		border-color: #1ABC9C;
 	}
+	.btn-default:hover > i {
+		color: black !important;
+	}
 	.user-nav ul li{
 		margin: 0px 5px;
 	}
