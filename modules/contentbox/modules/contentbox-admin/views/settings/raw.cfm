@@ -240,17 +240,16 @@
                             your application, modules, layouts, etc. You can read more about writing
                             <a href="http://wiki.coldbox.org/wiki/Interceptors.cfm">interceptors</a> in our documentation.</p>
                             <div class="row well well-sm">
-                                <div class="col-md-6">
-                                    <div class="form-group form-inline no-margin">
+                                <div class="col-md-12">
+                                    <div class="form-group no-margin">
                                         #html.textField(
-                                            name="eventFilter",
-                                            size="30",
-                                            class="form-control",
-                                            placeholder="Quick Filter"
+                                            name        = "eventFilter",
+                                            size        = "30",
+                                            class       = "form-control rounded",
+											placeholder = "Quick Filter"
                                         )#
                                     </div>
                                 </div>
-                                <div class="col-md-6"></div>
 							</div>
 
                             <!---Event Forms --->
@@ -261,10 +260,10 @@
                                         <tr>
                                             <th width="30" class="{sorter:none}">No.</th>
                                             <th>Event</th>
-                                            <th width="200">Module</th>
                                             <th width="100">Listeners</th>
                                         </tr>
-                                    </thead>
+									</thead>
+
                                     <tbody>
                                         <cfset index = 1>
                                         <cfloop array="#prc.interceptionPoints#" index="thisEvent">
@@ -272,19 +271,14 @@
                                             <cfset thisModule = listFirst( thisEvent, "_" )>
                                             <tr>
                                                 <td>
-                                                    <span class="badge badge-info">#index++#</badge>
+                                                    <span class="badge badge-default">#index++#</badge>
+												</td>
+
+												<td>
+                                                    <code>#thisModule#:#thisEvent#</code>
                                                 </td>
-                                                <td>
-                                                    #thisEvent#
-                                                </td>
-                                                <td>
-                                                    <cfswitch expression="#thisModule#">
-                                                        <cfcase value="cbui">ContentBox UI</cfcase>
-                                                        <cfcase value="cbadmin">ContentBox Admin</cfcase>
-                                                        <cfcase value="fb">ContentBox FileBrowser</cfcase>
-                                                    </cfswitch>
-                                                </td>
-                                                <td>
+
+												<td>
                                                     <cfif structKeyExists( controller.getInterceptorService().getInterceptionStates(), thisEvent )>
                                                         <cfdump var="#structKeyArray( controller.getInterceptorService().getInterceptionStates()[ thisEvent ].getMetadataMap() )#">
                                                     <cfelse>
