@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-swatchbook fa-lg"></i> Installed Themes
+			<i class="fas fa-swatchbook fa-lg"></i> Installed Themes (#structCount( prc.themes )#)
 		</h1>
     </div>
 </div>
@@ -16,29 +16,40 @@
 
 <div class="row">
 	<div class="col-md-12">
+
 		<div class="panel panel-default">
-		    <div class="panel-body">
 
-				<!--- Content Bar --->
-				<div class="well well-sm">
-					<!--- Rebuild Registry Button --->
-					<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
-						<div class="btn-group btn-sm pull-right">
+			<div class="panel-heading">
+				<div class="row">
 
-							<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan Themes directory and rebuild registry"><i class="fas fa-recycle"></i> Rebuild Registry</button>
+					<div class="col-md-6 col-xs-4">
+						<div class="form-group form-inline no-margin">
+							#html.textField(
+								name        = "themeFilter",
+								class       = "form-control rounded quicksearch",
+								placeholder = "Quick Search"
+							)#
 						</div>
-					</cfif>
-					<!--- Filter Bar --->
-					<div class="form-group form-inline no-margin">
-						#html.textField(
-							name="themeFilter",
-							size="30",
-							class="form-control",
-							placeholder="Quick Filter"
-						)#
+					</div>
+
+					<div class="col-md-6 col-xs-8">
+						<!--- Rebuild Registry Button --->
+						<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
+							<div class="text-right">
+								<button
+									class="btn btn-info"
+									onclick="return to('#event.buildLink( prc.xehFlushRegistry )#')"
+									title="Rescan Themes directory and rebuild registry"
+								>
+									<i class="fas fa-recycle"></i> Rebuild Registry
+								</button>
+							</div>
+						</cfif>
 					</div>
 				</div>
+			</div>
 
+			<div class="panel-body">
 				<!--- Theme Form --->
 				#html.startForm( name="themeForm", action=prc.xehThemeRemove )#
 					#html.hiddenField( name="themeName" )#
