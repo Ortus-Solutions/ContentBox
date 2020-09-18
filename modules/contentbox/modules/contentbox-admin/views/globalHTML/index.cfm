@@ -14,13 +14,13 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
-                <p>
-                    The global HTML snippets will be rendered by your theme's layouts at specific points during the HTML page.
-                    If your layout is not rendering out the content, then it might be that your layout was not implemented correctly.
-                    Please remember to save your work.
-                </p>
+
+				<p class="mb10">
+                    The Global HTML allows you to render HTML/CSS/JavaScript in many different locations within the life-cycle of the rendered content in the UI.
+				</p>
+
                 <!-- Vertical Nav -->
-                <div class="tab-wrapper tab-left tab-primary">
+                <div class="tab-wrapper tab-primary">
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
                         <li class="active">
@@ -44,11 +44,10 @@
                     )#
                         <!-- End Tabs -->
                         <!-- Tab Content -->
-                        <div class="tab-content">
+                        <div class="tab-content" id="tab-content">
                             <!--- Global HTML Page --->
                             <div class="tab-pane active" id="global">
                                 <fieldset>
-                                    <legend><i class="fa fa-globe fa-lg"></i> Global Layout</legend>
                                     #html.textarea(
                                         name="cb_html_beforeHeadEnd",
                                         label="Before Head End: ",
@@ -130,11 +129,11 @@
                                         groupWrapper="div class=form-group"
                                     )#
                                 </fieldset>
-                            </div>
+							</div>
+
                             <!--- Entry --->
                             <div class="tab-pane" id="entry">
                                 <fieldset>
-                                    <legend><i class="fas fa-blog fa-lg"></i> Blog Entries</legend>
                                     #html.textarea(
                                         name="cb_html_preEntryDisplay",
                                         label="Before A Blog Entry: ",
@@ -196,11 +195,11 @@
                                         groupWrapper="div class=form-group"
                                     )#
                                 </fieldset>
-                            </div>
+							</div>
+
                             <!--- Comments --->
                             <div class="tab-pane" id="comments">
                                 <fieldset>
-                                    <legend><i class="far fa-comments fa-lg"></i> Comments</legend>
                                     #html.textarea(
                                         name="cb_html_preCommentForm",
                                         label="Before The Comment Form: ",
@@ -222,11 +221,11 @@
                                         groupWrapper="div class=form-group"
                                     )#
                                 </fieldset>
-                            </div>
+							</div>
+
                             <!--- Pages --->
                             <div class="tab-pane" id="pages">
                                 <fieldset>
-                                    <legend><i class="fa fa-pencil fa-lg"></i> Pages</legend>
                                     #html.textarea(
                                         name="cb_html_prePageDisplay",
                                         label="Before Any Page: ",
@@ -252,15 +251,16 @@
                         </div>
                         <!-- End Tab Content -->
                     </div>
-                    <!-- End Vertical Nav -->
+					<!-- End Vertical Nav -->
+
                     <!---Button Bar --->
                     <div class="form-actions">
                         #html.submitButton(
-                            value="Save Global HTML",
-                            class="btn btn-danger",
-                            title="Save Global HTML content"
+                            value = "Save Global HTML",
+                            class = "btn btn-primary"
                         )#
-                    </div>
+					</div>
+
                 #html.endForm()#
             </div>
         </div>
