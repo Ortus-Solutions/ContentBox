@@ -26,10 +26,14 @@
 			<td class="text-center">
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
-			<td>
-				<div class="pull-left" style="margin-right: 10px">
+			<td class="pb5 pt5">
+				<div class="pull-left">
 					#getInstance( "Avatar@cb" )
-						.renderAvatar( email=author.getEmail(), size="40", class="gravatar img-circle" )#
+						.renderAvatar(
+							email = author.getEmail(),
+							size  = "40",
+							class = "gravatar img img-circle mr10"
+						)#
 				</div>
 
 				<!--- Display Link if Admin Or yourself --->
@@ -48,12 +52,15 @@
 						<i class="fa fa-mobile fa-lg" title="2 Factor Auth Enabled"></i>
 					</cfif>
 
-					<br>
-					#author.getEmail()#
+					<div class="mt5">
+						<a href="mailto:#author.getEmail()#" class="textMuted underline">
+							#author.getEmail()#
+						</a>
+					</div>
 				</div>
 			</td>
 
-			<td>
+			<td class="text-center">
 				<span class="label label-info">#author.getRole().getRole()#</span>
 			</td>
 
@@ -113,7 +120,7 @@
 							<li>
 								<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
 									title="Email User a password reset token and link to reset password.">
-									<i class="fas fa-key"></i> Reset Password
+									<i class="fas fa-key fa-lg"></i> Reset Password
 								</a>
 							</li>
 							</cfif>

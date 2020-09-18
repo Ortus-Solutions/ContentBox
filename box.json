@@ -23,15 +23,15 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^6.0.0",
-		"commandbox-dotenv":"*",
-		"commandbox-cfconfig":"*",
-		"commandbox-migrations":"*"
-	},
-	"devDependencies":{
+        "coldbox":"be",
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-migrations":"*"
+    },
+    "devDependencies":{
         "testbox":"*",
-		"commandbox-cfformat":"*"
-	},
+        "commandbox-cfformat":"*"
+    },
     "installPaths":{
         "testbox":"testbox/",
         "coldbox":"coldbox/"
@@ -47,8 +47,8 @@
         "log:lucee":"server log contentbox-lucee@5 --follow",
         "log:2016":"server log contentbox-adobe@2016 --follow",
         "log:2018":"server log contentbox-adobe@2018 --follow"
-	},
-	"cfmigrations":{
+    },
+    "cfmigrations":{
         "schema":"${DB_DATABASE}",
         "connectionInfo":{
             "password":"${DB_PASSWORD}",

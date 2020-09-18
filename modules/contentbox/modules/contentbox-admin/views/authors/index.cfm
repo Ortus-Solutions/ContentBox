@@ -51,33 +51,41 @@
 								    	<ul class="dropdown-menu">
 
 								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-								    			<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
+												<li>
+													<a href="javascript:importContent()">
+														<i class="fas fa-file-import fa-lg"></i> Import
+													</a>
+												</li>
 											</cfif>
 
 											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
-													<a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank">
+													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
 													</a>
 												</li>
 												<li>
-													<a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank">
+													<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All as XML
 													</a>
 												</li>
 
 												<li>
-													<a 	href="#event.buildLink( to=prc.xehGlobalPasswordReset )#"
+													<a 	href="#event.buildLink( prc.xehGlobalPasswordReset )#"
 														class="confirmIt"
 														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
 														title="Users will be prompted to change their passwords upon login"
 													>
-														<i class="fas fa-key"></i> Reset All Passwords
+														<i class="fas fa-key fa-lg"></i> Reset All Passwords
 													</a>
 												</li>
 											</cfif>
 
-											<li><a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All</a></li>
+											<li>
+												<a href="javascript:contentShowAll()">
+													<i class="fas fa-list fa-lg"></i> Show All
+												</a>
+											</li>
 								    	</ul>
 								    </div>
 								</cfif>
@@ -171,8 +179,10 @@
 							</select>
 						</div>
 
-						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply</a>
-						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+						<div class="text-center">
+							<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+							<a class="btn btn-primary btn-sm" href="javascript:contentFilter()">Apply</a>
+						</div>
 					#html.endForm()#
 				</div>
 			</div>

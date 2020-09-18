@@ -4,25 +4,28 @@
 
     	<div class="panel panel-default">
 
-            <div class="panel-heading">
+			<div class="panel-heading">
 
-                <h3 class="panel-title">
-                	<i class="fa fa-user"></i>
-					Create New Author
-                </h3>
-
-                <div class="actions">
-
-                    <!--- Back To Inbox --->
-                    #announce( "cbadmin_onNewAuthorActions" )#
-
+				<!--- Top Actions --->
+				<div class="floatRight mt10">
+					 <!--- Back To Inbox --->
+					 #announce( "cbadmin_onNewAuthorActions" )#
 					<!--- Back button --->
-					<p class="text-center">
-						<button class="btn btn-sm btn-default" onclick="return to('#event.buildLink( prc.xehAuthors )#')">
-							<i class="fas fa-chevron-left"></i> Cancel
-						</button>
-					</p>
-                </div>
+					<a
+						class="btn btn-sm btn-default"
+						href="#event.buildLink( prc.xehAuthors )#"
+						title="Back to listing"
+					>
+						<i class="fas fa-chevron-left"></i> Cancel
+					</a>
+				</div>
+
+				<!--- Title --->
+				<div class="size16 p10">
+					<i class="fas fa-user"></i>
+					Create New Author
+				</div>
+
             </div>
 
             <div class="panel-body">
@@ -138,90 +141,9 @@
 
                     #html.endFieldSet()#
 
-                    #html.startFieldset( legend="Profile" )#
-
-    					<!--- Biography --->
-    					#html.textarea(
-    						name   			= "biography",
-    						label  			= "Biography or Notes About The User:",
-    						bind   			= prc.author,
-    						rows   			= "10",
-    						class  			= "form-control",
-    						wrapper			= "div class=controls",
-    						labelClass  	= "control-label",
-    						groupWrapper	= "div class=form-group"
-    					)#
-
-                        <!---Editor of Choice --->
-                		#html.select(
-                			name			= "preference.editor",
-                			label			= "Default Editor:",
-                			options 		= prc.editors,
-                			class			= "form-control input-sm",
-                			selectedValue 	= prc.author.getPreference( "editor", "" ),
-                			wrapper			= "div class=controls",
-                			labelClass		= "control-label",
-                			groupWrapper	= "div class=form-group"
-                		)#
-
-                		<!---Markup of Choice --->
-                		#html.select(
-                			name			= "preference.markup",
-                			label			= "Default Markup:",
-                			options 		= prc.markups,
-                			class			= "form-control input-sm",
-                			selectedValue 	= prc.author.getPreference( "markup", "" ),
-                			wrapper			= "div class=controls",
-                			labelClass		= "control-label",
-                			groupWrapper	= "div class=form-group"
-                		)#
-
-                		<!---Social Preferences --->
-                		#html.textfield(
-                			name			= "preference.twitter",
-                			label			= "Twitter Profile:",
-                			class			= "form-control",
-                			value 			= prc.author.getPreference( "twitter", "" ),
-                			wrapper			= "div class=controls",
-                			labelClass		= "control-label",
-                			groupWrapper	= "div class=form-group"
-                		)#
-
-                		#html.textfield(
-                			name			= "preference.facebook",
-                			label			= "Facebook Profile:",
-                			class			= "form-control",
-                			value			= prc.author.getPreference( "facebook","" ),
-                			wrapper			= "div class=controls",
-                			labelClass		= "control-label",
-                			groupWrapper	= "div class=form-group"
-                		)#
-
-                		#html.textfield(
-                			name			= "preference.linkedin",
-                			label			= "Linkedin Profile:",
-                			class			= "form-control",
-                			value			= prc.author.getPreference( "linkedin", "" ),
-                			wrapper			= "div class=controls",
-                			labelClass 		= "control-label",
-                			groupWrapper 	= "div class=form-group"
-                		)#
-
-                        #html.textfield(
-                			name			= "preference.website",
-                			label			= "Website:",
-                			class			= "form-control",
-                			value			= prc.author.getPreference( "website", "" ),
-                			wrapper			= "div class=controls",
-                			labelClass 		= "control-label",
-                			groupWrapper 	= "div class=form-group"
-                		)#
-
-					#html.endFieldSet()#
-
 					<!--- Action Bar --->
 					<div class="form-actions">
-						<input type="submit" value="Create User" class="btn btn-danger">
+						<input type="submit" value="Create User" class="btn btn-primary btn-lg">
 					</div>
 
 				#html.endForm()#

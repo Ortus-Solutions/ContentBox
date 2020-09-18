@@ -681,6 +681,9 @@ table.diff {
 .size18{ font-size: 18px; }
 .size20{ font-size: 20px; }
 
+.underline:hover{
+	text-decoration: underline;
+}
 /**============================== MEDIA QUERIES ==============================**/
 
 @media all and (max-width: 437px) {
