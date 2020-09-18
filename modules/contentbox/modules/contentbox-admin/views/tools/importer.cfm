@@ -1,57 +1,78 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fas fa-file-import fa-lg"></i> Import Tools</h1>
+		<h1 class="h1">
+			<i class="fas fa-file-import fa-lg"></i> Import Tools
+		</h1>
 	</div>
 </div>
+
 <div class="row">
 	<div class="col-md-12">
 		#getInstance( "messagebox@cbMessagebox" ).renderit()#
 	</div>
 </div>
+
 <div class="row">
+
 	<div class="col-md-12">
+
 		#html.startForm(
 			name        = "importerForm",
 			action      = rc.xehDataImport,
 			novalidate  = "novalidate",
 			multipart   = true
 		)#
+
 		<div class="panel panel-default">
+
+			<div class="panel-heading">
+				<!--- Title --->
+				<div class="size16 p10">
+					<i class="fa fa-archive"></i> Box Archives + Database Imports
+ 				</div>
+			</div>
+
 			<div class="panel-body">
+
 				<p>Import content into your ContentBox site with only a few clicks!</p>
 
-				<div class="row m10">
-					<div class="col-md-6 well well-sm text-center">
-						<h2>ContentBox Package (.cbox)</h2>
-						<small>
-							If you're importing content from another ContentBox site, this option is for you.
-						</small>
-						<br /><br />
-						<label class="btn btn-success btn-toggle radio" for="import-contentbox">
-							#html.radioButton(
-								name    = "importtype",
-								id      = "import-contentbox",
-								checked = true,
-								value   = "contentbox"
-							)# Import ContentBox Package
-						</label>
+				<div class="row">
+
+					<div class="col-md-6">
+						<div class="well well-sm text-center alert-success rounded" style="min-height: 200px">
+							<h2>ContentBox Package</h2>
+							<small>
+								If you're importing content from another ContentBox site, this option is for you.
+							</small>
+							<br /><br />
+							<label class="btn btn-success btn-toggle radio" for="import-contentbox">
+								#html.radioButton(
+									name    = "importtype",
+									id      = "import-contentbox",
+									checked = true,
+									value   = "contentbox"
+								)# Import ContentBox Package
+							</label>
+						</div>
 					</div>
-					<div class="col-md-1">&nbsp;</div>
-					<div class="col-md-5 well well-sm text-center">
-						<h2>Database Import</h2>
-						<small>
-							ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog databases via Datasource connections!
-						</small>
-						<br />
-						<label class="btn btn-toggle radio" for="import-database">
-							#html.radioButton(
-								name 	= "importtype",
-								id 		= "import-database",
-								value 	= "database"
-							)#
-							Import from Database
-						</label>
+
+					<div class="col-md-6">
+						<div class="well well-sm text-center rounded" style="min-height: 200px">
+							<h2>Database Import</h2>
+							<small>
+								ContentBox also supports imports from Mango, WordPress, BlogCFC, and MachBlog databases via Datasource connections!
+							</small>
+							<br />
+							<label class="btn btn-toggle radio" for="import-database">
+								#html.radioButton(
+									name 	= "importtype",
+									id 		= "import-database",
+									value 	= "database"
+								)#
+								Import from Database
+							</label>
+						</div>
 					</div>
 				</div>
 
@@ -190,7 +211,7 @@ so please verify your application logs for information.
 						#html.button(
 							type    = "submit",
 							id      = "import_button",
-							value   = "<i class='fas fa-file-import'></i> Start Import",
+							value   = "<i class='far fa-play-circle'></i> Start Import",
 							class   = "btn btn-danger btn-lg"
 						)#
 					</div>

@@ -1,7 +1,9 @@
 <cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fas fa-file-export fa-lg"></i> Export Tools</h1>
+		<h1 class="h1">
+			<i class="fas fa-file-export fa-lg"></i> Export Site
+		</h1>
 	</div>
 </div>
 
@@ -14,44 +16,55 @@
 <div class="row">
 	<div class="col-md-12">
 
-		#html.startForm( name="exporterForm", action=prc.xehExport, novalidate="novalidate", target="_blank" )#
-			<div class="panel panel-default">
+		#html.startForm(
+			name       = "exporterForm",
+			action     = prc.xehExport,
+			novalidate = "novalidate",
+			target     = "_blank"
+		)#
+
+		<div class="panel panel-default">
 
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-archive"></i> Export A Box Archive</h3>
+					<!--- Title --->
+					<div class="size16 p10">
+						<i class="fa fa-archive"></i> Box Archives
+					</div>
 				</div>
 
 				<div class="panel-body">
 
 					<p>From this panel you can choose to export your entire site or parts of it as a <strong>*.box</strong> archive package.</p>
 
-					<div class="row m10">
-						<div class="col-md-6 well well-sm text-center alert-success">
-							<h2>Option ##1: Everything!</h2>
-							<small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
-							<label class="btn btn-success btn-toggle radio" for="export_everything">
-								#html.radioButton(
-									name 	= "export_type",
-									id 		= "export_everything",
-									checked = true,
-									value 	= "everything"
-								)# Export Everything
-							</label>
+					<div class="row">
+						<div class="col-md-6">
+							<div class="well well-sm text-center alert-success rounded" style="min-height: 185px">
+								<h2>Option ##1: Everything!</h2>
+								<small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
+								<label class="btn btn-success btn-toggle radio" for="export_everything">
+									#html.radioButton(
+										name 	= "export_type",
+										id 		= "export_everything",
+										checked = true,
+										value 	= "everything"
+									)# Export Everything
+								</label>
+							</div>
 						</div>
 
-						<div class="col-md-1">&nbsp;</div>
-
-						<div class="col-md-5 well well-sm text-center">
-							<h2>Option ##2: Mr. Picky</h2>
-							<small>For the more discriminating, select only the bits that you want to export.</small><br />
-							<label class="btn btn-toggle radio" for="export_selective">
-								#html.radioButton(
-									name 	= "export_type",
-									id 		= "export_selective",
-									value 	= "selective"
-								)#
-								Export a-la-carte
-							</label>
+						<div class="col-md-6">
+							<div class="well well-sm text-center rounded" style="min-height: 185px">
+								<h2>Option ##2: Mr. Picky</h2>
+								<small>For the more discriminating, select only the bits that you want to export.</small><br />
+								<label class="btn btn-toggle radio" for="export_selective">
+									#html.radioButton(
+										name 	= "export_type",
+										id 		= "export_selective",
+										value 	= "selective"
+									)#
+									Export a-la-carte
+								</label>
+							</div>
 						</div>
 					</div>
 
@@ -154,7 +167,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-key fa-lg"></i> Permission</h4>
+								<h4><i class="fas fa-key fa-lg"></i> Permissions</h4>
 								<small class="muted">Export all author permissions</small>
 							</div>
 							<div class="col-md-9">
@@ -170,7 +183,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-group fa-lg"></i> Roles</h4>
+								<h4><i class="fas fa-user-shield fa-lg"></i> Roles</h4>
 								<small class="muted">Export all author roles</small>
 							</div>
 							<div class="col-md-9">
@@ -420,18 +433,23 @@
 
 					<!--- Submit Button --->
 					<div class="actionBar" id="uploadBar">
-						#html.button(
-							type    = "button",
-							value   = "<i class='fa fa-search'></i> Preview Export",
-							class   = "btn btn-primary btn-normal btn-lg",
+						<button
+							type 	= "button"
+							id 		= "previewButton"
+							class   = "btn btn-info btn-normal btn-lg"
 							onclick = "return previewExport()"
-						)#
-						#html.button(
-							type    = "button",
-							value   = "<i class='fas fa-file-export' id='export-icon'></i> Start Export",
-							class   = "btn btn-danger btn-lg",
+						>
+							<i class='fa fa-search'></i> Preview Export
+						</button>
+
+						<button
+							type 	= "button"
+							id 		= "exportButton"
+							class   = "btn btn-danger btn-lg"
 							onclick = "doExport()"
-						)#
+						>
+							<i class='far fa-play-circle' id='export-icon'></i> Start Export
+						</button>
 					</div>
 
 					<!--- Loader --->
@@ -443,11 +461,21 @@
 			</div>
 		#html.endForm()#
 
-		#html.startForm( name="siteGeneratorForm", action=prc.xehSiteGenerator, novalidate="novalidate" )#
+		<!--- Site Generator --->
+		#html.startForm(
+			name       = "siteGeneratorForm",
+			action     = prc.xehSiteGenerator,
+			novalidate = "novalidate"
+		)#
 			<div class="panel panel-default">
+
 				<div class="panel-heading">
-					<h3 class="panel-title"><i class="fa fa-files-o"></i> Static Site Generator</h3>
+					<!--- Title --->
+					<div class="size16 p10">
+						<i class="fas fa-cloud-download-alt"></i> Static Site Generator
+					</div>
 				</div>
+
 				<div class="panel-body">
 					<p>ContentBox can export your entire site as a static HTML generated site. Please fill out the following options in order to generate your static site.</p>
 
@@ -461,7 +489,7 @@
 					<div class="actionBar" id="siteGeneratorBar">
 						#html.button(
 							type    = "button",
-							value   = "<i class='fas fa-file-export' id='export-icon'></i> Start Generation",
+							value   = "<i class='far fa-play-circle' id='export-icon'></i> Start Generation",
 							class   = "btn btn-danger btn-lg",
 							onclick = "doSiteExport()"
 						)#
@@ -470,7 +498,7 @@
 					<!--- Loader --->
 					<div class="text-center loaders" id="siteGeneratorLoader">
 						<i class="fa fa-spinner fa-spin fa-4x"></i><br/>
-					   <h2>Building your beautiful static site, please wait...</h2><br>
+						<h2>Building your beautiful static site, please wait...</h2><br>
 					</div>
 
 				</div>
@@ -481,16 +509,20 @@
 
 	</div>
 </div>
+
 <!--- ************************************************************************************************--->
 <!---                               EXPORT PREVIEW DIALOG                                             --->
 <!--- ************************************************************************************************--->
 <div id="exportPreviewDialog" class="modal fade" role="dialog" tabindex="-1">
 	<div class="modal-dialog modal-lg">
+
 		<div class="modal-content">
+
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4><i class="fa fa-exchange"></i> Export Preview</h4>
+				<h4><i class="fas fa-search"></i> Export Preview</h4>
 			</div>
+
 			<div class="modal-body" id="previewBody"></div>
 		</div>
 	</div>

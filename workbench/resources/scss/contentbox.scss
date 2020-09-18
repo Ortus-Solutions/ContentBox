@@ -472,7 +472,14 @@ widgetinfobar::-moz-selection {
 
 /**============================== MODALS ==============================**/
 
-#confirmIt a.close, #remoteModal a.close, #quickPost a.close, .modal a.close {z-index:99999;}
+.close {
+	z-index:99999;
+	font-size: 30px;
+}
+.close:hover {
+	font-weight: 900;
+	color: #1ABC9C;
+}
 
 /**============================== ADMIN MAIN NAVBAR SEARCH ==============================**/
 
