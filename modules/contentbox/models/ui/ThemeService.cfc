@@ -616,7 +616,7 @@ component accessors="true" threadSafe singleton{
 					}
 
 					// Write out group panel header
-					writeOutput( '<div class="panel panel-primary">' );
+					writeOutput( '<div class="panel panel-default">' );
   						if ( thisSettingMD.group != "" ){
   							writeOutput( '
   								<div class="panel-heading">
@@ -625,6 +625,7 @@ component accessors="true" threadSafe singleton{
 											data-toggle="collapse"
 											data-parent="##settings-accordion"
 											href="##settingtab-#hash( thisSettingMD.group )#"
+											style="display: block"
 										>
 											#thisSettingMD.group#
 										</a>

@@ -35,20 +35,20 @@
 
 				<!---Description --->
 				<blockquote id="theme-description">#encodeForHTML( prc.activeTheme.description )#</blockquote>
-				
+
 				<!---Author --->
 				<div id="theme-author">
 					<i class="fa fa-user mr5"></i>
 					<strong>Author: </strong> <a href="#encodeForHTMLAttribute( prc.activeTheme.authorURL )#" title="#encodeForHTMLAttribute( prc.activeTheme.AuthorURL )#" target="_blank">#encodeForHTML( prc.activeTheme.Author )#</a>
 				</div>
-			
+
 				<!--- Version --->
 				<div id="theme-version>">
 					<i class="fas fa-history mr5"></i>
 					<strong>Version: </strong>
 					#encodeForHTML( prc.activeTheme.version )#
 				</div>
-				
+
 				<!--- ForgeBox Slug --->
 				<div id="theme-forgebox>">
 					<i class="fa fa-cloud mr5"></i>
@@ -59,7 +59,7 @@
 						<em>None</em>
 					</cfif>
 				</div>
-				
+
 				<!---Interceptions --->
 				<div id="theme-interceptions">
 					<i class="fa fa-bullhorn mr5"></i>
@@ -70,7 +70,7 @@
 						<em>None</em>
 					</cfif>
 				</div>
-				
+
 				<!---Widgets --->
 				<div id="theme-widgets">
 					<i class="fa fa-magic mr5"></i>
@@ -81,7 +81,7 @@
 						<em>None</em>
 					</cfif>
 				</div>
-				
+
 				<!---Modules --->
 				<div id="theme-modules">
 					<i class="fa fa-bolt mr5"></i>
@@ -108,8 +108,8 @@
 						<!--- Announce display Event --->
 						#announce( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
 
-						<div class="form-group">
-							#html.submitButton( value="Save Settings", class="btn btn-info" )#
+						<div class="form-group text-center">
+							#html.submitButton( value="Save Settings", class="btn btn-primary btn-lg" )#
 						</div>
 
                     #html.endForm()#
