@@ -137,7 +137,9 @@
 
 		    <div class="panel-body">
 				#html.hiddenField( name="ruleID" )#
-				<div id="rulesTable">#renderView( "securityRules/rulesTable" )#</div>
+				<div id="rulesTable">
+					#renderView( view = "securityRules/rulesTable", prePostExempt = true )#
+				</div>
 			</div>
 		</div>
 
@@ -146,14 +148,15 @@
 </div>
 
 <cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Security Rules",
-			contentArea = "security rules",
-			action = prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> security rules file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+	#renderView(
+		view 			= "_tags/dialog/import",
+		args 			= {
+			title       : "Import Security Rules",
+			contentArea : "security rules",
+			action      : prc.xehImportAll,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> security rules file to import."
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 </cfoutput>

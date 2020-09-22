@@ -77,7 +77,6 @@
 				#renderView(
 					view : "_components/content/TableCreationInfo",
 					args : { content : entry },
-					module : "contentbox-admin",
 					prepostExempt : true
 				)#
 			</td>
@@ -87,7 +86,6 @@
 				#renderView(
 					view : "_components/content/TableStatus",
 					args : { content : entry },
-					module : "contentbox-admin",
 					prepostExempt : true
 				)#
 			</td>
@@ -97,7 +95,6 @@
 				#renderView(
 					view : "_components/content/TableSearchStatus",
 					args : { content : entry },
-					module : "contentbox-admin",
 					prepostExempt : true
 				)#
 			</td>

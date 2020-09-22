@@ -1,6 +1,9 @@
 ﻿<cfoutput>
 <!--- Load Content List Viewer UI --->
-#renderView( view="_tags/contentListViewer", prePostExempt=true )#
+#renderView(
+	view 			= "_tags/contentListViewer",
+	prePostExempt 	= true
+)#
 <!--- page JS --->
 <script>
 $( document ).ready(function() {

@@ -151,7 +151,11 @@
                             </div>
 
                             <!--- ContentToolBar --->
-                            #renderView( view="_tags/content/markup", args={ content = prc.page } )#
+                            #renderView(
+								view 			= "_tags/content/markup",
+								args 			= { content = prc.page },
+								prePostExempt 	= true
+							)#
 
                             <!--- content --->
                             #html.textarea(
@@ -176,8 +180,9 @@
                         <!--- Custom Fields --->
                          <div role="tabpanel" class="tab-pane" id="custom_fields">
                              #renderView(
-                                view = "_tags/customFields",
-                                args = { fieldType="Page", customFields=prc.page.getCustomFields() }
+                                view 			= "_tags/customFields",
+								args 			= { fieldType="Page", customFields=prc.page.getCustomFields() },
+								prePostExempt 	= true
                             )#
                         </div>
 
@@ -257,8 +262,9 @@
                     <div class="panel-body">
 
                         #renderView(
-                            view    = "_tags/content/publishing",
-                            args    = { content = prc.page }
+                            view    		= "_tags/content/publishing",
+							args    		= { content = prc.page },
+							prePostExempt 	= true
                         )#
 
                         <!--- Accordion --->
@@ -267,8 +273,9 @@
                             <!---Begin Page Info--->
                             <cfif prc.page.isLoaded()>
                                 #renderView(
-                                    view    = "_tags/content/infotable",
-                                    args    = { content = prc.page }
+                                    view    		= "_tags/content/infotable",
+									args    		= { content = prc.page },
+									prePostExempt 	= true
                                 )#
                             </cfif>
 
@@ -385,8 +392,11 @@
                                 </div>
                                 <div id="relatedcontent" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <cfset rcArgs = { relatedContent=prc.relatedContent }>
-                                        #renderView( view="_tags/relatedContent", args=rcArgs )#
+                                        #renderView(
+											view 			= "_tags/relatedContent",
+											args 			= { relatedContent : prc.relatedContent },
+											prePostExempt 	= true
+										)#
                                     </div>
                                 </div>
                             </div>
@@ -408,8 +418,11 @@
                                 </div>
                                 <div id="linkedcontent" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <cfset rcArgs = { linkedContent=prc.linkedContent, contentType=prc.page.getContentType() }>
-                                        #renderView( view="_tags/linkedContent", args=rcArgs )#
+										#renderView(
+											view 			= "_tags/linkedContent",
+											args 			= { linkedContent : prc.linkedContent, contentType : prc.page.getContentType() },
+											prePostExempt 	= true
+										)#
                                     </div>
                                 </div>
                             </div>

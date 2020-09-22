@@ -149,8 +149,9 @@
 
                         <!---ContentToolBar --->
                         #renderView(
-							view = "_tags/content/markup",
-							args = { content=prc.entry }
+							view 			= "_tags/content/markup",
+							args 			= { content : prc.entry },
+							prePostExempt 	= true
 						)#
 
                         <!--- content --->
@@ -260,8 +261,9 @@
 
 					<!--- Publishing Panel --->
                     #renderView(
-						view = "_tags/content/publishing",
-						args = { content = prc.entry }
+						view 			= "_tags/content/publishing",
+						args 			= { content = prc.entry },
+						prePostExempt 	= true
 					)#
 
                     <!--- Accordion --->
@@ -270,8 +272,9 @@
                         <!---Begin Info--->
                         <cfif prc.entry.isLoaded()>
                             #renderView(
-                                view    = "_tags/content/infotable",
-                                args    = { content = prc.entry }
+                                view    		= "_tags/content/infotable",
+								args    		= { content = prc.entry },
+								prePostExempt 	= true
                             )#
                         </cfif>
 
@@ -289,8 +292,9 @@
                             <div id="relatedcontent" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     #renderView(
-										view = "_tags/relatedContent",
-										args = { relatedContent=prc.relatedContent }
+										view 			= "_tags/relatedContent",
+										args 			= { relatedContent=prc.relatedContent },
+										prePostExempt 	= true
 									)#
                                 </div>
                             </div>
@@ -314,11 +318,12 @@
                             <div id="linkedcontent" class="panel-collapse collapse">
                                 <div class="panel-body">
                                     #renderView(
-										view = "_tags/linkedContent",
-										args = {
-											linkedContent = prc.linkedContent,
-											contentType   = prc.entry.getContentType()
-										}
+										view 			= "_tags/linkedContent",
+										args 			= {
+											linkedContent : prc.linkedContent,
+											contentType   : prc.entry.getContentType()
+										},
+										prePostExempt 	= true
 									)#
                                 </div>
                             </div>

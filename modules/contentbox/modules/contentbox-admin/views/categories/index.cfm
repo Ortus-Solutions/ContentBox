@@ -252,7 +252,8 @@
 			contentArea = "user",
 			action 		= prc.xehImportAll,
 			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
-		}
+		},
+		prePostExempt = true
 	)#
 </cfif>
 </cfoutput>

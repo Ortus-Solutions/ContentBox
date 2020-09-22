@@ -82,14 +82,15 @@
 
 <!--- Import --->
 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-    <cfscript>
-        dialogArgs = {
-            title = "Import Menus",
-            contentArea = "menu",
-            action = prc.xehMenuImport,
-            contentInfo = "Choose the ContentBox <strong>JSON</strong> menu file to import."
-        };
-    </cfscript>
-    #renderView( view="_tags/dialog/import", args=dialogArgs )#
+    #renderView(
+		view 			= "_tags/dialog/import",
+		args 			= {
+            title       : "Import Menus",
+            contentArea : "menu",
+            action      : prc.xehMenuImport,
+            contentInfo : "Choose the ContentBox <strong>JSON</strong> menu file to import."
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 </cfoutput>

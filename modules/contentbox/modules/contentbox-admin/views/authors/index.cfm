@@ -191,14 +191,15 @@
 </div>
 
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title 		= "Import Users",
-			contentArea = "user",
-			action 		= prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+	#renderView(
+		view = "_tags/dialog/import",
+		args = {
+			title 		: "Import Users",
+			contentArea : "user",
+			action 		: prc.xehImportAll,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> users file to import."
+		},
+		prePostExempt = true
+	)#
 </cfif>
 </cfoutput>

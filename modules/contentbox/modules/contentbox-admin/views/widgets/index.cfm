@@ -20,7 +20,11 @@
 					#html.hiddenField(name="widgetFile" )#
 
 					<!--- widgets --->
-					#renderView(view="widgets/widgetList", module="contentbox-admin", args={ mode="edit", cols=2 } )#
+					#renderView(
+						view 			= "widgets/widgetList",
+						args 			= { mode : "edit", cols : 2 },
+						prePostExempt 	= true
+					)#
 
 				#html.endForm()#
 

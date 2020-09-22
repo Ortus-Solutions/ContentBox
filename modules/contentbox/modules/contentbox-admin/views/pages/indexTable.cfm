@@ -113,7 +113,6 @@
 					#renderView(
 						view : "_components/content/TableCreationInfo",
 						args : { content : page },
-						module : "contentbox-admin",
 						prepostExempt : true
 					)#
 				</td>
@@ -122,7 +121,6 @@
 					#renderView(
 						view : "_components/content/TableStatus",
 						args : { content : page },
-						module : "contentbox-admin",
 						prepostExempt : true
 					)#
 				</td>
@@ -141,7 +139,6 @@
 					#renderView(
 						view : "_components/content/TableSearchStatus",
 						args : { content : page },
-						module : "contentbox-admin",
 						prepostExempt : true
 					)#
 				</td>

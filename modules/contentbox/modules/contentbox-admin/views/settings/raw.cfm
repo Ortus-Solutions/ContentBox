@@ -306,10 +306,11 @@
 #renderView(
 	view = "_tags/dialog/import",
 	args = {
-        title       = "Import Settings",
-        contentArea = "settings",
-        action      = prc.xehSettingsImport,
-        contentInfo = "Choose the ContentBox <strong>JSON</strong> settings file to import."
-    }
+        title       : "Import Settings",
+        contentArea : "settings",
+        action      : prc.xehSettingsImport,
+        contentInfo : "Choose the ContentBox <strong>JSON</strong> settings file to import."
+	},
+	prePostExempt = true
 )#
 </cfoutput>

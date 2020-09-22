@@ -204,13 +204,14 @@
 <!--- Sites Import --->
 <cfif prc.oCurrentAuthor.checkPermission( "TOOLS_IMPORT" )>
 	#renderView(
-		view : "_tags/dialog/import",
-		args : {
+		view = "_tags/dialog/import",
+		args = {
 			title       : "Import Sites",
 			contentArea : "sites",
 			action      : prc.xehImportAll,
 			contentInfo : "Choose the ContentBox <strong>JSON</strong> sites file to import."
-		}
+		},
+		prePostExempt = true
 	)#
 </cfif>
 </cfoutput>

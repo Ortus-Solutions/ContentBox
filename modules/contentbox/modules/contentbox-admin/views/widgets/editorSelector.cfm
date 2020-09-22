@@ -8,9 +8,9 @@
         <div class="modal-body">
             <div class="widget-detail" id="widget-detail" style="display:none;"></div>
             #renderView(
-                view    = "widgets/widgetList",
-                module  = "contentbox-admin",
-                args    = { mode = "insert", cols = 3 }
+                view    		= "widgets/widgetList",
+				args    		= { mode = "insert", cols = 3 },
+				prePostExempt 	= true
             )#
         </div>
         <div class="modal-footer">

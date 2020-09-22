@@ -17,7 +17,7 @@
 			        #html.label(
 						field="contentSearch",
 						content="Quick Search:",
-						class="control-label" 
+						class="control-label"
 					)#
 			        #html.textField(
 						name="contentSearch",
@@ -29,7 +29,10 @@
 
 				<!--- Render tables out --->
 				<div id="contentContainer">
-				#renderView(view="contentStore/editorSelectorEntries", module="contentbox-admin" )#
+				#renderView(
+					view 			= "contentStore/editorSelectorEntries",
+					prePostExempt 	= true
+				)#
 				</div>
 			#html.endForm()#
 		</div>

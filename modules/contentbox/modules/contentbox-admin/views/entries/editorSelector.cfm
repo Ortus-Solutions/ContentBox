@@ -18,7 +18,7 @@
 			        #html.label(
 						field="entrySearch",
 						content="Quick Search:",
-						class="control-label" 
+						class="control-label"
 					)#
 			        #html.textField(
 						name="entrySearch",
@@ -30,7 +30,7 @@
 
 				<!--- Render tables out --->
 				<div id="entriesContainer">
-				#renderView(view="entries/editorSelectorEntries", module="contentbox-admin" )#
+				#renderView( view = "entries/editorSelectorEntries", prePostExempt = true )#
 				</div>
 
 

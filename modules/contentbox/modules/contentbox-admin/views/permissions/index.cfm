@@ -206,14 +206,15 @@
 	</div>
 </cfif>
 <cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Permissions",
-			contentArea = "permissions",
-			action = prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> permissions file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+	#renderView(
+		view 		= "_tags/dialog/import",
+		args 		= {
+			title       : "Import Permissions",
+			contentArea : "permissions",
+			action      : prc.xehImportAll,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> permissions file to import."
+		},
+		prePostExempt = true
+	)#
 </cfif>
 </cfoutput>

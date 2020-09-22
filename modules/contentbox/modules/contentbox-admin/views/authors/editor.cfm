@@ -169,6 +169,6 @@
     <!--- SIDEBAR --->
     <!--- ****************************************************************************** --->
 
-    #renderView( view="authors/editor/sidebar" )#
+    #renderView( view="authors/editor/sidebar", prePostExempt=true )#
 </div>
 </cfoutput>

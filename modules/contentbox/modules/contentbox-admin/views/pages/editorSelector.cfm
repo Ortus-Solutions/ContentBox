@@ -17,7 +17,7 @@
 			        #html.label(
 						field="pageSearch",
 						content="Quick Search:",
-						class="control-label" 
+						class="control-label"
 					)#
 			        #html.textField(
 						name="pageSearch",
@@ -29,7 +29,7 @@
 
 				<!--- Render tables out --->
 				<div id="pagesContainer">
-					#renderView(view="pages/editorSelectorPages", module="contentbox-admin" )#
+					#renderView( view="pages/editorSelectorPages", prePostExempt = true )#
 				</div>
 		    #html.endForm()#
 		</div>

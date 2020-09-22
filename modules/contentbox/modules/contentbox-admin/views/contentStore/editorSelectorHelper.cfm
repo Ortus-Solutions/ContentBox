@@ -1,6 +1,9 @@
 <cfoutput>
 <!--- Shared Dynamic JS --->
-#renderView(view="_tags/contentSelector",prePostExempt=true)#
+#renderView(
+	view 			= "_tags/contentSelector",
+	prePostExempt 	= true
+)#
 <!--- Custom Javascript --->
 <script>
 $( document ).ready(function() {

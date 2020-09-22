@@ -227,7 +227,8 @@
 			publishLabel : "Publish entry?",
 			publishInfo  : "By default all cloned entries are published as drafts.",
 			statusName   : "entryStatus"
-		}
+		},
+		prePostExempt = true
 	)#
 </cfif>
 
@@ -242,7 +243,8 @@
 			contentInfo : "Choose the ContentBox <strong>JSON</strong> entries file to import. The creator of the entry is matched via their <strong>username</strong> and
                 entry overrides are matched via their <strong>slug</strong>.
                 If the importer cannot find the username from the import file in your installation, then it will ignore the record."
-		}
+		},
+		prePostExempt = true
 	)#
 </cfif>
 </cfoutput>

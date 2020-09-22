@@ -141,7 +141,7 @@
 				</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderview( view="_tags/needhelp", module="contentbox-admin" )#
+		    	#renderview( view = "_tags/needhelp", prePostExempt = true )#
 		    </div>
 		</div>
 		<!--- Event --->

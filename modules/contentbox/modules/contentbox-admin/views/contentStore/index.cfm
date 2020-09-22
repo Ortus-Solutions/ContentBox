@@ -186,30 +186,32 @@
 </div>
 <!--- Clone Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Content Cloning",
-			infoMsg = "By default, all internal links are updated for you as part of the cloning process.",
-			action = prc.xehContentClone,
-			titleLabel = "Please enter the new content title",
-			publishLabel="Publish content?",
-			publishInfo = "By default all cloned content are published as drafts.",
-			statusName = "contentStatus"
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
+	#renderView(
+		view 			= "_tags/dialog/clone",
+		args 			= {
+			title        : "Content Cloning",
+			infoMsg      : "By default, all internal links are updated for you as part of the cloning process.",
+			action       : prc.xehContentClone,
+			titleLabel   : "Please enter the new content title",
+			publishLabel : "Publish content?",
+			publishInfo  : "By default all cloned content are published as drafts.",
+			statusName   : "contentStatus"
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 <cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Content",
-			contentArea = "content",
-			action = prc.xehContentImport,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> content store file to import. The creator of the content is matched via their <strong>username</strong> and
+	#renderView(
+		view 			= "_tags/dialog/import",
+		args 			= {
+			title       : "Import Content",
+			contentArea : "content",
+			action      : prc.xehContentImport,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> content store file to import. The creator of the content is matched via their <strong>username</strong> and
                 contenet overrides are matched via their <strong>slug</strong>.
                 If the importer cannot find the username from the import file in your installation, then it will ignore the record."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 </cfoutput>

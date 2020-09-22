@@ -202,11 +202,12 @@
 	#renderView(
 		view = "_tags/dialog/import",
 		args = {
-			title       = "Import Permission Groups",
-			contentArea = "groups",
-			action      = prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> permission group's file to import."
-		}
+			title       : "Import Permission Groups",
+			contentArea : "groups",
+			action      : prc.xehImportAll,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> permission group's file to import."
+		},
+		prePostExempt = true
 	)#
 </cfif>
 </cfoutput>

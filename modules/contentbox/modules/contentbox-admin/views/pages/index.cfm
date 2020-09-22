@@ -206,30 +206,32 @@
 
 <!--- Clone Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Page Cloning",
-			infoMsg = "By default, all internal page links are updated for you as part of the cloning process.",
-			action = prc.xehPageClone,
-			titleLabel = "Please enter the new page title",
-			publishLabel="Publish all pages in hierarchy?",
-			publishInfo = "By default all cloned pages are published as drafts.",
-			statusName = "pageStatus"
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/clone", args=dialogArgs )#
+	#renderView(
+		view 			= "_tags/dialog/clone",
+		args 			= {
+			title        : "Page Cloning",
+			infoMsg      : "By default, all internal page links are updated for you as part of the cloning process.",
+			action       : prc.xehPageClone,
+			titleLabel   : "Please enter the new page title",
+			publishLabel :"Publish all pages in hierarchy?",
+			publishInfo  : "By default all cloned pages are published as drafts.",
+			statusName   : "pageStatus"
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 <cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Pages",
-			contentArea = "page",
-			action = prc.xehPageImport,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> pages file to import. The creator of the page is matched via their <strong>username</strong> and
+	#renderView(
+		view 			= "_tags/dialog/import",
+		args 			= {
+			title       : "Import Pages",
+			contentArea : "page",
+			action      : prc.xehPageImport,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> pages file to import. The creator of the page is matched via their <strong>username</strong> and
                 page overrides are matched via their <strong>slug</strong>.
                 If the importer cannot find the username from the import file in your installation, then it will ignore the record."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 </cfoutput>

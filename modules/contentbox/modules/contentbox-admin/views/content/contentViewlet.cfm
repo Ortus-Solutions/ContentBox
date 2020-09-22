@@ -99,7 +99,6 @@
 					#renderView(
 						view : "_components/content/TableStatus",
 						args : { content : thisContent },
-						module : "contentbox-admin",
 						prepostExempt : true
 					)#
 				</td>
