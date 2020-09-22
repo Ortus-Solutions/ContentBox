@@ -11,7 +11,7 @@
         <!---Begin Top Visited--->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##topcontent">
+                <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##topcontent">
                     <i class="fas fa-chart-pie fa-lg"></i> #$r( "dashboard.latestSnapshot.topHitsAndComments.head@admin" )#
                 </a>
             </div>
@@ -20,7 +20,7 @@
                     <!--- Top Visited Content Chart --->
                     <div id="top-visited-chart"></div>
                     <!--- Table Report --->
-                    <table class="table  table-hover table-striped-removed" width="100%">
+                    <table class="table  table-hover table-striped" width="100%">
                         <thead>
                             <tr>
                                 <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table.head1@admin" )#</th>
@@ -41,7 +41,7 @@
                     <!--- Top Visited Content Chart --->
                     <div id="top-commented-chart"></div>
                     <!--- Table Report --->
-                    <table class="table  table-hover table-striped-removed" width="100%">
+                    <table class="table  table-hover table-striped" width="100%">
                         <thead>
                             <tr>
                                 <th>#$r( "dashboard.latestSnapshot.topHitsAndComments.table2.head1@admin" )#</th>
@@ -67,7 +67,7 @@
         <!---Begin Discussions--->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##discussion">
+                <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##discussion">
                     <i class="far fa-comments fa-lg"></i> #$r( "dashboard.latestSnapshot.discussionCounts@admin" )#
                 </a>
             </div>
@@ -104,7 +104,7 @@
         <!---Begin Content--->
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##content">
+                <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##content">
                     <i class="fas fa-box fa-lg"></i> #$r( "dashboard.latestSnapshot.contentCounts@admin" )#
                 </a>
             </div>
