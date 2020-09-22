@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="roleService" inject="id:roleService@cb";
-	property name="permissionService" inject="id:permissionService@cb";
+	property name="roleService" inject="roleService@cb";
+	property name="permissionService" inject="permissionService@cb";
 
 	/**
 	 * Pre handler

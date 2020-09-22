@@ -8,7 +8,7 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="categoryService" inject="id:categoryService@cb";
+	property name="categoryService" inject="categoryService@cb";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	/**

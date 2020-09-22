@@ -2,14 +2,14 @@
 <div class="row">
     <div class="col-md-12" id="main-content-slot">
 
-    	<div class="panel panel-default">
+		<div class="panel panel-default">
 
 			<div class="panel-heading">
 
 				<!--- Top Actions --->
 				<div class="floatRight mt10">
-					 <!--- Back To Inbox --->
-					 #announce( "cbadmin_onNewAuthorActions" )#
+					<!--- Back To Inbox --->
+					#announce( "cbadmin_onNewAuthorActions" )#
 					<!--- Back button --->
 					<a
 						class="btn btn-sm btn-default"
@@ -30,8 +30,8 @@
 
             <div class="panel-body">
 
-            	<!--- Messageboxes --->
-            	#getInstance( "messagebox@cbMessagebox" ).renderIt()#
+				<!--- Messageboxes --->
+				#getInstance( "messagebox@cbMessagebox" ).renderIt()#
 
 				<!--- AuthorForm --->
 				#html.startForm(
@@ -41,56 +41,57 @@
 					class 		= "form-vertical"
 				)#
 					#html.startFieldset( legend="Account Details" )#
-    					#html.hiddenField( name="authorID", bind=prc.author )#
 
-    					#html.textField(
-    						name    		= "firstName",
-    						bind    		= prc.author,
-    						label   		= "*First Name:",
-    						required		= "required",
-    						size    		= "50",
-    						class   		= "form-control",
-    						wrapper 		= "div class=controls",
-    						labelClass 		= "control-label",
-    						groupWrapper 	= "div class=form-group"
-    					)#
+						#html.hiddenField( name="authorID", bind=prc.author )#
 
-    					#html.textField(
-    						name    		= "lastName",
-    						bind    		= prc.author,
-    						label   		= "*Last Name:",
-    						required		= "required",
-    						size    		= "50",
-    						class   		= "form-control",
-    						wrapper 		= "div class=controls",
-    						labelClass 		= "control-label",
-    						groupWrapper 	= "div class=form-group"
-    					)#
+						#html.textField(
+							name    		= "firstName",
+							bind    		= prc.author,
+							label   		= "*First Name:",
+							required		= "required",
+							size    		= "50",
+							class   		= "form-control",
+							wrapper 		= "div class=controls",
+							labelClass 		= "control-label",
+							groupWrapper 	= "div class=form-group"
+						)#
 
-    					#html.inputField(
-    						name    		= "email",
-    						type    		= "email",
-    						bind    		= prc.author,
-    						label   		= "*Email:",
-    						required		= "required",
-    						size    		= "50",
-    						class   		= "form-control",
-    						wrapper 		= "div class=controls",
-    						labelClass 		= "control-label",
-    						groupWrapper 	= "div class=form-group"
-    					)#
+						#html.textField(
+							name    		= "lastName",
+							bind    		= prc.author,
+							label   		= "*Last Name:",
+							required		= "required",
+							size    		= "50",
+							class   		= "form-control",
+							wrapper 		= "div class=controls",
+							labelClass 		= "control-label",
+							groupWrapper 	= "div class=form-group"
+						)#
 
-    					#html.textField(
-    						name    		= "username",
-    						bind    		= prc.author,
-    						label   		= "*Username:",
-    						required		= "required",
-    						size    		= "50",
-    						class   		= "form-control username",
-    						wrapper 		= "div class=controls",
-    						labelClass		= "control-label",
-    						groupWrapper	= "div class=form-group"
-    					)#
+						#html.inputField(
+							name    		= "email",
+							type    		= "email",
+							bind    		= prc.author,
+							label   		= "*Email:",
+							required		= "required",
+							size    		= "50",
+							class   		= "form-control",
+							wrapper 		= "div class=controls",
+							labelClass 		= "control-label",
+							groupWrapper 	= "div class=form-group"
+						)#
+
+						#html.textField(
+							name    		= "username",
+							bind    		= prc.author,
+							label   		= "*Username:",
+							required		= "required",
+							size    		= "50",
+							class   		= "form-control username",
+							wrapper 		= "div class=controls",
+							labelClass		= "control-label",
+							groupWrapper	= "div class=form-group"
+						)#
 
                     #html.endFieldset()#
 
@@ -104,20 +105,20 @@
 
                     #html.startFieldset( legend="Access" )#
 
-    					<!--- Roles --->
-    					#html.select(
-    						label     		= "Access Role:",
-    						name      		= "role",
-    						options   		= prc.roles,
-    						column    		= "roleID",
-    						nameColumn		= "role",
-    						bind      		= prc.author.getRole(),
-    						style     		= "width:200px",
-    						class     		= "form-control input-sm",
-    						wrapper   		= "div class=controls",
-    						labelClass		= "control-label",
-    						groupWrapper 	= "div class=form-group"
-    					)#
+						<!--- Roles --->
+						#html.select(
+							label     		= "Access Role:",
+							name      		= "role",
+							options   		= prc.roles,
+							column    		= "roleID",
+							nameColumn		= "role",
+							bind      		= prc.author.getRole(),
+							style     		= "width:200px",
+							class     		= "form-control input-sm",
+							wrapper   		= "div class=controls",
+							labelClass		= "control-label",
+							groupWrapper 	= "div class=form-group"
+						)#
 
                         <!--- Permission Groups --->
                         <div class="form-group">
@@ -151,7 +152,7 @@
 				<!--- cbadmin Event --->
 				#announce( "cbadmin_onNewAuthorForm" )#
             </div>
- 		</div>
+		</div>
     </div>
 </div>
 </cfoutput>

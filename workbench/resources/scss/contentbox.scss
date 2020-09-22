@@ -329,6 +329,14 @@ a.btn.btn-danger:visited {
 .btn-more:hover{
 	background-color: rgb(199, 199, 199) !important;
 }
+.btn-back{
+	color: #c4c4c4 !important;
+	background-color: transparent !important;
+}
+.btn-back:hover{
+	color: #444242 !important;
+	background-color: rgb(199, 199, 199) !important;
+}
 
 /******************** DROPDOWN MENUS ****************************/
 
@@ -633,6 +641,7 @@ table.diff {
 .pb5{ padding-bottom: 5px;}
 
 .p10{ padding: 10px;}
+.p11{ padding: 11px;}
 .pl10{ padding-left: 10px;}
 .pr10{ padding-right: 10px;}
 .pt10{ padding-top: 10px;}
@@ -651,6 +660,12 @@ table.diff {
 .mr10{ margin-right: 10px;}
 .mt10{ margin-top: 10px;}
 .mb10{ margin-bottom: 10px;}
+
+.m20{ margin: 20px;}
+.ml20{ margin-left: 20px;}
+.mr20{ margin-right: 20px;}
+.mt20{ margin-top: 20px;}
+.mb20{ margin-bottom: 20px;}
 
 .width20{ width: 20px }
 .width25{ width: 25px }

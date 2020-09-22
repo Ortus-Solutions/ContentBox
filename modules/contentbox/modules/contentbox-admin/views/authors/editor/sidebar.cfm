@@ -1,59 +1,35 @@
 <cfoutput>
-<div class="col-md-4" id="main-content-sidebar">
+<div class="col-md-4">
 
     	<div class="panel panel-primary">
 
-			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-camera-retro"></i> Snapshot</h3>
-			</div>
-
 			<div class="panel-body">
 
-				<div class="text-center m10" id="author_actions">
-					<div class="btn-group" role="group" aria-label="...">
-						<!--- <button type="button" class="btn btn-default">1</button> --->
+				<!--- Big Profile Picture --->
+				<div class="text-center mb20">
+					#getInstance( "Avatar@cb" ).renderAvatar(
+						email = prc.author.getEmail(),
+						size  = "100",
+						class = "img img-circle mb10"
+					)#
 
-						<!--- Export But --->
-						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
-						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <i class="far fa-sliders-h"></i> Actions
-							  <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
-										title="Issue a password reset for the user upon next login.">
-										<i class="fas fa-key"></i> Reset Password
-									</a>
-								</li>
-							</ul>
-						</div>
-
-						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							  <i class="fas fa-file-export fa-lg"></i> Export
-							  <span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										<i class="fas fa-file-export fa-lg"></i> Export as JSON
-									</a>
-								</li>
-								<li>
-									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
-										<i class="fas fa-file-export fa-lg"></i> Export as XML
-									</a>
-								</li>
-							</ul>
-						</div>
-						</cfif>
+					<div class="mt10 mb10">
+						<span class="label label-default size16">
+							#prc.author.getName()#
+						</span>
 					</div>
 				</div>
 
+				<!--- Password Reset --->
+				<cfif prc.author.getIsPasswordReset()>
+					<div class="alert alert-warning">
+						<i class="fa fa-exclamation-triangle fa-lg"></i>
+						This user has been marked for password reset upon login.
+					</div>
+				</cfif>
+
 				<!--- Persisted Info --->
-				<table class="table  table-hover table-striped-removed size12" width="100%">
+				<table class="table table-hover table-striped-removed mt10">
 					<tr>
 						<th width="125" class="textRight">Last Login</th>
 						<td>
@@ -69,14 +45,14 @@
 					</tr>
 
 					<tr>
-						<th class="textRight">Last Update</th>
+						<th class="textRight">Modified On</th>
 						<td>
 							#prc.author.getDisplayModifiedDate()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Two-Factor Auth</th>
+						<th class="textRight">Two-Factor</th>
 						<td>
 							#YesNoFormat( prc.author.getIs2FactorAuth() )#
 						</td>
@@ -86,13 +62,6 @@
 						<th class="textRight">Role</th>
 						<td>
 							#prc.author.getRole().getRole()#
-						</td>
-					</tr>
-
-					<tr>
-						<th class="textRight">Permission Groups</th>
-						<td>
-							#prc.author.getPermissionGroupsList()#
 						</td>
 					</tr>
 
@@ -118,27 +87,23 @@
 					</tr>
 				</table>
 
-				<p></p>
-
-				<!--- Password Reset --->
-				<cfif prc.author.getIsPasswordReset()>
-					<div class="alert alert-warning">
-						<i class="fa fa-exclamation-triangle fa-lg"></i>
-						This user has been marked for password reset upon login.
-					</div>
-				</cfif>
-
-
 				<!---Gravatar info --->
 				<cfif prc.cbSettings.cb_gravatar_display>
-				<div class="well well-sm">
+				<div class="well well-sm rounded">
 					<i class="fa fa-info-circle fa-lg"></i>
-					To change your avatar <a href="http://www.gravatar.com/site/signup/#URLEncodedFormat( prc.author.getEmail() )#" target="_blank">sign up to Gravatar.com</a>
-					and follow the on-screen instructions to add a Gravatar for #prc.author.getEmail()#
+					To change your avatar
+					<a
+						href="http://www.gravatar.com/site/signup/#URLEncodedFormat( prc.author.getEmail() )#"
+						target="_blank">
+						sign up to Gravatar.com
+					</a>
+					and follow the on-screen instructions to add a Gravatar for
+					<code>#prc.author.getEmail()#</code>
 				</div>
 				</cfif>
 			</div>
 		</div>
+
 		<!--- cbadmin Event --->
 		#announce( "cbadmin_onAuthorEditorSidebar" )#
     </div>

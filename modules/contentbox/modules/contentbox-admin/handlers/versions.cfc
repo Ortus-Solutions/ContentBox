@@ -4,10 +4,10 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="contentVersionService"	inject="id:contentVersionService@cb";
-	property name="contentService"			inject="id:contentService@cb";
-	property name="authorService"			inject="id:authorService@cb";
-	property name="CBHelper"				inject="id:CBHelper@cb";
+	property name="contentVersionService"	inject="contentVersionService@cb";
+	property name="contentService"			inject="contentService@cb";
+	property name="authorService"			inject="authorService@cb";
+	property name="CBHelper"				inject="CBHelper@cb";
 
 	/**
 	* Versions History Index

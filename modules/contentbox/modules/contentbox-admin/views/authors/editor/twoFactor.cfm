@@ -11,8 +11,6 @@
 		#html.hiddenField( name="relocationURL", value=event.buildLink( prc.xehTwoFactorRelocation ) )#
 
 		<fieldset>
-			<legend>Two-Factor Authentication</legend>
-
 			<p>
 				Increase your account's security by enabling Two-Factor Authentication (2FA).
 			</p>

@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="permissionGroupService" inject="id:permissionGroupService@cb";
-	property name="permissionService" inject="id:permissionService@cb";
+	property name="permissionGroupService" inject="permissionGroupService@cb";
+	property name="permissionService" inject="permissionService@cb";
 
 	/**
 	 * Pre handler

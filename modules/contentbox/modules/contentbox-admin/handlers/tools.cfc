@@ -8,14 +8,14 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="moduleService"   inject="id:moduleService@cb";
-	property name="themeService"    inject="id:themeService@cb";
-	property name="widgetService"   inject="id:widgetService@cb";
-	property name="roleService"     inject="id:roleService@cb";
-	property name="templateService" inject="id:emailtemplateService@cb";
-	property name="contentUtil"     inject="id:contentUtil@cb";
-	property name="HTMLHelper"      inject="HTMLHelper@coldbox";
-	property name="staticExporter"  inject="staticExporter@cbadmin";
+	property name="moduleService" inject="moduleService@cb";
+	property name="themeService" inject="themeService@cb";
+	property name="widgetService" inject="widgetService@cb";
+	property name="roleService" inject="roleService@cb";
+	property name="templateService" inject="emailtemplateService@cb";
+	property name="contentUtil" inject="contentUtil@cb";
+	property name="HTMLHelper" inject="HTMLHelper@coldbox";
+	property name="staticExporter" inject="staticExporter@cbadmin";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){

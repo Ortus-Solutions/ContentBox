@@ -4,8 +4,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="themeService" inject="id:themeService@cb";
-	property name="contentService" inject="id:contentService@cb";
+	property name="themeService" inject="themeService@cb";
+	property name="contentService" inject="contentService@cb";
 
 	/**
 	 * Active Theme
