@@ -3,7 +3,7 @@
 
     <div class="panel-heading">
         <h4 class="panel-title">
-            <a class="accordion-toggle" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
+            <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##pageinfo">
                 <i class="fa fa-info-circle fa-lg"></i> Info
             </a>
         </h4>

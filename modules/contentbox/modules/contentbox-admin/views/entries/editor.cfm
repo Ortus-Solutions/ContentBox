@@ -283,7 +283,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
                                         <i class="fas fa-sitemap"></i> Related Content
                                     </a>
 
@@ -309,7 +309,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
                                         <i class="fa fa-link"></i> Linked Content
                                     </a>
 
@@ -337,7 +337,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a
-                                    	class="accordion-toggle collapsed"
+                                    	class="accordion-toggle collapsed block"
                                     	data-toggle="collapse"
                                     	data-parent="##accordion"
                                     	href="##modifiers">
@@ -424,7 +424,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
                                         <i class="fas fa-database"></i> Cache Settings
                                     </a>
                                 </h4>
@@ -498,7 +498,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##categories">
                                         <i class="fas fa-tags"></i> Categories
                                     </a>
                                 </h4>
@@ -538,7 +538,7 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
                                         <i class="fas fa-photo-video"></i> Featured Image
                                     </a>
                                 </h4>

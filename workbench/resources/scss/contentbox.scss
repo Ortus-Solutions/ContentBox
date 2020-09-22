@@ -681,7 +681,7 @@ table.diff {
 .rounded-lg{ border-radius: 20px }
 
 .hidden { display:none!important; }
-.show{ display: block; }
+.block, .show{ display: block; }
 
 .flickerMessages { margin:0 0 10px; padding:15px 15px 15px 40px; font-weight:bold; display:none; background:#EFD1D8 url(../images/iinfo_icon.png) no-repeat 2% 50%; }
 
