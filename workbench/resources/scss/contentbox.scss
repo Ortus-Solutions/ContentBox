@@ -470,8 +470,15 @@ widgetinfobar::-moz-selection {
 .widget-teaser {line-height: 1.2em;font-size:11px;}
 .widget-footer-left {float: left; text-align: left;}
 .widget-footer-right {float: right; text-align: right;}
-.widget-no-preview {padding: 10px;background: #efefef;border: dashed 1px #dadada;font-weight: bold;margin-right: 15px;}
-.widget-preview-content .widget-no-preview {margin-top:10px;}
+.widget-no-preview {
+	padding: 10px;
+	background: #efefef;
+	border: dashed 1px #dadada;
+	font-weight: bold;
+	margin-right: 15px;}
+.widget-preview-content .widget-no-preview {
+	margin-top:10px;
+}
 #widget-title-bar img {margin-top:-5px;}
 .widget-total-bar {margin-bottom: 10px;font-size: 8pt;}
 .widget-preview-refresh {font-size:12px;float: right;margin-top:-25px;}
