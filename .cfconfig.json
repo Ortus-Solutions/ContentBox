@@ -1,6 +1,9 @@
 {
 	"systemErr":"System",
-    "systemOut":"System",
+	"systemOut":"System",
+	"adminPassword" : "contentbox",
+	"requestTimeout": "0,0,10,0",
+	"debuggingReportExecutionTimes": false,
     "whitespaceManagement":"white-space-pref",
 	"cacheDefaultObject":"contentbox",
     "caches":{
