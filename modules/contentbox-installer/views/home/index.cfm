@@ -1,16 +1,18 @@
 <cfoutput>
 <div class="panel panel-primary">
     <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-lightbulb-o"></i> #cb.r( "labels.wizard@installer" )#</h3>
+		<h3 class="panel-title">
+			<i class="far fa-lightbulb"></i> #cb.r( "labels.wizard@installer" )#
+		</h3>
     </div>
     <div class="panel-body">
-        #html.startForm( 
-            action 		= "cbinstaller/install", 
-            name 		= "installerForm", 
-            novalidate 	= "novalidate", 
-            class 		= "form-vertical" 
+        #html.startForm(
+            action 		= "cbinstaller/install",
+            name 		= "installerForm",
+            novalidate 	= "novalidate",
+            class 		= "form-vertical"
         )#
-            <div class="tab-wrapper tab-left tab-primary">
+            <div class="tab-wrapper tab-primary">
                 <!--- Tabs --->
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
                     <li class="active"><a href="##introduction" class="current" data-toggle="tab">#cb.r( "tab.intro@installer" )#</a></li>
@@ -36,35 +38,35 @@
                     	</div>
                     </div>
                     <!--- end panel 1 --->
-                    
+
                     <!--- ****************************************************************************** --->
                     <!--- Step 1 : Admin Setup--->
                     <!--- ****************************************************************************** --->
                     <div class="tab-pane" id="step1">
-                        #renderView( view="home/steps/step1", module="contentbox-installer" )#
+                        #renderView( view="home/steps/step1", prePostExempt = true )#
                     </div>
-                    
+
                     <!--- ****************************************************************************** --->
                     <!--- Step 2 : Site Setup--->
                     <!--- ****************************************************************************** --->
-                    <div class="tab-pane" id="step2">  
-                        #renderView( view="home/steps/step2", module="contentbox-installer" )#
+                    <div class="tab-pane" id="step2">
+                        #renderView( view="home/steps/step2", prePostExempt = true )#
                     </div>
-                    
+
                     <!--- ****************************************************************************** --->
                     <!--- Step 3 : Email Setup--->
                     <!--- ****************************************************************************** --->
-                    <div class="tab-pane" id="step3">  
-                        #renderView( view="home/steps/step3", module="contentbox-installer" )#
+                    <div class="tab-pane" id="step3">
+                        #renderView( view="home/steps/step3", prePostExempt = true )#
                     </div>
-                        
+
                     <!--- ****************************************************************************** --->
                     <!--- Step 4 : Site URL Rewrites --->
                     <!--- ****************************************************************************** --->
-                    <div class="tab-pane" id="step4">  
-                        #renderView( view="home/steps/step4", module="contentbox-installer" )#
-                    </div> 
-                                         
+                    <div class="tab-pane" id="step4">
+                        #renderView( view="home/steps/step4", prePostExempt = true )#
+                    </div>
+
                     <!---Error Bar --->
                     <div id="errorBar"></div>
                 </div>
