@@ -604,10 +604,7 @@ component extends="baseContentHandler" {
 
 		// if ajax and searching, just return tables
 		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView(
-				view   = "contentStore/editorSelectorEntries",
-				module = "contentbox-admin"
-			);
+			return renderView( view = "contentStore/editorSelectorEntries", prePostExempt = true );
 		} else {
 			event.setView( view = "contentStore/editorSelector", layout = "ajax" );
 		}

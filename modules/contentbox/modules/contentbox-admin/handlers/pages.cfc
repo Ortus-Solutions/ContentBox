@@ -651,15 +651,16 @@ component extends="baseContentHandler" {
 			siteId             : prc.oCurrentSite.getSiteId()
 		);
 		// setup data for display
-		prc.pages      = pageResults.pages;
-		prc.pagesCount = pageResults.count;
-		prc.CBHelper   = CBHelper;
+		prc.entries      = pageResults.pages;
+		prc.entriesCount = pageResults.count;
+		prc.CBHelper     = CBHelper;
+		prc.contentType  = "Pages";
 
 		// if ajax and searching, just return tables
 		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView( view = "pages/editorSelectorPages", module = "contentbox-admin" );
+			return renderView( view = "content/editorSelectorPages", prePostExempt = true );
 		} else {
-			event.setView( view = "pages/editorSelector", layout = "ajax" );
+			event.setView( view = "content/editorSelector", layout = "ajax" );
 		}
 	}
 

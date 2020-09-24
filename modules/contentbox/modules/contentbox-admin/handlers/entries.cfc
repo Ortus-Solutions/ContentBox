@@ -517,12 +517,13 @@ component extends="baseContentHandler" {
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
 		prc.CBHelper     = variables.CBHelper;
+		prc.contentType  = "Blog Entries";
 
 		// if ajax and searching, just return tables
 		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView( view = "entries/editorSelectorEntries", module = "contentbox-admin" );
+			return renderView( view = "content/editorSelectorEntries", prePostExempt = true );
 		} else {
-			event.setView( view = "entries/editorSelector", layout = "ajax" );
+			event.setView( view = "content/editorSelector", layout = "ajax" );
 		}
 	}
 

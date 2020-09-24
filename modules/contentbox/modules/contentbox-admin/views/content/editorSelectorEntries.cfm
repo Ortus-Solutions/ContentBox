@@ -1,6 +1,6 @@
 <cfoutput>
-<!--- content --->
-<table name="content" id="content" class="table table-striped-removed table-hover">
+<!--- entries --->
+<table name="entries" id="entries" class="table  table-striped-removed table-hover">
 	<thead>
 		<tr>
 			<th>
@@ -9,18 +9,17 @@
 			<th width="60" class="text-center">
 				Status
 			</th>
-			<th width="60" class="text-center">
+			<th width="100" class="text-center">
 				Insert
 			</th>
 		</tr>
 	</thead>
+
 	<tbody>
-		<cfloop array="#prc.content#" index="entry">
+		<cfloop array="#prc.entries#" index="entry">
 		<tr
 			id="contentID-#entry.getContentID()#"
 			<cfif NOT entry.getIsPublished()>class="warning"</cfif>
-			ondblclick="return insertContent( '#entry.getSlug()#' )"
-			title="Double click to insert"
 		>
 			<td>
 				<!--- Title --->
@@ -28,6 +27,7 @@
 					#entry.getTitle()#
 				</div>
 
+				<br>
 				<!--- Title --->
 				<div class="mt5">
 					<div class="textMuted">
@@ -55,11 +55,24 @@
 
 			<td class="text-center">
 				<button
-					class="btn btn-sm btn-more"
-					onclick="return insertContent( '#entry.getSlug()#' )"
-					title="Insert"
-				>
-					<i class="far fa-check-circle fa-lg"></i>
+					class="btn btn-more btn-sm"
+					onclick="return selectCBContent(
+						'#JSStringFormat( entry.getSlug() )#',
+						'#JSStringFormat( entry.getTitle() )#',
+						'#entry.getContentType().lcase()#ssl'
+					)"
+					title="SSL Link">
+					<i class="fas fa-key"></i>
+				</button>
+				<button
+					class="btn btn-more btn-sm"
+					onclick="return selectCBContent(
+						'#JSStringFormat( entry.getSlug() )#',
+						'#JSStringFormat( entry.getTitle() )#',
+						'#entry.getContentType().lcase()#'
+					)"
+					title="Link">
+					<i class="fa fa-link"></i>
 				</button>
 			</td>
 		</tr>
@@ -68,9 +81,5 @@
 </table>
 
 <!--- Paging --->
-#prc.oPaging.renderit(
-	foundRows = prc.contentCount,
-	link      = prc.pagingLink,
-	asList    = true
-)#
+#prc.oPaging.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
 </cfoutput>
