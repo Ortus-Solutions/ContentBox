@@ -119,8 +119,9 @@ component extends="baseContentHandler" {
 	// Quick Look
 	function quickLook( event, rc, prc ){
 		// get entry
-		prc.entry = variables.entryService.get( event.getValue( "contentID", 0 ) );
-		event.setView( view = "entries/quickLook", layout = "ajax" );
+		prc.content          = variables.entryService.get( event.getValue( "contentID", 0 ) );
+		prc.xehContentEditor = "#prc.cbAdminEntryPoint#.entries.editor";
+		event.setView( view = "content/quickLook", layout = "ajax" );
 	}
 
 	// Bulk Status Change

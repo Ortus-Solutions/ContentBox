@@ -34,9 +34,7 @@
 						#prc.contentVersion.renderContent()#
 					</div>
 					<div role="tabpanel" class="tab-pane" id="code">
-						<textarea class="form-control" rows="20">
-						#prc.contentVersion.getContent()#
-						</textarea>
+						<textarea class="form-control" rows="20">#prc.contentVersion.getContent()#</textarea>
 					</div>
 				</div>
 
