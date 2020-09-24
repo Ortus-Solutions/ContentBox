@@ -198,7 +198,7 @@
 						class    = "btn btn-default",
 						onclick  = "closeModal( $('##permissionEditorContainer') )"
 					)#
-					#html.submitButton( name="btnSave",value="Save",class="btn btn-danger" )#
+					#html.submitButton( name="btnSave",value="Save",class="btn btn-primary" )#
 				</div>
 				#html.endForm()#
 			</div>

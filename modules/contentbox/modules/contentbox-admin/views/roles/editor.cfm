@@ -127,7 +127,7 @@
 
 						<!--- Action Bar --->
 						<div class="form-actions">
-							<input type="submit" value="Save" class="btn btn-success">
+							<input type="submit" value="Save" class="btn btn-success btn-lg">
 						</div>
 
 					#html.endForm()#

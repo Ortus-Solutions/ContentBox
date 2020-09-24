@@ -235,7 +235,7 @@
 						class	= "btn btn-default",
 						onclick	= "closeModal( $( '##categoryEditorContainer' ) )"
 					)#
-					#html.submitButton( name="btnSave", value="Save Category", class="btn btn-danger" )#
+					#html.submitButton( name="btnSave", value="Save", class="btn btn-primary" )#
 				</div>
 				#html.endForm()#
 			</div>
