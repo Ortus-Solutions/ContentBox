@@ -131,24 +131,6 @@
         <!--- Action Bar --->
         <div class="actionBar" id="actionBar">
 
-            <!--- Published Status --->
-            <cfif args.content.isLoaded()>
-                <cfif args.content.getIsPublished()>
-                    <div class="alert alert-info">
-                        <cfif dateCompare( args.content.getPublishedDate(), now() ) eq 1>
-                            <i class="fa fa-space-shuttle"></i> This content publishes in the future: #args.content.getDisplayPublishedDate()#
-                        <cfelse>
-                            <i class="fa fa-thumbs-up"></i> This content is published!
-                        </cfif>
-                    </div>
-                <cfelse>
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i> This content is in draft!
-                    </div>
-                </cfif>
-
-            </cfif>
-
             <div class="btn-group">
                 <button type="button" class="btn btn-info" onclick="quickSave()" title="Save and continue editing">
                     Save

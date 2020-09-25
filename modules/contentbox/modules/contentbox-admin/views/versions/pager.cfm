@@ -54,31 +54,50 @@
 				<cfset activeVersion = thisVersion.getVersion()>
 			</cfif>
 			<tr id="version_row_#thisVersion.getContentVersionID()#" data-versionID="#thisVersion.getContentVersionID()#">
+				<!--- Diff --->
 				<td class="text-center">
 					<!--- old version --->
-					<input type="radio" class="rb_oldversion" value="#thisVersion.getContentVersionID()#"
-						   name="old_version" id="old_version" <cfif thisVersion.getVersion() eq ( activeVersion - 1 )>checked="checked"</cfif>>
+					<input
+						type="radio"
+						class="rb_oldversion"
+						value="#thisVersion.getContentVersionID()#"
+						name="old_version"
+						id="old_version"
+						<cfif thisVersion.getVersion() eq ( activeVersion - 1 )>checked="checked"</cfif>
+					>
 					<!--- current version --->
-					<input type="radio" class="rb_version" value="#thisVersion.getContentVersionID()#"
-						   name="version" id="version" <cfif thisVersion.getIsActive()>checked="checked"</cfif>>
+					<input
+						type="radio"
+						class="rb_version"
+						value="#thisVersion.getContentVersionID()#"
+						name="version"
+						id="version"
+						<cfif thisVersion.getIsActive()>checked="checked"</cfif>
+					>
 				</td>
 
+				<!--- Version Number --->
 				<td class="text-center">
-					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehVersionQuickLook)#/versionID/#thisVersion.getContentVersionID()#')">#thisVersion.getVersion()#</a>
+					<a href="javascript:openRemoteModal( '#event.buildLink( prc.xehVersionQuickLook )#/versionID/#thisVersion.getContentVersionID()#')">
+						#thisVersion.getVersion()#
+					</a>
 				</td>
 
+				<!--- Status --->
 				<td class="text-center">
 					<cfif thisVersion.getIsActive()>
-						<i class="far fa-dot-circle fa-lg textGreen" title="Active Version"></i>
+						<i class="far fa-dot-circle fa-lg textRed" title="Active Version"></i>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg textMuted"></i>
+						<i class="far fa-dot-circle fa-lg textMuted" title="Past Version"></i>
 					</cfif>
 				</td>
 
+				<!--- Created Version Date --->
 				<td class="text-center">
 					#thisVersion.getDisplayCreatedDate()#
 				</td>
 
+				<!--- Author + Changelog --->
 				<td>
 					#getInstance( "Avatar@cb" ).renderAvatar(
 						email	= thisVersion.getAuthorEmail(),
@@ -92,6 +111,7 @@
 					</div>
 				</td>
 
+				<!--- Actions --->
 				<td class="text-center">
 					<!--- ACTIVE INDICATOR --->
 					<cfif thisVersion.getIsActive()>
