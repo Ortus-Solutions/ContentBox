@@ -276,7 +276,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				c.isEq( "site.siteId", javaCast( "int", siteId ) );
 			} )
 			.when( len( arguments.contentId ), function( c ){
-				c.ne( "contentID", autoCast( "contentID", contentId ) );
+				c.ne( "contentID", javaCast( "int", contentId ) );
 			} )
 			.count() > 0 ? false : true;
 	}
