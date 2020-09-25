@@ -85,29 +85,55 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="firstname">Width</label>
-                                                    <input disabled="disabled" type="text" class="form-control" id="w" name="w">
+                                                    <input disabled="disabled" type="number" class="form-control" id="w" name="w">
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label for="firstname">Height</label>
-                                                    <input disabled="disabled" type="text" class="form-control" id="h" name="h">
+                                                    <input disabled="disabled" type="number" class="form-control" id="h" name="h">
                                                 </div>
                                             </div>
                                             <input type="hidden" size="4" id="x2" name="x2" />
                                             <input type="hidden" size="4" id="y2" name="y2" />
-                                            <input type="hidden" name="imageName"
-                                                    id="imageName" value="#rc.imageName#" />
-                                            <input type="hidden" name="imageFile"
-                                                    id="imageFile" value="" />
-                                            <input type="checkbox" class="hidden" name="imgEdited"
-                                                    id="imgEdited" />
-                                            <input type="hidden" name="imagePath"
-                                                    id="imagePath" value="#rc.imagePath#" />
-                                            <button type="button" class="btn btn-primary" disabled="disabled"
-                                                    id="imageCrop_btn" value="Crop the image">Crop the image</button>
-                                            <button type="button" class="btn btn-primary" disabled="disabled"
-                                                    id="imageDeselect_btn" value="Crop the image">Deselect</button>
+											<input
+												type="hidden"
+												name="imageName"
+												id="imageName"
+												value="#rc.imageName#" />
+											<input
+												type="hidden"
+												name="imageFile"
+												id="imageFile"
+												value="" />
+											<input
+												type="checkbox"
+												class="hidden"
+												name="imgEdited"
+                                                id="imgEdited" />
+											<input
+												type="hidden"
+												name="imagePath"
+												id="imagePath"
+												value="#rc.imagePath#" />
+											<button
+												type="button"
+												class="btn btn-primary btn-block"
+												disabled="disabled"
+												id="imageCrop_btn"
+												value="Crop the image"
+											>
+												Crop the image
+											</button>
+											<button
+												type="button"
+												class="btn btn-default btn-block"
+												disabled="disabled"
+												id="imageDeselect_btn"
+												value="Crop the image"
+											>
+												Deselect
+											</button>
 
                                     </form>
                                 </div>
@@ -123,7 +149,7 @@
                                                         <label for="width">Width</label>
                                                         <input value="#prc.width#"
                                                                 data-width="#prc.width#"
-                                                                type="text"
+                                                                type="number"
                                                                 class="form-control"
                                                                 id="width"
                                                                 name="width"
@@ -137,7 +163,7 @@
                                                         <label for="height">Height</label>
                                                         <input value="#prc.height#"
                                                                 data-height="#prc.height#"
-                                                                type="text"
+                                                                type="number"
                                                                 class="form-control input-sm"
                                                                 id="height"
                                                                 name="height"
@@ -147,14 +173,21 @@
                                                 </div>
 
                                             </div>
-                                            <button type="button" class="btn btn-primary" disabled="disabled"
-                                                    id="scale_btn" value="Scale">Scale</button>
+											<button
+												type="button"
+												class="btn btn-primary btn-block"
+												disabled="disabled"
+												id="scale_btn"
+												value="Scale"
+											>
+												Scale
+											</button>
 
                                     </form>
                                 </div>
 
                                 <div class="widget-arguments tab-pane" role="tabpanel" id="transform">
-                                    <div class="btn-group-vertical" id="transformers">
+                                    <div class="btn-group-vertical btn-block" id="transformers">
 
 												<button
 													type="button"
