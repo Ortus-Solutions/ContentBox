@@ -19,6 +19,7 @@ component {
 	property name="messagebox" inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller" inject="DataMarshaller@coldbox";
 	property name="markdown" inject="Processor@cbmarkdown";
+	property name="siteService" inject="siteService@cb";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -353,7 +354,8 @@ component {
 			.paramValue( "layout", "" )
 			.paramValue( "title", "" )
 			.paramValue( "slug", "" )
-			.paramValue( "h", "" );
+			.paramValue( "h", "" )
+			.paramValue( "siteId", "" );
 
 		// valid Author?
 		if (

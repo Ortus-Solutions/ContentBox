@@ -52,8 +52,8 @@
                 <!--- MessageBox --->
                 #getInstance( "messagebox@cbMessagebox" ).renderit()#
 
-                <!--- id --->
-                #html.hiddenField( name="contentID", bind=prc.page )#
+                <!--- ids --->
+				#html.hiddenField( name="contentID", bind=prc.page )#
                 #html.hiddenField( name="contentType", bind=prc.page )#
 
                 <div class="panel panel-default">
@@ -152,7 +152,7 @@
 
                             <!--- ContentToolBar --->
                             #renderView(
-								view 			= "_tags/content/markup",
+								view 			= "_tags/content/toolbar",
 								args 			= { content = prc.page },
 								prePostExempt 	= true
 							)#

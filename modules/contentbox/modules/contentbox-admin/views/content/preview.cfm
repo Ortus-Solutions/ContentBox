@@ -4,10 +4,16 @@
 		<div class="modal-header">
 
 			<div class="row">
+
 				<div class="col-md-3">
-					<h3 style="margin: 9px 0;"><i class="far fa-eye fa-lg"></i>&nbsp; <span class="header-title">Responsive Previews</span></h3>
+					<div class="size18">
+						<i class="far fa-eye fa-lg"></i>&nbsp;
+						<span class="header-title">Responsive Previews</span>
+					</div>
 				</div>
+
 				<div class="col-md-6 text-center">
+					<!--- Responsive Previews --->
 					<div class="btn-group" role="group" aria-label="Preview Resizer" style="min-width: 200px">
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -23,7 +29,7 @@
 								onclick="setPreviewSize( this, 768 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fa fa-2x fa-tablet"></i>
+							<i class="fa fa-2x fa-tablet-alt"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -31,7 +37,7 @@
 								onclick="setPreviewSize( this, 1024 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fa fa-2x fa-tablet fa-rotate-90"></i>
+							<i class="fa fa-2x fa-tablet-alt fa-rotate-90"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -39,7 +45,7 @@
 								onclick="setPreviewSize( this, 320 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fa fa-2x fa-mobile"></i>
+							<i class="fas fa-2x fa-mobile-alt"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -47,7 +53,7 @@
 								onclick="setPreviewSize( this, 568 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fa fa-2x fa-mobile fa-rotate-90"></i>
+							<i class="fas fa-2x fa-mobile-alt fa-rotate-90"></i>
 						</button>
 					</div>
 				</div>
@@ -56,6 +62,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="modal-body">
 			<!---hidden form for preview submit, has to be a form as content can be quite large
 				so get operations do not work.
@@ -75,10 +82,17 @@
 				#html.hiddenField( name="slug", value=rc.slug )#
 				#html.hiddenField( name="markup", value=rc.markup )#
 				#html.hiddenField( name="parentPage", value=rc.parentPage )#
+				#html.hiddenField( name="siteId", value=prc.oCurrentSite.getSiteId() )#
 			#html.endForm()#
 
 			<!--- hidden iframe for preview --->
-			<iframe id="previewFrame" name="previewFrame" width="100%" scrolling="auto" style="border: 1px solid ##eaeaea"></iframe>
+			<iframe
+				id="previewFrame"
+				name="previewFrame"
+				width="100%"
+				scrolling="auto"
+				style="border: 1px solid ##eaeaea"
+			></iframe>
 		</div>
 	</div>
 </div>

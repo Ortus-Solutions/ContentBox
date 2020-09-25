@@ -46,13 +46,16 @@ component extends="content"{
 
 		// Construct the preview entry according to passed arguments
 		prc.page = typeService.new();
-		prc.page.setTitle( rc.title );
-		prc.page.setSlug( rc.slug );
-		prc.page.setPublishedDate( now() );
-		prc.page.setAllowComments( false );
-		prc.page.setCache( false );
-		prc.page.setMarkup( rc.markup );
-		prc.page.setLayout( rc.layout );
+		prc.page = typeService.new( {
+			title         : rc.title,
+			slug          : rc.slug,
+			publishedDate : now(),
+			allowComments : false,
+			cache         : false,
+			markup        : rc.markup,
+			layout        : rc.layout,
+			site          : variables.siteService.getOrFail( rc.siteId )
+		} );
 
 		// Comments need to be empty
 		prc.comments = [];

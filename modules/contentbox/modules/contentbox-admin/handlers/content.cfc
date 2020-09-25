@@ -8,11 +8,11 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="contentService"                                                       inject="contentService@cb";
-	property name="statsService"                                                                             inject="statsService@cb";
-	property name="contentStoreService"	inject="contentStoreService@cb";
-	property name="authorService"                                                                  inject="authorService@cb";
-	property name="CBHelper"                                                                                                                         inject="CBHelper@cb";
+	property name="contentService"       inject="contentService@cb";
+	property name="statsService"         inject="statsService@cb";
+	property name="contentStoreService"	 inject="contentStoreService@cb";
+	property name="authorService"        inject="authorService@cb";
+	property name="CBHelper"             inject="CBHelper@cb";
 
 	/**
 	 * Quick Content Preview from editors

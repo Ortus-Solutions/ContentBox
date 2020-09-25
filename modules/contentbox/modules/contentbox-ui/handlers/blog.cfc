@@ -50,20 +50,24 @@ component extends="content"{
 		// Concrete Overrides Below
 
 		// Construct the preview entry according to passed arguments
-		prc.entry = entryService.new();
-		prc.entry.setTitle( rc.title );
-		prc.entry.setSlug( rc.slug );
-		prc.entry.setPublishedDate( now() );
-		prc.entry.setAllowComments( false );
-		prc.entry.setCache( false );
-		prc.entry.setMarkup( rc.markup );
+		prc.entry = entryService.new( {
+			title         : rc.title,
+			slug          : rc.slug,
+			publishedDate : now(),
+			allowComments : false,
+			cache         : false,
+			markup        : rc.markup,
+			site          : variables.siteService.getOrFail( rc.siteId )
+		} );
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
-		prc.entry.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
+		prc.entry
+			.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
 			.setActiveContent( prc.entry.getContentVersions() );
 		// set skin view
-		event.setLayout( name="#prc.cbTheme#/layouts/#rc.layout#", module=prc.cbThemeRecord.module )
+		event
+			.setLayout( name="#prc.cbTheme#/layouts/#rc.layout#", module=prc.cbThemeRecord.module )
 			.setView( view="#prc.cbTheme#/views/entry", module=prc.cbThemeRecord.module );
 	}
 

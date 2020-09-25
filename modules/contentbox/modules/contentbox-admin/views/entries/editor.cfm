@@ -149,7 +149,7 @@
 
                         <!---ContentToolBar --->
                         #renderView(
-							view 			= "_tags/content/markup",
+							view 			= "_tags/content/toolbar",
 							args 			= { content : prc.entry },
 							prePostExempt 	= true
 						)#
