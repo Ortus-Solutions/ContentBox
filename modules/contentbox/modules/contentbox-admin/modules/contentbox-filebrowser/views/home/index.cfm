@@ -23,46 +23,46 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div class="btn-group btn-group-sm" role="group">
 			<a
 				href="javascript:fbRefresh()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "refresh@fb" )# #prc.fbPreferences.listFolder#"
 			>
-				<i class="fas fa-recycle"></i>
+				<i class="fas fa-recycle fa-lg"></i>
 			</a>
 			<a
 				href="javascript:fbDrilldown()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "home@fb" )#"
 			>
-				<i class="fas fa-home"></i>
+				<i class="fas fa-home fa-lg"></i>
 			</a>
 		</div>
 
 		<div class="btn-group btn-group-sm" role="group">
 			<a
 				onclick="javascript:fbNewFolder();"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "newFolder@fb" )#"
 			>
-				<i class="fas fa-folder-plus"></i>
+				<i class="fas fa-folder fa-lg-plus"></i>
 			</a>
 			<a
 				onclick="javascript:fbRename()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "rename@fb" )#"
 			>
-				<i class="fas fa-terminal"></i>
+				<i class="fas fa-terminal fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbDelete()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "delete@fb" )#"
@@ -71,30 +71,30 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			</a>
 			<a
 				onclick="javascript:fbUpload()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "upload@fb" )#"
 			>
-				<i class="fas fa-upload"></i>
+				<i class="fas fa-upload fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbDownload()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "download@fb" )#"
 			>
-				<i class="fas fa-download"></i>
+				<i class="fas fa-download fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbQuickView()"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "quickview@fb" )#"
 			>
-				<i class="fas fa-camera"></i>
+				<i class="fas fa-camera fa-lg"></i>
 			</a>
 		</div>
 
@@ -102,21 +102,21 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div class="btn-group btn-group-sm" role="group">
 			<a
 				href="javascript:fbListTypeChange( 'listing', 'all' )"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "filelisting@fb" )#"
 			>
-				<i class="fas fa-list-ul"></i>
+				<i class="fas fa-list fa-lg-ul"></i>
 			</a>
 			<a
 				href="javascript:fbListTypeChange( 'grid', 'all' )"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "gridlisting@fb" )#"
 			>
-				<i class="fas fa-th"></i>
+				<i class="fas fa-th fa-lg"></i>
 			</a>
 		</div>
 
@@ -125,21 +125,21 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<div class="btn-group btn-group-sm" role="group">
 			<a
 				href="javascript:fbListTypeChange( 'listing', 'dir' )"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "directorylistview@fb" )#"
 			>
-				<i class="fas fa-align-justify"></i>
+				<i class="fas fa-align-justify fa-lg"></i>
 			</a>
 			<a
 				href="javascript:fbListTypeChange( 'grid', 'dir' )"
-				class="btn btn-info"
+				class="btn btn-more"
 				data-toggle="tooltip"
 				data-container="body"
 				title="#$r( "directorygridview@fb" )#"
 			>
-				<i class="fas fa-folder"></i>
+				<i class="fas fa-folder fa-lg"></i>
 			</a>
 		</div>
 
