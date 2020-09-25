@@ -7,9 +7,9 @@
 	<!--- Responsive --->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!--- SES --->
-	<base href="#getSetting('htmlBaseURL')#" />
+	<base href="#event.getHTMLBaseURL()#" />
 	<!--- Title --->
-    <title>#prc.fbSettings.title#</title> 
+    <title>#prc.fbSettings.title#</title>
 	<!--- JQuery --->
 	<cfset addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" )>
 </head>

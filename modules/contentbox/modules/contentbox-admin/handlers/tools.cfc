@@ -13,7 +13,6 @@ component extends="baseHandler" {
 	property name="widgetService" inject="widgetService@cb";
 	property name="roleService" inject="roleService@cb";
 	property name="templateService" inject="emailtemplateService@cb";
-	property name="contentUtil" inject="contentUtil@cb";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 	property name="staticExporter" inject="staticExporter@cbadmin";
 
@@ -174,7 +173,7 @@ component extends="baseHandler" {
 		// save success message
 		var filename           = variables.HTMLHelper.slugify( prc.oCurrentSite.getName() );
 		// send it
-		contentUtil.sendFile(
+		event.sendFile(
 			file       = exportFilePath,
 			name       = fileName,
 			abortAtEnd = true
@@ -200,7 +199,7 @@ component extends="baseHandler" {
 		// save success message
 		var filename       = variables.HTMLHelper.slugify( prc.oCurrentSite.getName() );
 		// send it
-		contentUtil.sendFile(
+		event.sendFile(
 			file       = exportFilePath,
 			name       = fileName,
 			abortAtEnd = true

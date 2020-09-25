@@ -19,10 +19,8 @@ component extends="baseHandler" {
 	 * Display media manager
 	 */
 	function index( event, rc, prc ){
-		// library type
-		event.paramValue( "library", "content" );
 		// get settings according to contentbox
-		prc.cbFileBrowserSettings = settingService.buildFileBrowserSettings();
+		prc.cbFileBrowserSettings       = variables.settingService.buildFileBrowserSettings();
 		// this is the default, so ignore
 		prc.cbFileBrowserSettings.title = "Content Library";
 

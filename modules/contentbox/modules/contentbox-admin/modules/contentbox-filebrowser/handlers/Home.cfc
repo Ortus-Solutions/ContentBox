@@ -8,7 +8,6 @@
 component {
 
 	// DI
-	property name="contentUtil"   inject="contentUtil@cb";
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
 
 	/**
@@ -354,7 +353,9 @@ component {
 			var iData = { path : rc.path };
 			announce( "fb_preFileDownload", iData );
 
-			contentUtil.sendFile( file = rc.path );
+			// Serve the file
+			event.sendFile( file = rc.path );
+
 			data.errors   = false;
 			data.messages = $r( resource = "messages.downloaded@fb", values = "#rc.path#" );
 			// Announce it
@@ -515,6 +516,7 @@ component {
 
 	/**
 	 * Load Assets for FileBrowser
+	 *
 	 * @force Force the loading of assets on demand
 	 * @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	 */
@@ -575,7 +577,7 @@ component {
 				cookieStorage.set( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 			if ( !structKeyExists( prefs, "listFolder" ) ) {
-				prefs.listFolder = "listing";
+				prefs.listFolder = "all";
 				cookieStorage.set( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}

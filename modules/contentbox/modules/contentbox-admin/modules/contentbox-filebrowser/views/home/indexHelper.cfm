@@ -81,54 +81,54 @@ $( document ).ready( function() {
 	fbSelectHistory = [];
 	// context menus
     $.contextMenu({
-        selector: '.files', 
+        selector: '.files',
         callback: function(key, options) {
             var m = "clicked: " + key;
-            window.console && console.log(m) || alert(m); 
+            window.console && console.log(m) || alert(m);
         },
         items: {
-            "Quick view": {name: "#$r( "quickview@fb" )#", icon: "fa-edit", callback: function(){
+            "Quick view": {name: "#$r( "quickview@fb" )#", callback: function(){
             	return fbQuickView();
             }},
-            "Rename": {name: "#$r( "rename@fb" )#", icon: "fa-terminal", callback: function(){
+            "Rename": {name: "#$r( "rename@fb" )#", callback: function(){
             	return fbRename();
             }},
-           "Delete": {name: "#$r( "delete@fb" )#", icon: "fa-times", callback: function(){
+           "Delete": {name: "#$r( "delete@fb" )#", callback: function(){
            	return fbDelete();
            }},
-            "Download": {name: "#$r( "download@fb" )#", icon: "fa-download", callback: function(){
+            "Download": {name: "#$r( "download@fb" )#", callback: function(){
             	return fbDownload();
             }},
-            "URL": {name: "URL", icon: "fa-link", callback: function(){
+            "URL": {name: "URL", callback: function(){
             	return fbUrl();
             }},
 			<cfif !len( rc.callback )>
             "sep1": "---------",
-            "edit": {name: "#$r( "edit@fb" )#", icon: "fa-edit", callback: function(){
+            "edit": {name: "#$r( "edit@fb" )#", callback: function(){
             	return fbEdit();
             }},
-            "info": {name: "#$r( "info@fb" )#", icon: "fa-info", callback: function(){
+            "info": {name: "#$r( "info@fb" )#", callback: function(){
             	return fbInfo();
             }}
             </cfif>
         }
     });
     $.contextMenu({
-        selector: '.folders', 
+        selector: '.folders',
         callback: function(key, options) {
             var m = "clicked: " + key;
-            window.console && console.log(m) || alert(m); 
+            window.console && console.log(m) || alert(m);
         },
         items: {
-            "Rename": {name: "Rename", icon: "fa-terminal", callback: function(){
+            "Rename": {name: "Rename", callback: function(){
             	return fbRename();
             }},
-           "Delete": {name: "Delete", icon: "fa-times", callback: function(){
+           "Delete": {name: "Delete", callback: function(){
            	return fbDelete();
            }}
         }
     });
-    $('.files,.folders').on('click contextmenu', function(e){
+    $('.files,.folders').on( 'click contextmenu', function(e){
 		// history cleanup
 		if(!e.ctrlKey){
 			$selectedItemType.val('');
@@ -175,12 +175,13 @@ $( document ).ready( function() {
 		// enable selection button
 		$selectButton.attr( "disabled", false );
 
-    })  
+    })
 
 	//$fileBrowser.find( ".files" ).contextmenu( { target : '##fbContextMenu' } );
 	//$fileBrowser.find( ".folders" ).contextmenu( { target : '##fbContextMenuDirectories' } );
 	// Sorting
-	$sorting.change(function(){ fbRefresh(); } );
+	$sorting.change( function(){ fbRefresh(); } );
+
 	// Quick div filter
 	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
@@ -192,15 +193,20 @@ function noMultiSelectAction(){
 }
 function fbListTypeChange( listType,file ){
 	$listType.val( listType );
-	$listFolder.val( file);
+	$listFolder.val( file );
 	fbRefresh();
 }
 function fbRefresh(){
-	$('.tooltip').remove();
+	$( '.tooltip' ).remove();
 	$fileLoaderBar.slideDown();
-	$fileBrowser.load( '#event.buildLink( prc.xehFBBrowser )#',
-		{ path:'#prc.fbSafeCurrentRoot#', sorting:$sorting.val(), listType: $listType.val(),listFolder
-		:$listFolder.val() },
+	$fileBrowser.load(
+		'#event.buildLink( prc.xehFBBrowser )#',
+		{
+			path       : '#prc.fbSafeCurrentRoot#',
+			sorting    : $sorting.val(),
+			listType   : $listType.val(),
+			listFolder : $listFolder.val()
+		},
 		function(){
 			$fileLoaderBar.slideUp();
 		} );
@@ -214,22 +220,41 @@ function fbDrilldown( inPath ){
 	} );
 }
 function fbQuickView(){
-	if(noMultiSelectAction()){return;};
+	// Clear out the preview
+	$( '.imagepreview' ).attr( 'src', '' );
+
+	// Abort if in multi select
+	if( noMultiSelectAction() ){
+		return;
+	};
+
 	// check selection
 	var sPath = $selectedItem.val();
-	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
+	if( !sPath.length ){
+		alert( '#$r( "jsmessages.select@fb" )#' );
+		return;
+	}
+
 	// get ID
 	var thisID 	= $selectedItemID.val();
-	var target 	= $( "##"+thisID);
+	var target 	= $( "##" + thisID );
+
 	// only images
-	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
+	if( target.attr( "data-quickview" ) == "false" ){
+		alert( '#$r( "jsmessages.quickview_only_images@fb" )#' );
+		return;
+	}
+
 	// show it
 	var imgURL = "#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent( target.attr( "data-fullURL" ) );
-	$('.imagepreview').attr('src', imgURL);
+	$( '.imagepreview' ).attr( 'src', imgURL );
 	openModal( $( "##modalPreview" ), 500 );
 }
 function fbRename(){
-	if(noMultiSelectAction()){return;};
+	// Abort if in multi select
+	if( noMultiSelectAction() ){
+		return;
+	};
 	// check selection
 	var sPath = $selectedItem.val();
 	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
@@ -237,14 +262,14 @@ function fbRename(){
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
 	// prompt for new name
-	bootbox.prompt( { 	title: '#$r( "jsmessages.newname@fb" )#', 
-						inputType: "text", 
-						value: target.attr( "data-name" ), 
+	bootbox.prompt( { 	title: '#$r( "jsmessages.newname@fb" )#',
+						inputType: "text",
+						value: target.attr( "data-name" ),
 						callback: function(result){
 							// do renaming if prompt not empty
 							if( result != null){
 								$fileLoaderBar.slideDown();
-								$.post( '#event.buildLink( prc.xehFBRename )#', 
+								$.post( '#event.buildLink( prc.xehFBRename )#',
 									    { name : result, path : target.attr( "data-fullURL" ) },
 									    function( data ){
 											if( data.errors ){ alert( data.messages ); }
@@ -256,7 +281,10 @@ function fbRename(){
 
 }
 function fbUrl(){
-	if(noMultiSelectAction()){return;};
+	// Abort if in multi select
+	if( noMultiSelectAction() ){
+		return;
+	};
 	// check selection
 	var sPath = $selectedItem.val();
 	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
@@ -264,15 +292,18 @@ function fbUrl(){
 	var thisID 		= $selectedItemID.val();
 	var target 		= $( "##"+thisID);
 	// prompt the URL
-	bootbox.prompt( { 	title: 'URL:', 
-						inputType: "text", 
-						value: "#event.buildLink( '' )#" + target.attr( "data-relurl" ).substring(1), 
+	bootbox.prompt( { 	title: 'URL:',
+						inputType: "text",
+						value: "#event.buildLink( '' )#" + target.attr( "data-relurl" ).substring(1),
 						callback: function(result){}
 	});
 
 }
 function fbEdit(){
-	if(noMultiSelectAction()){return;};
+	// Abort if in multi select
+	if( noMultiSelectAction() ){
+		return;
+	};
 	// check selection
 	var sPath = $selectedItem.val();
 	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
@@ -282,13 +313,16 @@ function fbEdit(){
 	// only images
 	if( target.attr( "data-quickview" ) == "false" ){ alert( '#$r( "jsmessages.quickview_only_images@fb" )#' ); return; }
 	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.index' )#",{
-		imageName:target.attr( "data-name" ), 
-		imageSrc:target.attr( "data-relUrl" ), 
+		imageName:target.attr( "data-name" ),
+		imageSrc:target.attr( "data-relUrl" ),
 		imagePath:target.attr( "data-fullUrl" )
 	}, $( window ).width() - 200, $( window ).height() - 200 );
 }
 function fbInfo(){
-	if(noMultiSelectAction()){return;};
+	// Abort if in multi select
+	if( noMultiSelectAction() ){
+		return;
+	};
 	// check selection
 	var sPath = $selectedItem.val();
 	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
@@ -297,15 +331,14 @@ function fbInfo(){
 	var target 		= $( "##"+thisID);
 	// Show info
 	openRemoteModal( "#event.buildLink( 'cbFileBrowser.editor.info' )#",{
-		fileName:target.attr( "data-name" ), 
-		fileSrc:target.attr( "data-relUrl" ), 
+		fileName:target.attr( "data-name" ),
+		fileSrc:target.attr( "data-relUrl" ),
 		filePath:target.attr( "data-fullUrl" )
 	}, $( window ).width() - 200, $( window ).height() - 200 );
 }
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
 function fbNewFolder(){
-
 	bootbox.prompt( '#$r( "jsmessages.newdirectory@fb" )#', function(result){
 		if( result != null){
 			$fileLoaderBar.slideDown();
@@ -329,12 +362,12 @@ function fbDelete(){
 	    message: '#$r( "jsmessages.delete_confirm@fb" )#',
 	    buttons: {
 	        confirm: {
-	            label: 'Yes',
-	            className: 'btn-success'
+	            label: 'DELETE',
+	            className: 'btn-danger'
 	        },
 	        cancel: {
-	            label: 'No',
-	            className: 'btn-danger'
+	            label: 'Cancel',
+	            className: 'btn-default'
 	        }
 	    },
 	    callback: function (result) {
@@ -360,9 +393,9 @@ function fbDownload(){
 	var sType = $selectedItemType.val();
 	if( !sPath.length ){
 		alert( '#$r( "jsmessages.select@fb" )#' ); return;
-	} else if ( sType == "dir" ){ 	
+	} else if ( sType == "dir" ){
 		alert( '#$r( "jsmessages.downloadFolder@fb" )#' ); return;
-	}	
+	}
 	// Trigger the download
 	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent(sPath) );
 }
@@ -384,9 +417,9 @@ $( document ).ready( function(){
 	// show upload button
 	$( "##file_uploader" ).on( "change", function() {
 		if( $( this ).val().length !=0 ){
-			$( "##file_uploader_button" ).removeClass( "hidden" ); 
+			$( "##file_uploader_button" ).removeClass( "hidden" );
 		}else{
-			$( "##file_uploader_button" ).addClass( "hidden" ); 
+			$( "##file_uploader_button" ).addClass( "hidden" );
 		}
 	} );
 
@@ -408,15 +441,15 @@ $( document ).ready( function(){
 			if( !results.errors ) {
 				fbRefresh();
 			} else {
-				wrapper.append( "<div class='alert alert-danger'>" + results.messages + "</div>" );	
+				wrapper.append( "<div class='alert alert-danger'>" + results.messages + "</div>" );
 				$( '##upload_message' ).remove();
 				field.prependTo( wrapper );
 				field.show();
 			}
 		} );
 	} );
-	
-	// File drag and drop	
+
+	// File drag and drop
 	$( "##FileBrowser-body" ).filedrop( {
 		// The name of the $_FILES entry:
 		paramname : 'FILEDATA',
@@ -439,7 +472,7 @@ $( document ).ready( function(){
 	    },
 	    dragLeave: function() {
 			$fileListing.removeClass( "fileListingUploading" );
-			$fileUploaderMessage.fadeOut(); 
+			$fileUploaderMessage.fadeOut();
 	    },
 		drop: function() {
 			$fileUploaderMessage.fadeOut();
@@ -469,7 +502,7 @@ $( document ).ready( function(){
 					break;
 			}
 			$fileListing.removeClass( "fileListingUploading" );
-			$fileUploaderMessage.fadeOut(); 
+			$fileUploaderMessage.fadeOut();
 		},
 		uploadStarted:function( i, file, len ){
 			//console.log( "uploading starting" + file );
@@ -499,7 +532,7 @@ $( document ).ready( function(){
 		// Associating a preview container with the file, using jQuery's $.data()
 		$.data( file, preview );
 	}
-	
+
 } );
 function fbUpload(){
 	$( "##uploadBar" ).slideToggle();

@@ -23,7 +23,7 @@
             </div>
             <div class="modal-footer">
                 <div class="widget-footer-right">
-                        <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-danger" onclick="closeRemoteModal()">Close</a>
+                        <a id="widget-button-cancel" href="javascript:void(0);" class="btn btn-default" onclick="closeRemoteModal()">Close</a>
                 </div>
             </div>
         </div>
