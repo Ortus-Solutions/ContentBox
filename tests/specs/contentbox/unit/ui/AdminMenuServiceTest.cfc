@@ -32,7 +32,6 @@ component extends="tests.resources.BaseTest"{
 			it( "can generate the menu", function(){
 				var r = model.generateMenu();
 				expect(	r ).notToBeEmpty();
-				expect(	r ).toInclude( "autoupdates" );
 			});
 
 
