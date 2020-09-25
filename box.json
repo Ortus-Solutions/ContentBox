@@ -44,9 +44,9 @@
         "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force",
         "start:2016":"server start serverConfigFile='server-adobe@2016.json' --force",
         "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force",
-        "log:lucee":"server log contentbox-lucee@5 --follow",
-        "log:2016":"server log contentbox-adobe@2016 --follow",
-        "log:2018":"server log contentbox-adobe@2018 --follow"
+        "log:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
+        "log:2016":"server log serverConfigFile=server-adobe@2016.json --follow",
+        "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow"
     },
     "cfmigrations":{
         "schema":"${DB_DATABASE}",
