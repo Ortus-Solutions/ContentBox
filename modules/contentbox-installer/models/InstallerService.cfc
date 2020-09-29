@@ -119,7 +119,7 @@ component accessors="true" {
 		// Inflate and set
 		settings.map( function( key, value ){
 			return variables.settingService.findByName( thisSetting ).setValue( value );
-		} )
+		} );
 
 		// Save all settings
 		settingService.saveAll( settings );
