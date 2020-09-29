@@ -221,7 +221,7 @@ component {
 		} );
 		systemOutput( "√ - Content Versioning boolean bits updated", true );
 
-		arguments.schema.alter( "cb_customField", ( table ) => {
+		arguments.schema.alter( "cb_customfield", ( table ) => {
 			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
 		} );
 		systemOutput( "√ - Custom Fields boolean bits updated", true );

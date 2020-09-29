@@ -583,12 +583,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table cb_customField
+# Dump of table cb_customfield
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `cb_customField`;
+DROP TABLE IF EXISTS `cb_customfield`;
 
-CREATE TABLE `cb_customField` (
+CREATE TABLE `cb_customfield` (
   `customFieldID` int(11) NOT NULL AUTO_INCREMENT,
   `key` varchar(255) NOT NULL,
   `value` longtext NOT NULL,
@@ -605,15 +605,15 @@ CREATE TABLE `cb_customField` (
   CONSTRAINT `FK1844684991F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-LOCK TABLES `cb_customField` WRITE;
-/*!40000 ALTER TABLE `cb_customField` DISABLE KEYS */;
+LOCK TABLES `cb_customfield` WRITE;
+/*!40000 ALTER TABLE `cb_customfield` DISABLE KEYS */;
 
-INSERT INTO `cb_customField` (`customFieldID`, `key`, `value`, `FK_contentID`, `createdDate`, `modifiedDate`, `isDeleted`)
+INSERT INTO `cb_customfield` (`customFieldID`, `key`, `value`, `FK_contentID`, `createdDate`, `modifiedDate`, `isDeleted`)
 VALUES
 	(3,'age','30',114,'2016-05-03 16:23:25','2016-05-03 16:23:25',0),
 	(4,'subtitle','4',114,'2016-05-03 16:23:25','2016-05-03 16:23:25',0);
 
-/*!40000 ALTER TABLE `cb_customField` ENABLE KEYS */;
+/*!40000 ALTER TABLE `cb_customfield` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
