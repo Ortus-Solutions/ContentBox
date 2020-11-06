@@ -1258,10 +1258,13 @@ component 	persistent 			= "true"
 	}
 
 	/**
-	* Get display publishedDate
-	*/
+	 * Get display publishedDate
+	 */
 	string function getDisplayPublishedDate(){
 		var publishedDate = getPublishedDate();
+		if( isNull( publishedDate ) ){
+			return "";
+		}
 		return dateFormat( publishedDate, variables.DATE_DISPLAY_FORMAT ) & " " & timeFormat( publishedDate, variables.TIME_FORMAT );
 	}
 
