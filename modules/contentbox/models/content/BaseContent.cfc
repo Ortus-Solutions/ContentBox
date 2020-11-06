@@ -1193,33 +1193,32 @@ component 	persistent 			= "true"
 				);
 			} );
 
-
 		// now clone children
-		if( original.hasChild() ){
-			var allChildren = original.getChildren();
-			// iterate and copy
-			for( var thisChild in allChildren ){
-				var newChild = originalService.new();
-				// attach to new parent copy
-				newChild.setParent( this );
-				// attach creator
-				newChild.setCreator( arguments.author );
-				// Setup the Page Title
-				newChild.setTitle( thisChild.getTitle() );
-				// Create the new hierarchical slug
-				newChild.setSlug( this.getSlug() & "/" & listLast( thisChild.getSlug(), "/" ) );
-				// now deep clone until no more child is left behind.
-				newChild.prepareForClone(
-					author          = arguments.author,
-					original        = thisChild,
-					originalService = originalService,
-					publish         = arguments.publish,
-					originalSlugRoot= arguments.originalSlugRoot,
-					newSlugRoot     = arguments.newSlugRoot
-				);
-				// now attach it
-				addChild( newChild );
-			}
+		if( arguments.original.hasChild() ){
+			arguments.original
+				.getChildren()
+				.each( function( thisChild ){
+					// Preapre new Child
+					var newChild = originalService.new( {
+						parent 	: this,
+						creator : author,
+						title 	: arguments.thisChild.getTitle(),
+						slug 	: this.getSlug() & "/" & listLast( arguments.thisChild.getSlug(), "/" ),
+						site 	: getSite()
+					} )
+					// now deep clone until no more child is left behind.
+					.prepareForClone(
+						author           = author,
+						original         = arguments.thisChild,
+						originalService  = originalService,
+						publish          = publish,
+						originalSlugRoot = originalSlugRoot,
+						newSlugRoot      = newSlugRoot
+					);
+
+					// now attach it to this piece of content
+					addChild( newChild );
+				} );
 		}
 
 		// evict original entity from hibernate cache, just in case
