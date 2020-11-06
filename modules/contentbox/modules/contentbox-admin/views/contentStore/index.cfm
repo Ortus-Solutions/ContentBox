@@ -189,17 +189,19 @@
 	#renderView(
 		view 			= "_tags/dialog/clone",
 		args 			= {
-			title        : "Content Cloning",
-			infoMsg      : "By default, all internal links are updated for you as part of the cloning process.",
+			title        : "Content Store Cloning",
+			infoMsg      : "",
 			action       : prc.xehContentClone,
-			titleLabel   : "Please enter the new content title",
-			publishLabel : "Publish content?",
-			publishInfo  : "By default all cloned content are published as drafts.",
+			titleLabel   : "Title",
+			publishLabel : "Publish",
+			publishInfo  : "By default all cloned items are published as drafts.",
 			statusName   : "contentStatus"
 		},
 		prePostExempt 	= true
 	)#
 </cfif>
+
+<!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 	#renderView(
 		view 			= "_tags/dialog/import",

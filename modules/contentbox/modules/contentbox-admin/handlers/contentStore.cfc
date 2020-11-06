@@ -270,20 +270,24 @@ component extends="baseContentHandler" {
 	}
 
 	/**
-	 * Clone a page
+	 * Clone a content store item
 	 */
 	function clone( event, rc, prc ){
+		// Defaults
+		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
+
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			relocate( event = prc.xehPages );
+			relocate( event = prc.xehContentStore );
 			return;
 		}
 
 		// get the content to clone
 		var original = variables.contentStoreService.get( rc.contentID );
-		// Verify new Title, else do a new copy of it
-		if ( rc.title eq original.getTitle() ) {
+
+		// Verify new Title, else do a new copy of it, but only if it's in the same site.
+		if( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 
@@ -292,14 +296,16 @@ component extends="baseContentHandler" {
 			title       : rc.title,
 			slug        : variables.HTMLHelper.slugify( rc.title ),
 			description : original.getDescription(),
-			order       : original.getOrder() + 1
+			order       : original.getOrder() + 1,
+			creator 	: prc.oCurrentAuthor,
+			site 		: variables.siteService.get( rc.site )
 		} );
-		clone.setCreator( prc.oCurrentAuthor );
 
 		// attach to the original's parent.
 		if ( original.hasParent() ) {
-			clone.setParent( original.getParent() );
-			clone.setSlug( original.getSlug() & "/" & clone.getSlug() );
+			clone
+				.setParent( original.getParent() )
+				.setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
 
 		// prepare for cloning
@@ -311,42 +317,44 @@ component extends="baseContentHandler" {
 			originalSlugRoot = original.getSlug(),
 			newSlugRoot      = clone.getSlug()
 		);
+
 		// clone this sucker now!
 		contentStoreService.saveContent( clone );
 
 		// relocate
-		cbMessageBox.info( "Content Cloned, isn't that cool!" );
-		if ( clone.hasParent() ) {
+		cbMessageBox.info( "Content Cloned!" );
+		if ( original.hasParent() ) {
 			relocate(
 				event       = prc.xehContentStore,
-				querystring = "parent=#clone.getParent().getContentID()#"
+				querystring = "parent=#original.getParent().getContentID()#"
 			);
 		} else {
 			relocate( event = prc.xehContentStore );
 		}
 	}
 
-	// save
+	/**
+	 * Save a new content store item
+	 */
 	function save( event, rc, prc ){
 		// params
-		event.paramValue( "newCategories", "" );
-		event.paramValue( "isPublished", true );
-		event.paramValue( "slug", "" );
-		event.paramValue( "creatorID", "" );
-		event.paramValue( "changelog", "" );
-		event.paramValue( "publishedDate", now() );
-		event.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) );
-		event.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) );
-		event.paramValue(
-			"publishedTime",
-			event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-		);
-		event.paramValue( "expireHour", "" );
-		event.paramValue( "expireMinute", "" );
-		event.paramValue( "expireTime", "" );
-		event.paramValue( "content", "" );
-		event.paramValue( "customFieldsCount", 0 );
-		event.paramValue( "relatedContentIDs", [] );
+		event
+			.paramValue( "newCategories", "" )
+			.paramValue( "isPublished", true )
+			.paramValue( "slug", "" )
+			.paramValue( "creatorID", "" )
+			.paramValue( "changelog", "" )
+			.paramValue( "publishedDate", now() )
+			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
+			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
+			.paramValue( "publishedTime", event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) )
+			.paramValue( "expireHour", "" )
+			.paramValue( "expireMinute", "" )
+			.paramValue( "expireTime", "" )
+			.paramValue( "content", "" )
+			.paramValue( "customFieldsCount", 0 )
+			.paramValue( "relatedContentIDs", [] )
+			.paramValue( "site", prc.oCurrentSite.getSiteId() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -371,7 +379,7 @@ component extends="baseContentHandler" {
 		var content = populateModel( variables.contentStoreService.get( rc.contentID ) )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
-			.setSite( prc.oCurrentSite );
+			.setSite( variables.siteService.get( rc.site ) );
 		var isNew = ( NOT content.isLoaded() );
 
 		// Validate it

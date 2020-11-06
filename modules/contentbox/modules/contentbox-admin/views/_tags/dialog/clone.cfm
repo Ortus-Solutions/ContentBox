@@ -1,3 +1,13 @@
+<!--- Component Args --->
+<cfparam name="title"         default="Clone">
+<cfparam name="infoMsg"       default="">
+<cfparam name="action"        default="">
+<cfparam name="titleLabel"    default="Title">
+<cfparam name="siteLabel"     default="Site">
+<cfparam name="publishLabel"  default="Publish">
+<cfparam name="publishInfo"   default="By default all cloned items are published as drafts.">
+<cfparam name="statusName"    default="contentStatus">
+<!--- Template --->
 <cfoutput>
 <div
 	id="cloneDialog"
@@ -13,7 +23,6 @@
 
 			<!-- Modal Header -->
             <div class="modal-header">
-                <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4 class="modal-title" id="cloneTitle">
 					<i class="far fa-clone"></i> #args.title#
@@ -54,7 +63,7 @@
 						<!--- Site To Clone To --->
 						<div class="form-group">
 							<label class="control-label">
-								Site
+								#args.siteLabel#
 							</label>
 
 							<p>

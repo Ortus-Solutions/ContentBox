@@ -229,7 +229,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getSiteId() )
+		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
 
 		// Validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
@@ -265,7 +265,7 @@ component extends="baseContentHandler" {
 			newSlugRoot      = clone.getSlug()
 		);
 
-		// Save the new entry now that all cloning params are set.
+		// clone this sucker now!
 		entryService.saveEntry( clone );
 
 		// relocate

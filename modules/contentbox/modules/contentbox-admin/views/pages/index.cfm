@@ -210,16 +210,18 @@
 		view 			= "_tags/dialog/clone",
 		args 			= {
 			title        : "Page Cloning",
-			infoMsg      : "By default, all internal page links are updated for you as part of the cloning process.",
+			infoMsg      : "",
 			action       : prc.xehPageClone,
-			titleLabel   : "Please enter the new page title",
-			publishLabel :"Publish all pages in hierarchy?",
+			titleLabel   : "Title",
+			publishLabel : "Publish all pages in hierarchy?",
 			publishInfo  : "By default all cloned pages are published as drafts.",
 			statusName   : "pageStatus"
 		},
 		prePostExempt 	= true
 	)#
 </cfif>
+
+<!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 	#renderView(
 		view 			= "_tags/dialog/import",
