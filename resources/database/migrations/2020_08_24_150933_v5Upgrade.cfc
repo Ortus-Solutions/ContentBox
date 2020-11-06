@@ -450,7 +450,7 @@ component {
 					"description"        : allSettings.cb_site_description,
 					"keywords"           : allSettings.cb_site_keywords,
 					"tagline"            : allSettings.cb_site_tagline,
-					"domainRegex"        : ".*",
+					"domainRegex"        : "127\.0\.0\.1",
 					"isBlogEnabled"      : 1,
 					"isSitemapEnabled"   : 1,
 					"poweredByHeader"    : 1,

@@ -112,7 +112,9 @@
 
 							<p>
 								Site detection is done against the incoming domain name found in the <code>cgi</code> scope.
-								Below you can register the full name or a regular expression to match.
+								Below you can register the full name or a
+								<a href="https://www.regextester.com/" placeholder="_blank">regular expression</a>
+								to match.
 							</p>
 
 							#html.textField(
@@ -126,7 +128,7 @@
 								wrapper 		= "div class=controls",
 								labelClass 		= "control-label",
 								groupWrapper 	= "div class=form-group",
-								placeholder 	= "mycoolsite.com"
+								placeholder 	= "mycoolsite\.com"
 							)#
 
 							<!--- Domain Name --->
@@ -134,11 +136,11 @@
 								#html.label(
 									class   = "control-label",
 									field   = "domain",
-									content = "*Qualified Domain:"
+									content = "*Domain Base URL:"
 								)#
 
 								<p>
-									The actual domain name so we can construct URLs to this site.
+									The domain base URL so we can construct URLs to this site.
 								</p>
 
 								<div class="input-group">
@@ -148,7 +150,9 @@
 										id="domain"
 										type="text"
 										class="form-control"
-										value="#prc.site.getDomain()#">
+										value="#prc.site.getDomain()#"
+										placeholder="mydomain.com"
+									>
 								</div>
 							</div>
 

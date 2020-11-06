@@ -3,16 +3,17 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * The base content handler
+ * The base content handler which is used by the entries, contentstore and pages handlers to provide uniformity
  */
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="authorService" inject="authorService@cb";
-	property name="themeService" inject="themeService@cb";
-	property name="CBHelper" inject="CBHelper@cb";
+	property name="authorService"   inject="authorService@cb";
+	property name="themeService"    inject="themeService@cb";
+	property name="CBHelper"        inject="CBHelper@cb";
 	property name="categoryService" inject="categoryService@cb";
-	property name="editorService" inject="editorService@cb";
+	property name="editorService"   inject="editorService@cb";
+	property name="siteService"   	inject="siteService@cb";
 
 	/**
 	 * Pre Handler

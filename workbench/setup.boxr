@@ -1,7 +1,8 @@
 echo off
 # Install all CFML dependencies
-echo "==> Install CFML Dependencies"
+echo "==> Install Tester CFML Dependencies"
 install
+
 # Install all ContentBox dependencies
 cd modules/contentbox && install
 cd ../../workbench
@@ -9,6 +10,7 @@ cd ../../workbench
 # Install NPM dependencies
 echo "==> Install Node Dependencies"
 !npm install -g grunt-cli
+
 # Install Yarn deps
-!npm install
+!yarn install
 echo "====> Finished installing all dependencies, go rock ContentBox Development!"

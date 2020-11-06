@@ -47,10 +47,10 @@
         "BCrypt":"modules/contentbox-deps/modules/BCrypt/",
         "cbmarkdown":"modules/contentbox-deps/modules/cbmarkdown/"
     },
-	"devDependencies":{},
-	"scripts":{
-		"format:watchCore":"cfformat watch models/,widgets/,modules/contentbox-admin/**/*.cfc,*.cfc ../../.cfformat.json",
-		"format:watchAdmin":"cfformat watch modules/contentbox-admin/**/*.cfc ../../.cfformat.json",
-		"format:watchUi":"cfformat watch modules/contentbox-ui/**/*.cfc ../../.cfformat.json"
+    "devDependencies":{},
+    "scripts":{
+        "format:watchCore":"cfformat watch models/,widgets/,modules/contentbox-admin/**/*.cfc,*.cfc ../../.cfformat.json",
+        "format:watchAdmin":"cfformat watch modules/contentbox-admin/**/*.cfc ../../.cfformat.json",
+        "format:watchUi":"cfformat watch modules/contentbox-ui/**/*.cfc ../../.cfformat.json"
     }
 }

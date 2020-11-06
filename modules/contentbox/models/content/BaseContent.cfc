@@ -5,13 +5,13 @@
  * ---
  * A mapped super class used for contentbox content: entries and pages
  */
-component 	persistent="true"
-			entityname         ="cbContent"
-			table              ="cb_content"
-			extends            ="contentbox.models.BaseEntityMethods"
-			cachename          ="cbContent"
-			cacheuse           ="read-write"
-			discriminatorColumn="contentType"{
+component 	persistent 			= "true"
+			entityname          = "cbContent"
+			table               = "cb_content"
+			extends             = "contentbox.models.BaseEntityMethods"
+			cachename           = "cbContent"
+			cacheuse            = "read-write"
+			discriminatorColumn = "contentType"{
 
 	/* *********************************************************************
 	**							DI INJECTIONS
@@ -522,14 +522,14 @@ component 	persistent="true"
 
 	/**
 	 * Override the setRelatedContent
+	 *
 	 * @relatedContent The related content to set
 	 */
 	BaseContent function setRelatedContent( required array relatedContent ) {
 		if( hasRelatedContent() ) {
 			variables.relatedContent.clear();
 			variables.relatedContent.addAll( arguments.relatedContent );
-		}
-		else {
+		} else {
 			variables.relatedContent = arguments.relatedContent;
 		}
 		return this;
@@ -1038,8 +1038,8 @@ component 	persistent="true"
 	}
 
 	/**
-	* Shorthand Creator email
-	*/
+	 * Shorthand Creator email
+	 */
 	string function getCreatorEmail(){
 		if( hasCreator() ){
 			return getCreator().getEmail();
@@ -1048,22 +1048,22 @@ component 	persistent="true"
 	}
 
 	/**
-	* Shorthand Author name from latest version
-	*/
+	 * Shorthand Author name from latest version
+	 */
 	string function getAuthorName(){
 		return getActiveContent().getAuthorName();
 	}
 
 	/**
-	* Shorthand Author email from latest version
-	*/
+	 * Shorthand Author email from latest version
+	 */
 	string function getAuthorEmail(){
 		return getActiveContent().getAuthorEmail();
 	}
 
 	/**
-	* Shorthand Author from latest version or null if any yet
-	*/
+	 * Shorthand Author from latest version or null if any yet
+	 */
 	any function getAuthor(){
 		return getActiveContent().getAuthor();
 	}
@@ -1071,58 +1071,65 @@ component 	persistent="true"
 	/************************************** PUBLIC *********************************************/
 
 	/**
-	* Get parent ID if set or empty if none
-	*/
+	 * Get parent ID if set or empty if none
+	 *
+	 * @return The parent ID or empty value if none attached
+	 */
 	function getParentID(){
-		if( hasParent() ){ return getParent().getContentID(); }
-		return "";
+		return ( hasParent() ? getParent().getContentID() : "" );
 	}
 
 	/**
-	* Get parent name or empty if none
-	*/
+	 * Get parent name or empty if none
+	 *
+	 * @return The parent name or empty value if none attached
+	 */
 	function getParentName(){
-		if( hasParent() ){ return getParent().getTitle(); }
-		return "";
+		return ( hasParent() ? getParent().getTitle() : "" );
 	}
 
 	/**
-	* Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
-	*/
+	 * Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
+	 */
 	boolean function isExpired(){
 		return ( isContentPublished() AND !isNull( expireDate) AND expireDate lte now() ) ? true : false;
 	}
 
 	/**
-	* Bit that denotes if the content has been published or not
-	*/
+	 * Bit that denotes if the content has been published or not
+	 */
 	boolean function isContentPublished(){
 		return ( getIsPublished() AND !isNull( publishedDate ) AND getPublishedDate() LTE now() ) ? true : false;
 	}
 
 	/**
-	* Bit that denotes if the content has been published or not in the future
-	*/
+	 * Bit that denotes if the content has been published or not in the future
+	 */
 	boolean function isPublishedInFuture(){
 		return ( getIsPublished() AND getPublishedDate() GT now() ) ? true : false;
 	}
 
 	/**
-	* is loaded?
-	*/
+	 * Is entity loaded
+	 */
 	boolean function isLoaded(){
 		return ( len( getContentID() ) ? true : false );
 	}
 
 	/**
-	* Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
-	* @author The author doing the cloning
-	* @original The original content object that will be cloned into this content object
-	* @originalService The ContentBox content service object
-	* @publish Publish pages or leave as drafts
-	* @originalSlugRoot The original slug that will be replaced in all cloned content
-	* @newSlugRoot The new slug root that will be replaced in all cloned content
-	*/
+	 * Prepare a content object for cloning. This processes several things:
+	 *
+	 * - Wipe primary key, and descendant keys
+	 * - Prepare for cloning of entire hierarchies
+	 * - Make sure categories are cloned
+	 *
+	 * @author The author doing the cloning
+	 * @original The original content object that will be cloned into this content object
+	 * @originalService The ContentBox content service object
+	 * @publish Publish pages or leave as drafts
+	 * @originalSlugRoot The original slug that will be replaced in all cloned content
+	 * @newSlugRoot The new slug root that will be replaced in all cloned content
+	 */
 	BaseContent function prepareForClone(
 		required any author,
 		required any original,
@@ -1131,14 +1138,10 @@ component 	persistent="true"
 		required any originalSlugRoot,
 		required any newSlugRoot
 	){
-		// set not published
-		setIsPublished( arguments.publish );
-
-		// reset creation date
-		setCreatedDate( now() );
-		setPublishedDate( now() );
-
-		// Base Content Properties
+		// Base Content Property cloning
+		variables.isPublished 			= arguments.publish;
+		variables.createdDate 			= now();
+		variables.modifiedDate			= variables.createdDate;
 		variables.HTMLKeywords          = arguments.original.getHTMLKeywords();
 		variables.HTMLDescription       = arguments.original.getHTMLDescription();
 		variables.HTMLTitle             = arguments.original.getHTMLTitle();
@@ -1158,35 +1161,38 @@ component 	persistent="true"
 		var latestContent               = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
 		latestContent                   = reReplaceNoCase( latestContent, "page\:\[#arguments.originalSlugRoot#\/", "page:[#arguments.newSlugRoot#/", "all" );
-		// reset versioning, and start with one
+
+		// reset versioning, and start with a new one
 		addNewContentVersion(
-			content  = latestContent,
-			changelog= "Content Cloned!",
-			author   = arguments.author
+			content   : latestContent,
+			changelog : "Content Cloned!",
+			author    : arguments.author
 		);
 
 		// safe clone custom fields
-		var newFields = arguments.original.getCustomFields();
-		for( var thisField in newFields ){
-			var newField = customFieldService.new( {
-				key  = thisField.getKey(),
-				value= thisField.getValue()
+		variables.customFields = arguments.original
+			.getCustomFields()
+			.map( function( thisField ){
+				return variables.customFieldService.new( {
+					key   : arguments.thisField.getKey(),
+					value : arguments.thisField.getValue()
+				} ).setRelatedContent( this );
 			} );
-			newField.setRelatedContent( this );
-			addCustomField( newField );
-		}
-
-		// safe clone categories
-		var newCategories = arguments.original.getCategories();
-		for( var thisCategory in newCategories ){
-			addCategories( categoryService.findBySlug( thisCategory.getSlug() ) );
-		}
 
 		// clone related content
-		var newRelatedContent = arguments.original.getRelatedContent();
-		for( var thisRelatedContent in newRelatedContent ) {
-			addRelatedContent( thisRelatedContent );
-		}
+		arguments.original.getRelatedContent()
+			.each( function( thisRelatedContent ){
+				addRelatedContent( arguments.thisRelatedContent );
+			} );
+
+		// clone categories
+		arguments.original.getCategories()
+			.each( function( thisCategory ){
+				addCategories(
+					variables.categoryService.getOrCreate( arguments.thisCategory, getSite() )
+				);
+			} );
+
 
 		// now clone children
 		if( original.hasChild() ){
@@ -1216,8 +1222,8 @@ component 	persistent="true"
 			}
 		}
 
-		// evict original entity, just in case
-		variables.contentService.evictEntity( arguments.original );
+		// evict original entity from hibernate cache, just in case
+		variables.contentService.evict( arguments.original );
 
 		return this;
 	}
@@ -1470,6 +1476,26 @@ component 	persistent="true"
 	 */
 	function getSiteId(){
 		return getSite().getSiteId();
+	}
+
+	/**
+	 * Verifies that the incoming site is the same as the content has already
+	 *
+	 * @site The site id or site object to verify
+	 */
+	boolean function isSameSite( required site ){
+		// If no site attached, break.
+		if( !hasSite() ){
+			return false;
+		}
+
+		// Simple Value Test
+		if( isSimpleValue( arguments.site ) ){
+			return arguments.site == getSiteid();
+		}
+
+		// Object test
+		return getSiteId() == arguments.site.getSiteId();
 	}
 
 }

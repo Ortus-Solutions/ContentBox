@@ -15,7 +15,9 @@ component extends="baseContentHandler" {
 	// Public properties
 	this.preHandler_except = "pager";
 
-	// pre handler
+	/**
+	 * Pre Handler interceptions
+	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 
@@ -33,7 +35,9 @@ component extends="baseContentHandler" {
 		}
 	}
 
-	// index
+	/**
+	 * Show blog entries
+	 */
 	function index( event, rc, prc ){
 		// get all authors
 		prc.authors = authorService.getAll( sortOrder = "lastName" );
@@ -61,7 +65,9 @@ component extends="baseContentHandler" {
 		event.setView( "entries/index" );
 	}
 
-	// entriesTable
+	/**
+	 * The entries table called via Ajax
+	 */
 	function entriesTable( event, rc, prc ){
 		// params
 		event
@@ -116,7 +122,9 @@ component extends="baseContentHandler" {
 		event.setView( view = "entries/indexTable", layout = "ajax" );
 	}
 
-	// Quick Look
+	/**
+	 * Entries quick look
+	 */
 	function quickLook( event, rc, prc ){
 		// get entry
 		prc.content          = variables.entryService.get( event.getValue( "contentID", 0 ) );
@@ -124,7 +132,9 @@ component extends="baseContentHandler" {
 		event.setView( view = "content/quickLook", layout = "ajax" );
 	}
 
-	// Bulk Status Change
+	/**
+	 * Bulk Status Change
+	 */
 	function bulkStatus( event, rc, prc ){
 		event.paramValue( "contentID", "" );
 		event.paramValue( "contentStatus", "draft" );
@@ -149,7 +159,9 @@ component extends="baseContentHandler" {
 		relocate( event = prc.xehEntries );
 	}
 
-	// editor
+	/**
+	 * Show the editor
+	 */
 	function editor( event, rc, prc ){
 		// cb helper
 		prc.cbHelper   = variables.CBHelper;
@@ -216,29 +228,34 @@ component extends="baseContentHandler" {
 	 * Clone an entry
 	 */
 	function clone( event, rc, prc ){
-		// validation
+		// Defaults
+		event.paramValue( "site", prc.oCurrentSite.getSiteId() )
+
+		// Validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
 			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
-			relocate( event = prc.xehPages );
+			relocate( event = prc.xehEntries );
 			return;
 		}
 
 		// get the entry to clone
 		var original = variables.entryService.get( rc.contentID );
-		// Verify new Title, else do a new copy of it
-		if ( rc.title eq original.getTitle() ) {
+
+		// Verify new Title, else do a new copy of it, but only if it's in the same site.
+		if( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
-		// get a clone
+
+		// Build up the clone army...
 		var clone = variables.entryService.new( {
 			title   : rc.title,
 			slug    : variables.HTMLHelper.slugify( rc.title ),
-			excerpt : original.getExcerpt()
+			excerpt : original.getExcerpt(),
+			site 	: variables.siteService.get( rc.site ),
+			creator : prc.oCurrentAuthor
 		} );
 
-		clone.setCreator( prc.oCurrentAuthor );
-
-		// prepare for clone
+		// Prepare For Cloning: Relationships, author checks, and much more.
 		clone.prepareForClone(
 			author           = prc.oCurrentAuthor,
 			original         = original,
@@ -248,37 +265,38 @@ component extends="baseContentHandler" {
 			newSlugRoot      = clone.getSlug()
 		);
 
-		// clone this sucker now!
+		// Save the new entry now that all cloning params are set.
 		entryService.saveEntry( clone );
 
 		// relocate
-		cbMessageBox.info( "Entry Cloned, isn't that cool!" );
+		cbMessageBox.info( "Entry cloned!" );
 		relocate( event = prc.xehEntries );
 	}
 
-	// save
+	/**
+	 * Save an entry
+	 */
 	function save( event, rc, prc ){
 		// params
-		event.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled );
-		event.paramValue( "newCategories", "" );
-		event.paramValue( "isPublished", true );
-		event.paramValue( "slug", "" );
-		event.paramValue( "changelog", "" );
-		event.paramValue( "customFieldsCount", 0 );
-		event.paramValue( "publishedDate", now() );
-		event.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) );
-		event.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) );
-		event.paramValue(
-			"publishedTime",
-			event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-		);
-		event.paramValue( "expireHour", "" );
-		event.paramValue( "expireMinute", "" );
-		event.paramValue( "expireTime", "" );
-		event.paramValue( "content", "" );
-		event.paramValue( "creatorID", "" );
-		event.paramValue( "customFieldsCount", 0 );
-		event.paramValue( "relatedContentIDs", [] );
+		event
+			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
+			.paramValue( "newCategories", "" )
+			.paramValue( "isPublished", true )
+			.paramValue( "slug", "" )
+			.paramValue( "changelog", "" )
+			.paramValue( "customFieldsCount", 0 )
+			.paramValue( "publishedDate", now() )
+			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
+			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
+			.paramValue( "publishedTime", event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) )
+			.paramValue( "expireHour", "" )
+			.paramValue( "expireMinute", "" )
+			.paramValue( "expireTime", "" )
+			.paramValue( "content", "" )
+			.paramValue( "creatorID", "" )
+			.paramValue( "customFieldsCount", 0 )
+			.paramValue( "relatedContentIDs", [] )
+			.paramValue( "site", prc.oCurrentSite.getSiteId() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -301,13 +319,15 @@ component extends="baseContentHandler" {
 		}
 
 		// get new/persisted entry and populate it
-		var entry        = variables.entryService.get( rc.contentID );
-		var originalSlug = entry.getSlug();
+		var entry        	= variables.entryService.get( rc.contentID );
+		var originalSlug 	= entry.getSlug();
+		var isNew 			= ( NOT entry.isLoaded() );
+
+		// Populate the entry
 		populateModel( entry )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
-			.setSite( prc.oCurrentSite );
-		var isNew = ( NOT entry.isLoaded() );
+			.setSite( variables.siteService.get( rc.site ) );
 
 		// Validate it
 		var errors = entry.validate();
@@ -386,7 +406,9 @@ component extends="baseContentHandler" {
 		}
 	}
 
-	// remove
+	/**
+	 * Remove an entry
+	 */
 	function remove( event, rc, prc ){
 		// params
 		event.paramValue( "contentID", "" );
@@ -428,7 +450,14 @@ component extends="baseContentHandler" {
 		relocate( event = prc.xehEntries );
 	}
 
-	// pager viewlet
+	/**
+	 * A viewlet for showcasing mini views of blog entries
+	 *
+	 * @authorID Show entries from all authors or only specific author ids
+	 * @max The max number fo entries to show, defaults to 0
+	 * @pagination Show pagination or not
+	 * @latest Show the by latest modified or created
+	 */
 	function pager(
 		event,
 		rc,
@@ -485,12 +514,16 @@ component extends="baseContentHandler" {
 		return renderView( view = "entries/pager", module = "contentbox-admin" );
 	}
 
-	// slugify remotely
+	/**
+	 * Slugify the incoming slug
+	 */
 	function slugify( event, rc, prc ){
 		event.renderData( data = trim( variables.HTMLHelper.slugify( rc.slug ) ), type = "plain" );
 	}
 
-	// editor selector
+	/**
+	 * Editor selector for entries UI
+	 */
 	function editorSelector( event, rc, prc ){
 		// paging default
 		event.paramValue( "page", 1 );
@@ -528,7 +561,9 @@ component extends="baseContentHandler" {
 		}
 	}
 
-	// Export Entry
+	/**
+	 * Export an entry
+	 */
 	function export( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get entry
@@ -562,7 +597,9 @@ component extends="baseContentHandler" {
 		}
 	}
 
-	// Export All Entries
+	/**
+	 * Export All Entries
+	 */
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
@@ -590,7 +627,9 @@ component extends="baseContentHandler" {
 		}
 	}
 
-	// import entries
+	/**
+	 * Import entries
+	 */
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );

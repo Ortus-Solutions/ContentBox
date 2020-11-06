@@ -84,10 +84,10 @@
 						<thead>
 							<tr>
 								<th>Site</th>
-								<th>Domain Match</th>
-								<th>Theme</th>
+								<th>Base URL</th>
+								<th width="100">Theme</th>
 								<th width="150" class="text-center {sorter:false}">Features</th>
-								<th width="100" class="text-center {sorter:false}">Actions</th>
+								<th width="50" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
 
@@ -97,18 +97,22 @@
 								<td>
 									<a
 										href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getSiteId()#' )#"
+										class="size18"
 									>
 										<cfif site.getSlug() eq 'default'>
 											<i class="fa fa-star textOrange" title="Default Site"></i>
 										</cfif>
 										#site.getName()#
 									</a>
-									<div>
+									<div class="mt5 mb5">
 										#site.getDescription()#
+									</div>
+									<div class="mt5 mb5 label label-success" title="Site Unique Slug">
+										#site.getSlug()#
 									</div>
 								</td>
 								<td>
-									#site.getDomainRegex()#
+									#site.getDomain()#
 								</td>
 								<td>
 									#site.getActiveTheme()#

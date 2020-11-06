@@ -430,14 +430,6 @@
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
 
- 		<!-- Create embedded datasource in Application.cfc
- 		<loadfile property="express.appdsn" srcFile="${dir.resources}/express-dsn.txt" />
- 		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc"
- 				 value="${express.appdsn}"
- 				 summary="true"
- 				 token='this.datasource = "contentbox";'
- 				 encoding="UTF-8"/> -->
-
 		<!-- Copy DSN to config -->
 		<copy todir="${dir.build}/express/webapps/ROOT/config" overwrite="true" encoding="UTF-8">
  			<fileset file="${dir.resources}/runtime.properties.cfm" />

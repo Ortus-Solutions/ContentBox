@@ -144,8 +144,14 @@
 
 						<!--- Edit --->
 						<li>
+							<cfset targetEditor = prc.xehEntriesEditor>
+							<cfif thisContent.getContentType() eq "page">
+								<cfset targetEditor = prc.xehPagesEditor>
+							<cfelseif thisContent.getContentType() eq "contentStore">
+								<cfset targetEditor = prc.xehContentStoreEditor>
+							</cfif>
 							<a
-								href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#"
+								href="#event.buildLink( targetEditor )#/contentID/#thisContent.getContentID()#"
 							>
 								<i class="fas fa-pen fa-lg"></i> Edit
 							</a>

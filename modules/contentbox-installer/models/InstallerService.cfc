@@ -84,7 +84,7 @@ component accessors="true" {
 			"description"        : arguments.setup.getSiteDescription(),
 			"keywords"           : arguments.setup.getSiteKeywords(),
 			"domain" 			 : "127.0.0.1",
-			"domainRegex"        : ".*",
+			"domainRegex"        : "127\.0\.0\.1",
 			"tagline"            : arguments.setup.getSiteTagLine(),
 			"homepage"           : "cbBlog",
 			"isBlogEnabled"      : true,

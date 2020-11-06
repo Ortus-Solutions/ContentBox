@@ -10,7 +10,7 @@ component extends="coldbox.system.Interceptor"{
 	// DI
 	property name="settingService"  inject="settingService@cb";
 	property name="contentService"  inject="contentService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="CBHelper" 		inject="id:CBHelper@cb";
 
 	/**
 	 * Configure CB Request

@@ -220,12 +220,12 @@
 	#renderView(
 		view = "_tags/dialog/clone",
 		args = {
-			title        : "Entry Cloning",
-			infoMsg      : "By default, all internal links are updated for you as part of the cloning process.",
+			title        : "Blog Entry Cloning",
+			infoMsg      : "",
 			action       : prc.xehEntryClone,
-			titleLabel   : "Please enter the new entry title",
-			publishLabel : "Publish entry?",
-			publishInfo  : "By default all cloned entries are published as drafts.",
+			titleLabel   : "Title",
+			publishLabel : "Publish",
+			publishInfo  : "By default all cloned entries are saved as drafts.",
 			statusName   : "entryStatus"
 		},
 		prePostExempt = true

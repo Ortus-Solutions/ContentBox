@@ -7,10 +7,12 @@
         <!--- Publishing Bar --->
         <div id="publishingBar" style="display: none;" class="well well-sm">
 
-            <h4><i class="fa fa-calendar"></i> Publishing Details</h4>
+			<h4>
+				<i class="fa fa-calendar"></i> Publishing Details
+			</h4>
 
             <!--- publish date --->
-            <div class="form-group">
+            <div>
 
                 #html.label(
                     class       = "control-label",
@@ -56,9 +58,13 @@
             </div>
 
             <!--- expire date --->
-            <div class="form-group">
+            <div>
 
-                #html.label( class="control-label", field="expireDate", content="Expiration Date" )#
+                #html.label(
+					class   = "control-label",
+					field   = "expireDate",
+					content = "Expiration Date"
+				)#
 
                 <div class="controls row">
                     <div class="col-md-6">
@@ -106,8 +112,29 @@
                 wrapper           = "div class=controls",
                 labelClass        = "control-label",
                 groupWrapper      = "div class=form-group"
-            )#
+			)#
 
+			<!--- Site To Publish To --->
+			<div class="form-group">
+				<label class="control-label">
+					Site
+				</label>
+
+				<select
+					name="site"
+					id="site"
+					class="form-control rounded"
+				>
+					<cfloop array="#prc.allSites#" index="thisSite">
+						<option
+							value="#thisSite[ 'siteId' ]#"
+							<cfif thisSite[ 'siteId' ] eq prc.oCurrentSite.getSiteId()>selected="selected"</cfif>
+						>
+							#thisSite[ 'name' ]#
+						</option>
+					</cfloop>
+				</select>
+			</div>
 
             <div class="text-center">
                 <button type="button"
