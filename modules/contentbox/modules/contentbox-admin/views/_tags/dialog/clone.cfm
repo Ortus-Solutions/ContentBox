@@ -1,12 +1,12 @@
 <!--- Component Args --->
-<cfparam name="title"         default="Clone">
-<cfparam name="infoMsg"       default="">
-<cfparam name="action"        default="">
-<cfparam name="titleLabel"    default="Title">
-<cfparam name="siteLabel"     default="Site">
-<cfparam name="publishLabel"  default="Publish">
-<cfparam name="publishInfo"   default="By default all cloned items are published as drafts.">
-<cfparam name="statusName"    default="contentStatus">
+<cfparam name="args.title"         default="Clone">
+<cfparam name="args.infoMsg"       default="">
+<cfparam name="args.action"        default="">
+<cfparam name="args.titleLabel"    default="Title">
+<cfparam name="args.siteLabel"     default="Site">
+<cfparam name="args.publishLabel"  default="Publish">
+<cfparam name="args.publishInfo"   default="By default all cloned items are published as drafts.">
+<cfparam name="args.statusName"    default="contentStatus">
 <!--- Template --->
 <cfoutput>
 <div
