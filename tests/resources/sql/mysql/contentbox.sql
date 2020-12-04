@@ -43,7 +43,6 @@ CREATE TABLE `cb_author` (
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `isPasswordReset` tinyint(1) NOT NULL DEFAULT '0',
   `is2FactorAuth` tinyint(1) NOT NULL DEFAULT '0',
-  `APIToken` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`authorID`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `APIToken` (`APIToken`),
@@ -56,7 +55,6 @@ CREATE TABLE `cb_author` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_passwordReset` (`isPasswordReset`),
-  KEY `idx_apitoken` (`APIToken`),
   KEY `idx_2factorauth` (`is2FactorAuth`),
   CONSTRAINT `FK6847396B9724FA40` FOREIGN KEY (`FK_roleID`) REFERENCES `cb_role` (`roleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -64,13 +62,13 @@ CREATE TABLE `cb_author` (
 LOCK TABLES `cb_author` WRITE;
 /*!40000 ALTER TABLE `cb_author` DISABLE KEYS */;
 
-INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`, `is2FactorAuth`, `APIToken`)
+INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`, `is2FactorAuth` )
 VALUES
-	(1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2020-09-09 17:38:19','2013-07-11 11:06:39','','{\"sidemenuCollapse\":\"yes\",\"linkedin\":\"\",\"sidebarState\":\"yes\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',2,'2020-09-09 17:38:19',0,0,0,'04AF40069044B3625811EF6C4399CC4DC3EBA390FB5F4CD25D16FA7B592C81189A8B29459CD5EDC021073D619BFEDC12EFA3F6A1395B89CE880B8D936CA88DF4'),
-	(2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',0,0,0,'A2707287EC2849AC4BF63E3D75286B1BAD81A23726D62899694F66BBC497E4E9EA3895F22BF8B36F3165C2F4CC3197D5163F9BC172FEE39A45C93CE640970D9C'),
-	(3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',1,'2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-18 15:22:13',0,1,1,'1DD3F7B17C26C3DD750ABD3DFDEE5E3404DF8B96028CD16FD741B2B6C45D501FE93EED010B94B8FF2A33CFCB8B9FCF7D7B492B8ECF24E61E70072848E34023CA'),
-	(4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',1,'2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',0,1,1,'488AB7F5CEF6CBF977C8D21FD1AC973C9163E1AE5D1D37EF23A3371614619E1F7851AFB5C0AC9AD4BD3F99FD44208872BB3E64455C91A0C395DA5F0AEB0F3E4D'),
-	(5,'Jorge','Morelos','joremorelos@morelos.com','joremorelos@morelos.com','$2a$12$IBAYihdRG.Hj8fh/fztmi.MvFRn2lPxk4Thw1mnmbVzjoLnNCgzOe',0,NULL,'2017-07-06 12:07:02','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-19 17:01:18',0,1,0,'0123971AF933E4406919693283CFB83C2494A3DC8F21565F84BEF4BD54F81916A9CE13F4C1F0745C5654CEB1CA28678C9B5AD92575F50459864C3EA3C6DA84EA');
+	(1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2020-09-09 17:38:19','2013-07-11 11:06:39','','{\"sidemenuCollapse\":\"yes\",\"linkedin\":\"\",\"sidebarState\":\"yes\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',2,'2020-09-09 17:38:19',0,0,0),
+	(2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',0,0,0),
+	(3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',1,'2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-18 15:22:13',0,1,1),
+	(4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',1,'2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',0,1,1),
+	(5,'Jorge','Morelos','joremorelos@morelos.com','joremorelos@morelos.com','$2a$12$IBAYihdRG.Hj8fh/fztmi.MvFRn2lPxk4Thw1mnmbVzjoLnNCgzOe',0,NULL,'2017-07-06 12:07:02','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-19 17:01:18',0,1,0);
 
 /*!40000 ALTER TABLE `cb_author` ENABLE KEYS */;
 UNLOCK TABLES;
