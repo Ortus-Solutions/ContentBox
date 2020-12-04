@@ -26,13 +26,6 @@ component extends="tests.resources.BaseTest"{
 				model = entityNew( "cbAuthor" );
 			});
 
-			it( "can generate an API Token", function(){
-				var APIToken = model.getAPIToken();
-				expect(	APIToken ).notToBeEmpty();
-				var newToken = model.generateAPIToken().getAPIToken();
-				expect(	newToken ).notToBe( APIToken );
-			});
-
 			it( "can load properly", function(){
 				var testUser = entityLoad( "cbAuthor" )[ 1 ];
 				expect(	testUser.isLoaded() ).toBeTrue();
@@ -51,7 +44,7 @@ component extends="tests.resources.BaseTest"{
 			it( "can display last login timestamps", function(){
 				var d = model.getDisplayLastLogin();
 				expect(	d ).toBe( "Never Logged In" );
-				
+
 				var testUser = entityLoad( "cbAuthor" )[ 1 ];
 				var d = testUser.getDisplayLastLogin();
 				expect(	d ).toBeDate();
@@ -72,7 +65,7 @@ component extends="tests.resources.BaseTest"{
 				// with default
 				var v = model.getPreference( "invalid", "test" );
 				expect( v ).toBe( "test" );
-				
+
 				// existent
 				var pref = {
 					editor = "textarea", test = "nada"
@@ -82,14 +75,14 @@ component extends="tests.resources.BaseTest"{
 
 				// invalid
 				expect(	function(){
-					model.getPreference( "invalid" );	
+					model.getPreference( "invalid" );
 				} ).toThrow();
 
 				// with default
 				model.setPreference( "UnitTest", "Hello" );
 				expect( model.getPreference( "UnitTest" ) ).toBe( "Hello" );
 			});
-			
+
 			it( "can check permissions even without a role", function(){
 				expect( model.checkPermission( "test" ) ).toBeFalse();
 			});

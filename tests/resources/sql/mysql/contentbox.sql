@@ -45,7 +45,6 @@ CREATE TABLE `cb_author` (
   `is2FactorAuth` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`authorID`),
   UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `APIToken` (`APIToken`),
   KEY `FK6847396B9724FA40` (`FK_roleID`),
   KEY `idx_active` (`isActive`),
   KEY `idx_email` (`email`),
