@@ -224,14 +224,12 @@ component
 	 * Constructor
 	 */
 	SettingService function init(){
-		variables.oSystem     = createObject( "java", "java.lang.System" );
-		variables.CBReadyFlag = false;
+		variables.oSystem     		= createObject( "java", "java.lang.System" );
+		variables.CBReadyFlag 		= false;
+		variables.cacheProviderName = "template";
 
 		// init it
 		super.init( entityName = "cbSetting" );
-
-		// load cache provider
-		loadCacheProviderName();
 
 		return this;
 	}
@@ -272,6 +270,9 @@ component
 		}
 
 		log.info( "ContentBox Global Settings pre-flight checks passed!" );
+
+		// load cache provider now that everyting is pre-flighted
+		loadCacheProviderName();
 
 		return this;
 	}
