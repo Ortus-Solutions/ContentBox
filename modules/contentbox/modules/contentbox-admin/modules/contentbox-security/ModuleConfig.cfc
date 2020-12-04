@@ -76,6 +76,7 @@ component {
 					validator                : "securityService@cb"
 				}
 			}
+			// Two Factor Authentication Enrollment Verifier
             ,{
                 class : "#moduleMapping#.interceptors.CheckForForceTwoFactorEnrollment",
                 name  : "CheckForForceTwoFactorEnrollment"

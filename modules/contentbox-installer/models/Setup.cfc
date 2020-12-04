@@ -13,16 +13,22 @@ component accessors="true" {
 	property name="email";
 	property name="username";
 	property name="password";
-	property name="populateData";
+
+	// Site Settings
 	property name="siteName";
-	property name="siteEmail";
-	property name="siteOutgoingEmail";
 	property name="siteTagLine";
 	property name="siteDescription";
 	property name="siteKeywords";
+	property name="populateData";
+	property name="createDevSite";
+
+	// Rewrites
 	property name="fullrewrite";
 	property name="rewrite_engine";
+
 	// mail settings
+	property name="siteEmail";
+	property name="siteOutgoingEmail";
 	property name="cb_site_mail_server";
 	property name="cb_site_mail_username";
 	property name="cb_site_mail_password";
@@ -45,6 +51,7 @@ component accessors="true" {
 		variables.populateData          = true;
 		variables.fullRewrite           = true;
 		variables.rewrite_engine        = "mod_rewrite";
+		variables.createDevSite 		= true;
 
 		return this;
 	}
@@ -54,11 +61,11 @@ component accessors="true" {
 	 */
 	function getUserData(){
 		var results = {
-			firstname : firstname,
-			lastName  : lastName,
-			email     : email,
-			username  : username,
-			password  : password
+			"firstname" : firstname,
+			"lastName"  : lastName,
+			"email"     : email,
+			"username"  : username,
+			"password"  : password
 		};
 		return results;
 	}

@@ -51,10 +51,19 @@ component accessors="true" {
 			createSettings( arguments.setup, site );
 			// Create global security rules
 			createSecurityRules( arguments.setup );
-			// Do we create sample data?
+			// Do we create sample data for the default site?
 			if ( arguments.setup.getPopulateData() ) {
 				createSampleData( arguments.setup, author, site );
 			}
+			// Do we create a Development Site?
+			if( arguments.setup.getCreateDevSite() ){
+				var devSite = createDevSite( arguments.setup );
+				// Populate the dev site?
+				if ( arguments.setup.getPopulateData() ) {
+					createSampleData( arguments.setup, author, devSite );
+				}
+			}
+
 			// Remove ORM update from Application.cfc
 			// Commented out for better update procedures.
 			// processORMUpdate( arguments.setup );
@@ -92,7 +101,35 @@ component accessors="true" {
 			"poweredByHeader"    : true,
 			"adminBar"           : true,
 			"isSSL"              : false,
-			"activeTheme"        : "contentbox-default",
+			"activeTheme"        : "default",
+			"notificationEmails" : arguments.setup.getSiteEmail()
+		} );
+		return siteService.save( oSite );
+	}
+
+	/**
+	 * Create the development site record
+	 *
+	 * @setup The setup object
+	 *
+	 * @return The site object
+	 */
+	function createDevSite( required setup ){
+		var oSite = siteService.new( {
+			"name"               : "Development Site",
+			"slug"               : "development",
+			"description"        : "A development site",
+			"keywords"           : "",
+			"domain" 			 : "localhost",
+			"domainRegex"        : "localhost",
+			"tagline"            : "",
+			"homepage"           : "cbBlog",
+			"isBlogEnabled"      : true,
+			"isSitemapEnabled"   : true,
+			"poweredByHeader"    : true,
+			"adminBar"           : true,
+			"isSSL"              : false,
+			"activeTheme"        : "default",
 			"notificationEmails" : arguments.setup.getSiteEmail()
 		} );
 		return siteService.save( oSite );
@@ -116,13 +153,16 @@ component accessors="true" {
 			"cb_site_mail_ssl"      : arguments.setup.getcb_site_mail_ssl()
 		};
 
-		// Inflate and set
-		settings.map( function( key, value ){
-			return variables.settingService.findByName( arguments.key ).setValue( arguments.value );
-		} );
-
 		// Save all settings
-		settingService.saveAll( settings );
+		settingService.saveAll(
+			// Inflate, set, reduce to array
+			settings.reduce( function( results, key, value ){
+				arguments.results.append(
+					variables.settingService.findByName( arguments.key ).setValue( arguments.value )
+				);
+				return arguments.results;
+			}, [] )
+		);
 	}
 
 	/**
