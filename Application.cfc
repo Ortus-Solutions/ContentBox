@@ -52,7 +52,9 @@ component {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation           : [ "models", "modules", "modules_app" ],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
-		// dialect 			= "MySQLwithInnoDB",
+		//dialect 			  : "MySQLDialect", // Basic MySQL Dialect
+		//dialect 			  : "MySQLwithInnoDB", // Basic MySQL Dialect
+		//dialect			  : "org.hibernate.dialect.MySQL5InnoDBDialect", // Explicit Adobe 2016 + MySQL Dialect
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate              : "update",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
