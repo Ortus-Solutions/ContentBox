@@ -60,6 +60,7 @@ component 	persistent="true"
 
 	property 	name="isActive"
 				ormtype="boolean"
+				sqltype="boolean"
 				notnull="true"
 				default="false"
 				index  ="idx_login,idx_activeAuthor";
@@ -95,13 +96,6 @@ component 	persistent="true"
 				default  ="false"
 				dbdefault="0"
 				index    ="idx_2factorauth";
-
-	property 	name="APIToken"
-				notnull="false"
-				length ="255"
-				unique ="true"
-				index  ="idx_apitoken"
-				default="";
 
 	/* *********************************************************************
 	**							RELATIONSHIPS
@@ -190,13 +184,15 @@ component 	persistent="true"
 	********************************************************************* */
 
 	// Non-persisted properties
-	property 	name="loggedIn"
-				persistent="false"
-				default   ="false"
-				type      ="boolean";
+	property
+		name 		= "loggedIn"
+		persistent	= "false"
+		default   	= "false"
+		type      	= "boolean";
 
-	property 	name="permissionList"
-				persistent="false";
+	property
+		name 		= "permissionList"
+		persistent	= "false";
 
 	/* *********************************************************************
 	**							PK + CONSTRAINTS
@@ -226,13 +222,9 @@ component 	persistent="true"
 		variables.permissionGroups= [];
 		variables.isPasswordReset = false;
 		variables.is2FactorAuth   = false;
-		variables.APIToken        = "";
 
 		// Setup empty preferences
 		setPreferences( {} );
-
-		// startup a token
-		generateAPIToken();
 
 		super.init();
 
@@ -243,18 +235,6 @@ component 	persistent="true"
 	* Listen to postLoad's from the ORM
 	*/
 	function postLoad(){
-		// Verify if the user has already an API Token, else generate one for them.
-		if( !len( getAPIToken() ) ){
-			generateAPIToken();
-		}
-	}
-
-	/**
-	* Generate new API Token, stores it locally but does not persist it.
-	*/
-	Author function generateAPIToken(){
-		variables.APIToken = hash( createUUID() & now(), "sha-512" );
-		return this;
 	}
 
 	/**
