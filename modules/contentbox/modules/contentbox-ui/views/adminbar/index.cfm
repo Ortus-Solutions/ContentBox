@@ -79,8 +79,12 @@
 	<div id="avatar">
 		<h4>
 			#getInstance( "Avatar@cb" )
-				.renderAvatar( email=args.oCurrentAuthor.getEmail(), size="30", title="Hola" )#
-			ContentBox Admin Bar
+				.renderAvatar(
+					email 	: args.oCurrentAuthor.getEmail(),
+					size 	: "30",
+					title	: "Hola"
+				)#
+			<span class="label label-info mr5">#prc.oCurrentSite.getName()#</span>
 		</h4>
 	</div>
 
