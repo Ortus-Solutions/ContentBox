@@ -41,7 +41,8 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+" ); }
 			// Build Type
 			if( arguments.dropdown ){
 				writeoutput( buildDropDown( links ) );
@@ -58,13 +59,18 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var rString = "";
 
 		saveContent variable="rString"{
-			writeOutput('<select name="meta" id="meta" onchange="window.location=this.value" )><option value="##">ContentBox Links</option>');
+			writeOutput('<select name="meta" id="meta" onchange="window.location=this.value" )>
+	<option value="##">ContentBox Links</option>
+	');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<option value="#links[ x ].link#">#links[ x ].title#</option>');
+				writeOutput('<option value="#links[ x ].link#">#links[ x ].title#</option>
+	');
 			}
 			// close ul
-			writeOutput( "</select>" );
+			writeOutput( "
+</select>
+" );
 		}
 		return rString;
 	}
@@ -73,13 +79,19 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var rString = "";
 
 		saveContent variable="rString"{
-			writeOutput('<ul id="meta">');
+			writeOutput('<ul id="meta">
+	');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
-				writeOutput('<li class="archives"><a href="#links[ x ].link#">#links[ x ].title#</a></li>');
+				writeOutput('<li class="archives">
+		<a href="#links[ x ].link#">#links[ x ].title#</a>
+	</li>
+	');
 			}
 			// close ul
-			writeOutput( "</ul>" );
+			writeOutput( "
+</ul>
+" );
 		}
 		return rString;
 	}

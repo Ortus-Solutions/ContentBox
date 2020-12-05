@@ -26,19 +26,20 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	 * @titleLevel The H{level} to use, by default we use H2
 	 */
 	any function renderIt(
-		boolean dropdown=false,
+		boolean dropdown     =false,
 		boolean showPostCount=true,
-		string title="",
-		string titleLevel="2"
+		string title         ="",
+		string titleLevel    ="2"
 	){
-		var categories 		= categoryService.list( sortOrder="category", asQuery=false );
-		var rString			= "";
+		var categories= categoryService.list( sortOrder="category", asQuery=false );
+		var rString   = "";
 
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
 			if( len( arguments.title ) ){
-				writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" );
+				writeOutput( "<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+" );
 			}
 			// Build Type
 			if( arguments.dropdown ){
@@ -52,44 +53,59 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	}
 
 	private function buildDropDown( categories, showPostCount ){
-		var rString = "";
+		var rString         = "";
 		// generate recent comments
 		saveContent variable="rString"{
-			writeOutput('<select name="categories" id="categories" onchange="window.location=this.value" )><option value="##">Select Category</option>');
+			writeOutput('<select
+	name="categories" id="categories" onchange="window.location=this.value"
+	)
+	
+>
+	<option value="##">Select Category</option>
+	');
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.categories ); x++){
 				if( arguments.categories[ x ].getNumberOfEntries() gt 0 ){
 
-					writeOutput( '<option value="#cb.linkCategory( arguments.categories[ x ] )#">#arguments.categories[ x ].getCategory()#' );
+	writeOutput( '<option value="#cb.linkCategory( arguments.categories[ x ] )#">#arguments.categories[ x ].getCategory()#' );
 
-					if( arguments.showPostCount ){
+		if( arguments.showPostCount ){
 						writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
 					}
-					writeOutput( '</option>' );
+					writeOutput( '</option>
+	' );
 				}
 			}
 			// close ul
-			writeOutput( "</select>" );
+			writeOutput( "
+</select>
+" );
 		}
 		return rString;
 	}
 
 	private function buildList( categories, showPostCount ){
-		var rString = "";
+		var rString         = "";
 		// generate recent comments
 		saveContent variable="rString"{
-			writeOutput( '<ul id="categories">' );
+			writeOutput( '<ul id="categories">
+	' );
 			for(var x=1; x lte arrayLen( arguments.categories ); x++){
 				if( arguments.categories[ x ].getNumberOfEntries() gt 0 ){
-					writeOutput( '<li class="categories"><a href="#cb.linkCategory( arguments.categories[ x ] )#">#arguments.categories[ x ].getCategory()#' );
+					writeOutput( '<li class="categories">
+		<a href="#cb.linkCategory( arguments.categories[ x ] )#">#arguments.categories[ x ].getCategory()#' );
 					if( arguments.showPostCount ){
 						writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
 					}
-					writeOutput('</a></li>');
+					writeOutput('</a>
+	</li>
+	');
 				}
 			}
 			// close ul
-			writeOutput( "</ul>" );
+			writeOutput( "
+</ul>
+" );
 		}
 		return rString;
 	}

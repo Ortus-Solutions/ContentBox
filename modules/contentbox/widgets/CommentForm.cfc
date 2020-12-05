@@ -27,16 +27,21 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	 * @content The content object to build the comment form or a content slug to load. If empty, we will take the content object from the prc scopes.
 	 */
 	any function renderIt( any content ){
-		var event 			= getRequestContext();
-		var prc 			= event.getPrivateCollection();
-		var cbSettings 		= event.getPrivateValue( name="cbSettings" );
-		var commentForm 	= "";
-		var oCurrentAuthor 	= securityService.getAuthorSession();
+		var event          = getRequestContext();
+		var prc            = event.getPrivateCollection();
+		var cbSettings     = event.getPrivateValue( "cbSettings" );
+		var commentForm    = "";
+		var oCurrentAuthor = variables.securityService.getAuthorSession();
 
 		// Check if content simple value
 		if( isSimpleValue( arguments.content ) and len( arguments.content ) ){
-			var originalSlug = arguments.content;
-			arguments.content = contentService.findBySlug( arguments.content );
+			var originalSlug  = arguments.content;
+
+			arguments.content = variables.contentService.findBySlug(
+				slug   : arguments.content,
+				siteid : variables.cb.site().getSiteId()
+			);
+
 			if( !arguments.content.isLoaded() ){
 				return "The content slug: #originalSlug# was not found, cannot generate comment form.";
 			}
@@ -119,9 +124,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 
 				#cb.event( "cbui_postCommentForm" )#
 
-				<div class="buttons">
-					#html.submitButton( name="commentSubmitButton", value="Submit", class="btn btn-primary" )#
-				</div>
+<div class="buttons">#html.submitButton( name="commentSubmitButton", value="Submit", class="btn btn-primary" )#</div>
 			#html.endForm()#
 			');
 		}

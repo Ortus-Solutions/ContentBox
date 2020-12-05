@@ -1,10 +1,10 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* This is the base class for contentbox widgets which gives them access to ContentBox and ColdBox.
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * This is the base class for contentbox widgets which gives them access to ContentBox and ColdBox.
+ */
 component accessors="true" extends="coldbox.system.FrameworkSupertype"{
 
 	// Shared DI all widgets receive
