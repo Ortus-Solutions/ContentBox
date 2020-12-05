@@ -29,7 +29,9 @@
 								<i class="fa fa-globe"></i> #cb.r( "lang.localize@cbcore" )# <b class="caret"></b>
 								<ul role="menu" class="dropdown-menu">
 									<cfloop array="#prc.langs#" index="thisLang">
-									<li><a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a></li>
+										<li>
+											<a href="#prc.xehLang#/#thisLang#">#cb.r( "lang.#listFirst( thisLang, "_" )#@cbcore" )#</a>
+										</li>
 									</cfloop>
 								</ul>
 							</a>
@@ -40,7 +42,7 @@
         </section>
 
 		<!--- Simple Container --->
-		<section id="simple-container" class="container-fluid">
+		<section id="simple-container" class="container">
 			#renderView()#
 		</section>
 
