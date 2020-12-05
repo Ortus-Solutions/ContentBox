@@ -63,7 +63,7 @@ component extends="tests.resources.BaseTest"{
 
 					model.save( rule );
 					var rule = model.new(
-						properties={
+						{
 							whitelist	= "",
 							securelist	= "secondRule",
 							roles		= "",
@@ -71,8 +71,9 @@ component extends="tests.resources.BaseTest"{
 							redirect	= "cbadmin/login",
 							useSSL		= false,
 							order		= 1,
-							match		= "event"}
-						);
+							match		= "event"
+						}
+					);
 					model.save( rule );
 					var r = model.getSecurityRules();
 

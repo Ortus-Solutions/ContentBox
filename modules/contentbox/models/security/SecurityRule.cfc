@@ -136,7 +136,7 @@ component
 		"overrideEvent" : { required : false, size : "1..500" },
 		"useSSL"       	: { required : false, type : "boolean" },
 		"action" 		: { required : false, size : "1..50", regex : "^(redirect|override)$" },
-		"modules"     	: { required : false, size : "1..255" },
+		"module"     	: { required : false, size : "1..255" },
 		"order"       	: { required : false, type : "numeric" },
 		"message"     	: { required : false, size : "1..255" },
 		"messageType" 	: { required : false, size : "1..50" }
@@ -148,11 +148,13 @@ component
 
 	// Constructor
 	function init(){
-		variables.match       = "event";
-		variables.action      = "redirect";
-		variables.useSSL      = false;
-		variables.order       = 0;
-		variables.messageType = "info";
+		variables.match       	= "event";
+		variables.action      	= "redirect";
+		variables.useSSL      	= false;
+		variables.order       	= 0;
+		variables.messageType 	= "info";
+		variables.overrideEvent = "";
+		variables.module 		= "";
 
 		super.init();
 
