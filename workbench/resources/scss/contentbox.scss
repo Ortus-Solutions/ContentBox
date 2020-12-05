@@ -295,7 +295,7 @@ a.btn.btn-danger:visited {
 }
 .nav-tabs > li > a:hover{
 	color: black !important;
-	background-color: #8ad3f0;
+	background-color: #ddd;
 	border: 1px solid transparent;
 }
 .tab-content{
@@ -304,10 +304,10 @@ a.btn.btn-danger:visited {
 .tab-pane .row.well.well-sm {
 	margin: 0 1px 10px;
 }
-.tab-wrapper > .nav-tabs > li.active > a {
+.tab-wrapper > .nav-tabs > li > a {
 	border-radius: 10px 10px 0px 0px;
 }
-.tab-left > .nav-tabs > li.active > a {
+.tab-left > .nav-tabs > li > a {
 	border-radius: 10px 0px 0px 10px;
 }
 
@@ -366,11 +366,18 @@ a.btn.btn-danger:visited {
 	border-radius: 15px !important;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important
 }
+/*
+* this allows for panel headings to not show non rounded corners
+* when collapsed
+*/
+.panel{
+	overflow: hidden;
+}
 .panel-heading{
 	//padding: 15px 15px 9px 15px !important;
 	padding: 10px 15px 7px 15px !important;
 	//min-height: 48px;
-	border-radius: 15px;
+	border-radius: 15px 15px 0 0;
 	text-transform: none !important;
 }
 .panel-default .actions i{ color: #fff; }
