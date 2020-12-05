@@ -45,6 +45,7 @@ component
 		ormtype="string"
 		notnull="false"
 		default="event"
+		dbdefault="'event'"
 		length ="50";
 
 	property
@@ -84,10 +85,11 @@ component
 		dbdefault="false";
 
 	property
-		name   ="match"
+		name   ="action"
 		ormtype="string"
 		notnull="false"
 		default="redirect"
+		dbdefault="'redirect'"
 		length ="50";
 
 	property
@@ -133,7 +135,7 @@ component
 		"redirect"    	: { required : false, size : "1..500" },
 		"overrideEvent" : { required : false, size : "1..500" },
 		"useSSL"       	: { required : false, type : "boolean" },
-		"action" 		: { required : false, size : "1..50", , regex : "^(redirect|override)$" },
+		"action" 		: { required : false, size : "1..50", regex : "^(redirect|override)$" },
 		"modules"     	: { required : false, size : "1..255" },
 		"order"       	: { required : false, type : "numeric" },
 		"message"     	: { required : false, size : "1..255" },

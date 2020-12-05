@@ -21,11 +21,6 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 		super.afterAll();
 	}
 
-	function reset(){
-		structDelete( application, "wirebox" );
-		structDelete( application, "cbController" );
-	}
-
 	function withRollback( target ){
 		transaction {
 			try {

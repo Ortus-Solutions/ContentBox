@@ -6,7 +6,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "1",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -16,7 +19,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "1",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -26,7 +32,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "1",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -36,7 +45,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "1",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -46,7 +58,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "2",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -56,7 +71,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "3",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -66,7 +84,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "4",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -76,7 +97,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "5",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -86,7 +110,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "6",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -96,7 +123,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "7",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -106,7 +136,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "8",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -116,7 +149,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "9",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -126,7 +162,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "10",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -136,7 +175,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "11",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -146,7 +188,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "12",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -156,7 +201,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "13",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -166,7 +214,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "14",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -176,7 +227,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "15",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -186,7 +240,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "16",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -196,7 +253,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "17",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -206,7 +266,10 @@
         "whitelist": "^contentbox-admin:security\\.",
         "redirect": "cbadmin/security/login",
         "order": "18",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -216,7 +279,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "19",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -226,7 +292,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "20",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     },
     {
@@ -236,7 +305,10 @@
         "whitelist": "",
         "redirect": "cbadmin/security/login",
         "order": "20",
-        "match": "event",
+		"match": "event",
+		"action" : "redirect",
+		"module" : "contentbox",
+		"overrideEvent" : "",
         "useSSL": false
     }
 ]

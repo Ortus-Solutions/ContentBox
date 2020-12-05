@@ -261,12 +261,26 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the current site object that you are visiting the UI from via our discovery methods
 	 *
+	 * - Check argument override
+	 * - Check prc set site
+	 * - Do full detection
+	 *
 	 * @siteId The site id to get the root from, by default we use the current site you are on
 	 */
 	function site( string siteId = "" ){
-		return (
-			len( arguments.siteId ) ? variables.siteService.getOrFail( arguments.siteId ) : getPrivateRequestCollection().oCurrentSite
-		);
+		// Verify incoming override
+		if( len( arguments.siteId ) ){
+			variables.siteService.getOrFail( arguments.siteId );
+		}
+
+		// Verify PRC
+		var prc = getPrivateRequestCollection();
+		if( !isNull( prc.oCurrentSite ) ){
+			return prc.oCurrentSite;
+		}
+
+		// Do full detection
+		return variables.siteService.discoverSite();
 	}
 
 	/**
