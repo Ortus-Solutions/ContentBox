@@ -41,6 +41,13 @@ component
 		length ="255";
 
 	property
+		name   ="match"
+		ormtype="string"
+		notnull="false"
+		default="event"
+		length ="50";
+
+	property
 		name   ="roles"
 		ormtype="string"
 		notnull="false"
@@ -62,6 +69,13 @@ component
 		length ="500";
 
 	property
+		name   ="overrideEvent"
+		ormtype="string"
+		notnull="true"
+		default=""
+		length ="500";
+
+	property
 		name     ="useSSL"
 		ormtype  ="boolean"
 		sqltype  ="boolean"
@@ -70,17 +84,24 @@ component
 		dbdefault="false";
 
 	property
+		name   ="match"
+		ormtype="string"
+		notnull="false"
+		default="redirect"
+		length ="50";
+
+	property
+		name   ="module"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="500";
+
+	property
 		name   ="order"
 		ormtype="integer"
 		notnull="true"
 		default="0";
-
-	property
-		name   ="match"
-		ormtype="string"
-		notnull="false"
-		default=""
-		length ="50";
 
 	property
 		name   ="message"
@@ -104,15 +125,19 @@ component
 	this.pk = "ruleID";
 
 	this.constraints = {
-		"whitelist"   : { required : false, size : "1..255" },
-		"securelist"  : { required : false, size : "1..255" },
-		"roles"       : { required : false, size : "1..255" },
-		"permissions" : { required : false, size : "1..500" },
-		"redirect"    : { required : false, size : "1..500" },
-		"order"       : { required : false, type : "numeric" },
-		"match"       : { required : false, size : "1..50" },
-		"message"     : { required : false, size : "1..255" },
-		"messageType" : { required : false, size : "1..50" }
+		"whitelist"   	: { required : false, size : "1..255" },
+		"securelist"  	: { required : false, size : "1..255" },
+		"match"       	: { required : false, size : "1..50", regex : "^(event|url)$" },
+		"roles"       	: { required : false, size : "1..255" },
+		"permissions" 	: { required : false, size : "1..500" },
+		"redirect"    	: { required : false, size : "1..500" },
+		"overrideEvent" : { required : false, size : "1..500" },
+		"useSSL"       	: { required : false, type : "boolean" },
+		"action" 		: { required : false, size : "1..50", , regex : "^(redirect|override)$" },
+		"modules"     	: { required : false, size : "1..255" },
+		"order"       	: { required : false, type : "numeric" },
+		"message"     	: { required : false, size : "1..255" },
+		"messageType" 	: { required : false, size : "1..50" }
 	};
 
 	/* *********************************************************************
@@ -122,6 +147,7 @@ component
 	// Constructor
 	function init(){
 		variables.match       = "event";
+		variables.action      = "redirect";
 		variables.useSSL      = false;
 		variables.order       = 0;
 		variables.messageType = "info";
@@ -132,54 +158,26 @@ component
 	}
 
 	/**
-	 * Overriden setter
-	 */
-	SecurityRule function setMatch( required match ){
-		if ( not reFindNoCase( "^(event|url)$", arguments.match ) ) {
-			throw(
-				message = "Invalid match type sent: #arguments.match#",
-				detail  = "Valid match types are 'event,url'",
-				type    = "InvalidMatchType"
-			);
-		}
-		variables.match = arguments.match;
-		return this;
-	}
-
-	/*
-	 * Validate entry, returns an array of error or no messages
-	 */
-	array function validate(){
-		var errors = [];
-
-		// limits
-		securelist  = left( securelist, 255 );
-		whitelist   = left( whitelist, 255 );
-		roles       = left( roles, 500 );
-		permissions = left( permissions, 500 );
-		redirect    = left( redirect, 255 );
-
-		// Required
-		if ( !len( securelist ) ) {
-			arrayAppend( errors, "Securelist is required" );
-		}
-		if ( !len( redirect ) ) {
-			arrayAppend( errors, "Redirect is required" );
-		}
-
-		return errors;
-	}
-
-	/**
 	 * Get memento representation
 	 */
 	function getMemento( excludes = "" ){
-		var pList = listToArray(
-			"whitelist,securelist,roles,permissions,redirect,useSSL,order,match,message,messageType"
-		);
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
+		var pList = [
+			"whitelist",
+			"securelist",
+			"match",
+			"roles",
+			"permissions",
+			"redirect",
+			"overrideEvent",
+			"useSSL",
+			"action",
+			"module",
+			"order",
+			"message",
+			"messageType"
+		];
 
-		return result;
+		return getBaseMemento( properties = pList, excludes = arguments.excludes );
 	}
 
 }
