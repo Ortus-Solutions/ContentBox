@@ -56,10 +56,17 @@ component cache=false {
 		}
 		// start installation
 		installerService.execute( populateModel( "Setup@cbi" ) );
+
+		// Construct finishing URI
+		var xehFinished = event.buildLink( "cbInstaller/finished" );
+
 		// start up fresh in next request
 		applicationStop();
+
 		// Take them to the finalized screen
-		relocate( "cbinstaller/finished" );
+		// Use location because ACF has many issues with state management due to
+		// the applicationStop() above.
+		location( xehFinished, false );
 	}
 
 	/**
