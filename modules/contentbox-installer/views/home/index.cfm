@@ -1,11 +1,15 @@
 <cfoutput>
 <div class="panel panel-primary">
-    <div class="panel-heading">
+
+	<!--- Installer Heading --->
+	<div class="panel-heading">
 		<h3 class="panel-title">
 			<i class="far fa-lightbulb"></i> #cb.r( "labels.wizard@installer" )#
 		</h3>
-    </div>
-    <div class="panel-body">
+	</div>
+
+	<!--- Installer Body --->
+    <div class="panel-body p30">
         #html.startForm(
             action 		= "cbinstaller/install",
             name 		= "installerForm",
