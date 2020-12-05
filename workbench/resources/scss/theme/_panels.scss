@@ -29,8 +29,12 @@
 }
 .panel-default>.panel-heading {
     border-color: #eff2f7;
-    background: #fafafa;
-    color:#767676;
+	background: #f0f0f0;
+	// make sure if the heading is a link it is also the
+	// favorred color below
+	&, a {
+		color:#555;
+	}
 }
 .panel-default .actions i {
     font-size: 1em;
@@ -43,7 +47,7 @@
 }
 .panel-default>.panel-footer {
     border-color: #eff2f7;
-    background: #fafafa;
+    background: #f0f0f0;
     color:#767676;
 }
 .panel-primary>.panel-heading {
