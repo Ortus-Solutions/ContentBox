@@ -11,7 +11,11 @@ component {
 	// THIS CAN BE REMOVED AFTER INSTALLATION, USUALLY IT IS REMOVED BY THE INSTALLER
 	// include "modules/contentbox-installer/includes/dsn_relocation.cfm";
 
-	// Application properties, modify as you see fit
+	/**
+	 * --------------------------------------------------------------------------
+	 * Application Properties: Modify as you see fit!
+	 * --------------------------------------------------------------------------
+	 */
 	this.name              = "ContentBox CMS";
 	this.sessionManagement = true;
 	this.sessionTimeout    = createTimespan( 0, 1, 0, 0 );
@@ -20,10 +24,13 @@ component {
 	this.scriptProtect     = false;
 	this.secureJSON        = false;
 
-	/**************************************
-	LUCEE Specific Settings
-	**************************************/
-	// buffer the output of a tag/function body to output in case of a exception
+	/**
+	 * --------------------------------------------------------------------------
+	 * Lucee Specific Settings
+	 * --------------------------------------------------------------------------
+	 */
+
+	 // buffer the output of a tag/function body to output in case of a exception
 	this.bufferOutput                   = true;
 	// Activate Gzip Compression
 	this.compression                    = false;
@@ -32,29 +39,60 @@ component {
 	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
 
-	// ColdBox Application Specific, Modify if you need to
+	/**
+	 * --------------------------------------------------------------------------
+	 * ColdBox Bootstrap Settings
+	 * --------------------------------------------------------------------------
+	 * Modify only if you need to, else default them.
+	 */
 	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING   = "";
 	COLDBOX_CONFIG_FILE   = "";
 	COLDBOX_APP_KEY       = "";
 
-	// LOCATION MAPPINGS
+	/**
+	 * --------------------------------------------------------------------------
+	 * Location Mappings
+	 * --------------------------------------------------------------------------
+	 * - cbApp : Quick reference to root application
+	 * - coldbox : Where ColdBox library is installed
+	 * - contentbox : Where the ContentBox module root is installed
+	 * - cborm : Where the cborm library is installed: Needed for ORM Event Handling.
+	 */
 	this.mappings[ "/cbapp" ]      = COLDBOX_APP_ROOT_PATH;
 	this.mappings[ "/coldbox" ]    = COLDBOX_APP_ROOT_PATH & "coldbox";
 	this.mappings[ "/contentbox" ] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
 	this.mappings[ "/cborm" ]      = this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
+	/**
+	 * --------------------------------------------------------------------------
+	 * ORM + Datasource Settings
+	 * --------------------------------------------------------------------------
+	 * - Please update the cfcLocation as needed to locate more ORM entities for your app
+	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
+	 * So Make sure you select one.
+	 */
 	// THE CONTENTBOX DATASOURCE NAME
 	this.datasource  = "contentbox";
 	// ORM SETTINGS
 	this.ormEnabled  = true;
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation           : [ "models", "modules", "modules_app" ],
+		cfclocation           : [
+			// If you create your own app entities
+			"models",
+			// The ContentBox Core Entities
+			"modules/contentbox/models",
+			// Custom Module Entities
+			"modules_app"
+		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
-		//dialect 			  : "MySQLDialect", // Basic MySQL Dialect
-		//dialect 			  : "MySQLwithInnoDB", // Basic MySQL Dialect
-		//dialect			  : "org.hibernate.dialect.MySQL5InnoDBDialect", // Explicit Adobe 2016 + MySQL Dialect
+		//dialect				: "PostgreSQL", // PostgreSQL Dialect
+		//dialect 			  	: "MySQLDialect", // Basic MySQL Dialect
+		//dialect 			  	: "MySQLwithInnoDB", // MySQL With InnoDB engine
+		//dialect			  	: "org.hibernate.dialect.MySQL5InnoDBDialect", // Adobe 2016 + MySQL Dialect
+		//dialect 				: "MicrosoftSQLServer", // SQL Server Dialect
+		//dialect 				: "Oracle10g", // Oracle 10G+
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate              : "update",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
