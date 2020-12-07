@@ -1,4 +1,4 @@
-component implements="contentbox.models.updates.IUpdate"{
+component implements="contentbox.models.updates.IUpdate" {
 
 	property name="log" inject="logbox:logger:{this}";
 
@@ -7,17 +7,17 @@ component implements="contentbox.models.updates.IUpdate"{
 	}
 
 	/**
-	* pre installation
-	*/
+	 * pre installation
+	 */
 	function preInstallation(){
-		variables.log.info("Executing pre installation");
+		variables.log.info( "Executing pre installation" );
 	}
-	
+
 	/**
-	* post installation
-	*/
+	 * post installation
+	 */
 	function postInstallation(){
-		variables.log.info("Executing post installation");
+		variables.log.info( "Executing post installation" );
 	}
 
 }

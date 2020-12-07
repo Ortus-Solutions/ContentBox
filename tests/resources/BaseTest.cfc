@@ -4,6 +4,8 @@
  */
 component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 
+	// Load on first test
+	this.loadColdBox   = true;
 	// Do not unload per test bundle to improve performance.
 	this.unloadColdBox = false;
 
@@ -13,7 +15,12 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 	function beforeAll(){
 		ormClearSession();
 		super.beforeAll();
-		getWireBox().autowire( this );
+
+		// Wire up the test object with dependencies
+		if( this.loadColdBox && structKeyExists( application, "wirebox" ) ){
+			getWireBox().autowire( this );
+		}
+
 	}
 
 	// executes after all suites+specs in the run() method
@@ -21,10 +28,15 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 		super.afterAll();
 	}
 
+	/**
+	 * Wrapper for rollbacks
+	 *
+	 * @target The target closure to run within the transaction
+	 */
 	function withRollback( target ){
 		transaction {
 			try {
-				arguments.target();
+				return arguments.target();
 			} catch ( any e ) {
 				rethrow;
 			} finally {
