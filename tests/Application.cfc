@@ -55,7 +55,7 @@ component{
 	this.ormEnabled = true;
 	this.datasource = "contentbox";
 	this.ormSettings = {
-		cfclocation			= [ rootPath & "/modules" ],
+		cfclocation			= [ rootPath & "/modules/contentbox/models" ],
 		//logSQL 				= true, //Uncomment when needed
 		logSQL 				= false,
 		flushAtRequestEnd 	= false,
@@ -70,6 +70,13 @@ component{
 		// Set a high timeout for long running tests
 		setting requestTimeout="9999";
 
+		// Cleanup
+		if( !isNull( application.cbController ) ){
+			application.cbController.getLoaderService().processShutdown();
+		}
+		structDelete( application, "cbController" );
+		structDelete( application, "wirebox" );
+
 		// ORM Reload for fresh results
 		if( structKeyExists( url, "fwreinit" ) ){
 			if( structKeyExists( server, "lucee" ) ){
@@ -79,16 +86,6 @@ component{
 		}
 
 		return true;
-	}
-
-	public void function onRequestEnd() {
-
-		if( !isNull( application.cbController ) ){
-			application.cbController.getLoaderService().processShutdown();
-		}
-
-		structDelete( application, "cbController" );
-		structDelete( application, "wirebox" );
 	}
 
 }
