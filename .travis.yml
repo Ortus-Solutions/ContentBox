@@ -11,7 +11,7 @@ branches:
   - master
 
 sudo: required
-dist: xenial
+dist: focal
 
 # Required for patches
 git:
