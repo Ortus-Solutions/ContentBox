@@ -55,7 +55,7 @@ before_script:
   # import database
   - mysql -u root < tests/resources/sql/mysql/contentbox.sql
   # Startup testing engine
-  - box server start serverConfigFile="server-${ENGINE}.json"
+  - box server start serverConfigFile="server-${ENGINE}.json" --debug
 
 script:
   # Run tests
