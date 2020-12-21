@@ -79,10 +79,10 @@ component
 	property
 		name     ="useSSL"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		
 		notnull  ="false"
 		default  ="false"
-		dbdefault="false";
+		dbdefault="0";
 
 	property
 		name   ="action"

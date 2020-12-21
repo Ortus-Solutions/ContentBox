@@ -60,7 +60,6 @@ component 	persistent="true"
 
 	property 	name="isActive"
 				ormtype="boolean"
-				sqltype="boolean"
 				notnull="true"
 				default="false"
 				index  ="idx_login,idx_activeAuthor";
@@ -83,7 +82,7 @@ component 	persistent="true"
 
 	property 	name="isPasswordReset"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				notnull  ="true"
 				default  ="false"
 				dbdefault="0"
@@ -91,7 +90,7 @@ component 	persistent="true"
 
 	property 	name="is2FactorAuth"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				notnull  ="true"
 				default  ="false"
 				dbdefault="0"

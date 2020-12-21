@@ -85,7 +85,7 @@ component 	persistent 			= "true"
 
 	property 	name="isDeleted"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				notnull  ="true"
 				default  ="false"
 				dbdefault="0"
@@ -135,17 +135,17 @@ component 	persistent 			= "true"
 	property 	name="isPublished"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
-				dbdefault="true"
+				
+				dbdefault="1"
 				default  ="true"
 				index    ="idx_published,idx_search,idx_publishedSlug";
 
 	property 	name="allowComments"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="true"
-				dbdefault="true";
+				dbdefault="1";
 
 	property 	name="passwordProtection"
 				notnull="false"
@@ -171,17 +171,17 @@ component 	persistent 			= "true"
 	property 	name="cache"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="true"
-				dbdefault="true"
+				dbdefault="1"
 				index    ="idx_cache";
 
 	property 	name="cacheLayout"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="true"
-				dbdefault="true"
+				dbdefault="1"
 				index    ="idx_cachelayout";
 
 	property 	name="cacheTimeout"
@@ -204,9 +204,9 @@ component 	persistent 			= "true"
 	property 	name="showInSearch"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="true"
-				dbdefault="true"
+				dbdefault="1"
 				index    ="idx_showInSearch";
 
 	property 	name="featuredImage"

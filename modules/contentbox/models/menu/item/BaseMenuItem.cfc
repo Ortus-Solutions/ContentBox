@@ -46,7 +46,7 @@ component
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"
@@ -94,8 +94,8 @@ component
 	property
 		name   ="active"
 		ormtype="boolean"
-		sqltype  ="boolean"
-		dbdefault="true"
+		
+		dbdefault="1"
 		default="true";
 
 	property

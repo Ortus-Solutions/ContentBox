@@ -33,10 +33,10 @@ component
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false"
+		dbdefault="0"
 		index    ="idx_deleted";
 
 }

@@ -38,7 +38,7 @@ component  	persistent="true"
 	property
 		name     ="isCore"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"

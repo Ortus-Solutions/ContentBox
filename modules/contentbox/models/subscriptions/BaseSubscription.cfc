@@ -36,7 +36,7 @@ component
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"

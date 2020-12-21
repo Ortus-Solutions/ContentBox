@@ -50,9 +50,9 @@ component	persistent="true"
 	property 	name="isActive"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="false"
-				dbdefault="false"
+				dbdefault="0"
 				index    ="idx_activeContentVersion,idx_contentVersions";
 
 	/* *********************************************************************

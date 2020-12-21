@@ -37,9 +37,9 @@ component 	persistent="true"
 	property 	name="showInMenu"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="true"
-				dbdefault="true"
+				dbdefault="1"
 				index    ="idx_showInMenu";
 
 	property 	name="excerpt"
@@ -51,9 +51,9 @@ component 	persistent="true"
 	property 	name="SSLOnly"
 				notnull  ="true"
 				ormtype  ="boolean"
-				sqltype  ="boolean"
+				
 				default  ="false"
-				dbdefault="false"
+				dbdefault="0"
 				index    ="idx_ssl";
 
 	/* *********************************************************************
