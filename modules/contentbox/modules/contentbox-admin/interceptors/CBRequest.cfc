@@ -90,6 +90,17 @@ component extends="coldbox.system.Interceptor"{
 			return;
 		}
 
+		/************************************** FORCE LOGIN *********************************************/
+
+		if(
+			!findNoCase( "contentbox-security:security", event.getCurrentEvent() )
+			&&
+			!prc.oCurrentAuthor.getLoggedIn()
+		){
+			relocate( "#prc.cbAdminEntryPoint#.security.login" );
+			return;
+		}
+
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 
 		// Global Admin Exit Handlers
