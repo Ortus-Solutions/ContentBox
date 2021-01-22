@@ -95,6 +95,9 @@ For running our test suites you will need 2 more steps, so please refer to the [
 
 If developing CSS and Javascript assets, please refer to the [UI Developer Guide](workbench/Developer.md) in the `workbench/Developer.md` folder.
 
+## Ortus Community
+Join us in our Ortus Community and become a valuable member of this project https://community.ortussolutions.com/c/communities/contentbox/15. We will looking forward to hearing from you!!
+
 ----
 
 ### THE DAILY BREAD
