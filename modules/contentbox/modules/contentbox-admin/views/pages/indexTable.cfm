@@ -15,11 +15,11 @@
 
 <!--- pages --->
 <table id="pages" name="pages" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
-	<thead>
-		<tr>
-			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
-				<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
-			</th>
+    <thead>
+        <tr>
+            <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
+            	<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
+            </th>
 			<th>
 				Name
 			</th>
@@ -38,10 +38,10 @@
 			<th width="100" class="text-center {sorter:false}">
 				Actions
 			</th>
-		</tr>
-	</thead>
-	<tbody>
-		<cfloop array="#prc.pages#" index="page">
+        </tr>
+    </thead>
+    <tbody>
+        <cfloop array="#prc.pages#" index="page">
 			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
 				<cfif page.isExpired()>
 					class="danger"
@@ -264,11 +264,11 @@
 									<i class="far fa-eye fa-lg"></i> Open In Site
 								</a>
 							</li>
-						</ul>
-					</div>
+				    	</ul>
+				    </div>
 				</td>
 			</tr>
 		</cfloop>
-	</tbody>
+    </tbody>
 </table>
 </cfoutput>
