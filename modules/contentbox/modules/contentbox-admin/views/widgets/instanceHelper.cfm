@@ -1,4 +1,4 @@
-<cfset event.paramValue( "editorName", "" )> 
+<cfset event.paramValue( "editorName", "" )>
 <cfoutput>
 <!--- Custom Javascript --->
 <script>
@@ -72,7 +72,7 @@ function updatePreview() {
             success: function( data, status, xhr ) {
                 // if we have content, update it
                 if( !data.length ) {
-                    $( '##widget-preview-content' ).html( '<div class="widget-no-preview">No preview available!</div>' ); 
+                    $( '##widget-preview-content' ).html( '<div class="widget-no-preview">No preview available!</div>' );
                 }
                 // otherwise, show error message
                 else {
@@ -94,11 +94,11 @@ function buildInfobarText( vals, count ) {
         i++;
         if( vals[ item ].length ) {
             if( $.inArray( item, blacklistKeys ) == -1 ) {
-                infobarText+= item + ' = ' + vals[ item ];  
+                infobarText+= item + ' = ' + vals[ item ];
                 pop=true;
             }
             if( item == 'widgetUDF' ) {
-                infobarText += 'UDF = ' + vals[ item ] + '()'; 
+                infobarText += 'UDF = ' + vals[ item ] + '()';
                 pop=true;
             }
             if( i < count && pop ){
@@ -154,14 +154,14 @@ function insertCBWidget(){
         closeRemoteModal();
         return false;
     }
-    
+
     // create new widget element
     widgetContent = new CKEDITOR.dom.element( 'widget' );
     widgetContent.setAttributes( vals );
     // create new widgetinfobar element
     widgetInfobar = new CKEDITOR.dom.element( 'widgetinfobar' );
     widgetInfobar.setAttributes( {
-        contenteditable: false    
+        contenteditable: false
     } );
     // create new img element
     widgetInfobarImage = new CKEDITOR.dom.element( 'img' );

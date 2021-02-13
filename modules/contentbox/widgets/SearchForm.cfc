@@ -31,23 +31,23 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @formcss.hint The form css classes
 	*/
 	any function renderIt(
-		string type       ="content", 
-		string label      ="Search for", 
-		string title      ="", 
-		string titleLevel ="2", 
-		string placeholder="", 
-		string querycss   ="", 
-		string buttoncss  ="", 
-		string formcss    ="" 
+		string type       ="content",
+		string label      ="Search for",
+		string title      ="",
+		string titleLevel ="2",
+		string placeholder="",
+		string querycss   ="",
+		string buttoncss  ="",
+		string formcss    =""
 	){
 		var rString= "";
 		var event  = getRequestContext();
 
 		// Check type
 		if( !reFindNoCase( "^(content|blog)$", arguments.type ) ){
-			throw( 
-				message = "Invalid type for search form", 
-				detail  = "Valid types are: content or blog", 
+			throw(
+				message = "Invalid type for search form",
+				detail  = "Valid types are: content or blog",
 				type    = "InvalidSearchType"
 			);
 		}

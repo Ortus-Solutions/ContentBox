@@ -23,7 +23,7 @@ component extends="tests.resources.BaseTest"{
 	function run( testResults, testBox ){
 
 		describe( "Module Services", function(){
-			
+
 			aroundEach(function( spec, suite ){
 				ORMClearSession();
 				ORMCloseSession();
@@ -32,7 +32,7 @@ component extends="tests.resources.BaseTest"{
 					transaction{
 						arguments.spec.body();
 					}
-				} 
+				}
 				catch( any e ){
 					transactionRollback();
 					rethrow;
@@ -59,9 +59,9 @@ component extends="tests.resources.BaseTest"{
 				expect(	r.count ).toBeGTE( 1 );
 			});
 
-			
+
 			story( "Find modules by entry point", function(){
-				
+
 				given( "an invalid entrypoint", function(){
 					then( "it should return a new module", function(){
 						var r = model.findModuleByEntryPoint( "invalid" );

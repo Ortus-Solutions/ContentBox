@@ -1,7 +1,7 @@
 <cfoutput>
 <script>
 	// This code is taken from: https://www.monkehworks.com/image-cropping-with-coldfusion-jquery/
-	jQuery(document).ready(function(){			
+	jQuery(document).ready(function(){
 
 		var jcrop_api;
 		// obtain original image dimensions
@@ -14,12 +14,12 @@
 		var imgW = $("##width").attr("data-width");
 		var imgH = $("##height").attr("data-height");
 
-		
+
 		// set the x and y coords using the image dimensions
 		// and the padding to leave a border
 		var setX = originalImgHeight-padding;
 		var setY = originalImgWidth-padding;
-		
+
 		// create variables for the form field elements
 		var imgPath 	= jQuery('input[name=imagePath]');
 		var imgName 	= jQuery('input[name=imageName]');
@@ -34,18 +34,18 @@
 
 		// get the current image source in the main view
 		var currentImage = jQuery("##croppedImage img").attr('src');
-		
+
 		setImageFileValue(currentImage);
 
 		buildJCrop();
 
-		jQuery("##imagesave").click(function(){				
+		jQuery("##imagesave").click(function(){
 			// organise data into a readable string
-			var data = 'height=' + $("##height").val() + '&width=' + $("##width").val() + 
+			var data = 'height=' + $("##height").val() + '&width=' + $("##width").val() +
 					'&imgLoc=' + encodeURIComponent(imgLoc.val());
 
 		    var $btn = $(this);
-		    $btn.button('loading');					
+		    $btn.button('loading');
 
 			$.ajax({
 			  type: "POST",
@@ -61,11 +61,11 @@
 			  	closeRemoteModal();
 			  	fbRefresh();
 			  }
-			});	
+			});
 
 		});
 
-		jQuery("##scale_btn").click(function(){	
+		jQuery("##scale_btn").click(function(){
 
 			// organise data into a readable string
 			var data = 'height=' + $("##height").val() + '&width=' + $("##width").val() +
@@ -81,7 +81,7 @@
 			    destroyJcrop();
 				buildJCrop();
 			} );
-			
+
 			// disable the image crop button and
 			// enable the revert button
 			jQuery('##imageCrop_btn').attr('disabled', 'disabled');
@@ -93,8 +93,8 @@
 			return false;
 		});
 
-		jQuery(".transform").click(function(){	
-	
+		jQuery(".transform").click(function(){
+
 			// organise data into a readable string
 			var data = 'imgPath=' + getImg() + '&imgEdited=' + isEdited() +'&imgName=' + imgName.val() + '&val=' + $(this).val();
 
@@ -109,7 +109,7 @@
 		    	destroyJcrop();
 				buildJCrop();
 			} );
-			
+
 			// disable the image crop button and
 			// enable the revert button
 			jQuery('##revert_btn').removeAttr('disabled');
@@ -123,8 +123,8 @@
 
 		// selecting revert will create the img html tag complete with
 		// image source attribute, read from the imageFile form field
-		jQuery("##revert_btn").click(function() {					
-			var htmlImg = '<img src="' + jQuery('input[name=imageFile]').val() 
+		jQuery("##revert_btn").click(function() {
+			var htmlImg = '<img src="' + jQuery('input[name=imageFile]').val()
 					+ '" id="cropbox" class="img-scaled" />';
 			jQuery('##croppedImage').html(htmlImg,{}, function(){
 		        imgEdited.prop('checked', false)
@@ -143,26 +143,26 @@
 			imgEdited.prop('checked', false);
 
 		});
-		
-		jQuery("##imageDeselect_btn").click(function() {					
+
+		jQuery("##imageDeselect_btn").click(function() {
 		    destroyJcrop();
 		    buildJCrop();
-		    return false;							
+		    return false;
 		});
-		
+
 		jQuery("##imageCrop_btn").click(function(){
 			if( !imgWidth.val() ){
 				alert("Please select an area to crop!");
 				return false;
-			}					
+			}
 			// organise data into a readable string
-			var data = 'imgX=' + imgX.val() + '&imgY=' + imgY.val() + 
-					'&height=' + imgHeight.val() + '&width=' + imgWidth.val() + 
+			var data = 'imgX=' + imgX.val() + '&imgY=' + imgY.val() +
+					'&height=' + imgHeight.val() + '&width=' + imgWidth.val() +
 					'&imgPath=' + getImg() + '&imgEdited=' + isEdited() +'&imgName=' + imgName.val() + '&imgLoc=' + imgLoc.val();
 
 		    var $btn = $(this);
-		    $btn.button('loading');					
-			// 
+		    $btn.button('loading');
+			//
 			jQuery('##croppedImage').load('#event.buildLink( 'cbFileBrowser.editor.crop' )#',data, function(){
 		        $btn.button('reset');
 		        imgEdited.prop('checked', true);
@@ -173,7 +173,7 @@
 					jQuery('##imageCrop_btn').attr('disabled', 'disabled');
 		        },100)
 			});
-			
+
 			// disable the image crop button and
 			// enable the revert button
 			jQuery('##revert_btn').removeAttr('disabled');
@@ -184,7 +184,7 @@
 			// do not submit the form using the default behaviour
 			return false;
 		});
-		
+
 		// add the jQuery invocation into a separate function,
 		// which we will need to call more than once
 		function buildJCrop() {
@@ -207,13 +207,13 @@
 		}
 
 		function destroyJcrop(){
-			jcrop_api.destroy();				
+			jcrop_api.destroy();
 			jQuery('##x').val('0');
 			jQuery('##y').val('0');
 			jQuery('##x2').val('0');
 			jQuery('##y2').val('0');
 			jQuery('##w').val('0');
-			jQuery('##h').val('0');			
+			jQuery('##h').val('0');
 		}
 
 		// set the imageFile form field value to match
@@ -225,23 +225,23 @@
 		function getImg(){
 			return jQuery("##croppedImage img").attr("src");
 		}
-		
+
 		function isEdited(){
 			return imgEdited.is(':checked');
 		}
 
 		function getSize(){
-			var img = document.getElementById('cropbox'); 
+			var img = document.getElementById('cropbox');
 			//or however you get a handle to the IMG
 			var width = img.clientWidth;
-			var height = img.clientHeight;		
+			var height = img.clientHeight;
 		}
 
 	    jQuery('##newname').click(function(){
 	        jQuery("##saveAs").val("");
 	        jQuery("##saver").toggleClass("hidden");
 	    });
-		
+
 	});
 
 	function resetCoords() {
@@ -259,7 +259,7 @@
 		jQuery('##x2').val(c.x2);
 		jQuery('##y2').val(c.y2);
 		jQuery('##w').val(c.w);
-		jQuery('##h').val(c.h);	
+		jQuery('##h').val(c.h);
 		// enable the image crop button and
 		jQuery("##imageCrop_btn").prop( "disabled", false );
 		jQuery("##imageDeselect_btn").prop( "disabled", false );

@@ -8,12 +8,12 @@ openRemoteModal() is part of contentbox js
 	var insertWidget= {
     		exec:function(editor){
     			// Open the selector widget dialog.
-    			openRemoteModal( 
-                    getWidgetSelectorURL(), 
-                    { editorName: editor.name }, 
+    			openRemoteModal(
+                    getWidgetSelectorURL(),
+                    { editorName: editor.name },
                     $( window ).width() - 200,
                     $( window ).height() - 300,
-                    true 
+                    true
                 );
     		}
     	},
@@ -41,7 +41,7 @@ openRemoteModal() is part of contentbox js
         }
     	//Section 2 : Create the button and add the functionality to it
     	pluginName='cbWidgets';
-        
+
 	CKEDITOR.plugins.add( pluginName,{
 		init:function(editor){
 			editor.addCommand( pluginName, insertWidget );
@@ -97,7 +97,7 @@ openRemoteModal() is part of contentbox js
                    if( element.getAscendant( 'widget', true ) ) {
                        // make sure selection is this element
                        editor.widgetSelection = element.getAscendant( 'widget', true );
-                       return { 
+                       return {
                            widgetEdit: CKEDITOR.TRISTATE_OFF,
                            widgetRemove: CKEDITOR.TRISTATE_OFF
                        };

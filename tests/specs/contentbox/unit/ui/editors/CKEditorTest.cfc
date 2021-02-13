@@ -30,13 +30,13 @@ component extends="tests.resources.BaseTest"{
 
 			it( "can compileJS", function(){
 				makePublic( model, "compileJS" );
-				var t = model.compileJS( 
-					{ toolbar 		= { "unit" = "true" }, excerptToolbar = { "excerptTest" = "true" } }, 
+				var t = model.compileJS(
+					{ toolbar 		= { "unit" = "true" }, excerptToolbar = { "excerptTest" = "true" } },
 					{ extraPlugins 	= listToArray( model.getExtraPlugins() ) },
 					{ extraConfig 	= "extraconfig = 'true'" },
 					{ contentsCss 	= [ "/unit/css" ] }
 				);
-				
+
 				expect(	t ).notToBeEmpty();
 				expect(	t ).toInclude( "extraconfig" )
 					.toInclude( "unit/css" )

@@ -10,12 +10,12 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		super.setup();
 		model.init();
 	}
-		
+
 	function testMemento(){
 		r = model.getmemento();
 		assertTrue( structCount( r ) );
 	}
-	
+
 	function testPopulate(){
 		r = {
 			results = [],
@@ -26,11 +26,11 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 			errorMessages = [],
 			searchTerm = "luis"
 		};
-		
+
 		model.populate( r );
 		m = model.getMemento();
 		assertEquals( r, m );
-		
+
 	}
 
-} 
+}

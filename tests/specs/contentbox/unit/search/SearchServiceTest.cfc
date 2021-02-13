@@ -10,16 +10,16 @@ component extends="coldbox.system.testing.BaseModelTest" model="contentbox.model
 		super.setup();
 		model.init();
 	}
-		
+
 	function testGetSearchAdapter(){
 		mockAdapter = getMockBox().createEmptyMock( "contentbox.models.search.DBSearch" );
 		mockWireBox.$( "getInstance", mockAdapter );
 		mockSettings = getMockBox().createEmptyMock( "contentbox.models.system.SettingService" ).$( "getSetting","contentbox.models.search.DBSearch" );
 		model.$property( "wirebox","variables",mockWireBox);
 		model.$property( "settingService","variables",mockSettings);
-		
+
 		a = model.getSearchAdapter();
 		assertEquals( mockAdapter, a );
 	}
 
-} 
+}

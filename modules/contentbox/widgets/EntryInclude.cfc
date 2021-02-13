@@ -43,7 +43,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	/**
 	* Return an array of slug lists, the @ignore annotation means the ContentBox widget editors do not use it only used internally.
 	* @cbignore
-	*/ 
+	*/
 	array function getSlugList(){
 		return entryService.getAllFlatSlugs();
 	}

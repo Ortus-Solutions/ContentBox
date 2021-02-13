@@ -19,9 +19,9 @@ component extends="baseHandler"{
 		var bindingArgs = {
 			"gravatarEmail"  = "info@ortussolutions.com"
 		};
-		
-		return renderLayout( 
-			view 	= "/contentbox/email_templates/#encodeForHTML( rc.template )#", 
+
+		return renderLayout(
+			view 	= "/contentbox/email_templates/#encodeForHTML( rc.template )#",
 			layout 	= "/contentbox/email_templates/layouts/email",
 			args 	= bindingArgs
 		);

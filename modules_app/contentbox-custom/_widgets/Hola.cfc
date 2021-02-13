@@ -11,7 +11,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
         setIcon( "info" );
-        
+
 		return this;
 	}
 

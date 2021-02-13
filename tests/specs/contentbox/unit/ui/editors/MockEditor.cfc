@@ -6,11 +6,11 @@ component implements="contentbox.models.ui.editors.IEditor"{
 
 	function getName(){ return "mock-editor"; }
 	function getDisplayName(){ return "Mock Editor"; }
-	
+
 	function startup(){	}
-	
+
 	function shutdown(){}
-	
+
 	function loadAssets(){}
 
-} 
+}

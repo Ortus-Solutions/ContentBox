@@ -1,35 +1,35 @@
 /*
  * Modified by Luis Majano July 2009
  * Copyright (c) 2009 Luis Majano
- * 
+ *
    JS on Load:
    $(document).ready(function() {
    		$( "##productFilter" ).keyup(function(){
 			$.uiDivFilter( $( ".ProductCollectionTab" ), this.value, divIsHidden )
 		} )
 	} )
-	
+
 	//Callback when items are hidden
    function divIsHidden(elem){
 		var words = elem.attr( "id" ).split( "_" );
 		var id = words[1];
-		
+
 		if( id ){
 			var pvtab = $( "##pvtab_"+id);
 			pvtab.hide();
 		}
 	}
-  
+
   Input Declaration For Filter
   <input size="40" type="text" name="productFilter" id="productFilter" />
- 
+
   Divs:
   <div id="ptab_#productID#" class="ProductCollectionTab<cfif currentrow mod 2 eq 0> even</cfif>">
 		<!--- Collection Name --->
 		<span><img src="includes/images/organization.png" border="0" align="top" alt="#name#" /> #name#</span>
    </div>
- 
-  
+
+
  * Original Creator:
  * Copyright (c) 2008 Greg Weber greg at gregweber.info
  * Dual licensed under the MIT and GPL licenses:
@@ -56,7 +56,7 @@ jQuery.uiDivFilter = function(jq, phrase, ifHidden, ifShown){
 	var phrase_length = phrase.length;
 	var words = phrase.toLowerCase().split( " " );
 	var test = "";
-	
+
 	/**
 	 * Search divs for texts
 	 * @return {[type]} [description]
@@ -64,9 +64,9 @@ jQuery.uiDivFilter = function(jq, phrase, ifHidden, ifShown){
 	var search_text = function(){
 		var elem = jQuery(this);
 		if( jQuery.uiDivFilter.has_words( elem.text(), words ) ){
-			elem.show();	
+			elem.show();
 			// Call callback if defined
-			if( ifShown ){ ifShown( elem ); }		
+			if( ifShown ){ ifShown( elem ); }
 		} else {
 			elem.hide();
 			// Call callback if defined
@@ -82,7 +82,7 @@ jQuery.uiDivFilter = function(jq, phrase, ifHidden, ifShown){
 	} else {
 		this.last_phrase = phrase;
 		jq.each( search_text );
-	}	
+	}
 	return jq;
 };
 jQuery.uiDivFilter.last_phrase = "";

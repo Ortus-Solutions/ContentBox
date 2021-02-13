@@ -11,13 +11,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
         setIcon( "info" );
-        
+
 		return this;
 	}
 
 	/**
 	 * Gives you todays date according to format
-     * 
+     *
 	 * @showTime Shows the time as well
      * @dateMask The date part mask
      * @timeMask The time part mask

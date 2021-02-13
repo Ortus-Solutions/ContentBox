@@ -10,7 +10,7 @@ module.exports = function( grunt ){
 	grunt.registerTask( "css", [
 		"clean:revcss", 		//clean old rev css
 		"bower_concat:css",		//bower concat
-		"concat:css", 			//concat css 
+		"concat:css", 			//concat css
 		"cssmin:css",			//min css
 		"clean:combinedcss",	//clean concat css
 		"rev:css",				//create cache buster
@@ -23,7 +23,7 @@ module.exports = function( grunt ){
 		"clean:revjs",			//clean old rev js
 		"jshint", 				//js lint
 		"bower_concat:js",		//bower concat
-		"concat:js", 			//concat js 
+		"concat:js", 			//concat js
 		"uglify:js",			//min js
 		"clean:combinedjs", 	//clean combined js
 		"rev:js",				//create cache buster
@@ -43,15 +43,15 @@ module.exports = function( grunt ){
 				  'js': 'includes/js/bower.js',
 				  'css': 'includes/css/bower.css'
 				}
-			},			
-			css : { 
+			},
+			css : {
 				dest: {
 				  'css': 'includes/css/bower.css'
 				},
 				mainFiles : {}
 			},
-		  	js 	: { 
-		  		dest  	: 'includes/js/bower.js', 
+		  	js 	: {
+		  		dest  	: 'includes/js/bower.js',
 		  		exclude : [ "jquery" ],
 		  		mainFiles :{
 		  		}
@@ -66,7 +66,7 @@ module.exports = function( grunt ){
 	            		"includes/css/bower.css",
 	            		"includes/css/src/main.css"
 	            	]
-				} 
+				}
 			},
 			js : {
 	        	files : {
@@ -87,7 +87,7 @@ module.exports = function( grunt ){
 
 		// JS Min
 		uglify : {
-			options : { 
+			options : {
     			banner : "/* <%= pkg.name %> minified @ <%= grunt.template.today() %> */\n",
     			mangle : false
     		},
@@ -125,7 +125,7 @@ module.exports = function( grunt ){
 				tasks : [ "css" ]
 			},
 			js : {
-				files : [ 
+				files : [
 					"includes/js/src/*.js"
 				],
 				tasks : [ "js" ]
@@ -146,12 +146,12 @@ module.exports = function( grunt ){
 				endtag : "//endinjector//"
 			},
 			css : {
-				files : { 
+				files : {
 					"handlers/Home.cfc"	: [ "includes/css/*fb.min.css" ]
 				}
 			},
 			js : {
-				files : { 
+				files : {
 					"handlers/Home.cfc"	: [ "includes/js/*fb.min.js" ]
 				}
 			}
@@ -159,7 +159,7 @@ module.exports = function( grunt ){
 
 		// JS Hint
 		jshint : {
-			options : { 
+			options : {
 				curly 	: true,
 				eqeqeq  : true,
 				eqnull 	: true,
@@ -174,7 +174,7 @@ module.exports = function( grunt ){
 				},
 				ignores : [ "*.ba.min.js" ]
 			},
-			all : [ "Gruntfile.js", 'includes/js/src/*.js' ]			
+			all : [ "Gruntfile.js", 'includes/js/src/*.js' ]
 		},
 
 	} );

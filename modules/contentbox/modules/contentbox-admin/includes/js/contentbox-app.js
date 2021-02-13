@@ -782,7 +782,7 @@ var app = function() {
 
     var toggleMenuLeft = function() {
         $('#toggle-left').bind('click', function(e) {
-           $('body').removeClass('off-canvas-open')    
+           $('body').removeClass('off-canvas-open')
             var bodyEl = $('#container');
             ($(window).width() > 767) ? $(bodyEl).toggleClass('sidebar-mini'): $(bodyEl).toggleClass('sidebar-opened');
         });
@@ -828,7 +828,7 @@ var app = function() {
     };
 
 
-    //Vector Maps 
+    //Vector Maps
     var map = function() {
         $('#map').vectorMap({
             map: 'world_mill_en',

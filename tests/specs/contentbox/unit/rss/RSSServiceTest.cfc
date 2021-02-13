@@ -19,7 +19,7 @@ component extends="tests.resources.BaseTest"{
 		// self cleanup on this test only.
 		structdelete( application, "cbController" );
 	}
-	
+
 	function testBuildCommentFeed(){
 		// mock cb
 		mockCBHelper.$( "siteName","Unit Test" )
@@ -30,17 +30,17 @@ component extends="tests.resources.BaseTest"{
 		makePublic( service, "buildCommentFeed" );
 		r = service.buildCommentFeed();
 		assertTrue( isXML(r) );
-		
+
 		// Slug
 		var b = entityLoad( "cbEntry" )[1];
 		r = service.buildCommentFeed(slug=b.getSlug());
 		assertTrue( isXML( r ) );
-		
+
 		// ContentType
 		r = service.buildCommentFeed(contentType='Page');
 		assertTrue( isXML( r ) );
 	}
-	
+
 	function testBuildContentFeed(){
 		getRequestContext().setValue( "CBENTRYPOINT","http://localhost",true);
 		// mock cb
@@ -53,12 +53,12 @@ component extends="tests.resources.BaseTest"{
 		makePublic( service, "buildContentFeed" );
 		var r = service.buildContentFeed();
 		assertTrue( isXML(r) );
-		
+
 		// Category
 		r = service.buildContentFeed(category='ContentBox');
 		assertTrue( isXML( r ) );
 	}
-	
+
 	function testBuildEntryFeed(){
 		getRequestContext().setValue( "CBENTRYPOINT","http://localhost",true);
 		// mock cb
@@ -71,12 +71,12 @@ component extends="tests.resources.BaseTest"{
 		makePublic( service, "buildEntryFeed" );
 		r = service.buildEntryFeed();
 		assertTrue( isXML(r) );
-		
+
 		// Category
 		r = service.buildEntryFeed(category='ContentBox');
 		assertTrue( isXML( r ) );
 	}
-	
+
 	function testbuildPageFeed(){
 		getRequestContext().setValue( "CBENTRYPOINT","http://localhost",true);
 		// mock cb
@@ -89,10 +89,10 @@ component extends="tests.resources.BaseTest"{
 		makePublic( service, "buildPageFeed" );
 		r = service.buildPageFeed();
 		assertTrue( isXML(r) );
-		
+
 		// Category
 		r = service.buildPageFeed(category='ContentBox');
 		assertTrue( isXML( r ) );
 	}
-	
-} 
+
+}

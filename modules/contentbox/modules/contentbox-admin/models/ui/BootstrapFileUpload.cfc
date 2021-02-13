@@ -15,9 +15,9 @@ component {
     */
     BootstrapFileUpload function init(){
         //Return instance
-        return this;        
+        return this;
     }
-    
+
     /**
      * Main method for rendering bootstrap-themed file upload field
      * @name.hint The name of the file field to create
@@ -30,11 +30,11 @@ component {
      * @changeButtonText.hint The text to use for the "change" button
      * @removeButtonText.hint The text to use for the "remove" button
      */
-    public string function renderIt( 
+    public string function renderIt(
         required string name,
         boolean required=true,
         string id="",
-        string label, 
+        string label,
         numeric columnWidth=3,
         useRemoveButton=true,
         selectButtonText="Select file",
@@ -64,7 +64,7 @@ component {
             if( arguments.useRemoveButton ) {
                 writeoutput(
                     '<a href="##" class="input-group-addon btn btn-default fileinput-exists" data-dismiss="fileinput">#arguments.removeButtonText#</a>'
-                );                
+                );
             }
             writeoutput(
                 '</div></div></div>'

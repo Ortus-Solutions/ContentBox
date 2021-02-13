@@ -23,21 +23,21 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 	function getName(){
 		return "textarea";
 	}
-	
+
 	/**
 	* Get the display name of an editor
 	*/
 	function getDisplayName(){
 		return "Textarea";
 	};
-	
+
 	/**
-	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc. 
+	* This is fired once editor javascript loads, you can use this to return back functions, asset calls, etc.
 	* return the appropriate JavaScript
 	*/
 	function loadAssets(){
 		var js = "";
-		
+
 		savecontent variable="js"{
 			writeOutput( "
 			function getContentEditor(){
@@ -71,17 +71,17 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 			}
 			" );
 		}
-		
+
 		return js;
 	};
-	
+
 	/**
 	* Startup the editor(s) on a page
 	*/
 	function startup(){
 		log.info( getName() & " editor started up." );
 	}
-	
+
 	/**
 	* Shutdown the editor(s) on a page
 	*/
@@ -89,4 +89,4 @@ component implements="contentbox.models.ui.editors.IEditor" accessors="true" sin
 		log.info( getName() & " editor shutdown." );
 	}
 
-} 
+}

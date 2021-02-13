@@ -6,7 +6,7 @@
  * This Module loads all of a user's custom assets:
  * - content - media manager assets
  * - themes - custom themes
- * - modules - custom modules 
+ * - modules - custom modules
  */
 component {
 
@@ -25,7 +25,7 @@ component {
 	this.cfmapping 			= "contentbox-custom";
 	// ContentBox must be loaded first
 	this.dependencies 		= [	"contentbox" ];
-	
+
 	/**
 	* Configure Module
 	*/
@@ -33,7 +33,7 @@ component {
 
 		// contentbox settings
 		settings = {
-			
+
 		};
 
 		// CB Module Conventions
@@ -55,11 +55,11 @@ component {
 
 		// interceptors
 		interceptors = [
-			
+
 		];
 
 	}
-	
+
 	/**
 	* Development tier
 	*/
@@ -70,7 +70,7 @@ component {
 	* Fired when the module is registered and activated.
 	*/
 	function onLoad(){
-		
+
 	}
 
 	/**
