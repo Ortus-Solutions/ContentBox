@@ -222,7 +222,9 @@ component {
 			class      : "cbmailservices.models.protocols.FileProtocol",
 			properties : { filePath : "/logs" }
 		};
-		// logbox.debug 	= ["coldbox.system.interceptors.Security"];
+
+		// Specific Debugging + Logging
+		// logbox.debug 	= [ "cbsecurity" ];
 		// logbox.debug 	= [ "coldbox.system.aop" ];
 		// logbox.debug 	= [ "root" ];
 	}

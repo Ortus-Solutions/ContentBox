@@ -40,10 +40,6 @@ component {
 			}
 		};
 
-		// Parent Settings
-		parentSettings = {
-		};
-
 		// SES Routes
 		routes = [
 			{ pattern="/", handler="dashboard", action="index" },

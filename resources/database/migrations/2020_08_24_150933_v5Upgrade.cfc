@@ -18,6 +18,10 @@ component {
 	];
 
 	function up( schema, query ){
+		// If you are on version 4 continue, else skip
+		// If cb_setting doesn't have a FK_siteId then it's 4
+
+
 		transaction {
 			try {
 				// Update Boolean Bits
