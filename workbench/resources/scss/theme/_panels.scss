@@ -1,6 +1,7 @@
 .panel {
     border: none;
     box-shadow: none;
+    overflow: visible !important; /* Rewrites Bootstrap */
     @include roundBorders(3px);
 }
 .panel>.panel-heading {
