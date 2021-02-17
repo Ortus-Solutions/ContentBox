@@ -6,18 +6,6 @@
 */
 component extends="tests.resources.BaseTest"{
 
-/*********************************** LIFE CYCLE Methods ***********************************/
-
-	// executes before all suites+specs in the run() method
-	function beforeAll(){
-		super.beforeAll();
-	}
-
-	// executes after all suites+specs in the run() method
-	function afterAll(){
-		super.afterAll();
-	}
-
 /*********************************** BDD SUITES ***********************************/
 
 	function run( testResults, testBox ){
@@ -30,7 +18,7 @@ component extends="tests.resources.BaseTest"{
 				model.getEditors()[ "test" ] 	= this;
 				model.getEditors()[ "Awesome" ] = this;
 				var a = model.getRegisteredEditors();
-				
+
 				expect(	a ).toInclude( "Awesome" )
 					.toInclude( "ckeditor" )
 					.toInclude( "test" );
@@ -40,7 +28,7 @@ component extends="tests.resources.BaseTest"{
 			it( "can register a new editor", function(){
 				var editor = prepareMock( new MockEditor() );
 				model.registerEditor( editor );
-				assertEquals( editor, model.getEditor( "mock-editor" ) );		
+				assertEquals( editor, model.getEditor( "mock-editor" ) );
 			});
 
 			it( "can unregister editors", function(){

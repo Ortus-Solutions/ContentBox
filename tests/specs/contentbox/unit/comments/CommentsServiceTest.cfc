@@ -1,96 +1,89 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-*/
-component extends="tests.resources.BaseTest"{
-
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ */
+component extends="tests.resources.BaseTest" {
 
 	function run( testResults, testBox ){
-
 		// all your suites go here.
 		describe( "Comment Service", function(){
-
-			aroundEach(function( spec, suite ){
-				ORMClearSession();
-				ORMCloseSession();
-				try{
+			aroundEach( function( spec, suite ){
+				ormClearSession();
+				ormCloseSession();
+				try {
 					// Make sure we always rollback
-					transaction{
+					transaction {
 						arguments.spec.body();
 					}
-				}
-				catch( any e ){
+				} catch ( any e ) {
 					transactionRollback();
 					rethrow;
 				}
-			});
+			} );
 
-			beforeEach(function( currentSpec ){
+			beforeEach( function( currentSpec ){
 				commentService = getInstance( "CommentService@cb" );
-			});
+			} );
 
 			it( "can get approved comment count", function(){
 				var r = commentService.getApprovedCommentCount();
-				expect(	r ).toBeGT( 0 );
-			});
+				expect( r ).toBeGT( 0 );
+			} );
 
 			it( "can get unapproved comment count", function(){
 				var r = commentService.getUnApprovedCommentCount();
-				expect(	r ).toBeGT( 0 );
-			});
+				expect( r ).toBeGT( 0 );
+			} );
 
 			describe( "Approved Comment Finders", function(){
 				it( "cand find all", function(){
 					var r = commentService.findApprovedComments();
-					expect(	r.count ).toBeGT( 0 );
-				});
+					expect( r.count ).toBeGT( 0 );
+				} );
 				it( "can find by content ID", function(){
-					var r = commentService.findApprovedComments( contentID=0 );
-					expect(	r.count ).toBe( 0 );
+					var r = commentService.findApprovedComments( contentID = 0 );
+					expect( r.count ).toBe( 0 );
 
-					var r = commentService.findApprovedComments( contentID=142 );
-					expect(	r.count ).toBeGT( 0 );
-				});
+					var r = commentService.findApprovedComments( contentID = 142 );
+					expect( r.count ).toBeGT( 0 );
+				} );
 				it( "can find by content types", function(){
-					var r = commentService.findApprovedComments(contentType="invalid" );
-					expect(	r.count ).toBe( 0 );
+					var r = commentService.findApprovedComments( contentType = "invalid" );
+					expect( r.count ).toBe( 0 );
 
-					var r = commentService.findApprovedComments(contentType="Entry" );
-					expect(	r.count ).toBeGT( 0 );
-				});
-			});
+					var r = commentService.findApprovedComments( contentType = "Entry" );
+					expect( r.count ).toBeGT( 0 );
+				} );
+			} );
 
 			it( "can do comment searching by parameters", function(){
 				// test get all
 				var r = commentService.search();
-				expect(	r.count ).toBeGT( 0 );
+				expect( r.count ).toBeGT( 0 );
 
 				// test any approved
-				var r = commentService.search( isApproved="any" );
-				expect(	r.count ).toBeGT( 0 );
+				var r = commentService.search( isApproved = "any" );
+				expect( r.count ).toBeGT( 0 );
 
-				var r = commentService.search( isApproved=false );
-				expect(	r.count ).toBe( 1 );
+				var r = commentService.search( isApproved = false );
+				expect( r.count ).toBe( 1 );
 
-				var r = commentService.search( contentID=142);
-				expect(	r.count ).toBeGT( 0 );
+				var r = commentService.search( contentID = 142 );
+				expect( r.count ).toBeGT( 0 );
 
 				// disjunction with content
-				var r = commentService.search( contentID=142, search="awesome" );
-				expect(	r.count ).toBeGTE( 1 );
+				var r = commentService.search( contentID = 142, search = "awesome" );
+				expect( r.count ).toBeGTE( 1 );
 				// disjunction with author
-				var r = commentService.search( contentID=142, search="Pio" );
-				expect(	r.count ).toBeGTE( 1 );
+				var r = commentService.search( contentID = 142, search = "Pio" );
+				expect( r.count ).toBeGTE( 1 );
 				// disjunction with authorEmail
-				var r = commentService.search( contentID=142, search="Test" );
-				expect(	r.count ).toBeGTE( 1 );
-			});
-
-
-
-		});
+				var r = commentService.search( contentID = 142, search = "Test" );
+				expect( r.count ).toBeGTE( 1 );
+			} );
+		} );
 	}
 
 }
