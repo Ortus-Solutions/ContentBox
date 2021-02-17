@@ -269,13 +269,13 @@ component accessors="true" singleton threadSafe {
 	 */
 	function site( string siteId = "" ){
 		// Verify incoming override
-		if( len( arguments.siteId ) ){
+		if ( len( arguments.siteId ) ) {
 			variables.siteService.getOrFail( arguments.siteId );
 		}
 
 		// Verify PRC
 		var prc = getPrivateRequestCollection();
-		if( !isNull( prc.oCurrentSite ) ){
+		if ( !isNull( prc.oCurrentSite ) ) {
 			return prc.oCurrentSite;
 		}
 
@@ -2289,10 +2289,6 @@ component accessors="true" singleton threadSafe {
 		if ( find( "@", arguments.resource ) ) {
 			arguments.bundle   = listLast( arguments.resource, "@" );
 			arguments.resource = listFirst( arguments.resource, "@" );
-		}
-		// Stupid CF9 Hack.
-		if ( structKeyExists( arguments, "defaultValue" ) ) {
-			arguments.default = arguments.defaultValue;
 		}
 		return resourceService.getResource( argumentCollection = arguments );
 	}

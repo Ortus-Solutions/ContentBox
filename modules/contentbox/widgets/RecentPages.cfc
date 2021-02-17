@@ -1,15 +1,15 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A cool basic widget that shows N recent pages
-*/
-component extends="contentbox.models.ui.BaseWidget" singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A cool basic widget that shows N recent pages
+ */
+component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	RecentPages function init(){
 		// Widget Properties
 		setName( "RecentPages" );
@@ -38,56 +38,74 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	 * @sortOrder.options Most Recent,Most Popular,Most Commented
 	 */
 	any function renderIt(
-		numeric max      =5,
-		string title     ="",
-		string titleLevel="2",
-		string category  ="",
-		string searchTerm="",
-		string sortOrder ="Most Recent"
+		numeric max       = 5,
+		string title      = "",
+		string titleLevel = "2",
+		string category   = "",
+		string searchTerm = "",
+		string sortOrder  = "Most Recent"
 	){
 		var event      = getRequestContext();
-		var cbSettings = event.getValue( name="cbSettings", private=true );
+		var cbSettings = event.getValue( name = "cbSettings", private = true );
 
 		// Determine Sort Order
-		switch( arguments.sortOrder ){
-			case "Most Popular" 	: { arguments.sortOrder = "hits DESC"; break; }
-			case "Most Commented" 	: { arguments.sortOrder = "numberOfComments DESC"; break;}
-			default : { arguments.sortOrder = "publishedDate DESC"; }
+		switch ( arguments.sortOrder ) {
+			case "Most Popular": {
+				arguments.sortOrder = "hits DESC";
+				break;
+			}
+			case "Most Commented": {
+				arguments.sortOrder = "numberOfComments DESC";
+				break;
+			}
+			default: {
+				arguments.sortOrder = "publishedDate DESC";
+			}
 		}
 
 		var pageResults = variables.pageService.findPublishedPages(
-			max        : arguments.max,
-			category   : arguments.category,
-			searchTerm : arguments.searchTerm,
-			sortOrder  : arguments.sortOrder,
-			siteId     : getSite().getSiteId()
+			max       : arguments.max,
+			category  : arguments.category,
+			searchTerm: arguments.searchTerm,
+			sortOrder : arguments.sortOrder,
+			siteId    : getSite().getSiteId()
 		);
 		var rString = "";
 
 		// iteration cap
-		if( pageResults.count lt arguments.max){
+		if ( pageResults.count lt arguments.max ) {
 			arguments.max = pageResults.count;
 		}
 
 		// generate recent pages
-		saveContent variable="rString"{
+		saveContent variable="rString" {
 			// title
-			if( len( arguments.title ) ){ writeOutput( "<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
-" ); }
+			if ( len( arguments.title ) ) {
+				writeOutput(
+					"<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+"
+				);
+			}
 			// UL start
-			writeOutput('<ul id="recentPages">
-	');
+			writeOutput(
+				"<ul id=""recentPages"">
+	"
+			);
 			// iterate and create
-			for(var x=1; x lte arguments.max; x++){
-				writeOutput('<li class="recentPages">
-		<a href="#cb.linkPage(pageResults.pages[ x ])#">#pageResults.pages[ x ].getTitle()#</a>
+			for ( var x = 1; x lte arguments.max; x++ ) {
+				writeOutput(
+					"<li class=""recentPages"">
+		<a href=""#cb.linkPage( pageResults.pages[ x ] )#"">#pageResults.pages[ x ].getTitle()#</a>
 	</li>
-	');
+	"
+				);
 			}
 			// close ul
-			writeOutput( "
+			writeOutput(
+				"
 </ul>
-" );
+"
+			);
 		}
 
 		return rString;
@@ -97,9 +115,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	 * Get all the categories
 	 */
 	array function getAllCategories() cbIgnore{
-		return variables.categoryService.getAllNames(
-			siteId = getSite().getSiteId()
-		);
+		return variables.categoryService.getAllNames( siteId = getSite().getSiteId() );
 	}
 
 }

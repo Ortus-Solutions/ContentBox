@@ -22,7 +22,11 @@ component {
 		layoutSettings = { defaultLayout : "simple.cfm" };
 
 		// i18n
-		i18n = { resourceBundles : { "security" : "#moduleMapping#/includes/i18n/security" } };
+		cbi18n = {
+			resourceBundles : {
+				"security" : "#moduleMapping#/includes/i18n/security"
+			}
+		};
 
 		// SES Routes
 		routes = [

@@ -83,7 +83,7 @@ component {
 		}
 
 		// i18n
-		i18n = { resourceBundles : { "fb" : "#moduleMapping#/includes/i18n/fb" } };
+		cbi18n = { resourceBundles : { "fb" : "#moduleMapping#/includes/i18n/fb" } };
 
 		// Layout Settings
 		layoutSettings = { defaultLayout : "filebrowser.cfm" };

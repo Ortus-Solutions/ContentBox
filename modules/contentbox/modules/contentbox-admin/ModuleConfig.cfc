@@ -34,7 +34,7 @@ component {
 		};
 
 		// i18n
-		i18n = {
+		cbi18n = {
 			resourceBundles = {
 				"admin" = "#moduleMapping#/includes/i18n/admin"
 			}
