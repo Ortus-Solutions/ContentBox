@@ -5,20 +5,20 @@
  * ---
  * Category service for contentbox
  */
-component extends="cborm.models.VirtualEntityService" singleton{
+component extends="cborm.models.VirtualEntityService" singleton {
 
 	// Dependencies
-	property name="htmlHelper"                                inject="HTMLHelper@coldbox";
-	property name="populator"                                        inject="wirebox:populator";
-	property name="contentService"inject="contentService@cb";
-	property name="dateUtil"                                                inject="DateUtil@cb";
+	property name="htmlHelper" inject="HTMLHelper@coldbox";
+	property name="populator" inject="wirebox:populator";
+	property name="contentService" inject="contentService@cb";
+	property name="dateUtil" inject="DateUtil@cb";
 
 	/**
 	 * Constructor
 	 */
 	CategoryService function init(){
 		// init it
-		super.init( entityName="cbCategory", useQueryCaching=true );
+		super.init( entityName = "cbCategory", useQueryCaching = true );
 
 		return this;
 	}
@@ -36,17 +36,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	Category function getOrCreate( required category, required site ){
 		// Verify the incoming category exists in the target site or not
 		var oTargetCategory = newCriteria()
-			.isEq( "site.siteId", javaCast( "int", arguments.site.getSiteId() ) )
+			.isEq( "site.siteId", javacast( "int", arguments.site.getSiteId() ) )
 			.isEq( "slug", arguments.category.getSlug() )
 			.get();
 
 		// Return or Create
-		if( isNull( oTargetCategory ) ){
+		if ( isNull( oTargetCategory ) ) {
 			oTargetCategory = save(
-				new( {
-					category 	: arguments.category.getCategory(),
-					slug 		: arguments.category.getSlug(),
-					site 		: arguments.site
+				new ( {
+					category : arguments.category.getCategory(),
+					slug     : arguments.category.getSlug(),
+					site     : arguments.site
 				} )
 			);
 		}
@@ -62,7 +62,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	numeric function getTotalCategoryCount( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
 			.count();
 	}
@@ -77,16 +77,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	function save( required category ){
 		// Verify uniqueness of slug
-		if( !isSlugUnique(
-				slug      : arguments.category.getSlug(),
-				contentID : arguments.category.getCategoryId(),
-				siteId    : arguments.category.getSite().getSiteId()
+		if (
+			!isSlugUnique(
+				slug     : arguments.category.getSlug(),
+				contentID: arguments.category.getCategoryId(),
+				siteId   : arguments.category.getSite().getSiteId()
 			)
-		){
+		) {
 			// Throw exception
 			throw(
-				message : "The incoming category #arguments.category.getSlug()# already exists",
-				type    : "UniqueCategoryException"
+				message: "The incoming category #arguments.category.getSlug()# already exists",
+				type   : "UniqueCategoryException"
 			);
 		}
 
@@ -103,11 +104,15 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @return True if the slug is unique or false if it's already used
 	 */
-	boolean function isSlugUnique( required any slug, any categoryID="", string siteId="" ){
+	boolean function isSlugUnique(
+		required any slug,
+		any categoryID = "",
+		string siteId  = ""
+	){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
 			.when( len( arguments.categoryID ), function( c ){
 				c.ne( "categoryID", autoCast( "categoryID", categoryID ) );
@@ -123,7 +128,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	array function createCategories( required categories, required site ){
 		// convert to array
-		if( isSimpleValue( arguments.categories ) ){
+		if ( isSimpleValue( arguments.categories ) ) {
 			arguments.categories = listToArray( arguments.categories );
 		}
 
@@ -132,11 +137,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			.filter( function( thisCategory ){
 				return newCriteria()
 					.isEq( "category", arguments.thisCategory )
-					.isEq( "site.siteId", javaCast( "int", site.getSiteId() ) )
+					.isEq( "site.siteId", javacast( "int", site.getSiteId() ) )
 					.count() == 0;
-			})
+			} )
 			.map( function( thisCategory ){
-				return new( {
+				return new ( {
 					"category" : thisCategory,
 					"slug"     : variables.htmlHelper.slugify( thisCategory ),
 					"site"     : site
@@ -144,7 +149,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			} );
 
 		// Save all cats
-		if( arrayLen( allCats ) ){
+		if ( arrayLen( allCats ) ) {
 			saveAll( allCats );
 		}
 
@@ -161,13 +166,15 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function inflateCategories( struct memento ){
 		var categories = [];
 		// iterate all memento keys
-		for( var key in arguments.memento ){
+		for ( var key in arguments.memento ) {
 			// match our prefix
-			if( findNoCase( "category_", key ) ){
+			if ( findNoCase( "category_", key ) ) {
 				// inflate key
-				var thisCat = get( arguments.memento[key] );
+				var thisCat = get( arguments.memento[ key ] );
 				// validate it
-				if( !isNull( thisCat ) ){ arrayAppend( categories, thisCat ); }
+				if ( !isNull( thisCat ) ) {
+					arrayAppend( categories, thisCat );
+				}
 			}
 		}
 		return categories;
@@ -178,18 +185,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @category.hint The category object to remove from the system
 	 */
 	boolean function deleteCategory( required category ){
-
-		transaction{
+		transaction {
 			// Remove content relationships
 			var aRelatedContent = removeAllRelatedContent( arguments.category );
 			// Save the related content
-			if( arrayLen( aRelatedContent ) ){
-				contentService.saveAll( entities=aRelatedContent, transactional=false );
+			if ( arrayLen( aRelatedContent ) ) {
+				contentService.saveAll( entities = aRelatedContent, transactional = false );
 			}
 			// Remove it
-			delete( entity=arguments.category, transactional=false );
+			delete( entity = arguments.category, transactional = false );
 			// evict queries
-			ORMEvictQueries( getQueryCacheRegion() );
+			ormEvictQueries( getQueryCacheRegion() );
 		}
 
 		// return results
@@ -197,17 +203,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/*
-	* Remove all content associations from a category and returns all the content objects it was removed from
-	* @category.hint The category object
-	*/
+	 * Remove all content associations from a category and returns all the content objects it was removed from
+	 * @category.hint The category object
+	 */
 	array function removeAllRelatedContent( required category ){
-		var aRelatedContent = contentService.newCriteria()
+		var aRelatedContent = contentService
+			.newCriteria()
 			.createAlias( "categories", "c" )
 			.isEq( "c.categoryID", arguments.category.getCategoryID() )
 			.list();
 
 		// Remove associations
-		for( var thisContent in aRelatedContent ){
+		for ( var thisContent in aRelatedContent ) {
 			thisContent.removeCategories( arguments.category );
 		}
 
@@ -215,71 +222,85 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Get all data prepared for export
-	*/
+	 * Get all data prepared for export
+	 */
 	array function getAllForExport(){
 		return newCriteria()
-			.withProjections( property : "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteId:site" )
+			.withProjections(
+				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteId:site"
+			)
 			.asStruct()
-			.list( sortOrder : "category" );
-
+			.list( sortOrder: "category" );
 	}
 
 	/**
 	 * Get an array of names of all categories in the system
 	 */
-	array function getAllNames( string siteId="" ){
+	array function getAllNames( string siteId = "" ){
 		return newCriteria()
-			.withProjections( property : "category" )
+			.withProjections( property: "category" )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.list( sortOrder : "category" );
+			.list( sortOrder: "category" );
 	}
 
 	/**
 	 * Get an array of slugs of all categories in the system
 	 */
-	array function getAllSlugs( string siteId="" ){
+	array function getAllSlugs( string siteId = "" ){
 		return newCriteria()
-			.withProjections( property : "slug" )
+			.withProjections( property: "slug" )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.list( sortOrder : "slug" );
+			.list( sortOrder: "slug" );
 	}
 
 	/**
-	* Import data from a ContentBox JSON file. Returns the import log
-	*/
-	string function importFromFile(required importFile, boolean override=false){
+	 * Import data from a ContentBox JSON file. Returns the import log
+	 */
+	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
-		var importLog = createObject( "java", "java.lang.StringBuilder" ).init( "Starting import with override = #arguments.override#...<br>" );
+		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
+			"Starting import with override = #arguments.override#...<br>"
+		);
 
-		if( !isJSON( data ) ){
-			throw(message="Cannot import file as the contents is not JSON", type="InvalidImportFormat" );
+		if ( !isJSON( data ) ) {
+			throw(
+				message = "Cannot import file as the contents is not JSON",
+				type    = "InvalidImportFormat"
+			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
-		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+		return importFromData(
+			deserializeJSON( data ),
+			arguments.override,
+			importLog
+		);
 	}
 
 	/**
-	* Import data from an array of structures of categories or just one structure of categories
-	*/
-	string function importFromData(required importData, boolean override=false, importLog){
+	 * Import data from an array of structures of categories or just one structure of categories
+	 */
+	string function importFromData(
+		required importData,
+		boolean override = false,
+		importLog
+	){
 		var allCategories = [];
 
 		// if struct, inflate into an array
-		if( isStruct( arguments.importData ) ){
+		if ( isStruct( arguments.importData ) ) {
 			arguments.importData = [ arguments.importData ];
 		}
 
 		// iterate and import
-		for( var thisCategory in arguments.importData ){
+		for ( var thisCategory in arguments.importData ) {
 			// Get new or persisted
-			var oCategory = this.findBySlug( slug=thisCategory.slug);
-			oCategory     = ( isNull( oCategory) ? new() : oCategory );
+			var oCategory = this.findBySlug( slug = thisCategory.slug );
+			oCategory     = ( isNull( oCategory ) ? new () : oCategory );
 
 			// date cleanups, just in case.
 			var badDateRegex          = " -\d{4}$";
@@ -290,29 +311,36 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			thisCategory.modifiedDate = dateUtil.epochToLocal( thisCategory.modifiedDate );
 
 			// populate content from data
-			populator.populateFromStruct( target=oCategory, memento=thisCategory, exclude="categoryID", composeRelationships=false );
+			populator.populateFromStruct(
+				target               = oCategory,
+				memento              = thisCategory,
+				exclude              = "categoryID",
+				composeRelationships = false
+			);
 
 			// if new or persisted with override then save.
-			if( !oCategory.isLoaded() ){
+			if ( !oCategory.isLoaded() ) {
 				arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
 				arrayAppend( allCategories, oCategory );
-			}
-			else if( oCategory.isLoaded() and arguments.override ){
-				arguments.importLog.append( "Persisted category overriden: #thisCategory.slug#<br>" );
+			} else if ( oCategory.isLoaded() and arguments.override ) {
+				arguments.importLog.append(
+					"Persisted category overriden: #thisCategory.slug#<br>"
+				);
 				arrayAppend( allCategories, oCategory );
-			}
-			else{
+			} else {
 				arguments.importLog.append( "Skipping persisted category: #thisCategory.slug#<br>" );
 			}
-		} // end import loop
+		}
+		// end import loop
 
 		// Save them?
-		if( arrayLen( allCategories ) ){
+		if ( arrayLen( allCategories ) ) {
 			saveAll( allCategories );
 			arguments.importLog.append( "Saved all imported and overriden categories!" );
-		}
-		else{
-			arguments.importLog.append( "No categories imported as none where found or able to be overriden from the import file." );
+		} else {
+			arguments.importLog.append(
+				"No categories imported as none where found or able to be overriden from the import file."
+			);
 		}
 
 		return arguments.importLog.toString();
