@@ -97,7 +97,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	 * Get all the categories
 	 */
 	array function getAllCategories() cbIgnore{
-		return variables.categoryService.getAllNames(
+		return variables.categoryService.getAllSlugs(
 			siteId = getSite().getSiteId()
 		);
 	}

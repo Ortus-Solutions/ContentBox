@@ -238,6 +238,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
+	 * Get an array of slugs of all categories in the system
+	 */
+	array function getAllSlugs( string siteId="" ){
+		return newCriteria()
+			.withProjections( property : "slug" )
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+			} )
+			.list( sortOrder : "slug" );
+	}
+
+	/**
 	* Import data from a ContentBox JSON file. Returns the import log
 	*/
 	string function importFromFile(required importFile, boolean override=false){
