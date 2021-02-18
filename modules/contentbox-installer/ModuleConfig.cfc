@@ -23,7 +23,7 @@ component {
 		layoutSettings = { defaultLayout : "simple.cfm" };
 
 		// i18n
-		i18n = { resourceBundles : { "installer" : "#moduleMapping#/includes/i18n/installer" } };
+		cbi18n = { resourceBundles : { "installer" : "#moduleMapping#/includes/i18n/installer" } };
 
 		// SES Routes
 		routes = [
