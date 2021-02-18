@@ -77,10 +77,10 @@ component extends="tests.resources.BaseTest" {
 				var r = commentService.search( contentID = 142, search = "awesome" );
 				expect( r.count ).toBeGTE( 1 );
 				// disjunction with author
-				var r = commentService.search( contentID = 142, search = "Pio" );
+				var r = commentService.search( contentID = 142, search = "luis" );
 				expect( r.count ).toBeGTE( 1 );
 				// disjunction with authorEmail
-				var r = commentService.search( contentID = 142, search = "Test" );
+				var r = commentService.search( contentID = 142, search = "lmajano@gmail.com" );
 				expect( r.count ).toBeGTE( 1 );
 			} );
 		} );

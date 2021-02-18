@@ -1,20 +1,20 @@
 # ************************************************************
-# Sequel Pro SQL dump
-# Version 4541
+# Sequel Ace SQL dump
+# Version 3016
 #
-# http://www.sequelpro.com/
-# https://github.com/sequelpro/sequelpro
+# https://sequel-ace.com/
+# https://github.com/Sequel-Ace/Sequel-Ace
 #
-# Host: Localhost (MySQL 5.7.22)
+# Host: 127.0.0.1 (MySQL 5.7.22)
 # Database: contentbox
-# Generation Time: 2020-09-10 16:08:19 +0000
+# Generation Time: 2021-02-18 23:47:29 +0000
 # ************************************************************
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+SET NAMES utf8mb4;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
@@ -61,9 +61,9 @@ CREATE TABLE `cb_author` (
 LOCK TABLES `cb_author` WRITE;
 /*!40000 ALTER TABLE `cb_author` DISABLE KEYS */;
 
-INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`, `is2FactorAuth` )
+INSERT INTO `cb_author` (`authorID`, `firstName`, `lastName`, `email`, `username`, `password`, `isActive`, `lastLogin`, `createdDate`, `biography`, `preferences`, `FK_roleID`, `modifiedDate`, `isDeleted`, `isPasswordReset`, `is2FactorAuth`)
 VALUES
-	(1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2020-09-09 17:38:19','2013-07-11 11:06:39','','{\"sidemenuCollapse\":\"yes\",\"linkedin\":\"\",\"sidebarState\":\"yes\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',2,'2020-09-09 17:38:19',0,0,0),
+	(1,'Luis','Majano','lmajano@gmail.com','lmajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2021-02-18 17:46:38','2013-07-11 11:06:39','','{\"sidemenuCollapse\":\"yes\",\"linkedin\":\"\",\"sidebarState\":\"yes\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',2,'2021-02-18 17:46:38',0,0,0),
 	(2,'Lui','Majano','lmajano@ortussolutions.com','luismajano','$2a$12$KU4n4ZQf3cd/ULCuvc8PIO9VrQKi7eKbcEuQaILTJ/sdcjXvT31YK',1,'2015-07-29 14:38:46','2013-07-11 11:07:23','','{\"GOOGLE\":\"\",\"EDITOR\":\"ckeditor\",\"TWITTER\":\"http:\\/\\/twitter.com\\/lmajano\",\"FACEBOOK\":\"http:\\/\\/facebook.com\\/lmajano\"}',2,'2017-06-21 18:29:30',0,0,0),
 	(3,'Tester','Majano','lmajano@testing.com','testermajano','$2a$12$FE058d9bj7Sv6tPmvZMaleC2x8.b.tRqVei5p/5XqPytSNpF5eCym',1,'2017-07-06 12:13:14','2013-07-11 11:07:23','','{\"sidemenuCollapse\":\"no\",\"google\":\"\",\"sidebarState\":\"true\",\"markup\":\"HTML\",\"editor\":\"ckeditor\",\"twitter\":\"http://twitter.com/lmajano\",\"facebook\":\"http://facebook.com/lmajano\"}',1,'2017-07-18 15:22:13',0,1,1),
 	(4,'Joe','Joe','joejoe@joe.com','joejoe','$2a$12$.FrcqDLb3DNIK2TqJo0aQuwB3WSxAW0KmJUKKPaAQV7VoYwihDM1.',1,'2017-07-06 11:38:28','2017-07-06 11:30:59','','{\"linkedin\":\"\",\"markup\":\"HTML\",\"website\":\"\",\"editor\":\"ckeditor\",\"twitter\":\"\",\"facebook\":\"\"}',2,'2017-07-06 11:54:11',0,1,1),
@@ -150,6 +150,8 @@ CREATE TABLE `cb_category` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_category_FK_siteId` (`FK_siteId`),
+  KEY `idxContentSite` (`FK_siteId`),
+  KEY `idx_categoryName` (`category`),
   CONSTRAINT `fk_cb_category_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -200,12 +202,11 @@ LOCK TABLES `cb_comment` WRITE;
 
 INSERT INTO `cb_comment` (`commentID`, `content`, `author`, `authorIP`, `authorEmail`, `authorURL`, `createdDate`, `isApproved`, `FK_contentID`, `modifiedDate`, `isDeleted`)
 VALUES
-	(10,'This is a test','Luis Majano','127.0.0.1','lmajano@ortussolutions.com','','2014-10-23 13:21:38',1,141,'2016-05-03 16:23:25',0),
+	(10,'This is a test','Luis Majano','127.0.0.1','lmajano@ortussolutions.com','','2014-10-23 13:21:38',0,141,'2021-02-18 17:46:58',0),
 	(11,'Test','Luis','','lmajano@gmail.com','','2015-08-04 16:17:43',1,142,'2016-05-03 16:23:25',0),
 	(12,'test','Luis Majano','127.0.0.1','lmajano@gmail.com','','2016-05-11 16:12:33',1,141,'2016-05-11 16:12:33',0),
 	(13,'test','Luis Majano','127.0.0.1','lmajano@ortussolutions.com','','2016-05-12 12:34:17',1,141,'2016-05-12 12:34:17',0),
-	(14,'My awesome comment','Luis Majano','127.0.0.1','lmajano@gmail.com','','2016-11-28 15:35:51',1,142,'2016-11-28 15:35:51',0),
-	(15,'non logged in user test','Pio','127.0.0.1','lmajano@gmail.com','','2016-11-28 15:39:46',0,142,'2016-11-28 15:39:46',0);
+	(14,'My awesome comment','Luis Majano','127.0.0.1','lmajano@gmail.com','','2016-11-28 15:35:51',1,142,'2016-11-28 15:35:51',0);
 
 /*!40000 ALTER TABLE `cb_comment` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -292,6 +293,7 @@ CREATE TABLE `cb_content` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_content_FK_siteId` (`FK_siteId`),
+  KEY `idxContentSite` (`FK_siteId`),
   CONSTRAINT `FKFFE018996FDC2C99` FOREIGN KEY (`FK_parentID`) REFERENCES `cb_content` (`contentID`),
   CONSTRAINT `FKFFE01899AA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
   CONSTRAINT `fk_cb_content_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -740,6 +742,7 @@ CREATE TABLE `cb_menu` (
   KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_menu_FK_siteId` (`FK_siteId`),
+  KEY `idxContentSite` (`FK_siteId`),
   CONSTRAINT `fk_cb_menu_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -796,8 +799,8 @@ LOCK TABLES `cb_menuItem` WRITE;
 
 INSERT INTO `cb_menuItem` (`menuItemID`, `menuType`, `title`, `label`, `data`, `active`, `FK_menuID`, `FK_parentID`, `mediaPath`, `contentSlug`, `menuSlug`, `url`, `js`, `itemClass`, `target`, `urlClass`, `createdDate`, `modifiedDate`, `isDeleted`)
 VALUES
-	(7,'Free','','test','',b'1',2,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,'2016-05-04 17:22:08','2016-05-04 17:22:08',0),
-	(8,'URL','','hello','',b'1',2,NULL,NULL,NULL,NULL,'http://www.ortussolutions.com',NULL,'','_blank','test','2016-05-04 17:22:08','2016-05-04 17:22:08',0);
+	(7,'Free','','test','',1,2,NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,NULL,'2016-05-04 17:22:08','2016-05-04 17:22:08',0),
+	(8,'URL','','hello','',1,2,NULL,NULL,NULL,NULL,'http://www.ortussolutions.com',NULL,'','_blank','test','2016-05-04 17:22:08','2016-05-04 17:22:08',0);
 
 /*!40000 ALTER TABLE `cb_menuItem` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -911,7 +914,8 @@ CREATE TABLE `cb_permission` (
   UNIQUE KEY `permission` (`permission`),
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
-  KEY `idx_deleted` (`isDeleted`)
+  KEY `idx_deleted` (`isDeleted`),
+  KEY `idx_permissionName` (`permission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_permission` WRITE;
@@ -984,7 +988,8 @@ CREATE TABLE `cb_permissionGroup` (
   UNIQUE KEY `name` (`name`),
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
-  KEY `idx_deleted` (`isDeleted`)
+  KEY `idx_deleted` (`isDeleted`),
+  KEY `idx_permissionGroupName` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_permissionGroup` WRITE;
@@ -1040,7 +1045,8 @@ CREATE TABLE `cb_role` (
   UNIQUE KEY `role` (`role`),
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
-  KEY `idx_deleted` (`isDeleted`)
+  KEY `idx_deleted` (`isDeleted`),
+  KEY `idx_roleName` (`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_role` WRITE;
@@ -1198,6 +1204,9 @@ CREATE TABLE `cb_securityRule` (
   `isDeleted` tinyint(4) NOT NULL DEFAULT '0',
   `message` varchar(255) DEFAULT NULL,
   `messageType` varchar(50) DEFAULT 'info',
+  `overrideEvent` longtext NOT NULL,
+  `action` varchar(50) DEFAULT 'redirect',
+  `module` longtext,
   PRIMARY KEY (`ruleID`),
   KEY `idx_createDate` (`createdDate`),
   KEY `idx_modifiedDate` (`modifiedDate`),
@@ -1207,32 +1216,32 @@ CREATE TABLE `cb_securityRule` (
 LOCK TABLES `cb_securityRule` WRITE;
 /*!40000 ALTER TABLE `cb_securityRule` DISABLE KEYS */;
 
-INSERT INTO `cb_securityRule` (`ruleID`, `whitelist`, `securelist`, `roles`, `permissions`, `redirect`, `useSSL`, `order`, `match`, `createdDate`, `modifiedDate`, `isDeleted`, `message`, `messageType`)
+INSERT INTO `cb_securityRule` (`ruleID`, `whitelist`, `securelist`, `roles`, `permissions`, `redirect`, `useSSL`, `order`, `match`, `createdDate`, `modifiedDate`, `isDeleted`, `message`, `messageType`, `overrideEvent`, `action`, `module`)
 VALUES
-	(26,'','^contentbox-admin:modules\\..*','','MODULES_ADMIN','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info'),
-	(27,'','^contentbox-admin:mediamanager\\..*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info'),
-	(28,'','^contentbox-admin:versions\\.(remove)','','VERSIONS_DELETE','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info'),
-	(29,'','^contentbox-admin:versions\\.(rollback)','','VERSIONS_ROLLBACK','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info'),
-	(30,'','^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$','','WIDGET_ADMIN','cbadmin/security/login',0,2,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info'),
-	(31,'','^contentbox-admin:tools\\.(importer|doImport)','','TOOLS_IMPORT','cbadmin/security/login',0,3,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info'),
-	(32,'','^contentbox-admin:(settings|permissions|roles|securityRules)\\..*','','SYSTEM_TAB','cbadmin/security/login',0,4,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(33,'','^contentbox-admin:settings\\.save','','SYSTEM_SAVE_CONFIGURATION','cbadmin/security/login',0,5,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(34,'','^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)','','SYSTEM_RAW_SETTINGS','cbadmin/security/login',0,6,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(35,'','^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)','','SECURITYRULES_ADMIN','cbadmin/security/login',0,7,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(36,'','^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)','','ROLES_ADMIN','cbadmin/security/login',0,8,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(37,'','^contentbox-admin:permissions\\.(remove|save)','','PERMISSIONS_ADMIN','cbadmin/security/login',0,9,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(38,'','^contentbox-admin:dashboard\\.reload','','RELOAD_MODULES','cbadmin/security/login',0,10,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(39,'','^contentbox-admin:pages\\.(changeOrder|remove)','','PAGES_ADMIN','cbadmin/security/login',0,11,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(40,'','^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)','','THEME_ADMIN','cbadmin/security/login',0,12,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(41,'','^contentbox-admin:entries\\.(quickPost|remove)','','ENTRIES_ADMIN','cbadmin/security/login',0,13,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(42,'','^contentbox-admin:contentStore\\.(editor|remove|save)','','CONTENTSTORE_ADMIN','cbadmin/security/login',0,14,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(43,'','^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)','','COMMENTS_ADMIN','cbadmin/security/login',0,15,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(44,'','^contentbox-admin:categories\\.(remove|save)','','CATEGORIES_ADMIN','cbadmin/security/login',0,16,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(45,'','^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)','','AUTHOR_ADMIN','cbadmin/security/login',0,17,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(46,'^contentbox-admin:security\\.','^contentbox-admin:.*','','CONTENTBOX_ADMIN','cbadmin/security/login',0,18,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(47,'','^contentbox-filebrowser:.*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',0,19,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(48,'','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$','','TOOLS_IMPORT','cbadmin/security/login',0,20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info'),
-	(49,'','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$','','TOOLS_EXPORT','cbadmin/security/login',0,20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info');
+	(26,'','^contentbox-admin:modules\\..*','','MODULES_ADMIN','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info','','redirect','contentbox'),
+	(27,'','^contentbox-admin:mediamanager\\..*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info','','redirect','contentbox'),
+	(28,'','^contentbox-admin:versions\\.(remove)','','VERSIONS_DELETE','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info','','redirect','contentbox'),
+	(29,'','^contentbox-admin:versions\\.(rollback)','','VERSIONS_ROLLBACK','cbadmin/security/login',0,1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info','','redirect','contentbox'),
+	(30,'','^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$','','WIDGET_ADMIN','cbadmin/security/login',0,2,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info','','redirect','contentbox'),
+	(31,'','^contentbox-admin:tools\\.(importer|doImport)','','TOOLS_IMPORT','cbadmin/security/login',0,3,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',0,'','info','','redirect','contentbox'),
+	(32,'','^contentbox-admin:(settings|permissions|roles|securityRules)\\..*','','SYSTEM_TAB','cbadmin/security/login',0,4,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(33,'','^contentbox-admin:settings\\.save','','SYSTEM_SAVE_CONFIGURATION','cbadmin/security/login',0,5,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(34,'','^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)','','SYSTEM_RAW_SETTINGS','cbadmin/security/login',0,6,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(35,'','^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)','','SECURITYRULES_ADMIN','cbadmin/security/login',0,7,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(36,'','^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)','','ROLES_ADMIN','cbadmin/security/login',0,8,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(37,'','^contentbox-admin:permissions\\.(remove|save)','','PERMISSIONS_ADMIN','cbadmin/security/login',0,9,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(38,'','^contentbox-admin:dashboard\\.reload','','RELOAD_MODULES','cbadmin/security/login',0,10,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(39,'','^contentbox-admin:pages\\.(changeOrder|remove)','','PAGES_ADMIN','cbadmin/security/login',0,11,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(40,'','^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)','','THEME_ADMIN','cbadmin/security/login',0,12,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(41,'','^contentbox-admin:entries\\.(quickPost|remove)','','ENTRIES_ADMIN','cbadmin/security/login',0,13,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(42,'','^contentbox-admin:contentStore\\.(editor|remove|save)','','CONTENTSTORE_ADMIN','cbadmin/security/login',0,14,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(43,'','^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)','','COMMENTS_ADMIN','cbadmin/security/login',0,15,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(44,'','^contentbox-admin:categories\\.(remove|save)','','CATEGORIES_ADMIN','cbadmin/security/login',0,16,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(45,'','^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)','','AUTHOR_ADMIN','cbadmin/security/login',0,17,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(46,'^contentbox-admin:security\\.','^contentbox-admin:.*','','CONTENTBOX_ADMIN','cbadmin/security/login',0,18,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(47,'','^contentbox-filebrowser:.*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',0,19,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(48,'','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$','','TOOLS_IMPORT','cbadmin/security/login',0,20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox'),
+	(49,'','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$','','TOOLS_EXPORT','cbadmin/security/login',0,20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',0,'','info','','redirect','contentbox');
 
 /*!40000 ALTER TABLE `cb_securityRule` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1393,7 +1402,32 @@ VALUES
 	(127,'cb_theme_default_showArchivesBlogSide','true',0,'2020-09-09 17:34:51','2020-09-09 17:34:51',0,1),
 	(128,'cb_theme_default_showEntriesSearchBlogSide','true',0,'2020-09-09 17:34:51','2020-09-09 17:34:51',0,1),
 	(129,'cb_active','true',1,'2020-09-09 17:34:49','2020-09-09 17:34:49',0,NULL),
-	(130,'cb_enc_key','guxDy6/lBXEyt3kOkKtl7A==',0,'2020-09-09 17:38:19','2020-09-09 17:38:19',0,NULL);
+	(130,'cb_enc_key','guxDy6/lBXEyt3kOkKtl7A==',0,'2020-09-09 17:38:19','2020-09-09 17:38:19',0,NULL),
+	(131,'cb_theme_default_cbBootswatchTheme','green',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(132,'cb_theme_default_overrideHeaderColors','false',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(133,'cb_theme_default_overrideHeaderBGColor','',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(134,'cb_theme_default_overrideHeaderTextColor','',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(135,'cb_theme_default_cssStyleOverrides','',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(136,'cb_theme_default_headerLogo','',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(137,'cb_theme_default_showSiteSearch','true',0,'2021-02-18 17:46:22','2021-02-18 17:46:22',0,2),
+	(138,'cb_theme_default_footerBox','',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(139,'cb_theme_default_hpHeaderTitle','',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(140,'cb_theme_default_hpHeaderText','',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(141,'cb_theme_default_hpHeaderLink','',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(142,'cb_theme_default_hpHeaderBtnText','',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(143,'cb_theme_default_hpHeaderBtnStyle','primary',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(144,'cb_theme_default_hpHeaderBg','green',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(145,'cb_theme_default_hpHeaderImgBg','',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(146,'cb_theme_default_hpHeaderBgPos','Top Center',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(147,'cb_theme_default_hpHeaderBgPaddingTop','100px',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(148,'cb_theme_default_hpHeaderBgPaddingBottom','50px',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(149,'cb_theme_default_rssDiscovery','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(150,'cb_theme_default_showCategoriesBlogSide','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(151,'cb_theme_default_showRecentEntriesBlogSide','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(152,'cb_theme_default_showSiteUpdatesBlogSide','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(153,'cb_theme_default_showEntryCommentsBlogSide','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(154,'cb_theme_default_showArchivesBlogSide','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2),
+	(155,'cb_theme_default_showEntriesSearchBlogSide','true',0,'2021-02-18 17:46:23','2021-02-18 17:46:23',0,2);
 
 /*!40000 ALTER TABLE `cb_setting` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1428,7 +1462,11 @@ CREATE TABLE `cb_site` (
   `notifyOnContentStore` tinyint(4) NOT NULL DEFAULT '1',
   `domain` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`siteId`),
-  UNIQUE KEY `slug` (`slug`)
+  UNIQUE KEY `slug` (`slug`),
+  KEY `idx_createDate` (`createdDate`),
+  KEY `idx_modifiedDate` (`modifiedDate`),
+  KEY `idx_siteSlug` (`slug`),
+  KEY `idx_deleted` (`isDeleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_site` WRITE;
@@ -1436,7 +1474,8 @@ LOCK TABLES `cb_site` WRITE;
 
 INSERT INTO `cb_site` (`siteId`, `createdDate`, `modifiedDate`, `isDeleted`, `name`, `slug`, `description`, `domainRegex`, `keywords`, `tagline`, `homepage`, `isBlogEnabled`, `isSitemapEnabled`, `poweredByHeader`, `adminBar`, `isSSL`, `activeTheme`, `notificationEmails`, `notifyOnEntries`, `notifyOnPages`, `notifyOnContentStore`, `domain`)
 VALUES
-	(1,'2020-09-09 17:16:59','2020-09-10 11:07:25',0,'Default Site','default','My Awesome Site','.*','','My Awesome Site','support',1,1,1,1,0,'default','lmajano@gmail.com',1,1,1,'127.0.0.1');
+	(1,'2020-09-09 17:16:59','2020-09-10 11:07:25',0,'Default Site','default','My Awesome Site','.*','','My Awesome Site','support',1,1,1,1,0,'default','lmajano@gmail.com',1,1,1,'127.0.0.1'),
+	(2,'2021-02-18 17:44:50','2021-02-18 17:44:50',0,'Development Site','development','A development site','localhost','','','cbBlog',1,1,1,1,0,'default','',1,1,1,'localhost');
 
 /*!40000 ALTER TABLE `cb_site` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1471,7 +1510,7 @@ VALUES
 	(31,9,190,'2016-05-03 16:23:26','2016-12-02 19:42:07',0),
 	(32,2,191,'2016-05-03 16:23:26','2016-05-03 16:23:26',0),
 	(33,4,189,'2016-05-03 16:23:26','2016-05-03 16:23:26',0),
-	(35,119,147,'2016-05-03 16:23:26','2020-09-10 11:07:28',0),
+	(35,121,147,'2016-05-03 16:23:26','2021-02-18 17:41:21',0),
 	(38,3,162,'2016-05-03 16:23:26','2016-12-02 19:42:05',0),
 	(39,1,160,'2016-05-03 16:23:26','2016-05-03 16:23:26',0),
 	(43,3,207,'2016-05-18 11:35:32','2016-05-18 11:35:32',0),
