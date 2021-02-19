@@ -17,10 +17,31 @@ component {
 		}
 	];
 
+	private function isContentBox4(){
+		// Check for columns created
+		cfdbinfo(
+			name  = "local.qSettingColumns",
+			type  = "columns",
+			table = "cb_setting"
+		);
+
+		if(
+			qSettingColumns.filter( ( thisRow ) => {
+				// systemOutput( thisRow, true );
+				return thisRow.column_name == "FK_siteId"
+			} ).recordCount > 0
+		){
+			return false;
+		}
+		return true;
+	}
+
 	function up( schema, query ){
 		// If you are on version 4 continue, else skip
 		// If cb_setting doesn't have a FK_siteId then it's 4
-
+		if( !isContentBox4() ){
+			return;
+		}
 
 		transaction {
 			try {
@@ -45,6 +66,10 @@ component {
 	}
 
 	function down( schema, query ){
+		if( !isContentBox4() ){
+			return;
+		}
+
 		// Remove Site Relationships
 		variables.siteTables.each( ( thisTable ) => {
 			schema.alter( thisTable, ( table ) => {
