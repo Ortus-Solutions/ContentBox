@@ -21,6 +21,7 @@ build/build-forgebox/**
 build/dependencies
 
 # Global Dependencies
+config/logs/**
 logs/**
 coldbox/*
 testbox/*

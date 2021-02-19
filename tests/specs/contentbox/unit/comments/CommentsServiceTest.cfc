@@ -11,7 +11,6 @@ component extends="tests.resources.BaseTest" {
 		describe( "Comment Service", function(){
 			aroundEach( function( spec, suite ){
 				ormClearSession();
-				ormCloseSession();
 				try {
 					// Make sure we always rollback
 					transaction {

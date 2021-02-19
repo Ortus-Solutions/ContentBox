@@ -37,10 +37,10 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can do search with results", function(){
-				var r = model.search( searchTerm = "welcome" );
+				var r = model.search( searchTerm = "Support" );
 
 				expect( r.getTotal() ).toBeGT( 0 );
-				expect( r.getSearchTerm() ).toBe( "welcome" );
+				expect( r.getSearchTerm() ).toBe( "Support" );
 				expect( r.getResults() ).toBeArray();
 				expect( r.getResults().size() ).toBeGT( 0 );
 				expect( r.getError() ).toBeFalse();
@@ -48,14 +48,14 @@ component extends="tests.resources.BaseTest" {
 
 			it( "can render search results", function(){
 				// setup
-				var r            = model.search( searchTerm = "welcome" );
+				var r            = model.search( searchTerm = "Support" );
 				var prc          = getRequestContext().getPrivateCollection();
 				prc.cbEntryPoint = "/";
 				prc.cbSettings   = {};
 
 				var rendering = model.renderSearchWithResults( r );
 				// debug( rendering );
-				expect( rendering ).toInclude( "welcome" ).toInclude( "searchResults" );
+				expect( rendering ).toInclude( "Support" ).toInclude( "searchResults" );
 			} );
 
 			it( "can render search with no results", function(){

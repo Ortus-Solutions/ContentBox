@@ -214,13 +214,13 @@ component {
 		// debugging file
 		logbox.appenders.files = {
 			class      : "coldbox.system.logging.appenders.RollingFileAppender",
-			properties : { filename : "contentbox", filePath : "/logs" }
+			properties : { filename : "contentbox", filePath : "/cbapp/config/logs/app" }
 		};
 
 		// Mail settings for writing to log files instead of sending mail on dev.
 		mailsettings.protocol = {
 			class      : "cbmailservices.models.protocols.FileProtocol",
-			properties : { filePath : "/logs" }
+			properties : { filePath : "/cbapp/config/logs/mail" }
 		};
 
 		// Specific Debugging + Logging
