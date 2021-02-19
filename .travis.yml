@@ -59,8 +59,8 @@ before_script:
 
 script:
   # Run tests
-  - box package set testbox.runner="http://localhost:8589/tests/runner.cfm"
-  - box testbox run verbose=true
+  - box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
+  - box testbox run --verbose
   # Execute build via ANT
   - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
   # Get ContentBox Version for rest of build process
