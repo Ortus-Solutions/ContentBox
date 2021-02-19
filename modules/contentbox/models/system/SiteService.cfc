@@ -152,9 +152,9 @@ component
 			return newCriteria().isEq( "slug", event.getValue( "siteSlug" ) ).get();
 		}
 
-		// Try to discover using the cgi.server_name
+		// Try to discover using the requested full URL including host + path + query string for added flexibility
 		var matchedSite = getAllFlat().filter( function( thisSite ){
-			return reFindNoCase( thisSite[ "domainRegex" ], cgi.SERVER_NAME );
+			return reFindNoCase( thisSite[ "domainRegex" ], event.getFullUrl() );
 		} );
 
 		// Return the first matched site

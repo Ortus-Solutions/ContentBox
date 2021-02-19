@@ -1474,7 +1474,7 @@ LOCK TABLES `cb_site` WRITE;
 
 INSERT INTO `cb_site` (`siteId`, `createdDate`, `modifiedDate`, `isDeleted`, `name`, `slug`, `description`, `domainRegex`, `keywords`, `tagline`, `homepage`, `isBlogEnabled`, `isSitemapEnabled`, `poweredByHeader`, `adminBar`, `isSSL`, `activeTheme`, `notificationEmails`, `notifyOnEntries`, `notifyOnPages`, `notifyOnContentStore`, `domain`)
 VALUES
-	(1,'2020-09-09 17:16:59','2020-09-10 11:07:25',0,'Default Site','default','My Awesome Site','.*','','My Awesome Site','support',1,1,1,1,0,'default','lmajano@gmail.com',1,1,1,'127.0.0.1'),
+	(1,'2020-09-09 17:16:59','2020-09-10 11:07:25',0,'Default Site','default','My Awesome Site','127\.0\.0\.1','','My Awesome Site','support',1,1,1,1,0,'default','lmajano@gmail.com',1,1,1,'127.0.0.1'),
 	(2,'2021-02-18 17:44:50','2021-02-18 17:44:50',0,'Development Site','development','A development site','localhost','','','cbBlog',1,1,1,1,0,'default','',1,1,1,'localhost');
 
 /*!40000 ALTER TABLE `cb_site` ENABLE KEYS */;
