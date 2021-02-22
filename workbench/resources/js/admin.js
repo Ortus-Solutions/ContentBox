@@ -637,21 +637,6 @@ function getToday(us) {
 }
 
 /**
- * Go Fullscreen, based on the fullscreen plugin
- */
-function toggleFullScreen() {
-    if (!$.fullscreen.isNativelySupported()) {
-        alert("Your Browser does not support fullscreen mode.");
-        return false;
-    }
-    if ($.fullscreen.isFullScreen()) {
-        $.fullscreen.exit();
-    } else {
-        $('body').fullscreen();
-    }
-}
-
-/**
  * Import Content Dialog Forms.
  * This function takes care of opening a generic configured import dialog and setup all
  * the events to submit it.
