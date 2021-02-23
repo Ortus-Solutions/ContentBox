@@ -35,7 +35,6 @@
         "@bower_components/font-awesome-sass": "FortAwesome/font-awesome-sass#*",
         "@bower_components/history.js": "browserstate/history.js#^1.8.0",
         "@bower_components/html5shiv": "aFarkas/html5shiv#*",
-        "@bower_components/jq-fullscreen": "private-face/jquery.fullscreen#^0.6.0",
         "@bower_components/jquery": "jquery/jquery-dist#>=1.6.3 <3",
         "@bower_components/jquery-nestable": "thesabbir/jquery-nestable#*",
         "@bower_components/jquery-validation": "ikajou/jquery-validation#^1.13.0",
