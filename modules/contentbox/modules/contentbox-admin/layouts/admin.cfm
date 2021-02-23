@@ -186,13 +186,6 @@
 						<!--- Utils --->
 						#prc.adminMenuService.generateUtilsMenu()#
 
-						<!--- FullScreen --->
-						<li class="hidden-xs hidden-sm" data-placement="right auto" title="Fullscreen">
-							<a class="btn btn-default btn-more options toggle" href="javascript:void( 0 )" onclick="toggleFullScreen()">
-								<i class="fa fa-arrows-alt"></i>
-							</a>
-						</li>
-
 						<!--- Profile --->
 						#prc.adminMenuService.generateProfileMenu()#
 
