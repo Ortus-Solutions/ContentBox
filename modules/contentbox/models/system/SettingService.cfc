@@ -224,8 +224,8 @@ component
 	 * Constructor
 	 */
 	SettingService function init(){
-		variables.oSystem     		= createObject( "java", "java.lang.System" );
-		variables.CBReadyFlag 		= false;
+		variables.oSystem           = createObject( "java", "java.lang.System" );
+		variables.CBReadyFlag       = false;
 		variables.cacheProviderName = "template";
 
 		// init it
@@ -239,40 +239,49 @@ component
 	 * If they are, we will create the core settings with the appropriate defaults: this.DEFAULTS
 	 */
 	SettingService function preFlightCheck(){
-		var missingSettings = false;
-
 		// Iterate over default core settings and check they exist
 		lock
-			name              ="contentbox-pre-flight",
-			timeout           = "10"
-			throwOnTimeout    ="true"
-			type              ="exclusive" {
-			var loadedSettings= getAllSettings( force: true );
+			name          ="contentbox-pre-flight",
+			timeout       = "10"
+			throwOnTimeout="true"
+			type          ="exclusive" {
+			// var loadedSettings= getAllSettings( force: true );
 
+			// Get all core, non-deleted setting names
+			var loadedSettings = newCriteria()
+				.isNull( "site" )
+				.isFalse( "isDeleted" )
+				.isTrue( "isCore" )
+				.withProjections( property: "name" )
+				.list( sortOrder = "name" );
+
+			// Check what's missing
 			transaction {
 				this.DEFAULTS
 					// only load defaults that do not exist
 					.filter( function( key, value ){
-						return !loadedSettings.keyExists( key );
+						return !arrayContainsNoCase( loadedSettings, arguments.key );
 					} )
 					// Create the missing setting
 					.each( function( key, value ){
-						log.info( "Missing setting in pre-flight: #key#, adding it!" );
-						missingSettings = true;
-						save( new ( { name : key, value : trim( value ), isCore : true } ) );
+						variables.log.info(
+							"Missing setting (#arguments.key#) in pre-flight, adding it!"
+						);
+						this.save(
+							this.new( {
+								name   : arguments.key,
+								value  : trim( arguments.value ),
+								isCore : true
+							} )
+						);
 					} );
 			}
 
-			// if we added new ones, flush caches
-			if ( missingSettings ) {
-				flushSettingsCache();
-			}
+			// load cache provider now that everyting is pre-flighted
+			loadCacheProviderName();
 		}
 
-		log.info( "ContentBox Global Settings pre-flight checks passed!" );
-
-		// load cache provider now that everyting is pre-flighted
-		loadCacheProviderName();
+		variables.log.info( "ContentBox Global Settings pre-flight checks finalized!" );
 
 		return this;
 	}
@@ -558,7 +567,7 @@ component
 	 */
 	SettingService function flushSettingsCache(){
 		// Info
-		log.info( "Settings Flush Executed!" );
+		variables.log.info( "Settings Flush Executed!" );
 		// Clear out the settings cache
 		getSettingsCacheProvider().clear( getSettingsCacheKey() );
 		// Re-load cache provider name, in case user changed it

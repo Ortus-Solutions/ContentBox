@@ -11,13 +11,14 @@ component {
 	this.title             = "ContentBox Admin";
 	this.author            = "Ortus Solutions, Corp";
 	this.webURL            = "https://www.ortussolutions.com";
+	this.version            = "@version.number@+@build.number@";
 	this.description       = "ContentBox Administration Module";
 	this.viewParentLookup  = true;
 	this.layoutParentLookup= true;
 	this.entryPoint        = "cbadmin";
 	this.modelNamespace    = "cbadmin";
 	this.cfmapping         = "cbadmin";
-	this.dependencies      = [ "contentbox" ];
+	this.dependencies      = [];
 
 	/**
 	* Configure Module

@@ -25,9 +25,6 @@ component {
 	 * Configure Module
 	 */
 	function configure(){
-		// Setup a logger for this class
-		variables.log = controller.getLogBox().getLogger( this );
-
 		// Verify custom module, this is needed for registration and loading.
 		verifyCustomModule();
 
@@ -112,7 +109,6 @@ component {
 		binder.map( "customFieldService@cb" ).toDSL( "entityService:cbCustomField" );
 
 		// ColdBox Integrations
-		binder.map( "ColdBoxRenderer" ).toDSL( "coldbox:Renderer" );
 		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
 	}
 
