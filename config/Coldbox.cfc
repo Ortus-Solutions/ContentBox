@@ -225,6 +225,7 @@ component {
 
 		// Specific Debugging + Logging
 		// logbox.debug 	= [ "cbsecurity" ];
+		// logbox.debug 	= [ "coldbox.system.web.services" ];
 		// logbox.debug 	= [ "coldbox.system.aop" ];
 		// logbox.debug 	= [ "root" ];
 	}
