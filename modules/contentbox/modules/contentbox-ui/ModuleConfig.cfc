@@ -282,13 +282,8 @@ component {
 	 * Fired when the module is registered and activated.
 	 */
 	function onLoad(){
-		var sTime = getTickCount();
-
 		// Startup the ContentBox theme service and activate the site themes
 		wirebox.getInstance( "themeService@cb" ).startupSiteThemes();
-
-		systemOutput( "====================== themeservice: #getTickCount() - sTime#", true );
-		var sTime = getTickCount();
 
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
