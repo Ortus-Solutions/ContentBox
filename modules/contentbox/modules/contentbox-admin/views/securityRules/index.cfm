@@ -67,9 +67,9 @@
 							<div class="text-right">
 								<!---Global --->
 								<div class="btn-group">
-									<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+									<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 										Bulk Actions <span class="caret"></span>
-									</a>
+									</button>
 									<ul class="dropdown-menu">
 										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 										<li>
@@ -122,12 +122,12 @@
 										</cfif>
 									</ul>
 								</div>
-								<a
-									href="#event.buildLink( prc.xehEditorRule )#"
+								<button
 									class="btn btn-primary"
+									onclick="return to('#event.buildLink( prc.xehEditorRule )#')"
 								>
 									Create Rule
-								</a>
+								</button>
 							</div>
 						</cfif>
 					</div>

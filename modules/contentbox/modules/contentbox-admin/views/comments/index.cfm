@@ -54,9 +54,9 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 								<div class="text-right">
 									<div class="btn-group">
-								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
-										</a>
+										</button>
 								    	<ul class="dropdown-menu">
 								    		<li><a href="javascript:changeStatus('approve')"><i class="fa fa-thumbs-up"></i> Approve Selected</a></li>
 											<li><a href="javascript:changeStatus('moderate')"><i class="fa fa-thumbs-down"></i> Moderate Selected</a></li>

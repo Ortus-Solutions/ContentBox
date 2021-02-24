@@ -53,9 +53,9 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<!---Global --->
 									<div class="btn-group">
-								    	<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
-										</a>
+										</button>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
@@ -74,12 +74,12 @@
 											</cfif>
 								    	</ul>
 								    </div>
-									<a
+									<button
 										class="btn btn-primary"
-										href="#event.buildLink( prc.xehGroupEditor )#"
+										onclick="return to('#event.buildLink( prc.xehGroupEditor )#')"
 									>
 										Create Group
-									</a>
+									</button>
 								</cfif>
 							</div>
 						</div>
