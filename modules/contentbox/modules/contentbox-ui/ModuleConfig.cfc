@@ -11,6 +11,7 @@ component {
 	this.title              = "contentbox-ui";
 	this.author             = "Ortus Solutions, Corp";
 	this.webURL             = "https://www.ortussolutions.com";
+	this.version            = "@version.number@+@build.number@";
 	this.description        = "ContentBox UI Module";
 	this.viewParentLookup   = true;
 	this.layoutParentLookup = true;
@@ -281,8 +282,13 @@ component {
 	 * Fired when the module is registered and activated.
 	 */
 	function onLoad(){
+		var sTime = getTickCount();
+
 		// Startup the ContentBox theme service and activate the site themes
 		wirebox.getInstance( "themeService@cb" ).startupSiteThemes();
+
+		systemOutput( "====================== themeservice: #getTickCount() - sTime#", true );
+		var sTime = getTickCount();
 
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();

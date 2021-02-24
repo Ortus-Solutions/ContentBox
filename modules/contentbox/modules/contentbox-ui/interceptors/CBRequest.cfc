@@ -5,12 +5,12 @@
  * ---
  * Manages ContentBox UI Module Requests
  */
-component extends="coldbox.system.Interceptor"{
+component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="settingService"  inject="settingService@cb";
-	property name="contentService"  inject="contentService@cb";
-	property name="CBHelper" 		inject="id:CBHelper@cb";
+	property name="settingService" inject="settingService@cb";
+	property name="contentService" inject="contentService@cb";
+	property name="CBHelper" inject="id:CBHelper@cb";
 
 	/**
 	 * Configure CB Request
@@ -27,23 +27,20 @@ component extends="coldbox.system.Interceptor"{
 	/**
 	 * Fired on contentbox requests
 	 */
-	function preProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui"{
-
+	function preProcess( event, data, buffer, rc, prc ) eventPattern="^contentbox\-ui"{
 		// Verify ContentBox installer has been ran?
-		if( !settingService.isCBReady() ){
-
+		if ( !settingService.isCBReady() ) {
 			// Check if installer module exists, else throw exception
-			if( controller.getSetting( "modules" ).keyExists( "contentbox-installer" ) ){
+			if ( controller.getSetting( "modules" ).keyExists( "contentbox-installer" ) ) {
 				// Relocate to it
 				relocate( "cbInstaller" );
 			} else {
 				throw(
-					message : "Oops! ContentBox is not installed and the Installer module cannot be found",
-					detail  : "To install the installer module use CommandBox via 'install contentbox-installer'",
-					type    : "ContentBoxInstallerMissing"
+					message: "Oops! ContentBox is not installed and the Installer module cannot be found",
+					detail : "To install the installer module use CommandBox via 'install contentbox-installer'",
+					type   : "ContentBoxInstallerMissing"
 				);
 			}
-
 		}
 
 		// Prepare UI Request
@@ -55,7 +52,7 @@ component extends="coldbox.system.Interceptor"{
 	 */
 	function postRender( event, data, buffer, rc, prc ) eventPattern="^contentbox-ui\:(page|blog)"{
 		// Rules to turn off the admin bar
-		if(
+		if (
 			// Disabled SiteBar Setting
 			!prc.oCurrentSite.getAdminBar()
 			||
@@ -75,15 +72,17 @@ component extends="coldbox.system.Interceptor"{
 			!prc.oCurrentAuthor.isLoggedIn()
 			||
 			// Permissions
-			!prc.oCurrentAuthor.checkPermission( "CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR" )
-		){
+			!prc.oCurrentAuthor.checkPermission(
+				"CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR"
+			)
+		) {
 			return;
 		}
 
 		// Verify if we are in cache mode.
-		if( structKeyExists( prc, "contentCacheData" ) ){
+		if ( structKeyExists( prc, "contentCacheData" ) ) {
 			// skip out if not in text/html mode
-			if( prc.contentCacheData.contentType neq "text/html" ){
+			if ( prc.contentCacheData.contentType neq "text/html" ) {
 				return;
 			}
 			// Inflate content for admin bar
@@ -91,17 +90,17 @@ component extends="coldbox.system.Interceptor"{
 		}
 
 		// Determine content via context search
-		if( structKeyExists( prc, "entry" ) ){
+		if ( structKeyExists( prc, "entry" ) ) {
 			local.oContent = prc.entry;
 		}
-		if( structKeyExists( prc, "page" ) ){
+		if ( structKeyExists( prc, "page" ) ) {
 			local.oContent = prc.page;
 		}
 
 		// If not null, setup the link to edit
 		var linkEdit = "";
-		if( !isNull( oContent ) ){
-			if( oContent.getContentType() == "entry" ){
+		if ( !isNull( oContent ) ) {
+			if ( oContent.getContentType() == "entry" ) {
 				linkEdit = "#CBHelper.linkAdmin()#entries/editor/contentID/#oContent.getContentID()#";
 			} else {
 				linkEdit = "#CBHelper.linkAdmin()#pages/editor/contentID/#oContent.getContentID()#";
@@ -113,12 +112,12 @@ component extends="coldbox.system.Interceptor"{
 			view   = "adminbar/index",
 			module = "contentbox-ui",
 			args   = {
-				oContent       = oContent ?: javaCast( "null", "" ),
-				linkEdit       = linkEdit,
-				oCurrentAuthor = prc.oCurrentAuthor
+				oContent       : oContent ?: javacast( "null", "" ),
+				linkEdit       : linkEdit,
+				oCurrentAuthor : prc.oCurrentAuthor
 			}
 		);
-		cfhtmlhead( text="#adminBar#" );
+		cfhtmlhead( text = "#adminBar#" );
 	}
 
 	/**
