@@ -15,6 +15,6 @@
         "action": "openbrowser",
         "url": "http://\\${runwar.host}:\\${http.port}/cbadmin",
         "disabled": false,
-        "image": "modules_app/contentbox-custom/_content/ContentBox-Circle_32.png"
+        "image": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
     }]
 }

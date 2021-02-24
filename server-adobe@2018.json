@@ -16,14 +16,14 @@
             "port":"8589"
         }
 	},
-    "trayicon":"modules_app/contentbox-custom/_content/ContentBox_300.png",
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
     "trayOptions":[
         {
             "label":"Open ContentBox Admin",
             "action":"openbrowser",
             "url":"http://\\${runwar.host}:${runwar.port}/cbadmin",
             "disabled":false,
-            "image":"modules_app/contentbox-custom/_content/ContentBox-Circle_32.png"
+            "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
     ]
 }
