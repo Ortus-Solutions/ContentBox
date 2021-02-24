@@ -20,11 +20,42 @@
 						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
 						data-provide="slider"
 						data-slider-min="8"
-						data-slider-max="100"
+						data-slider-max="50"
 						data-slider-step="1"
 						data-slider-tooltip="hide"
 				>
-				<strong class="m10">100</strong>
+				<strong class="m10">50</strong>
+			</div>
+		</div>
+	</div>
+
+	<!--- Password Reset Token Expiration --->
+	<div class="form-group">
+		<label class="control-label" for="cb_security_password_reset_expiration">
+			Reset Password Token Expiration:
+			<span class="badge badge-info" id="cb_security_password_reset_expiration_label">
+				#prc.cbSettings.cb_security_password_reset_expiration#
+			</span>
+		</label>
+		<div class="controls">
+			<small>
+				The number of minutes the password reset token is valid until it expires and the user has to issue another reset link.
+			</small>
+
+			<div>
+				<strong class="m10">10</strong>
+				<input 	type="text"
+						class="form-control slider"
+						id="cb_security_password_reset_expiration"
+						name="cb_security_password_reset_expiration"
+						data-slider-value="#prc.cbSettings.cb_security_password_reset_expiration#"
+						data-provide="slider"
+						data-slider-min="10"
+						data-slider-max="300"
+						data-slider-step="5"
+						data-slider-tooltip="hide"
+				>
+				<strong class="m10">300 (Minutes)</strong>
 			</div>
 		</div>
 	</div>

@@ -8,23 +8,20 @@
 component singleton {
 
 	// Dependencies
-	property name="authorService"  inject="authorService@cb";
+	property name="authorService" inject="authorService@cb";
 	property name="settingService" inject="settingService@cb";
-	property name="siteService"    inject="siteService@cb";
-	property name="cacheStorage"   inject="cacheStorage@cbStorages";
-	property name="cookieStorage"  inject="cookieStorage@cbStorages";
-	property name="mailService"    inject="mailService@cbmailservices";
-	property name="renderer"       inject="coldbox:renderer";
-	property name="CBHelper"       inject="CBHelper@cb";
-	property name="log"            inject="logbox:logger:{this}";
-	property name="cache"          inject="cachebox:template";
-	property name="bCrypt"         inject="BCrypt@BCrypt";
+	property name="siteService" inject="siteService@cb";
+	property name="cacheStorage" inject="cacheStorage@cbStorages";
+	property name="cookieStorage" inject="cookieStorage@cbStorages";
+	property name="mailService" inject="mailService@cbmailservices";
+	property name="renderer" inject="coldbox:renderer";
+	property name="CBHelper" inject="CBHelper@cb";
+	property name="log" inject="logbox:logger:{this}";
+	property name="cache" inject="cachebox:template";
+	property name="bCrypt" inject="BCrypt@BCrypt";
 
 	// Properties
 	property name="encryptionKey";
-
-	// Static Variables
-	RESET_TOKEN_TIMEOUT = 60;
 
 	/**
 	 * Constructor
@@ -288,13 +285,16 @@ component singleton {
 	 * @author The author to create the reset token for.
 	 */
 	string function generateResetToken( required Author author ){
+		var tokenTimeout = variables.settingService.getSetting(
+			"cb_security_password_reset_expiration"
+		);
 		// Store Security Token For X minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
 		cache.set(
 			"reset-token-#cgi.server_name#-#token#",
 			arguments.author.getAuthorID(),
-			RESET_TOKEN_TIMEOUT,
-			RESET_TOKEN_TIMEOUT
+			tokenTimeout,
+			tokenTimeout
 		);
 		return token;
 	}
@@ -319,7 +319,7 @@ component singleton {
 			name        : arguments.author.getName(),
 			email       : arguments.author.getEmail(),
 			username    : arguments.author.getUsername(),
-			linkTimeout : RESET_TOKEN_TIMEOUT,
+			linkTimeout : settings.cb_security_password_reset_expiration,
 			linkToken   : CBHelper.linkAdmin(
 				event = "security.verifyReset",
 				ssl   = settings.cb_admin_ssl
@@ -384,7 +384,7 @@ component singleton {
 		var bodyTokens = {
 			name        : arguments.author.getName(),
 			ip          : settingService.getRealIP(),
-			linkTimeout : RESET_TOKEN_TIMEOUT,
+			linkTimeout : settings.cb_security_password_reset_expiration,
 			siteName    : defaultSite.getName(),
 			linkToken   : CBHelper.linkAdmin(
 				event = "security.verifyReset",
