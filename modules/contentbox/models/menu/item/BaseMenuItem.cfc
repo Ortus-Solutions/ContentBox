@@ -46,7 +46,7 @@ component
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"
@@ -92,11 +92,11 @@ component
 		default="";
 
 	property
-		name   ="active"
-		ormtype="boolean"
-		sqltype  ="boolean"
-		dbdefault="true"
-		default="true";
+		name     ="active"
+		ormtype  ="boolean"
+		sqlType  ="tinyInt"
+		dbdefault="1"
+		default  ="true";
 
 	property
 		name  ="menuType"

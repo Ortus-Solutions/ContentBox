@@ -86,42 +86,42 @@ component
 	property
 		name     ="isBlogEnabled"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	property
 		name     ="isSitemapEnabled"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	property
 		name     ="poweredByHeader"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	property
 		name     ="adminBar"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	property
 		name     ="isSSL"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false";
+		dbdefault="0";
 
 	property
 		name   ="activeTheme"
@@ -140,26 +140,26 @@ component
 	property
 		name     ="notifyOnEntries"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	property
 		name     ="notifyOnPages"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	property
 		name     ="notifyOnContentStore"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		dbdefault="1";
 
 	/* *********************************************************************
 	 **							CALUCLATED FIELDS

@@ -41,12 +41,12 @@ component
 		length ="255";
 
 	property
-		name   ="match"
-		ormtype="string"
-		notnull="false"
-		default="event"
+		name     ="match"
+		ormtype  ="string"
+		notnull  ="false"
+		default  ="event"
 		dbdefault="'event'"
-		length ="50";
+		length   ="50";
 
 	property
 		name   ="roles"
@@ -79,18 +79,18 @@ component
 	property
 		name     ="useSSL"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="false"
 		default  ="false"
-		dbdefault="false";
+		dbdefault="0";
 
 	property
-		name   ="action"
-		ormtype="string"
-		notnull="false"
-		default="redirect"
+		name     ="action"
+		ormtype  ="string"
+		notnull  ="false"
+		default  ="redirect"
 		dbdefault="'redirect'"
-		length ="50";
+		length   ="50";
 
 	property
 		name   ="module"
@@ -127,19 +127,27 @@ component
 	this.pk = "ruleID";
 
 	this.constraints = {
-		"whitelist"   	: { required : false, size : "1..255" },
-		"securelist"  	: { required : false, size : "1..255" },
-		"match"       	: { required : false, size : "1..50", regex : "^(event|url)$" },
-		"roles"       	: { required : false, size : "1..255" },
-		"permissions" 	: { required : false, size : "1..500" },
-		"redirect"    	: { required : false, size : "1..500" },
+		"whitelist"  : { required : false, size : "1..255" },
+		"securelist" : { required : false, size : "1..255" },
+		"match"      : {
+			required : false,
+			size     : "1..50",
+			regex    : "^(event|url)$"
+		},
+		"roles"         : { required : false, size : "1..255" },
+		"permissions"   : { required : false, size : "1..500" },
+		"redirect"      : { required : false, size : "1..500" },
 		"overrideEvent" : { required : false, size : "1..500" },
-		"useSSL"       	: { required : false, type : "boolean" },
-		"action" 		: { required : false, size : "1..50", regex : "^(redirect|override)$" },
-		"module"     	: { required : false, size : "1..255" },
-		"order"       	: { required : false, type : "numeric" },
-		"message"     	: { required : false, size : "1..255" },
-		"messageType" 	: { required : false, size : "1..50" }
+		"useSSL"        : { required : false, type : "boolean" },
+		"action"        : {
+			required : false,
+			size     : "1..50",
+			regex    : "^(redirect|override)$"
+		},
+		"module"      : { required : false, size : "1..255" },
+		"order"       : { required : false, type : "numeric" },
+		"message"     : { required : false, size : "1..255" },
+		"messageType" : { required : false, size : "1..50" }
 	};
 
 	/* *********************************************************************
@@ -148,13 +156,13 @@ component
 
 	// Constructor
 	function init(){
-		variables.match       	= "event";
-		variables.action      	= "redirect";
-		variables.useSSL      	= false;
-		variables.order       	= 0;
-		variables.messageType 	= "info";
+		variables.match         = "event";
+		variables.action        = "redirect";
+		variables.useSSL        = false;
+		variables.order         = 0;
+		variables.messageType   = "info";
 		variables.overrideEvent = "";
-		variables.module 		= "";
+		variables.module        = "";
 
 		super.init();
 

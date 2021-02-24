@@ -1,22 +1,24 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* I am a system setting. A system setting can be core or non-core.  The difference is that core
-* settings cannot be deleted from the geek settings UI to prevent caos.  Admins would have
-* to remove core settings via the DB only as a precautionary measure.
-*/
-component  	persistent="true"
-			entityname="cbSetting"
-			table     ="cb_setting"
-			extends   ="contentbox.models.BaseEntity"
-			cachename ="cbSetting"
-			cacheuse  ="read-write"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * I am a system setting. A system setting can be core or non-core.  The difference is that core
+ * settings cannot be deleted from the geek settings UI to prevent caos.  Admins would have
+ * to remove core settings via the DB only as a precautionary measure.
+ */
+component
+	persistent="true"
+	entityname="cbSetting"
+	table     ="cb_setting"
+	extends   ="contentbox.models.BaseEntity"
+	cachename ="cbSetting"
+	cacheuse  ="read-write"
+{
 
 	/* *********************************************************************
-	**							PROPERTIES
-	********************************************************************* */
+	 **							PROPERTIES
+	 ********************************************************************* */
 
 	property
 		name     ="settingID"
@@ -38,15 +40,15 @@ component  	persistent="true"
 	property
 		name     ="isCore"
 		ormtype  ="boolean"
-		sqltype  ="boolean"
+		sqlType  ="tinyInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="0"
 		index    ="idx_core";
 
 	/* *********************************************************************
-	**							RELATIONSHIPS
-	********************************************************************* */
+	 **							RELATIONSHIPS
+	 ********************************************************************* */
 
 	// M20 -> site loaded as a proxy and fetched immediately
 	property
@@ -58,23 +60,23 @@ component  	persistent="true"
 		lazy     ="true";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS
-	********************************************************************* */
+	 **							PK + CONSTRAINTS
+	 ********************************************************************* */
 
 	this.pk = "settingID";
 
-	this.constraints ={
-		"name"  = { required=true, size="1..100" },
-		"value" = { required=true }
+	this.constraints = {
+		"name"  : { required : true, size : "1..100" },
+		"value" : { required : true }
 	};
 
 	/* *********************************************************************
-	**							PUBLIC METHODS
-	********************************************************************* */
+	 **							PUBLIC METHODS
+	 ********************************************************************* */
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	function init(){
 		variables.isCore = false;
 
@@ -84,12 +86,12 @@ component  	persistent="true"
 	}
 
 	/**
-	* Get memento representation
-	* @excludes Property excludes
-	*/
-	function getMemento( excludes="" ){
+	 * Get memento representation
+	 * @excludes Property excludes
+	 */
+	function getMemento( excludes = "" ){
 		var pList  = listToArray( "name,value,isCore" );
-		var result = getBaseMemento( properties=pList, excludes=arguments.excludes );
+		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 
 		return result;
 	}
@@ -100,7 +102,7 @@ component  	persistent="true"
 	 * @return The associated site id or empty if none
 	 */
 	function getSiteId(){
-		if( hasSite() ){
+		if ( hasSite() ) {
 			return getSite().getSiteId();
 		}
 		return "";
