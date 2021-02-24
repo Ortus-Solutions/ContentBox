@@ -83,7 +83,7 @@ component{
 
 	public void function onRequestEnd( required targetPage ) {
 
-		thread {
+		thread name="testbox-shutdown" {
 			if( !isNull( application.cbController ) ){
 				application.cbController.getLoaderService().processShutdown();
 			}
