@@ -11,6 +11,7 @@ component {
 	this.title              = "ContentBox Security";
 	this.author             = "Ortus Solutions, Corp";
 	this.webURL             = "https://www.ortussolutions.com";
+	this.version            = "@version.number@+@build.number@";
 	this.description        = "ContentBox Security Module";
 	this.viewParentLookup   = true;
 	this.layoutParentLookup = true;
@@ -22,11 +23,7 @@ component {
 		layoutSettings = { defaultLayout : "simple.cfm" };
 
 		// i18n
-		cbi18n = {
-			resourceBundles : {
-				"security" : "#moduleMapping#/includes/i18n/security"
-			}
-		};
+		cbi18n = { resourceBundles : { "security" : "#moduleMapping#/includes/i18n/security" } };
 
 		// SES Routes
 		routes = [

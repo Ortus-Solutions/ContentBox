@@ -11,6 +11,7 @@ component {
 	this.title 				= "ContentBox Markdown Editor";
 	this.author 			= "Ortus Solutions, Corp";
 	this.webURL 			= "https://www.ortussolutions.com";
+	this.version            = "@version.number@+@build.number@";
 	this.description 		= "ContentBox Markdown Module";
 	this.viewParentLookup 	= true;
 	this.layoutParentLookup = true;

@@ -82,12 +82,16 @@ component{
 	}
 
 	public void function onRequestEnd( required targetPage ) {
-		if( !isNull( application.cbController ) ){
-			application.cbController.getLoaderService().processShutdown();
+
+		thread {
+			if( !isNull( application.cbController ) ){
+				application.cbController.getLoaderService().processShutdown();
+			}
+
+			structDelete( application, "cbController" );
+			structDelete( application, "wirebox" );
 		}
 
-		structDelete( application, "cbController" );
-		structDelete( application, "wirebox" );
 	}
 
 }
