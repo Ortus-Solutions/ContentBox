@@ -2,101 +2,97 @@
 # yarn lockfile v1
 
 
-"@bower_components/Bootstrap-Confirmation@rochappy/Bootstrap-Confirmation#*":
+"@app_modules/Bootstrap-Confirmation@rochappy/Bootstrap-Confirmation#*":
   version "0.0.2"
   resolved "https://codeload.github.com/rochappy/Bootstrap-Confirmation/tar.gz/b7495a3639d59f34bf95ede256332dfe72e393e5"
 
-"@bower_components/TableDnD@isocra/TableDnD#^1.0.3":
-  version "1.0.4"
-  resolved "https://codeload.github.com/isocra/TableDnD/tar.gz/f10484d6a0c0ec9e4243a8fcae4042f021780df9"
+"@app_modules/TableDnD@isocra/TableDnD#^1.0.3":
+  version "1.0.5"
+  resolved "https://codeload.github.com/isocra/TableDnD/tar.gz/10943ed77b4151fffa27b78f4295e180d0cf2a76"
 
-"@bower_components/animate.css@daneden/animate.css#^3.5.2":
+"@app_modules/animate.css@daneden/animate.css#^3.5.2":
   version "3.7.2"
   resolved "https://codeload.github.com/daneden/animate.css/tar.gz/ab5fe9dae4fdb936eee698ce1850a263008f0a99"
 
-"@bower_components/bootstrap-datepicker@eternicode/bootstrap-datepicker#^1.7.1":
+"@app_modules/bootstrap-datepicker@eternicode/bootstrap-datepicker#^1.7.1":
   version "1.9.0"
   resolved "https://codeload.github.com/eternicode/bootstrap-datepicker/tar.gz/fb8776d65825068b9f914ab37d6fd847c951f488"
   dependencies:
     jquery ">=1.7.1 <4.0.0"
 
-"@bower_components/bootstrap-sass@twbs/bootstrap-sass#*":
+"@app_modules/bootstrap-sass@twbs/bootstrap-sass#*":
   version "3.4.1"
   resolved "https://codeload.github.com/twbs/bootstrap-sass/tar.gz/b34765d8a6aa775816c59012b2d6b30c4c66a8e9"
 
-"@bower_components/bootstrap-toggle@minhur/bootstrap-toggle#^2.2.2":
+"@app_modules/bootstrap-toggle@minhur/bootstrap-toggle#^2.2.2":
   version "2.2.2"
   resolved "https://codeload.github.com/minhur/bootstrap-toggle/tar.gz/187e332b7431afe3d0c07eeef92782ce59a77d66"
 
-"@bower_components/ckeditor@ckeditor/ckeditor-releases#^4.8.0":
-  version "4.14.1"
-  resolved "https://codeload.github.com/ckeditor/ckeditor-releases/tar.gz/8eccaf31ad9832a113757d379758996ed2150f60"
+"@app_modules/ckeditor@ckeditor/ckeditor-releases#^4.8.0":
+  version "4.16.0"
+  resolved "https://codeload.github.com/ckeditor/ckeditor-releases/tar.gz/98a1bce9c9237e2ee141c0d2e01c3f0576655d5d"
 
-"@bower_components/clockpicker@weareoutman/clockpicker#^0.0.7":
+"@app_modules/clockpicker@weareoutman/clockpicker#^0.0.7":
   version "0.0.7"
   resolved "https://codeload.github.com/weareoutman/clockpicker/tar.gz/d1bf8afdc29976c016215a3159c5dfee254e930b"
 
-"@bower_components/datatables@DataTables/DataTables#^1.10.16":
+"@app_modules/datatables@DataTables/DataTables#^1.10.16":
   version "1.10.21"
   resolved "https://codeload.github.com/DataTables/DataTables/tar.gz/83e59694a105225ff889ddfa0d723a3ab24fda78"
   dependencies:
     jquery ">=1.7"
 
-"@bower_components/eve-raphael@tomasAlabes/eve#v0.5.0":
+"@app_modules/eve-raphael@tomasAlabes/eve#v0.5.0":
   version "0.5.0"
   resolved "https://codeload.github.com/tomasAlabes/eve/tar.gz/93132d5d47a0ce31dbd1b75208b1d4c0e2ad81e8"
 
-"@bower_components/fastclick@ftlabs/fastclick#v0.6.11":
+"@app_modules/fastclick@ftlabs/fastclick#v0.6.11":
   version "0.6.11"
   resolved "https://codeload.github.com/ftlabs/fastclick/tar.gz/57d35f73ca54e31ee37161e32f6ac11786f520d2"
 
-"@bower_components/font-awesome-sass@FortAwesome/font-awesome-sass#*":
+"@app_modules/font-awesome-sass@FortAwesome/font-awesome-sass#*":
   version "0.0.0"
-  resolved "https://codeload.github.com/FortAwesome/font-awesome-sass/tar.gz/af7cf0ca10f84b44c038223bb03bea41fe8b02a6"
+  resolved "https://codeload.github.com/FortAwesome/font-awesome-sass/tar.gz/2ae124c7f8b0941ef018d6b1bb8d70fb1e3cb79e"
 
-"@bower_components/history.js@browserstate/history.js#^1.8.0":
+"@app_modules/history.js@browserstate/history.js#^1.8.0":
   version "1.8.0"
   resolved "https://codeload.github.com/browserstate/history.js/tar.gz/6c6c8b951b03fa725adb11b1087d73b0b6f0ac82"
   dependencies:
     buildr "0.8.x"
 
-"@bower_components/html5shiv@aFarkas/html5shiv#*":
+"@app_modules/html5shiv@aFarkas/html5shiv#*":
   version "3.7.3"
   resolved "https://codeload.github.com/aFarkas/html5shiv/tar.gz/ed28c56c071bddfe7d635ad88995674957a016be"
 
-"@bower_components/jq-fullscreen@private-face/jquery.fullscreen#^0.6.0":
-  version "0.6.0"
-  resolved "https://codeload.github.com/private-face/jquery.fullscreen/tar.gz/ceb6068ccdbf18b91ec48bffd2df1548dc81a716"
-
-"@bower_components/jquery-nestable@thesabbir/jquery-nestable#*":
+"@app_modules/jquery-nestable@thesabbir/jquery-nestable#*":
   version "0.0.0"
   resolved "https://codeload.github.com/thesabbir/jquery-nestable/tar.gz/6932ce28fc7326f395eabba0c2c1c2254bfb4c8a"
 
-"@bower_components/jquery-validation@ikajou/jquery-validation#^1.13.0":
+"@app_modules/jquery-validation@ikajou/jquery-validation#^1.13.0":
   version "1.13.0"
   resolved "https://codeload.github.com/ikajou/jquery-validation/tar.gz/26fcbcb67b9a9debac72861cceeec020aacb32d3"
 
-"@bower_components/jquery.cookie@carhartl/jquery-cookie#^1.4.1":
+"@app_modules/jquery.cookie@carhartl/jquery-cookie#^1.4.1":
   version "1.4.1"
   resolved "https://codeload.github.com/carhartl/jquery-cookie/tar.gz/7f88a4e631aba8a8c688fd8999ce6b9bcfd50718"
 
-"@bower_components/jquery@jquery/jquery-dist#>=1.6.3 <3":
+"@app_modules/jquery@jquery/jquery-dist#>=1.6.3 <3":
   version "2.2.4"
   resolved "https://codeload.github.com/jquery/jquery-dist/tar.gz/c0185ab7c75aab88762c5aae780b9d83b80eda72"
 
-"@bower_components/jwerty@keithamus/jwerty#^0.3.2":
+"@app_modules/jwerty@keithamus/jwerty#^0.3.2":
   version "0.3.2"
   resolved "https://codeload.github.com/keithamus/jwerty/tar.gz/ad2e0f4c3030329d3e681f5b3961168b2bae8f26"
 
-"@bower_components/lodash@lodash/lodash#^4.17.4":
-  version "4.17.20"
-  resolved "https://codeload.github.com/lodash/lodash/tar.gz/ded9bc66583ed0b4e3b7dc906206d40757b4a90a"
+"@app_modules/lodash@lodash/lodash#^4.17.4":
+  version "4.17.21"
+  resolved "https://codeload.github.com/lodash/lodash/tar.gz/f299b52f39486275a9e6483b60a410e06520c538"
 
-"@bower_components/lz-string@pieroxy/lz-string#^1.4.4":
+"@app_modules/lz-string@pieroxy/lz-string#^1.4.4":
   version "1.4.4"
   resolved "https://codeload.github.com/pieroxy/lz-string/tar.gz/cf06e9a0e61daa8b120a474bbc80666f959ff7d4"
 
-"@bower_components/mocha@mochajs/mocha#~1.17.1":
+"@app_modules/mocha@mochajs/mocha#~1.17.1":
   version "1.17.1"
   resolved "https://codeload.github.com/mochajs/mocha/tar.gz/7fc565ee3e225cb7a66bf39ae9c2c05b346675c1"
   dependencies:
@@ -108,33 +104,33 @@
     jade "0.26.3"
     mkdirp "0.3.5"
 
-"@bower_components/moment@moment/moment#^2.20.1":
-  version "2.27.0"
-  resolved "https://codeload.github.com/moment/moment/tar.gz/3e1a95b5ef0a505fec567c5b2290fd80e1da18f9"
+"@app_modules/moment@moment/moment#^2.20.1":
+  version "2.29.1"
+  resolved "https://codeload.github.com/moment/moment/tar.gz/b7ec8e2ec068e03de4f832f28362675bb9e02261"
 
-"@bower_components/morris.js@morrisjs/morris.js#~0.5.1":
+"@app_modules/morris.js@morrisjs/morris.js#~0.5.1":
   version "0.5.0"
   resolved "https://codeload.github.com/morrisjs/morris.js/tar.gz/d5cf1410eda7055eaf2c7d218d4cb24ec5ed55c8"
 
-"@bower_components/navgoco@tefra/navgoco#^0.2.1":
+"@app_modules/navgoco@tefra/navgoco#^0.2.1":
   version "0.2.1"
   resolved "https://codeload.github.com/tefra/navgoco/tar.gz/58c3447b812a7e76feb97d3fc2eeb16cb21f7421"
 
-"@bower_components/raphael@DmitryBaranovskiy/raphael#>= 2.0":
+"@app_modules/raphael@DmitryBaranovskiy/raphael#>= 2.0":
   version "2.3.0"
   resolved "https://codeload.github.com/DmitryBaranovskiy/raphael/tar.gz/d8fbe4be81d362837f95e33886b80fb41de443b4"
   dependencies:
     eve-raphael "0.5.0"
 
-"@bower_components/respond@scottjehl/Respond#^1.4.2":
+"@app_modules/respond@scottjehl/Respond#^1.4.2":
   version "1.4.2"
   resolved "https://codeload.github.com/scottjehl/Respond/tar.gz/20b7f4a192bb910c8c7e067b961de38519d334e4"
 
-"@bower_components/seiyria-bootstrap-slider@seiyria/bootstrap-slider#^9.10.0":
+"@app_modules/seiyria-bootstrap-slider@seiyria/bootstrap-slider#^9.10.0":
   version "9.10.0"
   resolved "https://codeload.github.com/seiyria/bootstrap-slider/tar.gz/92612ee5971257631c1d70347806253faad37be4"
 
-"@bower_components/simplemde@sparksuite/simplemde-markdown-editor#^1.11.2":
+"@app_modules/simplemde@sparksuite/simplemde-markdown-editor#^1.11.2":
   version "1.11.2"
   resolved "https://codeload.github.com/sparksuite/simplemde-markdown-editor/tar.gz/6abda7ab68cc20f4aca870eb243747951b90ab04"
   dependencies:
@@ -142,15 +138,15 @@
     codemirror-spell-checker "*"
     marked "*"
 
-"@bower_components/switchery@abpetkov/switchery#^0.8.2":
+"@app_modules/switchery@abpetkov/switchery#^0.8.2":
   version "0.8.2"
   resolved "https://codeload.github.com/abpetkov/switchery/tar.gz/81208cba869afed3ab3ac63f2379261977f0400e"
 
-"@bower_components/toastr@johnpapa/toastr-bower#^2.1.3":
+"@app_modules/toastr@johnpapa/toastr-bower#^2.1.3":
   version "0.0.0"
   resolved "https://codeload.github.com/johnpapa/toastr-bower/tar.gz/d6fef68471aa1836bc44ba1a41a90a96548b784f"
 
-"@bower_components/transitionize@abpetkov/transitionize#*":
+"@app_modules/transitionize@abpetkov/transitionize#*":
   version "0.0.3"
   resolved "https://codeload.github.com/abpetkov/transitionize/tar.gz/bd106f74b90520774c1a7fff5f1f24073c0bce89"
 
@@ -163,11 +159,6 @@ abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
-
-acorn@^3.1.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/acorn/-/acorn-3.3.0.tgz#45e37fb39e8da3f25baee3ff5369e2bb5f22017a"
-  integrity sha1-ReN/s56No/JbruP/U2niu18iAXo=
 
 ajv@^6.12.3:
   version "6.12.4"
@@ -412,11 +403,6 @@ bower-config@^1.3.0:
     osenv "^0.1.3"
     untildify "^2.1.0"
     wordwrap "^0.0.3"
-
-bower@~1.7.7:
-  version "1.7.10"
-  resolved "https://registry.yarnpkg.com/bower/-/bower-1.7.10.tgz#e51b48ea2c07a4494481d04c081232844bac8ef2"
-  integrity sha1-5RtI6iwHpElEgdBMCBIyhEusjvI=
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -839,11 +825,6 @@ define-property@^2.0.2:
     is-descriptor "^1.0.2"
     isobject "^3.0.1"
 
-defined@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/defined/-/defined-1.0.0.tgz#c98d9bcef75674188e110969151199e39b1fa693"
-  integrity sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=
-
 delayed-stream@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
@@ -858,14 +839,6 @@ detect-file@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/detect-file/-/detect-file-1.0.0.tgz#f0d66d03672a825cb1b73bdb3fe62310c8e552b7"
   integrity sha1-8NZtA2cqglyxtzvbP+YjEMjlUrc=
-
-detective@~4.3.1:
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/detective/-/detective-4.3.2.tgz#77697e2e7947ac3fe7c8e26a6d6f115235afa91c"
-  integrity sha1-d2l+LnlHrD/nyOJqbW8RUjWvqRw=
-  dependencies:
-    acorn "^3.1.0"
-    defined "^1.0.0"
 
 diff@1.0.7:
   version "1.0.7"
@@ -1169,11 +1142,6 @@ file-sync-cmp@^0.1.0:
   resolved "https://registry.yarnpkg.com/file-sync-cmp/-/file-sync-cmp-0.1.1.tgz#a5e7a8ffbfa493b43b923bbd4ca89a53b63b612b"
   integrity sha1-peeo/7+kk7Q7kju9TKiaU7Y7YSs=
 
-filesize@~3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.2.1.tgz#a06f1c5497ed6358057c415e53403f764c1fb5e6"
-  integrity sha1-oG8cVJftY1gFfEFeU0A/dkwfteY=
-
 fill-range@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/fill-range/-/fill-range-4.0.0.tgz#d544811d428f98eb06a63dc402d2403c328c38f7"
@@ -1423,18 +1391,6 @@ growl@1.7.x:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.7.0.tgz#de2d66136d002e112ba70f3f10c31cf7c350b2da"
   integrity sha1-3i1mE20ALhErpw8/EMMc98NQsto=
-
-grunt-bower-concat@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/grunt-bower-concat/-/grunt-bower-concat-1.0.0.tgz#f430c7b718704c6815215c6ca94d2fd5dd4a7b5b"
-  integrity sha1-9DDHtxhwTGgVIVxsqU0v1d1Ke1s=
-  dependencies:
-    async "~1.5.2"
-    bower "~1.7.7"
-    detective "~4.3.1"
-    filesize "~3.2.1"
-    lodash "~4.3.0"
-    underscore.string "~3.2.3"
 
 grunt-cli@~1.3.2:
   version "1.3.2"
@@ -2076,11 +2032,6 @@ lodash@~4.15.0:
   version "4.15.0"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.15.0.tgz#3162391d8f0140aa22cf8f6b3c34d6b7f63d3aa9"
   integrity sha1-MWI5HY8BQKoiz49rPDTWt/Y9Oqk=
-
-lodash@~4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.3.0.tgz#efd9c4a6ec53f3b05412429915c3e4824e4d25a4"
-  integrity sha1-79nEpuxT87BUEkKZFcPkgk5NJaQ=
 
 "log@>= 1.2.0":
   version "6.0.0"
@@ -3373,11 +3324,6 @@ unc-path-regex@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/unc-path-regex/-/unc-path-regex-0.1.2.tgz#e73dd3d7b0d7c5ed86fbac6b0ae7d8c6a69d50fa"
   integrity sha1-5z3T17DXxe2G+6xrCufYxqadUPo=
-
-underscore.string@~3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/underscore.string/-/underscore.string-3.2.3.tgz#806992633665d5e5fcb4db1fb3a862eb68e9e6da"
-  integrity sha1-gGmSYzZl1eX8tNsfs6hi62jp5to=
 
 underscore.string@~3.3.5:
   version "3.3.5"

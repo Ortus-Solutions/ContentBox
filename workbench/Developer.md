@@ -30,7 +30,7 @@ All needed CSS from libraries are added via the `cssmin` task.
 Vendor CSS files are added into `workbench/resources/vendor/css`.
 
 ### Output
-The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS, and bower CSS.
+The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS.
 
 
 ## Javascript Assets
@@ -50,7 +50,7 @@ Two global libraries are created in ContentBox:
 
 ## Vendor Libaries ##
 
-JavaScript libraries not managed by Bower will be placed under the `workbench/resources/vendor/js` folder and optimized by our build process into their appropriate global libraries.
+JavaScript libraries not managed by Yarn will be placed under the `workbench/resources/vendor/js` folder and optimized by our build process into their appropriate global libraries.
 
 
 ## Runtime Assets

@@ -9,8 +9,8 @@
 @import "globals";
 
 // External Libs
-@import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
-@import "../../bower_components/font-awesome-sass/assets/stylesheets/font-awesome";
+@import "../../app_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../../app_modules/font-awesome-sass/assets/stylesheets/font-awesome";
 
 // Variables, Mixins
 @import "theme/_variables.scss";
@@ -48,6 +48,6 @@
 @import "theme/_widget-container.scss";
 
 // Post-Theme External Libs
-@import "../../bower_components/toastr/toastr.scss";
+@import "../../app_modules/toastr/toastr.scss";
 // Finally Include the ContentBox Theme CSS
 @import "contentbox.scss";

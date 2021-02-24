@@ -26,6 +26,7 @@ logs/**
 coldbox/*
 testbox/*
 **/node_modules/**
+**/app_modules/**
 **/bower_components/**
 **/app_modules/**
 workbench/app_modules
