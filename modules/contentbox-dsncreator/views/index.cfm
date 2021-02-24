@@ -26,7 +26,7 @@
 		</div>
 		<div class="form-vertical">
 
-			<div class="alert alert-info">
+			<div class="alert alert-warning">
 
 				<p>
 					<strong>Important:</strong>
@@ -47,6 +47,11 @@
 
 			<fieldset>
 				<legend>Datasource Created?</legend>
+
+				<div class="alert alert-danger">
+					You can create a datasource through this wizard or you can log in to the engine administrator and do it there.
+					Please note that you will need the Admin password to create the datasources.
+				</div>
 				<p>Do you have a datasource created already?</p>
 
 				<div class="form-group">
@@ -69,9 +74,7 @@
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="true" />
 
-					<div class="alert alert-info">
 					<p>Please fill in the name of the datasource connection setup in your CFML engine.</p>
-					</div>
 
 					<label class="control-label">Datasource Name:
 						<input type="text" name="dsnName" id="dsnName" class="form-control" size="40"/>
@@ -92,9 +95,7 @@
 					<input type="hidden" name="action" id="action" value="process" />
 					<input type="hidden" name="dsnCreated" value="false" />
 
-					<div class="alert alert-info">
 					<p>Please fill in all the required information so we can create the datasource connection for you.</p>
-					</div>
 
 					<div class="form-group">
 						<div class="controls">
