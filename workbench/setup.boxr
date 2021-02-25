@@ -9,7 +9,7 @@ cd ../../workbench
 
 # Install NPM dependencies
 echo "==> Install Node Dependencies"
-!npm install -g grunt-cli
+!npm install -g grunt-cli yarn
 
 # Install Yarn deps
 !yarn install
