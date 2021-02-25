@@ -8,11 +8,11 @@
 component accessors="true" threadSafe singleton {
 
 	// DI
-	property name="settingService"  inject="settingService@cb";
+	property name="settingService" inject="settingService@cb";
 	property name="securityService" inject="securityService@cb";
-	property name="authorService"   inject="authorService@cb";
-	property name="cookieStorage"   inject="cookieStorage@cbStorages";
-	property name="log"             inject="logbox:logger:{this}";
+	property name="authorService" inject="authorService@cb";
+	property name="cookieStorage" inject="cookieStorage@cbStorages";
+	property name="log" inject="logbox:logger:{this}";
 
 	/**
 	 * Providers registry
@@ -182,11 +182,7 @@ component accessors="true" threadSafe singleton {
 			arguments.author.getIs2FactorAuth()
 		) {
 			// Verify if using trusted device options and if device is trusted
-			if (
-				oProvider.allowTrustedDevice() AND isTrustedDevice(
-					arguments.author.getAuthorID()
-				)
-			) {
+			if ( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ) {
 				results = false;
 			} else {
 				results = true;

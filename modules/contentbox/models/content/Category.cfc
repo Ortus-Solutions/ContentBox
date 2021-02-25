@@ -172,8 +172,18 @@ component
 	 * @excludes properties to exclude
 	 */
 	struct function getMemento( excludes = "" ){
-		var pList  = listToArray( "category,slug,numberOfPages,numberOfEntries,numberOfContentStore" );
+		var pList = listToArray(
+			"category,slug,numberOfPages,numberOfEntries,numberOfContentStore"
+		);
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
+
+		// Site Snapshot
+		result[ "site" ] = {};
+		if ( hasSite() ) {
+			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "name" ]   = getSite().getName();
+			result.site[ "slug" ]   = getSite().getSlug();
+		}
 
 		return result;
 	}
@@ -188,16 +198,17 @@ component
 	private numeric function getNumberOfPublishedContent( required service ){
 		var c = arguments.service.newCriteria();
 
-		return c.createAlias( "categories", "categories" )
-				.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
-				.isTrue( "isPublished" )
-				.isLE( "publishedDate", now() )
-				.isEq( "passwordProtection", "" )
-				.$or(
-					c.restrictions.isNull( "expireDate" ),
-					c.restrictions.isGT( "expireDate", now() )
-				)
-				.count( "contentID" );
+		return c
+			.createAlias( "categories", "categories" )
+			.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
+			.isTrue( "isPublished" )
+			.isLE( "publishedDate", now() )
+			.isEq( "passwordProtection", "" )
+			.$or(
+				c.restrictions.isNull( "expireDate" ),
+				c.restrictions.isGT( "expireDate", now() )
+			)
+			.count( "contentID" );
 	}
 
 }

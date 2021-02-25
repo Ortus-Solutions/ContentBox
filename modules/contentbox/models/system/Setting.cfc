@@ -93,6 +93,14 @@ component
 		var pList  = listToArray( "name,value,isCore" );
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 
+		// Site Snapshot
+		result[ "site" ] = {};
+		if ( hasSite() ) {
+			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "name" ]   = getSite().getName();
+			result.site[ "slug" ]   = getSite().getSlug();
+		}
+
 		return result;
 	}
 

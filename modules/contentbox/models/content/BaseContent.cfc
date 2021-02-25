@@ -1028,6 +1028,14 @@ component
 			result[ "relatedcontent" ] = [];
 		}
 
+		// Site Snapshot
+		result[ "site" ] = {};
+		if ( hasSite() ) {
+			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "name" ]   = getSite().getName();
+			result.site[ "slug" ]   = getSite().getSlug();
+		}
+
 		return result;
 	}
 
