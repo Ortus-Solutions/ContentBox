@@ -201,7 +201,7 @@ component singleton {
 	 */
 	SecurityService function logout(){
 		cacheStorage.clearAll();
-		cookieStorage.delete( name = "contentbox_keep_logged_in" );
+		cookieStorage.delete( "contentbox_keep_logged_in" );
 
 		return this;
 	}
@@ -587,14 +587,14 @@ component singleton {
 	 * Get remember me cookie
 	 */
 	any function getRememberMe(){
-		var cookieValue = cookieStorage.get( name = "contentbox_remember_me", defaultValue = "" );
+		var cookieValue = cookieStorage.get( "contentbox_remember_me", "" );
 
 		try {
 			return decryptIt( cookieValue );
 		} catch ( Any e ) {
 			// Errors on decryption
 			log.error( "Error decrypting remember me key: #e.message# #e.detail#", cookieValue );
-			cookieStorage.delete( name = "contentbox_remember_me" );
+			cookieStorage.delete( "contentbox_remember_me" );
 			return "";
 		}
 	}
@@ -604,7 +604,7 @@ component singleton {
 	 * Get keep me logged in cookie
 	 */
 	any function getKeepMeLoggedIn(){
-		var cookieValue = cookieStorage.get( name = "contentbox_keep_logged_in", defaultValue = "" );
+		var cookieValue = cookieStorage.get( "contentbox_keep_logged_in", "" );
 
 		try {
 			// Decrypted value should be a number representing the authorID
@@ -615,7 +615,7 @@ component singleton {
 				"Error decrypting Keep Me Logged in key: #e.message# #e.detail#",
 				cookieValue
 			);
-			cookieStorage.delete( name = "contentbox_keep_logged_in" );
+			cookieStorage.delete( "contentbox_keep_logged_in" );
 			return 0;
 		}
 	}
@@ -629,8 +629,8 @@ component singleton {
 	SecurityService function setRememberMe( required username, required numeric days = 0 ){
 		// If the user now only wants to be remembered for this session, remove any existing cookies.
 		if ( !arguments.days ) {
-			cookieStorage.delete( name = "contentbox_remember_me" );
-			cookieStorage.delete( name = "contentbox_keep_logged_in" );
+			cookieStorage.delete( "contentbox_remember_me" );
+			cookieStorage.delete( "contentbox_keep_logged_in" );
 			return this;
 		}
 

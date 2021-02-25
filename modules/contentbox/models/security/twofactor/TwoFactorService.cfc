@@ -155,14 +155,14 @@ component accessors="true" threadSafe singleton {
 			var targetTrustedID = securityService.decryptIt( cookieValue );
 			// Verify they are the same
 			if ( targetTrustedID neq arguments.trustedID ) {
-				cookieStorage.delete( name = variables.TRUSTED_DEVICE_COOKIE );
+				cookieStorage.delete( variables.TRUSTED_DEVICE_COOKIE );
 				return false;
 			}
 			return true;
 		} catch ( Any e ) {
 			// Errors on decryption
 			log.error( "Error decrypting trusted id cookie: #e.message# #e.detail#", cookieValue );
-			cookieStorage.delete( name = variables.TRUSTED_DEVICE_COOKIE );
+			cookieStorage.delete( variables.TRUSTED_DEVICE_COOKIE );
 			return false;
 		}
 	}
