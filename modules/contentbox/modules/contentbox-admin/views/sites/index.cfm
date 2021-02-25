@@ -58,12 +58,12 @@
 										</cfif>
 									</ul>
 								</div>
-								<a
-									href="#event.buildLink( prc.xehSiteEditor )#"
+								<button
 									class="btn btn-primary"
-									>
+									onclick="return to('#event.buildLink( prc.xehSiteEditor )#')"
+								>
 									Create Site
-								</a>
+								</button>
 							</div>
 							</cfif>
 						</div>

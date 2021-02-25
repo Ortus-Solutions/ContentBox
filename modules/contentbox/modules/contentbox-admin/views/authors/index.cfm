@@ -91,7 +91,12 @@
 								</cfif>
 
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<button class="btn btn-primary" onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')">Create User</button>
+									<button
+										class="btn btn-primary"
+										onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')"
+									>
+										Create User
+									</button>
 								</cfif>
 
 							</div>
