@@ -30,7 +30,8 @@
     },
     "devDependencies":{
         "testbox":"*",
-        "commandbox-cfformat":"*"
+        "commandbox-cfformat":"*",
+		"commandbox-docbox":"*"
     },
     "installPaths":{
         "testbox":"testbox/",
