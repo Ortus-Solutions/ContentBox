@@ -15,13 +15,13 @@
 					<!--- Export But --->
 					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-sms btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button type="button" class="btn btn-sms btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fas fa-sliders-h"></i> Actions
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
+									<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
 										title="Issue a password reset for the user upon next login.">
 										<i class="fas fa-key"></i> Reset Password
 									</a>
