@@ -1,20 +1,21 @@
 {
+	"name" : "ContentBox",
     "web": {
 		"directoryBrowsing": false,
         "rewrites": {
-            "enable": "true"
+            "enable": true
         }
     },
     "JVM": {
         "heapSize": "768"
 	},
 	"openBrowserURL" : "http://localhost:\\${http.port}",
-    "trayicon": "modules_app/contentbox-custom/_content/ContentBox_300.png",
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
     "trayOptions": [{
         "label": "Open ContentBox Admin",
         "action": "openbrowser",
-        "url": "http://\\${runwar.host}:\\${http.port}/cbadmin",
+		"url":"http://\\${runwar.host}:\\${runwar.port}/cbadmin",
         "disabled": false,
-        "image": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
+        "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
     }]
 }

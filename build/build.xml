@@ -95,6 +95,19 @@
 		<property name="src.isInit" value="true" />
 	</target>
 
+	<!-- Build API Docs -->
+	<target name="build.apidocs" description="Builds the api docs" depends="init">
+		<!-- Build the Docs-->
+	   <exec executable="box">
+		   <arg line="task run taskFile=build/BuildDocs.cfc :version=${contentbox.version}" />
+	   </exec>
+	   <!-- Zip API Docs -->
+	   <zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
+		<!-- Build Checksum -->
+		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
+		<checksum forceoverwrite="true" algorithm="SHA-512" fileext=".sha512" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
+	</target>
+
 	<!-- Build module distro -->
 	<target name="build.module" description="Build a new ContentBox module source release" depends="init">
 		<!-- Create module Build dir -->
@@ -107,7 +120,8 @@
       	<copy todir="${dir.build}/module" encoding="UTF-8">
       		<fileset dir="modules/contentbox">
       			<exclude name="modules/contentbox-deps/modules/**" />
-      			<exclude name="**/bower_components/**" />
+				<exclude name="**/bower_components/**" />
+				<exclude name="**/app_modules/**" />
       			<exclude name="**/node_modules/**" />
       		</fileset>
       		<fileset file="readme.md" />
@@ -146,7 +160,7 @@
 
 	<!-- Build installer distro -->
 	<target name="build.installer" description="Build a new ContentBox installer release" depends="build.module">
-		<!-- Create site Build dir -->
+		<!-- Create Installer Build directory -->
 		<mkdir dir="${dir.build}/installer"/>
 		<mkdir dir="${dir.build}/installer-module"/>
 
@@ -157,20 +171,20 @@
 		<!-- Copy Source -->
       	<copy todir="${dir.build}/installer" encoding="UTF-8">
       		<fileset dir=".">
-      			<exclude name=".*/**" />
+				<exclude name="Icon*" />
+				<exclude name=".*/**" />
       			<exclude name="artifacts/**" />
       			<exclude name="build/**" />
       			<exclude name="box*.json" />
       			<exclude name="coldbox/**" />
-      			<exclude name="docker-compose.yml" />
-      			<exclude name="logs/**" />
-      			<exclude name="settings.xml" />
+      			<exclude name="config/logs/**" />
       			<exclude name="server.json" />
       			<exclude name="server-*.json" />
       			<exclude name="tests/**" />
       			<exclude name="testbox/**" />
       			<exclude name="workbench/**" />
       			<exclude name="**/bower_components/**" />
+				<exclude name="**/app_modules/**" />
       			<exclude name="**/node_modules/**" />
       			<!-- Remove Dependencies -->
       			<exclude name="modules/contentbox/**" />
@@ -181,22 +195,25 @@
       	<copy todir="${dir.build}/installer-module" encoding="UTF-8">
       		<fileset dir="modules/contentbox-installer">
       			<exclude name="**/bower_components/**" />
+				<exclude name="**/app_modules/**" />
       			<exclude name="**/node_modules/**" />
       		</fileset>
       		<fileset file="readme.md" />
         </copy>
 
 		<!-- Activate DSN Creator link -->
-		<replace file="${dir.build}/installer/Application.cfc"
-				 value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-				 summary="true"
-				 token='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-				 encoding="UTF-8"/>
+		<replace
+			file="${dir.build}/installer/Application.cfc"
+			token='// include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
+			value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
+			summary="true"
+			encoding="UTF-8"/>
 
         <!-- Create site box.json -->
         <copy file="box-site.json" toFile="${dir.build}/installer/box.json" overwrite="true"  encoding="UTF-8"/>
-
-        <!-- Copy server.json -->
+		<!-- Create .env -->
+        <copy file=".env.template" toFile="${dir.build}/installer/.env" overwrite="true"  encoding="UTF-8"/>
+        <!-- Copy cfmlengineless server.json -->
         <copy file="build/resources/server.json" toFile="${dir.build}/installer/server.json" overwrite="true"  encoding="UTF-8"/>
 
         <!-- replace slugs -->
@@ -271,11 +288,12 @@
         </copy>
 
         <!-- Deactivate DSN Creator link -->
-		<replace file="${dir.build}/site/Application.cfc"
-				 value='//include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-				 summary="true"
-				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-				 encoding="UTF-8"/>
+		<replace
+			file="${dir.build}/site/Application.cfc"
+			token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
+			value='// include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
+			summary="true"
+			encoding="UTF-8"/>
 
         <!-- replace slugs -->
         <replaceregexp match='\-installer' replace="-site" flags="ig" byline="true" encoding="UTF-8">
@@ -298,37 +316,7 @@
 		<copy file="${dir.build}/site/box.json" toFile="${dir.contentbox.exports}/box-site.json" overwrite="true"  encoding="UTF-8"/>
 	</target>
 
- 	<!-- Build API Docs -->
- 	<target name="build.apidocs" description="Builds the api docs" depends="init">
- 		<!-- Create API apidocs dir -->
- 		<mkdir dir="${dir.api}"/>
- 		<!-- Install dependencies for docs -->
-		<exec executable="box" dir="${dir.apidocs}">
-			<arg line="install production=true" />
-		</exec>
-		<!-- Startup the apidocs server, wait for a few seconds for server to start -->
-		<exec executable="box" dir="${dir.apidocs}">
-			<arg line="server start" />
-		</exec>
-		<sleep seconds="5"/>
-		<!-- Get the apidocs now -->
-		<get dest="${dir.build}/docbox.html"
-			 src="${url.apidocs}?version=${contentbox.version}&amp;path=${dir.api}"
-			 verbose="true"
-			 retries="5"/>
-		<delete file="${dir.build}/docbox.html" />
- 		<!-- stop server -->
-		<exec executable="box" dir="${dir.apidocs}">
-			<arg line="server stop" />
-		</exec>
-		<!-- Zip API Docs -->
-		<zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
- 		<!-- Build Checksum -->
- 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
- 		<checksum forceoverwrite="true" algorithm="SHA-512" fileext=".sha512" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
- 	</target>
-
- 	<!-- Build war -->
+ 	<!-- Build WAR Deployment -->
  	<target name="build.war" description="Build a new ContentBox WAR distribution" depends="build.site">
  		<!-- Unzip War -->
  		<unzip dest="${dir.build}/war" src="${dir.dependencies}/lucee-${lucee.version}.war" overwrite="true">
@@ -338,11 +326,10 @@
 				<exclude name="favicon.ico"/>
 				<exclude name="License.txt"/>
 				<exclude name="assets/**"/>
-				<exclude name="**/apidocs/*"/>
 		    </patternset>
  		</unzip>
 
- 		<!-- Replace web.xml -->
+ 		<!-- Replace web.xml with our spiced up web.xml -->
  		<copy file="${dir.resources}/web.xml" toDir="${dir.build}/war/WEB-INF" overwrite="true" encoding="UTF-8"/>
 
  		<!-- Create Patch directory-->
@@ -358,7 +345,7 @@
  			</then>
  		</if>
 
- 		<!-- Copy Tuckey -->
+ 		<!-- Copy Tuckey Config and Binary -->
  		<copy file="${dir.resources}/urlrewrite.xml" toDir="${dir.build}/war/WEB-INF" overwrite="true" encoding="UTF-8"/>
  		<copy file="${dir.dependencies}/urlrewritefilter-${tuckey.version}.jar" toDir="${dir.build}/war/WEB-INF/lib" overwrite="true" encoding="UTF-8"/>
 
@@ -374,8 +361,9 @@
 		<exec executable="box" dir="${dir.build}/war/modules/contentbox">
 			<arg line="install production=true" />
 		</exec>
+		<!-- Install ContentBox dependencies -->
 		<exec executable="box" dir="${dir.build}/war">
-			<arg line="install id=coldbox production=true" />
+			<arg line="install id=coldbox@${coldbox.version} production=true" />
 		</exec>
 
  		<!-- Create War -->
@@ -408,10 +396,12 @@
  		<move todir="${dir.build}/express">
 			<fileset dir="${dir.build}/apache-tomcat-${express.server.version}"/>
   		</move>
+
  		<!-- Remove current webapps -->
  		<delete includeemptydirs="true" >
  			<fileset dir="${dir.build}/express/webapps" />
  		</delete>
+
  		<!-- create root app -->
  		<mkdir dir="${dir.build}/express/webapps/ROOT" />
 
@@ -430,10 +420,17 @@
 		<!-- Remove DSN Creator Module for Express Edition -->
 		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
 
-		<!-- Copy DSN to config -->
-		<copy todir="${dir.build}/express/webapps/ROOT/config" overwrite="true" encoding="UTF-8">
- 			<fileset file="${dir.resources}/runtime.properties.cfm" />
- 		</copy>
+		<!-- Copy admin password -->
+		<copy file="${dir.resources}/password.txt" toDir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee-server/context" overwrite="true" encoding="UTF-8"/>
+		<!-- Copy inline datasource -->
+		<copy file="${dir.resources}/datasource.cfm" toDir="${dir.build}/express/webapps/ROOT/config" overwrite="true" encoding="UTF-8"/>
+		<!-- Add datasource include -->
+		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc"
+				 value='include "config/datasource.cfm";'
+				 summary="true"
+				 token='this.datasource  = "contentbox";'
+				 encoding="UTF-8"/>
+
  		<!-- Custom Server Config -->
  		<copy todir="${dir.build}/express" overwrite="true" encoding="UTF-8">
  			<fileset dir="${dir.resources}/express" />
@@ -446,29 +443,6 @@
 
  		<!-- NO JRE EXPRESS -->
  		<zip destfile="${dir.contentbox.exports}/contentbox-express-${contentbox.version}.zip" basedir="${dir.build}/express" />
-
- 		<!-- MAC JRE -->
- 		<unzip src="${dir.dependencies}/jre-darwin64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
- 		<chmod perm="ugo+rx">
- 			<fileset dir="${dir.build}/express/jre/bin" />
- 		</chmod>
- 		<zip destfile="${dir.contentbox.exports}/contentbox-express-darwin64-${contentbox.version}.zip" basedir="${dir.build}/express" />
- 		<delete dir="${dir.build}/express/jre" />
-
- 		<!-- LINUX64 JRE -->
- 		<unzip src="${dir.dependencies}/jre-linux64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
- 		<chmod perm="ugo+rx">
- 			<fileset dir="${dir.build}/express/jre/bin" />
- 		</chmod>
- 		<zip destfile="${dir.contentbox.exports}/contentbox-express-linux64-${contentbox.version}.zip" basedir="${dir.build}/express" />
- 		<delete dir="${dir.build}/express/jre" />
-
- 		<!-- WINDOWS64 JRE -->
- 		<unzip src="${dir.dependencies}/jre-win64-${jre.version}.zip" dest="${dir.build}/express/jre" overwrite="true" />
- 		<chmod perm="ugo+rx">
- 			<fileset dir="${dir.build}/express/jre/bin" />
- 		</chmod>
- 		<zip destfile="${dir.contentbox.exports}/contentbox-express-win64-${contentbox.version}.zip" basedir="${dir.build}/express" />
 
  		<!-- Build Checksums -->
 		<checksum forceoverwrite="true" fileext=".md5">
@@ -484,7 +458,11 @@
  	</target>
 
 	<!-- Build all releases-->
-	<target name="build.all" description="Builds All ContentBox Release Flavors and patches" depends="build.express,build.apidocs,build.forgebox,build.patch">
+	<target
+		name="build.all"
+		description="Builds All ContentBox Release Flavors and patches"
+		depends="build.express,build.apidocs"
+	>
 		<!-- Copy as BE to root -->
 		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8" verbose="true">
 			<fileset dir="${dir.contentbox.exports}" />
@@ -508,32 +486,6 @@
 				<delete dir="${dir.forgeboxbuild}" />
 			</then>
 		</if>
-    </target>
-
-    <!-- Build ForgeBox package Submissions -->
-	<target name="build.forgebox" description="Build ForgeBox package submissions" depends="init">
-		<!-- Create module Build dir -->
-		<mkdir dir="${dir.build}/forgebox"/>
-
-		<!-- Copy Source -->
-      	<copy todir="${dir.build}/forgebox" encoding="UTF-8">
-      		<fileset dir="build/forgebox" />
-        </copy>
-
-        <!-- Replace Version + Build Numbers -->
-        <replaceregexp match='@version.number@' replace="${contentbox.version}" flags="ig" byline="true" encoding="UTF-8">
-			<fileset dir="${dir.build}/forgebox" />
-		</replaceregexp>
-	</target>
-
- 	<!-- Build Patches -->
-    <target name="build.patch">
-        <subant target="build">
-          	<fileset dir="build" includes="create-patch.xml"/>
-    		<property name="environment" 	value="${environment}" />
-    		<property name="isTravis"		value="${isTravis}" />
-    		<property name="build.branch"	value="${build.branch}" />
-        </subant>
     </target>
 
  	<!-- Get Dependencies -->
@@ -566,7 +518,7 @@
 		 						destination="${dir.dependencies}"/>
  			</then>
  		</if>
- 		<!-- Download Dependency via box task-->
+ 		<!-- Download Dependency via box task
  		<box-dependency groupID="oracle"
  						artifactID="jre"
  						version="${jre.version}"
@@ -582,6 +534,7 @@
  						version="${jre.version}"
  						destination="${dir.dependencies}"
  						classifiers="linux64"/>
+		-->
 	</target>
 
 </project>

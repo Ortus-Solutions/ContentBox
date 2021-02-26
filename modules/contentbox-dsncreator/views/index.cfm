@@ -127,7 +127,7 @@
 								<!---<option value="derby">Apache Derby</option>--->
 								<option value="mssql">Microsoft SQL Server</option>
 								<option value="mysql">MySQL</option>
-								<cfif listFindNoCase( "railo,lucee", server.coldfusion.productname )>
+								<cfif listFindNoCase( "lucee", server.coldfusion.productname )>
 								<option value="HSQLDB">HSQLDB (Hypersonic Embedded SQL DB)</option>
 								</cfif>
 								<option value="oracle">Oracle</option>

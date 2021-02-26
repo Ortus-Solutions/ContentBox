@@ -1,10 +1,10 @@
 {
     "name":"ContentBox Modular CMS Site",
     "version":"@version.number@+@build.number@",
-    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox-site",
-    "shortDescription":"A ColdBox site configured for ContentBox CMS",
+    "shortDescription":"A ColdBox site configured and deployed with ContentBox CMS",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
     "homepage":"https://www.contentboxcms.org",
@@ -35,11 +35,10 @@
 	},
 	"devDependencies":{
 		"testbox":"*",
-		"commandbox-cfformat":"*"
+		"commandbox-cfformat":"*",
+		"commandbox-docbox":"*"
     },
     "installPaths":{
-        "coldbox":"coldbox",
-        "testbox":"testbox"
     },
     "ignores":[
 	],
