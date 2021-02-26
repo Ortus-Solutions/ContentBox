@@ -30,6 +30,8 @@
             "allowSelect":true,
             "allowUpdate":true,
             "blob":"true",
+			"bundleName": "${DB_BUNDLENAME}",
+			"bundleVersion": "${DB_BUNDLEVERSION}",
             "class":"${DB_CLASS}",
             "clob":"true",
             "connectionLimit":"100",
@@ -44,9 +46,7 @@
             "port":"${DB_PORT}",
             "storage":"false",
             "username":"${DB_USER}",
-			"validate":"false",
-			"bundleName": "${DB_BUNDLENAME}",
-			"bundleVersion": "${DB_BUNDLEVERSION}"
+			"validate":"false"
 		}
 	}
 }

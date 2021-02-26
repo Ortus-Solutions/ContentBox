@@ -213,6 +213,9 @@
         <copy file="box-site.json" toFile="${dir.build}/installer/box.json" overwrite="true"  encoding="UTF-8"/>
 		<!-- Create .env -->
         <copy file=".env.template" toFile="${dir.build}/installer/.env" overwrite="true"  encoding="UTF-8"/>
+		<!-- Create .cfconfig -->
+        <copy file=".cfconfig.json" toFile="${dir.build}/installer/.cfconfig.json" overwrite="true"  encoding="UTF-8"/>
+
         <!-- Copy cfmlengineless server.json -->
         <copy file="build/resources/server.json" toFile="${dir.build}/installer/server.json" overwrite="true"  encoding="UTF-8"/>
 
