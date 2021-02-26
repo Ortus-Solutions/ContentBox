@@ -472,15 +472,6 @@
 			<mapper type="regexp" from="^(.*)(${contentbox.version})(.*)$" to="\1be\3" />
 		</copy>
 
-		<!-- Create Box Repo From macrodef -->
-		<box-repo location="${be.exports}"
-				  artifactID="${contentbox.slug}"
-				  groupID="${groupID}"
-				  buildID="${build.number}"
-				  latest="${contentbox.version}"
-				  stableVersion="${contentbox.stableversion}"
-				  classifiers="express,express-linux64,express-darwin64,express-win64,war,apidocs,patch,patch-db,patch-nodeps"/>
-
 		<!-- Cleanup -->
 		<if>
 			<equals arg1="$isTravis" arg2="false" />
