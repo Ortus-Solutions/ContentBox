@@ -6,7 +6,7 @@
     		<img src="#prc.cbroot#/includes/images/ContentBox_300.png" alt="logo" class="m10" title="Modular CMS"/>
 		    <h2><span class="label label-warning">#getModuleConfig('contentbox').version#</span></h2>
 	        <blockquote class="clearfix">
-				<strong>ContentBox</strong> #$r( "dashboard.about.blockquote1.1@admin" )#<a href="https://www.ortussolutions.com">Ortus Solutions</a> #$r( "dashboard.about.blockquote1.2@admin" )# <a href="http://www.coldbox.org">ColdBox Platform</a> #$r( "dashboard.about.blockquote1.3@admin" )#
+				<strong>ContentBox</strong> #$r( "dashboard.about.blockquote1.1@admin" )# <a href="https://www.ortussolutions.com">Ortus Solutions</a> #$r( "dashboard.about.blockquote1.2@admin" )# <a href="http://www.coldbox.org">ColdBox Platform</a> #$r( "dashboard.about.blockquote1.3@admin" )#
 				<small><a href="https://www.ortussolutions.com/products/contentbox">www.ortussolutions.com/products/contentbox</a></small>
 			</blockquote>
 		</div>
