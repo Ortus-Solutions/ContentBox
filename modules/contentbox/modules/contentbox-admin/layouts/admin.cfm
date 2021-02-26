@@ -91,7 +91,7 @@
 				<span
 					class="navbar-search hidden-sm hidden-xs"
 					id="div-search"
-					title="Press '\' to focus"
+					title="Press 'Ctrl + Shift + S' to focus"
 					data-toggle="tooltip"
 					data-placement="right"
 				>
