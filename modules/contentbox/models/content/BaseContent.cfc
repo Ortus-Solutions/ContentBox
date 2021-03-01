@@ -1242,6 +1242,10 @@ component
 		variables.numberOfHits           = 0;
 		// remove all comments
 		variables.comments               = [];
+		// Are we publishing?
+		if( arguments.publish ){
+			variables.publishedDate = now();
+		}
 		// get latest content versioning
 		var latestContent                = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
