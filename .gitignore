@@ -32,11 +32,9 @@ testbox/*
 workbench/app_modules
 .env
 
-# Runtime Properties
-config/runtime.properties.cfm
-
-# Engines
+# Engines + Docker Libraries
 .engines
+bin/.db/**
 
 # Module Dependencies
 modules/contentbox/themes/default/bower_components
