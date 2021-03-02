@@ -14,7 +14,9 @@ services:
       MSSQL_PID: "Developer"
     volumes:
       # This volume declaration ( mapped to the docker-machine VM ) ensures our databases persist between creations of the container
-      - .db/mssql/data:/var/opt/mssql/data
-      - .db/mssql/log:/var/opt/mssql/log
+      - mssql_data:/var/opt/mssql/data
     ports:
       - "1433:1433"
+
+volumes:
+  mssql_data:

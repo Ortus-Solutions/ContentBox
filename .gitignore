@@ -35,6 +35,7 @@ workbench/app_modules
 # Engines + Docker Libraries
 .engines
 bin/.db/**
+tests/resources/dbs/.db/**
 
 # Module Dependencies
 modules/contentbox/themes/default/bower_components
