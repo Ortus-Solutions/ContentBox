@@ -39,7 +39,6 @@
             "custom":"useUnicode=true&characterEncoding=UTF8&serverTimezone=America%2FChicago&useLegacyDatetimeCode=true&autoReconnect=true&useSSL=false",
             "database":"${DB_DATABASE}",
             "dbdriver":"${DB_DRIVER}",
-            "dsn":"jdbc:mysql://{host}:{port}/{database}",
             "host":"${DB_HOST}",
             "metaCacheTimeout":"60000",
             "password":"${DB_PASSWORD}",
