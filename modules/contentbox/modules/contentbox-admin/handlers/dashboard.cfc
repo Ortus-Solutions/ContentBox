@@ -40,6 +40,8 @@ component extends="baseHandler"{
 		prc.installerCheck = settingService.isInstallationPresent();
 		// Welcome Body
 		prc.welcomeBody    = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
+		// Light up
+		prc.tabContent_home = true;
 		// announce event
 		announce( "cbadmin_onDashboard" );
 		// dashboard view
