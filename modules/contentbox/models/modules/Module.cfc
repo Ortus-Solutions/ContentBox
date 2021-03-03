@@ -78,10 +78,10 @@ component
 	property
 		name     ="isActive"
 		notnull  ="true"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_activeModule";
 
 	property

@@ -71,8 +71,8 @@ component
 
 	property
 		name   ="isActive"
-		ormtype="boolean"
-		sqltype="tinyint"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull="true"
 		default="false"
 		index  ="idx_login,idx_activeAuthor";
@@ -98,20 +98,20 @@ component
 
 	property
 		name     ="isPasswordReset"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_passwordReset";
 
 	property
 		name     ="is2FactorAuth"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_2factorauth";
 
 	/* *********************************************************************

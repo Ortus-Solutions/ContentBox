@@ -1,18 +1,18 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manages page displays
-*/
-component extends="content"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manages page displays
+ */
+component extends="content" {
 
 	// DI
-	property name="pageService"			inject="pageService@cb";
-	property name="searchService"		inject="SearchService@cb";
-	property name="securityService"		inject="securityService@cb";
-	property name="mobileDetector"		inject="mobileDetector@cb";
-	property name="themeService"		inject="themeService@cb";
+	property name="pageService" inject="pageService@cb";
+	property name="searchService" inject="SearchService@cb";
+	property name="securityService" inject="securityService@cb";
+	property name="mobileDetector" inject="mobileDetector@cb";
+	property name="themeService" inject="themeService@cb";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -42,7 +42,9 @@ component extends="content"{
 		super.preview( argumentCollection = arguments );
 
 		// Determine content type service to allow for custom content types
-		var typeService = ( rc.contentType == "page" ? variables.pageService : variables.contentService );
+		var typeService = (
+			rc.contentType == "page" ? variables.pageService : variables.contentService
+		);
 
 		// Construct the preview entry according to passed arguments
 		prc.page = typeService.new();
@@ -62,28 +64,29 @@ component extends="content"{
 
 		// Create preview version
 		prc.page
-			.addNewContentVersion( content=URLDecode( rc.content ), author=prc.oCurrentAuthor )
+			.addNewContentVersion( content = urlDecode( rc.content ), author = prc.oCurrentAuthor )
 			.setActiveContent( prc.page.getContentVersions() );
 
-			// Do we have a parent?
-		if( len( rc.parentPage ) && isNumeric( rc.parentPage ) ){
+		// Do we have a parent?
+		if ( len( rc.parentPage ) && isNumeric( rc.parentPage ) ) {
 			var parent = variables.contentService.get( rc.parentPage );
-			if( !isNull( parent ) ){
+			if ( !isNull( parent ) ) {
 				prc.page.setParent( parent );
 			}
 		}
 
 		// set skin view
-		switch( rc.layout ){
-			case "-no-layout-" : {
+		switch ( rc.layout ) {
+			case "-no-layout-": {
 				return prc.page.renderContent();
 			}
-			default : {
-				event.setLayout(
+			default: {
+				event
+					.setLayout(
 						name   = "#prc.cbTheme#/layouts/#prc.page.getLayoutWithInheritance()#",
 						module = prc.cbThemeRecord.module
 					)
-					.setView( view="#prc.cbTheme#/views/page", module=prc.cbThemeRecord.module );
+					.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			}
 		}
 	}
@@ -96,7 +99,7 @@ component extends="content"{
 	 * @prc
 	 * @eventArguments
 	 */
-	function aroundIndex( event, rc, prc , eventArguments ){
+	function aroundIndex( event, rc, prc, eventArguments ){
 		// setup wrap arguments
 		arguments.contentCaching = prc.cbSettings.cb_content_caching;
 		arguments.action         = variables.index;
@@ -114,79 +117,101 @@ component extends="content"{
 	function index( event, rc, prc ){
 		// incoming params
 		event.paramValue( "pageSlug", "" );
-		var incomingURL  = "";
+		var incomingURL = "";
 
 		// Do we have an override page setup by the settings?
-		if( !structKeyExists( prc, "pageOverride" ) ){
+		if ( !structKeyExists( prc, "pageOverride" ) ) {
 			// Try slug parsing for hiearchical URLs
-			incomingURL  = rereplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" );
+			incomingURL = reReplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" );
 		} else {
-			incomingURL	 = prc.pageOverride;
+			incomingURL = prc.pageOverride;
 		}
 
 		// Entry point cleanup
-		if( len( prc.cbEntryPoint ) ){
-			incomingURL = replacenocase( incomingURL, prc.cbEntryPoint & "/", "" );
+		if ( len( prc.cbEntryPoint ) ) {
+			incomingURL = replaceNoCase( incomingURL, prc.cbEntryPoint & "/", "" );
 		}
 
 		// get the author and do publish unpublished tests
 		var showUnpublished = false;
-		if( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ){
+		if ( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ) {
 			var showUnpublished = true;
 		}
 
 		// Try to get the page using the incoming URI
 		prc.page = variables.contentService.findBySlug(
-			slug            : incomingURL,
-			showUnpublished : showUnpublished,
-			siteId          : prc.oCurrentSite.getSiteId()
+			slug           : incomingURL,
+			showUnpublished: showUnpublished,
+			siteId         : prc.oCurrentSite.getSiteId()
 		);
 
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
-		if( prc.page.isLoaded() ){
+		if ( prc.page.isLoaded() ) {
 			// Verify SSL?
-			if( prc.page.getSSLOnly() and !event.isSSL() ){
-				log.warn( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
-				relocate( event=incomingURL, ssl=true );
+			if ( prc.page.getSSLOnly() and !event.isSSL() ) {
+				log.warn(
+					"Page requested: #incomingURL# without SSL and SSL required. Relocating..."
+				);
+				relocate( event = incomingURL, ssl = true );
 				return;
 			}
 			// Record hit
 			variables.contentService.updateHits( prc.page.getContentID() );
 			// Retrieve Comments
 			// TODO: paging
-			if(prc.page.getAllowComments()){
-				var commentResults = commentService.findApprovedComments( contentID=prc.page.getContentID(), sortOrder="asc" );
-				prc.comments       = commentResults.comments;
-				prc.commentsCount  = commentResults.count;
+			if ( prc.page.getAllowComments() ) {
+				var commentResults = commentService.findAllApproved(
+					contentID = prc.page.getContentID(),
+					sortOrder = "asc"
+				);
+				prc.comments      = commentResults.comments;
+				prc.commentsCount = commentResults.count;
 			} else {
 				prc.comments      = [];
 				prc.commentsCount = 0;
 			}
 			// Detect Mobile Device
-			var isMobileDevice 	= mobileDetector.isMobile();
+			var isMobileDevice = mobileDetector.isMobile();
 			// announce event
-			announce( "cbui_onPage", { page=prc.page, isMobile=isMobileDevice } );
+			announce( "cbui_onPage", { page : prc.page, isMobile : isMobileDevice } );
 			// Use the mobile or standard layout
-			var thisLayout = ( isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance() );
+			var thisLayout = (
+				isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance()
+			);
 			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
 			verifyPageLayout( thisLayout );
 			// Verify No Layout
-			if( thisLayout eq '-no-layout-' ){
+			if ( thisLayout eq "-no-layout-" ) {
 				return prc.page.renderContent();
 			} else {
 				// set skin view
-				event.setLayout( name="#prc.cbTheme#/layouts/#thisLayout#", module=prc.cbThemeRecord.module )
-					.setView( view="#prc.cbTheme#/views/page", module=prc.cbThemeRecord.module );
+				event
+					.setLayout(
+						name   = "#prc.cbTheme#/layouts/#thisLayout#",
+						module = prc.cbThemeRecord.module
+					)
+					.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			}
 		} else {
 			// missing page
 			prc.missingPage      = incomingURL;
 			prc.missingRoutedURL = event.getCurrentRoutedURL();
 			// announce event
-			announce( "cbui_onPageNotFound", {page=prc.page, missingPage=prc.missingPage, routedURL=prc.missingRoutedURL} );
+			announce(
+				"cbui_onPageNotFound",
+				{
+					page        : prc.page,
+					missingPage : prc.missingPage,
+					routedURL   : prc.missingRoutedURL
+				}
+			);
 			// set skin not found
-			event.setLayout( name="#prc.cbTheme#/layouts/pages", module=prc.cbThemeRecord.module )
-				.setView( view="#prc.cbTheme#/views/notfound", module=prc.cbThemeRecord.module )
+			event
+				.setLayout(
+					name   = "#prc.cbTheme#/layouts/pages",
+					module = prc.cbThemeRecord.module
+				)
+				.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
 				.setHTTPHeader( "404", "Page not found" );
 		}
 	}
@@ -202,25 +227,26 @@ component extends="content"{
 	 */
 	function search( event, rc, prc ){
 		// incoming params
-		event.paramValue( "page", 1 )
-			.paramValue( "q", "" );
+		event.paramValue( "page", 1 ).paramValue( "q", "" );
 
 		// cleanup
-		rc.q = HTMLEditFormat( trim( rc.q ) );
+		rc.q = htmlEditFormat( trim( rc.q ) );
 
 		// prepare paging object
-		prc.oPaging         = getInstance( "paging@cb" );
-		prc.pagingBoundaries= prc.oPaging.getBoundaries( pagingMaxRows : prc.cbSettings.cb_search_maxResults );
-		prc.pagingLink      = variables.CBHelper.linkContentSearch() & "/#URLEncodedFormat( rc.q )#/@page@";
+		prc.oPaging          = getInstance( "paging@cb" );
+		prc.pagingBoundaries = prc.oPaging.getBoundaries(
+			pagingMaxRows: prc.cbSettings.cb_search_maxResults
+		);
+		prc.pagingLink = variables.CBHelper.linkContentSearch() & "/#urlEncodedFormat( rc.q )#/@page@";
 
 		// get search results
-		if( len( rc.q ) ){
+		if ( len( rc.q ) ) {
 			var searchAdapter = variables.searchService.getSearchAdapter();
 			prc.searchResults = searchAdapter.search(
-				offset     : prc.pagingBoundaries.startRow-1,
-				max        : prc.cbSettings.cb_search_maxResults,
-				searchTerm : rc.q,
-				siteId     : prc.oCurrentSite.getSiteId()
+				offset    : prc.pagingBoundaries.startRow - 1,
+				max       : prc.cbSettings.cb_search_maxResults,
+				searchTerm: rc.q,
+				siteId    : prc.oCurrentSite.getSiteId()
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
@@ -230,11 +256,21 @@ component extends="content"{
 		}
 
 		// set skin search
-		event.setLayout( name="#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#", module=prc.cbThemeRecord.module )
-			.setView( view="#prc.cbTheme#/views/search", module=prc.cbThemeRecord.module );
+		event
+			.setLayout(
+				name   = "#prc.cbTheme#/layouts/#themeService.getThemeSearchLayout()#",
+				module = prc.cbThemeRecord.module
+			)
+			.setView( view = "#prc.cbTheme#/views/search", module = prc.cbThemeRecord.module );
 
 		// announce event
-		announce( "cbui_onContentSearch", { searchResults=prc.searchResults, searchResultsContent=prc.searchResultsContent } );
+		announce(
+			"cbui_onContentSearch",
+			{
+				searchResults        : prc.searchResults,
+				searchResultsContent : prc.searchResultsContent
+			}
+		);
 	}
 
 
@@ -247,15 +283,23 @@ component extends="content"{
 	 */
 	function rss( event, rc, prc ){
 		// params
-		event.paramValue( "category","" );
-		event.paramValue( "entrySlug","" );
-		event.paramValue( "commentRSS",false);
+		event.paramValue( "category", "" );
+		event.paramValue( "entrySlug", "" );
+		event.paramValue( "commentRSS", false );
 
 		// Build out the RSS feeds
-		var feed = RSSService.getRSS(comments=rc.commentRSS,category=rc.category,entrySlug=rc.entrySlug);
+		var feed = RSSService.getRSS(
+			comments  = rc.commentRSS,
+			category  = rc.category,
+			entrySlug = rc.entrySlug
+		);
 
 		// Render out the feed xml
-		event.renderData(type="plain",data=feed,contentType="text/xml" );
+		event.renderData(
+			type        = "plain",
+			data        = feed,
+			contentType = "text/xml"
+		);
 	}
 
 	/**
@@ -271,13 +315,17 @@ component extends="content"{
 		// Try to retrieve page by contentID
 		var page = variables.contentService.get( rc.contentID );
 		// If null, kick them out
-		if( isNull( page ) ){
+		if ( isNull( page ) ) {
 			relocate( prc.cbEntryPoint );
 		}
 		// validate incoming comment post
 		validateCommentPost( event, rc, prc, page );
 		// Valid commenting, so go and save
-		saveComment( thisContent=page, subscribe=rc.subscribe, prc=prc );
+		saveComment(
+			thisContent = page,
+			subscribe   = rc.subscribe,
+			prc         = prc
+		);
 	}
 
 	/************************************** PRIVATE *********************************************/
@@ -290,16 +338,17 @@ component extends="content"{
 	private function verifyPageLayout( required layout ){
 		var excluded = "-no-layout-";
 		// Verify exclusions
-		if( listFindNoCase( excluded, arguments.layout ) ){ return; }
+		if ( listFindNoCase( excluded, arguments.layout ) ) {
+			return;
+		}
 		// Verify layout
-		if( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ){
+		if ( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ) {
 			throw(
-				message	= "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
-			    detail	= "Please verify your page layout settings",
-				type 	= "ContentBox.InvalidPageLayout"
+				message = "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
+				detail  = "Please verify your page layout settings",
+				type    = "ContentBox.InvalidPageLayout"
 			);
 		}
 	}
-
 
 }

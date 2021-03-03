@@ -42,10 +42,10 @@ component
 	property
 		name     ="showInMenu"
 		notnull  ="true"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		default  ="true"
-		dbdefault="1"
+		dbdefault="true"
 		index    ="idx_showInMenu";
 
 	property
@@ -58,10 +58,10 @@ component
 	property
 		name     ="SSLOnly"
 		notnull  ="true"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_ssl";
 
 	/* *********************************************************************

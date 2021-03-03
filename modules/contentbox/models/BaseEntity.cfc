@@ -20,23 +20,20 @@ component
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false"
-		index  ="idx_createDate";
+		update ="false";
 
 	property
 		name   ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
-		notnull="true"
-		index  ="idx_modifiedDate";
+		notnull="true";
 
 	property
 		name     ="isDeleted"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
-		index    ="idx_deleted";
+		dbdefault="false";
 
 }

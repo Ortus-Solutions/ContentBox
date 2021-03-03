@@ -15,6 +15,15 @@ component
 {
 
 	/* *********************************************************************
+	 **							DI
+	 ********************************************************************* */
+
+	property
+		name      ="contentService"
+		inject    ="provider:contentService@cb"
+		persistent="false";
+
+	/* *********************************************************************
 	 **							PROPERTIES
 	 ********************************************************************* */
 
@@ -86,42 +95,42 @@ component
 	property
 		name     ="isBlogEnabled"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name     ="isSitemapEnabled"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name     ="poweredByHeader"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name     ="adminBar"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name     ="isSSL"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0";
+		dbdefault="false";
 
 	property
 		name   ="activeTheme"
@@ -140,34 +149,30 @@ component
 	property
 		name     ="notifyOnEntries"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name     ="notifyOnPages"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name     ="notifyOnContentStore"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	/* *********************************************************************
 	 **							CALUCLATED FIELDS
 	 ********************************************************************* */
-
-	property
-		name   ="numberOfContent"
-		formula="select count(*) from cb_content as content where content.FK_siteId=siteId";
 
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS
@@ -233,6 +238,13 @@ component
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 
 		return result;
+	}
+
+	/**
+	 * Get the total number of content items in this site
+	 */
+	numeric function getNumberOfContent(){
+		return variables.contentService.getTotalContentCount( getSiteId() );
 	}
 
 }

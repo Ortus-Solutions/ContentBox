@@ -20,6 +20,11 @@ component
 	 ********************************************************************* */
 
 	property
+		name      ="wirebox"
+		inject    ="wirebox"
+		persistent="false";
+
+	property
 		name      ="cachebox"
 		inject    ="cachebox"
 		persistent="false";
@@ -77,24 +82,21 @@ component
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false"
-		index  ="idx_createDate";
+		update ="false";
 
 	property
 		name   ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
-		notnull="true"
-		index  ="idx_modifiedDate";
+		notnull="true";
 
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
-		index    ="idx_deleted";
+		dbdefault="false";
 
 	/* *********************************************************************
 	 **							PROPERTIES
@@ -147,8 +149,8 @@ component
 		name     ="isPublished"
 		notnull  ="true"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
-		dbdefault="1"
+		// sqltype  = "smallInt"
+		dbdefault="true"
 		default  ="true"
 		index    ="idx_published,idx_search,idx_publishedSlug";
 
@@ -156,9 +158,9 @@ component
 		name     ="allowComments"
 		notnull  ="true"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		default  ="true"
-		dbdefault="1";
+		dbdefault="true";
 
 	property
 		name   ="passwordProtection"
@@ -189,18 +191,18 @@ component
 		name     ="cache"
 		notnull  ="true"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		default  ="true"
-		dbdefault="1"
+		dbdefault="true"
 		index    ="idx_cache";
 
 	property
 		name     ="cacheLayout"
 		notnull  ="true"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		default  ="true"
-		dbdefault="1"
+		dbdefault="true"
 		index    ="idx_cachelayout";
 
 	property
@@ -227,9 +229,9 @@ component
 		name     ="showInSearch"
 		notnull  ="true"
 		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		// sqltype  = "smallInt"
 		default  ="true"
-		dbdefault="1"
+		dbdefault="true"
 		index    ="idx_showInSearch";
 
 	property
@@ -266,8 +268,7 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteId"
 		lazy     ="true"
-		fetch    ="join"
-		index    ="idxContentSite";
+		fetch    ="join";
 
 	// O2M -> Comments
 	property
@@ -309,19 +310,6 @@ component
 		fkcolumn    ="FK_contentID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
-
-	// Active Content Pseudo-Collection
-	property
-		name     ="activeContent"
-		fieldtype="one-to-many"
-		type     ="array"
-		lazy     ="extra"
-		cascade  ="save-update"
-		inverse  ="true"
-		cfc      ="contentbox.models.content.ContentVersion"
-		fkcolumn ="FK_contentID"
-		orderby  ="modifiedDate desc"
-		where    ="isActive = 1";
 
 	// M20 -> Parent Page loaded as a proxy
 	property
@@ -413,36 +401,6 @@ component
 	 **							CALCULATED FIELDS
 	 ********************************************************************* */
 
-	property
-		name   ="numberOfHits"
-		formula="select cs.hits from cb_stats cs where cs.FK_contentID=contentID"
-		default="0";
-
-	property
-		name   ="numberOfVersions"
-		formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID"
-		default="0";
-
-	property
-		name   ="numberOfActiveVersions"
-		formula="select count(*) from cb_contentVersion cv where cv.FK_contentID=contentID AND cv.isActive = 1"
-		default="0";
-
-	property
-		name   ="numberOfComments"
-		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID"
-		default="0";
-
-	property
-		name   ="numberOfApprovedComments"
-		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID and comment.isApproved = 1"
-		default="0";
-
-	property
-		name   ="numberOfChildren"
-		formula="select count(*) from cb_content content where content.FK_parentID=contentID"
-		default="0";
-
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS + STATIC VARS
 	 ********************************************************************* */
@@ -497,10 +455,68 @@ component
 	}
 
 	/**
-	 * Getter override to allow for null values
+	 * Get the total number of hits this content object has
 	 */
 	numeric function getNumberOfHits(){
-		return isNull( variables.numberOfHits ) ? 0 : variables.numberOfHits;
+		return (
+			isLoaded() ? variables.wirebox
+				.getInstance( "StatsService@cb" )
+				.getTotalHitsByContent( getContentId() ) : 0
+		);
+	}
+
+	/**
+	 * Get the total number of comments this content object has
+	 */
+	numeric function getNumberOfComments(){
+		return (
+			isLoaded() ? variables.wirebox
+				.getInstance( "CommentService@cb" )
+				.getTotalCountByContent( getContentId() ) : 0
+		);
+	}
+
+	/**
+	 * Get the total number of approved comments this content object has
+	 */
+	numeric function getNumberOfApprovedComments(){
+		return (
+			isLoaded() ? variables.wirebox
+				.getInstance( "CommentService@cb" )
+				.getTotalCountByContent( contentId: getContentId(), isApproved: true ) : 0
+		);
+	}
+
+	/**
+	 * Get the total number of content children we have
+	 */
+	numeric function getNumberOfChildren(){
+		// We use this instead of the relationshipt to make it fast!
+		return (
+			isLoaded() ? variables.contentService
+				.newCriteria()
+				.isNotNull( "parent" )
+				.isEq( "parent.contentID", javacast( "int", getContentId() ) )
+				.count() : 0
+		);
+	}
+
+	/**
+	 * Get the total number of versions this content object has
+	 */
+	numeric function getNumberOfVersions(){
+		return (
+			isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId() ) : 0
+		);
+	}
+
+	/**
+	 * Get the total number of active versions this content object has
+	 */
+	numeric function getNumberOfActiveVersions(){
+		return (
+			isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0
+		);
 	}
 
 	/**
@@ -536,7 +552,7 @@ component
 			newVersion.setRelatedContent( this );
 
 			// Do we already have an active version?
-			if ( hasActiveContentSet() ) {
+			if ( hasActiveContent() ) {
 				// deactive the curent version
 				var activeVersion = getActiveContent();
 				activeVersion.setIsActive( false );
@@ -1092,24 +1108,22 @@ component
 	 * Get the latest active content object, empty new one if none assigned
 	 */
 	function getActiveContent(){
-		if ( hasActiveContentSet() ) {
-			return activeContent[ 1 ];
-		}
-		return contentVersionService.new();
+		return contentVersionService.getActiveVersion( getContentId() );
 	}
 
 	/**
-	 * Verifies if we have active content versions, at least 1
-	 * There is the possibility of no active versions (Edge Case)
+	 * Verify if this content object has an active version with content
 	 */
-	function hasActiveContentSet(){
-		try {
-			return ( hasActiveContent() AND arrayIsDefined( variables.activeContent, 1 ) );
-		}
-		// Stupid Adobe Edge Case on one-to-many bag relationship
-		catch ( "java.lang.IndexOutOfBoundsException" e ) {
+	boolean function hasActiveContent(){
+		// If we are not persisted, then no exit out.
+		if( !isLoaded() ){
 			return false;
 		}
+		// Query if we haev one
+		return variables.contentVersionService.getNumberOfVersions(
+			contentId : getContentId(),
+			isActive : true
+		) > 0;
 	}
 
 	/**
@@ -1238,18 +1252,16 @@ component
 		variables.showInSearch           = arguments.original.getShowInSearch();
 		variables.featuredImage          = arguments.original.getFeaturedImage();
 		variables.featuredImageURL       = arguments.original.getFeaturedImageURL();
-		// reset hits
-		variables.numberOfHits           = 0;
 		// remove all comments
 		variables.comments               = [];
 		// Are we publishing?
-		if( arguments.publish ){
+		if ( arguments.publish ) {
 			variables.publishedDate = now();
 		}
 		// get latest content versioning
-		var latestContent                = arguments.original.getActiveContent().getContent();
+		var latestContent = arguments.original.getActiveContent().getContent();
 		// Original slug updates on all content
-		latestContent                    = reReplaceNoCase(
+		latestContent     = reReplaceNoCase(
 			latestContent,
 			"page\:\[#arguments.originalSlugRoot#\/",
 			"page:[#arguments.newSlugRoot#/",

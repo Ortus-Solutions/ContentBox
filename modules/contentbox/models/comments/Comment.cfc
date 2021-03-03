@@ -54,10 +54,10 @@ component
 	property
 		name     ="isApproved"
 		notnull  ="true"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_contentComment,idx_approved";
 
 	/* *********************************************************************

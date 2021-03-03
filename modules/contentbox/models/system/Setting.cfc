@@ -39,11 +39,11 @@ component
 
 	property
 		name     ="isCore"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
+		dbdefault="false"
 		index    ="idx_core";
 
 	/* *********************************************************************

@@ -31,7 +31,7 @@ component extends="coldbox.system.Interceptor" {
 			// if more than 0
 			if ( commentExpiration ) {
 				// now we have the green light to find and kill any old, moderated comments
-				commentService.deleteUnApprovedComments( expirationDays = commentExpiration );
+				commentService.deleteUnApproved( expirationDays = commentExpiration );
 				// done!
 				if ( log.canInfo() )
 					log.info(

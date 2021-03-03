@@ -70,8 +70,7 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteId"
 		lazy     ="true"
-		fetch    ="join"
-		index    ="idxContentSite";
+		fetch    ="join";
 
 	/* *********************************************************************
 	 **							CALCULATED FIELDS
