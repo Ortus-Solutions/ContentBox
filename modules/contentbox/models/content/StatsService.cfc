@@ -68,32 +68,32 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Update the content hits
-	 * @contentID.hint The content id to update
+	 * Update the hits for a content object
+	 *
+	 * @content. The content object to update the hits on
 	 */
-	StatsService function syncUpdateHits( required contentID ){
+	StatsService function syncUpdateHits( required content ){
 		// are we tracking hit counts?
-		if ( settingService.getSetting( "cb_content_hit_count" ) ) {
+		if ( variables.settingService.getSetting( "cb_content_hit_count" ) ) {
 			try {
 				// try to match a bot? or ignored bots?
-				if ( settingService.getSetting( "cb_content_hit_ignore_bots" ) OR !isUserAgentABot() ) {
+				if (
+					variables.settingService.getSetting( "cb_content_hit_ignore_bots" ) OR !isUserAgentABot()
+				) {
 					var q = new Query(
 						sql = "UPDATE cb_stats
 							SET hits = hits + 1,
 							modifiedDate = #createODBCDateTime( now() )#
-							WHERE FK_contentID = #arguments.contentID#"
+							WHERE FK_contentID = #arguments.content.getContentId()#"
 					).execute();
 					// if no record, means, new record, so insert
 					if ( q.getPrefix().RECORDCOUNT eq 0 ) {
-						var q = new Query(
-							sql = "INSERT INTO cb_stats ( hits, FK_contentID, createdDate, modifiedDate )
-								VALUES ( 1, #arguments.contentID#, #createODBCDateTime( now() )#, #createODBCDateTime( now() )# )"
-						).execute();
+						save( this.new( { hits : 1, relatedContent : arguments.content } ) );
 					}
 				}
 			} catch ( any e ) {
 				log.error(
-					"Error hit tracking contentID: #arguments.contentID#. #e.message# #e.detail#",
+					"Error hit tracking contentID: #arguments.content.getContentId()#. #e.message# #e.detail#",
 					e
 				);
 			}

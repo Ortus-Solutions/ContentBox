@@ -810,7 +810,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 			// STATS
 			if ( structKeyExists( thisContent, "stats" ) && thisContent.stats.hits > 0 ) {
-				var oStat = statsService.new( { hits : thisContent.stats.hits } );
+				var oStat = variables.statsService.new( { hits : thisContent.stats.hits } );
 				oStat.setRelatedContent( oContent );
 				oContent.setStats( oStat );
 			}
@@ -1008,21 +1008,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Update a content's hits with some async flava
-	 * @contentID The content id to update
+	 *
+	 * @content A content object or id to update the hits on
 	 * @async Async or not
 	 */
-	ContentService function updateHits( required contentID, boolean async = true ){
-		// if in thread already or not async
-		if ( systemUtil.inThread() OR !arguments.async ) {
-			statsService.syncUpdateHits( arguments.contentID );
-			return this;
+	ContentService function updateHits( required content, boolean async = true ){
+		// Inflate it if it's just an ID
+		if ( isSimpleValue( arguments.content ) ) {
+			arguments.content = get( arguments.content );
 		}
-
-		var threadName= "updateHits_#hash( arguments.contentID & now() )#";
-		thread name   ="#threadName#" contentID="#arguments.contentID#" {
-			statsService.syncUpdateHits( attributes.contentID );
-		}
-
+		// Record the hit
+		variables.statsService.syncUpdateHits( arguments.content );
 		return this;
 	}
 

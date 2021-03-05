@@ -156,7 +156,7 @@ component extends="content" {
 				return;
 			}
 			// Record hit
-			variables.contentService.updateHits( prc.page.getContentID() );
+			variables.contentService.updateHits( prc.page );
 			// Retrieve Comments
 			// TODO: paging
 			if ( prc.page.getAllowComments() ) {

@@ -211,6 +211,11 @@ component {
 		coldbox.reinitpassword          = "";
 		coldbox.customErrorTemplate     = "/coldbox/system/exceptions/Whoops.cfm";
 
+		// No Singletons for easy testing
+		wirebox = {
+			//singletonReload : true
+		};
+
 		// debugging file
 		logbox.appenders.files = {
 			class      : "coldbox.system.logging.appenders.RollingFileAppender",

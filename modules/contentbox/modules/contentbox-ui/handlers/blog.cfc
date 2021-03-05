@@ -257,7 +257,7 @@ component extends="content" {
 		// Check if loaded, else not found
 		if ( prc.entry.isLoaded() ) {
 			// Record hit
-			variables.entryService.updateHits( prc.entry.getContentID() );
+			variables.entryService.updateHits( prc.entry );
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults = variables.commentService.findAllApproved(
