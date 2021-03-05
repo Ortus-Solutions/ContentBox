@@ -1108,7 +1108,10 @@ component
 	 * Get the latest active content object, empty new one if none assigned
 	 */
 	function getActiveContent(){
-		return contentVersionService.getActiveVersion( getContentId() );
+		if ( isLoaded() ) {
+			return variables.contentVersionService.getActiveVersion( getContentId() );
+		}
+		return variables.contentVersionService.new();
 	}
 
 	/**
@@ -1116,12 +1119,12 @@ component
 	 */
 	boolean function hasActiveContent(){
 		// If we are not persisted, then no exit out.
-		if( !isLoaded() ){
+		if ( !isLoaded() ) {
 			return false;
 		}
 		// Query if we haev one
 		return variables.contentVersionService.getNumberOfVersions(
-			contentId : getContentId(),
+			contentId: getContentId(),
 			isActive : true
 		) > 0;
 	}
