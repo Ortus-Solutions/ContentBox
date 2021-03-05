@@ -1,21 +1,21 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manages content store items
-*/
-component extends="ContentService" singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manages content store items
+ */
+component extends="ContentService" singleton {
 
 	// DI
 	property name="contentService" inject="id:ContentService@cb";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	ContentStoreService function init(){
 		// init it
-		super.init( entityName="cbContentStore", useQueryCaching=true );
+		super.init( entityName = "cbContentStore", useQueryCaching = true );
 
 		return this;
 	}
@@ -28,29 +28,37 @@ component extends="ContentService" singleton{
 	 *
 	 * @returns ContentStoreService
 	 */
-	function saveContent( required any content, string originalSlug="" ){
-
-		transaction{
+	function saveContent( required any content, string originalSlug = "" ){
+		transaction {
 			// Verify uniqueness of slug
-			if( !variables.contentService.isSlugUnique(
-					slug      : arguments.content.getSlug(),
-					contentID : arguments.content.getContentID(),
-					siteId    : arguments.content.getSiteId()
+			if (
+				!variables.contentService.isSlugUnique(
+					slug     : arguments.content.getSlug(),
+					contentID: arguments.content.getContentID(),
+					siteId   : arguments.content.getSiteId()
 				)
-			){
+			) {
 				// make slug unique
 				arguments.content.setSlug( getUniqueSlugHash( arguments.content.getSlug() ) );
 			}
 
 			// save entry
-			save( entity=arguments.content, transactional=false );
+			save( entity = arguments.content, transactional = false );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-			if( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ){
-				var entriesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
-				for( var thisContent in entriesInNeed ){
-					thisContent.setSlug( replaceNoCase( thisContent.getSlug(), arguments.originalSlug, arguments.content.getSlug() ) );
-					save( entity=thisContent, transactional=false );
+			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
+				var entriesInNeed = newCriteria()
+					.like( "slug", "#arguments.originalSlug#/%" )
+					.list();
+				for ( var thisContent in entriesInNeed ) {
+					thisContent.setSlug(
+						replaceNoCase(
+							thisContent.getSlug(),
+							arguments.originalSlug,
+							arguments.content.getSlug()
+						)
+					);
+					save( entity = thisContent, transactional = false );
 				}
 			}
 		}
@@ -83,79 +91,82 @@ component extends="ContentService" singleton{
 		string author      = "all",
 		string creator     = "all",
 		string parent,
-		string category            = "all",
-		numeric max                = 0,
-		numeric offset             = 0,
-		string sortOrder           = "",
-		boolean searchActiveContent= true,
-		boolean showInSearch       = false,
-		string slugPrefix          = "",
-		string siteId              = ""
+		string category             = "all",
+		numeric max                 = 0,
+		numeric offset              = 0,
+		string sortOrder            = "",
+		boolean searchActiveContent = true,
+		boolean showInSearch        = false,
+		string slugPrefix           = "",
+		string siteId               = ""
 	){
-
 		var results = { "count" : 0, "content" : [] };
 		// criteria queries
 		var c       = newCriteria();
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
-		if(
+		if (
 			( arguments.author NEQ "all" ) ||
 			( len( arguments.search ) ) ||
 			( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
-			c.createAlias( "activeContent", "ac" );
+			c.createAlias(
+				associationName: "contentVersions",
+				alias          : "ac",
+				withClause     : getRestrictions().isTrue( "ac.isActive" )
+			);
 		}
 
 		// only search shownInSearch bits
-		if( arguments.showInSearch ){
+		if ( arguments.showInSearch ) {
 			c.isTrue( "showInSearch" );
 		}
 
 		// isPublished filter
-		if( arguments.isPublished NEQ "any" ){
-			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+		if ( arguments.isPublished NEQ "any" ) {
+			c.isEq( "isPublished", javacast( "boolean", arguments.isPublished ) );
 		}
 
 		// Author Filter
-		if( arguments.author NEQ "all" ){
-			c.isEq( "ac.author.authorID", javaCast( "int", arguments.author ) );
+		if ( arguments.author NEQ "all" ) {
+			c.isEq( "ac.author.authorID", javacast( "int", arguments.author ) );
 		}
 
 		// Creator Filter
-		if( arguments.creator NEQ "all" ){
-			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
+		if ( arguments.creator NEQ "all" ) {
+			c.isEq( "creator.authorID", javacast( "int", arguments.creator ) );
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// Search Criteria
-		if( len( arguments.search ) ){
+		if ( len( arguments.search ) ) {
 			// Search with active content
-			if( arguments.searchActiveContent ){
+			if ( arguments.searchActiveContent ) {
 				// like disjunctions
 				c.or(
-					c.restrictions.like( "title","%#arguments.search#%" ),
-					c.restrictions.like( "slug","%#arguments.search#%" ),
-					c.restrictions.like( "description","%#arguments.search#%" ),
+					c.restrictions.like( "title", "%#arguments.search#%" ),
+					c.restrictions.like( "slug", "%#arguments.search#%" ),
+					c.restrictions.like( "description", "%#arguments.search#%" ),
 					c.restrictions.like( "ac.content", "%#arguments.search#%" )
 				);
 			} else {
 				c.or(
-					c.restrictions.like( "title","%#arguments.search#%" ),
-					c.restrictions.like( "slug","%#arguments.search#%" ),
-					c.restrictions.like( "description","%#arguments.search#%" )
+					c.restrictions.like( "title", "%#arguments.search#%" ),
+					c.restrictions.like( "slug", "%#arguments.search#%" ),
+					c.restrictions.like( "description", "%#arguments.search#%" )
 				);
 			}
 		}
 
 		// parent filter
-		if( !isNull( arguments.parent ) ){
-			if( isSimpleValue( arguments.parent ) and len( arguments.parent ) ){
-				c.isEq( "parent.contentID", javaCast( "int", arguments.parent ) );
-			} else if( isObject( arguments.parent ) ){
+		if ( !isNull( arguments.parent ) ) {
+			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
+				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
+			} else if ( isObject( arguments.parent ) ) {
 				c.isEq( "parent", arguments.parent );
 			} else {
 				c.isNull( "parent" );
@@ -163,43 +174,51 @@ component extends="ContentService" singleton{
 		}
 
 		// Slug Prefix
-		if( len( arguments.slugPrefix ) ){
+		if ( len( arguments.slugPrefix ) ) {
 			c.ilike( "slug", "#arguments.slugPrefix#/%" );
 		}
 
 		// Category Filter
-		if( arguments.category NEQ "all" ){
+		if ( arguments.category NEQ "all" ) {
 			// Uncategorized?
-			if( arguments.category eq "none" ){
+			if ( arguments.category eq "none" ) {
 				c.isEmpty( "categories" );
 			}
 			// With categories
-			else{
+			else {
 				// search the association
 				c.createAlias( "categories", "cats" )
-					.isIn( "cats.categoryID", JavaCast( "java.lang.Integer[]", [ arguments.category ] ) );
+					.isIn(
+						"cats.categoryID",
+						javacast( "java.lang.Integer[]", [ arguments.category ] )
+					);
 			}
 		}
 
 		// DETERMINE SORT ORDERS
 		// If modified Date
-		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
-			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
+		if ( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
+			sortOrder = replaceNoCase(
+				arguments.sortOrder,
+				"modifiedDate",
+				"ac.createdDate"
+			);
 		}
 		// default to title sorting
-		else if( !len( arguments.sortOrder ) ){
+		else if ( !len( arguments.sortOrder ) ) {
 			sortOrder = "title asc";
 		}
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );
-		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(
-								offset    : arguments.offset,
-								max       : arguments.max,
-								sortOrder : arguments.sortOrder,
-								asQuery   : false
-							);
+		results.content = c
+			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+			.list(
+				offset   : arguments.offset,
+				max      : arguments.max,
+				sortOrder: arguments.sortOrder,
+				asQuery  : false
+			);
 		return results;
 	}
 
@@ -208,17 +227,18 @@ component extends="ContentService" singleton{
 	 *
 	 * @sortOrder The sort order to use, defaults to title
 	 */
-	array function getAllFlatEntries( sortOrder="title asc" ){
+	array function getAllFlatEntries( sortOrder = "title asc" ){
 		var c = newCriteria();
 
-		return c.withProjections( property="contentID,title,slug" )
+		return c
+			.withProjections( property = "contentID,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder=arguments.sortOrder );
+			.list( sortOrder = arguments.sortOrder );
 	}
 
 	/**
-	* Get all content for export as flat data
-	*/
+	 * Get all content for export as flat data
+	 */
 	array function getAllForExport(){
 		return super.getAllForExport( newCriteria().isNull( "parent" ).list() );
 	}

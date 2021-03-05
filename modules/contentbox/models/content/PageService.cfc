@@ -1,21 +1,21 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Service layer for all Page operations
-*/
-component extends="ContentService" singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Service layer for all Page operations
+ */
+component extends="ContentService" singleton {
 
 	// Inject generic content service
 	property name="contentService" inject="id:ContentService@cb";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	PageService function init(){
 		// init it
-		super.init( entityName="cbPage", useQueryCaching=true );
+		super.init( entityName = "cbPage", useQueryCaching = true );
 
 		return this;
 	}
@@ -28,29 +28,35 @@ component extends="ContentService" singleton{
 	 *
 	 * @return PageService
 	 */
-	function savePage( required any page, string originalSlug="" ){
-
-		transaction{
+	function savePage( required any page, string originalSlug = "" ){
+		transaction {
 			// Verify uniqueness of slug
-			if( !contentService.isSlugUnique(
-					slug      : arguments.page.getSlug(),
-					contentID : arguments.page.getContentID(),
-					siteId    : arguments.page.getSiteId()
+			if (
+				!contentService.isSlugUnique(
+					slug     : arguments.page.getSlug(),
+					contentID: arguments.page.getContentID(),
+					siteId   : arguments.page.getSiteId()
 				)
-			){
+			) {
 				// make slug unique
 				arguments.page.setSlug( getUniqueSlugHash( arguments.page.getSlug() ) );
 			}
 
 			// Save the target page
-			save( entity=arguments.page, transactional=false );
+			save( entity = arguments.page, transactional = false );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-			if( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ){
+			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
 				var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
-				for( var thisPage in pagesInNeed ){
-					thisPage.setSlug( replaceNoCase( thisPage.getSlug(), arguments.originalSlug, arguments.page.getSlug() ) );
-					save( entity=thisPage, transactional=false );
+				for ( var thisPage in pagesInNeed ) {
+					thisPage.setSlug(
+						replaceNoCase(
+							thisPage.getSlug(),
+							arguments.originalSlug,
+							arguments.page.getSlug()
+						)
+					);
+					save( entity = thisPage, transactional = false );
 				}
 			}
 		}
@@ -82,58 +88,61 @@ component extends="ContentService" singleton{
 		string author      = "all",
 		string creator     = "all",
 		string parent,
-		string category            = "all",
-		numeric max                = 0,
-		numeric offset             = 0,
-		string sortOrder           = "",
-		boolean searchActiveContent= true,
-		boolean showInSearch       = false,
-		string siteId              = ""
+		string category             = "all",
+		numeric max                 = 0,
+		numeric offset              = 0,
+		string sortOrder            = "",
+		boolean searchActiveContent = true,
+		boolean showInSearch        = false,
+		string siteId               = ""
 	){
-
 		var results = { "count" : 0, "pages" : [] };
 		// criteria queries
 		var c       = newCriteria();
 
 		// stub out activeContent alias based on potential conditions...
 		// this way, we don't have to worry about accidentally creating it twice, or not creating it at all
-		if(
+		if (
 			( arguments.author NEQ "all" ) ||
 			( len( arguments.search ) ) ||
 			( findNoCase( "modifiedDate", arguments.sortOrder ) )
 		) {
-			c.createAlias( "activeContent", "ac" );
+			c.createAlias(
+				associationName: "contentVersions",
+				alias          : "ac",
+				withClause     : getRestrictions().isTrue( "ac.isActive" )
+			);
 		}
 
 		// only search shownInSearch bits
-		if( arguments.showInSearch ){
+		if ( arguments.showInSearch ) {
 			c.isTrue( "showInSearch" );
 		}
 
 		// isPublished filter
-		if( arguments.isPublished NEQ "any" ){
-			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
+		if ( arguments.isPublished NEQ "any" ) {
+			c.isEq( "isPublished", javacast( "boolean", arguments.isPublished ) );
 		}
 
 		// Author Filter
-		if( arguments.author NEQ "all" ){
-			c.isEq( "ac.author.authorID", javaCast( "int", arguments.author ) );
+		if ( arguments.author NEQ "all" ) {
+			c.isEq( "ac.author.authorID", javacast( "int", arguments.author ) );
 		}
 
 		// Creator Filter
-		if( arguments.creator NEQ "all" ){
-			c.isEq( "creator.authorID", javaCast( "int", arguments.creator ) );
+		if ( arguments.creator NEQ "all" ) {
+			c.isEq( "creator.authorID", javacast( "int", arguments.creator ) );
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// Search Criteria
-		if( len( arguments.search ) ){
+		if ( len( arguments.search ) ) {
 			// Search with active content
-			if( arguments.searchActiveContent ){
+			if ( arguments.searchActiveContent ) {
 				// like disjunctions
 				c.or(
 					c.restrictions.like( "title", "%#arguments.search#%" ),
@@ -142,54 +151,62 @@ component extends="ContentService" singleton{
 				);
 			} else {
 				c.or(
-					c.restrictions.like( "title","%#arguments.search#%" ),
-					c.restrictions.like( "slug","%#arguments.search#%" )
+					c.restrictions.like( "title", "%#arguments.search#%" ),
+					c.restrictions.like( "slug", "%#arguments.search#%" )
 				);
 			}
 		}
 
 		// parent filter
-		if( structKeyExists( arguments, "parent" ) ){
-			if( len( trim( arguments.parent ) ) ){
-				c.isEq( "parent.contentID", javaCast( "int",arguments.parent) );
+		if ( structKeyExists( arguments, "parent" ) ) {
+			if ( len( trim( arguments.parent ) ) ) {
+				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
 			} else {
 				c.isNull( "parent" );
 			}
 		}
 
 		// Category Filter
-		if( arguments.category NEQ "all" ){
+		if ( arguments.category NEQ "all" ) {
 			// Uncategorized?
-			if( arguments.category eq "none" ){
+			if ( arguments.category eq "none" ) {
 				c.isEmpty( "categories" );
 			}
 			// With categories
-			else{
+			else {
 				// search the association
 				c.createAlias( "categories", "cats" )
-					.isIn( "cats.categoryID", JavaCast( "java.lang.Integer[]", [ arguments.category ] ) );
+					.isIn(
+						"cats.categoryID",
+						javacast( "java.lang.Integer[]", [ arguments.category ] )
+					);
 			}
 		}
 
 		// DETERMINE SORT ORDERS
 		// If modified Date
-		if( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
-			sortOrder = replaceNoCase( arguments.sortOrder, "modifiedDate", "ac.createdDate" );
+		if ( findNoCase( "modifiedDate", arguments.sortOrder ) ) {
+			sortOrder = replaceNoCase(
+				arguments.sortOrder,
+				"modifiedDate",
+				"ac.createdDate"
+			);
 		}
 		// default to title sorting
-		else if( !len( arguments.sortOrder ) ){
+		else if ( !len( arguments.sortOrder ) ) {
 			sortOrder = "title asc";
 		}
 
 		// run criteria query and projections count
 		results.count = c.count( "contentID" );
-		results.pages = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(
-								offset    = arguments.offset,
-								max       = arguments.max,
-								sortOrder = arguments.sortOrder,
-								asQuery   = false
-							);
+		results.pages = c
+			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+			.list(
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder,
+				asQuery   = false
+			);
 		return results;
 	}
 
@@ -209,56 +226,64 @@ component extends="ContentService" singleton{
 	 * @return struct of { count, pages }
 	 */
 	function findPublishedPages(
-		numeric max      =0,
-		numeric offset   =0,
-		string searchTerm="",
-		string category  ="",
-		boolean asQuery  =false,
+		numeric max       = 0,
+		numeric offset    = 0,
+		string searchTerm = "",
+		string category   = "",
+		boolean asQuery   = false,
 		string parent,
 		boolean showInMenu,
-		string sortOrder="publishedDate DESC",
-		string siteId   = ""
+		string sortOrder = "publishedDate DESC",
+		string siteId    = ""
 	){
 		var results = { "count" : 0, "pages" : [] };
 		var c       = newCriteria();
 
 		// only published pages
 		c.isTrue( "isPublished" )
-			.isLT( "publishedDate", Now() )
-			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
+			.isLT( "publishedDate", now() )
+			.$or(
+				c.restrictions.isNull( "expireDate" ),
+				c.restrictions.isGT( "expireDate", now() )
+			)
 			// only non-password pages
 			.isEq( "passwordProtection", "" );
 
 		// Show only pages with showInMenu criteria?
-		if( structKeyExists( arguments, "showInMenu" ) ){
-			c.isEq( "showInMenu", javaCast( "boolean", arguments.showInMenu ) );
+		if ( structKeyExists( arguments, "showInMenu" ) ) {
+			c.isEq( "showInMenu", javacast( "boolean", arguments.showInMenu ) );
 		}
 
 		// Category Filter
-		if( len( arguments.category ) ){
+		if ( len( arguments.category ) ) {
 			// create association with categories by slug.
-			c.createAlias( "categories", "cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
+			c.createAlias( "categories", "cats" )
+				.isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
 		// Search Criteria
-		if( len( arguments.searchTerm ) ){
+		if ( len( arguments.searchTerm ) ) {
 			// like disjunctions
-			c.createAlias( "activeContent", "ac" );
-			c.or(
-				c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
-				c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
-			);
+			c.createAlias(
+					associationName: "contentVersions",
+					alias          : "ac",
+					withClause     : getRestrictions().isTrue( "ac.isActive" )
+				)
+				.or(
+					c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+					c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
+				);
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// parent filter
-		if( structKeyExists( arguments, "parent" ) ){
-			if( len( trim( arguments.parent ) ) ){
-				c.isEq( "parent.contentID", javaCast( "int", arguments.parent ) );
+		if ( structKeyExists( arguments, "parent" ) ) {
+			if ( len( trim( arguments.parent ) ) ) {
+				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -268,13 +293,14 @@ component extends="ContentService" singleton{
 
 		// run criteria query and projections count
 		results.count = c.count( "contentID" );
-		results.pages = c.asDistinct()
-							.list(
-								offset    : arguments.offset,
-								max       : arguments.max,
-								sortOrder : arguments.sortOrder,
-								asQuery   : arguments.asQuery
-							);
+		results.pages = c
+			.asDistinct()
+			.list(
+				offset   : arguments.offset,
+				max      : arguments.max,
+				sortOrder: arguments.sortOrder,
+				asQuery  : arguments.asQuery
+			);
 
 		return results;
 	}
@@ -290,12 +316,12 @@ component extends="ContentService" singleton{
 	 * @return Array of page data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
 	 */
 	array function getAllFlatPages(
-		sortOrder="title asc",
+		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteId=""
+		string siteId = ""
 	){
-		return super.getAllFlatContent( argumentCollection=arguments );
+		return super.getAllFlatContent( argumentCollection = arguments );
 	}
 
 	/**
