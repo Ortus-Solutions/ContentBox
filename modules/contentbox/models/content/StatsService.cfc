@@ -62,9 +62,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @contentId The site to filter on
 	 */
 	numeric function getTotalHitsByContent( string contentId = "" ){
-		return newCriteria()
+		var oStat = newCriteria()
 			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
-			.count();
+			.get();
+
+		return ( isNull( oStat ) ? 0 : oStat.getHits() );
 	}
 
 	/**
@@ -96,6 +98,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					"Error hit tracking contentID: #arguments.content.getContentId()#. #e.message# #e.detail#",
 					e
 				);
+				writeDump( var = e );
+				abort;
 			}
 		}
 
