@@ -71,8 +71,8 @@ component
 
 	property
 		name   ="isActive"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype="boolean"
+		// sqltype  = "smallInt"
 		notnull="true"
 		default="false"
 		index  ="idx_login,idx_activeAuthor";
@@ -98,8 +98,8 @@ component
 
 	property
 		name     ="isPasswordReset"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
@@ -107,8 +107,8 @@ component
 
 	property
 		name     ="is2FactorAuth"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
@@ -188,22 +188,6 @@ component
 	 **							CALCULATED FIELDS
 	 ********************************************************************* */
 
-	// Calculated properties
-	property
-		name   ="numberOfEntries"
-		formula="select count(*) from cb_content as content
-						where content.FK_authorID=authorID and content.contentType = 'Entry'";
-
-	property
-		name   ="numberOfPages"
-		formula="select count(*) from cb_content as content
-						where content.FK_authorID=authorID and content.contentType = 'Page'";
-
-	property
-		name   ="numberOfContentStore"
-		formula="select count(*) from cb_content as content
-						where content.FK_authorID=authorID and content.contentType = 'ContentStore'";
-
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
 	 ********************************************************************* */
@@ -262,6 +246,34 @@ component
 	 * Listen to postLoad's from the ORM
 	 */
 	function postLoad(){
+	}
+
+	/**
+	 * Get the total number of content items this author has created
+	 */
+	numeric function getNumberOfContent(){
+		return ( isLoaded() ? variables.authorService.getTotalContent( getAuthorId() ) : 0 );
+	}
+
+	/**
+	 * Get the total number of entries this author has created
+	 */
+	numeric function getNumberOfEntries(){
+		return ( isLoaded() ? variables.authorService.getTotalEntries( getAuthorId() ) : 0 );
+	}
+
+	/**
+	 * Get the total number of pages this author has created
+	 */
+	numeric function getNumberOfPages(){
+		return ( isLoaded() ? variables.authorService.getTotalPages( getAuthorId() ) : 0 );
+	}
+
+	/**
+	 * Get the total number of content store items this author has created
+	 */
+	numeric function getNumberOfContentStore(){
+		return ( isLoaded() ? variables.authorService.getTotalContentStoreItems( getAuthorId() ) : 0 );
 	}
 
 	/**
