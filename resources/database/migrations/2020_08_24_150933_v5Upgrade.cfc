@@ -45,8 +45,8 @@ component {
 
 		transaction {
 			try {
-				// Update Boolean Bits
-				updateBooleanBits( argumentCollection = arguments );
+				// Update Boolean Bits: Removed, No longer needed
+				// updateBooleanBits( argumentCollection = arguments );
 				// Create Default Site
 				arguments.siteId = createDefaultSite( argumentCollection = arguments );
 				// Create Site Relationships
@@ -209,128 +209,6 @@ component {
 	}
 
 	/**
-	 * Updates all the boolean bits to tinyInteger to support cross-db compatibilities and better boolean support
-	 */
-	private function updateBooleanBits( schema, query ){
-		arguments.schema.alter( "cb_author", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "isActive", table.tinyInteger( "isActive" ).default( 1 ) );
-			table.modifyColumn(
-				"isPasswordReset",
-				table.tinyInteger( "isPasswordReset" ).default( 0 )
-			);
-			table.modifyColumn( "is2FactorAuth", table.tinyInteger( "is2FactorAuth" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Author boolean bits updated", true );
-
-		arguments.schema.alter( "cb_category", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Category boolean bits updated", true );
-
-		arguments.schema.alter( "cb_comment", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "isApproved", table.tinyInteger( "isApproved" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Comment boolean bits updated", true );
-
-		arguments.schema.alter( "cb_content", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "isPublished", table.tinyInteger( "isPublished" ).default( 1 ) );
-			table.modifyColumn( "allowComments", table.tinyInteger( "allowComments" ).default( 1 ) );
-			table.modifyColumn( "cache", table.tinyInteger( "cache" ).default( 1 ) );
-			table.modifyColumn( "cacheLayout", table.tinyInteger( "cacheLayout" ).default( 1 ) );
-			table.modifyColumn( "showInSearch", table.tinyInteger( "showInSearch" ).default( 1 ) );
-		} );
-		systemOutput( "√ - Content boolean bits updated", true );
-
-		arguments.schema.alter( "cb_contentVersion", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "isActive", table.tinyInteger( "isActive" ).default( 1 ) );
-		} );
-		systemOutput( "√ - Content Versioning boolean bits updated", true );
-
-		arguments.schema.alter( "cb_customfield", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Custom Fields boolean bits updated", true );
-
-		arguments.schema.alter( "cb_loginAttempts", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Audit log boolean bits updated", true );
-
-		arguments.schema.alter( "cb_menu", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Menus boolean bits updated", true );
-
-		arguments.schema.alter( "cb_menuItem", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "active", table.tinyInteger( "active" ).default( 1 ) );
-		} );
-		systemOutput( "√ - Menu Items boolean bits updated", true );
-
-		arguments.schema.alter( "cb_module", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "isActive", table.tinyInteger( "isActive" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Modules boolean bits updated", true );
-
-		arguments.schema.alter( "cb_page", ( table ) => {
-			table.modifyColumn( "showInMenu", table.tinyInteger( "showInMenu" ).default( 1 ) );
-			table.modifyColumn( "SSLOnly", table.tinyInteger( "SSLOnly" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Pages boolean bits updated", true );
-
-		arguments.schema.alter( "cb_permission", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Permissions boolean bits updated", true );
-
-		arguments.schema.alter( "cb_permissionGroup", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Permission Groups boolean bits updated", true );
-
-		arguments.schema.alter( "cb_role", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Roles boolean bits updated", true );
-
-		arguments.schema.alter( "cb_securityRule", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "useSSL", table.tinyInteger( "useSSL" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Security Rules boolean bits updated", true );
-
-		arguments.schema.alter( "cb_setting", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-			table.modifyColumn( "isCore", table.tinyInteger( "isCore" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Settings boolean bits updated", true );
-
-		arguments.schema.alter( "cb_stats", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Stats boolean bits updated", true );
-
-		arguments.schema.alter( "cb_subscribers", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Subscribers boolean bits updated", true );
-
-		arguments.schema.alter( "cb_subscriptions", ( table ) => {
-			table.modifyColumn( "isDeleted", table.tinyInteger( "isDeleted" ).default( 0 ) );
-		} );
-		systemOutput( "√ - Subscriptions boolean bits updated", true );
-
-		systemOutput( "********************************************", true );
-		systemOutput( "√√√ All boolean bit updates finalized", true );
-		systemOutput( "********************************************", true );
-	}
-
-	/**
 	 * Updates the admin with newer permissions
 	 */
 	private function updateAdminPermissions( schema, query ){
@@ -422,7 +300,7 @@ component {
 				table.increments( "siteId" );
 				table.dateTime( "createdDate" );
 				table.dateTime( "modifiedDate" );
-				table.tinyInteger( "isDeleted" ).default( 0 );
+				table.boolean( "isDeleted" ).default( false );
 				table.string( "name" );
 				table.string( "slug" ).unique();
 				table.longText( "description" ).nullable();
@@ -430,16 +308,16 @@ component {
 				table.string( "keywords" ).nullable();
 				table.string( "tagline" ).nullable();
 				table.string( "homepage" ).nullable();
-				table.tinyInteger( "isBlogEnabled" ).default( 1 );
-				table.tinyInteger( "isSitemapEnabled" ).default( 1 );
-				table.tinyInteger( "poweredByHeader" ).default( 1 );
-				table.tinyInteger( "adminBar" ).default( 1 );
-				table.tinyInteger( "isSSL" ).default( 0 );
+				table.boolean( "isBlogEnabled" ).default( true );
+				table.boolean( "isSitemapEnabled" ).default( true );
+				table.boolean( "poweredByHeader" ).default( true );
+				table.boolean( "adminBar" ).default( true );
+				table.boolean( "isSSL" ).default( false );
 				table.string( "activeTheme" ).nullable();
 				table.longText( "notificationEmails" ).nullable();
-				table.tinyInteger( "notifyOnEntries" ).default( 1 );
-				table.tinyInteger( "notifyOnPages" ).default( 1 );
-				table.tinyInteger( "notifyOnContentStore" ).default( 1 );
+				table.boolean( "notifyOnEntries" ).default( true );
+				table.boolean( "notifyOnPages" ).default( true );
+				table.boolean( "notifyOnContentStore" ).default( true );
 				table.string( "domain" ).nullable();
 			} );
 			systemOutput( "√ - Site table created", true );
@@ -472,7 +350,7 @@ component {
 					"siteId"             : 1,
 					"createdDate"        : today,
 					"modifiedDate"       : today,
-					"isDeleted"          : 0,
+					"isDeleted"          : false,
 					"name"               : allSettings.cb_site_name,
 					"slug"               : "default",
 					"homepage"           : allSettings.cb_site_homepage,
@@ -480,11 +358,11 @@ component {
 					"keywords"           : allSettings.cb_site_keywords,
 					"tagline"            : allSettings.cb_site_tagline,
 					"domainRegex"        : "127\.0\.0\.1",
-					"isBlogEnabled"      : 1,
-					"isSitemapEnabled"   : 1,
-					"poweredByHeader"    : 1,
-					"adminBar"           : 1,
-					"isSSL"              : 0,
+					"isBlogEnabled"      : true,
+					"isSitemapEnabled"   : true,
+					"poweredByHeader"    : true,
+					"adminBar"           : true,
+					"isSSL"              : false,
 					"activeTheme"        : "default",
 					"domain"             : "127.0.0.1",
 					"notificationEmails" : allSettings.cb_site_email
