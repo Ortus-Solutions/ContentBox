@@ -39,16 +39,21 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Get the total content counts
+	 * Get the total content counts according to the passed filters
 	 *
 	 * @siteId The site to filter on
+	 * @categoryId The category Id to filter on
 	 */
-	numeric function getTotalContentCount( string siteId = "" ){
-		return newCriteria()
+	numeric function getTotalContentCount( siteId = "", categoryId = "" ){
+		var c = newCriteria()
 			.when( len( arguments.siteId ), function( c ){
 				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.count();
+			.when( len( arguments.categoryId ), function( c ){
+				c.joinTo( "categories", "cats" )
+					.isEq( "cats.categoryID", javacast( "int", categoryId ) );
+			} );
+		return c.count();
 	}
 
 	/**
