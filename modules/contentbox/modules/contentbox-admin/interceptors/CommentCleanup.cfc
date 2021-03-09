@@ -11,6 +11,7 @@ component extends="coldbox.system.Interceptor" {
 	// DI
 	property name="securityService" inject="id:securityService@cb";
 	property name="settingService" inject="id:settingService@cb";
+	property name="siteService" inject="id:siteService@cb";
 	property name="commentService" inject="id:commentService@cb";
 
 	/**
@@ -20,25 +21,34 @@ component extends="coldbox.system.Interceptor" {
 	}
 
 	/**
-	 * on admin login
+	 * on admin login run our moderation rules
+	 * TODO: Refactor to async manager
 	 */
 	public void function cbadmin_onLogin( event, data ){
-		var author            = securityService.getAuthorSession();
-		var isContentBoxAdmin = author.checkPermission( "CONTENTBOX_ADMIN" );
-		// if an admin, continue...
-		if ( isContentBoxAdmin ) {
-			var commentExpiration = settingService.getSetting( "cb_comments_moderation_expiration" );
-			// if more than 0
-			if ( commentExpiration ) {
-				// now we have the green light to find and kill any old, moderated comments
-				commentService.deleteUnApproved( expirationDays = commentExpiration );
-				// done!
-				if ( log.canInfo() )
-					log.info(
-						"Comment moderation executed for the last (#commentExpiration#) days!"
-					);
-			}
+		// If we are not an admin, skip out
+		if ( !variables.securityService.getAuthorSession().checkPermission( "CONTENTBOX_ADMIN" ) ) {
+			return;
 		}
+
+		variables.siteService
+			.getAll()
+			.each( function( thisSite ){
+				var commentExpirationDays = variables.settingService.getSiteSetting(
+					thisSite.getSlug(),
+					"cb_comments_moderation_expiration"
+				);
+				if ( commentExpirationDays > 0 ) {
+					// now we have the green light to find and kill any old, moderated comments
+					variables.commentService.deleteUnApproved(
+						expirationDays = commentExpirationDays
+					);
+					// done!
+					if ( log.canInfo() )
+						log.info(
+							"Comment moderation executed for site (#arguments.thisSite.getSlug()#) the last (#commentExpirationDays#) days!"
+						);
+				}
+			} );
 	}
 
 }

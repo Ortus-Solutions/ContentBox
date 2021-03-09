@@ -164,15 +164,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @comment The comment to try to save
 	 * @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
+	 *
+	 * @result Return a struct of : { moderated:boolean, messages : array }
 	 */
 	struct function saveComment( required comment, required loggedInUser ){
 		transaction {
 			// Comment reference
-			var inComment  = arguments.comment;
-			// get settings
-			var inSettings = variables.settingService.getAllSettings();
+			var inComment    = arguments.comment;
+			// get site settings
+			var siteSettings = variables.settingService.getAllSiteSettings(
+				siteSlug: inComment.getRelatedContent().getSiteSlug()
+			);
 			// results
-			var results    = { "moderated" : true, "messages" : [] };
+			var results = { "moderated" : true, "messages" : [] };
 
 			// Log the IP Address
 			inComment.setAuthorIP( variables.settingService.getRealIP() );
@@ -180,7 +184,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 
 			// Check if activating URL's on Comment Content
-			if ( inSettings.cb_comments_urltranslations ) {
+			if ( siteSettings.cb_comments_urltranslations ) {
 				inComment.setContent( activateURLs( inComment.getContent() ) );
 			}
 
@@ -188,12 +192,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if (
 				arguments.loggedInUser.isLoggedIn()
 				OR
-				runModerationRules( comment = inComment, settings = inSettings )
+				runModerationRules( comment = inComment, settings = siteSettings )
 			) {
 				// send for saving, finally phew!
 				save( inComment );
-				// Send Notification or Moderation Email?
-				sendNotificationEmails( inComment, inSettings );
+				// Send Notification or Moderation Email? TODO: Async this
+				sendNotificationEmails( inComment, siteSettings );
 				// Return results
 				if ( inComment.getIsApproved() ) {
 					results.moderated = false;
@@ -373,31 +377,32 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Send a notification email for comments
 	 *
 	 * @comment Comment to moderate check
-	 * @settings The contentbox settings to moderate against
+	 * @siteSettings The contentbox site settings to moderate against
 	 */
-	private void function sendNotificationEmails( required comment, required settings ){
+	private void function sendNotificationEmails( required comment, required siteSettings ){
 		// Comment reference
-		var inComment  = arguments.comment;
-		var inSettings = arguments.settings;
-		var site       = inComment.getRelatedContent().getSite();
-		var outEmails  = inSettings.cb_site_email;
-		var subject    = "";
-		var template   = "";
+		var inComment    = arguments.comment;
+		var settings     = variables.settingService.getAllSettings();
+		var siteSettings = arguments.siteSettings;
+		var site         = inComment.getRelatedContent().getSite();
+		var outEmails    = settings.cb_site_email;
+		var subject      = "";
+		var template     = "";
 
 		// Verify if we have active notifications, else just quit notification process
-		if ( !inSettings.cb_comments_notify ) {
+		if ( !siteSettings.cb_comments_notify ) {
 			return;
 		}
 
 		// More notification emails?
 
-		if ( len( inSettings.cb_comments_notifyemails ) ) {
-			outEmails &= "," & inSettings.cb_comments_notifyemails;
+		if ( len( siteSettings.cb_comments_notifyemails ) ) {
+			outEmails &= "," & siteSettings.cb_comments_notifyemails;
 		}
 
 		// get mail payload
 		var bodyTokens             = inComment.getMemento();
-		bodyTokens[ "whoisURL" ]   = inSettings.cb_comments_whoisURL;
+		bodyTokens[ "whoisURL" ]   = settings.cb_comments_whoisURL;
 		bodyTokens[ "commentURL" ] = CBHelper.linkComment(
 			comment = inComment,
 			ssl     = site.getIsSSL()
@@ -417,7 +422,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		bodyTokens[ "contentTitle" ] = inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
-		if ( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ) {
+		if ( inComment.getIsApproved() eq false AND siteSettings.cb_comments_moderation_notify ) {
 			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
 		} else {
