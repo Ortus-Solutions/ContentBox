@@ -5,35 +5,50 @@
  * ---
  * Service to handle comment operations.
  */
-component extends="cborm.models.VirtualEntityService" singleton{
+component extends="cborm.models.VirtualEntityService" singleton {
 
 	// DI
-	property name="mailService"                                                                                                                                                                                                                                        inject="mailService@cbmailservices";
-	property name="renderer"                                                                                                                                                                                                                                                                                                                               inject="coldbox:renderer";
-	property name="settingService"                                                                                                                                                 inject="id:settingService@cb";
-	property name="CBHelper"                                                                                                                                                                                                                                                                                                                               inject="id:CBHelper@cb";
-	property name="log"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                inject="logbox:logger:{this}";
-	property name="interceptorService"                             inject="coldbox:interceptorService";
-	property name="loginTrackerService"	inject="loginTrackerService@cb";
+	property name="mailService" inject="mailService@cbmailservices";
+	property name="renderer" inject="coldbox:renderer";
+	property name="settingService" inject="id:settingService@cb";
+	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="log" inject="logbox:logger:{this}";
+	property name="interceptorService" inject="coldbox:interceptorService";
+	property name="loginTrackerService" inject="loginTrackerService@cb";
 
 	/**
 	 * Constructor
 	 */
 	CommentService function init(){
-		super.init( entityName="cbComment", useQueryCaching="true" );
+		super.init( entityName = "cbComment", useQueryCaching = "true" );
 		return this;
 	}
 
 	/**
-	 * Get the total comment counts
+	 * Get the total comment counts by content object
+	 *
+	 * @contentId The content id to filter on
+	 * @isApproved If passed, use it to filter on
+	 */
+	numeric function getTotalCountByContent( string contentId = "", boolean isApproved ){
+		return newCriteria()
+			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
+			.when( !isNull( arguments.isApproved ), function( c ){
+				c.isEq( "isApproved", javacast( "Boolean", isApproved ) );
+			} )
+			.count();
+	}
+
+	/**
+	 * Get the total comment counts in the system
 	 *
 	 * @siteId The site to filter on
 	 */
-	numeric function getTotalCommentCount( string siteId = "" ){
+	numeric function getTotalCount( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javaCast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
 			} )
 			.count();
 	}
@@ -43,12 +58,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @siteId The site to filter on
 	 */
-	numeric function getApprovedCommentCount( string siteId = "" ){
+	numeric function getApprovedCount( string siteId = "" ){
 		return newCriteria()
 			.isTrue( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javaCast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
 			} )
 			.count();
 	}
@@ -58,12 +73,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @siteId The site to filter on
 	 */
-	numeric function getUnApprovedCommentCount( string siteId = "" ){
+	numeric function getUnApprovedCount( string siteId = "" ){
 		return newCriteria()
 			.isFalse( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javaCast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
 			} )
 			.count();
 	}
@@ -80,13 +95,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @return struct with { comments, count }
 	 */
-	struct function findApprovedComments(
+	struct function findAllApproved(
 		contentID,
 		contentType,
-		max             = 0,
-		offset          = 0,
-		string sortOrder= "desc",
-		string siteId   = ""
+		max              = 0,
+		offset           = 0,
+		string sortOrder = "desc",
+		string siteId    = ""
 	){
 		var results = { "count" : 0, "comments" : [] };
 		var c       = newCriteria();
@@ -95,29 +110,28 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		c.isTrue( "isApproved" );
 
 		// By Content?
-		if( !isNull( arguments.contentID ) AND len( arguments.contentID ) ){
-			c.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
+		if ( !isNull( arguments.contentID ) AND len( arguments.contentID ) ) {
+			c.isEq( "relatedContent.contentID", javacast( "int", arguments.contentID ) );
 		}
 
 		// By Content Type Discriminator: class is a special hibernate deal
-		if( !isNull( arguments.contentType ) AND len( arguments.contentType ) ){
-			c.createCriteria( "relatedContent" )
-				.isEq( "class", arguments.contentType );
+		if ( !isNull( arguments.contentType ) AND len( arguments.contentType ) ) {
+			c.createCriteria( "relatedContent" ).isEq( "class", arguments.contentType );
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
+		if ( len( arguments.siteId ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", javaCast( "int", arguments.siteId ) );
+				.isEq( "relatedContent.site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// run criteria query and projections count
 		results.count    = c.count();
 		results.comments = c.list(
-			offset    : arguments.offset,
-			max       : arguments.max,
-			sortOrder : "createdDate #arguments.sortOrder#",
-			asQuery   : false
+			offset   : arguments.offset,
+			max      : arguments.max,
+			sortOrder: "createdDate #arguments.sortOrder#",
+			asQuery  : false
 		);
 
 		return results;
@@ -128,18 +142,18 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @expirationDays Required level of staleness in days to delete (0=all unapproved)
 	 */
-	CommentService function deleteUnApprovedComments( numeric expirationDays=0 ) {
+	CommentService function deleteUnApproved( numeric expirationDays = 0 ){
 		var hqlQuery = "from cbComment where isApproved = :approved";
-		var params   = { "approved" = false };
+		var params   = { "approved" : false };
 
 		// if we have an expirationDays setting greater than 0, add it to query for our date filter
-		if( arguments.expirationDays ) {
+		if ( arguments.expirationDays ) {
 			var expirationDate = dateAdd( "d", -arguments.expirationDays, now() );
 			hqlQuery &= " and createdDate < :expiration";
 			params[ "expiration" ] = expirationDate;
 		}
 		// run the delete
-		deleteByQuery( query=hqlQuery, params=params );
+		deleteByQuery( query = hqlQuery, params = params );
 
 		return this;
 	}
@@ -152,8 +166,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
 	 */
 	struct function saveComment( required comment, required loggedInUser ){
-
-		transaction{
+		transaction {
 			// Comment reference
 			var inComment  = arguments.comment;
 			// get settings
@@ -167,24 +180,28 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 
 			// Check if activating URL's on Comment Content
-			if( inSettings.cb_comments_urltranslations ){
+			if ( inSettings.cb_comments_urltranslations ) {
 				inComment.setContent( activateURLs( inComment.getContent() ) );
 			}
 
 			// Run moderation rules if not logged in.
-			if( arguments.loggedInUser.isLoggedIn()
+			if (
+				arguments.loggedInUser.isLoggedIn()
 				OR
-				runModerationRules( comment=inComment, settings=inSettings )
-			){
+				runModerationRules( comment = inComment, settings = inSettings )
+			) {
 				// send for saving, finally phew!
 				save( inComment );
 				// Send Notification or Moderation Email?
 				sendNotificationEmails( inComment, inSettings );
 				// Return results
-				if( inComment.getIsApproved() ){
+				if ( inComment.getIsApproved() ) {
 					results.moderated = false;
 				} else {
-					arrayAppend( results.messages, "Comment was moderated! Please wait for the system administrator to approve it." );
+					arrayAppend(
+						results.messages,
+						"Comment was moderated! Please wait for the system administrator to approve it."
+					);
 				}
 			} else {
 				// Messages
@@ -192,7 +209,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 				// discard it from session
 				evictEntity( inComment );
 				// log it
-				if( log.canWarn() ){
+				if ( log.canWarn() ) {
 					log.warn( "Incoming comment was blocked!", inComment.getMemento() );
 				}
 			}
@@ -202,98 +219,119 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-     * Sends subscription emails to subscribers of the content
+	 * Sends subscription emails to subscribers of the content
 	 *
-     * @comment The comment object
-     */
-    public void function sendSubscriptionNotifications( required any comment ) {
-        var content            = arguments.comment.getRelatedContent();
-        // get subscribers for this content item
-        var subscriptions      = content.getCommentSubscriptions();
-        var settings           = variables.settingService.getAllSettings();
-        var commentAuthorEmail = arguments.comment.getAuthorEmail();
+	 * @comment The comment object
+	 */
+	public void function sendSubscriptionNotifications( required any comment ){
+		var content            = arguments.comment.getRelatedContent();
+		// get subscribers for this content item
+		var subscriptions      = content.getCommentSubscriptions();
+		var settings           = variables.settingService.getAllSettings();
+		var commentAuthorEmail = arguments.comment.getAuthorEmail();
 
 		// get body tokens; can reuse most for all emails
-        var bodyTokens               = arguments.comment.getMemento();
-        bodyTokens[ "contentURL" ]   = CBHelper.linkContent( content );
-        bodyTokens[ "contentTitle" ] = arguments.comment.getParentTitle();
+		var bodyTokens               = arguments.comment.getMemento();
+		bodyTokens[ "contentURL" ]   = CBHelper.linkContent( content );
+		bodyTokens[ "contentTitle" ] = arguments.comment.getParentTitle();
 
 		// loop over subscribers
-        for( var subscription in subscriptions ) {
+		for ( var subscription in subscriptions ) {
 			var subscriber = subscription.getSubscriber();
 
 			// don't send email if the comment author is also subscribed...
-            if( subscriber.getSubscriberEmail() != commentAuthorEmail ) {
-
-                // get mail payload
-                bodyTokens[ "unsubscribeURL" ] = CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
-
-				// Send it baby!
-                var mail = variables.mailService.newMail(
-					to        = subscriber.getSubscriberEmail(),
-					from      = settings.cb_site_outgoingEmail,
-					subject   = "New comment was added",
-					bodyTokens= bodyTokens,
-					type      = "html",
-					server    = settings.cb_site_mail_server,
-					username  = settings.cb_site_mail_username,
-					password  = settings.cb_site_mail_password,
-					port      = settings.cb_site_mail_smtp,
-					useTLS    = settings.cb_site_mail_tls,
-					useSSL    = settings.cb_site_mail_ssl
+			if ( subscriber.getSubscriberEmail() != commentAuthorEmail ) {
+				// get mail payload
+				bodyTokens[ "unsubscribeURL" ] = CBHelper.linkContentUnsubscribe(
+					subscription.getSubscriptionToken()
 				);
 
-                // generate content for email from template
-                mail.setBody( variables.renderer.renderLayout(
-                    view  = "/contentbox/email_templates/comment_notification",
-                    layout= "/contentbox/email_templates/layouts/email",
-                    args  =  { gravatarEmail = commentAuthorEmail }
-				) );
+				// Send it baby!
+				var mail = variables.mailService.newMail(
+					to         = subscriber.getSubscriberEmail(),
+					from       = settings.cb_site_outgoingEmail,
+					subject    = "New comment was added",
+					bodyTokens = bodyTokens,
+					type       = "html",
+					server     = settings.cb_site_mail_server,
+					username   = settings.cb_site_mail_username,
+					password   = settings.cb_site_mail_password,
+					port       = settings.cb_site_mail_smtp,
+					useTLS     = settings.cb_site_mail_tls,
+					useSSL     = settings.cb_site_mail_ssl
+				);
 
-                // send it out
-                variables.mailService.send( mail );
-            }
-        }
-    }
+				// generate content for email from template
+				mail.setBody(
+					variables.renderer.renderLayout(
+						view   = "/contentbox/email_templates/comment_notification",
+						layout = "/contentbox/email_templates/layouts/email",
+						args   = { gravatarEmail : commentAuthorEmail }
+					)
+				);
+
+				// send it out
+				variables.mailService.send( mail );
+			}
+		}
+	}
 
 	/**
-	* Run moderation rules on an incoming comment and set of contentbox settings. If this method returns a false then the comment is moderated
-	* and can continue to be saved. If returns false, then it is blocked and must NOT be saved.
-	* @comment Comment to moderate check
-	* @settings The contentbox settings to moderate against
-	*/
+	 * Run moderation rules on an incoming comment and set of contentbox settings. If this method returns a false then the comment is moderated
+	 * and can continue to be saved. If returns false, then it is blocked and must NOT be saved.
+	 * @comment Comment to moderate check
+	 * @settings The contentbox settings to moderate against
+	 */
 	private boolean function runModerationRules( required comment, required settings ){
 		// Comment reference
-		var inComment = arguments.comment;
-		var inSettings= arguments.settings;
-		var allowSave = true;
+		var inComment  = arguments.comment;
+		var inSettings = arguments.settings;
+		var allowSave  = true;
 
 		// Not moderation, just approve and return
-		if( NOT settings.cb_comments_moderation ){
+		if ( NOT settings.cb_comments_moderation ) {
 			inComment.setIsApproved( true );
 			return true;
 		}
 
 		// Check if user has already an approved comment. If they do, then approve them
-		if( inSettings.cb_comments_moderation_whitelist AND userHasPreviousAcceptedComment( inComment.getAuthorEmail() ) ){
+		if (
+			inSettings.cb_comments_moderation_whitelist AND userHasPreviousAcceptedComment(
+				inComment.getAuthorEmail()
+			)
+		) {
 			inComment.setIsApproved( true );
 			return true;
 		}
 
 		// Execute moderation queries
-		if( len(inSettings.cb_comments_moderation_blacklist) AND anyKeywordMatch(inComment,inSettings.cb_comments_moderation_blacklist) ){
+		if (
+			len( inSettings.cb_comments_moderation_blacklist ) AND anyKeywordMatch(
+				inComment,
+				inSettings.cb_comments_moderation_blacklist
+			)
+		) {
 			inComment.setIsApproved( false );
 			allowSave = true;
 		}
 
 		// Execute blocking queries
-		if( len(inSettings.cb_comments_moderation_blockedlist) AND anyKeywordMatch(inComment,inSettings.cb_comments_moderation_blockedlist) ){
+		if (
+			len( inSettings.cb_comments_moderation_blockedlist ) AND anyKeywordMatch(
+				inComment,
+				inSettings.cb_comments_moderation_blockedlist
+			)
+		) {
 			inComment.setIsApproved( false );
 			allowSave = false;
 		}
 
 		// announce it.
-		var iData = { comment = arguments.comment, settings = arguments.settings, allowSave = allowSave };
+		var iData = {
+			comment   : arguments.comment,
+			settings  : arguments.settings,
+			allowSave : allowSave
+		};
 		interceptorService.announce( "cbui_onCommentModerationRules", iData );
 
 		// return if allowed save or block
@@ -301,34 +339,34 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	* Regex matching of a list of entries against a comment and matching keyword list
-	*/
-	private boolean function anyKeywordMatch(comment,matchList){
+	 * Regex matching of a list of entries against a comment and matching keyword list
+	 */
+	private boolean function anyKeywordMatch( comment, matchList ){
 		var inComment = arguments.comment;
-		var del       = chr(13) & chr(10);
-		var inList    = listToArray(arguments.matchList,del);
+		var del       = chr( 13 ) & chr( 10 );
+		var inList    = listToArray( arguments.matchList, del );
 
-		for(var x=1; x lte arrayLen(inList); x++){
-
+		for ( var x = 1; x lte arrayLen( inList ); x++ ) {
 			// Verify each keword via regex
-			if( refindNoCase( inList[ x ], inComment.getContent() ) OR
-				refindNoCase( inList[ x ], inComment.getAuthor() ) OR
-				refindNoCase( inList[ x ], inComment.getAuthorIP() ) ){
+			if (
+				reFindNoCase( inList[ x ], inComment.getContent() ) OR
+				reFindNoCase( inList[ x ], inComment.getAuthor() ) OR
+				reFindNoCase( inList[ x ], inComment.getAuthorIP() )
+			) {
 				return true;
 			}
-
 		}
 
 		return false;
 	}
 
 	/**
-	* Check if the user has already a comment in the system
-	* @email The email address to check.
-	*/
-	private boolean function userHasPreviousAcceptedComment(required email){
-		var args = {"authorEmail" = arguments.email, "isApproved" = true};
-		return ( countWhere(argumentCollection=args) GT 0 );
+	 * Check if the user has already a comment in the system
+	 * @email The email address to check.
+	 */
+	private boolean function userHasPreviousAcceptedComment( required email ){
+		var args = { "authorEmail" : arguments.email, "isApproved" : true };
+		return ( countWhere( argumentCollection = args ) GT 0 );
 	}
 
 	/**
@@ -339,35 +377,47 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	private void function sendNotificationEmails( required comment, required settings ){
 		// Comment reference
-		var inComment = arguments.comment;
-		var inSettings= arguments.settings;
-		var site      = inComment.getRelatedContent().getSite();
-		var outEmails = inSettings.cb_site_email;
-		var subject   = "";
-		var template  = "";
+		var inComment  = arguments.comment;
+		var inSettings = arguments.settings;
+		var site       = inComment.getRelatedContent().getSite();
+		var outEmails  = inSettings.cb_site_email;
+		var subject    = "";
+		var template   = "";
 
 		// Verify if we have active notifications, else just quit notification process
-		if( !inSettings.cb_comments_notify ){
+		if ( !inSettings.cb_comments_notify ) {
 			return;
 		}
 
 		// More notification emails?
 
-		if( len( inSettings.cb_comments_notifyemails ) ){
+		if ( len( inSettings.cb_comments_notifyemails ) ) {
 			outEmails &= "," & inSettings.cb_comments_notifyemails;
 		}
 
 		// get mail payload
 		var bodyTokens             = inComment.getMemento();
-		bodyTokens["whoisURL"]     = inSettings.cb_comments_whoisURL;
-		bodyTokens["commentURL"]   = CBHelper.linkComment( comment=inComment, ssl=site.getIsSSL() );
-		bodyTokens["deleteURL"]    = CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["approveURL"]   = CBHelper.linkAdmin( event="comments.moderate", ssl=settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
-		bodyTokens["contentURL"]   = CBHelper.linkContent( content=inComment.getRelatedContent(), ssl=site.getIsSSL() );
-		bodyTokens["contentTitle"] = inComment.getParentTitle();
+		bodyTokens[ "whoisURL" ]   = inSettings.cb_comments_whoisURL;
+		bodyTokens[ "commentURL" ] = CBHelper.linkComment(
+			comment = inComment,
+			ssl     = site.getIsSSL()
+		);
+		bodyTokens[ "deleteURL" ] = CBHelper.linkAdmin(
+			event = "comments.moderate",
+			ssl   = settings.cb_admin_ssl
+		) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens[ "approveURL" ] = CBHelper.linkAdmin(
+			event = "comments.moderate",
+			ssl   = settings.cb_admin_ssl
+		) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens[ "contentURL" ] = CBHelper.linkContent(
+			content = inComment.getRelatedContent(),
+			ssl     = site.getIsSSL()
+		);
+		bodyTokens[ "contentTitle" ] = inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
-		if( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ){
+		if ( inComment.getIsApproved() eq false AND inSettings.cb_comments_moderation_notify ) {
 			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
 		} else {
@@ -378,25 +428,27 @@ component extends="cborm.models.VirtualEntityService" singleton{
 
 		// Send it baby!
 		var mail = variables.mailservice.newMail(
-			to        = outEmails,
-			from      = settings.cb_site_outgoingEmail,
-			subject   = subject,
-			bodyTokens= bodyTokens,
-			type      = "html",
-			server    = settings.cb_site_mail_server,
-			username  = settings.cb_site_mail_username,
-			password  = settings.cb_site_mail_password,
-			port      = settings.cb_site_mail_smtp,
-			useTLS    = settings.cb_site_mail_tls,
-			useSSL    = settings.cb_site_mail_ssl
+			to         = outEmails,
+			from       = settings.cb_site_outgoingEmail,
+			subject    = subject,
+			bodyTokens = bodyTokens,
+			type       = "html",
+			server     = settings.cb_site_mail_server,
+			username   = settings.cb_site_mail_username,
+			password   = settings.cb_site_mail_password,
+			port       = settings.cb_site_mail_smtp,
+			useTLS     = settings.cb_site_mail_tls,
+			useSSL     = settings.cb_site_mail_ssl
 		);
 
 		// generate content for email from template
-		mail.setBody( renderer.renderLayout(
-			view  = "/contentbox/email_templates/#template#",
-			layout= "/contentbox/email_templates/layouts/email",
-			args  = { gravatarEmail : inComment.getAuthorEmail() }
-		) );
+		mail.setBody(
+			renderer.renderLayout(
+				view   = "/contentbox/email_templates/#template#",
+				layout = "/contentbox/email_templates/layouts/email",
+				args   = { gravatarEmail : inComment.getAuthorEmail() }
+			)
+		);
 
 		// send it out
 		variables.mailService.send( mail );
@@ -408,8 +460,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @text The target
 	 */
 	private function activateURLs( required text ){
-		return REReplaceNoCase( arguments.text, "((https?|ftp):\/\/)([^\s]*)\s?","<a href="" \1\3 "">\1\3</a>
- ", "ALL" );
+		return reReplaceNoCase(
+			arguments.text,
+			"((https?|ftp):\/\/)([^\s]*)\s?",
+			"<a href="" \1\3 "">\1\3</a>
+ ",
+			"ALL"
+		);
 	}
 
 	/**
@@ -426,7 +483,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @return struct with { comments, count }
 	 */
 	struct function search(
-		search="",
+		search = "",
 		isApproved,
 		contentID,
 		numeric max    = 0,
@@ -438,17 +495,17 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var c       = newCriteria();
 
 		// isApproved filter
-		if( !isNull( arguments.isApproved ) AND arguments.isApproved NEQ "any" ){
-			c.isEq( "isApproved", javaCast( "boolean", arguments.isApproved ) );
+		if ( !isNull( arguments.isApproved ) AND arguments.isApproved NEQ "any" ) {
+			c.isEq( "isApproved", javacast( "boolean", arguments.isApproved ) );
 		}
 
 		// Content Filter
-		if( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ){
-			c.isEq( "relatedContent.contentID", javaCast( "int", arguments.contentID ) );
+		if ( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ) {
+			c.isEq( "relatedContent.contentID", javacast( "int", arguments.contentID ) );
 		}
 
 		// Search Criteria
-		if( len( arguments.search ) ){
+		if ( len( arguments.search ) ) {
 			// OR disjunction on author, authorEmail and content.
 			c.or(
 				c.restrictions.like( "author", "%#arguments.search#%" ),
@@ -458,9 +515,9 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
+		if ( len( arguments.siteId ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", javaCast( "int", arguments.siteId ) );
+				.isEq( "relatedContent.site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// run criteria query and projections count
@@ -483,20 +540,19 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @return CommentService
 	 */
-	any function bulkStatus( any commentID, status="" ){
+	any function bulkStatus( any commentID, status = "" ){
 		var approve = false;
 
 		// approve flag
-		if( arguments.status eq "approve" ){
+		if ( arguments.status eq "approve" ) {
 			approve = true;
 		}
 
 		// Get all by id
-		var comments = getAll( id=arguments.commentID )
-			.map( function( thisComment ){
-				thisComment.setIsApproved( approve );
-				return thisComment;
-			} );
+		var comments = getAll( id = arguments.commentID ).map( function( thisComment ){
+			thisComment.setIsApproved( approve );
+			return thisComment;
+		} );
 
 		// transaction the save of all the comments
 		saveAll( comments );

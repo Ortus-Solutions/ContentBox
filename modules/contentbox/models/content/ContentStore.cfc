@@ -5,40 +5,40 @@
 * ---
 * I represent a content value store
 */
-component 	persistent="true" 
-			entityname="cbContentStore" 
-			table="cb_contentStore" 
-			batchsize="25" 
-			cachename="cbContentStore" 
-			cacheuse="read-write" 
-			extends="BaseContent" 
-			joinColumn="contentID" 
+component 	persistent="true"
+			entityname="cbContentStore"
+			table="cb_contentStore"
+			batchsize="25"
+			cachename="cbContentStore"
+			cacheuse="read-write"
+			extends="BaseContent"
+			joinColumn="contentID"
 			discriminatorValue="ContentStore"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property name="description"				
-			 notnull="false" 
-			 length="500" 
+	property name="description"
+			 notnull="false"
+			 length="500"
 			 default="";
 
-	property 	name="order"			
-				notnull="false" 	
-				ormtype="integer" 
+	property 	name="order"
+				notnull="false"
+				ormtype="integer"
 				default="0"
 				dbdefault="0";
 
 	/* *********************************************************************
-	**							CONSTRAINTS									
+	**							CONSTRAINTS
 	********************************************************************* */
 
 	this.constraints[ "title" ]	= { required = false, size = "1..500" };
 	this.constraints[ "order" ]	= { required = false, type="numeric" };
-	
+
 	/* *********************************************************************
-	**							CONSTRUCTOR									
+	**							CONSTRUCTOR
 	********************************************************************* */
 
 	/**
@@ -46,7 +46,7 @@ component 	persistent="true"
 	*/
 	function init(){
 		super.init();
-		
+
 		categories 		= [];
 		customFields	= [];
 		renderedContent = "";
@@ -55,14 +55,14 @@ component 	persistent="true"
 		createdDate		= now();
 		contentType		= "ContentStore";
 		order 			= 0;
-		
+
 		return this;
 	}
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
-	
+
 	/**
 	* Get a flat representation of this entry but for UI response format which
 	* restricts the data being generated.
@@ -75,7 +75,7 @@ component 	persistent="true"
 	* @showRelatedContent Show related Content in memento or not
 	*/
 	struct function getResponseMemento(
-		required array slugCache=[], 
+		required array slugCache=[],
 		boolean showAuthor=true,
 		boolean showComments=true,
 		boolean showCustomFields=true,
@@ -86,7 +86,7 @@ component 	persistent="true"
 	){
 		arguments.properties = listToArray( "description" );
 		var result 	= super.getResponseMemento( argumentCollection=arguments );
-		
+
 		return result;
 	};
 
@@ -104,8 +104,8 @@ component 	persistent="true"
 	* @showRelatedContent Show related Content in memento or not
 	* @showStats Show stats in memento or not
 	*/
-	function getMemento( 
-		required array slugCache=[], 
+	function getMemento(
+		required array slugCache=[],
 		counter=0,
 		boolean showAuthor=true,
 		boolean showComments=true,
@@ -119,7 +119,7 @@ component 	persistent="true"
 	){
 		arguments.properties = listToArray( "description,order" );
 		var result 	= super.getMemento( argumentCollection=arguments );
-		
+
 		return result;
 	}
 
@@ -133,9 +133,9 @@ component 	persistent="true"
 	* @newSlugRoot.hint The new slug root that will be replaced in all cloned content
 	*/
 	BaseContent function prepareForClone(
-		required any author, 
-		required any original, 
-		required any originalService, 
+		required any author,
+		required any original,
+		required any originalService,
 		required boolean publish,
 		required any originalSlugRoot,
 		required any newSlugRoot

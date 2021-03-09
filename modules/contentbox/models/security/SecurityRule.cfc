@@ -78,11 +78,11 @@ component
 
 	property
 		name     ="useSSL"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull  ="false"
 		default  ="false"
-		dbdefault="0";
+		dbdefault="false";
 
 	property
 		name     ="action"

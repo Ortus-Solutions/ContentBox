@@ -5,33 +5,33 @@
  * ---
  * A generic content service for content objects
  */
-component extends="cborm.models.VirtualEntityService" singleton{
+component extends="cborm.models.VirtualEntityService" singleton {
 
 	// DI
-	property name="settingService"              inject="id:settingService@cb";
-	property name="cacheBox"                    inject="cachebox";
-	property name="log"                         inject="logbox:logger:{this}";
-	property name="customFieldService"          inject="customFieldService@cb";
-	property name="categoryService"             inject="categoryService@cb";
-	property name="commentService"              inject="commentService@cb";
-	property name="contentVersionService"       inject="contentVersionService@cb";
-	property name="authorService"               inject="authorService@cb";
-	property name="contentStoreService"         inject="contentStoreService@cb";
-	property name="pageService"                 inject="pageService@cb";
-	property name="entryService"                inject="entryService@cb";
-	property name="populator"                   inject="wirebox:populator";
-	property name="systemUtil"                  inject="SystemUtil@cb";
-	property name="statsService"                inject="statsService@cb";
-	property name="dateUtil"                    inject="DateUtil@cb";
-	property name="commentSubscriptionService" 	inject="CommentSubscriptionService@cb";
-	property name="subscriberService"           inject="subscriberService@cb";
+	property name="settingService" inject="id:settingService@cb";
+	property name="cacheBox" inject="cachebox";
+	property name="log" inject="logbox:logger:{this}";
+	property name="customFieldService" inject="customFieldService@cb";
+	property name="categoryService" inject="categoryService@cb";
+	property name="commentService" inject="commentService@cb";
+	property name="contentVersionService" inject="contentVersionService@cb";
+	property name="authorService" inject="authorService@cb";
+	property name="contentStoreService" inject="contentStoreService@cb";
+	property name="pageService" inject="pageService@cb";
+	property name="entryService" inject="entryService@cb";
+	property name="populator" inject="wirebox:populator";
+	property name="systemUtil" inject="SystemUtil@cb";
+	property name="statsService" inject="statsService@cb";
+	property name="dateUtil" inject="DateUtil@cb";
+	property name="commentSubscriptionService" inject="CommentSubscriptionService@cb";
+	property name="subscriberService" inject="subscriberService@cb";
 
 	/**
 	 * Constructor
 	 *
 	 * @entityName The content entity name to bind this service to.
 	 */
-	ContentService function init( entityName="cbContent" ){
+	ContentService function init( entityName = "cbContent" ){
 		// init it
 		super.init( entityName = arguments.entityName, useQueryCaching = true );
 
@@ -39,73 +39,81 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	}
 
 	/**
-	 * Get the total content counts
+	 * Get the total content counts according to the passed filters
 	 *
 	 * @siteId The site to filter on
+	 * @categoryId The category Id to filter on
 	 */
-	numeric function getTotalContentCount( string siteId = "" ){
-		return newCriteria()
+	numeric function getTotalContentCount( siteId = "", categoryId = "" ){
+		var c = newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.count();
+			.when( len( arguments.categoryId ), function( c ){
+				c.joinTo( "categories", "cats" )
+					.isEq( "cats.categoryID", javacast( "int", categoryId ) );
+			} );
+		return c.count();
 	}
 
 	/**
-	* Clear all content caches
-	* @async Run it asynchronously or not, defaults to false
-	*/
-	function clearAllCaches( boolean async=false ){
+	 * Clear all content caches
+	 * @async Run it asynchronously or not, defaults to false
+	 */
+	function clearAllCaches( boolean async = false ){
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet="cb-content", async=arguments.async );
+		cache.clearByKeySnippet( keySnippet = "cb-content", async = arguments.async );
 		return this;
 	}
 
 	/**
-	* Clear all sitemap caches
-	* @async Run it asynchronously or not, defaults to false
-	*/
-	function clearAllSitemapCaches( boolean async=false ){
+	 * Clear all sitemap caches
+	 * @async Run it asynchronously or not, defaults to false
+	 */
+	function clearAllSitemapCaches( boolean async = false ){
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet="cb-content-sitemap", async=arguments.async );
+		cache.clearByKeySnippet( keySnippet = "cb-content-sitemap", async = arguments.async );
 		return this;
 	}
 
 	/**
-	* Clear all page wrapper caches
-	* @async Run it asynchronously or not, defaults to false
-	*/
-	function clearAllPageWrapperCaches( boolean async=false ){
+	 * Clear all page wrapper caches
+	 * @async Run it asynchronously or not, defaults to false
+	 */
+	function clearAllPageWrapperCaches( boolean async = false ){
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet="cb-content-wrapper", async=arguments.async );
+		cache.clearByKeySnippet( keySnippet = "cb-content-wrapper", async = arguments.async );
 		return this;
 	}
 
 	/**
-	* Clear all page wrapper caches
-	* @slug The slug partial to clean on
-	* @async Run it asynchronously or not, defaults to false
-	*/
-	function clearPageWrapperCaches( required any slug, boolean async=false ){
+	 * Clear all page wrapper caches
+	 * @slug The slug partial to clean on
+	 * @async Run it asynchronously or not, defaults to false
+	 */
+	function clearPageWrapperCaches( required any slug, boolean async = false ){
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet="cb-content-wrapper-#cgi.server_name#-#arguments.slug#", async=arguments.async );
+		cache.clearByKeySnippet(
+			keySnippet = "cb-content-wrapper-#cgi.server_name#-#arguments.slug#",
+			async      = arguments.async
+		);
 		return this;
 	}
 
 	/**
-	* Clear a page wrapper cache
-	* @slug The slug to clean
-	* @async Run it asynchronously or not, defaults to false
-	*/
-	function clearPageWrapper( required any slug, boolean async=false ){
+	 * Clear a page wrapper cache
+	 * @slug The slug to clean
+	 * @async Run it asynchronously or not, defaults to false
+	 */
+	function clearPageWrapper( required any slug, boolean async = false ){
 		var settings = settingService.getAllSettings();
 		// Get appropriate cache provider
 		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
@@ -131,76 +139,94 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @returns struct = { content, count }
 	 */
 	function searchContent(
-		any searchTerm             = "",
-		numeric max                = 0,
-		numeric offset             = 0,
-		boolean asQuery            = false,
-		any sortOrder              = "publishedDate DESC",
-		any isPublished            = true,
-		boolean searchActiveContent= true,
-		string contentTypes        = "",
-		any excludeIDs             = "",
+		any searchTerm              = "",
+		numeric max                 = 0,
+		numeric offset              = 0,
+		boolean asQuery             = false,
+		any sortOrder               = "publishedDate DESC",
+		any isPublished             = true,
+		boolean searchActiveContent = true,
+		string contentTypes         = "",
+		any excludeIDs              = "",
 		boolean showInSearch,
-		string siteId              = ""
+		string siteId = ""
 	){
-
 		var results = { "count" : 0, "content" : [] };
 		var c       = newCriteria();
 
-		// only published content
-		if( isBoolean( arguments.isPublished ) ){
+		// only published contentwithClause
+
+		if ( isBoolean( arguments.isPublished ) ) {
 			// Published bit
-			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
+			c.isEq( "isPublished", javacast( "Boolean", arguments.isPublished ) );
 			// Published eq true evaluate other params
-			if( arguments.isPublished ){
+			if ( arguments.isPublished ) {
 				c.isLt( "publishedDate", now() )
-				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
-				.isEq( "passwordProtection","" );
+					.$or(
+						c.restrictions.isNull( "expireDate" ),
+						c.restrictions.isGT( "expireDate", now() )
+					)
+					.isEq( "passwordProtection", "" );
 			}
 		}
 
 		// only search shownInSearch bits
-		if( structKeyExists( arguments, "showInSearch") ){
-			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );
+		if ( structKeyExists( arguments, "showInSearch" ) ) {
+			c.isEq( "showInSearch", javacast( "Boolean", arguments.showInSearch ) );
 		}
 
 		// Search Criteria
-		if( len( arguments.searchTerm ) ){
-			// like disjunctions
-			c.createAlias( "activeContent","ac" );
+		if ( len( arguments.searchTerm ) ) {
 			// Do we search title and active content or just title?
-			if( arguments.searchActiveContent ){
-				c.$or( c.restrictions.like( "title","%#arguments.searchTerm#%" ),
-				  	  c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" ) );
-			}
-			else{
+			if ( arguments.searchActiveContent ) {
+				c.createAlias(
+						associationName: "contentVersions",
+						alias          : "ac",
+						withClause     : getRestrictions().isTrue( "ac.isActive" )
+					)
+					.$or(
+						c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+						c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
+					);
+			} else {
 				c.like( "title", "%#arguments.searchTerm#%" );
 			}
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// Content Types
-		if( len( arguments.contentTypes ) ) {
-			c.isIn( 'contentType', arguments.contentTypes );
+		if ( len( arguments.contentTypes ) ) {
+			c.isIn( "contentType", arguments.contentTypes );
 		}
 
 		// excludeIDs
-		if( len( arguments.excludeIDs ) ) {
+		if ( len( arguments.excludeIDs ) ) {
 			// if not an array, inflate list
-			if( !isArray( arguments.excludeIDs ) ) {
+			if ( !isArray( arguments.excludeIDs ) ) {
 				arguments.excludeIDs = listToArray( arguments.excludeIDs );
 			}
-			c.isNot( c.restrictions.in( 'contentID', JavaCast( "java.lang.Integer[]", arguments.excludeIDs ) ) );
+			c.isNot(
+				c.restrictions.in(
+					"contentID",
+					javacast( "java.lang.Integer[]", arguments.excludeIDs )
+				)
+			);
 		}
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );
-		results.content = c.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-							.list(offset=arguments.offset, max=arguments.max, sortOrder=arguments.sortOrder, asQuery=arguments.asQuery);
+		results.content = c
+			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
+			.list(
+				offset    = arguments.offset,
+				max       = arguments.max,
+				sortOrder = arguments.sortOrder,
+				asQuery   = arguments.asQuery
+			);
 
 		return results;
 	}
@@ -215,11 +241,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	function getIdBySlug( required any slug, string siteId = "" ){
 		var results = newCriteria()
-			.isEq( "slug", arguments.slug)
+			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.withProjections( property : "contentID" )
+			.withProjections( property: "contentID" )
 			.get();
 
 		// verify results
@@ -238,13 +264,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	function findBySlug(
 		required any slug,
-		required boolean showUnpublished=false,
-		string siteId                   = ""
+		required boolean showUnpublished = false,
+		string siteId                    = ""
 	){
 		var oContent = newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
 			.when( !showUnpublished, function( c ){
 				c.isTrue( "isPublished" )
@@ -257,7 +283,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			.get();
 
 		// return accordingly
-		return isNull( oContent ) ? new() : oContent;
+		return isNull( oContent ) ? new () : oContent;
 	}
 
 	/**
@@ -269,49 +295,52 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 *
 	 * @return True if the slug is unique or false if it's already used
 	 */
-	boolean function isSlugUnique( required any slug, any contentID="", string siteId="" ){
+	boolean function isSlugUnique(
+		required any slug,
+		any contentID = "",
+		string siteId = ""
+	){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
 			.when( len( arguments.contentId ), function( c ){
-				c.ne( "contentID", javaCast( "int", contentId ) );
+				c.ne( "contentID", javacast( "int", contentId ) );
 			} )
 			.count() > 0 ? false : true;
 	}
 
 	/**
-	* Delete a content object safely via hierarchies
-	* @content the Content object to delete
-	*/
+	 * Delete a content object safely via hierarchies
+	 * @content the Content object to delete
+	 */
 	ContentService function deleteContent( required any content ){
-
-		transaction{
+		transaction {
 			// Check for dis-associations
-			if( arguments.content.hasParent() ){
+			if ( arguments.content.hasParent() ) {
 				arguments.content.getParent().removeChild( arguments.content );
 			}
-			if( arguments.content.hasCategories() ){
+			if ( arguments.content.hasCategories() ) {
 				arguments.content.removeAllCategories();
 			}
-			if( arguments.content.hasRelatedContent() ) {
+			if ( arguments.content.hasRelatedContent() ) {
 				arguments.content.getRelatedContent().clear();
 			}
-			if( arguments.content.hasLinkedContent() ) {
+			if ( arguments.content.hasLinkedContent() ) {
 				arguments.content.removeAllLinkedContent();
 			}
-			if( arguments.content.hasChild() ){
+			if ( arguments.content.hasChild() ) {
 				var aItemsToDelete = [];
-				for( var thisChild in arguments.content.getChildren() ){
+				for ( var thisChild in arguments.content.getChildren() ) {
 					arrayAppend( aItemsToDelete, thisChild );
 				}
-				for( var thisChild in aItemsToDelete ){
+				for ( var thisChild in aItemsToDelete ) {
 					deleteContent( thisChild );
 				}
 			}
 			// now delete it
-			delete( entity=arguments.content, transactional=false );
+			delete( entity = arguments.content, transactional = false );
 		}
 
 		// return service
@@ -335,60 +364,67 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @return struct as { count, content }
 	 */
 	function findPublishedContent(
-		numeric max     =0,
-		numeric offset  =0,
-		any searchTerm  ="",
-		any category    ="",
-		boolean asQuery =false,
-		string sortOrder="publishedDate DESC",
+		numeric max      = 0,
+		numeric offset   = 0,
+		any searchTerm   = "",
+		any category     = "",
+		boolean asQuery  = false,
+		string sortOrder = "publishedDate DESC",
 		any parent,
 		boolean showInMenu,
-		string slugPrefix="",
-		string siteId    = ""
+		string slugPrefix = "",
+		string siteId     = ""
 	){
-
 		var results = { "count" : 0, "content" : [] };
 		var c       = newCriteria();
 
 		// only published pages
 		c.isTrue( "isPublished" )
-			.isLT( "publishedDate", Now())
-			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
+			.isLT( "publishedDate", now() )
+			.$or(
+				c.restrictions.isNull( "expireDate" ),
+				c.restrictions.isGT( "expireDate", now() )
+			)
 			// only non-password pages
 			.isEq( "passwordProtection", "" );
 
 		// Show only pages with showInMenu criteria?
-		if( structKeyExists(arguments,"showInMenu" ) ){
-			c.isEq( "showInMenu", javaCast( "boolean", arguments.showInMenu ) );
+		if ( structKeyExists( arguments, "showInMenu" ) ) {
+			c.isEq( "showInMenu", javacast( "boolean", arguments.showInMenu ) );
 		}
 
 		// Category Filter
-		if( len( arguments.category ) ){
+		if ( len( arguments.category ) ) {
 			// create association with categories by slug.
-			c.createAlias( "categories","cats" ).isIn( "cats.slug", listToArray( arguments.category ) );
+			c.createAlias( "categories", "cats" )
+				.isIn( "cats.slug", listToArray( arguments.category ) );
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// Search Criteria
-		if( len( arguments.searchTerm ) ){
+		if ( len( arguments.searchTerm ) ) {
 			// like disjunctions
-			c.createAlias( "activeContent","ac" );
-			c.or(
-				c.restrictions.like( "title","%#arguments.searchTerm#%" ),
-				c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
-			);
+			c.createAlias(
+					associationName: "contentVersions",
+					alias          : "ac",
+					withClause     : getRestrictions().isTrue( "ac.isActive" )
+				)
+				.or(
+					c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
+					c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
+				);
 		}
 
 
 		// parent filter
-		if( !isNull( arguments.parent ) ){
-			if( isSimpleValue( arguments.parent ) and len( arguments.parent ) ){
-				c.isEq( "parent.contentID", javaCast( "int", arguments.parent ) );
-			} else if( isObject( arguments.parent ) ){
+		if ( !isNull( arguments.parent ) ) {
+			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
+				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
+			} else if ( isObject( arguments.parent ) ) {
 				c.isEq( "parent", arguments.parent );
 			} else {
 				c.isNull( "parent" );
@@ -396,19 +432,20 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		}
 
 		// Slug Prefix
-		if( len( arguments.slugPrefix ) ){
+		if ( len( arguments.slugPrefix ) ) {
 			c.ilike( "slug", "#arguments.slugPrefix#/%" );
 		}
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );
-		results.content = c.asDistinct()
-							.list(
-								offset    : arguments.offset,
-								max       : arguments.max,
-								sortOrder : arguments.sortOrder,
-								asQuery   : arguments.asQuery
-							);
+		results.content = c
+			.asDistinct()
+			.list(
+				offset   : arguments.offset,
+				max      : arguments.max,
+				sortOrder: arguments.sortOrder,
+				asQuery  : arguments.asQuery
+			);
 
 		return results;
 	}
@@ -423,13 +460,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 		var publish = false;
 
 		// publish flag
-		if( arguments.status eq "publish" ){
+		if ( arguments.status eq "publish" ) {
 			publish = true;
 		}
 
 		// Get all by id
-		var contentObjects = getAll(id=arguments.contentID);
-		for(var x=1; x lte arrayLen( contentObjects ); x++){
+		var contentObjects = getAll( id = arguments.contentID );
+		for ( var x = 1; x lte arrayLen( contentObjects ); x++ ) {
 			contentObjects[ x ].setpublishedDate( now() );
 			contentObjects[ x ].setisPublished( publish );
 		}
@@ -450,11 +487,15 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	array function findExpiredContent(
 		any author,
-		numeric max   =0,
-		numeric offset=0,
-		string siteId =""
+		numeric max    = 0,
+		numeric offset = 0,
+		string siteId  = ""
 	){
-		var c = newCriteria().createAlias( "activeContent", "ac" );
+		var c = newCriteria().createAlias(
+			associationName: "contentVersions",
+			alias          : "ac",
+			withClause     : getRestrictions().isTrue( "ac.isActive" )
+		);
 
 		// only future published pages
 		c.isTrue( "isPublished" )
@@ -462,12 +503,12 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			.isLT( "expireDate", now() );
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// author filter
-		if( structKeyExists( arguments, "author") ){
+		if ( structKeyExists( arguments, "author" ) ) {
 			c.isEq( "ac.author", arguments.author );
 		}
 
@@ -489,23 +530,26 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 */
 	array function findFuturePublishedContent(
 		any author,
-		numeric max   =0,
-		numeric offset=0,
-		string siteId =""
+		numeric max    = 0,
+		numeric offset = 0,
+		string siteId  = ""
 	){
-		var c = newCriteria().createAlias( "activeContent", "ac" );
+		var c = newCriteria().createAlias(
+			associationName: "contentVersions",
+			alias          : "ac",
+			withClause     : getRestrictions().isTrue( "ac.isActive" )
+		);
 
 		// Only non-expired future publishing pages
-		c.isTrue( "isPublished" )
-			.isGT( "publishedDate", now() );
+		c.isTrue( "isPublished" ).isGT( "publishedDate", now() );
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// author filter
-		if( structKeyExists( arguments, "author") ){
+		if ( structKeyExists( arguments, "author" ) ) {
 			c.isEq( "ac.author", arguments.author );
 		}
 
@@ -528,27 +572,29 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	array function getLatestEdits(
 		any author,
 		boolean isPublished,
-		numeric max  =25,
-		string siteId=""
+		numeric max   = 25,
+		string siteId = ""
 	){
-		var c = newCriteria().createAlias( "activeContent", "ac" );
-
-		// isPublished filter
-		if( structKeyExists( arguments, "isPublished") ){
-			c.isEq( "isPublished", javaCast( "boolean", arguments.isPublished ) );
-		}
-
-		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
-		}
-
-		// author filter
-		if( structKeyExists( arguments, "author") ){
-			c.isEq( "ac.author", arguments.author );
-		}
-
-		return c.list( max=arguments.max, sortOrder="ac.createdDate desc", asQuery=false );
+		// Get only active content joins
+		return newCriteria()
+			.createAlias(
+				associationName: "contentVersions",
+				alias          : "ac",
+				withClause     : getRestrictions().isTrue( "ac.isActive" )
+			)
+			// isPublished filter
+			.when( !isNull( arguments.isPublished ), function( c ){
+				c.isEq( "isPublished", javacast( "boolean", isPublished ) );
+			} )
+			// Site Filter
+			.when( !isNull( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			} )
+			// author filter
+			.when( !isNull( arguments.author ), function( c ){
+				c.isEq( "ac.author", author );
+			} )
+			.list( max: arguments.max, sortOrder: "ac.createdDate desc" );
 	}
 
 	/**
@@ -557,13 +603,13 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @max The maximum to retrieve, defaults to 5 entries
 	 * @siteId The site to filter on
 	 */
-	array function getTopVisitedContent( numeric max=5, string siteId="" ){
-		var c = newCriteria()
+	array function getTopVisitedContent( numeric max = 5, string siteId = "" ){
+		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.list( max=arguments.max, sortOrder="numberOfHits desc", asQuery=false );
-		return c;
+			.joinTo( "stats", "stats" )
+			.list( max = arguments.max, sortOrder = "stats.hits desc" );
 	}
 
 	/**
@@ -572,31 +618,38 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @max The maximum to retrieve, defaults to 5 entries
 	 * @siteId The site to filter on
 	 */
-	array function getTopCommentedContent( numeric max=5, string siteId="" ){
-		var c = newCriteria()
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javaCast( "int", siteId ) );
-			} )
-			.list( max=arguments.max, sortOrder="numberOfComments desc", asQuery=false );
-		return c;
+	array function getTopCommentedContent( numeric max = 5, string siteId = "" ){
+		return executeQuery(
+			query: "
+				SELECT new map( content as content, count( comments.commentID ) AS commentCount )
+				FROM cbContent content JOIN content.comments comments
+				GROUP BY content
+				ORDER BY count( comments.commentID ) DESC
+			",
+			max       : arguments.max,
+			ignoreCase: true
+		)
+			// We just need the content objects, not the comments count
+			.map( function( item ){
+				return item[ "content" ];
+			} );
 	}
 
 	/**
-	* Get all content for export as flat data
-	* @inData The data to use for exporting, usually concrete implementtions can override this.
-	*/
+	 * Get all content for export as flat data
+	 * @inData The data to use for exporting, usually concrete implementtions can override this.
+	 */
 	array function getAllForExport( any inData ){
 		var result = [];
 
-		if( !structKeyExists( arguments, "inData" ) ){
+		if ( !structKeyExists( arguments, "inData" ) ) {
 			// export from the root node, instead of everything.
 			var data = newCriteria().isNull( "parent" ).list();
-		}
-		else{
+		} else {
 			data = arguments.inData;
 		}
 
-		for( var thisItem in data ){
+		for ( var thisItem in data ) {
 			arrayAppend( result, thisItem.getMemento() );
 		}
 
@@ -609,159 +662,173 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @importFile The absolute file path to use for importing
 	 * @override Override records or not
 	 */
-	string function importFromFile( required importFile, boolean override=false ){
+	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
-		var importLog = createObject( "java", "java.lang.StringBuilder" )
-			.init( "Starting import with override = #arguments.override#...<br>" );
+		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
+			"Starting import with override = #arguments.override#...<br>"
+		);
 
-		if( !isJSON( data ) ){
+		if ( !isJSON( data ) ) {
 			throw(
-				message : "Cannot import file as the contents is not JSON",
-				type    : "InvalidImportFormat"
+				message: "Cannot import file as the contents is not JSON",
+				type   : "InvalidImportFormat"
 			);
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
-		return	importFromData( deserializeJSON( data ), arguments.override, importLog );
+		return importFromData(
+			deserializeJSON( data ),
+			arguments.override,
+			importLog
+		);
 	}
 
 	/**
-	* Import data from an array of structures of content or just one structure of a content entry
-	* @importData The data to import
-	* @override Override records or not
-	* @importLog The import log buffer
-	*/
+	 * Import data from an array of structures of content or just one structure of a content entry
+	 * @importData The data to import
+	 * @override Override records or not
+	 * @importLog The import log buffer
+	 */
 	string function importFromData(
 		required any importData,
-		boolean override=false,
+		boolean override = false,
 		required any importLog
 	){
-
 		var allContent = [];
 
 		// if struct, inflate into an array
-		if( isStruct( arguments.importData ) ){
+		if ( isStruct( arguments.importData ) ) {
 			arguments.importData = [ arguments.importData ];
 		}
 
 		// iterate and import
-		for( var thisContent in arguments.importData ){
-
+		for ( var thisContent in arguments.importData ) {
 			// Inflate content from data
 			var inflateResults = inflateFromStruct( thisContent, arguments.importLog );
 
 			// continue to next record if author not found
-			if( !inflateResults.authorFound ){ continue; }
+			if ( !inflateResults.authorFound ) {
+				continue;
+			}
 
 			// if new or persisted with override then save.
-			if( !inflateResults.content.isLoaded() ){
+			if ( !inflateResults.content.isLoaded() ) {
 				arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
 				arrayAppend( allContent, inflateResults.content );
-			}
-			else if( inflateResults.content.isLoaded() and arguments.override ){
+			} else if ( inflateResults.content.isLoaded() and arguments.override ) {
 				arguments.importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
 				arrayAppend( allContent, inflateResults.content );
-			}
-			else{
+			} else {
 				arguments.importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
 			}
-
-		} // end import loop
+		}
+		// end import loop
 
 		// Save content
-		if( arrayLen( allContent ) ){
+		if ( arrayLen( allContent ) ) {
 			saveAll( allContent );
 			arguments.importLog.append( "Saved all imported and overriden content!" );
-		}
-		else{
-			arguments.importLog.append( "No content imported as none where found or able to be overriden from the import file." );
+		} else {
+			arguments.importLog.append(
+				"No content imported as none where found or able to be overriden from the import file."
+			);
 		}
 
 		return arguments.importLog.toString();
 	}
 
 	/**
-	* Inflate a content object from a ContentBox JSON structure
-	* @contentData The content structure inflated from JSON
-	* @importLog The string builder import log
-	* @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
-	* @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
-	*/
+	 * Inflate a content object from a ContentBox JSON structure
+	 * @contentData The content structure inflated from JSON
+	 * @importLog The string builder import log
+	 * @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
+	 * @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
+	 */
 	public function inflateFromStruct(
 		required any contentData,
 		required any importLog,
 		any parent,
-		struct newContent={}
+		struct newContent = {}
 	){
-
 		// setup
 		var thisContent                = arguments.contentData;
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
-		var oContent                   = findBySlug( slug=thisContent.slug, showUnpublished=true );
+		var oContent                   = findBySlug( slug = thisContent.slug, showUnpublished = true );
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		newContent[ thisContent.slug ] = oContent;
 
 		// date cleanups, just in case.
-		var badDateRegex         = " -\d{4}$";
-		thisContent.createdDate  = reReplace( thisContent.createdDate, badDateRegex, "" );
-		thisContent.modifiedDate = reReplace( thisContent.modifiedDate, badDateRegex, "" );
-		thisContent.publishedDate= reReplace( thisContent.publishedDate, badDateRegex, "" );
-		thisContent.expireDate   = reReplace( thisContent.expireDate, badDateRegex, "" );
+		var badDateRegex          = " -\d{4}$";
+		thisContent.createdDate   = reReplace( thisContent.createdDate, badDateRegex, "" );
+		thisContent.modifiedDate  = reReplace( thisContent.modifiedDate, badDateRegex, "" );
+		thisContent.publishedDate = reReplace( thisContent.publishedDate, badDateRegex, "" );
+		thisContent.expireDate    = reReplace( thisContent.expireDate, badDateRegex, "" );
 		// Epoch to Local
-		thisContent.createdDate  = dateUtil.epochToLocal( thisContent.createdDate );
-		thisContent.modifiedDate = dateUtil.epochToLocal( thisContent.modifiedDate );
-		thisContent.publishedDate= dateUtil.epochToLocal( thisContent.publishedDate );
-		thisContent.expireDate   = dateUtil.epochToLocal( thisContent.expireDate );
+		thisContent.createdDate   = dateUtil.epochToLocal( thisContent.createdDate );
+		thisContent.modifiedDate  = dateUtil.epochToLocal( thisContent.modifiedDate );
+		thisContent.publishedDate = dateUtil.epochToLocal( thisContent.publishedDate );
+		thisContent.expireDate    = dateUtil.epochToLocal( thisContent.expireDate );
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		populator.populateFromStruct(
-			target              = oContent,
-			memento             = thisContent,
-			exclude             = "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
-			composeRelationships= false,
-			nullEmptyInclude    = "publishedDate,expireDate"
+			target               = oContent,
+			memento              = thisContent,
+			exclude              = "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
+			composeRelationships = false,
+			nullEmptyInclude     = "publishedDate,expireDate"
 		);
 
 		// determine author else ignore import
-		var oAuthor = authorService.findByUsername( ( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" ) );
-		if( !isNull( oAuthor ) ){
-
+		var oAuthor = authorService.findByUsername(
+			( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" )
+		);
+		if ( !isNull( oAuthor ) ) {
 			// AUTHOR CREATOR
 			oContent.setCreator( oAuthor );
 			arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
 
 			// PARENT
-			if( structKeyExists( arguments, "parent" ) and isObject( arguments.parent ) ){
+			if ( structKeyExists( arguments, "parent" ) and isObject( arguments.parent ) ) {
 				oContent.setParent( arguments.parent );
-				arguments.importLog.append( "Content parent passed and linked: #arguments.parent.getSlug()#<br>" );
-			}
-			else if( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ){
-				var oParent = findBySlug( slug=thisContent.parent.slug, showUnpublished=true );
+				arguments.importLog.append(
+					"Content parent passed and linked: #arguments.parent.getSlug()#<br>"
+				);
+			} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
+				var oParent = findBySlug( slug = thisContent.parent.slug, showUnpublished = true );
 				// assign if persisted
-				if( oParent.isLoaded() ){
+				if ( oParent.isLoaded() ) {
 					oContent.setParent( oParent );
-					arguments.importLog.append( "Content parent found and linked: #thisContent.parent.slug#<br>" );
-				}
-				else{
-					arguments.importLog.append( "Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>" );
+					arguments.importLog.append(
+						"Content parent found and linked: #thisContent.parent.slug#<br>"
+					);
+				} else {
+					arguments.importLog.append(
+						"Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>"
+					);
 				}
 			}
 
 			// STATS
-			if( structKeyExists( thisContent, "stats" ) && thisContent.stats.hits > 0 ){
-				var oStat = statsService.new( { hits = thisContent.stats.hits } );
+			if ( structKeyExists( thisContent, "stats" ) && thisContent.stats.hits > 0 ) {
+				var oStat = variables.statsService.new( { hits : thisContent.stats.hits } );
 				oStat.setRelatedContent( oContent );
 				oContent.setStats( oStat );
 			}
 
 			// CHILDREN
-			if( arrayLen( thisContent.children ) ){
+			if ( arrayLen( thisContent.children ) ) {
 				var allChildren = [];
 				// recurse on them and inflate hiearchy
-				for( var thisChild in thisContent.children ){
-					var inflateResults = inflateFromStruct( contentData=thisChild, importLog=arguments.importLog, parent=oContent );
+				for ( var thisChild in thisContent.children ) {
+					var inflateResults = inflateFromStruct(
+						contentData = thisChild,
+						importLog   = arguments.importLog,
+						parent      = oContent
+					);
 					// continue to next record if author not found
-					if( !inflateResults.authorFound ){ continue; }
+					if ( !inflateResults.authorFound ) {
+						continue;
+					}
 					// Add to array of children to add.
 					arrayAppend( allChildren, inflateResults.content );
 				}
@@ -769,29 +836,39 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// CUSTOM FIELDS
-			if( arrayLen( thisContent.customfields ) ){
+			if ( arrayLen( thisContent.customfields ) ) {
 				// wipe out custom fileds if they exist
-				if( oContent.hasCustomField() ){ oContent.getCustomFields().clear(); }
+				if ( oContent.hasCustomField() ) {
+					oContent.getCustomFields().clear();
+				}
 				// add new custom fields
-				for( var thisCF in thisContent.customfields ){
+				for ( var thisCF in thisContent.customfields ) {
 					// explicitly convert value to string...
 					// ACF doesn't handle string values well when they look like numbers :)
-					var args   = { key = thisCF.key, value = toString( thisCF.value ) };
-					var oField = customFieldService.new(properties=args);
+					var args   = { key : thisCF.key, value : toString( thisCF.value ) };
+					var oField = customFieldService.new( properties = args );
 					oField.setRelatedContent( oContent );
 					oContent.addCustomField( oField );
 				}
 			}
 
 			// CATEGORIES
-			if( arrayLen( thisContent.categories ) ){
+			if ( arrayLen( thisContent.categories ) ) {
 				// Create categories that don't exist first
 				var allCategories = [];
-				for( var thisCategory in thisContent.categories ){
+				for ( var thisCategory in thisContent.categories ) {
 					var oCategory = categoryService.findBySlug( thisCategory.slug );
-					oCategory     = ( isNull( oCategory ) ? populator.populateFromStruct( target=categoryService.new(), memento=thisCategory, exclude="categoryID" ) : oCategory );
+					oCategory     = (
+						isNull( oCategory ) ? populator.populateFromStruct(
+							target  = categoryService.new(),
+							memento = thisCategory,
+							exclude = "categoryID"
+						) : oCategory
+					);
 					// save category if new only
-					if( !oCategory.isLoaded() ){ categoryService.save( entity=oCategory ); }
+					if ( !oCategory.isLoaded() ) {
+						categoryService.save( entity = oCategory );
+					}
 					// append to add.
 					arrayAppend( allCategories, oCategory );
 				}
@@ -800,11 +877,11 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// RELATED CONTENT
-			if( arrayLen( thisContent.relatedContent ) ) {
+			if ( arrayLen( thisContent.relatedContent ) ) {
 				var allRelatedContent = [];
-				for( var thisRelatedContent in thisContent.relatedContent ) {
+				for ( var thisRelatedContent in thisContent.relatedContent ) {
 					var instanceService = "";
-					switch( thisRelatedContent.contentType ) {
+					switch ( thisRelatedContent.contentType ) {
 						case "Page":
 							instanceService = PageService;
 							break;
@@ -816,34 +893,38 @@ component extends="cborm.models.VirtualEntityService" singleton{
 							break;
 					}
 					// if content has already been inflated as part of another process, just use that instance so we don't collide keys
-					if( structKeyExists( arguments.newContent, thisRelatedContent.slug ) ) {
-						arrayAppend( allRelatedContent, arguments.newContent[ thisRelatedContent.slug ] );
+					if ( structKeyExists( arguments.newContent, thisRelatedContent.slug ) ) {
+						arrayAppend(
+							allRelatedContent,
+							arguments.newContent[ thisRelatedContent.slug ]
+						);
 					}
 					// otherwise, we need to inflate the new instance
 					else {
 						var inflateResults = instanceService.inflateFromStruct(
-							contentData= thisRelatedContent,
-							importLog  =arguments.importLog,
-							newContent =newContent
+							contentData = thisRelatedContent,
+							importLog   = arguments.importLog,
+							newContent  = newContent
 						);
 						arrayAppend( allRelatedContent, inflateResults.content );
 					}
-
 				}
 				oContent.setRelatedContent( allRelatedContent );
 			}
 
 			// COMMENTS
-			if( arrayLen( thisContent.comments ) ){
+			if ( arrayLen( thisContent.comments ) ) {
 				var allComments = [];
-				for( var thisComment in thisContent.comments ){
+				for ( var thisComment in thisContent.comments ) {
 					// some conversions
 					thisComment.createdDate = reReplace( thisComment.createdDate, badDateRegex, "" );
 					// population
-					var oComment            = populator.populateFromStruct( target=commentService.new(),
-															 	 memento             =thisComment,
-															 	 exclude             ="commentID",
-															 	 composeRelationships=false );
+					var oComment            = populator.populateFromStruct(
+						target               = commentService.new(),
+						memento              = thisComment,
+						exclude              = "commentID",
+						composeRelationships = false
+					);
 					oComment.setRelatedContent( oContent );
 					arrayAppend( allComments, oComment );
 				}
@@ -851,22 +932,28 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// Subscriptions
-			if( isArray( thisContent.commentSubscriptions ) && arrayLen( thisContent.commentSubscriptions ) ){
+			if (
+				isArray( thisContent.commentSubscriptions ) && arrayLen(
+					thisContent.commentSubscriptions
+				)
+			) {
 				var allSubscriptions = [];
 				// recurse on them and inflate hiearchy
-				for( var thisSubscription in thisContent.commentSubscriptions ){
+				for ( var thisSubscription in thisContent.commentSubscriptions ) {
 					// Subscription
 					var oSubscription = commentSubscriptionService.new( {
-						relatedContent    = oContent,
-						subscriptionToken = thisSubscription.subscriptionToken,
-						type              = thisSubscription.type
+						relatedContent    : oContent,
+						subscriptionToken : thisSubscription.subscriptionToken,
+						type              : thisSubscription.type
 					} );
 					// Subscriber
-					var oSubscriber = subscriberService.findBySubscriberEmail( thisSubscription.subscriber.subscriberEmail );
-					if( isNull( oSubscriber ) ){
+					var oSubscriber = subscriberService.findBySubscriberEmail(
+						thisSubscription.subscriber.subscriberEmail
+					);
+					if ( isNull( oSubscriber ) ) {
 						oSubscriber = subscriberService.new( {
-							subscriberEmail = thisSubscription.subscriber.subscriberEmail,
-							subscriberToken = thisSubscription.subscriber.subscriberToken
+							subscriberEmail : thisSubscription.subscriber.subscriberEmail,
+							subscriberToken : thisSubscription.subscriber.subscriberToken
 						} );
 					}
 					oSubscription.setSubscriber( oSubscriber );
@@ -880,67 +967,68 @@ component extends="cborm.models.VirtualEntityService" singleton{
 			}
 
 			// CONTENT VERSIONS
-			if( arrayLen( thisContent.contentversions ) ){
+			if ( arrayLen( thisContent.contentversions ) ) {
 				var allContentVersions = [];
-				for( var thisVersion in thisContent.contentversions ){
+				for ( var thisVersion in thisContent.contentversions ) {
 					// some conversions
 					thisVersion.createdDate = reReplace( thisVersion.createdDate, badDateRegex, "" );
 
 					// population
-					var oVersion = populator.populateFromStruct( target=contentVersionService.new(),
-																 memento             =thisVersion,
-																 exclude             ="contentVersionID,author",
-																 composeRelationships=false );
+					var oVersion = populator.populateFromStruct(
+						target               = contentVersionService.new(),
+						memento              = thisVersion,
+						exclude              = "contentVersionID,author",
+						composeRelationships = false
+					);
 					// Get author
 					var oAuthor = authorService.findByUsername( thisVersion.author.username );
 					// Only add if author found
-					if( !isNull( oAuthor ) ){
+					if ( !isNull( oAuthor ) ) {
 						oVersion.setAuthor( oAuthor );
 						oVersion.setRelatedContent( oContent );
 						arrayAppend( allContentVersions, oVersion );
-					}
-					else{
-						arguments.importLog.append( "Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>" );
+					} else {
+						arguments.importLog.append(
+							"Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>"
+						);
 					}
 				}
 				oContent.setContentVersions( allContentVersions );
 			}
-		} // end if author found
-		else{
-			arguments.importLog.append( "Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>" );
+		}
+		// end if author found
+		else {
+			arguments.importLog.append(
+				"Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>"
+			);
 		}
 
-		return { content=oContent, authorFound=( !isNull( oAuthor ) ) };
+		return { content : oContent, authorFound : ( !isNull( oAuthor ) ) };
 	}
 
 	/**
-	* Update a content's hits with some async flava
-	* @contentID The content id to update
-	* @async Async or not
-	*/
-	ContentService function updateHits(required contentID, boolean async=true){
-		// if in thread already or not async
-		if( systemUtil.inThread() OR !arguments.async ){
-			statsService.syncUpdateHits( arguments.contentID );
-			return this;
+	 * Update a content's hits with some async flava
+	 *
+	 * @content A content object or id to update the hits on
+	 * @async Async or not
+	 */
+	ContentService function updateHits( required content, boolean async = true ){
+		// Inflate it if it's just an ID
+		if ( isSimpleValue( arguments.content ) ) {
+			arguments.content = get( arguments.content );
 		}
-
-		var threadName= "updateHits_#hash( arguments.contentID & now() )#";
-		thread name   ="#threadName#" contentID="#arguments.contentID#"{
-			statsService.syncUpdateHits( attributes.contentID );
-		}
-
+		// Record the hit
+		variables.statsService.syncUpdateHits( arguments.content );
 		return this;
 	}
 
 	/**
-	* Returns an array of slugs of all the content objects in the system.
-	*/
+	 * Returns an array of slugs of all the content objects in the system.
+	 */
 	array function getAllFlatSlugs(){
 		var c = newCriteria();
 
-		return c.withProjections( property="slug" )
-			.list( sortOrder="slug asc" );
+		return c.withProjections( property = "slug" ).list( sortOrder = "slug asc" );
 	}
 
 	/**
@@ -954,50 +1042,56 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @return Array of content data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
 	 */
 	array function getAllFlatContent(
-		sortOrder="title asc",
+		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteId=""
+		string siteId = ""
 	){
 		var c = newCriteria();
 
 		// only published content
-		if(
-			structKeyExists( arguments, "isPublished")
+		if (
+			structKeyExists( arguments, "isPublished" )
 			&&
 			isBoolean( arguments.isPublished )
-		){
+		) {
 			// Published bit
-			c.isEq( "isPublished", javaCast( "Boolean", arguments.isPublished ) );
+			c.isEq( "isPublished", javacast( "Boolean", arguments.isPublished ) );
 			// Published eq true evaluate other params
-			if( arguments.isPublished ){
+			if ( arguments.isPublished ) {
 				c.isLt( "publishedDate", now() )
-				.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
-				.isEq( "passwordProtection", "" );
+					.$or(
+						c.restrictions.isNull( "expireDate" ),
+						c.restrictions.isGT( "expireDate", now() )
+					)
+					.isEq( "passwordProtection", "" );
 			}
 		}
 
 		// Site Filter
-		if( len( arguments.siteId ) ){
-			c.isEq( "site.siteId", javaCast( "int", arguments.siteId ) );
+		if ( len( arguments.siteId ) ) {
+			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
 		}
 
 		// Show in Search
-		if(
+		if (
 			structKeyExists( arguments, "showInSearch" )
 			&&
 			isBoolean( arguments.showInSearch )
-		){
+		) {
 			// showInSearch bit
-			c.isEq( "showInSearch", javaCast( "Boolean", arguments.showInSearch ) );
+			c.isEq( "showInSearch", javacast( "Boolean", arguments.showInSearch ) );
 		}
 
-		return c.withProjections( property="contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
+		return c
+			.withProjections(
+				property = "contentID,title,slug,createdDate,modifiedDate,featuredImageURL"
+			)
 			.asStruct()
-			.list( sortOrder=arguments.sortOrder );
+			.list( sortOrder = arguments.sortOrder );
 	}
 
-/********************************************* PRIVATE *********************************************/
+	/********************************************* PRIVATE *********************************************/
 
 	/**
 	 * Get a unique slug hash
@@ -1005,7 +1099,7 @@ component extends="cborm.models.VirtualEntityService" singleton{
 	 * @slug The slug to unique it
 	 */
 	private function getUniqueSlugHash( required string slug ){
-		return "#arguments.slug#-#lcase( left( hash( now() ), 5 ) )#";
+		return "#arguments.slug#-#lCase( left( hash( now() ), 5 ) )#";
 	}
 
 }

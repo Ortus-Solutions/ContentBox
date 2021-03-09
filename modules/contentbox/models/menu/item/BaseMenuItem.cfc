@@ -34,23 +34,23 @@ component
 		ormtype="timestamp"
 		notnull="true"
 		update ="false"
-		index  ="idx_createDate";
+		index  ="idx_BaseMenuItem_createDate";
 
 	property
 		name   ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		index  ="idx_modifiedDate";
+		index  ="idx_BaseMenuItem_modifiedDate";
 
 	property
 		name     ="isDeleted"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="0"
-		index    ="idx_deleted";
+		dbdefault="false"
+		index    ="idx_BaseMenuItem_deleted";
 
 	/* *********************************************************************
 	 **                          PROPERTIES
@@ -93,9 +93,9 @@ component
 
 	property
 		name     ="active"
-		ormtype  ="boolean"
-		sqlType  ="tinyInt"
-		dbdefault="1"
+		ormtype  = "boolean"
+		//sqltype  = "smallInt"
+		dbdefault="true"
 		default  ="true";
 
 	property

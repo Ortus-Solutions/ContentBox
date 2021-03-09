@@ -70,36 +70,12 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteId"
 		lazy     ="true"
-		fetch    ="join"
-		index    ="idxContentSite";
+		fetch    ="join";
 
 	/* *********************************************************************
 	 **							CALCULATED FIELDS
 	 ********************************************************************* */
 
-	property
-		name   ="numberOfContentStore"
-		formula="select count(*)
-				from cb_contentCategories as contentCategories, cb_contentStore as contentStore, cb_content as content
-				where contentCategories.FK_categoryID=categoryID
-					and contentCategories.FK_contentID = contentStore.contentID
-					and contentStore.contentID = content.contentID";
-
-	property
-		name   ="numberOfEntries"
-		formula="select count(*)
-				from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
-				where contentCategories.FK_categoryID=categoryID
-					and contentCategories.FK_contentID = entry.contentID
-					and entry.contentID = content.contentID";
-
-	property
-		name   ="numberOfPages"
-		formula="select count(*)
-				from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
-				where contentCategories.FK_categoryID=categoryID
-					and contentCategories.FK_contentID = page.contentID
-					and page.contentID = content.contentID";
 
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS
@@ -127,6 +103,35 @@ component
 		variables.numberOfPublishedContentStore = "";
 
 		return this;
+	}
+
+	/**
+	 * Get the total number of pages with this category
+	 */
+	numeric function getNumberOfPages(){
+		return (
+			isLoaded() ? variables.pageService.getTotalContentCount( categoryId: getCategoryId() ) : 0
+		);
+	}
+
+	/**
+	 * Get the total number of entries with this category
+	 */
+	numeric function getNumberOfEntries(){
+		return (
+			isLoaded() ? variables.entryService.getTotalContentCount( categoryId: getCategoryId() ) : 0
+		);
+	}
+
+	/**
+	 * Get the total number of content store items with this category
+	 */
+	numeric function getNumberOfContentStore(){
+		return (
+			isLoaded() ? variables.contentStoreService.getTotalContentCount(
+				categoryId: getCategoryId()
+			) : 0
+		);
 	}
 
 	/**
