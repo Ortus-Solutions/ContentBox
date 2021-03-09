@@ -27,32 +27,32 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can get approved comment count", function(){
-				var r = commentService.getApprovedCommentCount();
+				var r = commentService.getApprovedCount();
 				expect( r ).toBeGT( 0 );
 			} );
 
 			it( "can get unapproved comment count", function(){
-				var r = commentService.getUnApprovedCommentCount();
+				var r = commentService.getUnApprovedCount();
 				expect( r ).toBeGT( 0 );
 			} );
 
 			describe( "Approved Comment Finders", function(){
 				it( "cand find all", function(){
-					var r = commentService.findApprovedComments();
+					var r = commentService.findAllApproved();
 					expect( r.count ).toBeGT( 0 );
 				} );
 				it( "can find by content ID", function(){
-					var r = commentService.findApprovedComments( contentID = 0 );
+					var r = commentService.findAllApproved( contentID = 0 );
 					expect( r.count ).toBe( 0 );
 
-					var r = commentService.findApprovedComments( contentID = 142 );
+					var r = commentService.findAllApproved( contentID = 142 );
 					expect( r.count ).toBeGT( 0 );
 				} );
 				it( "can find by content types", function(){
-					var r = commentService.findApprovedComments( contentType = "invalid" );
+					var r = commentService.findAllApproved( contentType = "invalid" );
 					expect( r.count ).toBe( 0 );
 
-					var r = commentService.findApprovedComments( contentType = "Entry" );
+					var r = commentService.findAllApproved( contentType = "Entry" );
 					expect( r.count ).toBeGT( 0 );
 				} );
 			} );
