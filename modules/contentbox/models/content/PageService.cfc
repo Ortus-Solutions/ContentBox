@@ -144,13 +144,13 @@ component extends="ContentService" singleton {
 			// Search with active content
 			if ( arguments.searchActiveContent ) {
 				// like disjunctions
-				c.or(
+				c.$or(
 					c.restrictions.like( "title", "%#arguments.search#%" ),
 					c.restrictions.like( "slug", "%#arguments.search#%" ),
 					c.restrictions.like( "ac.content", "%#arguments.search#%" )
 				);
 			} else {
-				c.or(
+				c.$or(
 					c.restrictions.like( "title", "%#arguments.search#%" ),
 					c.restrictions.like( "slug", "%#arguments.search#%" )
 				);
@@ -269,7 +269,7 @@ component extends="ContentService" singleton {
 					alias          : "ac",
 					withClause     : getRestrictions().isTrue( "ac.isActive" )
 				)
-				.or(
+				.$or(
 					c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
 					c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
 				);

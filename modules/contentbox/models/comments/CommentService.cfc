@@ -507,7 +507,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Search Criteria
 		if ( len( arguments.search ) ) {
 			// OR disjunction on author, authorEmail and content.
-			c.or(
+			c.$or(
 				c.restrictions.like( "author", "%#arguments.search#%" ),
 				c.restrictions.like( "authorEmail", "%#arguments.search#%" ),
 				c.restrictions.like( "content", "%#arguments.search#%" )

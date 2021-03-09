@@ -413,7 +413,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					alias          : "ac",
 					withClause     : getRestrictions().isTrue( "ac.isActive" )
 				)
-				.or(
+				.$or(
 					c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
 					c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
 				);
