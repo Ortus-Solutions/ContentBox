@@ -604,17 +604,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @siteId The site to filter on
 	 */
 	array function getTopVisitedContent( numeric max = 5, string siteId = "" ){
-		var c = newCriteria()
+		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
 				c.isEq( "site.siteId", javacast( "int", siteId ) );
 			} )
-			.createAlias( "stats", "stats" )
-			.list(
-				max       = arguments.max,
-				sortOrder = "stats.hits desc",
-				asQuery   = false
-			);
-		return c;
+			.joinTo( "stats", "stats" )
+			.list( max = arguments.max, sortOrder = "stats.hits desc" );
 	}
 
 	/**
