@@ -171,6 +171,24 @@ component
 		dbdefault="true";
 
 	/* *********************************************************************
+	 **							RELATIONSHIPS
+	 ********************************************************************* */
+
+	// O2M -> Settings
+	property
+		name        ="settings"
+		singularName="setting"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="extra"
+		batchsize   ="25"
+		orderby     ="name"
+		cfc         ="contentbox.models.system.Setting"
+		fkcolumn    ="FK_siteId"
+		inverse     ="true"
+		cascade     ="all-delete-orphan";
+
+	/* *********************************************************************
 	 **							CALUCLATED FIELDS
 	 ********************************************************************* */
 
@@ -209,6 +227,7 @@ component
 	 * Constructor
 	 */
 	function init(){
+		variables.settings = [];
 		super.init();
 
 		return this;
@@ -245,6 +264,18 @@ component
 	 */
 	numeric function getNumberOfContent(){
 		return variables.contentService.getTotalContentCount( getSiteId() );
+	}
+
+	/*
+	 * I remove all setting associations
+	 */
+	Site function removeAllSettings(){
+		if ( hasSetting() ) {
+			variables.settings.clear();
+		} else {
+			variables.settings = [];
+		}
+		return this;
 	}
 
 }

@@ -39,8 +39,8 @@ component
 
 	property
 		name     ="isCore"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
@@ -50,13 +50,14 @@ component
 	 **							RELATIONSHIPS
 	 ********************************************************************* */
 
-	// M20 -> site loaded as a proxy and fetched immediately
+	// M20 -> The site this setting belongs to
 	property
 		name     ="site"
 		notnull  ="false"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteId"
+		cascade  ="none"
 		lazy     ="true";
 
 	/* *********************************************************************

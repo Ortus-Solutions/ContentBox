@@ -235,7 +235,12 @@ component {
 				// Two Factor Events
 				"cbadmin_onTwoFactorSettingsPanel",
 				"cbadmin_onAuthorTwoFactorOptions",
-				"cbadmin_onAuthorTwoFactorSaveOptions"
+				"cbadmin_onAuthorTwoFactorSaveOptions",
+				// Site Events
+				"cbadmin_preSiteRemove",
+				"cbadmin_postSiteRemove",
+				"cbadmin_preSiteSave",
+				"cbadmin_postSiteSave"
 			]
 		};
 

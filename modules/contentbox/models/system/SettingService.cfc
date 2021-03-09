@@ -100,11 +100,6 @@ component
 		"cb_dashboard_welcome_body"             : "",
 		// Global Comment Settings
 		"cb_comments_whoisURL"                  : "http://whois.arin.net/ui/query.do?q",
-		"cb_comments_moderation"                : "true",
-		"cb_comments_moderation_whitelist"      : "true",
-		"cb_comments_moderation_blacklist"      : "",
-		"cb_comments_moderation_blockedlist"    : "",
-		"cb_comments_moderation_expiration"     : "30",
 		// Mail Settings
 		"cb_site_mail_server"                   : "",
 		"cb_site_mail_username"                 : "",
@@ -194,30 +189,36 @@ component
 	// Site Defaults
 	this.SITE_DEFAULTS = {
 		// Global HTML: Panel Section
-		"cb_html_beforeHeadEnd"         : "",
-		"cb_html_afterBodyStart"        : "",
-		"cb_html_beforeBodyEnd"         : "",
-		"cb_html_beforeContent"         : "",
-		"cb_html_afterContent"          : "",
-		"cb_html_beforeSideBar"         : "",
-		"cb_html_afterSideBar"          : "",
-		"cb_html_afterFooter"           : "",
-		"cb_html_preEntryDisplay"       : "",
-		"cb_html_postEntryDisplay"      : "",
-		"cb_html_preIndexDisplay"       : "",
-		"cb_html_postIndexDisplay"      : "",
-		"cb_html_preArchivesDisplay"    : "",
-		"cb_html_postArchivesDisplay"   : "",
-		"cb_html_preCommentForm"        : "",
-		"cb_html_postCommentForm"       : "",
-		"cb_html_prePageDisplay"        : "",
-		"cb_html_postPageDisplay"       : "",
+		"cb_html_beforeHeadEnd"              : "",
+		"cb_html_afterBodyStart"             : "",
+		"cb_html_beforeBodyEnd"              : "",
+		"cb_html_beforeContent"              : "",
+		"cb_html_afterContent"               : "",
+		"cb_html_beforeSideBar"              : "",
+		"cb_html_afterSideBar"               : "",
+		"cb_html_afterFooter"                : "",
+		"cb_html_preEntryDisplay"            : "",
+		"cb_html_postEntryDisplay"           : "",
+		"cb_html_preIndexDisplay"            : "",
+		"cb_html_postIndexDisplay"           : "",
+		"cb_html_preArchivesDisplay"         : "",
+		"cb_html_postArchivesDisplay"        : "",
+		"cb_html_preCommentForm"             : "",
+		"cb_html_postCommentForm"            : "",
+		"cb_html_prePageDisplay"             : "",
+		"cb_html_postPageDisplay"            : "",
 		// Site Comment Settings
-		"cb_comments_maxDisplayChars"   : "500",
-		"cb_comments_enabled"           : "true",
-		"cb_comments_notify"            : "true",
-		"cb_comments_moderation_notify" : "true",
-		"cb_comments_notifyemails"      : ""
+		"cb_comments_enabled"                : "true",
+		"cb_comments_maxDisplayChars"        : "500",
+		"cb_comments_notify"                 : "true",
+		"cb_comments_urltranslations"        : "true",
+		"cb_comments_moderation_notify"      : "true",
+		"cb_comments_notifyemails"           : "",
+		"cb_comments_moderation"             : "true",
+		"cb_comments_moderation_whitelist"   : "true",
+		"cb_comments_moderation_blacklist"   : "",
+		"cb_comments_moderation_blockedlist" : "",
+		"cb_comments_moderation_expiration"  : "30"
 	};
 
 	/**
@@ -239,33 +240,35 @@ component
 	 * If they are, we will create the core settings with the appropriate defaults: this.DEFAULTS
 	 */
 	SettingService function preFlightCheck(){
+		// Log it
+		log.info( "> Running ContentBox pre flight checks..." );
+
 		// Iterate over default core settings and check they exist
 		lock
 			name          ="contentbox-pre-flight",
 			timeout       = "10"
 			throwOnTimeout="true"
 			type          ="exclusive" {
-			// var loadedSettings= getAllSettings( force: true );
-
-			// Get all core, non-deleted setting names
-			var loadedSettings = newCriteria()
-				.isNull( "site" )
-				.isFalse( "isDeleted" )
-				.isTrue( "isCore" )
-				.withProjections( property: "name" )
-				.list( sortOrder = "name" );
-
-			// Check what's missing
+			// Check what's missing for the global settings
 			transaction {
+				// Get all core, non-deleted settings
+				var loadedSettings = newCriteria()
+					.isNull( "site" )
+					.isFalse( "isDeleted" )
+					.isTrue( "isCore" )
+					.withProjections( property: "name" )
+					.list( sortOrder = "name" );
+
+				// Verify defaults exist
 				this.DEFAULTS
-					// only load defaults that do not exist
+					// only process defaults that do not exist in the database
 					.filter( function( key, value ){
 						return !arrayContainsNoCase( loadedSettings, arguments.key );
 					} )
-					// Create the missing setting
+					// Create the missing global setting
 					.each( function( key, value ){
 						variables.log.info(
-							"Missing setting (#arguments.key#) in pre-flight, adding it!"
+							"- Missing core setting (#arguments.key#) found in pre-flight, adding it!"
 						);
 						this.save(
 							this.new( {
@@ -275,15 +278,62 @@ component
 							} )
 						);
 					} );
+
+				// Get all site core settings in the database
+				var dbSiteSettings = newCriteria()
+					.isFalse( "isDeleted" )
+					.isTrue( "isCore" )
+					.joinTo( "site", "site" )
+					.withProjections( property: "name,site.slug:siteSlug" )
+					.asStruct()
+					.list( sortOrder = "site.slug,name" );
+
+				// Get all Sites and process them for core settings
+				variables.siteService
+					.getAll()
+					.each( function( site ){
+						var targetSite = arguments.site;
+						this.SITE_DEFAULTS
+							// only process defaults that do not exist in the database
+							.filter( function( key, value ){
+								return arrayFilter( dbSiteSettings, function( item ){
+									return (
+										arguments.item[ "name" ] == key && arguments.item[ "siteSlug" ] == targetSite.getSlug()
+									);
+								} ).isEmpty();
+							} )
+							// Create the missing site setting
+							.each( function( key, value ){
+								variables.log.info(
+									"- Site (#targetSite.getSlug()#) missing setting (#arguments.key#), adding it!"
+								);
+								this.save(
+									this.new( {
+										name   : arguments.key,
+										value  : trim( arguments.value ),
+										isCore : true,
+										site   : targetSite
+									} )
+								);
+							} );
+					} );
 			}
+			// end transaction
 
 			// load cache provider now that everyting is pre-flighted
 			loadCacheProviderName();
 		}
 
-		variables.log.info( "ContentBox Global Settings pre-flight checks finalized!" );
+		variables.log.info( "√ ContentBox Global Settings pre-flight checks finalized!" );
 
 		return this;
+	}
+
+	/**
+	 * Get a collection (struct) of settings that represent the defaults for a site in ContentBox
+	 */
+	struct function getSiteSettingDefaults(){
+		return this.SITE_DEFAULTS;
 	}
 
 	/**
@@ -522,7 +572,7 @@ component
 		var allSites  = variables.siteService.getAllFlat();
 		var container = { "global" : {}, "sites" : {} };
 
-		// Initialize site setting containers
+		// Initialize site setting containers from defaults
 		container.sites = arrayReduce(
 			allSites,
 			function( result, item ){
@@ -532,7 +582,7 @@ component
 			{}
 		);
 
-		// Populate containers
+		// Populate containers from what's on the database now
 		newCriteria()
 			.isFalse( "isDeleted" )
 			.list( sortOrder = "site,name" )

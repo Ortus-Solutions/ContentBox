@@ -16,6 +16,7 @@ component
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
+	property name="settingService" inject="provider:settingService@cb";
 
 	/**
 	 * Constructor
@@ -63,6 +64,56 @@ component
 			.isEq( "slug", "default" )
 			.withProjections( property: "siteId" )
 			.get();
+	}
+
+	/**
+	 * Save a site object in the system. If the site is a new site,
+	 * we make sure all proper settings are created and configured.
+	 *
+	 * @site A persisted or new site object
+	 */
+	Site function save( required site ){
+		transaction {
+			// Create all site settings if this is a new site
+			if ( !arguments.site.isLoaded() ) {
+				variables.settingService.saveAll(
+					variables.settingService
+						.getSiteSettingDefaults()
+						.reduce( function( result, setting, value ){
+							arguments.result.append(
+								variables.settingService.new( {
+									name   : arguments.setting,
+									value  : trim( arguments.value ),
+									isCore : true,
+									site   : site
+								} )
+							)
+							return result;
+						}, [] )
+				);
+			}
+
+			// Persist the site
+			super.save( arguments.site );
+		}
+
+		return arguments.site;
+	}
+
+	/**
+	 * Delete an entire site from the system
+	 *
+	 * @site The site to remove
+	 */
+	SiteService function delete( required site ){
+		transaction {
+			// Remove all settings
+			arguments.site.removeAllSettings();
+			// Now destroy the site
+			super.delete( arguments.site );
+		}
+
+		return this;
 	}
 
 	/**

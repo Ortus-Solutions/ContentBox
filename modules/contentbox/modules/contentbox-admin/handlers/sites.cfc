@@ -95,6 +95,23 @@ component extends="baseHandler" {
 		}
 	}
 
+	/**
+	 * Remove a site
+	 */
+	function remove( event, rc, prc ){
+		// Get requested site to remove
+		var oSite = variables.siteService.get( rc.siteId );
+		// announce event
+		announce( "cbadmin_preSiteRemove", { site : oSite } );
+		// Now delete it
+		variables.siteService.delete( oSite );
+		// announce event
+		announce( "cbadmin_postSiteRemove", { siteId : rc.siteId } );
+		// Message
+		cbMessagebox.setMessage( "info", "Site Removed!" );
+		// relocate
+		relocate( prc.xehSitesManager );
+	}
 
 	/**
 	 * Change current editing site

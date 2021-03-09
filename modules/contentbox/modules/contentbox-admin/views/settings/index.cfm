@@ -32,11 +32,6 @@
 									<i class="fas fa-globe fa-lg"></i> All Sites
 								</a>
 							</li>
-							<li>
-								<a href="##comments" data-toggle="tab">
-									<i class="far fa-comments fa-lg"></i> Comments
-								</a>
-                            </li>
                             <li>
 								<a href="##dashboard_options" data-toggle="tab">
 									<i class="fa fa-desktop fa-lg"></i> Administrator
@@ -105,14 +100,6 @@
                             <div class="tab-pane active" id="site_options">
                                 #renderView( view = "settings/sections/siteOptions", prePostExempt = true )#
 							</div>
-
-							<!--- ********************************************************************* --->
-                            <!---                           COMMENT OPTIONS                               --->
-                            <!--- ********************************************************************* --->
-
-                            <div class="tab-pane" id="comments">
-                                #renderView( view = "settings/sections/comments", prePostExempt = true )#
-                            </div>
 
                             <!--- ********************************************************************* --->
                             <!---                           ADMIN OPTIONS                               --->
