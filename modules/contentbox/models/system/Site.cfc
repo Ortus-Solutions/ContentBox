@@ -95,7 +95,6 @@ component
 	property
 		name     ="isBlogEnabled"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";
@@ -103,7 +102,6 @@ component
 	property
 		name     ="isSitemapEnabled"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";
@@ -111,7 +109,6 @@ component
 	property
 		name     ="poweredByHeader"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";
@@ -119,7 +116,6 @@ component
 	property
 		name     ="adminBar"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";
@@ -127,7 +123,6 @@ component
 	property
 		name     ="isSSL"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false";
@@ -149,7 +144,6 @@ component
 	property
 		name     ="notifyOnEntries"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";
@@ -157,7 +151,6 @@ component
 	property
 		name     ="notifyOnPages"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";
@@ -165,7 +158,6 @@ component
 	property
 		name     ="notifyOnContentStore"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="true"
 		dbdefault="true";

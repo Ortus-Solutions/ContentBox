@@ -383,21 +383,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Comment reference
 		var inComment    = arguments.comment;
 		var settings     = variables.settingService.getAllSettings();
-		var siteSettings = arguments.siteSettings;
 		var site         = inComment.getRelatedContent().getSite();
 		var outEmails    = settings.cb_site_email;
 		var subject      = "";
 		var template     = "";
 
 		// Verify if we have active notifications, else just quit notification process
-		if ( !siteSettings.cb_comments_notify ) {
+		if ( !arguments.siteSettings.cb_comments_notify ) {
 			return;
 		}
 
 		// More notification emails?
 
-		if ( len( siteSettings.cb_comments_notifyemails ) ) {
-			outEmails &= "," & siteSettings.cb_comments_notifyemails;
+		if ( len( arguments.siteSettings.cb_comments_notifyemails ) ) {
+			outEmails &= "," & arguments.siteSettings.cb_comments_notifyemails;
 		}
 
 		// get mail payload
@@ -422,7 +421,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		bodyTokens[ "contentTitle" ] = inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
-		if ( inComment.getIsApproved() eq false AND siteSettings.cb_comments_moderation_notify ) {
+		if ( inComment.getIsApproved() eq false AND arguments.siteSettings.cb_comments_moderation_notify ) {
 			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
 		} else {

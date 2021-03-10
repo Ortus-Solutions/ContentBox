@@ -87,7 +87,7 @@ component
 									isCore : true,
 									site   : site
 								} )
-							)
+							);
 							return result;
 						}, [] )
 				);
@@ -95,7 +95,7 @@ component
 
 			// Persist the site
 			super.save( arguments.site );
-		}
+		} // end transaction
 
 		return arguments.site;
 	}

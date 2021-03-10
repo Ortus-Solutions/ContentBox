@@ -31,7 +31,6 @@ component
 	property
 		name     ="isDeleted"
 		ormtype  = "boolean"
-		//sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false";
