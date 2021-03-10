@@ -228,6 +228,32 @@ component {
 			properties : { filePath : "/cbapp/config/logs/mail" }
 		};
 
+		// Debugger Settings
+		debugger = {
+			// Activate debugger for everybody
+			debugMode = true,
+			// Setup a password for the panel
+			debugPassword = "",
+			enableDumpVar = false,
+			persistentRequestProfiler = true,
+			maxPersistentRequestProfilers = 10,
+			maxRCPanelQueryRows = 10,
+			showTracerPanel = true,
+			expandedTracerPanel = true,
+			showInfoPanel = true,
+			expandedInfoPanel = true,
+			showCachePanel = true,
+			expandedCachePanel = false,
+			showRCPanel = false,
+			expandedRCPanel = false,
+			showModulesPanel = true,
+			expandedModulesPanel = false,
+			showQBPanel = true,
+			expandedQBPanel = false,
+			showRCSnapshots = false,
+			wireboxCreationProfiler=false
+		};
+
 		// Specific Debugging + Logging
 		// logbox.debug 	= [ "cbsecurity" ];
 		// logbox.debug 	= [ "coldbox.system.web.services" ];
