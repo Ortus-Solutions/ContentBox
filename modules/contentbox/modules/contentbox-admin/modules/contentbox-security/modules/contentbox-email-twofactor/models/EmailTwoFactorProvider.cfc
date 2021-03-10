@@ -125,7 +125,7 @@ component
 				name         : arguments.author.getName(),
 				email        : arguments.author.getEmail(),
 				username     : arguments.author.getUsername(),
-				ip           : variables.settingService.getRealIP(),
+				ip           : variables.securityService.getRealIP(),
 				tokenTimeout : TOKEN_TIMEOUT,
 				token        : token,
 				siteName     : site.getName()

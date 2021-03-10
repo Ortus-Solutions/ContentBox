@@ -11,6 +11,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="mailService" inject="mailService@cbmailservices";
 	property name="renderer" inject="coldbox:renderer";
 	property name="settingService" inject="id:settingService@cb";
+	property name="securityService" inject="id:securityService@cb";
 	property name="CBHelper" inject="id:CBHelper@cb";
 	property name="log" inject="logbox:logger:{this}";
 	property name="interceptorService" inject="coldbox:interceptorService";
@@ -179,7 +180,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			var results = { "moderated" : true, "messages" : [] };
 
 			// Log the IP Address
-			inComment.setAuthorIP( variables.settingService.getRealIP() );
+			inComment.setAuthorIP( variables.securityService.getRealIP() );
 			// Default moderation unless user is logged in
 			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 
