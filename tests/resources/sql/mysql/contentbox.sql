@@ -37,8 +37,6 @@ CREATE TABLE `cb_author` (
   KEY `idx_email` (`email`),
   KEY `idx_login` (`username`,`password`,`isActive`),
   KEY `idx_activeAuthor` (`isActive`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_passwordReset` (`isPasswordReset`),
   KEY `idx_2factorauth` (`is2FactorAuth`),
@@ -133,8 +131,6 @@ CREATE TABLE `cb_category` (
   PRIMARY KEY (`categoryID`),
   KEY `idx_slug` (`slug`),
   KEY `idx_categorySlug` (`slug`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_category_FK_siteId` (`FK_siteId`),
   KEY `idxContentSite` (`FK_siteId`),
@@ -178,8 +174,6 @@ CREATE TABLE `cb_comment` (
   KEY `idx_contentComment` (`isApproved`,`FK_contentID`),
   KEY `idx_createdDate` (`createdDate`),
   KEY `idx_commentCreatedDate` (`createdDate`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKFFCED27F91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -274,8 +268,6 @@ CREATE TABLE `cb_content` (
   KEY `idx_expireDate` (`expireDate`),
   KEY `idx_search` (`title`,`isPublished`),
   KEY `idx_showInSearch` (`showInSearch`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_content_FK_siteId` (`FK_siteId`),
   KEY `idxContentSite` (`FK_siteId`),
@@ -433,8 +425,6 @@ CREATE TABLE `cb_contentVersion` (
   KEY `idx_createdDate` (`createdDate`),
   KEY `idx_versionCreatedDate` (`createdDate`),
   KEY `idx_activeContentVersion` (`isActive`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKE166DFF91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`),
   CONSTRAINT `FKE166DFFAA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`)
@@ -584,8 +574,6 @@ CREATE TABLE `cb_customfield` (
   PRIMARY KEY (`customFieldID`),
   KEY `FK1844684991F58374` (`FK_contentID`),
   KEY `idx_contentCustomFields` (`FK_contentID`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FK1844684991F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -686,8 +674,6 @@ CREATE TABLE `cb_loginAttempts` (
   KEY `idx_createdDate` (`createdDate`),
   KEY `idx_values` (`value`),
   KEY `idx_loginCreatedDate` (`createdDate`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -724,8 +710,6 @@ CREATE TABLE `cb_menu` (
   PRIMARY KEY (`menuID`),
   KEY `idx_menuslug` (`slug`),
   KEY `idx_menutitle` (`title`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_menu_FK_siteId` (`FK_siteId`),
   KEY `idxContentSite` (`FK_siteId`),
@@ -773,8 +757,6 @@ CREATE TABLE `cb_menuItem` (
   KEY `FKF9F1DCF2D3B42410` (`FK_parentID`),
   KEY `FKF9F1DCF28E0E8DD2` (`FK_menuID`),
   KEY `idx_menuitemtitle` (`title`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKF9F1DCF28E0E8DD2` FOREIGN KEY (`FK_menuID`) REFERENCES `cb_menu` (`menuID`),
   CONSTRAINT `FKF9F1DCF2D3B42410` FOREIGN KEY (`FK_parentID`) REFERENCES `cb_menuItem` (`menuItemID`)
@@ -817,8 +799,6 @@ CREATE TABLE `cb_module` (
   KEY `idx_entryPoint` (`entryPoint`),
   KEY `idx_moduleName` (`name`),
   KEY `idx_activeModule` (`isActive`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_moduleType` (`moduleType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -898,8 +878,6 @@ CREATE TABLE `cb_permission` (
   `isDeleted` bit(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`permissionID`),
   UNIQUE KEY `permission` (`permission`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_permissionName` (`permission`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -972,8 +950,6 @@ CREATE TABLE `cb_permissionGroup` (
   `description` longtext,
   PRIMARY KEY (`permissionGroupID`),
   UNIQUE KEY `name` (`name`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_permissionGroupName` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1029,8 +1005,6 @@ CREATE TABLE `cb_role` (
   `isDeleted` bit(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`roleID`),
   UNIQUE KEY `role` (`role`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_roleName` (`role`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1194,8 +1168,6 @@ CREATE TABLE `cb_securityRule` (
   `action` varchar(50) DEFAULT 'redirect',
   `module` longtext,
   PRIMARY KEY (`ruleID`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1249,8 +1221,6 @@ CREATE TABLE `cb_setting` (
   `FK_siteId` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`settingID`),
   KEY `idx_core` (`isCore`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   KEY `fk_cb_setting_FK_siteId` (`FK_siteId`),
   CONSTRAINT `fk_cb_setting_FK_siteId` FOREIGN KEY (`FK_siteId`) REFERENCES `cb_site` (`siteId`) ON DELETE CASCADE ON UPDATE NO ACTION
@@ -1449,8 +1419,6 @@ CREATE TABLE `cb_site` (
   `domain` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`siteId`),
   UNIQUE KEY `slug` (`slug`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_siteSlug` (`slug`),
   KEY `idx_deleted` (`isDeleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1482,8 +1450,6 @@ CREATE TABLE `cb_stats` (
   PRIMARY KEY (`statsID`),
   UNIQUE KEY `FK_contentID` (`FK_contentID`),
   KEY `FK14DE30BF91F58374` (`FK_contentID`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FK14DE30BF91F58374` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -1527,8 +1493,6 @@ CREATE TABLE `cb_subscribers` (
   KEY `idx_createdDate` (`createdDate`),
   KEY `idx_subscriberEmail` (`subscriberEmail`),
   KEY `idx_subscriberCreatedDate` (`createdDate`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1562,8 +1526,6 @@ CREATE TABLE `cb_subscriptions` (
   KEY `idx_subscriber` (`FK_subscriberID`),
   KEY `idx_createdDate` (`createdDate`),
   KEY `idx_subscriptionCreatedDate` (`createdDate`),
-  KEY `idx_createDate` (`createdDate`),
-  KEY `idx_modifiedDate` (`modifiedDate`),
   KEY `idx_deleted` (`isDeleted`),
   CONSTRAINT `FKE92A1716F2A66EE4` FOREIGN KEY (`FK_subscriberID`) REFERENCES `cb_subscribers` (`subscriberID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
