@@ -16,6 +16,7 @@ services:
       # You can uncomment and it will seed the db with our prepared sql data
       #- ../tests/resources/sql/mysql:/docker-entrypoint-initdb.d
 
+  # Redis Cache
   contentbox_cache:
     platform: linux/x86_64 # Needed for Mac's on the M1 chip
     image: redis
