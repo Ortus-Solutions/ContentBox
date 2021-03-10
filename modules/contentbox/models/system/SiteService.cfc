@@ -95,7 +95,8 @@ component
 
 			// Persist the site
 			super.save( arguments.site );
-		} // end transaction
+		}
+		// end transaction
 
 		return arguments.site;
 	}

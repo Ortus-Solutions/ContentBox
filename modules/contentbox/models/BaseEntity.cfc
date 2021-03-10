@@ -30,7 +30,7 @@ component
 
 	property
 		name     ="isDeleted"
-		ormtype  = "boolean"
+		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false";
