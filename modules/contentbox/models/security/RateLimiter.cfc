@@ -9,6 +9,7 @@ component extends="coldbox.system.Interceptor" {
 
 	// DI
 	property name="settingService" inject="id:settingService@cb";
+	property name="securityService" inject="id:securityService@cb";
 
 	/**
 	 * Configure
@@ -22,7 +23,7 @@ component extends="coldbox.system.Interceptor" {
 	 * Limiter
 	 */
 	function onRequestCapture( event, data, buffer ){
-		var allSettings = settingService.getAllSettings();
+		var allSettings = variables.settingService.getAllSettings();
 
 		// If turned off, just exist
 		if (
@@ -54,7 +55,7 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	private function limiter( count, duration, event, settings ){
 		// Get real IP address of requester
-		var realIP = settingService.getRealIP();
+		var realIP = variables.securityService.getRealIP();
 
 		// If first time visit, create record.
 		if ( !structKeyExists( variables.limitData, realIP ) ) {

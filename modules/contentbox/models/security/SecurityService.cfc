@@ -383,7 +383,7 @@ component singleton {
 		// get mail payload
 		var bodyTokens = {
 			name        : arguments.author.getName(),
-			ip          : settingService.getRealIP(),
+			ip          : getRealIP(),
 			linkTimeout : settings.cb_security_password_reset_expiration,
 			siteName    : defaultSite.getName(),
 			linkToken   : CBHelper.linkAdmin(
@@ -506,7 +506,7 @@ component singleton {
 		// get mail payload
 		var bodyTokens = {
 			name       : arguments.author.getName(),
-			ip         : settingService.getRealIP(),
+			ip         : getRealIP(),
 			linkLogin  : CBHelper.linkAdminLogin( ssl = settings.cb_admin_ssl ),
 			siteName   : defaultSite.getName(),
 			adminEmail : settings.cb_site_email
@@ -620,7 +620,6 @@ component singleton {
 		}
 	}
 
-
 	/**
 	 * Set remember me cookie
 	 * @username The username to store
@@ -716,6 +715,23 @@ component singleton {
 
 		// Return it.
 		return oSetting.getValue();
+	}
+
+	/**
+	 * Get Real IP, by looking at clustered, proxy headers and locally.
+	 */
+	function getRealIP(){
+		var headers = getHTTPRequestData().headers;
+
+		// Very balanced headers
+		if ( structKeyExists( headers, "x-cluster-client-ip" ) ) {
+			return headers[ "x-cluster-client-ip" ];
+		}
+		if ( structKeyExists( headers, "X-Forwarded-For" ) ) {
+			return headers[ "X-Forwarded-For" ];
+		}
+
+		return len( CGI.REMOTE_ADDR ) ? trim( listFirst( CGI.REMOTE_ADDR ) ) : "127.0.0.1";
 	}
 
 }
