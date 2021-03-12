@@ -413,6 +413,11 @@ component
 		formula="select count(*) from cb_content content where content.FK_parentID=contentID"
 		default="0";
 
+	property
+		name   ="numberOfComments"
+		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID"
+		default="0";
+
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS + STATIC VARS
 	 ********************************************************************* */
@@ -484,11 +489,7 @@ component
 	 * Get the total number of comments this content object has
 	 */
 	numeric function getNumberOfComments(){
-		return (
-			isLoaded() ? variables.wirebox
-				.getInstance( "CommentService@cb" )
-				.getTotalCountByContent( getContentId() ) : 0
-		);
+		return ( isNull( variables.numberOfComments ) ? 0 : variables.numberOfComments );
 	}
 
 	/**
