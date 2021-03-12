@@ -59,8 +59,7 @@ component
 	property
 		name     ="isActive"
 		notnull  ="true"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
 		default  ="false"
 		dbdefault="false"
 		index    ="idx_activeContentVersion,idx_contentVersions";

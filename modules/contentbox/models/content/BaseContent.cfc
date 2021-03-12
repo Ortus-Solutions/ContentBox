@@ -401,6 +401,18 @@ component
 	 **							CALCULATED FIELDS
 	 ********************************************************************* */
 
+	property
+		name   ="numberOfHits"
+		formula="select cbStats.hits
+			from cb_stats cbStats
+			where cbStats.FK_contentID=contentID"
+		default="0";
+
+	property
+		name   ="numberOfChildren"
+		formula="select count(*) from cb_content content where content.FK_parentID=contentID"
+		default="0";
+
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS + STATIC VARS
 	 ********************************************************************* */
@@ -455,14 +467,17 @@ component
 	}
 
 	/**
-	 * Get the total number of hits this content object has
+	 * Get the number of hits
 	 */
 	numeric function getNumberOfHits(){
-		return (
-			isLoaded() ? variables.wirebox
-				.getInstance( "StatsService@cb" )
-				.getTotalHitsByContent( getContentId() ) : 0
-		);
+		return ( isNull( variables.numberOfHits ) ? 0 : variables.numberOfHits );
+	}
+
+	/**
+	 * Get the number of children
+	 */
+	numeric function getNumberOfChildren(){
+		return ( isNull( variables.numberOfChildren ) ? 0 : variables.numberOfChildren );
 	}
 
 	/**
@@ -484,20 +499,6 @@ component
 			isLoaded() ? variables.wirebox
 				.getInstance( "CommentService@cb" )
 				.getTotalCountByContent( contentId: getContentId(), isApproved: true ) : 0
-		);
-	}
-
-	/**
-	 * Get the total number of content children we have
-	 */
-	numeric function getNumberOfChildren(){
-		// We use this instead of the relationshipt to make it fast!
-		return (
-			isLoaded() ? variables.contentService
-				.newCriteria()
-				.isNotNull( "parent" )
-				.isEq( "parent.contentID", javacast( "int", getContentId() ) )
-				.count() : 0
 		);
 	}
 
@@ -1086,32 +1087,35 @@ component
 	}
 
 	/**
-	 * Get recursive slug paths to get ancestry, DEPRECATED.
-	 * @deprecated
-	 */
-	function getRecursiveSlug( separator = "/" ){
-		var pPath = "";
-		if ( hasParent() ) {
-			pPath = getParent().getRecursiveSlug();
-		}
-		return pPath & arguments.separator & getSlug();
-	}
-
-	/**
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
-	function getContent(){
+	string function getContent(){
 		return getActiveContent().getContent();
 	}
 
 	/**
 	 * Get the latest active content object, empty new one if none assigned
 	 */
-	function getActiveContent(){
-		if ( isLoaded() ) {
-			return variables.contentVersionService.getActiveVersion( getContentId() );
+	ContentVersion function getActiveContent(){
+		// If not loaded, return a new entity
+		if ( !isLoaded() ) {
+			return variables.contentVersionService.new();
 		}
-		return variables.contentVersionService.new();
+		// Load up the active content
+		if ( isNull( variables.activeContent ) ) {
+			// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
+			for ( var thisVersion in variables.contentVersions ) {
+				if ( thisVersion.getIsActive() ) {
+					variables.activeContent = thisVersion;
+					break;
+				}
+			}
+			// We didn't find one, something is out of sync
+			if ( isNull( variables.activeContent ) ) {
+				return variables.contentVersionService.new();
+			}
+		}
+		return variables.activeContent;
 	}
 
 	/**
@@ -1122,11 +1126,13 @@ component
 		if ( !isLoaded() ) {
 			return false;
 		}
-		// Query if we haev one
-		return variables.contentVersionService.getNumberOfVersions(
-			contentId: getContentId(),
-			isActive : true
-		) > 0;
+		// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
+		for ( var thisVersion in variables.contentVersions ) {
+			if ( thisVersion.getIsActive() ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -1588,17 +1594,17 @@ component
 	}
 
 	/**
-	 * get flat categories list
+	 * Get a list string of the categories this content object has.
+	 *
+	 * @return The category list or `Uncategorized` if it doesn't have any
 	 */
 	function getCategoriesList(){
 		if ( NOT hasCategories() ) {
 			return "Uncategorized";
 		}
-		var catList = [];
-		for ( var x = 1; x lte arrayLen( variables.categories ); x++ ) {
-			arrayAppend( catList, variables.categories[ x ].getCategory() );
-		}
-		return replace( arrayToList( catList ), ",", ", ", "all" );
+		return arrayMap( variables.categories, function( item ){
+			return item.getCategory();
+		} ).toList();
 	}
 
 	/**

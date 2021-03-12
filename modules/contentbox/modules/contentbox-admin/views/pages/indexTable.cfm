@@ -16,7 +16,7 @@
 <!--- pages --->
 <table id="pages" name="pages" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
     <thead>
-        <tr>
+        <tr></tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
             	<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
             </th>
@@ -49,7 +49,7 @@
 					class="success"
 				<cfelseif !page.isContentPublished()>
 					class="warning"
-				<cfelseif page.getNumberOfActiveVersions() eq 0 >
+				<cfelseif page.hasActiveContent() eq false>
 					class="danger" title="No active content versions found, please publish one."
 				</cfif>
 				<!--- double click drill down --->
@@ -65,6 +65,7 @@
 					<cfif page.getSlug() eq prc.oCurrentSite.getHomepage()>
 						<i class="fa fa-home textMuted" title="Current Homepage"></i>
 					</cfif>
+
 
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
@@ -82,7 +83,7 @@
 					<!--- Title --->
 					<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 						<a
-							href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"
+							href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 							title="Edit #page.getTitle()#"
 							class="size18"
 						>
@@ -175,7 +176,10 @@
 								<!--- Clone Command --->
 								<li class="mb5">
 									<a
-										href="javascript:openCloneDialog('#page.getContentID()#','#URLEncodedFormat(page.getTitle())#')"
+										href="javascript:openCloneDialog(
+											'#page.getContentID()#',
+											'#URLEncodedFormat( page.getTitle() )#'
+										)"
 									>
 										<i class="far fa-clone fa fa-lg"></i> Clone
 									</a>
@@ -184,7 +188,7 @@
 								<!--- Create Child --->
 								<li class="mb5">
 									<a
-										href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"
+										href="#event.buildLink( prc.xehPageEditor )#/parentID/#page.getContentID()#"
 									>
 										<i class="fas fa-sitemap fa-lg"></i> Create Child
 									</a>
@@ -194,7 +198,7 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 									<li class="mb5">
 										<a
-											href="javascript:remove('#page.getContentID()#')"
+											href="javascript:remove( '#page.getContentID()#' )"
 											class="confirmIt"
 											data-title="<i class='far fa-trash-alt'></i> Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
@@ -209,7 +213,7 @@
 								<!--- Edit Command --->
 								<li class="mb5">
 									<a
-										href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"
+										href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 									>
 										<i class="fas fa-pen fa-lg"></i> Edit
 									</a>
@@ -220,7 +224,7 @@
 								<!--- Export --->
 								<li class="mb5">
 									<a
-										href="#event.buildLink(to=prc.xehPageExport)#/contentID/#page.getContentID()#.json"
+										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
 										target="_blank"
 									>
 										<i class="fas fa-file-export fa-lg"></i> Export as JSON
@@ -228,7 +232,7 @@
 								</li>
 								<li class="mb5">
 									<a
-										href="#event.buildLink(to=prc.xehPageExport)#/contentID/#page.getContentID()#.xml"
+										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.xml"
 										target="_blank"
 									>
 										<i class="fas fa-file-export fa-lg"></i> Export as XML
@@ -240,7 +244,7 @@
 							<!--- History Command --->
 							<li class="mb5">
 								<a
-									href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"
+									href="#event.buildLink( prc.xehPageHistory )#/contentID/#page.getContentID()#"
 								>
 									<i class="fas fa-history fa-lg"></i> History
 								</a>

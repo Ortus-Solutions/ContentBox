@@ -44,7 +44,7 @@
 				class="success"
 			<cfelseif !entry.isContentPublished()>
 				class="warning"
-			<cfelseif entry.getNumberOfActiveVersions() eq 0 >
+			<cfelseif entry.hasActiveContent() eq false>
 				class="danger" title="No active content versions found, please publish one."
 			</cfif>
 		>

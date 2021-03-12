@@ -32,29 +32,11 @@
 				</span>
 			</a>
 
-			<cfif args.content.getAuthorEmail() neq args.content.getCreatorEmail()>
-			<a
-				href="mailto:#args.content.getAuthorEmail()#"
-				class="textMuted ml5"
-				title="Last edit by #args.content.getAuthorName()#"
-			>
-				#getInstance( "Avatar@cb" ).renderAvatar(
-					email	= args.content.getAuthorEmail(),
-					size	= "20",
-					class	= "img img-circle"
-				)#
-				<span class="ml5">
-					#args.content.getAuthorName()#
-				</span>
-			</a>
-			</cfif>
-		</div>
-
-		<!--- Created Date --->
-		<div class="mt10 mb5 ml5">
 			<span title="Created Date">
 				<i class="fas fa-calendar mr5"></i> #args.content.getDisplayCreatedDate()#
 			</span>
+
+
 		</div>
 
 		<!--- Categories --->
