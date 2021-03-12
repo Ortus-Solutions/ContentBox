@@ -608,7 +608,7 @@ component accessors="true" singleton threadSafe {
 	 * @return array of entities
 	 */
 	any function getCurrentCategories(){
-		return categoryService.list( sortOrder = "category", asQuery = false );
+		return variables.categoryService.list( sortOrder = "category", asQuery = false );
 	}
 
 	/**
@@ -2161,7 +2161,8 @@ component accessors="true" singleton threadSafe {
 		arguments.pageRecords = pageService.findPublishedPages(
 			parent    : "",
 			showInMenu: true,
-			siteId    : site().getSiteId()
+			siteId    : site().getSiteId(),
+			properties: "contentID,slug,title,numberOfChildren"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2209,7 +2210,8 @@ component accessors="true" singleton threadSafe {
 		arguments.pageRecords = pageService.findPublishedPages(
 			parent    : page.getContentID(),
 			showInMenu: true,
-			siteId    : site().getSiteId()
+			siteId    : site().getSiteId(),
+			properties: "contentID,slug,title,numberOfChildren"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2375,17 +2377,19 @@ component accessors="true" singleton threadSafe {
 			if (
 				!len( arguments.excludes ) OR !listFindNoCase(
 					arguments.excludes,
-					pageResults.pages[ x ].getTitle()
+					pageResults.pages[ x ][ "title" ]
 				)
 			) {
 				// Do we need to nest?
 				var doNesting = (
-					arguments.currentLevel lt arguments.levels AND pageResults.pages[ x ].hasChild()
+					arguments.currentLevel lt arguments.levels AND pageResults.pages[ x ][
+						"numberOfChildren"
+					] > 0
 				);
 				// Is element active (or one of its decendants)
-				var isElementActive         = currentPageID eq pageResults.pages[ x ].getContentID();
+				var isElementActive         = currentPageID eq pageResults.pages[ x ][ "contentID" ];
 				var isElementActiveAncestor = (
-					listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ].getContentID() )
+					listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ][ "contentID" ] )
 				);
 				// class = active? Then add to class text
 				if ( isElementActive ) {
@@ -2400,15 +2404,16 @@ component accessors="true" singleton threadSafe {
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPage( pageResults.pages[ x ] )#"">#pageResults.pages[ x ].getTitle()#</a>"
+							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"">#pageResults.pages[ x ][ "title" ]#</a>"
 						);
 						// If type is "li" then guess to do a nested ul list
 						b.append(
 							buildMenu(
 								pageRecords = pageService.findPublishedPages(
-									parent    : pageResults.pages[ x ].getContentID(),
+									parent    : pageResults.pages[ x ][ "contentID" ],
 									showInMenu: true,
-									siteId    : site().getSiteId()
+									siteId    : site().getSiteId(),
+									properties: "contentID,slug,title,numberOfChildren"
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2431,15 +2436,16 @@ component accessors="true" singleton threadSafe {
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPage( pageResults.pages[ x ] )#"">#pageResults.pages[ x ].getTitle()#</a>"
+							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"">#pageResults.pages[ x ][ "title" ]#</a>"
 						);
 						// If type is "li" then guess to do a nested ul list
 						b.append(
 							buildMenu(
 								pageRecords = pageService.findPublishedPages(
-									parent    : pageResults.pages[ x ].getContentID(),
+									parent    : pageResults.pages[ x ][ "contentID" ],
 									showInMenu: true,
-									siteId    : site().getSiteId()
+									siteId    : site().getSiteId(),
+									properties: "contentID,slug,title,numberOfChildren"
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2454,7 +2460,7 @@ component accessors="true" singleton threadSafe {
 					} else {
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPage( pageResults.pages[ x ] )#"">#pageResults.pages[ x ].getTitle()#</a>"
+							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"">#pageResults.pages[ x ][ "title" ]#</a>"
 						);
 					}
 
@@ -2462,15 +2468,16 @@ component accessors="true" singleton threadSafe {
 					b.append( "</li>" );
 				} else if ( arguments.type eq "data" ) {
 					var pageData = {
-						title : pageResults.pages[ x ].getTitle(),
-						link  : linkPage( pageResults.pages[ x ] )
+						title : pageResults.pages[ x ][ "title" ],
+						link  : linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )
 					};
 					if ( doNesting ) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedPages(
-								parent    : pageResults.pages[ x ].getContentID(),
+								parent    : pageResults.pages[ x ][ "contentID" ],
 								showInMenu: true,
-								siteId    : site().getSiteId()
+								siteId    : site().getSiteId(),
+								properties: "contentID,slug,title,numberOfChildren"
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
@@ -2484,13 +2491,16 @@ component accessors="true" singleton threadSafe {
 					}
 					// Do we nest active and activeShowChildren flag is activated?
 					else if (
-						activeShowChildren AND isElementActive AND pageResults.pages[ x ].hasChild()
+						activeShowChildren AND isElementActive AND pageResults.pages[ x ][
+							"numberOfChildren"
+						] > 0
 					) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedPages(
-								parent    : pageResults.pages[ x ].getContentID(),
+								parent    : pageResults.pages[ x ][ "contentID" ],
 								showInMenu: true,
-								siteId    : site().getSiteId()
+								siteId    : site().getSiteId(),
+								properties: "contentID,slug,title,numberOfChildren"
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
@@ -2505,7 +2515,7 @@ component accessors="true" singleton threadSafe {
 					arrayAppend( dataMenu, pageData );
 				} else {
 					b.append(
-						"<a href=""#linkPage( pageResults.pages[ x ] )#"" class=""#arrayToList( classText, " " )#"">#pageResults.pages[ x ].getTitle()#</a>#arguments.separator#"
+						"<a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"" class=""#arrayToList( classText, " " )#"">#pageResults.pages[ x ][ "title" ]#</a>#arguments.separator#"
 					);
 				}
 			}

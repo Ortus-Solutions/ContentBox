@@ -9,6 +9,7 @@ component extends="content" {
 
 	// DI
 	property name="entryService" inject="id:entryService@cb";
+	property name="paginator" inject="Paging@cb";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -91,25 +92,24 @@ component extends="content" {
 			rc.page = 1;
 		}
 
-		// XSS Cleanup
-		rc.q        = variables.antiSamy.clean( rc.q );
-		rc.category = variables.antiSamy.clean( rc.category );
-
 		// prepare paging object
-		prc.oPaging          = getInstance( "Paging@cb" );
+		prc.oPaging          = variables.paginator;
 		prc.pagingBoundaries = prc.oPaging.getBoundaries(
 			pagingMaxRows: prc.cbSettings.cb_paging_maxentries
 		);
-		prc.pagingLink = variables.CBHelper.linkBlog() & "?page=@page@";
+		prc.blogLink   = variables.CBHelper.linkBlog();
+		prc.pagingLink = prc.blogLink & "?page=@page@";
 
 		// Search Paging Link Override?
 		if ( len( rc.q ) ) {
-			prc.pagingLink = variables.CBHelper.linkBlog() & "/search/#rc.q#/@page@?";
+			rc.q           = variables.antiSamy.clean( rc.q );
+			prc.pagingLink = prc.blogLink & "/search/#rc.q#/@page@?";
 		}
 
 		// Category Filter Link Override
 		if ( len( rc.category ) ) {
-			prc.pagingLink = variables.CBHelper.linkBlog() & "/category/#rc.category#/@page@?";
+			rc.category    = variables.antiSamy.clean( rc.category );
+			prc.pagingLink = prc.blogLink & "/category/#rc.category#/@page@?";
 		}
 
 		// get published entries
@@ -174,7 +174,7 @@ component extends="content" {
 		}
 
 		// prepare paging object
-		prc.oPaging          = getInstance( "Paging@cb" );
+		prc.oPaging          = variables.paginator;
 		prc.pagingBoundaries = prc.oPaging.getBoundaries(
 			pagingMaxRows = prc.cbSettings.cb_paging_maxentries
 		);

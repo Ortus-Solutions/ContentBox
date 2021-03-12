@@ -496,11 +496,14 @@ component
 	 * Get the total number of approved comments this content object has
 	 */
 	numeric function getNumberOfApprovedComments(){
-		return (
-			isLoaded() ? variables.wirebox
-				.getInstance( "CommentService@cb" )
-				.getTotalCountByContent( contentId: getContentId(), isApproved: true ) : 0
-		);
+		if ( !isLoaded() ) {
+			return 0;
+		}
+		return variables.comments
+			.filter( function( comment ){
+				return comment.getIsApproved();
+			} )
+			.len();
 	}
 
 	/**

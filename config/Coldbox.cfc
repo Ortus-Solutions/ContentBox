@@ -245,10 +245,9 @@ component {
 			showCachePanel = true,
 			expandedCachePanel = false,
 			showRCPanel = false,
-			expandedRCPanel = false,
 			showModulesPanel = true,
 			expandedModulesPanel = false,
-			showQBPanel = true,
+			showQBPanel = false,
 			expandedQBPanel = false,
 			showRCSnapshots = false,
 			wireboxCreationProfiler=false

@@ -25,7 +25,7 @@
 		<div class="row">
 			<div class="<cfif args.sidebar>col-sm-9<cfelse>col-sm-12</cfif>">
 				<!--- ContentBoxEvent --->
-				#cb.event("cbui_preEntryDisplay")#
+				#cb.event( "cbui_preEntryDisplay" )#
 
 
 				<!--- Export and Breadcrumbs Symbols --->

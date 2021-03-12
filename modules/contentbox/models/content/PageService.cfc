@@ -222,6 +222,7 @@ component extends="ContentService" singleton {
 	 * @showInMenu If passed, it limits the search to this content property
 	 * @sortOrder The sort order string, defaults to publisedDate DESC
 	 * @siteId The siteId to filter on
+	 * @properties The list of properties to project on instead of giving you full object graphs
 	 *
 	 * @return struct of { count, pages }
 	 */
@@ -234,7 +235,8 @@ component extends="ContentService" singleton {
 		string parent,
 		boolean showInMenu,
 		string sortOrder = "publishedDate DESC",
-		string siteId    = ""
+		string siteId    = "",
+		properties
 	){
 		var results = { "count" : 0, "pages" : [] };
 		var c       = newCriteria();
@@ -247,59 +249,55 @@ component extends="ContentService" singleton {
 				c.restrictions.isGT( "expireDate", now() )
 			)
 			// only non-password pages
-			.isEq( "passwordProtection", "" );
-
-		// Show only pages with showInMenu criteria?
-		if ( structKeyExists( arguments, "showInMenu" ) ) {
-			c.isEq( "showInMenu", javacast( "boolean", arguments.showInMenu ) );
-		}
-
-		// Category Filter
-		if ( len( arguments.category ) ) {
-			// create association with categories by slug.
-			c.createAlias( "categories", "cats" )
-				.isIn( "cats.slug", listToArray( arguments.category ) );
-		}
-
-		// Search Criteria
-		if ( len( arguments.searchTerm ) ) {
-			// like disjunctions
-			c.createAlias(
-					associationName: "contentVersions",
-					alias          : "ac",
-					withClause     : getRestrictions().isTrue( "ac.isActive" )
-				)
-				.$or(
-					c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
-					c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
-				);
-		}
-
-		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
-		}
-
-		// parent filter
-		if ( structKeyExists( arguments, "parent" ) ) {
-			if ( len( trim( arguments.parent ) ) ) {
-				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
-			} else {
-				c.isNull( "parent" );
-			}
-			// change sort by parent
-			arguments.sortOrder = "order asc";
-		}
+			.isEq( "passwordProtection", "" )
+			// Show only pages with showInMenu criteria?
+			.when( !isNull( arguments.showInMenu ), function( c ){
+				c.isEq( "showInMenu", javacast( "boolean", showInMenu ) );
+			} )
+			// Category Filter
+			.when( len( arguments.category ), function( c ){
+				// create association with categories by slug.
+				c.joinTo( "categories", "cats" ).isIn( "cats.slug", listToArray( category ) );
+			} )
+			// Search Criteria
+			.when( len( arguments.searchTerm ), function( c ){
+				// like disjunctions
+				c.joinTo(
+						associationName: "contentVersions",
+						alias          : "ac",
+						withClause     : getRestrictions().isTrue( "ac.isActive" )
+					)
+					.$or(
+						c.restrictions.like( "title", "%#searchTerm#%" ),
+						c.restrictions.like( "ac.content", "%#searchTerm#%" )
+					);
+			} )
+			// Site Filter
+			.when( len( arguments.siteId ), function( c ){
+				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			} )
+			// Parent Filter
+			.when( !isNull( arguments.parent ), function( c ){
+				if ( len( trim( parent ) ) ) {
+					c.isEq( "parent.contentID", javacast( "int", parent ) );
+				} else {
+					c.isNull( "parent" );
+				}
+				// change sort by parent
+				sortOrder = "order asc";
+			} );
 
 		// run criteria query and projections count
 		results.count = c.count( "contentID" );
 		results.pages = c
-			.asDistinct()
+			// Do we want array of simple projections?
+			.when( !isNull( arguments.properties ), function( c ){
+				c.withProjections( property: properties ).asStruct();
+			} )
 			.list(
 				offset   : arguments.offset,
 				max      : arguments.max,
-				sortOrder: arguments.sortOrder,
-				asQuery  : arguments.asQuery
+				sortOrder: arguments.sortOrder
 			);
 
 		return results;

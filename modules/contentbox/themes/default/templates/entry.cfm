@@ -23,8 +23,14 @@
 
 		<!--- Post detail --->
 		<div class="row">
-			<div class="col-sm-7 pull-left"><span class="text-muted">Posted by</span> <i class="icon-user"></i> <a href="##">#entry.getAuthorName()#</a></div>
-			<div class="col-sm-5 pull-right text-right"><i class="fa fa-calendar"></i> #entry.getDisplayPublishedDate()#</div>
+			<div class="col-sm-7 pull-left">
+				<span class="text-muted">Posted by</span>
+				<i class="icon-user"></i>
+				<a href="##">#entry.getAuthorName()#</a>
+			</div>
+			<div class="col-sm-5 pull-right text-right">
+				<i class="fa fa-calendar"></i> #entry.getDisplayPublishedDate()#
+			</div>
 		</div>
 
 
@@ -34,7 +40,9 @@
 			<cfif entry.hasExcerpt()>
 				#entry.renderExcerpt()#
 				<div class="post-more">
-					<a href="#cb.linkEntry( entry )#" title="Read The Full Entry!"><button class="btn btn-success">Read More...</button></a>
+					<a href="#cb.linkEntry( entry )#" title="Read The Full Entry!">
+						<button class="btn btn-success">Read More...</button>
+					</a>
 				</div>
 			<cfelse>
 				#entry.renderContent()#
@@ -42,10 +50,13 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-9 pull-left">
-				<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks(entry)#
+				<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks( entry )#
 			</div>
 			<div class="col-xs-3 pull-right text-right">
-				<i class="fa fa-comment"></i> <a href="#cb.linkEntry(entry)###comments" title="View Comments"> #entry.getNumberOfApprovedComments()# Comments</a>
+				<i class="fa fa-comment"></i>
+				<a href="#cb.linkEntry( entry )###comments" title="View Comments">
+					#entry.getNumberOfApprovedComments()# Comments
+				</a>
 			</div>
 		</div>
 	</div>

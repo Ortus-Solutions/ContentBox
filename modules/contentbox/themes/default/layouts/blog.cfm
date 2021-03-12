@@ -14,9 +14,9 @@
 <body>
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_afterBodyStart" )#
-	
+
 	<!--- Header --->
-	#cb.quickView( view='_header' )#
+	#cb.quickView( '_header' )#
 
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_beforeContent" )#
@@ -28,7 +28,7 @@
 	#cb.event( "cbui_afterContent" )#
 
 	#cb.quickView( view='_footer' )#
-	
+
 	<!--- ContentBoxEvent --->
 	#cb.event( "cbui_beforeBodyEnd" )#
 </body>
