@@ -28,6 +28,7 @@ component accessors="true" singleton threadSafe {
 	property name="resourceService" inject="resourceService@cbi18n";
 	property name="securityService" inject="securityService@cb";
 	property name="markdown" inject="Processor@cbmarkdown";
+	property name="requestStorage" inject="requestStorage@cbstorages";
 
 	/**
 	 * Constructor
@@ -268,9 +269,13 @@ component accessors="true" singleton threadSafe {
 	 * @siteId The site id to get the root from, by default we use the current site you are on
 	 */
 	function site( string siteId = "" ){
-		// Verify incoming override
+		// Verify incoming override/lookup
 		if ( len( arguments.siteId ) ) {
-			variables.siteService.getOrFail( arguments.siteId );
+			// Do a request storage lookup cache for optmizations when requesting the same site
+			// over and over again in the same request.
+			return variables.requestStorage.getOrSet( "cbhelper-request-site-#arguments.siteId#", function(){
+				return variables.siteService.getOrFail( siteId );
+			} );
 		}
 
 		// Verify PRC
@@ -1625,7 +1630,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @page The page to link to. This can be a simple value or a page object
 	 * @ssl	Use SSL or not, defaults to false.
-	 * @format The format output of the content default is HTML but you can pass pdf,print or doc.
+	 * @format The format extension output of the content default is HTML but you can pass pdf, print or doc.
 	 *
 	 * @return The link to this page
 	 */
@@ -1634,7 +1639,7 @@ component accessors="true" singleton threadSafe {
 		boolean ssl = getRequestContext().isSSL(),
 		format      = "html"
 	){
-		// format?
+		// format extension?
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 
 		// link directly or with slug
@@ -1646,11 +1651,7 @@ component accessors="true" singleton threadSafe {
 			);
 		}
 
-		// Is this page the home page
-		if ( arguments.page.isHomePage() ) {
-			return linkHome( arguments.page.getSiteId() );
-		}
-
+		// Build out the link
 		return siteRoot( arguments.page.getSiteId() ) & sep() & arguments.page.getSlug() & outputFormat;
 	}
 
@@ -1670,11 +1671,7 @@ component accessors="true" singleton threadSafe {
 		var outputFormat = ( arguments.format neq "html" ? ".#arguments.format#" : "" );
 		// cleanup
 		arguments.slug   = reReplace( arguments.slug, "^/", "" );
-		// homepage discovery
-		if ( arguments.slug eq getHomePage() ) {
-			return linkHome();
-		}
-
+		// Return the formed link
 		return siteRoot() & sep() & arguments.slug & outputFormat;
 	}
 
