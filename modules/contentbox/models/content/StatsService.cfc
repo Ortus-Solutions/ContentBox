@@ -65,7 +65,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var oStat = newCriteria()
 			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
 			.withProjections( property: "hits" )
-			.get()
+			.get();
 		return ( isNull( oStat ) ? 0 : oStat );
 	}
 
