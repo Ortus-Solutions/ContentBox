@@ -1,4 +1,4 @@
-###################################################################
+# ##################################################################
 # ContentBox v5.0.0 Updater
 # ------------------------------
 # This updater will take your 4.x ContentBox installations
@@ -13,7 +13,7 @@
 # Please note that ONLY `contentbox-site` or `contentbox-installer`
 # v4 installations can be updated. If you have a custom setup, then
 # you can run this at your own risk.
-###################################################################
+# ##################################################################
 echo off
 
 # Unistall ColdBox
