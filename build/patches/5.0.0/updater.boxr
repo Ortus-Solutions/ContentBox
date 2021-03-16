@@ -1,19 +1,18 @@
-# ##################################################################
+# ------------------------------
 # ContentBox v5.0.0 Updater
 # ------------------------------
 # This updater will take your 4.x ContentBox installations
 # and update them to 5.0 standards. Please note that this
 # updater is meant to be ran from the root of your ContentBox
 # installation with the following requirements:
-#
+# .
 # - commandbox-dotenv, commandbox-migrations are installed
 # - `.env` file has been seeded with your migrations/db credentials
 # - You have run the `migrate install` command successfully
-#
+# .
 # Please note that ONLY `contentbox-site` or `contentbox-installer`
 # v4 installations can be updated. If you have a custom setup, then
 # you can run this at your own risk.
-# ##################################################################
 echo off
 
 # Unistall ColdBox
@@ -24,14 +23,14 @@ echo "Installing latest version of ColdBox 6..."
 install coldbox@^6.0.0 --save
 
 # Uninstall current version of ContentBox
-echo "Now to the fun stuf: Removing previous version of ContentBox `package show version`..."
+echo "Now to the fun stuf: Removing previous version of ContentBox `package show dependencies.contentbox`..."
 uninstall contentbox
 
 echo "Installing ContentBox v5.0.0"
-install contentbox@5.0.0 --save
+install contentbox@5.0.0-beta-snapshot --save
 
 # Run our migrations
-echo "ContentBox upgraded, running DB Migrations"
+echo "ContentBox upgraded, running DB Migrations..."
 migrate up
 
 echo "Eureka!  You are now ready to startup your engines and run ContentBox v5.0.0!"
