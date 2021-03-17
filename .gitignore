@@ -41,7 +41,7 @@ tests/resources/dbs/.db/**
 modules/contentbox/themes/default/bower_components
 modules/contentbox/themes/default/node_modules
 modules/route-visualizer/**
-modules/cbdebugger/**
+modules/cbdebugger
 
 # ContentBox Dependency Modules
 modules/contentbox/modules/contentbox-deps/modules/*

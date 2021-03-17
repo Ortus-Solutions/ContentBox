@@ -245,11 +245,10 @@ component {
 			showCachePanel = server.keyExists( "lucee" ) ? true : false,
 			expandedCachePanel = false,
 			showRCPanel = false,
-			showModulesPanel = true,
+			showModulesPanel = false,
 			expandedModulesPanel = false,
 			showQBPanel = false,
 			expandedQBPanel = false,
-			showRCSnapshots = false,
 			wireboxCreationProfiler=false
 		};
 
