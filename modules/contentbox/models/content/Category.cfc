@@ -214,7 +214,7 @@ component
 						service.getRestrictions().isGT( "expireDate", now() )
 					)
 					.cache( true )
-					.count( "contentID" )
+					.count( "contentID" );
 			} );
 	}
 

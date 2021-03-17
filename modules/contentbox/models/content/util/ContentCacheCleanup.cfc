@@ -150,7 +150,7 @@ component extends="coldbox.system.Interceptor" {
 			arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : ""
 		);
 		var wrapperKey = "#blogPrefix##arguments.content.getSlug()#";
-		variables.contentService.clearPageWrapperCaches( slug = wrapperKey, async = true )
+		variables.contentService.clearPageWrapperCaches( slug = wrapperKey, async = true );
 		// log it
 		variables.log.info( "+ Cleared content wrapper caches using wrapper key of: #wrapperKey#" );
 
