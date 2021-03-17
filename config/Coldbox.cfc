@@ -242,7 +242,7 @@ component {
 			expandedTracerPanel = true,
 			showInfoPanel = true,
 			expandedInfoPanel = true,
-			showCachePanel = true,
+			showCachePanel = server.keyExists( "lucee" ) ? true : false,
 			expandedCachePanel = false,
 			showRCPanel = false,
 			showModulesPanel = true,
