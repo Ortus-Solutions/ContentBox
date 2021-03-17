@@ -61,10 +61,6 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_postEntrySave( event, data ){
 		doCacheCleanup( arguments.data.entry.buildContentCacheCleanupKey(), arguments.data.entry );
-		// Rebuild Sitemap caches if entry was published
-		if ( arguments.data.entry.isContentPublished() ) {
-			variables.contentService.clearAllSitemapCaches( async = true );
-		}
 	}
 
 	/**
@@ -75,8 +71,6 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_preEntryRemove( event, data ){
 		doCacheCleanup( arguments.data.entry.buildContentCacheCleanupKey(), arguments.data.entry );
-		// Rebuild Sitemap caches
-		variables.contentService.clearAllSitemapCaches( async = true );
 	}
 
 	/**
@@ -87,10 +81,6 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_postPageSave( event, data ){
 		doCacheCleanup( arguments.data.page.buildContentCacheCleanupKey(), arguments.data.page );
-		// Rebuild Sitemap caches if entry was published
-		if ( arguments.data.page.isContentPublished() ) {
-			variables.contentService.clearAllSitemapCaches( async = true );
-		}
 	}
 
 	/**
@@ -101,8 +91,6 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function cbadmin_prePageRemove( event, data ){
 		doCacheCleanup( arguments.data.page.buildContentCacheCleanupKey(), arguments.data.page );
-		// Rebuild Sitemap caches
-		variables.contentService.clearAllSitemapCaches( async = true );
 	}
 
 	/**
@@ -142,6 +130,11 @@ component extends="coldbox.system.Interceptor" {
 	 * @content The content object
 	 */
 	private function doCacheCleanup( required string cacheKey, any content ){
+		// Log it
+		variables.log.info(
+			"=> Starting content cache cleanup for : #arguments.content.getContentType()#:#arguments.cacheKey#..."
+		);
+
 		// Get settings
 		var settings = variables.settingService.getAllSettings();
 		// Get appropriate cache provider
@@ -150,7 +143,7 @@ component extends="coldbox.system.Interceptor" {
 		// clear content translation caches
 		cache.clearByKeySnippet( keySnippet = arguments.cacheKey, async = true );
 		// log it
-		variables.log.info( "Cleared content translation caches for: #arguments.cacheKey#" );
+		variables.log.info( "+ Cleared content translation caches for: #arguments.cacheKey#" );
 
 		// clear content wrapper caches
 		var blogPrefix = (
@@ -159,12 +152,21 @@ component extends="coldbox.system.Interceptor" {
 		var wrapperKey = "#blogPrefix##arguments.content.getSlug()#";
 		variables.contentService.clearPageWrapperCaches( slug = wrapperKey, async = true )
 		// log it
-		variables.log.info( "Cleared content wrapper caches for: #wrapperKey#" );
+		variables.log.info( "+ Cleared content wrapper caches using wrapper key of: #wrapperKey#" );
 
 		// Clear category count caches
 		variables.contentService.clearAllCategoryCountCaches();
 		// log it
-		variables.log.info( "Cleared category count caches" );
+		variables.log.info( "+ Cleared all category count caches." );
+
+		// Rebuild Sitemap caches
+		variables.contentService.clearAllSitemapCaches( async = true );
+		// log it
+		variables.log.info( "+ Cleared all sitemap caches" );
+
+		variables.log.info(
+			"=> Finalized cache content cleanup for #arguments.content.getContentType()#:#arguments.cacheKey#"
+		);
 	}
 
 }
