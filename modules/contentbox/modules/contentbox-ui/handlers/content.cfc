@@ -364,7 +364,7 @@ component {
 			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) NEQ 0
 		) {
 			// Not an author, kick them out.
-			relocate( URL = CBHelper.linkHome() );
+			relocate( URL = "/" );
 		}
 
 		// xss headers

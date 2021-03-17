@@ -52,7 +52,7 @@ component extends="content" {
 		// Concrete Overrides Below
 
 		// Construct the preview entry according to passed arguments
-		prc.entry = entryService.new( {
+		prc.entry = variables.entryService.new( {
 			title         : rc.title,
 			slug          : rc.slug,
 			publishedDate : now(),
@@ -64,9 +64,12 @@ component extends="content" {
 		// Comments need to be empty
 		prc.comments = [];
 		// Create preview version
-		prc.entry
-			.addNewContentVersion( content = urlDecode( rc.content ), author = prc.oCurrentAuthor )
-			.setActiveContent( prc.entry.getContentVersions() );
+		prc.entry.addNewContentVersion(
+			content   = urlDecode( rc.content ),
+			author    = prc.oCurrentAuthor,
+			isPreview = true
+		);
+
 		// set skin view
 		event
 			.setLayout(

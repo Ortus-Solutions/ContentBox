@@ -47,7 +47,6 @@ component extends="content" {
 		);
 
 		// Construct the preview entry according to passed arguments
-		prc.page = typeService.new();
 		prc.page = typeService.new( {
 			title         : rc.title,
 			slug          : rc.slug,
@@ -63,9 +62,11 @@ component extends="content" {
 		prc.comments = [];
 
 		// Create preview version
-		prc.page
-			.addNewContentVersion( content = urlDecode( rc.content ), author = prc.oCurrentAuthor )
-			.setActiveContent( prc.page.getContentVersions() );
+		prc.page.addNewContentVersion(
+			content = urlDecode( rc.content ),
+			author  = prc.oCurrentAuthor,
+			isPreview = true
+		);
 
 		// Do we have a parent?
 		if ( len( rc.parentPage ) && isNumeric( rc.parentPage ) ) {

@@ -149,7 +149,6 @@ component
 		name     ="isPublished"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		dbdefault="true"
 		default  ="true"
 		index    ="idx_published,idx_search,idx_publishedSlug";
@@ -158,7 +157,6 @@ component
 		name     ="allowComments"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		default  ="true"
 		dbdefault="true";
 
@@ -191,7 +189,6 @@ component
 		name     ="cache"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		default  ="true"
 		dbdefault="true"
 		index    ="idx_cache";
@@ -200,7 +197,6 @@ component
 		name     ="cacheLayout"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		default  ="true"
 		dbdefault="true"
 		index    ="idx_cachelayout";
@@ -229,7 +225,6 @@ component
 		name     ="showInSearch"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		default  ="true"
 		dbdefault="true"
 		index    ="idx_showInSearch";
@@ -525,55 +520,57 @@ component
 	}
 
 	/**
-	 * Add a new content version to save for this content object
+	 * Add a new content version to the content object.  This does not persist the version.
+	 * It just makes sure that the content object receives a new active version and it
+	 * deactivates the previous version.  Persisting is done by the handler/service not by
+	 * this method.
 	 *
-	 * @content The incoming content
-	 * @changelog The changelog commit
-	 * @author The author object
+	 * @content The incoming content string to store as the new version content
+	 * @changelog The changelog commit message, defaults to empty string
+	 * @author The author object that is making the edit
+	 * @isPreview Is this a preview version or a real version
 	 *
-	 * @return BaseContent
+	 * @return The same content object
 	 */
 	BaseContent function addNewContentVersion(
 		required content,
 		changelog = "",
-		required author
+		required author,
+		boolean isPreview = false
 	){
-		// lock it for new content creation
+		// lock it for new content creation to avoid version overlaps
 		lock
-			name          ="contentbox.addNewContentVersion.#getSlug()#"
-			type          ="exclusive"
-			timeout       ="10"
-			throwOnTimeout=true {
-			// get a new version object
-			var newVersion= contentVersionService.new(
-				properties = {
-					content   : arguments.content,
-					changelog : arguments.changelog
-				}
-			);
-
-			// join them to author and related content
-			newVersion.setAuthor( arguments.author );
-			newVersion.setRelatedContent( this );
+			name           ="contentbox.addNewContentVersion.#getSlug()#"
+			type           ="exclusive"
+			timeout        ="10"
+			throwOnTimeout =true {
+			// get a new version object with our incoming content + relationships
+			var oNewVersion= variables.contentVersionService.new( {
+				content        : arguments.content,
+				changelog      : arguments.changelog,
+				author         : arguments.author,
+				relatedContent : this
+			} );
 
 			// Do we already have an active version?
 			if ( hasActiveContent() ) {
-				// deactive the curent version
-				var activeVersion = getActiveContent();
-				activeVersion.setIsActive( false );
-				// cap checks
-				maxContentVersionChecks();
+				// cap checks if not in preview mode
+				if ( !arguments.isPreview ) {
+					maxContentVersionChecks();
+				}
+				// deactive the curent version, we do it after in case the content versions check kick off a transaction
+				getActiveContent().setIsActive( false );
 			}
 
 			// Get the latest content version, to increase the new version number, collection is ordered by 'version' descending
 			if ( hasContentVersion() ) {
-				newVersion.setVersion( variables.contentVersions[ 1 ].getVersion() + 1 );
+				oNewVersion.setVersion( variables.contentVersions[ 1 ].getVersion() + 1 );
 			}
 
 			// Activate the new version
-			newVersion.setIsActive( true );
-			// Add it to the content so it can be saved as part of this content object
-			addContentVersion( newVersion );
+			oNewVersion.setIsActive( true );
+			// Add it to the content versions array so it can be saved as part of this content object
+			addContentVersion( oNewVersion );
 		}
 		return this;
 	}
@@ -1064,7 +1061,7 @@ component
 	 * Verify and rotate maximum content versions
 	 */
 	private function maxContentVersionChecks(){
-		if ( !len( settingService.getSetting( "cb_versions_max_history" ) ) ) {
+		if ( !len( variables.settingService.getSetting( "cb_versions_max_history" ) ) ) {
 			return;
 		}
 
@@ -1075,7 +1072,11 @@ component
 			.count();
 
 		// Have we passed the limit?
-		if ( ( versionCounts + 1 ) GT settingService.getSetting( "cb_versions_max_history" ) ) {
+		if (
+			( versionCounts + 1 ) GT variables.settingService.getSetting(
+				"cb_versions_max_history"
+			)
+		) {
 			var oldestVersion = contentVersionService
 				.newCriteria()
 				.isEq( "relatedContent.contentID", getContentID() )
@@ -1083,7 +1084,7 @@ component
 				.withProjections( id = "true" )
 				.list(
 					sortOrder = "createdDate DESC",
-					offset    = settingService.getSetting( "cb_versions_max_history" ) - 2
+					offset    = variables.settingService.getSetting( "cb_versions_max_history" ) - 2
 				);
 			// delete by primary key IDs found
 			contentVersionService.deleteByID( arrayToList( oldestVersion ) );
@@ -1098,14 +1099,15 @@ component
 	}
 
 	/**
-	 * Get the latest active content object, empty new one if none assigned
+	 * Get the latest active version object, empty new one if none assigned
 	 */
 	ContentVersion function getActiveContent(){
-		// If not loaded, return a new entity
-		if ( !isLoaded() ) {
+		// If we don't have any versions, send back a new one
+		if ( !hasContentVersion() ) {
 			return variables.contentVersionService.new();
 		}
-		// Load up the active content
+
+		// Load up the active content if not set yet
 		if ( isNull( variables.activeContent ) ) {
 			// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
 			for ( var thisVersion in variables.contentVersions ) {
@@ -1114,12 +1116,23 @@ component
 					break;
 				}
 			}
-			// We didn't find one, something is out of sync
+			// We didn't find one, something is out of sync, return just an empty version
 			if ( isNull( variables.activeContent ) ) {
 				return variables.contentVersionService.new();
 			}
 		}
+
 		return variables.activeContent;
+	}
+
+	/**
+	 * Set the active content version manually, usually great for previews
+	 *
+	 * @content The content to set as the active version
+	 */
+	BaseContent function setActiveContent( required content ){
+		variables.activeContent = arguments.content;
+		return this;
 	}
 
 	/**
@@ -1492,14 +1505,14 @@ component
 	 * Verify we can do content caching on this content object using global and local rules
 	 */
 	boolean function canCacheContent(){
-		var settings = settingService.getAllSettings();
+		var settings = variables.settingService.getAllSettings();
 
 		// check global caching first
 		if (
 			( getContentType() eq "page" AND settings.cb_content_caching ) OR
 			( getContentType() eq "entry" AND settings.cb_entry_caching )
 		) {
-			// check override?
+			// check override in local content bit
 			return ( getCache() ? true : false );
 		}
 		return false;
@@ -1509,7 +1522,7 @@ component
 	 * Render content out using translations, caching, etc.
 	 */
 	any function renderContent() profile{
-		var settings = settingService.getAllSettings();
+		var settings = variables.settingService.getAllSettings();
 
 		// caching enabled?
 		if ( canCacheContent() ) {
@@ -1527,16 +1540,8 @@ component
 
 		// Check if we need to translate
 		if ( NOT len( variables.renderedContent ) ) {
-			lock
-				name          ="contentbox.contentrendering.#getContentID()#"
-				type          ="exclusive"
-				throwontimeout="true"
-				timeout       ="10" {
-				if ( NOT len( variables.renderedContent ) ) {
-					// save content
-					variables.renderedContent = renderContentSilent();
-				}
-			}
+			// save content
+			variables.renderedContent = renderContentSilent();
 		}
 
 		// caching enabled?
@@ -1558,6 +1563,7 @@ component
 
 	/**
 	 * Renders the content silently so no caching, or extra fluff is done, just content translation rendering.
+	 *
 	 * @content The content markup to translate, by default it uses the active content version's content
 	 */
 	any function renderContentSilent( any content = getContent() ) profile{
@@ -1565,8 +1571,7 @@ component
 		var b = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
 
 		// announce renderings with data, so content renderers can process them
-		var iData = { builder : b, content : this };
-		interceptorService.announce( "cb_onContentRendering", iData );
+		interceptorService.announce( "cb_onContentRendering", { builder : b, content : this } );
 
 		// return processed content
 		return b.toString();
