@@ -340,7 +340,7 @@ component
 	 * Retrieve a multi-tenant settings cache key
 	 */
 	string function getSettingsCacheKey(){
-		return "cb-settings-#CGI.SERVER_NAME#";
+		return "cb-settings-#CGI.HTTP_HOST#";
 	}
 
 	/**

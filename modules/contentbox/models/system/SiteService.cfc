@@ -174,7 +174,7 @@ component
 	 * - incoming `siteId` (rc)
 	 * - incoming `siteSlug` (rc)
 	 * - incoming header: `x-contentbox-site`
-	 * - cgi.server_name
+	 * - full incoming url
 	 *
 	 * @return The site object
 	 */

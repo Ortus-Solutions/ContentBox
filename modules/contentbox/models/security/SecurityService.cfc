@@ -291,7 +291,7 @@ component singleton {
 		// Store Security Token For X minutes
 		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
 		cache.set(
-			"reset-token-#cgi.server_name#-#token#",
+			"reset-token-#token#",
 			arguments.author.getAuthorID(),
 			tokenTimeout,
 			tokenTimeout
@@ -441,7 +441,7 @@ component singleton {
 	 */
 	struct function validateResetToken( required token ){
 		var results  = { "error" : false, "author" : "" };
-		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
+		var cacheKey = "reset-token-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back
@@ -474,7 +474,7 @@ component singleton {
 		required password
 	){
 		var results  = { "error" : false, "messages" : "" };
-		var cacheKey = "reset-token-#cgi.server_name#-#arguments.token#";
+		var cacheKey = "reset-token-#arguments.token#";
 		var authorID = cache.get( cacheKey );
 
 		// If token not found, don't reset and return back

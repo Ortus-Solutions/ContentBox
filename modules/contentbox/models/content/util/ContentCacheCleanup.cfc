@@ -1,13 +1,13 @@
 ﻿/**
-* This interceptor monitors pages, posts and custom html content so it can purge caches on updates
-*/
-component extends="coldbox.system.Interceptor"{
+ * This interceptor monitors pages, posts and custom html content so it can purge caches on updates
+ */
+component extends="coldbox.system.Interceptor" {
 
 	// DI Injections
-	property name="cachebox"             			inject="cachebox";
-	property name="settingService"		inject="id:settingService@cb";
-	property name="commentService"		inject="id:commentService@cb";
-	property name="contentService"		inject="id:contentService@cb";
+	property name="cachebox" inject="cachebox";
+	property name="settingService" inject="settingService@cb";
+	property name="commentService" inject="commentService@cb";
+	property name="contentService" inject="contentService@cb";
 
 	/**
 	 * Listen when comments are posted.
@@ -16,7 +16,10 @@ component extends="coldbox.system.Interceptor"{
 	 * @data Intercept data
 	 */
 	function cbui_onCommentPost( event, data ){
-		doCacheCleanup( arguments.data.content.buildContentCacheKey(), arguments.data.content );
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
 	}
 
 	/**
@@ -26,10 +29,13 @@ component extends="coldbox.system.Interceptor"{
 	 * @data Intercept data
 	 */
 	function cbadmin_onCommentStatusUpdate( event, data ){
-		commentService
+		variables.commentService
 			.getAll( arguments.data.commentID )
 			.each( function( thisComment ){
-				doCacheCleanup( thisComment.getRelatedContent().buildContentCacheKey(), thisComment.getRelatedContent() );
+				doCacheCleanup(
+					arguments.thisComment.getRelatedContent().buildContentCacheCleanupKey(),
+					arguments.thisComment.getRelatedContent()
+				);
 			} );
 	}
 
@@ -40,8 +46,11 @@ component extends="coldbox.system.Interceptor"{
 	 * @data Intercept data
 	 */
 	function cbadmin_preCommentRemove( event, data ){
-		var oComment = commentService.get( arguments.data.commentID );
-		doCacheCleanup( oComment.getRelatedContent().buildContentCacheKey(), oComment.getRelatedContent() );
+		var oComment = variables.commentService.get( arguments.data.commentID );
+		doCacheCleanup(
+			oComment.getRelatedContent().buildContentCacheCleanupKey(),
+			oComment.getRelatedContent()
+		);
 	}
 
 	/**
@@ -51,12 +60,23 @@ component extends="coldbox.system.Interceptor"{
 	 * @data Intercept data
 	 */
 	function cbadmin_postEntrySave( event, data ){
-		var entry 	 = arguments.data.entry;
-		doCacheCleanup( entry.buildContentCacheKey(), entry );
+		doCacheCleanup( arguments.data.entry.buildContentCacheCleanupKey(), arguments.data.entry );
 		// Rebuild Sitemap caches if entry was published
-		if( entry.isContentPublished() ){
-			contentService.clearAllSitemapCaches( async=true );
+		if ( arguments.data.entry.isContentPublished() ) {
+			variables.contentService.clearAllSitemapCaches( async = true );
 		}
+	}
+
+	/**
+	 * Listen when entries are removed
+	 *
+	 * @event The request context
+	 * @data Intercept data
+	 */
+	function cbadmin_preEntryRemove( event, data ){
+		doCacheCleanup( arguments.data.entry.buildContentCacheCleanupKey(), arguments.data.entry );
+		// Rebuild Sitemap caches
+		variables.contentService.clearAllSitemapCaches( async = true );
 	}
 
 	/**
@@ -66,36 +86,49 @@ component extends="coldbox.system.Interceptor"{
 	 * @data Intercept data
 	 */
 	function cbadmin_postPageSave( event, data ){
-		var page 	 = arguments.data.page;
-		doCacheCleanup( page.buildContentCacheKey(), page );
+		doCacheCleanup( arguments.data.page.buildContentCacheCleanupKey(), arguments.data.page );
 		// Rebuild Sitemap caches if entry was published
-		if( page.isContentPublished() ){
-			contentService.clearAllSitemapCaches( async=true );
+		if ( arguments.data.page.isContentPublished() ) {
+			variables.contentService.clearAllSitemapCaches( async = true );
 		}
 	}
 
 	/**
 	 * Listen when pages are removed
 	 *
-	 * @cacheKey
-	 * @content
+	 * @event The request context
+	 * @data Intercept data
 	 */
 	function cbadmin_prePageRemove( event, data ){
-		var page 	 = arguments.data.page;
-		doCacheCleanup( page.buildContentCacheKey(), page);
+		doCacheCleanup( arguments.data.page.buildContentCacheCleanupKey(), arguments.data.page );
 		// Rebuild Sitemap caches
-		contentService.clearAllSitemapCaches( async=true );
+		variables.contentService.clearAllSitemapCaches( async = true );
 	}
 
 	/**
-	 * Listen when custom HTML is saved
+	 * Listen when a content store item is saved
 	 *
 	 * @event The request context
 	 * @data Intercept data
 	 */
 	function cbadmin_postContentStoreSave( event, data ){
-		var content		= arguments.data.content;
-		doCacheCleanup( content.buildContentCacheKey(), content );
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
+	}
+
+	/**
+	 * Listen when a content store item is removed
+	 *
+	 * @event The request context
+	 * @data Intercept data
+	 */
+	function cbadmin_preContentStoreRemove( event, data ){
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
 	}
 
 	/*********************************************************************************************************/
@@ -103,36 +136,35 @@ component extends="coldbox.system.Interceptor"{
 	/*********************************************************************************************************/
 
 	/**
-	 * clear according to cache settings
+	 * Clear the content caches according to incoming key and content object
 	 *
 	 * @cacheKey The cache key to use
 	 * @content The content object
 	 */
-	private function doCacheCleanup(required string cacheKey, any content){
+	private function doCacheCleanup( required string cacheKey, any content ){
 		// Get settings
-		var settings = settingService.getAllSettings();
+		var settings = variables.settingService.getAllSettings();
 		// Get appropriate cache provider
-		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
+		var cache    = variables.cacheBox.getCache( settings.cb_content_cacheName );
 
-		// clear internal caches
-		cache.clearByKeySnippet( keySnippet=arguments.cacheKey, async=true );
-		// log
-		if( log.canInfo() ){
-			log.info( "Sent clear command using the following content key: #arguments.cacheKey# from provider: #settings.cb_content_cacheName#" );
-		}
+		// clear content translation caches
+		cache.clearByKeySnippet( keySnippet = arguments.cacheKey, async = true );
+		// log it
+		variables.log.info( "Cleared content translation caches for: #arguments.cacheKey#" );
 
-		// clear ancestry caches
-		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
-		//#replacenocase( arguments.content.getSlug(), "/" & listLast( arguments.content.getSlug(), "/" ), "" )#
-		var wrapperKey = "cb-content-wrapper-#cgi.server_name#-#blogPrefix##arguments.content.getSlug()#/";
-		cache.clearByKeySnippet(
-			keySnippet = wrapperKey,
-			async      = true
+		// clear content wrapper caches
+		var blogPrefix = (
+			arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : ""
 		);
-		// log
-		if( log.canInfo() ){
-			log.info( "Sent clear ancentry cache usin key: #wrapperKey# from provider: #settings.cb_content_cacheName#" );
-		}
+		var wrapperKey = "#blogPrefix##arguments.content.getSlug()#";
+		variables.contentService.clearPageWrapperCaches( slug = wrapperKey, async = true )
+		// log it
+		variables.log.info( "Cleared content wrapper caches for: #wrapperKey#" );
 
+		// Clear category count caches
+		variables.contentService.clearAllCategoryCountCaches();
+		// log it
+		variables.log.info( "Cleared category count caches" );
 	}
+
 }

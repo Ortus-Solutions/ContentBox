@@ -58,66 +58,79 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Clear all content caches
+	 *
 	 * @async Run it asynchronously or not, defaults to false
 	 */
-	function clearAllCaches( boolean async = false ){
-		var settings = settingService.getAllSettings();
-		// Get appropriate cache provider
-		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet = "cb-content", async = arguments.async );
+	ContentService function clearAllCaches( boolean async = false ){
+		variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.clearByKeySnippet( keySnippet = "cb-content", async = arguments.async );
+		return this;
+	}
+
+	/**
+	 * Clear all category content counts caches
+	 *
+	 * @async Run it asynchronously or not, defaults to false
+	 */
+	ContentService function clearAllCategoryCountCaches( boolean async = false ){
+		variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.clearByKeySnippet( keySnippet = "cb-content-category-counts", async = arguments.async );
 		return this;
 	}
 
 	/**
 	 * Clear all sitemap caches
+	 *
 	 * @async Run it asynchronously or not, defaults to false
 	 */
-	function clearAllSitemapCaches( boolean async = false ){
-		var settings = settingService.getAllSettings();
-		// Get appropriate cache provider
-		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet = "cb-content-sitemap", async = arguments.async );
+	ContentService function clearAllSitemapCaches( boolean async = false ){
+		variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.clearByKeySnippet( keySnippet = "cb-content-sitemap", async = arguments.async );
 		return this;
 	}
 
 	/**
 	 * Clear all page wrapper caches
+	 *
 	 * @async Run it asynchronously or not, defaults to false
 	 */
-	function clearAllPageWrapperCaches( boolean async = false ){
-		var settings = settingService.getAllSettings();
-		// Get appropriate cache provider
-		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet( keySnippet = "cb-content-wrapper", async = arguments.async );
+	ContentService function clearAllPageWrapperCaches( boolean async = false ){
+		variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.clearByKeySnippet( keySnippet = "cb-content-wrapper", async = arguments.async );
 		return this;
 	}
 
 	/**
-	 * Clear all page wrapper caches
+	 * Clear a specific page wrapper caches according to slug prefix
+	 *
 	 * @slug The slug partial to clean on
 	 * @async Run it asynchronously or not, defaults to false
 	 */
-	function clearPageWrapperCaches( required any slug, boolean async = false ){
-		var settings = settingService.getAllSettings();
-		// Get appropriate cache provider
-		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clearByKeySnippet(
-			keySnippet = "cb-content-wrapper-#cgi.server_name#-#arguments.slug#",
-			async      = arguments.async
-		);
+	ContentService function clearPageWrapperCaches( required any slug, boolean async = false ){
+		variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.clearByKeySnippet(
+				keySnippet = "cb-content-wrapper-[^-]*-#arguments.slug#",
+				regex      = true,
+				async      = arguments.async
+			);
 		return this;
 	}
 
 	/**
-	 * Clear a page wrapper cache
-	 * @slug The slug to clean
+	 * Clear a page wrapper cache for a specific content object
+	 *
+	 * @slug The slug to clear
 	 * @async Run it asynchronously or not, defaults to false
 	 */
-	function clearPageWrapper( required any slug, boolean async = false ){
-		var settings = settingService.getAllSettings();
-		// Get appropriate cache provider
-		var cache    = cacheBox.getCache( settings.cb_content_cacheName );
-		cache.clear( "cb-content-wrapper-#cgi.server_name#-#arguments.slug#/" );
+	ContentService function clearPageWrapper( required any slug, boolean async = false ){
+		variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.clear( "cb-content-wrapper-#cgi.HTTP_HOST#-#arguments.slug#/" );
 		return this;
 	}
 

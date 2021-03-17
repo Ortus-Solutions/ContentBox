@@ -8,10 +8,10 @@
 component {
 
 	// DI
-	property name="entryService"   inject="id:entryService@cb";
-	property name="pageService"    inject="id:pageService@cb";
+	property name="entryService" inject="id:entryService@cb";
+	property name="pageService" inject="id:pageService@cb";
 	property name="contentService" inject="id:contentService@cb";
-	property name="CBHelper"       inject="id:CBHelper@cb";
+	property name="CBHelper" inject="id:CBHelper@cb";
 	property name="settingService" inject="id:settingService@cb";
 
 	/**
@@ -40,7 +40,7 @@ component {
 		if ( cacheEnabled ) {
 			// Get appropriate cache provider from settings
 			var cache    = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-			var cacheKey = "cb-content-sitemap-#cgi.server_name#" &
+			var cacheKey = "cb-content-sitemap-#cgi.HTTP_HOST#" &
 			hash( ".#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash );
 
 			// get content data from cache

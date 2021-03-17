@@ -47,9 +47,9 @@ component singleton {
 
 		// compose cache key
 		if ( arguments.comments ) {
-			cacheKey = "cb-feeds-#cgi.server_name#-content-comments-";
+			cacheKey = "cb-feeds-#cgi.HTTP_HOST#-content-comments-";
 		} else {
-			cacheKey = "cb-feeds-#cgi.server_name#-content";
+			cacheKey = "cb-feeds-#cgi.HTTP_HOST#-content";
 		}
 
 		// clear by snippet
@@ -95,11 +95,11 @@ component singleton {
 
 		// Comments cache Key
 		if ( arguments.comments ) {
-			cacheKey = "cb-feeds-#cgi.server_name#-content-comments-#arguments.slug#";
+			cacheKey = "cb-feeds-#cgi.HTTP_HOST#-content-comments-#arguments.slug#";
 		}
 		// Entries cache Key
 		else {
-			cacheKey = "cb-feeds-#cgi.server_name#-content-#hash( arguments.category & arguments.contentType )#";
+			cacheKey = "cb-feeds-#cgi.HTTP_HOST#-content-#hash( arguments.category & arguments.contentType )#";
 		}
 
 		// Retrieve via caching? and caching active

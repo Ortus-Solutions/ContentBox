@@ -1497,8 +1497,15 @@ component
 	 * Build content cache keys according to sent content object
 	 */
 	string function buildContentCacheKey(){
-		var inputHash = hash( cgi.server_name & cgi.query_string );
+		var inputHash = hash( cgi.HTTP_HOST & cgi.query_string );
 		return "cb-content-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#-#inputHash#";
+	}
+
+	/**
+	 * This builds a partial cache key so we can clean from the cache many permutations of the content object
+	 */
+	string function buildContentCacheCleanupKey(){
+		return "cb-content-#getContentType()#-#getContentID()#";
 	}
 
 	/**

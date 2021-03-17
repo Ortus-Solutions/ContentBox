@@ -35,6 +35,10 @@ component
 		inject    ="contentStoreService@cb"
 		persistent="false";
 
+	property name="cachebox" inject="cachebox";
+
+	property name="settingService" inject="settingService@cb";
+
 	/* *********************************************************************
 	 **							PROPERTIES
 	 ********************************************************************* */
@@ -195,19 +199,23 @@ component
 	 * @service The target service to use.
 	 */
 	private numeric function getNumberOfPublishedContent( required service ){
-		var c = arguments.service.newCriteria();
-
-		return c
-			.createAlias( "categories", "categories" )
-			.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
-			.isTrue( "isPublished" )
-			.isLE( "publishedDate", now() )
-			.isEq( "passwordProtection", "" )
-			.$or(
-				c.restrictions.isNull( "expireDate" ),
-				c.restrictions.isGT( "expireDate", now() )
-			)
-			.count( "contentID" );
+		return variables.cacheBox
+			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
+			.getOrSet( "cb-content-category-counts-#getSlug()#", function(){
+				return service
+					.newCriteria()
+					.createAlias( "categories", "categories" )
+					.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
+					.isTrue( "isPublished" )
+					.isLE( "publishedDate", now() )
+					.isEq( "passwordProtection", "" )
+					.$or(
+						service.getRestrictions().isNull( "expireDate" ),
+						service.getRestrictions().isGT( "expireDate", now() )
+					)
+					.cache( true )
+					.count( "contentID" )
+			} );
 	}
 
 }
