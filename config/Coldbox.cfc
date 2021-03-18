@@ -229,7 +229,7 @@ component {
 		};
 
 		// Debugger Settings
-		debugger = {
+		variables.modulesettings.cbdebugger = {
 			// Activate debugger for everybody
 			debugMode = true,
 			// Setup a password for the panel
