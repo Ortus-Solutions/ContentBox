@@ -1528,7 +1528,7 @@ component
 	/**
 	 * Render content out using translations, caching, etc.
 	 */
-	any function renderContent() profile{
+	any function renderContent(){
 		var settings = variables.settingService.getAllSettings();
 
 		// caching enabled?

@@ -234,10 +234,25 @@ component {
 			debugMode = true,
 			// Setup a password for the panel
 			debugPassword = "",
-			enableDumpVar = false,
-			persistentRequestProfiler = true,
-			maxPersistentRequestProfilers = 10,
-			maxRCPanelQueryRows = 10,
+			// Persist request tracking profilers
+			persistentRequestProfiler     : true,
+			// How many tracking profilers to keep in stack: Default is monitor the last 10 requests
+			maxPersistentRequestProfilers : 10,
+			// If enabled, the debugger will monitor the creation time of CFC objects via WireBox
+			wireboxCreationProfiler       : false,
+			// How many rows to dump for object collections if the RC panel is activated
+			maxRCPanelQueryRows           : 50,
+			// Slow request threshold in milliseconds, if execution time is above it, we mark those transactions as red
+			slowExecutionThreshold        : 250,
+			// Profile model objects annotated with the `profile` annotation
+			profileObjects                : true,
+			// If enabled, will trace the results of any methods that are being profiled
+			traceObjectResults            : false,
+			// Profile Custom or Core interception points
+			profileInterceptions          : false,
+			// By default all interception events are excluded, you must include what you want to profile
+			includedInterceptions         : [],
+			// Panels
 			showTracerPanel = true,
 			expandedTracerPanel = true,
 			showInfoPanel = true,
@@ -248,8 +263,7 @@ component {
 			showModulesPanel = false,
 			expandedModulesPanel = false,
 			showQBPanel = false,
-			expandedQBPanel = false,
-			wireboxCreationProfiler=false
+			expandedQBPanel = false
 		};
 
 		// Specific Debugging + Logging
