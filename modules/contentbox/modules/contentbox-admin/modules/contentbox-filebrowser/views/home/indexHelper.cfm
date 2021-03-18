@@ -145,26 +145,26 @@ $( document ).ready( function() {
 		$sItem.addClass( "selected" );
 		if($selectedItemType.val() != ''){
 			var selectedDataType = $selectedItemType.val();
-			$selectedItemType.val( selectedDataType + ',' + $sItem.attr( "data-type" ) );
+			$selectedItemType.val( selectedDataType + '||' + $sItem.attr( "data-type" ) );
 		}else{
 			$selectedItemType.val( $sItem.attr( "data-type" ) );
 		}
 		if($selectedItemID.val() != ''){
 			var selectedIds = $selectedItemID.val();
-			$selectedItemID.val( selectedIds + ',' + $sItem.attr( "id" ) );
+			$selectedItemID.val( selectedIds + '||' + $sItem.attr( "id" ) );
 		}else{
 			$selectedItemID.val( $sItem.attr( "id" ) );
 		}
 		// save selection
 		if($selectedItem.val() != ''){
 			var selectedFiles = $selectedItem.val();
-			$selectedItem.val( selectedFiles + ',' + $sItem.attr( "data-fullURL" ) );
+			$selectedItem.val( selectedFiles + '||' + $sItem.attr( "data-fullURL" ) );
 		}else{
 			$selectedItem.val( $sItem.attr( "data-fullURL" ) );
 		}
 		if($selectedItemURL.val() != ''){
 			var selectedURL = $selectedItemURL.val();
-			$selectedItemURL.val( selectedURL + ',' + $sItem.attr( "data-relURL" ) );
+			$selectedItemURL.val( selectedURL + '||' + $sItem.attr( "data-relURL" ) );
 		}else{
 			$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
 		}

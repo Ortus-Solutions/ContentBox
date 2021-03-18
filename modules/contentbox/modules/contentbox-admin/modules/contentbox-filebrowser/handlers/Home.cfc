@@ -259,7 +259,7 @@ component {
 			event.renderData( data = data, type = "json" );
 			return;
 		}
-		rc.pathsArray = listToArray( rc.path );
+		rc.pathsArray = listToArray( rc.path, "||" );
 		for ( var thisFile in rc.pathsArray ) {
 			// Traversal Security
 			if ( NOT isTraversalSecure( prc, thisFile ) ) {
@@ -320,7 +320,7 @@ component {
 			event.renderData( data = data, type = "json" );
 			return;
 		}
-		rc.pathsArray = listToArray( rc.path );
+		rc.pathsArray = listToArray( rc.path, "||" );
 		if ( fileExists( "#getTempDirectory()#\download.zip" ) )
 			fileDelete( "#getTempDirectory()#\download.zip" );
 		if ( arrayLen( rc.pathsArray ) > 1 ) {
