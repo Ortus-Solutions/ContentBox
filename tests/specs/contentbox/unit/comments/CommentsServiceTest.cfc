@@ -9,19 +9,6 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		// all your suites go here.
 		describe( "Comment Service", function(){
-			aroundEach( function( spec, suite ){
-				ormClearSession();
-				try {
-					// Make sure we always rollback
-					transaction {
-						arguments.spec.body();
-					}
-				} catch ( any e ) {
-					transactionRollback();
-					rethrow;
-				}
-			} );
-
 			beforeEach( function( currentSpec ){
 				commentService = getInstance( "CommentService@cb" );
 			} );
