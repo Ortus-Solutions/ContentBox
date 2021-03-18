@@ -57,7 +57,7 @@ component{
 	this.ormSettings = {
 		cfclocation			= [ rootPath & "/modules/contentbox/models" ],
 		//logSQL 				= true, //Uncomment when needed
-		logSQL 				= ( directoryExists( expandPath( "/home/travis" ) ) ? true, false ),
+		logSQL 				= ( directoryExists( expandPath( "/home/travis" ) ) ? true : false ),
 		flushAtRequestEnd 	= false,
 		autoManageSession	= false,
 		eventHandling 		= true,
