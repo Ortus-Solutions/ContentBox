@@ -1,13 +1,15 @@
 User-agent: *
-Disallow: 
+Disallow:
 Allow: /modules/contentbox/themes/
+Allow: /modules_app/contentbox-custom/_themes/
+Disallow: /bin/
 Disallow: /coldbox/
 Disallow: /config/
 Disallow: /handlers/
-Disallow: /layouts/
 Disallow: /interceptors/
-Disallow: /logs/
-Disallow: /model/
+Disallow: /layouts/
+Disallow: /models/
 Disallow: /modules/
-Disallow: /plugins/
+Disallow: /modules_app/
+Disallow: /resources/
 Disallow: /views/

@@ -67,7 +67,7 @@ component {
 
 		// Run Migrations
 		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
-		//command( "migrate up" ).run();
+		command( "migrate up" ).run();
 		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Update ColdBox
@@ -84,51 +84,14 @@ component {
 		command( "install contentbox@#variables.targetVersion# --save" ).run();
 		print.greenLine( "√ ContentBox v5 Installed!" ).toConsole();
 
-		// Backup the Application.cfc
-		print.blueLine( "Backing up Application.cfc as Application.bak..." ).toConsole();
-		fileCopy(
-			variables.cwd & "Application.cfc",
-			variables.cwd & "Application.bak"
-		);
-		print.blueLine( "Installing new Application.cfc..." ).toConsole();
-		fileCopy(
-			variables.tempFolder & "/Application.cfc",
-			variables.cwd & "Application.cfc"
-		);
-		print.greenLine( "√ New Application.cfc Installed!" ).toConsole();
-
-		// ContentBox Bin installation
+		// ContentBox Bin directory installation
 		print.blueLine( "Moving new ContentBox bin folder to root..." ).toConsole();
 		directoryCreate( variables.cwd & "bin" );
 		copy( variables.tempFolder & "/bin", variables.cwd & "bin" );
 		print.greenLine( "√ New ContentBox bin folder installed!" ).toConsole();
 
-		// New CacheBox.cfc
-		print.blueLine( "Backing up config/CacheBox.cfc as CacheBox.bak..." ).toConsole();
-		fileCopy(
-			variables.cwd & "config/CacheBox.cfc",
-			variables.cwd & "config/CacheBox.bak"
-		);
-		print.blueLine( "Installing new CacheBox.cfc..." ).toConsole();
-		fileCopy(
-			variables.tempFolder & "/config/CacheBox.cfc",
-			variables.cwd & "config/CacheBox.cfc"
-		);
-		print.greenLine( "√ New config/CacheBox.cfc Installed!" ).toConsole();
-
-		// New ColdBox.cfc
-		print.blueLine( "Backing up config/Coldbox.cfc as Coldbox.bak..." ).toConsole();
-		fileCopy(
-			variables.cwd & "config/Coldbox.cfc",
-			variables.cwd & "config/Coldbox.bak"
-		);
-		print.blueLine( "Installing new Coldbox.cfc..." ).toConsole();
-		fileCopy(
-			variables.tempFolder & "/config/Coldbox.cfc",
-			variables.cwd & "config/Coldbox.cfc"
-		);
-		print.greenLine( "√ New config/Coldbox.cfc Installed!" ).toConsole();
-		print.redLine( "√ Make sure you review the new ColdBox.cfc for your previous updates" ).toConsole();
+		// Copy over new files
+		replaceNewFiles();
 
 		// Remove temp folder
 		directoryDelete( variables.tempFolder, true );
@@ -138,6 +101,35 @@ component {
 			"√ Eureka!  You are now ready to startup your engines and run ContentBox v5.0.0!"
 		)
 		.toConsole();
+	}
+
+	function replaceNewFiles(){
+		print.blueLine( "Starting to deploy new files..." ).line().toConsole();
+
+		var files = [
+			".cfconfig.json",
+			"server.json",
+			"Application.cfc",
+			"robots.txt",
+			"readme.md",
+			"config/CacheBox.cfc",
+			"config/Coldbox.cfc"
+		].each( ( thisFile ) => {
+			print.blueLine( "Backing up #thisFile#..." ).toConsole();
+			fileCopy(
+				variables.cwd & thisFile,
+				variables.cwd & thisFile & ".bak"
+			);
+			print.blueLine( "Installing new #thisFile#..." ).toConsole();
+
+			fileCopy(
+				variables.tempFolder & "/" & thisFile,
+				variables.cwd & thisFile
+			);
+			print.greenLine( "√ New #thisFile# Installed!" ).toConsole();
+		} );
+
+		print.line().greenLine( "√ New files deployed!" ).line().toConsole();
 	}
 
 	/**
