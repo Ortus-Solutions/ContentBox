@@ -1,0 +1,23 @@
+# Global Ignores
+.DS_Store
+.idea
+web.config
+"Icon\r"
+.vscode/*
+.env
+
+# Global Dependencies
+config/logs/**
+coldbox/*
+testbox/*
+modules/*
+modules/**/apidocs/**
+
+# Engines + Docker Libraries
+.engines
+bin/.db/**
+
+# npm
+**/node_modules/*
+npm-debug.log
+yarn-error.log
