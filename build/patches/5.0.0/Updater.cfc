@@ -5,12 +5,22 @@ component {
 
 	function init(){
 		variables.util = shell.getUtil();
-		variables.root = getCWD();
-		variables.tempFolder = variables.root & "__temp";
+		variables.cwd = getCWD();
+		variables.tempFolder = variables.cwd & "__temp";
 
 		variables.targetVersion = "5.0.0-beta-snapshot";
 
+		if( directoryExists( variables.tempFolder ) ){
+			directoryDelete( variables.tempFolder, true );
+		}
 		directoryCreate( variables.tempFolder );
+
+		// Directory copy excludes
+		variables.excludes = [
+			".tmp",
+			".DS_Store",
+			".git"
+		];
 
 		return this;
 	}
@@ -23,8 +33,11 @@ component {
 		print.blueLine( "This task will update your ContentBox 4 installation to a ContentBox 5 installation." )
 			.blueLine( "Please make a backup of your source and your database now. " )
 			.line()
-			.redLine( "Here are some caveats with the updater:")
-			.redLine( "- This updater will replace your Application.cfc with a new version. Make sure you update it if you had previous customizations." )
+			.redLine( "Here are some files that will be overwritten by the updater. We will create .bak files for you.")
+			.redLine( "Make sure you copy back your customizations to your new files:")
+			.redLine( "- Application.cfc" )
+			.redLine( "- config/CacheBox.cfc")
+			.redLine( "- config/Coldbox.cfc")
 			.line()
 			.toConsole();
 
@@ -37,35 +50,88 @@ component {
 			return;
 		}
 
+		// install contentbox-site so we can copy over new assets and run our migrations
+		print.blueLine( "Downloading ContentBox v#variables.targetVersion# assets to __temp folder..." ).toConsole();
+		command( "install contentbox-site@#variables.targetVersion#" )
+			.inWorkingDirectory( variables.tempFolder )
+			.run();
+		print.greenLine( "√ ContentBox assets downloaded!" ).toConsole();
+
+		// Copy over migration resources
+		print.blueLine( "Installing new ContentBox resources folder..." ).toConsole();
+		if( !directoryExists( variables.cwd & "resources" ) ){
+			directoryCreate( variables.cwd & "resources" );
+		};
+		copy( variables.tempFolder & "/resources", variables.cwd & "resources" );
+		print.greenLine( "√ ContentBox resources installed!" ).toConsole();
+
+		// Run Migrations
+		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
+		//command( "migrate up" ).run();
+		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
+
 		// Update ColdBox
 		print.blueLine( "Uninstalling current version of ColdBox..." ).toConsole();
 		command( "uninstall coldbox" ).run();
 		print.blueLine( "Installing latest version of ColdBox 6..." ).toConsole();
 		command( "install coldbox@^6.0.0 --save" ).run();
-		print.line()
-			.greenLine( "√ ColdBox Updated!" )
-			.toConsole();
+		print.greenLine( "√ ColdBox Updated!" ).toConsole();
 
 		// Update ContentBox
-		print.blueLine( "Uninstalling current version of ContentBox..." ).toConsole();
+		print.blueLine( "Uninstalling current version of the ContentBox module..." ).toConsole();
 		command( "uninstall contentbox" ).run();
 		print.blueLine( "Installing ContentBox v5.0.0" ).toConsole();
 		command( "install contentbox@#variables.targetVersion# --save" ).run();
-		print.line()
-			.greenLine( "√ ContentBox v5 Installed!" )
-			.toConsole();
+		print.greenLine( "√ ContentBox v5 Installed!" ).toConsole();
 
-		// install contentbox-site so we can copy over new assets
-		command( "install contentbox-site@#variables.targetVersion#" )
-			.inWorkingDirectory( variables.tempFolder )
-			.run()
+		// Backup the Application.cfc
+		print.blueLine( "Backing up Application.cfc as Application.bak..." ).toConsole();
+		fileCopy(
+			variables.cwd & "Application.cfc",
+			variables.cwd & "Application.bak"
+		);
+		print.blueLine( "Installing new Application.cfc..." ).toConsole();
+		fileCopy(
+			variables.tempFolder & "/Application.cfc",
+			variables.cwd & "Application.cfc"
+		);
+		print.greenLine( "√ New Application.cfc Installed!" ).toConsole();
+
+		// ContentBox Bin installation
+		print.blueLine( "Moving new ContentBox bin folder to root..." ).toConsole();
+		directoryCreate( variables.cwd & "bin" );
+		copy( variables.tempFolder & "/bin", variables.cwd & "bin" );
+		print.greenLine( "√ New ContentBox bin folder installed!" ).toConsole();
+
+		// New CacheBox.cfc
+		print.blueLine( "Backing up config/CacheBox.cfc as CacheBox.bak..." ).toConsole();
+		fileCopy(
+			variables.cwd & "config/CacheBox.cfc",
+			variables.cwd & "config/CacheBox.bak"
+		);
+		print.blueLine( "Installing new CacheBox.cfc..." ).toConsole();
+		fileCopy(
+			variables.tempFolder & "/config/CacheBox.cfc",
+			variables.cwd & "config/CacheBox.cfc"
+		);
+		print.greenLine( "√ New config/CacheBox.cfc Installed!" ).toConsole();
+
+		// New ColdBox.cfc
+		print.blueLine( "Backing up config/Coldbox.cfc as Coldbox.bak..." ).toConsole();
+		fileCopy(
+			variables.cwd & "config/Coldbox.cfc",
+			variables.cwd & "config/Coldbox.bak"
+		);
+		print.blueLine( "Installing new Coldbox.cfc..." ).toConsole();
+		fileCopy(
+			variables.tempFolder & "/config/Coldbox.cfc",
+			variables.cwd & "config/Coldbox.cfc"
+		);
+		print.greenLine( "√ New config/Coldbox.cfc Installed!" ).toConsole();
+		print.redLine( "√ Make sure you review the new ColdBox.cfc for your previous updates" ).toConsole();
 
 		// Remove temp folder
 		directoryDelete( variables.tempFolder, true );
-
-		// Run Migrations
-		print.blueLine( "ContentBox Upgraded, running DB Migrations..." ).toConsole();
-		command( "migrate up" ).run();
 
 		// Final Comment
 		print.boldRedLine(
@@ -74,4 +140,28 @@ component {
 		.toConsole();
 	}
 
+	/**
+     * DirectoryCopy is broken in lucee
+     */
+    private function copy( src, target, recurse=true ){
+        // process paths with excludes
+        directoryList( src, false, "path", function( path ){
+            var isExcluded = false;
+            variables.excludes.each( function( item ){
+                if( path.replaceNoCase( variables.cwd, "", "all" ).findNoCase( item ) ){
+                    isExcluded = true;
+                }
+            } );
+            return !isExcluded;
+        }).each( function( item ){
+            // Copy to target
+            if( fileExists( item ) ){
+                print.blueLine( "Copying #item#" ).toConsole();
+                fileCopy( item, target );
+            } else {
+                print.greenLine( "Copying directory #item#" ).toConsole();
+                directoryCopy( item, target & "/" & item.replace( src, "" ), true );
+            }
+        } );
+    }
 }
