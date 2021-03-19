@@ -67,7 +67,7 @@ component {
 
 		// Run Migrations
 		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
-		command( "migrate up" ).run();
+		//command( "migrate up" ).run();
 		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Update ColdBox
@@ -86,7 +86,9 @@ component {
 
 		// ContentBox Bin directory installation
 		print.blueLine( "Moving new ContentBox bin folder to root..." ).toConsole();
-		directoryCreate( variables.cwd & "bin" );
+		if( !directoryExists( variables.cwd & "bin" ) ){
+			directoryCreate( variables.cwd & "bin" );
+		};
 		copy( variables.tempFolder & "/bin", variables.cwd & "bin" );
 		print.greenLine( "√ New ContentBox bin folder installed!" ).toConsole();
 
