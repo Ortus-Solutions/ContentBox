@@ -35,9 +35,15 @@ component
 		inject    ="contentStoreService@cb"
 		persistent="false";
 
-	property name="cachebox" inject="cachebox";
+	property
+		name      ="cachebox"
+		inject    ="cachebox"
+		persistent="false";
 
-	property name="settingService" inject="settingService@cb";
+	property
+		name      ="settingService"
+		inject    ="settingService@cb"
+		persistent="false";
 
 	/* *********************************************************************
 	 **							PROPERTIES
