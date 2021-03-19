@@ -94,7 +94,7 @@ component {
 		//dialect 				: "MicrosoftSQLServer", // SQL Server Dialect
 		//dialect 				: "Oracle10g", // Oracle 10G+
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate              : "update",
+		dbcreate              : "dropcreate",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 		secondarycacheenabled : false,
 		cacheprovider         : "ehCache",

@@ -56,7 +56,7 @@ component accessors="true" {
 				createSampleData( arguments.setup, author, site );
 			}
 			// Do we create a Development Site?
-			if( arguments.setup.getCreateDevSite() ){
+			if ( arguments.setup.getCreateDevSite() ) {
 				var devSite = createDevSite( arguments.setup );
 				// Populate the dev site?
 				if ( arguments.setup.getPopulateData() ) {
@@ -66,7 +66,7 @@ component accessors="true" {
 
 			// Remove ORM update from Application.cfc
 			// Commented out for better update procedures.
-			// processORMUpdate( arguments.setup );
+			processORMUpdate( arguments.setup );
 			// Process reinit and debug password security
 			processColdBoxPasswords( arguments.setup );
 			// ContentBox is now online, mark it:
@@ -92,7 +92,7 @@ component accessors="true" {
 			"slug"               : "default",
 			"description"        : arguments.setup.getSiteDescription(),
 			"keywords"           : arguments.setup.getSiteKeywords(),
-			"domain" 			 : "127.0.0.1",
+			"domain"             : "127.0.0.1",
 			"domainRegex"        : "127\.0\.0\.1",
 			"tagline"            : arguments.setup.getSiteTagLine(),
 			"homepage"           : "cbBlog",
@@ -120,7 +120,7 @@ component accessors="true" {
 			"slug"               : "development",
 			"description"        : "A development site",
 			"keywords"           : "",
-			"domain" 			 : "localhost",
+			"domain"             : "localhost",
 			"domainRegex"        : "localhost",
 			"tagline"            : "",
 			"homepage"           : "cbBlog",
@@ -175,14 +175,15 @@ component accessors="true" {
 
 	/**
 	 * Process ORM Update
+	 *
 	 * @setup The setup object
 	 */
 	function processORMUpdate( required setup ){
 		var appCFCPath = appPath & "Application.cfc";
 		var c          = fileRead( appCFCPath );
 
-		c = replaceNoCase( c, """update""", """none""" );
-		fileWrite( appCFCPath, c );
+		fileWrite( appCFCPath, replaceNoCase( c, """dropcreate""", """update""" ) );
+
 		return this;
 	}
 
