@@ -117,13 +117,15 @@ component {
 			"config/CacheBox.cfc",
 			"config/Coldbox.cfc"
 		].each( ( thisFile ) => {
-			print.blueLine( "Backing up #thisFile#..." ).toConsole();
-			fileCopy(
-				variables.cwd & thisFile,
-				variables.cwd & thisFile & ".bak"
-			);
-			print.blueLine( "Installing new #thisFile#..." ).toConsole();
+			if( fileExists( variables.cwd & thisFile ) ){
+				print.blueLine( "Backing up #thisFile#..." ).toConsole();
+				fileCopy(
+					variables.cwd & thisFile,
+					variables.cwd & thisFile & ".bak"
+				);
+			}
 
+			print.blueLine( "Installing new #thisFile#..." ).toConsole();
 			fileCopy(
 				variables.tempFolder & "/" & thisFile,
 				variables.cwd & thisFile
