@@ -11,7 +11,7 @@
 
 			<div class="panel-body">
 	        	<!--- Render Messagebox. --->
-				#getInstance( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
                 <!--- AuthorForm --->
                 #html.startForm(

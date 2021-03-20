@@ -6,7 +6,7 @@
 <cfif not structKeyExists( prc, "contents" )>
     <div class="modal-body" id="modal-body">
         <!--- messageBox --->
-        #getInstance( "messagebox@cbMessagebox" ).renderit()#
+        #cbMessageBox().renderit()#
     </div>
 <cfelse>
     <div class="modal-body" id="modal-body">

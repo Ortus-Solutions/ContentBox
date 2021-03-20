@@ -13,7 +13,7 @@
 	<div class="col-md-12">
 
     	<!--- messageBox --->
-		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 
 		<!--- FileBrowser Viewlet --->
 		#runEvent(

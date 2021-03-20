@@ -232,7 +232,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			#announce( "fb_preFileListing" )#
 
 			<!--- Messagebox --->
-			#getInstance( "messagebox@cbMessagebox" ).renderit()#
+			#cbMessageBox().renderit()#
 
 			<!--- Display back links --->
 			<cfif prc.fbCurrentRoot NEQ prc.fbDirRoot>

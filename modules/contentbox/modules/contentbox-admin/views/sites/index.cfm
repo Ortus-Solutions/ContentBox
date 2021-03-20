@@ -9,7 +9,7 @@
 
 <div class="row">
 	<div class="col-md-12">
-		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>

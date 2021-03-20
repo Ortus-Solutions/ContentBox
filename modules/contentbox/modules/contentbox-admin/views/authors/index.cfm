@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="col-md-9">
 		<!--- MessageBox --->
-		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 
 		<!--- Import Log --->
 		<cfif flash.exists( "importLog" )>

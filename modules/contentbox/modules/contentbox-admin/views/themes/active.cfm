@@ -21,7 +21,7 @@
 		    <div class="panel-body">
 
 		    	<!--- MessageBox --->
-				#getInstance( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
 				<!---screenshot --->
 				<div id="theme-screenshot" class="pull-right">

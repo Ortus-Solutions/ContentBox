@@ -43,7 +43,7 @@
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
-            #getInstance( "messagebox@cbMessagebox" ).renderit()#
+            #cbMessageBox().renderit()#
             <!--- form --->
             #html.hiddenField( name="contentID", bind=prc.content)#
             #html.hiddenField( name="contentType", bind=prc.content)#

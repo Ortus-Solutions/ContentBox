@@ -288,9 +288,10 @@ component {
 		wirebox.getInstance( "EditorService@cb" );
 
 		// Messagebox overrides for admin
-		var mb = wirebox.getInstance( "messagebox@cbmessagebox" );
-		mb.setStyleOverride( true );
-		mb.setTemplate( "/contentbox/models/ui/templates/messagebox.cfm" );
+		wirebox
+			.getInstance( "messagebox@cbmessagebox" )
+			.setStyleOverride( true )
+			.setTemplate( "/contentbox/models/ui/templates/messagebox.cfm" );
 	}
 
 }

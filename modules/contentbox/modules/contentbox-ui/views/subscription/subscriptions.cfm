@@ -3,7 +3,7 @@
     <h1>Manage My Subscriptions</h1>
 
     <!--- MessageBox --->
-    #getInstance( "messagebox@cbmessagebox" ).renderit()#
+    #cbMessageBox().renderit()#
 
     <cfif prc.oSubscriber.isLoaded()>
         <cfif structCount( prc.subscriptions )>

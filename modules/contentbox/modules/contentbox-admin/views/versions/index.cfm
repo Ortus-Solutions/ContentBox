@@ -35,7 +35,7 @@
 
 			<div class="panel-body">
 				<!--- MessageBox --->
-				#getInstance( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 				<!--- Version History Panel --->
 				#prc.versionsPager#
 			</div>

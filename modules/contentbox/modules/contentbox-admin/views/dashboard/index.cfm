@@ -13,7 +13,7 @@
 		<p class="lead">#prc.welcomeBody#</p>
 
 		<!--- Messagebox --->
-		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 
 		<!--- Event --->
 		#announce( "cbadmin_preDashboardContent" )#

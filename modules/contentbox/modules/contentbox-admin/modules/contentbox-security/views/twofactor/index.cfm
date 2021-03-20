@@ -12,7 +12,7 @@
 
             <div class="panel-body">
 	        	<!--- Render Messagebox --->
-				#getInstance( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
                 #html.startForm(
                 	action		= prc.xehValidate,

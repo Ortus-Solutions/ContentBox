@@ -13,7 +13,7 @@
 
         <!--- messageBox --->
         <div class="clearfix">
-            #getInstance( "messagebox@cbMessagebox" ).renderit()#
+            #cbMessageBox().renderit()#
         </div>
 
         <!---Import Log --->

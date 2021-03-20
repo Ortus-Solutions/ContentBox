@@ -26,7 +26,7 @@
             </div>
             <div class="panel-body">
 
-                #getInstance( "messagebox@cbMessagebox" ).renderit()#
+                #cbMessageBox().renderit()#
 
                 <menu class="well well-sm">
                     <p>Click any of the options below to insert a new menu item of that type.</p>

@@ -54,7 +54,7 @@
 		<!--- ******************************************************************************** --->
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
-            #getInstance( "messagebox@cbMessagebox" ).renderit()#
+            #cbMessageBox().renderit()#
 
             <!--- id --->
             #html.hiddenField( name="contentID",	bind=prc.entry )#

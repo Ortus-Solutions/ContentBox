@@ -49,9 +49,7 @@ component {
 		// Parent Affected Settings
 		parentSettings = {
 			// File Browser module name override
-			filebrowser_module_name : "contentbox-filebrowser",
-			// The default HTMl template for emitting the messages
-			messagebox              : { template : "#moduleMapping#/models/ui/templates/messagebox.cfm" }
+			filebrowser_module_name : "contentbox-filebrowser"
 		};
 
 		// interceptor settings

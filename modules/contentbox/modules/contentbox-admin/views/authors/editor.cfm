@@ -82,7 +82,7 @@
             <div class="panel-body">
 
             	<!--- Messageboxes --->
-            	#getInstance( "messagebox@cbMessagebox" ).renderIt()#
+            	#cbMessageBox().renderit()#
 
             	<!--- Vertical Nav --->
                 <div class="tab-wrapper tab-left tab-primary">

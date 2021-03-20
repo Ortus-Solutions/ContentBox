@@ -14,7 +14,7 @@
 <div class="row">
     <div class="col-md-12">
         <!-- MessageBox -->
-		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 
         <!--- Info Bar --->
 		<cfif NOT prc.cbSiteSettings.cb_comments_enabled>

@@ -30,7 +30,7 @@
 				<div class="panel-body">
 
 					<!--- Messageboxes --->
-					#getInstance( "messagebox@cbMessagebox" ).renderIt()#
+					#cbMessageBox().renderit()#
 
 					<!--- Form --->
 					#html.startForm(

@@ -8,7 +8,7 @@
 		</h1>
 
         <!--- messageBox --->
-		#getInstance( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>

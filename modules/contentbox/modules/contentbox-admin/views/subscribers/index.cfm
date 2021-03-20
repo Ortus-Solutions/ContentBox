@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getInstance( "messagebox@cbMessagebox" ).renderit()#
+        #cbMessageBox().renderit()#
     </div>
 </div>
 <div class="row">
