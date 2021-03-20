@@ -7,6 +7,9 @@
  */
 component extends="contentbox.models.ui.BaseWidget" singleton {
 
+	// DI
+	property name="messagebox" inject="messagebox@cbmessagebox";
+
 	/**
 	 * Constructor
 	 */
@@ -72,7 +75,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 				#cb.event( "cbui_preCommentForm" )#
 
-				#cbMessageBox().renderit()#
+				#variables.messagebox.renderit()#
 
 				#html.hiddenField( name = "contentID", value = arguments.content.getContentID() )#
 				#html.hiddenField( name = "contentType", value = arguments.content.getContentType() )#
