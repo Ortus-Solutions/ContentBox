@@ -383,8 +383,6 @@ component {
 		required prc,
 		required thisContent
 	){
-		var commentErrors = [];
-
 		// param values
 		event
 			.paramValue( "author", "" )
@@ -406,7 +404,7 @@ component {
 		rc.content     = antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
 
 		// Validate incoming data
-		commentErrors = [];
+		var commentErrors = [];
 		if ( !len( rc.author ) ) {
 			arrayAppend( commentErrors, "Your name is missing!" );
 		}
@@ -451,6 +449,7 @@ component {
 
 	/**
 	 * Save the comment for a content object
+	 *
 	 * @thisContent.hint The content object
 	 * @subscribe Subscribing to comments or not
 	 * @prc The prc reference

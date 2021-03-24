@@ -73,26 +73,6 @@
                                             </div>
                                         </div>
 
-                                        <!--- URL Translations --->
-                                        <div class="form-group">
-                                            #html.label(
-                                                field="cb_comments_urltranslations",
-                                                content="Translate URL's to links:",
-                                                class="control-label"
-                                            )#
-                                            <div class="controls">
-                                            	#html.checkbox(
-													name    = "cb_comments_urltranslations_toggle",
-													data	= { toggle: 'toggle', match: 'cb_comments_urltranslations' },
-													checked	= prc.cbSiteSettings.cb_comments_urltranslations
-												)#
-												#html.hiddenField(
-													name	= "cb_comments_urltranslations",
-													value	= prc.cbSiteSettings.cb_comments_urltranslations
-												)#
-                                            </div>
-                                        </div>
-
 										<!--- Enable Moderation --->
 										<div class="form-group">
 											#html.label(

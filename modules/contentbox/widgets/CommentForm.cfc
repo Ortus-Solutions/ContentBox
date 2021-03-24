@@ -113,7 +113,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 				#html.textArea(
 					name = "content",
-					label = "Comment:",
+					label = "Comment: (Markdown allowed)",
 					class = "form-control",
 					required = "required",
 					value = event.getValue( "content", "" )

@@ -211,7 +211,6 @@ component
 		"cb_comments_enabled"                : "true",
 		"cb_comments_maxDisplayChars"        : "500",
 		"cb_comments_notify"                 : "true",
-		"cb_comments_urltranslations"        : "true",
 		"cb_comments_moderation_notify"      : "true",
 		"cb_comments_notifyemails"           : "",
 		"cb_comments_moderation"             : "true",

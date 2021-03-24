@@ -184,11 +184,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// Default moderation unless user is logged in
 			inComment.setIsApproved( arguments.loggedInUser.isLoggedIn() ? true : false );
 
-			// Check if activating URL's on Comment Content
-			if ( siteSettings.cb_comments_urltranslations ) {
-				inComment.setContent( activateURLs( inComment.getContent() ) );
-			}
-
 			// Run moderation rules if not logged in.
 			if (
 				arguments.loggedInUser.isLoggedIn()
@@ -459,21 +454,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// send it out
 		variables.mailService.send( mail );
-	}
-
-	/**
-	 * Activate URL's from text
-	 *
-	 * @text The target
-	 */
-	private function activateURLs( required text ){
-		return reReplaceNoCase(
-			arguments.text,
-			"((https?|ftp):\/\/)([^\s]*)\s?",
-			"<a href="" \1\3 "">\1\3</a>
- ",
-			"ALL"
-		);
 	}
 
 	/**

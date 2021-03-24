@@ -104,32 +104,37 @@
 					</div>
 
 					<cfif !args.print>
-					<!--- Comments Bar --->
-					#html.anchor(name="comments")#
-					<div class="post-comments">
-						<div class="infoBar">
-							<cfif NOT cb.isCommentsEnabled( prc.entry )>
-							<i class="icon-warning-sign icon-2x"></i>
-							Comments are currently closed
-							<cfelse>
-								<p>
-									<button class="btn btn-primary" onclick="toggleCommentForm()"><i class="fa fa-comments"></i> Add Comment (#prc.entry.getNumberOfApprovedComments()#)</button>
-								</p>
-							</cfif>
-						</div>
-					</div>
 
-					<!--- Separator --->
-					<div class="separator"></div>
+						<p>&nbsp;</p>
 
-					<!--- Comment Form: I can build it or I can quick it? --->
-					<div id="commentFormShell">
-						<div class="row">
-							<div class="col-sm-12">
-								#cb.quickCommentForm( prc.entry )#
+						<!--- Comments Bar --->
+						#html.anchor(name="comments")#
+						<div class="post-comments">
+							<div class="infoBar">
+								<cfif NOT cb.isCommentsEnabled( prc.entry )>
+									<i class="icon-warning-sign icon-2x"></i>
+									Comments are currently closed
+								<cfelse>
+									<p>
+										<button class="btn btn-primary" onclick="toggleCommentForm()">
+											<i class="fa fa-comments"></i> Add Comment (#prc.entry.getNumberOfApprovedComments()#)
+										</button>
+									</p>
+								</cfif>
 							</div>
 						</div>
-					</div>
+
+						<!--- Separator --->
+						<div class="separator"></div>
+
+						<!--- Comment Form: I can build it or I can quick it? --->
+						<div id="commentFormShell">
+							<div class="row">
+								<div class="col-sm-12">
+									#cb.quickCommentForm( prc.entry )#
+								</div>
+							</div>
+						</div>
 					</cfif>
 
 					<hr>
@@ -146,13 +151,13 @@
 				</div>
 
 				<!--- ContentBoxEvent --->
-				#cb.event("cbui_postEntryDisplay")#
+				#cb.event( "cbui_postEntryDisplay" )#
 
 			</div>
 
 			<cfif args.sidebar>
 				<div class="col-sm-3" id="blog-sidenav">
-					#cb.quickView(view='_blogsidebar', args=args)#
+					#cb.quickView( view='_blogsidebar', args=args )#
 				</div>
 			</cfif>
 		</div>
@@ -162,12 +167,12 @@
 <!--- Custom JS --->
 <script type="text/javascript">
 	$(document).ready(function() {
-		<!---<cfif cb.isCommentFormError()>--->
-		toggleCommentForm();
-		<!---</cfif>--->
+		<cfif !cb.isCommentFormError()>
+			toggleCommentForm();
+		</cfif>
 	});
 	function toggleCommentForm(){
-		$("##commentForm").slideToggle();
+		$( "##commentForm" ).slideToggle();
 	}
 </script>
 </cfoutput>

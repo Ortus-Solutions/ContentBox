@@ -26,11 +26,16 @@
 					<legend><i class="far fa-eye fa-lg"></i> Details</legend>
 
 						<div class="form-group pull-right">
-							#getInstance( "Avatar@cb" ).renderAvatar( email=rc.comment.getAuthorEmail() )#
+							#getInstance( "Avatar@cb" ).renderAvatar(
+								email=rc.comment.getAuthorEmail(),
+								class="img-circle"
+							)#
 							&nbsp;
 							<a 	href="mailto:#encodeForHTMLAttribute( rc.comment.getAUthorEmail() )#"
 								title="#encodeForHTMLAttribute( rc.comment.getAUthorEmail() )#"
-							>#rc.comment.getAuthor()#</a>
+							>
+								#encodeForHtml( rc.comment.getAuthor() )#
+							</a>
 						</div>
 
 						<!--- Content Object --->
@@ -47,12 +52,12 @@
 						</div>
 
 						<!--- Author URL --->
-						<cfif !len( rc.comment.getAuthorURL() )>
+						<cfif len( rc.comment.getAuthorURL() )>
 							<div class="form-group">
 								<i class="fa fa-cloud"></i>
 								<label>Author URL: </label>
 								<a href="<cfif NOT findnocase( "http",rc.comment.getAuthorURL())>http://</cfif>#rc.comment.getAuthorURL()#" target="_blank">
-									#rc.comment.getAuthorURL()#
+									#encodeForHtml( rc.comment.getAuthorURL() )#
 								</a>
 							</div>
 						</cfif>
@@ -76,9 +81,9 @@
 				<!--- content --->
 				<fieldset>
 					<legend><i class="fa fa-comment"></i> Comment</legend>
-					<blockquote>
-						#rc.comment.getContent()#
-					</blockquote>
+					<div>
+						#rc.comment.getDisplayContent()#
+					</div>
 				</fieldset>
 
 				<!--- Search Form --->
@@ -87,8 +92,17 @@
 					#html.hiddenField( name="commentStatus", value="approve" )#
 					<div class="form-actions">
 						<!--- Buttons --->
-						<button type="submit" class="btn btn-danger btn-lg" onclick="removeComment()"><i class="fa fa-trash"></i> Delete</button>
-						<button type="submit" class="btn btn-primary btn-lg" /><i class="far fa-check-circle"></i> Approve</button>
+						<button
+							type="submit"
+							class="btn btn-danger btn-lg"
+							onclick="removeComment()">
+							<i class="fa fa-trash"></i> Delete
+						</button>
+						<button
+							type="submit"
+							class="btn btn-primary btn-lg" />
+							<i class="far fa-check-circle"></i> Approve
+						</button>
 					</div>
 				#html.endForm()#
 

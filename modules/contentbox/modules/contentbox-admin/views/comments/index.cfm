@@ -40,6 +40,7 @@
 				<div class="panel-heading">
 					<div class="row">
 
+						<!--- Quick Filter --->
 						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
@@ -50,6 +51,7 @@
 							</div>
 						</div>
 
+						<!---Bulk Actions --->
 						<div class="col-md-6 col-xs-8">
 							<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 								<div class="text-right">
@@ -58,10 +60,30 @@
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<li><a href="javascript:changeStatus('approve')"><i class="fa fa-thumbs-up"></i> Approve Selected</a></li>
-											<li><a href="javascript:changeStatus('moderate')"><i class="fa fa-thumbs-down"></i> Moderate Selected</a></li>
-											<li><a href="javascript:removeAllSelected()" class="confirmIt"><i class="far fa-trash-alt"></i> Remove Selected</a></li>
-											<li><a href="javascript:removeAllModerated()" class="confirmIt" data-message="Are you sure you want to delete all moderated comments?" title="Nuclear: Delete all moderated comments!"><i class="fa fa-times"></i> Remove All Moderated</a></li>
+								    		<li>
+												<a href="javascript:changeStatus( 'approve' )">
+													<i class="fa fa-thumbs-up"></i> Approve Selected
+												</a>
+											</li>
+											<li>
+												<a href="javascript:changeStatus( 'moderate' )">
+													<i class="fa fa-thumbs-down"></i> Moderate Selected
+												</a>
+											</li>
+											<li>
+												<a href="javascript:removeAllSelected()" class="confirmIt">
+													<i class="far fa-trash-alt"></i> Remove Selected
+												</a>
+											</li>
+											<li>
+												<a
+													href="javascript:removeAllModerated()"
+													class="confirmIt"
+													data-message="Are you sure you want to delete all moderated comments?"
+													title="Nuclear: Delete all moderated comments!">
+													<i class="fa fa-times"></i> Remove All Moderated
+												</a>
+											</li>
 								    	</ul>
 								    </div>
 								</div>
@@ -71,7 +93,7 @@
 				</div>
 
 				<div class="panel-body">
-					<!--- comments --->
+					<!--- comments table --->
 					<table
 						name="comments"
 						id="comments"
@@ -79,7 +101,15 @@
 					>
 						<thead>
 							<tr>
-								<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'commentID')"/></th>
+								<th
+									id="checkboxHolder"
+									class="{sorter:false} text-center"
+									width="15">
+									<input
+										type="checkbox"
+										onClick="checkAll( this.checked, 'commentID' )"
+									/>
+								</th>
 								<th width="200">Author</th>
 								<th class="{sorter:false}">Comment</th>
 								<th width="75" class="text-center {sorter:false}">Actions</th>
@@ -88,7 +118,7 @@
 
 						<tbody>
 							<cfloop array="#prc.comments#" index="comment">
-							<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
+							<tr <cfif !comment.getIsApproved()>class="danger"</cfif> data-commentID="#comment.getCommentID()#">
 								<!--- Delete Checkbox with PK--->
 								<td class="text-center">
 									<input type="checkbox" name="commentID" id="commentID" value="#comment.getCommentID()#" />
@@ -107,11 +137,12 @@
 									<br/>
 
 									<cfif len(comment.getAuthorURL())>
-										<i class="fas fa-globe"></i>
-										<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
-											#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
-										</a>
-										<br />
+										<div class="ml5 mt10">
+											<i class="fas fa-globe"></i>
+											<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
+												#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
+											</a>
+										</div>
 									</cfif>
 
 									<div class="ml5 mt10">
@@ -139,9 +170,9 @@
 
 									<div class="mt10">
 										#left( comment.getDisplayContent(), prc.cbSiteSettings.cb_comments_maxDisplayChars )#
-									<cfif len( comment.getDisplayContent() ) gt prc.cbSiteSettings.cb_comments_maxDisplayChars>
-									....<strong>more</strong>
-									</cfif>
+										<cfif len( comment.getDisplayContent() ) gt prc.cbSiteSettings.cb_comments_maxDisplayChars>
+										....<strong>more</strong>
+										</cfif>
 									</div>
 								</td>
 

@@ -16,6 +16,15 @@ component
 {
 
 	/* *********************************************************************
+	 **							DI
+	 ********************************************************************* */
+
+	property
+		name      ="markdown"
+		inject    ="Processor@cbmarkdown"
+		persistent="false";
+
+	/* *********************************************************************
 	 **							PROPERTIES
 	 ********************************************************************* */
 
@@ -54,8 +63,8 @@ component
 	property
 		name     ="isApproved"
 		notnull  ="true"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		default  ="false"
 		dbdefault="false"
 		index    ="idx_contentComment,idx_approved";
@@ -115,10 +124,10 @@ component
 	}
 
 	/**
-	 * Get Display Content
+	 * Render the comment using markdown and encoding it for HTML output
 	 */
 	string function getDisplayContent(){
-		return paragraphFormat( getContent() );
+		return variables.markdown.toHTML( getContent().reReplace( "##{1,6}\s", "", "all" ) );
 	}
 
 	/**
