@@ -67,7 +67,7 @@ component {
 
 		// Run Migrations
 		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
-		//command( "migrate up" ).run();
+		command( "migrate up" ).run();
 		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Update ColdBox
