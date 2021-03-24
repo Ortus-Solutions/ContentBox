@@ -5,19 +5,22 @@
  * ---
  * This simulates the onRequest start for the admin interface
  */
-component extends="coldbox.system.Interceptor"{
+component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="securityService"  inject="securityService@cb";
-	property name="settingService"   inject="settingService@cb";
-	property name="siteService"      inject="siteService@cb";
+	property name="securityService" inject="securityService@cb";
+	property name="settingService" inject="settingService@cb";
+	property name="siteService" inject="siteService@cb";
 	property name="adminMenuService" inject="adminMenuService@cb";
 
 	/**
 	 * Configure CB Request
 	 */
 	function configure(){
-		variables.childModulesRegex = arrayToList( getModuleConfig( "contentbox-admin" ).childModules, "|" );
+		variables.childModulesRegex = arrayToList(
+			getModuleConfig( "contentbox-admin" ).childModules,
+			"|"
+		);
 	}
 
 	/**
@@ -25,13 +28,18 @@ component extends="coldbox.system.Interceptor"{
 	 */
 	function preProcess( event, data, rc, prc ){
 		// Only execute for admin or child modules
-		if( !reFindNoCase( "^(contentbox-admin|#variables.childModulesRegex#)", event.getCurrentEvent() ) ){
+		if (
+			!reFindNoCase(
+				"^(contentbox-admin|#variables.childModulesRegex#)",
+				event.getCurrentEvent()
+			)
+		) {
 			return;
 		}
 
 		// Verify ContentBox installer has been ran?
-		if( !settingService.isCBReady() ){
-			relocate( 'cbInstaller' );
+		if ( !settingService.isCBReady() ) {
+			relocate( "cbInstaller" );
 		}
 
 		/************************************** SETUP CONTEXT REQUEST *********************************************/
@@ -62,23 +70,23 @@ component extends="coldbox.system.Interceptor"{
 		// Sidemenu collapsed
 		prc.sideMenuClass           = "";
 		// Is sidemenu collapsed for user?
-		if( prc.oCurrentAuthor.getPreference( "sidemenuCollapse", false ) == "true" ){
+		if ( prc.oCurrentAuthor.getPreference( "sidemenuCollapse", false ) == "true" ) {
 			prc.sideMenuClass = "sidebar-mini";
 		}
 
 		/************************************** FORCE SSL *********************************************/
 
-		if( prc.cbSettings.cb_admin_ssl and !event.isSSL() ){
-			relocate( event=event.getCurrentRoutedURL(), ssl=true );
+		if ( prc.cbSettings.cb_admin_ssl and !event.isSSL() ) {
+			relocate( event = event.getCurrentRoutedURL(), ssl = true );
 		}
 
 		/************************************** FORCE PASSWORD RESET *********************************************/
 
-		if(
+		if (
 			!findNoCase( "contentbox-security:security", event.getCurrentEvent() )
 			&&
 			prc.oCurrentAuthor.getIsPasswordReset()
-		){
+		) {
 			var token = securityService.generateResetToken( prc.oCurrentAuthor );
 			getInstance( "messagebox@cbMessagebox" ).info(
 				prc.CBHelper.r( "messages.password_reset_detected@security" )
@@ -93,83 +101,60 @@ component extends="coldbox.system.Interceptor"{
 		/************************************** NAVIGATION EXIT HANDLERS *********************************************/
 
 		// Global Admin Exit Handlers
-		prc.xehDashboard = "#prc.cbAdminEntryPoint#.dashboard";
-		prc.xehAbout     = "#prc.cbAdminEntryPoint#.dashboard.about";
-
+		prc.xehDashboard             = "#prc.cbAdminEntryPoint#.dashboard";
+		prc.xehAbout                 = "#prc.cbAdminEntryPoint#.dashboard.about";
 		// Entries Tab
-		prc.xehEntries      = "#prc.cbAdminEntryPoint#.entries";
-		prc.xehEntriesEditor= "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehCategories   = "#prc.cbAdminEntryPoint#.categories";
-
+		prc.xehEntries               = "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntriesEditor         = "#prc.cbAdminEntryPoint#.entries.editor";
+		prc.xehCategories            = "#prc.cbAdminEntryPoint#.categories";
 		// Content Tab
-		prc.xehPages             = "#prc.cbAdminEntryPoint#.pages";
-		prc.xehPagesEditor       = "#prc.cbAdminEntryPoint#.pages.editor";
-		prc.xehContentStore      = "#prc.cbAdminEntryPoint#.contentStore";
-		prc.xehContentStoreEditor= "#prc.cbAdminEntryPoint#.contentStore.editor";
-		prc.xehMediaManager      = "#prc.cbAdminEntryPoint#.mediamanager";
-		prc.xehMenuManager       = "#prc.cbAdminEntryPoint#.menus";
-		prc.xehMenuManagerEditor = "#prc.cbAdminEntryPoint#.menus.editor";
-
+		prc.xehPages                 = "#prc.cbAdminEntryPoint#.pages";
+		prc.xehPagesEditor           = "#prc.cbAdminEntryPoint#.pages.editor";
+		prc.xehContentStore          = "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentStoreEditor    = "#prc.cbAdminEntryPoint#.contentStore.editor";
+		prc.xehMediaManager          = "#prc.cbAdminEntryPoint#.mediamanager";
+		prc.xehMenuManager           = "#prc.cbAdminEntryPoint#.menus";
+		prc.xehMenuManagerEditor     = "#prc.cbAdminEntryPoint#.menus.editor";
 		// Comments Tab
-		prc.xehComments       = "#prc.cbAdminEntryPoint#.comments";
-		prc.xehCommentsettings= "#prc.cbAdminEntryPoint#.comments.settings";
-
+		prc.xehComments              = "#prc.cbAdminEntryPoint#.comments";
+		prc.xehCommentsettings       = "#prc.cbAdminEntryPoint#.comments.settings";
 		// Look and Feel Tab
-		prc.xehThemes    = "#prc.cbAdminEntryPoint#.themes";
-		prc.xehWidgets   = "#prc.cbAdminEntryPoint#.widgets";
-		prc.xehGlobalHTML= "#prc.cbAdminEntryPoint#.globalHTML";
-
+		prc.xehThemes                = "#prc.cbAdminEntryPoint#.themes";
+		prc.xehWidgets               = "#prc.cbAdminEntryPoint#.widgets";
+		prc.xehGlobalHTML            = "#prc.cbAdminEntryPoint#.globalHTML";
 		// Modules
-		prc.xehModules	= "#prc.cbAdminEntryPoint#.modules";
-
+		prc.xehModules               = "#prc.cbAdminEntryPoint#.modules";
 		// Authors Tab
-		prc.xehAuthors         = "#prc.cbAdminEntryPoint#.authors";
-		prc.xehAuthorNew       = "#prc.cbAdminEntryPoint#.authors.new";
-		prc.xehAuthorEditor    = "#prc.cbAdminEntryPoint#.authors.editor";
-		prc.xehPermissions     = "#prc.cbAdminEntryPoint#.permissions";
-		prc.xehPermissionGroups= "#prc.cbAdminEntryPoint#.permissionGroups";
-		prc.xehRoles           = "#prc.cbAdminEntryPoint#.roles";
-		prc.xehSavePreference  = "#prc.cbAdminEntryPoint#.authors.saveSinglePreference";
-
+		prc.xehAuthors               = "#prc.cbAdminEntryPoint#.authors";
+		prc.xehAuthorNew             = "#prc.cbAdminEntryPoint#.authors.new";
+		prc.xehAuthorEditor          = "#prc.cbAdminEntryPoint#.authors.editor";
+		prc.xehPermissions           = "#prc.cbAdminEntryPoint#.permissions";
+		prc.xehPermissionGroups      = "#prc.cbAdminEntryPoint#.permissionGroups";
+		prc.xehRoles                 = "#prc.cbAdminEntryPoint#.roles";
+		prc.xehSavePreference        = "#prc.cbAdminEntryPoint#.authors.saveSinglePreference";
 		// Tools
-		prc.xehToolsImport	= "#prc.cbAdminEntryPoint#.tools.importer";
-
+		prc.xehToolsImport           = "#prc.cbAdminEntryPoint#.tools.importer";
 		// System
-		prc.xehSettings     = "#prc.cbAdminEntryPoint#.settings";
-		prc.xehSitesManager = "#prc.cbAdminEntryPoint#.sites";
-		prc.xehChangeSite   = "#prc.cbAdminEntryPoint#.sites.changeSite";
-		prc.xehSecurityRules= "#prc.cbAdminEntryPoint#.securityrules";
-		prc.xehRawSettings  = "#prc.cbAdminEntryPoint#.settings.raw";
-
+		prc.xehSettings              = "#prc.cbAdminEntryPoint#.settings";
+		prc.xehSitesManager          = "#prc.cbAdminEntryPoint#.sites";
+		prc.xehChangeSite            = "#prc.cbAdminEntryPoint#.sites.changeSite";
+		prc.xehSecurityRules         = "#prc.cbAdminEntryPoint#.securityrules";
+		prc.xehRawSettings           = "#prc.cbAdminEntryPoint#.settings.raw";
 		// Stats
-		prc.xehSubscribers  = "#prc.cbAdminEntryPoint#.subscribers";
-
+		prc.xehSubscribers           = "#prc.cbAdminEntryPoint#.subscribers";
 		// Login/Logout
-		prc.xehDoLogout = "#prc.cbAdminEntryPoint#.security.doLogout";
-		prc.xehLogin    = "#prc.cbAdminEntryPoint#.security.login";
-
+		prc.xehDoLogout              = "#prc.cbAdminEntryPoint#.security.doLogout";
+		prc.xehLogin                 = "#prc.cbAdminEntryPoint#.security.login";
 		// CK Editor Integration Handlers For usage with the Quick Post
-		prc.xehCKFileBrowserURL     = "#prc.cbAdminEntryPoint#/ckfilebrowser/";
-		prc.xehCKFileBrowserURLImage= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
-		prc.xehCKFileBrowserURLFlash= "#prc.cbAdminEntryPoint#/ckfilebrowser/";
-
+		prc.xehCKFileBrowserURL      = "#prc.cbAdminEntryPoint#/ckfilebrowser/";
+		prc.xehCKFileBrowserURLImage = "#prc.cbAdminEntryPoint#/ckfilebrowser/";
+		prc.xehCKFileBrowserURLFlash = "#prc.cbAdminEntryPoint#/ckfilebrowser/";
 		// Search global
-		prc.xehSearchGlobal = "#prc.cbAdminEntryPoint#.content.search";
-
+		prc.xehSearchGlobal          = "#prc.cbAdminEntryPoint#.content.search";
 		// Prepare Admin Actions
-		prc.xehAdminActionData = [
-			{ name="Clear RSS Caches",          value="rss-purge" },
-			{ name="Clear Content Caches",      value="content-purge" },
-			{ name="Reload Application",        value="app" },
-			{ name="Reload ORM",                value="orm" },
-			{ name="Reload Admin Module",       value="contentbox-admin" },
-			{ name="Reload FileBrowser Module", value="contentbox-filebrowser" },
-			{ name="Reload Security Module",    value="contentbox-security" },
-			{ name="Reload Site Module",        value="contentbox-ui" }
-		];
-		prc.xehAdminAction = "#prc.cbAdminEntryPoint#.dashboard.reload";
+		prc.xehAdminAction           = "#prc.cbAdminEntryPoint#.dashboard.reload";
 		// Installer Check
-		prc.installerCheck = settingService.isInstallationPresent();
+		prc.installerCheck           = settingService.isInstallationPresent();
 	}
 
 }

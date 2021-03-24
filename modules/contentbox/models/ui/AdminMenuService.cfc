@@ -255,6 +255,13 @@ component accessors="true" threadSafe singleton {
 				}
 			)
 			.addHeaderSubMenu(
+				name  = "cachepurge",
+				label = "Clear Template Cache",
+				href  = function( required menu, required event ){
+					return "javascript:adminAction( 'cache-purge', '#arguments.event.buildLink( xehAdminAction )#' )";
+				}
+			)
+			.addHeaderSubMenu(
 				name  = "app",
 				label = "Reload Application",
 				href  = function( required menu, required event ){
@@ -268,20 +275,7 @@ component accessors="true" threadSafe singleton {
 					return "javascript:adminAction( 'orm', '#arguments.event.buildLink( xehAdminAction )#' )";
 				}
 			)
-			.addHeaderSubMenu(
-				name  = "contentboxadmin",
-				label = "Reload Admin Module",
-				href  = function( required menu, required event ){
-					return "javascript:adminAction( 'contentbox-admin', '#arguments.event.buildLink( xehAdminAction )#' )";
-				}
-			)
-			.addHeaderSubMenu(
-				name  = "contentboxui",
-				label = "Reload Site Module",
-				href  = function( required menu, required event ){
-					return "javascript:adminAction( 'contentbox-ui', '#arguments.event.buildLink( xehAdminAction )#' )";
-				}
-			);
+		;
 		return this;
 	}
 

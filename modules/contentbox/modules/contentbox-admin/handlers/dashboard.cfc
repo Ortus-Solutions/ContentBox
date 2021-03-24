@@ -269,6 +269,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Reload System Actions
+	 *
 	 * @return relocation if synchronous, json if ajax
 	 */
 	function reload( event, rc, prc ){
@@ -291,14 +292,8 @@ component extends="baseHandler" {
 					getInstance( "ContentService@cb" ).clearAllCaches( async = false );
 					break;
 				}
-				case "contentbox-admin":
-				case "contentbox-ui":
-				case "contentbox-filebrowser":
-				case "contentbox-security": {
-					// reload the core module first
-					controller.getModuleService().reload( "contentbox" );
-					// reload requested module
-					controller.getModuleService().reload( rc.targetModule );
+				case "cache-purge": {
+					getCache( "template" ).clearAll();
 					break;
 				}
 				default: {
