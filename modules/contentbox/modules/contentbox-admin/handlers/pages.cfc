@@ -136,14 +136,18 @@ component extends="baseContentHandler" {
 
 	// editor
 	function editor( event, rc, prc ){
-		// cb helper reference
-		prc.cbHelper      = variables.CBHelper;
+		// get new page or persisted
+		prc.page          = variables.pageService.get( event.getValue( "contentID", 0 ) );
 		// CK Editor Helper
 		prc.ckHelper      = variables.CKHelper;
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
+		// Check if the entry's markup matches the choosen editor
+		if ( prc.page.getMarkup() == "markdown" && prc.defaultEditor != "simplemde" ) {
+			prc.defaultEditor = "simplemde";
+		}
 		// Get the editor driver object
 		prc.oEditorDriver = variables.editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
@@ -153,14 +157,14 @@ component extends="baseContentHandler" {
 			"markup",
 			variables.editorService.getDefaultMarkup()
 		);
+
 		// get all categories for display purposes
 		prc.categories = variables.categoryService.list(
 			criteria : { "site" : prc.oCurrentSite },
 			sortOrder: "category",
 			asQuery  : false
 		);
-		// get new page or persisted
-		prc.page = variables.pageService.get( event.getValue( "contentID", 0 ) );
+
 		// load comments,versions and child pages viewlets if persisted
 		if ( prc.page.isLoaded() ) {
 			var args            = { contentID : rc.contentID };
@@ -228,7 +232,10 @@ component extends="baseContentHandler" {
 			.paramValue( "publishedDate", now() )
 			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
 			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue( "publishedTime", event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) )
+			.paramValue(
+				"publishedTime",
+				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
+			)
 			.paramValue( "expireHour", "" )
 			.paramValue( "expireMinute", "" )
 			.paramValue( "expireTime", "" )
@@ -366,22 +373,22 @@ component extends="baseContentHandler" {
 		var original = variables.pageService.get( rc.contentID );
 
 		// Verify new Title, else do a new copy of it, but only if it's in the same site.
-		if( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
+		if ( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 
 		// get a clone
 		var clone = variables.pageService.new( {
-			title        	: rc.title,
-			slug         	: variables.HTMLHelper.slugify( rc.title ),
-			layout       	: original.getLayout(),
-			mobileLayout 	: original.getMobileLayout(),
-			order        	: original.getOrder() + 1,
-			showInMenu   	: original.getShowInMenu(),
-			excerpt      	: original.getExcerpt(),
-			SSLOnly      	: original.getSSLonly(),
-			creator 		: prc.oCurrentAuthor,
-			site 			: variables.siteService.get( rc.site )
+			title        : rc.title,
+			slug         : variables.HTMLHelper.slugify( rc.title ),
+			layout       : original.getLayout(),
+			mobileLayout : original.getMobileLayout(),
+			order        : original.getOrder() + 1,
+			showInMenu   : original.getShowInMenu(),
+			excerpt      : original.getExcerpt(),
+			SSLOnly      : original.getSSLonly(),
+			creator      : prc.oCurrentAuthor,
+			site         : variables.siteService.get( rc.site )
 		} );
 
 		// attach to the original's parent.

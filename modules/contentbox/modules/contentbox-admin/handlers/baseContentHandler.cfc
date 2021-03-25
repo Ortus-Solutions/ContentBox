@@ -8,12 +8,12 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="authorService"   inject="authorService@cb";
-	property name="themeService"    inject="themeService@cb";
-	property name="CBHelper"        inject="CBHelper@cb";
+	property name="authorService" inject="authorService@cb";
+	property name="themeService" inject="themeService@cb";
+	property name="CBHelper" inject="CBHelper@cb";
 	property name="categoryService" inject="categoryService@cb";
-	property name="editorService"   inject="editorService@cb";
-	property name="siteService"   	inject="siteService@cb";
+	property name="editorService" inject="editorService@cb";
+	property name="siteService" inject="siteService@cb";
 
 	/**
 	 * Pre Handler
@@ -30,7 +30,10 @@ component extends="baseHandler" {
 
 	/**
 	 * Get the user's default editor with some logic
-	 * @author.hint The author object
+	 *
+	 * @author The author object to get the default editor from
+	 *
+	 * @return The default editor in string format
 	 */
 	private function getUserDefaultEditor( required author ){
 		// get user default editor
