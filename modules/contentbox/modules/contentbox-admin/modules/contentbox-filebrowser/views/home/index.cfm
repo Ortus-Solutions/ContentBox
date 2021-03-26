@@ -49,7 +49,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "newFolder@fb" )#"
 			>
-				<i class="fas fa-folder fa-lg-plus"></i>
+				<i class="fas fa-folder-plus fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbRename()"
