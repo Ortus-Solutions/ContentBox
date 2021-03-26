@@ -105,6 +105,9 @@ component
 		}
 		// end transaction
 
+		// flush cache to rebuild site settings
+		variables.settingService.flushSettingsCache();
+
 		return arguments.site;
 	}
 
