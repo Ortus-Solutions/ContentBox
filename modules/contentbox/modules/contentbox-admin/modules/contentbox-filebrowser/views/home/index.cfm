@@ -49,7 +49,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "newFolder@fb" )#"
 			>
-				<i class="fas fa-folder fa-lg-plus"></i>
+				<i class="fas fa-folder-plus fa-lg"></i>
 			</a>
 			<a
 				onclick="javascript:fbRename()"
@@ -101,6 +101,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		<!---Grid or listing --->
 		<div class="btn-group btn-group-sm" role="group">
 			<a
+				id="listingall"
 				href="javascript:fbListTypeChange( 'listing', 'all' )"
 				class="btn btn-more"
 				data-toggle="tooltip"
@@ -110,6 +111,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<i class="fas fa-list fa-lg-ul"></i>
 			</a>
 			<a
+				id="gridall"
 				href="javascript:fbListTypeChange( 'grid', 'all' )"
 				class="btn btn-more"
 				data-toggle="tooltip"
@@ -124,6 +126,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 		<div class="btn-group btn-group-sm" role="group">
 			<a
+				id="listingdir"
 				href="javascript:fbListTypeChange( 'listing', 'dir' )"
 				class="btn btn-more"
 				data-toggle="tooltip"
@@ -133,6 +136,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				<i class="fas fa-align-justify fa-lg"></i>
 			</a>
 			<a
+				id="griddir"
 				href="javascript:fbListTypeChange( 'grid', 'dir' )"
 				class="btn btn-more"
 				data-toggle="tooltip"
