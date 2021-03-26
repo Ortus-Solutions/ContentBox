@@ -199,8 +199,6 @@ component extends="baseContentHandler" {
 
 	// editor
 	function editor( event, rc, prc ){
-		// cb helper
-		prc.cbHelper   = variables.CBHelper;
 		// get all categories
 		prc.categories = variables.categoryService.list(
 			criteria : { "site" : prc.oCurrentSite },
@@ -233,6 +231,10 @@ component extends="baseContentHandler" {
 		prc.editors       = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
+		// Check if the entry's markup matches the choosen editor
+		if ( prc.content.getMarkup() == "markdown" && prc.defaultEditor != "simplemde" ) {
+			prc.defaultEditor = "simplemde";
+		}
 		// Get the editor driver object
 		prc.oEditorDriver = editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
@@ -287,7 +289,7 @@ component extends="baseContentHandler" {
 		var original = variables.contentStoreService.get( rc.contentID );
 
 		// Verify new Title, else do a new copy of it, but only if it's in the same site.
-		if( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
+		if ( original.isSameSite( rc.site ) && rc.title eq original.getTitle() ) {
 			rc.title = "Copy of #rc.title#";
 		}
 
@@ -297,8 +299,8 @@ component extends="baseContentHandler" {
 			slug        : variables.HTMLHelper.slugify( rc.title ),
 			description : original.getDescription(),
 			order       : original.getOrder() + 1,
-			creator 	: prc.oCurrentAuthor,
-			site 		: variables.siteService.get( rc.site )
+			creator     : prc.oCurrentAuthor,
+			site        : variables.siteService.get( rc.site )
 		} );
 
 		// attach to the original's parent.
@@ -347,7 +349,10 @@ component extends="baseContentHandler" {
 			.paramValue( "publishedDate", now() )
 			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
 			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue( "publishedTime", event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" ) )
+			.paramValue(
+				"publishedTime",
+				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
+			)
 			.paramValue( "expireHour", "" )
 			.paramValue( "expireMinute", "" )
 			.paramValue( "expireTime", "" )

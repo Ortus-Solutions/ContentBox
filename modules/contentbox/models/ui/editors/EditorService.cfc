@@ -86,7 +86,7 @@ component accessors="true" threadSafe singleton {
 	 * Get an array of registered editor names in alphabetical order
 	 */
 	array function getRegisteredEditors(){
-		return listToArray( listSort( structKeyList( variables.editors ), "textnocase" ) );
+		return variables.editors.keyArray().sort( "textnocase" );
 	}
 
 	/**

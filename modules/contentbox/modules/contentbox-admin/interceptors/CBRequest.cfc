@@ -12,6 +12,7 @@ component extends="coldbox.system.Interceptor" {
 	property name="settingService" inject="settingService@cb";
 	property name="siteService" inject="siteService@cb";
 	property name="adminMenuService" inject="adminMenuService@cb";
+	property name="cbHelper" inject="CBHelper@cb";
 
 	/**
 	 * Configure CB Request
@@ -24,7 +25,7 @@ component extends="coldbox.system.Interceptor" {
 	}
 
 	/**
-	 * Fired on contentbox requests
+	 * Fired on ContentBox Admin and Child Module requests
 	 */
 	function preProcess( event, data, rc, prc ){
 		// Only execute for admin or child modules
@@ -47,28 +48,35 @@ component extends="coldbox.system.Interceptor" {
 		// store module root
 		prc.cbRoot                  = getContextRoot() & event.getModuleRoot( "contentbox-admin" );
 		// cb helper
-		prc.CBHelper                = getInstance( "CBHelper@cb" );
+		prc.CBHelper                = variables.cbHelper;
 		// store admin module entry point
 		prc.cbAdminEntryPoint       = getModuleConfig( "contentbox-admin" ).entryPoint;
-		// store site entry point
-		prc.cbEntryPoint            = getModuleConfig( "contentbox-ui" ).entryPoint;
 		// store filebrowser entry point
 		prc.cbFileBrowserEntryPoint = getModuleConfig( "contentbox-filebrowser" ).entryPoint;
+		// store site entry point if loaded
+		if ( structKeyExists( getSetting( "modules" ), "contentbox-ui" ) ) {
+			prc.cbEntryPoint = getModuleConfig( "contentbox-ui" ).entryPoint;
+		} else {
+			prc.cbEntryPoint = "";
+		}
 		// Place user in prc
-		prc.oCurrentAuthor          = securityService.getAuthorSession();
+		prc.oCurrentAuthor = variables.securityService.getAuthorSession();
 		// Place all settings in prc for usage by the UI switcher
-		prc.allSites                = siteService.getAllFlat();
+		prc.allSites       = variables.siteService.getAllFlat();
 		// Get the current working site object on PRC
-		prc.oCurrentSite            = siteService.getCurrentWorkingSite();
+		prc.oCurrentSite   = variables.siteService.getCurrentWorkingSite();
 		// Place global cb options on scope
-		prc.cbSettings              = settingService.getAllSettings();
-		prc.cbSiteSettings          = settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
+		prc.cbSettings     = variables.settingService.getAllSettings();
+		prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
+			prc.oCurrentSite.getSlug()
+		);
 		// Place widgets root location
-		prc.cbWidgetRoot            = getContextRoot() & event.getModuleRoot( "contentbox" ) & "/widgets";
+		prc.cbWidgetRoot     = getContextRoot() & event.getModuleRoot( "contentbox" ) & "/widgets";
 		// store admin menu service
-		prc.adminMenuService        = adminMenuService;
+		prc.adminMenuService = variables.adminMenuService;
 		// Sidemenu collapsed
-		prc.sideMenuClass           = "";
+		prc.sideMenuClass    = "";
+
 		// Is sidemenu collapsed for user?
 		if ( prc.oCurrentAuthor.getPreference( "sidemenuCollapse", false ) == "true" ) {
 			prc.sideMenuClass = "sidebar-mini";
@@ -154,7 +162,7 @@ component extends="coldbox.system.Interceptor" {
 		// Prepare Admin Actions
 		prc.xehAdminAction           = "#prc.cbAdminEntryPoint#.dashboard.reload";
 		// Installer Check
-		prc.installerCheck           = settingService.isInstallationPresent();
+		prc.installerCheck           = variables.settingService.isInstallationPresent();
 	}
 
 }
