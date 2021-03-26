@@ -442,6 +442,8 @@ $( document ).ready( function(){
 		field.hide();
 		// submit the form; it's target is the iframe, so AJAX-ish upload style
 		form.submit();
+
+		fbRefresh();
 		// handle load method of iframe
 		iframe.load(function(){
 			// try to get JSON response from server in textfield
