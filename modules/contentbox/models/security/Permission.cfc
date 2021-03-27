@@ -43,11 +43,11 @@ component 	persistent="true"
 	// Calculated Fields
 	property 	name="numberOfRoles"
 				formula="select count(*) from cb_rolePermissions as rolePermissions
-						where rolePermissions.FK_permissionID=permissionID";
+						where rolePermissions.FK_permissionID=id";
 
 	property 	name="numberOfGroups"
 				formula="select count(*) from cb_groupPermissions as groupPermissions
-						where groupPermissions.FK_permissionID=permissionID";
+						where groupPermissions.FK_permissionID=id";
 
 	/* *********************************************************************
 	**							PK + CONSTRAINTS

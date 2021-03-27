@@ -400,17 +400,17 @@ component
 		name   ="numberOfHits"
 		formula="select cbStats.hits
 			from cb_stats cbStats
-			where cbStats.FK_contentID=contentID"
+			where cbStats.FK_contentID=id"
 		default="0";
 
 	property
 		name   ="numberOfChildren"
-		formula="select count(*) from cb_content content where content.FK_parentID=contentID"
+		formula="select count(*) from cb_content content where content.FK_parentID=id"
 		default="0";
 
 	property
 		name   ="numberOfComments"
-		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID"
+		formula="select count(*) from cb_comment comment where comment.FK_contentID=id"
 		default="0";
 
 	/* *********************************************************************
@@ -491,7 +491,7 @@ component
 	 * Get the total number of approved comments this content object has
 	 */
 	numeric function getNumberOfApprovedComments(){
-		if ( !isLoaded() ) {
+		if ( !this.isLoaded() ) {
 			return 0;
 		}
 		return variables.comments
@@ -506,7 +506,7 @@ component
 	 */
 	numeric function getNumberOfVersions(){
 		return (
-			isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId() ) : 0
+			this.isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId() ) : 0
 		);
 	}
 
@@ -515,7 +515,7 @@ component
 	 */
 	numeric function getNumberOfActiveVersions(){
 		return (
-			isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0
+			this.isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0
 		);
 	}
 
@@ -1140,7 +1140,7 @@ component
 	 */
 	boolean function hasActiveContent(){
 		// If we are not persisted, then no exit out.
-		if ( !isLoaded() ) {
+		if ( !this.isLoaded() ) {
 			return false;
 		}
 		// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
@@ -1232,13 +1232,6 @@ component
 	 */
 	boolean function isPublishedInFuture(){
 		return ( getIsPublished() AND getPublishedDate() GT now() ) ? true : false;
-	}
-
-	/**
-	 * Is entity loaded
-	 */
-	boolean function isLoaded(){
-		return ( len( getContentID() ) ? true : false );
 	}
 
 	/**

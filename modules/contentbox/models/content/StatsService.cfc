@@ -86,7 +86,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						sql = "UPDATE cb_stats
 							SET hits = hits + 1,
 							modifiedDate = #createODBCDateTime( now() )#
-							WHERE FK_contentID = #arguments.content.getContentId()#"
+							WHERE FK_contentID = '#arguments.content.getContentId()#'"
 					).execute();
 					// if no record, means, new record, so insert
 					if ( q.getPrefix().RECORDCOUNT eq 0 ) {

@@ -87,11 +87,11 @@ component
 	property
 		name   ="numberOfPermissions"
 		formula="select count(*) from cb_groupPermissions as groupPermissions
-						 where groupPermissions.FK_permissionGroupID = permissionGroupID";
+						 where groupPermissions.FK_permissionGroupID = id";
 
 	property
 		name   ="numberOfAuthors"
-		formula="select count(*) from cb_authorPermissionGroups as pg where pg.FK_permissionGroupID = permissionGroupID";
+		formula="select count(*) from cb_authorPermissionGroups as pg where pg.FK_permissionGroupID = id";
 
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES

@@ -90,25 +90,25 @@ component
 		name   ="numberOfContentStore"
 		formula="select count(*)
 				from cb_contentCategories as contentCategories, cb_contentStore as contentStore, cb_content as content
-				where contentCategories.FK_categoryID=categoryID
+				where contentCategories.FK_categoryID=id
 					and contentCategories.FK_contentID = contentStore.contentID
-					and contentStore.contentID = content.contentID";
+					and contentStore.contentID = content.id";
 
 	property
 		name   ="numberOfEntries"
 		formula="select count(*)
 				from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
-				where contentCategories.FK_categoryID=categoryID
-					and contentCategories.FK_contentID = entry.contentID
-					and entry.contentID = content.contentID";
+				where contentCategories.FK_categoryID=id
+					and contentCategories.FK_contentID = entry.contentId
+					and entry.contentID = content.id";
 
 	property
 		name   ="numberOfPages"
 		formula="select count(*)
 				from cb_contentCategories as contentCategories, cb_page as page, cb_content as content
-				where contentCategories.FK_categoryID=categoryID
+				where contentCategories.FK_categoryID=id
 					and contentCategories.FK_contentID = page.contentID
-					and page.contentID = content.contentID";
+					and page.contentID = content.id";
 
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS

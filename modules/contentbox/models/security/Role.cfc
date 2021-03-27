@@ -65,10 +65,10 @@ component 	persistent="true"
 	********************************************************************* */
 
 	property 	name="numberOfPermissions"
-				formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_roleID=roleID";
+				formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_roleID=id";
 
 	property 	name="numberOfAuthors"
-				formula="select count(*) from cb_author as author where author.FK_roleID=roleID";
+				formula="select count(*) from cb_author as author where author.FK_roleID=id";
 
 	/* *********************************************************************
 	**							NON PERSISTED PROPERTIES
