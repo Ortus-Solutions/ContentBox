@@ -53,7 +53,7 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		return newCriteria().isEq( "siteId", javacast( "int", getCurrentWorkingSiteId() ) ).get();
+		return newCriteria().isEq( "siteId", getCurrentWorkingSiteId() ).get();
 	}
 
 	/**
@@ -155,7 +155,7 @@ component
 	 * @throws EntityNotFound
 	 */
 	function getOrFail( required siteId ){
-		var site = newCriteria().isEq( "siteId", javacast( "int", arguments.siteId ) ).get();
+		var site = newCriteria().isEq( "siteId", arguments.siteId ).get();
 
 		if ( !isNull( site ) ) {
 			return site;

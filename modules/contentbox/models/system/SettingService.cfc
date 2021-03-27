@@ -726,7 +726,7 @@ component
 
 		// Site
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// run criteria query and projections count

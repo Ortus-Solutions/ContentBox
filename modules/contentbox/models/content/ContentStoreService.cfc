@@ -129,17 +129,17 @@ component extends="ContentService" singleton {
 
 		// Author Filter
 		if ( arguments.author NEQ "all" ) {
-			c.isEq( "ac.author.authorID", javacast( "int", arguments.author ) );
+			c.isEq( "ac.author.authorID", arguments.author );
 		}
 
 		// Creator Filter
 		if ( arguments.creator NEQ "all" ) {
-			c.isEq( "creator.authorID", javacast( "int", arguments.creator ) );
+			c.isEq( "creator.authorID", arguments.creator );
 		}
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// Search Criteria
@@ -165,7 +165,7 @@ component extends="ContentService" singleton {
 		// parent filter
 		if ( !isNull( arguments.parent ) ) {
 			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
-				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
+				c.isEq( "parent.contentID", arguments.parent );
 			} else if ( isObject( arguments.parent ) ) {
 				c.isEq( "parent", arguments.parent );
 			} else {

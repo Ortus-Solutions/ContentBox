@@ -211,7 +211,7 @@ component
 				return service
 					.newCriteria()
 					.createAlias( "categories", "categories" )
-					.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
+					.isEq( "categories.categoryID", getCategoryID() )
 					.isTrue( "isPublished" )
 					.isLE( "publishedDate", now() )
 					.isEq( "passwordProtection", "" )

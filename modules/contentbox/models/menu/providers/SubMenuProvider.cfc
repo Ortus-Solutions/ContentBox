@@ -43,7 +43,7 @@ component
 		var criteria     = menuService.newCriteria();
 		var existingSlug = "";
 		if ( structKeyExists( rc, "menuID" ) && len( rc.menuID ) ) {
-			criteria.ne( "menuID", javacast( "int", rc.menuID ) );
+			criteria.ne( "menuID", rc.menuID );
 		}
 		if ( !isNull( arguments.menuItem.getMenuSlug() ) ) {
 			existingSlug = arguments.menuItem.getMenuSlug();

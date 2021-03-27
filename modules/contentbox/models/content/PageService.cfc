@@ -126,17 +126,17 @@ component extends="ContentService" singleton {
 
 		// Author Filter
 		if ( arguments.author NEQ "all" ) {
-			c.isEq( "ac.author.authorID", javacast( "int", arguments.author ) );
+			c.isEq( "ac.author.authorID", arguments.author );
 		}
 
 		// Creator Filter
 		if ( arguments.creator NEQ "all" ) {
-			c.isEq( "creator.authorID", javacast( "int", arguments.creator ) );
+			c.isEq( "creator.authorID", arguments.creator );
 		}
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// Search Criteria
@@ -160,7 +160,7 @@ component extends="ContentService" singleton {
 		// parent filter
 		if ( structKeyExists( arguments, "parent" ) ) {
 			if ( len( trim( arguments.parent ) ) ) {
-				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
+				c.isEq( "parent.contentID", arguments.parent );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -274,12 +274,12 @@ component extends="ContentService" singleton {
 			} )
 			// Site Filter
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			// Parent Filter
 			.when( !isNull( arguments.parent ), function( c ){
 				if ( len( trim( parent ) ) ) {
-					c.isEq( "parent.contentID", javacast( "int", parent ) );
+					c.isEq( "parent.contentID", parent );
 				} else {
 					c.isNull( "parent" );
 				}

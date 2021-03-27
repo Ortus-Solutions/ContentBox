@@ -47,11 +47,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	numeric function getTotalContentCount( siteId = "", categoryId = "" ){
 		var c = newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.when( len( arguments.categoryId ), function( c ){
 				c.joinTo( "categories", "cats" )
-					.isEq( "cats.categoryID", javacast( "int", categoryId ) );
+					.isEq( "cats.categoryID", categoryId );
 			} );
 		return c.count();
 	}
@@ -208,7 +208,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// Content Types
@@ -256,7 +256,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var results = newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.withProjections( property: "contentID" )
 			.get();
@@ -283,7 +283,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var oContent = newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.when( !showUnpublished, function( c ){
 				c.isTrue( "isPublished" )
@@ -316,10 +316,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.when( len( arguments.contentId ), function( c ){
-				c.ne( "contentID", javacast( "int", contentId ) );
+				c.ne( "contentID", contentId );
 			} )
 			.count() > 0 ? false : true;
 	}
@@ -415,7 +415,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// Search Criteria
@@ -436,7 +436,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// parent filter
 		if ( !isNull( arguments.parent ) ) {
 			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
-				c.isEq( "parent.contentID", javacast( "int", arguments.parent ) );
+				c.isEq( "parent.contentID", arguments.parent );
 			} else if ( isObject( arguments.parent ) ) {
 				c.isEq( "parent", arguments.parent );
 			} else {
@@ -517,7 +517,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// author filter
@@ -558,7 +558,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// author filter
@@ -601,7 +601,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			} )
 			// Site Filter
 			.when( !isNull( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			// author filter
 			.when( !isNull( arguments.author ), function( c ){
@@ -619,7 +619,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	array function getTopVisitedContent( numeric max = 5, string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.joinTo( "stats", "stats" )
 			.list( max = arguments.max, sortOrder = "stats.hits desc" );
@@ -1083,7 +1083,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// Show in Search

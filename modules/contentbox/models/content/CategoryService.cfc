@@ -36,7 +36,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	Category function getOrCreate( required category, required site ){
 		// Verify the incoming category exists in the target site or not
 		var oTargetCategory = newCriteria()
-			.isEq( "site.siteId", javacast( "int", arguments.site.getSiteId() ) )
+			.isEq( "site.siteId", arguments.site.getSiteId() )
 			.isEq( "slug", arguments.category.getSlug() )
 			.get();
 
@@ -62,7 +62,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	numeric function getTotalCategoryCount( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.count();
 	}
@@ -112,7 +112,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.when( len( arguments.categoryID ), function( c ){
 				c.ne( "categoryID", autoCast( "categoryID", categoryID ) );
@@ -137,7 +137,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.filter( function( thisCategory ){
 				return newCriteria()
 					.isEq( "category", arguments.thisCategory )
-					.isEq( "site.siteId", javacast( "int", site.getSiteId() ) )
+					.isEq( "site.siteId", site.getSiteId() )
 					.count() == 0;
 			} )
 			.map( function( thisCategory ){
@@ -240,7 +240,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.withProjections( property: "category" )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.list( sortOrder: "category" );
 	}
@@ -252,7 +252,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.withProjections( property: "slug" )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+				c.isEq( "site.siteId", siteId );
 			} )
 			.list( sortOrder: "slug" );
 	}
