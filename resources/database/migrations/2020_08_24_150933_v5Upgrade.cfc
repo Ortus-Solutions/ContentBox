@@ -522,6 +522,13 @@ component {
 		switch( listLast( getMetadata( grammar ).name, "." ) ){
 			case "MySQLGrammar":{
 				var guidFn = 'UUID()';
+				var populateFKValues = function( tableName, keyConfig ){
+					queryExecute("
+					UPDATE #tableName#
+					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+					"
+					);
+				};
 				var pkDropSQL = function( tableName, pkColumn ){ return "ALTER TABLE #arguments.tableName# DROP PRIMARY KEY, MODIFY #pkColumn# int(11)"; }
 				var dropForeignKeys = function( tableName, columnName ){
 					query.newQuery().select( [ "CONSTRAINT_NAME" ] )
@@ -649,26 +656,7 @@ component {
 					table.addConstraint( table.uuid( tmpColumn ).references( "id" ).onTable( keyConfig.reference.table ) );
 				} );
 
-				queryExecute("
-				UPDATE #tableName#
-				SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
-				"
-				);
-
-				// var cte = tableName & "_ref_" & keyConfig.reference.column;
-
-				// query.with( cte, function( q ){
-				// 	q.select( [ "id", keyConfig.reference.column ] )
-				// 		.from( keyConfig.reference.table )
-				// 		.join( tableName, keyConfig.reference.table & "." & keyConfig.reference.column, tableName & "." & keyConfig.column )
-				// }  )
-				// .get()
-				// .each( function( ref ){
-				// 	query.from( tableName )
-				// 			.where( keyConfig.column, "=", ref[ keyConfig.reference.column ]  )
-				// 			.update( { "#tmpColumn#" : ref.id } );
-
-				// } );
+				populateFKValues( tableName, keyConfig );
 
 				schema.alter( tableName, function( table ){
 					table.dropColumn( keyConfig.column );
