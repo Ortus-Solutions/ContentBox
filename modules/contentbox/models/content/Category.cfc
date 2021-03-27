@@ -52,9 +52,9 @@ component
 	property
 		name     ="categoryID"
 		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'categoryID_seq' }";
+		column="id"
+		generator="assigned"
+		setter   ="false";
 
 	property
 		name   ="category"

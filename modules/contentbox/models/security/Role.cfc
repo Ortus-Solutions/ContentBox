@@ -24,9 +24,9 @@ component 	persistent="true"
 
 	property 	name="roleID"
 				fieldtype="id"
-				generator="native"
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'roleID_seq' }";
+				column="id"
+				generator="assigned"
+				setter="false";
 
 	property 	name="role"
 				ormtype="string"

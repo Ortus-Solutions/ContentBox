@@ -21,9 +21,9 @@ component
 	property
 		name     ="moduleID"
 		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'moduleID_seq' }";
+		column="id"
+		generator="assigned"
+		setter   ="false";
 
 	property
 		name   ="name"

@@ -46,9 +46,9 @@ component
 	property
 		name     ="subscriptionID"
 		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'subscriptionID_seq' }";
+		column="id"
+		generator="assigned"
+		setter   ="false";
 
 	property name="subscriptionToken" notnull="true";
 

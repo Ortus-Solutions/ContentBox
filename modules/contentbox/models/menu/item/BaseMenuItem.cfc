@@ -59,9 +59,9 @@ component
 	property
 		name     ="menuItemID"
 		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'menuItemID_seq' }";
+		column="id"
+		generator="assigned"
+		setter   ="false";
 
 	property
 		name   ="title"

@@ -21,10 +21,10 @@ component
 	property
 		name     ="ruleID"
 		fieldtype="id"
+		column="id"
 		column   ="ruleID"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'ruleID_seq' }";
+		generator="assigned"
+		setter   ="false";
 
 	property
 		name   ="whitelist"

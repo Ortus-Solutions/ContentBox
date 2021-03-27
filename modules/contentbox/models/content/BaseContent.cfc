@@ -106,9 +106,9 @@ component
 		name     ="contentID"
 		notnull  ="true"
 		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'contentID_seq' }";
+		column="id"
+		generator="assigned"
+		setter   ="false";
 
 	property
 		name   ="contentType"

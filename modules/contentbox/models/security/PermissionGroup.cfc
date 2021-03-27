@@ -27,9 +27,9 @@ component
 	property
 		name     ="permissionGroupID"
 		fieldtype="id"
-		generator="native"
-		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'permissionGroupID_seq' }";
+		column="id"
+		generator="assigned"
+		setter   ="false";
 
 	property
 		name   ="name"
