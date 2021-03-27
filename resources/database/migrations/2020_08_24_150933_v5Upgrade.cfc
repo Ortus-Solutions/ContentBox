@@ -526,9 +526,17 @@ component {
 					queryExecute("
 					UPDATE #tableName#
 					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
-					"
-					);
+					");
 				};
+
+				var populateChildFKValues = function( tmpColumn, tableName ){
+					queryExecute("
+						UPDATE #tableName#
+						SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
+						");
+
+				};
+
 				var pkDropSQL = function( tableName, pkColumn ){ return "ALTER TABLE #arguments.tableName# DROP PRIMARY KEY, MODIFY #pkColumn# int(11)"; }
 				var dropForeignKeys = function( tableName, columnName ){
 					query.newQuery().select( [ "CONSTRAINT_NAME" ] )
@@ -636,11 +644,7 @@ component {
 				table.addColumn( table.uuid( tmpColumn ).nullable().unique() );
 				table.addConstraint( table.uuid( tmpColumn ).references( "id" ).onTable( childTables[ tableName ].parent ) )
 			} );
-			queryExecute("
-				UPDATE #tableName#
-				SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
-				"
-			);
+			populateChildFKValues( tmpColumn, tableName );
 		} );
 
 		// Update all foreign keys
