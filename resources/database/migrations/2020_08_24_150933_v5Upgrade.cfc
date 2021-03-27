@@ -7,8 +7,7 @@ component {
 	variables.siteTables = [
 		"cb_category",
 		"cb_content",
-		"cb_menu",
-		"cb_setting"
+		"cb_menu"
 	];
 	variables.newPermissions = [
 		{
@@ -41,6 +40,21 @@ component {
 		// If cb_setting doesn't have a FK_siteId then it's 4
 		if( !isContentBox4() ){
 			return;
+		}
+
+
+		variables.uuidLib = createobject("java", "java.util.UUID");
+
+		try{
+			migrateIdentifiersToGUIDs( argumentCollection=arguments );
+		} catch( any e ){
+			systemOutput( e.message, true );
+			systemOutput( e.stacktrace, true );
+			transactionRollback();
+			throw(
+				"Migration from identifiers to GUIDs failed due to the following: #e.message#.  Your database is now in an unusable state.  Please restore your database."
+			);
+			rethrow;
 		}
 
 		transaction {
@@ -155,30 +169,19 @@ component {
 
 	private function createSiteRelationships( schema, query, siteId ){
 		variables.siteTables.each( ( thisTable ) => {
-			// Check for columns created
-			cfdbinfo(
-				name  = "local.qColumns",
-				type  = "columns",
-				table = thisTable
-			);
-
-			var isSiteColumnCreated = qColumns.filter( ( thisRow ) => {
-				// systemOutput( thisRow, true );
-				return thisRow.column_name == "FK_siteId"
-			} ).recordCount > 0;
-
-			if ( isSiteColumnCreated ) {
-				systemOutput(
-					"√ - Site relationship for '#thisTable#' already defined, skipping",
-					true
+			// Add site id relationship
+			schema.alter( thisTable, ( table ) => {
+				table.addColumn( table.uuid( "FK_siteId" ).nullable() );
+				table.addConstraint(
+					table
+						.foreignKey( "FK_siteId" )
+						.references( "id" )
+						.onTable( "cb_site" )
+						.onDelete( "CASCADE" )
 				);
-			} else {
-				// Add site id relationship
-				schema.alter( thisTable, ( table ) => {
-					table.addColumn( table.unsignedInteger( "FK_siteId" ).nullable() );
-				} );
-				systemOutput( "√ - Created site column on '#thisTable#'", true );
-			}
+			} );
+
+			systemOutput( "√ - Created site column on '#thisTable#'", true );
 
 			// Seed with site id
 			if ( thisTable != "cb_setting" ) {
@@ -192,19 +195,6 @@ component {
 				systemOutput( "√ - Populated '#thisTable#' with default site data", true );
 			}
 
-			// Add foreign key
-			if ( !isSiteColumnCreated ) {
-				schema.alter( thisTable, ( table ) => {
-					table.addConstraint(
-						table
-							.foreignKey( "FK_siteId" )
-							.references( "siteId" )
-							.onTable( "cb_site" )
-							.onDelete( "CASCADE" )
-					);
-				} );
-				systemOutput( "√ - Created site foreign key on '#thisTable#'", true );
-			}
 		} );
 	}
 
@@ -214,14 +204,14 @@ component {
 	private function updateAdminPermissions( schema, query ){
 		var admin = arguments.query
 			.newQuery()
-			.select( "roleID" )
+			.select( "id" )
 			.from( "cb_role" )
 			.where( "role", "Administrator" )
 			.first();
 
 		var siteAdmin = arguments.query
 			.newQuery()
-			.select( "permissionID" )
+			.select( "id" )
 			.from( "cb_permission" )
 			.where( "permission", "SITES_ADMIN" )
 			.first();
@@ -230,7 +220,7 @@ component {
 			.newQuery()
 			.select( "FK_permissionID" )
 			.from( "cb_rolePermissions" )
-			.where( "FK_permissionID", siteAdmin.permissionId )
+			.where( "FK_permissionID", siteAdmin.id )
 			.first()
 			.isEmpty();
 
@@ -239,8 +229,8 @@ component {
 				.newQuery()
 				.from( "cb_rolePermissions" )
 				.insert( {
-					"FK_roleID"       : admin.roleID,
-					"FK_permissionID" : siteAdmin.permissionID
+					"FK_roleID"       : admin.id,
+					"FK_permissionID" : siteAdmin.id
 				} );
 			systemOutput( "√ - Admin role updated with new permissions", true );
 		} else {
@@ -255,7 +245,7 @@ component {
 		variables.newPermissions.each( ( thisPermission ) => {
 			var isNewPermission = query
 				.newQuery()
-				.select( "permissionID" )
+				.select( "id" )
 				.from( "cb_permission" )
 				.where( "permission", thisPermission.name )
 				.first()
@@ -273,6 +263,7 @@ component {
 				.newQuery()
 				.from( "cb_permission" )
 				.insert( {
+					"id" 		   : uuidLib.randomUUID().toString(),
 					"createdDate"  : today,
 					"modifiedDate" : today,
 					"isDeleted"    : 0,
@@ -287,92 +278,433 @@ component {
 	 * Create multi-site support
 	 */
 	private function createDefaultSite( schema, query ){
-		cfdbinfo( name = "local.qTables", type = "tables" );
 
-		var isSiteTableCreated = qTables.filter( ( thisRow ) => {
-			// systemOutput( thisRow, true );
-			return thisRow.table_name == "cb_site"
-		} ).recordCount > 0;
+		// Create the site table
+		arguments.schema.create( "cb_site", ( table ) => {
+			table.uuid( "id" ).primaryKey();
+			table.dateTime( "createdDate" );
+			table.dateTime( "modifiedDate" );
+			table.boolean( "isDeleted" ).default( false );
+			table.string( "name" );
+			table.string( "slug" ).unique();
+			table.longText( "description" ).nullable();
+			table.string( "domainRegex" ).nullable();
+			table.string( "keywords" ).nullable();
+			table.string( "tagline" ).nullable();
+			table.string( "homepage" ).nullable();
+			table.boolean( "isBlogEnabled" ).default( true );
+			table.boolean( "isSitemapEnabled" ).default( true );
+			table.boolean( "poweredByHeader" ).default( true );
+			table.boolean( "adminBar" ).default( true );
+			table.boolean( "isSSL" ).default( false );
+			table.string( "activeTheme" ).nullable();
+			table.longText( "notificationEmails" ).nullable();
+			table.boolean( "notifyOnEntries" ).default( true );
+			table.boolean( "notifyOnPages" ).default( true );
+			table.boolean( "notifyOnContentStore" ).default( true );
+			table.string( "domain" ).nullable();
+		} );
+		systemOutput( "√ - Site table created", true );
 
-		if ( !isSiteTableCreated ) {
-			// Create the site table
-			arguments.schema.create( "cb_site", ( table ) => {
-				table.increments( "siteId" );
-				table.dateTime( "createdDate" );
-				table.dateTime( "modifiedDate" );
-				table.boolean( "isDeleted" ).default( false );
-				table.string( "name" );
-				table.string( "slug" ).unique();
-				table.longText( "description" ).nullable();
-				table.string( "domainRegex" ).nullable();
-				table.string( "keywords" ).nullable();
-				table.string( "tagline" ).nullable();
-				table.string( "homepage" ).nullable();
-				table.boolean( "isBlogEnabled" ).default( true );
-				table.boolean( "isSitemapEnabled" ).default( true );
-				table.boolean( "poweredByHeader" ).default( true );
-				table.boolean( "adminBar" ).default( true );
-				table.boolean( "isSSL" ).default( false );
-				table.string( "activeTheme" ).nullable();
-				table.longText( "notificationEmails" ).nullable();
-				table.boolean( "notifyOnEntries" ).default( true );
-				table.boolean( "notifyOnPages" ).default( true );
-				table.boolean( "notifyOnContentStore" ).default( true );
-				table.string( "domain" ).nullable();
-			} );
-			systemOutput( "√ - Site table created", true );
-		} else {
-			systemOutput( "√ - Site table already created, skipping", true );
-		}
+		schema.alter(
+			"cb_setting",
+			function( table ){
+				table.addColumn( table.uuid( "FK_siteId" ).nullable() );
+				table.addConstraint( table.uuid( "FK_siteId" ).references( "id" ).onTable( "cb_site" ) )
+			}
+		);
 
-		var defaultSiteRecord = query
+		var allSettings = arguments.query
 			.newQuery()
-			.select( "siteId" )
+			.from( "cb_setting" )
+			.whereNull( "FK_siteId" )
+			.get()
+			.reduce( ( results, thisSetting ) => {
+				results[ thisSetting.name ] = thisSetting.value;
+				return results;
+			}, {} );
+
+
+		var initialSiteIdentifier = uuidLib.randomUUID().toString();
+		arguments.query
+			.newQuery()
 			.from( "cb_site" )
-			.where( "slug", "default" )
-			.first();
+			.insert( {
+				"id"             	 : initialSiteIdentifier,
+				"createdDate"        : today,
+				"modifiedDate"       : today,
+				"isDeleted"          : 0,
+				"name"               : allSettings.cb_site_name,
+				"slug"               : "default",
+				"homepage"           : allSettings.cb_site_homepage,
+				"description"        : allSettings.cb_site_description,
+				"keywords"           : allSettings.cb_site_keywords,
+				"tagline"            : allSettings.cb_site_tagline,
+				"domainRegex"        : "127\.0\.0\.1",
+				"isBlogEnabled"      : 1,
+				"isSitemapEnabled"   : 1,
+				"poweredByHeader"    : 1,
+				"adminBar"           : 1,
+				"isSSL"              : 0,
+				"activeTheme"        : "default",
+				"domain"             : "127.0.0.1",
+				"notificationEmails" : allSettings.cb_site_email
+			} );
+		systemOutput( "√ - Default site created", true );
 
-		if ( defaultSiteRecord.isEmpty() ) {
-			var allSettings = arguments.query
-				.newQuery()
-				.from( "cb_setting" )
-				.whereNull( "FK_siteId" )
-				.get()
-				.reduce( ( results, thisSetting ) => {
-					results[ thisSetting.name ] = thisSetting.value;
-					return results;
-				}, {} );
+		return initialSiteIdentifier;
+	}
 
-			var qResults = arguments.query
-				.newQuery()
-				.from( "cb_site" )
-				.insert( {
-					"siteId"             : 1,
-					"createdDate"        : today,
-					"modifiedDate"       : today,
-					"isDeleted"          : false,
-					"name"               : allSettings.cb_site_name,
-					"slug"               : "default",
-					"homepage"           : allSettings.cb_site_homepage,
-					"description"        : allSettings.cb_site_description,
-					"keywords"           : allSettings.cb_site_keywords,
-					"tagline"            : allSettings.cb_site_tagline,
-					"domainRegex"        : "127\.0\.0\.1",
-					"isBlogEnabled"      : true,
-					"isSitemapEnabled"   : true,
-					"poweredByHeader"    : true,
-					"adminBar"           : true,
-					"isSSL"              : false,
-					"activeTheme"        : "default",
-					"domain"             : "127.0.0.1",
-					"notificationEmails" : allSettings.cb_site_email
-				} );
-			systemOutput( "√ - Default site created", true );
-			return qResults.result.generatedKey;
-		} else {
-			systemOutput( "√ - Default site already created, skipping", true );
-			return defaultSiteRecord.siteId;
+	function migrateIdentifiersToGUIDs( schema, query ){
+
+		var grammar = query.getGrammar();
+		if( isInstanceOf( grammar, "AutoDiscover" ) ){
+			grammar = grammar.autoDiscoverGrammar();
 		}
+
+		var idTables = {
+			"cb_author" : "authorID",
+			"cb_category" : "categoryID",
+			"cb_comment" : "commentID",
+			"cb_content" : "contentID",
+			"cb_contentVersion" : "contentVersionID",
+			"cb_customfield" : "customFieldID",
+			"cb_loginAttempts" : "loginAttemptsID",
+			"cb_menu" : "menuID",
+			"cb_menuItem" : "menuItemID",
+			"cb_module" : "moduleID",
+			"cb_permission" : "permissionID",
+			"cb_permissionGroup" : "permissionGroupID",
+			"cb_role" : "roleID",
+			"cb_securityRule" : "ruleID",
+			"cb_setting" : "settingID",
+			"cb_stats" : "statsID",
+			"cb_subscribers" : "subscriberID",
+			"cb_subscriptions" : "subscriptionID"
+		};
+
+		var childTables = {
+			"cb_entry" : { "parent" : "cb_content", "key" : "contentID" },
+			"cb_page" : { "parent" : "cb_content", "key" : "contentID" },
+			"cb_contentStore" : {"parent" : "cb_content", "key" : "contentID"},
+			"cb_commentSubscriptions" : { "parent": "cb_subscriptions", "key" : "subscriptionID"}
+		}
+
+		var FKMap = {
+			"cb_authorPermissionGroups" : [
+				{
+					"column" : "FK_permissionGroupID",
+					"reference" : { "table" : "cb_permissionGroup", "column" : "permissionGroupID" }
+				},
+				{
+					"column" : "FK_authorID",
+					"reference" : { "table" : "cb_author", "column" : "authorID" }
+				}
+			],
+			"cb_authorPermissions" : [
+				{
+					"column" : "FK_permissionID",
+					"reference" : { "table" : "cb_permission", "column" : "permissionID" }
+				},
+				{
+					"column" : "FK_authorID",
+					"reference" : { "table" : "cb_author", "column" : "authorID" }
+				}
+			],
+			"cb_rolePermissions" : [
+				{
+					"column" : "FK_permissionID",
+					"reference" : { "table" : "cb_permission", "column" : "permissionID" }
+				},
+				{
+					"column" : "FK_roleID",
+					"reference" : { "table" : "cb_role", "column" : "roleID" }
+				}
+			],
+			"cb_relatedContent" : [
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				},
+				{
+					"column" : "FK_relatedContentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_groupPermissions" : [
+				{
+					"column" : "FK_permissionGroupID",
+					"reference" : { "table" : "cb_permissionGroup", "column" : "permissionGroupID" }
+				},
+				{
+					"column" : "FK_permissionID",
+					"reference" : { "table" : "cb_permission", "column" : "permissionID" }
+				}
+			],
+			"cb_contentCategories" : [
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				},
+				{
+					"column" : "FK_categoryID",
+					"reference" : { "table" : "cb_category", "column" : "categoryID" }
+				}
+			],
+			"cb_commentSubscriptions" : [
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_author" : [
+				{
+					"column" : "FK_roleID",
+					"reference" : { "table" : "cb_role", "column" : "roleID" }
+				}
+			],
+			"cb_menuItem" : [
+				{
+					"column" : "FK_menuID",
+					"reference" : { "table" : "cb_menu", "column" : "menuID" }
+				},
+				{
+					"column" : "FK_parentID",
+					"reference" : { "table" : "cb_menuItem", "column" : "menuItemID" }
+				}
+			],
+			"cb_customField" : [
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_stats" : [
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_comment" : [
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_content" : [
+				{
+					"column" : "FK_authorID",
+					"reference" : { "table" : "cb_author", "column" : "authorID" }
+				},
+				{
+					"column" : "FK_parentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_contentVersion" : [
+				{
+					"column" : "FK_authorID",
+					"reference" : { "table" : "cb_author", "column" : "authorID" }
+				},
+				{
+					"column" : "FK_contentID",
+					"reference" : { "table" : "cb_content", "column" : "contentID" }
+				}
+			],
+			"cb_subscriptions" : [
+				{
+					"column" : "FK_subscriberID",
+					"reference" : { "table" : "cb_subscribers", "column" : "subscriberID" }
+				}
+			]
+		};
+
+		switch( listLast( getMetadata( grammar ).name, "." ) ){
+			case "MySQLGrammar":{
+				var guidFn = 'UUID()';
+				var pkDropSQL = function( tableName, pkColumn ){ return "ALTER TABLE #arguments.tableName# DROP PRIMARY KEY, MODIFY #pkColumn# int(11)"; }
+				var dropForeignKeys = function( tableName, columnName ){
+					query.newQuery().select( [ "CONSTRAINT_NAME" ] )
+							.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
+							.where( "TABLE_NAME", tableName )
+							.where( "COLUMN_NAME", columnName )
+							.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
+							.whereNotNull( "REFERENCED_TABLE_NAME" )
+							.get()
+							.map( function( row ){ return row.constraint_name; } )
+							.each( function( constraintName ){
+								queryExecute( "ALTER TABLE #tableName# DROP FOREIGN KEY #constraintName#");
+							} );
+
+					query.newQuery().select( [ "INDEX_NAME" ] )
+							.from( "INFORMATION_SCHEMA.STATISTICS" )
+							.where( "TABLE_NAME", tableName )
+							.where( "COLUMN_NAME", columnName )
+							.where( "INDEX_NAME", "!=", "PRIMARY" )
+							.get()
+							.map( function( row ){ return row.index_name; } )
+							.each( function( indexName ){
+								schema.alter( tableName, function( table ){
+									table.dropConstraint( indexName );
+								} );
+							} );
+
+					// Drop any foreign keys which reference this table
+					if( idTables.keyExists( tableName ) ){
+						query.newQuery().select( [ "CONSTRAINT_NAME", "TABLE_NAME" ] )
+								.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
+								.where( "REFERENCED_TABLE_NAME", tableName )
+								.where( "REFERENCED_COLUMN_NAME", idTables[ tableName ] )
+								.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
+								.whereNotNull( "TABLE_NAME" )
+								.get()
+								.map( function( row ){ return { "table" : row.table_name, "constraint" : row.constraint_name }; } )
+								.each( function( row ){
+									queryExecute( "ALTER TABLE #row.table# DROP FOREIGN KEY #row.constraint#");
+								} );
+					}
+
+				}
+				var fkConstraints = function( tableName, fkColumn ){
+					return
+				}
+				break;
+			}
+			case "PostgresGrammar":{
+				var guidFn = 'gen_random_uuid()';
+				var pkDropSQL = function( tableName ){
+					var constraintName = queryExecute(
+						"SELECT constraint_name FROM information_schema.table_constraints WHERE table_name = '#arguments.tableName#' and constraint_type = 'PRIMARY KEY'"
+					).constraint_name;
+					return "ALTER table #tableName# DROP CONSTRAINT #constraintName#";
+				}
+				break;
+			}
+			case "SqlServerGrammar":{
+				var guidFn = 'NEWID()';
+				var pkDropSQL = function( tableName ){
+					var constraintName = queryExecute(
+						"SELECT name
+						FROM sys.key_constraints
+						WHERE type = 'PK' AND OBJECT_NAME(parent_object_id) = N'#tableName#'"
+					).name;
+
+					return "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#";
+				}
+				break;
+			}
+			case "OracleGrammar":{
+				var guidFn= 'sys_guid()';
+				var pkDropSQL = function( tableName ){
+					var constraintName = queryExecute(
+						"SELECT constraint_name
+						 FROM user_constraints
+						 WHERE table_name = '#tableName#'
+						 AND constraint_type = 'P'"
+					).constraint_name;
+
+					return "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#";
+				}
+				break;
+			}
+			default:{
+				throw( "DBMS Grammatical type could not be determined from the grammar #getMetadata( grammar ).name#.  The migration must be aborted." );
+			}
+		}
+
+		// Populate all of our new identifier columns
+		idTables.keyArray().each( function( tableName ){
+			var pkColumn = idTables[ tableName ];
+			schema.alter( tableName, function( table ){
+				table.addColumn( table.uuid( "id" ).unique().default( "#guidFn#" ) );
+			} );
+		} );
+
+		// Create child table foreign and future PKs
+		childTables.keyArray().each( function( tableName ){
+			var pkColumn = childTables[ tableName ].key;
+			dropForeignKeys( tableName, pkColumn );
+			var tmpColumn = "tmp_" & pkColumn;
+			schema.alter( tableName, function( table ){
+				table.addColumn( table.uuid( tmpColumn ).nullable().unique() );
+				table.addConstraint( table.uuid( tmpColumn ).references( "id" ).onTable( childTables[ tableName ].parent ) )
+			} );
+			queryExecute("
+				UPDATE #tableName#
+				SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
+				"
+			);
+		} );
+
+		// Update all foreign keys
+		FKMap.keyArray().each( function( tableName ){
+			var FKeys = FKMap[ tableName ];
+			FKeys.each( function( keyConfig ){
+
+				dropForeignKeys( tableName, keyConfig.column );
+
+				var tmpColumn = "tmp_" & keyConfig.column;
+				schema.alter( tableName, function( table ){
+					table.addColumn( table.uuid( tmpColumn ).nullable() );
+					table.addConstraint( table.uuid( tmpColumn ).references( "id" ).onTable( keyConfig.reference.table ) );
+				} );
+
+				queryExecute("
+				UPDATE #tableName#
+				SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+				"
+				);
+
+				// var cte = tableName & "_ref_" & keyConfig.reference.column;
+
+				// query.with( cte, function( q ){
+				// 	q.select( [ "id", keyConfig.reference.column ] )
+				// 		.from( keyConfig.reference.table )
+				// 		.join( tableName, keyConfig.reference.table & "." & keyConfig.reference.column, tableName & "." & keyConfig.column )
+				// }  )
+				// .get()
+				// .each( function( ref ){
+				// 	query.from( tableName )
+				// 			.where( keyConfig.column, "=", ref[ keyConfig.reference.column ]  )
+				// 			.update( { "#tmpColumn#" : ref.id } );
+
+				// } );
+
+				schema.alter( tableName, function( table ){
+					table.dropColumn( keyConfig.column );
+					table.renameColumn( tmpColumn, table.uuid( keyConfig.column ).nullable() );
+				} );
+
+			} );
+
+		} );
+
+
+		// Change primary keys over on master tables
+		idTables.keyArray().each( function( tableName ){
+			var pkColumn = idTables[ tableName ];
+			schema.alter( tableName, function( table ){
+				queryExecute( pkDropSQL( tableName, pkColumn ) );
+				table.addConstraint( table.primaryKey( "id" ) );
+				table.dropColumn( pkColumn );
+			} );
+		} );
+
+		// Change primary keys over on child tables
+		childTables.keyArray().each( function( tableName ){
+			var pkColumn = childTables[ tableName ].key;
+			var tmpColumn = "tmp_" & pkColumn;
+			schema.alter( tableName, function( table ){
+				queryExecute( pkDropSQL( tableName, pkColumn ) );
+				table.addConstraint( table.primaryKey( tmpColumn ) );
+				table.dropColumn( pkColumn );
+				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
+			} );
+		} );
+
+
+		systemOutput( "√ - All tables migrated from incremental identifiers to GUIDs", true );
+
 	}
 
 }
