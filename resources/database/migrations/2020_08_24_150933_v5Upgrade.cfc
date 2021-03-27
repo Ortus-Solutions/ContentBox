@@ -580,9 +580,6 @@ component {
 					}
 
 				}
-				var fkConstraints = function( tableName, fkColumn ){
-					return
-				}
 				break;
 			}
 			case "PostgresGrammar":{
