@@ -185,8 +185,9 @@ $( document ).ready( function() {
 	// Quick div filter
 	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
-	} )
+	} );
 
+	verifyActiveView();
 } );
 function noMultiSelectAction(){
 	if( fbSelectHistory.length != 1 ){ alert( '#$r( "jsmessages.no_multi_select@fb" )#' ); return true; }
@@ -336,6 +337,13 @@ function fbInfo(){
 		filePath:target.attr( "data-fullUrl" )
 	}, $( window ).width() - 200, $( window ).height() - 200 );
 }
+
+/** Verifies which view is active */
+function verifyActiveView () {
+	let identifier = "##" + $listType.val() + $listFolder.val();
+	$( identifier ).removeClass( "btn-more" ).addClass( "btn-default" );
+}
+
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
 function fbNewFolder(){
@@ -434,6 +442,8 @@ $( document ).ready( function(){
 		field.hide();
 		// submit the form; it's target is the iframe, so AJAX-ish upload style
 		form.submit();
+
+		fbRefresh();
 		// handle load method of iframe
 		iframe.load(function(){
 			// try to get JSON response from server in textfield

@@ -82,8 +82,6 @@ component extends="baseHandler" {
 			announce( "cbadmin_preSiteSave", { site : oSite, siteId : rc.siteId } );
 			// save rule
 			variables.siteService.save( oSite );
-			// flush cache to rebuild site settings
-			variables.settingService.flushSettingsCache();
 			// announce event
 			announce( "cbadmin_postSiteSave", { site : oSite } );
 			// Message

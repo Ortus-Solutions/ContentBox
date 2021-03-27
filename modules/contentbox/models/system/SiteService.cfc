@@ -17,6 +17,7 @@ component
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
 	property name="settingService" inject="provider:settingService@cb";
+	property name="themeService" inject="provider:themeService@cb";
 
 	/**
 	 * Constructor
@@ -95,8 +96,17 @@ component
 
 			// Persist the site
 			super.save( arguments.site );
+
+			// Activate the site's theme
+			variables.themeService.startupTheme(
+				name : arguments.site.getActiveTheme(),
+				siteId : arguments.site.getSiteId()
+			);
 		}
 		// end transaction
+
+		// flush cache to rebuild site settings
+		variables.settingService.flushSettingsCache();
 
 		return arguments.site;
 	}
