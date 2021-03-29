@@ -106,7 +106,6 @@ component
 		name     ="contentID"
 		notnull  ="true"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

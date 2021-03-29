@@ -19,7 +19,6 @@ component 	persistent="true"
 
 	property 	name="statsID"
 				fieldtype="id"
-				column="id"
 				generator="assigned"
 				setter="false";
 

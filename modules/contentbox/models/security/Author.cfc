@@ -31,7 +31,6 @@ component
 	property
 		name     ="authorID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

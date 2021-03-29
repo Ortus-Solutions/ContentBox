@@ -46,7 +46,6 @@ component
 	property
 		name     ="subscriptionID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

@@ -21,7 +21,6 @@ component
 	property
 		name     ="moduleID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

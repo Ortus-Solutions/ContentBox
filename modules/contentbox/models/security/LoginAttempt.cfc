@@ -21,7 +21,6 @@ component 	persistent="true"
 	*/
 	property 	name="loginAttemptsID"
 				fieldtype="id"
-				column="id"
 				generator="assigned"
 				setter="false";
 	/**

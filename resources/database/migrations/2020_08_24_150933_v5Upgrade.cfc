@@ -175,7 +175,7 @@ component {
 				table.addConstraint(
 					table
 						.foreignKey( "FK_siteId" )
-						.references( "id" )
+						.references( "siteID" )
 						.onTable( "cb_site" )
 						.onDelete( "CASCADE" )
 				);
@@ -204,14 +204,14 @@ component {
 	private function updateAdminPermissions( schema, query ){
 		var admin = arguments.query
 			.newQuery()
-			.select( "id" )
+			.select( "roleID" )
 			.from( "cb_role" )
 			.where( "role", "Administrator" )
 			.first();
 
 		var siteAdmin = arguments.query
 			.newQuery()
-			.select( "id" )
+			.select( "permissionID" )
 			.from( "cb_permission" )
 			.where( "permission", "SITES_ADMIN" )
 			.first();
@@ -220,7 +220,7 @@ component {
 			.newQuery()
 			.select( "FK_permissionID" )
 			.from( "cb_rolePermissions" )
-			.where( "FK_permissionID", siteAdmin.id )
+			.where( "FK_permissionID", siteAdmin.permissionID )
 			.first()
 			.isEmpty();
 
@@ -229,8 +229,8 @@ component {
 				.newQuery()
 				.from( "cb_rolePermissions" )
 				.insert( {
-					"FK_roleID"       : admin.id,
-					"FK_permissionID" : siteAdmin.id
+					"FK_roleID"       : admin.roleID,
+					"FK_permissionID" : siteAdmin.permissionID
 				} );
 			systemOutput( "√ - Admin role updated with new permissions", true );
 		} else {
@@ -245,7 +245,7 @@ component {
 		variables.newPermissions.each( ( thisPermission ) => {
 			var isNewPermission = query
 				.newQuery()
-				.select( "id" )
+				.select( "permissionID" )
 				.from( "cb_permission" )
 				.where( "permission", thisPermission.name )
 				.first()
@@ -263,7 +263,7 @@ component {
 				.newQuery()
 				.from( "cb_permission" )
 				.insert( {
-					"id" 		   : uuidLib.randomUUID().toString(),
+					"permissionID" : uuidLib.randomUUID().toString(),
 					"createdDate"  : today,
 					"modifiedDate" : today,
 					"isDeleted"    : 0,
@@ -281,7 +281,7 @@ component {
 
 		// Create the site table
 		arguments.schema.create( "cb_site", ( table ) => {
-			table.uuid( "id" ).primaryKey();
+			table.uuid( "siteID" ).primaryKey();
 			table.dateTime( "createdDate" );
 			table.dateTime( "modifiedDate" );
 			table.boolean( "isDeleted" ).default( false );
@@ -310,7 +310,7 @@ component {
 			"cb_setting",
 			function( table ){
 				table.addColumn( table.uuid( "FK_siteId" ).nullable() );
-				table.addConstraint( table.uuid( "FK_siteId" ).references( "id" ).onTable( "cb_site" ) )
+				table.addConstraint( table.uuid( "FK_siteId" ).references( "siteID" ).onTable( "cb_site" ) )
 			}
 		);
 
@@ -330,7 +330,7 @@ component {
 			.newQuery()
 			.from( "cb_site" )
 			.insert( {
-				"id"             	 : initialSiteIdentifier,
+				"siteID"             : initialSiteIdentifier,
 				"createdDate"        : today,
 				"modifiedDate"       : today,
 				"isDeleted"          : 0,
@@ -388,7 +388,7 @@ component {
 			"cb_page" : { "parent" : "cb_content", "key" : "contentID" },
 			"cb_contentStore" : {"parent" : "cb_content", "key" : "contentID"},
 			"cb_commentSubscriptions" : { "parent": "cb_subscriptions", "key" : "subscriptionID"}
-		}
+		};
 
 		var FKMap = {
 			"cb_authorPermissionGroups" : [
@@ -522,17 +522,19 @@ component {
 		switch( listLast( getMetadata( grammar ).name, "." ) ){
 			case "MySQLGrammar":{
 				var guidFn = 'UUID()';
-				var populateFKValues = function( tableName, keyConfig ){
+				var populateFKValues = function( tmpColumn, tableName, keyConfig ){
+					var tmpId = "tmp_" & idTables[ keyConfig.reference.table ];
 					queryExecute("
 					UPDATE #tableName#
-					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+					SET #tmpColumn# = ( SELECT #tmpId# from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
 					");
 				};
 
 				var populateChildFKValues = function( tmpColumn, tableName ){
+					var tmpId = "tmp_" & idTables[ childTables[ tableName ].parent ];
 					queryExecute("
 						UPDATE #tableName#
-						SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
+						SET #tmpColumn# = ( SELECT #tmpId# from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
 						");
 
 				};
@@ -627,8 +629,9 @@ component {
 		// Populate all of our new identifier columns
 		idTables.keyArray().each( function( tableName ){
 			var pkColumn = idTables[ tableName ];
+			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
-				table.addColumn( table.uuid( "id" ).unique().default( "#guidFn#" ) );
+				table.addColumn( table.uuid( tmpColumn ).unique().default( "#guidFn#" ) );
 			} );
 		} );
 
@@ -639,7 +642,6 @@ component {
 			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
 				table.addColumn( table.uuid( tmpColumn ).nullable().unique() );
-				table.addConstraint( table.uuid( tmpColumn ).references( "id" ).onTable( childTables[ tableName ].parent ) )
 			} );
 			populateChildFKValues( tmpColumn, tableName );
 		} );
@@ -654,10 +656,9 @@ component {
 				var tmpColumn = "tmp_" & keyConfig.column;
 				schema.alter( tableName, function( table ){
 					table.addColumn( table.uuid( tmpColumn ).nullable() );
-					table.addConstraint( table.uuid( tmpColumn ).references( "id" ).onTable( keyConfig.reference.table ) );
 				} );
 
-				populateFKValues( tableName, keyConfig );
+				populateFKValues( tmpColumn, tableName, keyConfig );
 
 				schema.alter( tableName, function( table ){
 					table.dropColumn( keyConfig.column );
@@ -672,12 +673,28 @@ component {
 		// Change primary keys over on master tables
 		idTables.keyArray().each( function( tableName ){
 			var pkColumn = idTables[ tableName ];
+			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
-				table.addConstraint( table.primaryKey( "id" ) );
 				table.dropColumn( pkColumn );
+				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
+				table.addConstraint( table.primaryKey( pkColumn ) );
 			} );
 		} );
+
+		// Now restore the foreign key constraints
+		FKMap.keyArray().each( function( tableName ){
+			var FKeys = FKMap[ tableName ];
+			FKeys.each( function( keyConfig ){
+				var tmpColumn = "tmp_" & keyConfig.column;
+				schema.alter( tableName, function( table ){
+					table.addConstraint( table.uuid( keyConfig.column ).references( idTables[ keyConfig.reference.table ] ).onTable( keyConfig.reference.table ) );
+				} );
+
+			} );
+
+		} );
+
 
 		// Change primary keys over on child tables
 		childTables.keyArray().each( function( tableName ){
@@ -688,6 +705,7 @@ component {
 				table.addConstraint( table.primaryKey( tmpColumn ) );
 				table.dropColumn( pkColumn );
 				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
+				table.addConstraint( table.uuid( pkColumn ).references( idTables[ childTables[ tableName ].parent ] ).onTable( childTables[ tableName ].parent ) );
 			} );
 		} );
 

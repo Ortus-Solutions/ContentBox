@@ -31,7 +31,6 @@ component
 	property
 		name     ="commentID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

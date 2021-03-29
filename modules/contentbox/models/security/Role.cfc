@@ -24,7 +24,6 @@ component 	persistent="true"
 
 	property 	name="roleID"
 				fieldtype="id"
-				column="id"
 				generator="assigned"
 				setter="false";
 

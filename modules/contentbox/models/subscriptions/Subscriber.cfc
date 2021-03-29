@@ -18,7 +18,6 @@ component   persistent="true"
 
     property    name="subscriberID"
                 fieldtype="id"
-				column="id"
                 generator="assigned"
                 setter="false";
 

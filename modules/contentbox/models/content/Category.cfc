@@ -52,7 +52,6 @@ component
 	property
 		name     ="categoryID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

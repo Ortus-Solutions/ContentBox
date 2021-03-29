@@ -21,7 +21,6 @@ component
 	property
 		name     ="ruleID"
 		fieldtype="id"
-		column="id"
 		column   ="ruleID"
 		generator="assigned"
 		setter   ="false";

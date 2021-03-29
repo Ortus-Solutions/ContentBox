@@ -27,7 +27,6 @@ component
 	property
 		name     ="permissionGroupID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

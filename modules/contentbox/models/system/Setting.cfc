@@ -23,7 +23,6 @@ component
 	property
 		name     ="settingID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 

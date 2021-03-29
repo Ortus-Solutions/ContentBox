@@ -18,7 +18,6 @@ component 	persistent="true"
 
 	property 	name="permissionID"
 				fieldtype="id"
-				column="id"
 				generator="assigned"
 				setter="false";
 

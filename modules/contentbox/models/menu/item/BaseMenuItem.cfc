@@ -59,7 +59,6 @@ component
 	property
 		name     ="menuItemID"
 		fieldtype="id"
-		column="id"
 		generator="assigned"
 		setter   ="false";
 
