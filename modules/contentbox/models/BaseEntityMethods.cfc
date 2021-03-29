@@ -25,9 +25,7 @@ component mappedsuperclass="true"{
 
 		var uuidLib = createobject("java", "java.util.UUID");
 
-		var keyColumn = getKey();
-
-		variables[ keyColumn ] = uuidLib.randomUUID().toString();
+		variables[ this.pk ] = uuidLib.randomUUID().toString();
 
 		variables.isLoaded = false;
 		variables.isDeleted = false;
@@ -118,37 +116,6 @@ component mappedsuperclass="true"{
 		}
 
 		return result;
-	}
-
-	/**
-	 * Returns the key (id field) of a given entity, either simple or composite keys.
-	 * If the key is a simple pk then it will return a string, if it is a composite key then it returns an array.
-	 * If the key cannot be identified then a blank string is returned.
-	 *
-	 * @entity The entity name or entity object
-	 *
-	 * @return string or array
-	 */
-	any function getKey(){
-		var md = getMetadata( this );
-
-		var hibernateMD = variables.ORMUtil.getEntityMetadata(
-			entityName = md.keyExists( "entityName" ) ? md.entityName : listLast( md.name, "." ),
-			datasource = variables.ORMUtil.getEntityDatasource( this, variables.ORMUtil.getDefaultDatasource() )
-		);
-
-		// Is this a simple key?
-		if ( hibernateMD.hasIdentifierProperty() ) {
-			return hibernateMD.getIdentifierPropertyName();
-		}
-
-		// Composite Keys?
-		if ( hibernateMD.getIdentifierType().isComponentType() ) {
-			// Do conversion to CF Array instead of java array, just in case
-			return listToArray( arrayToList( hibernateMD.getIdentifierType().getPropertyNames() ) );
-		}
-
-		return "";
 	}
 
 }
