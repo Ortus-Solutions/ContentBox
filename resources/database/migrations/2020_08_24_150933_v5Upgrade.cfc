@@ -189,7 +189,6 @@ component {
 					.newQuery()
 					.from( thisTable )
 					.whereNull( "FK_siteId" )
-					.orWhere( "FK_siteId", 0 )
 					.update( { "FK_siteId" : siteId } );
 
 				systemOutput( "√ - Populated '#thisTable#' with default site data", true );
@@ -605,6 +604,62 @@ component {
 
 					return "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#";
 				}
+				var populateFKValues = function( tmpColumn, tableName, keyConfig ){
+					var tmpId = "tmp_" & idTables[ keyConfig.reference.table ];
+					queryExecute("
+					UPDATE #tableName#
+					SET #tmpColumn# = ( SELECT #tmpId# from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+					");
+				};
+
+				var populateChildFKValues = function( tmpColumn, tableName ){
+					var tmpId = "tmp_" & idTables[ childTables[ tableName ].parent ];
+					queryExecute("
+						UPDATE #tableName#
+						SET #tmpColumn# = ( SELECT #tmpId# from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
+						");
+
+				};
+				var dropForeignKeys = function( tableName, columnName ){
+
+					query.newQuery().select( [ "sys.foreign_keys.name" ] )
+								.from( "sys.foreign_keys" )
+								.join( "sys.foreign_key_columns", "sys.foreign_key_columns.constraint_object_id", "sys.foreign_keys.OBJECT_ID" )
+								.join( "sys.tables", "sys.tables.OBJECT_ID", "sys.foreign_keys.referenced_object_id" )
+								.whereRaw( "OBJECT_NAME( sys.foreign_keys.parent_object_id ) = '#tableName#'" )
+								.whereRaw( "COL_NAME(sys.foreign_key_columns.parent_object_id,sys.foreign_key_columns.parent_column_id) = '#columnName#'" )
+								.get()
+								.map( function( row ){ return row.name; } )
+								.each( function( constraintName ){
+									queryExecute( "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#");
+								} );
+
+					query.newQuery().select( [ "name" ] )
+							.from( "sys.indexes" )
+							.join( "sys.index_columns", "sys.indexes.index_id", "sys.index_columns.index_id" )
+							.where( "sys.indexes.is_hypothetical", 0 )
+							.whereRaw( "sys.indexes.object_id = OBJECT_ID( '#tableName#' ) and COL_NAME(sys.index_columns.object_id,sys.index_columns.column_id) = '#columnName#' AND name NOT LIKE 'PK_%'" )
+							.get()
+							.map( function( row ){ return row.name; } )
+							.each( function( indexName ){
+								queryExecute( listFirst( indexName, "_" ) == 'UQ' ? "ALTER TABLE #tableName# DROP CONSTRAINT #indexName#" : "DROP INDEX IF EXISTS #indexName# on #tableName#");
+							} );
+
+					// Drop any foreign keys which reference this table
+					if( idTables.keyExists( tableName ) ){
+						query.newQuery().selectRaw( "sys.foreign_keys.name as constraint_name, OBJECT_NAME( sys.foreign_keys.parent_object_id ) as table_name")
+								.from( "sys.foreign_keys" )
+								.join( "sys.foreign_key_columns", "sys.foreign_key_columns.constraint_object_id", "sys.foreign_keys.OBJECT_ID" )
+								.join( "sys.tables", "sys.tables.OBJECT_ID", "sys.foreign_keys.referenced_object_id" )
+								.whereRaw( "OBJECT_NAME (sys.foreign_keys.referenced_object_id) = '#tableName#'" )
+								.get()
+								.map( function( row ){ return { "table" : row.table_name, "constraint" : row.constraint_name }; } )
+								.each( function( row ){
+									queryExecute( "ALTER TABLE #row.table# DROP CONSTRAINT #row.constraint#");
+								} );
+					}
+
+				}
 				break;
 			}
 			case "OracleGrammar":{
@@ -641,7 +696,7 @@ component {
 			dropForeignKeys( tableName, pkColumn );
 			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
-				table.addColumn( table.uuid( tmpColumn ).nullable().unique() );
+				table.addColumn( table.uuid( tmpColumn ).nullable() );
 			} );
 			populateChildFKValues( tmpColumn, tableName );
 		} );
@@ -702,6 +757,9 @@ component {
 			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
+				//ensure it is a not null field before we make it PK
+				table.modifyColumn( tmpColumn, table.uuid( tmpColumn ) );
+
 				table.addConstraint( table.primaryKey( tmpColumn ) );
 				table.dropColumn( pkColumn );
 				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
