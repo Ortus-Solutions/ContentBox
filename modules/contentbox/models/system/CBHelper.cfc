@@ -301,15 +301,8 @@ component accessors="true" singleton threadSafe {
 	 * @siteId The site id to get the root from, by default we use the current site you are on
 	 */
 	function siteRoot( string siteId = "" ){
-		// Discover the right site object
-		var oSite = site( arguments.siteId );
 		// Return the appropriate site Uri
-		return "http"
-		& ( oSite.getIsSSL() ? "s" : "" ) // SSL or not
-		& "://"
-		& oSite.getDomain() // Site Domain
-		& ( cgi.server_port != 80 ? ":#cgi.server_port#" : "" ) // The right port
-		& getPrivateRequestCollection().cbEntryPoint; // The entry point if any
+		return this.site( arguments.siteId ).getSiteRoot() & getPrivateRequestCollection().cbEntryPoint;
 	}
 
 	/**

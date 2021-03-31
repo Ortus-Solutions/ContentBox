@@ -270,7 +270,9 @@ component
 		return this;
 	}
 
-	/** Get the site root URL */
+	/**
+	 * Get the site root URL as defined per the settings
+	 */
 	String function getSiteRoot(){
 		// Return the appropriate site Uri
 		return "http"
