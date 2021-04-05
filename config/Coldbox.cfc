@@ -229,41 +229,80 @@ component {
 		};
 
 		// Debugger Settings
-		variables.modulesettings.cbdebugger = {
-			// Activate debugger for everybody
-			debugMode = true,
-			// Setup a password for the panel
-			debugPassword = "",
-			// Persist request tracking profilers
-			persistentRequestProfiler     : true,
-			// How many tracking profilers to keep in stack: Default is monitor the last 10 requests
-			maxPersistentRequestProfilers : 10,
-			// If enabled, the debugger will monitor the creation time of CFC objects via WireBox
-			wireboxCreationProfiler       : false,
-			// How many rows to dump for object collections if the RC panel is activated
-			maxRCPanelQueryRows           : 50,
-			// Slow request threshold in milliseconds, if execution time is above it, we mark those transactions as red
-			slowExecutionThreshold        : 250,
-			// Profile model objects annotated with the `profile` annotation
-			profileObjects                : true,
-			// If enabled, will trace the results of any methods that are being profiled
-			traceObjectResults            : false,
-			// Profile Custom or Core interception points
-			profileInterceptions          : false,
-			// By default all interception events are excluded, you must include what you want to profile
-			includedInterceptions         : [],
-			// Panels
-			showTracerPanel = true,
-			expandedTracerPanel = true,
-			showInfoPanel = true,
-			expandedInfoPanel = true,
-			showCachePanel = server.keyExists( "lucee" ) ? true : false,
-			expandedCachePanel = false,
-			showRCPanel = false,
-			showModulesPanel = false,
-			expandedModulesPanel = false,
-			showQBPanel = false,
-			expandedQBPanel = false
+		variables.modulesettings.cbdebugger = cbDebugger : {
+			// This flag enables/disables the tracking of request data to our storage facilities
+			// To disable all tracking, turn this master key off
+			enabled   : true,
+			// This setting controls if you will activate the debugger for visualizations ONLY
+			// The debugger will still track requests even in non debug mode.
+			debugMode : true,
+			// The URL password to use to activate it on demand
+			debugPassword  : "cb",
+			// Request Tracker Options
+			requestTracker : {
+				trackDebuggerEvents : false,
+				// Expand by default the tracker panel or not
+				expanded                     : true,
+				// Slow request threshold in milliseconds, if execution time is above it, we mark those transactions as red
+				slowExecutionThreshold       : 1000,
+				// How many tracking profilers to keep in stack: Default is to monitor the last 20 requests
+				maxProfilers                 : 25,
+				// If enabled, the debugger will monitor the creation time of CFC objects via WireBox
+				profileWireBoxObjectCreation : false,
+				// Profile model objects annotated with the `profile` annotation
+				profileObjects               : true,
+				// If enabled, will trace the results of any methods that are being profiled
+				traceObjectResults           : false,
+				// Profile Custom or Core interception points
+				profileInterceptions         : true,
+				// By default all interception events are excluded, you must include what you want to profile
+				includedInterceptions        : [],
+				// Control the execution timers
+				executionTimers              : {
+					expanded           : true,
+					// Slow transaction timers in milliseconds, if execution time of the timer is above it, we mark it
+					slowTimerThreshold : 250
+				},
+				// Control the coldbox info reporting
+				coldboxInfo : { expanded : false },
+				// Control the http request reporting
+				httpRequest : {
+					expanded        : false,
+					// If enabled, we will profile HTTP Body content, disabled by default as it contains lots of data
+					profileHTTPBody : true
+				}
+			},
+			// ColdBox Tracer Appender Messages
+			tracers     : { enabled : true, expanded : false },
+			// Request Collections Reporting
+			collections : {
+				// Enable tracking
+				enabled      : false,
+				// Expanded panel or not
+				expanded     : false,
+				// How many rows to dump for object collections
+				maxQueryRows : 50,
+				// How many levels to output on dumps for objects
+				maxDumpTop   : 5
+			},
+			// CacheBox Reporting
+			cachebox : { enabled : false, expanded : false },
+			// Modules Reporting
+			modules  : { enabled : false, expanded : false },
+			// Quick and QB Reporting
+			qb       : {
+				enabled   : false,
+				expanded  : false,
+				// Log the binding parameters
+				logParams : true
+			},
+			// cborm Reporting
+			cborm : {
+				enabled   : true,
+				expanded  : false,
+				// Log the binding parameters
+				logParams : true
+			}
 		};
 
 		// Specific Debugging + Logging
