@@ -240,13 +240,15 @@ component {
 			debugPassword  : "cb",
 			// Request Tracker Options
 			requestTracker : {
+				storage                      : "cachebox",
+				cacheName                    : "template",
 				trackDebuggerEvents : false,
 				// Expand by default the tracker panel or not
 				expanded                     : false,
 				// Slow request threshold in milliseconds, if execution time is above it, we mark those transactions as red
 				slowExecutionThreshold       : 1000,
 				// How many tracking profilers to keep in stack: Default is to monitor the last 20 requests
-				maxProfilers                 : 25,
+				maxProfilers                 : 50,
 				// If enabled, the debugger will monitor the creation time of CFC objects via WireBox
 				profileWireBoxObjectCreation : false,
 				// Profile model objects annotated with the `profile` annotation
@@ -286,9 +288,9 @@ component {
 				maxDumpTop   : 5
 			},
 			// CacheBox Reporting
-			cachebox : { enabled : false, expanded : false },
+			cachebox : { enabled : true, expanded : false },
 			// Modules Reporting
-			modules  : { enabled : true, expanded : false },
+			modules  : { enabled : false, expanded : false },
 			// Quick and QB Reporting
 			qb       : {
 				enabled   : false,
