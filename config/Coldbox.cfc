@@ -229,7 +229,7 @@ component {
 		};
 
 		// Debugger Settings
-		variables.modulesettings.cbdebugger = cbDebugger : {
+		variables.modulesettings.cbdebugger = {
 			// This flag enables/disables the tracking of request data to our storage facilities
 			// To disable all tracking, turn this master key off
 			enabled   : true,
@@ -254,7 +254,7 @@ component {
 				// If enabled, will trace the results of any methods that are being profiled
 				traceObjectResults           : false,
 				// Profile Custom or Core interception points
-				profileInterceptions         : true,
+				profileInterceptions         : false,
 				// By default all interception events are excluded, you must include what you want to profile
 				includedInterceptions        : [],
 				// Control the execution timers
@@ -269,7 +269,7 @@ component {
 				httpRequest : {
 					expanded        : false,
 					// If enabled, we will profile HTTP Body content, disabled by default as it contains lots of data
-					profileHTTPBody : true
+					profileHTTPBody : false
 				}
 			},
 			// ColdBox Tracer Appender Messages

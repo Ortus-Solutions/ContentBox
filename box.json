@@ -32,7 +32,7 @@
         "testbox":"*",
         "commandbox-cfformat":"*",
         "commandbox-docbox":"*",
-        "cbdebugger":"^2.2.0+45"
+        "cbdebugger":"be"
     },
     "installPaths":{
         "testbox":"testbox/",
