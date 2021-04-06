@@ -30,9 +30,9 @@
     },
     "devDependencies":{
         "testbox":"*",
+        "cbdebugger":"be",
         "commandbox-cfformat":"*",
-        "commandbox-docbox":"*",
-        "cbdebugger":"be"
+        "commandbox-docbox":"*"
     },
     "installPaths":{
         "testbox":"testbox/",
