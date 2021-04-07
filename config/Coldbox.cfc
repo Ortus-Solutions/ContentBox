@@ -304,6 +304,10 @@ component {
 				expanded  : false,
 				// Log the binding parameters
 				logParams : true
+			},
+			async : {
+				enabled : true,
+				expanded : false
 			}
 		};
 

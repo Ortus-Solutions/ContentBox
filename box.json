@@ -30,7 +30,7 @@
     },
     "devDependencies":{
         "testbox":"*",
-        "cbdebugger":"be",
+        "cbdebugger":"^3.0.0",
         "commandbox-cfformat":"*",
         "commandbox-docbox":"*"
     },
