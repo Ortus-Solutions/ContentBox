@@ -1,0 +1,8 @@
+{
+    "dependencies":{
+        "cbcsrf":"^2.1.0+38"
+    },
+    "installPaths":{
+        "cbcsrf":"modules/cbcsrf/"
+    }
+}

@@ -1,0 +1,43 @@
+{
+    "name":"ColdBox Cross Site Request Forgery (CSRF)",
+    "version":"2.1.0+38",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/cbcsrf/2.1.0/cbcsrf-2.1.0.zip",
+    "author":"Ortus Solutions.com <info@ortussolutions.com>",
+    "slug":"cbcsrf",
+    "type":"modules",
+    "shortDescription":"Provides generateCSRFToken() and verifyCSRFToken() methods that will simply call the native function if supported by the CF engine, otherwise will use its own implementation.  This ensures code will work on older versions of CF that don't nativley support CSRF tokens.",
+    "homepage":"https://github.com/coldbox-modules/cbcsrf",
+    "documentation":"https://github.com/coldbox-modules/cbcsrf",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-modules/cbcsrf"
+    },
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    ],
+    "contributors":[
+        "Brad Wood <brad@ortussolutions.com>",
+        "Luis Majano <lmajano@ortussolutions.com>",
+        "Curt Gratz <gratzc@compknowhow.com>"
+    ],
+    "ignore":[
+        "**/.*",
+        "tests",
+        "*/.md"
+    ],
+    "dependencies":{
+        "cbstorages":"^2.1.0"
+    },
+    "scripts":{
+        "release":"recipe build/release.boxr",
+        "format":"cfformat run *.cfc,models/**.cfc",
+        "format:watch":"cfformat watch *.cfc,models/**.cfc",
+        "format:check":"cfformat check *.cfc,models/**.cfc"
+    },
+    "installPaths":{
+        "cbstorages":"modules/cbstorages/"
+    }
+}

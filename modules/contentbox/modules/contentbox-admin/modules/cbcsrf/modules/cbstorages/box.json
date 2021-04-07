@@ -1,0 +1,43 @@
+{
+    "name":"CBStorages",
+    "version":"2.5.0+73",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/coldbox-modules/cbstorages/2.5.0/cbstorages-2.5.0.zip",
+    "author":"Ortus Solutions.com <info@ortussolutions.com>",
+    "slug":"cbstorages",
+    "type":"modules",
+    "keywords":"storages, session, cache, client, distributed cache",
+    "homepage":"https://github.com/coldbox-modules/cbstorages",
+    "documentation":"https://github.com/coldbox-modules/cbstorages",
+    "bugs":"https://github.com/coldbox-modules/cbstorages/issues",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-modules/cbstorages"
+    },
+    "shortDescription":"Provides a collection of facade storages for ColdFusion and distributed caching",
+    "license":[
+        {
+            "type":"Apache2",
+            "url":"http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    ],
+    "contributors":[
+        "Brad Wood <bdw429s@gmail.com>",
+        "Curt Gratz <gratz@computerknowhow.com>",
+        "Jon Clausen <jclausen@ortussolutions.com>",
+        "Dan Murphy"
+    ],
+    "dependencies":{},
+    "devDependencies":{},
+    "installPaths":{},
+    "ignore":[
+        "**/.*",
+        "test-harness",
+        "*/.md"
+    ],
+    "scripts":{
+        "release":"recipe build/release.boxr",
+        "format":"cfformat run models/,test-harness/tests/,ModuleConfig.cfc --overwrite",
+        "format:watch":"cfformat watch models/,test-harness/tests/,ModuleConfig.cfc ./.cfformat.json",
+        "format:check":"cfformat check models/,test-harness/tests/,ModuleConfig.cfc"
+    }
+}
