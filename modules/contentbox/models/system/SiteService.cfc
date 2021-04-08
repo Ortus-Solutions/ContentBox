@@ -99,8 +99,8 @@ component
 
 			// Activate the site's theme
 			variables.themeService.startupTheme(
-				name : arguments.site.getActiveTheme(),
-				siteId : arguments.site.getSiteId()
+				name  : arguments.site.getActiveTheme(),
+				siteId: arguments.site.getSiteId()
 			);
 		}
 		// end transaction

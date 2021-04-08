@@ -270,4 +270,16 @@ component
 		return this;
 	}
 
+	/**
+	 * Get the site root URL as defined per the settings
+	 */
+	String function getSiteRoot(){
+		// Return the appropriate site Uri
+		return "http"
+		& ( this.getIsSSL() ? "s" : "" ) // SSL or not
+		& "://"
+		& this.getDomain() // Site Domain
+		& ( cgi.server_port != 80 ? ":#cgi.server_port#" : "" ); // The right port
+	}
+
 }

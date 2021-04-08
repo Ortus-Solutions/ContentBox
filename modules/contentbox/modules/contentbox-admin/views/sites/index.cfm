@@ -172,6 +172,13 @@
 												</a>
 											</li>
 
+											<!--- Open site --->
+											<li>
+												<a href="#site.getSiteRoot()#" target="_blank">
+													<i class="fas fa-external-link-alt fa-lg"></i>Open site
+												</a>
+											</li>
+
 											<!--- Export --->
 											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
 												<li>

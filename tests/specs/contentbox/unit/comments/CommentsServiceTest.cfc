@@ -10,6 +10,8 @@ component extends="tests.resources.BaseTest" {
 		// all your suites go here.
 		describe( "Comment Service", function(){
 			beforeEach( function( currentSpec ){
+				// Capture the request so the debugger can track our data. since we are in unit mode.
+				getController().getRequestService().requestCapture();
 				commentService = getInstance( "CommentService@cb" );
 			} );
 
