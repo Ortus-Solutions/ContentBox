@@ -691,16 +691,6 @@ component {
 				}
 				break;
 			}
-			case "PostgresGrammar":{
-				variables.guidFn = 'gen_random_uuid()';
-				variables.pkDropSQL = function( tableName ){
-					var constraintName = queryExecute(
-						"SELECT constraint_name FROM information_schema.table_constraints WHERE table_name = '#arguments.tableName#' and constraint_type = 'PRIMARY KEY'"
-					).constraint_name;
-					return "ALTER table #tableName# DROP CONSTRAINT #constraintName#";
-				}
-				break;
-			}
 			case "SqlServerGrammar":{
 				variables.guidFn = 'NEWID()';
 				variables.pkDropSQL = function( tableName ){
@@ -788,19 +778,11 @@ component {
 				}
 				break;
 			}
+			case "PostgresGrammar":
 			case "OracleGrammar":{
-				var guidFn= 'sys_guid()';
-				var pkDropSQL = function( tableName ){
-					var constraintName = queryExecute(
-						"SELECT constraint_name
-						 FROM user_constraints
-						 WHERE table_name = '#tableName#'
-						 AND constraint_type = 'P'"
-					).constraint_name;
-
-					return "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#";
-				}
-				break;
+				throw(
+					"Database Migrations from ContentBox v4 to v5 are not supported for this DBMS platform"
+				);
 			}
 			default:{
 				throw( "DBMS Grammatical type could not be determined from the grammar #getMetadata( grammar ).name#.  The migration must be aborted." );
