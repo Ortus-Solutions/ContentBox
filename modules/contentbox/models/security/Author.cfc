@@ -29,12 +29,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="authorID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="firstName"
 		length ="100"
 		notnull="true"

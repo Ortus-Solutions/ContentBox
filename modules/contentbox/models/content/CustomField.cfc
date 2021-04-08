@@ -16,11 +16,6 @@ component 	persistent="true"
 	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="customFieldID"
-				fieldtype="id"
-				generator="assigned"
-				setter="false";
-
 	property 	name="key"
 				notnull="true"
 				ormtype="string"

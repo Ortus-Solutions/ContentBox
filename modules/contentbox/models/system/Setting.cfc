@@ -21,12 +21,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="settingID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="name"
 		notnull="true"
 		length ="100";

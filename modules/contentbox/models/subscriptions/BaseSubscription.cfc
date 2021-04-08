@@ -42,13 +42,6 @@ component
 	/* *********************************************************************
 	 **                          PROPERTIES
 	 ********************************************************************* */
-
-	property
-		name     ="subscriptionID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
 	property name="subscriptionToken" notnull="true";
 
 	property

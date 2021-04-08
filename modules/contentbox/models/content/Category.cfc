@@ -50,12 +50,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="categoryID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="category"
 		notnull="true"
 		length ="200"

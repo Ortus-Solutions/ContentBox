@@ -29,12 +29,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="contentVersionID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="content"
 		notnull="true"
 		ormtype="text"

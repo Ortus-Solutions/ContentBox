@@ -17,13 +17,6 @@ component 	persistent="true"
 	********************************************************************* */
 
 	/**
-	* Primary key
-	*/
-	property 	name="loginAttemptsID"
-				fieldtype="id"
-				generator="assigned"
-				setter="false";
-	/**
 	* The username attempt value
 	*/
 	property 	name="value"

@@ -14,6 +14,11 @@ component
 	/* *********************************************************************
 	 **							PROPERTIES
 	 ********************************************************************* */
+	property
+		name     ="id"
+		fieldtype="id"
+		generator="uuid"
+		setter   ="false";
 
 	property
 		name   ="createdDate"

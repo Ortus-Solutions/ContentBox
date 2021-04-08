@@ -16,11 +16,6 @@ component   persistent="true"
     **                          PROPERTIES
     ********************************************************************* */
 
-    property    name="subscriberID"
-                fieldtype="id"
-                generator="assigned"
-                setter="false";
-
     property    name="subscriberEmail"
                 notnull="true"
                 length="255"

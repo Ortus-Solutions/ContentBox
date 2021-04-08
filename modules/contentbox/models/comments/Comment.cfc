@@ -29,12 +29,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="commentID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="content"
 		ormtype="text"
 		notnull="true";

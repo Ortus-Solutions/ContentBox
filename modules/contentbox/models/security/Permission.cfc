@@ -16,11 +16,6 @@ component 	persistent="true"
 	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="permissionID"
-				fieldtype="id"
-				generator="assigned"
-				setter="false";
-
 	property 	name="permission"
 				ormtype="string"
 				notnull="true"

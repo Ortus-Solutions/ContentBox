@@ -36,12 +36,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="menuID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="title"
 		notnull="true"
 		ormtype="string"

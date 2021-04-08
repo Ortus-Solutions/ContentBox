@@ -25,12 +25,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="permissionGroupID"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="name"
 		ormtype="string"
 		notnull="true"

@@ -28,13 +28,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="siteId"
-		fieldtype="id"
-		column	 ="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="name"
 		ormtype="string"
 		notnull="true"

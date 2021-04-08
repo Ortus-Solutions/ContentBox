@@ -103,13 +103,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="contentID"
-		notnull  ="true"
-		fieldtype="id"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="contentType"
 		setter ="false"
 		update ="false"

@@ -19,13 +19,6 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="ruleID"
-		fieldtype="id"
-		column   ="ruleID"
-		generator="assigned"
-		setter   ="false";
-
-	property
 		name   ="whitelist"
 		ormtype="string"
 		notnull="false"

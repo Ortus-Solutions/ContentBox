@@ -22,11 +22,6 @@ component 	persistent="true"
 	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="roleID"
-				fieldtype="id"
-				generator="assigned"
-				setter="false";
-
 	property 	name="role"
 				ormtype="string"
 				notnull="true"

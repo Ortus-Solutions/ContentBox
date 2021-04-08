@@ -17,11 +17,6 @@ component 	persistent="true"
 	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="statsID"
-				fieldtype="id"
-				generator="assigned"
-				setter="false";
-
 	property 	name="hits"
 				notnull="false"
 				ormtype="long"
