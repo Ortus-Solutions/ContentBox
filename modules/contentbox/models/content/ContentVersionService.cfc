@@ -44,7 +44,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	numeric function getNumberOfVersions( string contentId = "", boolean isActive ){
 		return newCriteria()
-			.isEq( "relatedContent.contentID", arguments.contentId )
+			.isEq( "relatedContent.id", arguments.contentId )
 			.when( !isNull( arguments.isActive ), function( c ){
 				c.isEq( "isActive", javacast( "Boolean", isActive ) );
 			} )
@@ -61,7 +61,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	function getActiveVersion( required contentId ){
 		// Get all the active versions
 		var aVersions = newCriteria()
-			.isEq( "relatedContent.contentID", arguments.contentId )
+			.isEq( "relatedContent.id", arguments.contentId )
 			.isTrue( "isActive" )
 			.list();
 
@@ -87,7 +87,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Find it
 		var c = newCriteria().isEq(
-			"relatedContent.contentID",
+			"relatedContent.id",
 			arguments.contentID
 		);
 

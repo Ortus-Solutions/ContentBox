@@ -122,7 +122,7 @@
 		#html.endFieldSet()#
 
 		<!--- Action Bar --->
-		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getId() EQ prc.oCurrentAuthor.getId()>
 			<div class="form-actions">
 				<input type="submit" value="Save Details" class="btn btn-primary btn-lg">
 			</div>

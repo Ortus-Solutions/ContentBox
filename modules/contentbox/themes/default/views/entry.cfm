@@ -53,7 +53,7 @@
 				</cfif>
 
 				<!--- post --->
-				<div class="post" id="post_#prc.entry.getContentID()#">
+				<div class="post" id="post_#prc.entry.getId()#">
 
 					<!--- Title --->
 					<div class="post-title">

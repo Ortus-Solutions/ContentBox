@@ -78,7 +78,7 @@
 								<cfloop array="#prc.allSites#" index="thisSite">
 									<option
 										value="#thisSite[ 'siteId' ]#"
-										<cfif thisSite[ 'siteId' ] eq prc.oCurrentSite.getSiteId()>selected="selected"</cfif>
+										<cfif thisSite[ 'siteId' ] eq prc.oCurrentSite.getId()>selected="selected"</cfif>
 									>
 										#thisSite[ 'name' ]#
 									</option>

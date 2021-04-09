@@ -20,7 +20,7 @@
 			<cfset i = 0>
 			<cfloop array="#prc.pager_pages#" index="page">
 			<cfset i++>
-			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
+			<tr id="contentID-#page.getId()#" data-contentID="#page.getId()#"
 				<cfif page.isExpired()>
 					class="error"
 				<cfelseif page.isPublishedInFuture()>
@@ -30,7 +30,7 @@
 				</cfif>>
 				<td>
 					<!--- Title --->
-					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
+					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getId()#">#page.getSlug()#</a><br>
 					<small><i class="fa fa-user" title="last edit by"></i> <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#</small>
 				</td>
 				<td class="text-center">
@@ -58,12 +58,12 @@
 				    	<ul class="dropdown-menu text-left pull-right">
 				    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR" ) OR prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 							<!--- Edit Command --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getId()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 							<!--- Create Child --->
-							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
+							<li><a href="#event.buildLink(prc.xehPageEditor)#/parentID/#page.getId()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
 							</cfif>
 							<!--- History Command --->
-							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
+							<li><a href="#event.buildLink(prc.xehPageHistory)#/contentID/#page.getId()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 							<!--- View in Site --->
 							<li><a href="#prc.CBHelper.linkPage(page)#" target="_blank"><i class="far fa-eye fa-lg"></i> View Page</a></li>
 				    	</ul>

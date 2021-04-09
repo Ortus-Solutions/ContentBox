@@ -82,7 +82,7 @@
 									<!--- Button Bar --->
 									<div class="btn-group">
 										<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ thisTheme.name>
-											<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#thisTheme.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
+											<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#thisTheme.name#/h/#hash(prc.oCurrentAuthor.getId())#');return false;">
 												<i class="far fa-eye"></i> Preview
 											</button>
 											<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#thisTheme.name#')">

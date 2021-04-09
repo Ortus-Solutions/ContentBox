@@ -104,7 +104,7 @@ component extends="baseContentHandler" {
 			creator    : rc.fCreators,
 			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
 			sortOrder  : "order asc",
-			siteId     : prc.oCurrentSite.getSiteId()
+			siteId     : prc.oCurrentSite.getId()
 		);
 		prc.pages      = pageResults.pages;
 		prc.pagesCount = pageResults.count;
@@ -178,7 +178,7 @@ component extends="baseContentHandler" {
 				event  = arguments.event,
 				rc     = arguments.rc,
 				prc    = arguments.prc,
-				parent = prc.page.getContentID()
+				parent = prc.page.getId()
 			);
 			// Get Versions Viewlet
 			prc.versionsViewlet = runEvent(
@@ -192,7 +192,7 @@ component extends="baseContentHandler" {
 		prc.themeRecord      = variables.themeService.getActiveTheme();
 		prc.availableLayouts = reReplaceNoCase( prc.themeRecord.layouts, "blog,?", "" );
 		// Get parent from active page
-		prc.parentcontentID  = prc.page.getParentID();
+		prc.parentcontentID  = prc.page.getId();
 		// Override the parent page if incoming via URL
 		if ( structKeyExists( rc, "parentID" ) ) {
 			prc.parentcontentID = rc.parentID;
@@ -241,7 +241,7 @@ component extends="baseContentHandler" {
 			.paramValue( "expireTime", "" )
 			.paramValue( "customFieldsCount", 0 )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getSiteId() );
+			.paramValue( "site", prc.oCurrentSite.getId() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -286,7 +286,7 @@ component extends="baseContentHandler" {
 			!isNew and
 			prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) and
 			rc.creatorID.len() and
-			page.getCreator().getAuthorID() NEQ rc.creatorID
+			page.getId() NEQ rc.creatorID
 		) {
 			page.setCreator( authorService.get( rc.creatorID ) );
 		}
@@ -299,7 +299,7 @@ component extends="baseContentHandler" {
 		);
 
 		// attach a parent page if it exists and not the same
-		if ( rc.parentPage neq "null" AND page.getContentID() NEQ rc.parentPage ) {
+		if ( rc.parentPage neq "null" AND page.getId() NEQ rc.parentPage ) {
 			page.setParent( variables.pageService.get( rc.parentPage ) );
 			// update slug according to hierarchy
 			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
@@ -339,7 +339,7 @@ component extends="baseContentHandler" {
 
 		// Ajax?
 		if ( event.isAjax() ) {
-			var rData = { "CONTENTID" : page.getContentID() };
+			var rData = { "CONTENTID" : page.getId() };
 			event.renderData( type = "json", data = rData );
 		} else {
 			// relocate
@@ -347,7 +347,7 @@ component extends="baseContentHandler" {
 			if ( page.hasParent() ) {
 				relocate(
 					event       = prc.xehPages,
-					querystring = "parent=#page.getParent().getContentID()#"
+					querystring = "parent=#page.getId()#"
 				);
 			} else {
 				relocate( event = prc.xehPages );
@@ -360,7 +360,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
+		event.paramValue( "site", prc.oCurrentSite.getId() );
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
@@ -416,7 +416,7 @@ component extends="baseContentHandler" {
 		if ( original.hasParent() ) {
 			relocate(
 				event       = prc.xehPages,
-				querystring = "parent=#original.getParent().getContentID()#"
+				querystring = "parent=#original.getId()#"
 			);
 		} else {
 			relocate( event = prc.xehPages );
@@ -483,7 +483,7 @@ component extends="baseContentHandler" {
 				);
 			} else {
 				// GET id to be sent for announcing later
-				var contentID = page.getContentID();
+				var contentID = page.getId();
 				var title     = page.getTitle();
 				// announce event
 				announce( "cbadmin_prePageRemove", { page : page } );
@@ -662,7 +662,7 @@ component extends="baseContentHandler" {
 			max                : prc.cbSettings.cb_paging_maxrows,
 			sortOrder          : "slug asc",
 			searchActiveContent: false,
-			siteId             : prc.oCurrentSite.getSiteId()
+			siteId             : prc.oCurrentSite.getId()
 		);
 		// setup data for display
 		prc.entries      = pageResults.pages;

@@ -21,7 +21,7 @@ component extends="content"{
 			comments : rc.commentRSS,
 			category : rc.category,
 			slug     : rc.contentSlug,
-			siteId   : prc.oCurrentSite.getSiteId()
+			siteId   : prc.oCurrentSite.getId()
 		);
 
 		// Render out the feed xml
@@ -44,7 +44,7 @@ component extends="content"{
 			slug        : rc.slug,
 			comments    : rc.commentRSS,
 			contentType : "Page",
-			siteId      : prc.oCurrentSite.getSiteId()
+			siteId      : prc.oCurrentSite.getId()
 		);
 
 		// Render out the feed xml

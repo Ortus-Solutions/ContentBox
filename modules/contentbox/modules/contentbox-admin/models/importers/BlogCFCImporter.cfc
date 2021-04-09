@@ -66,7 +66,7 @@ component implements="cbadmin.models.importers.ICBImporter" {
 				var cat = categoryService.new(properties=props);
 				entitySave(cat);
 				log.info( "Imported category: #props.category#" );
-				catMap[qCategories.categoryId[ x ]] = cat.getCategoryID();
+				catMap[qCategories.categoryId[ x ]] = cat.getId();
 			}
 			log.info( "Categories imported successfully!" );
 
@@ -91,7 +91,7 @@ component implements="cbadmin.models.importers.ICBImporter" {
 				author.setRole( defaultRole );
 				entitySave(author);
 				log.info( "Imported author: #props.firstName# #props.lastName#" );
-				authorMap[qAuthors.username[ x ]] = author.getAuthorID();
+				authorMap[qAuthors.username[ x ]] = author.getId();
 
 				// Save first author found from blogCFC as the default author.
 				if(x == 1) {

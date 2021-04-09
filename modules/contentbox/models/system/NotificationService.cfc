@@ -49,7 +49,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			authorRole         : author.getRole().getRole(),
 			permissionGroups   : author.getPermissionGroupsList(),
 			authorEmail        : author.getEmail(),
-			authorURL          : CBHelper.linkAdmin( event="authors.editor.authorID.#author.getAuthorID()#", ssl=settings.cb_admin_ssl ),
+			authorURL          : CBHelper.linkAdmin( event="authors.editor.authorID.#author.getId()#", ssl=settings.cb_admin_ssl ),
 			currentAuthor      : currentAuthor.getName(),
 			currentAuthorEmail : currentAuthor.getEmail()
 		};
@@ -416,7 +416,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			contentIsPublished  = content.getIsPublished(),
 			contentPublishedDate= content.getDisplayPublishedDate(),
 			contentExpireDate   = content.getDisplayExpireDate(),
-			contentURL          = arguments.event.buildLink( to="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
+			contentURL          = arguments.event.buildLink( to="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getId()#", ssl=settings.cb_admin_ssl ),
 			contentExcerpt      = content.renderContentSilent( content.getActiveContent().getContent() )
 		};
 
@@ -475,7 +475,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			contentIsPublished   : content.getIsPublished(),
 			contentPublishedDate : content.getDisplayPublishedDate(),
 			contentExpireDate    : content.getDisplayExpireDate(),
-			contentURL           : arguments.event.buildLink( to="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getContentID()#", ssl=settings.cb_admin_ssl ),
+			contentURL           : arguments.event.buildLink( to="#CBHelper.adminRoot()#.contentStore.export/contentID/#content.getId()#", ssl=settings.cb_admin_ssl ),
 			contentExcerpt       : content.renderContentSilent( content.getActiveContent().getContent() )
 		};
 

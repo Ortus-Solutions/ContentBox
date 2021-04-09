@@ -18,7 +18,7 @@
 
 	<tbody>
 		<cfloop array="#prc.commentPager_comments#" index="comment">
-		<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
+		<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getId()#">
 			<td>
 				#getInstance( "Avatar@cb" ).renderAvatar(
 					email = comment.getAuthorEmail(),
@@ -72,9 +72,9 @@
 				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<!--- Approve/Unapprove --->
 					<cfif !comment.getIsApproved()>
-						<a class="btn btn-sm btn-primary" href="javascript:commentPagerChangeStatus('approve','#comment.getCommentID()#')" title="Approve Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg" ></i></a>
+						<a class="btn btn-sm btn-primary" href="javascript:commentPagerChangeStatus('approve','#comment.getId()#')" title="Approve Comment"><i id="status_#comment.getId()#" class="fa fa-thumbs-up fa-lg" ></i></a>
 					<cfelse>
-						<a class="btn btn-sm btn-default" href="javascript:commentPagerChangeStatus('moderate','#comment.getCommentID()#')" title="Unapprove Comment"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
+						<a class="btn btn-sm btn-default" href="javascript:commentPagerChangeStatus('moderate','#comment.getId()#')" title="Unapprove Comment"><i id="status_#comment.getId()#" class="fa fa-thumbs-down fa-lg"></i></a>
 					</cfif>
 				</cfif>
 
@@ -84,8 +84,8 @@
 					</a>
 					<ul class="dropdown-menu text-left pull-right">
 						<li><!--- Delete Command --->
-							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Comment?">
-								<i id="delete_#comment.getCommentID()#" class="far fa-trash-alt fa-lg"></i> Delete
+							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getId()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Comment?">
+								<i id="delete_#comment.getId()#" class="far fa-trash-alt fa-lg"></i> Delete
 							</a>
 						</li>
 						<li>

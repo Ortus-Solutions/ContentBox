@@ -118,7 +118,7 @@ component extends="baseHandler" {
 				arrayAppend( messages, "Invalid categoryID sent: #thisCatID#, so skipped removal" );
 			} else {
 				// GET id to be sent for announcing later
-				var categoryID = category.getCategoryID();
+				var categoryID = category.getId();
 				var title      = category.getSlug();
 				// announce event
 				announce(

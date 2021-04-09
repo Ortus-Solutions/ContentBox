@@ -36,7 +36,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	Category function getOrCreate( required category, required site ){
 		// Verify the incoming category exists in the target site or not
 		var oTargetCategory = newCriteria()
-			.isEq( "site.siteId", arguments.site.getSiteId() )
+			.isEq( "site.id", arguments.site.getId() )
 			.isEq( "slug", arguments.category.getSlug() )
 			.get();
 
@@ -62,7 +62,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	numeric function getTotalCategoryCount( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.count();
 	}
@@ -80,8 +80,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if (
 			!isSlugUnique(
 				slug     : arguments.category.getSlug(),
-				contentID: arguments.category.getCategoryId(),
-				siteId   : arguments.category.getSite().getSiteId()
+				contentID: arguments.category.getId(),
+				siteId   : arguments.category.getSite().getId()
 			)
 		) {
 			// Throw exception
@@ -112,7 +112,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.when( len( arguments.categoryID ), function( c ){
 				c.ne( "categoryID", autoCast( "categoryID", categoryID ) );
@@ -137,7 +137,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.filter( function( thisCategory ){
 				return newCriteria()
 					.isEq( "category", arguments.thisCategory )
-					.isEq( "site.siteId", site.getSiteId() )
+					.isEq( "site.id", site.getId() )
 					.count() == 0;
 			} )
 			.map( function( thisCategory ){
@@ -210,7 +210,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var aRelatedContent = contentService
 			.newCriteria()
 			.createAlias( "categories", "c" )
-			.isEq( "c.categoryID", arguments.category.getCategoryID() )
+			.isEq( "c.categoryID", arguments.category.getId() )
 			.list();
 
 		// Remove associations
@@ -227,7 +227,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	array function getAllForExport(){
 		return newCriteria()
 			.withProjections(
-				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteId:site"
+				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.id:site"
 			)
 			.asStruct()
 			.list( sortOrder: "category" );
@@ -240,7 +240,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.withProjections( property: "category" )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.list( sortOrder: "category" );
 	}
@@ -252,7 +252,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.withProjections( property: "slug" )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.list( sortOrder: "slug" );
 	}

@@ -57,7 +57,7 @@
 
 					<div class="floatRight mt5">
 						<a
-							href="#event.buildLink( '#prc.cbAdminEntryPoint#.versions.index' )#/contentID/#prc.content.getContentId()#"
+							href="#event.buildLink( '#prc.cbAdminEntryPoint#.versions.index' )#/contentID/#prc.content.getId()#"
 							class="btn btn-default btn-sm"
 						>
 							<i class="fas fa-history"></i> View History
@@ -148,7 +148,7 @@
 				<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 					<a
 						class="btn btn-info"
-						href="#event.buildLink( prc.xehContentEditor )#/contentID/#prc.content.getContentID()#"
+						href="#event.buildLink( prc.xehContentEditor )#/contentID/#prc.content.getId()#"
 					>
 						Edit
 					</a>

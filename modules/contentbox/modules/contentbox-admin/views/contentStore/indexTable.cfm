@@ -35,10 +35,10 @@
 
 	<tbody>
 		<cfloop array="#prc.content#" index="content">
-		<tr id="contentID-#content.getContentID()#"
-			data-contentID="#content.getContentID()#"
+		<tr id="contentID-#content.getId()#"
+			data-contentID="#content.getId()#"
 			<!--- double click drill down --->
-			<cfif content.getNumberOfChildren()>ondblclick="contentDrilldown( '#content.getContentID()#' )"</cfif>
+			<cfif content.getNumberOfChildren()>ondblclick="contentDrilldown( '#content.getId()#' )"</cfif>
 			<!---Status bits --->
 			<cfif content.isExpired()>
 				class="danger"
@@ -52,13 +52,13 @@
 		>
 			<!--- check box --->
 			<td class="text-center">
-				<input type="checkbox" name="contentID" id="contentID" value="#content.getContentID()#" />
+				<input type="checkbox" name="contentID" id="contentID" value="#content.getId()#" />
 			</td>
 			<td>
 				<!--- Children Dig Deeper --->
 				<cfif content.getNumberOfChildren()>
 					<a
-						href="javascript:contentDrilldown( '#content.getContentID()#' )"
+						href="javascript:contentDrilldown( '#content.getId()#' )"
 						class="hand-cursor textMuted"
 						title="View Children (#content.getNumberOfChildren()#)"
 					>
@@ -71,7 +71,7 @@
 				<!--- Title --->
 				<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 					<a
-						href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#content.getContentID()#"
+						href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#content.getId()#"
 						title="Edit content"
 					>
 						<span class="size18">#content.getTitle()#</span>
@@ -117,27 +117,27 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 							<!--- Clone Command --->
 							<li>
-								<a href="javascript:openCloneDialog( '#content.getContentID()#', '#URLEncodedFormat( content.getTitle() )#' )">
+								<a href="javascript:openCloneDialog( '#content.getId()#', '#URLEncodedFormat( content.getTitle() )#' )">
 									<i class="far fa-clone fa-lg"></i> Clone
 								</a>
 							</li>
 							<!--- Create Child --->
 							<li>
-								<a href="#event.buildLink( prc.xehContentEditor )#/parentID/#content.getContentID()#">
+								<a href="#event.buildLink( prc.xehContentEditor )#/parentID/#content.getId()#">
 									<i class="fas fa-sitemap fa-lg"></i> Create Child
 								</a>
 							</li>
 							<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
-									<a href="javascript:remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Content?">
-										<i id="delete_#content.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+									<a href="javascript:remove( '#content.getId()#' )" class="confirmIt" data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Content?">
+										<i id="delete_#content.getId()#" class="far fa-trash-alt fa-lg" ></i> Delete
 									</a>
 								</li>
 							</cfif>
 							<!--- Edit Command --->
 							<li>
-								<a href="#event.buildLink( prc.xehContentEditor )#/contentID/#content.getContentID()#">
+								<a href="#event.buildLink( prc.xehContentEditor )#/contentID/#content.getId()#">
 									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
@@ -145,19 +145,19 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 							<li>
-								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">
+								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getId()#.json" target="_blank">
 									<i class="fas fa-file-export fa-lg"></i> Export as JSON
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.xml" target="_blank">
+								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getId()#.xml" target="_blank">
 									<i class="fas fa-file-export fa-lg"></i> Export as XML
 								</a>
 							</li>
 						</cfif>
 						<!--- History Command --->
 						<li>
-							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#content.getContentID()#">
+							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#content.getId()#">
 								<i class="fas fa-history fa-lg"></i> History
 							</a>
 						</li>

@@ -137,7 +137,7 @@ component 	persistent="true"
 
 		// Check if we need to translate
 		if( NOT len( renderedExcerpt ) ){
-			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10"{
+			lock name="contentbox.excerptrendering.#getId()#" type="exclusive" throwontimeout="true" timeout="10"{
 				if( NOT len( renderedExcerpt ) ){
 					// render excerpt out, prepare builder
 					var b = createObject( "java","java.lang.StringBuilder" ).init( getExcerpt() );

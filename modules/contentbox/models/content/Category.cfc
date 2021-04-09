@@ -92,7 +92,7 @@ component
 		formula="select count(*)
 				from cb_contentCategories as contentCategories, cb_entry as entry, cb_content as content
 				where contentCategories.FK_categoryID=id
-					and contentCategories.FK_contentID = entry.contentId
+					and contentCategories.FK_contentID = entry.contentID
 					and entry.contentID = content.id";
 
 	property
@@ -182,7 +182,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "id" ] = getSite().getId();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}
@@ -204,7 +204,7 @@ component
 				return service
 					.newCriteria()
 					.createAlias( "categories", "categories" )
-					.isEq( "categories.categoryID", getCategoryID() )
+					.isEq( "categories.id", getId() )
 					.isTrue( "isPublished" )
 					.isLE( "publishedDate", now() )
 					.isEq( "passwordProtection", "" )
@@ -213,7 +213,7 @@ component
 						service.getRestrictions().isGT( "expireDate", now() )
 					)
 					.cache( true )
-					.count( "contentID" );
+					.count( "id" );
 			} );
 	}
 

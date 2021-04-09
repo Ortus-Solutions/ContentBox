@@ -143,7 +143,7 @@ component extends="content" {
 		prc.page = variables.contentService.findBySlug(
 			slug           : incomingURL,
 			showUnpublished: showUnpublished,
-			siteId         : prc.oCurrentSite.getSiteId()
+			siteId         : prc.oCurrentSite.getId()
 		);
 
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
@@ -162,7 +162,7 @@ component extends="content" {
 			// TODO: paging
 			if ( prc.page.getAllowComments() ) {
 				var commentResults = commentService.findAllApproved(
-					contentID = prc.page.getContentID(),
+					contentID = prc.page.getId(),
 					sortOrder = "asc"
 				);
 				prc.comments      = commentResults.comments;
@@ -247,7 +247,7 @@ component extends="content" {
 				offset    : prc.pagingBoundaries.startRow - 1,
 				max       : prc.cbSettings.cb_search_maxResults,
 				searchTerm: rc.q,
-				siteId    : prc.oCurrentSite.getSiteId()
+				siteId    : prc.oCurrentSite.getId()
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {

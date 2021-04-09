@@ -99,7 +99,7 @@ component {
 			sortOrder    = "order asc",
 			isPublished  = true,
 			showInSearch = true,
-			siteId       = prc.oCurrentSite.getSiteId()
+			siteId       = prc.oCurrentSite.getId()
 		);
 
 		// Blog data if enabled
@@ -113,7 +113,7 @@ component {
 				sortOrder    = "createdDate asc",
 				isPublished  = true,
 				showInSearch = true,
-				siteId       = prc.oCurrentSite.getSiteId()
+				siteId       = prc.oCurrentSite.getId()
 			);
 		}
 

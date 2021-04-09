@@ -20,7 +20,7 @@
                     novalidate 	= "novalidate",
                     class 		= "form-vertical"
                 )#
-					#html.hiddenField( name="authorID",      value=prc.oAuthor.getAuthorID() )#
+					#html.hiddenField( name="authorID",      value=prc.oAuthor.getId() )#
 					#html.hiddenField( name="relocationURL", value=rc.relocationURL )#
 					#html.hiddenField( name="rememberMe",    value=rc.rememberMe )#
 

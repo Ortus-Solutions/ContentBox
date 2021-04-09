@@ -107,7 +107,7 @@
             <cfloop array="#args.relatedContent#" index="content">
                 <cfset publishedClass = content.isContentPublished() ? "published" : "selected">
                 <cfset publishedTitle = content.isContentPublished() ? "" : "Content is not published!">
-                <tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
+                <tr id="content_#content.getId()#" class="related-content" title="#publishedTitle#">
                     <td width="14" class="center #publishedClass#">
                         <cfif content.getContentType() eq "Page">
                             <i class="fa fa-file icon-small" title="Page"></i>
@@ -120,7 +120,7 @@
                     <td class="#publishedClass#">#content.getTitle()#</td>
                     <td width="14" class="center #publishedClass#">
                         <button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>
-                        <input type="hidden" name="relatedContentIDs" value="#content.getContentID()#" />
+                        <input type="hidden" name="relatedContentIDs" value="#content.getId()#" />
                     </td>
                 </tr>
             </cfloop>

@@ -29,7 +29,7 @@ component extends="baseHandler"{
 			relocate( "#prc.cbAdminEntryPoint#.security.login" );
 		}
 		// Inflate author for requested events
-		prc.oAuthor = authorService.get( flash.get( "authorData" ).authorID );
+		prc.oAuthor = authorService.get( flash.get( "authorData" ).id );
 		// Verify author, just in case
 		if( isNull( prc.oAuthor ) OR !prc.oAuthor.isLoaded() ){
 			// message and redirect
@@ -83,7 +83,7 @@ component extends="baseHandler"{
 			var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
 			// Are we trusting devices? If so, trust this device if passed
 			if( oTwoFactorProvider.allowTrustedDevice() AND rc.trustDevice ){
-				twoFactorService.setTrustedDevice( prc.oAuthor.getAuthorID() );
+				twoFactorService.setTrustedDevice( prc.oAuthor.getId() );
 			}
 			// Call Provider finalize callback, in case something is needed for teardowns
 			oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );

@@ -121,7 +121,7 @@ component extends="content" {
 			max       : prc.cbSettings.cb_paging_maxentries,
 			category  : rc.category,
 			searchTerm: rc.q,
-			siteId    : prc.oCurrentSite.getSiteId()
+			siteId    : prc.oCurrentSite.getId()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
@@ -190,7 +190,7 @@ component extends="content" {
 			day    = rc.day,
 			offset = prc.pagingBoundaries.startRow - 1,
 			max    = prc.cbSettings.cb_paging_maxentries,
-			siteId = prc.oCurrentSite.getSiteId()
+			siteId = prc.oCurrentSite.getId()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
@@ -254,7 +254,7 @@ component extends="content" {
 		prc.entry = variables.entryService.findBySlug(
 			slug           : rc.entrySlug,
 			showUnpublished: showUnpublished,
-			siteId         : prc.oCurrentSite.getSiteId()
+			siteId         : prc.oCurrentSite.getId()
 		);
 
 		// Check if loaded, else not found
@@ -264,7 +264,7 @@ component extends="content" {
 			// Retrieve Comments
 			// TODO: paging
 			var commentResults = variables.commentService.findAllApproved(
-				contentID: prc.entry.getContentID(),
+				contentID: prc.entry.getId(),
 				sortOrder: "asc"
 			);
 			prc.comments      = commentResults.comments;
@@ -305,7 +305,7 @@ component extends="content" {
 			category   : rc.category,
 			slug       : rc.entrySlug,
 			contentType: "Entry",
-			siteId     : prc.oCurrentSite.getSiteId()
+			siteId     : prc.oCurrentSite.getId()
 		);
 
 		// Render out the feed xml
@@ -326,7 +326,7 @@ component extends="content" {
 		// Try to retrieve entry by slug
 		var thisEntry = variables.entryService.findBySlug(
 			slug  : rc.entrySlug,
-			siteId: prc.oCurrentSite.getSiteId()
+			siteId: prc.oCurrentSite.getId()
 		);
 		// If null, kick them out
 		if ( isNull( thisEntry ) ) {

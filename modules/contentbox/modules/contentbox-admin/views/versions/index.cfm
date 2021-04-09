@@ -16,11 +16,11 @@
 				<div class="floatRight mt10">
 					<a
 						<cfif prc.content.getContentType() eq "page">
-							href="#event.buildLink( prc.xehPagesEditor )#/contentId/#prc.content.getContentId()#"
+							href="#event.buildLink( prc.xehPagesEditor )#/contentId/#prc.content.getId()#"
 						<cfelseif prc.content.getContentType() eq "contentstore">
-							href="#event.buildLink( prc.xehContentStoreEditor )#/contentId/#prc.content.getContentId()#"
+							href="#event.buildLink( prc.xehContentStoreEditor )#/contentId/#prc.content.getId()#"
 						<cfelse>
-							href="#event.buildLink( prc.xehEntriesEditor )#/contentId/#prc.content.getContentId()#"
+							href="#event.buildLink( prc.xehEntriesEditor )#/contentId/#prc.content.getId()#"
 						</cfif>
 						class="btn btn-sm btn-default"
 					>
@@ -108,8 +108,8 @@
 					<button
 						class="btn btn-default btn-sm"
 						title="Back to listing"
-						<cfif len( prc.content.getParentID() )>
-							onclick="to( '#event.buildLink( prc.xehBackTrack )#/parent/#prc.content.getParentID()#' );return false;"
+						<cfif len( prc.content.getId() )>
+							onclick="to( '#event.buildLink( prc.xehBackTrack )#/parent/#prc.content.getId()#' );return false;"
 						<cfelse>
 							onclick="to( '#event.buildLink( prc.xehBackTrack )#' );return false;"
 						</cfif>

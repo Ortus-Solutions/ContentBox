@@ -42,7 +42,7 @@
     </thead>
     <tbody>
         <cfloop array="#prc.pages#" index="page">
-			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
+			<tr id="contentID-#page.getId()#" data-contentID="#page.getId()#"
 				<cfif page.isExpired()>
 					class="danger"
 				<cfelseif page.isPublishedInFuture()>
@@ -53,11 +53,11 @@
 					class="danger" title="No active content versions found, please publish one."
 				</cfif>
 				<!--- double click drill down --->
-				<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getContentID()#' )"</cfif>
+				<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getId()#' )"</cfif>
 			>
 				<!--- check box --->
 				<td class="text-center">
-					<input type="checkbox" name="contentID" id="contentID" value="#page.getContentID()#" />
+					<input type="checkbox" name="contentID" id="contentID" value="#page.getId()#" />
 				</td>
 
 				<td>
@@ -70,7 +70,7 @@
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
 						<a
-							href="javascript:contentDrilldown( '#page.getContentID()#' )"
+							href="javascript:contentDrilldown( '#page.getId()#' )"
 							class="hand-cursor textMuted"
 							title="View Child Pages (#page.getNumberOfChildren()#)"
 						>
@@ -83,7 +83,7 @@
 					<!--- Title --->
 					<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 						<a
-							href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
+							href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getId()#"
 							title="Edit #page.getTitle()#"
 							class="size18"
 						>
@@ -177,7 +177,7 @@
 								<li class="mb5">
 									<a
 										href="javascript:openCloneDialog(
-											'#page.getContentID()#',
+											'#page.getId()#',
 											'#URLEncodedFormat( page.getTitle() )#'
 										)"
 									>
@@ -188,7 +188,7 @@
 								<!--- Create Child --->
 								<li class="mb5">
 									<a
-										href="#event.buildLink( prc.xehPageEditor )#/parentID/#page.getContentID()#"
+										href="#event.buildLink( prc.xehPageEditor )#/parentID/#page.getId()#"
 									>
 										<i class="fas fa-sitemap fa-lg"></i> Create Child
 									</a>
@@ -198,13 +198,13 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 									<li class="mb5">
 										<a
-											href="javascript:remove( '#page.getContentID()#' )"
+											href="javascript:remove( '#page.getId()#' )"
 											class="confirmIt"
 											data-title="<i class='far fa-trash-alt'></i> Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
 										>
 											<i
-												id="delete_#page.getContentID()#"
+												id="delete_#page.getId()#"
 												class="far fa-trash-alt fa-lg"></i> Delete
 										</a>
 									</li>
@@ -213,7 +213,7 @@
 								<!--- Edit Command --->
 								<li class="mb5">
 									<a
-										href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
+										href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getId()#"
 									>
 										<i class="fas fa-pen fa-lg"></i> Edit
 									</a>
@@ -224,7 +224,7 @@
 								<!--- Export --->
 								<li class="mb5">
 									<a
-										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
+										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getId()#.json"
 										target="_blank"
 									>
 										<i class="fas fa-file-export fa-lg"></i> Export as JSON
@@ -232,7 +232,7 @@
 								</li>
 								<li class="mb5">
 									<a
-										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.xml"
+										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getId()#.xml"
 										target="_blank"
 									>
 										<i class="fas fa-file-export fa-lg"></i> Export as XML
@@ -244,7 +244,7 @@
 							<!--- History Command --->
 							<li class="mb5">
 								<a
-									href="#event.buildLink( prc.xehPageHistory )#/contentID/#page.getContentID()#"
+									href="#event.buildLink( prc.xehPageHistory )#/contentID/#page.getId()#"
 								>
 									<i class="fas fa-history fa-lg"></i> History
 								</a>
@@ -253,7 +253,7 @@
 							<!--- Reset hits --->
 							<li class="mb5">
 								<a
-									href="javascript:resetHits( '#page.getContentID()#' )"
+									href="javascript:resetHits( '#page.getId()#' )"
 								>
 									<i class="fas fa-recycle fa-lg"></i> Reset Hits
 								</a>

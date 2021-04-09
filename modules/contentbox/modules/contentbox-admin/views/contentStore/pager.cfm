@@ -17,7 +17,7 @@
 
 	<tbody>
 		<cfloop array="#prc.pager_content#" index="content">
-		<tr data-contentID="#content.getContentID()#"
+		<tr data-contentID="#content.getId()#"
 			<cfif content.isExpired()>
 				class="error"
 			<cfelseif content.isPublishedInFuture()>
@@ -26,7 +26,7 @@
 				class="warning"
 			</cfif>>
 			<td>
-				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#" title="Edit #content.getTitle()#">#content.getTitle()#</a><br/>
+				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getId()#" title="Edit #content.getTitle()#">#content.getTitle()#</a><br/>
 				<small>
 				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
 				</small>
@@ -55,12 +55,12 @@
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSOTE_EDITOR,CONTENTSTORE_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getId()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 						<!--- Create Child --->
-						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getContentID()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
+						<li><a href="#event.buildLink(prc.xehContentEditor)#/parentID/#content.getId()#"><i class="fas fa-sitemap fa-lg"></i> Create Child</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehContentHistory)#/contentID/#content.getId()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 			    	</ul>
 			    </div>
 			</td>

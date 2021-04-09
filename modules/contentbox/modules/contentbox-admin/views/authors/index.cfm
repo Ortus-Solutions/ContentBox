@@ -154,7 +154,7 @@
 							<select name="fRole" id="fRole" class="form-control input-sm">
 								<option value="any">All Roles</option>
 								<cfloop array="#prc.aRoles#" index="thisRole">
-								<option value="#thisRole.getRoleID()#">#thisRole.getRole()# (#thisRole.getNumberOfAuthors()#)</option>
+								<option value="#thisRole.getId()#">#thisRole.getRole()# (#thisRole.getNumberOfAuthors()#)</option>
 								</cfloop>
 							</select>
 						</div>

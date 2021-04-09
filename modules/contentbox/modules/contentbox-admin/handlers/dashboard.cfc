@@ -54,7 +54,7 @@ component extends="baseHandler" {
 	 * @return html
 	 */
 	function latestSnapshot( event, rc, prc ){
-		var siteId = prc.oCurrentSite.getSiteId();
+		var siteId = prc.oCurrentSite.getId();
 
 		prc.entriesCount            = variables.entryService.getTotalContentCount( siteId );
 		prc.pagesCount              = variables.pageService.getTotalContentCount( siteId );

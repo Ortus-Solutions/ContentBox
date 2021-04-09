@@ -19,9 +19,9 @@
         <tbody>
             <cfloop array="#prc.content#" index="content">
 			<tr
-				id="contentID-#content.getContentID()#"
+				id="contentID-#content.getId()#"
 				<cfif NOT content.getIsPublished()>class="warning"</cfif>
-				ondblclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )"
+				ondblclick="return chooseRelatedContent( #content.getId()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )"
 				title="Double click to select"
 			>
                 <td>
@@ -58,7 +58,7 @@
                     <div class="btn-group">
                         <button
                         	class="btn btn-sm btn-more"
-                        	onclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )"
+                        	onclick="return chooseRelatedContent( #content.getId()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )"
 							title="Select"
 						>
                             <i class="far fa-check-circle fa-lg"></i>

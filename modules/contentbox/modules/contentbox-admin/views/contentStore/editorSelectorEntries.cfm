@@ -17,7 +17,7 @@
 	<tbody>
 		<cfloop array="#prc.content#" index="entry">
 		<tr
-			id="contentID-#entry.getContentID()#"
+			id="contentID-#entry.getId()#"
 			<cfif NOT entry.getIsPublished()>class="warning"</cfif>
 			ondblclick="return insertContent( '#entry.getSlug()#' )"
 			title="Double click to insert"

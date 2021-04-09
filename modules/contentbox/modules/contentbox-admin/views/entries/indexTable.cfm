@@ -37,7 +37,7 @@
 
 	<tbody>
 		<cfloop array="#prc.entries#" index="entry">
-		<tr data-contentID="#entry.getContentID()#"
+		<tr data-contentID="#entry.getId()#"
 			<cfif entry.isExpired()>
 				class="danger"
 			<cfelseif entry.isPublishedInFuture()>
@@ -50,7 +50,7 @@
 		>
 			<!--- check box --->
 			<td class="text-center">
-				<input type="checkbox" name="contentID" id="contentID" value="#entry.getContentID()#" />
+				<input type="checkbox" name="contentID" id="contentID" value="#entry.getId()#" />
 			</td>
 
 			<td>
@@ -58,7 +58,7 @@
 				<!--- Title --->
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 					<a
-						href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#entry.getContentID()#"
+						href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#entry.getId()#"
 						title="Edit"
 						class="size18"
 					>
@@ -120,7 +120,7 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li>
-							<a href="javascript:openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
+							<a href="javascript:openCloneDialog( '#entry.getId()#','#URLEncodedFormat(entry.getTitle())#')">
 								<i class="far fa-clone fa-lg"></i> Clone
 							</a>
 						</li>
@@ -128,16 +128,16 @@
 						<!--- Delete Command --->
 						<li>
 							<a
-								href="javascript:remove( '#entry.getContentID()#' )"
+								href="javascript:remove( '#entry.getId()#' )"
 								class="confirmIt"
 								data-title="<i class='far fa-trash-alt'></i> Delete Entry?">
-								<i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+								<i id="delete_#entry.getId()#" class="far fa-trash-alt fa-lg" ></i> Delete
 							</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->
 						<li>
-							<a href="#event.buildLink( prc.xehEntryEditor )#/contentID/#entry.getContentID()#">
+							<a href="#event.buildLink( prc.xehEntryEditor )#/contentID/#entry.getId()#">
 								<i class="fas fa-pen fa-lg"></i> Edit
 							</a>
 						</li>
@@ -146,14 +146,14 @@
 						<!--- Export --->
 						<li>
 							<a
-								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.json"
+								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getId()#.json"
 								target="_blank">
 								<i class="fas fa-file-export fa-lg"></i> Export as JSON
 							</a>
 						</li>
 						<li>
 							<a
-								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.xml"
+								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getId()#.xml"
 								target="_blank">
 								<i class="fas fa-file-export fa-lg"></i> Export as XML
 							</a>
@@ -161,13 +161,13 @@
 						</cfif>
 						<!--- History Command --->
 						<li>
-							<a href="#event.buildLink( prc.xehEntryHistory )#/contentID/#entry.getContentID()#">
+							<a href="#event.buildLink( prc.xehEntryHistory )#/contentID/#entry.getId()#">
 								<i class="fas fa-history fa-lg"></i> History
 							</a>
 						</li>
 						<!-- Reset hits -->
 						<li>
-							<a href="javascript:resetHits( '#entry.getContentID()#' )">
+							<a href="javascript:resetHits( '#entry.getId()#' )">
 								<i class="fas fa-recycle fa-lg"></i> Reset Hits
 							</a>
 						</li>

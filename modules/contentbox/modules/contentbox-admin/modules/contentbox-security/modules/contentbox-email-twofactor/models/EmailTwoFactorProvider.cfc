@@ -91,13 +91,13 @@ component
 	string function generateValidationToken( required author ){
 		// Store Security Token For X minutes
 		var token = left(
-			hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() ),
+			hash( arguments.author.getEmail() & arguments.author.getId() & now() ),
 			6
 		);
 		// Cache the code for 5 minutes
 		cache.set(
 			"email-twofactor-token-#token#",
-			arguments.author.getAuthorID(),
+			arguments.author.getId(),
 			TOKEN_TIMEOUT,
 			TOKEN_TIMEOUT
 		);
@@ -189,7 +189,7 @@ component
 		var authorID = variables.cache.get( "email-twofactor-token-#arguments.code#" );
 
 		// Verify it exists and is valid
-		if ( !isNull( authorID ) AND arguments.author.getAuthorID() eq authorID ) {
+		if ( !isNull( authorID ) AND arguments.author.getId() eq authorID ) {
 			results.messages = "Code validated!";
 		} else {
 			results.error    = true;

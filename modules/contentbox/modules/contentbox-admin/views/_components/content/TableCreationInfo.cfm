@@ -3,17 +3,17 @@
 	<!--- Trigger --->
 	<button
 		class="btn btn-more btn-sm"
-		onclick="toggleMoreInfoPanel( '#args.content.getContentId()#' ); return false"
+		onclick="toggleMoreInfoPanel( '#args.content.getId()#' ); return false"
 		title="Click for More Info"
 	>
-		<i id="moreInfoOpenButton-#args.content.getContentId()#" class="fas fa-ellipsis-h"></i>
-		<i id="moreInfoCloseButton-#args.content.getContentId()#" class="far fa-times-circle hidden"></i>
+		<i id="moreInfoOpenButton-#args.content.getId()#" class="fas fa-ellipsis-h"></i>
+		<i id="moreInfoCloseButton-#args.content.getId()#" class="far fa-times-circle hidden"></i>
 	</button>
 
 	<!--- More Panel --->
 	<div
 		class="textMuted hidden"
-		id="moreInfo-#args.content.getContentId()#"
+		id="moreInfo-#args.content.getId()#"
 	>
 		<!--- Authors --->
 		<div class="mt10 mb5">

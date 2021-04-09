@@ -80,7 +80,7 @@ component extends="baseHandler"{
 				return runEvent(
 					event 			= "contentbox-security:twoFactorEnrollment.forceEnrollment",
 					eventArguments 	= {
-						authorID      = results.author.getAuthorID(),
+						authorID      = results.author.getId(),
 						relocationURL = _securedURL,
 						rememberMe 	  = rc.rememberMe
 					} );
@@ -90,7 +90,7 @@ component extends="baseHandler"{
 			if( twoFactorService.canChallenge( results.author ) ){
 				// Flash data needed for authorizations
 				flash.put( "authorData", {
-					authorID     = results.author.getAuthorID(),
+					authorID     = results.author.getId(),
 					rememberMe   = rc.rememberMe,
 					securedURL   = rc._securedURL,
 					isEnrollment = false

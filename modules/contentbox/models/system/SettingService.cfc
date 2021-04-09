@@ -255,7 +255,7 @@ component
 					.isNull( "site" )
 					.isFalse( "isDeleted" )
 					.isTrue( "isCore" )
-					.withProjections( property: "name" )
+					.withProjections( property : "name" )
 					.list( sortOrder = "name" );
 
 				// Verify defaults exist
@@ -726,7 +726,7 @@ component
 
 		// Site
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.id", arguments.siteId );
 		}
 
 		// run criteria query and projections count
@@ -749,7 +749,7 @@ component
 	array function getAllForExport(){
 		return newCriteria()
 			.withProjections(
-				property = "settingID,name,value,createdDate,modifiedDate,isDeleted,isCore,site.siteId:siteId"
+				property = "settingID,name,value,createdDate,modifiedDate,isDeleted,isCore,site.id:siteId"
 			)
 			.asStruct()
 			.list( sortOrder = "name" );

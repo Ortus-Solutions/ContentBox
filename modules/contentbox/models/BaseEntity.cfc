@@ -18,26 +18,30 @@ component
 		name     ="id"
 		fieldtype="id"
 		generator="uuid"
-		setter   ="false";
+		update="false"
+		persistent="true";
 
 	property
 		name   ="createdDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false";
+		update ="false"
+		persistent="true";
 
 	property
 		name   ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
-		notnull="true";
+		notnull="true"
+		persistent="true";
 
 	property
 		name     ="isDeleted"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false";
+		dbdefault="false"
+		persistent="true";
 
 }

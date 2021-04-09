@@ -152,7 +152,7 @@ component accessors="true" threadSafe singleton {
 			.each( function( record ){
 				startupTheme(
 					name  : arguments.record[ "activeTheme" ],
-					siteId: arguments.record[ "siteId" ]
+					siteId: arguments.record[ "id" ]
 				);
 			} );
 
@@ -325,7 +325,7 @@ component accessors="true" threadSafe singleton {
 
 			// Unregister theme Descriptor Interceptor
 			variables.interceptorService.unregister(
-				interceptorName = "cbTheme-#currentSite.getActiveTheme()#-#currentSite.getSiteId()#"
+				interceptorName = "cbTheme-#currentSite.getActiveTheme()#-#currentSite.getId()#"
 			);
 
 			// Setup the new chosen theme for the site
@@ -336,7 +336,7 @@ component accessors="true" threadSafe singleton {
 			startupTheme(
 				name          : arguments.themeName,
 				processWidgets: false,
-				siteId        : currentSite.getSiteId()
+				siteId        : currentSite.getId()
 			);
 
 			// Force Recreation of all Widgets, since we need to deactivate the old widgets
@@ -926,7 +926,8 @@ component accessors="true" threadSafe singleton {
 						variables.settingService
 							.new( {
 								name  : "cb_theme_#name#_#thisSetting.name#",
-								value : thisSetting.defaultValue
+								value : thisSetting.defaultValue,
+								site  : arguments.site
 							} )
 							.setSite( site )
 					);

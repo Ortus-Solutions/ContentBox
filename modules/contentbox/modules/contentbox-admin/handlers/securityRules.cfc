@@ -149,7 +149,7 @@ component extends="baseHandler" {
 		switch ( rc.format ) {
 			case "xml":
 			case "json": {
-				var filename = "SecurityRule-#prc.rule.getRuleID()#." & (
+				var filename = "SecurityRule-#prc.rule.getId()#." & (
 					rc.format eq "xml" ? "xml" : "json"
 				);
 				event

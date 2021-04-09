@@ -96,7 +96,7 @@
 							<tr>
 								<td>
 									<a
-										href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getSiteId()#' )#"
+										href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getId()#' )#"
 										class="size18"
 									>
 										<cfif site.getSlug() eq 'default'>
@@ -156,18 +156,18 @@
 											<cfif site.getNumberOfContent() eq 0>
 												<li>
 													<a
-														href="javascript:remove( '#site.getSiteId()#' )"
+														href="javascript:remove( '#site.getId()#' )"
 														class="confirmIt"
 														data-title="<i class='far fa-trash-alt'></i> Delete Site?"
 													>
-														<i class="far fa-trash-alt fa-lg" id="delete_#site.getSiteId()#"></i> Delete
+														<i class="far fa-trash-alt fa-lg" id="delete_#site.getId()#"></i> Delete
 													</a>
 												</li>
 											</cfif>
 
 											<!--- Edit Command --->
 											<li>
-												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getSiteId()#' )#">
+												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteId/#site.getId()#' )#">
 													<i class="fas fa-pen fa-lg"></i> Edit
 												</a>
 											</li>
@@ -183,7 +183,7 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
 												<li>
 													<a
-														href="#event.buildLink( prc.xehExport )#/siteId/#site.getSiteId()#.json"
+														href="#event.buildLink( prc.xehExport )#/siteId/#site.getId()#.json"
 														target="_blank"
 													>
 														<i class="fas fa-file-export fa-lg"></i> Export as JSON
@@ -191,7 +191,7 @@
 												</li>
 												<li>
 													<a
-														href="#event.buildLink( prc.xehExport )#/siteId/#site.getSiteId()#.xml"
+														href="#event.buildLink( prc.xehExport )#/siteId/#site.getId()#.xml"
 														target="_blank"
 													>
 														<i class="fas fa-file-export fa-lg"></i> Export as XML

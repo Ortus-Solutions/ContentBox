@@ -33,8 +33,8 @@ component extends="ContentService" singleton {
 		if (
 			!contentService.isSlugUnique(
 				slug     : arguments.entry.getSlug(),
-				contentID: arguments.entry.getContentID(),
-				siteId   : arguments.entry.getSiteId()
+				contentID: arguments.entry.getId(),
+				siteId   : arguments.entry.getId()
 			)
 		) {
 			// make slug unique
@@ -140,7 +140,7 @@ component extends="ContentService" singleton {
 		}
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.id", arguments.siteId );
 		}
 
 		// DETERMINE SORT ORDERS
@@ -158,7 +158,7 @@ component extends="ContentService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
+		results.count   = c.count( "id" );
 		results.entries = c
 			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 			.list(
@@ -220,7 +220,7 @@ component extends="ContentService" singleton {
 		// Site
 		if ( len( arguments.siteId ) ) {
 			params[ "siteId" ] = arguments.siteId;
-			hql &= " AND site.siteId = :siteId";
+			hql &= " AND site.id = :siteId";
 		}
 
 		// year lookup mandatory
@@ -323,11 +323,11 @@ component extends="ContentService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.id", arguments.siteId );
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
+		results.count   = c.count( "id" );
 		results.entries = c
 			.asDistinct()
 			.list(

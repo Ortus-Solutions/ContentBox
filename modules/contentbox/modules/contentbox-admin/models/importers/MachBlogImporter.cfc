@@ -53,7 +53,7 @@ component implements="ICBImporter" {
 				var cat 	= categoryService.new(properties=props);
 				entitySave( cat );
 				log.info( "Imported category: #props.category#" );
-				catMap[ q.category_id[ x ] ] = cat.getCategoryID();
+				catMap[ q.category_id[ x ] ] = cat.getId();
 			}
 			log.info( "Categories imported successfully!" );
 
@@ -79,7 +79,7 @@ component implements="ICBImporter" {
 
 				entitySave( author );
 				log.info( "Imported author: #props.firstName# #props.lastName#" );
-				authorMap[ q.user_id[ x ] ] = author.getAuthorID();
+				authorMap[ q.user_id[ x ] ] = author.getId();
 			 }
 			 log.info( "Authors imported successfully!" );
 

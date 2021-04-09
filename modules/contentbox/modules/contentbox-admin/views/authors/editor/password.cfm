@@ -1,6 +1,6 @@
 <cfoutput>
 <div class="tab-pane" id="change-password" style="min-height: 400px">
-	<cfif prc.oCurrentAuthor.getAuthorID() eq rc.authorID>
+	<cfif prc.oCurrentAuthor.getId() eq rc.authorID>
 		#html.startForm(
 			name       = "authorPasswordForm",
 			action     = prc.xehAuthorChangePassword,
@@ -46,7 +46,7 @@
 			#html.endFieldSet()#
 
 			<!--- Action Bar --->
-			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getId() EQ prc.oCurrentAuthor.getId()>
 			<div class="form-actions">
 				<input type="submit" value="Change Password" class="btn btn-danger">
 			</div>

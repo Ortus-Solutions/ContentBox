@@ -1,8 +1,8 @@
 ﻿<cfoutput>
-<div id="comment_#comment.getCommentID()#" class="media comment">
+<div id="comment_#comment.getId()#" class="media comment">
 
 	<!--- Anchor --->
-	<a name="comment_#comment.getCommentID()#"></a>
+	<a name="comment_#comment.getId()#"></a>
 
 	<!--- User Avatar --->
     <a class="pull-left" href="##">

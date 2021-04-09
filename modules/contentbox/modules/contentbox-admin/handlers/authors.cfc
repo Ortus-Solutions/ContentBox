@@ -42,7 +42,7 @@ component extends="baseHandler" {
 			if (
 				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )
 				AND
-				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
+				oAuthor.getId() NEQ prc.oCurrentAuthor.getId()
 			) {
 				// relocate
 				cbMessagebox.error( "You do not have permissions to do this!" );
@@ -260,7 +260,7 @@ component extends="baseHandler" {
 		// relocate
 		relocate(
 			event       = ( rc.editing ? prc.xehAuthorEditor : prc.xehAuthors ),
-			queryString = ( rc.editing ? "authorID=#oAuthor.getAuthorID()#" : "" )
+			queryString = ( rc.editing ? "authorID=#oAuthor.getId()#" : "" )
 		);
 	}
 
@@ -416,7 +416,7 @@ component extends="baseHandler" {
 	 * @return html
 	 */
 	function myprofile( event, rc, prc ){
-		rc.authorID = prc.oCurrentAuthor.getAuthorID();
+		rc.authorID = prc.oCurrentAuthor.getId();
 		editor( argumentCollection = arguments );
 	}
 
@@ -495,7 +495,7 @@ component extends="baseHandler" {
 		// relocate
 		relocate(
 			event       = prc.xehAuthorEditor,
-			queryString = "authorID=#oAuthor.getAuthorID()###preferences"
+			queryString = "authorID=#oAuthor.getId()###preferences"
 		);
 	}
 
@@ -529,7 +529,7 @@ component extends="baseHandler" {
 			// relocate
 			relocate(
 				event       = prc.xehAuthorEditor,
-				queryString = "authorID=#oAuthor.getAuthorID()###preferences"
+				queryString = "authorID=#oAuthor.getId()###preferences"
 			);
 		} else {
 			// message
@@ -537,7 +537,7 @@ component extends="baseHandler" {
 			// relocate
 			relocate(
 				event       = prc.xehAuthorEditor,
-				queryString = "authorID=#oAuthor.getAuthorID()###preferences"
+				queryString = "authorID=#oAuthor.getId()###preferences"
 			);
 		}
 	}
@@ -585,7 +585,7 @@ component extends="baseHandler" {
 			cbMessagebox.warn( messageArray = vResults.getAllErrors() );
 			relocate(
 				event       = prc.xehAuthorEditor,
-				queryString = "authorID=#oAuthor.getAuthorID()#"
+				queryString = "authorID=#oAuthor.getId()#"
 			);
 		}
 	}
@@ -594,7 +594,7 @@ component extends="baseHandler" {
 	 * Change user password
 	 */
 	function passwordChange( event, rc, prc ){
-		if ( prc.oCurrentAuthor.getAuthorID() != rc.authorID ) {
+		if ( prc.oCurrentAuthor.getId() != rc.authorID ) {
 			cbMessagebox.error(
 				"You cannot change passwords for other users. Please start a password reset instead."
 			);

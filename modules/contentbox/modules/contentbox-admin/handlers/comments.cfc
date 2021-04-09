@@ -69,7 +69,7 @@ component extends="baseHandler" {
 			offset    : prc.paging.startRow - 1,
 			max       : prc.cbSettings.cb_paging_maxrows,
 			isApproved: rc.fStatus,
-			siteId    : prc.oCurrentSite.getSiteId()
+			siteId    : prc.oCurrentSite.getId()
 		);
 
 		prc.comments        = commentResults.comments;
@@ -349,7 +349,7 @@ component extends="baseHandler" {
 			contentID: arguments.contentID,
 			offset   : prc.commentPager_paging.startRow - 1,
 			max      : arguments.max,
-			siteId   : prc.oCurrentSite.getSiteId()
+			siteId   : prc.oCurrentSite.getId()
 		);
 		prc.commentPager_comments      = commentResults.comments;
 		prc.commentPager_commentsCount = commentResults.count;

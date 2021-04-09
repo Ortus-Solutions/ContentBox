@@ -42,7 +42,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 			arguments.content = variables.contentService.findBySlug(
 				slug  : arguments.content,
-				siteid: variables.cb.site().getSiteId()
+				siteid: variables.cb.site().getId()
 			);
 
 			if ( !arguments.content.isLoaded() ) {
@@ -77,7 +77,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 				#variables.messagebox.renderit()#
 
-				#html.hiddenField( name = "contentID", value = arguments.content.getContentID() )#
+				#html.hiddenField( name = "contentID", value = arguments.content.getId() )#
 				#html.hiddenField( name = "contentType", value = arguments.content.getContentType() )#
 
 				#html.textField(

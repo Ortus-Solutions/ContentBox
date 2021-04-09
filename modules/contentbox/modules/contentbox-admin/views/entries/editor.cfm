@@ -366,8 +366,8 @@
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
                                                 <option
-                                                	value="#author.getAuthorID()#"
-													<cfif prc.entry.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>
+                                                	value="#author.getId()#"
+													<cfif prc.entry.getId() eq author.getId()>selected="selected"</cfif>
 												>
 													#author.getName()#
 												</option>
@@ -518,7 +518,7 @@
                                         <label>
                                         #html.checkbox(
                                             name="category_#x#",
-                                            value="#prc.categories[ x ].getCategoryID()#",
+                                            value="#prc.categories[ x ].getId()#",
                                             checked=prc.entry.hasCategories( prc.categories[ x ] )
                                         )#
                                         #prc.categories[ x ].getCategory()#

@@ -28,19 +28,19 @@
 		</a>
 		<cfif thisContent.getContentType() eq "contentStore">
 			<a 	title="Edit Content"
-				href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#"
+				href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getId()#"
 			>
 				#thisContent.getTitle()#
 			</a>
 		<cfelseif thisContent.getContentType() eq "page">
 			<a 	title="Edit Page "
-				href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#"
+				href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getId()#"
 			>
 				#thisContent.getTitle()#
 			</a>
 		<cfelse>
 			<a 	title="Edit Entry"
-				href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getContentID()#"
+				href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getId()#"
 			>
 				#thisContent.getTitle()#
 			</a>
@@ -67,7 +67,7 @@
 		</span>
 		<span class="label label-info pull-right">#thisAuthor.getRole().getRole()#</span>
 		<a 	title="#thisAuthor.getEmail()#"
-			href="#event.buildLInk( to=prc.xehAuthorEditor, queryString="authorID=#thisAUthor.getAUthorID()#" )#"
+			href="#event.buildLInk( to=prc.xehAuthorEditor, queryString="authorID=#thisAUthor.getId()#" )#"
 		>
 			#thisAuthor.getName()#
 		</a>

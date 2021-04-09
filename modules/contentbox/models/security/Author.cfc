@@ -245,28 +245,28 @@ component
 	 * Get the total number of content items this author has created
 	 */
 	numeric function getNumberOfContent(){
-		return ( isLoaded() ? variables.authorService.getTotalContent( getAuthorId() ) : 0 );
+		return ( isLoaded() ? variables.authorService.getId() : 0 );
 	}
 
 	/**
 	 * Get the total number of entries this author has created
 	 */
 	numeric function getNumberOfEntries(){
-		return ( isLoaded() ? variables.authorService.getTotalEntries( getAuthorId() ) : 0 );
+		return ( isLoaded() ? variables.authorService.getTotalEntries( getId() ) : 0 );
 	}
 
 	/**
 	 * Get the total number of pages this author has created
 	 */
 	numeric function getNumberOfPages(){
-		return ( isLoaded() ? variables.authorService.getTotalPages( getAuthorId() ) : 0 );
+		return ( isLoaded() ? variables.authorService.getId() : 0 );
 	}
 
 	/**
 	 * Get the total number of content store items this author has created
 	 */
 	numeric function getNumberOfContentStore(){
-		return ( isLoaded() ? variables.authorService.getTotalContentStoreItems( getAuthorId() ) : 0 );
+		return ( isLoaded() ? variables.authorService.getTotalContentStoreItems( getId() ) : 0 );
 	}
 
 	/**
@@ -479,7 +479,7 @@ component
 	 */
 	Author function setPreferences( required any preferences ){
 		lock
-			name          ="user.#getAuthorID()#.preferences"
+			name          ="user.#getId()#.preferences"
 			type          ="exclusive"
 			throwontimeout="true"
 			timeout       ="5" {
@@ -497,7 +497,7 @@ component
 	 */
 	struct function getAllPreferences(){
 		lock
-			name          ="user.#getAuthorID()#.preferences"
+			name          ="user.#getId()#.preferences"
 			type          ="readonly"
 			throwontimeout="true"
 			timeout       ="5" {
@@ -513,7 +513,7 @@ component
 	any function getPreference( required name, defaultValue ){
 		// get preference
 		lock
-			name              ="user.#getAuthorID()#.preferences"
+			name              ="user.#getId()#.preferences"
 			type              ="readonly"
 			throwontimeout    ="true"
 			timeout           ="5" {

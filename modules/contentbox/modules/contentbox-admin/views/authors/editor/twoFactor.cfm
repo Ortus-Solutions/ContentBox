@@ -78,7 +78,7 @@
 			Action Bar
 			Saving only if you have permissions, else it is view only.
 		--->
-		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
+		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getId() EQ prc.oCurrentAuthor.getId()>
         <div class="form-actions">
             <div class="form-group">
                 <cfif prc.author.getIs2FactorAuth()>
@@ -87,7 +87,7 @@
                         value = "Un-enroll",
                         class = "btn btn-danger"
                     )#
-                <cfelseif prc.author.getAuthorId() EQ prc.oCurrentAuthor.getAuthorId()>
+                <cfelseif prc.author.getId() EQ prc.oCurrentAuthor.getId()>
                     #html.button(
                         type = "submit",
                         value = "Enroll",

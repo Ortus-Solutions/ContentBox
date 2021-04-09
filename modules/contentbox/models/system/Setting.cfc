@@ -89,7 +89,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "id" ] = getSite().getId();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}
@@ -104,7 +104,7 @@ component
 	 */
 	function getSiteId(){
 		if ( hasSite() ) {
-			return getSite().getSiteId();
+			return getSite().getId();
 		}
 		return "";
 	}

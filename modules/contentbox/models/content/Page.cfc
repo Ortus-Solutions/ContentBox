@@ -125,7 +125,7 @@ component
 		// Check if we need to translate
 		if ( NOT len( renderedExcerpt ) ) {
 			lock
-				name          ="contentbox.excerptrendering.#getContentID()#"
+				name          ="contentbox.excerptrendering.#getId()#"
 				type          ="exclusive"
 				throwontimeout="true"
 				timeout       ="10" {

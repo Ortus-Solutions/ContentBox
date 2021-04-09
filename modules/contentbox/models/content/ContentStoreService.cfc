@@ -34,8 +34,8 @@ component extends="ContentService" singleton {
 			if (
 				!variables.contentService.isSlugUnique(
 					slug     : arguments.content.getSlug(),
-					contentID: arguments.content.getContentID(),
-					siteId   : arguments.content.getSiteId()
+					contentID: arguments.content.getId(),
+					siteId   : arguments.content.getId()
 				)
 			) {
 				// make slug unique
@@ -139,7 +139,7 @@ component extends="ContentService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.id", arguments.siteId );
 		}
 
 		// Search Criteria
@@ -165,7 +165,7 @@ component extends="ContentService" singleton {
 		// parent filter
 		if ( !isNull( arguments.parent ) ) {
 			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
-				c.isEq( "parent.contentID", arguments.parent );
+				c.isEq( "parent.id", arguments.parent );
 			} else if ( isObject( arguments.parent ) ) {
 				c.isEq( "parent", arguments.parent );
 			} else {
@@ -210,7 +210,7 @@ component extends="ContentService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
+		results.count   = c.count( "id" );
 		results.content = c
 			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 			.list(

@@ -29,7 +29,7 @@
 	</thead>
 	<tbody>
 		<cfloop array="#args.aContent#" index="thisContent">
-		<tr id="contentID-#thisContent.getContentID()#" data-contentID="#thisContent.getContentID()#"
+		<tr id="contentID-#thisContent.getId()#" data-contentID="#thisContent.getId()#"
 			<cfif args.colorCodings>
 				<cfif thisContent.isExpired()>
 					class="danger"
@@ -47,7 +47,7 @@
 				<!--- Editor --->
 	    		<cfif thisContent.getContentType() eq "page">
 					<!--- Edit --->
-					<a href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page">
+					<a href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getId()#" title="Edit Page">
 						#thisContent.getTitle()#
 					</a>
 					<!--- Label --->
@@ -56,7 +56,7 @@
 					</div>
 				<cfelseif thisContent.getContentType() eq "contentStore">
 					<!--- Edit --->
-					<a href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit ContentStore">
+					<a href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getId()#" title="Edit ContentStore">
 						#thisContent.getTitle()#
 					</a>
 					<!--- Label --->
@@ -65,7 +65,7 @@
 					</div>
 				<cfelse>
 					<!--- Edit --->
-					<a href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry">
+					<a href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getId()#" title="Edit Entry">
 						#thisContent.getTitle()#
 					</a>
 					<!--- Label --->
@@ -151,7 +151,7 @@
 								<cfset targetEditor = prc.xehContentStoreEditor>
 							</cfif>
 							<a
-								href="#event.buildLink( targetEditor )#/contentID/#thisContent.getContentID()#"
+								href="#event.buildLink( targetEditor )#/contentID/#thisContent.getId()#"
 							>
 								<i class="fas fa-pen fa-lg"></i> Edit
 							</a>

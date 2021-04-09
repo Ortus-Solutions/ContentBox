@@ -21,7 +21,7 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
+									<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#prc.author.getId()#/editing/true"
 										title="Issue a password reset for the user upon next login.">
 										<i class="fas fa-key"></i> Reset Password
 									</a>
@@ -36,12 +36,12 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li>
-									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
+									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getId()#.json" target="_blank">
 										<i class="fas fa-file-export fa-lg"></i> Export as JSON
 									</a>
 								</li>
 								<li>
-									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
+									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getId()#.xml" target="_blank">
 										<i class="fas fa-file-export fa-lg"></i> Export as XML
 									</a>
 								</li>

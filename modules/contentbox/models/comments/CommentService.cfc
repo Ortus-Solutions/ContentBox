@@ -33,7 +33,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	numeric function getTotalCountByContent( string contentId = "", boolean isApproved ){
 		return newCriteria()
-			.isEq( "relatedContent.contentID", arguments.contentId )
+			.isEq( "relatedContent.id", arguments.contentId )
 			.when( !isNull( arguments.isApproved ), function( c ){
 				c.isEq( "isApproved", javacast( "Boolean", isApproved ) );
 			} )
@@ -49,7 +49,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", siteId );
+					.isEq( "relatedContent.site.id", siteId );
 			} )
 			.count();
 	}
@@ -64,7 +64,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.isTrue( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", siteId );
+					.isEq( "relatedContent.site.id", siteId );
 			} )
 			.count();
 	}
@@ -79,7 +79,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.isFalse( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", siteId );
+					.isEq( "relatedContent.site.id", siteId );
 			} )
 			.count();
 	}
@@ -112,7 +112,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// By Content?
 		if ( !isNull( arguments.contentID ) AND len( arguments.contentID ) ) {
-			c.isEq( "relatedContent.contentID", arguments.contentID );
+			c.isEq( "relatedContent.id", arguments.contentID );
 		}
 
 		// By Content Type Discriminator: class is a special hibernate deal
@@ -123,7 +123,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", arguments.siteId );
+				.isEq( "relatedContent.site.id", arguments.siteId );
 		}
 
 		// run criteria query and projections count
@@ -405,11 +405,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		bodyTokens[ "deleteURL" ] = CBHelper.linkAdmin(
 			event = "comments.moderate",
 			ssl   = settings.cb_admin_ssl
-		) & "?commentID=#inComment.getCommentID()#";
+		) & "?commentID=#inComment.getId()#";
 		bodyTokens[ "approveURL" ] = CBHelper.linkAdmin(
 			event = "comments.moderate",
 			ssl   = settings.cb_admin_ssl
-		) & "?commentID=#inComment.getCommentID()#";
+		) & "?commentID=#inComment.getId()#";
 		bodyTokens[ "contentURL" ] = CBHelper.linkContent(
 			content = inComment.getRelatedContent(),
 			ssl     = site.getIsSSL()
@@ -488,7 +488,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Content Filter
 		if ( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ) {
-			c.isEq( "relatedContent.contentID", arguments.contentID );
+			c.isEq( "relatedContent.id", arguments.contentID );
 		}
 
 		// Search Criteria
@@ -504,7 +504,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", arguments.siteId );
+				.isEq( "relatedContent.site.id", arguments.siteId );
 		}
 
 		// run criteria query and projections count

@@ -106,7 +106,7 @@ component extends="baseContentHandler" {
 			offset     : ( rc.showAll ? 0 : prc.paging.startRow - 1 ),
 			max        : ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 			sortOrder  : "createdDate desc",
-			siteId     : prc.oCurrentSite.getSiteId()
+			siteId     : prc.oCurrentSite.getId()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
@@ -232,7 +232,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
+		event.paramValue( "site", prc.oCurrentSite.getId() );
 
 		// Validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
@@ -302,7 +302,7 @@ component extends="baseContentHandler" {
 			.paramValue( "creatorID", "" )
 			.paramValue( "customFieldsCount", 0 )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getSiteId() );
+			.paramValue( "site", prc.oCurrentSite.getId() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -355,7 +355,7 @@ component extends="baseContentHandler" {
 		if (
 			!isNew and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" ) and len( rc.creatorID ) and entry
 				.getCreator()
-				.getAuthorID() NEQ rc.creatorID
+				.getId() NEQ rc.creatorID
 		) {
 			entry.setCreator( authorService.get( rc.creatorID ) );
 		}
@@ -403,7 +403,7 @@ component extends="baseContentHandler" {
 
 		// Ajax?
 		if ( event.isAjax() ) {
-			var rData = { "CONTENTID" : entry.getContentID() };
+			var rData = { "CONTENTID" : entry.getId() };
 			event.renderData( type = "json", data = rData );
 		} else {
 			// relocate
@@ -439,7 +439,7 @@ component extends="baseContentHandler" {
 				);
 			} else {
 				// GET id to be sent for announcing later
-				var contentID = entry.getContentID();
+				var contentID = entry.getId();
 				var title     = entry.getTitle();
 				// announce event
 				announce( "cbadmin_preEntryRemove", { entry : entry } );
@@ -551,7 +551,7 @@ component extends="baseContentHandler" {
 			max                : prc.cbSettings.cb_paging_maxrows,
 			sortOrder          : "publishedDate desc",
 			searchActiveContent: false,
-			siteId             : prc.oCurrentSite.getSiteId()
+			siteId             : prc.oCurrentSite.getId()
 		);
 
 		prc.entries      = entryResults.entries;

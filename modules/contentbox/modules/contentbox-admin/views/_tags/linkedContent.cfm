@@ -39,7 +39,7 @@
             <cfloop array="#args.linkedContent#" index="content">
                 <cfset publishedClass = content.isContentPublished() ? "published" : "selected">
                 <cfset publishedTitle = content.isContentPublished() ? "" : "Content is not published!">
-                <tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
+                <tr id="content_#content.getId()#" class="related-content" title="#publishedTitle#">
                     <td width="14" class="center #publishedClass#">
                         <cfif content.getContentType() eq "Page">
                             <i class="fa fa-file-alt icon-small" title="Page"></i>
@@ -51,7 +51,7 @@
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>
                     <td width="14" class="center #publishedClass#">
-                        <button id="#content.getContentID()#" class="btn btn-xs btn-danger" type="button"><i class="fa fa-unlink" title="Break Link to Content"></i></button>
+                        <button id="#content.getId()#" class="btn btn-xs btn-danger" type="button"><i class="fa fa-unlink" title="Break Link to Content"></i></button>
                     </td>
                 </tr>
             </cfloop>

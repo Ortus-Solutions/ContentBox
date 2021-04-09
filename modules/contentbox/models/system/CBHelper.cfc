@@ -190,7 +190,7 @@ component accessors="true" singleton threadSafe {
 	function contentStore(
 		required slug,
 		defaultValue  = "",
-		string siteId = site().getSiteId()
+		string siteId = site().getId()
 	){
 		var content = variables.contentStoreService.findBySlug(
 			slug  : arguments.slug,
@@ -208,7 +208,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return The content object or a new empty content object
 	 */
-	function contentStoreObject( required slug, string siteId = site().getSiteId() ){
+	function contentStoreObject( required slug, string siteId = site().getId() ){
 		return contentStoreService.findBySlug(
 			slug           : arguments.slug,
 			showUnpublished: true,
@@ -1567,7 +1567,7 @@ component accessors="true" singleton threadSafe {
 			);
 		}
 
-		return linkBlog( arguments.entry.getSiteId() ) & "/" & arguments.entry.getSlug() & outputFormat;
+		return linkBlog( arguments.entry.getSite().getId() ) & "/" & arguments.entry.getSlug() & outputFormat;
 	}
 
 	/**
@@ -1645,7 +1645,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// Build out the link
-		return siteRoot( arguments.page.getSiteId() ) & sep() & arguments.page.getSlug() & outputFormat;
+		return siteRoot( arguments.page.getId() ) & sep() & arguments.page.getSlug() & outputFormat;
 	}
 
 	/**
@@ -1682,7 +1682,7 @@ component accessors="true" singleton threadSafe {
 			xeh = linkEntry( arguments.comment.getRelatedContent(), arguments.ssl );
 		}
 
-		xeh &= "##comment_#arguments.comment.getCommentID()#";
+		xeh &= "##comment_#arguments.comment.getId()#";
 		return xeh;
 	}
 
@@ -2046,7 +2046,7 @@ component accessors="true" singleton threadSafe {
 		required array slugCache = []
 	){
 		var result = "";
-		var menu   = variables.menuService.findBySlug( arguments.slug, site().getSiteId() );
+		var menu   = variables.menuService.findBySlug( arguments.slug, site().getId() );
 
 		if ( menu.isLoaded() ) {
 			if ( arguments.type == "data" ) {
@@ -2154,8 +2154,8 @@ component accessors="true" singleton threadSafe {
 		arguments.pageRecords = pageService.findPublishedPages(
 			parent    : "",
 			showInMenu: true,
-			siteId    : site().getSiteId(),
-			properties: "contentID,slug,title,numberOfChildren"
+			siteId    : site().getId(),
+			properties: "id,slug,title,numberOfChildren"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2201,9 +2201,9 @@ component accessors="true" singleton threadSafe {
 
 		// get child pages
 		arguments.pageRecords = pageService.findPublishedPages(
-			parent    : page.getContentID(),
+			parent    : page.getId(),
 			showInMenu: true,
-			siteId    : site().getSiteId(),
+			siteId    : site().getId(),
 			properties: "contentID,slug,title,numberOfChildren"
 		);
 		// build it out
@@ -2333,19 +2333,19 @@ component accessors="true" singleton threadSafe {
 		var locPage                = "";
 		// class text
 		var classtext              = [];
-		var currentPageID          = 0;
+		var currentPageID          = '';
 
 		// Get contentID
 		if ( structKeyExists( prc, "page" ) and prc.page.isLoaded() ) {
 			locPage                = getCurrentPage();
-			currentPageID          = locPage.getContentID();
-			pageAncestorContentIDs = locPage.getContentID();
+			currentPageID          = locPage.getId();
+			pageAncestorContentIDs = locPage.getId();
 			// If this is subnav, add ancestry trail
 			while ( locPage.hasParent() ) {
 				locPage                = locPage.getParent();
 				pageAncestorContentIDs = listAppend(
 					pageAncestorContentIDs,
-					locPage.getContentID()
+					locPage.getId()
 				);
 			}
 		}
@@ -2380,9 +2380,9 @@ component accessors="true" singleton threadSafe {
 					] > 0
 				);
 				// Is element active (or one of its decendants)
-				var isElementActive         = currentPageID eq pageResults.pages[ x ][ "contentID" ];
+				var isElementActive         = currentPageID eq pageResults.pages[ x ][ "id" ];
 				var isElementActiveAncestor = (
-					listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ][ "contentID" ] )
+					listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ][ "id" ] )
 				);
 				// class = active? Then add to class text
 				if ( isElementActive ) {
@@ -2403,9 +2403,9 @@ component accessors="true" singleton threadSafe {
 						b.append(
 							buildMenu(
 								pageRecords = pageService.findPublishedPages(
-									parent    : pageResults.pages[ x ][ "contentID" ],
+									parent    : pageResults.pages[ x ][ "id" ],
 									showInMenu: true,
-									siteId    : site().getSiteId(),
+									siteId    : site().getId(),
 									properties: "contentID,slug,title,numberOfChildren"
 								),
 								excludes           = arguments.excludes,
@@ -2435,9 +2435,9 @@ component accessors="true" singleton threadSafe {
 						b.append(
 							buildMenu(
 								pageRecords = pageService.findPublishedPages(
-									parent    : pageResults.pages[ x ][ "contentID" ],
+									parent    : pageResults.pages[ x ][ "id" ],
 									showInMenu: true,
-									siteId    : site().getSiteId(),
+									siteId    : site().getId(),
 									properties: "contentID,slug,title,numberOfChildren"
 								),
 								excludes           = arguments.excludes,
@@ -2467,9 +2467,9 @@ component accessors="true" singleton threadSafe {
 					if ( doNesting ) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedPages(
-								parent    : pageResults.pages[ x ][ "contentID" ],
+								parent    : pageResults.pages[ x ][ "id" ],
 								showInMenu: true,
-								siteId    : site().getSiteId(),
+								siteId    : site().getId(),
 								properties: "contentID,slug,title,numberOfChildren"
 							),
 							excludes           = arguments.excludes,
@@ -2490,9 +2490,9 @@ component accessors="true" singleton threadSafe {
 					) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedPages(
-								parent    : pageResults.pages[ x ][ "contentID" ],
+								parent    : pageResults.pages[ x ][ "id" ],
 								showInMenu: true,
-								siteId    : site().getSiteId(),
+								siteId    : site().getId(),
 								properties: "contentID,slug,title,numberOfChildren"
 							),
 							excludes           = arguments.excludes,

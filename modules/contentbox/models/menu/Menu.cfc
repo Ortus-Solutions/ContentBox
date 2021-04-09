@@ -207,7 +207,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "id" ] = getSite().getId();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}
@@ -271,7 +271,7 @@ component
 	 * Shortcut to get the site id
 	 */
 	function getSiteId(){
-		return getSite().getSiteId();
+		return getSite().getId();
 	}
 
 }

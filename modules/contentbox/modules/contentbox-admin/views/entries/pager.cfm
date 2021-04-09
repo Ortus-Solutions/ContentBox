@@ -19,7 +19,7 @@
 
 	<tbody>
 		<cfloop array="#prc.pager_entries#" index="entry">
-		<tr data-contentID="#entry.getContentID()#"
+		<tr data-contentID="#entry.getId()#"
 			<cfif entry.isExpired()>
 				class="error"
 			<cfelseif entry.isPublishedInFuture()>
@@ -28,7 +28,7 @@
 				class="warning"
 			</cfif>>
 			<td>
-				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
+				<a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getId()#" title="Edit #entry.getTitle()#">#entry.getTitle()#</a><br/>
 				<small>
 				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#entry.getAuthorEmail()#">#entry.getAuthorName()#</a> on #entry.getActiveContent().getDisplayCreatedDate()#
 				</small>
@@ -59,10 +59,10 @@
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR" ) OR prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
 						<!--- Edit Command --->
-						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getContentID()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryEditor)#/contentID/#entry.getId()#"><i class="fas fa-pen fa-lg"></i> Edit</a></li>
 						</cfif>
 						<!--- History Command --->
-						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getContentID()#"><i class="fas fa-history fa-lg"></i> History</a></li>
+						<li><a href="#event.buildLink(prc.xehEntryHistory)#/contentID/#entry.getId()#"><i class="fas fa-history fa-lg"></i> History</a></li>
 						<!--- View in Site --->
 						<li><a href="#prc.CBHelper.linkEntry(entry)#" target="_blank"><i class="far fa-eye fa-lg"></i> Open In Site</a></li>
 			    	</ul>

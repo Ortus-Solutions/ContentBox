@@ -86,7 +86,7 @@ component extends="coldbox.system.Interceptor" {
 				return;
 			}
 			// Inflate content for admin bar
-			local.oContent = variables.contentService.get( prc.contentCacheData.contentID );
+			local.oContent = variables.contentService.get( prc.contentCacheData.id );
 		}
 
 		// Determine content via context search
@@ -101,9 +101,9 @@ component extends="coldbox.system.Interceptor" {
 		var linkEdit = "";
 		if ( !isNull( oContent ) ) {
 			if ( oContent.getContentType() == "entry" ) {
-				linkEdit = "#CBHelper.linkAdmin()#entries/editor/contentID/#oContent.getContentID()#";
+				linkEdit = "#CBHelper.linkAdmin()#entries/editor/contentID/#oContent.getId()#";
 			} else {
-				linkEdit = "#CBHelper.linkAdmin()#pages/editor/contentID/#oContent.getContentID()#";
+				linkEdit = "#CBHelper.linkAdmin()#pages/editor/contentID/#oContent.getId()#";
 			}
 		}
 

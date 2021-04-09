@@ -9,7 +9,7 @@ component
 	persistent         ="true"
 	entityname         ="cbContent"
 	table              ="cb_content"
-	extends            ="contentbox.models.BaseEntityMethods"
+	extends            ="contentbox.models.BaseEntity"
 	cachename          ="cbContent"
 	cacheuse           ="read-write"
 	discriminatorColumn="contentType"
@@ -72,31 +72,6 @@ component
 		name      ="renderedContent"
 		persistent="false"
 		default   ="";
-
-	/* *********************************************************************
-	 **							STUPID PROPERTIES DUE TO ACF BUG
-	 ********************************************************************* */
-
-	property
-		name   ="createdDate"
-		type   ="date"
-		ormtype="timestamp"
-		notnull="true"
-		update ="false";
-
-	property
-		name   ="modifiedDate"
-		type   ="date"
-		ormtype="timestamp"
-		notnull="true";
-
-	property
-		name     ="isDeleted"
-		ormtype  ="boolean"
-		// sqltype  = "smallInt"
-		notnull  ="true"
-		default  ="false"
-		dbdefault="false";
 
 	/* *********************************************************************
 	 **							PROPERTIES
@@ -498,7 +473,7 @@ component
 	 */
 	numeric function getNumberOfVersions(){
 		return (
-			this.isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId() ) : 0
+			this.isLoaded() ? variables.contentVersionService.getNumberOfVersions( getId() ) : 0
 		);
 	}
 
@@ -507,7 +482,7 @@ component
 	 */
 	numeric function getNumberOfActiveVersions(){
 		return (
-			this.isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0
+			this.isLoaded() ? variables.contentVersionService.getNumberOfVersions( getId(), true ) : 0
 		);
 	}
 
@@ -576,7 +551,7 @@ component
 		if ( hasRelatedContent() ) {
 			// loop over related content and add ids to list
 			for ( var currentContent in getRelatedContent() ) {
-				relatedContentIDs = listAppend( relatedContentIDs, currentContent.getContentID() );
+				relatedContentIDs = listAppend( relatedContentIDs, currentContent.getId() );
 			}
 		}
 		return relatedContentIDs;
@@ -939,7 +914,7 @@ component
 		// Do Author Relationship
 		if ( arguments.showAuthor && hasCreator() ) {
 			result[ "creator" ] = {
-				"creatorID" : getCreator().getAuthorID(),
+				"creatorID" : getCreator().getId(),
 				"firstname" : getCreator().getFirstname(),
 				"lastName"  : getCreator().getLastName(),
 				"email"     : getCreator().getEmail(),
@@ -985,7 +960,7 @@ component
 		// Parent
 		if ( arguments.showParent && hasParent() ) {
 			result[ "parent" ] = {
-				"contentID" : getParent().getContentID(),
+				"contentID" : getParent().getId(),
 				"slug"      : getParent().getSlug(),
 				"title"     : getParent().getTitle()
 			};
@@ -1041,7 +1016,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "id" ] = getSite().getId();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}
@@ -1060,7 +1035,7 @@ component
 		// How many versions do we have?
 		var versionCounts = contentVersionService
 			.newCriteria()
-			.isEq( "relatedContent.contentID", getContentID() )
+			.isEq( "relatedContent.id", getId() )
 			.count();
 
 		// Have we passed the limit?
@@ -1071,7 +1046,7 @@ component
 		) {
 			var oldestVersion = contentVersionService
 				.newCriteria()
-				.isEq( "relatedContent.contentID", getContentID() )
+				.isEq( "relatedContent.id", getId() )
 				.isEq( "isActive", javacast( "boolean", false ) )
 				.withProjections( id = "true" )
 				.list(
@@ -1193,7 +1168,7 @@ component
 	 * @return The parent ID or empty value if none attached
 	 */
 	function getParentID(){
-		return ( hasParent() ? getParent().getContentID() : "" );
+		return ( hasParent() ? getParent().getId() : "" );
 	}
 
 	/**
@@ -1483,14 +1458,14 @@ component
 	 */
 	string function buildContentCacheKey(){
 		var inputHash = hash( cgi.HTTP_HOST & cgi.query_string );
-		return "cb-content-#getContentType()#-#getContentID()#-#i18n.getfwLocale()#-#inputHash#";
+		return "cb-content-#getContentType()#-#getId()#-#i18n.getfwLocale()#-#inputHash#";
 	}
 
 	/**
 	 * This builds a partial cache key so we can clean from the cache many permutations of the content object
 	 */
 	string function buildContentCacheCleanupKey(){
-		return "cb-content-#getContentType()#-#getContentID()#";
+		return "cb-content-#getContentType()#-#getId()#";
 	}
 
 	/**
@@ -1626,7 +1601,7 @@ component
 	 * Shortcut to get the site id
 	 */
 	function getSiteId(){
-		return getSite().getSiteId();
+		return getSite().getId();
 	}
 
 	/**
@@ -1646,7 +1621,7 @@ component
 		}
 
 		// Object test
-		return getSiteId() == arguments.site.getSiteId();
+		return getSiteId() == arguments.site.getId();
 	}
 
 }

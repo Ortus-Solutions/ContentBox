@@ -48,7 +48,7 @@ component extends="baseHandler"{
 			}
 		}
 		// author security hash
-		prc.h = hash( prc.oCurrentAuthor.getAuthorID() );
+		prc.h = hash( prc.oCurrentAuthor.getId() );
 		// full preview view
 		event.setView( view="content/preview", layout="ajax" );
 	}
@@ -80,7 +80,7 @@ component extends="baseHandler"{
 				isPublished        :  "all",
 				searchActiveContent:  false,
 				contentTypes       :  prc.context,
-				siteId             :  prc.oCurrentSite.getSiteId()
+				siteId             :  prc.oCurrentSite.getId()
 			);
 			prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
 		} else {
@@ -126,7 +126,7 @@ component extends="baseHandler"{
 			data[ "UNIQUE" ] = variables.contentService.isSlugUnique(
 				rc.slug,
 				rc.contentID,
-				prc.oCurrentSite.getSiteId()
+				prc.oCurrentSite.getId()
 			);
 		}
 
@@ -163,7 +163,7 @@ component extends="baseHandler"{
 			searchActiveContent : false,
 			contentTypes        : rc.contentType,
 			excludeIDs          : rc.excludeIDs,
-			siteId              : prc.oCurrentSite.getSiteId()
+			siteId              : prc.oCurrentSite.getId()
 		);
 
 		// setup data for display
@@ -281,13 +281,13 @@ component extends="baseHandler"{
 		boolean showAuthor         =true
 	){
 		// Setup args so we can use them in the viewlet
-		var args = { max = arguments.max, siteId = prc.oCurrentSite.getSiteId() };
+		var args = { max = arguments.max, siteId = prc.oCurrentSite.getId() };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
 		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
 
 		// Add Site context if `author` is not passed
 		if( isNull( args.author ) ){
-			args.siteId = prc.oCurrentSite.getSiteId();
+			args.siteId = prc.oCurrentSite.getId();
 		}
 
 		// Get latest content edits with criteria
@@ -337,7 +337,7 @@ component extends="baseHandler"{
 		boolean showAuthor         =true
 	){
 		// Setup args so we can use them in the viewlet
-		var args = { max = arguments.max, offset = arguments.offset, siteId = prc.oCurrentSite.getSiteId() };
+		var args = { max = arguments.max, offset = arguments.offset, siteId = prc.oCurrentSite.getId() };
 		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
 
 		// Expired Content

@@ -63,7 +63,7 @@ component extends="coldbox.system.Interceptor"{
 		// Relocate to force the enrolmment for this user.
 		relocate(
 			event       = "#prc.cbAdminEntryPoint#.security.twofactorEnrollment.forceEnrollment",
-			queryString = "authorID=#prc.oCurrentAuthor.getAuthorID()#"
+			queryString = "authorID=#prc.oCurrentAuthor.getId()#"
 		);
     }
 

@@ -111,14 +111,14 @@
 					</thead>
 					<tbody>
 						<cfloop array="#prc.categories#" index="category">
-						<tr id="categoryID-#category.getCategoryID()#" data-categoryID="#category.getCategoryID()#">
+						<tr id="categoryID-#category.getId()#" data-categoryID="#category.getId()#">
 							<!--- check box --->
 							<td class="text-center">
-								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
+								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getId()#" />
 							</td>
 							<td>
 								<a href="javascript:edit(
-									'#category.getCategoryID()#',
+									'#category.getId()#',
 									'#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#'
 									)"
@@ -151,7 +151,7 @@
 											<!--- Edit Command --->
 											<li>
 												<a
-													href="javascript:edit( '#category.getCategoryID()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+													href="javascript:edit( '#category.getId()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
 													'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
 													>
 														<i class="fas fa-pen fa-lg"></i> Edit
@@ -162,11 +162,11 @@
 												<!--- Delete Command --->
 												<a
 													class="confirmIt"
-													href="javascript:removeCategory( '#category.getcategoryID()#' )"
+													href="javascript:removeCategory( '#category.getId()#' )"
 													data-title="Delete Category?"
 													data-message="Delete the category and all of its associations"
 												>
-													<i class="far fa-trash-alt fa-lg" id="delete_#category.getCategoryID()#"></i> Delete
+													<i class="far fa-trash-alt fa-lg" id="delete_#category.getId()#"></i> Delete
 												</a>
 											</li>
 										</ul>

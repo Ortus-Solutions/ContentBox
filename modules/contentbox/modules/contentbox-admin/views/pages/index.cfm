@@ -142,7 +142,7 @@
 								<select name="fAuthors" id="fAuthors" class="form-control input-sm valid">
 									<option value="all" selected="selected">All Authors</option>
 									<cfloop array="#prc.authors#" index="author">
-									<option value="#author.getAuthorID()#">#author.getName()#</option>
+									<option value="#author.getId()#">#author.getName()#</option>
 									</cfloop>
 								</select>
 							</div>
@@ -153,7 +153,7 @@
 							<select name="fCreators" id="fCreators" class="form-control input-sm" title="Filter on who created content">
 								<option value="all" selected="selected">All Creators</option>
 								<cfloop array="#prc.authors#" index="author">
-									<option value="#author.getAuthorID()#">#author.getName()#</option>
+									<option value="#author.getId()#">#author.getName()#</option>
 								</cfloop>
 							</select>
 						</div>
@@ -165,7 +165,7 @@
 									<option value="all">All Categories</option>
 									<option value="none">Uncategorized</option>
 									<cfloop array="#prc.categories#" index="category">
-									<option value="#category.getCategoryID()#">#category.getCategory()#</option>
+									<option value="#category.getId()#">#category.getCategory()#</option>
 									</cfloop>
 								</select>
 					        </div>

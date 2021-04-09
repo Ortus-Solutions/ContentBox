@@ -16,14 +16,14 @@
 
         <tbody>
             <cfloop array="#prc.menus#" index="menu">
-            <tr id="contentID-#menu.getMenuID()#" data-contentID="#menu.getMenuID()#">
+            <tr id="contentID-#menu.getId()#" data-contentID="#menu.getId()#">
                 <!--- check box --->
                 <td class="text-center">
-                    <input type="checkbox" name="menuID" id="menuID" value="#menu.getMenuID()#" />
+                    <input type="checkbox" name="menuID" id="menuID" value="#menu.getId()#" />
                 </td>
                 <td>
                     <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
-                        <a href="#event.buildLink(prc.xehMenuEditor)#/menuID/#menu.getMenuID()#" title="Edit menu">#menu.getTitle()#</a>
+                        <a href="#event.buildLink(prc.xehMenuEditor)#/menuID/#menu.getId()#" title="Edit menu">#menu.getTitle()#</a>
                     <cfelse>
                         #menu.getTitle()#
                     </cfif>
@@ -39,16 +39,16 @@
                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
                                 <!--- Delete Command --->
                                 <li>
-                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="far fa-trash-alt fa-lg" id="delete_#menu.getMenuID()#"></i> Delete</a>
+                                    <a title="Delete Menu" href="javascript:remove('#menu.getId()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="far fa-trash-alt fa-lg" id="delete_#menu.getId()#"></i> Delete</a>
                                 </li>
                                 <!--- Edit Command --->
                                 <li>
-                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fas fa-pen fa-lg"></i> Edit</a>
+                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getId()#"><i class="fas fa-pen fa-lg"></i> Edit</a>
                                 </li>
                                 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
-                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export as JSON</a></li>
-                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export as XML</a></li>
+                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getId()#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export as JSON</a></li>
+                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getId()#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export as XML</a></li>
                                 </cfif>
                             </cfif>
                         </ul>

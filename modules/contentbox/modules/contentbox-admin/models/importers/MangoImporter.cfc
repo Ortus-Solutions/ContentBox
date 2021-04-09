@@ -58,7 +58,7 @@ component implements="cbadmin.models.importers.ICBImporter"{
 				}
 
 				log.info( "Imported category: #props.category#" );
-				catMap[ q.id[ x ] ] = cat.getCategoryID();
+				catMap[ q.id[ x ] ] = cat.getId();
 			}
 			log.info( "Categories imported successfully!" );
 
@@ -82,7 +82,7 @@ component implements="cbadmin.models.importers.ICBImporter"{
 
 				entitySave( author );
 				log.info( "Imported author: #props.firstName# #props.lastName#" );
-				authorMap[ q.id[ x ] ] = author.getAuthorID();
+				authorMap[ q.id[ x ] ] = author.getId();
 			}
 			log.info( "Authors imported successfully!" );
 

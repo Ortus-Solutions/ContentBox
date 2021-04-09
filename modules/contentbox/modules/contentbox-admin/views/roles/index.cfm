@@ -112,7 +112,7 @@
 								<td>
 									<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
 										<a
-											href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getRoleId()#")#"
+											href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getId()#")#"
 											title="Edit #role.getName()#"
 											>
 											#role.getName()#
@@ -147,11 +147,11 @@
 												<!--- Delete Command --->
 												<cfif role.getNumberOfAuthors() eq 0>
 													<li>
-														<a 	href="javascript:remove( '#role.getRoleId()#' )"
+														<a 	href="javascript:remove( '#role.getId()#' )"
 															class="confirmIt"
 															data-title="<i class='far fa-trash-alt'></i> Delete Role?"
 														>
-															<i class="far fa-trash-alt fa-lg" id="delete_#role.getRoleId()#"></i> Delete
+															<i class="far fa-trash-alt fa-lg" id="delete_#role.getId()#"></i> Delete
 														</a>
 													</li>
 												</cfif>
@@ -159,7 +159,7 @@
 												<!--- Edit Command --->
 												<li>
 													<a
-														href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getRoleId()#")#"
+														href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getId()#")#"
 											   		>
 											   			<i class="fas fa-pen fa-lg"></i> Edit
 											   		</a>
@@ -169,7 +169,7 @@
 												<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a
-															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.json"
+															href="#event.buildLink( prc.xehExport )#/roleID/#role.getId()#.json"
 															target="_blank"
 														>
 															<i class="fas fa-file-export fa-lg"></i> Export as JSON
@@ -177,7 +177,7 @@
 													</li>
 													<li>
 														<a
-															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.xml"
+															href="#event.buildLink( prc.xehExport )#/roleID/#role.getId()#.xml"
 															target="_blank"
 														>
 															<i class="fas fa-file-export fa-lg"></i> Export as XML

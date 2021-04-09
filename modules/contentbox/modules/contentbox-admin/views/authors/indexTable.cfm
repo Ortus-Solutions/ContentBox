@@ -21,10 +21,10 @@
 			<cfif !author.getIsActive()>
 				class="danger"
 			</cfif>
-			data-authorID="#author.getAuthorID()#" >
+			data-authorID="#author.getId()#" >
 			<!--- check box --->
 			<td class="text-center">
-				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
+				<input type="checkbox" name="authorID" id="authorID" value="#author.getId()#" />
 			</td>
 			<td class="pb5 pt5">
 				<div class="pull-left">
@@ -38,13 +38,13 @@
 
 				<!--- Display Link if Admin Or yourself --->
 				<div>
-					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
-						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getId() eq author.getId()>
+						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getId()#" title="Edit #author.getName()#">#author.getName()#</a>
 					<cfelse>
 						#author.getName()#
 					</cfif>
 
-					<cfif prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
+					<cfif prc.oCurrentAuthor.getId() eq author.getId()>
 						<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
 					</cfif>
 
@@ -75,16 +75,16 @@
 						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
+						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getId() eq author.getId()>
 							<!--- Delete Command --->
-							<cfif prc.oCurrentAuthor.getAuthorID() neq author.getAuthorID()>
+							<cfif prc.oCurrentAuthor.getId() neq author.getId()>
 								<li>
 									<a 	title="Delete Author"
-										href="javascript:removeAuthor( '#author.getAuthorID()#' )"
+										href="javascript:removeAuthor( '#author.getId()#' )"
 										class="confirmIt"
 										data-title="<i class='far fa-trash-alt'></i> Delete Author?"
 									>
-										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Delete
+										<i id="delete_#author.getId()#" class="far fa-trash-alt fa-lg"></i> Delete
 									</a>
 								</li>
 							<cfelse>
@@ -93,14 +93,14 @@
 										href="javascript:alert('Can\'t delete yourself buddy!')"
 										class="textRed"
 									>
-										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Can't Delete
+										<i id="delete_#author.getId()#" class="far fa-trash-alt fa-lg"></i> Can't Delete
 									</a>
 								</li>
 							</cfif>
 
 							<!--- Edit Command --->
 							<li>
-								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">
+								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getId()#" title="Edit #author.getName()#">
 									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
@@ -108,17 +108,17 @@
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
-								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
+								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getId()#.json" target="_blank">
 									<i class="fas fa-file-export fa-lg"></i> Export as JSON
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
+								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getId()#.xml" target="_blank">
 									<i class="fas fa-file-export fa-lg"></i> Export as XML
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
+								<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#author.getId()#"
 									title="Email User a password reset token and link to reset password.">
 									<i class="fas fa-key fa-lg"></i> Reset Password
 								</a>

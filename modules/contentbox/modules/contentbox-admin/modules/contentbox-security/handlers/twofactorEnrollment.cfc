@@ -40,7 +40,7 @@ component extends="baseHandler"{
 	function forceEnrollment( event, rc, prc ){
 		// If not relocation URL set, default to editor
 		if( !rc.relocationURL.len() ){
-			rc.relocationURL = event.buildLink( "#prc.cbAdminEntryPoint#/authors/editor/authorID/#prc.oCurrentAuthor.getAuthorID()###twofactor" );
+			rc.relocationURL = event.buildLink( "#prc.cbAdminEntryPoint#/authors/editor/authorID/#prc.oCurrentAuthor.getId()###twofactor" );
 		}
 		prc.xehEnroll 			= "#prc.cbAdminEntryPoint#.security.twofactorEnrollment.process";
 		prc.twoFactorProvider 	= twoFactorService.getDefaultProviderObject();
@@ -55,7 +55,7 @@ component extends="baseHandler"{
 		// Given a logged in user, make sure they are the same
 		if(
 			prc.oCurrentAuthor.isLoaded() &&
-			prc.oCurrentAuthor.getAuthorID() != prc.oAuthor.getAuthorID()
+			prc.oCurrentAuthor.getId() != prc.oAuthor.getId()
 		){
 			messagebox.warn( cb.r( "twofactor.illegalAuthorEnrollment@security" ) );
             relocate( "#prc.cbAdminEntryPoint#.dashboard" );
@@ -74,7 +74,7 @@ component extends="baseHandler"{
 
 		// Flash data needed for two factor checks
 		flash.put( "authorData", {
-			authorID 	 = prc.oAuthor.getAuthorID(),
+			authorID 	 = prc.oAuthor.getId(),
 			rememberMe 	 = rc.rememberMe,
 			securedURL   = rc.relocationURL,
 			isEnrollment = true

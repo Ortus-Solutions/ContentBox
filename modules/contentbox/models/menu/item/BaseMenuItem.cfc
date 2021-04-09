@@ -9,7 +9,7 @@ component
 	persistent         ="true"
 	entityName         ="cbMenuItem"
 	table              ="cb_menuItem"
-	extends            ="contentbox.models.BaseEntityMethods"
+	extends            ="contentbox.models.BaseEntity"
 	cachename          ="cbMenuItem"
 	cacheuse           ="read-write"
 	discriminatorColumn="menuType"
@@ -23,34 +23,6 @@ component
 		name      ="menuItemService"
 		inject    ="menuItemService@cb"
 		persistent="false";
-
-	/* *********************************************************************
-	 **							PROPERTIES due to ACF Bug
-	 ********************************************************************* */
-
-	property
-		name   ="createdDate"
-		type   ="date"
-		ormtype="timestamp"
-		notnull="true"
-		update ="false"
-		index  ="idx_BaseMenuItem_createDate";
-
-	property
-		name   ="modifiedDate"
-		type   ="date"
-		ormtype="timestamp"
-		notnull="true"
-		index  ="idx_BaseMenuItem_modifiedDate";
-
-	property
-		name     ="isDeleted"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
-		notnull  ="true"
-		default  ="false"
-		dbdefault="false"
-		index    ="idx_BaseMenuItem_deleted";
 
 	/* *********************************************************************
 	 **                          PROPERTIES

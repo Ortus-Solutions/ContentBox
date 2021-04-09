@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <!--- post --->
-<div class="post" id="post_#entry.getContentID()#">
+<div class="post" id="post_#entry.getId()#">
 
 	<!--- Title --->
 	<div class="post-title">

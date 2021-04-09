@@ -103,7 +103,7 @@ component extends="baseContentHandler" {
 			creator    : rc.fCreators,
 			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
 			sortOrder  : "order asc, createdDate desc",
-			siteId     : prc.oCurrentSite.getSiteId()
+			siteId     : prc.oCurrentSite.getId()
 		);
 		prc.content      = contentResults.content;
 		prc.contentCount = contentResults.count;
@@ -215,7 +215,7 @@ component extends="baseContentHandler" {
 				event  = arguments.event,
 				rc     = arguments.rc,
 				prc    = arguments.prc,
-				parent = prc.content.getContentID()
+				parent = prc.content.getId()
 			);
 			// Get Versions Viewlet
 			prc.versionsViewlet = runEvent(
@@ -252,7 +252,7 @@ component extends="baseContentHandler" {
 		prc.relatedContentIDs = prc.content.getRelatedContentIDs();
 
 		// Get parent from active page
-		prc.parentcontentID = prc.content.getParentID();
+		prc.parentcontentID = prc.content.getId();
 		// Override the parent page if incoming via URL
 		if ( structKeyExists( rc, "parentID" ) ) {
 			prc.parentcontentID = rc.parentID;
@@ -276,7 +276,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
+		event.paramValue( "site", prc.oCurrentSite.getId() );
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
@@ -328,7 +328,7 @@ component extends="baseContentHandler" {
 		if ( original.hasParent() ) {
 			relocate(
 				event       = prc.xehContentStore,
-				querystring = "parent=#original.getParent().getContentID()#"
+				querystring = "parent=#original.getId()#"
 			);
 		} else {
 			relocate( event = prc.xehContentStore );
@@ -359,7 +359,7 @@ component extends="baseContentHandler" {
 			.paramValue( "content", "" )
 			.paramValue( "customFieldsCount", 0 )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getSiteId() );
+			.paramValue( "site", prc.oCurrentSite.getId() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -407,7 +407,7 @@ component extends="baseContentHandler" {
 		if (
 			!isNew and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) and len(
 				rc.creatorID
-			) and content.getCreator().getAuthorID() NEQ rc.creatorID
+			) and content.getId() NEQ rc.creatorID
 		) {
 			content.setCreator( authorService.get( rc.creatorID ) );
 		}
@@ -420,7 +420,7 @@ component extends="baseContentHandler" {
 		);
 
 		// attach a parent page if it exists and not the same
-		if ( isNumeric( rc.parentContent ) AND content.getContentID() NEQ rc.parentContent ) {
+		if ( isNumeric( rc.parentContent ) AND content.getId() NEQ rc.parentContent ) {
 			content.setParent( variables.contentStoreService.get( rc.parentContent ) );
 			// update slug
 			content.setSlug( content.getParent().getSlug() & "/" & content.getSlug() );
@@ -452,7 +452,7 @@ component extends="baseContentHandler" {
 
 		// Ajax?
 		if ( event.isAjax() ) {
-			var rData = { "CONTENTID" : content.getContentID() };
+			var rData = { "CONTENTID" : content.getId() };
 			event.renderData( type = "json", data = rData );
 		} else {
 			// relocate
@@ -460,7 +460,7 @@ component extends="baseContentHandler" {
 			if ( content.hasParent() ) {
 				relocate(
 					event       = prc.xehContentStore,
-					querystring = "parent=#content.getParent().getContentID()#"
+					querystring = "parent=#content.getId()#"
 				);
 			} else {
 				relocate( event = prc.xehContentStore );
@@ -493,7 +493,7 @@ component extends="baseContentHandler" {
 				);
 			} else {
 				// GET id to be sent for announcing later
-				var contentID = content.getContentID();
+				var contentID = content.getId();
 				var title     = content.getTitle();
 				// announce event
 				announce( "cbadmin_preContentStoreRemove", { content : content } );
@@ -608,7 +608,7 @@ component extends="baseContentHandler" {
 			max                : prc.cbSettings.cb_paging_maxrows,
 			sortOrder          : "createdDate asc",
 			searchActiveContent: false,
-			siteId             : prc.oCurrentSite.getSiteId()
+			siteId             : prc.oCurrentSite.getId()
 		);
 
 		prc.content      = contentResults.content;

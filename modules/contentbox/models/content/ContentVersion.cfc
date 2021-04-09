@@ -131,7 +131,7 @@ component
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 
 		result[ "author" ] = {
-			"authorID"  : getAuthor().getAuthorID(),
+			"authorID"  : getAuthor().getId(),
 			"firstname" : getAuthor().getFirstname(),
 			"lastName"  : getAuthor().getLastName(),
 			"email"     : getAuthor().getEmail(),

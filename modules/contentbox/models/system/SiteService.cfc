@@ -54,7 +54,7 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		return newCriteria().isEq( "siteId", getCurrentWorkingSiteId() ).get();
+		return newCriteria().isEq( "id", getCurrentWorkingSiteId() ).get();
 	}
 
 	/**
@@ -63,7 +63,7 @@ component
 	string function getDefaultSiteId(){
 		return newCriteria()
 			.isEq( "slug", "default" )
-			.withProjections( property: "siteId" )
+			.withProjections( property: "id" )
 			.get();
 	}
 
@@ -100,7 +100,7 @@ component
 			// Activate the site's theme
 			variables.themeService.startupTheme(
 				name  : arguments.site.getActiveTheme(),
-				siteId: arguments.site.getSiteId()
+				siteId: arguments.site.getId()
 			);
 		}
 		// end transaction
@@ -139,7 +139,7 @@ component
 	 */
 	array function getAllFlat(){
 		return newCriteria()
-			.withProjections( property: "siteId,name,slug,domainRegex" )
+			.withProjections( property: "id,name,slug,domainRegex" )
 			.asStruct()
 			.list( sortOrder = "name" );
 	}
@@ -152,9 +152,9 @@ component
 	array function getAllSiteThemes(){
 		return newCriteria()
 			.isFalse( "isDeleted" )
-			.withProjections( distinct: "activeTheme,siteId" )
+			.withProjections( distinct: "activeTheme,id" )
 			.asStruct()
-			.list( sortOrder = "siteId" );
+			.list( sortOrder = "id" );
 	}
 
 	/**
@@ -165,7 +165,7 @@ component
 	 * @throws EntityNotFound
 	 */
 	function getOrFail( required siteId ){
-		var site = newCriteria().isEq( "siteId", arguments.siteId ).get();
+		var site = newCriteria().isEq( "id", arguments.siteId ).get();
 
 		if ( !isNull( site ) ) {
 			return site;
@@ -221,7 +221,7 @@ component
 
 		// Return the first matched site
 		if ( arrayLen( matchedSite ) ) {
-			return getOrFail( matchedSite[ 1 ][ "siteId" ] );
+			return getOrFail( matchedSite[ 1 ][ "id" ] );
 		}
 
 		// Default to the default site

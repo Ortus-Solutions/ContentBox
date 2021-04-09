@@ -18,7 +18,7 @@
 	<tbody>
 		<cfloop array="#prc.entries#" index="entry">
 		<tr
-			id="contentID-#entry.getContentID()#"
+			id="contentID-#entry.getId()#"
 			<cfif NOT entry.getIsPublished()>class="warning"</cfif>
 		>
 			<td>

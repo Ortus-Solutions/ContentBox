@@ -40,7 +40,7 @@ component
 			query: "
 				SELECT count(*)
 				FROM cbContent content join content.creator creator
-				WHERE creator.authorID = :authorId AND
+				WHERE creator.id = :authorId AND
 				content.contentType = 'Page'
 			",
 			params: { "authorId" : arguments.authorId },
@@ -56,7 +56,7 @@ component
 			query: "
 				SELECT count(*)
 				FROM cbContent content join content.creator creator
-				WHERE creator.authorID = :authorId AND
+				WHERE creator.id = :authorId AND
 				content.contentType = 'Entry'
 			",
 			params: { "authorId" : arguments.authorId },
@@ -72,7 +72,7 @@ component
 			query: "
 				SELECT count(*)
 				FROM cbContent content join content.creator creator
-				WHERE creator.authorID = :authorId AND
+				WHERE creator.id = :authorId AND
 				content.contentType = 'ContentStore'
 			",
 			params: { "authorId" : arguments.authorId },
@@ -88,7 +88,7 @@ component
 			query: "
 				SELECT count(*)
 				FROM cbContent content join content.creator creator
-				WHERE creator.authorID = :authorId
+				WHERE creator.id = :authorId
 			",
 			params: { "authorId" : arguments.authorId },
 			unique: true

@@ -27,7 +27,7 @@ component singleton{
 
 		if( len( arguments.page.getTitle() ) ){
 			bc &= '<span class="fas fa-chevron-right mr5 ml5"></span>
-<a href="javascript:contentDrilldown( ''#arguments.page.getContentID()#'' )">#arguments.page.getTitle()#</a>
+<a href="javascript:contentDrilldown( ''#arguments.page.getId()#'' )">#arguments.page.getTitle()#</a>
  ';
 		}
 

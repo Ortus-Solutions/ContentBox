@@ -82,7 +82,7 @@ component {
 		if (
 			prc.oCurrentAuthor.isLoaded() AND
 			prc.oCurrentAuthor.isLoggedIn() AND
-			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) EQ 0
+			compareNoCase( hash( prc.oCurrentAuthor.getId() ), rc.h ) EQ 0
 		) {
 			// Place theme on scope
 			prc.cbTheme     = rc.l;
@@ -230,7 +230,7 @@ component {
 						.setHTTPHeader( name = "x-contentbox-cached-content", value = "true" );
 				}
 				// Store hits
-				variables.contentService.updateHits( prc.contentCacheData.contentID );
+				variables.contentService.updateHits( prc.contentCacheData.id );
 				// return cache content to be displayed
 				event.renderData(
 					data        = prc.contentCacheData.content,
@@ -328,7 +328,7 @@ component {
 			cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.isContentPublished()
 		) {
 			// store content ID as we have it by now
-			data.contentID = oContent.getContentID();
+			data.contentID = oContent.getId();
 			// Cache data
 			cache.set(
 				cachekey,
@@ -361,7 +361,7 @@ component {
 		if (
 			!prc.oCurrentAuthor.isLoaded() OR
 			!prc.oCurrentAuthor.isLoggedIn() OR
-			compareNoCase( hash( prc.oCurrentAuthor.getAuthorID() ), rc.h ) NEQ 0
+			compareNoCase( hash( prc.oCurrentAuthor.getId() ), rc.h ) NEQ 0
 		) {
 			// Not an author, kick them out.
 			relocate( URL = "/" );

@@ -37,7 +37,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var content = variables.contentStoreService.findBySlug(
 			slug            = arguments.slug,
 			showUnpublished = true,
-			siteId          = variables.cb.site().getSiteId()
+			siteId          = variables.cb.site().getId()
 		);
 
 		// Return if loaded and published

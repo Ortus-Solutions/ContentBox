@@ -243,7 +243,7 @@ component extends="baseHandler" {
 				arrayAppend( messages, "Invalid menuID sent: #thisMenuID#, so skipped removal" );
 			} else {
 				// GET id to be sent for announcing later
-				var menuID = oMenu.getMenuID();
+				var menuID = oMenu.getId();
 				var title  = oMenu.getSlug();
 				// announce event
 				announce( "cbadmin_preMenuRemove", { menu : oMenu, menuID : menuID } );

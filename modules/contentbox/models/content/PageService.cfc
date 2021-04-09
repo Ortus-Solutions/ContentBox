@@ -34,8 +34,8 @@ component extends="ContentService" singleton {
 			if (
 				!contentService.isSlugUnique(
 					slug     : arguments.page.getSlug(),
-					contentID: arguments.page.getContentID(),
-					siteId   : arguments.page.getSiteId()
+					contentID: arguments.page.getId(),
+					siteId   : arguments.page.getId()
 				)
 			) {
 				// make slug unique
@@ -136,7 +136,7 @@ component extends="ContentService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.id", arguments.siteId );
 		}
 
 		// Search Criteria
@@ -160,7 +160,7 @@ component extends="ContentService" singleton {
 		// parent filter
 		if ( structKeyExists( arguments, "parent" ) ) {
 			if ( len( trim( arguments.parent ) ) ) {
-				c.isEq( "parent.contentID", arguments.parent );
+				c.isEq( "parent.id", arguments.parent );
 			} else {
 				c.isNull( "parent" );
 			}
@@ -198,7 +198,7 @@ component extends="ContentService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count = c.count( "contentID" );
+		results.count = c.count( "id" );
 		results.pages = c
 			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 			.list(
@@ -274,12 +274,12 @@ component extends="ContentService" singleton {
 			} )
 			// Site Filter
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			// Parent Filter
 			.when( !isNull( arguments.parent ), function( c ){
 				if ( len( trim( parent ) ) ) {
-					c.isEq( "parent.contentID", parent );
+					c.isEq( "parent.id", parent );
 				} else {
 					c.isNull( "parent" );
 				}
@@ -288,7 +288,7 @@ component extends="ContentService" singleton {
 			} );
 
 		// run criteria query and projections count
-		results.count = c.count( "contentID" );
+		results.count = c.count( "id" );
 		results.pages = c
 			// Do we want array of simple projections?
 			.when( !isNull( arguments.properties ), function( c ){

@@ -190,7 +190,7 @@ component singleton {
 	 * @return SecurityService
 	 */
 	SecurityService function setAuthorSession( required Author author ){
-		cacheStorage.set( "loggedInAuthorID", author.getAuthorID() );
+		cacheStorage.set( "loggedInAuthorID", author.getId() );
 		return this;
 	}
 
@@ -289,10 +289,10 @@ component singleton {
 			"cb_security_password_reset_expiration"
 		);
 		// Store Security Token For X minutes
-		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
+		var token = hash( arguments.author.getEmail() & arguments.author.getId() & now() );
 		cache.set(
 			"reset-token-#token#",
-			arguments.author.getAuthorID(),
+			arguments.author.getId(),
 			tokenTimeout,
 			tokenTimeout
 		);
@@ -485,7 +485,7 @@ component singleton {
 		};
 
 		// Verify the author of the token
-		if ( arguments.author.getAuthorID() neq authorID ) {
+		if ( arguments.author.getId() neq authorID ) {
 			results.error    = true;
 			results.messages = "Author reset token mismatch";
 			return results;
@@ -646,7 +646,7 @@ component singleton {
 			// The user will be auto-logged in as long as this cookie exists
 			cookieStorage.set(
 				name    = "contentbox_keep_logged_in",
-				value   = encryptIt( author.getAuthorID() ),
+				value   = encryptIt( author.getId() ),
 				expires = arguments.days
 			);
 		}

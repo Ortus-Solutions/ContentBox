@@ -37,8 +37,8 @@ component
 			if (
 				!isSlugUnique(
 					slug  : arguments.menu.getSlug(),
-					menuID: arguments.menu.getMenuID(),
-					siteId: arguments.menu.getSiteId()
+					menuID: arguments.menu.getId(),
+					siteId: arguments.menu.getId()
 				)
 			) {
 				// make slug unique
@@ -81,7 +81,7 @@ component
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.id", arguments.siteId );
 		}
 
 		// run criteria query and projections count
@@ -111,7 +111,7 @@ component
 		var menu = newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.get();
 		// return accordingly
@@ -140,7 +140,7 @@ component
 	array function getAllSlugs( string siteId = "" ){
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.withProjections( property = "slug" )
 			.list( sortOrder = "slug asc" );
@@ -301,7 +301,7 @@ component
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
 			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+				c.isEq( "site.id", siteId );
 			} )
 			.when( len( arguments.menuID ), function( c ){
 				c.ne( "menuID", autoCast( "menuID", menuID ) );
