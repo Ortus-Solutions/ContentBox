@@ -927,7 +927,7 @@ component accessors="true" threadSafe singleton {
 							.new( {
 								name  : "cb_theme_#name#_#thisSetting.name#",
 								value : thisSetting.defaultValue,
-								site  : arguments.site
+								site  : site
 							} )
 							.setSite( site )
 					);
