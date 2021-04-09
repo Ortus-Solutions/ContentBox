@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col-md-12">
         #html.startForm( name="menuForm", action=prc.xehMenuRemove )#
-            #html.hiddenField( name="menuID", value="" )#
+            #html.hiddenField( name="id", value="" )#
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">

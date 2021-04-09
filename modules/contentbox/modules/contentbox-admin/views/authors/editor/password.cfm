@@ -8,7 +8,7 @@
 			class      = "form-vertical"
 		)#
 
-			#html.hiddenField( name="authorID", bind=prc.author )#
+			#html.hiddenField( name="id", bind=prc.author )#
 
 			<!--- Fields --->
 			#html.passwordField(

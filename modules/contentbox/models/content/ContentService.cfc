@@ -1098,7 +1098,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		return c
 			.withProjections(
-				property = "contentID,title,slug,createdDate,modifiedDate,featuredImageURL"
+				property = "id,title,slug,createdDate,modifiedDate,featuredImageURL"
 			)
 			.asStruct()
 			.list( sortOrder = arguments.sortOrder );

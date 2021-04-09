@@ -88,7 +88,7 @@
 
 				<!--- Search Form --->
 				#html.startForm( name="commentForm", action=prc.xehCommentstatus )#
-					#html.hiddenField( name="commentID", bind=rc.comment )#
+					#html.hiddenField( name="id", bind=rc.comment )#
 					#html.hiddenField( name="commentStatus", value="approve" )#
 					<div class="form-actions">
 						<!--- Buttons --->

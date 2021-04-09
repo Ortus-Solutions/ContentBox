@@ -244,7 +244,7 @@ component {
 
 		// Prepare data packet for rendering and caching and more
 		var data = {
-			contentID   : "",
+			id   : "",
 			contentType : "text/html",
 			isBinary    : false
 		};
@@ -328,7 +328,7 @@ component {
 			cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.isContentPublished()
 		) {
 			// store content ID as we have it by now
-			data.contentID = oContent.getId();
+			data.id = oContent.getId();
 			// Cache data
 			cache.set(
 				cachekey,

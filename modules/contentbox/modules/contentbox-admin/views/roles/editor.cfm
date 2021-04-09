@@ -45,7 +45,7 @@
 					)#
 
 						<!--- Group Info --->
-						#html.hiddenField( name="roleId", bind=prc.oRole )#
+						#html.hiddenField( name="id", bind=prc.oRole )#
 
 						#html.textField(
 							name    		= "name",

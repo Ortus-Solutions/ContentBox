@@ -172,7 +172,7 @@
 													<select name="site" id="site" class="form-control">
 														<option value="" selected="selected">GLOBAL</option>
 														<cfloop array=#prc.allSites# index="thisSite">
-															<option value="#thisSite[ 'siteId' ]#">
+															<option value="#thisSite[ 'id' ]#">
 																#thisSite[ 'name' ]#
 															</option>
 														</cfloop>

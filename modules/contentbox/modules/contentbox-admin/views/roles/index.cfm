@@ -29,7 +29,7 @@
             action = prc.xehRoleRemove,
             class  = "form-vertical"
         )#
-			#html.hiddenField( name="roleID", value="" )#
+			#html.hiddenField( name="id", value="" )#
 
         	<div class="panel panel-default">
 				<div class="panel-heading">

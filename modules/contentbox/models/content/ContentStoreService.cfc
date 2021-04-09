@@ -231,7 +231,7 @@ component extends="ContentService" singleton {
 		var c = newCriteria();
 
 		return c
-			.withProjections( property = "contentID,title,slug" )
+			.withProjections( property = "id,title,slug" )
 			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
 			.list( sortOrder = arguments.sortOrder );
 	}

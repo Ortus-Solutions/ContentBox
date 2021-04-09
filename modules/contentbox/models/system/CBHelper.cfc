@@ -1645,7 +1645,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// Build out the link
-		return siteRoot( arguments.page.getId() ) & sep() & arguments.page.getSlug() & outputFormat;
+		return siteRoot( arguments.page.getSite().getId() ) & sep() & arguments.page.getSlug() & outputFormat;
 	}
 
 	/**
@@ -2204,7 +2204,7 @@ component accessors="true" singleton threadSafe {
 			parent    : page.getId(),
 			showInMenu: true,
 			siteId    : site().getId(),
-			properties: "contentID,slug,title,numberOfChildren"
+			properties: "id,slug,title,numberOfChildren"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );

@@ -30,7 +30,7 @@
 	#html.startForm( name="groupsForm", class="form-vertical" )#
 	#html.startFieldset( legend="Permission Groups" )#
 	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-			#html.hiddenField( name="authorID", bind=prc.author )#
+			#html.hiddenField( name="id", bind=prc.author )#
 
 			<!--- Loader --->
 			<div class="loaders floatRight text-center" id="groupsLoader">
@@ -130,7 +130,7 @@
 	#html.startForm( name="permissionForm", class="form-vertical" )#
 	#html.startFieldset( legend="A-la-Carte Permissions" )#
 	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-			#html.hiddenField( name="authorID", bind=prc.author )#
+			#html.hiddenField( name="id", bind=prc.author )#
 
 			<!--- Loader --->
 			<div class="loaders floatRight text-center" id="permissionLoader">

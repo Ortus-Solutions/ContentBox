@@ -53,7 +53,7 @@
                 #cbMessageBox().renderit()#
 
                 <!--- ids --->
-				#html.hiddenField( name="contentID", bind=prc.page )#
+				#html.hiddenField( name="id", bind=prc.page )#
                 #html.hiddenField( name="contentType", bind=prc.page )#
 
                 <div class="panel panel-default">

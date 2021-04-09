@@ -6,7 +6,7 @@
 	novalidate	= "novalidate",
 	class		= "form-vertical"
 )#
-		#html.hiddenField( name="authorID", bind=prc.author )#
+		#html.hiddenField( name="id", bind=prc.author )#
 
 		<!---Editor of Choice --->
 		#html.select(
@@ -135,7 +135,7 @@
 	class 		= "form-vertical"
 )#
 	#html.startFieldset( legend="Raw Preferences (<a href='javascript:toggleRawPreferences()'>Show/Hide</a>)" )#
-	#html.hiddenField( name="authorID", bind=prc.author )#
+	#html.hiddenField( name="id", bind=prc.author )#
 
 	<div id="rawPreferences" style="display:none">
 

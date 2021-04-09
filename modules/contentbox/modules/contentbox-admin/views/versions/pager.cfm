@@ -53,14 +53,14 @@
 			<cfif thisVersion.getIsActive()>
 				<cfset activeVersion = thisVersion.getVersion()>
 			</cfif>
-			<tr id="version_row_#thisVersion.getContentVersionID()#" data-versionID="#thisVersion.getContentVersionID()#">
+			<tr id="version_row_#thisVersion.getId()#" data-versionID="#thisVersion.getId()#">
 				<!--- Diff --->
 				<td class="text-center">
 					<!--- old version --->
 					<input
 						type="radio"
 						class="rb_oldversion"
-						value="#thisVersion.getContentVersionID()#"
+						value="#thisVersion.getId()#"
 						name="old_version"
 						id="old_version"
 						<cfif thisVersion.getVersion() eq ( activeVersion - 1 )>checked="checked"</cfif>
@@ -69,7 +69,7 @@
 					<input
 						type="radio"
 						class="rb_version"
-						value="#thisVersion.getContentVersionID()#"
+						value="#thisVersion.getId()#"
 						name="version"
 						id="version"
 						<cfif thisVersion.getIsActive()>checked="checked"</cfif>
@@ -78,7 +78,7 @@
 
 				<!--- Version Number --->
 				<td class="text-center">
-					<a href="javascript:openRemoteModal( '#event.buildLink( prc.xehVersionQuickLook )#/versionID/#thisVersion.getContentVersionID()#')">
+					<a href="javascript:openRemoteModal( '#event.buildLink( prc.xehVersionQuickLook )#/versionID/#thisVersion.getId()#')">
 						#thisVersion.getVersion()#
 					</a>
 				</td>
@@ -122,25 +122,25 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
 							<!--- ROLLBACK BUTTON --->
 							<a
-								href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')"
+								href="javascript:versionsPagerRollback('#thisVersion.getId()#')"
 								title="Rollback this version"
 								class="confirmIt"
 								data-message="Do you really want to rollback to this version?"
 							>
-								<i class="fas fa-recycle fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i>
+								<i class="fas fa-recycle fa-lg" id="version_rollback_#thisVersion.getId()#"></i>
 							</a>
 						</cfif>
 
 						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>
 							<!--- DELETE VERSION --->
 							<a
-								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"
+								href="javascript:versionsPagerRemove('#thisVersion.getId()#')"
 								title="Remove this version"
 								class="confirmIt ml5"
 								data-title="<i class='far fa-trash-alt'></i> Remove Content Version"
 								data-message="Do you really want to remove this content version?"
 							>
-								<i class="far fa-trash-alt fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
+								<i class="far fa-trash-alt fa-lg" id="version_delete_#thisVersion.getId()#"></i>
 							</a>
 						</cfif>
 					</cfif>

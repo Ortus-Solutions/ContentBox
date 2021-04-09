@@ -44,7 +44,7 @@
                     class      = "form-vertical"
                 )#
                     <!--- ruleID --->
-                    #html.hiddenField( name="ruleID", bind=prc.rule )#
+                    #html.hiddenField( name="id", bind=prc.rule )#
 
 					<!--- Usage --->
 					<div class="alert alert-danger">

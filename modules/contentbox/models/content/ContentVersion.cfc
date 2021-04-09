@@ -187,7 +187,7 @@ component
 		// Check if we need to translate
 		if ( NOT len( variables.renderedContent ) ) {
 			lock
-				name          ="contentbox.versionrendering.#getContentVersionID()#"
+				name          ="contentbox.versionrendering.#getId()#"
 				type          ="exclusive"
 				throwontimeout="true"
 				timeout       ="10" {

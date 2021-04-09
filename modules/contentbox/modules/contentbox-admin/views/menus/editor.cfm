@@ -84,7 +84,7 @@
             </div>
             <div class="panel-body">
                 <!--- id --->
-                #html.hiddenField( name="menuID", bind=prc.menu )#
+                #html.hiddenField( name="id", bind=prc.menu )#
                 #html.hiddenField( name="menuItems" )#
                 <!--- title --->
                 #html.textfield(

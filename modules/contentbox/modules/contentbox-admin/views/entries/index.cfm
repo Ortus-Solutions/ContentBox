@@ -30,7 +30,7 @@
 		#html.startForm( name="entryForm", action=prc.xehEntryRemove )#
 
 			#html.hiddenField( name="contentStatus", value="" )#
-			#html.hiddenField( name="contentID", value="" )#
+			#html.hiddenField( name="id", value="" )#
 
 			<div class="panel panel-default">
 				<div class="panel-heading">

@@ -22,7 +22,7 @@
 	<div class="col-md-12">
 
 		#html.startForm( name="categoryForm", action=prc.xehCategoryRemove )#
-		#html.hiddenField( name="categoryID", value="" )#
+		#html.hiddenField( name="id", value="" )#
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -203,7 +203,7 @@
 					role 			= "form"
 				)#
 				<div class="modal-body">
-					#html.hiddenField( name="categoryID", value="" )#
+					#html.hiddenField( name="id", value="" )#
 					#html.textField(
 						name		 	= "category",
 						label		 	= "Category:",

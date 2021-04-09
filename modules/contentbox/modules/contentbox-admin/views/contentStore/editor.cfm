@@ -45,7 +45,7 @@
             <!--- MessageBox --->
             #cbMessageBox().renderit()#
             <!--- form --->
-            #html.hiddenField( name="contentID", bind=prc.content)#
+            #html.hiddenField( name="id", bind=prc.content)#
             #html.hiddenField( name="contentType", bind=prc.content)#
             #html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
 

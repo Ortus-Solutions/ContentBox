@@ -42,7 +42,7 @@
 				)#
 					#html.startFieldset( legend="Account Details" )#
 
-						#html.hiddenField( name="authorID", bind=prc.author )#
+						#html.hiddenField( name="id", bind=prc.author )#
 
 						#html.textField(
 							name    		= "firstName",

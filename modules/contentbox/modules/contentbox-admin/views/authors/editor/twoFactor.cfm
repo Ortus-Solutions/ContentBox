@@ -7,7 +7,7 @@
 		novalidate 	= "novalidate",
 		class 		= "form-vertical"
 	)#
-		#html.hiddenField( name="authorID", bind=prc.author )#
+		#html.hiddenField( name="id", bind=prc.author )#
 		#html.hiddenField( name="relocationURL", value=event.buildLink( prc.xehTwoFactorRelocation ) )#
 
 		<fieldset>

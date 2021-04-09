@@ -136,7 +136,7 @@
 			</div>
 
 		    <div class="panel-body">
-				#html.hiddenField( name="ruleID" )#
+				#html.hiddenField( name="id" )#
 				<div id="rulesTable">
 					#renderView( view = "securityRules/rulesTable", prePostExempt = true )#
 				</div>
