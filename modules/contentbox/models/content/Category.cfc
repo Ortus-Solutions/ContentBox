@@ -104,10 +104,8 @@ component
 					and page.contentID = content.id";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "categoryID";
 
 	this.constraints = {
 		"category" : { required : true, size : "1..200" },

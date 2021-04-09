@@ -96,10 +96,8 @@ component
 		lazy        ="extra";
 
 	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
+	 **                          CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "menuID";
 
 	this.constraints = {
 		"title"     : { required : true, size : "1..200" },

@@ -44,10 +44,8 @@ component 	persistent="true"
 						where groupPermissions.FK_permissionID=id";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS
+	**							CONSTRAINTS
 	********************************************************************* */
-
-	this.pk = "permissionID";
 
 	this.constraints = {
 		"permission"		= { required = true, size = "1..255", validator = "UniqueValidator@cborm" },

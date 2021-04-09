@@ -84,10 +84,8 @@ component
 		index    ="idx_moduleType";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "moduleID";
 
 	this.constraints = {
 		"name"         : { required : true, size : "1..255" },

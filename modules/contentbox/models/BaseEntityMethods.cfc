@@ -9,9 +9,11 @@
 component{
 
 	// PK Pointer
-	this.pk = "PLEASE_SELECT_ONE";
+	this.pk = "id";
 	// Constraints Default
 	this.constraints = {};
+
+
 
 	/* *********************************************************************
 	**						PUBLIC FUNCTIONS

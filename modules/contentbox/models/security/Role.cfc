@@ -70,10 +70,8 @@ component 	persistent="true"
 	property name="permissionList" 	persistent="false";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS
+	**							CONSTRAINTS
 	********************************************************************* */
-
-	this.pk = "roleID";
 
 	this.constraints = {
 		"role"	 			= { required = true, size = "1..255", validator = "UniqueValidator@cborm" },

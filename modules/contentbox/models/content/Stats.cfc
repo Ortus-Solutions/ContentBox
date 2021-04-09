@@ -36,10 +36,8 @@ component 	persistent="true"
 				fetch="join";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS
+	**							CONSTRAINTS
 	********************************************************************* */
-
-	this.pk = "statsID";
 
 	this.constraints = {
 		"hits"	= { required = false, type="numeric" }

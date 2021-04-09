@@ -104,10 +104,8 @@ component
 		cascade     ="all-delete-orphan";
 
 	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
+	 **                          CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "menuItemID";
 
 	this.constraints = {
 		"title"     : { required : true, size : "1..200" },

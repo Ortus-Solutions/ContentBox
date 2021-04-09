@@ -41,10 +41,8 @@ component
 		orderBy  ="subscriberEmail";
 
 	/* *********************************************************************
-	 **                          PK + CONSTRAINTS
+	 **                          CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "subscriptionID";
 
 	this.constraints = {
 		"subscriptionToken" : { required : true, size : "1..255" },

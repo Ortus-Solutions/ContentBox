@@ -89,10 +89,8 @@ component
 	property name="renderedContent" persistent="false";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "contentVersionID";
 
 	this.constraints = {
 		"content" : { required : true },

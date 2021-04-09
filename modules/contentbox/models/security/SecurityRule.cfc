@@ -113,10 +113,8 @@ component
 		length   ="50";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "ruleID";
 
 	this.constraints = {
 		"whitelist"  : { required : false, size : "1..255" },

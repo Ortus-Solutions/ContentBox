@@ -93,10 +93,8 @@ component
 	property name="permissionList" persistent="false";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "permissionGroupID";
 
 	this.constraints = {
 		"name" : {

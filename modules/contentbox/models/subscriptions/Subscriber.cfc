@@ -41,10 +41,8 @@ component   persistent="true"
                 cascade="all-delete-orphan";
 
     /* *********************************************************************
-    **                          PK + CONSTRAINTS
+    **                          CONSTRAINTS
     ********************************************************************* */
-
-    this.pk = "subscriberID";
 
     this.constraints ={
         "subscriptionToken" = { required=true, size="1..255" },

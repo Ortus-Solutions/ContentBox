@@ -5,34 +5,34 @@
 * ---
 * A Submenu-based Menu Item
 */
-component   persistent="true" 
-            entityName="cbSubMenuItem" 
-            table="cb_menuItem" 
-            extends="contentbox.models.menu.item.BaseMenuItem" 
+component   persistent="true"
+            entityName="cbSubMenuItem"
+            table="cb_menuItem"
+            extends="contentbox.models.menu.item.BaseMenuItem"
             discriminatorValue="SubMenu" {
-    
+
     /* *********************************************************************
-    **                          DI                                  
+    **                          DI
     ********************************************************************* */
     property name="provider" persistent="false" inject="contentbox.models.menu.providers.SubMenuProvider";
-    
+
     /* *********************************************************************
-    **                          PROPERTIES                                  
+    **                          PROPERTIES
     ********************************************************************* */
-    
-    property    name="menuSlug" 
-                notnull="false" 
-                ormtype="string" 
+
+    property    name="menuSlug"
+                notnull="false"
+                ormtype="string"
                 default="";
-    
+
     /* *********************************************************************
-    **                          PK + CONSTRAINTS                                  
+    **                          CONSTRAINTS
     ********************************************************************* */
 
     this.constraints[ "menuSlug" ]     = { required = false, size = "1..255" };
 
     /* *********************************************************************
-    **                          PUBLIC FUNCTIONS                                  
+    **                          PUBLIC FUNCTIONS
     ********************************************************************* */
 
     /**
@@ -40,10 +40,10 @@ component   persistent="true"
      */
     public struct function getMemento(){
         var result = super.getMemento();
-        
+
         // add our subclasses's properties
         result[ "menuSlug" ] = getMenuSlug();
-        
+
         return result;
     }
 
@@ -57,6 +57,6 @@ component   persistent="true"
             var slug = getMenuSlug();
             return !arrayFindNoCase( options.slugCache, slug ) ? true : false;
         }
-        return display;    
+        return display;
     }
 }

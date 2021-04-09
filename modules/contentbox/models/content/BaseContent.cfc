@@ -381,10 +381,8 @@ component
 		default="0";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS + STATIC VARS
+	 **							CONSTRAINTS + STATIC VARS
 	 ********************************************************************* */
-
-	this.pk = "contentID";
 
 	this.constraints = {
 		"title"                  : { required : true, size : "1..200" },

@@ -53,10 +53,8 @@ component
 		lazy     ="true";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "settingID";
 
 	this.constraints = {
 		"name"  : { required : true, size : "1..100" },

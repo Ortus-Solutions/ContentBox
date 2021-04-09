@@ -5,40 +5,40 @@
 * ---
 * A Content-based Menu Item
 */
-component   persistent="true" 
-			entityName="cbContentMenuItem" 
-			table="cb_menuItem" 
-			extends="contentbox.models.menu.item.BaseMenuItem" 
+component   persistent="true"
+			entityName="cbContentMenuItem"
+			table="cb_menuItem"
+			extends="contentbox.models.menu.item.BaseMenuItem"
 			discriminatorValue="Content"{
 
 	/* *********************************************************************
-	**                          DI                                  
+	**                          DI
 	********************************************************************* */
-	
+
 	property name="provider"            persistent="false"  inject="contentbox.models.menu.providers.ContentProvider";
 	property name="contentService"      persistent="false"  inject="id:contentService@cb";
-	
+
 	/* *********************************************************************
-	**                          PROPERTIES                                  
+	**                          PROPERTIES
 	********************************************************************* */
 
-	property    name="contentSlug" 
-				notnull="false" 
-				ormtype="string" 
+	property    name="contentSlug"
+				notnull="false"
+				ormtype="string"
 				default="";
 
-	property    name="target" 
-				notnull="false" 
-				ormtype="string" 
+	property    name="target"
+				notnull="false"
+				ormtype="string"
 				default="";
 
-	property    name="urlClass" 
-				notnull="false" 
-				ormtype="string" 
+	property    name="urlClass"
+				notnull="false"
+				ormtype="string"
 				default="";
 
 	/* *********************************************************************
-	**                          PK + CONSTRAINTS                                  
+	**                          CONSTRAINTS
 	********************************************************************* */
 
 	this.constraints[ "contentSlug" ] 	= { required = false, size = "1..255" };
@@ -46,7 +46,7 @@ component   persistent="true"
 	this.constraints[ "urlClass" ]		= { required = false, size = "1..255" };
 
 	/* *********************************************************************
-	**                          PUBLIC FUNCTIONS                                  
+	**                          PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -54,7 +54,7 @@ component   persistent="true"
 	 */
 	public struct function getMemento(){
 		var result = super.getMemento();
-		
+
 		// add our subclasses's properties
 		result[ "contentSlug" ] = getContentSlug();
 		result[ "urlClass" ] 	= getURLClass();
@@ -74,6 +74,6 @@ component   persistent="true"
 			var type = content.getContentType();
 			return content.isLoaded() && ( type=="Page" || type=="Entry" ) ? true : false;
 		}
-		return display;        
+		return display;
 	}
 }

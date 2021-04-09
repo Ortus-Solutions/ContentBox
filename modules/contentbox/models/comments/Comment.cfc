@@ -80,8 +80,6 @@ component
 	 **							CONSTRAINTS + PK
 	 ********************************************************************* */
 
-	this.pk = "commentID";
-
 	this.constraints = {
 		"content"     : { required : true },
 		"author"      : { required : true, size : "1..100" },

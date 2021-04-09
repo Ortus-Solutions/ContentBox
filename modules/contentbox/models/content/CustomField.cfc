@@ -40,10 +40,8 @@ component 	persistent="true"
 				index="idx_contentCustomFields";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS
+	**							CONSTRAINTS
 	********************************************************************* */
-
-	this.pk = "customFieldID";
 
 	this.constraints = {
 		"key" = { required = true, size = "1..255"},

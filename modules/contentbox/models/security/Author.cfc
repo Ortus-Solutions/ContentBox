@@ -195,10 +195,8 @@ component
 	property name="permissionList" persistent="false";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							CONSTRAINTS
 	 ********************************************************************* */
-
-	this.pk = "authorID";
 
 	this.constraints = {
 		"firstName" : { required : true, size : "1..100" },
