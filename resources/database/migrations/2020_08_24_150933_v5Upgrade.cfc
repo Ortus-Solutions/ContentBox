@@ -106,65 +106,21 @@ component {
 
 	private function removeUniqueConstraints( schema, query ){
 		// Remove Setting Name Unique Constraint
-		try {
-			dropIndexesForTableColumn( "cb_settings", "name" );
-			systemOutput( "√ - Setting name unique constraint dropped", true );
-		} catch ( any e ) {
-			if ( findNoCase( "column/key exists", e.message ) ) {
-				systemOutput(
-					"√ - Setting name unique constraint deletion skipped as it doesn't exist",
-					true
-				);
-			} else {
-				rethrow;
-			}
-		}
+		dropIndexesForTableColumn( "cb_settings", "name" );
+		systemOutput( "√ - Setting name unique constraint dropped", true );
 
 		// Remove Content Unique Constraint
-		try {
-
-			dropIndexesForTableColumn( "cb_content", "slug" );
-			systemOutput( "√ - Content slug unique constraint dropped", true );
-		} catch ( any e ) {
-			if ( findNoCase( "column/key exists", e.message ) ) {
-				systemOutput(
-					"√ - Content slug unique constraint deletion skipped as it doesn't exist",
-					true
-				);
-			} else {
-				rethrow;
-			}
-		}
+		dropIndexesForTableColumn( "cb_content", "slug" );
+		systemOutput( "√ - Content slug unique constraint dropped", true );
 
 		// Remove category unique constraint
-		try {
-			dropIndexesForTableColumn( "cb_category", "slug" );
-			systemOutput( "√ - Content Category slug unique constraint dropped", true );
-		} catch ( any e ) {
-			if ( findNoCase( "column/key exists", e.message ) ) {
-				systemOutput(
-					"√ - Content Category slug unique constraint deletion skipped as it doesn't exist",
-					true
-				);
-			} else {
-				rethrow;
-			}
-		}
+		dropIndexesForTableColumn( "cb_category", "slug" );
+		systemOutput( "√ - Content Category slug unique constraint dropped", true );
 
 		// Remove menu unique constraint
-		try {
-			dropIndexesForTableColumn( "cb_menu", "slug" );
-			systemOutput( "√ - Menu slug unique constraint dropped", true );
-		} catch ( any e ) {
-			if ( findNoCase( "column/key exists", e.message ) ) {
-				systemOutput(
-					"√ - Menu slug unique constraint deletion skipped as it doesn't exist",
-					true
-				);
-			} else {
-				rethrow;
-			}
-		}
+		dropIndexesForTableColumn( "cb_menu", "slug" );
+		systemOutput( "√ - Menu slug unique constraint dropped", true );
+
 	}
 
 	private function createSiteRelationships( schema, query, siteId ){
