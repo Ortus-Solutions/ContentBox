@@ -175,7 +175,7 @@ component {
 				table.addConstraint(
 					table
 						.foreignKey( "FK_siteId" )
-						.references( "siteID" )
+						.references( "id" )
 						.onTable( "cb_site" )
 						.onDelete( "CASCADE" )
 				);
@@ -184,15 +184,13 @@ component {
 			systemOutput( "√ - Created site column on '#thisTable#'", true );
 
 			// Seed with site id
-			if ( thisTable != "cb_setting" ) {
-				query
-					.newQuery()
-					.from( thisTable )
-					.whereNull( "FK_siteId" )
-					.update( { "FK_siteId" : siteId } );
+			query
+				.newQuery()
+				.from( thisTable )
+				.whereNull( "FK_siteId" )
+				.update( { "FK_siteId" : siteId } );
 
-				systemOutput( "√ - Populated '#thisTable#' with default site data", true );
-			}
+			systemOutput( "√ - Populated '#thisTable#' with default site data", true );
 
 		} );
 	}
@@ -203,14 +201,14 @@ component {
 	private function updateAdminPermissions( schema, query ){
 		var admin = arguments.query
 			.newQuery()
-			.select( "roleID" )
+			.select( "id" )
 			.from( "cb_role" )
 			.where( "role", "Administrator" )
 			.first();
 
 		var siteAdmin = arguments.query
 			.newQuery()
-			.select( "permissionID" )
+			.select( "id" )
 			.from( "cb_permission" )
 			.where( "permission", "SITES_ADMIN" )
 			.first();
@@ -219,7 +217,7 @@ component {
 			.newQuery()
 			.select( "FK_permissionID" )
 			.from( "cb_rolePermissions" )
-			.where( "FK_permissionID", siteAdmin.permissionID )
+			.where( "FK_permissionID", siteAdmin.id )
 			.first()
 			.isEmpty();
 
@@ -228,8 +226,8 @@ component {
 				.newQuery()
 				.from( "cb_rolePermissions" )
 				.insert( {
-					"FK_roleID"       : admin.roleID,
-					"FK_permissionID" : siteAdmin.permissionID
+					"FK_roleID"       : admin.id,
+					"FK_permissionID" : siteAdmin.id
 				} );
 			systemOutput( "√ - Admin role updated with new permissions", true );
 		} else {
@@ -244,7 +242,7 @@ component {
 		variables.newPermissions.each( ( thisPermission ) => {
 			var isNewPermission = query
 				.newQuery()
-				.select( "permissionID" )
+				.select( "id" )
 				.from( "cb_permission" )
 				.where( "permission", thisPermission.name )
 				.first()
@@ -262,7 +260,7 @@ component {
 				.newQuery()
 				.from( "cb_permission" )
 				.insert( {
-					"permissionID" : uuidLib.randomUUID().toString(),
+					"id" : uuidLib.randomUUID().toString(),
 					"createdDate"  : today,
 					"modifiedDate" : today,
 					"isDeleted"    : 0,
@@ -280,7 +278,7 @@ component {
 
 		// Create the site table
 		arguments.schema.create( "cb_site", ( table ) => {
-			table.uuid( "siteID" ).primaryKey();
+			table.uuid( "id" ).primaryKey();
 			table.dateTime( "createdDate" );
 			table.dateTime( "modifiedDate" );
 			table.boolean( "isDeleted" ).default( false );
@@ -309,7 +307,7 @@ component {
 			"cb_setting",
 			function( table ){
 				table.addColumn( table.uuid( "FK_siteId" ).nullable() );
-				table.addConstraint( table.uuid( "FK_siteId" ).references( "siteID" ).onTable( "cb_site" ) )
+				table.addConstraint( table.uuid( "FK_siteId" ).references( "id" ).onTable( "cb_site" ) )
 			}
 		);
 
@@ -329,7 +327,7 @@ component {
 			.newQuery()
 			.from( "cb_site" )
 			.insert( {
-				"siteID"             : initialSiteIdentifier,
+				"id"                 : initialSiteIdentifier,
 				"createdDate"        : today,
 				"modifiedDate"       : today,
 				"isDeleted"          : 0,
@@ -351,6 +349,47 @@ component {
 			} );
 		systemOutput( "√ - Default site created", true );
 
+		var siteSettings = [
+				// Global HTML: Panel Section
+				"cb_html_beforeHeadEnd",
+				"cb_html_afterBodyStart",
+				"cb_html_beforeBodyEnd",
+				"cb_html_beforeContent",
+				"cb_html_afterContent",
+				"cb_html_beforeSideBar",
+				"cb_html_afterSideBar",
+				"cb_html_afterFooter",
+				"cb_html_preEntryDisplay",
+				"cb_html_postEntryDisplay",
+				"cb_html_preIndexDisplay",
+				"cb_html_postIndexDisplay",
+				"cb_html_preArchivesDisplay",
+				"cb_html_postArchivesDisplay",
+				"cb_html_preCommentForm",
+				"cb_html_postCommentForm",
+				"cb_html_prePageDisplay",
+				"cb_html_postPageDisplay",
+				// Site Comment Settings
+				"cb_comments_enabled",
+				"cb_comments_maxDisplayChars",
+				"cb_comments_notify",
+				"cb_comments_moderation_notify",
+				"cb_comments_notifyemails",
+				"cb_comments_moderation",
+				"cb_comments_moderation_whitelist",
+				"cb_comments_moderation_blacklist",
+				"cb_comments_moderation_blockedlist",
+				"cb_comments_moderation_expiration"
+		];
+
+		// Assign all null site settings to the default
+		query
+			.newQuery()
+			.from( "cb_setting" )
+			.whereNull( "FK_siteId" )
+			.whereIn( "name", siteSettings )
+			.update( { "FK_siteId" : initialSiteIdentifier } );
+
 		return initialSiteIdentifier;
 	}
 
@@ -359,9 +398,8 @@ component {
 		// Populate all of our new identifier columns
 		idTables.keyArray().each( function( tableName ){
 			var pkColumn = idTables[ tableName ];
-			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
-				table.addColumn( table.uuid( tmpColumn ).unique().default( "#guidFn#" ) );
+				table.addColumn( table.uuid( "id" ).unique().default( "#guidFn#" ) );
 			} );
 		} );
 
@@ -403,12 +441,10 @@ component {
 		// Change primary keys over on master tables
 		idTables.keyArray().each( function( tableName ){
 			var pkColumn = idTables[ tableName ];
-			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
 				table.dropColumn( pkColumn );
-				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
-				table.addConstraint( table.primaryKey( pkColumn ) );
+				table.addConstraint( table.primaryKey( "id" ) );
 			} );
 		} );
 
@@ -418,7 +454,7 @@ component {
 			FKeys.each( function( keyConfig ){
 				var tmpColumn = "tmp_" & keyConfig.column;
 				schema.alter( tableName, function( table ){
-					table.addConstraint( table.uuid( keyConfig.column ).references( idTables[ keyConfig.reference.table ] ).onTable( keyConfig.reference.table ) );
+					table.addConstraint( table.uuid( keyConfig.column ).references( "id" ).onTable( keyConfig.reference.table ) );
 				} );
 
 			} );
@@ -438,7 +474,7 @@ component {
 				table.addConstraint( table.primaryKey( tmpColumn ) );
 				table.dropColumn( pkColumn );
 				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
-				table.addConstraint( table.uuid( pkColumn ).references( idTables[ childTables[ tableName ].parent ] ).onTable( childTables[ tableName ].parent ) );
+				table.addConstraint( table.uuid( pkColumn ).references( "id" ).onTable( childTables[ tableName ].parent ) );
 			} );
 		} );
 
@@ -616,18 +652,16 @@ component {
 			case "MySQLGrammar":{
 				variables.guidFn = 'UUID()';
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
-					var tmpId = "tmp_" & idTables[ keyConfig.reference.table ];
 					queryExecute("
 					UPDATE #tableName#
-					SET #tmpColumn# = ( SELECT #tmpId# from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
 					");
 				};
 
 				variables.populateChildFKValues = function( tmpColumn, tableName ){
-					var tmpId = "tmp_" & idTables[ childTables[ tableName ].parent ];
 					queryExecute("
 						UPDATE #tableName#
-						SET #tmpColumn# = ( SELECT #tmpId# from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
+						SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
 						");
 
 				};
@@ -703,18 +737,16 @@ component {
 					return "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#";
 				}
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
-					var tmpId = "tmp_" & idTables[ keyConfig.reference.table ];
 					queryExecute("
 					UPDATE #tableName#
-					SET #tmpColumn# = ( SELECT #tmpId# from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
 					");
 				};
 
 				variables.populateChildFKValues = function( tmpColumn, tableName ){
-					var tmpId = "tmp_" & idTables[ childTables[ tableName ].parent ];
 					queryExecute("
 						UPDATE #tableName#
-						SET #tmpColumn# = ( SELECT #tmpId# from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
+						SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
 						");
 
 				};
