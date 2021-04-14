@@ -168,9 +168,20 @@ component extends="baseHandler"{
 		var oAuthor = "";
 
 		// Param email
-		event.paramValue( "email", "" );
+		event.paramValue( "email", "" )
+			.paramValue( "_csrftoken", "" );
 
-		rc.email = antiSamy.htmlSanitizer( rc.email );
+		// Sanitize
+		rc.email		= antiSamy.htmlSanitizer( rc.email );
+		rc._csrftoken	= antiSamy.htmlSanitizer( rc._csrftoken );
+
+		if ( !csrfVerify( rc._csrftoken ) ) {
+			messagebox.warning( cb.r( "messages.invalid_token@security" ) );
+
+			return relocate(
+				event = "#prc.cbAdminEntryPoint#.security.lostPassword"
+			);
+		}
 
 		// Validate email
 		if( NOT trim( rc.email ).length() ){
@@ -181,7 +192,7 @@ component extends="baseHandler"{
 			if( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ){
 				// Don't give away that the email did not exist.
 				messagebox.info( cb.r( resource='messages.lostpassword_check@security', values="5" ) );
-				relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
+				return relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			}
 		}
 
