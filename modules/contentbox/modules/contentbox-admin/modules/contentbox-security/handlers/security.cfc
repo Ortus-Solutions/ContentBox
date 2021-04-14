@@ -50,16 +50,26 @@ component extends="baseHandler"{
 	function doLogin( event, rc, prc ){
 		// params
 		event.paramValue( "rememberMe", 0 )
-			.paramValue( "_securedURL", "" );
+			.paramValue( "_securedURL", "" )
+			.paramValue( "_csrftoken", "" );
 
 		// Sanitize
 		rc.username 	= antiSamy.htmlSanitizer( rc.username );
 		rc.password 	= antiSamy.htmlSanitizer( rc.password );
 		rc.rememberMe 	= antiSamy.htmlSanitizer( rc.rememberMe );
 		rc._securedURL 	= antiSamy.htmlSanitizer( rc._securedURL );
+		rc._csrftoken	= antiSamy.htmlSanitizer( rc._csrftoken );
 
 		// announce event
 		announce( "cbadmin_preLogin" );
+
+		if ( !csrfVerify( rc._csrftoken ) ) {
+			messagebox.warning( cb.r( "messages.invalid_token@security" ) );
+
+			return relocate(
+				event = "#prc.cbAdminEntryPoint#.security.login"
+			);
+		}
 
 		// Authenticate credentials
 		var results = securityService.authenticate( rc.username, rc.password );
@@ -69,7 +79,7 @@ component extends="baseHandler"{
 			if( results.author.getIsPasswordReset() ){
 				var token = securityService.generateResetToken( results.author );
 				messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
-				relocate(
+				return relocate(
 					event 		= "#prc.cbAdminEntryPoint#.security.verifyReset",
 					queryString = "token=#token#"
 				);
