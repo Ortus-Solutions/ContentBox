@@ -23,6 +23,7 @@
 				)#
 
 					#html.hiddenField( name="token", value=encodeForHTMLAttribute( rc.token ) )#
+					#html.hiddenField( name="_csrftoken", value=csrfToken() )#
 
 					<div class="form-group">
 						<div class="col-md-12 controls">
