@@ -234,12 +234,23 @@ component extends="baseHandler"{
 	function doPasswordChange( event, rc, prc ){
 		event.paramValue( "token", "" )
 			.paramValue( "password", "" )
-			.paramValue( "password_confirmation", "" );
+			.paramValue( "password_confirmation", "" )
+			.paramValue( "_csrftoken", "" );
 
 		// Sanitize
 		rc.token                 = antiSamy.htmlSanitizer( rc.token );
 		rc.password              = antiSamy.htmlSanitizer( rc.password );
 		rc.password_confirmation = antiSamy.htmlSanitizer( rc.password_confirmation );
+		rc._csrftoken			 = antiSamy.htmlSanitizer( rc._csrftoken );
+
+		// Validate CSRF
+		if ( !csrfVerify( rc._csrftoken ) ) {
+			messagebox.warning( cb.r( "messages.invalid_token@security" ) );
+
+			return relocate(
+				event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString="token=#rc.token#"
+			);
+		}
 
 		// Validate passwords
 		if( !len( rc.password ) || !len( rc.password_confirmation ) ){
