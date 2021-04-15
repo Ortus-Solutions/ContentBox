@@ -21,6 +21,7 @@
                 	class		= "form-horizontal"
                 )#
 					#html.hiddenField( name="_securedURL", value=rc._securedURL )#
+					#html.hiddenField( name="_csrftoken", value=csrfToken() )#
 
 					<!--- Sign In Text --->
 					<cfif len( prc.signInText )>#prc.signInText#</cfif>

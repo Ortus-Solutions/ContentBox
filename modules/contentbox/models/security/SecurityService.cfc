@@ -19,6 +19,7 @@ component singleton {
 	property name="log" inject="logbox:logger:{this}";
 	property name="cache" inject="cachebox:template";
 	property name="bCrypt" inject="BCrypt@BCrypt";
+	property name="cbCSRF" inject="@cbcsrf";
 
 	// Properties
 	property name="encryptionKey";
@@ -200,8 +201,9 @@ component singleton {
 	 * @return SecurityService
 	 */
 	SecurityService function logout(){
-		cacheStorage.clearAll();
-		cookieStorage.delete( "contentbox_keep_logged_in" );
+		variables.cacheStorage.clearAll();
+		variables.cookieStorage.delete( "contentbox_keep_logged_in" );
+		variables.cbCSRF.rotate();
 
 		return this;
 	}
