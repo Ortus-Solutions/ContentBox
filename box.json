@@ -41,6 +41,7 @@
     },
     "ignores":[],
     "scripts":{
+		"dbseed":"task run resources/seeder/Seed.cfc",
         "format":"cfformat run modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
         "format:watch":"cfformat watch modules/**/*.cfc,tests/specs/**/*.cfc ./.cfformat.json",
         "format:check":"cfformat check modules/**/*.cfc,tests/specs/**/*.cfc",
