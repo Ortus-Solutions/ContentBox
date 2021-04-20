@@ -28,7 +28,7 @@
     ],
     "dependencies":{
         "coldbox":"^6.0.0",
-		"contentbox":"^@version.number@+@build.number@",
+		"contentbox":"~@version.number@+@build.number@",
 		"commandbox-dotenv":"*",
 		"commandbox-cfconfig":"*",
 		"commandbox-migrations":"*"
