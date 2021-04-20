@@ -290,7 +290,7 @@ component {
 			// CacheBox Reporting
 			cachebox : { enabled : true, expanded : false },
 			// Modules Reporting
-			modules  : { enabled : false, expanded : false },
+			modules  : { enabled : true, expanded : false },
 			// Quick and QB Reporting
 			qb       : {
 				enabled   : false,
