@@ -9,7 +9,6 @@ settings.xml
 web.config
 "Icon\r"
 WEB-INF/**
-.vscode/*
 
 # Build Dependencies
 artifacts/**
