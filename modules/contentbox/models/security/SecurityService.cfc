@@ -161,15 +161,15 @@ component singleton {
 	 */
 	Author function getAuthorSession(){
 		// Check if valid user id in session
-		var authorID = val( cacheStorage.get( "loggedInAuthorID", "" ) );
+		var authorID = cacheStorage.get( "loggedInAuthorID", "" );
 
 		// If that fails, check for a cookie
-		if ( !authorID ) {
+		if ( !len( authorID ) ) {
 			authorID = getKeepMeLoggedIn();
 		}
 
 		// If we found an authorID, load it up
-		if ( authorID ) {
+		if ( len( authorID ) ) {
 			// try to get it with that ID
 			var author = authorService.findWhere( { authorID : authorID, isActive : true } );
 			// If user found?
@@ -609,8 +609,7 @@ component singleton {
 		var cookieValue = cookieStorage.get( "contentbox_keep_logged_in", "" );
 
 		try {
-			// Decrypted value should be a number representing the authorID
-			return val( decryptIt( cookieValue ) );
+			return decryptIt( cookieValue );
 		} catch ( Any e ) {
 			// Errors on decryption
 			log.error(
@@ -618,7 +617,7 @@ component singleton {
 				cookieValue
 			);
 			cookieStorage.delete( "contentbox_keep_logged_in" );
-			return 0;
+			return "";
 		}
 	}
 
