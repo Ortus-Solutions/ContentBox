@@ -1,0 +1,29 @@
+[
+    {
+        "categoryID": 2,
+        "category": "ColdFusion",
+        "slug": "coldfusion",
+        "createdDate": "2016-05-03 16:23:25",
+        "modifiedDate": "2016-05-03 16:23:25",
+        "isDeleted": 0,
+        "FK_siteId": 1
+    },
+	{
+        "categoryID": 4,
+        "category": "ContentBox",
+        "slug": "contentbox",
+        "createdDate": "2016-05-03 16:23:25",
+        "modifiedDate": "2016-05-03 16:23:25",
+        "isDeleted": 0,
+        "FK_siteId": 1
+    },
+	{
+        "categoryID": 5,
+        "category": "coldbox",
+        "slug": "coldbox",
+        "createdDate": "2016-05-03 16:23:25",
+        "modifiedDate": "2016-05-03 16:23:25",
+        "isDeleted": 0,
+        "FK_siteId": 1
+    }
+]

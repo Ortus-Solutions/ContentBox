@@ -1,0 +1,38 @@
+[
+    {
+        "loginAttemptsID": 16,
+        "value": "lmajano",
+        "attempts": 0,
+        "createdDate": "2016-11-28 14:56:43",
+        "lastLoginSuccessIP": "127.0.0.1",
+        "modifiedDate": "2016-11-28 14:56:46",
+        "isDeleted": 0
+    },
+    {
+        "loginAttemptsID": 17,
+        "value": "testermajano",
+        "attempts": 0,
+        "createdDate": "2017-06-21 16:07:26",
+        "lastLoginSuccessIP": "127.0.0.1",
+        "modifiedDate": "2017-06-21 17:37:42",
+        "isDeleted": 0
+    },
+    {
+        "loginAttemptsID": 19,
+        "value": "joejoe@joe.com",
+        "attempts": 0,
+        "createdDate": "2017-07-06 11:37:09",
+        "lastLoginSuccessIP": { "value": "", "null": true },
+        "modifiedDate": "2017-07-06 11:37:31",
+        "isDeleted": 0
+    },
+    {
+        "loginAttemptsID": 20,
+        "value": "joejoe",
+        "attempts": 0,
+        "createdDate": "2017-07-06 11:38:28",
+        "lastLoginSuccessIP": "127.0.0.1",
+        "modifiedDate": "2017-07-06 11:38:28",
+        "isDeleted": 0
+    }
+]

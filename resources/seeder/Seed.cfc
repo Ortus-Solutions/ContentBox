@@ -56,6 +56,329 @@ component {
 				var aPerms = deserializeJSON( fileRead( "mockdata/permissions.json" ) );
 				qb.from( "cb_permission" ).insert( aPerms );
 				print.cyanLine( "   ==> (#aPerms.len()#) User Permissions inserted" );
+
+				/******************** AUTHORS ************************/
+				print.line().greenLine( "Generating authors..." );
+				truncate( "cb_author" );
+				var aAuthors = deserializeJSON( fileRead( "mockdata/authors.json" ) );
+				qb.from( "cb_author" ).insert( aAuthors );
+				print.cyanLine( "   ==> (#aAuthors.len()#) Authors inserted" );
+				
+				/******************* AUTHOR PERMISSION GROUP *****************/
+				print.line().greenLine( "Generating authors permission groups..." );
+				truncate( "cb_authorPermissionGroups" );
+				var aAuthorsPermissionGroup = [
+					{
+						"FK_authorID" : 4,
+						"FK_permissionGroupID": 1
+					},
+					{
+						"FK_authorID" : 5,
+						"FK_permissionGroupID": 1
+					},
+					{
+						"FK_authorID" : 5,
+						"FK_permissionGroupID": 2
+					}
+				];
+
+				qb.from( "cb_authorPermissionGroups" ).insert( aAuthorsPermissionGroup );
+				print.cyanLine( "   ==> (#aAuthorsPermissionGroup.len()#) Authors Permission Group inserted" );
+
+				/******************** AUTHOR PERMISSIONS *********************/
+				print.line().greenLine( "Generating authors permissions..." );
+				truncate( "cb_authorPermissions" );
+
+				var aAuthorPermissions = [
+					{
+						"FK_authorID": 3,
+						"FK_permissionID": 36
+					},
+					{
+						"FK_authorID": 3,
+						"FK_permissionID": 45
+					},
+					{
+						"FK_authorID": 3,
+						"FK_permissionID": 42
+					},
+					{
+						"FK_authorID": 3,
+						"FK_permissionID": 41
+					},
+					{
+						"FK_authorID": 3,
+						"FK_permissionID": 40
+					},
+					{
+						"FK_authorID": 3,
+						"FK_permissionID": 44
+					}
+				];
+
+				qb.from( "cb_authorPermissions" ).insert( aAuthorPermissions );
+				print.cyanLine( "   ==> (#aAuthorPermissions.len()#) Authors Permissions inserted" );
+
+				/******************** CATEGORIES *****************************/
+				print.line().greenLine( "Generating categories..." );
+				truncate( "cb_category" );
+				var aCategories = deserializeJSON( fileRead( "mockdata/categories.json" ) );
+				qb.from( "cb_category" ).insert( aCategories );
+				print.cyanLine( "   ==> (#aCategories.len()#) Categories inserted" );
+
+				/******************** COMMENTS *******************************/
+				print.line().greenLine( "Generating comments..." );
+				truncate( "cb_comment" );
+				var aComments = deserializeJSON( fileRead( "mockdata/comments.json" ) );
+				qb.from( "cb_comment" ).insert( aComments );
+				print.cyanLine( "   ==> (#aComments.len()#) Comments inserted" );
+
+				/********************* COMMENTS SUBSCRIPTIONS ****************/
+				print.line().greenLine( "Generating comment subscriptions..." );
+				truncate( "cb_commentSubscriptions" );
+
+				var aCommentSubscriptions = [
+					{
+						"subscriptionID": 5,
+						"FK_contentID": 141
+					},
+					{
+						"subscriptionID": 6,
+						"FK_contentID": 141
+					},
+					{
+						"subscriptionID": 4,
+						"FK_contentID": 142
+					},
+				];
+
+				qb.from( "cb_commentSubscriptions" ).insert( aCommentSubscriptions );
+				print.cyanLine( "   ==> (#aCommentSubscriptions.len()#) Comment Subscriptions inserted" );
+
+				/******************** CONTENT ********************************/
+				print.line().greenLine( "Generating content..." );
+				truncate( "cb_content" );
+				var aContent = deserializeJSON( fileRead( "mockdata/content.json" ) );
+				qb.from( "cb_content" ).insert( aContent );
+				print.cyanLine( "   ==> (#aContent.len()#) Content inserted" );
+
+				/******************** CONTENT CATEGORIES *********************/
+				print.line().greenLine( "Generating content categories..." );
+				truncate( "cb_contentCategories" );
+
+				var aContentCategories = [
+					{
+						"FK_contentID": 114,
+						"FK_categoryID": 2
+					},
+					{
+						"FK_contentID": 114,
+						"FK_categoryID": 4
+					},
+					{
+						"FK_contentID": 64,
+						"FK_categoryID": 2
+					},
+					{
+						"FK_contentID": 64,
+						"FK_categoryID": 4
+					},
+					{
+						"FK_contentID": 87,
+						"FK_categoryID": 2
+					},
+					{
+						"FK_contentID": 87,
+						"FK_categoryID": 4
+					},
+					{
+						"FK_contentID": 88,
+						"FK_categoryID": 2
+					},
+					{
+						"FK_contentID": 88,
+						"FK_categoryID": 4
+					},
+					{
+						"FK_contentID": 147,
+						"FK_categoryID": 5
+					}
+				];
+
+				qb.from( "cb_contentCategories" ).insert( aContentCategories );
+				print.cyanLine( "   ==> (#aContentCategories.len()#) Content Categories inserted" );
+
+				/******************** CONTENT STORE **************************/
+				print.line().greenLine( "Generating content store..." );
+				truncate( "cb_contentStore" );
+
+				aContentStore = [
+					{
+						"contentID": 111,
+						"description": "My very first content",
+						"order": 0
+					},
+					{
+						"contentID": 114,
+						"description": "Most greatest news",
+						"order": 0
+					},
+					{
+						"contentID": 122,
+						"description": "",
+						"order": 0
+					},
+					{
+						"contentID": 123,
+						"description": "footer",
+						"order": 0
+					},
+					{
+						"contentID": 124,
+						"description": "support options",
+						"order": 0
+					},
+					{
+						"contentID": 127,
+						"description": "Test",
+						"order": 0
+					},
+					{
+						"contentID": 159,
+						"description": "A small footer",
+						"order": 0
+					},
+					{
+						"contentID": 168,
+						"description": "test",
+						"order": 0
+					},
+					{
+						"contentID": 169,
+						"description": "asdf",
+						"order": 0
+					},
+					{
+						"contentID": 219,
+						"description": "",
+						"order": 0
+					}
+				];
+
+				qb.from( "cb_contentStore" ).insert( aContentStore );
+				print.cyanLine( "   ==> (#aContentStore.len()#) Content Store inserted" );
+
+				/******************** CONTENT VERSION ************************/
+				
+				/******************** CUSTOM FIELD ***************************/
+				print.line().greenLine( "Generating custom field..." );
+				truncate( "cb_customfield" );
+
+				var aCustomFields = [
+					{
+						"customFieldID": 3,
+						"key": "age",
+						"value": '30',
+						"FK_contentID": 114,
+						"createdDate": "2016-05-03 16:23:25",
+						"modifiedDate": "2016-05-03 16:23:25",
+						"isDeleted": 0
+					},
+					{
+						"customFieldID": 4,
+						"key": "subtitle",
+						"value": '4',
+						"FK_contentID": 114,
+						"createdDate": "2016-05-03 16:23:25",
+						"modifiedDate": "2016-05-03 16:23:25",
+						"isDeleted": 0
+					}
+				];
+
+				qb.from( "cb_customfield" ).insert( aCustomFields );
+				print.cyanLine( "   ==> (#aCustomFields.len()#) Custom Fields inserted" );
+
+				/******************** ENTRIES ********************************/
+				print.line().greenLine( "Generating entries..." );
+				truncate( "cb_entry" );
+
+				var aEntries = deserializeJSON( fileRead( "mockdata/entries.json" ) );
+
+				qb.from( "cb_entry" ).insert( aEntries );
+				print.cyanLine( "   ==> (#aEntries.len()#) Entries inserted" );
+
+				/******************** GROUP PERMISSIONS **********************/
+				print.line().greenLine( "Generating group permissions..." );
+				truncate( "cb_groupPermissions" );
+
+				var aGroupPermissions = [
+					{
+						"FK_permissionGroupID": 1,
+						"FK_permissionID": 14
+					},
+					{
+						"FK_permissionGroupID": 1,
+						"FK_permissionID": 28
+					},
+					{
+						"FK_permissionGroupID": 1,
+						"FK_permissionID": 25
+					},
+					{
+						"FK_permissionGroupID": 2,
+						"FK_permissionID": 29
+					},
+					{
+						"FK_permissionGroupID": 2,
+						"FK_permissionID": 3
+					}
+				];
+
+				qb.from( "cb_groupPermissions" ).insert( aGroupPermissions );
+				print.cyanLine( "   ==> (#aGroupPermissions.len()#) Group Permissions inserted" );
+				
+				/******************** LOGIN ATTEMPTS *************************/
+				print.line().greenLine( "Generating login attempts..." );
+				truncate( "cb_loginAttempts" );
+
+				var aLoginAttempts = deserializeJSON( fileRead( "mockdata/loginAttempts.json" ) );
+
+				qb.from( "cb_loginAttempts" ).insert( aLoginAttempts );
+				print.cyanLine( "   ==> (#aLoginAttempts.len()#) Login Attempts inserted" );
+
+				/******************** MENU ***********************************/
+				print.line().greenLine( "Generating menus..." );
+				truncate( "cb_menu" );
+
+				var aMenus = [
+					{
+						"menuID": 2,
+						"title": "Test",
+						"slug": "test",
+						"listType": "ul",
+						"createdDate": "2016-05-04 17:00:14",
+						"menuClass": "",
+						"listClass": "",
+						"modifiedDate": "2016-05-04 17:20:11",
+						"isDeleted": 0,
+						"FK_siteId": 1
+					},
+					{
+						"menuID": 3,
+						"title": "test",
+						"slug": "test -e123c",
+						"listType": "ul",
+						"createdDate": "2016-05-04 17:02:54",
+						"menuClass": "",
+						"listClass": "",
+						"modifiedDate": "2016-05-04 17:02:54",
+						"isDeleted": 0,
+						"FK_siteId": 1
+					}
+				];
+
+				qb.from( "cb_menu" ).insert( aMenus );
+				print.cyanLine( "   ==> (#aMenus.len()#) Menus inserted" );
 				return;
 
 				/******************** PROJECT PERMISSIONS ********************/
