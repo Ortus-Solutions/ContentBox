@@ -41,13 +41,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total content counts according to the passed filters
 	 *
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 * @categoryId The category Id to filter on
 	 */
-	numeric function getTotalContentCount( siteId = "", categoryId = "" ){
+	numeric function getTotalContentCount( siteID = "", categoryId = "" ){
 		var c = newCriteria()
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.when( len( arguments.categoryId ), function( c ){
 				c.joinTo( "categories", "cats" ).isEq( "cats.categoryID", categoryId );
@@ -146,7 +146,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
 	 * @excludeIDs List of IDs to exclude from search
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
-	 * @siteId The site ID to filter on
+	 * @siteID The site ID to filter on
 	 *
 	 * @returns struct = { content, count }
 	 */
@@ -161,7 +161,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		string contentTypes         = "",
 		any excludeIDs              = "",
 		boolean showInSearch,
-		string siteId = ""
+		string siteID = ""
 	){
 		var results = { "count" : 0, "content" : [] };
 		var c       = newCriteria();
@@ -206,8 +206,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// Content Types
@@ -247,15 +247,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get an id from a slug of a content object
 	 *
 	 * @slug The slug to search an ID for.
-	 * @siteId The site this slug belongs to
+	 * @siteID The site this slug belongs to
 	 *
 	 * @return The id of the content object or empty string if not found
 	 */
-	function getIdBySlug( required any slug, string siteId = "" ){
+	function getIdBySlug( required any slug, string siteID = "" ){
 		var results = newCriteria()
 			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.withProjections( property: "contentID" )
 			.get();
@@ -270,19 +270,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @slug The slug to search
 	 * @showUnpublished To also show unpublished content, defaults to false.
-	 * @siteId The site this slug belongs to
+	 * @siteID The site this slug belongs to
 	 *
 	 * @return The content object or a new unpersisted content object
 	 */
 	function findBySlug(
 		required any slug,
 		required boolean showUnpublished = false,
-		string siteId                    = ""
+		string siteID                    = ""
 	){
 		var oContent = newCriteria()
 			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.when( !showUnpublished, function( c ){
 				c.isTrue( "isPublished" )
@@ -303,19 +303,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @slug The slug to search for uniqueness
 	 * @contentID Limit the search to the passed contentID usually for updates
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 *
 	 * @return True if the slug is unique or false if it's already used
 	 */
 	boolean function isSlugUnique(
 		required any slug,
 		any contentID = "",
-		string siteId = ""
+		string siteID = ""
 	){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.when( len( arguments.contentId ), function( c ){
 				c.ne( "contentID", contentId );
@@ -371,7 +371,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
 	 * @showInMenu Whether to filter with the show in menu bit or not
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
-	 * @siteId If passed, filter by site id
+	 * @siteID If passed, filter by site id
 	 *
 	 * @return struct as { count, content }
 	 */
@@ -385,7 +385,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		any parent,
 		boolean showInMenu,
 		string slugPrefix = "",
-		string siteId     = ""
+		string siteID     = ""
 	){
 		var results = { "count" : 0, "content" : [] };
 		var c       = newCriteria();
@@ -413,8 +413,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// Search Criteria
@@ -495,13 +495,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @author The author filtering if passed.
 	 * @max The maximum number of records to return
 	 * @offset The pagination offset
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
 	array function findExpiredContent(
 		any author,
 		numeric max    = 0,
 		numeric offset = 0,
-		string siteId  = ""
+		string siteID  = ""
 	){
 		var c = newCriteria().createAlias(
 			associationName: "contentVersions",
@@ -515,8 +515,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.isLT( "expireDate", now() );
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// author filter
@@ -538,13 +538,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @author The author filtering if passed.
 	 * @max The maximum number of records to return
 	 * @offset The pagination offset
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
 	array function findFuturePublishedContent(
 		any author,
 		numeric max    = 0,
 		numeric offset = 0,
-		string siteId  = ""
+		string siteID  = ""
 	){
 		var c = newCriteria().createAlias(
 			associationName: "contentVersions",
@@ -556,8 +556,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		c.isTrue( "isPublished" ).isGT( "publishedDate", now() );
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// author filter
@@ -579,13 +579,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @author The author object to use for retrieval
 	 * @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
 	 * @max The maximum number of records to return
-	 * @siteId The site to get edits from
+	 * @siteID The site to get edits from
 	 */
 	array function getLatestEdits(
 		any author,
 		boolean isPublished,
 		numeric max   = 25,
-		string siteId = ""
+		string siteID = ""
 	){
 		// Get only active content joins
 		return newCriteria()
@@ -599,8 +599,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				c.isEq( "isPublished", javacast( "boolean", isPublished ) );
 			} )
 			// Site Filter
-			.when( !isNull( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( !isNull( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			// author filter
 			.when( !isNull( arguments.author ), function( c ){
@@ -613,12 +613,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get the top visited content entries
 	 *
 	 * @max The maximum to retrieve, defaults to 5 entries
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	array function getTopVisitedContent( numeric max = 5, string siteId = "" ){
+	array function getTopVisitedContent( numeric max = 5, string siteID = "" ){
 		return newCriteria()
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.joinTo( "stats", "stats" )
 			.list( max = arguments.max, sortOrder = "stats.hits desc" );
@@ -628,9 +628,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get the top commented content entries
 	 *
 	 * @max The maximum to retrieve, defaults to 5 entries
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	array function getTopCommentedContent( numeric max = 5, string siteId = "" ){
+	array function getTopCommentedContent( numeric max = 5, string siteID = "" ){
 		return executeQuery(
 			query: "
 				SELECT new map( content as content, count( comments.commentID ) AS commentCount )
@@ -1049,7 +1049,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @sortOrder The sort ordering of the results
 	 * @isPublished	Show all content or true/false published content
 	 * @showInSearch Show all content or true/false showInSearch flag
-	 * @siteId The site id to use to filter on
+	 * @siteID The site id to use to filter on
 	 *
 	 * @return Array of content data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
 	 */
@@ -1057,7 +1057,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteId = ""
+		string siteID = ""
 	){
 		var c = newCriteria();
 
@@ -1081,8 +1081,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// Show in Search

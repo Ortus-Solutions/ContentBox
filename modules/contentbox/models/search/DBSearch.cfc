@@ -29,7 +29,7 @@ component
 	 * @searchTerm The search term to search on
 	 * @max The max results to return if paging
 	 * @offset The offset to use in the search results if paging
-	 * @siteId The site to filter on if passed
+	 * @siteID The site to filter on if passed
 	 *
 	 * @return contentbox.models.search.SearchResults Object
 	 */
@@ -37,7 +37,7 @@ component
 		required string searchTerm,
 		numeric max    = 0,
 		numeric offset = 0,
-		string siteId  = ""
+		string siteID  = ""
 	){
 		// get new search results object
 		var searchResults = variables.wirebox.getInstance( "SearchResults@cb" );
@@ -50,7 +50,7 @@ component
 				searchTerm  : arguments.searchTerm,
 				showInSearch: true,
 				contentTypes: "Page,Entry",
-				siteId      : arguments.siteId
+				siteID      : arguments.siteID
 			);
 
 			// populate the search results

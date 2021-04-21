@@ -35,7 +35,7 @@ component extends="ContentService" singleton {
 				!contentService.isSlugUnique(
 					slug     : arguments.page.getSlug(),
 					contentID: arguments.page.getContentID(),
-					siteId   : arguments.page.getSiteId()
+					siteID   : arguments.page.getsiteID()
 				)
 			) {
 				// make slug unique
@@ -78,7 +78,7 @@ component extends="ContentService" singleton {
 	 * @sortOrder Sorting of the results, defaults to page title asc
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	 * @siteId The site ID to filter on
+	 * @siteID The site ID to filter on
 	 *
 	 * @returns struct = { pages, count }
 	 */
@@ -94,7 +94,7 @@ component extends="ContentService" singleton {
 		string sortOrder            = "",
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
-		string siteId               = ""
+		string siteID               = ""
 	){
 		var results = { "count" : 0, "pages" : [] };
 		// criteria queries
@@ -135,8 +135,8 @@ component extends="ContentService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// Search Criteria
@@ -221,7 +221,7 @@ component extends="ContentService" singleton {
 	 * @parent The parent ID to restrict the search on
 	 * @showInMenu If passed, it limits the search to this content property
 	 * @sortOrder The sort order string, defaults to publisedDate DESC
-	 * @siteId The siteId to filter on
+	 * @siteID The siteID to filter on
 	 * @properties The list of properties to project on instead of giving you full object graphs
 	 *
 	 * @return struct of { count, pages }
@@ -235,7 +235,7 @@ component extends="ContentService" singleton {
 		string parent,
 		boolean showInMenu,
 		string sortOrder = "publishedDate DESC",
-		string siteId    = "",
+		string siteID    = "",
 		properties
 	){
 		var results = { "count" : 0, "pages" : [] };
@@ -273,8 +273,8 @@ component extends="ContentService" singleton {
 					);
 			} )
 			// Site Filter
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", siteId );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			// Parent Filter
 			.when( !isNull( arguments.parent ), function( c ){
@@ -309,7 +309,7 @@ component extends="ContentService" singleton {
 	 * @sortOrder The sort ordering of the results
 	 * @isPublished	Show all content or true/false published content
 	 * @showInSearch Show all content or true/false showInSearch flag
-	 * @siteId The site id to use to filter on
+	 * @siteID The site id to use to filter on
 	 *
 	 * @return Array of page data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
 	 */
@@ -317,7 +317,7 @@ component extends="ContentService" singleton {
 		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteId = ""
+		string siteID = ""
 	){
 		return super.getAllFlatContent( argumentCollection = arguments );
 	}

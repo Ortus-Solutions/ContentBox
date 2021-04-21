@@ -106,7 +106,7 @@ component extends="baseContentHandler" {
 			offset     : ( rc.showAll ? 0 : prc.paging.startRow - 1 ),
 			max        : ( rc.showAll ? 0 : prc.cbSettings.cb_paging_maxrows ),
 			sortOrder  : "createdDate desc",
-			siteId     : prc.oCurrentSite.getSiteId()
+			siteID     : prc.oCurrentSite.getsiteID()
 		);
 		prc.entries      = entryResults.entries;
 		prc.entriesCount = entryResults.count;
@@ -232,7 +232,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
+		event.paramValue( "site", prc.oCurrentSite.getsiteID() );
 
 		// Validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
@@ -302,7 +302,7 @@ component extends="baseContentHandler" {
 			.paramValue( "creatorID", "" )
 			.paramValue( "customFieldsCount", 0 )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getSiteId() );
+			.paramValue( "site", prc.oCurrentSite.getsiteID() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -551,7 +551,7 @@ component extends="baseContentHandler" {
 			max                : prc.cbSettings.cb_paging_maxrows,
 			sortOrder          : "publishedDate desc",
 			searchActiveContent: false,
-			siteId             : prc.oCurrentSite.getSiteId()
+			siteID             : prc.oCurrentSite.getsiteID()
 		);
 
 		prc.entries      = entryResults.entries;

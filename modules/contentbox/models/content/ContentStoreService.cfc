@@ -35,7 +35,7 @@ component extends="ContentService" singleton {
 				!variables.contentService.isSlugUnique(
 					slug     : arguments.content.getSlug(),
 					contentID: arguments.content.getContentID(),
-					siteId   : arguments.content.getSiteId()
+					siteID   : arguments.content.getsiteID()
 				)
 			) {
 				// make slug unique
@@ -81,7 +81,7 @@ component extends="ContentService" singleton {
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
-	 * @siteId The site ID to filter on
+	 * @siteID The site ID to filter on
 	 *
 	 * @returns struct = { content, count }
 	 */
@@ -98,7 +98,7 @@ component extends="ContentService" singleton {
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
 		string slugPrefix           = "",
-		string siteId               = ""
+		string siteID               = ""
 	){
 		var results = { "count" : 0, "content" : [] };
 		// criteria queries
@@ -138,8 +138,8 @@ component extends="ContentService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// Search Criteria

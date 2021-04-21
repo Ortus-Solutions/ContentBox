@@ -68,7 +68,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			category  : arguments.category,
 			searchTerm: arguments.searchTerm,
 			sortOrder : arguments.sortOrder,
-			siteId    : getSite().getSiteId()
+			siteID    : getSite().getsiteID()
 		);
 		var rString = "";
 
@@ -115,7 +115,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 * Get all the categories
 	 */
 	array function getAllCategories() cbIgnore{
-		return variables.categoryService.getAllSlugs( siteId = getSite().getSiteId() );
+		return variables.categoryService.getAllSlugs( siteID = getSite().getsiteID() );
 	}
 
 }

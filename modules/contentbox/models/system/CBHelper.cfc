@@ -185,16 +185,16 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @slug The content slug to retrieve
 	 * @defaultValue The default value to use if the content element not found.
-	 * @siteId The site to get it from, defaults to current site
+	 * @siteID The site to get it from, defaults to current site
 	 */
 	function contentStore(
 		required slug,
 		defaultValue  = "",
-		string siteId = site().getSiteId()
+		string siteID = site().getsiteID()
 	){
 		var content = variables.contentStoreService.findBySlug(
 			slug  : arguments.slug,
-			siteId: arguments.siteId
+			siteID: arguments.siteID
 		);
 
 		// Render if the object is loaded
@@ -208,11 +208,11 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @return The content object or a new empty content object
 	 */
-	function contentStoreObject( required slug, string siteId = site().getSiteId() ){
+	function contentStoreObject( required slug, string siteID = site().getsiteID() ){
 		return contentStoreService.findBySlug(
 			slug           : arguments.slug,
 			showUnpublished: true,
-			siteId         : arguments.siteId
+			siteID         : arguments.siteID
 		);
 	}
 
@@ -266,15 +266,15 @@ component accessors="true" singleton threadSafe {
 	 * - Check prc set site
 	 * - Do full detection
 	 *
-	 * @siteId The site id to get the root from, by default we use the current site you are on
+	 * @siteID The site id to get the root from, by default we use the current site you are on
 	 */
-	function site( string siteId = "" ){
+	function site( string siteID = "" ){
 		// Verify incoming override/lookup
-		if ( len( arguments.siteId ) ) {
+		if ( len( arguments.siteID ) ) {
 			// Do a request storage lookup cache for optmizations when requesting the same site
 			// over and over again in the same request.
-			return variables.requestStorage.getOrSet( "cbhelper-request-site-#arguments.siteId#", function(){
-				return variables.siteService.getOrFail( siteId );
+			return variables.requestStorage.getOrSet( "cbhelper-request-site-#arguments.siteID#", function(){
+				return variables.siteService.getOrFail( siteID );
 			} );
 		}
 
@@ -298,11 +298,11 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the site root location using your configured module's entry point and the discovered site
 	 *
-	 * @siteId The site id to get the root from, by default we use the current site you are on
+	 * @siteID The site id to get the root from, by default we use the current site you are on
 	 */
-	function siteRoot( string siteId = "" ){
+	function siteRoot( string siteID = "" ){
 		// Return the appropriate site Uri
-		return this.site( arguments.siteId ).getSiteRoot() & getPrivateRequestCollection().cbEntryPoint;
+		return this.site( arguments.siteID ).getSiteRoot() & getPrivateRequestCollection().cbEntryPoint;
 	}
 
 	/**
@@ -693,10 +693,10 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the current working site's homepage
 	 *
-	 * @siteId The site id to get it from
+	 * @siteID The site id to get it from
 	 */
-	any function getHomePage( string siteId = "" ){
-		return site( arguments.siteId ).getHomepage();
+	any function getHomePage( string siteID = "" ){
+		return site( arguments.siteID ).getHomepage();
 	}
 
 	/**
@@ -1313,19 +1313,19 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Create a link to your site homepage
 	 *
-	 * @siteId The site id to link to or use the default
+	 * @siteID The site id to link to or use the default
 	 */
-	function linkHome( string siteId = "" ){
-		return siteRoot( arguments.siteId );
+	function linkHome( string siteID = "" ){
+		return siteRoot( arguments.siteID );
 	}
 
 	/**
 	 * Create a link to your site blog
 	 *
-	 * @siteId The site id to link to or use the default
+	 * @siteID The site id to link to or use the default
 	 */
-	function linkBlog( string siteId = "" ){
-		return "#siteRoot( arguments.siteId )#/#getBlogEntryPoint()#";
+	function linkBlog( string siteID = "" ){
+		return "#siteRoot( arguments.siteID )#/#getBlogEntryPoint()#";
 	}
 
 	/**
@@ -1571,7 +1571,7 @@ component accessors="true" singleton threadSafe {
 			);
 		}
 
-		return linkBlog( arguments.entry.getSiteId() ) & "/" & arguments.entry.getSlug() & outputFormat;
+		return linkBlog( arguments.entry.getsiteID() ) & "/" & arguments.entry.getSlug() & outputFormat;
 	}
 
 	/**
@@ -1649,7 +1649,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// Build out the link
-		return siteRoot( arguments.page.getSiteId() ) & sep() & arguments.page.getSlug() & outputFormat;
+		return siteRoot( arguments.page.getsiteID() ) & sep() & arguments.page.getSlug() & outputFormat;
 	}
 
 	/**
@@ -2050,7 +2050,7 @@ component accessors="true" singleton threadSafe {
 		required array slugCache = []
 	){
 		var result = "";
-		var menu   = variables.menuService.findBySlug( arguments.slug, site().getSiteId() );
+		var menu   = variables.menuService.findBySlug( arguments.slug, site().getsiteID() );
 
 		if ( menu.isLoaded() ) {
 			if ( arguments.type == "data" ) {
@@ -2158,7 +2158,7 @@ component accessors="true" singleton threadSafe {
 		arguments.pageRecords = pageService.findPublishedPages(
 			parent    : "",
 			showInMenu: true,
-			siteId    : site().getSiteId(),
+			siteID    : site().getsiteID(),
 			properties: "contentID,slug,title,numberOfChildren"
 		);
 		// build it out
@@ -2207,7 +2207,7 @@ component accessors="true" singleton threadSafe {
 		arguments.pageRecords = pageService.findPublishedPages(
 			parent    : page.getContentID(),
 			showInMenu: true,
-			siteId    : site().getSiteId(),
+			siteID    : site().getsiteID(),
 			properties: "contentID,slug,title,numberOfChildren"
 		);
 		// build it out
@@ -2409,7 +2409,7 @@ component accessors="true" singleton threadSafe {
 								pageRecords = pageService.findPublishedPages(
 									parent    : pageResults.pages[ x ][ "contentID" ],
 									showInMenu: true,
-									siteId    : site().getSiteId(),
+									siteID    : site().getsiteID(),
 									properties: "contentID,slug,title,numberOfChildren"
 								),
 								excludes           = arguments.excludes,
@@ -2441,7 +2441,7 @@ component accessors="true" singleton threadSafe {
 								pageRecords = pageService.findPublishedPages(
 									parent    : pageResults.pages[ x ][ "contentID" ],
 									showInMenu: true,
-									siteId    : site().getSiteId(),
+									siteID    : site().getsiteID(),
 									properties: "contentID,slug,title,numberOfChildren"
 								),
 								excludes           = arguments.excludes,
@@ -2473,7 +2473,7 @@ component accessors="true" singleton threadSafe {
 							pageRecords = pageService.findPublishedPages(
 								parent    : pageResults.pages[ x ][ "contentID" ],
 								showInMenu: true,
-								siteId    : site().getSiteId(),
+								siteID    : site().getsiteID(),
 								properties: "contentID,slug,title,numberOfChildren"
 							),
 							excludes           = arguments.excludes,
@@ -2496,7 +2496,7 @@ component accessors="true" singleton threadSafe {
 							pageRecords = pageService.findPublishedPages(
 								parent    : pageResults.pages[ x ][ "contentID" ],
 								showInMenu: true,
-								siteId    : site().getSiteId(),
+								siteID    : site().getsiteID(),
 								properties: "contentID,slug,title,numberOfChildren"
 							),
 							excludes           = arguments.excludes,

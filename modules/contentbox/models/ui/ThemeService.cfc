@@ -152,7 +152,7 @@ component accessors="true" threadSafe singleton {
 			.each( function( record ){
 				startupTheme(
 					name: arguments.record[ "activeTheme" ],
-					site: arguments.record[ "siteId" ]
+					site: arguments.record[ "siteID" ]
 				);
 			} );
 
@@ -165,7 +165,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @name The name of the theme to activate
 	 * @processWidgets Process widget registration on activation, defaults to true.
-	 * @siteId The site id or object we are starting up this theme for
+	 * @siteID The site id or object we are starting up this theme for
 	 */
 	function startupTheme(
 		required name,
@@ -183,7 +183,7 @@ component accessors="true" threadSafe singleton {
 		// Register description as an interceptor with custom points
 		variables.interceptorService.registerInterceptor(
 			interceptorObject: oTheme,
-			interceptorName  : "cbtheme-#arguments.name#-#arguments.site.getSiteId()#",
+			interceptorName  : "cbtheme-#arguments.name#-#arguments.site.getsiteID()#",
 			customPoints     : themeRecord.customInterceptionPoints
 		);
 
@@ -328,7 +328,7 @@ component accessors="true" threadSafe singleton {
 
 			// Unregister theme Descriptor Interceptor
 			variables.interceptorService.unregister(
-				interceptorName = "cbTheme-#currentSite.getActiveTheme()#-#currentSite.getSiteId()#"
+				interceptorName = "cbTheme-#currentSite.getActiveTheme()#-#currentSite.getsiteID()#"
 			);
 
 			// Setup the new chosen theme for the site

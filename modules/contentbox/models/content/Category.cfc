@@ -78,7 +78,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteId"
+		fkcolumn ="FK_siteID"
 		lazy     ="true"
 		fetch    ="join";
 
@@ -189,7 +189,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "siteID" ] = getSite().getsiteID();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}

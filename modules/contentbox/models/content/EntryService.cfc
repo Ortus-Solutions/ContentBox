@@ -34,7 +34,7 @@ component extends="ContentService" singleton {
 			!contentService.isSlugUnique(
 				slug     : arguments.entry.getSlug(),
 				contentID: arguments.entry.getContentID(),
-				siteId   : arguments.entry.getSiteId()
+				siteID   : arguments.entry.getsiteID()
 			)
 		) {
 			// make slug unique
@@ -60,7 +60,7 @@ component extends="ContentService" singleton {
 	 * @sortOrder Sorting of the results, defaults to page title asc
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	 * @siteId The site ID to filter on
+	 * @siteID The site ID to filter on
 	 *
 	 * @returns struct of { entries, count }
 	 */
@@ -75,7 +75,7 @@ component extends="ContentService" singleton {
 		string sortOrder            = "",
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
-		string siteId               = ""
+		string siteID               = ""
 	){
 		var results = { "count" : 0, "entries" : [] };
 		// criteria queries
@@ -139,8 +139,8 @@ component extends="ContentService" singleton {
 			}
 		}
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// DETERMINE SORT ORDERS
@@ -196,7 +196,7 @@ component extends="ContentService" singleton {
 	 * @max The maximum records to return
 	 * @offset The offset on the pagination
 	 * @asQuery Return query or array of structs
-	 * @siteId The site ID to filter on
+	 * @siteID The site ID to filter on
 	 *
 	 * @returns struct of { entries, count }
 	 */
@@ -207,7 +207,7 @@ component extends="ContentService" singleton {
 		numeric max     = 0,
 		numeric offset  = 0,
 		boolean asQuery = false,
-		string siteId   = ""
+		string siteID   = ""
 	){
 		var results = {};
 		var hql     = "FROM cbEntry
@@ -218,9 +218,9 @@ component extends="ContentService" singleton {
 		params[ "now" ] = now();
 
 		// Site
-		if ( len( arguments.siteId ) ) {
-			params[ "siteId" ] = arguments.siteId;
-			hql &= " AND site.siteId = :siteId";
+		if ( len( arguments.siteID ) ) {
+			params[ "siteID" ] = arguments.siteID;
+			hql &= " AND site.siteID = :siteID";
 		}
 
 		// year lookup mandatory
@@ -273,7 +273,7 @@ component extends="ContentService" singleton {
 	 * @category Pass a list of categories to narrow down results by using an OR, or delimit the list with a `+` to narrow down result by using an AND operation on the categories
 	 * @asQuery Return results as array of objects or query, default is array of objects
 	 * @sortOrder The sort order string, defaults to publisedDate DESC
-	 * @siteId The siteId to filter on
+	 * @siteID The siteID to filter on
 	 *
 	 * @return struct of { count, entries }
 	 */
@@ -284,7 +284,7 @@ component extends="ContentService" singleton {
 		string category   = "",
 		boolean asQuery   = false,
 		string sortOrder  = "publishedDate DESC",
-		string siteId     = ""
+		string siteID     = ""
 	){
 		var results = { "count" : 0, "entries" : [] };
 		var c       = newCriteria();
@@ -322,8 +322,8 @@ component extends="ContentService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// run criteria query and projections count
@@ -346,7 +346,7 @@ component extends="ContentService" singleton {
 	 * @sortOrder The sort ordering of the results
 	 * @isPublished	Show all content or true/false published content
 	 * @showInSearch Show all content or true/false showInSearch flag
-	 * @siteId The site id to use to filter on
+	 * @siteID The site id to use to filter on
 	 *
 	 * @return Array of entry data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
 	 */
@@ -354,7 +354,7 @@ component extends="ContentService" singleton {
 		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteId = ""
+		string siteID = ""
 	){
 		return super.getAllFlatContent( argumentCollection = arguments );
 	}

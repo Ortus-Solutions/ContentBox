@@ -41,7 +41,7 @@
 					)#
 						#html.startFieldset( legend="Site Details" )#
 
-							#html.hiddenField( name="siteId", bind=prc.site )#
+							#html.hiddenField( name="siteID", bind=prc.site )#
 
 							#html.textField(
 								name    		= "name",

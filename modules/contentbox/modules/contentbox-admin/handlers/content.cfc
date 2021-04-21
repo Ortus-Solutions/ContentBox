@@ -5,14 +5,14 @@
  * ---
  * Manage Generic content actions
  */
-component extends="baseHandler"{
+component extends="baseHandler" {
 
 	// Dependencies
-	property name="contentService"       inject="contentService@cb";
-	property name="statsService"         inject="statsService@cb";
-	property name="contentStoreService"	 inject="contentStoreService@cb";
-	property name="authorService"        inject="authorService@cb";
-	property name="CBHelper"             inject="CBHelper@cb";
+	property name="contentService" inject="contentService@cb";
+	property name="statsService" inject="statsService@cb";
+	property name="contentStoreService" inject="contentStoreService@cb";
+	property name="authorService" inject="authorService@cb";
+	property name="CBHelper" inject="CBHelper@cb";
 
 	/**
 	 * Quick Content Preview from editors
@@ -21,36 +21,37 @@ component extends="baseHandler"{
 	 */
 	function preview( event, rc, prc ){
 		// param incoming data
-		event.paramValue( "layout","pages" )
-			.paramValue( "content","" )
-			.paramValue( "contentType","" )
-			.paramValue( "title","" )
-			.paramValue( "slug","" )
-			.paramValue( "markup","HTML" )
+		event
+			.paramValue( "layout", "pages" )
+			.paramValue( "content", "" )
+			.paramValue( "contentType", "" )
+			.paramValue( "title", "" )
+			.paramValue( "slug", "" )
+			.paramValue( "markup", "HTML" )
 			.paramValue( "parentPage", "" );
 
 		// Determine Type
-		switch( rc.contentType ){
-			case "Page" 	: {
+		switch ( rc.contentType ) {
+			case "Page": {
 				prc.xehPreview = variables.CBHelper.linkPage( "__page_preview" );
 				break;
 			}
-			case "Entry" : {
+			case "Entry": {
 				prc.xehPreview = variables.CBHelper.linkPage( "__entry_preview" );
 				rc.layout      = "blog";
 				break;
 			}
-			case "ContentStore" : {
+			case "ContentStore": {
 				var oContent = contentStoreService.new();
 				prc.preview  = oContent.renderContentSilent( rc.content );
-				event.setView( view="content/simplePreview", layout="ajax" );
+				event.setView( view = "content/simplePreview", layout = "ajax" );
 				return;
 			}
 		}
 		// author security hash
 		prc.h = hash( prc.oCurrentAuthor.getAuthorID() );
 		// full preview view
-		event.setView( view="content/preview", layout="ajax" );
+		event.setView( view = "content/preview", layout = "ajax" );
 	}
 
 	/**
@@ -65,36 +66,40 @@ component extends="baseHandler"{
 		// Determine Context via `:` Search string
 		prc.context      = "";
 		prc.contentTypes = "page,entry,contentstore";
-		if( find( ":", rc.search ) ){
+		if ( find( ":", rc.search ) ) {
 			prc.context = listFirst( rc.search, ":" );
 			rc.search   = listLast( rc.search, ":" );
 		}
 
 		// Determine search via context or none at all
-		if( !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context ) ){
+		if ( !len( prc.context ) || listFindNoCase( prc.contentTypes, prc.context ) ) {
 			// Search for content
 			prc.results = variables.contentService.searchContent(
-				searchTerm         :  rc.search,
-				max                :  prc.cbSettings.cb_admin_quicksearch_max,
-				sortOrder          :  "title",
-				isPublished        :  "all",
-				searchActiveContent:  false,
-				contentTypes       :  prc.context,
-				siteId             :  prc.oCurrentSite.getSiteId()
+				searchTerm         : rc.search,
+				max                : prc.cbSettings.cb_admin_quicksearch_max,
+				sortOrder          : "title",
+				isPublished        : "all",
+				searchActiveContent: false,
+				contentTypes       : prc.context,
+				siteID             : prc.oCurrentSite.getsiteID()
 			);
-			prc.minContentCount = ( prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max );
+			prc.minContentCount = (
+				prc.results.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.results.count : prc.cbSettings.cb_admin_quicksearch_max
+			);
 		} else {
 			prc.results         = { "count" : 0, "content" : [] };
 			prc.minContentCount = 0;
 		}
 
 		// Search for Authors
-		if( !len( prc.context ) || listFindNoCase( "author", prc.context ) ){
+		if ( !len( prc.context ) || listFindNoCase( "author", prc.context ) ) {
 			prc.authors = authorService.search(
-				searchTerm : rc.search,
-				max        : prc.cbSettings.cb_admin_quicksearch_max
+				searchTerm: rc.search,
+				max       : prc.cbSettings.cb_admin_quicksearch_max
 			);
-			prc.minAuthorCount 	= ( prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max );
+			prc.minAuthorCount = (
+				prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max
+			);
 		} else {
 			prc.authors        = { "count" : 0, "authors" : [] };
 			prc.minAuthorCount = 0;
@@ -115,22 +120,19 @@ component extends="baseHandler"{
 	 */
 	function slugUnique( event, rc, prc ){
 		// Params
-		event.paramValue( "slug", "" )
-			.paramValue( "contentID", "" );
+		event.paramValue( "slug", "" ).paramValue( "contentID", "" );
 
-		var data = {
-			"UNIQUE" = false
-		};
+		var data = { "UNIQUE" : false };
 
-		if( len( rc.slug ) ){
+		if ( len( rc.slug ) ) {
 			data[ "UNIQUE" ] = variables.contentService.isSlugUnique(
 				rc.slug,
 				rc.contentID,
-				prc.oCurrentSite.getSiteId()
+				prc.oCurrentSite.getsiteID()
 			);
 		}
 
-		event.renderData( data=data, type="json" );
+		event.renderData( data = data, type = "json" );
 	}
 
 	/**
@@ -140,7 +142,8 @@ component extends="baseHandler"{
 	 */
 	function relatedContentSelector( event, rc, prc ){
 		// paging default
-		event.paramValue( "page", 1 )
+		event
+			.paramValue( "page", 1 )
 			.paramValue( "search", "" )
 			.paramValue( "clear", false )
 			.paramValue( "excludeIDs", "" )
@@ -156,14 +159,14 @@ component extends="baseHandler"{
 
 		// search entries with filters and all
 		var contentResults = variables.contentService.searchContent(
-			searchTerm          : rc.search,
-			offset              : prc.paging.startRow-1,
-			max                 : prc.cbSettings.cb_paging_maxrows,
-			sortOrder           : ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
-			searchActiveContent : false,
-			contentTypes        : rc.contentType,
-			excludeIDs          : rc.excludeIDs,
-			siteId              : prc.oCurrentSite.getSiteId()
+			searchTerm         : rc.search,
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			sortOrder          : ( rc.contentType == "Entry" ? "publishedDate desc" : "slug asc" ),
+			searchActiveContent: false,
+			contentTypes       : rc.contentType,
+			excludeIDs         : rc.excludeIDs,
+			siteID             : prc.oCurrentSite.getsiteID()
 		);
 
 		// setup data for display
@@ -172,7 +175,7 @@ component extends="baseHandler"{
 		prc.CBHelper     = variables.CBHelper;
 
 		// if ajax and searching, just return tables
-		return renderView( view="content/relatedContentResults", module="contentbox-admin" );
+		return renderView( view = "content/relatedContentResults", module = "contentbox-admin" );
 	}
 
 	/**
@@ -180,8 +183,9 @@ component extends="baseHandler"{
 	 *
 	 * @return html
 	 */
-	function showRelatedContentSelector( event, rc, prc ) {
-		event.paramValue( "search", "" )
+	function showRelatedContentSelector( event, rc, prc ){
+		event
+			.paramValue( "search", "" )
 			.paramValue( "clear", false )
 			.paramValue( "excludeIDs", "" )
 			.paramValue( "contentType", "Page,Entry,ContentStore" );
@@ -190,7 +194,7 @@ component extends="baseHandler"{
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 		prc.CBHelper                  = variables.CBHelper;
 
-		event.setView( view="content/relatedContentSelector", layout="ajax" );
+		event.setView( view = "content/relatedContentSelector", layout = "ajax" );
 	}
 
 	/**
@@ -198,12 +202,11 @@ component extends="baseHandler"{
 	 *
 	 * @return json
 	 */
-	function breakContentLink( event, rc, prc ) {
-		event.paramValue( "contentID", "" )
-			.paramValue( "linkedID", "" );
+	function breakContentLink( event, rc, prc ){
+		event.paramValue( "contentID", "" ).paramValue( "linkedID", "" );
 
 		var data = {};
-		if( len( rc.contentID ) && len( rc.linkedID ) ) {
+		if ( len( rc.contentID ) && len( rc.linkedID ) ) {
 			var currentContent = variables.contentService.get( rc.contentID );
 			var linkedContent  = variables.contentService.get( rc.linkedID );
 
@@ -212,7 +215,7 @@ component extends="baseHandler"{
 
 			data[ "SUCCESS" ] = true;
 		}
-		event.renderData( data=data, type="json" );
+		event.renderData( data = data, type = "json" );
 	}
 
 	/**
@@ -223,35 +226,39 @@ component extends="baseHandler"{
 	any function resetHits( event, rc, prc ){
 		event.paramValue( "contentID", 0 );
 		var response = {
-			"data"       = { "data" = "", "error" = false, "messages" = [] },
-			"statusCode" = "200",
-			"statusText" = "Ok"
+			"data"       : { "data" : "", "error" : false, "messages" : [] },
+			"statusCode" : "200",
+			"statusText" : "Ok"
 		};
 		// build to array and iterate
 		rc.contentID = listToArray( rc.contentID );
-		for( var thisID in rc.contentID ){
+		for ( var thisID in rc.contentID ) {
 			var oContent = variables.contentService.get( thisID );
 			// check if loaded
-			if( !isNull( oContent ) and oContent.isLoaded() ){
+			if ( !isNull( oContent ) and oContent.isLoaded() ) {
 				// Only update if it has stats
-				if( oContent.hasStats() ){
+				if ( oContent.hasStats() ) {
 					oContent.getStats().setHits( 0 );
 					contentService.save( oContent );
 				}
 				arrayAppend( response.data.messages, "Hits reset for '#oContent.getTitle()#'" );
 			} else {
-				response.data.error= true;
-				response.statusCode= 400;
-				arrayAppend( response.data.messages, "The contentID '#thisContentID#' requested does not exist" );
-
+				response.data.error = true;
+				response.statusCode = 400;
+				arrayAppend(
+					response.data.messages,
+					"The contentID '#thisContentID#' requested does not exist"
+				);
 			}
 		}
 		// Render it out
 		event.renderData(
-			data      = response.data,
-			type      = "json",
-			statusCode= response.statusCode,
-			statusText= ( arrayLen( response.data.messages ) ? 'Error processing request please look at data messages' : 'Ok' )
+			data       = response.data,
+			type       = "json",
+			statusCode = response.statusCode,
+			statusText = (
+				arrayLen( response.data.messages ) ? "Error processing request please look at data messages" : "Ok"
+			)
 		);
 	}
 
@@ -274,20 +281,27 @@ component extends="baseHandler"{
 		prc,
 		any author,
 		boolean isPublished,
-		numeric max                =25,
-		boolean showHits           =true,
-		boolean colorCodings       =true,
-		boolean showPublishedStatus=true,
-		boolean showAuthor         =true
+		numeric max                 = 25,
+		boolean showHits            = true,
+		boolean colorCodings        = true,
+		boolean showPublishedStatus = true,
+		boolean showAuthor          = true
 	){
 		// Setup args so we can use them in the viewlet
-		var args = { max = arguments.max, siteId = prc.oCurrentSite.getSiteId() };
-		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
-		if( structKeyExists( arguments, "isPublished" ) ){ args.isPublished = arguments.isPublished; }
+		var args = {
+			max    : arguments.max,
+			siteID : prc.oCurrentSite.getsiteID()
+		};
+		if ( structKeyExists( arguments, "author" ) ) {
+			args.author = arguments.author;
+		}
+		if ( structKeyExists( arguments, "isPublished" ) ) {
+			args.isPublished = arguments.isPublished;
+		}
 
 		// Add Site context if `author` is not passed
-		if( isNull( args.author ) ){
-			args.siteId = prc.oCurrentSite.getSiteId();
+		if ( isNull( args.author ) ) {
+			args.siteID = prc.oCurrentSite.getsiteID();
 		}
 
 		// Get latest content edits with criteria
@@ -298,12 +312,12 @@ component extends="baseHandler"{
 			view   = "content/contentViewlet",
 			module = "contentbox-admin",
 			args   = {
-				viewletID           = createUUID(),
-				aContent            = aLatestEdits,
-				showHits            = arguments.showHits,
-				colorCodings        = arguments.colorCodings,
-				showPublishedStatus = arguments.showPublishedStatus,
-				showAuthor          = arguments.showAuthor
+				viewletID           : createUUID(),
+				aContent            : aLatestEdits,
+				showHits            : arguments.showHits,
+				colorCodings        : arguments.colorCodings,
+				showPublishedStatus : arguments.showPublishedStatus,
+				showAuthor          : arguments.showAuthor
 			}
 		);
 	}
@@ -327,27 +341,35 @@ component extends="baseHandler"{
 		event,
 		rc,
 		prc,
-		boolean showExpired=false,
+		boolean showExpired = false,
 		any author,
-		boolean offset             =0,
-		numeric max                =25,
-		boolean showHits           =true,
-		boolean colorCodings       =true,
-		boolean showPublishedStatus=true,
-		boolean showAuthor         =true
+		boolean offset              = 0,
+		numeric max                 = 25,
+		boolean showHits            = true,
+		boolean colorCodings        = true,
+		boolean showPublishedStatus = true,
+		boolean showAuthor          = true
 	){
 		// Setup args so we can use them in the viewlet
-		var args = { max = arguments.max, offset = arguments.offset, siteId = prc.oCurrentSite.getSiteId() };
-		if( structKeyExists( arguments, "author" ) ){ args.author = arguments.author; }
+		var args = {
+			max    : arguments.max,
+			offset : arguments.offset,
+			siteID : prc.oCurrentSite.getsiteID()
+		};
+		if ( structKeyExists( arguments, "author" ) ) {
+			args.author = arguments.author;
+		}
 
 		// Expired Content
 		var aContent = "";
-		if( arguments.showExpired ){
+		if ( arguments.showExpired ) {
 			aContent = variables.contentService.findExpiredContent( argumentCollection = args );
 		}
 		// Future Published Content
 		else {
-			aContent = variables.contentService.findFuturePublishedContent( argumentCollection = args );
+			aContent = variables.contentService.findFuturePublishedContent(
+				argumentCollection = args
+			);
 		}
 
 		// view pager
@@ -355,12 +377,12 @@ component extends="baseHandler"{
 			view   = "content/contentViewlet",
 			module = "contentbox-admin",
 			args   = {
-				viewletID          = createUUID(),
-				aContent           = aContent,
-				showHits           = arguments.showHits,
-				colorCodings       = arguments.colorCodings,
-				showPublishedStatus= arguments.showPublishedStatus,
-				showAuthor         = arguments.showAuthor
+				viewletID           : createUUID(),
+				aContent            : aContent,
+				showHits            : arguments.showHits,
+				colorCodings        : arguments.colorCodings,
+				showPublishedStatus : arguments.showPublishedStatus,
+				showAuthor          : arguments.showAuthor
 			}
 		);
 	}

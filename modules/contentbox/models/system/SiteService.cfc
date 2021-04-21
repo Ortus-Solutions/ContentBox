@@ -31,10 +31,10 @@ component
 	/**
 	 * Store the current working site in the admin UI
 	 *
-	 * @siteId The site to store as the current working one
+	 * @siteID The site to store as the current working one
 	 */
-	SiteService function setCurrentWorkingSiteId( required siteId ){
-		variables.cacheStorage.set( "adminCurrentSite", arguments.siteId );
+	SiteService function setCurrentWorkingsiteID( required siteID ){
+		variables.cacheStorage.set( "adminCurrentSite", arguments.siteID );
 		return this;
 	}
 
@@ -42,10 +42,10 @@ component
 	 * Get the current working site in the admin UI. We look in the cache first,
 	 * if none is set, we use the `default` site.
 	 */
-	function getCurrentWorkingSiteId(){
+	function getCurrentWorkingsiteID(){
 		return variables.cacheStorage.get(
 			name        : "adminCurrentSite",
-			defaultValue: getDefaultSiteId()
+			defaultValue: getDefaultsiteID()
 		);
 	}
 
@@ -54,16 +54,16 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		return newCriteria().isEq( "siteId", getCurrentWorkingSiteId() ).get();
+		return newCriteria().isEq( "siteID", getCurrentWorkingsiteID() ).get();
 	}
 
 	/**
 	 * Get the default site Identifier
 	 */
-	string function getDefaultSiteId(){
+	string function getDefaultsiteID(){
 		return newCriteria()
 			.isEq( "slug", "default" )
-			.withProjections( property: "siteId" )
+			.withProjections( property: "siteID" )
 			.get();
 	}
 
@@ -139,7 +139,7 @@ component
 	 */
 	array function getAllFlat(){
 		return newCriteria()
-			.withProjections( property: "siteId,name,slug,domainRegex" )
+			.withProjections( property: "siteID,name,slug,domainRegex" )
 			.asStruct()
 			.list( sortOrder = "name" );
 	}
@@ -147,14 +147,14 @@ component
 	/**
 	 * Returns a collection of all the themes that are used in all active sites
 	 *
-	 * @return array of { activeTheme:string, siteId:numeric }
+	 * @return array of { activeTheme:string, siteID:numeric }
 	 */
 	array function getAllSiteThemes(){
 		return newCriteria()
 			.isFalse( "isDeleted" )
-			.withProjections( distinct: "activeTheme,siteId" )
+			.withProjections( distinct: "activeTheme,siteID" )
 			.asStruct()
-			.list( sortOrder = "siteId" );
+			.list( sortOrder = "siteID" );
 	}
 
 	/**
@@ -164,8 +164,8 @@ component
 	 *
 	 * @throws EntityNotFound
 	 */
-	function getOrFail( required siteId ){
-		var site = newCriteria().isEq( "siteId", arguments.siteId ).get();
+	function getOrFail( required siteID ){
+		var site = newCriteria().isEq( "siteID", arguments.siteID ).get();
 
 		if ( !isNull( site ) ) {
 			return site;
@@ -173,7 +173,7 @@ component
 
 		throw(
 			type   : "EntityNotFound",
-			message: "No site with ID #arguments.siteId.toString()# found"
+			message: "No site with ID #arguments.siteID.toString()# found"
 		);
 	}
 
@@ -181,7 +181,7 @@ component
 	 * This method discovers which site you are on and returns it depending on the following markers:
 	 *
 	 * - Are we in the admin, use the current working site
-	 * - incoming `siteId` (rc)
+	 * - incoming `siteID` (rc)
 	 * - incoming `siteSlug` (rc)
 	 * - incoming header: `x-contentbox-site`
 	 * - full incoming url
@@ -203,10 +203,10 @@ component
 			return getCurrentWorkingSite();
 		}
 
-		// Do we have an incoming site header, which should contain the siteId
-		var siteId = event.getValue( "siteId", event.getHTTPHeader( "x-contentbox-site", "" ) );
-		if ( len( siteId ) ) {
-			return getOrFail( siteId );
+		// Do we have an incoming site header, which should contain the siteID
+		var siteID = event.getValue( "siteID", event.getHTTPHeader( "x-contentbox-site", "" ) );
+		if ( len( siteID ) ) {
+			return getOrFail( siteID );
 		}
 
 		// Do we have an incoming siteSlug in the RC
@@ -221,7 +221,7 @@ component
 
 		// Return the first matched site
 		if ( arrayLen( matchedSite ) ) {
-			return getOrFail( matchedSite[ 1 ][ "siteId" ] );
+			return getOrFail( matchedSite[ 1 ][ "siteID" ] );
 		}
 
 		// Default to the default site

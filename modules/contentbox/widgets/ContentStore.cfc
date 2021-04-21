@@ -5,7 +5,7 @@
  * ---
  * A widget that renders content store objects
  */
-component extends="contentbox.models.ui.BaseWidget" singleton{
+component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Constructor
@@ -37,21 +37,21 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		var content = variables.contentStoreService.findBySlug(
 			slug            = arguments.slug,
 			showUnpublished = true,
-			siteId          = variables.cb.site().getSiteId()
+			siteID          = variables.cb.site().getsiteID()
 		);
 
 		// Return if loaded and published
-		if( content.isLoaded() && content.isContentPublished() && !content.isExpired() ){
+		if ( content.isLoaded() && content.isContentPublished() && !content.isExpired() ) {
 			return content.renderContent();
 		}
 
 		// Return empty if expired
-		if( content.isLoaded() && content.isExpired() ){
+		if ( content.isLoaded() && content.isExpired() ) {
 			return "";
 		}
 
 		// default value
-		if( structKeyExists( arguments, "defaultValue" ) ){
+		if ( structKeyExists( arguments, "defaultValue" ) ) {
 			return arguments.defaultValue;
 		}
 

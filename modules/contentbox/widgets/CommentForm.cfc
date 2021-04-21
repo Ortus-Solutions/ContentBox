@@ -42,7 +42,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 			arguments.content = variables.contentService.findBySlug(
 				slug  : arguments.content,
-				siteid: variables.cb.site().getSiteId()
+				siteID: variables.cb.site().getsiteID()
 			);
 
 			if ( !arguments.content.isLoaded() ) {

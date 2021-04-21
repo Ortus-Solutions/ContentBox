@@ -705,7 +705,7 @@ component
 	 * @max The max records
 	 * @offset The offset to tuse
 	 * @sortOrder The sort order
-	 * @siteId The site id to filter on
+	 * @siteID The site id to filter on
 	 *
 	 * @return struct of { count, settings }
 	 */
@@ -714,7 +714,7 @@ component
 		max       = 0,
 		offset    = 0,
 		sortOrder = "name asc",
-		siteId    = ""
+		siteID    = ""
 	){
 		var results = { "count" : 0, "settings" : [] };
 		var c       = newCriteria();
@@ -725,8 +725,8 @@ component
 		}
 
 		// Site
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// run criteria query and projections count
@@ -749,7 +749,7 @@ component
 	array function getAllForExport(){
 		return newCriteria()
 			.withProjections(
-				property = "settingID,name,value,createdDate,modifiedDate,isDeleted,isCore,site.siteId:siteId"
+				property = "settingID,name,value,createdDate,modifiedDate,isDeleted,isCore,site.siteID:siteID"
 			)
 			.asStruct()
 			.list( sortOrder = "name" );

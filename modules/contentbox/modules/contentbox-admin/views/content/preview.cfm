@@ -82,7 +82,7 @@
 				#html.hiddenField( name="slug", value=rc.slug )#
 				#html.hiddenField( name="markup", value=rc.markup )#
 				#html.hiddenField( name="parentPage", value=rc.parentPage )#
-				#html.hiddenField( name="siteId", value=prc.oCurrentSite.getSiteId() )#
+				#html.hiddenField( name="siteID", value=prc.oCurrentSite.getsiteID() )#
 			#html.endForm()#
 
 			<!--- hidden iframe for preview --->

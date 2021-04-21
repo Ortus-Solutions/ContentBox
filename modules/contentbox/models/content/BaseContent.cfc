@@ -260,7 +260,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteId"
+		fkcolumn ="FK_siteID"
 		lazy     ="true"
 		fetch    ="join";
 
@@ -1048,7 +1048,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "siteID" ] = getSite().getsiteID();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}
@@ -1639,8 +1639,8 @@ component
 	/**
 	 * Shortcut to get the site id
 	 */
-	function getSiteId(){
-		return getSite().getSiteId();
+	function getsiteID(){
+		return getSite().getsiteID();
 	}
 
 	/**
@@ -1656,11 +1656,11 @@ component
 
 		// Simple Value Test
 		if ( isSimpleValue( arguments.site ) ) {
-			return arguments.site == getSiteid();
+			return arguments.site == getsiteID();
 		}
 
 		// Object test
-		return getSiteId() == arguments.site.getSiteId();
+		return getsiteID() == arguments.site.getsiteID();
 	}
 
 }

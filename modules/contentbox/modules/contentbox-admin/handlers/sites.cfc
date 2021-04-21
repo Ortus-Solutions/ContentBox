@@ -52,14 +52,14 @@ component extends="baseHandler" {
 		prc.tabSystem_sites = true;
 
 		// get new or persisted
-		prc.site   = variables.siteService.get( event.getValue( "siteId", 0 ) );
+		prc.site   = variables.siteService.get( event.getValue( "siteID", 0 ) );
 		// Get all registered themes
 		prc.themes = variables.themeService.getThemes();
 		// pages
 		prc.pages  = variables.pageService.search(
 			sortOrder   = "slug asc",
 			isPublished = true,
-			siteId      = prc.site.getSiteId()
+			siteID      = prc.site.getsiteID()
 		).pages;
 
 		// exit handlers
@@ -74,12 +74,12 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		var oSite    = populateModel( siteService.get( id: rc.siteId ) );
+		var oSite    = populateModel( siteService.get( id: rc.siteID ) );
 		// validate it
 		var vResults = validateModel( oSite );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preSiteSave", { site : oSite, siteId : rc.siteId } );
+			announce( "cbadmin_preSiteSave", { site : oSite, siteID : rc.siteID } );
 			// save rule
 			variables.siteService.save( oSite );
 			// announce event
@@ -98,13 +98,13 @@ component extends="baseHandler" {
 	 */
 	function remove( event, rc, prc ){
 		// Get requested site to remove
-		var oSite = variables.siteService.get( rc.siteId );
+		var oSite = variables.siteService.get( rc.siteID );
 		// announce event
 		announce( "cbadmin_preSiteRemove", { site : oSite } );
 		// Now delete it
 		variables.siteService.delete( oSite );
 		// announce event
-		announce( "cbadmin_postSiteRemove", { siteId : rc.siteId } );
+		announce( "cbadmin_postSiteRemove", { siteID : rc.siteID } );
 		// Message
 		cbMessagebox.setMessage( "info", "Site Removed!" );
 		// relocate
@@ -115,7 +115,7 @@ component extends="baseHandler" {
 	 * Change current editing site
 	 */
 	function changeSite( event, rc, prc ){
-		siteService.setCurrentWorkingSiteId( rc.siteId );
+		siteService.setCurrentWorkingsiteID( rc.siteID );
 		relocate( prc.xehDashboard );
 	}
 

@@ -80,14 +80,14 @@ component singleton {
 	 * @comments Retrieve the comments RSS feed or content feed, defaults to false
 	 * @category Filter the content feed with categories
 	 * @contentType The contentType to build an RSS feed on. Empty is for the site. Available content types are [page,entry]
-	 * @siteId The site Id to filter on
+	 * @siteID The site Id to filter on
 	 */
 	function getRSS(
 		string slug      = "",
 		boolean comments = false,
 		category         = "",
 		contentType      = "",
-		string siteId    = ""
+		string siteID    = ""
 	){
 		var settings = settingService.getAllSettings();
 		var rssFeed  = "";
@@ -166,14 +166,14 @@ component singleton {
 	 * Build entries feeds
 	 *
 	 * @category The category to filter on
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	private function buildEntryFeed( string category = "", string siteId = "" ){
+	private function buildEntryFeed( string category = "", string siteID = "" ){
 		var settings     = settingService.getAllSettings();
 		var entryResults = entryService.findPublishedEntries(
 			category: arguments.category,
 			max     : settings.cb_rss_maxEntries,
-			siteId  : arguments.siteId
+			siteID  : arguments.siteID
 		);
 		var myArray    = [];
 		var feedStruct = {};
@@ -240,14 +240,14 @@ component singleton {
 	 * Build pages feeds
 	 *
 	 * @category The category to filter on
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	private function buildPageFeed( string category = "", string siteId = "" ){
+	private function buildPageFeed( string category = "", string siteID = "" ){
 		var settings    = settingService.getAllSettings();
 		var pageResults = variables.pageService.findPublishedPages(
 			category: arguments.category,
 			max     : settings.cb_rss_maxEntries,
-			siteId  : arguments.siteId
+			siteID  : arguments.siteID
 		);
 		var myArray    = [];
 		var feedStruct = {};
@@ -311,14 +311,14 @@ component singleton {
 	 * Build content feeds
 	 *
 	 * @category The category to filter on
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	private function buildContentFeed( string category = "", string siteId = "" ){
+	private function buildContentFeed( string category = "", string siteID = "" ){
 		var settings       = variables.settingService.getAllSettings();
 		var contentResults = variables.contentService.findPublishedContent(
 			category: arguments.category,
 			max     : settings.cb_rss_maxEntries,
-			siteId  : arguments.siteId
+			siteID  : arguments.siteID
 		);
 		var myArray    = [];
 		var feedStruct = {};
@@ -386,19 +386,19 @@ component singleton {
 	 *
 	 * @slug The content slug to filter on
 	 * @contentType The content type discriminator to filter on
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
 	private function buildCommentFeed(
 		string slug        = "",
 		string contentType = "",
-		string siteId      = ""
+		string siteID      = ""
 	){
 		var settings       = variables.settingService.getAllSettings();
 		var commentResults = variables.commentService.findAllApproved(
 			contentID  : variables.contentService.getIDBySlug( arguments.slug ),
 			contentType: arguments.contentType,
 			max        : settings.cb_rss_maxComments,
-			siteId     : arguments.siteId
+			siteID     : arguments.siteID
 		);
 		var myArray    = [];
 		var feedStruct = {};

@@ -56,7 +56,7 @@ component
 		notnull  ="false"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteId"
+		fkcolumn ="FK_siteID"
 		lazy     ="true";
 
 	/* *********************************************************************
@@ -96,7 +96,7 @@ component
 		// Site Snapshot
 		result[ "site" ] = {};
 		if ( hasSite() ) {
-			result.site[ "siteId" ] = getSite().getSiteId();
+			result.site[ "siteID" ] = getSite().getsiteID();
 			result.site[ "name" ]   = getSite().getName();
 			result.site[ "slug" ]   = getSite().getSlug();
 		}
@@ -109,9 +109,9 @@ component
 	 *
 	 * @return The associated site id or empty if none
 	 */
-	function getSiteId(){
+	function getsiteID(){
 		if ( hasSite() ) {
-			return getSite().getSiteId();
+			return getSite().getsiteID();
 		}
 		return "";
 	}

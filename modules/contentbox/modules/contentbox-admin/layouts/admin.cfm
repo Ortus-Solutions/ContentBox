@@ -72,13 +72,13 @@
 						name="siteSwitcher"
 						id="siteSwitcher"
 						class="form-control input-sm rounded"
-						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteId/' + this.value )"
+						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteID/' + this.value )"
 						style="width: 175px"
 					>
 						<cfloop array="#prc.allSites#" index="thisSite">
 							<option
-								value="#thisSite[ 'siteId' ]#"
-								<cfif thisSite[ 'siteId' ] eq prc.oCurrentSite.getSiteId()>selected="selected"</cfif>
+								value="#thisSite[ 'siteID' ]#"
+								<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()>selected="selected"</cfif>
 							>
 								#thisSite[ 'name' ]#
 							</option>

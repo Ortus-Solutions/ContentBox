@@ -28,7 +28,7 @@ component
 	 ********************************************************************* */
 
 	property
-		name     ="siteId"
+		name     ="siteID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -176,7 +176,7 @@ component
 		batchsize   ="25"
 		orderby     ="name"
 		cfc         ="contentbox.models.system.Setting"
-		fkcolumn    ="FK_siteId"
+		fkcolumn    ="FK_siteID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
@@ -188,7 +188,7 @@ component
 	 **							PK + CONSTRAINTS
 	 ********************************************************************* */
 
-	this.pk = "siteId";
+	this.pk = "siteID";
 
 	this.constraints = {
 		"name" : { required : true, size : "2..255" },
@@ -255,7 +255,7 @@ component
 	 * Get the total number of content items in this site
 	 */
 	numeric function getNumberOfContent(){
-		return variables.contentService.getTotalContentCount( getSiteId() );
+		return variables.contentService.getTotalContentCount( getsiteID() );
 	}
 
 	/*

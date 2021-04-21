@@ -67,7 +67,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			category  : arguments.category,
 			searchTerm: arguments.searchTerm,
 			sortOrder : arguments.sortOrder,
-			siteId    : getSite().getSiteId()
+			siteID    : getSite().getsiteID()
 		);
 		var rString = "";
 
