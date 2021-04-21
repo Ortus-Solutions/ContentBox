@@ -596,12 +596,16 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Get the current array of category entities
+	 * Get the current array of category entities for the current site
 	 *
-	 * @return array of entities
+	 * @return array of category
 	 */
 	any function getCurrentCategories(){
-		return variables.categoryService.list( sortOrder = "category", asQuery = false );
+		return variables.categoryService.list(
+			criteria : { "site" : site() },
+			sortOrder= "category",
+			asQuery  = false
+		);
 	}
 
 	/**
