@@ -151,8 +151,8 @@ component accessors="true" threadSafe singleton {
 			.getAllSiteThemes()
 			.each( function( record ){
 				startupTheme(
-					name  : arguments.record[ "activeTheme" ],
-					siteId: arguments.record[ "siteId" ]
+					name: arguments.record[ "activeTheme" ],
+					site: arguments.record[ "siteId" ]
 				);
 			} );
 
@@ -165,22 +165,25 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @name The name of the theme to activate
 	 * @processWidgets Process widget registration on activation, defaults to true.
-	 * @siteId The site we are starting up this theme for
+	 * @siteId The site id or object we are starting up this theme for
 	 */
 	function startupTheme(
 		required name,
 		boolean processWidgets = true,
-		string siteId          = ""
+		any site               = ""
 	){
 		// Get theme record information
 		var themeRecord = getThemeRecord( arguments.name );
 		var oTheme      = themeRecord.descriptor;
-		var oSite       = variables.siteService.getOrFail( arguments.siteId );
+		// Determine object or id
+		if ( isSimpleValue( arguments.site ) ) {
+			arguments.site = variables.siteService.getOrFail( arguments.site );
+		}
 
 		// Register description as an interceptor with custom points
 		variables.interceptorService.registerInterceptor(
 			interceptorObject: oTheme,
-			interceptorName  : "cbtheme-#arguments.name#-#arguments.siteId#",
+			interceptorName  : "cbtheme-#arguments.name#-#arguments.site.getSiteId()#",
 			customPoints     : themeRecord.customInterceptionPoints
 		);
 
@@ -189,7 +192,7 @@ component accessors="true" threadSafe singleton {
 			registerThemeSettings(
 				name    : arguments.name,
 				settings: oTheme.settings,
-				site    : oSite
+				site    : arguments.site
 			);
 		}
 
@@ -223,7 +226,7 @@ component accessors="true" threadSafe singleton {
 			{
 				themeName   : arguments.name,
 				themeRecord : themeRecord,
-				site        : oSite
+				site        : arguments.site
 			}
 		);
 
@@ -336,7 +339,7 @@ component accessors="true" threadSafe singleton {
 			startupTheme(
 				name          : arguments.themeName,
 				processWidgets: false,
-				siteId        : currentSite.getSiteId()
+				site          : currentSite
 			);
 
 			// Force Recreation of all Widgets, since we need to deactivate the old widgets
@@ -905,10 +908,10 @@ component accessors="true" threadSafe singleton {
 		// Get all core, non-deleted setting names
 		var loadedSiteSettings = variables.settingService
 			.newCriteria()
-				.isFalse( "isDeleted" )
-				.isEq( "site", arguments.site )
-				.withProjections( property: "name" )
-				.list( sortOrder = "name" );
+			.isFalse( "isDeleted" )
+			.isEq( "site", arguments.site )
+			.withProjections( property: "name" )
+			.list( sortOrder = "name" );
 
 		// Check what's missing
 		transaction {
