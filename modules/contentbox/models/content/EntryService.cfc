@@ -103,11 +103,11 @@ component extends="ContentService" singleton {
 		}
 		// Author Filter
 		if ( arguments.author NEQ "all" ) {
-			c.isEq( "ac.author.authorID", javacast( "int", arguments.author ) );
+			c.isEq( "ac.author.authorID", arguments.author );
 		}
 		// Creator Filter
 		if ( arguments.creator NEQ "all" ) {
-			c.isEq( "creator.authorID", javacast( "int", arguments.creator ) );
+			c.isEq( "creator.authorID", arguments.creator );
 		}
 		// Search Criteria
 		if ( len( arguments.search ) ) {
@@ -140,7 +140,7 @@ component extends="ContentService" singleton {
 		}
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// DETERMINE SORT ORDERS
@@ -323,7 +323,7 @@ component extends="ContentService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+			c.isEq( "site.siteId", arguments.siteId );
 		}
 
 		// run criteria query and projections count

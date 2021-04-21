@@ -5,49 +5,49 @@
 * ---
 * I am a Subscriber Entity
 */
-component   persistent="true" 
-            entityname="cbSubscriber" 
-            table="cb_subscribers" 
+component   persistent="true"
+            entityname="cbSubscriber"
+            table="cb_subscribers"
             extends="contentbox.models.BaseEntity"
-            cachename="cbSubscriber" 
+            cachename="cbSubscriber"
             cacheuse="read-write"{
 
     /* *********************************************************************
-    **                          PROPERTIES                                  
+    **                          PROPERTIES
     ********************************************************************* */
 
-    property    name="subscriberID" 
-                fieldtype="id" 
-                generator="native" 
-                setter="false" 
-                params="{ allocationSize = 1, sequence = 'subscriberID_seq' }";
+    property    name="subscriberID"
+				fieldtype="id"
+				generator="uuid"
+				setter   ="false"
+				update   ="false";
 
-    property    name="subscriberEmail" 
-                notnull="true" 
-                length="255" 
+    property    name="subscriberEmail"
+                notnull="true"
+                length="255"
                 index="idx_subscriberEmail";
 
-    property    name="subscriberToken" 
+    property    name="subscriberToken"
                 notnull="true";
 
     /* *********************************************************************
     **                          RELATIONSHIPS
     ********************************************************************* */
 
-    property    name="subscriptions" 
-                singularName="subscription" 
-                fieldtype="one-to-many" 
-                type="array" 
-                lazy="extra" 
-                batchsize="25" 
-                orderby="createdDate" 
-                cfc="contentbox.models.subscriptions.BaseSubscription" 
-                fkcolumn="FK_subscriberID" 
-                inverse="true" 
+    property    name="subscriptions"
+                singularName="subscription"
+                fieldtype="one-to-many"
+                type="array"
+                lazy="extra"
+                batchsize="25"
+                orderby="createdDate"
+                cfc="contentbox.models.subscriptions.BaseSubscription"
+                fkcolumn="FK_subscriberID"
+                inverse="true"
                 cascade="all-delete-orphan";
-    
+
     /* *********************************************************************
-    **                          PK + CONSTRAINTS                                    
+    **                          PK + CONSTRAINTS
     ********************************************************************* */
 
     this.pk = "subscriberID";
@@ -58,7 +58,7 @@ component   persistent="true"
     };
 
     /* *********************************************************************
-    **                          PUBLIC FUNCTIONS                                    
+    **                          PUBLIC FUNCTIONS
     ********************************************************************* */
 
     /**
@@ -72,14 +72,14 @@ component   persistent="true"
 
         // subscriptions
         if( arguments.showSubscriptions && hasSubscription() ){
-            result[ "subscriptions" ] = [];   
+            result[ "subscriptions" ] = [];
             for( var thisSub in variables.subscriptions ){
                 result[ "subscriptions" ].append( thisSub.getMemento( showSubscriber=false ) );
             }
         } else if ( arguments.showSubscriptions ){
-            result[ "subscriptions" ] = [];   
+            result[ "subscriptions" ] = [];
         }
-        
+
         return result;
     }
 

@@ -63,7 +63,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	numeric function getTotalHitsByContent( string contentId = "" ){
 		var oStat = newCriteria()
-			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
+			.isEq( "relatedContent.contentID", arguments.contentId )
 			.withProjections( property: "hits" )
 			.get();
 		return ( isNull( oStat ) ? 0 : oStat );

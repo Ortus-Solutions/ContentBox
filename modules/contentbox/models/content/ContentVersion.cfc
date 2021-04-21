@@ -31,9 +31,9 @@ component
 	property
 		name     ="contentVersionID"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'contentVersionID_seq' }";
+		update   ="false";
 
 	property
 		name   ="content"

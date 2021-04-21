@@ -23,9 +23,9 @@ component
 	property
 		name     ="settingID"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'settingID_seq' }";
+		update   ="false";
 
 	property
 		name   ="name"

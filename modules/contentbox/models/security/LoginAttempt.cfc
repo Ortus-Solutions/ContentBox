@@ -5,62 +5,63 @@
 * ---
 * Store logins from admin attempts. Depending on system settings, users can be blocked via this entity
 */
-component 	persistent="true" 
-			table="cb_loginAttempts" 
-			entityName="cbLoginAttempt" 
+component 	persistent="true"
+			table="cb_loginAttempts"
+			entityName="cbLoginAttempt"
 			extends="contentbox.models.BaseEntity"
-			cachename="loginAttempt" 
+			cachename="loginAttempt"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
 	/**
 	* Primary key
 	*/
-	property 	name="loginAttemptsID" 
-				fieldtype="id" 
-				generator="native" 
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'loginAttemptsID_seq' }";
+	property 	name="loginAttemptsID"
+				fieldtype="id"
+				generator="uuid"
+				setter   ="false"
+				update   ="false";
+
 	/**
 	* The username attempt value
 	*/
-	property 	name="value" 		
-				notnull="true" 
-				default="" 
+	property 	name="value"
+				notnull="true"
+				default=""
 				length="255"
 				index="idx_values";
 	/**
 	* How many attempts in the system
 	*/
-	property 	name="attempts" 	
-				ormtype="integer"  
-				notnull="true"  
+	property 	name="attempts"
+				ormtype="integer"
+				notnull="true"
 				default="0";
 	/**
 	* Tracks the last successful login IP address
 	*/
-	property 	name="lastLoginSuccessIP"	
+	property 	name="lastLoginSuccessIP"
 				notnull="false"
 				length="100";
 	/**
 	* Verifies if tracking is blocked or not
 	*/
-	property 	name="isBlocked"	
-				persistent="false" 
-				default="false" 
+	property 	name="isBlocked"
+				persistent="false"
+				default="false"
 				type="boolean";
-		
+
 	/* *********************************************************************
-	**							PK+CONSTRAINTS									
+	**							PK+CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "loginAttemptsID";
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -72,7 +73,7 @@ component 	persistent="true"
 		variables.isBlocked 	= false;
 
 		super.init();
-		
+
 		return this;
 	}
 
@@ -82,7 +83,7 @@ component 	persistent="true"
 	function getMemento( excludes="" ){
 		var pList 	= listToArray( "value,attempts,lastLoginSuccessIP,isBlocked" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		return result;
 	}
 

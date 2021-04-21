@@ -104,11 +104,10 @@ component
 
 	property
 		name     ="contentID"
-		notnull  ="true"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'contentID_seq' }";
+		update   ="false";
 
 	property
 		name   ="contentType"

@@ -5,48 +5,52 @@
 * ---
 * I am a custom field metadata that can be attached to base content in contentbox
 */
-component 	persistent="true" 
-			entityname="cbCustomField" 
-			table="cb_customfield" 
+component 	persistent="true"
+			entityname="cbCustomField"
+			table="cb_customfield"
 			extends="contentbox.models.BaseEntity"
-			cachename="cbCustomField" 
+			cachename="cbCustomField"
 			cacheuse="read-write"{
 
 	/* *********************************************************************
-	**							PROPERTIES									
+	**							PROPERTIES
 	********************************************************************* */
 
-	property 	name="customFieldID" 
-				fieldtype="id" 
-				generator="native" 
-				setter="false"  
-				params="{ allocationSize = 1, sequence = 'customFieldID_seq' }";
+	property
+		name="customFieldID"
+		fieldtype="id"
+		generator="uuid"
+		setter   ="false"
+		update   ="false";
 
-	property 	name="key"			
-				notnull="true" 
-				ormtype="string" 	
+	property
+	name="key"
+				notnull="true"
+				ormtype="string"
 				length="255";
 
-	property 	name="value"    	
-				notnull="true" 
-				ormtype="text" 		
+	property
+	name="value"
+				notnull="true"
+				ormtype="text"
 				length="8000";
 
 	/* *********************************************************************
-	**							RELATIONSHIPS									
+	**							RELATIONSHIPS
 	********************************************************************* */
 
 	// M20 -> Content loaded as a proxy
-	property 	name="relatedContent" 
-				notnull="false" 
-				cfc="contentbox.models.content.BaseContent" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_contentID" 
-				lazy="true" 
+	property
+	name="relatedContent"
+				notnull="false"
+				cfc="contentbox.models.content.BaseContent"
+				fieldtype="many-to-one"
+				fkcolumn="FK_contentID"
+				lazy="true"
 				index="idx_contentCustomFields";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
+	**							PK + CONSTRAINTS
 	********************************************************************* */
 
 	this.pk = "customFieldID";
@@ -57,7 +61,7 @@ component 	persistent="true"
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
+	**							PUBLIC FUNCTIONS
 	********************************************************************* */
 
 	/**
@@ -66,7 +70,7 @@ component 	persistent="true"
 	function getMemento( excludes="" ){
 		var pList 	= listToArray( "key,value" );
 		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
+
 		return result;
 	}
 

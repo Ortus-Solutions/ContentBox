@@ -33,7 +33,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	numeric function getTotalCountByContent( string contentId = "", boolean isApproved ){
 		return newCriteria()
-			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
+			.isEq( "relatedContent.contentID", arguments.contentId )
 			.when( !isNull( arguments.isApproved ), function( c ){
 				c.isEq( "isApproved", javacast( "Boolean", isApproved ) );
 			} )
@@ -49,7 +49,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteId", siteId );
 			} )
 			.count();
 	}
@@ -64,7 +64,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.isTrue( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteId", siteId );
 			} )
 			.count();
 	}
@@ -79,7 +79,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.isFalse( "isApproved" )
 			.when( len( arguments.siteId ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteId", siteId );
 			} )
 			.count();
 	}
@@ -112,7 +112,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// By Content?
 		if ( !isNull( arguments.contentID ) AND len( arguments.contentID ) ) {
-			c.isEq( "relatedContent.contentID", javacast( "int", arguments.contentID ) );
+			c.isEq( "relatedContent.contentID", arguments.contentID );
 		}
 
 		// By Content Type Discriminator: class is a special hibernate deal
@@ -123,7 +123,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", javacast( "int", arguments.siteId ) );
+				.isEq( "relatedContent.site.siteId", arguments.siteId );
 		}
 
 		// run criteria query and projections count
@@ -488,7 +488,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Content Filter
 		if ( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ) {
-			c.isEq( "relatedContent.contentID", javacast( "int", arguments.contentID ) );
+			c.isEq( "relatedContent.contentID", arguments.contentID );
 		}
 
 		// Search Criteria
@@ -504,7 +504,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", javacast( "int", arguments.siteId ) );
+				.isEq( "relatedContent.site.siteId", arguments.siteId );
 		}
 
 		// run criteria query and projections count

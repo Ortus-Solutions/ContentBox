@@ -257,7 +257,7 @@ component
 
 		// role filter
 		if ( structKeyExists( arguments, "role" ) AND arguments.role NEQ "any" ) {
-			c.createAlias( "role", "role" ).isEq( "role.roleID", javacast( "int", arguments.role ) );
+			c.createAlias( "role", "role" ).isEq( "role.roleID", arguments.role );
 		}
 
 		// permission groups filter

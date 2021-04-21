@@ -52,9 +52,9 @@ component
 	property
 		name     ="categoryID"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'categoryID_seq' }";
+		update   ="false";
 
 	property
 		name   ="category"
@@ -211,7 +211,7 @@ component
 				return service
 					.newCriteria()
 					.createAlias( "categories", "categories" )
-					.isEq( "categories.categoryID", javacast( "int", getCategoryID() ) )
+					.isEq( "categories.categoryID", getCategoryID() )
 					.isTrue( "isPublished" )
 					.isLE( "publishedDate", now() )
 					.isEq( "passwordProtection", "" )
