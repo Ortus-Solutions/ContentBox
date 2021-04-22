@@ -33,7 +33,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	numeric function getTotalCountByContent( string contentId = "", boolean isApproved ){
 		return newCriteria()
-			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
+			.isEq( "relatedContent.contentID", arguments.contentId )
 			.when( !isNull( arguments.isApproved ), function( c ){
 				c.isEq( "isApproved", javacast( "Boolean", isApproved ) );
 			} )
@@ -43,13 +43,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total comment counts in the system
 	 *
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	numeric function getTotalCount( string siteId = "" ){
+	numeric function getTotalCount( string siteID = "" ){
 		return newCriteria()
-			.when( len( arguments.siteId ), function( c ){
+			.when( len( arguments.siteID ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -57,14 +57,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total number of approved comments in the system
 	 *
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	numeric function getApprovedCount( string siteId = "" ){
+	numeric function getApprovedCount( string siteID = "" ){
 		return newCriteria()
 			.isTrue( "isApproved" )
-			.when( len( arguments.siteId ), function( c ){
+			.when( len( arguments.siteID ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -72,14 +72,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total number of unapproved comments in the system
 	 *
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	numeric function getUnApprovedCount( string siteId = "" ){
+	numeric function getUnApprovedCount( string siteID = "" ){
 		return newCriteria()
 			.isFalse( "isApproved" )
-			.when( len( arguments.siteId ), function( c ){
+			.when( len( arguments.siteID ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteId", javacast( "int", siteId ) );
+					.isEq( "relatedContent.site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -92,7 +92,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @max The maximum number of records to return, 0 means all
 	 * @offset The offset in the paging, 0 means 0
 	 * @sortOrder Sort the comments asc or desc, by default it is desc
-	 * @siteId The site to filter on if needed
+	 * @siteID The site to filter on if needed
 	 *
 	 * @return struct with { comments, count }
 	 */
@@ -102,7 +102,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		max              = 0,
 		offset           = 0,
 		string sortOrder = "desc",
-		string siteId    = ""
+		string siteID    = ""
 	){
 		var results = { "count" : 0, "comments" : [] };
 		var c       = newCriteria();
@@ -112,7 +112,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// By Content?
 		if ( !isNull( arguments.contentID ) AND len( arguments.contentID ) ) {
-			c.isEq( "relatedContent.contentID", javacast( "int", arguments.contentID ) );
+			c.isEq( "relatedContent.contentID", arguments.contentID );
 		}
 
 		// By Content Type Discriminator: class is a special hibernate deal
@@ -121,9 +121,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
+		if ( len( arguments.siteID ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", javacast( "int", arguments.siteId ) );
+				.isEq( "relatedContent.site.siteID", arguments.siteID );
 		}
 
 		// run criteria query and projections count
@@ -465,7 +465,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @max max records
 	 * @offset offset for pagination
 	 * @sortOrder The sort order, defaults to `createdDate DESC`
-	 * @siteId The site to filter on if needed
+	 * @siteID The site to filter on if needed
 	 *
 	 * @return struct with { comments, count }
 	 */
@@ -476,7 +476,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		numeric max    = 0,
 		numeric offset = 0,
 		sortOrder      = "createdDate DESC",
-		string siteId  = ""
+		string siteID  = ""
 	){
 		var results = { "count" : 0, "comments" : [] };
 		var c       = newCriteria();
@@ -488,7 +488,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Content Filter
 		if ( !isNull( arguments.contentID ) AND arguments.contentID NEQ "all" ) {
-			c.isEq( "relatedContent.contentID", javacast( "int", arguments.contentID ) );
+			c.isEq( "relatedContent.contentID", arguments.contentID );
 		}
 
 		// Search Criteria
@@ -502,9 +502,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
+		if ( len( arguments.siteID ) ) {
 			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteId", javacast( "int", arguments.siteId ) );
+				.isEq( "relatedContent.site.siteID", arguments.siteID );
 		}
 
 		// run criteria query and projections count

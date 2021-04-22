@@ -36,7 +36,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	Category function getOrCreate( required category, required site ){
 		// Verify the incoming category exists in the target site or not
 		var oTargetCategory = newCriteria()
-			.isEq( "site.siteId", javacast( "int", arguments.site.getSiteId() ) )
+			.isEq( "site.siteID", arguments.site.getsiteID() )
 			.isEq( "slug", arguments.category.getSlug() )
 			.get();
 
@@ -57,12 +57,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total category counts
 	 *
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
-	numeric function getTotalCategoryCount( string siteId = "" ){
+	numeric function getTotalCategoryCount( string siteID = "" ){
 		return newCriteria()
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -81,7 +81,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			!isSlugUnique(
 				slug     : arguments.category.getSlug(),
 				contentID: arguments.category.getCategoryId(),
-				siteId   : arguments.category.getSite().getSiteId()
+				siteID   : arguments.category.getSite().getsiteID()
 			)
 		) {
 			// Throw exception
@@ -100,19 +100,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @slug The slug to search for uniqueness
 	 * @categoryId Limit the search to the passed categoryId usually for updates
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 *
 	 * @return True if the slug is unique or false if it's already used
 	 */
 	boolean function isSlugUnique(
 		required any slug,
 		any categoryID = "",
-		string siteId  = ""
+		string siteID  = ""
 	){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.when( len( arguments.categoryID ), function( c ){
 				c.ne( "categoryID", autoCast( "categoryID", categoryID ) );
@@ -137,7 +137,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.filter( function( thisCategory ){
 				return newCriteria()
 					.isEq( "category", arguments.thisCategory )
-					.isEq( "site.siteId", javacast( "int", site.getSiteId() ) )
+					.isEq( "site.siteID", site.getsiteID() )
 					.count() == 0;
 			} )
 			.map( function( thisCategory ){
@@ -227,7 +227,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	array function getAllForExport(){
 		return newCriteria()
 			.withProjections(
-				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteId:site"
+				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteID:site"
 			)
 			.asStruct()
 			.list( sortOrder: "category" );
@@ -236,11 +236,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get an array of names of all categories in the system
 	 */
-	array function getAllNames( string siteId = "" ){
+	array function getAllNames( string siteID = "" ){
 		return newCriteria()
 			.withProjections( property: "category" )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.list( sortOrder: "category" );
 	}
@@ -248,11 +248,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get an array of slugs of all categories in the system
 	 */
-	array function getAllSlugs( string siteId = "" ){
+	array function getAllSlugs( string siteID = "" ){
 		return newCriteria()
 			.withProjections( property: "slug" )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.list( sortOrder: "slug" );
 	}

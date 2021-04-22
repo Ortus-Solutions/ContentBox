@@ -50,16 +50,17 @@ component extends="baseHandler" {
 	function editor( event, rc, prc ){
 		// tab
 		prc.tabSystem_sites = true;
-
 		// get new or persisted
-		prc.site   = variables.siteService.get( event.getValue( "siteId", 0 ) );
+		if( isNull( prc.site ) ){
+			prc.site   = variables.siteService.get( event.getValue( "siteID", 0 ) );
+		}
 		// Get all registered themes
 		prc.themes = variables.themeService.getThemes();
 		// pages
 		prc.pages  = variables.pageService.search(
 			sortOrder   = "slug asc",
 			isPublished = true,
-			siteId      = prc.site.getSiteId()
+			siteID      = prc.site.getsiteID()
 		).pages;
 
 		// exit handlers
@@ -74,21 +75,21 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		var oSite    = populateModel( siteService.get( id: rc.siteId ) );
+		prc.site    = populateModel( variables.siteService.get( rc.siteID ) );
 		// validate it
-		var vResults = validateModel( oSite );
+		var vResults = validate( prc.site );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preSiteSave", { site : oSite, siteId : rc.siteId } );
+			announce( "cbadmin_preSiteSave", { site : prc.site, siteID : rc.siteID } );
 			// save rule
-			variables.siteService.save( oSite );
+			variables.siteService.save( prc.site );
 			// announce event
-			announce( "cbadmin_postSiteSave", { site : oSite } );
+			announce( "cbadmin_postSiteSave", { site : prc.site } );
 			// Message
 			cbMessagebox.info( "Site saved!" );
 			relocate( prc.xehSitesManager );
 		} else {
-			cbMessagebox.warn( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warn( vResults.getAllErrors() );
 			return editor( argumentCollection = arguments );
 		}
 	}
@@ -98,13 +99,13 @@ component extends="baseHandler" {
 	 */
 	function remove( event, rc, prc ){
 		// Get requested site to remove
-		var oSite = variables.siteService.get( rc.siteId );
+		var oSite = variables.siteService.get( rc.siteID );
 		// announce event
 		announce( "cbadmin_preSiteRemove", { site : oSite } );
 		// Now delete it
 		variables.siteService.delete( oSite );
 		// announce event
-		announce( "cbadmin_postSiteRemove", { siteId : rc.siteId } );
+		announce( "cbadmin_postSiteRemove", { siteID : rc.siteID } );
 		// Message
 		cbMessagebox.setMessage( "info", "Site Removed!" );
 		// relocate
@@ -115,7 +116,7 @@ component extends="baseHandler" {
 	 * Change current editing site
 	 */
 	function changeSite( event, rc, prc ){
-		siteService.setCurrentWorkingSiteId( rc.siteId );
+		siteService.setCurrentWorkingsiteID( rc.siteID );
 		relocate( prc.xehDashboard );
 	}
 

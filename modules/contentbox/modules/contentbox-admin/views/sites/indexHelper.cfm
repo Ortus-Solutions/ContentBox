@@ -30,7 +30,7 @@ function remove( recordID ){
 		$( "##delete_"+ recordID )
 			.removeClass( "fa fa-minus-circle" )
 			.addClass( "fa fa-spinner fa-spin" );
-		$( "##siteId" ).val( recordID );
+		$( "##siteID" ).val( recordID );
 	}
 	//Submit Form
 	$siteForm.submit();

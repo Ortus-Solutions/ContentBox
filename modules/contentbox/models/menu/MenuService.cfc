@@ -38,7 +38,7 @@ component
 				!isSlugUnique(
 					slug  : arguments.menu.getSlug(),
 					menuID: arguments.menu.getMenuID(),
-					siteId: arguments.menu.getSiteId()
+					siteID: arguments.menu.getsiteID()
 				)
 			) {
 				// make slug unique
@@ -58,7 +58,7 @@ component
 	 * @offset The offset for pagination
 	 * @asQuery Query or objects
 	 * @sortOrder The sort order to apply
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
 	function search(
 		string searchTerm = "",
@@ -66,7 +66,7 @@ component
 		numeric offset    = 0,
 		boolean asQuery   = false,
 		string sortOrder  = "title",
-		string siteId     = ""
+		string siteID     = ""
 	){
 		var results = {};
 		var c       = newCriteria();
@@ -80,8 +80,8 @@ component
 		}
 
 		// Site Filter
-		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", javacast( "int", arguments.siteId ) );
+		if ( len( arguments.siteID ) ) {
+			c.isEq( "site.siteID", arguments.siteID );
 		}
 
 		// run criteria query and projections count
@@ -102,16 +102,16 @@ component
 	 * Find a menu object by slug, if not found it returns a new menu object
 	 *
 	 * @slug The slug to search
-	 * @siteId The site this slug is on
+	 * @siteID The site this slug is on
 	 *
 	 * @return The menu found or a new menu blank
 	 */
-	function findBySlug( required any slug, string siteId = "" ){
+	function findBySlug( required any slug, string siteID = "" ){
 		// By criteria now
 		var menu = newCriteria()
 			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.get();
 		// return accordingly
@@ -135,12 +135,12 @@ component
 	/**
 	 * Returns an array of slugs of all the content objects in the system.
 	 *
-	 * @siteId Filter by site
+	 * @siteID Filter by site
 	 */
-	array function getAllSlugs( string siteId = "" ){
+	array function getAllSlugs( string siteID = "" ){
 		return newCriteria()
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.withProjections( property = "slug" )
 			.list( sortOrder = "slug asc" );
@@ -291,17 +291,17 @@ component
 	 *
 	 * @slug The slug to search for uniqueness
 	 * @menuID Limit the search to the passed menuID usually for updates
-	 * @siteId The site to filter on
+	 * @siteID The site to filter on
 	 */
 	function isSlugUnique(
 		required any slug,
 		any menuID    = "",
-		string siteId = ""
+		string siteID = ""
 	){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
-			.when( len( arguments.siteId ), function( c ){
-				c.isEq( "site.siteId", javacast( "int", siteId ) );
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
 			} )
 			.when( len( arguments.menuID ), function( c ){
 				c.ne( "menuID", autoCast( "menuID", menuID ) );

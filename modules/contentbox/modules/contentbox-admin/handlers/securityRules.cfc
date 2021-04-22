@@ -77,7 +77,9 @@ component extends="baseHandler" {
 		prc.tabSystem_securityRules = true;
 
 		// get new or persisted
-		prc.rule         = ruleService.get( event.getValue( "ruleID", 0 ) );
+		if( isNull( prc.rule ) ){
+			prc.rule = ruleService.get( event.getValue( "ruleID", 0 ) );
+		}
 		// Load permissions
 		prc.aPermissions = variables.permissionService.list(
 			sortOrder = "permission",
@@ -85,38 +87,33 @@ component extends="baseHandler" {
 		);
 		// Load roles
 		prc.aRoles = variables.roleService.list( sortOrder = "role", asQuery = false );
-
 		// exit handlers
 		prc.xehRuleSave = "#prc.cbAdminEntryPoint#.securityRules.save";
-
 		// view
-		event.setView( view = "securityRules/editor" );
+		event.setView( "securityRules/editor" );
 	}
 
-	// save rule
 	function save( event, rc, prc ){
 		// populate and get content
-		var oRule  = populateModel( ruleService.get( id = rc.ruleID ) );
+		prc.rule  = populateModel( variables.ruleService.get( rc.ruleID ) );
 		// validate it
-		var errors = oRule.validate();
-		if ( !arrayLen( errors ) ) {
+		var vResults = validate( prc.rule );
+		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preSecurityRulesSave", { rule : oRule, ruleID : rc.ruleID } );
+			announce( "cbadmin_preSecurityRulesSave", { rule : prc.rule, ruleID : rc.ruleID } );
 			// save rule
-			ruleService.saveRule( oRule );
+			variables.ruleService.saveRule( prc.rule );
 			// announce event
-			announce( "cbadmin_postSecurityRulesSave", { rule : oRule } );
-			// Message
+			announce( "cbadmin_postSecurityRulesSave", { rule : prc.rule } );
+			// Message + Relocate
 			cbMessagebox.info( "Security Rule saved! Isn't that awesome!" );
+			relocate( prc.xehsecurityRules );
 		} else {
-			cbMessagebox.warn( errorMessages = errors );
+			cbMessagebox.warn( vResults.getAllErrors() );
+			return editor( argumentCollection = arguments );
 		}
-
-		// relocate back to editor
-		relocate( prc.xehsecurityRules );
 	}
 
-	// remove
 	function remove( event, rc, prc ){
 		event.paramValue( "ruleID", "" );
 		// check for length

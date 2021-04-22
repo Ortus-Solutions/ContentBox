@@ -54,18 +54,18 @@ component extends="baseHandler" {
 	 * @return html
 	 */
 	function latestSnapshot( event, rc, prc ){
-		var siteId = prc.oCurrentSite.getSiteId();
+		var siteID = prc.oCurrentSite.getsiteID();
 
-		prc.entriesCount            = variables.entryService.getTotalContentCount( siteId );
-		prc.pagesCount              = variables.pageService.getTotalContentCount( siteId );
-		prc.commentsCount           = variables.commentService.getTotalCount( siteId );
-		prc.commentsApprovedCount   = variables.commentService.getApprovedCount( siteId );
-		prc.commentsUnApprovedCount = variables.commentService.getUnApprovedCount( siteId );
-		prc.categoriesCount         = variables.categoryService.getTotalCategoryCount( siteId );
+		prc.entriesCount            = variables.entryService.getTotalContentCount( siteID );
+		prc.pagesCount              = variables.pageService.getTotalContentCount( siteID );
+		prc.commentsCount           = variables.commentService.getTotalCount( siteID );
+		prc.commentsApprovedCount   = variables.commentService.getApprovedCount( siteID );
+		prc.commentsUnApprovedCount = variables.commentService.getUnApprovedCount( siteID );
+		prc.categoriesCount         = variables.categoryService.getTotalCategoryCount( siteID );
 
 		// Few Reports
-		prc.topContent   = variables.contentService.getTopVisitedContent( max: 5, siteId: siteId );
-		prc.topCommented = variables.contentService.getTopCommentedContent( max: 5, siteId: siteId );
+		prc.topContent   = variables.contentService.getTopVisitedContent( max: 5, siteID: siteID );
+		prc.topCommented = variables.contentService.getTopCommentedContent( max: 5, siteID: siteID );
 
 		// convert report to chart data
 		prc.aTopContent          = [];

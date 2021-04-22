@@ -84,7 +84,7 @@ component extends="baseHandler" {
 			cbMessagebox.setMessage( "info", "Category saved!" );
 		} else {
 			// messagebox
-			cbMessagebox.warning( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warning( vResults.getAllErrors() );
 		}
 		// relocate
 		relocate( prc.xehCategories );
@@ -134,7 +134,7 @@ component extends="baseHandler" {
 		}
 
 		// messagebox
-		cbMessagebox.info( messageArray = messages );
+		cbMessagebox.info( messages );
 		relocate( prc.xehCategories );
 	}
 

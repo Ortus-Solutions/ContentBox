@@ -63,7 +63,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	numeric function getTotalHitsByContent( string contentId = "" ){
 		var oStat = newCriteria()
-			.isEq( "relatedContent.contentID", javacast( "int", arguments.contentId ) )
+			.isEq( "relatedContent.contentID", arguments.contentId )
 			.withProjections( property: "hits" )
 			.get();
 		return ( isNull( oStat ) ? 0 : oStat );
@@ -86,7 +86,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						sql = "UPDATE cb_stats
 							SET hits = hits + 1,
 							modifiedDate = #createODBCDateTime( now() )#
-							WHERE FK_contentID = #arguments.content.getContentId()#"
+							WHERE FK_contentID = '#arguments.content.getContentId()#'"
 					).execute();
 					// if no record, means, new record, so insert
 					if ( q.getPrefix().RECORDCOUNT eq 0 ) {

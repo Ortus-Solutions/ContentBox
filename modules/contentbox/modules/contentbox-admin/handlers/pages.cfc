@@ -104,7 +104,7 @@ component extends="baseContentHandler" {
 			creator    : rc.fCreators,
 			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
 			sortOrder  : "order asc",
-			siteId     : prc.oCurrentSite.getSiteId()
+			siteID     : prc.oCurrentSite.getsiteID()
 		);
 		prc.pages      = pageResults.pages;
 		prc.pagesCount = pageResults.count;
@@ -241,7 +241,7 @@ component extends="baseContentHandler" {
 			.paramValue( "expireTime", "" )
 			.paramValue( "customFieldsCount", 0 )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getSiteId() );
+			.paramValue( "site", prc.oCurrentSite.getsiteID() );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
@@ -272,7 +272,7 @@ component extends="baseContentHandler" {
 			arrayAppend( errors, "Please enter the content to save!" );
 		}
 		if ( arrayLen( errors ) ) {
-			cbMessageBox.warn( messageArray = errors );
+			cbMessageBox.warn( errors );
 			editor( argumentCollection = arguments );
 			return;
 		}
@@ -360,7 +360,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		// Defaults
-		event.paramValue( "site", prc.oCurrentSite.getSiteId() );
+		event.paramValue( "site", prc.oCurrentSite.getsiteID() );
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
@@ -499,7 +499,7 @@ component extends="baseContentHandler" {
 			}
 		}
 		// messagebox
-		cbMessageBox.info( messageArray = messages );
+		cbMessageBox.info( messages );
 		// relocate
 		relocate( event = prc.xehPages, queryString = "parent=#rc.parent#" );
 	}
@@ -662,7 +662,7 @@ component extends="baseContentHandler" {
 			max                : prc.cbSettings.cb_paging_maxrows,
 			sortOrder          : "slug asc",
 			searchActiveContent: false,
-			siteId             : prc.oCurrentSite.getSiteId()
+			siteID             : prc.oCurrentSite.getsiteID()
 		);
 		// setup data for display
 		prc.entries      = pageResults.pages;

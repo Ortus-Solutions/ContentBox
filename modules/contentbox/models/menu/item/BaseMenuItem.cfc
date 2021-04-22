@@ -45,8 +45,8 @@ component
 
 	property
 		name     ="isDeleted"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
@@ -59,9 +59,9 @@ component
 	property
 		name     ="menuItemID"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'menuItemID_seq' }";
+		update   ="false";
 
 	property
 		name   ="title"
@@ -93,8 +93,8 @@ component
 
 	property
 		name     ="active"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		dbdefault="true"
 		default  ="true";
 

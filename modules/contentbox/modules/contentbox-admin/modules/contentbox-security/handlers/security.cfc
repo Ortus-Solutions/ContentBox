@@ -218,7 +218,7 @@ component extends="baseHandler"{
 			// announce event
 			announce( "cbadmin_onInvalidPasswordReminder", { errors = errors, email = rc.email } );
 			// messagebox
-			messagebox.error( messageArray=errors );
+			messagebox.error( errors );
 		}
 		// Re Route
 		relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );

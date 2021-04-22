@@ -55,7 +55,7 @@ component extends="content" {
 			cache         : false,
 			markup        : rc.markup,
 			layout        : rc.layout,
-			site          : variables.siteService.getOrFail( rc.siteId )
+			site          : variables.siteService.getOrFail( rc.siteID )
 		} );
 
 		// Comments need to be empty
@@ -143,7 +143,7 @@ component extends="content" {
 		prc.page = variables.contentService.findBySlug(
 			slug           : incomingURL,
 			showUnpublished: showUnpublished,
-			siteId         : prc.oCurrentSite.getSiteId()
+			siteID         : prc.oCurrentSite.getsiteID()
 		);
 
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
@@ -247,7 +247,7 @@ component extends="content" {
 				offset    : prc.pagingBoundaries.startRow - 1,
 				max       : prc.cbSettings.cb_search_maxResults,
 				searchTerm: rc.q,
-				siteId    : prc.oCurrentSite.getSiteId()
+				siteID    : prc.oCurrentSite.getsiteID()
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {

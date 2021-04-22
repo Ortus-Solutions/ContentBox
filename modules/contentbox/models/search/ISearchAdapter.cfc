@@ -12,13 +12,13 @@ interface {
 	 * @searchTerm The search term to search on
 	 * @max The max results to return if paging
 	 * @offset The offset to use in the search results if paging
-	 * @siteId The site id to search on if passed
+	 * @siteID The site id to search on if passed
 	 */
 	contentbox.models.search.SearchResults function search(
 		required string searchTerm,
 		numeric max    = 0,
 		numeric offset = 0,
-		string siteId  = ""
+		string siteID  = ""
 	);
 
 	/**

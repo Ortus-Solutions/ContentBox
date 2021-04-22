@@ -7,18 +7,20 @@
 			<span id="rulesCountContainer"></span>
 		</h1>
 
-        <!--- messageBox --->
+    </div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+
+		<!--- messageBox --->
 		#cbMessageBox().renderit()#
 
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
 		</cfif>
-    </div>
-</div>
 
-<div class="row">
-	<div class="col-md-12">
 		<div class="panel panel-info">
 
 		    <div class="panel-heading">

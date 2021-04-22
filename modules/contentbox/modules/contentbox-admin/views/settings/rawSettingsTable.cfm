@@ -71,7 +71,7 @@
 										'#encodeForHTMLAttribute( setting.getName() )#',
 										'#encodeForHTMLAttribute( JSStringFormat( setting.getValue() ) )#',
 										#setting.getIsCore() ? 'true' : 'false'#,
-										'#setting.getSiteId()#'
+										'#setting.getsiteID()#'
 									)"
 									title="Edit Setting"
 								>

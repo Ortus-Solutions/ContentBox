@@ -68,7 +68,7 @@ component extends="baseHandler" {
 
 		// Validate results
 		if ( vResults.hasErrors() ) {
-			variables.cbMessagebox.error( messageArray = vResults.getAllErrors() );
+			variables.cbMessagebox.error( vResults.getAllErrors() );
 			return index( argumentCollection = arguments );
 		}
 

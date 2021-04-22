@@ -21,9 +21,9 @@ component
 	property
 		name     ="moduleID"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'moduleID_seq' }";
+		update   ="false";
 
 	property
 		name   ="name"
@@ -78,8 +78,8 @@ component
 	property
 		name     ="isActive"
 		notnull  ="true"
-		ormtype  = "boolean"
-		//sqltype  = "smallInt"
+		ormtype  ="boolean"
+		// sqltype  = "smallInt"
 		default  ="false"
 		dbdefault="false"
 		index    ="idx_activeModule";

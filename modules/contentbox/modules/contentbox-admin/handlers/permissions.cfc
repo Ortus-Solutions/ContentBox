@@ -75,7 +75,7 @@ component extends="baseHandler" {
 			cbMessagebox.setMessage( "info", "Permission saved!" );
 		} else {
 			// messagebox
-			cbMessagebox.warning( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warning( vResults.getAllErrors() );
 		}
 		// relocate
 		relocate( prc.xehPermissions );

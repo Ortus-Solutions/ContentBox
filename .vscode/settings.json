@@ -1,17 +1,19 @@
 {
-	"cflint.enabled": false,
 	"cfml.mappings": [
 		{
 			"logicalPath": "/contentbox",
-			"directoryPath": "./modules/contentbox"
+			"directoryPath": "./modules/contentbox",
+			"isPhysicalDirectoryPath" :false
 		},
 		{
 			"logicalPath": "/coldbox",
-			"directoryPath": "./coldbox"
+			"directoryPath": "./coldbox",
+			"isPhysicalDirectoryPath" :false
 		},
 		{
 			"logicalPath": "/testbox",
-			"directoryPath": "./testbox"
+			"directoryPath": "./testbox",
+			"isPhysicalDirectoryPath" :false
 		}
 	]
 }

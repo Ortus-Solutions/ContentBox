@@ -355,7 +355,7 @@ component {
 			.paramValue( "title", "" )
 			.paramValue( "slug", "" )
 			.paramValue( "h", "" )
-			.paramValue( "siteId", "" );
+			.paramValue( "siteID", "" );
 
 		// valid Author?
 		if (

@@ -16,23 +16,26 @@ component
 	 ********************************************************************* */
 
 	property
-		name   ="createdDate"
-		type   ="date"
-		ormtype="timestamp"
-		notnull="true"
-		update ="false";
+		name      ="createdDate"
+		type      ="date"
+		ormtype   ="timestamp"
+		notnull   ="true"
+		update    ="false"
+		persistent="true";
 
 	property
-		name   ="modifiedDate"
-		type   ="date"
-		ormtype="timestamp"
-		notnull="true";
+		name      ="modifiedDate"
+		type      ="date"
+		ormtype   ="timestamp"
+		notnull   ="true"
+		persistent=true;
 
 	property
-		name     ="isDeleted"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false"
-		dbdefault="false";
+		name      ="isDeleted"
+		ormtype   ="boolean"
+		notnull   ="true"
+		default   ="false"
+		dbdefault ="false"
+		persistent="true";
 
 }

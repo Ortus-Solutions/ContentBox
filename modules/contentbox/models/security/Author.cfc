@@ -31,9 +31,9 @@ component
 	property
 		name     ="authorID"
 		fieldtype="id"
-		generator="native"
+		generator="uuid"
 		setter   ="false"
-		params   ="{ allocationSize = 1, sequence = 'authorID_seq' }";
+		update   ="false";
 
 	property
 		name   ="firstName"
