@@ -242,7 +242,7 @@ component
 	 */
 	SettingService function preFlightCheck(){
 		// Log it
-		log.info( "> Running ContentBox pre flight checks..." );
+		variables.log.info( "> Running ContentBox pre flight checks..." );
 
 		// Iterate over default core settings and check they exist
 		lock
