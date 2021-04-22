@@ -1,16 +1,19 @@
 {
 	"cfml.mappings": [
 		{
-			"logicalPath": "contentbox",
-			"directoryPath": "./modules/contentbox"
+			"logicalPath": "/contentbox",
+			"directoryPath": "./modules/contentbox",
+			"isPhysicalDirectoryPath" :false
 		},
 		{
-			"logicalPath": "coldbox",
-			"directoryPath": "./coldbox"
+			"logicalPath": "/coldbox",
+			"directoryPath": "./coldbox",
+			"isPhysicalDirectoryPath" :false
 		},
 		{
-			"logicalPath": "testbox",
-			"directoryPath": "./testbox"
+			"logicalPath": "/testbox",
+			"directoryPath": "./testbox",
+			"isPhysicalDirectoryPath" :false
 		}
 	]
 }
