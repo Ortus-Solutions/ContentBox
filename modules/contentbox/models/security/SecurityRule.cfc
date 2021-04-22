@@ -64,21 +64,20 @@ component
 	property
 		name   ="redirect"
 		ormtype="string"
-		notnull="true"
+		notnull="false"
 		default=""
 		length ="500";
 
 	property
 		name   ="overrideEvent"
 		ormtype="string"
-		notnull="true"
+		notnull="false"
 		default=""
 		length ="500";
 
 	property
 		name     ="useSSL"
 		ormtype  = "boolean"
-		//sqltype  = "smallInt"
 		notnull  ="false"
 		default  ="false"
 		dbdefault="false";
@@ -127,7 +126,7 @@ component
 
 	this.constraints = {
 		"whitelist"  : { required : false, size : "1..255" },
-		"securelist" : { required : false, size : "1..255" },
+		"securelist" : { required : true, size : "1..255" },
 		"match"      : {
 			required : false,
 			size     : "1..50",
