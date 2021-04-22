@@ -1,0 +1,106 @@
+[
+    {
+        "statsID": 31,
+        "hits": 10,
+        "FK_contentID": 190,
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2021-02-19 10:51:56",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 32,
+        "hits": 3,
+        "FK_contentID": 191,
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2021-02-19 10:51:59",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 33,
+        "hits": 5,
+        "FK_contentID": 189,
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2021-02-19 10:52:00",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 35,
+        "hits": 129,
+        "FK_contentID": 147,
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2021-02-19 10:54:50",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 38,
+        "hits": 4,
+        "FK_contentID": 162,
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2021-02-19 10:52:03",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 39,
+        "hits": 1,
+        "FK_contentID": 160,
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2016-05-03 16:23:26",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 43,
+        "hits": 4,
+        "FK_contentID": 207,
+        "createdDate": "2016-05-18 11:35:32",
+        "modifiedDate": "2021-02-19 10:51:51",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 44,
+        "hits": 5,
+        "FK_contentID": 213,
+        "createdDate": "2016-05-18 11:35:32",
+        "modifiedDate": "2021-02-19 10:51:43",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 45,
+        "hits": 1,
+        "FK_contentID": 192,
+        "createdDate": "2016-05-18 11:48:04",
+        "modifiedDate": "2016-05-18 11:48:04",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 46,
+        "hits": 10,
+        "FK_contentID": 141,
+        "createdDate": "2016-08-05 11:41:28",
+        "modifiedDate": "2021-02-19 10:53:28",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 47,
+        "hits": 29,
+        "FK_contentID": 142,
+        "createdDate": "2016-11-28 14:56:53",
+        "modifiedDate": "2017-06-20 11:37:12",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 48,
+        "hits": 1,
+        "FK_contentID": 135,
+        "createdDate": "2021-02-19 10:53:24",
+        "modifiedDate": "2021-02-19 10:53:24",
+        "isDeleted": 0
+    },
+    {
+        "statsID": 49,
+        "hits": 1,
+        "FK_contentID": 110,
+        "createdDate": "2021-02-19 10:53:35",
+        "modifiedDate": "2021-02-19 10:53:35",
+        "isDeleted": 0
+    }
+]
