@@ -69,29 +69,29 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		var oRole = populateModel(
-			model               : roleService.get( id = rc.roleID ),
+		prc.oRole = populateModel(
+			model               : roleService.get( rc.roleID ),
 			composeRelationships: true
 		);
 
-
 		// Validate
-		var vResults = validateModel( oRole );
+		var vResults = validate( prc.oRole );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preRoleSave", { role : oRole, roleID : rc.roleID } );
+			announce( "cbadmin_preRoleSave", { role : prc.oRole, roleID : rc.roleID } );
 			// save role
-			roleService.save( oRole );
+			roleService.save( prc.oRole );
 			// announce event
-			announce( "cbadmin_postRoleSave", { role : oRole } );
+			announce( "cbadmin_postRoleSave", { role : prc.oRole } );
 			// messagebox
 			cbMessagebox.setMessage( "info", "Role saved!" );
+			// relocate
+			relocate( prc.xehroles );
 		} else {
 			// messagebox
 			cbMessagebox.warning( vResults.getAllErrors() );
+			return editor( argumentCollection = arguments );
 		}
-		// relocate
-		relocate( prc.xehroles );
 	}
 
 	/**
@@ -105,7 +105,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_preRoleRemove", { roleID : rc.roleID } );
 		// Get requested role and remove permissions
-		var oRole = roleService.get( id = rc.roleID ).clearPermissions();
+		var oRole = roleService.get( rc.roleID ).clearPermissions();
 		// finally delete
 		roleService.delete( oRole );
 		// announce event
@@ -122,7 +122,9 @@ component extends="baseHandler" {
 	function editor( event, rc, prc ){
 		param rc.roleId  = 0;
 		// Get or fail
-		prc.oRole        = variables.roleService.get( rc.roleId );
+		if( isNull( prc.oRole ) ){
+			prc.oRole = variables.roleService.get( rc.roleId );
+		}
 		// Load permissions
 		prc.aPermissions = variables.permissionService.list(
 			sortOrder = "permission",

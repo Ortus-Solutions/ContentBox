@@ -48,7 +48,7 @@
 						#html.hiddenField( name="roleId", bind=prc.oRole )#
 
 						#html.textField(
-							name    		= "name",
+							name    		= "role",
 							bind    		= prc.oRole,
 							label   		= "*Role Name:",
 							required		= "required",
