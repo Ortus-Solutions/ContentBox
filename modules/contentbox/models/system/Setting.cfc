@@ -40,7 +40,6 @@ component
 	property
 		name     ="isCore"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
