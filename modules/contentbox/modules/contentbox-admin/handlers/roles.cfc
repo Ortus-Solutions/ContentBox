@@ -88,7 +88,7 @@ component extends="baseHandler" {
 			cbMessagebox.setMessage( "info", "Role saved!" );
 		} else {
 			// messagebox
-			cbMessagebox.warning( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warning( vResults.getAllErrors() );
 		}
 		// relocate
 		relocate( prc.xehroles );

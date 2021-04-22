@@ -50,9 +50,10 @@ component extends="baseHandler" {
 	function editor( event, rc, prc ){
 		// tab
 		prc.tabSystem_sites = true;
-
 		// get new or persisted
-		prc.site   = variables.siteService.get( event.getValue( "siteID", 0 ) );
+		if( isNull( prc.site ) ){
+			prc.site   = variables.siteService.get( event.getValue( "siteID", 0 ) );
+		}
 		// Get all registered themes
 		prc.themes = variables.themeService.getThemes();
 		// pages
@@ -74,21 +75,21 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		var oSite    = populateModel( siteService.get( id: rc.siteID ) );
+		prc.site    = populateModel( variables.siteService.get( rc.siteID ) );
 		// validate it
-		var vResults = validateModel( oSite );
+		var vResults = validate( prc.site );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce( "cbadmin_preSiteSave", { site : oSite, siteID : rc.siteID } );
+			announce( "cbadmin_preSiteSave", { site : prc.site, siteID : rc.siteID } );
 			// save rule
-			variables.siteService.save( oSite );
+			variables.siteService.save( prc.site );
 			// announce event
-			announce( "cbadmin_postSiteSave", { site : oSite } );
+			announce( "cbadmin_postSiteSave", { site : prc.site } );
 			// Message
 			cbMessagebox.info( "Site saved!" );
 			relocate( prc.xehSitesManager );
 		} else {
-			cbMessagebox.warn( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warn( vResults.getAllErrors() );
 			return editor( argumentCollection = arguments );
 		}
 	}

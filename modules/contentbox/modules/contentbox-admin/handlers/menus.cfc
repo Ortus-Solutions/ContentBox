@@ -256,7 +256,7 @@ component extends="baseHandler" {
 		}
 
 		// messagebox
-		cbMessagebox.info( messageArray = messages );
+		cbMessagebox.info( messages );
 		relocate( prc.xehMenus );
 	}
 

@@ -332,7 +332,7 @@ component extends="baseHandler" {
 			// relocate
 			relocate( prc.xehAuthors );
 		} else {
-			cbMessagebox.warn( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warn( vResults.getAllErrors() );
 			return new ( argumentCollection = arguments );
 		}
 	}
@@ -533,7 +533,7 @@ component extends="baseHandler" {
 			);
 		} else {
 			// message
-			cbMessagebox.error( messageArray = vResult.getAllErrors() );
+			cbMessagebox.error( vResult.getAllErrors() );
 			// relocate
 			relocate(
 				event       = prc.xehAuthorEditor,
@@ -582,7 +582,7 @@ component extends="baseHandler" {
 			// relocate
 			relocate( prc.xehAuthors );
 		} else {
-			cbMessagebox.warn( messageArray = vResults.getAllErrors() );
+			cbMessagebox.warn( vResults.getAllErrors() );
 			relocate(
 				event       = prc.xehAuthorEditor,
 				queryString = "authorID=#oAuthor.getAuthorID()#"

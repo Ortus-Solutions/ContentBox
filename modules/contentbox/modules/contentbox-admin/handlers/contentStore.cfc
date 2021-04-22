@@ -393,7 +393,7 @@ component extends="baseContentHandler" {
 			arrayAppend( errors, "Please enter the content to save!" );
 		}
 		if ( arrayLen( errors ) ) {
-			cbMessageBox.warn( messageArray = errors );
+			cbMessageBox.warn( errors );
 			editor( argumentCollection = arguments );
 			return;
 		}
@@ -509,7 +509,7 @@ component extends="baseContentHandler" {
 			}
 		}
 		// messagebox
-		cbMessageBox.info( messageArray = messages );
+		cbMessageBox.info( messages );
 		// relocate
 		relocate( event = prc.xehContentStore, queryString = "parent=#rc.parent#" );
 	}
