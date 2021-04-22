@@ -268,7 +268,14 @@ component {
 				qb.from( "cb_contentStore" ).insert( aContentStore );
 				print.cyanLine( "   ==> (#aContentStore.len()#) Content Store inserted" );
 
-				/******************** CONTENT VERSION ************************/
+				/******************** CONTENT VERSIONS ***********************/
+				print.line().greenLine( "Generating content versions..." );
+				truncate( "cb_contentVersion" );
+
+				var aContentVersions = deserializeJSON( fileRead( "mockdata/contentVersions.json" ) );
+
+				qb.from( "cb_contentVersion" ).insert( aContentVersions );
+				print.cyanLine( "   ==> (#aContentVersions.len()#) Content versions inserted" );
 				
 				/******************** CUSTOM FIELD ***************************/
 				print.line().greenLine( "Generating custom field..." );
@@ -379,6 +386,238 @@ component {
 
 				qb.from( "cb_menu" ).insert( aMenus );
 				print.cyanLine( "   ==> (#aMenus.len()#) Menus inserted" );
+
+				/******************** MENU ITEMS *****************************/
+				print.line().greenLine( "Generating menu items..." );
+				truncate( "cb_menuItem" );
+
+				var aMenuItems = [
+					{
+						"menuItemID": 7,
+						"menuType": "Free",
+						"title": "",
+						"label": "test",
+						"data": "",
+						"active": 1,
+						"FK_menuID": 2,
+						"FK_parentID": { "value": "", "null": true },
+						"mediaPath": { "value": "", "null": true },
+						"contentSlug": { "value": "", "null": true },
+						"menuSlug": { "value": "", "null": true },
+						"url": { "value": "", "null": true },
+						"js": { "value": "", "null": true },
+						"itemClass": "",
+						"target": { "value": "", "null": true },
+						"urlClass": { "value": "", "null": true },
+						"createdDate": "2016-05-04 17:22:08",
+						"modifiedDate": "2016-05-04 17:22:08",
+						"isDeleted": 0
+					},
+					{
+						"menuItemID": 8,
+						"menuType": "URL",
+						"title": "",
+						"label": "hello",
+						"data": "",
+						"active": 1,
+						"FK_menuID": 2,
+						"FK_parentID": { "value": "", "null": true },
+						"mediaPath": { "value": "", "null": true },
+						"contentSlug": { "value": "", "null": true },
+						"menuSlug": { "value": "", "null": true },
+						"url": "http://www.ortussolutions.com",
+						"js": { "value": "", "null": true },
+						"itemClass": "",
+						"target": "_blank",
+						"urlClass": "test",
+						"createdDate": "2016-05-04 17:22:08",
+						"modifiedDate": "2016-05-04 17:22:08",
+						"isDeleted": 0
+					}
+				];
+
+				qb.from( "cb_menuItem" ).insert( aMenuItems );
+				print.cyanLine( "   ==> (#aMenuItems.len()#) Menu Items inserted" );
+
+				/******************** MODULES *********************************/
+				print.line().greenLine( "Generating modules..." );
+				truncate( "cb_module" );
+
+				var aModules = [
+					{
+						"moduleID": 36,
+						"name": "Hello",
+						"title": "HelloContentBox",
+						"version": "1.0",
+						"entryPoint": "HelloContentBox",
+						"author": "Ortus Solutions, Corp",
+						"webURL": "http://www.ortussolutions.com",
+						"forgeBoxSlug": "",
+						"description": "This is an awesome hello world module",
+						"isActive": 0,
+						"createdDate": "2016-07-15 12:09:34",
+						"modifiedDate": "2016-07-15 12:09:34",
+						"isDeleted": 0,
+						"moduleType": "core"
+					}
+				];
+
+				qb.from( "cb_module" ).insert( aModules );
+				print.cyanLine( "   ==> (#aModules.len()#) Modules inserted" );
+
+				/******************** PAGES **********************************/
+				print.line().greenLine( "Generating pages..." );
+				truncate( "cb_page" );
+
+				var aPages = deserializeJSON( fileRead( "mockdata/pages.json" ) );
+
+				qb.from( "cb_page" ).insert( aPages );
+				print.cyanLine( "   ==> (#aPages.len()#) Pages inserted" );
+
+				/******************** PERMISSION GROUP ***********************/
+				print.line().greenLine( "Generating permission groups..." );
+				truncate( "cb_permissionGroup" );
+
+				var aPermissionGroups = [
+					{
+						"permissionGroupID": 1,
+						"createdDate": "2017-06-12 16:01:13",
+						"modifiedDate": "2017-06-12 20:31:52",
+						"isDeleted": 0,
+						"name": "Finance",
+						"description": "Finance team permissions"
+					},
+					{
+						"permissionGroupID": 2,
+						"createdDate": "2017-06-16 13:02:12",
+						"modifiedDate": "2017-06-16 13:02:12",
+						"isDeleted": 0,
+						"name": "Security",
+						"description": ""
+					}
+				];
+
+				qb.from( "cb_permissionGroup" ).insert( aPermissionGroups );
+				print.cyanLine( "   ==> (#aPermissionGroups.len()#) Persmission Groups inserted" );
+
+				/******************** RELATED CONTENT ************************/
+				print.line().greenLine( "Generating related content..." );
+				truncate( "cb_relatedContent" );
+
+				var aRelatedContent = [
+					{
+						"FK_contentID": 127,
+						"FK_relatedContentID": 111
+					}
+				];
+
+				qb.from( "cb_relatedContent" ).insert( aRelatedContent );
+				print.cyanLine( "   ==> (#aRelatedContent.len()#) Related Content inserted" );
+
+				/******************** ROLES **********************************/
+				print.line().greenLine( "Generating roles..." );
+				truncate( "cb_role" );
+
+				var aRoles = [
+					{
+						"roleID": 1,
+						"role": "Editor",
+						"description": "A ContentBox editor",
+						"createdDate": "2016-05-03 16:23:26",
+						"modifiedDate": "2016-05-03 16:23:26",
+						"isDeleted": 0
+					},
+					{
+						"roleID": 2,
+						"role": "Administrator",
+						"description": "A ContentBox Administrator",
+						"createdDate": "2016-05-03 16:23:26",
+						"modifiedDate": "2016-05-03 16:23:26",
+						"isDeleted": 0
+					},
+					{
+						"roleID": 3,
+						"role": "MegaAdmin",
+						"description": "A ContentBox Mega Admin",
+						"createdDate": "2016-05-03 16:23:26",
+						"modifiedDate": "2016-05-03 16:23:26",
+						"isDeleted": 0
+					},
+					{
+						"roleID": 5,
+						"role": "Test",
+						"description": "Test",
+						"createdDate": "2016-09-23 14:35:41",
+						"modifiedDate": "2016-09-23 14:35:41",
+						"isDeleted": 0
+					}
+				];
+
+				qb.from( "cb_role" ).insert( aRoles );
+				print.cyanLine( "   ==> (#aRoles.len()#) Roles inserted" );
+
+				/******************** ROLE PERMISSIONS ***********************/
+				print.line().greenLine( "Generating role permissions..." );
+				truncate( "cb_rolePermissions" );
+
+				var aRolePermission = deserializeJSON( fileRead( "mockdata/rolePermissions.json" ) );
+
+				qb.from( "cb_rolePermissions" ).insert( aRolePermission );
+				print.cyanLine( "   ==> (#aRolePermission.len()#) Role Permissions inserted" );
+
+				/******************** SECURITY RULES *************************/
+				print.line().greenLine( "Generating security rules..." );
+				truncate( "cb_securityRule" );
+
+				var aSecurityRules = deserializeJSON( fileRead( "mockdata/securityRules.json" ) );
+
+				qb.from( "cb_securityRule" ).insert( aSecurityRules );
+				print.cyanLine( "   ==> (#aSecurityRules.len()#) Security Rules inserted" );
+
+				/******************** SETTINGS *******************************/
+				print.line().greenLine( "Generating settings..." );
+				truncate( "cb_setting" );
+
+				var aSettings = deserializeJSON( fileRead( "mockdata/settings.json" ) );
+
+				qb.from( "cb_setting" ).insert( aSettings );
+				print.cyanLine( "   ==> (#aSettings.len()#) Settings inserted" );
+
+				/******************** SITES **********************************/
+				print.line().greenLine( "Generating sites..." );
+				truncate( "cb_site" );
+
+				var aSites = deserializeJSON( fileRead( "mockdata/sites.json" ) );
+
+				qb.from( "cb_site" ).insert( aSites );
+				print.cyanLine( "   ==> (#aSites.len()#) Sites inserted" );
+
+				/******************** STATS **********************************/
+				print.line().greenLine( "Generating stats..." );
+				truncate( "cb_stats" );
+
+				var aStats = deserializeJSON( fileRead( "mockdata/stats.json" ) );
+
+				qb.from( "cb_stats" ).insert( aStats );
+				print.cyanLine( "   ==> (#aStats.len()#) Stats inserted" );
+
+				/******************** SUBSCRIBERS **********************************/
+				print.line().greenLine( "Generating subscribers..." );
+				truncate( "cb_subscribers" );
+
+				var aSubscribers = deserializeJSON( fileRead( "mockdata/subscribers.json" ) );
+
+				qb.from( "cb_subscribers" ).insert( aSubscribers );
+				print.cyanLine( "   ==> (#aSubscribers.len()#) Subscribers inserted" );
+
+				/******************** SUBSCRIPTIONS **********************************/
+				print.line().greenLine( "Generating subscriptions..." );
+				truncate( "cb_subscriptions" );
+
+				var aSubscriptions = deserializeJSON( fileRead( "mockdata/subscriptions.json" ) );
+
+				qb.from( "cb_subscriptions" ).insert( aSubscriptions );
+				print.cyanLine( "   ==> (#aSubscriptions.len()#) Subscriptions inserted" );
 				return;
 
 				/******************** PROJECT PERMISSIONS ********************/
