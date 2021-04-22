@@ -6,7 +6,7 @@
         "createdDate": "2016-05-03 16:23:25",
         "modifiedDate": "2016-05-03 16:23:25",
         "isDeleted": 0,
-        "FK_siteId": 1
+        "FK_siteID": 1
     },
 	{
         "categoryID": 4,
@@ -15,7 +15,7 @@
         "createdDate": "2016-05-03 16:23:25",
         "modifiedDate": "2016-05-03 16:23:25",
         "isDeleted": 0,
-        "FK_siteId": 1
+        "FK_siteID": 1
     },
 	{
         "categoryID": 5,
@@ -24,6 +24,6 @@
         "createdDate": "2016-05-03 16:23:25",
         "modifiedDate": "2016-05-03 16:23:25",
         "isDeleted": 0,
-        "FK_siteId": 1
+        "FK_siteID": 1
     }
 ]

@@ -1,0 +1,34 @@
+[
+	{
+	  "roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "createdDate": "2021-04-22 17:51:25",
+	  "modifiedDate": "2021-04-22 17:51:25",
+	  "isDeleted": 0,
+	  "role": "Editor",
+	  "description": "A ContentBox editor"
+	},
+	{
+	  "roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "createdDate": "2021-04-22 17:51:25",
+	  "modifiedDate": "2021-04-22 17:51:25",
+	  "isDeleted": 0,
+	  "role": "Administrator",
+	  "description": "A ContentBox Administrator"
+	},
+	{
+	  "roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "createdDate": "2021-04-22 17:57:37",
+	  "modifiedDate": "2021-04-22 17:57:37",
+	  "isDeleted": 0,
+	  "role": "MegaAdmin",
+	  "description": "A ContentBox Mega Admin"
+	},
+	{
+	  "roleID": "ff80808178fbc7620178fbce95460133",
+	  "createdDate": "2021-04-22 17:58:43",
+	  "modifiedDate": "2021-04-22 17:58:43",
+	  "isDeleted": 0,
+	  "role": "Test",
+	  "description": "Test"
+	}
+  ]

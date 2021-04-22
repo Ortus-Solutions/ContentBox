@@ -1,1841 +1,982 @@
 [
 	{
-		"settingID": 3,
-		"name": "cb_security_login_blocker",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 4,
-		"name": "cb_media_allowDelete",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 5,
-		"name": "cb_security_login_signin_text",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 6,
-		"name": "cb_versions_max_history",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 7,
-		"name": "cb_security_rate_limiter_duration",
-		"value": "1",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 8,
-		"name": "cb_rss_description",
-		"value": "ContentBox RSS Feed",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 9,
-		"name": "cb_media_html5uploads_maxFiles",
-		"value": "25",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 10,
-		"name": "cb_site_mail_password",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 11,
-		"name": "cb_rss_cacheName",
-		"value": "Template",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 12,
-		"name": "cb_editors_markup",
-		"value": "HTML",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 13,
-		"name": "cb_content_cacheName",
-		"value": "Template",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 14,
-		"name": "cb_editors_ckeditor_toolbar",
-		"value": "[\n		{ \"name\": \"document\",    \"items\" : [ \"Source\",\"-\",\"Maximize\",\"ShowBlocks\" ] },\n		{ \"name\": \"clipboard\",   \"items\" : [ \"Cut\",\"Copy\",\"Paste\",\"PasteText\",\"PasteFromWord\",\"-\",\"Undo\",\"Redo\" ] },\n		{ \"name\": \"editing\",     \"items\" : [ \"Find\",\"Replace\",\"SpellChecker\"] },\n		{ \"name\": \"forms\",       \"items\" : [ \"Form\", \"Checkbox\", \"Radio\", \"TextField\", \"Textarea\", \"Select\", \"Button\",\"HiddenField\" ] },\n		\"/\",\n		{ \"name\": \"basicstyles\", \"items\" : [ \"Bold\",\"Italic\",\"Underline\",\"Strike\",\"Subscript\",\"Superscript\",\"-\",\"RemoveFormat\" ] },\n		{ \"name\": \"paragraph\",   \"items\" : [ \"NumberedList\",\"BulletedList\",\"-\",\"Outdent\",\"Indent\",\"-\",\"Blockquote\",\"CreateDiv\",\"-\",\"JustifyLeft\",\"JustifyCenter\",\"JustifyRight\",\"JustifyBlock\",\"-\",\"BidiLtr\",\"BidiRtl\" ] },\n		{ \"name\": \"links\",       \"items\" : [ \"Link\",\"Unlink\",\"Anchor\" ] },\n		\"/\",\n		{ \"name\": \"styles\",      \"items\" : [ \"Styles\",\"Format\" ] },\n		{ \"name\": \"colors\",      \"items\" : [ \"TextColor\",\"BGColor\" ] },\n		{ \"name\": \"insert\",      \"items\" : [ \"Image\",\"Table\",\"HorizontalRule\",\"Smiley\",\"SpecialChar\",\"Iframe\",\"InsertPre\"] },\n		{ \"name\": \"contentbox\",  \"items\" : [ \"MediaEmbed\",\"cbIpsumLorem\",\"cbWidgets\",\"cbContentStore\",\"cbLinks\",\"cbEntryLinks\" ] }\n		]",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 15,
-		"name": "cb_security_rate_limiter_logging",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 16,
-		"name": "cb_site_settings_cache",
-		"value": "template",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 17,
-		"name": "cb_versions_commit_mandatory",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 18,
-		"name": "cb_notify_page",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 19,
-		"name": "cb_site_mail_username",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 20,
-		"name": "cb_rss_webmaster",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 21,
-		"name": "cb_rss_title",
-		"value": "RSS Feed by ContentBox",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 22,
-		"name": "cb_media_acceptMimeTypes",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 23,
-		"name": "cb_notify_author",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 24,
-		"name": "cb_dashboard_welcome_title",
-		"value": "Dashboard",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 25,
-		"name": "cb_page_excerpts",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 26,
-		"name": "cb_site_outgoingEmail",
-		"value": "info@ortussolutions.com",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 27,
-		"name": "cb_dashboard_newsfeed",
-		"value": "https://www.ortussolutions.com/blog/rss",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 28,
-		"name": "cb_media_createFolders",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 29,
-		"name": "cb_security_min_password_length",
-		"value": "8",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 30,
-		"name": "cb_dashboard_newsfeed_count",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 31,
-		"name": "cb_rss_cachingTimeout",
-		"value": "60",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 32,
-		"name": "cb_content_cachingTimeoutIdle",
-		"value": "15",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 33,
-		"name": "cb_media_html5uploads_maxFileSize",
-		"value": "100",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 34,
-		"name": "cb_salt",
-		"value": "50C8A804FEFA3CC43AFF8E68F6FF4299E311786C6B0D5A8DC070044A3C59938B70218FFE71F5C8B8C544AD26FE0C21D2F7D582F53B8CF016350BCC98FEA8B102",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 35,
-		"name": "cb_site_mail_server",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 36,
-		"name": "cb_media_quickViewWidth",
-		"value": "400",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 37,
-		"name": "cb_security_2factorAuth_trusted_days",
-		"value": "30",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 38,
-		"name": "cb_rss_generator",
-		"value": "ContentBox by Ortus Solutions",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 39,
-		"name": "cb_content_bot_regex",
-		"value": "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 40,
-		"name": "cb_editors_ckeditor_excerpt_toolbar",
-		"value": "[\n		{ \"name\": \"document\",    \"items\" : [ \"Source\",\"-\",\"Maximize\",\"ShowBlocks\" ] },\n		{ \"name\": \"basicstyles\", \"items\" : [ \"Bold\",\"Italic\",\"Underline\",\"Strike\",\"Subscript\",\"Superscript\"] },\n		{ \"name\": \"paragraph\",   \"items\" : [ \"NumberedList\",\"BulletedList\",\"-\",\"Outdent\",\"Indent\",\"CreateDiv\"] },\n		{ \"name\": \"links\",       \"items\" : [ \"Link\",\"Unlink\",\"Anchor\" ] },\n		{ \"name\": \"insert\",      \"items\" : [ \"Image\",\"Flash\",\"Table\",\"HorizontalRule\",\"Smiley\",\"SpecialChar\" ] },\n		{ \"name\": \"contentbox\",  \"items\" : [ \"MediaEmbed\",\"cbIpsumLorem\",\"cbWidgets\",\"cbContentStore\",\"cbLinks\",\"cbEntryLinks\" ] }\n		]",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 41,
-		"name": "cb_security_blocktime",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 42,
-		"name": "cb_comments_moderation_expiration",
-		"value": "30",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 43,
-		"name": "cb_contentstore_caching",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 44,
-		"name": "cb_gravatar_rating",
-		"value": "PG",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 45,
-		"name": "cb_site_maintenance_message",
-		"value": "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 46,
-		"name": "cb_admin_theme",
-		"value": "contentbox-default",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 47,
-		"name": "cb_dashboard_recentcontentstore",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 48,
-		"name": "cb_comments_moderation_blockedlist",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 49,
-		"name": "cb_content_cachingTimeout",
-		"value": "60",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 50,
-		"name": "cb_security_login_signout_url",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 51,
-		"name": "cb_site_mail_ssl",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 52,
-		"name": "cb_paging_bandgap",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 53,
-		"name": "cb_rss_maxComments",
-		"value": "10",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 54,
-		"name": "cb_security_rate_limiter",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 55,
-		"name": "cb_media_allowDownloads",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 56,
-		"name": "cb_content_caching",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 57,
-		"name": "cb_content_hit_ignore_bots",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 58,
-		"name": "cb_rss_copyright",
-		"value": "Ortus Solutions, Corp (www.ortussolutions.com)",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 59,
-		"name": "cb_site_maintenance",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 60,
-		"name": "cb_comments_moderation",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 61,
-		"name": "cb_rss_cachingTimeoutIdle",
-		"value": "15",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 62,
-		"name": "cb_admin_ssl",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 63,
-		"name": "cb_paging_maxentries",
-		"value": "10",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 64,
-		"name": "cb_dashboard_recentComments",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 65,
-		"name": "cb_security_latest_logins",
-		"value": "10",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 66,
-		"name": "cb_content_cachingHeader",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 67,
-		"name": "cb_search_adapter",
-		"value": "contentbox.models.search.DBSearch",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 68,
-		"name": "cb_notify_entry",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 69,
-		"name": "cb_site_mail_smtp",
-		"value": "25",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 70,
-		"name": "cb_security_rate_limiter_message",
-		"value": "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 71,
-		"name": "cb_security_2factorAuth_force",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 72,
-		"name": "cb_paging_maxrows",
-		"value": "20",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 73,
-		"name": "cb_security_rate_limiter_count",
-		"value": "4",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 74,
-		"name": "cb_security_max_attempts",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 75,
-		"name": "cb_admin_quicksearch_max",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 76,
-		"name": "cb_comments_whoisURL",
-		"value": "http://whois.arin.net/ui/query.do?q",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 77,
-		"name": "cb_security_2factorAuth_provider",
-		"value": "email",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 78,
-		"name": "cb_security_max_auth_logs",
-		"value": "500",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 79,
-		"name": "cb_dashboard_recentPages",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 80,
-		"name": "cb_comments_moderation_blacklist",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 81,
-		"name": "cb_editors_default",
-		"value": "ckeditor",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 82,
-		"name": "cb_site_mail_tls",
-		"value": "false",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 83,
-		"name": "cb_media_provider",
-		"value": "CFContentMediaProvider",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 84,
-		"name": "cb_gravatar_display",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 85,
-		"name": "cb_editors_ckeditor_extraplugins",
-		"value": "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 86,
-		"name": "cb_site_email",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 87,
-		"name": "cb_notify_contentstore",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 88,
-		"name": "cb_paging_maxRSSComments",
-		"value": "10",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 89,
-		"name": "cb_media_provider_caching",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 90,
-		"name": "cb_site_blog_entrypoint",
-		"value": "blog",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 91,
-		"name": "cb_media_allowUploads",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 92,
-		"name": "cb_dashboard_welcome_body",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 93,
-		"name": "cb_media_directoryRoot",
-		"value": "/contentbox-custom/_content",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 94,
-		"name": "cb_search_maxResults",
-		"value": "20",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 95,
-		"name": "cb_security_rate_limiter_bots_only",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 96,
-		"name": "cb_content_uiexport",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 97,
-		"name": "cb_entry_caching",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 98,
-		"name": "cb_content_hit_count",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 99,
-		"name": "cb_comments_moderation_whitelist",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 100,
-		"name": "cb_rss_caching",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 101,
-		"name": "cb_security_rate_limiter_redirectURL",
-		"value": "",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 102,
-		"name": "cb_dashboard_recentEntries",
-		"value": "5",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 103,
-		"name": "cb_rss_maxEntries",
-		"value": "10",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 104,
-		"name": "cb_theme_default_cbBootswatchTheme",
-		"value": "green",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 105,
-		"name": "cb_theme_default_overrideHeaderColors",
-		"value": "false",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 106,
-		"name": "cb_theme_default_overrideHeaderBGColor",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 107,
-		"name": "cb_theme_default_overrideHeaderTextColor",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 108,
-		"name": "cb_theme_default_cssStyleOverrides",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 109,
-		"name": "cb_theme_default_headerLogo",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 110,
-		"name": "cb_theme_default_showSiteSearch",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 111,
-		"name": "cb_theme_default_footerBox",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 112,
-		"name": "cb_theme_default_hpHeaderTitle",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 113,
-		"name": "cb_theme_default_hpHeaderText",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 114,
-		"name": "cb_theme_default_hpHeaderLink",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 115,
-		"name": "cb_theme_default_hpHeaderBtnText",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 116,
-		"name": "cb_theme_default_hpHeaderBtnStyle",
-		"value": "primary",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 117,
-		"name": "cb_theme_default_hpHeaderBg",
-		"value": "green",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 118,
-		"name": "cb_theme_default_hpHeaderImgBg",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 119,
-		"name": "cb_theme_default_hpHeaderBgPos",
-		"value": "Top Center",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 120,
-		"name": "cb_theme_default_hpHeaderBgPaddingTop",
-		"value": "100px",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:50",
-		"modifiedDate": "2020-09-09 17:34:50",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 121,
-		"name": "cb_theme_default_hpHeaderBgPaddingBottom",
-		"value": "50px",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 122,
-		"name": "cb_theme_default_rssDiscovery",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 123,
-		"name": "cb_theme_default_showCategoriesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 124,
-		"name": "cb_theme_default_showRecentEntriesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 125,
-		"name": "cb_theme_default_showSiteUpdatesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 126,
-		"name": "cb_theme_default_showEntryCommentsBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 127,
-		"name": "cb_theme_default_showArchivesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 128,
-		"name": "cb_theme_default_showEntriesSearchBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:34:51",
-		"modifiedDate": "2020-09-09 17:34:51",
-		"isDeleted": 0,
-		"FK_siteId": 1
-	},
-	{
-		"settingID": 129,
-		"name": "cb_active",
-		"value": "true",
-		"isCore": 1,
-		"createdDate": "2020-09-09 17:34:49",
-		"modifiedDate": "2020-09-09 17:34:49",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 130,
-		"name": "cb_enc_key",
-		"value": "guxDy6/lBXEyt3kOkKtl7A==",
-		"isCore": 0,
-		"createdDate": "2020-09-09 17:38:19",
-		"modifiedDate": "2020-09-09 17:38:19",
-		"isDeleted": 0,
-		"FK_siteId": {
-			"value": "",
-			"null": true
-		}
-	},
-	{
-		"settingID": 131,
-		"name": "cb_theme_default_cbBootswatchTheme",
-		"value": "green",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 132,
-		"name": "cb_theme_default_overrideHeaderColors",
-		"value": "false",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 133,
-		"name": "cb_theme_default_overrideHeaderBGColor",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 134,
-		"name": "cb_theme_default_overrideHeaderTextColor",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 135,
-		"name": "cb_theme_default_cssStyleOverrides",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 136,
-		"name": "cb_theme_default_headerLogo",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 137,
-		"name": "cb_theme_default_showSiteSearch",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:22",
-		"modifiedDate": "2021-02-18 17:46:22",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 138,
-		"name": "cb_theme_default_footerBox",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 139,
-		"name": "cb_theme_default_hpHeaderTitle",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 140,
-		"name": "cb_theme_default_hpHeaderText",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 141,
-		"name": "cb_theme_default_hpHeaderLink",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 142,
-		"name": "cb_theme_default_hpHeaderBtnText",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 143,
-		"name": "cb_theme_default_hpHeaderBtnStyle",
-		"value": "primary",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 144,
-		"name": "cb_theme_default_hpHeaderBg",
-		"value": "green",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 145,
-		"name": "cb_theme_default_hpHeaderImgBg",
-		"value": "",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 146,
-		"name": "cb_theme_default_hpHeaderBgPos",
-		"value": "Top Center",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 147,
-		"name": "cb_theme_default_hpHeaderBgPaddingTop",
-		"value": "100px",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 148,
-		"name": "cb_theme_default_hpHeaderBgPaddingBottom",
-		"value": "50px",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 149,
-		"name": "cb_theme_default_rssDiscovery",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 150,
-		"name": "cb_theme_default_showCategoriesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 151,
-		"name": "cb_theme_default_showRecentEntriesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 152,
-		"name": "cb_theme_default_showSiteUpdatesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 153,
-		"name": "cb_theme_default_showEntryCommentsBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 154,
-		"name": "cb_theme_default_showArchivesBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
-	},
-	{
-		"settingID": 155,
-		"name": "cb_theme_default_showEntriesSearchBlogSide",
-		"value": "true",
-		"isCore": 0,
-		"createdDate": "2021-02-18 17:46:23",
-		"modifiedDate": "2021-02-18 17:46:23",
-		"isDeleted": 0,
-		"FK_siteId": 2
+	  "settingID": "ff80808178fb87e60178fb880f270001",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_login_blocker",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f350002",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_allowDelete",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f370003",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_login_signin_text",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f3a0004",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_versions_max_history",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f430005",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter_duration",
+	  "value": "1",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f470006",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_description",
+	  "value": "ContentBox RSS Feed",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f490007",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_html5uploads_maxFiles",
+	  "value": "25",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f4d0008",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_mail_password",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f500009",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_cacheName",
+	  "value": "Template",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f53000a",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_editors_markup",
+	  "value": "HTML",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f58000b",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_cacheName",
+	  "value": "Template",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f5c000c",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_editors_ckeditor_toolbar",
+	  "value": "[\n\t\t{ \"name\": \"document\",    \"items\" : [ \"Source\",\"-\",\"Maximize\",\"ShowBlocks\" ] },\n\t\t{ \"name\": \"clipboard\",   \"items\" : [ \"Cut\",\"Copy\",\"Paste\",\"PasteText\",\"PasteFromWord\",\"-\",\"Undo\",\"Redo\" ] },\n\t\t{ \"name\": \"editing\",     \"items\" : [ \"Find\",\"Replace\",\"SpellChecker\"] },\n\t\t{ \"name\": \"forms\",       \"items\" : [ \"Form\", \"Checkbox\", \"Radio\", \"TextField\", \"Textarea\", \"Select\", \"Button\",\"HiddenField\" ] },\n\t\t\"/\",\n\t\t{ \"name\": \"basicstyles\", \"items\" : [ \"Bold\",\"Italic\",\"Underline\",\"Strike\",\"Subscript\",\"Superscript\",\"-\",\"RemoveFormat\" ] },\n\t\t{ \"name\": \"paragraph\",   \"items\" : [ \"NumberedList\",\"BulletedList\",\"-\",\"Outdent\",\"Indent\",\"-\",\"Blockquote\",\"CreateDiv\",\"-\",\"JustifyLeft\",\"JustifyCenter\",\"JustifyRight\",\"JustifyBlock\",\"-\",\"BidiLtr\",\"BidiRtl\" ] },\n\t\t{ \"name\": \"links\",       \"items\" : [ \"Link\",\"Unlink\",\"Anchor\" ] },\n\t\t\"/\",\n\t\t{ \"name\": \"styles\",      \"items\" : [ \"Styles\",\"Format\" ] },\n\t\t{ \"name\": \"colors\",      \"items\" : [ \"TextColor\",\"BGColor\" ] },\n\t\t{ \"name\": \"insert\",      \"items\" : [ \"Image\",\"Table\",\"HorizontalRule\",\"Smiley\",\"SpecialChar\",\"Iframe\",\"InsertPre\"] },\n\t\t{ \"name\": \"contentbox\",  \"items\" : [ \"MediaEmbed\",\"cbIpsumLorem\",\"cbWidgets\",\"cbContentStore\",\"cbLinks\",\"cbEntryLinks\" ] }\n\t\t]",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f60000d",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter_logging",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f68000e",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_settings_cache",
+	  "value": "template",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f6c000f",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_versions_commit_mandatory",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f710010",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_notify_page",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f750011",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_mail_username",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f780012",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_webmaster",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f7b0013",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_title",
+	  "value": "RSS Feed by ContentBox",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f7d0014",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_acceptMimeTypes",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f800015",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_notify_author",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f840016",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_welcome_title",
+	  "value": "Dashboard",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f870017",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_page_excerpts",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f8a0018",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_outgoingEmail",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f8d0019",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_newsfeed",
+	  "value": "https://www.ortussolutions.com/blog/rss",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f90001a",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_createFolders",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f93001b",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_min_password_length",
+	  "value": "8",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f97001c",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_newsfeed_count",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880f9b001d",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_cachingTimeout",
+	  "value": "60",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fa1001e",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_cachingTimeoutIdle",
+	  "value": "15",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fa7001f",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_html5uploads_maxFileSize",
+	  "value": "100",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880faa0020",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_salt",
+	  "value": "B8EB8974486552E0AFEC02C13DC5200B99EEB8737B2ACA4A1FBCE0E0D9841C9CF33307D0FAB0C17A616E9F514965CDAE2D3A4E085249A61F38BE604FB5161BAF",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fad0021",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_mail_server",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fae0022",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_quickViewWidth",
+	  "value": "400",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fb00023",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_2factorAuth_trusted_days",
+	  "value": "30",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fb20024",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_generator",
+	  "value": "ContentBox by Ortus Solutions",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fb40025",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_bot_regex",
+	  "value": "Google|msnbot|Rambler|Yahoo|AbachoBOT|accoona|AcioRobot|ASPSeek|CocoCrawler|Dumbot|FAST-WebCrawler|GeonaBot|Gigabot|Lycos|MSRBOT|Scooter|AltaVista|IDBot|eStyle|Scrubby",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fb60026",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_editors_ckeditor_excerpt_toolbar",
+	  "value": "[\n\t\t{ \"name\": \"document\",    \"items\" : [ \"Source\",\"-\",\"Maximize\",\"ShowBlocks\" ] },\n\t\t{ \"name\": \"basicstyles\", \"items\" : [ \"Bold\",\"Italic\",\"Underline\",\"Strike\",\"Subscript\",\"Superscript\"] },\n\t\t{ \"name\": \"paragraph\",   \"items\" : [ \"NumberedList\",\"BulletedList\",\"-\",\"Outdent\",\"Indent\",\"CreateDiv\"] },\n\t\t{ \"name\": \"links\",       \"items\" : [ \"Link\",\"Unlink\",\"Anchor\" ] },\n\t\t{ \"name\": \"insert\",      \"items\" : [ \"Image\",\"Flash\",\"Table\",\"HorizontalRule\",\"Smiley\",\"SpecialChar\" ] },\n\t\t{ \"name\": \"contentbox\",  \"items\" : [ \"MediaEmbed\",\"cbIpsumLorem\",\"cbWidgets\",\"cbContentStore\",\"cbLinks\",\"cbEntryLinks\" ] }\n\t\t]",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fb80027",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_blocktime",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fbc0028",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_contentstore_caching",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fbe0029",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_gravatar_rating",
+	  "value": "PG",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fc0002a",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_maintenance_message",
+	  "value": "<h1>This site is down for maintenance.<br /> Please check back again soon.</h1>",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fc3002b",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_admin_theme",
+	  "value": "contentbox-default",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fc9002c",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_recentcontentstore",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fcc002d",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_cachingTimeout",
+	  "value": "60",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fce002e",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_login_signout_url",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fd1002f",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_mail_ssl",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fd50030",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_paging_bandgap",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fd80031",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_maxComments",
+	  "value": "10",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fda0032",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fdd0033",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_media_allowDownloads",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fde0034",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_caching",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fe00035",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_hit_ignore_bots",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fe10036",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_copyright",
+	  "value": "Ortus Solutions, Corp (www.ortussolutions.com)",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fe30037",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_maintenance",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fe50038",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_rss_cachingTimeoutIdle",
+	  "value": "15",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fe60039",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_admin_ssl",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fe8003a",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_paging_maxentries",
+	  "value": "10",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fea003b",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_recentComments",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880feb003c",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_latest_logins",
+	  "value": "10",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fed003d",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_content_cachingHeader",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fee003e",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_search_adapter",
+	  "value": "contentbox.models.search.DBSearch",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ff0003f",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_password_reset_expiration",
+	  "value": "60",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ff10040",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_notify_entry",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ff30041",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_site_mail_smtp",
+	  "value": "25",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ff50042",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter_message",
+	  "value": "<p>You are making too many requests too fast, please slow down and wait {duration} seconds</p>",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ff70043",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_2factorAuth_force",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ff90044",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_paging_maxrows",
+	  "value": "20",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ffb0045",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter_count",
+	  "value": "4",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880ffd0046",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_security_max_attempts",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb880fff0047",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_admin_quicksearch_max",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810010048",
+	  "createdDate": "2021-04-22 16:41:41",
+	  "modifiedDate": "2021-04-22 16:41:41",
+	  "isDeleted": 0,
+	  "name": "cb_comments_whoisURL",
+	  "value": "http://whois.arin.net/ui/query.do?q",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810040049",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_security_2factorAuth_provider",
+	  "value": "email",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb881006004a",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_security_max_auth_logs",
+	  "value": "500",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb881009004b",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_recentPages",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88100b004c",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_editors_default",
+	  "value": "ckeditor",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88100d004d",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_site_mail_tls",
+	  "value": "false",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88100e004e",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_version",
+	  "value": "@version.number@+@build.number@",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb881010004f",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_media_provider",
+	  "value": "CFContentMediaProvider",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810110050",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_gravatar_display",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810140051",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_editors_ckeditor_extraplugins",
+	  "value": "cbKeyBinding,cbWidgets,cbLinks,cbEntryLinks,cbContentStore,cbIpsumLorem,wsc,mediaembed,insertpre,justify,colorbutton,showblocks,find,div,smiley,specialchar,iframe",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810180052",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_site_email",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88101a0053",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_notify_contentstore",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88101c0054",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_paging_maxRSSComments",
+	  "value": "10",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88101e0055",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_media_provider_caching",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88101f0056",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_site_blog_entrypoint",
+	  "value": "blog",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810210057",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_media_allowUploads",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810230058",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_welcome_body",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810240059",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_media_directoryRoot",
+	  "value": "/contentbox-custom/_content",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb881025005a",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_search_maxResults",
+	  "value": "20",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb881027005b",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter_bots_only",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb881028005c",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_content_uiexport",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88102b005d",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_entry_caching",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88102d005e",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_content_hit_count",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb88102e005f",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_rss_caching",
+	  "value": "true",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810310060",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_security_rate_limiter_redirectURL",
+	  "value": "",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810330061",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_dashboard_recentEntries",
+	  "value": "5",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
+	},
+	{
+	  "settingID": "ff80808178fb87e60178fb8810350062",
+	  "createdDate": "2021-04-22 16:41:42",
+	  "modifiedDate": "2021-04-22 16:41:42",
+	  "isDeleted": 0,
+	  "name": "cb_rss_maxEntries",
+	  "value": "10",
+	  "isCore": 1,
+	  "FK_siteID": { "value" : "", "null" : true }
 	}
-]
+  ]

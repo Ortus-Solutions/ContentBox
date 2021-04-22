@@ -1,390 +1,450 @@
 [
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 14
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 18
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 13
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 10
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 28
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 24
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 19
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 2
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 20
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 25
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 26
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 31
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 22
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 5
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 23
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 16
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 12
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 1
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 6
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 15
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 11
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 29
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 33
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 17
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 30
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 7
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 9
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 4
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 32
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 27
-    },
-    {
-        "FK_roleID": 3,
-        "FK_permissionID": 3
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 14
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 18
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 13
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 10
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 36
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 37
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 28
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 24
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 39
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 19
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 2
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 45
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 20
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 42
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 25
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 41
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 26
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 31
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 22
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 5
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 40
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 16
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 38
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 43
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 12
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 1
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 6
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 15
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 11
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 29
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 33
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 44
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 17
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 30
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 7
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 9
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 23
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 34
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 4
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 32
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 27
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 3
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 46
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 18
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 13
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 10
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 37
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 28
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 24
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 39
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 19
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 2
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 20
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 42
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 25
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 41
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 46
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 31
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 5
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 40
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 16
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 43
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 6
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 23
-    },
-    {
-        "FK_roleID": 1,
-        "FK_permissionID": 27
-    },
-    {
-        "FK_roleID": 2,
-        "FK_permissionID": 47
-    }
-]
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20076"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30077"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20075"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a1006f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60082"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70087"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20074"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49d0064"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60085"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f0068"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30079"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a50081"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20073"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4ad0090",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10072"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49d0064"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49e0067"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49e0066"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49e0065"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f0069"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f0068"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f006a"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f006b"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a1006f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10070"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10072"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10071"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20073"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20076"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20075"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20074"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30077"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30078"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30079"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a3007a"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007b"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a50080"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a50081"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60083"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60082"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60084"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70086"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60085"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70088"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70087"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70089"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008b"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008a"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbc7e4b20091",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f0068"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49e0066"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20075"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a3007a"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49e0067"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60085"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008b"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a1006f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007e"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60082"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70087"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f0069"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70088"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10071"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007f"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a8008a"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f006a"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49e0065"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49d0064"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10072"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70086"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a50081"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007b"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60083"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a70089"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a4007c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a50080"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30078"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a60084"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e49f006b"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30077"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a10070"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006d"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20074"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20073"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a30079"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a0006c"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbcd93ea0132",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a20076"
+	},
+	{
+	  "FK_roleID": "ff80808178fbc7620178fbce95460133",
+	  "FK_permissionID": "ff80808178fbc7620178fbc7e4a9008f"
+	}
+  ]
