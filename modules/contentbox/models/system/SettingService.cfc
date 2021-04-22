@@ -43,6 +43,8 @@ component
 
 	// Global Setting Defaults
 	this.DEFAULTS = {
+		// ContentBox Global Version
+		"cb_version" : "@version.number@+@build.number@",
 		// Installation security salt
 		"cb_salt"                               : hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 		// Global Notifications

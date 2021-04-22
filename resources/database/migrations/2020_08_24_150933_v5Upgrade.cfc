@@ -3,6 +3,8 @@
  */
 component {
 
+	property name="migrationService" inject="MigrationService@cfmigrations";
+
 	variables.today      = now();
 	variables.siteTables = [
 		"cb_category",
@@ -17,23 +19,26 @@ component {
 		}
 	];
 
-	private function isContentBox4(){
-		// Check for columns created
+	private boolean function hasColumn( targetTable, targetColumn ){
+		// Check for column created
 		cfdbinfo(
 			name  = "local.qSettingColumns",
 			type  = "columns",
-			table = "cb_setting"
+			table = arguments.targetTable
 		);
-
 		if(
 			qSettingColumns.filter( ( thisRow ) => {
 				// systemOutput( thisRow, true );
-				return thisRow.column_name == "FK_siteID"
+				return thisRow.column_name == targetColumn
 			} ).recordCount > 0
 		){
-			return false;
+			return true;
 		}
-		return true;
+		return false;
+	}
+
+	private function isContentBox4(){
+		return !hasColumn( "cb_setting", "FK_siteID" );
 	}
 
 	function up( schema, query ){
@@ -43,9 +48,11 @@ component {
 			return;
 		}
 
-		scopeGrammarUDFs( argumentCollection=arguments );
-
+		// Get the db schema name, we might need it when dropping keys
+		variables.dbSchema = migrationService.getSchema();
 		variables.uuidLib = createobject("java", "java.util.UUID");
+
+		scopeGrammarUDFs( argumentCollection=arguments );
 
 		try{
 			migrateIdentifiersToGUIDs( argumentCollection=arguments );
@@ -56,7 +63,6 @@ component {
 			throw(
 				"Migration from identifiers to GUIDs failed due to the following: #e.message#.  Your database is now in an unusable state.  Please restore your database."
 			);
-			rethrow;
 		}
 
 		transaction {
@@ -125,19 +131,23 @@ component {
 
 	private function createSiteRelationships( schema, query, siteId ){
 		variables.siteTables.each( ( thisTable ) => {
-			// Add site id relationship
-			schema.alter( thisTable, ( table ) => {
-				table.addColumn( table.uuid( "FK_siteID" ).nullable() );
-				table.addConstraint(
-					table
-						.foreignKey( "FK_siteID" )
-						.references( "siteID" )
-						.onTable( "cb_site" )
-						.onDelete( "CASCADE" )
-				);
-			} );
 
-			systemOutput( "√ - Created site column on '#thisTable#'", true );
+			if( !hasColumn( thisTable, "FK_siteID" ) ){
+				// Add site id relationship
+				schema.alter( thisTable, ( table ) => {
+					table.addColumn( table.uuid( "FK_siteID" ).nullable() );
+					table.addConstraint(
+						table
+							.foreignKey( "FK_siteID" )
+							.references( "siteID" )
+							.onTable( "cb_site" )
+							.onDelete( "CASCADE" )
+					);
+				} );
+				systemOutput( "√ - Created site column on '#thisTable#'", true );
+			} else {
+				systemOutput( "! - Skipped creating site column on '#thisTable#', it already had one", true );
+			}
 
 			// Seed with site id
 			query
@@ -351,62 +361,101 @@ component {
 
 	function migrateIdentifiersToGUIDs( schema, query ){
 
-		// Populate all of our new temporary identifier columns: _id
+		systemOutput( "> Starting to process migration of identifiers to uuid's...", true );
+
+		// Create new master table identifiers with a temp name so we can migrate
 		variables.idTables.keyArray().each( function( tableName ){
 			var pkColumn = idTables[ tableName ];
 			schema.alter( tableName, function( table ){
-				table.addColumn( table.uuid( "id" ).unique().default( "#guidFn#" ) );
+				table.addColumn( table.uuid( "id" ).unique().nullable() );
 			} );
+			query
+				.newQuery()
+				.from( tableName )
+				.update( {
+					"id" : query.raw( "#guidFn#")
+				});
+			systemOutput( "	√ - #tablename# new uuid pk created and populated", true );
 		} );
+
+		systemOutput( "√√ - Finalized adding new primary keys to all tables", true );
+		systemOutput( "", true );
+		systemOutput( "> Beginning to process child tables...", true );
+		systemOutput( "", true );
 
 		// Create child table foreign and future PKs
 		childTables.keyArray().each( function( tableName ){
+			systemOutput( "> Starting to process child table: #tableName#", true );
+
 			var pkColumn = childTables[ tableName ].key;
 			dropForeignKeysAndConstraints( tableName, pkColumn );
+			systemOutput( "	√ - (#tableName#) Dropped foreign key and constraints", true );
+
 			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
 				table.addColumn( table.uuid( tmpColumn ).nullable() );
 			} );
 			populateChildFKValues( tmpColumn, tableName );
+			systemOutput( "	√ - (#tableName#) rekeyed to new parent uuid", true );
 		} );
+
+		systemOutput( "√√ - Finalized rekeying all child tables", true );
+		systemOutput( "", true );
+		systemOutput( "> Beginning to process foreign keys...", true );
+		systemOutput( "", true );
 
 		// Update all foreign keys
 		FKMap.keyArray().each( function( tableName ){
-			var FKeys = FKMap[ tableName ];
+
+			systemOutput( "> Starting to process (#arguments.tableName#) foreign keys...", true );
+
+			var FKeys = FKMap[ arguments.tableName ];
 			FKeys.each( function( keyConfig ){
 
-				dropForeignKeysAndConstraints( tableName, keyConfig.column );
+				dropForeignKeysAndConstraints( tableName, arguments.keyConfig.column );
+				systemOutput( "	√ - (#tableName#) Dropped foreign key and constraints (#arguments.keyConfig.column#)", true );
 
-				var tmpColumn = "tmp_" & keyConfig.column;
+				var tmpColumn = "tmp_" & arguments.keyConfig.column;
 				schema.alter( tableName, function( table ){
 					table.addColumn( table.uuid( tmpColumn ).nullable() );
 				} );
-
-				populateFKValues( tmpColumn, tableName, keyConfig );
-
+				populateFKValues( tmpColumn, tableName, arguments.keyConfig );
 				schema.alter( tableName, function( table ){
 					table.dropColumn( keyConfig.column );
 					table.renameColumn( tmpColumn, table.uuid( keyConfig.column ).nullable() );
 				} );
-
+				systemOutput( "	√ - (#tableName#) foreign key (#arguments.keyConfig.column#) rekeyed as a uuid into (#tmpColumn#)", true );
 			} );
 
 		} );
 
+		systemOutput( "√√ - Finalized rekeying all foreign keys to new uuid's", true );
+		systemOutput( "", true );
+		systemOutput( "> Beginning to drop original primary keys and rekeying tables with new uuids...", true );
+		systemOutput( "", true );
+
 		// Change primary keys over on master tables
 		idTables.keyArray().each( function( tableName ){
+			systemOutput( "> Starting to process (#arguments.tableName#)...", true );
 			var pkColumn = idTables[ tableName ];
 			schema.alter( tableName, function( table ){
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
 				table.dropColumn( pkColumn );
 				// Rename it back to what it was called
-				table.renameColumn( "id", table.uuid( pkColumn ).unique().default( "#guidFn#" ) )
+				table.renameColumn( "id", table.uuid( pkColumn ).unique() )
 				table.addConstraint( table.primaryKey( pkColumn ) );
 			} );
+			systemOutput( "	√ (#arguments.tableName#) new uuid key set and finalized!", true );
 		} );
+
+		systemOutput( "√√ - Finalized rekeying all tables with new identifiers and old identifiers dropped", true );
+		systemOutput( "", true );
+		systemOutput( "> Beginning restore all foreign key constraints...", true );
+		systemOutput( "", true );
 
 		// Now restore the foreign key constraints
 		FKMap.keyArray().each( function( tableName ){
+			systemOutput( "> Starting to process (#arguments.tableName#)...", true );
 			var FKeys = FKMap[ tableName ];
 			FKeys.each( function( keyConfig ){
 				var tmpColumn = "tmp_" & keyConfig.column;
@@ -414,27 +463,34 @@ component {
 					table.addConstraint( table.uuid( keyConfig.column ).references( keyConfig.reference.column ).onTable( keyConfig.reference.table ) );
 				} );
 			} );
-
+			systemOutput( "	√ (#arguments.tableName#) foreign key constraints finalized!", true );
 		} );
 
+		systemOutput( "√√ - All foreign key constraints finalized", true );
+		systemOutput( "", true );
+		systemOutput( "> Restore child table primary keys to uuids...", true );
+		systemOutput( "", true );
 
 		// Change primary keys over on child tables
 		childTables.keyArray().each( function( tableName ){
+			systemOutput( "> Processing child table (#arguments.tableName#)...", true );
 			var pkColumn = childTables[ tableName ].key;
 			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
 				// ensure it is a not null field before we make it PK
 				table.modifyColumn( tmpColumn, table.uuid( tmpColumn ) );
-
 				table.addConstraint( table.primaryKey( tmpColumn ) );
 				table.dropColumn( pkColumn );
 				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
 				table.addConstraint( table.uuid( pkColumn ).references( pkColumn ).onTable( childTables[ tableName ].parent ) );
 			} );
+			systemOutput( "	√ (#arguments.tableName#) finalized!", true );
 		} );
 
-		systemOutput( "√ - All tables migrated from incremental identifiers to GUIDs", true );
+		systemOutput( "√√√ - All tables migrated from incremental identifiers to GUIDs", true );
+		systemOutput( "", true );
+		systemOutput( "", true );
 	}
 
 	function scopeGrammarUDFs( query, schema ){
@@ -606,28 +662,36 @@ component {
 				variables.guidFn = 'UUID()';
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
 					queryExecute("
-					UPDATE #tableName#
-					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+						UPDATE #arguments.tableName# as target
+						JOIN #arguments.keyConfig.reference.table# as ref
+							ON target.#arguments.keyConfig.column# = ref.#arguments.keyConfig.reference.column#
+						SET target.#arguments.tmpColumn# = ref.id
 					");
 				};
 
 				variables.populateChildFKValues = function( tmpColumn, tableName ){
 					queryExecute("
-						UPDATE #tableName#
-						SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
-						");
-
+						UPDATE #arguments.tableName#
+						SET #arguments.tmpColumn# = (
+							SELECT id from #childTables[ arguments.tableName ].parent#
+							WHERE #childTables[ arguments.tableName ].parent#.#childTables[ arguments.tableName ].key# = #arguments.tableName#.#childTables[ arguments.tableName ].key#
+						)
+					");
 				};
 
 				variables.pkDropSQL = function( tableName, pkColumn ){
-					return "ALTER TABLE #arguments.tableName# DROP PRIMARY KEY, MODIFY #pkColumn# int(11)";
+					return "ALTER TABLE #arguments.tableName# DROP PRIMARY KEY, MODIFY #arguments.pkColumn# int(11)";
 				}
+
 				variables.dropForeignKeysAndConstraints = function( tableName, columnName, dropReferenced=true ){
+
+					// Drop FKs
 					query.newQuery().select( [ "CONSTRAINT_NAME" ] )
 							.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
 							.where( "TABLE_NAME", tableName )
 							.where( "COLUMN_NAME", columnName )
 							.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
+							.where( "TABLE_SCHEMA", variables.dbSchema )
 							.whereNotNull( "REFERENCED_TABLE_NAME" )
 							.get()
 							.map( function( row ){ return row.constraint_name; } )
@@ -635,11 +699,13 @@ component {
 								queryExecute( "ALTER TABLE #tableName# DROP FOREIGN KEY #constraintName#");
 							} );
 
+					// Drop Indexes
 					query.newQuery().select( [ "INDEX_NAME" ] )
 							.from( "INFORMATION_SCHEMA.STATISTICS" )
 							.where( "TABLE_NAME", tableName )
 							.where( "COLUMN_NAME", columnName )
 							.where( "INDEX_NAME", "!=", "PRIMARY" )
+							.where( "TABLE_SCHEMA", variables.dbSchema )
 							.get()
 							.map( function( row ){ return row.index_name; } )
 							.each( function( indexName ){
@@ -655,6 +721,7 @@ component {
 								.where( "REFERENCED_TABLE_NAME", tableName )
 								.where( "REFERENCED_COLUMN_NAME", idTables[ tableName ] )
 								.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
+								.where( "TABLE_SCHEMA", variables.dbSchema )
 								.whereNotNull( "TABLE_NAME" )
 								.get()
 								.map( function( row ){ return { "table" : row.table_name, "constraint" : row.constraint_name }; } )
@@ -670,6 +737,7 @@ component {
 							.where( "TABLE_NAME", tableName )
 							.where( "COLUMN_NAME", columnName )
 							.where( "INDEX_NAME", "!=", "PRIMARY" )
+							.where( "TABLE_SCHEMA", variables.dbSchema )
 							.get()
 							.map( function( row ){ return row.index_name; } )
 							.each( function( indexName ){
@@ -693,18 +761,23 @@ component {
 				}
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
 					queryExecute("
-					UPDATE #tableName#
-					SET #tmpColumn# = ( SELECT id from #keyConfig.reference.table# WHERE #keyConfig.reference.table#.#keyConfig.reference.column# = #tableName#.#keyConfig.column# )
+						UPDATE #arguments.tableName# as target
+						JOIN #arguments.keyConfig.reference.table# as ref
+							ON target.#arguments.keyConfig.column# = ref.#arguments.keyConfig.reference.column#
+						SET target.#arguments.tmpColumn# = ref.id
 					");
 				};
 
 				variables.populateChildFKValues = function( tmpColumn, tableName ){
 					queryExecute("
-						UPDATE #tableName#
-						SET #tmpColumn# = ( SELECT id from #childTables[ tableName ].parent# WHERE #childTables[ tableName ].parent#.#childTables[ tableName ].key# = #tableName#.#childTables[ tableName ].key# )
-						");
-
+						UPDATE #arguments.tableName#
+						SET #arguments.tmpColumn# = (
+							SELECT id from #childTables[ arguments.tableName ].parent#
+							WHERE #childTables[ arguments.tableName ].parent#.#childTables[ arguments.tableName ].key# = #arguments.tableName#.#childTables[ arguments.tableName ].key#
+						)
+					");
 				};
+
 				variables.dropForeignKeysAndConstraints = function( tableName, columnName, dropReferenced=true  ){
 
 					query.newQuery().select( [ "sys.foreign_keys.name" ] )
