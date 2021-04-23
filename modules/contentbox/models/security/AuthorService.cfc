@@ -265,7 +265,7 @@ component
 			c.createAlias( "permissionGroups", "permissionGroups" )
 				.isIn(
 					"permissionGroups.permissionGroupID",
-					javacast( "java.lang.Integer[]", listToArray( arguments.permissionGroups ) )
+					listToArray( arguments.permissionGroups )
 				);
 		}
 

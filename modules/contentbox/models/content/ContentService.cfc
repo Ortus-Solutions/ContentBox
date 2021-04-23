@@ -224,7 +224,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			c.isNot(
 				c.restrictions.in(
 					"contentID",
-					javacast( "java.lang.Integer[]", arguments.excludeIDs )
+					arguments.excludeIDs
 				)
 			);
 		}

@@ -63,7 +63,7 @@ component extends="tests.resources.BaseTest" {
 				expect( r.count ).toBeGT( 0 );
 
 				// no categories
-				var r = model.search( category = "1" );
+				var r = model.search( category = "786a98cc-a444-11eb-ab6f-0290cc502ae3" );
 				expect( r.count ).toBe( 0 );
 			} );
 

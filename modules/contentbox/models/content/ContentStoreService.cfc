@@ -190,7 +190,7 @@ component extends="ContentService" singleton {
 				c.createAlias( "categories", "cats" )
 					.isIn(
 						"cats.categoryID",
-						javacast( "java.lang.Integer[]", [ arguments.category ] )
+						[ arguments.category ]
 					);
 			}
 		}
