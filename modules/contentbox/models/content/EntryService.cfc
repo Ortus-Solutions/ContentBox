@@ -140,7 +140,7 @@ component extends="ContentService" singleton {
 		}
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.siteID", arguments.siteId );
 		}
 
 		// DETERMINE SORT ORDERS
