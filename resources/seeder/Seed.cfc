@@ -85,8 +85,6 @@ component {
 			transaction {
 				queryExecute( "SET FOREIGN_KEY_CHECKS=0;" );
 
-
-
 				/******************** LOGIN ATTEMPTS *************************/
 				print.line().greenLine( "Generating login attempts..." );
 				truncate( "cb_loginAttempts" );
@@ -129,7 +127,7 @@ component {
 				print.cyanLine( "   ==> (#aPermissionGroups.len()#) Persmission Groups inserted" );
 
 
-				/******************** PERMISSIONS GROUPS **********************/
+				/******************** LINK Permission GROUPS **********************/
 				print.line().greenLine( "Linking permissions groups..." );
 				truncate( "cb_groupPermissions" );
 				var aGroupPermissions = [
@@ -180,10 +178,10 @@ component {
 				/******************** SITES **********************************/
 				print.line().greenLine( "Generating sites..." );
 				truncate( "cb_site" );
-				var aSites = deserializeJSON( fileRead( "mockdata/sites.json" ) )
-					.each( ( thisRecord ) => thisRecord[ "siteID" ] = uuidLib.randomUUID().toString() );
+				var aSites = deserializeJSON( fileRead( "mockdata/sites.json" ) );
 				qb.from( "cb_site" ).insert( aSites );
 				print.cyanLine( "   ==> (#aSites.len()#) Sites inserted" );
+
 
 				/******************** SITE SETTINGS *******************************/
 				print.line().greenLine( "Generating settings..." );
@@ -212,27 +210,79 @@ component {
 					print.cyanLine( "   ==> (#aSettings.len()#) Settings inserted for site: #thisSite.name#" );
 				} );
 
-				return;
 
 				/******************** CATEGORIES *****************************/
 				print.line().greenLine( "Generating categories..." );
 				truncate( "cb_category" );
-				var aCategories = deserializeJSON( fileRead( "mockdata/categories.json" ) )
-					.each( ( thisRecord ) => {
-						thisRecord[ "categoryID" ] = uuidLib.randomUUID().toString();
-						thisRecord[ "FK_siteID" ] = aSites[ 1 ].siteID;
-					} );
+				var aCategories = deserializeJSON( fileRead( "mockdata/categories.json" ) );
 				qb.from( "cb_category" ).insert( aCategories );
 				print.cyanLine( "   ==> (#aCategories.len()#) Categories inserted" );
+
 
 
 				/******************** SECURITY RULES *************************/
 				print.line().greenLine( "Generating security rules..." );
 				truncate( "cb_securityRule" );
-				var aSecurityRules = deserializeJSON( fileRead( "mockdata/securityRules.json" ) )
-					.each( ( thisRecord ) => thisRecord[ "ruleID" ] = uuidLib.randomUUID().toString() );
+				var aSecurityRules = deserializeJSON( fileRead( "mockdata/securityRules.json" ) );
 				qb.from( "cb_securityRule" ).insert( aSecurityRules );
 				print.cyanLine( "   ==> (#aSecurityRules.len()#) Security Rules inserted" );
+
+
+				/******************** AUTHORS ************************/
+				print.line().greenLine( "Generating authors..." );
+				truncate( "cb_author" );
+				var aAuthors = deserializeJSON( fileRead( "mockdata/authors.json" ) );
+				qb.from( "cb_author" ).insert( aAuthors );
+				print.cyanLine( "   ==> (#aAuthors.len()#) Authors inserted" );
+
+
+				/******************** AUTHOR PERMISSIONS *********************/
+				print.line().greenLine( "Generating authors a-la-carte permissions..." );
+				truncate( "cb_authorPermissions" );
+				var testAuthor = aAuthors.filter( (thisAuthor) => thisAuthor.username == "testermajano" )[ 1 ];
+				var aAuthorPermissions = [];
+				for( var x=1; x lte 4; x++ ){
+					aAuthorPermissions.append( {
+						"FK_authorID": testAuthor.authorID,
+						"FK_permissionID" : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
+					} );
+				}
+				qb.from( "cb_authorPermissions" ).insert( aAuthorPermissions );
+				print.cyanLine( "   ==> (#aAuthorPermissions.len()#) Authors Permissions inserted" );
+
+
+				/******************** AUTHOR PERMISSION GROUPS *********************/
+				print.line().greenLine( "Generating authors permissions groups..." );
+				truncate( "cb_authorPermissionGroups" );
+				var testUser1 = aAuthors.filter( (thisAuthor) => thisAuthor.username == "joejoe" )[ 1 ];
+				var testUser2 = aAuthors.filter( (thisAuthor) => thisAuthor.username == "joremorelos@morelos.com" )[ 1 ];
+				var aAuthorPermissionGroups = [
+					{
+						"FK_authorID" : testUser1.authorID,
+						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID
+					},
+					{
+						"FK_authorID" : testUser2.authorID,
+						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID
+					},
+					{
+						"FK_authorID" : testUser2.authorID,
+						"FK_permissionGroupID" : aPermissionGroups[ 2 ].permissionGroupID
+					}
+				]
+				qb.from( "cb_authorPermissionGroups" ).insert( aAuthorPermissionGroups );
+				print.cyanLine( "   ==> (#aAuthorPermissionGroups.len()#) Authors Permission Groups inserted" );
+
+
+				/******************** CONTENT ********************************/
+				print.line().greenLine( "Generating content..." );
+				truncate( "cb_content" );
+				var aContent = deserializeJSON( fileRead( "mockdata/content.json" ) );
+				qb.from( "cb_content" ).insert( aContent );
+				print.cyanLine( "   ==> (#aContent.len()#) Content inserted" );
+
+
+				return;
 
 
 				/******************** COMMENTS *******************************/
@@ -263,55 +313,6 @@ component {
 
 				qb.from( "cb_commentSubscriptions" ).insert( aCommentSubscriptions );
 				print.cyanLine( "   ==> (#aCommentSubscriptions.len()#) Comment Subscriptions inserted" );
-
-				/******************** AUTHORS ************************/
-				print.line().greenLine( "Generating authors..." );
-				truncate( "cb_author" );
-				var aAuthors = deserializeJSON( fileRead( "mockdata/authors.json" ) )
-					.each( ( thisRecord ) => thisRecord[ "authorID" ] = uuidLib.randomUUID().toString() );
-				qb.from( "cb_author" ).insert( aAuthors );
-				print.cyanLine( "   ==> (#aAuthors.len()#) Authors inserted" );
-
-				/******************** AUTHOR PERMISSIONS *********************/
-				print.line().greenLine( "Generating authors permissions..." );
-				truncate( "cb_authorPermissions" );
-
-				var aAuthorPermissions = [
-					{
-						"FK_authorID": 3,
-						"FK_permissionID": 36
-					},
-					{
-						"FK_authorID": 3,
-						"FK_permissionID": 45
-					},
-					{
-						"FK_authorID": 3,
-						"FK_permissionID": 42
-					},
-					{
-						"FK_authorID": 3,
-						"FK_permissionID": 41
-					},
-					{
-						"FK_authorID": 3,
-						"FK_permissionID": 40
-					},
-					{
-						"FK_authorID": 3,
-						"FK_permissionID": 44
-					}
-				];
-
-				qb.from( "cb_authorPermissions" ).insert( aAuthorPermissions );
-				print.cyanLine( "   ==> (#aAuthorPermissions.len()#) Authors Permissions inserted" );
-
-				/******************** CONTENT ********************************/
-				print.line().greenLine( "Generating content..." );
-				truncate( "cb_content" );
-				var aContent = deserializeJSON( fileRead( "mockdata/content.json" ) );
-				qb.from( "cb_content" ).insert( aContent );
-				print.cyanLine( "   ==> (#aContent.len()#) Content inserted" );
 
 				/******************** CONTENT CATEGORIES *********************/
 				print.line().greenLine( "Generating content categories..." );
@@ -553,31 +554,6 @@ component {
 				qb.from( "cb_menuItem" ).insert( aMenuItems );
 				print.cyanLine( "   ==> (#aMenuItems.len()#) Menu Items inserted" );
 
-				/******************** MODULES *********************************/
-				print.line().greenLine( "Generating modules..." );
-				truncate( "cb_module" );
-
-				var aModules = [
-					{
-						"moduleID": 36,
-						"name": "Hello",
-						"title": "HelloContentBox",
-						"version": "1.0",
-						"entryPoint": "HelloContentBox",
-						"author": "Ortus Solutions, Corp",
-						"webURL": "http://www.ortussolutions.com",
-						"forgeBoxSlug": "",
-						"description": "This is an awesome hello world module",
-						"isActive": 0,
-						"createdDate": "2016-07-15 12:09:34",
-						"modifiedDate": "2016-07-15 12:09:34",
-						"isDeleted": 0,
-						"moduleType": "core"
-					}
-				];
-
-				qb.from( "cb_module" ).insert( aModules );
-				print.cyanLine( "   ==> (#aModules.len()#) Modules inserted" );
 
 				/******************** PAGES **********************************/
 				print.line().greenLine( "Generating pages..." );

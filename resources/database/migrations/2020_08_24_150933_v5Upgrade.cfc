@@ -45,6 +45,7 @@ component {
 		// If you are on version 4 continue, else skip
 		// If cb_setting doesn't have a FK_siteID then it's 4
 		if( !isContentBox4() ){
+			systemOutput( "- Skipping ContentBox v4 -> v5 Migration as we have detected you are already on the v5 schema", true );
 			return;
 		}
 

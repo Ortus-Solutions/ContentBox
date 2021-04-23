@@ -1,5 +1,15 @@
 [
 	{
+		"settingID": "e95d5c48-a441-11eb-ab6f-0290cc502ae3",
+		"createdDate": "2021-04-22 16:41:41",
+		"modifiedDate": "2021-04-22 16:41:41",
+		"isDeleted": 0,
+		"name": "cb_active",
+		"value": "true",
+		"isCore": 1,
+		"FK_siteID": { "value" : "", "null" : true }
+	},
+	{
 	  "settingID": "ff80808178fb87e60178fb880f270001",
 	  "createdDate": "2021-04-22 16:41:41",
 	  "modifiedDate": "2021-04-22 16:41:41",
