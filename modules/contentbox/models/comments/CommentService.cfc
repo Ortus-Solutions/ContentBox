@@ -105,26 +105,22 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		string siteID    = ""
 	){
 		var results = { "count" : 0, "comments" : [] };
-		var c       = newCriteria();
-
-		// only approved comments
-		c.isTrue( "isApproved" );
-
-		// By Content?
-		if ( !isNull( arguments.contentID ) AND len( arguments.contentID ) ) {
-			c.isEq( "relatedContent.contentID", arguments.contentID );
-		}
-
-		// By Content Type Discriminator: class is a special hibernate deal
-		if ( !isNull( arguments.contentType ) AND len( arguments.contentType ) ) {
-			c.createCriteria( "relatedContent" ).isEq( "class", arguments.contentType );
-		}
-
-		// Site Filter
-		if ( len( arguments.siteID ) ) {
-			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteID", arguments.siteID );
-		}
+		var c       = newCriteria()
+			// only approved comments
+			.isTrue( "isApproved" )
+			// By Content?
+			.when( !isNull( arguments.contentID ) AND len( arguments.contentID ), function( c ){
+				c.isEq( "relatedContent.contentID", contentID );
+			} )
+			// By Content Type Discriminator: class is a special hibernate deal
+			.when( !isNull( arguments.contentType ) AND len( arguments.contentType ), function( c ){
+				c.createCriteria( "relatedContent" ).isEq( "class", contentType );
+			})
+			// Site Filter
+			.when( len( arguments.siteID ), function( c ){
+				c.joinTo( "relatedContent", "relatedContent" )
+					.isEq( "relatedContent.site.siteID", siteID );
+			});
 
 		// run criteria query and projections count
 		results.count    = c.count();
