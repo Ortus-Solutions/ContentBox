@@ -86,7 +86,9 @@ component accessors="true" threadSafe singleton {
 	 * Get an array of registered editor names in alphabetical order
 	 */
 	array function getRegisteredEditors(){
-		return variables.editors.keyArray().sort( "textnocase" );
+		var sortedArray = variables.editors.keyArray();
+		sortedArray.sort( "textnocase" );
+		return sortedArray;
 	}
 
 	/**
