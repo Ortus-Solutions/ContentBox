@@ -10,7 +10,7 @@
 # Generation Time: 2021-04-23 22:29:12 +0000
 # ************************************************************
 
-USE `contentbox`
+USE `contentbox`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
