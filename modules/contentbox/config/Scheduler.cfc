@@ -55,6 +55,8 @@ component {
 					} );
 			} )
 			.everyHour()
+			// Don't start it immediately, wait an hour. Especially so tests can pass if enabled in tests.
+			.delay( 1, "hours" )
 			.onOneServer();
 	}
 
