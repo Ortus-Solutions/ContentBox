@@ -33,51 +33,6 @@ component {
 		// i18n
 		cbi18n = { resourceBundles : { "admin" : "#moduleMapping#/includes/i18n/admin" } };
 
-		// SES Routes
-		routes = [
-			{ pattern : "/", handler : "dashboard", action : "index" },
-			// Security Module Routing
-			{
-				pattern       : "/security",
-				moduleRouting : "contentbox-security"
-			},
-			// Dashboard Reloads
-			{
-				pattern : "/dashboard/reload/:targetModule",
-				handler : "dashboard",
-				action  : "reload"
-			},
-			{ pattern : "/authors/page/:page", handler : "authors" },
-			{ pattern : "/entries/page/:page", handler : "entries" },
-			{ pattern : "/pages/parent/:parent?", handler : "pages" },
-			{
-				pattern : "/entries/pager/page/:page",
-				handler : "entries",
-				action  : "pager"
-			},
-			{ pattern : "/comments/page/:page", handler : "comments" },
-			{
-				pattern : "/contentStore/parent/:parent?",
-				handler : "contentStore"
-			},
-			{
-				pattern : "/contentStore/page/:page",
-				handler : "contentStore"
-			},
-			{ pattern : "/menus/page/:page", handler : "menus" },
-			{
-				pattern : "/mediamanager/library/:library",
-				handler : "mediamanager",
-				action  : "index"
-			},
-			{
-				pattern : "/module/:moduleEntryPoint/:moduleHandler?/:moduleAction?",
-				handler : "modules",
-				action  : "execute"
-			},
-			{ pattern : "/:handler/:action?" }
-		];
-
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
@@ -351,7 +306,7 @@ component {
 			{
 				class : "#moduleMapping#.interceptors.UnenrollTwoFactorOnProviderChange",
 				name  : "UnenrollTwoFactorOnProviderChange@cbAdmin"
-			},
+			}
 		];
 	}
 

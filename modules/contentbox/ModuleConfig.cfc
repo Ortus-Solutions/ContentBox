@@ -30,10 +30,10 @@ component {
 
 		// contentbox settings
 		settings = {
-			codename          : "Psalm 144:1",
-			codenameLink      : "https://www.bible.com/bible/114/psa.144.1.nkjv",
+			codename     : "Psalm 144:1",
+			codenameLink : "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Officially supported languages for modules
-			languages         : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
+			languages    : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
 
 		// i18n
@@ -48,14 +48,12 @@ component {
 			filebrowser_module_name : "contentbox-filebrowser"
 		};
 
-		// interceptor settings
+		// ContentBox Core Custom Events
 		interceptorSettings = {
-			// ContentBox Custom Events
-			customInterceptionPoints : arrayToList( [
-				// Code Rendering
+			customInterceptionPoints : [
 				"cb_onContentRendering",
 				"cb_onContentStoreRendering"
-			] )
+			]
 		};
 
 		// Async Executors for ContentBox Core

@@ -22,20 +22,24 @@ limitations under the License.
 ********************************************************************************
 * This interceptor monitors new comments and new entries to clear RSS cache entries
 */
-component extends="coldbox.system.Interceptor"{
+component extends="coldbox.system.Interceptor" {
 
-		// Listen when entries are saved
-	function cbadmin_postEntrySave(event,data){
+	// Listen when entries are saved
+	function cbadmin_postEntrySave( event, data ){
 		getInstance( "rssService@cb" ).clearCaches();
 	}
 
 	// Listen when entries are removed
-	function cbadmin_postEntryRemove(event,data){
+	function cbadmin_postEntryRemove( event, data ){
 		getInstance( "rssService@cb" ).clearCaches();
 	}
 
 	// Listen when comments are made
-	function cbui_onCommentPost(event,data){
-		getInstance( "rssService@cb" ).clearCaches(comments=true,slug=arguments.data.comment.getRelatedContent().getSlug());
+	function cbui_onCommentPost( event, data ){
+		getInstance( "rssService@cb" ).clearCaches(
+			comments = true,
+			slug     = arguments.data.comment.getRelatedContent().getSlug()
+		);
 	}
+
 }
