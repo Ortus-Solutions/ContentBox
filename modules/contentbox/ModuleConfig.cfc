@@ -32,10 +32,6 @@ component {
 		settings = {
 			codename          : "Psalm 144:1",
 			codenameLink      : "https://www.bible.com/bible/114/psa.144.1.nkjv",
-			// Auto Updates
-			updateSlug_stable : "contentbox-stable-updates",
-			updateSlug_beta   : "contentbox-beta-updates",
-			updatesURL        : "https://www.coldbox.org/api/forgebox",
 			// Officially supported languages for modules
 			languages         : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
 		};
