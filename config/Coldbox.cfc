@@ -178,7 +178,7 @@ component {
 		 */
 		moduleSettings = {
 			/**
-			 * ColdBox cbORM
+			 * ColdBox cborm configurations
 			 */
 			cborm : {
 				injection : {
@@ -188,11 +188,18 @@ component {
 					include : "",
 					// Which entities to exclude from DI, if empty, none are excluded
 					exclude : ""
+				},
+				resources : {
+					// Enable the ORM Resource Event Loader
+					eventLoader     : true,
+					// Pagination max rows
+					maxRows         : 25,
+					// Pagination max row limit: 0 = no limit
+					maxRowsLimit     : 500
 				}
 			},
 			/**
-			 * ColdBox Security
-			 * Customize as you see fit.
+			 * ColdBox Security is loaded by the ContentBox core module found at: /modules/contentbox/ModuleConfig.cfc
 			 */
 			cbSecurity : {
 				// Do not load global firewall
