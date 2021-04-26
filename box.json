@@ -32,32 +32,34 @@
         "testbox":"*",
         "cbdebugger":"^3.0.0",
         "commandbox-cfformat":"*",
-        "commandbox-docbox":"*"
+        "commandbox-docbox":"*",
+        "route-visualizer":"^1.4.0+24"
     },
     "installPaths":{
         "testbox":"testbox/",
         "coldbox":"coldbox/",
-        "cbdebugger":"modules/cbdebugger/"
+        "cbdebugger":"modules/cbdebugger/",
+        "route-visualizer":"modules/route-visualizer/"
     },
     "ignores":[],
     "scripts":{
-		"dbseed":"task run resources/seeder/Seed.cfc",
+        "dbseed":"task run resources/seeder/Seed.cfc",
         "format":"cfformat run modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
         "format:watch":"cfformat watch modules/**/*.cfc,tests/specs/**/*.cfc ./.cfformat.json",
         "format:check":"cfformat check modules/**/*.cfc,tests/specs/**/*.cfc",
         "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force --debug",
         "start:2016":"server start serverConfigFile='server-adobe@2016.json' --force --debug",
         "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force --debug",
-		"start:2021":"server start serverConfigFile='server-adobe@2021.json' --force --debug",
+        "start:2021":"server start serverConfigFile='server-adobe@2021.json' --force --debug",
         "stop:lucee":"server stop serverConfigFile='server-lucee@5.json'",
         "stop:2016":"server stop serverConfigFile='server-adobe@2016.json'",
         "stop:2018":"server stop serverConfigFile='server-adobe@2018.json'",
-		"stop:2021":"server stop serverConfigFile='server-adobe@2021.json'",
+        "stop:2021":"server stop serverConfigFile='server-adobe@2021.json'",
         "log:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
         "log:2016":"server log serverConfigFile=server-adobe@2016.json --follow",
         "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow",
-		"log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
-		"cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run"
+        "log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
+        "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run"
     },
     "cfmigrations":{
         "schema":"${MIGRATIONS_DATABASE}",

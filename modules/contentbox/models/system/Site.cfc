@@ -128,6 +128,13 @@ component
 		dbdefault="false";
 
 	property
+		name     ="isActive"
+		ormtype  ="boolean"
+		notnull  ="true"
+		default  ="true"
+		dbdefault="true";
+
+	property
 		name   ="activeTheme"
 		ormtype="string"
 		notnull="false"
@@ -208,6 +215,7 @@ component
 		"poweredByHeader"  : { required : true, type : "boolean" },
 		"adminBar"         : { required : true, type : "boolean" },
 		"isSSL"            : { required : true, type : "boolean" },
+		"isActive"         : { required : true, type : "boolean" },
 		"activeTheme"      : { required : false, size : "0..255" }
 	};
 
@@ -231,20 +239,21 @@ component
 	 */
 	function getMemento( excludes = "" ){
 		var pList = [
-			"name",
-			"slug",
+			"activeTheme",
+			"adminBar",
 			"description",
-			"keywords",
 			"domain",
 			"domainRegex",
-			"tagline",
 			"homepage",
+			"isActive",
 			"isBlogEnabled",
 			"isSitemapEnabled",
-			"poweredByHeader",
-			"adminBar",
 			"isSSL",
-			"activeTheme"
+			"keywords",
+			"name",
+			"poweredByHeader",
+			"slug",
+			"tagline"
 		];
 		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
 

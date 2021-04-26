@@ -37,11 +37,11 @@ component {
 				"defaultAuthorizationAction"  : "override",
 				// Global Security Rules
 				"rules"                       : [
-					{
-						"match"      : "event",
-						"secureList" : "contentbox\-api\-v1\:.*", // Secure all api endpoints
-						"whitelist"  : "(auth|echo)" // Except the auth and echo endpoints
-					}
+					 // {
+					//	"match"      : "event",
+					//	"secureList" : "contentbox\-api\-v1\:.*", // Secure all api endpoints
+					//	"whitelist"  : "(auth|echo)" // Except the auth and echo endpoints
+					// }
 				],
 				// The validator is an object that will validate rules and annotations and provide feedback on either authentication or authorization issues.
 				"validator" : "JWTService@cbsecurity"

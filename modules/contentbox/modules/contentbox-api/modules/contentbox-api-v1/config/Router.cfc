@@ -11,6 +11,8 @@ component {
 
 		// Resource Groups
 		var except = "new,edit";
+		resources( resource: "permissions", except: except );
+		resources( resource: "sites", except: except );
 
 		// Catch All Resource
 		route( "/:anything" ).to( "Echo.onInvalidRoute" );

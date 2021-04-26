@@ -1,6 +1,7 @@
 /**
- * This base handler will inherit from the Base API Handler but actually implement it
- * for CRUD operations using ORM, cbORM and ColdBox Resources.
+ * @see https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
+ *
+ * This is our base handler for our API which is bassed off the cborm resources base handler.
  *
  * ## Pre-Requisites
  *
@@ -34,5 +35,24 @@
  */
 component extends="cborm.models.resources.BaseHandler" {
 
+	/**
+	 * Display all resource records with pagination
+	 * GET /api/v1/{resource}
+	 *
+	 * @criteria If you pass a criteria object, then we will use that instead of creating a new one
+	 * @results If you pass in a results struct, it must contain the following: { count:numeric, records: array of objects }
+	 */
+	function index( event, rc, prc, criteria, struct results ){
+		param rc.page      = 1;
+		param rc.isDeleted = false;
+
+		// Add to incoming criteria our base default criterias
+		if ( !isNull( arguments.criteria ) ) {
+			arguments.criteria.isEq( "isDeleted", autoCast( "isDeleted", rc.isDeleted ) );
+		}
+
+		// Delegate it
+		super.index( argumentCollection = arguments );
+	}
 
 }
