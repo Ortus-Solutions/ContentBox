@@ -22,6 +22,7 @@ component {
 		 * You register tasks with the task() method and get back a ColdBoxScheduledTask object
 		 * that you can use to register your tasks configurations.
 		 */
+
 	}
 
 	/**
@@ -34,7 +35,7 @@ component {
 	 * Called after the scheduler has registered all schedules
 	 */
 	function onStartup(){
-		log.info( "√ ContentBox Admin Scheduler started successfully!" );
+		log.info( "√ ColdBox Core Scheduler started successfully!" );
 	}
 
 	/**
@@ -44,6 +45,10 @@ component {
 	 * @exception The ColdFusion exception object
 	 */
 	function onAnyTaskError( required task, required exception ){
+		log.error(
+			"The global task (#arguments.task.getname()#) failed to executed. Caused by: #exception.message & exception.detail#",
+			exception.stacktrace
+		);
 	}
 
 	/**
@@ -53,6 +58,10 @@ component {
 	 * @result The result (if any) that the task produced
 	 */
 	function onAnyTaskSuccess( required task, result ){
+		log.info(
+			"Global task (#arguments.task.getName()#) completed succesfully in #arguments.task.getStats().lastExecutionTime# ms",
+			arguments.task.getStats()
+		);
 	}
 
 	/**
@@ -61,6 +70,7 @@ component {
 	 * @task The task about to be executed
 	 */
 	function beforeAnyTask( required task ){
+		log.info( "Starting to execute global task (#arguments.task.getName()#)..." );
 	}
 
 	/**

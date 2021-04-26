@@ -68,7 +68,7 @@ component {
 	 * Called after the scheduler has registered all schedules
 	 */
 	function onStartup(){
-		log.info( "√ ColdBox Core Scheduler started successfully!" );
+		log.info( "√ ContentBox Core Scheduler started successfully!" );
 	}
 
 	/**

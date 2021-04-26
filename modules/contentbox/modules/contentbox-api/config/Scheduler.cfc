@@ -34,7 +34,7 @@ component {
 	 * Called after the scheduler has registered all schedules
 	 */
 	function onStartup(){
-		log.info( "√ ContentBox Admin Scheduler started successfully!" );
+		log.info( "√ ContentBox API Scheduler started successfully!" );
 	}
 
 	/**
