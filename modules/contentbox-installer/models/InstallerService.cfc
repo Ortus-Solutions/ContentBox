@@ -74,7 +74,7 @@ component accessors="true" {
 			// Reload Security Rules
 			variables.coldbox
 				.getInterceptorService()
-				.getInterceptor( "cbSecurity@contentbox-security" )
+				.getInterceptor( "cbSecurity@contentbox" )
 				.configure();
 		}
 	}
