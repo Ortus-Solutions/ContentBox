@@ -132,10 +132,7 @@ component extends="ContentService" singleton {
 			else {
 				// search the association
 				c.createAlias( "categories", "cats" )
-					.isIn(
-						"cats.categoryID",
-						[ arguments.category ]
-					);
+					.isIn( "cats.categoryID", [ arguments.category ] );
 			}
 		}
 		// Site Filter
@@ -220,7 +217,7 @@ component extends="ContentService" singleton {
 		// Site
 		if ( len( arguments.siteId ) ) {
 			params[ "siteId" ] = arguments.siteId;
-			hql &= " AND site.siteId = :siteId";
+			hql &= " AND site.siteID = :siteId";
 		}
 
 		// year lookup mandatory
@@ -323,7 +320,7 @@ component extends="ContentService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
-			c.isEq( "site.siteId", arguments.siteId );
+			c.isEq( "site.siteID", arguments.siteId );
 		}
 
 		// run criteria query and projections count
