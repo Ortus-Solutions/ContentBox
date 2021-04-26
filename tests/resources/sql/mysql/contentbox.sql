@@ -1315,7 +1315,7 @@ VALUES
 	('cb_site_mail_ssl','false',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db0e2-a444-11eb-ab6f-0290cc502ae3',NULL),
 	('cb_paging_bandgap','5',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db13c-a444-11eb-ab6f-0290cc502ae3',NULL),
 	('cb_rss_maxComments','10',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db196-a444-11eb-ab6f-0290cc502ae3',NULL),
-	('cb_security_rate_limiter','true',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db1fa-a444-11eb-ab6f-0290cc502ae3',NULL),
+	('cb_security_rate_limiter','false',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db1fa-a444-11eb-ab6f-0290cc502ae3',NULL),
 	('cb_media_allowDownloads','true',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db254-a444-11eb-ab6f-0290cc502ae3',NULL),
 	('cb_content_caching','true',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db2ae-a444-11eb-ab6f-0290cc502ae3',NULL),
 	('cb_content_hit_ignore_bots','false',b'1','2020-09-09 17:34:49','2020-09-09 17:34:49',b'0','782db308-a444-11eb-ab6f-0290cc502ae3',NULL),
