@@ -37,7 +37,7 @@
 				<cfif len( rule.getWhiteList() )>
 					<div class="mt10">
 						<span title="Whitelist">
-							<i class="fas fa-unlock textGreen"></i>
+							<i class="fas fa-unlock text-green"></i>
 							<code>#rule.getWhiteList()#</code>
 						</span>
 					</div>

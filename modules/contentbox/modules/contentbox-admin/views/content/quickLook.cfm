@@ -9,7 +9,7 @@
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 
 				<!--- Status --->
-				<div class="floatRight mr20 mt5">
+				<div class="float-right mr20 mt5">
 					<cfif prc.content.isExpired()>
 						<span class="p5 label label-danger">
 							Expired on #prc.content.getDisplayExpiredDate()#
@@ -55,7 +55,7 @@
 				<!--- Info Snapshot --->
 				<div class="well well-sm rounded">
 
-					<div class="floatRight mt5">
+					<div class="float-right mt5">
 						<a
 							href="#event.buildLink( '#prc.cbAdminEntryPoint#.versions.index' )#/contentID/#prc.content.getContentId()#"
 							class="btn btn-default btn-sm"
@@ -68,7 +68,7 @@
 					<div>
 						<a
 							href="mailto:#prc.content.getCreatorEmail()#"
-							class="textMuted"
+							class="text-muted"
 							title="Created by #prc.content.getCreatorName()#"
 						>
 							#getInstance( "Avatar@cb" ).renderAvatar(
@@ -88,7 +88,7 @@
 						<div class="mt10">
 							<a
 								href="mailto:#prc.content.getAuthorEmail()#"
-								class="textMuted"
+								class="text-muted"
 								title="Last edit by #prc.content.getAuthorName()#"
 							>
 								#getInstance( "Avatar@cb" ).renderAvatar(

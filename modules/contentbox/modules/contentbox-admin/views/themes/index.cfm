@@ -67,7 +67,7 @@
 							<tr>
 								<td>
 									<cfif prc.oCurrentSite.getActiveTheme() eq themeName>
-										<i class="fas fa-asterisk fa-lg textOrange" title="Active Theme"></i>
+										<i class="fas fa-asterisk fa-lg text-orange" title="Active Theme"></i>
 									</cfif>
 
 									<strong>#thisTheme.themeName#</strong>

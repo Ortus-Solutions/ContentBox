@@ -12,14 +12,14 @@
 
 	<!--- More Panel --->
 	<div
-		class="textMuted hidden"
+		class="text-muted hidden"
 		id="moreInfo-#args.content.getContentId()#"
 	>
 		<!--- Authors --->
 		<div class="mt10 mb5">
 			<a
 				href="mailto:#args.content.getCreatorEmail()#"
-				class="textMuted"
+				class="text-muted"
 				title="Created by #args.content.getCreatorName()#"
 			>
 				#getInstance( "Avatar@cb" ).renderAvatar(
@@ -41,7 +41,7 @@
 
 		<!--- Categories --->
 		<div class="mt10 mb5 ml5">
-			<div class="textMuted">
+			<div class="text-muted">
 				<span title="Categories">
 					<i class="fas fa-tags"></i> #args.content.getCategoriesList()#
 				</span>
@@ -50,7 +50,7 @@
 
 		<!--- Permalink --->
 		<div class="mt5">
-			<div class="textMuted">
+			<div class="text-muted">
 				<span title="Permalink">
 					<i class="fas fa-sitemap mr5"></i>
 					<span class="label label-success">#args.content.getSlug()#</span>
@@ -61,7 +61,7 @@
 		<!--- Description --->
 		<cfif args.showDescription>
 			<div class="mt10 mb5 ml5">
-				<div class="textMuted">
+				<div class="text-muted">
 					<i class="fas fa-info-circle mr5"></i> #args.content.getDescription()#
 				</div>
 			</div>

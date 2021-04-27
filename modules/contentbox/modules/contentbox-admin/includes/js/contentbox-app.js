@@ -254,7 +254,7 @@ function toggleSidebar() {
  */
 function adminAction(action, actionURL) {
     if (action != 'null') {
-        $("#adminActionsIcon").addClass("fa-spin textOrange");
+        $("#adminActionsIcon").addClass("fa-spin text-orange");
         // Run Action Dispatch
         $.post(actionURL, { targetModule: action }, function(data) {
             if (data.ERROR) {
@@ -262,7 +262,7 @@ function adminAction(action, actionURL) {
             } else {
                 adminNotifier("info", "<i class='fa-exclamation-sign'></i> <strong>Action Ran, Booya!</strong>");
             }
-            $("#adminActionsIcon").removeClass("fa-spin textOrange");
+            $("#adminActionsIcon").removeClass("fa-spin text-orange");
         });
     }
 }
@@ -767,7 +767,7 @@ var app = function() {
 
     var toggleMenuLeft = function() {
         $('#toggle-left').bind('click', function(e) {
-           $('body').removeClass('off-canvas-open')    
+           $('body').removeClass('off-canvas-open')
             var bodyEl = $('#container');
             ($(window).width() > 767) ? $(bodyEl).toggleClass('sidebar-mini'): $(bodyEl).toggleClass('sidebar-opened');
         });
@@ -813,7 +813,7 @@ var app = function() {
     };
 
 
-    //Vector Maps 
+    //Vector Maps
     var map = function() {
         $('#map').vectorMap({
             map: 'world_mill_en',

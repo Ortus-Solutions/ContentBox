@@ -121,7 +121,7 @@
 										#role.getRole()#
 									</cfif>
 
-									<div class="mt5 textMuted">
+									<div class="mt5 text-muted">
 										#role.getDescription()#
 									</div>
 								</td>

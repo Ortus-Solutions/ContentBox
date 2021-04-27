@@ -34,7 +34,7 @@
 								<th width="75">Attempts</th>
 								<th width="200">Date</th>
 								<th width="200">Successfull IP</th>
-								<th width="100" class="textCenter">Status</th>
+								<th width="100" class="text-center">Status</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -63,9 +63,9 @@
 								</td>
 								<td class="text-center">
 									<cfif thisLog.getIsBlocked()>
-										<i class="far fa-dot-circle fa-lg textRed" title="Blocked"></i>
+										<i class="far fa-dot-circle fa-lg text-red" title="Blocked"></i>
 									<cfelse>
-										<i class="far fa-dot-circle fa-lg textGreen" title="Allowed"></i>
+										<i class="far fa-dot-circle fa-lg text-green" title="Allowed"></i>
 									</cfif>
 								</td>
 							</tr>

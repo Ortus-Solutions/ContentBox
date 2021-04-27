@@ -70,7 +70,7 @@
 
 				<!--- password protect --->
 				<cfif entry.isPasswordProtected()>
-					<i class="fas fa-key textOrange" title="Password Protected Content"></i>
+					<i class="fas fa-key text-orange" title="Password Protected Content"></i>
 				</cfif>
 
 				<!--- Content Info --->

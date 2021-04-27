@@ -8,7 +8,7 @@
 			<!--- Heading --->
 			<div class="panel-heading">
 				<!--- Top Actions --->
-				<div class="floatRight mt10">
+				<div class="float-right mt10">
 					<!--- Back button --->
 					<a
 						class="btn btn-sm btn-default"
@@ -129,7 +129,7 @@
 								</cfif>
 							</label>
 
-							<div class="mb5 textMuted">
+							<div class="mb5 text-muted">
 								The list of security permissions needed to access the secured content of this rule.
 							</div>
 
@@ -159,7 +159,7 @@
 								</cfif>
 							</label>
 
-							<div class="mb5 textMuted">
+							<div class="mb5 text-muted">
 								The list of security roles needed to access the secured content of this rule.
 							</div>
 

@@ -123,7 +123,7 @@
 										#group.getName()#
 									</cfif>
 
-									<div class="mt5 textMuted">
+									<div class="mt5 text-muted">
 										#group.getDescription()#
 									</div>
 								</td>

@@ -2,7 +2,7 @@
 <div id="versionsPager">
 
 	<!--- Loader --->
-	<div class="loaders floatRight" id="versionsPagerLoader">
+	<div class="loaders float-right" id="versionsPagerLoader">
 		<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 	</div>
 
@@ -86,9 +86,9 @@
 				<!--- Status --->
 				<td class="text-center">
 					<cfif thisVersion.getIsActive()>
-						<i class="far fa-dot-circle fa-lg textRed" title="Active Version"></i>
+						<i class="far fa-dot-circle fa-lg text-red" title="Active Version"></i>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg textMuted" title="Past Version"></i>
+						<i class="far fa-dot-circle fa-lg text-muted" title="Past Version"></i>
 					</cfif>
 				</td>
 

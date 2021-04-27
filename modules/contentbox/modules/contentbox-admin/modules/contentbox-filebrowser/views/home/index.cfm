@@ -362,7 +362,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 									</div>
 
 									<!--- File Size --->
-									<div class="textMuted mt5">
+									<div class="text-muted mt5">
 										(#numberFormat( prc.fbqListing.size / 1024 )# kb)
 									</div>
 								</div>

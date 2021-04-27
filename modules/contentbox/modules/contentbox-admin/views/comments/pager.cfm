@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div id="pagerComments">
 <!--- Loader --->
-<div class="loaders floatRight" id="commentsPagerLoader">
+<div class="loaders float-right" id="commentsPagerLoader">
 	<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 </div>
 

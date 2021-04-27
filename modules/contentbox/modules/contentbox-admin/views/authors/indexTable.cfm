@@ -45,7 +45,7 @@
 					</cfif>
 
 					<cfif prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
-						<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
+						<i class="fa fa-star fa-lg text-orange" title="That's you!"></i>
 					</cfif>
 
 					<cfif author.getIs2FactorAuth()>
@@ -53,7 +53,7 @@
 					</cfif>
 
 					<div class="mt5">
-						<a href="mailto:#author.getEmail()#" class="textMuted underline">
+						<a href="mailto:#author.getEmail()#" class="text-muted underline">
 							#author.getEmail()#
 						</a>
 					</div>
@@ -91,7 +91,7 @@
 								<li>
 									<a 	title="Can't Delete Yourself"
 										href="javascript:alert('Can\'t delete yourself buddy!')"
-										class="textRed"
+										class="text-red"
 									>
 										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Can't Delete
 									</a>

@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div id="pagerContent">
 <!--- Loader --->
-<div class="loaders floatRight" id="contentPagerLoader">
+<div class="loaders float-right" id="contentPagerLoader">
 	<i class="fa fa-spinner fa-spin fa-lg"></i>
 </div>
 
@@ -33,16 +33,16 @@
 			</td>
 			<td class="text-center">
 				<cfif content.isExpired()>
-					<i class="fas fa-history fa-lg textRed" title="Content has expired!"></i>
+					<i class="fas fa-history fa-lg text-red" title="Content has expired!"></i>
 					<span class="hidden">expired</span>
 				<cfelseif content.isPublishedInFuture()>
-					<i class="fa fa-space-shuttle fa-lg textBlue" title="Content Publishes in the future!"></i>
+					<i class="fa fa-space-shuttle fa-lg text-blue" title="Content Publishes in the future!"></i>
 					<span class="hidden">published in future</span>
 				<cfelseif content.isContentPublished()>
-					<i class="far fa-dot-circle fa-lg textGreen" title="Content Published!"></i>
+					<i class="far fa-dot-circle fa-lg text-green" title="Content Published!"></i>
 					<span class="hidden">published in future</span>
 				<cfelse>
-					<i class="far fa-check-circle fa-lg textRed" title="Content Draft!"></i>
+					<i class="far fa-check-circle fa-lg text-red" title="Content Draft!"></i>
 					<span class="hidden">draft</span>
 				</cfif>
 			</td>

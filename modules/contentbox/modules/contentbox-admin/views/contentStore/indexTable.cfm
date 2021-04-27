@@ -59,7 +59,7 @@
 				<cfif content.getNumberOfChildren()>
 					<a
 						href="javascript:contentDrilldown( '#content.getContentID()#' )"
-						class="hand-cursor textMuted"
+						class="cursor-pointer text-muted"
 						title="View Children (#content.getNumberOfChildren()#)"
 					>
 						<i class="fa fa-plus-square"></i>

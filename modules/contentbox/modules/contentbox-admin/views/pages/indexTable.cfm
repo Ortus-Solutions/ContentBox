@@ -63,7 +63,7 @@
 				<td>
 					<!--- Home page--->
 					<cfif page.getSlug() eq prc.oCurrentSite.getHomepage()>
-						<i class="fa fa-home textMuted" title="Current Homepage"></i>
+						<i class="fa fa-home text-muted" title="Current Homepage"></i>
 					</cfif>
 
 
@@ -71,7 +71,7 @@
 					<cfif page.getNumberOfChildren()>
 						<a
 							href="javascript:contentDrilldown( '#page.getContentID()#' )"
-							class="hand-cursor textMuted"
+							class="cursor-pointer text-muted"
 							title="View Child Pages (#page.getNumberOfChildren()#)"
 						>
 							<i class="fa fa-plus-square"></i>
@@ -95,12 +95,12 @@
 
 					<!--- password protected --->
 					<cfif page.isPasswordProtected()>
-						<i class="fas fa-key textOrange" title="Password Protected Content"></i>
+						<i class="fas fa-key text-orange" title="Password Protected Content"></i>
 					</cfif>
 
 					<!--- ssl protected --->
 					<cfif page.getSSLOnly()>
-						<i class="fas fa-shield-alt textOrange" title="SSL Enabled"></i>
+						<i class="fas fa-shield-alt text-orange" title="SSL Enabled"></i>
 					</cfif>
 
 					<!--- Search Label --->
@@ -128,10 +128,10 @@
 
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
-						<i class="far fa-dot-circle fa-lg textGreen"></i>
+						<i class="far fa-dot-circle fa-lg text-green"></i>
 						<span class="hidden">yes</span>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg textGray"></i>
+						<i class="far fa-dot-circle fa-lg text-gray"></i>
 						<span class="hidden">no</span>
 					</cfif>
 				</td>

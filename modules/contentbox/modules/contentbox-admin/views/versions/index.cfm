@@ -13,7 +13,7 @@
 	<div class="col-md-8">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<div class="floatRight mt10">
+				<div class="float-right mt10">
 					<a
 						<cfif prc.content.getContentType() eq "page">
 							href="#event.buildLink( prc.xehPagesEditor )#/contentId/#prc.content.getContentId()#"
@@ -54,13 +54,13 @@
 		    <div class="panel-body">
 				<table class="table table-hover table-striped-removed" width="100%">
 					<tr>
-						<th class="textRight">Created:</th>
+						<th class="text-right">Created:</th>
 						<td>
 							#prc.content.getDisplayCreatedDate()#
 						</td>
 					</tr>
 					<tr>
-						<th class="textRight">Creator:</th>
+						<th class="text-right">Creator:</th>
 						<td>
 							<a href="mailto:#prc.content.getCreatorEmail()#">
 								#getInstance( "Avatar@cb" ).renderAvatar(
@@ -73,25 +73,25 @@
 						</td>
 					</tr>
 					<tr>
-						<th class="textRight">Published:</th>
+						<th class="text-right">Published:</th>
 						<td>
 							#prc.content.getDisplayPublishedDate()#
 						</td>
 					</tr>
 					<tr>
-						<th class="textRight">Expires:</th>
+						<th class="text-right">Expires:</th>
 						<td>
 							#prc.content.getDisplayExpireDate()#
 						</td>
 					</tr>
 					<tr>
-						<th class="textRight">Modified:</th>
+						<th class="text-right">Modified:</th>
 						<td>
 							#prc.content.getDisplayModifiedDate()#
 						</td>
 					</tr>
 					<tr>
-						<th class="textRight">Last Edit:</th>
+						<th class="text-right">Last Edit:</th>
 						<td>
 							<a href="mailto:#prc.content.getAuthorEmail()#">
 								#getInstance( "Avatar@cb" ).renderAvatar(

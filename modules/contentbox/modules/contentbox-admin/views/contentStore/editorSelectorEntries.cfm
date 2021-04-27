@@ -30,7 +30,7 @@
 
 				<!--- Title --->
 				<div class="mt5">
-					<div class="textMuted">
+					<div class="text-muted">
 					<cfif entry.getContentType() eq "contentStore">
 						#entry.getDescription()#
 					<cfelse>

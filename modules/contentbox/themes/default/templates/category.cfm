@@ -2,7 +2,7 @@
 	<!--- Mini RSS --->
 	<li>
 		<a
-			class="floatRight"
+			class="float-right"
 			href="#cb.linkRSS( category=category )#"
 			title="RSS Feed For #category.getCategory()#"
 		>

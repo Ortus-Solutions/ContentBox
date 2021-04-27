@@ -185,7 +185,7 @@
         <!--- Loader --->
         <div class="loaders" id="uploadBarLoader">
             <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
-            <div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
+            <div id="uploadBarLoaderStatus" class="center text-red">Saving...</div>
         </div>
     </div>
 </cfoutput>

@@ -31,7 +31,7 @@
 					</div>
 
 					<div class="mt5">
-						<div class="textMuted">
+						<div class="text-muted">
 						<cfif content.getContentType() eq "contentStore">
 							#content.getDescription()#
 						<cfelse>

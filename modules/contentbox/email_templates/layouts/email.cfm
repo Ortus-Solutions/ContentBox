@@ -49,9 +49,9 @@
             table[class="kmColumnContainer"] td[class=kmTextContent] {
                 padding-top:9px !important;
             }
-            td[class="rowContainer kmFloatLeft"],
-            td[class="rowContainer kmFloatLeft firstColumn"],
-            td[class="rowContainer kmFloatLeft lastColumn"] {
+            td[class="rowContainer kmfloat-left"],
+            td[class="rowContainer kmfloat-left firstColumn"],
+            td[class="rowContainer kmfloat-left lastColumn"] {
                 float:left;
                 clear: both;
                 width: 100% !important;
@@ -137,7 +137,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" class="templateRow" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
                                         <tbody>
                                             <tr>
-                                                <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
+                                                <td class="rowContainer kmfloat-left" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -149,7 +149,7 @@
                                     <table border="0" cellpadding="0" cellspacing="0" class="templateRow" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
                                         <tbody>
                                             <tr>
-                                                <td class="rowContainer kmFloatLeft" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
+                                                <td class="rowContainer kmfloat-left" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
 
                                                     <cfoutput>#renderView( args=args )#</cfoutput>
 

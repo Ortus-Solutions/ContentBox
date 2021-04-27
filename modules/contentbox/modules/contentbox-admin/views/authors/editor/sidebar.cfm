@@ -31,56 +31,56 @@
 				<!--- Persisted Info --->
 				<table class="table table-hover table-striped-removed mt10">
 					<tr>
-						<th width="125" class="textRight">Last Login</th>
+						<th width="125" class="text-right">Last Login</th>
 						<td>
 							#prc.author.getDisplayLastLogin()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Created On</th>
+						<th class="text-right">Created On</th>
 						<td>
 							#prc.author.getDisplayCreatedDate()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Modified On</th>
+						<th class="text-right">Modified On</th>
 						<td>
 							#prc.author.getDisplayModifiedDate()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Two-Factor</th>
+						<th class="text-right">Two-Factor</th>
 						<td>
 							#YesNoFormat( prc.author.getIs2FactorAuth() )#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Role</th>
+						<th class="text-right">Role</th>
 						<td>
 							#prc.author.getRole().getRole()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Entries</th>
+						<th class="text-right">Entries</th>
 						<td>
 							#prc.author.getNumberOfEntries()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Pages</th>
+						<th class="text-right">Pages</th>
 						<td>
 							#prc.author.getNumberOfPages()#
 						</td>
 					</tr>
 
 					<tr>
-						<th class="textRight">Content Store</th>
+						<th class="text-right">Content Store</th>
 						<td>
 							#prc.author.getNumberOfContentStore()#
 						</td>

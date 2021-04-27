@@ -7,7 +7,7 @@
 				<!--- Heading --->
 				<div class="panel-heading">
 					<!--- Top Actions --->
-					<div class="floatRight mt10">
+					<div class="float-right mt10">
 						<!--- Back button --->
 						<a
 							class="btn btn-sm btn-default"
@@ -89,7 +89,7 @@
 									id="permissionFilter"
 								>
 								<span
-									class="input-group-addon hand-cursor"
+									class="input-group-addon cursor-pointer"
 									id="sizing-addon3"
 									title="Clear Search"
 									onclick="clearFilter()"

@@ -48,7 +48,7 @@
                             thisArg.value = structKeyExists( prc.vals, thisArg.name ) ? prc.vals[ thisArg.name ] == "" ? thisArg.default : prc.vals[ thisArg.name ] : thisArg.default;
                             // required stuff
                             if( thisarg.required ){
-                                requiredText = "<span class='textRed'>Required</span>";
+                                requiredText = "<span class='text-red'>Required</span>";
                                 requiredValidator = "required";
                             }
                         </cfscript>

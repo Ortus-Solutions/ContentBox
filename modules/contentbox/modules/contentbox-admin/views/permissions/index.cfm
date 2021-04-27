@@ -97,7 +97,7 @@
 										#permission.getPermission()#
 									</cfif>
 
-									<div class="mt5 textMuted">
+									<div class="mt5 text-muted">
 										#permission.getDescription()#
 									</div>
 								</td>

@@ -8,7 +8,7 @@
 			<div class="panel-heading">
 
 				<!--- Top Actions --->
-				<div class="floatRight mt10">
+				<div class="float-right mt10">
 					<!--- Back To Inbox --->
 					#announce( "cbadmin_onAuthorEditorActions" )#
 

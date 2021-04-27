@@ -34,7 +34,7 @@
 								value ="#rc.search#"
 							>
 							<span
-								class="input-group-addon hand-cursor"
+								class="input-group-addon cursor-pointer"
 								id="sizing-addon3"
 								title="Clear Search"
 								onclick="clearSearch()"
