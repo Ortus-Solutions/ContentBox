@@ -8,7 +8,7 @@
 				<div class="panel-heading">
 
 					<!--- Top Actions --->
-					<div class="floatRight mt10">
+					<div class="float-right mt10">
 						<!--- Back button --->
 						<a
 							class="btn btn-sm btn-default"
@@ -20,9 +20,22 @@
 					</div>
 
 					<!--- Title --->
-					<div class="size16 p10">
+					<div class="size16 p10 flex gap-x-2">
+
 						<i class="fas fa-globe"></i>
-						#prc.site.isLoaded() ? 'Update' : 'Create'# Site
+
+						<span>
+							#prc.site.isLoaded() ? prc.site.getSlug() : 'Create Site'#
+						</span>
+
+						<!--- Published Marker --->
+						<cfif prc.site.isLoaded()>
+							<cfif prc.site.getIsActive()>
+								<span class="label label-success">Published</span>
+							<cfelse>
+								<span class="label label-danger">Disabled</span>
+							</cfif>
+						</cfif>
 					</div>
 
 				</div>
@@ -344,6 +357,32 @@
 									)#
 									#html.hiddenField(
 										name	= "poweredByHeader",
+										bind 	= prc.site
+									)#
+								</div>
+							</div>
+
+
+							<!--- Powered by Header --->
+							<div class="form-group alert alert-danger">
+								#html.label(
+									class   = "control-label",
+									field   = "isActive",
+									content = "Site Enabled:"
+								)#
+
+								<p>
+									ContentBox can disable a site from being served by disabling it. Diabling a site does not delete or unpublish any items. It is a nice toggle switch.
+								</p>
+
+								<div class="controls">
+									#html.checkbox(
+										name    = "isActive_toggle",
+										data	= { toggle: 'toggle', match: 'isActive' },
+										checked	= prc.site.getIsActive()
+									)#
+									#html.hiddenField(
+										name	= "isActive",
 										bind 	= prc.site
 									)#
 								</div>

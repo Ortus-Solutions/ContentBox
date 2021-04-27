@@ -50,17 +50,37 @@
 									</button>
 									<ul class="dropdown-menu">
 										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
-										<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
+											<li>
+												<a href="javascript:importContent()">
+													<i class="fas fa-file-import fa-lg"></i> Import
+												</a>
+											</li>
 										</cfif>
 										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
-											<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as JSON</a></li>
-											<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as XML</a></li>
+											<li>
+												<a
+													href="#event.buildLink( prc.xehExportAll )#.json"
+													target="_blank"
+												>
+													<i class="fas fa-file-export fa-lg"></i>
+													Export All as JSON
+												</a>
+											</li>
+											<li>
+												<a
+													href="#event.buildLink( prc.xehExportAll )#.xml"
+													target="_blank"
+												>
+													<i class="fas fa-file-export fa-lg"></i>
+													Export All as XML
+												</a>
+											</li>
 										</cfif>
 									</ul>
 								</div>
 								<button
 									class="btn btn-primary"
-									onclick="return to('#event.buildLink( prc.xehSiteEditor )#')"
+									onclick="return to( '#event.buildLink( prc.xehSiteEditor )#' )"
 								>
 									Create Site
 								</button>
@@ -86,21 +106,27 @@
 								<th>Site</th>
 								<th>Base URL</th>
 								<th width="100">Theme</th>
-								<th width="150" class="text-center {sorter:false}">Features</th>
+								<th width="185" class="text-center {sorter:false}">Features</th>
 								<th width="50" class="text-center {sorter:false}">Actions</th>
 							</tr>
 						</thead>
 
 						<tbody>
 							<cfloop array="#prc.sites#" index="site">
-							<tr>
+							<tr
+								<!--- DISABLED MARKER --->
+								<cfif !site.getIsActive()>
+									class="danger"
+									title="Site is disabled!"
+								</cfif>
+							>
 								<td>
 									<a
 										href="#event.buildLink( '#prc.xehSiteEditor#/siteID/#site.getsiteID()#' )#"
 										class="size18"
 									>
 										<cfif site.getSlug() eq 'default'>
-											<i class="fa fa-star textOrange" title="Default Site"></i>
+											<i class="fa fa-star text-orange" title="Default Site"></i>
 										</cfif>
 										#site.getName()#
 									</a>
@@ -120,27 +146,27 @@
 								<td>
 									<!--- Blog Enabled --->
 									<i
-										class="fas fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'textGreen' : 'textGray'#"
+										class="fas fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
 										title="Blog"></i>
 
 									<!--- SiteMap Enabled --->
 									<i
-										class="fas fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'textGreen' : 'textGray'#"
+										class="fas fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
 										title="Sitemap"></i>
 
 									<!--- PoweredBy --->
 									<i
-										class="fas fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'textGreen' : 'textGray'#"
+										class="fas fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
 										title="Powered By Header"></i>
 
 									<!--- AdminBar --->
 									<i
-										class="fas fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'textGreen' : 'textGray'#"
+										class="fas fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
 										title="Admin Bar"></i>
 
 									<!--- SSL --->
 									<i
-										class="fas fa-lock fa-lg mr5 #site.getIsSSL() ? 'textGreen' : 'textGray'#"
+										class="fas fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
 										title="SSL"></i>
 
 								</td>
