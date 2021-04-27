@@ -6,7 +6,7 @@
  * This is an abstract class that represents base entity methods.
  * We created this due to the stupid bug in ACF 9-2016, where the mapped super class is not respected in table inheritance
  */
-component mappedsuperclass="true" {
+component {
 
 	// PK Pointer
 	this.pk          = "PLEASE_SELECT_ONE";
