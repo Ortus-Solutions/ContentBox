@@ -136,10 +136,17 @@ component
 
 	/**
 	 * Get an array/struct representation of all sites in the system
+	 *
+	 * @isActive If passed, bind via this boolean flag
+	 *
+	 * @return array of { siteID,name,slug,domainRegex,isActive }
 	 */
-	array function getAllFlat(){
+	array function getAllFlat( boolean isActive ){
 		return newCriteria()
-			.withProjections( property: "siteID,name,slug,domainRegex" )
+			.when( !isNull( arguments.isActive ), function( c ){
+				arguments.c.isEq( "this.isActive", javacast( "boolean", isActive ) );
+			} )
+			.withProjections( property: "siteID,name,slug,domainRegex,isActive" )
 			.asStruct()
 			.list( sortOrder = "name" );
 	}
@@ -204,19 +211,34 @@ component
 		}
 
 		// Do we have an incoming site header, which should contain the siteID
+		// Verify the site is valid, else continue search
 		var siteID = event.getValue( "siteID", event.getHTTPHeader( "x-contentbox-site", "" ) );
 		if ( len( siteID ) ) {
-			return getOrFail( siteID );
+			var oSite = newCriteria()
+				.isEq( "siteID", siteID )
+				.isTrue( "isActive" )
+				.get();
+			if ( !isNull( oSite ) ) {
+				return oSite;
+			}
 		}
 
 		// Do we have an incoming siteSlug in the RC
+		// Verify the site is valid, else continue search
 		if ( event.valueExists( "siteSlug" ) ) {
-			return newCriteria().isEq( "slug", event.getValue( "siteSlug" ) ).get();
+			var oSite = newCriteria()
+				.isEq( "slug", event.getValue( "siteSlug" ) )
+				.isTrue( "isActive" )
+				.get();
+			if ( !isNull( oSite ) ) {
+				return oSite;
+			}
 		}
 
 		// Try to discover using the requested full URL including host + path + query string for added flexibility
-		var matchedSite = getAllFlat().filter( function( thisSite ){
-			return reFindNoCase( thisSite[ "domainRegex" ], event.getFullUrl() );
+		// Verify the site is valid, else continue search
+		var matchedSite = getAllFlat( isActive: true ).filter( function( thisSite ){
+			return reFindNoCase( arguments.thisSite[ "domainRegex" ], event.getFullUrl() );
 		} );
 
 		// Return the first matched site

@@ -363,30 +363,32 @@
 							</div>
 
 
-							<!--- Powered by Header --->
-							<div class="form-group alert alert-danger">
-								#html.label(
-									class   = "control-label",
-									field   = "isActive",
-									content = "Site Enabled:"
-								)#
-
-								<p>
-									ContentBox can disable a site from being served by disabling it. Diabling a site does not delete or unpublish any items. It is a nice toggle switch.
-								</p>
-
-								<div class="controls">
-									#html.checkbox(
-										name    = "isActive_toggle",
-										data	= { toggle: 'toggle', match: 'isActive' },
-										checked	= prc.site.getIsActive()
+							<!--- Site Disable/Enable --->
+							<cfif prc.site.getSlug() neq "default">
+								<div class="form-group alert alert-danger">
+									#html.label(
+										class   = "control-label",
+										field   = "isActive",
+										content = "Site Enabled:"
 									)#
-									#html.hiddenField(
-										name	= "isActive",
-										bind 	= prc.site
-									)#
+
+									<p>
+										ContentBox can disable a site from being served by disabling it. Diabling a site does not delete or unpublish any items. It is a nice toggle switch.
+									</p>
+
+									<div class="controls">
+										#html.checkbox(
+											name    = "isActive_toggle",
+											data	= { toggle: 'toggle', match: 'isActive' },
+											checked	= prc.site.getIsActive()
+										)#
+										#html.hiddenField(
+											name	= "isActive",
+											bind 	= prc.site
+										)#
+									</div>
 								</div>
-							</div>
+							</cfif>
 
 						#html.endFieldSet()#
 
