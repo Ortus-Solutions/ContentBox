@@ -59,7 +59,7 @@ component
 		lazy     ="true";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							PK + CONSTRAINTS + Memento
 	 ********************************************************************* */
 
 	this.pk = "settingID";
@@ -67,6 +67,11 @@ component
 	this.constraints = {
 		"name"  : { required : true, size : "1..100" },
 		"value" : { required : true }
+	};
+
+	this.memento = {
+		defaultIncludes : [ "name", "value", "isCore", "siteSnapshot" ],
+		defaultExcludes : [ "site" ]
 	};
 
 	/* *********************************************************************
@@ -85,22 +90,10 @@ component
 	}
 
 	/**
-	 * Get memento representation
-	 * @excludes Property excludes
+	 * Build a site snapshot
 	 */
-	function getMemento( excludes = "" ){
-		var pList  = listToArray( "name,value,isCore" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Site Snapshot
-		result[ "site" ] = {};
-		if ( hasSite() ) {
-			result.site[ "siteID" ] = getSite().getsiteID();
-			result.site[ "name" ]   = getSite().getName();
-			result.site[ "slug" ]   = getSite().getSlug();
-		}
-
-		return result;
+	struct function getSiteSnapshot(){
+		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
 	}
 
 	/**

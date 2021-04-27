@@ -192,11 +192,18 @@ component
 	 ********************************************************************* */
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							PK + CONSTRAINTS + Memento
 	 ********************************************************************* */
 
 	this.pk = "siteID";
 
+	// Mementofication
+	this.memento = {
+		defaultIncludes : [ "*" ],
+		defaultExcludes : [ "settings" ]
+	};
+
+	// Validation Constraints
 	this.constraints = {
 		"name" : { required : true, size : "2..255" },
 		"slug" : {
@@ -228,36 +235,10 @@ component
 	 */
 	function init(){
 		variables.settings = [];
+
 		super.init();
 
 		return this;
-	}
-
-	/**
-	 * Get memento representation
-	 * @excludes Property excludes
-	 */
-	function getMemento( excludes = "" ){
-		var pList = [
-			"activeTheme",
-			"adminBar",
-			"description",
-			"domain",
-			"domainRegex",
-			"homepage",
-			"isActive",
-			"isBlogEnabled",
-			"isSitemapEnabled",
-			"isSSL",
-			"keywords",
-			"name",
-			"poweredByHeader",
-			"slug",
-			"tagline"
-		];
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		return result;
 	}
 
 	/**
@@ -289,6 +270,20 @@ component
 		& "://"
 		& this.getDomain() // Site Domain
 		& ( cgi.server_port != 80 ? ":#cgi.server_port#" : "" ); // The right port
+	}
+
+	/**
+	 * A nice snapshot of this entity used for mementifications
+	 */
+	struct function getInfoSnapshot(){
+		if ( isLoaded() ) {
+			return {
+				"siteID" : getId(),
+				"slug"   : getSlug(),
+				"name"   : getName()
+			};
+		}
+		return {};
 	}
 
 }

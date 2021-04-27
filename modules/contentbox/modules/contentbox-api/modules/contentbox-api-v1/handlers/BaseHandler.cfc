@@ -55,4 +55,32 @@ component extends="cborm.models.resources.BaseHandler" {
 		super.index( argumentCollection = arguments );
 	}
 
+	/**
+	 * This utility tries to get the incoming resource by id or slug or fails
+	 *
+	 * @throws EntityNotFound
+	 *
+	 * @return The found entity
+	 */
+	private function getByIdOrSlugOrFail( required id ){
+		var c       = newCriteria();
+		var oEntity = c
+			.$or(
+				// note: id is a shortcut in Hibernate for the Primary Key
+				c.restrictions.isEq( "id", arguments.id ),
+				c.restrictions.isEq( "slug", arguments.id )
+			)
+			.get();
+
+		if ( isNull( oEntity ) ) {
+			throw(
+				message      = "No entity found for ID/Slug #arguments.id.toString()#",
+				type         = "EntityNotFound",
+				extendedinfo = variables.entity
+			);
+		}
+
+		return oEntity
+	}
+
 }

@@ -36,7 +36,7 @@
             "clob":"true",
             "connectionLimit":"100",
             "connectionTimeout":"1",
-            "custom":"useUnicode=true&characterEncoding=UTF8&serverTimezone=America%2FChicago&useLegacyDatetimeCode=true&autoReconnect=true&useSSL=false",
+            "custom":"useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC&useLegacyDatetimeCode=true&autoReconnect=true&useSSL=false",
             "database":"${DB_DATABASE}",
             "dbdriver":"${DB_DRIVER}",
             "host":"${DB_HOST}",

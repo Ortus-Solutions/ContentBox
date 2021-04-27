@@ -14,6 +14,15 @@ component mappedsuperclass="true" {
 	this.constraints = {};
 
 	/* *********************************************************************
+	 **						PUBLIC STATIC VARIABLES
+	 ********************************************************************* */
+
+	this.DATE_FORMAT       = "mmm dd, yyyy";
+	this.DATE_FORMAT_SHORT = "mmm-dd-yyyy";
+	this.TIME_FORMAT       = "HH:mm:ss z";
+	this.TIME_FORMAT_SHORT = "hh:mm tt";
+
+	/* *********************************************************************
 	 **						PUBLIC FUNCTIONS
 	 ********************************************************************* */
 
@@ -21,7 +30,38 @@ component mappedsuperclass="true" {
 	 * Constructor
 	 */
 	function init(){
-		variables.isDeleted = false;
+		variables.createdDate  = now();
+		variables.modifiedDate = now();
+		variables.isDeleted    = false;
+
+		// Incorporate default includes for the base class.
+		if ( !isNull( this.memento.defaultIncludes ) && isNull( this.memento.baseIncluded ) ) {
+			this.memento.defaultIncludes.append(
+				[
+					this.pk,
+					"createdDate",
+					"modifiedDate",
+					"isDeleted"
+				],
+				true
+			);
+			this.memento.baseIncluded = true;
+		}
+
+		return this;
+	}
+
+	/**
+	 * Append an incoming array of properties to a memento list target
+	 *
+	 * @collection The array to append
+	 * @target The target to append to: defaultIncludes, defaultExcludes, neverInclude, defaults, etc.
+	 */
+	function appendToMemento( required collection, target = "defaultIncludes" ){
+		var filtered = arguments.collection.filter( function( item ){
+			!this.memento[ target ].containsNoCase( arguments.item )
+		} );
+		this.memento[ arguments.target ].append( filtered, true );
 		return this;
 	}
 
@@ -38,41 +78,48 @@ component mappedsuperclass="true" {
 	 * pre insertion procedures
 	 */
 	void function preInsert(){
-		var now = now();
-		setCreatedDate( now );
-		setModifiedDate( now );
+		var now                = now();
+		variables.createdDate  = now;
+		variables.modifiedDate = now;
 	}
 
 	/**
 	 * pre update procedures
 	 */
 	void function preUpdate( struct oldData ){
-		setModifiedDate( now() );
+		variables.modifiedDate = now();
 	}
 
 	/**
 	 * Get formatted createdDate
 	 */
-	string function getDisplayCreatedDate(){
-		var createdDate = getCreatedDate();
-		if ( isNull( createdDate ) ) {
+	string function getDisplayCreatedDate(
+		dateFormat = this.DATE_FORMAT,
+		timeFormat = this.TIME_FORMAT_SHORT
+	){
+		if ( isNull( variables.createdDate ) ) {
 			return "";
 		}
-		return dateFormat( createdDate, "dd mmm yyyy" ) & " " & timeFormat(
-			createdDate,
-			"hh:mm tt"
+		return dateFormat( variables.createdDate, arguments.dateFormat ) & " " & timeFormat(
+			variables.createdDate,
+			arguments.timeFormat
 		);
 	}
 
 	/**
 	 * Get formatted modified date
 	 */
-	string function getDisplayModifiedDate(){
-		var modDate = getModifiedDate();
-		if ( isNull( modDate ) ) {
+	string function getDisplayModifiedDate(
+		dateFormat = this.DATE_FORMAT,
+		timeFormat = this.TIME_FORMAT_SHORT
+	){
+		if ( isNull( variables.modifiedDate ) ) {
 			return "";
 		}
-		return dateFormat( modDate, "dd mmm yyyy" ) & " " & timeFormat( modDate, "hh:mm tt" );
+		return dateFormat( variables.modifiedDate, arguments.dateFormat ) & " " & timeFormat(
+			variables.modifiedDate,
+			arguments.timeFormat
+		);
 	}
 
 	/**

@@ -23,6 +23,7 @@ component {
 	this.setDomainCookies  = true;
 	this.scriptProtect     = false;
 	this.secureJSON        = false;
+	this.timezone 			= "UTC";
 
 	/**
 	 * --------------------------------------------------------------------------
