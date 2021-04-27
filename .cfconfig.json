@@ -19,7 +19,7 @@
 		}
     },
 	"datasources" : {
-		"${DB_DATABASE}":{
+		"contentbox":{
             "allowAlter":true,
             "allowCreate":true,
             "allowDelete":true,
