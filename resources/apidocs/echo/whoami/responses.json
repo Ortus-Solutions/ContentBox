@@ -1,0 +1,74 @@
+{
+    "200": {
+        "description": "Returns the logged in user information",
+        "content": {
+            "application/json": {
+                "example": {
+					"$ref": "example.200.json"
+				},
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "description": "Flag to indicate an error.",
+                            "type": "boolean"
+                        },
+                        "messages": {
+                            "description": "An array of messages related to the request.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+						},
+						"pagination" : {
+							"description": "Pagination information.",
+                            "type": "object",
+                            "properties": {}
+						},
+                        "data": {
+							"$ref" : "../../_schemas/app-user.json"
+						}
+                    }
+                }
+            }
+        }
+	},
+
+	"401": {
+        "description": "Invalid or Missing Authentication Credentials",
+        "content": {
+            "application/json": {
+                "example": {
+					"$ref": "example.401.json"
+				},
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "description": "Flag to indicate an error.",
+                            "type": "boolean"
+                        },
+                        "messages": {
+                            "description": "An array of messages related to the request.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+						},
+						"pagination" : {
+							"description": "Pagination information.",
+                            "type": "object",
+                            "properties": {}
+						},
+                        "data": {
+                            "description": "The data packet",
+                            "type": "object",
+                            "properties": {}
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

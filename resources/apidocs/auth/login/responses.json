@@ -1,0 +1,88 @@
+{
+    "200": {
+        "description": "Application registration successful",
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "description": "Flag to indicate an error.",
+                            "type": "boolean"
+                        },
+                        "messages": {
+                            "description": "An array of messages related to the request.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+						},
+						"pagination" : {
+							"description": "Pagination information.",
+                            "type": "object",
+                            "properties": {}
+						},
+                        "data": {
+                            "description": "The data packet of the registration",
+							"type": "object",
+							"properties" : {
+								"token" : {
+									"type" : "string",
+									"description" : "The beaerer token created for the registration"
+								},
+								"user" : {
+									"$ref" : "../../_schemas/app-user.json"
+								}
+							}
+                        }
+                    }
+				},
+				"example": {
+					"$ref": "example.200.json"
+				}
+            }
+        }
+	},
+
+	"401": {
+        "description": "Validation exception",
+        "content": {
+            "application/json": {
+                "example": {
+					"$ref": "example.401.json"
+				},
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "description": "Flag to indicate an error.",
+                            "type": "boolean"
+                        },
+                        "messages": {
+                            "description": "An array of messages related to the request.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+						},
+						"pagination" : {
+							"description": "Pagination information.",
+                            "type": "object",
+                            "properties": {}
+						},
+                        "data": {
+                            "description": "The validation data packet",
+                            "type": "object",
+                            "properties": {
+								"{invalidField}" : {
+									"$ref" : "../../_schemas/app-validation.json"
+								}
+							}
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

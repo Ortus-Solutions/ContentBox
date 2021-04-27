@@ -1,0 +1,33 @@
+{
+	"description" : "An invalid field will contain an array of information messages",
+	"type" : "array",
+	"items" : {
+		"type" : "object",
+		"properties" : {
+			"MESSAGE" :{
+				"type" : "string",
+				"description" : "The human readable error message"
+			},
+			"VALIDATIONDATA" :{
+				"type" : "boolean",
+				"description" : "The validation data attached"
+			},
+			"ERRORMETADATA" :{
+				"type" : "object",
+				"description" : "Any error metdata attached"
+			},
+			"REJECTEDVALUE" :{
+				"type" : "string",
+				"description" : "The rejected value if any"
+			},
+			"VALIDATIONTYPE" :{
+				"type" : "string",
+				"description" : "The contraint type applied"
+			},
+			"FIELD" :{
+				"type" : "string",
+				"description" : "The field name that caused the validation"
+			}
+		}
+	}
+}

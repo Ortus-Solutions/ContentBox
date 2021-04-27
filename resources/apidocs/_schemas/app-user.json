@@ -1,0 +1,29 @@
+{
+	"description": "The user that is logged in",
+	"type": "object",
+	"properties": {
+		"id": {
+			"description": "The User ID",
+			"type": "integer"
+		},
+		"fname": {
+			"description": "The user's first name",
+			"type": "string"
+		},
+		"lname": {
+			"description": "The user's last name",
+			"type": "integer"
+		},
+		"email": {
+			"description": "The user's email",
+			"type": "string"
+		},
+		"permissions": {
+			"description": "The collection of permissions",
+			"type": "array",
+			"items" : {
+				"type" : "string"
+			}
+		}
+	}
+}

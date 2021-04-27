@@ -1,0 +1,17 @@
+{
+    "data": {
+        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODkzMTI3NzcsInNjb3BlcyI6W10sImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6NjUxMDAvIiwic3ViIjoiRTBDMTlDNjgtRDA5MC00QzY4LUE5NUY4NUIzRDFGRDZCODIiLCJleHAiOjE1ODkzMTYzNzcsImp0aSI6IjQ3Q0QxMDlDNTA4NTdDQTlGRUVBMDY0NzNEQzMxRkY3In0.I3F-MFsy7BbgLYwt6L9FR1HMNu6ZsUpkFQRgbpXdaPBbIbHRznWEw3MTsTKf654g0eO_yE5JVhGYYRzn_VyR6g",
+        "user": {
+            "lname": "majano",
+            "permissions": [],
+            "fname": "luis",
+            "id": "E0C19C68-D090-4C68-A95F85B3D1FD6B82",
+            "email": "test@test.com"
+        }
+    },
+    "error": false,
+    "pagination": {},
+    "messages": [
+        "User registered correctly and Bearer token created and it expires in 60 minutes"
+    ]
+}

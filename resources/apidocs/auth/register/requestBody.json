@@ -1,0 +1,41 @@
+{
+    "description": "Needed fields to register a user",
+    "required": true,
+    "content": {
+        "application/json": {
+            "schema": {
+                "type": "object",
+                "required": [
+					"fname",
+					"lname",
+					"email",
+                    "password"
+                ],
+                "properties": {
+					"fname": {
+                        "description": "The user's first name",
+                        "type": "string"
+					},
+					"lname": {
+                        "description": "The user's last name",
+                        "type": "string"
+					},
+                    "email": {
+                        "description": "The email to use for login in",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The password to use for login in",
+                        "type": "string"
+                    }
+                },
+                "example": {
+					"fname" : "luis",
+					"lname" : "majano",
+                    "email": "user@email.org",
+                    "password": "test"
+                }
+            }
+        }
+    }
+}

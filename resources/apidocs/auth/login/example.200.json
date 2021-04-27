@@ -1,0 +1,8 @@
+{
+    "data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODkzMDUwMzEsInNjb3BlcyI6W10sImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6NjUxMDAvIiwic3ViIjoxLCJleHAiOjE1ODkzMDg2MzEsImp0aSI6IkQxNkI4Qzg5NTc2OUU5MDcyNUNBQTU3M0I3M0FCNTc2In0.VDsqEDCXtHnrMXZYXqE2To2lQpmQAmHP8asXjhw_c2KsI_1mx2gZETuIrVNXckUl9zdevx2O818PlCkp6znmGw",
+    "error": false,
+    "pagination": {},
+    "messages": [
+        "Bearer token created and it expires in 60 minutes"
+    ]
+}
