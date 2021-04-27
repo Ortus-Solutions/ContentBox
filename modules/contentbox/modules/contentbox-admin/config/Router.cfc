@@ -3,7 +3,7 @@ component {
 	function configure(){
 		route( "/" ).to( "dashboard" );
 
-		route( "/cbsecurity" ).toModuleRouting( "contentbox-security" )
+		route( "/cbsecurity" ).toModuleRouting( "contentbox-security" );
 
 		route( "/authors/page/:page" ).to( "authors" );
 		route( "/comments/page/:page" ).to( "comments" );
