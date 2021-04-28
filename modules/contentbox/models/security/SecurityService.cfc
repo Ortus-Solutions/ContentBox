@@ -13,6 +13,7 @@ component singleton {
 	property name="siteService" inject="siteService@cb";
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
+	property name="requestStorage" inject="RequestStorage@cbstorages";
 	property name="mailService" inject="mailService@cbmailservices";
 	property name="renderer" inject="coldbox:renderer";
 	property name="CBHelper" inject="CBHelper@cb";
@@ -23,6 +24,9 @@ component singleton {
 
 	// Properties
 	property name="encryptionKey";
+
+	// Static key to identify an author in a request: more for api interaction than web.
+	variables.AUTHOR_KEY = "contentbox_author";
 
 	/**
 	 * Constructor
@@ -37,170 +41,89 @@ component singleton {
 	 *
 	 * @author The author object
 	 */
-	SecurityService function updateAuthorLoginTimestamp( required author ){
+	Author function updateAuthorLoginTimestamp( required author ){
 		arguments.author.setLastLogin( now() );
 		authorService.save( arguments.author );
-		return this;
+		return arguments.author;
 	}
 
 	/**
-	 * This function is called once an incoming event matches a security rule.
-	 * You will receive the security rule that matched and an instance of the
-	 * ColdBox controller.
-	 *
-	 * You must return a struct with two keys:
-	 * - allow:boolean True, user can continue access, false, invalid access actions will ensue
-	 * - type:string(authentication|authorization) The type of block that ocurred.  Either an authentication or an authorization issue.
-	 * - messages:string Info/debug messages
-	 *
-	 * @return { allow:boolean, type:authentication|authorization, messages:string }
+	 * Alias to getAuthorSession() created to satisfy JWT Service
 	 */
-	struct function ruleValidator( required rule, required controller ){
-		return validateSecurity( rule: arguments.rule, controller: arguments.controller );
+	function getUser(){
+		return this.getAuthorSession();
 	}
 
 	/**
-	 * This function is called once access to a handler/action is detected.
-	 * You will receive the secured annotation value and an instance of the ColdBox Controller
+	 * Tries to get the currently logged in user by using our lookup algorithm:
 	 *
-	 * You must return a struct with two keys:
-	 * - allow:boolean True, user can continue access, false, invalid access actions will ensue
-	 * - type:string(authentication|authorization) The type of block that ocurred.  Either an authentication or an authorization issue.
-	 * - messages:string Info/debug messages
+	 * - Look in request storage
+	 * - Look in cache
+	 * - Look in remember me cookie
+	 * - Tough look, you are an invalid user, return an unauthenticated user
 	 *
-	 * @return { allow:boolean, type:authentication|authorization, messages:string }
-	 */
-	struct function annotationValidator( required securedValue, required controller ){
-		return validateSecurity(
-			securedValue: arguments.securedValue,
-			controller  : arguments.controller
-		);
-	}
-
-	/**
-	 * Validates if a user can access an event. Called via the cbSecurity module.
-	 *
-	 * @rule The security rule being tested for
-	 * @controller The ColdBox controller calling the validation
-	 */
-	struct function validateSecurity( struct rule, securedValue, any controller ){
-		var results = {
-			"allow"    : false,
-			"type"     : "authentication",
-			"messages" : ""
-		};
-		// Get the currently logged in user, if any
-		var author = getAuthorSession();
-
-		// First check if user has been authenticated.
-		if ( author.isLoaded() AND author.isLoggedIn() ) {
-			// Check if the rule requires roles
-			if ( !isNull( arguments.rule ) && len( arguments.rule.roles ) ) {
-				for ( var x = 1; x lte listLen( arguments.rule.roles ); x++ ) {
-					if ( listGetAt( arguments.rule.roles, x ) eq author.getRole().getRole() ) {
-						results.allow = true;
-						results.type  = "authorization";
-						break;
-					}
-				}
-			}
-
-			// Check if the rule requires permissions
-			if ( !isNull( arguments.rule ) && len( arguments.rule.permissions ) ) {
-				for ( var y = 1; y lte listLen( arguments.rule.permissions ); y++ ) {
-					if ( author.checkPermission( listGetAt( arguments.rule.permissions, y ) ) ) {
-						results.allow = true;
-						results.type  = "authorization";
-						break;
-					}
-				}
-			}
-
-			// Check if the secured annotations is set
-			if ( !isNull( arguments.securedValue ) && len( arguments.securedValue ) ) {
-				for ( var y = 1; y lte listLen( arguments.securedValue ); y++ ) {
-					if ( author.checkPermission( listGetAt( arguments.securedValue, y ) ) ) {
-						results.allow = true;
-						results.type  = "authorization";
-						break;
-					}
-				}
-			}
-
-			// Check for empty rules and perms
-			if ( !len( rule.roles ) AND !len( rule.permissions ) ) {
-				results.allow = true;
-			}
-		}
-
-		// If the rule has a message, then set a messagebox
-		if (
-			!results.allow &&
-			!isNull( arguments.rule ) &&
-			structKeyExists( rule, "message" ) &&
-			len( rule.message )
-		) {
-			arguments.controller
-				.getWireBox()
-				.getInstance( "messagebox@cbmessagebox" )
-				.setMessage(
-					type: (
-						structKeyExists( rule, "messageType" ) && len( rule.messageType ) ? rule.messageType : "info"
-					),
-					message: rule.message
-				);
-		}
-
-		return results;
-	}
-
-	/**
-	 * Get an author from session, or returns a new empty author entity
-	 *
-	 * @return Logged in or new user object
+	 * @return Logged in or new author object
 	 */
 	Author function getAuthorSession(){
-		// Check if valid user id in session
-		var authorID = cacheStorage.get( "loggedInAuthorID", "" );
+		// Check if valid author id in session or request respectively
+		var oAuthor = variables.requestStorage.get(
+			variables.AUTHOR_KEY,
+			variables.authorService.new()
+		);
+		if ( oAuthor.isLoggedIn() ) {
+			return oAuthor;
+		}
 
-		// If that fails, check for a cookie
+		// Verify we have in secondary storage
+		var authorID = variables.cacheStorage.get( "loggedInAuthorID", "" );
+		// Check remember me inflatable cookie
 		if ( !len( authorID ) ) {
 			authorID = getKeepMeLoggedIn();
 		}
 
-		// If we found an authorID, load it up
+		// If we found an authorID, load it up and check it
 		if ( len( authorID ) ) {
 			// try to get it with that ID
-			var author = authorService.findWhere( { authorID : authorID, isActive : true } );
-			// If user found?
-			if ( NOT isNull( author ) ) {
-				author.setLoggedIn( true );
-				return author;
+			var author = variables.authorService.findWhere( { authorID : authorID, isActive : true, isDeleted : false } );
+			// If user found? Inflate them back
+			if ( !isNull( author ) ) {
+				return login( author );
 			}
 		}
 
-		// return new author, not found or not valid
-		return authorService.new();
+		// return unathenticated user
+		return oAuthor;
 	}
 
 	/**
-	 * Set a new author in session
-	 *
-	 * @author The author to login to ContentBox
-	 *
-	 * @return SecurityService
+	 * Verifies if a user is logged in or not. Required for JWT Services
 	 */
-	SecurityService function setAuthorSession( required Author author ){
-		cacheStorage.set( "loggedInAuthorID", author.getAuthorID() );
-		return this;
+	boolean function isLoggedIn(){
+		return this.getAuthorSession().isLoggedIn();
 	}
 
 	/**
-	 * Delete an author session
+	 * Logs an authenticated author into the system. Required for JWT services
+	 *
+	 * @author The author to log in
+	 */
+	Author function login( required author ){
+		// Mark as logged in
+		arguments.author.setLoggedIn( true );
+		// Store for the duration of the request, API mode
+		variables.requestStorage.set( variables.AUTHOR_KEY, arguments.author );
+		// Store on the long-lived cache for HTML mode
+		variables.cacheStorage.set( "loggedInAuthorID", arguments.author.getAuthorID() );
+		return arguments.author;
+	}
+
+	/**
+	 * Delete an author session wether web or api based: Required for JWT services
 	 *
 	 * @return SecurityService
 	 */
 	SecurityService function logout(){
+		variables.requestStorage.delete( variables.AUTHOR_KEY );
 		variables.cacheStorage.clearAll();
 		variables.cookieStorage.delete( "contentbox_keep_logged_in" );
 		variables.cbCSRF.rotate();
@@ -209,76 +132,74 @@ component singleton {
 	}
 
 	/**
-	 * Authenticate an author via ContentBox credentials.
-	 * This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
-	 * The `author` object which it represents.
+	 * Authenticate an author via ContentBox credentials. If the user is not valid an InvalidCredentials is thrown. Required for JWT services
+	 *
+	 * The usage of the LogThemIn boolean flag is essential for two-factor authentication, where a user is authenticated
+	 * but not yet validated by a two-factor mechanism.  Thus, the default is to ONLY authenticate but not log them in yet.
+	 *
+	 * For our RESTFul API, we can do an authenticate and login at the same time.
 	 *
 	 * @username The username to validate
 	 * @password The password to validate
+	 * @logThemIn If true, we will log them in automatically, else it will be the caller's job to do so via the `login()` method.
 	 *
-	 * @return struct:{ isAuthenticated:boolean, author:Author }
+	 * @throws InvalidCredentials
+	 *
+	 * @return User : The logged in user object
 	 */
-	struct function authenticate( required username, required password ){
-		var results = { isAuthenticated : false, author : authorService.new() };
-
-		// Find username
-		var oAuthor = authorService.findWhere( {
-			username  : arguments.username,
-			isActive  : true,
-			isDeleted : false
-		} );
-
-		// Verify if author found
-		if ( isNull( oAuthor ) ) {
-			// return not authenticated
-			return results;
-		}
-
-		// Determine password type
-		var isBcrypt       = ( findNoCase( "$", oAuthor.getPassword() ) ? true : false );
-		// Hash password according to algorithm
-		var isSamePassword = false;
-		if ( isBcrypt ) {
-			try {
-				isSamePassword = variables.bCrypt.checkPassword(
-					arguments.password,
-					oAuthor.getPassword()
-				);
-			} catch ( "java.lang.IllegalArgumentException" e ) {
-				// Usually means the value is not bcrypt.
-				isSamePassword = false;
-			}
-		} else {
-			// Legacy hash compare
-			isSamePassword = (
-				compareNoCase( hash( arguments.password, "SHA-256" ), oAuthor.getPassword() ) eq 0 ? true : false
+	Author function authenticate(
+		required username,
+		required password,
+		boolean logThemIn = false
+	){
+		// Find them
+		try {
+			var oAuthor = variables.authorService.retrieveUserByUsername( arguments.username );
+		} catch ( EntityNotFound e ) {
+			variables.log.warn(
+				"Invalid username authentication from #getRealIP()# for username: #arguments.username#",
+				getHTTPRequestData( false )
 			);
+			throw( type = "InvalidCredentials", message = "Incorrect Credentials Entered" );
 		}
 
-		// check if found and return verification
-		if ( isSamePassword ) {
-			// Do we update the password algorithm?
-			if ( !isBcrypt ) {
-				oAuthor.setPassword( encryptString( arguments.password ) );
-			}
-			// Set last login date
-			updateAuthorLoginTimestamp( oAuthor );
-
-			// User authenticated, mark and return
-			results.isAuthenticated = true;
-			results.author          = oAuthor;
+		// Validate password using bcrypt
+		try {
+			var isSamePassword = variables.bcrypt.checkPassword(
+				arguments.password,
+				oAuthor.getPassword()
+			);
+		} catch ( any e ) {
+			var isSamePassword = false;
 		}
 
-		return results;
+		// Verify Password
+		if ( !isSamePassword ) {
+			variables.log.warn(
+				"Invalid password authentication from #getRealIP()# for username: #arguments.username#",
+				getHTTPRequestData( false )
+			);
+			throw( type = "InvalidCredentials", message = "Incorrect Credentials Entered" );
+		}
+
+		// Set last login date
+		updateAuthorLoginTimestamp( oAuthor );
+
+		// Verify if we need to automatically log them in, usually from a rest call
+		if ( arguments.logThemIn ) {
+			this.login( oAuthor );
+		}
+
+		return oAuthor;
 	}
 
 	/**
-	 * Leverages bcrypt to encrypt a string
+	 * Leverages bcrypt to do a one way encrypt of a string using our salts
 	 *
 	 * @string The string to bcrypt
 	 */
 	string function encryptString( required string ){
-		return bCrypt.hashPassword( arguments.string );
+		return variables.bCrypt.hashPassword( arguments.string );
 	}
 
 	/**
@@ -318,7 +239,7 @@ component singleton {
 
 		// get mail payload
 		var bodyTokens = {
-			name        : arguments.author.getName(),
+			name        : arguments.author.getFullName(),
 			email       : arguments.author.getEmail(),
 			username    : arguments.author.getUsername(),
 			linkTimeout : settings.cb_security_password_reset_expiration,
@@ -384,7 +305,7 @@ component singleton {
 
 		// get mail payload
 		var bodyTokens = {
-			name        : arguments.author.getName(),
+			name        : arguments.author.getFullName(),
 			ip          : getRealIP(),
 			linkTimeout : settings.cb_security_password_reset_expiration,
 			siteName    : defaultSite.getName(),
@@ -507,7 +428,7 @@ component singleton {
 
 		// get mail payload
 		var bodyTokens = {
-			name       : arguments.author.getName(),
+			name       : arguments.author.getFullName(),
 			ip         : getRealIP(),
 			linkLogin  : CBHelper.linkAdminLogin( ssl = settings.cb_admin_ssl ),
 			siteName   : defaultSite.getName(),
@@ -629,23 +550,27 @@ component singleton {
 	SecurityService function setRememberMe( required username, required numeric days = 0 ){
 		// If the user now only wants to be remembered for this session, remove any existing cookies.
 		if ( !arguments.days ) {
-			cookieStorage.delete( "contentbox_remember_me" );
-			cookieStorage.delete( "contentbox_keep_logged_in" );
+			variables.cookieStorage.delete( "contentbox_remember_me" );
+			variables.cookieStorage.delete( "contentbox_keep_logged_in" );
 			return this;
 		}
 
 		// Save the username to pre-populate the login field after their login expires for up to a year.
-		cookieStorage.set(
+		variables.cookieStorage.set(
 			name    = "contentbox_remember_me",
 			value   = encryptIt( arguments.username ),
 			expires = 365
 		);
 
 		// Look up the user ID and store for the duration specified
-		var author = authorService.findWhere( { username : arguments.username, isActive : true } );
+		var author = variables.authorService.findWhere( {
+			username  : arguments.username,
+			isActive  : true,
+			isDeleted : false
+		} );
 		if ( !isNull( author ) ) {
 			// The user will be auto-logged in as long as this cookie exists
-			cookieStorage.set(
+			variables.cookieStorage.set(
 				name    = "contentbox_keep_logged_in",
 				value   = encryptIt( author.getAuthorID() ),
 				expires = arguments.days
@@ -722,17 +647,18 @@ component singleton {
 	 * Get Real IP, by looking at clustered, proxy headers and locally.
 	 */
 	function getRealIP(){
-		var headers = getHTTPRequestData().headers;
+		var headers = getHTTPRequestData( false ).headers;
 
-		// Very balanced headers
+		// When going through a proxy, the IP can be a delimtied list, thus we take the last one in the list
+
 		if ( structKeyExists( headers, "x-cluster-client-ip" ) ) {
-			return headers[ "x-cluster-client-ip" ];
+			return trim( listLast( headers[ "x-cluster-client-ip" ] ) );
 		}
 		if ( structKeyExists( headers, "X-Forwarded-For" ) ) {
-			return headers[ "X-Forwarded-For" ];
+			return trim( listFirst( headers[ "X-Forwarded-For" ] ) );
 		}
 
-		return len( CGI.REMOTE_ADDR ) ? trim( listFirst( CGI.REMOTE_ADDR ) ) : "127.0.0.1";
+		return len( cgi.remote_addr ) ? trim( listFirst( cgi.remote_addr ) ) : "127.0.0.1";
 	}
 
 }

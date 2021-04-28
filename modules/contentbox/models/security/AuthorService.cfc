@@ -50,6 +50,8 @@ component
 
 	/**
 	 * Get the total number of entries an author has created
+	 *
+	 * @authorId The author id to report on
 	 */
 	numeric function getTotalEntries( required authorId ){
 		return executeQuery(
@@ -66,6 +68,8 @@ component
 
 	/**
 	 * Get the total number of content store items an author has created
+	 *
+	 * @authorId The author id to report on
 	 */
 	numeric function getTotalContentStoreItems( required authorId ){
 		return executeQuery(
@@ -82,6 +86,8 @@ component
 
 	/**
 	 * Get the total number of content items an author has created
+	 *
+	 * @authorId The author id to report on
 	 */
 	numeric function getTotalContent( required authorId ){
 		return executeQuery(
@@ -139,15 +145,17 @@ component
 	/**
 	 * Delete an author from the system
 	 *
-	 * @author 			The author object
-	 * @transactional 	Auto transactions
+	 * @author The author to delete
 	 */
-	function deleteAuthor( required author, boolean transactional = true ){
-		// Clear permissions, just in case
-		arguments.author.clearPermissions();
+	function deleteAuthor( required author ){
+		transaction {
+			// Clear out relationships
+			arguments.author.clearPermissions();
 
-		// send for deletion
-		delete( entity = arguments.author, transactional = arguments.transactional );
+			// send for deletion
+			super.delete( arguments.author );
+		}
+		return this;
 	}
 
 	/**
@@ -170,13 +178,18 @@ component
 	 * @return The created author
 	 */
 	Author function createNewAuthor( required author ){
-		// Save it
-		saveAuthor( author = arguments.author );
+		transaction {
+			// Save it
+			this.saveAuthor( arguments.author );
 
-		// Send Account Creation
-		var mailResults = securityService.sendNewAuthorReminder( arguments.author );
-		if ( mailResults.error ) {
-			variables.logger.error( "Error sending author created email", mailResults.errorArray );
+			// Send Account Creation
+			var mailResults = variables.securityService.sendNewAuthorReminder( arguments.author );
+			if ( mailResults.error ) {
+				variables.logger.error(
+					"Error sending author created email",
+					mailResults.errorArray
+				);
+			}
 		}
 
 		return arguments.author;
@@ -186,15 +199,10 @@ component
 	 * Save an author with extra pizazz!
 	 * @author The author object
 	 * @passwordChange Are we changing the password
-	 * @transaactional Auto transactions
 	 *
 	 * @return Author
 	 */
-	Author function saveAuthor(
-		required author,
-		boolean passwordChange = false,
-		boolean transactional  = true
-	){
+	Author function saveAuthor( required author, boolean passwordChange = false ){
 		// bcrypt password if new author
 		if ( !arguments.author.isLoaded() OR arguments.passwordChange ) {
 			// bcrypt the incoming password
@@ -204,7 +212,7 @@ component
 		}
 
 		// save the author
-		return save( entity = arguments.author, transactional = arguments.transactional );
+		return super.save( arguments.author );
 	}
 
 	/**
@@ -282,6 +290,52 @@ component
 
 
 		return results;
+	}
+
+	/**
+	 * Get an author by username which is active and not deleted
+	 *
+	 * @username The username to verify the user with
+	 *
+	 * @throws EntityNotFound
+	 */
+	Author function retrieveUserByUsername( required username ){
+		var oAuthor = newCriteria()
+			.eq( "username", arguments.username )
+			.isTrue( "isActive" )
+			.isFalse( "isDeleted" )
+			.get();
+
+		if ( isNull( oAuthor ) ) {
+			throw(
+				type    = "EntityNotFound",
+				message = "Author not found with username (#encodeForHTML( arguments.username )#)"
+			);
+		}
+		return oAuthor;
+	}
+
+	/**
+	 * Get an author by id which is active and not deleted
+	 *
+	 * @id The unique Id
+	 *
+	 * @throws EntityNotFound
+	 */
+	User function retrieveUserById( required id ){
+		var oAuthor = newCriteria()
+			.eq( "authorID", arguments.id )
+			.isTrue( "isActive" )
+			.isFalse( "isDeleted" )
+			.get();
+
+		if ( isNull( oAuthor ) ) {
+			throw(
+				type    = "EntityNotFound",
+				message = "Author not found with id (#encodeForHTML( arguments.id )#)"
+			);
+		}
+		return oAuthor;
 	}
 
 	/**
