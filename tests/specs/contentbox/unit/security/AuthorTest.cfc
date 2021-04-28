@@ -21,12 +21,7 @@ component extends="tests.resources.BaseTest" {
 
 			it( "can display created dates", function(){
 				var d = model.getDisplayCreatedDate();
-				assertEquals( "", d );
-				expect( d ).toBeEmpty();
-
-				var testUser = entityLoad( "cbAuthor" )[ 1 ];
-				var d        = testUser.getDisplayCreatedDate();
-				expect( d.len() ).toBeGT( 0 );
+				expect( dateDiff( "d", now(), d ) ).toBe( 0 );
 			} );
 
 			it( "can display last login timestamps", function(){
