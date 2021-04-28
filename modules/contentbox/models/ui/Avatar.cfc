@@ -25,7 +25,7 @@ component singleton {
 		numeric size = 80,
 		rating       = "PG"
 	){
-		return "//www.gravatar.com/avatar.php?gravatar_id=#lCase( hash( arguments.email ) )#&s=#arguments.size#&r=#rating#"
+		return "//www.gravatar.com/avatar.php?gravatar_id=#lCase( hash( arguments.email ) )#&s=#arguments.size#&r=#rating#";
 	}
 
 	/**
