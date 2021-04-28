@@ -1,7 +1,7 @@
 /**
  * RESTFul CRUD for Sites
  */
-component extends="BaseHandler" {
+component extends="baseHandler" {
 
 	// DI
 	property name="ormService" inject="SiteService@cb";
