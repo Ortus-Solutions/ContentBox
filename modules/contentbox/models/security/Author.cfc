@@ -24,6 +24,11 @@ component
 		inject    ="authorService@cb"
 		persistent="false";
 
+	property
+		name      ="avatar"
+		inject    ="Avatar@CB"
+		persistent="false";
+
 	/* *********************************************************************
 	 **							PROPERTIES
 	 ********************************************************************* */
@@ -243,12 +248,6 @@ component
 	}
 
 	/**
-	 * Listen to postLoad's from the ORM
-	 */
-	function postLoad(){
-	}
-
-	/**
 	 * Get the total number of content items this author has created
 	 */
 	numeric function getNumberOfContent(){
@@ -417,20 +416,13 @@ component
 		var lastLogin = getLastLogin();
 
 		if ( NOT isNull( lastLogin ) ) {
-			return dateFormat( lastLogin, "dd mmm yyyy" ) & " " & timeFormat(
+			return dateFormat( lastLogin, this.DATE_FORMAt ) & " " & timeFormat(
 				lastLogin,
-				"hh:mm tt"
+				this.TIME_FORMAT
 			);
 		}
 
 		return "Never Logged In";
-	}
-
-	/**
-	 * Retrieve full name
-	 */
-	string function getName(){
-		return getFirstName() & " " & getLastName();
 	}
 
 	/**
@@ -549,6 +541,65 @@ component
 		allPreferences[ arguments.name ] = arguments.value;
 		// store in lock mode
 		return setPreferences( allPreferences );
+	}
+
+	/******************* IJwtSubject Interface Methods ********************/
+
+	/**
+	 * A struct of custom claims to add to the JWT token
+	 */
+	struct function getJwtCustomClaims(){
+		return {};
+	}
+
+	/**
+	 * This function returns an array of all the scopes that should be attached to the JWT token that will be used for authorization.
+	 */
+	array function getJwtScopes(){
+		return [];
+	}
+
+	/******************* Utilities ********************/
+
+	/**
+	 * Get the user's role name
+	 */
+	string function getRoleName(){
+		return ( hasRole() ? getRole().getRole() : "" );
+	}
+
+	/**
+	 * Retrieve full name
+	 */
+	string function getFullName(){
+		return getFirstname() & " " & getLastName();
+	}
+
+	/**
+	 * Get the avatar link for this user.
+	 *
+	 * @size The size of the avatar, defaults to 40
+	 */
+	string function getAvatarLink( numeric size = 40 ){
+		return (
+			isNull( getEmail() ) ? "" : variables.avatar.generateLink( getEmail(), arguments.size )
+		);
+	}
+
+	/**
+	 * Utility method to get a snapshot of the user information
+	 */
+	struct function getInfoSnapshot(){
+		if ( isLoaded() ) {
+			return {
+				"authorID"   : getAuthorID(),
+				"name"       : getFullName(),
+				"email"      : getEmail(),
+				"avatarLink" : getAvatarLink()
+			};
+		}
+
+		return {};
 	}
 
 }
