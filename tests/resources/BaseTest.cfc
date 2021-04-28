@@ -29,6 +29,15 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 	}
 
 	/**
+	 * Helper to execeute after each spec
+	 *
+	 * @afterEach
+	 */
+	function clearAfterEachSpec(){
+		ormClearSession();
+	}
+
+	/**
 	 * Wrapper for rollbacks
 	 *
 	 * @target The target closure to run within the transaction
@@ -41,6 +50,7 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 				rethrow;
 			} finally {
 				transaction action="rollback";
+				ormClearSession();
 			}
 		}
 	}
