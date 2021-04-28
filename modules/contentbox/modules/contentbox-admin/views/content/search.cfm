@@ -69,7 +69,7 @@
 		<a 	title="#thisAuthor.getEmail()#"
 			href="#event.buildLInk( to=prc.xehAuthorEditor, queryString="authorID=#thisAUthor.getAUthorID()#" )#"
 		>
-			#thisAuthor.getName()#
+			#thisauthor.getFullName()#
 		</a>
 		<br>
 		#thisAuthor.getEmail()#

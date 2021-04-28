@@ -122,7 +122,7 @@ component
 
 			// Build body tokens
 			var bodyTokens = {
-				name         : arguments.author.getName(),
+				name         : arguments.author.getFullName(),
 				email        : arguments.author.getEmail(),
 				username     : arguments.author.getUsername(),
 				ip           : variables.securityService.getRealIP(),

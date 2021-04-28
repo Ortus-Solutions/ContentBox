@@ -45,12 +45,12 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			authorName         : author.getName(),
+			authorName         : author.getFullName(),
 			authorRole         : author.getRole().getRole(),
 			permissionGroups   : author.getPermissionGroupsList(),
 			authorEmail        : author.getEmail(),
 			authorURL          : CBHelper.linkAdmin( event="authors.editor.authorID.#author.getAuthorID()#", ssl=settings.cb_admin_ssl ),
-			currentAuthor      : currentAuthor.getName(),
+			currentAuthor      : currentauthor.getFullName(),
 			currentAuthorEmail : currentAuthor.getEmail()
 		};
 		var mail = variables.mailservice.newMail(
@@ -101,10 +101,10 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 
 		// get mail payload
 		var bodyTokens = {
-			authorName         : author.getName(),
+			authorName         : author.getFullName(),
 			authorRole         : author.getRole().getRole(),
 			authorEmail        : author.getEmail(),
-			currentAuthor      : currentAuthor.getName(),
+			currentAuthor      : currentauthor.getFullName(),
 			currentAuthorEmail : currentAuthor.getEmail()
 		};
 		var mail = variables.mailservice.newMail(
@@ -160,7 +160,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			entryTitle         : entry.getTitle(),
 			entryExcerpt       : "",
 			entryURL           : CBHelper.linkEntry( entry=entry, ssl=site.getIsSSL() ),
-			entryAuthor        : currentAuthor.getName(),
+			entryAuthor        : currentauthor.getFullName(),
 			entryAuthorEmail   : currentAuthor.getEmail(),
 			entryIsPublished   : entry.getIsPublished(),
 			entryPublishedDate : entry.getDisplayPublishedDate(),
@@ -224,7 +224,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			entryTitle      = entry.getTitle(),
 			entryExcerpt    = "",
 			entryURL        = CBHelper.linkEntry( entry=entry, ssl=site.getIsSSL() ),
-			entryAuthor     = currentAuthor.getName(),
+			entryAuthor     = currentauthor.getFullName(),
 			entryAuthorEmail= currentAuthor.getEmail()
 		};
 		if( entry.hasExcerpt() ){
@@ -286,7 +286,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			pageTitle         : page.getTitle(),
 			pageURL           : CBHelper.linkPage( page=page, ssl=site.getIsSSL() ),
-			pageAuthor        : currentAuthor.getName(),
+			pageAuthor        : currentauthor.getFullName(),
 			pageAuthorEmail   : currentAuthor.getEmail(),
 			pageIsPublished   : page.getIsPublished(),
 			pagePublishedDate : page.getDisplayPublishedDate(),
@@ -350,7 +350,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 			pageTitle      = page.getTitle(),
 			pageExcerpt    = "",
 			pageURL        = CBHelper.linkPage( page=page, ssl=site.getIsSSL() ),
-			pageAuthor     = currentAuthor.getName(),
+			pageAuthor     = currentauthor.getFullName(),
 			pageAuthorEmail= currentAuthor.getEmail()
 		};
 		if( page.hasExcerpt() ){
@@ -411,7 +411,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			contentTitle        = content.getTitle(),
 			contentDescription  = content.getDescription(),
-			contentAuthor       = currentAuthor.getName(),
+			contentAuthor       = currentauthor.getFullName(),
 			contentAuthorEmail  = currentAuthor.getEmail(),
 			contentIsPublished  = content.getIsPublished(),
 			contentPublishedDate= content.getDisplayPublishedDate(),
@@ -470,7 +470,7 @@ component extends="coldbox.system.Interceptor" accessors="true"{
 		var bodyTokens = {
 			contentTitle         : content.getTitle(),
 			contentDescription   : content.getDescription(),
-			contentAuthor        : currentAuthor.getName(),
+			contentAuthor        : currentauthor.getFullName(),
 			contentAuthorEmail   : currentAuthor.getEmail(),
 			contentIsPublished   : content.getIsPublished(),
 			contentPublishedDate : content.getDisplayPublishedDate(),

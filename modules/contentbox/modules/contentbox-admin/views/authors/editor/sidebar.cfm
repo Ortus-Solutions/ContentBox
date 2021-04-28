@@ -15,7 +15,7 @@
 
 					<div class="mt10 mb10">
 						<span class="label label-default size16">
-							#prc.author.getName()#
+							#prc.author.getFullName()#
 						</span>
 					</div>
 				</div>

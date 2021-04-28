@@ -74,7 +74,7 @@
 					</span>
 
 					<span>
-						#prc.author.getName()#
+						#prc.author.getFullName()#
 					</span>
 				</div>
             </div>

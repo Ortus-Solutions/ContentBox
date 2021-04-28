@@ -39,9 +39,9 @@
 				<!--- Display Link if Admin Or yourself --->
 				<div>
 					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
-						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">#author.getFullName()#</a>
 					<cfelse>
-						#author.getName()#
+						#author.getFullName()#
 					</cfif>
 
 					<cfif prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
@@ -100,7 +100,7 @@
 
 							<!--- Edit Command --->
 							<li>
-								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">
+								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">
 									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>

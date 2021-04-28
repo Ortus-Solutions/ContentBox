@@ -452,7 +452,7 @@
                                                 )#
                                                 <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                     <cfloop array="#prc.authors#" index="author">
-                                                    <option value="#author.getAuthorID()#" <cfif prc.page.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+                                                    <option value="#author.getAuthorID()#" <cfif prc.page.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
                                                     </cfloop>
                                                 </select>
                                             </div>

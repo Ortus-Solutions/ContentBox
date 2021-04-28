@@ -87,7 +87,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 					class = "form-control",
 					groupWrapper = "div class=form-group",
 					required = "required",
-					value = event.getValue( "author", oCurrentAuthor.getName() )
+					value = event.getValue( "author", oCurrentauthor.getFullName() )
 				)#
 
 				#html.inputField(

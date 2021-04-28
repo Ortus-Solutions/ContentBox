@@ -369,7 +369,7 @@
                                                 	value="#author.getAuthorID()#"
 													<cfif prc.entry.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>
 												>
-													#author.getName()#
+													#author.getFullName()#
 												</option>
                                                 </cfloop>
                                             </select>
