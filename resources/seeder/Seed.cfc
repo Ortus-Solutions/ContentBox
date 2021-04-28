@@ -281,10 +281,6 @@ component {
 				qb.from( "cb_content" ).insert( aContent );
 				print.cyanLine( "   ==> (#aContent.len()#) Content inserted" );
 
-
-				return;
-
-
 				/******************** COMMENTS *******************************/
 				print.line().greenLine( "Generating comments..." );
 				truncate( "cb_comment" );
@@ -298,16 +294,16 @@ component {
 
 				var aCommentSubscriptions = [
 					{
-						"subscriptionID": 5,
-						"FK_contentID": 141
+						"subscriptionID": "F6B464C7-7E47-4991-A0B28121EFFB67F5",
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141"
 					},
 					{
-						"subscriptionID": 6,
-						"FK_contentID": 141
+						"subscriptionID": "F6B464C7-7E47-4991-A0B28121EFFB67F6",
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141"
 					},
 					{
-						"subscriptionID": 4,
-						"FK_contentID": 142
+						"subscriptionID": "F6B464C7-7E47-4991-A0B28121EFFB67F4",
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502142"
 					},
 				];
 
@@ -320,40 +316,40 @@ component {
 
 				var aContentCategories = [
 					{
-						"FK_contentID": 114,
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"FK_categoryID": 2
 					},
 					{
-						"FK_contentID": 114,
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"FK_categoryID": 4
 					},
 					{
-						"FK_contentID": 64,
-						"FK_categoryID": 2
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a64",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180124"
 					},
 					{
-						"FK_contentID": 64,
-						"FK_categoryID": 4
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a64",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180126"
 					},
 					{
-						"FK_contentID": 87,
-						"FK_categoryID": 2
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a87",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180124"
 					},
 					{
-						"FK_contentID": 87,
-						"FK_categoryID": 4
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a87",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180126"
 					},
 					{
-						"FK_contentID": 88,
-						"FK_categoryID": 2
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180124"
 					},
 					{
-						"FK_contentID": 88,
-						"FK_categoryID": 4
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180126"
 					},
 					{
-						"FK_contentID": 147,
-						"FK_categoryID": 5
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
+						"FK_categoryID": "ff80808178fbc7620178fbc7f1180125"
 					}
 				];
 
@@ -366,52 +362,52 @@ component {
 
 				aContentStore = [
 					{
-						"contentID": 111,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
 						"description": "My very first content",
 						"order": 0
 					},
 					{
-						"contentID": 114,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"description": "Most greatest news",
 						"order": 0
 					},
 					{
-						"contentID": 122,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502122",
 						"description": "",
 						"order": 0
 					},
 					{
-						"contentID": 123,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502123",
 						"description": "footer",
 						"order": 0
 					},
 					{
-						"contentID": 124,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
 						"description": "support options",
 						"order": 0
 					},
 					{
-						"contentID": 127,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
 						"description": "Test",
 						"order": 0
 					},
 					{
-						"contentID": 159,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502159",
 						"description": "A small footer",
 						"order": 0
 					},
 					{
-						"contentID": 168,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502168",
 						"description": "test",
 						"order": 0
 					},
 					{
-						"contentID": 169,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502169",
 						"description": "asdf",
 						"order": 0
 					},
 					{
-						"contentID": 219,
+						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502219",
 						"description": "",
 						"order": 0
 					}
@@ -435,19 +431,19 @@ component {
 
 				var aCustomFields = [
 					{
-						"customFieldID": 3,
+						"customFieldID": "3E0AB238-1783-4DD6-93518F0B67B9B5F3",
 						"key": "age",
 						"value": '30',
-						"FK_contentID": 114,
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"createdDate": "2016-05-03 16:23:25",
 						"modifiedDate": "2016-05-03 16:23:25",
 						"isDeleted": 0
 					},
 					{
-						"customFieldID": 4,
+						"customFieldID": "3E0AB238-1783-4DD6-93518F0B67B9B5F4",
 						"key": "subtitle",
 						"value": '4',
-						"FK_contentID": 114,
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
 						"createdDate": "2016-05-03 16:23:25",
 						"modifiedDate": "2016-05-03 16:23:25",
 						"isDeleted": 0
@@ -474,7 +470,7 @@ component {
 
 				var aMenus = [
 					{
-						"menuID": 2,
+						"menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE72",
 						"title": "Test",
 						"slug": "test",
 						"listType": "ul",
@@ -483,10 +479,10 @@ component {
 						"listClass": "",
 						"modifiedDate": "2016-05-04 17:20:11",
 						"isDeleted": 0,
-						"FK_siteId": 1
+						"FK_siteId": "ff80808178fbc7620178fbc7e5f400af"
 					},
 					{
-						"menuID": 3,
+						"menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE73",
 						"title": "test",
 						"slug": "test -e123c",
 						"listType": "ul",
@@ -495,7 +491,7 @@ component {
 						"listClass": "",
 						"modifiedDate": "2016-05-04 17:02:54",
 						"isDeleted": 0,
-						"FK_siteId": 1
+						"FK_siteId": "ff80808178fbc7620178fbc7e5f400af"
 					}
 				];
 
@@ -508,13 +504,13 @@ component {
 
 				var aMenuItems = [
 					{
-						"menuItemID": 7,
+						"menuItemID": "2508B7D0-F3B7-4395-BDFBD12BCBB8CE97",
 						"menuType": "Free",
 						"title": "",
 						"label": "test",
 						"data": "",
 						"active": 1,
-						"FK_menuID": 2,
+						"FK_menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE73",
 						"FK_parentID": { "value": "", "null": true },
 						"mediaPath": { "value": "", "null": true },
 						"contentSlug": { "value": "", "null": true },
@@ -529,13 +525,13 @@ component {
 						"isDeleted": 0
 					},
 					{
-						"menuItemID": 8,
+						"menuItemID": "2508B7D0-F3B7-4395-BDFBD12BCBB8CE98",
 						"menuType": "URL",
 						"title": "",
 						"label": "hello",
 						"data": "",
 						"active": 1,
-						"FK_menuID": 2,
+						"FK_menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE73",
 						"FK_parentID": { "value": "", "null": true },
 						"mediaPath": { "value": "", "null": true },
 						"contentSlug": { "value": "", "null": true },
@@ -570,8 +566,8 @@ component {
 
 				var aRelatedContent = [
 					{
-						"FK_contentID": 127,
-						"FK_relatedContentID": 111
+						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
+						"FK_relatedContentID": "0e35bbec-a441-11eb-ab6f-0290cc502111"
 					}
 				];
 
