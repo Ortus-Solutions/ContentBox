@@ -1,9 +1,9 @@
 component extends="BaseTest" {
 
 	// DI
-	property name="securityService" inject="provider:securityService@cb";
-	property name="cbsecure"        inject="provider:CBSecurity@cbsecurity";
-	property name="jwt"             inject="provider:JWTService@cbsecurity";
+	property name="securityService" inject="securityService@cb";
+	property name="cbsecure"        inject="CBSecurity@cbsecurity";
+	property name="jwt"             inject="JWTService@cbsecurity";
 
 
 	/**
@@ -23,11 +23,11 @@ component extends="BaseTest" {
 
 		 // Override the JWT Token Storage due to Lucee Bug
 		// TODO: Remove when Lucee fixes their crap! Feature not supported when doing transactions with orm/qb
-		jwt.getSettings().jwt.tokenStorage.driver = "cachebox";
-		jwt.getSettings().jwt.tokenStorage.properties = { cacheName : "default" };
+		variables.jwt.getSettings().jwt.tokenStorage.driver = "cachebox";
+		variables.jwt.getSettings().jwt.tokenStorage.properties = { cacheName : "default" };
 
 		// Logout just in case
-		securityService.logout();
+		variables.securityService.logout();
 	}
 
 	/**
@@ -55,8 +55,8 @@ component extends="BaseTest" {
 	 */
 	struct function loginUser( username = variables.testAdminUsername ){
 		request.testUserData = {
-			"token" : jwt.attempt( arguments.username, variables.testAdminPassword ),
-			"user"  : securityService.getUser()
+			"token" : variables.jwt.attempt( arguments.username, variables.testAdminPassword ),
+			"user"  : variables.securityService.getUser()
 		};
 		return request.testUserData;
 	}
