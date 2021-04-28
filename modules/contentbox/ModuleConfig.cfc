@@ -119,7 +119,7 @@ component {
 					"rulesModel"                  : "securityRuleService@cb",
 					"rulesModelMethod"            : "getSecurityRules",
 					// The validator is an object that will validate rules and annotations and provide feedback on either authentication or authorization issues.
-					"validator"                   : "SecurityService@cb",
+					"validator"                   : "SecurityValidator@cb",
 					// The WireBox ID of the authentication service to use in cbSecurity which must adhere to the cbsecurity.interfaces.IAuthService interface.
 					"authenticationService"       : "SecurityService@cb",
 					// WireBox ID of the user service to use
