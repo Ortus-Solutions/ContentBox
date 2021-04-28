@@ -1,29 +1,29 @@
 {
-	"app": {
-		"cfengine": "adobe@2016",
-		"serverHomeDirectory": ".engines/acf2016"
-	},
-	"name": "contentbox-adobe2016",
-	"JVM": {
-		"heapSize": "1024"
-	},
-	"web": {
-		"directoryBrowsing": true,
-		"rewrites": {
-			"enable": true
-		},
-		"http": {
-			"port": "8589"
-		}
-	},
-	"trayicon": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
-	"trayOptions": [
-		{
-			"label": "Open ContentBox Admin",
-			"action": "openbrowser",
-			"url": "http://\\${runwar.host}:\\${runwar.port}/cbadmin",
-			"disabled": false,
-			"image": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
+    "app":{
+        "cfengine":"adobe@2016",
+        "serverHomeDirectory":".engines/acf2016"
+    },
+    "name":"contentbox-adobe2016",
+    "JVM":{
+        "heapSize":"1024"
+    },
+    "web":{
+        "directoryBrowsing":true,
+        "rewrites":{
+            "enable":true
+        },
+        "http":{
+            "port":"8589"
+        }
+    },
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
+    "trayOptions":[
+        {
+            "label":"Open ContentBox Admin",
+            "action":"openbrowser",
+            "url":"http://\\${runwar.host}:\\${runwar.port}/cbadmin",
+            "disabled":false,
+            "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
     ]
 }

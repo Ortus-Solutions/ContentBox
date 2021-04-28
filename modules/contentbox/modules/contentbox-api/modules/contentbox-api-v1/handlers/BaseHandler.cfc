@@ -56,6 +56,132 @@ component extends="cborm.models.resources.BaseHandler" {
 	}
 
 	/**
+	 * Display a resource by incoming ID or slug
+	 */
+	function show( event, rc, prc ){
+		param rc.includes       = "";
+		param rc.excludes       = "";
+		param rc.ignoreDefaults = false;
+		param rc.id             = 0;
+
+		// announce it
+		announceInterception(
+			"#variables.settings.resources.eventPrefix#pre#variables.entity#Show",
+			{}
+		);
+
+		// Get by id or slug
+		prc.oEntity = getByIdOrSlugOrFail( rc.id );
+
+		// announce it
+		announceInterception(
+			"#variables.settings.resources.eventPrefix#post#variables.entity#Show",
+			{ entity : prc.oEntity }
+		);
+
+		// Marshall it
+		prc.response.setData(
+			prc.oEntity.getMemento(
+				includes       = rc.includes,
+				excludes       = rc.excludes,
+				ignoreDefaults = rc.ignoreDefaults
+			)
+		);
+	}
+
+	/**
+	 * Update a resource
+	 */
+	function update(
+		event,
+		rc,
+		prc,
+		struct populate   = {},
+		struct validate   = {},
+		string saveMethod = variables.saveMethod
+	){
+		param rc.includes                             = "";
+		param rc.excludes                             = "";
+		param rc.ignoreDefaults                       = false;
+		param rc.id                                   = 0;
+		param arguments.populate.composeRelationships = true;
+
+		// Population arguments
+		arguments.populate.memento = rc;
+		arguments.populate.model   = getByIdOrSlugOrFail( rc.id );
+
+		// Validation Arguments
+		arguments.validate.target = populateModel( argumentCollection = arguments.populate );
+
+		// Validate
+		prc.oEntity = validateOrFail( argumentCollection = arguments.validate );
+
+		// announce it
+		announceInterception(
+			"#variables.settings.resources.eventPrefix#pre#variables.entity#Update",
+			{ entity : prc.oEntity }
+		);
+
+		// Save it
+		invoke(
+			variables.ormService,
+			arguments.saveMethod,
+			[ prc.oEntity ]
+		);
+
+		// announce it
+		announceInterception(
+			"#variables.settings.resources.eventPrefix#post#variables.entity#Update",
+			{ entity : prc.oEntity }
+		);
+
+		// Marshall it out
+		prc.response.setData(
+			prc.oEntity.getMemento(
+				includes       = rc.includes,
+				excludes       = rc.excludes,
+				ignoreDefaults = rc.ignoreDefaults
+			)
+		);
+	}
+
+	/**
+	 * Delete a resource by id or slug
+	 */
+	function delete(
+		event,
+		rc,
+		prc,
+		string deleteMethod = variables.deleteMethod
+	){
+		param rc.id = 0;
+
+		prc.oEntity = getByIdOrSlugOrFail( rc.id );
+
+		// announce it
+		announceInterception(
+			"#variables.settings.resources.eventPrefix#pre#variables.entity#Delete",
+			{ entity : prc.oEntity }
+		);
+
+		// Delete it
+		invoke(
+			variables.ormService,
+			arguments.deleteMethod,
+			[ prc.oEntity ]
+		);
+
+		// announce it
+		announceInterception(
+			"#variables.settings.resources.eventPrefix#post#variables.entity#Delete",
+			{ id : rc.id }
+		);
+
+		// Marshall it out
+		prc.response.addMessage( "#variables.entity# deleted!" );
+	}
+
+	/**
 	 * This utility tries to get the incoming resource by id or slug or fails
 	 *
 	 * @throws EntityNotFound
