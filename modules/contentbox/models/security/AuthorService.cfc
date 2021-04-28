@@ -301,7 +301,7 @@ component
 	 */
 	Author function retrieveUserByUsername( required username ){
 		var oAuthor = newCriteria()
-			.eq( "username", arguments.username )
+			.isEq( "username", arguments.username )
 			.isTrue( "isActive" )
 			.isFalse( "isDeleted" )
 			.get();
@@ -324,7 +324,7 @@ component
 	 */
 	User function retrieveUserById( required id ){
 		var oAuthor = newCriteria()
-			.eq( "authorID", arguments.id )
+			.isEq( "authorID", arguments.id )
 			.isTrue( "isActive" )
 			.isFalse( "isDeleted" )
 			.get();
