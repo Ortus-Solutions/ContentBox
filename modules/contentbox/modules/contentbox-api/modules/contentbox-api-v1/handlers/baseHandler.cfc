@@ -35,6 +35,9 @@
  */
 component extends="cborm.models.resources.BaseHandler" {
 
+	// DI
+	property name="settings" inject="coldbox:moduleSettings:cborm";
+
 	/**
 	 * Display all resource records with pagination
 	 * GET /api/v1/{resource}
