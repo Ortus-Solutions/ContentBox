@@ -116,6 +116,9 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 	 * Decorator for each coldbox request setup, basically, put the jwt token in place if logged in
 	 */
 	function setup(){
+		// Clear it before each request, so we avoid any overlapps between stories/specs
+		ormClearSession();
+
 		super.setup();
 
 		if ( !isNull( request.testUserData ) ) {

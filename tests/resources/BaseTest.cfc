@@ -13,9 +13,11 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" autow
 
 	// executes before all suites+specs in the run() method
 	function beforeAll(){
-		super.beforeAll();
-		// Clear everything out
+		// Clear everything out at the beginning of all tests
 		ormClearSession();
+
+		super.beforeAll();
+
 		// Wire up the test object with dependencies
 		//if( this.loadColdBox && structKeyExists( application, "wirebox" ) ){
 		//	getWireBox().autowire( this );

@@ -36,11 +36,11 @@ component {
 			// Officially supported languages for modules
 			languages    : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ],
 			// cbSecurity settings
-			cbSecurity = {
+			cbSecurity   : {
 				// Load the security rules for ContentBox from our db model
-				"rules"                       : "model",
-				"rulesModel"                  : "securityRuleService@cb",
-				"rulesModelMethod"            : "getSecurityRules",
+				"rules"            : "model",
+				"rulesModel"       : "securityRuleService@cb",
+				"rulesModelMethod" : "getSecurityRules"
 			}
 		};
 
