@@ -33,7 +33,7 @@ component extends="baseHandler" {
 				c.$or(
 					c.restrictions.like( "name", "%#rc.search#%" ),
 					c.restrictions.like( "description", "%#rc.search#%" )
-				)
+				);
 			} );
 
 		// Delegate it!

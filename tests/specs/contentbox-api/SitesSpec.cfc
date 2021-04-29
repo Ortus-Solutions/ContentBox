@@ -33,7 +33,7 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to view a site by id or slug", function(){
 				given( "an valid id", function(){
 					then( "then I should get the requested site", function(){
-						var testSite = siteService.findWhere( { "slug" : "default" } );
+						var testSite = variables.siteService.findWhere( { "slug" : "default" } );
 						var event    = this.get( "/cbapi/v1/sites/#testSite.getSiteID()#" );
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getData().slug ).toBe( "default" );
@@ -131,7 +131,7 @@ component extends="tests.resources.BaseApiTest" {
 							}
 						);
 						expect( event.getResponse() ).toHaveStatus( 400 );
-						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" )
+						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
 				given( "invalid data", function(){
@@ -143,7 +143,7 @@ component extends="tests.resources.BaseApiTest" {
 						expect( event.getResponse() ).toHaveInvalidData( "domain", "is required" );
 					} );
 				} );
-			} );
+			} ); // end create story
 
 			story( "I want to edit a site", function(){
 				given( "a valid id/slug and valid data", function(){
@@ -167,7 +167,7 @@ component extends="tests.resources.BaseApiTest" {
 						expect( event.getResponse() ).toHaveStatus( 404 );
 					} );
 				} );
-			} );
+			} ); // end edit story
 
 			story( "I want to delete a site", function(){
 				given( "a valid id/slug", function(){
@@ -194,8 +194,8 @@ component extends="tests.resources.BaseApiTest" {
 						expect( event.getResponse() ).toHaveStatus( 404 );
 					} );
 				} );
-			} );
-		} );
-	}
+			} ); // end delete story
+		} ); // end describe
+	} // end run
 
 }

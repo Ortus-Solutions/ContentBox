@@ -29,7 +29,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 
 		// Add Custom Matchers: REMOVE once we fix the issue in the ColdBox matchers.
 		addMatchers( {
-			toHaveStatus : ( expectation, args = {} ) => {
+			toHaveStatus : function( expectation, args = {} ) {
 				// handle both positional and named arguments
 				param args.statusCode = "";
 				if ( structKeyExists( args, 1 ) ) {
@@ -52,7 +52,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 				return true;
 			},
 			// Verifies invalid cbValidation data
-			toHaveInvalidData : ( expectation, args = {} ) => {
+			toHaveInvalidData : function( expectation, args = {} ) {
 				param args.field = "";
 				if ( structKeyExists( args, 1 ) ) {
 					args.field = args[ 1 ];
@@ -97,7 +97,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 					try {
 						expect(
 							expectation.actual.getData()[ args.field ]
-								.map( ( item ) => item.message )
+								.map( function( item ) { return item.message; } )
 								.toList()
 						).toInclude( args.error );
 					} catch ( any e ) {

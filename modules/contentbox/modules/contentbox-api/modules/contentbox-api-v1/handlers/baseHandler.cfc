@@ -212,7 +212,7 @@ component extends="cborm.models.resources.BaseHandler" {
 			);
 		}
 
-		return oEntity
+		return oEntity;
 	}
 
 }
