@@ -10,11 +10,14 @@ component extends="baseHandler" {
 	 * Display all system settings
 	 */
 	function index( event, rc, prc ){
-		event.getResponse()
+		event
+			.getResponse()
 			.setData(
-				variables.settingService.getAllSettings().filter( function( key, value ){
-					return reFindNoCase( "^cb\_html\_", arguments.key );
-				} )
+				variables.settingService
+					.getAllSettings()
+					.filter( function( key, value ){
+						return reFindNoCase( "^cb\_html\_", arguments.key );
+					} )
 			);
 	}
 
