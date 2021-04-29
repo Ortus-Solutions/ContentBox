@@ -4,37 +4,24 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="ormService" inject="SettingService@cb";
+	property name="settingService" inject="SettingService@cb";
 
-	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder = "name";
-	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity    = "Setting";
-	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
-	variables.useGetOrFail = true;
+	variables.RESERVED_SETTINGS = [
+		"cb_enc_key",
+		"cb_salt",
+		"cb_site_mail_password"
+	];
 
 	/**
-	 * Display all non-site settings
-	 *
-	 * @override
+	 * Display all system settings
 	 */
 	function index( event, rc, prc ){
-		// Criterias and Filters
-		param rc.sortOrder = "name";
-		param rc.search    = "";
-		param rc.isCore = "";
-		param rc.excludes = "siteSnapshot";
-
-		// Build up a search criteria and let the base execute it
-		arguments.criteria = newCriteria()
-			// Core filter if passed
-			.when( len( rc.isCore ) && isBoolean( rc.isCore ), function( c ){
-				c.isEq( "isCore", autoCast( "isCore", rc.isCore ) );
-			} )
-			.isNull( "site" );
-
-		// Delegate it!
-		super.index( argumentCollection = arguments );
+		event.getResponse()
+			.setData(
+				variables.settingService.getAllSettings().filter( function( key, value ){
+					return !variables.RESERVED_SETTINGS.containsNoCase( arguments.key );
+				} )
+			);
 	}
 
 }

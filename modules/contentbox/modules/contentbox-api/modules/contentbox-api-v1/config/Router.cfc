@@ -9,11 +9,16 @@ component {
 		post( "/logout", "auth.logout" );
 		get( "/whoami", "auth.whoami" );
 
+		// Settings
+		get( "/settings", "settings" );
+		get( "/siteSettings/:slug", "siteSettings" );
+
+		// Global HTML
+		get( "/globalhtml", "globalhtml" );
+
 		// Resource Groups
 		var except = "new,edit";
-		resources( resource: "settings", except: except );
 		resources( resource: "sites", except: except );
-		resources( resource: "siteSettings", except: except );
 
 		// Catch All Resource
 		route( "/:anything" ).to( "Echo.onInvalidRoute" );
