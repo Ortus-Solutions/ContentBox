@@ -4,7 +4,6 @@
 component extends="BaseHandler" {
 
 	// DI
-	property name="userService" inject="UserService@cb";
 	property name="securityService" inject="securityService@cb";
 
 	/**

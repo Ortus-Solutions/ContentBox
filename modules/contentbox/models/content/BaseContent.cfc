@@ -1156,7 +1156,7 @@ component
 	 */
 	string function getCreatorName(){
 		if ( hasCreator() ) {
-			return getCreator().getName();
+			return getCreator().getFullName();
 		}
 		return "";
 	}

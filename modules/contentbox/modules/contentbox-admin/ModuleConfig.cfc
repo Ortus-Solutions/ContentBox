@@ -29,7 +29,7 @@ component {
 
 		// Module Settings
 		settings = {
-			// Security Configuration for the admin via cbecurity
+			// Security for the admin: Rules are loaded by the core contentbox module as it impacts the entire set of modules
 			cbsecurity : {
 				// The global invalid authentication event or URI or URL to go if an invalid authentication occurs
 				"invalidAuthenticationEvent"  : "cbadmin/security/login",

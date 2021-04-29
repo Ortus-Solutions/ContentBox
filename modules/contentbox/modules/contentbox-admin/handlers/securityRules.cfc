@@ -7,7 +7,7 @@ component extends="baseHandler" {
 	property name="ruleService" inject="securityRuleService@cb";
 	property name="permissionService" inject="permissionService@cb";
 	property name="roleService" inject="roleService@cb";
-	property name="securityInterceptor" inject="coldbox:interceptor:cbSecurity@contentbox";
+	property name="securityInterceptor" inject="coldbox:interceptor:cbsecurity@global";
 
 	// index
 	function index( event, rc, prc ){
