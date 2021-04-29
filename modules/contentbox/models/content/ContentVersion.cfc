@@ -154,7 +154,7 @@ component
 	 */
 	string function getAuthorName(){
 		if ( hasAuthor() ) {
-			return getAuthor().getName();
+			return getAuthor().getFullName();
 		}
 		return "";
 	}
