@@ -25,12 +25,6 @@ env:
 
 services:
   - mysql
-#addons:
-#  apt:
-#    packages:
-#    - mysql-server-5.7
-#    - mysql-client-core-5.7
-#    - mysql-client-5.7
 
 before_install:
   # CommandBox Keys
@@ -58,8 +52,11 @@ before_script:
   - box server start serverConfigFile="server-${ENGINE}.json" --debug
 
 script:
-  # Run tests
+  # Run web tests
   - box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
+  - box testbox run --verbose
+  # Run api tests
+  - box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
   - box testbox run --verbose
   # Execute build via ANT
   - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
