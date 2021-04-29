@@ -24,6 +24,11 @@ component extends="baseHandler" {
 		param rc.search    = "";
 		param rc.isActive  = true;
 
+		// Make sure isActive is boolean
+		if ( !isBoolean( rc.isActive ) ) {
+			rc.isActive = true;
+		}
+
 		// Build up a search criteria and let the base execute it
 		arguments.criteria = newCriteria()
 			// Active filter

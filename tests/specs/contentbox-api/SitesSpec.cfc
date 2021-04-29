@@ -64,7 +64,7 @@ component extends="tests.resources.BaseApiTest" {
 							.getResponse()
 							.getData()
 							.each( function( thisItem ){
-								expect( thisItem.isActive ).toBeTrue();
+								expect( thisItem.isActive ).toBeTrue( thisItem.toString() );
 							} );
 					} );
 				} );
