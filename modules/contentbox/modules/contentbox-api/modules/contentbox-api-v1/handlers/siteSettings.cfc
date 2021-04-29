@@ -6,8 +6,7 @@ component extends="baseHandler" {
 	// DI
 	property name="settingService" inject="SettingService@cb";
 
-	variables.RESERVED_SETTINGS = [
-	];
+	variables.RESERVED_SETTINGS = [];
 
 	/**
 	 * Display all system settings
@@ -15,7 +14,7 @@ component extends="baseHandler" {
 	function index( event, rc, prc ){
 		var siteSettings = variables.settingService.getSettingsContainer().sites;
 
-		if( !siteSettings.keyExists( rc.slug ) ){
+		if ( !siteSettings.keyExists( rc.slug ) ) {
 			arguments.event
 				.getResponse()
 				.setError( true )
@@ -25,10 +24,11 @@ component extends="baseHandler" {
 			return;
 		}
 
-		event.getResponse()
+		event
+			.getResponse()
 			.setData(
 				siteSettings[ rc.slug ].filter( function( key, value ){
-					return !variables.RESERVED_SETTINGS.containsNoCase( arguments.key );
+					return !arrayContainsNoCase( variables.RESERVED_SETTINGS, arguments.key );
 				} )
 			);
 	}

@@ -172,8 +172,8 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to delete a site", function(){
 				given( "a valid id/slug", function(){
 					then( "then I should see the confirmation", function(){
-						var testSite = siteService.save(
-							siteService.new( {
+						var testSite = variables.siteService.save(
+							variables.siteService.new( {
 								name        : "bddtest",
 								slug        : "bddtest",
 								description : "my bdd test site",
@@ -196,6 +196,7 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} ); // end delete story
 		} ); // end describe
-	} // end run
+	}
+	// end run
 
 }

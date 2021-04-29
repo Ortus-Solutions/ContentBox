@@ -16,11 +16,14 @@ component extends="baseHandler" {
 	 * Display all system settings
 	 */
 	function index( event, rc, prc ){
-		event.getResponse()
+		event
+			.getResponse()
 			.setData(
-				variables.settingService.getAllSettings().filter( function( key, value ){
-					return !variables.RESERVED_SETTINGS.containsNoCase( arguments.key );
-				} )
+				variables.settingService
+					.getAllSettings()
+					.filter( function( key, value ){
+						return !arrayContainsNoCase( variables.RESERVED_SETTINGS, arguments.key );
+					} )
 			);
 	}
 

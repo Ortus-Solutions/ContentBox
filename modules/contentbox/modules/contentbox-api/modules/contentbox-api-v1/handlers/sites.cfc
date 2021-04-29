@@ -7,9 +7,9 @@ component extends="baseHandler" {
 	property name="ormService" inject="SiteService@cb";
 
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder = "slug";
+	variables.sortOrder    = "slug";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity    = "Site";
+	variables.entity       = "Site";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
 

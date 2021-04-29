@@ -114,7 +114,9 @@ component extends="cborm.models.resources.BaseHandler" {
 
 		// Population arguments
 		arguments.populate.memento = rc;
-		arguments.populate.model   = ( variables.useGetOrFail ? getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
+		arguments.populate.model   = (
+			variables.useGetOrFail ? getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id )
+		);
 
 		// Validation Arguments
 		arguments.validate.target = populateModel( argumentCollection = arguments.populate );

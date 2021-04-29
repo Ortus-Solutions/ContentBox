@@ -13,9 +13,6 @@ component {
 		get( "/settings", "settings" );
 		get( "/siteSettings/:slug", "siteSettings" );
 
-		// Global HTML
-		get( "/globalhtml", "globalhtml" );
-
 		// Resource Groups
 		var except = "new,edit";
 		resources( resource: "sites", except: except );

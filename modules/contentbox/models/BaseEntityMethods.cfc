@@ -59,7 +59,7 @@ component {
 	 */
 	function appendToMemento( required collection, target = "defaultIncludes" ){
 		var filtered = arguments.collection.filter( function( item ){
-			!this.memento[ target ].containsNoCase( arguments.item );
+			!arrayContainsNoCase( this.memento[ target ], arguments.item );
 		} );
 		this.memento[ arguments.target ].append( filtered, true );
 		return this;
