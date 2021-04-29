@@ -207,10 +207,25 @@ component
 	property name="permissionList" persistent="false";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							PK + CONSTRAINTS + MEMENTO
 	 ********************************************************************* */
 
 	this.pk = "authorID";
+
+	this.memento = {
+		// Default properties to serialize
+		defaultIncludes : [ "*" ],
+		// Default Exclusions
+		defaultExcludes : [
+			"entries",
+			"pages",
+			"permissions",
+			"permissionGroups"
+		],
+		neverInclude : [ "password" ],
+		// Defaults
+		defaults     : { "role" : {} }
+	};
 
 	this.constraints = {
 		"firstName" : { required : true, size : "1..100" },
@@ -423,51 +438,6 @@ component
 		}
 
 		return "Never Logged In";
-	}
-
-	/**
-	 * Get a flat representation of this entry
-	 * @excludes 			Exclude properties, by default it does pages and entries
-	 * @showRole 			Show Roles
-	 * @showPermissions 		Show permissions
-	 * @showPermissionGroups Show permission groups
-	 */
-	function getMemento(
-		excludes                     = "pages,entries",
-		boolean showRole             = true,
-		boolean showPermissions      = true,
-		boolean showPermissionGroups = true
-	){
-		// Do this to convert native Array to CF Array for content properties
-		var pList  = listToArray( arrayToList( authorService.getPropertyNames() ) );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Do Role Relationship
-		if ( arguments.showRole && hasRole() ) {
-			result[ "role" ] = getRole().getMemento();
-		}
-
-		// Permissions
-		if ( arguments.showPermissions && hasPermission() ) {
-			result[ "permissions" ] = [];
-			for ( var thisPerm in variables.permissions ) {
-				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
-			}
-		} else if ( arguments.showPermissions ) {
-			result[ "permissions" ] = [];
-		}
-
-		// Permission Groups
-		if ( arguments.showPermissionGroups && hasPermissionGroup() ) {
-			result[ "permissiongroups" ] = [];
-			for ( var thisGroup in variables.permissiongroups ) {
-				arrayAppend( result[ "permissiongroups" ], thisGroup.getMemento() );
-			}
-		} else if ( arguments.showPermissionGroups ) {
-			result[ "permissiongroups" ] = [];
-		}
-
-		return result;
 	}
 
 	/************************************** PREFERENCE FUNCTIONS *********************************************/

@@ -88,10 +88,15 @@ component
 	property name="permissionList" persistent="false";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							PK + CONSTRAINTS + MEMENTO
 	 ********************************************************************* */
 
 	this.pk = "roleID";
+
+	this.memento = {
+		defaultIncludes : [ "*" ],
+		defaultExcludes : [ "permissionList" ]
+	};
 
 	this.constraints = {
 		"role" : {
@@ -108,8 +113,8 @@ component
 
 	// Constructor
 	function init(){
-		permissions    = [];
-		permissionList = "";
+		variables.permissions    = [];
+		variables.permissionList = "";
 		super.init();
 
 		return this;
@@ -166,28 +171,6 @@ component
 			variables.permissions = arguments.permissions;
 		}
 		return this;
-	}
-
-	/**
-	 * Get memento representation
-	 * @excludes Exclude properties
-	 * @showPermissions Show permissions or not
-	 */
-	function getMemento( excludes = "", boolean showPermissions = true ){
-		var pList  = listToArray( "role,description" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Do Permissions
-		if ( arguments.showPermissions && hasPermission() ) {
-			result[ "permissions" ] = [];
-			for ( var thisPerm in variables.permissions ) {
-				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
-			}
-		} else if ( arguments.showPermissions ) {
-			result[ "permissions" ] = [];
-		}
-
-		return result;
 	}
 
 }

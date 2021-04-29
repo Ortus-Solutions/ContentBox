@@ -45,7 +45,10 @@ component
 	 **							CALCULATED FIELDS
 	 ********************************************************************* */
 
-	// Calculated Fields
+	property
+		name   ="numberOfPermissionGroups"
+		formula="select count(*) from cb_groupPermissions as gp where gp.FK_permissionID=permissionID";
+
 	property
 		name   ="numberOfRoles"
 		formula="select count(*) from cb_rolePermissions as rolePermissions
@@ -57,10 +60,12 @@ component
 						where groupPermissions.FK_permissionID=permissionID";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							PK + CONSTRAINTS + MEMENTO
 	 ********************************************************************* */
 
 	this.pk = "permissionID";
+
+	this.memento = { defaultIncludes : [ "*" ], defaultExcludes : [ "" ] };
 
 	this.constraints = {
 		"permission" : {
@@ -81,16 +86,6 @@ component
 	function init(){
 		super.init();
 		return this;
-	}
-
-	/**
-	 * Get memento representation
-	 */
-	function getMemento( excludes = "" ){
-		var pList  = listToArray( "permission,description,numberOfRoles,numberOfGroups" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		return result;
 	}
 
 }
