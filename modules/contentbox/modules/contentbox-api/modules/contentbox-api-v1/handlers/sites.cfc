@@ -10,6 +10,8 @@ component extends="baseHandler" {
 	variables.sortOrder = "slug";
 	// The name of the entity this resource handler controls. Singular name please.
 	variables.entity    = "Site";
+	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
+	variables.useGetOrFail = false;
 
 	/**
 	 * Display all sites

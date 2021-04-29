@@ -22,16 +22,17 @@ component extends="baseHandler" {
 		// Criterias and Filters
 		param rc.sortOrder = "name";
 		param rc.search    = "";
-		param rc.isCore = "";
-		param rc.excludes = "siteSnapshot";
+		// An incoming site id or slug to filter on
+		param rc.site = "";
 
 		// Build up a search criteria and let the base execute it
-		arguments.criteria = newCriteria()
-			// Core filter if passed
-			.when( len( rc.isCore ) && isBoolean( rc.isCore ), function( c ){
-				c.isEq( "isCore", autoCast( "isCore", rc.isCore ) );
-			} )
-			.isNull( "site" );
+		var c = newCriteria();
+		arguments.criteria = c
+			.joinTo( "site", "site" )
+				.$or(
+					c.restrictions.isEq( "site.siteID", rc.site ),
+					c.restrictions.isEq( "site.slug", rc.site )
+				);
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
