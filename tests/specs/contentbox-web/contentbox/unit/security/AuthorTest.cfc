@@ -9,7 +9,7 @@ component extends="tests.resources.BaseTest" {
 	/*********************************** BDD SUITES ***********************************/
 
 	function run( testResults, testBox ){
-		describe( "DB Search Adapter", function(){
+		describe( "Author Suite", function(){
 			beforeEach( function( currentSpec ){
 				model = entityNew( "cbAuthor" );
 			} );

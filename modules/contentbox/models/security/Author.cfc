@@ -418,7 +418,7 @@ component
 		if ( NOT isNull( lastLogin ) ) {
 			return dateFormat( lastLogin, this.DATE_FORMAt ) & " " & timeFormat(
 				lastLogin,
-				this.TIME_FORMAT
+				this.TIME_FORMAT_SHORT
 			);
 		}
 
