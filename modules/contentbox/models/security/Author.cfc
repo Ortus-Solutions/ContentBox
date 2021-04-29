@@ -214,15 +214,26 @@ component
 
 	this.memento = {
 		// Default properties to serialize
-		defaultIncludes : [ "*" ],
+		defaultIncludes : [
+			"firstName",
+			"lastName",
+			"email",
+			"username",
+			"isActive",
+			"lastLogin",
+			"biography",
+			"preferences",
+			"role"
+		],
 		// Default Exclusions
 		defaultExcludes : [
 			"entries",
 			"pages",
 			"permissions",
-			"permissionGroups"
+			"permissionGroups",
+			"role.permissions"
 		],
-		neverInclude : [ "password" ],
+		neverInclude : [ "password", "isPasswordReset", "is2FactorAuth" ],
 		// Defaults
 		defaults     : { "role" : {} }
 	};

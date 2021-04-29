@@ -23,6 +23,7 @@ component {
 			pattern = "#siteprefix#/categories",
 			except  : except
 		);
+		resources( resource: "authors", except: except );
 		resources( resource: "sites", except: except );
 
 		// Catch All Resource

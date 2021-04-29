@@ -78,7 +78,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// Get by id or slug
-		prc.oEntity = ( variables.useGetOrFail ? getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
+		prc.oEntity = ( variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
 
 		// announce it
 		announceInterception(
@@ -130,7 +130,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		// Population arguments
 		arguments.populate.memento = rc;
 		arguments.populate.model   = (
-			variables.useGetOrFail ? getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id )
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id )
 		);
 
 		// Validation Arguments
@@ -179,7 +179,7 @@ component extends="cborm.models.resources.BaseHandler" {
 	){
 		param rc.id = 0;
 
-		prc.oEntity = ( variables.useGetOrFail ? getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
+		prc.oEntity = ( variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
 
 		// announce it
 		announceInterception(
