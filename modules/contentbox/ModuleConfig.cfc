@@ -30,10 +30,18 @@ component {
 
 		// contentbox settings
 		settings = {
+			// Code name
 			codename     : "Psalm 144:1",
 			codenameLink : "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Officially supported languages for modules
-			languages    : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ]
+			languages    : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ],
+			// cbSecurity settings
+			cbSecurity = {
+				// Load the security rules for ContentBox from our db model
+				"rules"                       : "model",
+				"rulesModel"                  : "securityRuleService@cb",
+				"rulesModelMethod"            : "getSecurityRules",
+			}
 		};
 
 		// i18n
@@ -97,84 +105,11 @@ component {
 			{
 				class : "contentbox.models.content.renderers.MarkdownRenderer",
 				name  : "MarkdownRenderer@cb"
-			},
-			// ContentBox Security Firewall using Default config for ALL modules and global Site
-			// Each module can override the settings
-			{
-				class      : "cbsecurity.interceptors.Security",
-				name       : "cbSecurity",
-				properties : {
-					// The global invalid authentication event or URI or URL to go if an invalid authentication occurs
-					"invalidAuthenticationEvent"  : "cbadmin/security/login",
-					// Default Auhtentication Action: override or redirect when a user has not logged in
-					"defaultAuthenticationAction" : "redirect",
-					// The global invalid authorization event or URI or URL to go if an invalid authorization occurs
-					"invalidAuthorizationEvent"   : "cbadmin",
-					// Default Authorization Action: override or redirect when a user does not have enough permissions to access something
-					"defaultAuthorizationAction"  : "redirect",
-					// You can define your security rules here or externally via a source
-					// specify an array for inline, or a string (db|json|xml|model) for externally
-					"rules"                       : "model",
-					// If source is model, the wirebox Id to use for retrieving the rules
-					"rulesModel"                  : "securityRuleService@cb",
-					"rulesModelMethod"            : "getSecurityRules",
-					// The validator is an object that will validate rules and annotations and provide feedback on either authentication or authorization issues.
-					"validator"                   : "SecurityValidator@cb",
-					// The WireBox ID of the authentication service to use in cbSecurity which must adhere to the cbsecurity.interfaces.IAuthService interface.
-					"authenticationService"       : "SecurityService@cb",
-					// WireBox ID of the user service to use
-					"userService"                 : "AuthorService@cb",
-					// The name of the variable to use to store an authenticated user in prc scope if using a validator that supports it.
-					"prcUserVariable"             : "oCurrentAuthor",
-					// Use regex in rules
-					"useRegex"                    : true,
-					// Use SSL: Determined by Request
-					"useSSL"                      : false,
-					// Enable annotation security as well
-					"handlerAnnotationSecurity"   : true,
-					// JWT Settings
-					"jwt"                         : {
-						// The issuer authority for the tokens, placed in the `iss` claim
-						"issuer"              : "contentbox",
-						// The jwt secret encoding key to use
-						"secretKey"           : getSystemSetting( "JWT_SECRET", "" ),
-						// by default it uses the authorization bearer header, but you can also pass a custom one as well or as an rc variable.
-						"customAuthHeader"    : "x-auth-token",
-						// The expiration in minutes for the jwt tokens
-						"expiration"          : 60,
-						// If true, enables refresh tokens, longer lived tokens (not implemented yet)
-						"enableRefreshTokens" : true,
-						// The default expiration for refresh tokens, defaults to 30 days
-						"refreshExpiration"   : 43200,
-						// encryption algorithm to use, valid algorithms are: HS256, HS384, and HS512
-						"algorithm"           : "HS512",
-						// Which claims neds to be present on the jwt token or `TokenInvalidException` upon verification and decoding
-						"requiredClaims"      : [],
-						// The token storage settings
-						"tokenStorage"        : {
-							// enable or not, default is true
-							"enabled"    : true,
-							// A cache key prefix to use when storing the tokens
-							"keyPrefix"  : "cbjwt_",
-							// The driver to use: db, cachebox or a WireBox ID
-							"driver"     : "db",
-							// Driver specific properties
-							"properties" : {
-								"table"             : "cb_jwt",
-								"autoCreate"        : true,
-								"rotationDays"      : 7,
-								"rotationFrequency" : 60
-							}
-						}
-					} // end jwt config
-				} // end security config
 			}
 		];
 
 		// Manual Mappings
 		binder.map( "customFieldService@cb" ).toDSL( "entityService:cbCustomField" );
-
-		// ColdBox Integrations
 		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
 	}
 
