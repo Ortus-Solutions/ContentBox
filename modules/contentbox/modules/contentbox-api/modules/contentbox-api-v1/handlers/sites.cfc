@@ -32,7 +32,7 @@ component extends="baseHandler" {
 		// Build up a search criteria and let the base execute it
 		arguments.criteria = newCriteria()
 			// Active filter
-			.isEq( "isActive", autoCast( "isActive", rc.isActive ) )
+			.isEq( "isActive", javacast( "boolean", rc.isActive ) )
 			// Search filter
 			.when( len( rc.search ), function( c ){
 				c.$or(
