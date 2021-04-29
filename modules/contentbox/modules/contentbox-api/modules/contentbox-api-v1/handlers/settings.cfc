@@ -22,7 +22,7 @@ component extends="baseHandler" {
 				variables.settingService
 					.getAllSettings()
 					.filter( function( key, value ){
-						return !variables.RESERVED_SETTINGS.containsNoCase( arguments.key );
+						return !arrayContainsNoCase( variables.RESERVED_SETTINGS, arguments.key );
 					} )
 			);
 	}

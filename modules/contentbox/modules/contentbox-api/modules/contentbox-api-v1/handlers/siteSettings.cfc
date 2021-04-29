@@ -28,7 +28,7 @@ component extends="baseHandler" {
 			.getResponse()
 			.setData(
 				siteSettings[ rc.slug ].filter( function( key, value ){
-					return !variables.RESERVED_SETTINGS.containsNoCase( arguments.key );
+					return !arrayContainsNoCase( variables.RESERVED_SETTINGS, arguments.key );
 				} )
 			);
 	}
