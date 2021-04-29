@@ -3,23 +3,24 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * Our DB Search Adapter
+ * Our DB Search Adapter that should implement contentbox.models.search.ISearchAdapter
+ *
+ * @see contentbox.models.search.ISearchAdapter
  */
 component
 	accessors ="true"
-	implements="contentbox.models.search.ISearchAdapter"
 	singleton
 {
 
 	// DI
-	property name="contentService" inject="id:contentService@cb";
-	property name="cb" inject="id:cbHelper@cb";
-	property name="wirebox" inject="wirebox";
+	property name="contentService" inject="contentService@cb";
+	property name="cb"             inject="cbHelper@cb";
+	property name="wirebox"        inject="wirebox";
 
 	/**
 	 * Constructor
 	 */
-	function init(){
+	DBSearch function init(){
 		return this;
 	}
 
@@ -71,12 +72,15 @@ component
 
 	/**
 	 * If chosen to be implemented, it should refresh search indexes and collections
+	 *
+	 * @return contentbox.models.search.ISearchAdapter
 	 */
-	contentbox.models.search.ISearchAdapter function refresh(){
+	DBSearch function refresh(){
 	}
 
 	/**
 	 * Render the search results according to the adapter and returns HTML
+	 *
 	 * @searchResults The search results object
 	 */
 	any function renderSearch(
@@ -90,6 +94,7 @@ component
 
 	/**
 	 * Render the search results according the passed in search results object
+	 *
 	 * @searchResults The search results object
 	 */
 	any function renderSearchWithResults(
@@ -127,7 +132,7 @@ component
 
 				if ( item.hasCategories() ) {
 					writeOutput( "<div class=""panel-footer""><cite>Categories: " );
-					for ( var categoryItem in          #item.getCategoriesList()# ) {
+					for ( var categoryItem in #item.getCategoriesList()# ) {
 						writeOutput( " <span class=""label label-primary"">#categoryItem#</span>" );
 					}
 					writeOutput( "</cite></div>" );
