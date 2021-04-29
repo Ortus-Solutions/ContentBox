@@ -322,7 +322,7 @@ component
 	 *
 	 * @throws EntityNotFound
 	 */
-	User function retrieveUserById( required id ){
+	Author function retrieveUserById( required id ){
 		var oAuthor = newCriteria()
 			.isEq( "authorID", arguments.id )
 			.isTrue( "isActive" )
