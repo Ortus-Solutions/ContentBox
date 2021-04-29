@@ -192,18 +192,16 @@ component
 	 ********************************************************************* */
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS + Memento
+	 **							PK + CONSTRAINTS + MEMENTO
 	 ********************************************************************* */
 
 	this.pk = "siteID";
 
-	// Mementofication
 	this.memento = {
 		defaultIncludes : [ "*" ],
 		defaultExcludes : [ "settings" ]
 	};
 
-	// Validation Constraints
 	this.constraints = {
 		"name" : { required : true, size : "2..255" },
 		"slug" : {

@@ -76,21 +76,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @return The category sent for saving
 	 */
 	function save( required category ){
-		// Verify uniqueness of slug
-		if (
-			!isSlugUnique(
-				slug     : arguments.category.getSlug(),
-				contentID: arguments.category.getCategoryId(),
-				siteID   : arguments.category.getSite().getsiteID()
-			)
-		) {
-			// Throw exception
-			throw(
-				message: "The incoming category #arguments.category.getSlug()# already exists",
-				type   : "UniqueCategoryException"
-			);
-		}
-
 		// Save the category
 		return super.save( arguments.category );
 	}
@@ -182,18 +167,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Delete a category which also removes itself from all many-to-many relationships
-	 * @category.hint The category object to remove from the system
+	 *
+	 * @category The category object to remove from the system
 	 */
-	boolean function deleteCategory( required category ){
+	boolean function delete( required category ){
 		transaction {
 			// Remove content relationships
 			var aRelatedContent = removeAllRelatedContent( arguments.category );
 			// Save the related content
 			if ( arrayLen( aRelatedContent ) ) {
-				contentService.saveAll( entities = aRelatedContent, transactional = false );
+				contentService.saveAll( aRelatedContent );
 			}
 			// Remove it
-			delete( entity = arguments.category, transactional = false );
+			super.delete( arguments.category );
 			// evict queries
 			ormEvictQueries( getQueryCacheRegion() );
 		}

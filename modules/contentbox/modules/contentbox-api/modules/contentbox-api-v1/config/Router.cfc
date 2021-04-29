@@ -9,12 +9,20 @@ component {
 		post( "/logout", "auth.logout" );
 		get( "/whoami", "auth.whoami" );
 
-		// Settings
+		// Global Settings
 		get( "/settings", "settings" );
-		get( "/siteSettings/:slug", "siteSettings" );
+
+		// Site Settings
+		get( "/sites/:slug/settings", "siteSettings" );
 
 		// Resource Groups
-		var except = "new,edit";
+		var except     = "new,edit";
+		var sitePrefix = "/sites/:site";
+		resources(
+			resource: "categories",
+			pattern = "#siteprefix#/categories",
+			except  : except
+		);
 		resources( resource: "sites", except: except );
 
 		// Catch All Resource

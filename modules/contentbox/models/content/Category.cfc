@@ -111,14 +111,29 @@ component
 					and page.contentID = content.contentID";
 
 	/* *********************************************************************
-	 **							PK + CONSTRAINTS
+	 **							PK + CONSTRAINTS + MEMENTO
 	 ********************************************************************* */
 
 	this.pk = "categoryID";
 
+	this.memento = { defaultIncludes : [ "*" ], defaultExcludes : [ "site" ] };
+
 	this.constraints = {
 		"category" : { required : true, size : "1..200" },
-		"slug"     : { required : true, size : "1..200" }
+		"slug"     : {
+			required   : true,
+			size       : "1..200",
+			udfMessage : "The 'slug' is not unique",
+			udf        : function( value, target ){
+				return arguments.target
+					.getCategoryService()
+					.isSlugUnique(
+						slug      : arguments.value,
+						categoryID: arguments.target.isLoaded() ? arguments.target.getCategoryID() : "",
+						siteID    : arguments.target.hasSite() ? arguments.target.getSite().getSiteID() : ""
+					);
+			}
+		}
 	};
 
 	/* *********************************************************************
@@ -176,25 +191,10 @@ component
 	}
 
 	/**
-	 * Get memento representation
-	 *
-	 * @excludes properties to exclude
+	 * Build a site snapshot
 	 */
-	struct function getMemento( excludes = "" ){
-		var pList = listToArray(
-			"category,slug,numberOfPages,numberOfEntries,numberOfContentStore"
-		);
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Site Snapshot
-		result[ "site" ] = {};
-		if ( hasSite() ) {
-			result.site[ "siteID" ] = getSite().getsiteID();
-			result.site[ "name" ]   = getSite().getName();
-			result.site[ "slug" ]   = getSite().getSlug();
-		}
-
-		return result;
+	struct function getSiteSnapshot(){
+		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
 	}
 
 	/********************************** PRIVATE **********************************/

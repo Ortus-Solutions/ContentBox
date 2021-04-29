@@ -63,13 +63,13 @@ component extends="baseHandler" {
 			rc.slug = variables.HTMLHelper.slugify( rc.category );
 		}
 
-		// populate and get category
+		// Pop/Get/Set
 		var oCategory = populateModel( variables.categoryService.get( rc.categoryID ) ).setSite(
 			prc.oCurrentSite
 		);
-		var vResults = validateModel( oCategory );
 
 		// Validation Results
+		var vResults = validateModel( oCategory );
 		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce(
@@ -126,7 +126,7 @@ component extends="baseHandler" {
 					{ category : category, categoryID : categoryID }
 				);
 				// Delete category via service
-				variables.categoryService.deleteCategory( category );
+				variables.categoryService.delete( category );
 				arrayAppend( messages, "Category '#title#' removed" );
 				// announce event
 				announce( "cbadmin_postCategoryRemove", { categoryID : categoryID } );

@@ -31,7 +31,7 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to get site settings", function(){
 				given( "a valid site slug", function(){
 					then( "it can display all site settings", function(){
-						var event = this.get( "/cbapi/v1/siteSettings/default" );
+						var event = this.get( "/cbapi/v1/sites/default/settings" );
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getData() ).toBeStruct().notToBeEmpty();
 					} );
@@ -39,7 +39,7 @@ component extends="tests.resources.BaseApiTest" {
 
 				given( "an invalid site slug", function(){
 					then( "it will show me an error", function(){
-						var event = this.get( "/cbapi/v1/siteSettings/bogus" );
+						var event = this.get( "/cbapi/v1/sites/bogus/settings" );
 						expect( event.getResponse() ).toHaveStatus( 404 );
 					} );
 				} );

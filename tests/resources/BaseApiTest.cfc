@@ -143,4 +143,8 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 		return request.testUserData;
 	}
 
+	function getDefaultSite(){
+		return variables.siteService.findWhere( { slug : "default" } );
+	}
+
 }

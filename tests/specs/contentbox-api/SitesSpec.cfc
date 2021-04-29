@@ -33,7 +33,7 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to view a site by id or slug", function(){
 				given( "an valid id", function(){
 					then( "then I should get the requested site", function(){
-						var testSite = variables.siteService.findWhere( { "slug" : "default" } );
+						var testSite = getDefaultSite();
 						var event    = this.get( "/cbapi/v1/sites/#testSite.getSiteID()#" );
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getData().slug ).toBe( "default" );

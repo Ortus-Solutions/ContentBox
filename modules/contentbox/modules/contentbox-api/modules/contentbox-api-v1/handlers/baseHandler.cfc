@@ -37,6 +37,7 @@ component extends="cborm.models.resources.BaseHandler" {
 
 	// DI
 	property name="settings" inject="coldbox:moduleSettings:cborm";
+	property name="siteService" inject="siteService@cb";
 
 	// Use native getOrFail() or getByIdOrSlugOrFail()
 	variables.useGetOrFail = true;
@@ -93,6 +94,20 @@ component extends="cborm.models.resources.BaseHandler" {
 				ignoreDefaults = rc.ignoreDefaults
 			)
 		);
+	}
+
+	/**
+	 * Create a resource
+	 */
+	function create(
+		event,
+		rc,
+		prc,
+		struct populate   = {},
+		struct validate   = {},
+		string saveMethod = variables.saveMethod
+	){
+		super.create( argumentCollection = arguments );
 	}
 
 	/**
@@ -215,6 +230,34 @@ component extends="cborm.models.resources.BaseHandler" {
 		}
 
 		return oEntity;
+	}
+
+	/**
+	 * This utility tries to get a site by id or slug
+	 *
+	 * @throws EntityNotFound
+	 *
+	 * @return The found site
+	 */
+	private function getSiteByIdOrSlugOrFail( required id ){
+		var c     = variables.siteService.newCriteria();
+		var oSite = c
+			.$or(
+				// note: id is a shortcut in Hibernate for the Primary Key
+				c.restrictions.isEq( "id", arguments.id ),
+				c.restrictions.isEq( "slug", arguments.id )
+			)
+			.get();
+
+		if ( isNull( oSite ) ) {
+			throw(
+				message      = "No site found for ID/Slug #arguments.id.toString()#",
+				type         = "EntityNotFound",
+				extendedinfo = "Site"
+			);
+		}
+
+		return oSite;
 	}
 
 }
