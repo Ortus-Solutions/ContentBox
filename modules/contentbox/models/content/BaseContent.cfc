@@ -471,19 +471,33 @@ component
 	};
 
 	this.constraints = {
-		"title"                  : { required : true, size : "1..200" },
-		"slug"                   : { required : true, size : "1..200" },
-		"publishedDate"          : { required : false, type : "date" },
-		"expireDate"             : { required : false, type : "date" },
-		"passwordProtection"     : { required : false, size : "1..100" },
-		"HTMLKeywords"           : { required : false, size : "1..160" },
-		"HTMLDescription"        : { required : false, size : "1..160" },
-		"cacheTimeout"           : { required : false, type : "numeric" },
 		"cacheLastAccessTimeout" : { required : false, type : "numeric" },
-		"markup"                 : { required : true, size : "1..100" },
+		"cacheTimeout"           : { required : false, type : "numeric" },
+		"expireDate"             : { required : false, type : "date" },
 		"featuredImage"          : { required : false, size : "1..255" },
 		"featuredImageURL"       : { required : false, size : "1..255" },
-		"site"                   : { required : true }
+		"HTMLDescription"        : { required : false, size : "1..160" },
+		"HTMLKeywords"           : { required : false, size : "1..160" },
+		"markup"                 : { required : true, size : "1..100" },
+		"passwordProtection"     : { required : false, size : "1..100" },
+		"publishedDate"          : { required : false, type : "date" },
+		"site"                   : { required : true },
+		"slug"                   : {
+			required   : true,
+			size       : "1..200",
+			udfMessage : "The 'slug' is not unique",
+			udf        : function( value, target ){
+				return arguments.target
+					.getContentService()
+					.isSlugUnique(
+						contentType: arguments.target.getContentType(),
+						slug       : arguments.value,
+						contentID  : arguments.target.isLoaded() ? arguments.target.getContentID() : "",
+						siteID     : arguments.target.hasSite() ? arguments.target.getSite().getSiteID() : ""
+					);
+			}
+		},
+		"title" : { required : true, size : "1..200" }
 	};
 
 	/* *********************************************************************

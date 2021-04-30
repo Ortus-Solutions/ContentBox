@@ -319,7 +319,7 @@ component extends="baseHandler" {
 		oAuthor.setPreferences( allPreferences );
 
 		// validate it
-		var vResults = validateModel( target = oAuthor, excludes = "password" );
+		var vResults = validate( target = oAuthor, excludes = "password" );
 		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce( "cbadmin_preNewAuthorSave", { author : oAuthor } );
@@ -505,7 +505,7 @@ component extends="baseHandler" {
 	function saveRawPreferences( event, rc, prc ){
 		var oAuthor = authorService.get( id = rc.authorID );
 		// Validate raw preferences
-		var vResult = validateModel(
+		var vResult = validate(
 			target      = rc,
 			constraints = { preferences : { required : true, type : "json" } }
 		);
@@ -559,7 +559,7 @@ component extends="baseHandler" {
 		}
 
 		// validate it
-		var vResults = validateModel(
+		var vResults = validate(
 			target   = oAuthor,
 			excludes = ( structKeyExists( rc, "password" ) ? "" : "password" )
 		);

@@ -126,30 +126,6 @@ component
 		return renderedExcerpt;
 	}
 
-	/*
-	 * Validate entry, returns an array of error or no messages
-	 */
-	array function validate(){
-		var errors = [];
-
-		// limits
-		HTMLKeyWords       = left( HTMLKeywords, 160 );
-		HTMLDescription    = left( HTMLDescription, 160 );
-		passwordProtection = left( passwordProtection, 100 );
-		title              = left( title, 200 );
-		slug               = left( slug, 200 );
-
-		// Required
-		if ( !len( title ) ) {
-			arrayAppend( errors, "Title is required" );
-		}
-		if ( !len( slug ) ) {
-			arrayAppend( errors, "Slug is required" );
-		}
-
-		return errors;
-	}
-
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	 * @author.hint The author doing the cloning

@@ -61,7 +61,7 @@ component extends="baseHandler" {
 	 */
 	function saveSettings( event, rc, prc ){
 		prc.xehActiveTheme = "#prc.cbAdminEntryPoint#.themes.active";
-		var vResults       = validateModel(
+		var vResults       = validate(
 			target      = rc,
 			constraints = variables.themeService.getSettingsConstraints( rc.themeName )
 		);

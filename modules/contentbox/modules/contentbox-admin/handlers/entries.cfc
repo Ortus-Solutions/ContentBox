@@ -269,7 +269,7 @@ component extends="baseContentHandler" {
 		);
 
 		// clone this sucker now!
-		entryService.saveEntry( clone );
+		entryService.save( clone );
 
 		// relocate
 		cbMessageBox.info( "Entry cloned!" );
@@ -336,12 +336,9 @@ component extends="baseContentHandler" {
 			.setSite( variables.siteService.get( rc.site ) );
 
 		// Validate it
-		var errors = entry.validate();
-		if ( !len( trim( rc.content ) ) ) {
-			arrayAppend( errors, "Please enter the content to save!" );
-		}
-		if ( arrayLen( errors ) ) {
-			cbMessageBox.warn( errors );
+		var vResults = validate( entry );
+		if ( vResults.hasErrors() ) {
+			variables.cbMessageBox.warn( vResults.getAllErrors() );
 			editor( argumentCollection = arguments );
 			return;
 		}
@@ -390,7 +387,7 @@ component extends="baseContentHandler" {
 			}
 		);
 		// save entry
-		entryService.saveEntry( entry );
+		entryService.save( entry );
 		// announce event
 		announce(
 			"cbadmin_postEntrySave",

@@ -21,33 +21,6 @@ component extends="ContentService" singleton {
 	}
 
 	/**
-	 * Save an entry
-	 *
-	 * @entry The entry to save
-	 * @transactional Transactional or not, defaults to true
-	 *
-	 * @return EntryService
-	 */
-	function saveEntry( required any entry, boolean transactional = true ){
-		// Verify uniqueness of slug
-		if (
-			!contentService.isSlugUnique(
-				slug     : arguments.entry.getSlug(),
-				contentID: arguments.entry.getContentID(),
-				siteId   : arguments.entry.getSiteId()
-			)
-		) {
-			// make slug unique
-			arguments.entry.setSlug( getUniqueSlugHash( arguments.entry.getSlug() ) );
-		}
-
-		// save entry
-		save( entity = arguments.entry, transactional = arguments.transactional );
-
-		return arguments.entry;
-	}
-
-	/**
 	 * Search for blog entries according to many filters
 	 *
 	 * @search The search term to search on
@@ -271,6 +244,7 @@ component extends="ContentService" singleton {
 	 * @asQuery Return results as array of objects or query, default is array of objects
 	 * @sortOrder The sort order string, defaults to publisedDate DESC
 	 * @siteId The siteId to filter on
+	 * @authorID The authorID to filter on
 	 *
 	 * @return struct of { count, entries }
 	 */
@@ -281,7 +255,8 @@ component extends="ContentService" singleton {
 		string category   = "",
 		boolean asQuery   = false,
 		string sortOrder  = "publishedDate DESC",
-		string siteId     = ""
+		string siteId     = "",
+		string authorID   = ""
 	){
 		var results = { "count" : 0, "entries" : [] };
 		var c       = newCriteria();
@@ -321,6 +296,11 @@ component extends="ContentService" singleton {
 		// Site Filter
 		if ( len( arguments.siteId ) ) {
 			c.isEq( "site.siteID", arguments.siteId );
+		}
+
+		// Creator Filter
+		if ( len( arguments.authorID ) ) {
+			c.isEq( "creator.authorID", arguments.authorID );
 		}
 
 		// run criteria query and projections count

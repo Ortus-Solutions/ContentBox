@@ -221,12 +221,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if ( !isArray( arguments.excludeIDs ) ) {
 				arguments.excludeIDs = listToArray( arguments.excludeIDs );
 			}
-			c.isNot(
-				c.restrictions.in(
-					"contentID",
-					arguments.excludeIDs
-				)
-			);
+			c.isNot( c.restrictions.in( "contentID", arguments.excludeIDs ) );
 		}
 
 		// run criteria query and projections count
@@ -304,13 +299,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @slug The slug to search for uniqueness
 	 * @contentID Limit the search to the passed contentID usually for updates
 	 * @siteID The site to filter on
+	 * @contentType The content type uniqueness
 	 *
 	 * @return True if the slug is unique or false if it's already used
 	 */
 	boolean function isSlugUnique(
 		required any slug,
-		any contentID = "",
-		string siteID = ""
+		any contentID      = "",
+		string siteID      = "",
+		string contentType = ""
 	){
 		return newCriteria()
 			.isEq( "slug", arguments.slug )
@@ -320,11 +317,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.when( len( arguments.contentId ), function( c ){
 				c.ne( "contentID", contentId );
 			} )
+			.when( len( arguments.contentType ), function( c ){
+				c.ne( "contentType", contentType );
+			} )
 			.count() > 0 ? false : true;
 	}
 
 	/**
 	 * Delete a content object safely via hierarchies
+	 *
 	 * @content the Content object to delete
 	 */
 	ContentService function deleteContent( required any content ){
@@ -352,7 +353,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				}
 			}
 			// now delete it
-			delete( entity = arguments.content, transactional = false );
+			super.delete( arguments.content );
 		}
 
 		// return service

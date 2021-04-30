@@ -67,7 +67,7 @@ component extends="baseHandler" {
 		);
 
 		// Validate
-		var vResults = validateModel( oGroup );
+		var vResults = validate( oGroup );
 		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce(

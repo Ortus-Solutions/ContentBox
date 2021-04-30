@@ -58,7 +58,7 @@ component extends="baseHandler" {
 		rc.permission   = uCase( rc.permission );
 		// populate and get
 		var oPermission = populateModel( permissionService.get( id = rc.permissionID ) );
-		var vResults    = validateModel( oPermission );
+		var vResults    = validate( oPermission );
 
 		// Validation Results
 		if ( !vResults.hasErrors() ) {

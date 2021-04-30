@@ -12,6 +12,8 @@ component extends="baseHandler" {
 	variables.entity       = "Entry";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
+	// Delete method to use
+	variables.deleteMethod = "deleteContent";
 
 	/**
 	 * Executes before all handler actions
@@ -23,18 +25,20 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Display all entries
+	 * Display all entries using different filters
 	 *
 	 * @override
 	 */
 	function index( event, rc, prc ){
+		param rc.page      = 1;
 		// Criterias and Filters
 		param rc.sortOrder = "publishedDate DESC";
-		param rc.page      = 1;
+		// Search terms
 		param rc.search    = "";
+		// One or a list of categories to filter on
 		param rc.category  = "";
-		param rc.includes  = "";
-		param rc.excludes  = "";
+		// Author ID to filter on
+		param rc.author    = "";
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.findPublishedEntries(
@@ -43,7 +47,8 @@ component extends="baseHandler" {
 			offset     = getPageOffset( rc.page ),
 			max        = getMaxRows(),
 			sortOrder  = rc.sortOrder,
-			siteId     = prc.oCurrentSite.getSiteID()
+			siteId     = prc.oCurrentSite.getSiteID(),
+			authorID   = rc.author
 		);
 
 		// Build to match interface
@@ -71,6 +76,16 @@ component extends="baseHandler" {
 		param rc.excludes = "";
 
 		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Create a blog entry
+	 */
+	function create( event, rc, prc ){
+		// Set author to logged in user and override it
+		rc.creator = jwtAuth().getUser().getAuthorID();
+		// Supersize it
+		super.create( argumentCollection = arguments );
 	}
 
 }

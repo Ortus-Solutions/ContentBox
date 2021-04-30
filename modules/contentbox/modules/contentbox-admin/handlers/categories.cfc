@@ -69,7 +69,7 @@ component extends="baseHandler" {
 		);
 
 		// Validation Results
-		var vResults = validateModel( oCategory );
+		var vResults = validate( oCategory );
 		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce(
