@@ -429,7 +429,7 @@ component
 			"contentID",
 			"contentType",
 			"createdDate",
-			"creatorSnapshot", // Creator
+			"creatorSnapshot:creator", // Creator
 			"expireDate",
 			"featuredImage",
 			"featuredImageURL",
@@ -437,7 +437,7 @@ component
 			"HTMLKeywords",
 			"HTMLTitle",
 			"isPublished",
-			"lastEditorSnapshot",
+			"lastEditorSnapshot:lastEditor",
 			"markup",
 			"modifiedDate",
 			"numberOfChildren",
