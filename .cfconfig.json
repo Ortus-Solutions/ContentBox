@@ -3,6 +3,7 @@
 	"systemOut":"System",
 	"adminPassword" : "contentbox",
 	"requestTimeout": "0,0,10,0",
+	"thistimezone":"UTC",
 	"debuggingReportExecutionTimes": false,
     "whitespaceManagement":"white-space-pref",
 	"cacheDefaultObject":"contentbox",
