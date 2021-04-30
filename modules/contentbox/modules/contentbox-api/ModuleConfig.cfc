@@ -48,7 +48,6 @@ component {
 			}
 		};
 
-
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
