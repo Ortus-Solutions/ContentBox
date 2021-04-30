@@ -437,6 +437,7 @@ component
 			"HTMLKeywords",
 			"HTMLTitle",
 			"isPublished",
+			"lastEditorSnapshot",
 			"markup",
 			"modifiedDate",
 			"numberOfChildren",
@@ -536,6 +537,14 @@ component
 	 */
 	struct function getCreatorSnapshot(){
 		return ( hasCreator() ? getCreator().getInfoSnapshot() : {} );
+	}
+
+	/**
+	 * Build a last editor snapshot
+	 */
+	struct function getLastEditorSnapshot(){
+		var activeContent = getActiveContent();
+		return ( activeContent.hasAuthor() ? activeContent.getAuthor().getInfoSnapshot() : {} );
 	}
 
 	/**
@@ -789,6 +798,7 @@ component
 
 	/**
 	 * Shortcut to get a custom field value
+	 *
 	 * @key The custom field key to get
 	 * @defaultValue The default value if the key is not found.
 	 */
@@ -1326,7 +1336,9 @@ component
 	}
 
 	/**
-	 * Get display publishedDate
+	 * Get's the published date of the content object in UI format.
+	 * If no publish date is found, we use now()
+	 *
 	 * @showTime Show time on return string or not
 	 */
 	string function getPublishedDateForEditor( boolean showTime = false ){
@@ -1334,16 +1346,20 @@ component
 		if ( isNull( pDate ) ) {
 			pDate = now();
 		}
+
 		// get formatted date
 		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT_SHORT );
 		}
+
 		return fDate;
 	}
 
 	/**
-	 * Get display expireDate
+	 * Get the expire date for the content object in UI format
+	 * If no expire date is found, we return an empty string
+	 *
 	 * @showTime Show time on return string or not
 	 */
 	string function getExpireDateForEditor( boolean showTime = false ){
@@ -1351,11 +1367,13 @@ component
 		if ( isNull( pDate ) ) {
 			pDate = "";
 		}
+
 		// get formatted date
 		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT_SHORT );
 		}
+
 		return fDate;
 	}
 
@@ -1369,7 +1387,7 @@ component
 		}
 		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat(
 			publishedDate,
-			this.TIME_FORMAT
+			this.TIME_FORMAT_SHORT
 		);
 	}
 
@@ -1382,7 +1400,7 @@ component
 		}
 		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat(
 			expireDate,
-			this.TIME_FORMAT
+			this.TIME_FORMAT_SHORT
 		);
 	}
 
@@ -1400,7 +1418,7 @@ component
 		if ( !isDate( getPublishedDate() ) ) {
 			return this;
 		}
-		var time = timeFormat( "#arguments.hour#:#arguments.minute#", this.TIME_FORMAT );
+		var time = timeFormat( "#arguments.hour#:#arguments.minute#", this.TIME_FORMAT_SHORT );
 		setPublishedDate( getPublishedDate() & " " & time );
 		return this;
 	}
@@ -1433,7 +1451,7 @@ component
 			arguments.minute = "00";
 		}
 		// setup the right time now.
-		var time = timeFormat( "#arguments.hour#:#arguments.minute#", this.TIME_FORMAT );
+		var time = timeFormat( "#arguments.hour#:#arguments.minute#", this.TIME_FORMAT_SHORT );
 		setExpireDate( getExpireDate() & " " & time );
 		return this;
 	}
