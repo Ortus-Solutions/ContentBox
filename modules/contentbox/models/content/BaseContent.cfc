@@ -429,7 +429,7 @@ component
 			"contentID",
 			"contentType",
 			"createdDate",
-			"creatorSnapshot",
+			"creatorSnapshot", // Creator
 			"expireDate",
 			"featuredImage",
 			"featuredImageURL",
@@ -444,7 +444,7 @@ component
 			"numberOfComments",
 			"numberOfHits",
 			"numberOfVersions",
-			"parentSnapshot",
+			"parentSnapshot", // Parent
 			"publishedDate",
 			"showInSearch",
 			"slug",
@@ -455,6 +455,7 @@ component
 			"comments",
 			"commentSubscriptions",
 			"contentVersions",
+			"customFields",
 			"linkedContent",
 			"parent",
 			"relatedContent",

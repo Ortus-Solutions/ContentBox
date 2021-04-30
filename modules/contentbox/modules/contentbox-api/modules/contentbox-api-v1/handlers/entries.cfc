@@ -60,7 +60,10 @@ component extends="baseHandler" {
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = arrayToList( [
+			"activeContent",
 			"childrenSnapshot",
+			"customFields",
+			"customFieldsAsStruct",
 			"linkedContentSnapshot",
 			"relatedContentSnapshot",
 			"renderedContent"

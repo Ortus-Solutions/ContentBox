@@ -101,6 +101,18 @@ component
 
 	this.pk = "contentVersionID";
 
+	this.memento = {
+		defaultIncludes : [
+			"content",
+			"changelog",
+			"version",
+			"isActive",
+			"authorSnapshot"
+		],
+		defaultExcludes : [ "relatedContent" ],
+		neverInclude    : [ "" ]
+	};
+
 	this.constraints = {
 		"content" : { required : true },
 		"version" : { required : true, type : "integer" }
@@ -131,22 +143,10 @@ component
 	 ********************************************************************* */
 
 	/**
-	 * Get memento representation
+	 * Build the author snapshot
 	 */
-	function getMemento( excludes = "" ){
-		var pList  = listToArray( "content,changelog,version,isActive" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		result[ "author" ] = {
-			"authorID"  : getAuthor().getAuthorID(),
-			"firstname" : getAuthor().getFirstname(),
-			"lastName"  : getAuthor().getLastName(),
-			"email"     : getAuthor().getEmail(),
-			"username"  : getAuthor().getUsername(),
-			"role"      : getAuthor().getRole().getRole()
-		};
-
-		return result;
+	struct function getAuthorSnapshot(){
+		return ( hasAuthor() ? getAuthor().getInfoSnapshot() : {} );
 	}
 
 	/**
