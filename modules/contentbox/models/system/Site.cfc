@@ -191,6 +191,39 @@ component
 	 **							CALUCLATED FIELDS
 	 ********************************************************************* */
 
+	property
+		name   ="numberOfEntries"
+		formula="select count(*)
+				from cb_entry as entry, cb_content as content
+				where entry.contentID=content.contentID
+					and content.FK_siteID = siteID";
+
+	property
+		name   ="numberOfPages"
+		formula="select count(*)
+				from cb_page as page, cb_content as content
+				where page.contentID=content.contentID
+					and content.FK_siteID = siteID";
+
+	property
+		name   ="numberOfContentStore"
+		formula="select count(*)
+				from cb_contentStore as contentStore, cb_content as content
+				where contentStore.contentID=content.contentID
+					and content.FK_siteID = siteID";
+
+	property
+		name   ="numberOfMenus"
+		formula="select count(*)
+		from cb_menu as menu
+		where menu.FK_siteID = siteID";
+
+	property
+		name   ="numberOfCategories"
+		formula="select count(*)
+		from cb_category as category
+		where category.FK_siteID = siteID";
+
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS + MEMENTO
 	 ********************************************************************* */
@@ -198,7 +231,32 @@ component
 	this.pk = "siteID";
 
 	this.memento = {
-		defaultIncludes : [ "*" ],
+		defaultIncludes : [
+			"activeTheme",
+			"adminBar",
+			"description",
+			"domain",
+			"domainregex",
+			"homepage",
+			"isActive",
+			"isBlogEnabled",
+			"isSitemapEnabled",
+			"isSSL",
+			"keywords",
+			"name",
+			"notificationEmails",
+			"notifyOnContentStore",
+			"notifyOnEntries",
+			"notifyOnPages",
+			"numberOfCategories",
+			"numberOfContentStore",
+			"numberOfEntries",
+			"numberOfMenus",
+			"numberOfPages",
+			"poweredByHeader",
+			"slug",
+			"tagline"
+		],
 		defaultExcludes : [ "settings" ]
 	};
 

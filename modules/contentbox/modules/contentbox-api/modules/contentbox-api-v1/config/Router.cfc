@@ -23,6 +23,26 @@ component {
 			pattern = "#siteprefix#/categories",
 			except  : except
 		);
+		resources(
+			resource: "entries",
+			pattern = "#siteprefix#/entries",
+			except  : except
+		);
+		resources(
+			resource: "content",
+			pattern = "#siteprefix#/content",
+			except  : except
+		);
+		resources(
+			resource: "pages",
+			pattern = "#siteprefix#/pages",
+			except  : except
+		);
+		resources(
+			resource: "menus",
+			pattern = "#siteprefix#/menus",
+			except  : except
+		);
 		resources( resource: "authors", except: except );
 		resources( resource: "sites", except: except );
 

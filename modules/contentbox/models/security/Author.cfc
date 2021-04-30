@@ -223,7 +223,11 @@ component
 			"lastLogin",
 			"biography",
 			"preferences",
-			"role"
+			"role",
+			"numberOfContent",
+			"numberOfEntries",
+			"numberOfPages",
+			"numberOfContentStore"
 		],
 		// Default Exclusions
 		defaultExcludes : [

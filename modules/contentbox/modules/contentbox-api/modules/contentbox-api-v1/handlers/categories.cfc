@@ -39,4 +39,16 @@ component extends="baseHandler" {
 		super.index( argumentCollection = arguments );
 	}
 
+	/**
+	 * Show a category using the id
+	 *
+	 * @override
+	 */
+	function show( event, rc, prc ){
+		param rc.includes = "NumberOfPublishedPages,numberOfPublishedContentStore,numberOfPublishedEntries";
+		param rc.excludes = "";
+
+		super.show( argumentCollection = arguments );
+	}
+
 }

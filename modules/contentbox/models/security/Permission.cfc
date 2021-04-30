@@ -65,7 +65,10 @@ component
 
 	this.pk = "permissionID";
 
-	this.memento = { defaultIncludes : [ "*" ], defaultExcludes : [ "" ] };
+	this.memento = {
+		defaultIncludes : [ "permission", "description" ],
+		defaultExcludes : [ "" ]
+	};
 
 	this.constraints = {
 		"permission" : {

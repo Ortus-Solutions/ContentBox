@@ -34,17 +34,18 @@ component {
 		variables.modifiedDate = now();
 		variables.isDeleted    = false;
 
-		// Incorporate default includes for the base class.
-		if ( !isNull( this.memento.defaultIncludes ) && isNull( this.memento.baseIncluded ) ) {
-			this.memento.defaultIncludes.append(
-				[
-					this.pk,
-					"createdDate",
-					"modifiedDate",
-					"isDeleted"
-				],
-				true
-			);
+		if ( isNull( this.memento.baseIncluded ) ) {
+			// Incorporate default includes for the base class.
+			if ( !isNull( this.memento.defaultIncludes ) ) {
+				this.memento.defaultIncludes.append(
+					[ this.pk, "createdDate", "modifiedDate" ],
+					true
+				);
+			}
+			// Incorporate default excludes for the base class.
+			if ( !isNull( this.memento.defaultExcludes ) ) {
+				this.memento.defaultExcludes.append( [ "isDeleted" ], true );
+			}
 			this.memento.baseIncluded = true;
 		}
 
@@ -59,7 +60,7 @@ component {
 	 */
 	function appendToMemento( required collection, target = "defaultIncludes" ){
 		var filtered = arguments.collection.filter( function( item ){
-			!arrayContainsNoCase( this.memento[ target ], arguments.item );
+			return !arrayContainsNoCase( this.memento[ target ], arguments.item );
 		} );
 		this.memento[ arguments.target ].append( filtered, true );
 		return this;

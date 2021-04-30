@@ -46,4 +46,33 @@ component extends="baseHandler" {
 		super.index( argumentCollection = arguments );
 	}
 
+	/**
+	 * Show an author using the id
+	 *
+	 * @override
+	 */
+	function show( event, rc, prc ){
+		param rc.includes       = "permissions,permissionGroups,role.permissions";
+		param rc.excludes       = "role.permissions.createdDate,role.permissions.modifiedDate";
+		param rc.ignoreDefaults = false;
+		param rc.id             = 0;
+
+		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an author using an id
+	 *
+	 * @override
+	 */
+	function update( event, rc, prc ){
+		param rc.includes = "permissions,permissionGroups,role.permissions";
+
+		// Can't update passwords, use the password change endpoint
+		arguments.populate.exclude          = "password";
+		arguments.populate.nullEmptyInclude = "";
+
+		super.update( argumentCollection = arguments );
+	}
+
 }

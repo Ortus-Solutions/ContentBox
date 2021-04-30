@@ -418,6 +418,56 @@ component
 
 	this.pk = "contentID";
 
+	this.memento = {
+		defaultIncludes : [
+			"allowComments",
+			"cache",
+			"cacheLastAccessTimeout",
+			"cacheLayout",
+			"cacheTimeout",
+			"categoriesList",
+			"contentID",
+			"contentType",
+			"createdDate",
+			"creatorSnapshot",
+			"expireDate",
+			"featuredImage",
+			"featuredImageURL",
+			"HTMLDescription",
+			"HTMLKeywords",
+			"HTMLTitle",
+			"isPublished",
+			"markup",
+			"modifiedDate",
+			"numberOfChildren",
+			"numberOfComments",
+			"numberOfHits",
+			"numberOfVersions",
+			"parentSnapshot",
+			"publishedDate",
+			"showInSearch",
+			"slug",
+			"title"
+		],
+		defaultExcludes : [
+			"children",
+			"comments",
+			"commentSubscriptions",
+			"contentVersions",
+			"linkedContent",
+			"parent",
+			"relatedContent",
+			"site",
+			"stats"
+		],
+		neverInclude : [ "passwordProtection" ],
+		mappers      : {
+			"categoriesList" : function( item, memento ){
+				return listToArray( arguments.item );
+			}
+		}
+	};
+
 	this.constraints = {
 		"title"                  : { required : true, size : "1..200" },
 		"slug"                   : { required : true, size : "1..200" },
@@ -433,13 +483,6 @@ component
 		"featuredImageURL"       : { required : false, size : "1..255" },
 		"site"                   : { required : true }
 	};
-
-	// Used for JS controls
-	variables.TIME_FORMAT         = "hh:mm tt";
-	// Used for JS Controls
-	variables.DATE_FORMAT         = "yyyy-mm-dd";
-	// Used for display purposes
-	variables.DATE_DISPLAY_FORMAT = "dd mmm yyyy";
 
 	/* *********************************************************************
 	 **							PUBLIC FUNCTIONS
@@ -463,6 +506,43 @@ component
 		super.init();
 
 		return this;
+	}
+
+	/**
+	 * Utility method to get a snapshot of this content object
+	 */
+	struct function getInfoSnapshot(){
+		if ( isLoaded() ) {
+			return {
+				"contentID"     : getContentID(),
+				"title"         : getTitle(),
+				"slug"          : getSlug(),
+				"isPublished"   : getIsPublished(),
+				"publishedDate" : getPublishedDate()
+			};
+		}
+		return {};
+	}
+
+	/**
+	 * Build a parent snapshot
+	 */
+	struct function getParentSnapshot(){
+		return ( hasParent() ? getParent().getInfoSnapshot() : {} );
+	}
+
+	/**
+	 * Build a creator snapshot
+	 */
+	struct function getCreatorSnapshot(){
+		return ( hasCreator() ? getCreator().getInfoSnapshot() : {} );
+	}
+
+	/**
+	 * Build a site snapshot
+	 */
+	struct function getSiteSnapshot(){
+		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
 	}
 
 	/**
@@ -575,18 +655,51 @@ component
 	}
 
 	/**
+	 * Build the array of linked content snapshots
+	 */
+	array function getLinkedContentSnapshot(){
+		if ( hasLinkedContent() ) {
+			return arrayMap( variables.linkedContent, function( thisItem ){
+				return arguments.thisItem.getInfoSnapshot();
+			} );
+		}
+		return [];
+	}
+
+	/**
+	 * Build the array of children snapshots
+	 */
+	array function getChildrenSnapshot(){
+		if ( hasChild() ) {
+			return arrayMap( variables.children, function( thisItem ){
+				return arguments.thisItem.getInfoSnapshot();
+			} );
+		}
+		return [];
+	}
+
+	/**
+	 * Build the array of related content snapshots
+	 */
+	array function getRelatedContentSnapshot(){
+		if ( hasRelatedContent() ) {
+			return arrayMap( variables.relatedContent, function( thisItem ){
+				return arguments.thisItem.getInfoSnapshot();
+			} );
+		}
+		return [];
+	}
+
+	/**
 	 * Returns a list of active related content for this piece of content
 	 */
 	string function getRelatedContentIDs(){
-		var relatedContentIDs = "";
-		// if we have related content...
 		if ( hasRelatedContent() ) {
-			// loop over related content and add ids to list
-			for ( var currentContent in getRelatedContent() ) {
-				relatedContentIDs = listAppend( relatedContentIDs, currentContent.getContentID() );
-			}
+			return arrayMap( variables.relatedContent, function( thisItem ){
+				return arguments.thisItem.getContentID();
+			} ).toList();
 		}
-		return relatedContentIDs;
+		return "";
 	}
 
 	/**
@@ -897,160 +1010,6 @@ component
 			}
 		} else if ( arguments.showRelatedContent ) {
 			result[ "relatedcontent" ] = [];
-		}
-
-		return result;
-	}
-
-	/**
-	 * Get a flat representation of this entry
-	 * @slugCache Cache of slugs to prevent infinite recursions
-	 * @counter
-	 * @showAuthor Show author in memento or not
-	 * @showComments Show comments in memento or not
-	 * @showCustomFields Show comments in memento or not
-	 * @showContentVersions Show content versions in memento or not
-	 * @showParent Show parent in memento or not
-	 * @showChildren Show children in memento or not
-	 * @showCategories Show categories in memento or not
-	 * @showRelatedContent Show related Content in memento or not
-	 * @showStats Show stats in memento or not
-	 * @showCommentSubscriptions Show comment subscriptions or not
-	 * @excludes Excludes
-	 * @properties Additional properties to incorporate in the memento
-	 */
-	function getMemento(
-		required array slugCache         = [],
-		counter                          = 0,
-		boolean showAuthor               = true,
-		boolean showComments             = true,
-		boolean showCustomFields         = true,
-		boolean showContentVersions      = true,
-		boolean showParent               = true,
-		boolean showChildren             = true,
-		boolean showCategories           = true,
-		boolean showRelatedContent       = true,
-		boolean showStats                = true,
-		boolean showCommentSubscriptions = true,
-		excludes                         = "activeContent,linkedContent,commentSubscriptions",
-		array properties
-	){
-		// Do this to convert native Array to CF Array for content properties
-		var pList = listToArray( arrayToList( contentService.getPropertyNames() ) );
-		// Add incoming properties
-		if ( structKeyExists( arguments, "properties" ) ) {
-			pList.addAll( arguments.properties );
-		}
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Do Author Relationship
-		if ( arguments.showAuthor && hasCreator() ) {
-			result[ "creator" ] = {
-				"creatorID" : getCreator().getAuthorID(),
-				"firstname" : getCreator().getFirstname(),
-				"lastName"  : getCreator().getLastName(),
-				"email"     : getCreator().getEmail(),
-				"username"  : getCreator().getUsername()
-			};
-		}
-
-		// Comments
-		if ( arguments.showComments && hasComment() ) {
-			result[ "comments" ] = [];
-			for ( var thisComment in variables.comments ) {
-				arrayAppend( result[ "comments" ], thisComment.getMemento() );
-			}
-		} else if ( arguments.showComments ) {
-			result[ "comments" ] = [];
-		}
-
-		// Stats
-		if ( arguments.showStats && hasStats() ) {
-			result[ "stats" ] = getStats().getMemento();
-		} else if ( arguments.showStats ) {
-			result[ "stats" ] = { "statsID" : 0, "hits" : 0 };
-		}
-
-		// Custom Fields
-		if ( arguments.showCustomFields && hasCustomField() ) {
-			result[ "customfields" ] = [];
-			for ( var thisField in variables.customfields ) {
-				arrayAppend( result[ "customfields" ], thisField.getMemento() );
-			}
-		} else if ( arguments.showCustomFields ) {
-			result[ "customfields" ] = [];
-		}
-		// Versions
-		if ( arguments.showContentVersions && hasContentVersion() ) {
-			result[ "contentversions" ] = [];
-			for ( var thisVersion in variables.contentversions ) {
-				arrayAppend( result[ "contentversions" ], thisVersion.getMemento() );
-			}
-		} else if ( arguments.showContentVersions ) {
-			result[ "contentversions" ] = [];
-		}
-		// Parent
-		if ( arguments.showParent && hasParent() ) {
-			result[ "parent" ] = {
-				"contentID" : getParent().getContentID(),
-				"slug"      : getParent().getSlug(),
-				"title"     : getParent().getTitle()
-			};
-		}
-		// Children
-		if ( arguments.showChildren && hasChild() ) {
-			result[ "children" ] = [];
-			for ( var thisChild in variables.children ) {
-				arrayAppend( result[ "children" ], thisChild.getMemento() );
-			}
-		} else if ( arguments.showChildren ) {
-			result[ "children" ] = [];
-		}
-		// Comment Subscriptions
-		if ( arguments.showCommentSubscriptions && hasCommentSubscription() ) {
-			result[ "commentSubscriptions" ] = [];
-			for ( var thisChild in variables.commentSubscriptions ) {
-				arrayAppend( result[ "commentSubscriptions" ], thisChild.getMemento() );
-			}
-		} else if ( arguments.showCommentSubscriptions ) {
-			result[ "commentSubscriptions" ] = [];
-		}
-		// Categories
-		if ( arguments.showCategories && hasCategories() ) {
-			result[ "categories" ] = [];
-			for ( var thisCategory in variables.categories ) {
-				arrayAppend( result[ "categories" ], thisCategory.getMemento() );
-			}
-		} else if ( arguments.showCategories ) {
-			result[ "categories" ] = [];
-		}
-
-		// Related Content
-		if (
-			arguments.showRelatedContent && hasRelatedContent() && !arrayFindNoCase(
-				arguments.slugCache,
-				getSlug()
-			)
-		) {
-			result[ "relatedcontent" ] = [];
-			// add slug to cache
-			arrayAppend( arguments.slugCache, getSlug() );
-			for ( var content in variables.relatedContent ) {
-				arrayAppend(
-					result[ "relatedcontent" ],
-					content.getMemento( slugCache = arguments.slugCache )
-				);
-			}
-		} else if ( arguments.showRelatedContent ) {
-			result[ "relatedcontent" ] = [];
-		}
-
-		// Site Snapshot
-		result[ "site" ] = {};
-		if ( hasSite() ) {
-			result.site[ "siteID" ] = getSite().getsiteID();
-			result.site[ "name" ]   = getSite().getName();
-			result.site[ "slug" ]   = getSite().getSlug();
 		}
 
 		return result;
@@ -1376,9 +1335,9 @@ component
 			pDate = now();
 		}
 		// get formatted date
-		var fDate = dateFormat( pDate, variables.DATE_FORMAT );
+		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, variables.TIME_FORMAT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
 		}
 		return fDate;
 	}
@@ -1393,9 +1352,9 @@ component
 			pDate = "";
 		}
 		// get formatted date
-		var fDate = dateFormat( pDate, variables.DATE_FORMAT );
+		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, variables.TIME_FORMAT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
 		}
 		return fDate;
 	}
@@ -1408,9 +1367,9 @@ component
 		if ( isNull( publishedDate ) ) {
 			return "";
 		}
-		return dateFormat( publishedDate, variables.DATE_DISPLAY_FORMAT ) & " " & timeFormat(
+		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat(
 			publishedDate,
-			variables.TIME_FORMAT
+			this.TIME_FORMAT
 		);
 	}
 
@@ -1421,9 +1380,9 @@ component
 		if ( isNull( expireDate ) ) {
 			return "N/A";
 		}
-		return dateFormat( expireDate, variables.DATE_DISPLAY_FORMAT ) & " " & timeFormat(
+		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat(
 			expireDate,
-			variables.TIME_FORMAT
+			this.TIME_FORMAT
 		);
 	}
 
@@ -1441,7 +1400,7 @@ component
 		if ( !isDate( getPublishedDate() ) ) {
 			return this;
 		}
-		var time = timeFormat( "#arguments.hour#:#arguments.minute#", variables.TIME_FORMAT );
+		var time = timeFormat( "#arguments.hour#:#arguments.minute#", this.TIME_FORMAT );
 		setPublishedDate( getPublishedDate() & " " & time );
 		return this;
 	}
@@ -1474,7 +1433,7 @@ component
 			arguments.minute = "00";
 		}
 		// setup the right time now.
-		var time = timeFormat( "#arguments.hour#:#arguments.minute#", variables.TIME_FORMAT );
+		var time = timeFormat( "#arguments.hour#:#arguments.minute#", this.TIME_FORMAT );
 		setExpireDate( getExpireDate() & " " & time );
 		return this;
 	}
@@ -1522,6 +1481,13 @@ component
 			return ( getCache() ? true : false );
 		}
 		return false;
+	}
+
+	/**
+	 * Shortcut to get the rendered content
+	 */
+	any function getRenderedContent(){
+		return this.renderContent();
 	}
 
 	/**

@@ -94,7 +94,7 @@ component
 	this.pk = "roleID";
 
 	this.memento = {
-		defaultIncludes : [ "*" ],
+		defaultIncludes : [ "role", "description" ],
 		defaultExcludes : [ "permissionList" ]
 	};
 

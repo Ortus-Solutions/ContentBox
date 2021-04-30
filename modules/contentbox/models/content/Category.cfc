@@ -116,7 +116,16 @@ component
 
 	this.pk = "categoryID";
 
-	this.memento = { defaultIncludes : [ "*" ], defaultExcludes : [ "site" ] };
+	this.memento = {
+		defaultIncludes : [
+			"category",
+			"numberOfContentStore",
+			"numberOfEntries",
+			"numberOfPages",
+			"slug"
+		],
+		defaultExcludes : [ "site" ]
+	};
 
 	this.constraints = {
 		"category" : { required : true, size : "1..200" },
@@ -149,6 +158,8 @@ component
 		variables.numberOfPublishedPages        = "";
 		variables.numberOfPublishedEntries      = "";
 		variables.numberOfPublishedContentStore = "";
+
+		super.init();
 
 		return this;
 	}
