@@ -2,7 +2,11 @@
 <!--- Count --->
 <input type="hidden" name="rulesCount" id="rulesCount" value="#arrayLen( prc.rules )#">
 <!--- rules --->
-<table name="rules" id="rules" class="table table-hover table-striped-removed " width="100%">
+<table
+	name="rules"
+	id="rules"
+	class="table table-hover table-striped-removed "
+	width="100%">
 	<thead>
 		<tr>
 			<th>Security Rule</th>
@@ -13,7 +17,10 @@
 
 	<tbody>
 		<cfloop array="#prc.rules#" index="rule">
-		<tr id="ruleid-#rule.getRuleID()#">
+		<tr
+			<!--- We convert the - in the id to _ since the order plugin doesn't like dashes--->
+			id="contentID-#rule.getRuleId().replace( "-", "_", "all" )#"
+		>
 			<td class="breakCellWords">
 				<cfif rule.getMatch() eq "event">
 					<span class="badge badge-info" title="Matches an event string">#rule.getMatch()#</span>

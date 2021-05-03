@@ -14,9 +14,15 @@
 #html.hiddenField( name="pagesCount", value=prc.pagesCount )#
 
 <!--- pages --->
-<table id="pages" name="pages" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
+<table
+	id="pages"
+	name="pages"
+	class="table table-striped-removed table-hover "
+	cellspacing="0"
+	width="100%"
+>
     <thead>
-        <tr></tr>
+        <tr>
             <th id="checkboxHolder" class="{sorter:false} text-center" width="15">
             	<input type="checkbox" onClick="checkAll( this.checked, 'contentID' )"/>
             </th>
@@ -42,7 +48,12 @@
     </thead>
     <tbody>
         <cfloop array="#prc.pages#" index="page">
-			<tr id="contentID-#page.getContentID()#" data-contentID="#page.getContentID()#"
+			<tr
+				<!--- We convert the - in the id to _ since the order plugin doesn't like dashes--->
+				id="contentID-#page.getContentID().replace( "-", "_", "all" )#"
+				data-contentID="#page.getContentID()#"
+
+				<!--- Classes according to content status --->
 				<cfif page.isExpired()>
 					class="danger"
 				<cfelseif page.isPublishedInFuture()>
@@ -52,8 +63,11 @@
 				<cfelseif page.hasActiveContent() eq false>
 					class="danger" title="No active content versions found, please publish one."
 				</cfif>
+
 				<!--- double click drill down --->
-				<cfif page.getNumberOfChildren()>ondblclick="contentDrilldown( '#page.getContentID()#' )"</cfif>
+				<cfif page.getNumberOfChildren()>
+					ondblclick="contentDrilldown( '#page.getContentID()#' )"
+				</cfif>
 			>
 				<!--- check box --->
 				<td class="text-center">

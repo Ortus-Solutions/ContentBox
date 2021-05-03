@@ -11,11 +11,15 @@
 
 <!--- Hidden Elements --->
 #html.hiddenField( name="parent", value=event.getValue( "parent", "" ) )#
-<!--- Content Count --->
 #html.hiddenField( name="contenCount", value=prc.contentCount )#
 
 <!--- content --->
-<table name="content" id="content" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
+<table
+	name="content"
+	id="content"
+	class="table table-striped-removed table-hover "
+	cellspacing="0"
+	width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
@@ -35,10 +39,16 @@
 
 	<tbody>
 		<cfloop array="#prc.content#" index="content">
-		<tr id="contentID-#content.getContentID()#"
+		<tr
+			<!--- We convert the - in the id to _ since the order plugin doesn't like dashes--->
+			id="contentID-#content.getContentID().replace( "-", "_", "all" )#"
 			data-contentID="#content.getContentID()#"
+
 			<!--- double click drill down --->
-			<cfif content.getNumberOfChildren()>ondblclick="contentDrilldown( '#content.getContentID()#' )"</cfif>
+			<cfif content.getNumberOfChildren()>
+				ondblclick="contentDrilldown( '#content.getContentID()#' )"
+			</cfif>
+
 			<!---Status bits --->
 			<cfif content.isExpired()>
 				class="danger"

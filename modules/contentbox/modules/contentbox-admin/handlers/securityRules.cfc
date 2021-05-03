@@ -56,18 +56,40 @@ component extends="baseHandler" {
 
 	// change order for all rules
 	function changeOrder( event, rc, prc ){
-		event.paramValue( "newRulesOrder", "" );
-		rc.newRulesOrder = replaceNoCase( rc.newRulesOrder, "&rules[]=", ",", "all" );
-		rc.newRulesOrder = replaceNoCase( rc.newRulesOrder, "rules[]=,", "", "all" );
-		for ( var i = 1; i lte listLen( rc.newRulesOrder ); i++ ) {
-			ruleID   = listGetAt( rc.newRulesOrder, i );
-			var rule = ruleService.get( ruleID );
-			if ( !isNull( rule ) ) {
-				rule.setOrder( i );
-				ruleService.saveRule( rule );
-			}
+		event.paramValue( "tableID", "rules" ).paramValue( "newRulesOrder", "" );
+		// decode + cleanup incoming rules data
+		// We replace _ to - due to the js plugin issue of not liking dashes
+		var aOrderedContent = urlDecode( rc.newRulesOrder )
+			.replace( "_", "-", "all" )
+			.listToArray( "&" )
+			.map( function( thisItem ){
+				return reReplaceNoCase(
+					arguments.thisItem,
+					"#rc.tableID#\[\]\=",
+					"",
+					"all"
+				);
+			} )
+			// Inflate
+			.map( function( thisId, index ){
+				return variables.ruleService.get( arguments.thisId ).setOrder( arguments.index );
+			} );
+
+
+		// save them
+		if ( arrayLen( aOrderedContent ) ) {
+			variables.ruleService.saveAll( aOrderedContent );
 		}
-		event.renderData( type = "json", data = "true" );
+
+		// Send response with the data in the right order
+		event
+			.getResponse()
+			.setData(
+				aOrderedContent.map( function( thisItem ){
+					return arguments.thisItem.getContentID();
+				} )
+			)
+			.addMessage( "Rules ordered successfully!" );
 	}
 
 	// editor

@@ -513,43 +513,47 @@ component extends="baseContentHandler" {
 		event.paramValue( "tableID", "pages" ).paramValue( "newRulesOrder", "" );
 
 		// decode + cleanup incoming rules data
-		rc.newRulesOrder = urlDecode( rc.newRulesOrder );
-		rc.newRulesOrder = listToArray(
-			reReplaceNoCase(
-				rc.newRulesOrder,
-				"&?#rc.tableID#\[\]\=",
-				",",
-				"all"
-			)
-		);
-
-		// iterate and perform ordering
-		var index  = 1;
-		var aPages = [];
-		for ( var thisPageID in rc.newRulesOrder ) {
-			var oPage = variables.pageService.get( thisPageID );
-			if ( !isNull( oPage ) ) {
-				arrayAppend( aPages, oPage );
-				// Update order
-				oPage.setOrder( index++ );
-				// remove caching
-				variables.pageService.clearPageWrapper( oPage.getSlug() );
+		// We replace _ to - due to the js plugin issue of not liking dashes
+		var aOrderedContent = urlDecode( rc.newRulesOrder )
+			.replace( "_", "-", "all" )
+			.listToArray( "&" )
+			.map( function( thisItem ){
+				return reReplaceNoCase(
+					arguments.thisItem,
+					"#rc.tableID#\[\]\=",
+					"",
+					"all"
+				);
+			} )
+			// Inflate to the page
+			.map( function( thisId, index ){
+				return variables.pageService.get( arguments.thisId ).setOrder( arguments.index );
+			} )
+			// remove caching once ordering changes
+			.each( function( oPage ){
+				variables.pageService.clearPageWrapper( arguments.oPage.getSlug() );
 				// Do we have a parent?
-				if ( oPage.hasParent() ) {
+				if ( arguments.oPage.hasParent() ) {
 					variables.pageService.clearPageWrapperCaches(
-						slug = oPage.getParent().getSlug()
+						slug = arguments.oPage.getParent().getSlug()
 					);
 				}
-			}
-		}
+			} );
 
 		// save them
-		if ( arrayLen( aPages ) ) {
-			variables.pageService.saveAll( aPages );
+		if ( arrayLen( aOrderedContent ) ) {
+			variables.pageService.saveAll( aOrderedContent );
 		}
 
-		// render data back
-		event.renderData( type = "json", data = "true" );
+		// Send response with the data in the right order
+		event
+			.getResponse()
+			.setData(
+				aOrderedContent.map( function( thisItem ){
+					return arguments.thisItem.getContentID();
+				} )
+			)
+			.addMessage( "Pages ordered successfully!" );
 	}
 
 	// pager viewlet

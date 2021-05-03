@@ -133,35 +133,40 @@ component extends="baseContentHandler" {
 		event.paramValue( "tableID", "content" ).paramValue( "newRulesOrder", "" );
 
 		// decode + cleanup incoming rules data
-		rc.newRulesOrder = urlDecode( rc.newRulesOrder );
-		rc.newRulesOrder = listToArray(
-			reReplaceNoCase(
-				rc.newRulesOrder,
-				"&?#rc.tableID#\[\]\=",
-				",",
-				"all"
-			)
-		);
+		// We replace _ to - due to the js plugin issue of not liking dashes
+		var aOrderedContent = urlDecode( rc.newRulesOrder )
+			.replace( "_", "-", "all" )
+			.listToArray( "&" )
+			.map( function( thisItem ){
+				return reReplaceNoCase(
+					arguments.thisItem,
+					"#rc.tableID#\[\]\=",
+					"",
+					"all"
+				);
+			} )
+			// Inflate
+			.map( function( thisId, index ){
+				return variables.contentStoreService
+					.get( arguments.thisId )
+					.setOrder( arguments.index );
+			} );
 
-		// iterate and perform ordering
-		var index         = 1;
-		var aContentItems = [];
-		for ( var thisContentID in rc.newRulesOrder ) {
-			var oContent = variables.contentStoreService.get( thisContentID );
-			if ( !isNull( oContent ) ) {
-				arrayAppend( aContentItems, oContent );
-				// Update order
-				oContent.setOrder( index++ );
-			}
-		}
 
 		// save them
-		if ( arrayLen( aContentItems ) ) {
-			contentStoreService.saveAll( aContentItems );
+		if ( arrayLen( aOrderedContent ) ) {
+			variables.contentStoreService.saveAll( aOrderedContent );
 		}
 
-		// render data back
-		event.renderData( type = "json", data = "true" );
+		// Send response with the data in the right order
+		event
+			.getResponse()
+			.setData(
+				aOrderedContent.map( function( thisItem ){
+					return arguments.thisItem.getContentID();
+				} )
+			)
+			.addMessage( "Content ordered successfully!" );
 	}
 
 	// Bulk Status Change

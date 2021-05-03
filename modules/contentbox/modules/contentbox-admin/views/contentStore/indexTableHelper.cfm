@@ -31,14 +31,16 @@ $( document ).ready(function() {
 		dragHandle  : ".dragHandle",
 		onDragClass : "selected",
 		onDragStart : function( table, row ){
-			var $rowContainer = $( row ).closest( 'tr' );
+			var $rowContainer = $( row )
+				.closest( 'tr' )
+				.addClass( "border-dotted opacity-70" );
 			this.movedHash = $( table ).tableDnDSerialize();
-			$( row ).removeClass( "btn-default" )
+			$( row )
+				.removeClass( "btn-default" )
 				.addClass( "btn-primary" )
 				.css( "cursor", "grab" )
 				.css( "cursor", "-moz-grabbing" )
 				.css( "cursor", "-webkit-grabbing" );
-			$rowContainer.addClass( "dotted" );
 		},
 		onDrop : function( table, row ){
 			var newRulesOrder = $( table ).tableDnDSerialize();
@@ -60,11 +62,12 @@ $( document ).ready(function() {
 				}
 			);
 			//console.log( $( row ) );
-			$( row ).find( "a.dragHandle" )
+			$( row )
+				.find( "a.dragHandle" )
 				.css( "cursor", "pointer" )
 				.removeClass( "btn-primary" )
 				.addClass( "btn-default" );
-			$( row ).removeClass( "dotted" );
+			$( row ).removeClass( "border-dotted opacity-70" );
 		}
 	} );
 	</cfif>
