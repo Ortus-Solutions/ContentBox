@@ -119,6 +119,17 @@ component
 		// INHERITANCE LAYOUT STATIC
 		variables.LAYOUT_INHERITANCE_KEY = "-inherit-";
 
+		appendToMemento(
+			[
+				"layout",
+				"mobileLayout",
+				"order",
+				"showInMenu",
+				"SSLOnly"
+			],
+			"defaultIncludes"
+		);
+
 		return this;
 	}
 

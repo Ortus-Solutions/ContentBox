@@ -29,8 +29,8 @@ component {
 			except  : except
 		);
 		resources(
-			resource: "content",
-			pattern = "#siteprefix#/content",
+			resource: "contentStore",
+			pattern = "#siteprefix#/contentStore",
 			except  : except
 		);
 		resources(

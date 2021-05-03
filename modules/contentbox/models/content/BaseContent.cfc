@@ -538,8 +538,7 @@ component
 				"createdDate"   : getCreatedDate(),
 				"modifiedDate"  : getModifiedDate(),
 				"expireDate"    : getExpireDate(),
-				"contentType"   : getContentType(),
-				"showInMenu"    : getShowInMenu()
+				"contentType"   : getContentType()
 			};
 		}
 		return {};
