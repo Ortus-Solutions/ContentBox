@@ -2155,7 +2155,7 @@ component accessors="true" singleton threadSafe {
 	){
 		arguments.showNone    = false;
 		// get root pages
-		arguments.pageRecords = pageService.findPublishedPages(
+		arguments.pageRecords = pageService.findPublishedContent(
 			parent    : "",
 			showInMenu: true,
 			siteID    : site().getsiteID(),
@@ -2204,7 +2204,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		// get child pages
-		arguments.pageRecords = pageService.findPublishedPages(
+		arguments.pageRecords = pageService.findPublishedContent(
 			parent    : page.getContentID(),
 			showInMenu: true,
 			siteID    : site().getsiteID(),
@@ -2374,19 +2374,22 @@ component accessors="true" singleton threadSafe {
 			if (
 				!len( arguments.excludes ) OR !listFindNoCase(
 					arguments.excludes,
-					pageResults.pages[ x ][ "title" ]
+					pageResults.content[ x ][ "title" ]
 				)
 			) {
 				// Do we need to nest?
 				var doNesting = (
-					arguments.currentLevel lt arguments.levels AND pageResults.pages[ x ][
+					arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][
 						"numberOfChildren"
 					] > 0
 				);
 				// Is element active (or one of its decendants)
-				var isElementActive         = currentPageID eq pageResults.pages[ x ][ "contentID" ];
+				var isElementActive         = currentPageID eq pageResults.content[ x ][ "contentID" ];
 				var isElementActiveAncestor = (
-					listFindNoCase( pageAncestorContentIDs, pageResults.pages[ x ][ "contentID" ] )
+					listFindNoCase(
+						pageAncestorContentIDs,
+						pageResults.content[ x ][ "contentID" ]
+					)
 				);
 				// class = active? Then add to class text
 				if ( isElementActive ) {
@@ -2401,13 +2404,13 @@ component accessors="true" singleton threadSafe {
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"">#pageResults.pages[ x ][ "title" ]#</a>"
+							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
 						);
 						// If type is "li" then guess to do a nested ul list
 						b.append(
 							buildMenu(
-								pageRecords = pageService.findPublishedPages(
-									parent    : pageResults.pages[ x ][ "contentID" ],
+								pageRecords = pageService.findPublishedContent(
+									parent    : pageResults.content[ x ][ "contentID" ],
 									showInMenu: true,
 									siteID    : site().getsiteID(),
 									properties: "contentID,slug,title,numberOfChildren"
@@ -2425,7 +2428,7 @@ component accessors="true" singleton threadSafe {
 					}
 					// Do we nest active and activeShowChildren flag is activated?
 					else if (
-						activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.pages[
+						activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.content[
 							x
 						].hasChild()
 					) {
@@ -2433,13 +2436,13 @@ component accessors="true" singleton threadSafe {
 						arrayAppend( classText, arguments.parentClass );
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"">#pageResults.pages[ x ][ "title" ]#</a>"
+							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
 						);
 						// If type is "li" then guess to do a nested ul list
 						b.append(
 							buildMenu(
-								pageRecords = pageService.findPublishedPages(
-									parent    : pageResults.pages[ x ][ "contentID" ],
+								pageRecords = pageService.findPublishedContent(
+									parent    : pageResults.content[ x ][ "contentID" ],
 									showInMenu: true,
 									siteID    : site().getsiteID(),
 									properties: "contentID,slug,title,numberOfChildren"
@@ -2457,7 +2460,7 @@ component accessors="true" singleton threadSafe {
 					} else {
 						// Start Embedded List
 						b.append(
-							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"">#pageResults.pages[ x ][ "title" ]#</a>"
+							"<li class=""#arrayToList( classText, " " )#""><a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"">#pageResults.content[ x ][ "title" ]#</a>"
 						);
 					}
 
@@ -2465,13 +2468,13 @@ component accessors="true" singleton threadSafe {
 					b.append( "</li>" );
 				} else if ( arguments.type eq "data" ) {
 					var pageData = {
-						title : pageResults.pages[ x ][ "title" ],
-						link  : linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )
+						title : pageResults.content[ x ][ "title" ],
+						link  : linkPageWithSlug( pageResults.content[ x ][ "slug" ] )
 					};
 					if ( doNesting ) {
 						pageData.subPageMenu = buildMenu(
-							pageRecords = pageService.findPublishedPages(
-								parent    : pageResults.pages[ x ][ "contentID" ],
+							pageRecords = pageService.findPublishedContent(
+								parent    : pageResults.content[ x ][ "contentID" ],
 								showInMenu: true,
 								siteID    : site().getsiteID(),
 								properties: "contentID,slug,title,numberOfChildren"
@@ -2488,13 +2491,13 @@ component accessors="true" singleton threadSafe {
 					}
 					// Do we nest active and activeShowChildren flag is activated?
 					else if (
-						activeShowChildren AND isElementActive AND pageResults.pages[ x ][
+						activeShowChildren AND isElementActive AND pageResults.content[ x ][
 							"numberOfChildren"
 						] > 0
 					) {
 						pageData.subPageMenu = buildMenu(
-							pageRecords = pageService.findPublishedPages(
-								parent    : pageResults.pages[ x ][ "contentID" ],
+							pageRecords = pageService.findPublishedContent(
+								parent    : pageResults.content[ x ][ "contentID" ],
 								showInMenu: true,
 								siteID    : site().getsiteID(),
 								properties: "contentID,slug,title,numberOfChildren"
@@ -2512,7 +2515,7 @@ component accessors="true" singleton threadSafe {
 					arrayAppend( dataMenu, pageData );
 				} else {
 					b.append(
-						"<a href=""#linkPageWithSlug( pageResults.pages[ x ][ "slug" ] )#"" class=""#arrayToList( classText, " " )#"">#pageResults.pages[ x ][ "title" ]#</a>#arguments.separator#"
+						"<a href=""#linkPageWithSlug( pageResults.content[ x ][ "slug" ] )#"" class=""#arrayToList( classText, " " )#"">#pageResults.content[ x ][ "title" ]#</a>#arguments.separator#"
 					);
 				}
 			}

@@ -56,7 +56,7 @@ component
 		variables.contentType     = "Entry";
 
 		appendToMemento( [ "excerpt" ], "defaultIncludes" );
-		appendToMemento( [ "parentSnapshot" ], "defaultExcludes" );
+		appendToMemento( [], "defaultExcludes" );
 
 		return this;
 	}

@@ -444,7 +444,7 @@ component
 			"numberOfComments",
 			"numberOfHits",
 			"numberOfVersions",
-			"parentSnapshot", // Parent
+			"parentSnapshot:parent", // Parent
 			"publishedDate",
 			"showInSearch",
 			"slug",

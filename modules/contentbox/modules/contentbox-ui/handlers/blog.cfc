@@ -116,14 +116,14 @@ component extends="content" {
 		}
 
 		// get published entries
-		var entryResults = variables.entryService.findPublishedEntries(
+		var entryResults = variables.entryService.findPublishedContent(
 			offset    : prc.pagingBoundaries.startRow - 1,
 			max       : prc.cbSettings.cb_paging_maxentries,
 			category  : rc.category,
 			searchTerm: rc.q,
 			siteID    : prc.oCurrentSite.getsiteID()
 		);
-		prc.entries      = entryResults.entries;
+		prc.entries      = entryResults.content;
 		prc.entriesCount = entryResults.count;
 
 		// announce event

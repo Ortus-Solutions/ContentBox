@@ -170,7 +170,7 @@ component singleton {
 	 */
 	private function buildEntryFeed( string category = "", string siteID = "" ){
 		var settings     = settingService.getAllSettings();
-		var entryResults = entryService.findPublishedEntries(
+		var entryResults = entryService.findPublishedContent(
 			category: arguments.category,
 			max     : settings.cb_rss_maxEntries,
 			siteID  : arguments.siteID
@@ -178,7 +178,7 @@ component singleton {
 		var myArray    = [];
 		var feedStruct = {};
 		var columnMap  = {};
-		var qEntries   = entityToQuery( entryResults.entries );
+		var qEntries   = entityToQuery( entryResults.content );
 
 		// max checks
 		if ( settings.cb_rss_maxEntries lt entryResults.count ) {
@@ -209,15 +209,15 @@ component singleton {
 			qEntries.guid_permalink[ i ] = false;
 			qEntries.guid_string[ i ]    = variables.CBHelper.linkEntry( qEntries.slug[ i ] );
 			;
-			qEntries.author[ i ]       = "#entryResults.entries[ i ].getAuthorEmail()# (#entryResults.entries[ i ].getAuthorName()#)";
+			qEntries.author[ i ]       = "#entryResults.content[ i ].getAuthorEmail()# (#entryResults.content[ i ].getAuthorName()#)";
 			qEntries.linkComments[ i ] = variables.CBHelper.linkComments(
-				entryResults.entries[ i ]
+				entryResults.content[ i ]
 			);
-			qEntries.categories[ i ] = entryResults.entries[ i ].getCategoriesList();
-			if ( entryResults.entries[ i ].hasExcerpt() ) {
-				qEntries.content[ i ] = entryResults.entries[ i ].renderExcerpt();
+			qEntries.categories[ i ] = entryResults.content[ i ].getCategoriesList();
+			if ( entryResults.content[ i ].hasExcerpt() ) {
+				qEntries.content[ i ] = entryResults.content[ i ].renderExcerpt();
 			} else {
-				qEntries.content[ i ] = entryResults.entries[ i ].renderContent();
+				qEntries.content[ i ] = entryResults.content[ i ].renderContent();
 			}
 			qEntries.content[ i ] = cleanupContent( qEntries.content[ i ] );
 		}
@@ -244,7 +244,7 @@ component singleton {
 	 */
 	private function buildPageFeed( string category = "", string siteID = "" ){
 		var settings    = settingService.getAllSettings();
-		var pageResults = variables.pageService.findPublishedPages(
+		var pageResults = variables.pageService.findPublishedContent(
 			category: arguments.category,
 			max     : settings.cb_rss_maxEntries,
 			siteID  : arguments.siteID
@@ -252,7 +252,7 @@ component singleton {
 		var myArray    = [];
 		var feedStruct = {};
 		var columnMap  = {};
-		var qPages     = entityToQuery( pageResults.pages );
+		var qPages     = entityToQuery( pageResults.content );
 
 		// max checks
 		if ( settings.cb_rss_maxEntries lt pageResults.count ) {
@@ -280,15 +280,15 @@ component singleton {
 		for ( var i = 1; i lte pageResults.count; i++ ) {
 			// build URL to entry
 			qPages.link[ i ]           = variables.CBHelper.linkPage( qPages.slug );
-			qPages.author[ i ]         = "#pageResults.pages[ i ].getAuthorEmail()# (#pageResults.pages[ i ].getAuthorName()#)";
-			qPages.linkComments[ i ]   = variables.CBHelper.linkComments( pageResults.pages[ i ] );
-			qPages.categories[ i ]     = pageResults.pages[ i ].getCategoriesList();
+			qPages.author[ i ]         = "#pageResults.content[ i ].getAuthorEmail()# (#pageResults.content[ i ].getAuthorName()#)";
+			qPages.linkComments[ i ]   = variables.CBHelper.linkComments( pageResults.content[ i ] );
+			qPages.categories[ i ]     = pageResults.content[ i ].getCategoriesList();
 			qPages.guid_permalink[ i ] = false;
 			qPages.guid_string[ i ]    = variables.CBHelper.linkPage( qPages.slug );
-			if ( pageResults.pages[ i ].hasExcerpt() ) {
-				qPages.content[ i ] = pageResults.pages[ i ].renderExcerpt();
+			if ( pageResults.content[ i ].hasExcerpt() ) {
+				qPages.content[ i ] = pageResults.content[ i ].renderExcerpt();
 			} else {
-				qPages.content[ i ] = pageResults.pages[ i ].renderContent();
+				qPages.content[ i ] = pageResults.content[ i ].renderContent();
 			}
 			qPages.content[ i ] = cleanupContent( qPages.content[ i ] );
 		}

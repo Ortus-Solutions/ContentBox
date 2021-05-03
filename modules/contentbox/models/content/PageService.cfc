@@ -176,10 +176,7 @@ component extends="ContentService" singleton {
 			else {
 				// search the association
 				c.createAlias( "categories", "cats" )
-					.isIn(
-						"cats.categoryID",
-						[ arguments.category ]
-					);
+					.isIn( "cats.categoryID", [ arguments.category ] );
 			}
 		}
 
@@ -211,96 +208,46 @@ component extends="ContentService" singleton {
 	}
 
 	/**
-	 * Find published pages in ContentBox that have no passwords
+	 * Find published pages using different filters and output formats.
 	 *
-	 * @max The max number of pages to return, defaults to 0=all
-	 * @offset The pagination offset
-	 * @searchTerm Pass a search term to narrow down results
-	 * @category Pass a list of categories to narrow down results
-	 * @asQuery Return results as array of objects or query, default is array of objects
-	 * @parent The parent ID to restrict the search on
-	 * @showInMenu If passed, it limits the search to this content property
-	 * @sortOrder The sort order string, defaults to publisedDate DESC
-	 * @siteID The siteID to filter on
+	 * @max The maximum number of records to paginate
+	 * @offset The offset in the pagination
+	 * @searchTerm The search term to search
+	 * @category The category to filter the content on
+	 * @asQuery Return as query or array of objects, defaults to array of objects
+	 * @sortOrder how we need to sort the results
+	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
+	 * @siteID If passed, filter by site id
 	 * @properties The list of properties to project on instead of giving you full object graphs
+	 * @authorID The authorID to filter on
+	 * @criteria The criteria object to use if passed, else we create a new one.
+	 * @showInMenu If passed, it limits the search to this content property
 	 *
-	 * @return struct of { count, pages }
+	 * @return struct of { count, content }
 	 */
-	function findPublishedPages(
-		numeric max       = 0,
-		numeric offset    = 0,
-		string searchTerm = "",
-		string category   = "",
-		boolean asQuery   = false,
-		string parent,
-		boolean showInMenu,
+	function findPublishedContent(
+		numeric max      = 0,
+		numeric offset   = 0,
+		any searchTerm   = "",
+		any category     = "",
+		boolean asQuery  = false,
 		string sortOrder = "publishedDate DESC",
-		string siteID    = "",
-		properties
+		any parent,
+		string slugPrefix = "",
+		string siteID     = "",
+		string properties,
+		string authorID = "",
+		boolean showInMenu
 	){
-		var results = { "count" : 0, "pages" : [] };
-		var c       = newCriteria();
-
-		// only published pages
-		c.isTrue( "isPublished" )
-			.isLT( "publishedDate", now() )
-			.$or(
-				c.restrictions.isNull( "expireDate" ),
-				c.restrictions.isGT( "expireDate", now() )
-			)
-			// only non-password pages
-			.isEq( "passwordProtection", "" )
+		arguments.criteria = newCriteria()
 			// Show only pages with showInMenu criteria?
 			.when( !isNull( arguments.showInMenu ), function( c ){
-				c.isEq( "showInMenu", javacast( "boolean", showInMenu ) );
-			} )
-			// Category Filter
-			.when( len( arguments.category ), function( c ){
-				// create association with categories by slug.
-				c.joinTo( "categories", "cats" ).isIn( "cats.slug", listToArray( category ) );
-			} )
-			// Search Criteria
-			.when( len( arguments.searchTerm ), function( c ){
-				// like disjunctions
-				c.joinTo(
-						associationName: "contentVersions",
-						alias          : "ac",
-						withClause     : getRestrictions().isTrue( "ac.isActive" )
-					)
-					.$or(
-						c.restrictions.like( "title", "%#searchTerm#%" ),
-						c.restrictions.like( "ac.content", "%#searchTerm#%" )
-					);
-			} )
-			// Site Filter
-			.when( len( arguments.siteID ), function( c ){
-				c.isEq( "site.siteID", siteID );
-			} )
-			// Parent Filter
-			.when( !isNull( arguments.parent ), function( c ){
-				if ( len( trim( parent ) ) ) {
-					c.isEq( "parent.contentID", parent );
-				} else {
-					c.isNull( "parent" );
-				}
-				// change sort by parent
-				sortOrder = "order asc";
+				arguments.c.isEq( "showInMenu", javacast( "boolean", showInMenu ) );
 			} );
 
 		// run criteria query and projections count
-		results.count = c.count( "contentID" );
-		results.pages = c
-			// Do we want array of simple projections?
-			.when( !isNull( arguments.properties ), function( c ){
-				c.withProjections( property: properties ).asStruct();
-			} )
-			.list(
-				offset   : arguments.offset,
-				max      : arguments.max,
-				sortOrder: arguments.sortOrder
-			);
-
-		return results;
+		return super.findPublishedContent( argumentCollection = arguments );
 	}
 
 	/**

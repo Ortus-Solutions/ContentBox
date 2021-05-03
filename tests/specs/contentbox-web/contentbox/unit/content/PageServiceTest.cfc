@@ -52,21 +52,21 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "cand find published pages", function(){
-				var r = model.findPublishedPages();
+				var r = model.findPublishedContent();
 				expect( r.count ).toBeGT( 0 );
 
 				// search
-				var r = model.findPublishedPages( searchTerm = "products" );
+				var r = model.findPublishedContent( searchTerm = "products" );
 				expect( r.count ).toBeGT( 0 );
 
 				// parent
-				var r = model.findPublishedPages( parent = "" );
+				var r = model.findPublishedContent( parent = "" );
 				expect( r.count ).toBeGT( 0 );
-				var r = model.findPublishedPages( parent = "1" );
+				var r = model.findPublishedContent( parent = "1" );
 				expect( r.count ).toBe( 0 );
 
 				// search
-				var r = model.findPublishedPages( showInMenu = true );
+				var r = model.findPublishedContent( showInMenu = true );
 				expect( r.count ).toBeGT( 0 );
 			} );
 		} );

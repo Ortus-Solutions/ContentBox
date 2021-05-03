@@ -100,17 +100,17 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can find published entries by criteria", function(){
-				var r = model.findPublishedEntries();
+				var r = model.findPublishedContent();
 				expect( r.count ).toBeGT( 0 );
 
 				// categories
-				var r = model.findPublishedEntries( category = "software" );
+				var r = model.findPublishedContent( category = "software" );
 				expect( r.count ).toBe( 0 );
-				var r = model.findPublishedEntries( category = "ColdFusion" );
+				var r = model.findPublishedContent( category = "ColdFusion" );
 				expect( r.count ).toBeGTE( 1 );
 
 				// search
-				var r = model.findPublishedEntries( search = "first" );
+				var r = model.findPublishedContent( search = "first" );
 				expect( r.count ).toBeGT( 0 );
 			} );
 		} );

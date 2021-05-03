@@ -7,7 +7,7 @@ component extends="baseHandler" {
 	property name="ormService" inject="EntryService@cb";
 
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "lastName";
+	variables.sortOrder    = "publishedDate DESC";
 	// The name of the entity this resource handler controls. Singular name please.
 	variables.entity       = "Entry";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
@@ -41,7 +41,7 @@ component extends="baseHandler" {
 		param rc.author    = "";
 
 		// Build up a search criteria and let the base execute it
-		arguments.results = variables.ormService.findPublishedEntries(
+		arguments.results = variables.ormService.findPublishedContent(
 			searchTerm = rc.search,
 			category   = rc.category,
 			offset     = getPageOffset( rc.page ),
@@ -52,7 +52,7 @@ component extends="baseHandler" {
 		);
 
 		// Build to match interface
-		arguments.results.records = arguments.results.entries;
+		arguments.results.records = arguments.results.content;
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
@@ -68,8 +68,8 @@ component extends="baseHandler" {
 			"activeContent",
 			"childrenSnapshot:children",
 			"customFieldsAsStruct:customFields",
-			"linkedContentSnapshot",
-			"relatedContentSnapshot",
+			"linkedContentSnapshot:linkedContent",
+			"relatedContentSnapshot:relatedContent",
 			"renderedContent"
 		] );
 		param rc.excludes = "";

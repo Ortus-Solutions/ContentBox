@@ -361,7 +361,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Find published content objects
+	 * Find published content objects by different filters and output formats
 	 *
 	 * @max The maximum number of records to paginate
 	 * @offset The offset in the pagination
@@ -370,9 +370,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @asQuery Return as query or array of objects, defaults to array of objects
 	 * @sortOrder how we need to sort the results
 	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	 * @showInMenu Whether to filter with the show in menu bit or not
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 	 * @siteID If passed, filter by site id
+	 * @properties The list of properties to project on instead of giving you full object graphs
+	 * @authorID The authorID to filter on
+	 * @criteria The criteria object to use if passed, else we create a new one.
 	 *
 	 * @return struct as { count, content }
 	 */
@@ -384,12 +386,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		boolean asQuery  = false,
 		string sortOrder = "publishedDate DESC",
 		any parent,
-		boolean showInMenu,
 		string slugPrefix = "",
-		string siteID     = ""
+		string siteID     = "",
+		string properties,
+		string authorID = "",
+		any criteria
 	){
 		var results = { "count" : 0, "content" : [] };
-		var c       = newCriteria();
+		var c       = ( isNull( arguments.criteria ) ? newCriteria() : arguments.criteria );
 
 		// only published pages
 		c.isTrue( "isPublished" )
@@ -399,60 +403,58 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				c.restrictions.isGT( "expireDate", now() )
 			)
 			// only non-password pages
-			.isEq( "passwordProtection", "" );
-
-		// Show only pages with showInMenu criteria?
-		if ( structKeyExists( arguments, "showInMenu" ) ) {
-			c.isEq( "showInMenu", javacast( "boolean", arguments.showInMenu ) );
-		}
-
-		// Category Filter
-		if ( len( arguments.category ) ) {
-			// create association with categories by slug.
-			c.createAlias( "categories", "cats" )
-				.isIn( "cats.slug", listToArray( arguments.category ) );
-		}
-
-		// Site Filter
-		if ( len( arguments.siteID ) ) {
-			c.isEq( "site.siteID", arguments.siteID );
-		}
-
-		// Search Criteria
-		if ( len( arguments.searchTerm ) ) {
-			// like disjunctions
-			c.createAlias(
-					associationName: "contentVersions",
-					alias          : "ac",
-					withClause     : getRestrictions().isTrue( "ac.isActive" )
-				)
-				.$or(
-					c.restrictions.like( "title", "%#arguments.searchTerm#%" ),
-					c.restrictions.like( "ac.content", "%#arguments.searchTerm#%" )
-				);
-		}
-
-
-		// parent filter
-		if ( !isNull( arguments.parent ) ) {
-			if ( isSimpleValue( arguments.parent ) and len( arguments.parent ) ) {
-				c.isEq( "parent.contentID", arguments.parent );
-			} else if ( isObject( arguments.parent ) ) {
-				c.isEq( "parent", arguments.parent );
-			} else {
-				c.isNull( "parent" );
-			}
-		}
-
-		// Slug Prefix
-		if ( len( arguments.slugPrefix ) ) {
-			c.ilike( "slug", "#arguments.slugPrefix#/%" );
-		}
+			.isEq( "passwordProtection", "" )
+			// Category Filter
+			.when( len( arguments.category ), function( c ){
+				// create association with categories by slug.
+				arguments.c
+					.joinTo( "categories", "cats" )
+					.isIn( "cats.slug", listToArray( category ) );
+			} )
+			// Search Criteria
+			.when( len( arguments.searchTerm ), function( c ){
+				// like disjunctions
+				arguments.c
+					.joinTo(
+						associationName: "contentVersions",
+						alias          : "ac",
+						withClause     : getRestrictions().isTrue( "ac.isActive" )
+					)
+					.$or(
+						arguments.c.restrictions.like( "title", "%#searchTerm#%" ),
+						arguments.c.restrictions.like( "ac.content", "%#searchTerm#%" )
+					);
+			} )
+			// Site Filter
+			.when( len( arguments.siteID ), function( c ){
+				arguments.c.isEq( "site.siteID", siteID );
+			} )
+			// Slug Prefix hierarchy search
+			.when( len( arguments.slugPrefix ), function( c ){
+				arguments.c.ilike( "slug", "#slugPrefix#/%" );
+			} )
+			// Creator Filter
+			.when( len( arguments.authorID ), function( c ){
+				arguments.c.isEq( "creator.authorID", authorID );
+			} )
+			// Parent Filter
+			.when( !isNull( arguments.parent ), function( c ){
+				if ( len( trim( parent ) ) ) {
+					arguments.c.isEq( "parent.contentID", parent );
+				} else {
+					arguments.c.isNull( "parent" );
+				}
+				// change sort by parent
+				sortOrder = "order asc";
+			} );
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );
 		results.content = c
-			.asDistinct()
+			// Do we want array of simple projections?
+			.when( !isNull( arguments.properties ), function( c ){
+				arguments.c.withProjections( property: properties ).asStruct();
+			} )
 			.list(
 				offset   : arguments.offset,
 				max      : arguments.max,

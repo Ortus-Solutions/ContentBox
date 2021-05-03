@@ -107,7 +107,7 @@ component
 			"changelog",
 			"version",
 			"isActive",
-			"authorSnapshot"
+			"authorSnapshot:author"
 		],
 		defaultExcludes : [ "relatedContent" ],
 		neverInclude    : [ "" ]

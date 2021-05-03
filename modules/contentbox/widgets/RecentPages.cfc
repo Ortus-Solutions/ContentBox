@@ -63,7 +63,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			}
 		}
 
-		var pageResults = variables.pageService.findPublishedPages(
+		var pageResults = variables.pageService.findPublishedContent(
 			max       : arguments.max,
 			category  : arguments.category,
 			searchTerm: arguments.searchTerm,
@@ -95,7 +95,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			for ( var x = 1; x lte arguments.max; x++ ) {
 				writeOutput(
 					"<li class=""recentPages"">
-		<a href=""#cb.linkPage( pageResults.pages[ x ] )#"">#pageResults.pages[ x ].getTitle()#</a>
+		<a href=""#cb.linkPage( pageResults.content[ x ] )#"">#pageResults.content[ x ].getTitle()#</a>
 	</li>
 	"
 				);

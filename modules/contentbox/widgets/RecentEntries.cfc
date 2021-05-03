@@ -62,7 +62,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			}
 		}
 
-		var entryResults = entryService.findPublishedEntries(
+		var entryResults = entryService.findPublishedContent(
 			max       : arguments.max,
 			category  : arguments.category,
 			searchTerm: arguments.searchTerm,
@@ -94,7 +94,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			for ( var x = 1; x lte arguments.max; x++ ) {
 				writeOutput(
 					"<li class=""recentEntries"">
-		<a href=""#cb.linkEntry( entryResults.entries[ x ] )#"">#entryResults.entries[ x ].getTitle()#</a>
+		<a href=""#cb.linkEntry( entryResults.content[ x ] )#"">#entryResults.content[ x ].getTitle()#</a>
 	</li>
 	"
 				);
