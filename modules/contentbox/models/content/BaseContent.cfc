@@ -425,7 +425,7 @@ component
 			"cacheLastAccessTimeout",
 			"cacheLayout",
 			"cacheTimeout",
-			"categoriesList",
+			"categoriesList:categories",
 			"contentID",
 			"contentType",
 			"createdDate",
@@ -464,7 +464,7 @@ component
 		],
 		neverInclude : [ "passwordProtection" ],
 		mappers      : {
-			"categoriesList" : function( item, memento ){
+			"categories" : function( item, memento ){
 				return listToArray( arguments.item );
 			}
 		}
@@ -534,7 +534,12 @@ component
 				"title"         : getTitle(),
 				"slug"          : getSlug(),
 				"isPublished"   : getIsPublished(),
-				"publishedDate" : getPublishedDate()
+				"publishedDate" : getPublishedDate(),
+				"createdDate"   : getCreatedDate(),
+				"modifiedDate"  : getModifiedDate(),
+				"expireDate"    : getExpireDate(),
+				"contentType"   : getContentType(),
+				"showInMenu"    : getShowInMenu()
 			};
 		}
 		return {};
