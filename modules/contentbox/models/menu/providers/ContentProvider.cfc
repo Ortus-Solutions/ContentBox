@@ -58,13 +58,11 @@ component
 			title              : title,
 			slug               : slug
 		};
-		return renderer
-			.$get()
-			.renderView(
-				view   = "menus/providers/content/admin",
-				module = "contentbox-admin",
-				args   = viewArgs
-			);
+		return variables.renderer.renderView(
+			view   = "menus/providers/content/admin",
+			module = "contentbox-admin",
+			args   = viewArgs
+		);
 	}
 
 	/**
@@ -79,13 +77,11 @@ component
 			contentLink : CBHelper.linkContent( content = content ),
 			data        : arguments.menuItem.getMemento()
 		};
-		return renderer
-			.$get()
-			.renderExternalView(
-				view   = "/contentbox/models/menu/views/content/display",
-				module = "contentbox",
-				args   = viewArgs
-			);
+		return variables.renderer.renderExternalView(
+			view   = "/contentbox/models/menu/views/content/display",
+			module = "contentbox",
+			args   = viewArgs
+		);
 	}
 
 }

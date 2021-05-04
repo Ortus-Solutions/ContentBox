@@ -50,13 +50,11 @@ component
 		}
 		var menus    = criteria.list( sortOrder = "title ASC" );
 		var viewArgs = { menus : menus, existingSlug : existingSlug };
-		return renderer
-			.$get()
-			.renderView(
-				view   = "menus/providers/submenu/admin",
-				module = "contentbox-admin",
-				args   = viewArgs
-			);
+		return variables.renderer.renderView(
+			view   = "menus/providers/submenu/admin",
+			module = "contentbox-admin",
+			args   = viewArgs
+		);
 	}
 	/**
 	 * Retrieves template for use in rendering menu item on the site
@@ -69,13 +67,11 @@ component
 			data      : arguments.menuItem.getMemento(),
 			slugCache : arguments.options.slugCache
 		};
-		return renderer
-			.$get()
-			.renderExternalView(
-				view   = "/contentbox/models/menu/views/submenu/display",
-				module = "contentbox",
-				args   = viewArgs
-			);
+		return variables.renderer.renderExternalView(
+			view   = "/contentbox/models/menu/views/submenu/display",
+			module = "contentbox",
+			args   = viewArgs
+		);
 	}
 
 }

@@ -46,13 +46,11 @@ component
 			menuItem : arguments.menuItem,
 			data     : arguments.menuItem.getMemento()
 		};
-		return renderer
-			.$get()
-			.renderExternalView(
-				view   = "/contentbox/models/menu/views/free/display",
-				module = "contentbox",
-				args   = viewArgs
-			);
+		return variables.renderer.renderExternalView(
+			view   = "/contentbox/models/menu/views/free/display",
+			module = "contentbox",
+			args   = viewArgs
+		);
 	}
 
 }

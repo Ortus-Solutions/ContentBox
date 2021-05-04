@@ -94,7 +94,6 @@ component
 	property
 		name     ="active"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		dbdefault="true"
 		default  ="true";
 
@@ -144,6 +143,18 @@ component
 
 	this.pk = "menuItemID";
 
+	this.memento = {
+		defaultIncludes : [
+			"active",
+			"data",
+			"itemClass",
+			"label",
+			"menuType",
+			"children"
+		],
+		defaultExcludes : [ "menu", "parent" ]
+	};
+
 	this.constraints = {
 		"title"     : { required : true, size : "1..200" },
 		"label"     : { required : false, size : "1..200" },
@@ -155,9 +166,6 @@ component
 	 **                          CONSTRUCTOR
 	 ********************************************************************* */
 
-	/**
-	 * constructor
-	 */
 	BaseMenuItem function init(){
 		variables.active   = true;
 		variables.children = [];
@@ -167,33 +175,26 @@ component
 		return this;
 	}
 
+	/**
+	 * Build a parent snapshot
+	 */
+	struct function getParentSnapshot(){
+		return ( hasParent() ? getParent().getInfoSnapshot() : {} );
+	}
+
+	/**
+	 * Utility method to get a snapshot of this menu item
+	 */
+	struct function getInfoSnapshot(){
+		if ( isLoaded() ) {
+			return getMemento( excludes = "children,parent" );
+		}
+		return {};
+	}
+
 	/* *********************************************************************
 	 **                          PUBLIC FUNCTIONS
 	 ********************************************************************* */
-
-	/**
-	 * Get a flat representation of this menu item
-	 * @excludes Exclude properties
-	 */
-	public struct function getMemento( excludes = "" ){
-		var pList  = listToArray( arrayToList( menuItemService.getPropertyNames() ) );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// add contentType
-		result[ "menuType" ] = getMenuType();
-		// set empty children
-		result[ "children" ] = [];
-		// remove parent...we'll rationalize the relationships via "children"
-		structDelete( result, "parent" );
-		// Children
-		if ( hasChild() ) {
-			result[ "children" ] = [];
-			for ( var thisChild in variables.children ) {
-				arrayAppend( result[ "children" ], thisChild.getMemento() );
-			}
-		}
-		return result;
-	}
 
 	/**
 	 * Get a handy, formatted string of attributes that are applicable for the current menu item

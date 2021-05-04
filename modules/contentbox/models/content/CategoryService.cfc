@@ -73,10 +73,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @category The category object
 	 *
 	 * @throws UniqueCategoryException
-	 * @return The category sent for saving
+	 *
+	 * @return The saved category
 	 */
 	function save( required category ){
-		// Save the category
 		return super.save( arguments.category );
 	}
 
@@ -100,7 +100,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				c.isEq( "site.siteID", siteID );
 			} )
 			.when( len( arguments.categoryID ), function( c ){
-				c.ne( "categoryID", autoCast( "categoryID", categoryID ) );
+				c.ne( "categoryID", categoryID );
 			} )
 			.count() > 0 ? false : true;
 	}

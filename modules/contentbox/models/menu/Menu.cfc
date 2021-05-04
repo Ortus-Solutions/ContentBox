@@ -108,6 +108,17 @@ component
 
 	this.pk = "menuID";
 
+	this.memento = {
+		defaultIncludes : [
+			"listClass",
+			"listType",
+			"menuClass",
+			"slug",
+			"title"
+		],
+		defaultExcludes : [ "site", "menuItems" ]
+	};
+
 	this.constraints = {
 		"title"     : { required : true, size : "1..200" },
 		"slug"      : { required : true, size : "1..200" },
@@ -177,49 +188,13 @@ component
 	/**
 	 * Retrieves root menu items (only items with no parents)
 	 */
-	public array function getRootMenuItems(){
-		var items = [];
+	array function getRootMenuItems(){
 		if ( hasMenuItem() ) {
-			for ( var item in getMenuItems() ) {
-				if ( !item.hasParent() ) {
-					arrayAppend( items, item );
-				}
-			}
+			return getMenuItems().filter( function( thisItem ){
+				return !arguments.thisItem.hasParent();
+			} );
 		}
-		return items;
-	}
-
-	/**
-	 * Get a flat representation of this menu
-	 * slugCache.hint Cache of slugs to prevent infinite recursions
-	 */
-	public struct function getMemento( excludes = "" ){
-		var pList  = listToArray( arrayToList( menuService.getPropertyNames() ) );
-		// Do this to convert native Array to CF Array for content properties
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// menu items
-		if ( hasMenuItem() ) {
-			result[ "menuItems" ] = [];
-			for ( var thisMenuItem in variables.menuItems ) {
-				// only export top-level items (items themselves will take care of children)
-				if ( !( thisMenuItem.hasParent() ) ) {
-					arrayAppend( result[ "menuItems" ], thisMenuItem.getMemento() );
-				}
-			}
-		} else {
-			result[ "menuItems" ] = [];
-		}
-
-		// Site Snapshot
-		result[ "site" ] = {};
-		if ( hasSite() ) {
-			result.site[ "siteID" ] = getSite().getsiteID();
-			result.site[ "name" ]   = getSite().getName();
-			result.site[ "slug" ]   = getSite().getSlug();
-		}
-
-		return result;
+		return [];
 	}
 
 	/* *********************************************************************
@@ -227,8 +202,9 @@ component
 	 ********************************************************************* */
 
 	/**
-	 * Recusive function to build menu items hierarchy from raw data
-	 * @rawData.hint The raw data definitions for the menu items
+	 * Recursive function to build menu items hierarchy from raw data
+	 *
+	 * @rawData The raw data definitions for the menu items
 	 */
 	private array function createMenuItems( required array rawData ){
 		var items = [];

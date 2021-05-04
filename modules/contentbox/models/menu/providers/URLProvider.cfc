@@ -1,22 +1,24 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Provider for URL-type menu items
-*/
-component   implements="contentbox.models.menu.providers.IMenuItemProvider"
-			extends="contentbox.models.menu.providers.BaseProvider"
-			accessors="true"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Provider for URL-type menu items
+ */
+component
+	implements="contentbox.models.menu.providers.IMenuItemProvider"
+	extends   ="contentbox.models.menu.providers.BaseProvider"
+	accessors ="true"
+{
 
 	/* *********************************************************************
-	**						PUBLIC FUNCTIONS
-	********************************************************************* */
+	 **						PUBLIC FUNCTIONS
+	 ********************************************************************* */
 
 	/**
 	 * Constructor
 	 */
-	public URLProvider function init() {
+	public URLProvider function init(){
 		setName( "URL" );
 		setType( "URL" );
 		setIconClass( "fa fa-link" );
@@ -30,14 +32,12 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
 	 */
-	public string function getAdminTemplate( required any menuItem, required struct options={} ) {
-		var viewArgs = {
-			menuItem=arguments.menuItem
-		};
-		return renderer.$get().renderView(
-			view="menus/providers/url/admin",
-			module="contentbox-admin",
-			args = viewArgs
+	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
+		var viewArgs = { menuItem : arguments.menuItem };
+		return variables.renderer.renderView(
+			view   = "menus/providers/url/admin",
+			module = "contentbox-admin",
+			args   = viewArgs
 		);
 	}
 
@@ -46,15 +46,16 @@ component   implements="contentbox.models.menu.providers.IMenuItemProvider"
 	 * @menuItem.hint The menu item object
 	 * @options.hint Additional arguments to be used in the method
 	 */
-	public string function getDisplayTemplate( required any menuItem, required struct options={} ) {
+	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
 		var viewArgs = {
-			menuItem=arguments.menuItem,
-			data = arguments.menuItem.getMemento()
+			menuItem : arguments.menuItem,
+			data     : arguments.menuItem.getMemento()
 		};
-		return renderer.$get().renderExternalView(
-			view="/contentbox/models/menu/views/url/display",
-			module="contentbox",
-			args = viewArgs
+		return variables.renderer.renderExternalView(
+			view   = "/contentbox/models/menu/views/url/display",
+			module = "contentbox",
+			args   = viewArgs
 		);
 	}
+
 }

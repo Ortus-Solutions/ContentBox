@@ -28,31 +28,19 @@ component
 
 	/**
 	 * Save a menu and do necessary updates
+	 *
 	 * @menu The menu to save or update
 	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
+	 *
+	 * @return The saved menu
 	 */
-	function saveMenu( required any menu, string originalSlug = "" ){
-		transaction {
-			// Verify uniqueness of slug
-			if (
-				!isSlugUnique(
-					slug  : arguments.menu.getSlug(),
-					menuID: arguments.menu.getMenuID(),
-					siteID: arguments.menu.getsiteID()
-				)
-			) {
-				// make slug unique
-				arguments.menu.setSlug( getUniqueSlugHash( arguments.menu.getSlug() ) );
-			}
-			// Save the target menu
-			save( entity = arguments.menu, transactional = false );
-		}
-
-		return this;
+	function save( required menu, string originalSlug = "" ){
+		return super.save( arguments.menu );
 	}
 
 	/**
-	 * Menu search by title or slug
+	 * Menu search using different filters and return options
+	 *
 	 * @searchTerm Search in firstname, lastname and email fields
 	 * @max The max returned objects
 	 * @offset The offset for pagination
@@ -86,14 +74,12 @@ component
 
 		// run criteria query and projections count
 		results.count = c.count( "menuID" );
-		results.menus = c
-			.asDistinct()
-			.list(
-				offset    = arguments.offset,
-				max       = arguments.max,
-				sortOrder = arguments.sortOrder,
-				asQuery   = arguments.asQuery
-			);
+		results.menus = c.list(
+			offset    = arguments.offset,
+			max       = arguments.max,
+			sortOrder = arguments.sortOrder,
+			asQuery   = arguments.asQuery
+		);
 
 		return results;
 	}
@@ -304,7 +290,7 @@ component
 				c.isEq( "site.siteID", siteID );
 			} )
 			.when( len( arguments.menuID ), function( c ){
-				c.ne( "menuID", autoCast( "menuID", menuID ) );
+				c.ne( "menuID", menuID );
 			} )
 			.count() > 0 ? false : true;
 	}

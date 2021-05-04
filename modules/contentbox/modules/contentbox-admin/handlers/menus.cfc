@@ -172,7 +172,7 @@ component extends="baseHandler" {
 		if ( !len( rc.slug ) ) {
 			rc.slug = variables.HTMLHelper.slugify( rc.title );
 		}
-		var oMenu        = menuService.get( id = rc.menuID );
+		var oMenu        = variables.menuService.get( id = rc.menuID );
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
 		populateModel( model = oMenu, exclude = "menuItems" );
@@ -185,7 +185,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_preMenuSave", { menu : oMenu, menuID : rc.menuID } );
 		// save menu
-		menuService.saveMenu( menu = oMenu, originalSlug = originalSlug );
+		variables.menuService.save( oMenu );
 		// announce event
 		announce( "cbadmin_postMenuSave", { menu : oMenu, originalSlug : originalSlug } );
 		// messagebox

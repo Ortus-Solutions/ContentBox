@@ -42,13 +42,11 @@ component
 			menuItem         : arguments.menuItem,
 			xehMediaSelector : "#requestService.getContext().buildLink( to = "cbadmin.menus.filebrowser" )#"
 		};
-		return renderer
-			.$get()
-			.renderView(
-				view   = "menus/providers/media/admin",
-				module = "contentbox-admin",
-				args   = viewArgs
-			);
+		return variables.renderer.renderView(
+			view   = "menus/providers/media/admin",
+			module = "contentbox-admin",
+			args   = viewArgs
+		);
 	}
 	/**
 	 * Retrieves template for use in rendering menu item on the site
@@ -57,13 +55,11 @@ component
 	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
 		var viewArgs = { menuItem : arguments.menuItem };
-		return renderer
-			.$get()
-			.renderExternalView(
-				view   = "/contentbox/models/menu/views/media/display",
-				module = "contentbox",
-				args   = viewArgs
-			);
+		return variables.renderer.renderExternalView(
+			view   = "/contentbox/models/menu/views/media/display",
+			module = "contentbox",
+			args   = viewArgs
+		);
 	}
 
 }
