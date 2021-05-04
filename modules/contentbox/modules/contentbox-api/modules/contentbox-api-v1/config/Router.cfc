@@ -15,17 +15,39 @@ component {
 		// Site Settings
 		get( "/sites/:slug/settings", "siteSettings" );
 
-		// Resource Groups
+		/**
+		 * --------------------------------------------------------------------------
+		 * Resource groups for /sites/:site
+		 * --------------------------------------------------------------------------
+		 */
 		var except     = "new,edit";
 		var sitePrefix = "/sites/:site";
+
+		/**
+		 * --------------------------------------------------------------------------
+		 * Category Routing
+		 * --------------------------------------------------------------------------
+		 */
 		resources(
 			resource: "categories",
 			pattern = "#siteprefix#/categories",
 			except  : except
 		);
+
+		/**
+		 * --------------------------------------------------------------------------
+		 * Entry Based Routing
+		 * --------------------------------------------------------------------------
+		 */
 		resources(
 			resource: "comments",
 			pattern = "#siteprefix#/entries/:contentIdOrSlug/comments",
+			except  : except,
+			meta    : { contentType : "entry" }
+		);
+		resources(
+			resource: "versions",
+			pattern = "#siteprefix#/entries/:contentIdOrSlug/versions",
 			except  : except,
 			meta    : { contentType : "entry" }
 		);
@@ -34,10 +56,34 @@ component {
 			pattern = "#siteprefix#/entries",
 			except  : except
 		);
+
+		/**
+		 * --------------------------------------------------------------------------
+		 * ContentStore Routing
+		 * --------------------------------------------------------------------------
+		 */
+		resources(
+			resource: "versions",
+			pattern = "#siteprefix#/contentStore/:contentIdOrSlug/versions",
+			except  : except,
+			meta    : { contentType : "contentStore" }
+		);
 		resources(
 			resource: "contentStore",
 			pattern = "#siteprefix#/contentStore",
 			except  : except
+		);
+
+		/**
+		 * --------------------------------------------------------------------------
+		 * Page Routing
+		 * --------------------------------------------------------------------------
+		 */
+		resources(
+			resource: "versions",
+			pattern = "#siteprefix#/pages/:contentIdOrSlug/versions",
+			except  : except,
+			meta    : { contentType : "page" }
 		);
 		resources(
 			resource: "comments",
@@ -50,11 +96,19 @@ component {
 			pattern = "#siteprefix#/pages",
 			except  : except
 		);
+
+		/**
+		 * --------------------------------------------------------------------------
+		 * Menu Routing
+		 * --------------------------------------------------------------------------
+		 */
 		resources(
 			resource: "menus",
 			pattern = "#siteprefix#/menus",
 			except  : except
 		);
+
+
 		resources( resource: "authors", except: except );
 		resources( resource: "sites", except: except );
 

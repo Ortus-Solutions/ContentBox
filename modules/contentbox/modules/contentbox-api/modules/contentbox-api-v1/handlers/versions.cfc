@@ -1,16 +1,16 @@
 /**
- * RESTFul CRUD for Content Comments
+ * RESTFul CRUD for Content Versions
  */
 component extends="baseHandler" {
 
 	// DI
-	property name="ormService" inject="CommentService@cb";
+	property name="ormService" inject="contentVersionService@cb";
 	property name="contentService" inject="contentService@cb";
 
 	// The default sorting order string: permission, name, data desc, etc.
-	variables.sortOrder    = "createdDate DESC";
+	variables.sortOrder    = "version DESC";
 	// The name of the entity this resource handler controls. Singular name please.
-	variables.entity       = "Comment";
+	variables.entity       = "ContentVersion";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = true;
 
@@ -28,7 +28,7 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Display all comments for the requested contentype
+	 * Display all versions for the requested contentype
 	 *
 	 * @override
 	 */
@@ -38,6 +38,9 @@ component extends="baseHandler" {
 		param rc.sortOrder  = variables.sortOrder;
 		// Approved Bit
 		param rc.isApproved = "";
+		// Memento Params
+		param rc.includes   = "";
+		param rc.excludes   = "content";
 
 		// Boolean check is approved
 		if ( len( rc.isApproved ) && !isBoolean( rc.isApproved ) ) {
@@ -57,7 +60,7 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Show a comment individually
+	 * Show a content version individually
 	 *
 	 * @override
 	 */
