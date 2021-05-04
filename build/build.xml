@@ -97,12 +97,14 @@
 
 	<!-- Build API Docs -->
 	<target name="build.apidocs" description="Builds the api docs" depends="init">
-		<!-- Build the Docs-->
-	   <exec executable="box">
-		   <arg line="task run taskFile=build/BuildDocs.cfc :version=${contentbox.version}" />
-	   </exec>
-	   <!-- Zip API Docs -->
-	   <zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
+		<!-- Build the CFC Docs-->
+		<exec executable="box">
+			<arg line="task run taskFile=build/BuildDocs.cfc :version=${contentbox.version}" />
+		</exec>
+		<!-- Copy over swagger docs to exports -->
+		<copy file="${dir.api}/contentbox-swagger.json" toFile="${dir.contentbox.exports}/contentbox-swagger-${contentbox.version}.json" overwrite="true" encoding="UTF-8"/>
+		<!-- Zip API Docs -->
+		<zip destfile="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" basedir="${dir.api}"></zip>
 		<!-- Build Checksum -->
 		<checksum forceoverwrite="true" fileext=".md5" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />
 		<checksum forceoverwrite="true" algorithm="SHA-512" fileext=".sha512" file="${dir.contentbox.exports}/contentbox-apidocs-${contentbox.version}.zip" />

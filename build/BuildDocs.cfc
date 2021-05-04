@@ -21,13 +21,13 @@ component{
 	}
 
 	/**
-	 * Run this task and produce awesome CFC Docs
+	 * Run this task and produce awesome Docs
 	 *
 	 * @version The version to add to the title output
 	 */
 	function run( version="1.0.0" ){
 		var sTime = getTickCount();
-		print.blueLine( "Generating ContentBox v#arguments.version# API Docs..." ).toConsole();
+		print.blueLine( "Generating ContentBox v#arguments.version# CFC Docs..." ).toConsole();
 
 		command( "docbox generate" )
 			.params(
@@ -39,7 +39,17 @@ component{
 			)
 			.run();
 
-		print.greenLine( "√ API Docs completed in #getTickCount() - sTime#ms and can be found at: #variables.outputDir#" ).toConsole();
+		print.greenLine( "√ CFC Docs completed in #getTickCount() - sTime#ms and can be found at: #variables.outputDir#" ).toConsole();
+
+		print.blueLine( "Generating ContentBox Swagger json docs..." ).toConsole();
+		cfhttp(
+			url="http://127.0.0.1:8589/cbswagger/json?debugmode=false&debugpassword=cb",
+			resolveurl="true",
+			path = variables.outputDir,
+			file="contentbox-swagger.json"
+		);
+
+		print.greenLine( "√ Swagger JSON docs generated in #getTickCount() - sTime#ms and can be found at: #variables.outputDir#/contentbox-swagger.json" ).toConsole();
 	}
 
 }
