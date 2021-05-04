@@ -13,8 +13,6 @@ component {
 	this.webURL         = "https://www.ortussolutions.com";
 	this.version        = "@version.number@+@build.number@";
 	this.description    = "ContentBox API Module";
-	// The main entry point for the ContentBox API: http://{host}:{port}/cbapi
-	this.entryPoint     = "cbapi";
 	this.modelNamespace = "contentbox-api";
 	this.cfmapping      = "contentbox-api";
 	this.dependencies   = [];
