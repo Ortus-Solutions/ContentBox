@@ -118,13 +118,6 @@ component
 		"version" : { required : true, type : "integer" }
 	};
 
-	/* *********************************************************************
-	 **							CONSTRUCTOR
-	 ********************************************************************* */
-
-	/**
-	 * constructor
-	 */
 	function init(){
 		variables.createdDate     = now();
 		variables.isActive        = false;
@@ -138,15 +131,21 @@ component
 		return this;
 	}
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
 	/**
 	 * Build the author snapshot
 	 */
 	struct function getAuthorSnapshot(){
 		return ( hasAuthor() ? getAuthor().getInfoSnapshot() : {} );
+	}
+
+	/**
+	 * Build a snapshot of the related content
+	 */
+	struct function getRelatedContentSnapshot(){
+		if ( hasRelatedContent() ) {
+			return getRelatedContent().getInfoSnapshot();
+		}
+		return {};
 	}
 
 	/**

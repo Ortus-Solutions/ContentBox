@@ -64,7 +64,6 @@ component
 		name     ="isApproved"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		default  ="false"
 		dbdefault="false"
 		index    ="idx_contentComment,idx_approved";
@@ -89,19 +88,28 @@ component
 
 	this.pk = "commentID";
 
+	this.memento = {
+		defaultIncludes : [
+			"content",
+			"displayContent:renderedContent",
+			"author",
+			"authorIP",
+			"authorEmail",
+			"authorURL",
+			"isApproved"
+		],
+		defaultExcludes : [ "relatedContent" ]
+	};
+
 	this.constraints = {
 		"content"     : { required : true },
 		"author"      : { required : true, size : "1..100" },
 		"authorIP"    : { required : true, size : "1..100" },
 		"authorEmail" : { required : true, size : "1..255", type : "email" },
-		"authorURL"   : { required : true, size : "1..255", type : "URL" }
+		"authorURL"   : { required : true, size : "1..255", type : "URL" },
+		"isApproved"  : { required : true, type : "boolean" }
 	};
 
-	/************************************** CONSTRUCTOR *********************************************/
-
-	/**
-	 * constructor
-	 */
 	function init(){
 		variables.isApproved  = false;
 		variables.createdDate = now();
@@ -111,16 +119,14 @@ component
 		return this;
 	}
 
-	/************************************** PUBLIC *********************************************/
-
 	/**
-	 * Get memento representation
+	 * Build a snapshot of the related content
 	 */
-	function getMemento( excludes = "" ){
-		var pList  = listToArray( "content,author,authorIP,authorEmail,authorURL,isApproved" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		return result;
+	struct function getRelatedContentSnapshot(){
+		if ( hasRelatedContent() ) {
+			return getRelatedContent().getInfoSnapshot();
+		}
+		return {};
 	}
 
 	/**

@@ -267,12 +267,9 @@ component extends="baseContentHandler" {
 		var isNew = ( NOT page.isLoaded() );
 
 		// Validate Page And Incoming Data
-		var errors = page.validate();
-		if ( !len( trim( rc.content ) ) ) {
-			arrayAppend( errors, "Please enter the content to save!" );
-		}
-		if ( arrayLen( errors ) ) {
-			cbMessageBox.warn( errors );
+		var vResults = validate( page );
+		if ( vResults.hasErrors() ) {
+			variables.cbMessageBox.warn( vResults.getAllErrors() );
 			editor( argumentCollection = arguments );
 			return;
 		}

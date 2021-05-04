@@ -260,6 +260,33 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
+	 * This utility tries to get the content type by id/slug or fails
+	 *
+	 * @throws EntityNotFound
+	 *
+	 * @return The found entity
+	 */
+	function getByIdOrSlugOrFail( required id ){
+		var c       = newCriteria();
+		var oEntity = c
+			.$or(
+				// note: id is a shortcut in Hibernate for the Primary Key
+				c.restrictions.isEq( "id", arguments.id ),
+				c.restrictions.isEq( "slug", arguments.id )
+			)
+			.get();
+
+		if ( isNull( oEntity ) ) {
+			throw(
+				message = "No entity found for ID/Slug #arguments.id.toString()#",
+				type    = "EntityNotFound"
+			);
+		}
+
+		return oEntity;
+	}
+
+	/**
 	 * Find a published content object by slug and published unpublished flags, if not found it returns
 	 * a new content object
 	 *

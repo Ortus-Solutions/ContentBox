@@ -24,6 +24,12 @@ component {
 			except  : except
 		);
 		resources(
+			resource: "comments",
+			pattern = "#siteprefix#/entries/:contentIdOrSlug/comments",
+			except  : except,
+			meta    : { contentType : "entry" }
+		);
+		resources(
 			resource: "entries",
 			pattern = "#siteprefix#/entries",
 			except  : except
@@ -32,6 +38,12 @@ component {
 			resource: "contentStore",
 			pattern = "#siteprefix#/contentStore",
 			except  : except
+		);
+		resources(
+			resource: "comments",
+			pattern = "#siteprefix#/pages/:contentIdOrSlug/comments",
+			except  : except,
+			meta    : { contentType : "page" }
 		);
 		resources(
 			resource: "pages",
