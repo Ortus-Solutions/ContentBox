@@ -120,15 +120,18 @@ component extends="baseHandler" {
 	 */
 	function slugUnique( event, rc, prc ){
 		// Params
-		event.paramValue( "slug", "" ).paramValue( "contentID", "" );
+		param rc.slug        = "";
+		param rc.contentID   = "";
+		param rc.contentType = "";
 
 		var data = { "UNIQUE" : false };
 
 		if ( len( rc.slug ) ) {
 			data[ "UNIQUE" ] = variables.contentService.isSlugUnique(
-				rc.slug,
-				rc.contentID,
-				prc.oCurrentSite.getsiteID()
+				slug       : rc.slug,
+				contentID  : rc.contentID,
+				siteID     : prc.oCurrentSite.getsiteID(),
+				contentType: rc.contentType
 			);
 		}
 

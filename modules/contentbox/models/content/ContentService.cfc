@@ -345,7 +345,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				c.ne( "contentID", contentId );
 			} )
 			.when( len( arguments.contentType ), function( c ){
-				c.ne( "contentType", contentType );
+				c.isEq( "contentType", contentType );
 			} )
 			.count() > 0 ? false : true;
 	}

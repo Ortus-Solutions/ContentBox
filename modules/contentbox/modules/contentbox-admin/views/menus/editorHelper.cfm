@@ -19,11 +19,15 @@
                 return;
             }
             toggleSlug()
-            $.get( '#event.buildLink( prc.xehSlugify )#', { slug : linkToUse }, function( data ){
-                $slug.val( data );
-                slugUniqueCheck();
-                toggleSlug();
-            } );
+            $.get(
+				'#event.buildLink( prc.xehSlugify )#',
+				{ slug : linkToUse },
+				function( data ){
+					$slug.val( data );
+					slugUniqueCheck();
+					toggleSlug();
+				}
+			);
         }
 
         //disable or enable (toggle) slug field
@@ -62,14 +66,21 @@
                 return;
             }
             // Verify unique
-            $.getJSON( '#event.buildLink( prc.xehSlugCheck )#', { slug:linkToUse, menuID: $( '##menuID' ).val() }, function( data ){
-                if( !data.UNIQUE ){
-                    $( '##slugCheckErrors' ).html('The menu slug you entered is already in use, please enter another one or modify it.').addClass( 'alert' );
-                }
-                else{
-                    $( '##slugCheckErrors' ).html( '' ).removeClass( 'alert' );
-                }
-            } );
+            $.getJSON(
+				'#event.buildLink( prc.xehSlugCheck )#',
+				{
+					slug : linkToUse,
+					menuID : $( '##menuID' ).val()
+				},
+				function( data ){
+					if( !data.UNIQUE ){
+						$( '##slugCheckErrors' ).html('The menu slug you entered is already in use, please enter another one or modify it.').addClass( 'alert' );
+					}
+					else{
+						$( '##slugCheckErrors' ).html( '' ).removeClass( 'alert' );
+					}
+				}
+			);
         }
         /**
          * Updates label of menu item when label is changed in form
