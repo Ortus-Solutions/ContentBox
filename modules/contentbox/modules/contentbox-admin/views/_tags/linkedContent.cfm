@@ -1,7 +1,7 @@
 <cfoutput>
     <script>
         <cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
-            var currentLCContentID = #rc.contentID#;
+            var currentLCContentID = "#rc.contentID#";
         </cfif>
         $( document ).ready(function() {
             $( '##linkedContent-items' ).on( 'click', '.btn', function(){
