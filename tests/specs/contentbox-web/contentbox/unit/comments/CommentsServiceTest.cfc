@@ -60,7 +60,7 @@ component extends="tests.resources.BaseTest" {
 				expect( r.count ).toBeGT( 0 );
 
 				var r = commentService.search( isApproved = false );
-				expect( r.count ).toBe( 1 );
+				expect( r.count ).toBeGTE( 1 );
 
 				var r = commentService.search( contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3" );
 				expect( r.count ).toBeGT( 0 );
