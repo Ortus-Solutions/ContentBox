@@ -1,15 +1,8 @@
 <cfoutput>
-    <style>
-        .btn-tiny {
-            padding: 0 3px;
-            font-size: 9.5px;
-            line-height:14px;
-        }
-    </style>
     <script>
         $( document ).ready(function() {
             <cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
-                var currentContentID = #rc.contentID#;
+                var currentContentID = "#rc.contentID#";
             </cfif>
             // listener for add button
             $( '##add-related-content' ).on( 'click', function() {
