@@ -12,8 +12,6 @@ component extends="baseHandler" {
 	variables.entity       = "Page";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
-	// Delete method to use
-	variables.deleteMethod = "deleteContent";
 
 	/**
 	 * Executes before all handler actions

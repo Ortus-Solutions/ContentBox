@@ -21,29 +21,18 @@ component extends="ContentService" singleton {
 	}
 
 	/**
-	 * Save content store object
+	 * Save the content store object and if an original slug is passed, we will update the entire
+	 * hierarchy if the slug changed.
 	 *
 	 * @content The content store object
 	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
 	 *
 	 * @returns ContentStoreService
 	 */
-	function saveContent( required any content, string originalSlug = "" ){
+	function save( required any content, string originalSlug = "" ){
 		transaction {
-			// Verify uniqueness of slug
-			if (
-				!variables.contentService.isSlugUnique(
-					slug     : arguments.content.getSlug(),
-					contentID: arguments.content.getContentID(),
-					siteID   : arguments.content.getsiteID()
-				)
-			) {
-				// make slug unique
-				arguments.content.setSlug( getUniqueSlugHash( arguments.content.getSlug() ) );
-			}
-
 			// save entry
-			save( entity = arguments.content, transactional = false );
+			super.save( arguments.content );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
 			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
@@ -58,7 +47,7 @@ component extends="ContentService" singleton {
 							arguments.content.getSlug()
 						)
 					);
-					save( entity = thisContent, transactional = false );
+					super.save( thisContent );
 				}
 			}
 		}
@@ -188,10 +177,7 @@ component extends="ContentService" singleton {
 			else {
 				// search the association
 				c.createAlias( "categories", "cats" )
-					.isIn(
-						"cats.categoryID",
-						[ arguments.category ]
-					);
+					.isIn( "cats.categoryID", [ arguments.category ] );
 			}
 		}
 

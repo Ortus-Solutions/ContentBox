@@ -326,7 +326,7 @@ component extends="baseContentHandler" {
 		);
 
 		// clone this sucker now!
-		contentStoreService.saveContent( clone );
+		contentStoreService.save( clone );
 
 		// relocate
 		cbMessageBox.info( "Content Cloned!" );
@@ -448,7 +448,7 @@ component extends="baseContentHandler" {
 		// announce event
 		announce( "cbadmin_preContentStoreSave", { content : content, isNew : isNew } );
 		// save content
-		contentStoreService.saveContent( content );
+		contentStoreService.save( content );
 		// announce event
 		announce( "cbadmin_postContentStoreSave", { content : content, isNew : isNew } );
 
@@ -504,7 +504,7 @@ component extends="baseContentHandler" {
 					content.getParent().removeChild( content );
 				}
 				// Delete it
-				contentStoreService.deleteContent( content );
+				contentStoreService.delete( content );
 				arrayAppend( messages, "content '#title#' removed" );
 				// announce event
 				announce( "cbadmin_postContentStoreRemove", { contentID : contentID } );

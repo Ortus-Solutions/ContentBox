@@ -326,7 +326,7 @@ component extends="baseContentHandler" {
 		);
 
 		// save entry
-		variables.pageService.savePage( page, originalSlug );
+		variables.pageService.save( page, originalSlug );
 
 		// announce event
 		announce(
@@ -406,7 +406,7 @@ component extends="baseContentHandler" {
 		);
 
 		// clone this sucker now!
-		variables.pageService.savePage( clone );
+		variables.pageService.save( clone );
 
 		// relocate
 		cbMessageBox.info( "Page Cloned!" );
@@ -489,7 +489,7 @@ component extends="baseContentHandler" {
 					page.getParent().removeChild( page );
 				}
 				// Send for deletion
-				variables.pageService.deleteContent( page );
+				variables.pageService.delete( page );
 				arrayAppend( messages, "Page '#title#' removed" );
 				// announce event
 				announce( "cbadmin_postPageRemove", { contentID : contentID } );

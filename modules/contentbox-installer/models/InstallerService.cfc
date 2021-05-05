@@ -461,7 +461,7 @@ component accessors="true" {
 			changelog = "First creation",
 			author    = arguments.author
 		);
-		pageService.savePage( page );
+		pageService.save( page );
 
 		// create a custom store element
 		var contentStore = contentStoreService.new(
@@ -485,7 +485,7 @@ component accessors="true" {
 			changelog = "First creation",
 			author    = arguments.author
 		);
-		contentStoreService.saveContent( contentStore );
+		contentStoreService.save( contentStore );
 	}
 
 }

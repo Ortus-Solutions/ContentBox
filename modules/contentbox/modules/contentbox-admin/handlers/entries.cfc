@@ -441,7 +441,7 @@ component extends="baseContentHandler" {
 				// announce event
 				announce( "cbadmin_preEntryRemove", { entry : entry } );
 				// Delete it
-				entryService.deleteContent( entry );
+				entryService.delete( entry );
 				arrayAppend( messages, "Entry '#title#' removed" );
 				// announce event
 				announce( "cbadmin_postEntryRemove", { contentID : contentID } );

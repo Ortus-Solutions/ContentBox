@@ -21,29 +21,17 @@ component extends="ContentService" singleton {
 	}
 
 	/**
-	 * Save a page and do necessary updates
+	 * Save a page and do necessary updates to the hierarchies if there is a slug change
 	 *
 	 * @page The page to save or update
 	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
 	 *
-	 * @return PageService
+	 * @return Saved page
 	 */
-	function savePage( required any page, string originalSlug = "" ){
+	function save( required any page, string originalSlug = "" ){
 		transaction {
-			// Verify uniqueness of slug
-			if (
-				!contentService.isSlugUnique(
-					slug     : arguments.page.getSlug(),
-					contentID: arguments.page.getContentID(),
-					siteID   : arguments.page.getsiteID()
-				)
-			) {
-				// make slug unique
-				arguments.page.setSlug( getUniqueSlugHash( arguments.page.getSlug() ) );
-			}
-
 			// Save the target page
-			save( entity = arguments.page, transactional = false );
+			super.save( arguments.page );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
 			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
@@ -56,7 +44,7 @@ component extends="ContentService" singleton {
 							arguments.page.getSlug()
 						)
 					);
-					save( entity = thisPage, transactional = false );
+					super.save( thisPage );
 				}
 			}
 		}

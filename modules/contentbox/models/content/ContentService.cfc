@@ -355,7 +355,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @content the Content object to delete
 	 */
-	ContentService function deleteContent( required any content ){
+	ContentService function delete( required any content ){
 		transaction {
 			// Check for dis-associations
 			if ( arguments.content.hasParent() ) {
@@ -376,9 +376,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					arrayAppend( aItemsToDelete, thisChild );
 				}
 				for ( var thisChild in aItemsToDelete ) {
-					deleteContent( thisChild );
+					this.delete( thisChild );
 				}
 			}
+
 			// now delete it
 			super.delete( arguments.content );
 		}
