@@ -1,8 +1,6 @@
-/**
- * Task that seeds my database with test data
- */
-component {
+abstract component{
 
+	// DI
 	property name="packageService" inject="PackageService";
 	property name="JSONService"    inject="JSONService";
 	property name="qb"             inject="provider:QueryBuilder@qb";
@@ -55,6 +53,10 @@ component {
 		return this;
 	}
 
+	abstract function truncate( required table );
+	abstract function keysOff();
+	abstract function keysOn();
+
 	function onDIComplete(){
 		variables.cfmigrationsInfo = getCFMigrationsInfo();
 		print.cyanLine(
@@ -71,6 +73,24 @@ component {
 		print.greenLine( "Connection success!" );
 	}
 
+	function getCFMigrationsInfo(){
+		var directory = getCWD();
+		// Check and see if box.json exists
+		if ( !packageService.isPackage( directory ) ) {
+			return error( "File [#packageService.getDescriptorPath( directory )#] does not exist." );
+		}
+
+		var boxJSON = packageService.readPackageDescriptor( directory );
+
+		if ( !JSONService.check( boxJSON, "cfmigrations" ) ) {
+			return error(
+				"There is no `cfmigrations` key in your box.json. Please create one with the necessary values. See https://github.com/elpete/commandbox-migrations"
+			);
+		}
+
+		return JSONService.show( boxJSON, "cfmigrations" );
+	}
+
 	function run(){
 		if (
 			!confirm(
@@ -83,15 +103,8 @@ component {
 
 		try {
 			transaction {
-				queryExecute( "SET FOREIGN_KEY_CHECKS=0;" );
-
-				/******************** LOGIN ATTEMPTS *************************/
-				print.line().greenLine( "Generating login attempts..." );
-				truncate( "cb_loginAttempts" );
-				var aLoginAttempts = deserializeJSON( fileRead( "mockdata/loginAttempts.json" ) )
-					.each( ( thisRecord ) => thisRecord[ "loginAttemptsID" ] = uuidLib.randomUUID().toString() );
-				qb.from( "cb_loginAttempts" ).insert( aLoginAttempts );
-				print.cyanLine( "   ==> (#aLoginAttempts.len()#) Login Attempts inserted" );
+				keysOff();
+				seedLoginAttempts();
 
 				/******************** PERMISSIONS ********************/
 				print.line().greenLine( "Generating user permissions..." );
@@ -608,35 +621,20 @@ component {
 		} catch ( any e ) {
 			rethrow;
 		} finally {
-			queryExecute( "SET FOREIGN_KEY_CHECKS=1;" );
+			keysOn();
 		}
 
-
-		return;
 	}
 
-	/************************* PRIVATE METHODS ************************************/
-
-	private function getCFMigrationsInfo(){
-		var directory = getCWD();
-		// Check and see if box.json exists
-		if ( !packageService.isPackage( directory ) ) {
-			return error( "File [#packageService.getDescriptorPath( directory )#] does not exist." );
-		}
-
-		var boxJSON = packageService.readPackageDescriptor( directory );
-
-		if ( !JSONService.check( boxJSON, "cfmigrations" ) ) {
-			return error(
-				"There is no `cfmigrations` key in your box.json. Please create one with the necessary values. See https://github.com/elpete/commandbox-migrations"
-			);
-		}
-
-		return JSONService.show( boxJSON, "cfmigrations" );
+	function seedLoginAttempts(){
+		/******************** LOGIN ATTEMPTS *************************/
+		print.line().greenLine( "Generating login attempts..." );
+		truncate( "cb_loginAttempts" );
+		var aLoginAttempts = deserializeJSON( fileRead( "mockdata/loginAttempts.json" ) )
+			.each( ( thisRecord ) => thisRecord[ "loginAttemptsID" ] = uuidLib.randomUUID().toString() );
+		qb.from( "cb_loginAttempts" ).insert( aLoginAttempts );
+		print.cyanLine( "   ==> (#aLoginAttempts.len()#) Login Attempts inserted" );
 	}
 
-	private function truncate( required table ){
-		queryExecute( "truncate #arguments.table#" );
-	}
 
 }
