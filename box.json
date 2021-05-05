@@ -44,7 +44,9 @@
     },
     "ignores":[],
     "scripts":{
-		"buildDocs": "task run taskFile=build/BuildDocs.cfc :version=`package show version`",
+		"build:allDocs": "task run taskFile=build/BuildDocs.cfc :version=`package show version`",
+		"build:apidocs": "task run taskFile=build/BuildDocs.cfc target=apiDocs :version=`package show version`",
+		"build:swagger": "task run taskFile=build/BuildDocs.cfc target=swagger :version=`package show version`",
         "dbseed:mysql":"task run resources/seeder/MSSQL.cfc",
 		"dbseed:mssal":"task run resources/seeder/SeedMySQL.cfc",
 		"dbseed:postgres":"task run resources/seeder/SeedPostgreSQL.cfc",
