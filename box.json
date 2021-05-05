@@ -45,7 +45,9 @@
     "ignores":[],
     "scripts":{
 		"buildDocs": "task run taskFile=build/BuildDocs.cfc :version=`package show version`",
-        "dbseed":"task run resources/seeder/Seed.cfc",
+        "dbseed:mysql":"task run resources/seeder/MSSQL.cfc",
+		"dbseed:mssal":"task run resources/seeder/SeedMySQL.cfc",
+		"dbseed:postgres":"task run resources/seeder/SeedPostgreSQL.cfc",
         "format":"cfformat run modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
         "format:watch":"cfformat watch modules/**/*.cfc,tests/specs/**/*.cfc ./.cfformat.json",
         "format:check":"cfformat check modules/**/*.cfc,tests/specs/**/*.cfc",
