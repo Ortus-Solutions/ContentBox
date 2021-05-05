@@ -59,7 +59,9 @@
         "log:2016":"server log serverConfigFile=server-adobe@2016.json --follow",
         "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow",
         "log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
-        "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run"
+        "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\"' | run",
+		"cfpm:install":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run",
+		"install:2021" : "run-script cfpm:install zip,orm,mysql,postgresql,sqlserver,document,feed"
     },
     "cfmigrations":{
         "schema":"${MIGRATIONS_DATABASE}",
