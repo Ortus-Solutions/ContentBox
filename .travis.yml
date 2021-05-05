@@ -64,6 +64,7 @@ script:
   - PROJECT_VERSION="$(cat build/build-contentbox/version.json | jq -r '.version')"
   # Spit out debugging info
   - cat build/build-contentbox/module/box.json
+  - cat build/build-contentbox/apidocs/contentbox-swagger.json
 
 after_failure:
   - cd $TRAVIS_BUILD_DIR

@@ -43,8 +43,7 @@ component{
 
 		print.blueLine( "Generating ContentBox Swagger json docs..." ).toConsole();
 		cfhttp(
-			url="http://127.0.0.1:8589/index.cfm/cbswagger/json?debugmode=false&debugpassword=cb",
-			resolveurl="true",
+			url="http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb",
 			path = variables.outputDir,
 			file="contentbox-swagger.json"
 		);
