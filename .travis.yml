@@ -48,7 +48,7 @@ before_script:
   - mysql -u root -e 'create database contentbox;'
   # import database
   - mysql -u root < tests/resources/sql/mysql/contentbox.sql
-  # Seed .env for MySQL
+  # Seed .env for MySQL 8
   - echo "Seeding database .env"
   - touch $TRAVIS_BUILD_DIR/.env
   - printf "DB_HOST=127.0.0.1\n" >> $TRAVIS_BUILD_DIR/.env
@@ -64,22 +64,20 @@ before_script:
 
 script:
   ## Run web tests
-  #- box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
-  #- box testbox run --verbose
+  - box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
+  - box testbox run --verbose
   ## Run api tests
-  #- box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
-  #- box testbox run --verbose
+  - box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
+  - box testbox run --verbose
   # Get ContentBox Version for rest of build process
   - PROJECT_VERSION=`cat $TRAVIS_BUILD_DIR/box.json | jq '.version' -r`
   - TRAVIS_TAG=${PROJECT_VERSION}
-  - curl http://localhost:8589
-  - curl http://localhost:8589/index.cfm/cbswagger
   # Build Docs so we don't get any ORM interference later
-  #- box run-script build:allDocs
+  - box run-script build:allDocs
   ## Execute build via ANT
-  #- ant -Dcontentbox.version=$PROJECT_VERSION -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
+  - ant -Dcontentbox.version=$PROJECT_VERSION -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
   ## Spit out debugging info
-  #- cat build/build-contentbox/module/box.json
+  - cat build/build-contentbox/module/box.json
 
 after_failure:
   - cd $TRAVIS_BUILD_DIR
