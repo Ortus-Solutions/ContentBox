@@ -15,8 +15,6 @@ component extends="baseHandler" {
 
 	/**
 	 * Display all authors
-	 *
-	 * @override
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
