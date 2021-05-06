@@ -55,10 +55,6 @@
 		<loadproperties srcFile="build/build.properties"/>
 
 		<!-- Cleanup + Init -->
-		<delete dir="${dir.build}" />
-		<delete verbose="true" failonerror="false">
-			<fileset dir="${dir.contentbox.exports}" />
-		</delete>
 		<mkdir dir="${dir.build}"/>
 		<mkdir dir="${be.exports}"/>
 		<chmod file="${dir.build}/**" perm="g+wxrs" type="both" />
