@@ -53,6 +53,7 @@ before_script:
   - touch $TRAVIS_BUILD_DIR/.env
   - printf "DB_HOST=127.0.0.1\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_DATABASE=contentbox\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_DRIVER=MySQL\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_USER=root\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_PASSWORD=\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_CLASS=com.mysql.cj.jdbc.Driver\n" >> $TRAVIS_BUILD_DIR/.env
