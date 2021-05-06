@@ -102,7 +102,7 @@ component
 	array function getSubscriptionsSnapshot(){
 		if ( hasSubscriptions() ) {
 			return getSubscriptions().map( function( thisItem ){
-				return arguments.thisItem.getMemento( excludes = "subscriber" )
+				return arguments.thisItem.getMemento( excludes = "subscriber" );
 			} );
 		}
 		return {};
