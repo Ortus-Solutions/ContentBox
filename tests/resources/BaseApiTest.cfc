@@ -15,6 +15,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 	variables.testPassword             = "test";
 	variables.testAdminUsername = "lmajano";
 	variables.testAdminPassword = "lmajano";
+	variables.testAdminEmail = "lmajano@gmail.com";
 
 	function beforeAll(){
 		super.beforeAll();

@@ -70,8 +70,12 @@ component extends="baseHandler" {
 		}
 
 		try {
-			// Authenticate credentials
-			prc.oAuthor = securityService.authenticate( rc.username, rc.password );
+			// Authenticate credentials: Don't log them in because we could have a reset password bit or a mfa check.
+			prc.oAuthor = securityService.authenticate(
+				username : rc.username,
+				password : rc.password,
+				logThemIn: false
+			);
 
 			// Verify if user needs to reset their password?
 			if ( prc.oAuthor.getIsPasswordReset() ) {
@@ -119,7 +123,10 @@ component extends="baseHandler" {
 			}
 
 			// Set keep me log in remember cookie, if set.
-			variables.securityService.setRememberMe( username: rc.username, days: val( rc.rememberMe ) );
+			variables.securityService.setRememberMe(
+				username: rc.username,
+				days    : val( rc.rememberMe )
+			);
 			// Set in session, validations are now complete
 			variables.securityService.login( prc.oAuthor );
 

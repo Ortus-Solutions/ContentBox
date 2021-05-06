@@ -31,16 +31,26 @@ interface {
 	ISecurityService function logout();
 
 	/**
-	 * Authenticate an author via ContentBox credentials.
-	 * This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
-	 * The `author` object which it represents.
+	 * Authenticate an author via ContentBox credentials. If the user is not valid an InvalidCredentials is thrown. Required for JWT services
+	 *
+	 * The usage of the LogThemIn boolean flag is essential for two-factor authentication, where a user is authenticated
+	 * but not yet validated by a two-factor mechanism.  Thus, the default is to ONLY authenticate but not log them in yet.
+	 *
+	 * For our RESTFul API, we can do an authenticate and login at the same time.
 	 *
 	 * @username The username to validate
 	 * @password The password to validate
+	 * @logThemIn If true, we will log them in automatically, else it will be the caller's job to do so via the `login()` method.
 	 *
-	 * @return struct:{ isAuthenticated:boolean, author:Author }
+	 * @throws InvalidCredentials
+	 *
+	 * @return User : The logged in user object
 	 */
-	struct function authenticate( required username, required password );
+	Author function authenticate(
+		required username,
+		required password,
+		boolean logThemIn = false
+	);
 
 	/**
 	 * Send password reminder for an author

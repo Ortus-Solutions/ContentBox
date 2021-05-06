@@ -38,6 +38,7 @@ component extends="cborm.models.resources.BaseHandler" {
 	// DI
 	property name="settings" inject="coldbox:moduleSettings:cborm";
 	property name="siteService" inject="siteService@cb";
+	property name="cb" inject="CBHelper@cb";
 
 	// Use native getOrFail() or getByIdOrSlugOrFail()
 	variables.useGetOrFail = true;
@@ -78,7 +79,11 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// Get by id or slug
-		prc.oEntity = ( variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
+		prc.oEntity = (
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
+				rc.id
+			)
+		);
 
 		// announce it
 		announceInterception(
@@ -130,7 +135,9 @@ component extends="cborm.models.resources.BaseHandler" {
 		// Population arguments
 		arguments.populate.memento = rc;
 		arguments.populate.model   = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id )
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
+				rc.id
+			)
 		);
 
 		// Validation Arguments
@@ -179,7 +186,11 @@ component extends="cborm.models.resources.BaseHandler" {
 	){
 		param rc.id = 0;
 
-		prc.oEntity = ( variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id ) );
+		prc.oEntity = (
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
+				rc.id
+			)
+		);
 
 		// announce it
 		announceInterception(

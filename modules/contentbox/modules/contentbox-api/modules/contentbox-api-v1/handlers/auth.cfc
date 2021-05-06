@@ -1,7 +1,7 @@
 /**
  * ContentBox API Authentication handler
  */
-component extends="BaseHandler" {
+component extends="baseHandler" {
 
 	// DI
 	property name="securityService" inject="securityService@cb";
@@ -16,18 +16,34 @@ component extends="BaseHandler" {
 		param rc.excludes       = "";
 		param rc.ignoreDefaults = false;
 
+		// Let's try to get log them in
 		prc.token = jwtAuth().attempt( rc.username, rc.password );
+
+		// If we get here, credentials are good to go!
+
+		// Verify if user needs to reset their password?
+		if ( prc.oCurrentAuthor.getIsPasswordReset() ) {
+			var errorMessage = "Your user needs to reset their password before using the API Services";
+			prc.response
+				.setErrorMessage( errorMessage, event.STATUS.NOT_ALLOWED )
+				.addMessage(
+					"Please visit #variables.cb.linkAdminLogin()# in order to reset your password."
+				);
+			return;
+		}
+
+		// Ok, we can log them in now for the request
+		variables.securityService.login( prc.oCurrentAuthor );
+
+		// Build out the response
 		prc.response
 			.setData( {
-				"token" : prc.token,
-				"user"  : cbSecure()
-					.getAuthService()
-					.getUser()
-					.getMemento(
-						includes       = rc.includes,
-						excludes       = rc.excludes,
-						ignoreDefaults = rc.ignoreDefaults
-					)
+				"token"  : prc.token,
+				"author" : prc.oCurrentAuthor.getMemento(
+					includes       = rc.includes,
+					excludes       = rc.excludes,
+					ignoreDefaults = rc.ignoreDefaults
+				)
 			} )
 			.addMessage(
 				"Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes"
@@ -41,7 +57,6 @@ component extends="BaseHandler" {
 		jwtAuth().logout();
 		prc.response.addMessage( "Bye bye!" );
 	}
-
 
 	/**
 	 * If logged in, you will be able to see your user information.
