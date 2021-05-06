@@ -15,9 +15,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	numeric function getUniqueSubscriberCount(){
-		return newCriteria();
-		.withProjections( countDistinct = "email" );
-		.count();
+		return newCriteria().withProjections( countDistinct = "email" ).count();
 	}
 
 }
