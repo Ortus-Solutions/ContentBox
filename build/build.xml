@@ -453,7 +453,7 @@
 	<target
 		name="build.all"
 		description="Builds All ContentBox Release Flavors and patches"
-		depends="build.express,build.apidocs"
+		depends="build.express"
 	>
 		<!-- Copy as BE to root -->
 		<copy toDir="${be.exports}" overwrite="true" encoding="UTF-8" verbose="true">
