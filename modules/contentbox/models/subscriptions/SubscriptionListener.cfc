@@ -28,28 +28,24 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 
 		// if author has elected to subscribe to comments, do it
 		if ( subscribe ) {
-			var criteria   = ;
+			var criteria   = { subscriberEmail : comment.getAuthorEmail() };
 			var subscriber = variables.subscriberService.findWhere( criteria = criteria );
 			var exists     = false;
 
 			if ( isNull( subscriber ) ) {
 				subscriber = variables.subscriberService.new( criteria );
 			}
-
 			var args = {
 				relatedContent : comment.getRelatedContent(),
 				subscriber     : subscriber,
 				type           : "Comment"
 			};
-
 			if ( subscriber.isLoaded() ) {
-				exists = !isNull(
-					variables.commentSubscriptionService.findWhere( criteria = args )
-				);
+				exists = !isNull( commentSubscriptionService.findWhere( criteria = args ) );
 			}
 
 			if ( !exists ) {
-				var subscription = variables.commentSubscriptionService.new( args );
+				var subscription = commentSubscriptionService.new( args );
 				subscriber.addSubscription( subscription );
 				variables.subscriberService.save( subscriber );
 			}
@@ -59,7 +55,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	public void function cbadmin_onCommentStatusUpdate( required any event, required struct data ){
 		var commentIds = listToArray( arguments.data.commentID );
 		for ( var commentId in commentIds ) {
-			var comment = variables.commentService.get( commentId );
+			var comment = commentService.get( commentId );
 			if ( comment.getIsApproved() ) {
 				variables.commentService.sendSubscriptionNotifications( comment );
 			}
