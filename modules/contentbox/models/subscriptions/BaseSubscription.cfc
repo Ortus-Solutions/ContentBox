@@ -49,8 +49,18 @@ component
 		setter   ="false"
 		update   ="false";
 
-	property name="subscriptionToken" notnull="true";
+	/**
+	 * This token identifies subscribers (emails) to appropriate subscriptions
+	 */
+	property
+		name   ="subscriptionToken"
+		ormtype="string"
+		length ="255"
+		notnull="true";
 
+	/**
+	 * The type of subscriptions. Available subscriptions are : comment
+	 */
 	property
 		name   ="type"
 		ormtype="string"
@@ -78,32 +88,33 @@ component
 
 	this.pk = "subscriptionID";
 
+	this.memento = {
+		defaultIncludes : [ "subscriptionToken", "type" ],
+		defaultExcludes : []
+	};
+
 	this.constraints = {
 		"subscriptionToken" : { required : true, size : "1..255" },
-		"type"              : { required : true, size : "1..255" }
+		"type"              : { required : true, size : "1..255", regex : "^(comment)$" }
 	};
 
 	/* *********************************************************************
-	 **                          PUBLIC FUNCTIONS
+	 **                          METHODS
 	 ********************************************************************* */
 
+	function init(){
+		super.init();
+		return this;
+	}
+
 	/**
-	 * Get memento representation
-	 * @excludes Exclude Properties
-	 * @showSubscriber Show the subscriber
+	 * Build a snapshot of the subscriber
 	 */
-	function getMemento( excludes = "", boolean showSubscriber = true ){
-		var pList  = listToArray( "subscriptionToken,type" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Subscriber
-		if ( arguments.showSubscriber && hasSubscriber() ) {
-			result[ "subscriber" ] = getSubscriber().getMemento( showSubscriptions = false );
-		} else if ( arguments.showSubscriber ) {
-			result[ "subscriber" ] = {};
+	struct function getSubscriberSnapshot(){
+		if ( hasSubscriber() ) {
+			return getSubscriber().getInfoSnapshot();
 		}
-
-		return result;
+		return {};
 	}
 
 }

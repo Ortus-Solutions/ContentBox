@@ -1,83 +1,69 @@
 /**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Comment Notification interceptor
+ */
+component extends="coldbox.system.Interceptor" accessors="true" {
 
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
+	// DI
+	property name="commentService" inject="id:commentService@cb";
+	property name="subscriberService" inject="id:subscriberService@cb";
+	property name="commentSubscriptionService" inject="id:commentSubscriptionService@cb";
 
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+	function configure(){
+	}
 
-http://www.apache.org/licenses/LICENSE-2.0
+	public void function cbui_onCommentPost( required any event, required struct data ){
+		var content   = data.content;
+		var comment   = data.comment;
+		var subscribe = data.subscribe;
+		var moderated = data.moderationResults.moderated;
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* Comment Notification interceptor
-*/
-component extends="coldbox.system.Interceptor" accessors="true"{
+		// now process existing subscriptions
+		if ( !moderated ) {
+			variables.commentService.sendSubscriptionNotifications( comment );
+		}
 
-    // DI
-    property name="commentService"  inject="id:commentService@cb";
-    property name="subscriberService"  inject="id:subscriberService@cb";
-    property name="commentSubscriptionService"  inject="id:commentSubscriptionService@cb";
+		// if author has elected to subscribe to comments, do it
+		if ( subscribe ) {
+			var criteria   = ;
+			var subscriber = variables.subscriberService.findWhere( criteria = criteria );
+			var exists     = false;
 
-    /**
-    * Configure
-    */
-    function configure(){}
+			if ( isNull( subscriber ) ) {
+				subscriber = variables.subscriberService.new( criteria );
+			}
 
-    public void function cbui_onCommentPost( required any event, required struct data ) {
-        var content = data.content;
-        var comment = data.comment;
-        var subscribe = data.subscribe;
-        var moderated = data.moderationResults.moderated;
+			var args = {
+				relatedContent : comment.getRelatedContent(),
+				subscriber     : subscriber,
+				type           : "Comment"
+			};
 
-        // now process existing subscriptions
-        if( !moderated ) {
-            commentService.sendSubscriptionNotifications( comment );
-        }
-        // if author has elected to subscribe to comments, do it
-        if( subscribe ) {
-            var criteria = { subscriberEmail=comment.getAuthorEmail() };
-            var subscriber = subscriberService.findWhere( criteria=criteria );
-            var exists = false;
+			if ( subscriber.isLoaded() ) {
+				exists = !isNull(
+					variables.commentSubscriptionService.findWhere( criteria = args )
+				);
+			}
 
-            if( isNull( subscriber ) ) {
-                subscriber = subscriberService.new( criteria );
-            }
-            var args = {
-                relatedContent = comment.getRelatedContent(),
-                subscriber = subscriber,
-                type = "Comment"
+			if ( !exists ) {
+				var subscription = variables.commentSubscriptionService.new( args );
+				subscriber.addSubscription( subscription );
+				variables.subscriberService.save( subscriber );
+			}
+		}
+	}
 
-            };
-            if( subscriber.isLoaded() ) {
-                exists = !isNull( commentSubscriptionService.findWhere( criteria=args ) );
-            }
+	public void function cbadmin_onCommentStatusUpdate( required any event, required struct data ){
+		var commentIds = listToArray( arguments.data.commentID );
+		for ( var commentId in commentIds ) {
+			var comment = variables.commentService.get( commentId );
+			if ( comment.getIsApproved() ) {
+				variables.commentService.sendSubscriptionNotifications( comment );
+			}
+		}
+	}
 
-            if( !exists ) {
-                var subscription = commentSubscriptionService.new( args );
-                subscriber.addSubscription( subscription );
-                subscriberService.save( subscriber );
-            }
-        }
-    }
-
-    public void function cbadmin_onCommentStatusUpdate( required any event, required struct data ) {
-        var commentIds = listToArray( arguments.data.commentID );
-        for( var commentId in commentIds ) {
-            var comment = commentService.get( commentId );
-            if( comment.getIsApproved() ) {
-                commentService.sendSubscriptionNotifications( comment );
-            }
-        }
-    }
 }

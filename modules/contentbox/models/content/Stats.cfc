@@ -52,32 +52,23 @@ component
 
 	this.pk = "statsID";
 
+	this.memento = { defaultIncludes : [ "hits" ], defaultExcludes : [ "" ] };
+
 	this.constraints = { "hits" : { required : false, type : "numeric" } };
 
-	/* *********************************************************************
-	 **							CONSTRUCTOR
-	 ********************************************************************* */
-
-	/**
-	 * constructor
-	 */
 	function init(){
 		super.init();
 		return this;
 	}
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
 	/**
-	 * Get memento representation
+	 * Build a snapshot of the related content
 	 */
-	function getMemento( excludes = "" ){
-		var pList  = listToArray( "hits" );
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		return result;
+	struct function getRelatedContentSnapshot(){
+		if ( hasRelatedContent() ) {
+			return getRelatedContent().getInfoSnapshot();
+		}
+		return {};
 	}
 
 }

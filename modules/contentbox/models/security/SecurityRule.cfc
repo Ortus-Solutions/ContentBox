@@ -77,7 +77,7 @@ component
 
 	property
 		name     ="useSSL"
-		ormtype  = "boolean"
+		ormtype  ="boolean"
 		notnull  ="false"
 		default  ="false"
 		dbdefault="false";
@@ -124,6 +124,25 @@ component
 
 	this.pk = "ruleID";
 
+	this.memento = {
+		defaultIncludes : [
+			"action",
+			"match",
+			"message",
+			"messageType",
+			"module",
+			"order",
+			"overrideEvent",
+			"permissions",
+			"redirect",
+			"roles",
+			"securelist",
+			"useSSL",
+			"whitelist"
+		],
+		defaultExcludes : [ "" ]
+	};
+
 	this.constraints = {
 		"whitelist"  : { required : false, size : "1..255" },
 		"securelist" : { required : true, size : "1..255" },
@@ -165,29 +184,6 @@ component
 		super.init();
 
 		return this;
-	}
-
-	/**
-	 * Get memento representation
-	 */
-	function getMemento( excludes = "" ){
-		var pList = [
-			"whitelist",
-			"securelist",
-			"match",
-			"roles",
-			"permissions",
-			"redirect",
-			"overrideEvent",
-			"useSSL",
-			"action",
-			"module",
-			"order",
-			"message",
-			"messageType"
-		];
-
-		return getBaseMemento( properties = pList, excludes = arguments.excludes );
 	}
 
 }

@@ -79,7 +79,6 @@ component
 		name     ="isActive"
 		notnull  ="true"
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		default  ="false"
 		dbdefault="false"
 		index    ="idx_activeModule";
@@ -96,6 +95,22 @@ component
 
 	this.pk = "moduleID";
 
+	this.memento = {
+		defaultIncludes : [
+			"author",
+			"description",
+			"entryPoint",
+			"forgeBoxSlug",
+			"isActrive",
+			"moduleType",
+			"name",
+			"title",
+			"version",
+			"webURL"
+		],
+		defaultExcludes : [ "" ]
+	};
+
 	this.constraints = {
 		"name"         : { required : true, size : "1..255" },
 		"title"        : { required : true, size : "1..255" },
@@ -106,13 +121,6 @@ component
 		"forgeBoxSlug" : { required : false, size : "1..255" }
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
-	/**
-	 * Constructor
-	 */
 	function init(){
 		variables.isActive   = false;
 		variables.moduleType = "core";
@@ -120,19 +128,6 @@ component
 		super.init();
 
 		return this;
-	}
-
-	/**
-	 * Get memento representation
-	 * @excludes Property excludes
-	 */
-	function getMemento( excludes = "" ){
-		var pList = listToArray(
-			"name,title,version,entryPoint,author,webURL,forgeBoxSlug,description,isActive,moduleType"
-		);
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		return result;
 	}
 
 }
