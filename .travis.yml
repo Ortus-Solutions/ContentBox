@@ -55,9 +55,9 @@ before_script:
   - printf "DB_DATABASE=contentbox\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_USER=root\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_PASSWORD=\n" >> $TRAVIS_BUILD_DIR/.env
-  - printf "DB_CLASS=com.mysql.jdbc.Driver\n" >> $TRAVIS_BUILD_DIR/.env
-  - printf "DB_BUNDLEVERSION=5.1.40\n" >> $TRAVIS_BUILD_DIR/.env
-  - printf "DB_BUNDLENAME=com.mysql.jdbc\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_CLASS=com.mysql.cj.jdbc.Driver\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_BUNDLEVERSION=8.0.19\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_BUNDLENAME=com.mysql.cj\n" >> $TRAVIS_BUILD_DIR/.env
   # Startup testing engine
   - box server start serverConfigFile="server-${ENGINE}.json" --debug
 

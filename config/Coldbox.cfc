@@ -321,7 +321,7 @@ component {
 						"url"  : "https://www.apache.org/licenses/LICENSE-2.0.html"
 					},
 					// REQUIRED. The version of the OpenAPI document (which is distinct from the OpenAPI Specification version or the API implementation version).
-					"version" : "@version.number@+@build.number@"
+					"version" : "1"
 				},
 				// An array of Server Objects, which provide connectivity information to a target server. If the servers property is not provided, or is an empty array, the default value would be a Server Object with a url value of /.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#serverObject
