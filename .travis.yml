@@ -48,6 +48,16 @@ before_script:
   - mysql -u root -e 'create database contentbox;'
   # import database
   - mysql -u root < tests/resources/sql/mysql/contentbox.sql
+  # Seed .env for MySQL
+  - echo "Seeding database .env"
+  - touch $TRAVIS_BUILD_DIR/.env
+  - printf "DB_HOST=127.0.0.1\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_DATABASE=contentbox\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_USER=root\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_PASSWORD=\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_CLASS=om.mysql.jdbc.Driver\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_BUNDLEVERSION=5.1.40\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_BUNDLENAME=com.mysql.cj\n" >> $TRAVIS_BUILD_DIR/.env
   # Startup testing engine
   - box server start serverConfigFile="server-${ENGINE}.json" --debug
 
