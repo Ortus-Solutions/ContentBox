@@ -325,7 +325,12 @@ component {
 				},
 				// An array of Server Objects, which provide connectivity information to a target server. If the servers property is not provided, or is an empty array, the default value would be a Server Object with a url value of /.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#serverObject
-				"servers"      : [],
+				"servers"      : [
+					{
+						"url" : "http://127.0.0.1:8589/cbapi/v1",
+						"description" : "Development Server"
+					}
+				],
 				// An element to hold various schemas for the specification.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#componentsObject
 				"components"   : {
