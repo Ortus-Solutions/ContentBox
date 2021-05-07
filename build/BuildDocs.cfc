@@ -81,12 +81,25 @@ component{
 	 */
 	function swagger( version="1.0.0" ){
 		var sTime = getTickCount();
-		print.blueLine( "Generating ContentBox Swagger json docs..." ).toConsole();
+		print.blueLine( "Generating ContentBox #arguments.version# Swagger json docs..." ).toConsole();
+		command( "tokenReplace" )
+			.params(
+				path        = "#variables.root#/config/Coldbox.cfc",
+				token       = "@version.number@",
+				replacement = arguments.version
+			)
+			.run();
 		cfhttp(
 			url="http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb",
 			path = variables.apidocsDir,
 			file="contentbox-swagger.json"
 		);
+		// Move Rapidoc
+		fileCopy(
+			"#variables.root#/build/resources/apidoc.html",
+			"#variables.apidocsDir#/apidoc.html"
+		);
+
 		print.greenLine( "√ Swagger JSON docs generated in #getTickCount() - sTime#ms and can be found at: #variables.apidocsDir#/contentbox-swagger.json" ).toConsole();
 	}
 
