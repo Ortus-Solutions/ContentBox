@@ -25,6 +25,13 @@ component {
 
 		/**
 		 * --------------------------------------------------------------------------
+		 * Author Routing
+		 * --------------------------------------------------------------------------
+		 */
+		resources( resource: "authors", except: except );
+
+		/**
+		 * --------------------------------------------------------------------------
 		 * Category Routing
 		 * --------------------------------------------------------------------------
 		 */
@@ -108,8 +115,6 @@ component {
 			except  : except
 		);
 
-
-		resources( resource: "authors", except: except );
 		resources( resource: "sites", except: except );
 
 		// Catch All Resource

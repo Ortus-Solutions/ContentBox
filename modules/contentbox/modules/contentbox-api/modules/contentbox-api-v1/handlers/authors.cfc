@@ -1,10 +1,13 @@
 /**
  * RESTFul CRUD for Authors
+ * Only tokens with the `AUTHOR_ADMIN` can interact with this endpoint
  */
-component extends="baseHandler" {
+component extends="baseHandler" secured="AUTHOR_ADMIN" {
 
 	// DI
 	property name="ormService" inject="AuthorService@cb";
+	property name="roleService" inject="roleService@cb";
+	property name="permissionService" inject="permissionService@cb";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "lastName";
@@ -14,7 +17,7 @@ component extends="baseHandler" {
 	variables.useGetOrFail = true;
 
 	/**
-	 * Display all authors
+	 * Display all authors according to query options
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -59,18 +62,39 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Update an author using an id
-	 *
-	 * @override
+	 * Create an author in ContentBox
+	 */
+	function create( event, rc, prc ){
+		// Default set variables for the author
+		rc.isPasswordRest = true;
+		rc.password       = hash( createUUID() & now() );
+		rc.isActive       = true;
+
+		// Super size me!
+		arguments.saveMethod = "createNewAuthor";
+		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing author
 	 */
 	function update( event, rc, prc ){
+		// Memento output
 		param rc.includes = "permissions,permissionGroups,role.permissions";
 
-		// Can't update passwords, use the password change endpoint
-		arguments.populate.exclude          = "password";
+		// Can't update everything via the API.
+		arguments.populate.exclude          = "username,password,pages,entries,is2FactorAuth,isPasswordReset,lastLogin";
 		arguments.populate.nullEmptyInclude = "";
 
+		// Super size it!
 		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete an author using an id
+	 */
+	function delete( event, rc, prc ){
+		super.delete( argumentCollection = arguments );
 	}
 
 }

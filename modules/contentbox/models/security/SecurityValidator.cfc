@@ -11,9 +11,6 @@ component singleton {
 	// Dependencies
 	property name="securityService" inject="securityService@cb";
 
-	/**
-	 * Constructor
-	 */
 	SecurityValidator function init(){
 		return this;
 	}
@@ -104,10 +101,7 @@ component singleton {
 				}
 			}
 
-			// Check for empty rules and perms
-			if ( !len( rule.roles ) AND !len( rule.permissions ) ) {
-				results.allow = true;
-			}
+			results.allow = true;
 		}
 
 		// If the rule has a message, then set a messagebox

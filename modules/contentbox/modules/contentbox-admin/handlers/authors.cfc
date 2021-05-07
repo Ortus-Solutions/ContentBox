@@ -242,7 +242,7 @@ component extends="baseHandler" {
 		if ( oAuthor.isLoaded() ) {
 			// Issue a password reset for a user
 			oAuthor.setIsPasswordReset( true );
-			authorService.saveAuthor( oAuthor );
+			variables.authorService.save( oAuthor );
 			securityService.sendPasswordReminder(
 				author      = oAuthor,
 				adminIssued = true,
@@ -429,7 +429,7 @@ component extends="baseHandler" {
 			// store the new author preference
 			prc.oCurrentAuthor.setPreference( name = "editor", value = rc.editor );
 			// save Author preference
-			authorService.saveAuthor( prc.oCurrentAuthor );
+			variables.authorService.save( prc.oCurrentAuthor );
 			results[ "MESSAGES" ] = "Editor changed to #rc.editor#";
 		} catch ( Any e ) {
 			log.error( "Error saving preferences.", e );
@@ -452,7 +452,7 @@ component extends="baseHandler" {
 			// store the new author preference
 			prc.oCurrentAuthor.setPreference( name = rc.preference, value = rc.value );
 			// save Author preference
-			authorService.saveAuthor( prc.oCurrentAuthor );
+			variables.authorService.save( prc.oCurrentAuthor );
 			results[ "MESSAGES" ] = "Preference saved";
 		} else {
 			results[ "ERROR" ]    = true;
@@ -484,7 +484,7 @@ component extends="baseHandler" {
 			{ author : oAuthor, preferences : allPreferences }
 		);
 		// save Author
-		authorService.saveAuthor( oAuthor );
+		variables.authorService.save( oAuthor );
 		// announce event
 		announce(
 			"cbadmin_postAuthorPreferencesSave",
@@ -518,7 +518,7 @@ component extends="baseHandler" {
 				{ author : oAuthor, preferences : rc.preferences }
 			);
 			// save Author
-			authorService.saveAuthor( oAuthor );
+			variables.authorService.save( oAuthor );
 			// announce event
 			announce(
 				"cbadmin_postAuthorPreferencesSave",
@@ -574,7 +574,7 @@ component extends="baseHandler" {
 				}
 			);
 			// save Author
-			authorService.saveAuthor( oAuthor );
+			variables.authorService.save( oAuthor );
 			// announce event
 			announce( "cbadmin_postAuthorSave", { author : oAuthor, isNew : newAuthor } );
 			// message
@@ -606,7 +606,7 @@ component extends="baseHandler" {
 		if ( compareNoCase( rc.password, rc.password_confirm ) EQ 0 ) {
 			// set new password
 			oAuthor.setPassword( rc.password );
-			authorService.saveAuthor( author = oAuthor, passwordChange = true );
+			variables.authorService.save( author = oAuthor, passwordChange = true );
 			// announce event
 			announce(
 				"cbadmin_onAuthorPasswordChange",
@@ -680,7 +680,7 @@ component extends="baseHandler" {
 		if ( !oAuthor.hasPermission( oPermission ) ) {
 			oAuthor.addPermission( oPermission );
 			// Save it
-			authorService.saveAuthor( oAuthor );
+			variables.authorService.save( oAuthor );
 		}
 		// Saved
 		event.renderData( data = "true", type = "json" );
@@ -698,7 +698,7 @@ component extends="baseHandler" {
 		// Remove it
 		oAuthor.removePermission( oPermission );
 		// Save it
-		authorService.saveAuthor( oAuthor );
+		variables.authorService.save( oAuthor );
 		// Saved
 		event.renderData( data = "true", type = "json" );
 	}
@@ -716,7 +716,7 @@ component extends="baseHandler" {
 		if ( !oAuthor.hasPermissionGroup( oGroup ) ) {
 			oAuthor.addPermissionGroup( oGroup );
 			// Save it
-			authorService.saveAuthor( oAuthor );
+			variables.authorService.save( oAuthor );
 		}
 
 		// Saved
@@ -736,7 +736,7 @@ component extends="baseHandler" {
 			// Remove it
 			oAuthor.removePermissionGroup( oGroup );
 			// Save it
-			authorService.saveAuthor( oAuthor );
+			variables.authorService.save( oAuthor );
 		}
 
 		// Saved

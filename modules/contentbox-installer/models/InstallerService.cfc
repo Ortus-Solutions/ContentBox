@@ -369,7 +369,7 @@ component accessors="true" {
 			.setIsActive( true )
 			.setRole( arguments.adminRole );
 
-		return variables.authorService.saveAuthor( oAuthor );
+		return variables.authorService.save( oAuthor );
 	}
 
 	/**

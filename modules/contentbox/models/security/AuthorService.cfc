@@ -12,13 +12,18 @@ component
 {
 
 	// DI
-	property name="populator" inject="wirebox:populator";
-	property name="permissionService" inject="permissionService@cb";
-	property name="permissionGroupService" inject="permissionGroupService@cb";
-	property name="roleService" inject="roleService@cb";
 	property name="bCrypt" inject="BCrypt@BCrypt";
 	property name="dateUtil" inject="DateUtil@cb";
-	property name="securityService" inject="securityService@cb";
+	property name="CBHelper" inject="CBHelper@cb";
+	property name="mailService" inject="mailService@cbmailservices";
+	property name="permissionService" inject="permissionService@cb";
+	property name="permissionGroupService" inject="permissionGroupService@cb";
+	property name="renderer" inject="coldbox:renderer";
+	property name="requestService" inject="coldbox:requestService";
+	property name="roleService" inject="roleService@cb";
+	property name="settingService" inject="provider:settingService@cb";
+	property name="securityService" inject="provider:securityService@cb";
+	property name="siteService" inject="provider:siteService@cb";
 
 	/**
 	 * Constructor
@@ -180,13 +185,13 @@ component
 	Author function createNewAuthor( required author ){
 		transaction {
 			// Save it
-			this.saveAuthor( arguments.author );
+			this.save( arguments.author );
 
 			// Send Account Creation
-			var mailResults = variables.securityService.sendNewAuthorReminder( arguments.author );
+			var mailResults = sendNewUserEmail( arguments.author );
 			if ( mailResults.error ) {
 				variables.logger.error(
-					"Error sending author created email",
+					"Error sending author created email for #arguments.author.getFullName()#",
 					mailResults.errorArray
 				);
 			}
@@ -202,7 +207,7 @@ component
 	 *
 	 * @return Author
 	 */
-	Author function saveAuthor( required author, boolean passwordChange = false ){
+	Author function save( required author, boolean passwordChange = false ){
 		// bcrypt password if new author
 		if ( !arguments.author.isLoaded() OR arguments.passwordChange ) {
 			// bcrypt the incoming password
@@ -428,7 +433,7 @@ component
 			thisUser.createdDate  = dateUtil.epochToLocal( thisUser.modifiedDate );
 
 			// populate content from data
-			populator.populateFromStruct(
+			getBeanPopulator().populateFromStruct(
 				target               = oUser,
 				memento              = thisUser,
 				exclude              = "role,authorID,permissions",
@@ -442,7 +447,7 @@ component
 				for ( var thisPermission in thisUser.permissions ) {
 					var oPerm = permissionService.findByPermission( thisPermission.permission );
 					oPerm     = (
-						isNull( oPerm ) ? populator.populateFromStruct(
+						isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
 							target  = permissionService.new(),
 							memento = thisPermission,
 							exclude = "permissionID"
@@ -466,7 +471,7 @@ component
 				for ( var thisGroup in thisUser.permissiongroups ) {
 					var oGroup = permissionGroupService.findByName( thisGroup.name );
 					oGroup     = (
-						isNull( oGroup ) ? populator.populateFromStruct(
+						isNull( oGroup ) ? getBeanPopulator().populateFromStruct(
 							target  = permissionGroupService.new(),
 							memento = thisGroup,
 							exclude = "permissionGroupID,permissions"
@@ -524,6 +529,60 @@ component
 		}
 
 		return arguments.importLog.toString();
+	}
+
+	/**
+	 * Sends a new author their reminder to reset their password and log in to their account
+	 *
+	 * @author The author to send the reminder to
+	 *
+	 * @return struct of { error:boolean, errorArray:array }
+	 */
+	struct function sendNewUserEmail( required Author author ){
+		var token       = variables.securityService.generateResetToken( arguments.author );
+		var settings    = variables.settingService.getAllSettings();
+		var defaultSite = variables.siteService.getDefaultSite();
+		var adminUrl    = variables.requestService
+			.getContext()
+			.buildLink( to: "/cbadmin", ssl: settings.cb_admin_ssl );
+
+		// get mail payload
+		var bodyTokens = {
+			name        : arguments.author.getFullName(),
+			email       : arguments.author.getEmail(),
+			username    : arguments.author.getUsername(),
+			linkTimeout : settings.cb_security_password_reset_expiration,
+			linkToken   : adminUrl & "/security/verifyReset?token=#token#",
+			resetLink   : adminUrl & "/security/lostPassword",
+			siteName    : defaultSite.getName(),
+			issuedBy    : "",
+			issuedEmail : ""
+		};
+
+		// Build email out
+		var mail = variables.mailservice.newMail(
+			to         = arguments.author.getEmail(),
+			from       = settings.cb_site_outgoingEmail,
+			subject    = "#defaultSite.getName()# Account was created for you",
+			bodyTokens = bodyTokens,
+			type       = "html",
+			server     = settings.cb_site_mail_server,
+			username   = settings.cb_site_mail_username,
+			password   = settings.cb_site_mail_password,
+			port       = settings.cb_site_mail_smtp,
+			useTLS     = settings.cb_site_mail_tls,
+			useSSL     = settings.cb_site_mail_ssl
+		);
+
+		mail.setBody(
+			variables.renderer.renderLayout(
+				layout = "/contentbox/email_templates/layouts/email",
+				view   = "/contentbox/email_templates/author_welcome"
+			)
+		);
+
+		// send it out
+		return variables.mailService.send( mail );
 	}
 
 }
