@@ -153,7 +153,7 @@ abstract     component {
 		print.line().greenLine( "Generating user permissions..." );
 		truncate( "cb_permission" );
 
-		variables.aPerms = deserializeJSON( fileRead( "mockdata/permissions.json" ) ).each( ( thisRecord ) => thisRecord[ "permissionID" ] = uuidLib.randomUUID().toString() );
+		variables.aPerms = deserializeJSON( fileRead( "mockdata/permissions.json" ) )/* .each( ( thisRecord ) => thisRecord[ "permissionID" ] = uuidLib.randomUUID().toString() ) */;
 
 		qb.from( "cb_permission" ).insert( variables.aPerms );
 		print.cyanLine( "   ==> (#variables.aPerms.len()#) User Permissions inserted" );
@@ -164,20 +164,20 @@ abstract     component {
 
 		variables.aPermissionGroups = [
 			{
-				"permissionGroupID" : uuidLib.randomUUID().toString(),
-				"createdDate"       : "2017-06-12 16:01:13",
-				"modifiedDate"      : "2017-06-12 20:31:52",
-				"isDeleted"         : 0,
-				"name"              : "Finance",
-				"description"       : "Finance team permissions"
+				"createdDate": "2017-06-12 16:01:13",
+				"modifiedDate": "2017-06-12 20:31:52",
+				"isDeleted": 0,
+				"name": "Finance",
+				"description": "Finance team permissions",
+				"permissionGroupID": "7850efee-a444-11eb-ab6f-0290cc502ae3"
 			},
 			{
-				"permissionGroupID" : uuidLib.randomUUID().toString(),
-				"createdDate"       : "2017-06-16 13:02:12",
-				"modifiedDate"      : "2017-06-16 13:02:12",
-				"isDeleted"         : 0,
-				"name"              : "Security",
-				"description"       : ""
+				"createdDate": "2017-06-16 13:02:12",
+				"modifiedDate": "2017-06-16 13:02:12",
+				"isDeleted": 0,
+				"name": "Security",
+				"description": "",
+				"permissionGroupID": "7850f138-a444-11eb-ab6f-0290cc502ae3"
 			}
 		];
 
@@ -290,6 +290,7 @@ abstract     component {
 		qb.from( "cb_category" ).insert( aCategories );
 		print.cyanLine( "   ==> (#aCategories.len()#) Categories inserted" );
 	}
+
 	function seedSecurityRules(){
 		/******************** SECURITY RULES *************************/
 		print.line().greenLine( "Generating security rules..." );
@@ -315,15 +316,32 @@ abstract     component {
 		print.line().greenLine( "Generating authors a-la-carte permissions..." );
 		truncate( "cb_authorPermissions" );
 
-		var testAuthor         = aAuthors.filter( ( thisAuthor ) => thisAuthor.username == "testermajano" )[ 1 ];
-		var aAuthorPermissions = [];
-
-		for ( var x = 1; x lte 4; x++ ) {
-			aAuthorPermissions.append( {
-				"FK_authorID"     : testAuthor.authorID,
-				"FK_permissionID" : variables.aPerms[ randRange( 1, variables.aPerms.len() ) ].permissionID
-			} );
-		}
+		var aAuthorPermissions = [
+			{
+				"FK_permissionID": "785d8182-a444-11eb-ab6f-0290cc502ae3",
+				"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_permissionID": "785d8574-a444-11eb-ab6f-0290cc502ae3",
+				"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_permissionID": "785d8420-a444-11eb-ab6f-0290cc502ae3",
+				"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_permissionID": "785d83b2-a444-11eb-ab6f-0290cc502ae3",
+				"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_permissionID": "785d8344-a444-11eb-ab6f-0290cc502ae3",
+				"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_permissionID": "785d84fc-a444-11eb-ab6f-0290cc502ae3",
+				"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3"
+			}
+		];
 
 		qb.from( "cb_authorPermissions" ).insert( aAuthorPermissions );
 		print.cyanLine( "   ==> (#aAuthorPermissions.len()#) Authors Permissions inserted" );
@@ -360,7 +378,9 @@ abstract     component {
 		/******************** CONTENT ********************************/
 		print.line().greenLine( "Generating content..." );
 		truncate( "cb_content" );
+
 		var aContent = deserializeJSON( fileRead( "mockdata/content.json" ) );
+
 		qb.from( "cb_content" ).insert( aContent );
 		print.cyanLine( "   ==> (#aContent.len()#) Content inserted" );
 	}
@@ -369,7 +389,9 @@ abstract     component {
 		/******************** COMMENTS *******************************/
 		print.line().greenLine( "Generating comments..." );
 		truncate( "cb_comment" );
+
 		var aComments = deserializeJSON( fileRead( "mockdata/comments.json" ) );
+
 		qb.from( "cb_comment" ).insert( aComments );
 		print.cyanLine( "   ==> (#aComments.len()#) Comments inserted" );
 	}
@@ -381,16 +403,16 @@ abstract     component {
 
 		var aCommentSubscriptions = [
 			{
-				"subscriptionID" : "F6B464C7-7E47-4991-A0B28121EFFB67F5",
-				"FK_contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502141"
+				"subscriptionID": "77e37aae-a444-11eb-ab6f-0290cc502ae3",
+				"FK_contentID": "779cd18a-a444-11eb-ab6f-0290cc502ae3"
 			},
 			{
-				"subscriptionID" : "F6B464C7-7E47-4991-A0B28121EFFB67F6",
-				"FK_contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502141"
+				"subscriptionID": "77e37b80-a444-11eb-ab6f-0290cc502ae3",
+				"FK_contentID": "779cd18a-a444-11eb-ab6f-0290cc502ae3"
 			},
 			{
-				"subscriptionID" : "F6B464C7-7E47-4991-A0B28121EFFB67F4",
-				"FK_contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502142"
+				"subscriptionID": "77e3796e-a444-11eb-ab6f-0290cc502ae3",
+				"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3"
 			}
 		];
 
@@ -403,44 +425,7 @@ abstract     component {
 		print.line().greenLine( "Generating content categories..." );
 		truncate( "cb_contentCategories" );
 
-		var aContentCategories = [
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
-				"FK_categoryID" : 2
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
-				"FK_categoryID" : 4
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a64",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180124"
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a64",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180126"
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a87",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180124"
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a87",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180126"
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a88",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180124"
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a88",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180126"
-			},
-			{
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502147",
-				"FK_categoryID" : "ff80808178fbc7620178fbc7f1180125"
-			}
-		];
+		var aContentCategories = deserializeJSON( fileRead( "mockdata/contentCategories.json" ) );
 
 		qb.from( "cb_contentCategories" ).insert( aContentCategories );
 		print.cyanLine( "   ==> (#aContentCategories.len()#) Content Categories inserted" );
@@ -451,58 +436,7 @@ abstract     component {
 		print.line().greenLine( "Generating content store..." );
 		truncate( "cb_contentStore" );
 
-		aContentStore = [
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502111",
-				"description" : "My very first content",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502114",
-				"description" : "Most greatest news",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502122",
-				"description" : "",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502123",
-				"description" : "footer",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502124",
-				"description" : "support options",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502127",
-				"description" : "Test",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502159",
-				"description" : "A small footer",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502168",
-				"description" : "test",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502169",
-				"description" : "asdf",
-				"order"       : 0
-			},
-			{
-				"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502219",
-				"description" : "",
-				"order"       : 0
-			}
-		];
+		var aContentStore = deserializeJSON( fileRead( "mockdata/contentStore.json" ) );
 
 		qb.from( "cb_contentStore" ).insert( aContentStore );
 		print.cyanLine( "   ==> (#aContentStore.len()#) Content Store inserted" );
@@ -524,26 +458,7 @@ abstract     component {
 		print.line().greenLine( "Generating custom field..." );
 		truncate( "cb_customfield" );
 
-		var aCustomFields = [
-			{
-				"customFieldID" : "3E0AB238-1783-4DD6-93518F0B67B9B5F3",
-				"key"           : "age",
-				"value"         : "30",
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
-				"createdDate"   : "2016-05-03 16:23:25",
-				"modifiedDate"  : "2016-05-03 16:23:25",
-				"isDeleted"     : 0
-			},
-			{
-				"customFieldID" : "3E0AB238-1783-4DD6-93518F0B67B9B5F4",
-				"key"           : "subtitle",
-				"value"         : "4",
-				"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
-				"createdDate"   : "2016-05-03 16:23:25",
-				"modifiedDate"  : "2016-05-03 16:23:25",
-				"isDeleted"     : 0
-			}
-		];
+		var aCustomFields = deserializeJSON( fileRead( "mockdata/customFields.json" ) );
 
 		qb.from( "cb_customfield" ).insert( aCustomFields );
 		print.cyanLine( "   ==> (#aCustomFields.len()#) Custom Fields inserted" );
@@ -567,28 +482,28 @@ abstract     component {
 
 		var aMenus = [
 			{
-				"menuID"       : "69C9F53E-A13C-4D4C-A39641562E5EAE72",
-				"title"        : "Test",
-				"slug"         : "test",
-				"listType"     : "ul",
-				"createdDate"  : "2016-05-04 17:00:14",
-				"menuClass"    : "",
-				"listClass"    : "",
-				"modifiedDate" : "2016-05-04 17:20:11",
-				"isDeleted"    : 0,
-				"FK_siteId"    : "ff80808178fbc7620178fbc7e5f400af"
+				"title": "Main Menu",
+				"slug": "main-menu",
+				"listType": "ul",
+				"createdDate": "2016-05-04 17:00:14",
+				"menuClass": "m5 p5",
+				"listClass": "",
+				"modifiedDate": "2021-05-05 15:29:13",
+				"isDeleted": 0,
+				"menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+				"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 			},
 			{
-				"menuID"       : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
-				"title"        : "test",
-				"slug"         : "test -e123c",
-				"listType"     : "ul",
-				"createdDate"  : "2016-05-04 17:02:54",
-				"menuClass"    : "",
-				"listClass"    : "",
-				"modifiedDate" : "2016-05-04 17:02:54",
-				"isDeleted"    : 0,
-				"FK_siteId"    : "ff80808178fbc7620178fbc7e5f400af"
+				"title": "test",
+				"slug": "test -e123c",
+				"listType": "ul",
+				"createdDate": "2016-05-04 17:02:54",
+				"menuClass": "",
+				"listClass": "",
+				"modifiedDate": "2016-05-04 17:02:54",
+				"isDeleted": 0,
+				"menuID": "77ccceb2-a444-11eb-ab6f-0290cc502ae3",
+				"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 			}
 		];
 
@@ -601,50 +516,7 @@ abstract     component {
 		print.line().greenLine( "Generating menu items..." );
 		truncate( "cb_menuItem" );
 
-		var aMenuItems = [
-			{
-				"menuItemID"   : "2508B7D0-F3B7-4395-BDFBD12BCBB8CE97",
-				"menuType"     : "Free",
-				"title"        : "",
-				"label"        : "test",
-				"data"         : "",
-				"active"       : 1,
-				"FK_menuID"    : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
-				"FK_parentID"  : { "value" : "", "null" : true },
-				"mediaPath"    : { "value" : "", "null" : true },
-				"contentSlug"  : { "value" : "", "null" : true },
-				"menuSlug"     : { "value" : "", "null" : true },
-				"url"          : { "value" : "", "null" : true },
-				"js"           : { "value" : "", "null" : true },
-				"itemClass"    : "",
-				"target"       : { "value" : "", "null" : true },
-				"urlClass"     : { "value" : "", "null" : true },
-				"createdDate"  : "2016-05-04 17:22:08",
-				"modifiedDate" : "2016-05-04 17:22:08",
-				"isDeleted"    : 0
-			},
-			{
-				"menuItemID"   : "2508B7D0-F3B7-4395-BDFBD12BCBB8CE98",
-				"menuType"     : "URL",
-				"title"        : "",
-				"label"        : "hello",
-				"data"         : "",
-				"active"       : 1,
-				"FK_menuID"    : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
-				"FK_parentID"  : { "value" : "", "null" : true },
-				"mediaPath"    : { "value" : "", "null" : true },
-				"contentSlug"  : { "value" : "", "null" : true },
-				"menuSlug"     : { "value" : "", "null" : true },
-				"url"          : "http://www.ortussolutions.com",
-				"js"           : { "value" : "", "null" : true },
-				"itemClass"    : "",
-				"target"       : "_blank",
-				"urlClass"     : "test",
-				"createdDate"  : "2016-05-04 17:22:08",
-				"modifiedDate" : "2016-05-04 17:22:08",
-				"isDeleted"    : 0
-			}
-		];
+		var aMenuItems = deserializeJSON( fileRead( "mockdata/menuItems.json" ) );
 
 		qb.from( "cb_menuItem" ).insert( aMenuItems );
 		print.cyanLine( "   ==> (#aMenuItems.len()#) Menu Items inserted" );

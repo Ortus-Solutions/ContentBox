@@ -1,0 +1,52 @@
+[
+	{
+		"contentID"   : "779ccbb8-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "My very first content",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779ccc62-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "Most greatest news",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779ccd02-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779ccdac-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "This is a reusable footer",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779cce56-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "support options",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779ccef6-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "Test",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779cd388-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "A small footer",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779cd57c-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "test",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779cd61c-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "asdf",
+		"order"       : 0
+	},
+	{
+		"contentID"   : "779ce300-a444-11eb-ab6f-0290cc502ae3",
+		"description" : "",
+		"order"       : 0
+	}
+]

@@ -1,0 +1,227 @@
+[
+    {
+        "menuType": "Free",
+        "title": "",
+        "label": "test",
+        "data": "",
+        "active": 1,
+        "mediaPath": {
+            "value": "",
+            "null": true
+        },
+        "contentSlug": {
+            "value": "",
+            "null": true
+        },
+        "menuSlug": {
+            "value": "",
+            "null": true
+        },
+        "url": {
+            "value": "",
+            "null": true
+        },
+        "js": {
+            "value": "",
+            "null": true
+        },
+        "itemClass": "",
+        "target": {
+            "value": "",
+            "null": true
+        },
+        "urlClass": {
+            "value": "",
+            "null": true
+        },
+        "createdDate": "2021-05-05 15:30:12",
+        "modifiedDate": "2021-05-05 15:30:12",
+        "isDeleted": 0,
+        "menuItemID": "ff808081793cf2c801793e3947b6003b",
+        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "FK_parentID": {
+            "value": "",
+            "null": true
+        }
+    },
+    {
+        "menuType": "URL",
+        "title": "",
+        "label": "hello",
+        "data": "",
+        "active": 1,
+        "mediaPath": {
+            "value": "",
+            "null": true
+        },
+        "contentSlug": {
+            "value": "",
+            "null": true
+        },
+        "menuSlug": {
+            "value": "",
+            "null": true
+        },
+        "url": "http://www.ortussolutions.com",
+        "js": {
+            "value": "",
+            "null": true
+        },
+        "itemClass": "",
+        "target": "_blank",
+        "urlClass": "test",
+        "createdDate": "2021-05-05 15:30:12",
+        "modifiedDate": "2021-05-05 15:30:12",
+        "isDeleted": 0,
+        "menuItemID": "ff808081793cf2c801793e3947b6003c",
+        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "FK_parentID": "ff808081793cf2c801793e3947b6003b"
+    },
+    {
+        "menuType": "Content",
+        "title": "",
+        "label": "Disk Queues ",
+        "data": "",
+        "active": 1,
+        "mediaPath": {
+            "value": "",
+            "null": true
+        },
+        "contentSlug": "disk-queues-77caf",
+        "menuSlug": {
+            "value": "",
+            "null": true
+        },
+        "url": {
+            "value": "",
+            "null": true
+        },
+        "js": {
+            "value": "",
+            "null": true
+        },
+        "itemClass": "",
+        "target": "",
+        "urlClass": "",
+        "createdDate": "2021-05-05 15:30:12",
+        "modifiedDate": "2021-05-05 15:30:12",
+        "isDeleted": 0,
+        "menuItemID": "ff808081793cf2c801793e3947b6003d",
+        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "FK_parentID": {
+            "value": "",
+            "null": true
+        }
+    },
+    {
+        "menuType": "Free",
+        "title": "",
+        "label": "Sites",
+        "data": "",
+        "active": 1,
+        "mediaPath": {
+            "value": "",
+            "null": true
+        },
+        "contentSlug": {
+            "value": "",
+            "null": true
+        },
+        "menuSlug": {
+            "value": "",
+            "null": true
+        },
+        "url": {
+            "value": "",
+            "null": true
+        },
+        "js": {
+            "value": "",
+            "null": true
+        },
+        "itemClass": "",
+        "target": {
+            "value": "",
+            "null": true
+        },
+        "urlClass": {
+            "value": "",
+            "null": true
+        },
+        "createdDate": "2021-05-05 15:30:12",
+        "modifiedDate": "2021-05-05 15:30:12",
+        "isDeleted": 0,
+        "menuItemID": "ff808081793cf2c801793e3947b6003e",
+        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "FK_parentID": {
+            "value": "",
+            "null": true
+        }
+    },
+    {
+        "menuType": "URL",
+        "title": "",
+        "label": "ortus",
+        "data": "",
+        "active": 1,
+        "mediaPath": {
+            "value": "",
+            "null": true
+        },
+        "contentSlug": {
+            "value": "",
+            "null": true
+        },
+        "menuSlug": {
+            "value": "",
+            "null": true
+        },
+        "url": "https://ortussolutions.com",
+        "js": {
+            "value": "",
+            "null": true
+        },
+        "itemClass": "",
+        "target": "_blank",
+        "urlClass": "",
+        "createdDate": "2021-05-05 15:30:12",
+        "modifiedDate": "2021-05-05 15:30:12",
+        "isDeleted": 0,
+        "menuItemID": "ff808081793cf2c801793e3947b7003f",
+        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "FK_parentID": "ff808081793cf2c801793e3947b6003e"
+    },
+    {
+        "menuType": "URL",
+        "title": "Products",
+        "label": "Products",
+        "data": "",
+        "active": 1,
+        "mediaPath": {
+            "value": "",
+            "null": true
+        },
+        "contentSlug": {
+            "value": "",
+            "null": true
+        },
+        "menuSlug": {
+            "value": "",
+            "null": true
+        },
+        "url": "https://www.ortussolutions.com/products",
+        "js": {
+            "value": "",
+            "null": true
+        },
+        "itemClass": "",
+        "target": "_blank",
+        "urlClass": "",
+        "createdDate": "2021-05-05 15:30:12",
+        "modifiedDate": "2021-05-05 15:30:12",
+        "isDeleted": 0,
+        "menuItemID": "ff808081793cf2c801793e3947b70040",
+        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "FK_parentID": "ff808081793cf2c801793e3947b7003f"
+    }
+]
