@@ -110,6 +110,7 @@ abstract     component {
 				seedRoles();
 				seedRolePermissions();
 				seedSites();
+				seedCategories();
 				seedSecurityRules();
 				seedAuthors();
 				seedContent();
@@ -279,6 +280,16 @@ abstract     component {
 		} );
 	}
 
+	function seedCategories(){
+		/******************** CATEGORIES *****************************/
+		print.line().greenLine( "Generating categories..." );
+		truncate( "cb_category" );
+
+		var aCategories = deserializeJSON( fileRead( "mockdata/categories.json" ) );
+
+		qb.from( "cb_category" ).insert( aCategories );
+		print.cyanLine( "   ==> (#aCategories.len()#) Categories inserted" );
+	}
 	function seedSecurityRules(){
 		/******************** SECURITY RULES *************************/
 		print.line().greenLine( "Generating security rules..." );
