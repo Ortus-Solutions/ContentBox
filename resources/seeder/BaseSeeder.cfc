@@ -540,8 +540,16 @@ abstract     component {
 
 		var aRelatedContent = [
 			{
-				"FK_contentID"        : "0e35bbec-a441-11eb-ab6f-0290cc502127",
-				"FK_relatedContentID" : "0e35bbec-a441-11eb-ab6f-0290cc502111"
+				"FK_contentID": "779ccef6-a444-11eb-ab6f-0290cc502ae3",
+				"FK_relatedContentID": "779ccbb8-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_contentID": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
+				"FK_relatedContentID": "779cd4dc-a444-11eb-ab6f-0290cc502ae3"
+			},
+			{
+				"FK_contentID": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
+				"FK_relatedContentID": "779cd234-a444-11eb-ab6f-0290cc502ae3"
 			}
 		];
 

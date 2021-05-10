@@ -1,106 +1,106 @@
 [
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26931",
-        "hits": 10,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502190",
-        "createdDate": "2016-05-03 16:23:26",
-        "modifiedDate": "2021-02-19 10:51:56",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26932",
-        "hits": 3,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502191",
-        "createdDate": "2016-05-03 16:23:26",
-        "modifiedDate": "2021-02-19 10:51:59",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26933",
-        "hits": 5,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502189",
-        "createdDate": "2016-05-03 16:23:26",
-        "modifiedDate": "2021-02-19 10:52:00",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26935",
-        "hits": 129,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
-        "createdDate": "2016-05-03 16:23:26",
-        "modifiedDate": "2021-02-19 10:54:50",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26938",
-        "hits": 4,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502162",
-        "createdDate": "2016-05-03 16:23:26",
-        "modifiedDate": "2021-02-19 10:52:03",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26939",
-        "hits": 1,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502160",
-        "createdDate": "2016-05-03 16:23:26",
-        "modifiedDate": "2016-05-03 16:23:26",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26943",
-        "hits": 4,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502207",
-        "createdDate": "2016-05-18 11:35:32",
-        "modifiedDate": "2021-02-19 10:51:51",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26944",
-        "hits": 5,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502213",
-        "createdDate": "2016-05-18 11:35:32",
-        "modifiedDate": "2021-02-19 10:51:43",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26945",
-        "hits": 1,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502192",
-        "createdDate": "2016-05-18 11:48:04",
-        "modifiedDate": "2016-05-18 11:48:04",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26946",
-        "hits": 10,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141",
-        "createdDate": "2016-08-05 11:41:28",
-        "modifiedDate": "2021-02-19 10:53:28",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26947",
-        "hits": 29,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502142",
-        "createdDate": "2016-11-28 14:56:53",
-        "modifiedDate": "2017-06-20 11:37:12",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26948",
-        "hits": 1,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502135",
-        "createdDate": "2021-02-19 10:53:24",
-        "modifiedDate": "2021-02-19 10:53:24",
-        "isDeleted": 0
-    },
-    {
-        "statsID": "2F587E86-4707-4D3A-93D2452F52E26949",
-        "hits": 1,
-        "FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502110",
-        "createdDate": "2021-02-19 10:53:35",
-        "modifiedDate": "2021-02-19 10:53:35",
-        "isDeleted": 0
-    }
+	{
+		"hits": 10,
+		"createdDate": "2016-05-03 16:23:26",
+		"modifiedDate": "2021-02-19 10:51:56",
+		"isDeleted": 0,
+		"statsID": "78468572-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd8b0-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 3,
+		"createdDate": "2016-05-03 16:23:26",
+		"modifiedDate": "2021-02-19 10:51:59",
+		"isDeleted": 0,
+		"statsID": "784686bc-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd950-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 5,
+		"createdDate": "2016-05-03 16:23:26",
+		"modifiedDate": "2021-02-19 10:52:00",
+		"isDeleted": 0,
+		"statsID": "78468752-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd806-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 129,
+		"createdDate": "2016-05-03 16:23:26",
+		"modifiedDate": "2021-02-19 10:54:50",
+		"isDeleted": 0,
+		"statsID": "784687fc-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd2de-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 4,
+		"createdDate": "2016-05-03 16:23:26",
+		"modifiedDate": "2021-02-19 10:52:03",
+		"isDeleted": 0,
+		"statsID": "78468874-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd4dc-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 1,
+		"createdDate": "2016-05-03 16:23:26",
+		"modifiedDate": "2016-05-03 16:23:26",
+		"isDeleted": 0,
+		"statsID": "784688d8-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd432-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 4,
+		"createdDate": "2016-05-18 11:35:32",
+		"modifiedDate": "2021-02-19 10:51:51",
+		"isDeleted": 0,
+		"statsID": "78468946-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cdb4e-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 5,
+		"createdDate": "2016-05-18 11:35:32",
+		"modifiedDate": "2021-02-19 10:51:43",
+		"isDeleted": 0,
+		"statsID": "784689b4-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cdf22-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 1,
+		"createdDate": "2016-05-18 11:48:04",
+		"modifiedDate": "2016-05-18 11:48:04",
+		"isDeleted": 0,
+		"statsID": "78468a18-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd9fa-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 10,
+		"createdDate": "2016-08-05 11:41:28",
+		"modifiedDate": "2021-02-19 10:53:28",
+		"isDeleted": 0,
+		"statsID": "78468a7c-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd18a-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 33,
+		"createdDate": "2016-11-28 14:56:53",
+		"modifiedDate": "2021-05-05 20:15:29",
+		"isDeleted": 0,
+		"statsID": "78468aea-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 1,
+		"createdDate": "2021-02-19 10:53:24",
+		"modifiedDate": "2021-02-19 10:53:24",
+		"isDeleted": 0,
+		"statsID": "78468b4e-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779cd0ea-a444-11eb-ab6f-0290cc502ae3"
+	},
+	{
+		"hits": 1,
+		"createdDate": "2021-02-19 10:53:35",
+		"modifiedDate": "2021-02-19 10:53:35",
+		"isDeleted": 0,
+		"statsID": "78468bb2-a444-11eb-ab6f-0290cc502ae3",
+		"FK_contentID": "779ccb0e-a444-11eb-ab6f-0290cc502ae3"
+	}
 ]
