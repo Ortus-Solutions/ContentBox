@@ -1,3 +1,5 @@
+<cfset siteService = getInstance( "siteService@cb" )>
+<cfset defaultSite = siteService.getDefaultSite()>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -5,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<base href="<cfoutput>#event.getHTMLBaseURL()#</cfoutput>/modules/contentbox/email_templates/images/" />
+	<base href="<cfoutput>#defaultSite.getSiteRoot()#</cfoutput>/modules/contentbox/email_templates/images/" />
 
 	<title>ContentBox Email</title>
     <!--[if gte mso 6]>
@@ -149,21 +151,34 @@
                                     <table border="0" cellpadding="0" cellspacing="0" class="templateRow" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
                                         <tbody>
                                             <tr>
-                                                <td class="rowContainer kmfloat-left" valign="top" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
+                                                <td
+                                                	class="rowContainer kmfloat-left"
+                                                	valign="top"
+                                                	style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0;padding-top:10px;">
 
-                                                    <cfoutput>#renderView( args=args )#</cfoutput>
+                                                    <cfoutput>
+													#externalView(
+														view : getExplicitView().view,
+														args : args
+													)#
+													</cfoutput>
 
                                                     <!-- Footer -->
-                                                    <div style="text-align: center; border-top: 1px dotted gray; margin: 20px; padding-top: 20px">
-                                                        <img alt="contentbox" class="kmImage" src="contentbox-horizontal.png" style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; max-width: 100%; padding-bottom: 0; display: inline; vertical-align: bottom" />
+                                                   <div
+                                                    	style="text-align: center; border-top: 1px dotted gray; margin: 20px; padding-top: 20px">
+                                                        <img
+                                                        	alt="contentbox"
+                                                        	class="kmImage"
+                                                        	src="contentbox-horizontal.png"
+                                                        	style="border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; max-width: 100%; padding-bottom: 0; display: inline; vertical-align: bottom" />
 
                                                         <br><br>
 
                                                         <cfoutput>
                                                         <small style="color: gray">
                                                             You're receiving this email because of your account on
-                                                            <a href="#event.getHTMLBaseURL()#">
-                                                                <em>#getInstance( "siteService@cb" ).getDefaultSite().getName()#</em>
+                                                            <a href="#defaultSite.getSiteRoot()#">
+                                                                <em>#defaultSite.getName()#</em>
                                                             </a>
                                                             <br>
                                                             If you'd like to receive fewer emails, you can adjust your notification settings.

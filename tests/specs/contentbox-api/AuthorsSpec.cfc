@@ -1,7 +1,9 @@
 component extends="tests.resources.BaseApiTest" {
 
 	property name="siteService" inject="siteService@cb";
-	property name="categoryService" inject="categoryService@cb";
+	property name="authorService" inject="authorService@cb";
+	property name="roleService" inject="roleService@cb";
+	property name="permissionService" inject="permissionService@cb";
 
 	/*********************************** LIFE CYCLE Methods ***********************************/
 
@@ -11,7 +13,7 @@ component extends="tests.resources.BaseApiTest" {
 	function beforeAll(){
 		super.beforeAll();
 		// Log in admin
-		// variables.loggedInData = loginUser();
+		variables.loggedInData = loginUser();
 	}
 
 	/**
@@ -45,129 +47,216 @@ component extends="tests.resources.BaseApiTest" {
 							} );
 					} );
 				} );
-			} ); // end list all authors
-
-			xstory( "I want to view a category by id or slug", function(){
-				given( "a valid id", function(){
-					then( "then I should get the requested category", function(){
-						var testCategory = variables.categoryService.findWhere( { "slug" : "coldbox", "site" : getDefaultSite() } );
-						var event        = this.get(
-							"/cbapi/v1/sites/default/categories/#testCategory.getCategoryID()#"
-						);
+				given( "isActive = false", function(){
+					then( "it should display inactive users", function(){
+						var event = this.get( "/cbapi/v1/authors?isActive=false" );
 						expect( event.getResponse() ).toHaveStatus( 200 );
-						expect( event.getResponse().getData().slug ).toBe( "coldbox" );
+						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
+						event
+							.getResponse()
+							.getData()
+							.each( function( thisItem ){
+								expect( thisItem.isActive ).toBeFalse( thisItem.toString() );
+							} );
 					} );
 				} );
-				given( "a valid slug", function(){
-					then( "then I should get the requested category", function(){
-						var event = this.get( "/cbapi/v1/sites/default/categories/coldbox" );
+				given( "a search criteria", function(){
+					then( "it should display searched users", function(){
+						var event = this.get( "/cbapi/v1/authors?search=tester" );
 						expect( event.getResponse() ).toHaveStatus( 200 );
-						expect( event.getResponse().getData().slug ).toBe( "coldbox" );
+						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
+					} );
+				} );
+			} ); // end list all authors
+
+			story( "I want to view an author by id", function(){
+				given( "a valid id", function(){
+					then( "then I should get the requested author", function(){
+						var testUser = variables.authorService.findWhere( { "username" : "lmajano" } );
+						var event    = this.get( "/cbapi/v1/authors/#testUser.getAuthorID()#" );
+						expect( event.getResponse() ).toHaveStatus(
+							200,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse().getData().username ).toBe( "lmajano" );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.get( "/cbapi/v1/sites/default/categories/bogus" );
-						expect( event.getResponse() ).toHaveStatus( 404 );
+						var event = this.get( "/cbapi/v1/authors/123122" );
+						expect( event.getResponse() ).toHaveStatus(
+							404,
+							event.getResponse().getMessagesString()
+						);
 					} );
 				} );
-			} ); // end story view site by id or slug
+			} ); // end view author
 
-			xstory( "I want to create a site category", function(){
+			story( "I want to create a new author", function(){
 				given( "valid incoming data", function(){
 					then( "then I should see the confirmation", function(){
+						var testRole       = variables.roleService.findWhere( { role : "Administrator" } );
+						var testPermission = variables.permissionService.findWhere( { permission : "TOOLS_IMPORT" } );
 						withRollback( function(){
 							var event = this.post(
-								"cbapi/v1/sites/default/categories",
-								{ category : "bddtest", slug : "bddtest" }
+								"cbapi/v1/authors",
+								{
+									firstName   : "bdd",
+									lastName    : "bdd",
+									email       : "bdd@ortussolutions.com",
+									username    : "bdd@ortussolutions.com",
+									role        : testRole.getRoleID(),
+									permissions : testPermission.getPermissionID()
+								}
 							);
-							expect( event.getResponse() ).toHaveStatus( 200 );
-							expect( event.getResponse().getData().categoryID ).notToBeEmpty();
-							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
+							expect( event.getResponse() ).toHaveStatus(
+								200,
+								event.getResponse().getMessagesString()
+							);
+							expect( event.getResponse().getData().authorID ).notToBeEmpty();
+							expect( event.getResponse().getData().username ).toBe(
+								"bdd@ortussolutions.com"
+							);
 						} );
 					} );
 				} );
-				given( "duplicate category slug", function(){
+				given( "duplicate username", function(){
 					then( "it should display an error message", function(){
-						var event = this.post(
-							"cbapi/v1/sites/default/categories",
-							{ category : "coldbox", slug : "coldbox" }
+						var testRole       = variables.roleService.findWhere( { role : "Administrator" } );
+						var testPermission = variables.permissionService.findWhere( { permission : "TOOLS_IMPORT" } );
+						var event          = this.post(
+							"cbapi/v1/authors",
+							{
+								firstName   : "bdd",
+								lastName    : "bdd",
+								email       : "bdd@ortussolutions.com",
+								username    : variables.testAdminUsername,
+								role        : testRole.getRoleID(),
+								permissions : testPermission.getPermissionID()
+							}
 						);
-						expect( event.getResponse() ).toHaveStatus( 400 );
-						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse() ).toHaveInvalidData(
+							"username",
+							"is not unique"
+						);
 					} );
 				} );
-				given( "invalid data", function(){
+				given( "duplicate email", function(){
 					then( "it should display an error message", function(){
-						var event = this.post(
-							"cbapi/v1/sites/default/categories",
-							{ name : "A nice category" }
+						var testRole       = variables.roleService.findWhere( { role : "Administrator" } );
+						var testPermission = variables.permissionService.findWhere( { permission : "TOOLS_IMPORT" } );
+						var event          = this.post(
+							"cbapi/v1/authors",
+							{
+								firstName   : "bdd",
+								lastName    : "bdd",
+								email       : variables.testAdminEmail,
+								username    : "uniquebaby!",
+								role        : testRole.getRoleID(),
+								permissions : testPermission.getPermissionID()
+							}
 						);
-						expect( event.getResponse() ).toHaveStatus( 400 );
-						expect( event.getResponse() ).toHaveInvalidData( "slug", "is required" );
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse() ).toHaveInvalidData( "email", "is not unique" );
+					} );
+				} );
+				given( "basic invalid data", function(){
+					then( "it should display an error message", function(){
+						var event = this.post( "cbapi/v1/authors", {} );
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse() ).toHaveInvalidData(
+							"firstName",
+							"is required"
+						);
+						expect( event.getResponse() ).toHaveInvalidData( "lastName", "is required" );
+						expect( event.getResponse() ).toHaveInvalidData( "email", "is required" );
+						expect( event.getResponse() ).toHaveInvalidData( "username", "is required" );
 					} );
 				} );
 			} ); // end create story
 
-			xstory( "I want to edit a category", function(){
-				given( "a valid id/slug and valid data", function(){
-					then( "then it should update a category", function(){
+			story( "I want to edit an author", function(){
+				given( "a valid id and valid data", function(){
+					then( "then it should update an author", function(){
 						withRollback( function(){
-							var event = this.put(
-								"/cbapi/v1/sites/default/categories/coldbox",
-								{ category : "ColdBox Rocks" }
+							var testAuthor = variables.authorService.findWhere( { username : "lmajano" } );
+							var event      = this.put(
+								"/cbapi/v1/authors/#testAuthor.getAuthorID()#",
+								{ biography : "ColdBox Daddy!" }
 							);
-							expect( event.getResponse() ).toHaveStatus( 200 );
-							expect( event.getResponse().getData().category ).toInclude(
-								"ColdBox Rocks"
+							expect( event.getResponse() ).toHaveStatus(
+								200,
+								event.getResponse().getMessagesString()
+							);
+							expect( event.getResponse().getData().biography ).toInclude(
+								"ColdBox Daddy!"
 							);
 						} );
 					} );
 				} );
-				given( "a non-unique slug", function(){
-					then( "then I should see a validation message", function(){
-						var event = this.put(
-							"/cbapi/v1/sites/default/categories/coldbox",
-							{ slug : "coldfusion" }
-						);
-						expect( event.getResponse() ).toHaveStatus( 400 );
-						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
-					} );
-				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.put( "/cbapi/v1/sites/categories/123" );
-						expect( event.getResponse() ).toHaveStatus( 404 );
+						var event = this.put( "/cbapi/v1/authors/1232222" );
+						expect( event.getResponse() ).toHaveStatus(
+							404,
+							event.getResponse().getMessagesString()
+						);
 					} );
 				} );
-			} ); // end edit story
+			} ); // end edit author
 
-			xstory( "I want to delete a category", function(){
-				given( "a valid id/slug", function(){
+			story( "I want to delete an author", function(){
+				given( "a valid id", function(){
 					then( "then I should see the confirmation", function(){
 						try {
-							var testCategory = variables.categoryService.save(
-								variables.categoryService.new( {
-									category : "bddtest",
-									slug     : "bddtest",
-									site     : getDefaultSite()
+							var testRole       = variables.roleService.findWhere( { role : "Administrator" } );
+							var testPermission = variables.permissionService.findWhere( { permission : "TOOLS_IMPORT" } );
+							var testAuthor     = variables.authorService.save(
+								variables.authorService.new( {
+									firstName   : "bdd",
+									lastName    : "bdd",
+									email       : "bdd@ortussolutions.com",
+									username    : "bddtest",
+									role        : testRole.getRoleID(),
+									permissions : testPermission.getPermissionID()
 								} )
 							);
-							var event = this.delete( "/cbapi/v1/sites/default/categories/bddtest" );
-							expect( event.getResponse() ).toHaveStatus( 200 );
+							var event = this.delete(
+								"/cbapi/v1/authors/#testAuthor.getAuthorId()#"
+							);
+							expect( event.getResponse() ).toHaveStatus(
+								200,
+								event.getResponse().getMessagesString()
+							);
 							expect( event.getResponse().getMessagesString() ).toInclude( "deleted" );
 						} finally {
-							queryExecute( "delete from cb_category where slug = 'bddtest'" );
+							queryExecute(
+								"delete from cb_authorPermissions where FK_authorID = '#testAuthor.getAuthorID()#'"
+							);
+							queryExecute( "delete from cb_author where username = 'bddtest'" );
 						}
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.delete( "/cbapi/v1/sites/default/categories/1232222" );
-						expect( event.getResponse() ).toHaveStatus( 404 );
+						expect( event.getResponse() ).toHaveStatus(
+							404,
+							event.getResponse().getMessagesString()
+						);
 					} );
 				} );
-			} ); // end delete story
+			} ); // end delete author
 		} ); // end describe
 	}
 	// end run

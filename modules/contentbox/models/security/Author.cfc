@@ -245,8 +245,13 @@ component
 	this.constraints = {
 		"firstName" : { required : true, size : "1..100" },
 		"lastName"  : { required : true, size : "1..100" },
-		"email"     : { required : true, size : "1..255", type : "email" },
-		"username"  : {
+		"email"     : {
+			required  : true,
+			size      : "1..255",
+			type      : "email",
+			validator : "UniqueValidator@cborm"
+		},
+		"username" : {
 			required  : true,
 			size      : "1..100",
 			validator : "UniqueValidator@cborm"

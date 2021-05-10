@@ -43,7 +43,7 @@ component singleton {
 	 */
 	Author function updateAuthorLoginTimestamp( required author ){
 		arguments.author.setLastLogin( now() );
-		authorService.save( arguments.author );
+		variables.authorService.save( arguments.author );
 		return arguments.author;
 	}
 
@@ -223,66 +223,6 @@ component singleton {
 	}
 
 	/**
-	 * Sends a new author their reminder to reset their password and log in to their account
-	 *
-	 * @author The author to send the reminder to
-	 *
-	 * @return error:boolean,errorArray
-	 */
-	struct function sendNewAuthorReminder( required Author author ){
-		// Generate security token
-		var token = generateResetToken( arguments.author );
-
-		// get settings + default site
-		var settings    = variables.settingService.getAllSettings();
-		var defaultSite = variables.siteService.getDefaultSite();
-
-		// get mail payload
-		var bodyTokens = {
-			name        : arguments.author.getFullName(),
-			email       : arguments.author.getEmail(),
-			username    : arguments.author.getUsername(),
-			linkTimeout : settings.cb_security_password_reset_expiration,
-			linkToken   : CBHelper.linkAdmin(
-				event = "security.verifyReset",
-				ssl   = settings.cb_admin_ssl
-			) & "?token=#token#",
-			resetLink : CBHelper.linkAdmin(
-				event = "security.lostPassword",
-				ssl   = settings.cb_admin_ssl
-			),
-			siteName    : defaultSite.getName(),
-			issuedBy    : "",
-			issuedEmail : ""
-		};
-
-		// Build email out
-		var mail = mailservice.newMail(
-			to         = arguments.author.getEmail(),
-			from       = settings.cb_site_outgoingEmail,
-			subject    = "#defaultSite.getName()# Account was created for you",
-			bodyTokens = bodyTokens,
-			type       = "html",
-			server     = settings.cb_site_mail_server,
-			username   = settings.cb_site_mail_username,
-			password   = settings.cb_site_mail_password,
-			port       = settings.cb_site_mail_smtp,
-			useTLS     = settings.cb_site_mail_tls,
-			useSSL     = settings.cb_site_mail_ssl
-		);
-
-		mail.setBody(
-			renderer.renderLayout(
-				view   = "/contentbox/email_templates/author_welcome",
-				layout = "/contentbox/email_templates/layouts/email"
-			)
-		);
-
-		// send it out
-		return mailService.send( mail );
-	}
-
-	/**
 	 * Send password reminder email, this verifies that the email is valid and they must click on the token
 	 * link in order to reset their password.
 	 * @author 		The author to send the reminder to
@@ -374,7 +314,7 @@ component singleton {
 		};
 
 		// Verify the author of the token
-		results.author = authorService.get( authorID );
+		results.author = variables.authorService.get( authorID );
 		if ( isNull( results.author ) ) {
 			results.error = true;
 			return results;
@@ -424,7 +364,7 @@ component singleton {
 		// set it in the user and save reset password
 		arguments.author.setPassword( arguments.password );
 		arguments.author.setIsPasswordReset( false );
-		authorService.saveAuthor( author = arguments.author, passwordChange = true );
+		variables.authorService.save( author = arguments.author, passwordChange = true );
 
 		// get mail payload
 		var bodyTokens = {
