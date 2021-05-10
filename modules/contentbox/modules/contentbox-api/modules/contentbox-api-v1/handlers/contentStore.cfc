@@ -28,6 +28,7 @@ component extends="baseHandler" {
 	 * Display all content store items using different filters
 	 *
 	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		param rc.page       = 1;
@@ -68,6 +69,7 @@ component extends="baseHandler" {
 	 * Show a content store item using the id
 	 *
 	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -87,6 +89,7 @@ component extends="baseHandler" {
 	 * Create a content store item
 	 *
 	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// params
@@ -123,6 +126,7 @@ component extends="baseHandler" {
 	 * Update an existing content store item
 	 *
 	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		super.update( argumentCollection = arguments );
@@ -132,6 +136,7 @@ component extends="baseHandler" {
 	 * Delete a content store item using an id or slug
 	 *
 	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="CONTENTSTORE_ADMIN"{
 		super.delete( argumentCollection = arguments );

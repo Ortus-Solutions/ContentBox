@@ -349,8 +349,9 @@ component {
 							"name"        : "x-auth-token",
 							"in"          : "query"
 						},
-						"bearerAuth" : {
+						"BearerAuth" : {
 							"type"         : "http",
+							"description" : "User your JWT in the bearer Authorization header"
 							"scheme"       : "bearer",
 							"bearerFormat" : "JWT"
 						}
@@ -358,7 +359,11 @@ component {
 				},
 				// A declaration of which security mechanisms can be used across the API.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#securityRequirementObject
-				"security"     : [],
+				"security"     : [
+					"ApiKeyAuth" : [],
+					"ApiKeyQueryAuth" : []
+					"BearerAuth" : []
+				],
 				// A list of tags used by the specification with additional metadata.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#tagObject
 				"tags"         : [

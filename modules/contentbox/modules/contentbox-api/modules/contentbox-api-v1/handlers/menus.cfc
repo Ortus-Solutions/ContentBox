@@ -3,7 +3,7 @@
  *
  * An incoming site identifier is required
  */
-component extends="baseHandler" {
+component extends="baseHandler" secured="MENUS_ADMIN" {
 
 	// DI
 	property name="ormService" inject="MenuService@cb";
@@ -28,8 +28,9 @@ component extends="baseHandler" {
 	 * Display all menus
 	 *
 	 * @tags Menus
+	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
-	function index( event, rc, prc ) secured="MENUS_ADMIN"{
+	function index( event, rc, prc ){
 		// Criterias and Filters
 		param rc.sortOrder = "slug";
 
@@ -44,8 +45,9 @@ component extends="baseHandler" {
 	 * Show a category using the id
 	 *
 	 * @tags Menus
+	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
-	function show( event, rc, prc ) secured="MENUS_ADMIN"{
+	function show( event, rc, prc ){
 		param rc.includes = "rootMenuItems:menuItems";
 		param rc.excludes = "";
 
@@ -56,8 +58,9 @@ component extends="baseHandler" {
 	 * Create a menu
 	 *
 	 * @tags Menus
+	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
-	function create( event, rc, prc ) secured="MENUS_ADMIN"{
+	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );
 	}
 
@@ -65,8 +68,9 @@ component extends="baseHandler" {
 	 * Update an existing menu
 	 *
 	 * @tags Menus
+	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
-	function update( event, rc, prc ) secured="MENUS_ADMIN"{
+	function update( event, rc, prc ){
 		super.update( argumentCollection = arguments );
 	}
 
@@ -74,8 +78,9 @@ component extends="baseHandler" {
 	 * Delete a menu using an id or slug
 	 *
 	 * @tags Menus
+	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
-	function delete( event, rc, prc ) secured="MENUS_ADMIN"{
+	function delete( event, rc, prc ){
 		super.delete( argumentCollection = arguments );
 	}
 

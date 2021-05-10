@@ -28,6 +28,7 @@ component extends="baseHandler" {
 	 * Display all entries using different filters
 	 *
 	 * @tags Entries
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		param rc.page      = 1;
@@ -62,6 +63,7 @@ component extends="baseHandler" {
 	 * Show an entry using the id
 	 *
 	 * @tags Entries
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -81,6 +83,7 @@ component extends="baseHandler" {
 	 * Create a blog entry
 	 *
 	 * @tags Entries
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		// params
@@ -117,6 +120,7 @@ component extends="baseHandler" {
 	 * Update an existing entry
 	 *
 	 * @tags Entries
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		super.update( argumentCollection = arguments );
@@ -126,6 +130,7 @@ component extends="baseHandler" {
 	 * Delete a entry using an id or slug
 	 *
 	 * @tags Entries
+	 * @x-contentbox-permissions ENTRIES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="ENTRIES_ADMIN"{
 		super.delete( argumentCollection = arguments );

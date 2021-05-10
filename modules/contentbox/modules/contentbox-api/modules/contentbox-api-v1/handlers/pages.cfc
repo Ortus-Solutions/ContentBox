@@ -28,6 +28,7 @@ component extends="baseHandler" {
 	 * Display all pages using different filters
 	 *
 	 * @tags Pages
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.page       = 1;
@@ -76,6 +77,7 @@ component extends="baseHandler" {
 	 * Show an page using the id
 	 *
 	 * @tags Pages
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -95,6 +97,7 @@ component extends="baseHandler" {
 	 * Create a page
 	 *
 	 * @tags Pages
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// params
@@ -131,6 +134,7 @@ component extends="baseHandler" {
 	 * Update an existing page
 	 *
 	 * @tags Pages
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		super.update( argumentCollection = arguments );
@@ -140,6 +144,7 @@ component extends="baseHandler" {
 	 * Delete a page using an id or slug
 	 *
 	 * @tags Pages
+	 * @x-contentbox-permissions PAGES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
 		super.delete( argumentCollection = arguments );
