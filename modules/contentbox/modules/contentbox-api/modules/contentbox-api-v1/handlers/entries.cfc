@@ -1,5 +1,7 @@
 /**
- * RESTFul CRUD for Entries
+ * RESTFul CRUD for Blog Entries
+ *
+ * An incoming site identifier is required
  */
 component extends="baseHandler" {
 
@@ -25,9 +27,9 @@ component extends="baseHandler" {
 	/**
 	 * Display all entries using different filters
 	 *
-	 * @override
+	 * @tags Entries
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		param rc.page      = 1;
 		// Criterias and Filters
 		param rc.sortOrder = "publishedDate DESC";
@@ -59,9 +61,9 @@ component extends="baseHandler" {
 	/**
 	 * Show an entry using the id
 	 *
-	 * @override
+	 * @tags Entries
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		param rc.includes = arrayToList( [
 			"activeContent",
 			"childrenSnapshot:children",
@@ -77,8 +79,10 @@ component extends="baseHandler" {
 
 	/**
 	 * Create a blog entry
+	 *
+	 * @tags Entries
 	 */
-	function create( event, rc, prc ){
+	function create( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		// params
 		event
 			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
@@ -107,6 +111,24 @@ component extends="baseHandler" {
 		rc.creator = jwtAuth().getUser().getAuthorID();
 		// Supersize it
 		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing entry
+	 *
+	 * @tags Entries
+	 */
+	function update( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a entry using an id or slug
+	 *
+	 * @tags Entries
+	 */
+	function delete( event, rc, prc ) secured="ENTRIES_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

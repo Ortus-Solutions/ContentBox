@@ -1,7 +1,7 @@
 /**
  * RESTFul CRUD for Sites
  */
-component extends="baseHandler" {
+component extends="baseHandler" secured="SITES_ADMIN" {
 
 	// DI
 	property name="ormService" inject="SiteService@cb";
@@ -16,7 +16,7 @@ component extends="baseHandler" {
 	/**
 	 * Display all sites
 	 *
-	 * @override
+	 * @tags Sites
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -43,6 +43,43 @@ component extends="baseHandler" {
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
+	}
+
+	/**
+	 * Show a site using the id
+	 *
+	 * @tags Sites
+	 */
+	function show( event, rc, prc ){
+		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Create a site
+	 *
+	 * @tags Sites
+	 */
+	function create( event, rc, prc ){
+		// Supersize it
+		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing site
+	 *
+	 * @tags Sites
+	 */
+	function update( event, rc, prc ){
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a site using an id or slug
+	 *
+	 * @tags Sites
+	 */
+	function delete( event, rc, prc ){
+		super.delete( argumentCollection = arguments );
 	}
 
 }

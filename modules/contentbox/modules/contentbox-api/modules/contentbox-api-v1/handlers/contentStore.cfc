@@ -1,5 +1,7 @@
 /**
- * RESTFul CRUD for Pages
+ * RESTFul CRUD for Content Store items
+ *
+ * An incoming site identifier is required
  */
 component extends="baseHandler" {
 
@@ -23,11 +25,11 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Display all pages using different filters
+	 * Display all content store items using different filters
 	 *
-	 * @override
+	 * @tags ContentStore
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		param rc.page       = 1;
 		// Criterias and Filters
 		param rc.sortOrder  = "publishedDate DESC";
@@ -63,11 +65,11 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Show an page using the id
+	 * Show a content store item using the id
 	 *
-	 * @override
+	 * @tags ContentStore
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		param rc.includes = arrayToList( [
 			"activeContent",
 			"childrenSnapshot:children",
@@ -82,9 +84,11 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Create a page
+	 * Create a content store item
+	 *
+	 * @tags ContentStore
 	 */
-	function create( event, rc, prc ){
+	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// params
 		event
 			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
@@ -113,6 +117,24 @@ component extends="baseHandler" {
 		rc.creator = jwtAuth().getUser().getAuthorID();
 		// Supersize it
 		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing content store item
+	 *
+	 * @tags ContentStore
+	 */
+	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a content store item using an id or slug
+	 *
+	 * @tags ContentStore
+	 */
+	function delete( event, rc, prc ) secured="CONTENTSTORE_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

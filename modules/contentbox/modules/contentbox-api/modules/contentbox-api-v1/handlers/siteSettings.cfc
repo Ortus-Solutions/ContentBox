@@ -1,7 +1,7 @@
 /**
- * RESTFul CRUD for Settings
+ * RESTFul API for visualizing site settings
  */
-component extends="baseHandler" {
+component extends="baseHandler" secured="SITES_ADMIN" {
 
 	// DI
 	property name="settingService" inject="SettingService@cb";
@@ -9,7 +9,9 @@ component extends="baseHandler" {
 	variables.RESERVED_SETTINGS = [];
 
 	/**
-	 * Display all system settings
+	 * Display all site settings
+	 *
+	 * @tags Sites
 	 */
 	function index( event, rc, prc ){
 		var siteSettings = variables.settingService.getSettingsContainer().sites;

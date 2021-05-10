@@ -1,5 +1,6 @@
 /**
  * RESTFul CRUD for Site Menus
+ *
  * An incoming site identifier is required
  */
 component extends="baseHandler" {
@@ -26,9 +27,9 @@ component extends="baseHandler" {
 	/**
 	 * Display all menus
 	 *
-	 * @override
+	 * @tags Menus
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="MENUS_ADMIN"{
 		// Criterias and Filters
 		param rc.sortOrder = "slug";
 
@@ -42,13 +43,40 @@ component extends="baseHandler" {
 	/**
 	 * Show a category using the id
 	 *
-	 * @override
+	 * @tags Menus
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) secured="MENUS_ADMIN"{
 		param rc.includes = "rootMenuItems:menuItems";
 		param rc.excludes = "";
 
 		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Create a menu
+	 *
+	 * @tags Menus
+	 */
+	function create( event, rc, prc ) secured="MENUS_ADMIN"{
+		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing menu
+	 *
+	 * @tags Menus
+	 */
+	function update( event, rc, prc ) secured="MENUS_ADMIN"{
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a menu using an id or slug
+	 *
+	 * @tags Menus
+	 */
+	function delete( event, rc, prc ) secured="MENUS_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

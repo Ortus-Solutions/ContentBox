@@ -2,7 +2,7 @@
  * RESTFul CRUD for Site Categories
  * An incoming site identifier is required
  */
-component extends="baseHandler"{
+component extends="baseHandler" {
 
 	// DI
 	property name="ormService" inject="CategoryService@cb";
@@ -25,6 +25,8 @@ component extends="baseHandler"{
 
 	/**
 	 * Display all categories
+	 *
+	 * @tags Categories
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -39,6 +41,8 @@ component extends="baseHandler"{
 
 	/**
 	 * Show a category using the id or slug
+	 *
+	 * @tags Categories
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "NumberOfPublishedPages,numberOfPublishedContentStore,numberOfPublishedEntries";
@@ -48,7 +52,9 @@ component extends="baseHandler"{
 	}
 
 	/**
-	 * Create an category
+	 * Create a category
+	 *
+	 * @tags Categories
 	 */
 	function create( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.create( argumentCollection = arguments );
@@ -56,13 +62,17 @@ component extends="baseHandler"{
 
 	/**
 	 * Update an existing category
+	 *
+	 * @tags Categories
 	 */
 	function update( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.update( argumentCollection = arguments );
 	}
 
 	/**
-	 * Delete an category using an id or slug
+	 * Delete a category using an id or slug
+	 *
+	 * @tags Categories
 	 */
 	function delete( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.delete( argumentCollection = arguments );

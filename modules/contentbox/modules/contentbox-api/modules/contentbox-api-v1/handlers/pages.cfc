@@ -1,5 +1,7 @@
 /**
  * RESTFul CRUD for Pages
+ *
+ * An incoming site identifier is required
  */
 component extends="baseHandler" {
 
@@ -25,9 +27,9 @@ component extends="baseHandler" {
 	/**
 	 * Display all pages using different filters
 	 *
-	 * @override
+	 * @tags Pages
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.page       = 1;
 		// Criterias and Filters
 		param rc.sortOrder  = "publishedDate DESC";
@@ -73,9 +75,9 @@ component extends="baseHandler" {
 	/**
 	 * Show an page using the id
 	 *
-	 * @override
+	 * @tags Pages
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.includes = arrayToList( [
 			"activeContent",
 			"childrenSnapshot:children",
@@ -91,8 +93,10 @@ component extends="baseHandler" {
 
 	/**
 	 * Create a page
+	 *
+	 * @tags Pages
 	 */
-	function create( event, rc, prc ){
+	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// params
 		event
 			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
@@ -121,6 +125,24 @@ component extends="baseHandler" {
 		rc.creator = jwtAuth().getUser().getAuthorID();
 		// Supersize it
 		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing page
+	 *
+	 * @tags Pages
+	 */
+	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a page using an id or slug
+	 *
+	 * @tags Pages
+	 */
+	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }
