@@ -351,7 +351,7 @@ component {
 						},
 						"BearerAuth" : {
 							"type"         : "http",
-							"description" : "User your JWT in the bearer Authorization header"
+							"description" : "User your JWT in the bearer Authorization header",
 							"scheme"       : "bearer",
 							"bearerFormat" : "JWT"
 						}
