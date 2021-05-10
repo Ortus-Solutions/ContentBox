@@ -72,7 +72,7 @@ component {
 		resources(
 			resource: "versions",
 			pattern = "#siteprefix#/contentStore/:contentIdOrSlug/versions",
-			except  : except,
+			except  : "new,edit,update,create",
 			meta    : { contentType : "contentStore" }
 		);
 		resources(

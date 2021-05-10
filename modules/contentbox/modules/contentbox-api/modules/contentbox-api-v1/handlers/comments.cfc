@@ -1,5 +1,8 @@
 /**
  * RESTFul CRUD for Content Comments
+ *
+ * An incoming site identifier is required
+ * An incoming contentID or slug is required
  */
 component extends="baseHandler" {
 
@@ -28,9 +31,9 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Display all comments for the requested contentype
+	 * Display all comments for the requested content object
 	 *
-	 * @override
+	 * @tags Comments,ContentStore,Pages,Entries
 	 */
 	function index( event, rc, prc ){
 		param rc.page       = 1;
@@ -57,15 +60,44 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Show a comment individually
+	 * Show a comment using an ID
 	 *
-	 * @override
+	 * @tags Comments,ContentStore,Pages,Entries
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "relatedContentSnapshot:relatedContent";
 		param rc.excludes = "";
 
 		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Create a new comment
+	 *
+	 * @tags Comments,ContentStore,Pages,Entries
+	 */
+	function create( event, rc, prc ){
+		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing comment
+	 *
+	 * @tags Comments,ContentStore,Pages,Entries
+	 * @x-contentbox-permissions COMMENTS_ADMIN
+	 */
+	function update( event, rc, prc ) secured="COMMENTS_ADMIN"{
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a comment from a specific content item
+	 *
+	 * @tags Comments,ContentStore,Pages,Entries
+	 * @x-contentbox-permissions COMMENTS_ADMIN
+	 */
+	function delete( event, rc, prc ) secured="COMMENTS_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

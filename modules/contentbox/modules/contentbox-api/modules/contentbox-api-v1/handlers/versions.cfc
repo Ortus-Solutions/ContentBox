@@ -1,7 +1,13 @@
 /**
  * RESTFul CRUD for Content Versions
+ *
+ * An incoming site identifier is required
+ * An incoming contentID or slug is required
  */
-component extends="baseHandler" {
+component
+	extends="baseHandler"
+	secured="PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"
+{
 
 	// DI
 	property name="ormService" inject="contentVersionService@cb";
@@ -30,7 +36,8 @@ component extends="baseHandler" {
 	/**
 	 * Display all versions for the requested contentype
 	 *
-	 * @override
+	 * @tags Versions,ContentStore,Pages,Entries
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function index( event, rc, prc ){
 		param rc.page       = 1;
@@ -62,13 +69,24 @@ component extends="baseHandler" {
 	/**
 	 * Show a content version individually
 	 *
-	 * @override
+	 * @tags Versions,ContentStore,Pages,Entries
+	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "relatedContentSnapshot:relatedContent";
 		param rc.excludes = "";
 
 		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a version from a specific content item
+	 *
+	 * @tags Versions,ContentStore,Pages,Entries
+	 * @x-contentbox-permissions VERSIONS_DELETE
+	 */
+	function delete( event, rc, prc ) secured="VERSIONS_DELETE"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

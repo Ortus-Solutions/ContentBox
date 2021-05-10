@@ -370,12 +370,14 @@ component {
 					{ "name" : "Authors", "description" : "Author operations" },
 					{ "name" : "Authentication", "description" : "Authentication operations" },
 					{ "name" : "Categories", "description" : "Category operations" },
+					{ "name" : "Comments", "description" : "Comment operations" },
 					{ "name" : "ContentStore", "description" : "Content store operations" },
 					{ "name" : "Entries", "description" : "Blog entry operations" },
 					{ "name" : "Menus", "description" : "Menu operations" },
 					{ "name" : "Pages", "description" : "Pages operations" },
 					{ "name" : "Sites", "description" : "Site operations" },
-					{ "name" : "Settings", "description" : "Global setting operations" }
+					{ "name" : "Settings", "description" : "Global setting operations" },
+					{ "name" : "Versions", "description" : "Content versions operations" }
 				],
 				// Additional external documentation.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#externalDocumentationObject
