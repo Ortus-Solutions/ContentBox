@@ -44,6 +44,8 @@ component extends="baseHandler" {
 		param rc.parent     = "";
 		// If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 		param rc.slugPrefix = "";
+		// If passed, we can do a slug wildcard search
+		param rc.slugSearch = "";
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.findPublishedContent(
@@ -55,7 +57,8 @@ component extends="baseHandler" {
 			siteId     = prc.oCurrentSite.getSiteID(),
 			authorID   = rc.author,
 			parent     = rc.parent,
-			slugPrefix = rc.slugPrefix
+			slugPrefix = rc.slugPrefix,
+			slugSearch = rc.slugSearch
 		);
 
 		// Build to match interface

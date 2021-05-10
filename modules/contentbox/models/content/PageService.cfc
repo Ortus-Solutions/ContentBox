@@ -211,6 +211,7 @@ component extends="ContentService" singleton {
 	 * @authorID The authorID to filter on
 	 * @criteria The criteria object to use if passed, else we create a new one.
 	 * @showInMenu If passed, it limits the search to this content property
+	 * @slugSearch If passed, we will search for content items with this field as a full text search on slugs
 	 *
 	 * @return struct of { count, content }
 	 */
@@ -226,7 +227,8 @@ component extends="ContentService" singleton {
 		string siteID     = "",
 		string properties,
 		string authorID = "",
-		boolean showInMenu
+		boolean showInMenu,
+		string slugSearch = ""
 	){
 		arguments.criteria = newCriteria()
 			// Show only pages with showInMenu criteria?
