@@ -361,7 +361,7 @@ component {
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#securityRequirementObject
 				"security"     : [
 					"ApiKeyAuth" : [],
-					"ApiKeyQueryAuth" : []
+					"ApiKeyQueryAuth" : [],
 					"BearerAuth" : []
 				],
 				// A list of tags used by the specification with additional metadata.
