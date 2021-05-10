@@ -95,7 +95,7 @@ component
 			6
 		);
 		// Cache the code for 5 minutes
-		cache.set(
+		variables.cache.set(
 			"email-twofactor-token-#token#",
 			arguments.author.getAuthorID(),
 			TOKEN_TIMEOUT,
@@ -132,7 +132,7 @@ component
 			};
 
 			// Build email out
-			var mail = mailservice.newMail(
+			var mail = variables.mailservice.newMail(
 				to        : arguments.author.getEmail(),
 				from      : settings.cb_site_outgoingEmail,
 				subject   : "#site.getName()# Two Factor Validation",
@@ -147,10 +147,9 @@ component
 			);
 
 			mail.setBody(
-				renderer.renderLayout(
-					layout     = "/contentbox/email_templates/layouts/email",
-					view       = "emails/verification",
-					viewModule = "contentbox-email-twofactor"
+				variables.renderer.renderLayout(
+					layout = "/contentbox/email_templates/layouts/email",
+					view   = "/contentbox-email-twofactor/emails/verification"
 				)
 			);
 

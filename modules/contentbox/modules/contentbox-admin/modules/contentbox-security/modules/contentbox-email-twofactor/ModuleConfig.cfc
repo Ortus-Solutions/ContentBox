@@ -8,14 +8,13 @@
 component {
 
 	// Module Properties
-	this.title              = "ContentBox Email Two Factor";
-	this.author             = "Ortus Solutions, Corp";
-	this.webURL             = "https://www.ortussolutions.com";
-	this.version            = "@version.number@+@build.number@";
-	this.description        = "Provides email two factor authentication";
-	this.viewParentLookup   = true;
-	this.layoutParentLookup = true;
-	this.dependencies       = [ "contentbox-admin" ];
+	this.title        = "ContentBox Email Two Factor";
+	this.author       = "Ortus Solutions, Corp";
+	this.webURL       = "https://www.ortussolutions.com";
+	this.version      = "@version.number@+@build.number@";
+	this.description  = "Provides email two factor authentication";
+	this.dependencies = [ "contentbox-admin" ];
+	this.cfmapping    = "contentbox-email-twofactor";
 
 	/**
 	 * Configure
