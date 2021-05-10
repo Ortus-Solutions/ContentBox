@@ -10,10 +10,10 @@ component {
 		get( "/whoami", "auth.whoami" );
 
 		// Global Settings
-		get( "/settings", "settings" );
+		get( "/settings", "settings.index" );
 
 		// Site Settings
-		get( "/sites/:slug/settings", "siteSettings" );
+		get( "/sites/:slug/settings", "siteSettings.index" );
 
 		/**
 		 * --------------------------------------------------------------------------
