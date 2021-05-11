@@ -425,6 +425,21 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var results = { "count" : 0, "content" : [] };
 		var c       = ( isNull( arguments.criteria ) ? newCriteria() : arguments.criteria );
 
+		// Do we evaluate parent roots or not?
+		var nullParentFields = [
+			arguments.searchTerm,
+			arguments.category,
+			arguments.authorID,
+			arguments.slugPrefix,
+			arguments.slugSearch
+		];
+		var hasSearchContext = nullParentFields.reduce( function( results, thisItem ){
+			if ( len( arguments.thisItem ) ) {
+				return true;
+			}
+			return results;
+		}, false );
+
 		// only published pages
 		c.isTrue( "isPublished" )
 			.isLT( "publishedDate", now() )
@@ -476,25 +491,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.when( !isNull( arguments.parent ) && len( arguments.parent ), function( c ){
 				arguments.c.isEq( "parent.contentID", parent );
 			} )
-			// Parent Root
-			.when( !isNull( arguments.parent ) && !len( arguments.parent ), function( c ){
-				// Do we evaluate parent or not?
-				var nullParentFields = [
-					"search",
-					"category",
-					"author",
-					"slugPrefix",
-					"slugSearch"
-				];
-				var hasSearchContext = nullParentFields.reduce( function( results, thisItem ){
-					return ( len( arguments.thisItem ) ? true : false );
-				}, false );
-
-				if ( !hasSearchContext ) {
-					// change sort by parent
-					arguments.c.isNull( "parent" );
-					sortOrder = "order asc";
-				}
+			// Parent Root when parent = ''
+			.when( !isNull( arguments.parent ) && !len( arguments.parent ) && !hasSearchContext, function( c ){
+				// change sort by parent
+				arguments.c.isNull( "parent" );
+				sortOrder = "order asc";
 			} )
 		;
 

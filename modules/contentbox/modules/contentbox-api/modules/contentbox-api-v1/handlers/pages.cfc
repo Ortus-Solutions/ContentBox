@@ -32,6 +32,7 @@ component extends="baseHandler" {
 	 */
 	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.page       = 1;
+		param rc.excludes   = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
 		param rc.sortOrder  = "publishedDate DESC";
 		// Search terms

@@ -31,7 +31,9 @@ component extends="baseHandler" {
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+		// Paging + Mementifier
 		param rc.page       = 1;
+		param rc.excludes   = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
 		param rc.sortOrder  = "publishedDate DESC";
 		// Search terms
