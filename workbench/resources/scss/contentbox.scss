@@ -406,6 +406,13 @@ img.img-screenshot{ height: 200px; }
 .bg-helper{ padding: 15px}
 .tooltip{ position: fixed;}
 .checkbox-spacer {margin-top:5px;}
+.cb-select-arrow{
+	float: right;
+	margin-top: 16px;
+	position: relative;
+	right: 20px;
+	color: #999999;
+}
 
 /**============================== WIDGETS ==============================**/
 
@@ -515,15 +522,18 @@ widgetinfobar::-moz-selection {
 		font-size: 13px;
 		height: 18px;
 		line-height: 18px;
-		min-height: 36px;
+		min-height: 46px;
 		outline: 0 none;
 		padding: 6px 11px;
-		border: 1px solid #ccc;
+		border: 1px solid #d2d6dc;
+		width: 175px;
 	}
 
 	input:focus{
 		box-shadow: 0 0 2px 0px #1ABC9C !important;
 		border-color: #1ABC9C;
+		width: 250px !important;
+		transition: width 1s !important;
 	}
 }
 
@@ -1020,6 +1030,10 @@ table.diff {
 .gap-x-20  { column-gap: 5rem; }
 .gap-y-20  { row-gap: 5rem; }
 
+.appearance-none{
+	appearance: none;
+	-moz-appearance: none;
+}
 
 
 /**============================== MEDIA QUERIES ==============================**/

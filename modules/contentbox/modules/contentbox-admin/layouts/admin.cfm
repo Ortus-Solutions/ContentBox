@@ -68,12 +68,13 @@
 					data-placement="right"
 					title="Site Switcher"
 				>
+					<i class="fas fa-chevron-down cb-select-arrow"></i>
 					<select
 						name="siteSwitcher"
 						id="siteSwitcher"
-						class="form-control input-sm rounded"
+						class="form-control input-sm rounded-sm appearance-none"
 						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteID/' + this.value )"
-						style="width: 175px"
+						style="width: 175px;"
 					>
 						<cfloop array="#prc.allSites#" index="thisSite">
 							<option
@@ -93,7 +94,7 @@
 					id="div-search"
 					title="Press 'Ctrl + Shift + S' to focus"
 					data-toggle="tooltip"
-					data-placement="right"
+					data-placement="left"
 				>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
