@@ -4,6 +4,7 @@
 component extends="baseHandler" {
 
 	// DI
+	property name="authorService" inject="authorService@cb";
 	property name="contentService" inject="ContentService@cb";
 	property name="categoryService" inject="categoryService@cb";
 	property name="customFieldService" inject="customFieldService@cb";
@@ -50,6 +51,32 @@ component extends="baseHandler" {
 		struct validate   = {},
 		string saveMethod = variables.saveMethod
 	){
+		save( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing content item
+	 */
+	function update( event, rc, prc ){
+		super.update( argumentCollection = arguments );
+	}
+
+	/***************************************************************************/
+	/** PRIVATE **/
+	/***************************************************************************/
+
+	/**
+	 * Shared method for create and update to be DRY
+	 */
+	private function save(
+		event,
+		rc,
+		prc,
+		struct populate    = {},
+		struct validate    = {},
+		string saveMethod  = variables.saveMethod,
+		string contentType = ""
+	){
 		// params
 		param arguments.populate.composeRelationships = true;
 		param rc.includes                             = arrayToList( [
@@ -65,6 +92,7 @@ component extends="baseHandler" {
 		param rc.categories     = "";
 		param rc.changelog      = "Created from the RESTful API";
 		param rc.content        = "";
+		param rc.creator        = "";
 		param rc.customFields   = [];
 		param rc.expireDate     = "";
 		param rc.isPublished    = true;
@@ -72,8 +100,9 @@ component extends="baseHandler" {
 		param rc.publishedDate  = now();
 		param rc.slug           = "";
 		param rc.title          = "";
+		param rc.id             = "";
 
-		// Verify Content exists
+		// Verify content exists
 		if ( !len( rc.content ) ) {
 			arguments.event
 				.getResponse()
@@ -93,15 +122,29 @@ component extends="baseHandler" {
 		rc.creator = prc.oCurrentAuthor;
 
 		// Verify permission for publishing, else save as draft
-		if ( !prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) ) {
+		if ( !prc.oCurrentAuthor.checkPermission( "#arguments.contentType#_ADMIN" ) ) {
 			rc.isPublished = "false";
 		}
 
 		// Population arguments
-		arguments.populate.memento          = rc;
-		arguments.populate.model            = variables.ormService.new();
+		arguments.populate.memento = rc;
+		arguments.populate.model   = (
+			// Check if creation or editing
+			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id )
+		);
 		arguments.populate.nullEmptyInclude = "parent";
-		arguments.populate.excludes         = "categories,comments,customFields,contentVersions,children,commentSubscriptions";
+		arguments.populate.excludes         = "creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
+
+		// If it's an update don't set the creator unless you have the right permissions
+		if (
+			arguments.populate.model.isLoaded() && len( rc.creator ) && prc.oCurrentAuthor.checkPermission(
+				"#arguments.contentType#_ADMIN"
+			)
+		) {
+			arguments.populate.model.setCreator(
+				variables.authorService.retrieveUserById( rc.creator )
+			)
+		}
 
 		// Start save transaction procedures
 		transaction {
@@ -112,6 +155,14 @@ component extends="baseHandler" {
 				changelog: rc.changelog,
 				author   : prc.oCurrentAuthor
 			);
+
+			// Inflate the slug if the content was given a parent
+			if ( len( rc.parent ) && prc.oEntity.hasParent() ) {
+				// update slug hierarchies
+				prc.oEntity.setSlug(
+					prc.oEntity.getParent().getSlug() & "/" & prc.oEntity.getSlug()
+				);
+			}
 
 			// Inflate Categories
 			if ( isSimpleValue( rc.categories ) ) {
@@ -148,7 +199,7 @@ component extends="baseHandler" {
 
 			// announce it
 			announceInterception(
-				"#variables.settings.resources.eventPrefix#pre#variables.entity#Save",
+				"#variables.settings.resources.eventPrefix#pre#variables.entity##len( rc.id ) ? "Update" : "Save"#",
 				{ entity : prc.oEntity }
 			);
 
@@ -161,7 +212,7 @@ component extends="baseHandler" {
 
 			// announce it
 			announceInterception(
-				"#variables.settings.resources.eventPrefix#post#variables.entity#Save",
+				"#variables.settings.resources.eventPrefix#post#variables.entity##len( rc.id ) ? "Update" : "Save"#",
 				{ entity : prc.oEntity }
 			);
 		}
@@ -175,13 +226,6 @@ component extends="baseHandler" {
 				ignoreDefaults = rc.ignoreDefaults
 			)
 		);
-	}
-
-	/**
-	 * Update an existing content item
-	 */
-	function update( event, rc, prc ){
-		super.update( argumentCollection = arguments );
 	}
 
 }

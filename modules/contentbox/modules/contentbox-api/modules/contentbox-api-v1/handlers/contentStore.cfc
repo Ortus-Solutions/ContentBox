@@ -98,6 +98,7 @@ component extends="baseContentHandler" {
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// Supersize it
+		arguments.contentType = "CONTENTSTORE";
 		super.create( argumentCollection = arguments );
 	}
 
@@ -108,6 +109,7 @@ component extends="baseContentHandler" {
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+		arguments.contentType = "CONTENTSTORE";
 		super.update( argumentCollection = arguments );
 	}
 

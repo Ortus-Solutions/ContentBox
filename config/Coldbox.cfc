@@ -216,7 +216,9 @@ component {
 				// The default value for relationships/getters which return null
 				nullDefaultValue = '',
 				// Don't check for getters before invoking them
-				trustedGetters = false
+				trustedGetters = false,
+				// If not empty, convert all date/times to the specific timezone
+				convertToTimezone = "UTC"
 			},
 
 			/**
