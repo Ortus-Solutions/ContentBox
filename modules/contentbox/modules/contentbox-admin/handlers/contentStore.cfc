@@ -499,10 +499,6 @@ component extends="baseContentHandler" {
 				var title     = content.getTitle();
 				// announce event
 				announce( "cbadmin_preContentStoreRemove", { content : content } );
-				// Diassociate it
-				if ( content.hasParent() ) {
-					content.getParent().removeChild( content );
-				}
 				// Delete it
 				contentStoreService.delete( content );
 				arrayAppend( messages, "content '#title#' removed" );

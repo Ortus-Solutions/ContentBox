@@ -138,53 +138,61 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} ); // end story list all sites
 
-			xstory( "I want to create a content store item", function(){
-				given( "a valid id/slug", function(){
+			story( "I want to create a content store item", function(){
+				xgiven( "a valid data", function(){
 					then( "then I should see the confirmation", function(){
 						withRollback( function(){
 							var event = this.post(
 								"cbapi/v1/sites",
 								{
-									name        : "bddtest",
-									slug        : "bddtest",
-									description : "my bdd test site",
-									domain      : "bddtest.com",
-									domainRegex : "bddtest\.com",
-									activeTheme : "default",
-									homepage    : "cbBlog"
+									title         : "bddtest",
+									slug          : "bddtest",
+									description   : "my bdd test site",
+									content       : "This is my awesome bdd test content store item",
+									publishedDate : now(),
+									isPublished   : true,
+									changelog     : "My first creation"
 								}
 							);
-							expect( event.getResponse() ).toHaveStatus( 200 );
-							expect( event.getResponse().getData().siteID ).notToBeEmpty();
+							expect( event.getResponse() ).toHaveStatus(
+								200,
+								event.getResponse().getMessagesString()
+							);
+							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
 						} );
 					} );
 				} );
-				given( "duplicate site slug", function(){
+				given( "duplicate content slug", function(){
 					then( "it should display an error message", function(){
 						var event = this.post(
-							"cbapi/v1/sites",
+							"cbapi/v1/sites/default/contentStore",
 							{
-								name        : "default",
-								slug        : "default",
-								description : "my bdd test site",
-								domain      : "bddtest.com",
-								domainRegex : "bddtest\.com",
-								activeTheme : "default",
-								homepage    : "cbBlog"
+								title   : "foot",
+								slug    : "foot",
+								content : "Footer is here",
+								order   : 10
 							}
 						);
-						expect( event.getResponse() ).toHaveStatus( 400 );
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
 				given( "invalid data", function(){
 					then( "it should display an error message", function(){
-						var event = this.post( "cbapi/v1/sites", { description : "A nice site" } );
-						expect( event.getResponse() ).toHaveStatus( 400 );
-						expect( event.getResponse() ).toHaveInvalidData( "name", "is required" );
+						var event = this.post(
+							"cbapi/v1/sites/default/contentStore",
+							{ description : "A nice site" }
+						);
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse() ).toHaveInvalidData( "title", "is required" );
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is required" );
-						expect( event.getResponse() ).toHaveInvalidData( "domain", "is required" );
 					} );
 				} );
 			} ); // end create story

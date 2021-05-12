@@ -3,7 +3,7 @@
  *
  * An incoming site identifier is required
  */
-component extends="baseHandler" {
+component extends="baseContentHandler" {
 
 	// DI
 	property name="ormService" inject="ContentStoreService@cb";
@@ -97,32 +97,6 @@ component extends="baseHandler" {
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
-		// params
-		event
-			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
-			.paramValue( "newCategories", "" )
-			.paramValue( "isPublished", true )
-			.paramValue( "slug", "" )
-			.paramValue( "changelog", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "publishedDate", now() )
-			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
-			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue(
-				"publishedTime",
-				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-			)
-			.paramValue( "expireHour", "" )
-			.paramValue( "expireMinute", "" )
-			.paramValue( "expireTime", "" )
-			.paramValue( "content", "" )
-			.paramValue( "creatorID", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() );
-
-		// Set author to logged in user and override it
-		rc.creator = jwtAuth().getUser().getAuthorID();
 		// Supersize it
 		super.create( argumentCollection = arguments );
 	}

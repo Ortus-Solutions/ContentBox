@@ -784,7 +784,7 @@ component
 	}
 
 	/**
-	 * Override the setCustomFields
+	 * Override the setter
 	 */
 	BaseContent function setCustomFields( required array customFields ){
 		if ( hasCustomField() ) {

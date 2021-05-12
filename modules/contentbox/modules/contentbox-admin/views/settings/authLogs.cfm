@@ -19,8 +19,18 @@
 
     			<!-- Buttons -->
 				<div class="pull-right p10">
-					<a href="#event.buildLink( prc.xehSettings )###security_options" class="btn btn-primary">Configure Tracker</a>
-					<a href="#event.buildLink( prc.xehTruncate )#" class="btn btn-danger confirmIt">Truncate Logs</a>
+					<a
+						href="#event.buildLink( prc.xehSettings )###security_options"
+						class="btn btn-primary"
+					>
+						Configure Tracker
+					</a>
+					<a
+						href="#event.buildLink( prc.xehTruncate )#"
+						class="btn btn-danger confirmIt"
+					>
+						Truncate Logs
+					</a>
 				</div>
 
 				<p>Here you see all recent Logins and as well the login attempts to your system</p>
