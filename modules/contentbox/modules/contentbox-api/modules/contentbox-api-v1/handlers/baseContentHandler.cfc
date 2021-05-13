@@ -40,33 +40,16 @@ component extends="baseHandler" {
 		super.show( argumentCollection = arguments );
 	}
 
-	/**
-	 * Create a content item
-	 */
-	function create(
-		event,
-		rc,
-		prc,
-		struct populate   = {},
-		struct validate   = {},
-		string saveMethod = variables.saveMethod
-	){
-		save( argumentCollection = arguments );
-	}
-
-	/**
-	 * Update an existing content item
-	 */
-	function update( event, rc, prc ){
-		super.update( argumentCollection = arguments );
-	}
-
 	/***************************************************************************/
 	/** PRIVATE **/
 	/***************************************************************************/
 
 	/**
 	 * Shared method for create and update to be DRY
+	 * @populate Population arguments
+	 * @validate Validation arguments
+	 * @saveMethod The method to use for saving entities
+	 * @contenType The type used for permission checks
 	 */
 	private function save(
 		event,
@@ -89,18 +72,9 @@ component extends="baseHandler" {
 		param rc.excludes       = "";
 		param rc.ignoreDefaults = false;
 		// param content fields
-		param rc.categories     = "";
-		param rc.changelog      = "Created from the RESTful API";
-		param rc.content        = "";
-		param rc.creator        = "";
-		param rc.customFields   = [];
-		param rc.expireDate     = "";
-		param rc.isPublished    = true;
-		param rc.parent         = "";
-		param rc.publishedDate  = now();
-		param rc.slug           = "";
-		param rc.title          = "";
 		param rc.id             = "";
+		param rc.changelog      = "";
+		param rc.content        = len( rc.id ) ? "Update from the ContentBox API" : "Creation from the ContentBox API";
 
 		// Verify content exists
 		if ( !len( rc.content ) ) {
@@ -109,17 +83,16 @@ component extends="baseHandler" {
 				.setErrorMessage( "Content is required", arguments.event.STATUS.BAD_REQUEST );
 			return;
 		}
-
+		// Setup Parent if sent!
+		if ( !isNull( rc.parent ) && len( rc.parent ) ) {
+			rc.parent = getByIdOrSlugOrFail( rc.parent );
+		}
+		// Setup Site
+		rc.site = prc.oCurrentSite;
 		// slugify the incoming title or slug
-		rc.slug = (
-			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(
-				listLast( rc.slug, "/" )
-			)
-		);
-
-		// Setup Relationships
-		rc.site    = prc.oCurrentSite;
-		rc.creator = prc.oCurrentAuthor;
+		if ( !isNull( rc.slug ) && len( rc.slug ) ) {
+			rc.slug = variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) );
+		}
 
 		// Verify permission for publishing, else save as draft
 		if ( !prc.oCurrentAuthor.checkPermission( "#arguments.contentType#_ADMIN" ) ) {
@@ -128,74 +101,67 @@ component extends="baseHandler" {
 
 		// Population arguments
 		arguments.populate.memento = rc;
+		// Check if creation or editing
 		arguments.populate.model   = (
-			// Check if creation or editing
 			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id )
 		);
 		arguments.populate.nullEmptyInclude = "parent";
-		arguments.populate.excludes         = "creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
+		arguments.populate.exclude          = "creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
 
-		// If it's an update don't set the creator unless you have the right permissions
+		// Creator override: Only if you have the right perms
+		arguments.populate.model.setCreator( prc.oCurrentAuthor );
 		if (
-			arguments.populate.model.isLoaded() && len( rc.creator ) && prc.oCurrentAuthor.checkPermission(
-				"#arguments.contentType#_ADMIN"
-			)
+			arguments.populate.model.isLoaded() && !isNull( rc.creator ) && len( rc.creator ) && prc
+				.oCurrentAuthor()
+				.checkPermission( "#arguments.contentType#_ADMIN" )
 		) {
 			arguments.populate.model.setCreator(
 				variables.authorService.retrieveUserById( rc.creator )
-			)
+			);
 		}
+
+		// populate it
+		arguments.validate.target = populateModel( argumentCollection = arguments.populate );
 
 		// Start save transaction procedures
 		transaction {
-			// populate + validate + add new content version
-			arguments.validate.target = populateModel( argumentCollection = arguments.populate );
-			prc.oEntity               = validateOrFail( argumentCollection = arguments.validate ).addNewContentVersion(
+			// Validate + Inflate New Content Version
+			prc.oEntity = validateOrFail( argumentCollection = arguments.validate ).addNewContentVersion(
 				content  : rc.content,
 				changelog: rc.changelog,
 				author   : prc.oCurrentAuthor
 			);
 
-			// Inflate the slug if the content was given a parent
-			if ( len( rc.parent ) && prc.oEntity.hasParent() ) {
-				// update slug hierarchies
-				prc.oEntity.setSlug(
-					prc.oEntity.getParent().getSlug() & "/" & prc.oEntity.getSlug()
+			// Inflate Categories if they come as a list of slugs
+			if ( !isNull( rc.categories ) ) {
+				if ( isSimpleValue( rc.categories ) ) {
+					rc.categories = listToArray( rc.categories );
+				}
+				prc.oEntity.setCategories(
+					rc.categories.map( function( thisCategory ){
+						return variables.categoryService.getOrCreateBySlug(
+							arguments.thisCategory,
+							rc.site
+						);
+					} )
 				);
 			}
 
-			// Inflate Categories
-			if ( isSimpleValue( rc.categories ) ) {
-				rc.categories = listToArray( rc.categories );
-			}
-			prc.oEntity.setCategories(
-				rc.categories.map( function( thisCategory ){
-					var oCategory = variables.categoryService.findWhere( { slug : arguments.thisCategory, site : rc.site } );
-					if ( isNull( oCategory ) ) {
-						oCategory = variables.categoryService.new( {
-							category : arguments.thisCategory,
-							slug     : arguments.thisCategory,
-							site     : rc.site
-						} );
-						variables.categoryService.save( oCategory );
-					}
-					return oCategory;
-				} )
-			);
-
 			// Inflate Custom Fields [ { key : "", value : "" } ] if a string, else this should be an array
-			if ( isSimpleValue( rc.customFields ) && isJSON( rc.customFields ) ) {
-				rc.customFields = deserializeJSON( rc.customFields );
+			if ( !isNull( rc.customFields ) ) {
+				if ( isSimpleValue( rc.customFields ) && isJSON( rc.customFields ) ) {
+					rc.customFields = deserializeJSON( rc.customFields );
+				}
+				prc.oEntity.setCustomFields(
+					rc.customFields.map( function( thisField ){
+						return variables.customFieldService.new( {
+							key            : toString( arguments.thisField.key ),
+							value          : toString( arguments.thisField.value ),
+							relatedContent : prc.oEntity
+						} );
+					} )
+				);
 			}
-			prc.oEntity.setCustomFields(
-				rc.customFields.map( function( thisField ){
-					return variables.customFieldService.new( {
-						key            : toString( arguments.thisField.key ),
-						value          : toString( arguments.thisField.value ),
-						relatedContent : prc.oEntity
-					} );
-				} )
-			);
 
 			// announce it
 			announceInterception(

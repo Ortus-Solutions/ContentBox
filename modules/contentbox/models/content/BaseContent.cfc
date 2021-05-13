@@ -509,6 +509,7 @@ component
 	 */
 	function init(){
 		variables.isPublished            = true;
+		variables.publishedDate          = now();
 		variables.allowComments          = true;
 		variables.cache                  = true;
 		variables.cacheLayout            = true;
@@ -1664,6 +1665,28 @@ component
 
 		// Object test
 		return getsiteID() == arguments.site.getsiteID();
+	}
+
+	/**
+	 * Override setter as we do some hiearchy slug magic when setting a parent
+	 *
+	 * @parent The parent object or null
+	 */
+	BaseContent function setParent( parent ){
+		// Welcome home papa!
+		variables.parent = arguments.parent;
+
+		// Nulllify?
+		if ( isNull( arguments.parent ) ) {
+			return this;
+		}
+
+		// Update slug, if parent slug is not set
+		if ( !variables.slug.findNoCase( arguments.parent.getSlug() ) ) {
+			variables.slug = arguments.parent.getSlug() & "/" & variables.slug;
+		}
+
+		return this;
 	}
 
 }

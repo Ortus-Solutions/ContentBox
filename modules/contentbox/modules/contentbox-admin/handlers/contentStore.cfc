@@ -377,7 +377,9 @@ component extends="baseContentHandler" {
 
 		// slugify the incoming title or slug
 		rc.slug = (
-			NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) )
+			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(
+				listLast( rc.slug, "/" )
+			)
 		);
 
 		// Verify permission for publishing, else save as draft
@@ -411,7 +413,7 @@ component extends="baseContentHandler" {
 				rc.creatorID
 			) and content.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
-			content.setCreator( authorService.get( rc.creatorID ) );
+			content.setCreator( variables.authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
@@ -421,15 +423,11 @@ component extends="baseContentHandler" {
 			author    = prc.oCurrentAuthor
 		);
 
-		// attach a parent page if it exists and not the same
-		if ( isNumeric( rc.parentContent ) AND content.getContentID() NEQ rc.parentContent ) {
-			content.setParent( variables.contentStoreService.get( rc.parentContent ) );
-			// update slug
-			content.setSlug( content.getParent().getSlug() & "/" & content.getSlug() );
-		}
-		// Remove parent
-		else if ( rc.parentContent EQ "null" OR rc.parentContent EQ "" ) {
+		// Inflate parent
+		if ( rc.parentContent EQ "null" OR rc.parentContent EQ "" ) {
 			content.setParent( javacast( "null", "" ) );
+		} else {
+			content.setParent( variables.contentStoreService.get( rc.parentContent ) );
 		}
 
 		// Create new categories?

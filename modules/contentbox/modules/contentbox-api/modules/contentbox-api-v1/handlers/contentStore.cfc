@@ -99,7 +99,7 @@ component extends="baseContentHandler" {
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// Supersize it
 		arguments.contentType = "CONTENTSTORE";
-		super.create( argumentCollection = arguments );
+		super.save( argumentCollection = arguments );
 	}
 
 	/**
@@ -110,7 +110,7 @@ component extends="baseContentHandler" {
 	 */
 	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		arguments.contentType = "CONTENTSTORE";
-		super.update( argumentCollection = arguments );
+		super.save( argumentCollection = arguments );
 	}
 
 	/**

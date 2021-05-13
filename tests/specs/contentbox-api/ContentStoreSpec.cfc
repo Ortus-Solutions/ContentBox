@@ -139,27 +139,42 @@ component extends="tests.resources.BaseApiTest" {
 			} ); // end story list all sites
 
 			story( "I want to create a content store item", function(){
-				xgiven( "a valid data", function(){
-					then( "then I should see the confirmation", function(){
+				given( "valid data", function(){
+					then( "then it should create a new content object", function(){
 						withRollback( function(){
 							var event = this.post(
-								"cbapi/v1/sites",
+								"cbapi/v1/sites/default/contentstore",
 								{
 									title         : "bddtest",
 									slug          : "bddtest",
 									description   : "my bdd test site",
 									content       : "This is my awesome bdd test content store item",
-									publishedDate : now(),
-									isPublished   : true,
-									changelog     : "My first creation"
+									publishedDate : dateTimeFormat(
+										now(),
+										"yyyy-mm-dd'T'HH:mm:ssZ",
+										"utc"
+									),
+									changelog    : "My first creation from the bdd test",
+									categories   : "coldbox,news",
+									customFields : [
+										{ key : "test", value : "true" },
+										{ key : "data", value : "#now()#" }
+									]
 								}
 							);
 							expect( event.getResponse() ).toHaveStatus(
 								200,
 								event.getResponse().getMessagesString()
 							);
+							debug( event.getResponse().getData() );
 							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
+							expect( event.getResponse().getData().categories )
+								.toBeArray()
+								.notToBeEmpty();
+							expect( event.getResponse().getData().customFields )
+								.toBeStruct()
+								.notToBeEmpty();
 						} );
 					} );
 				} );
@@ -181,42 +196,84 @@ component extends="tests.resources.BaseApiTest" {
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
-				given( "invalid data", function(){
+				given( "invalid content", function(){
 					then( "it should display an error message", function(){
 						var event = this.post(
 							"cbapi/v1/sites/default/contentStore",
-							{ description : "A nice site" }
+							{ slug : "A nice site" }
 						);
 						expect( event.getResponse() ).toHaveStatus(
 							400,
 							event.getResponse().getMessagesString()
 						);
-						expect( event.getResponse() ).toHaveInvalidData( "title", "is required" );
+						expect( event.getResponse().getMessages() ).toInclude(
+							"content is required"
+						);
+					} );
+				} );
+				given( "invalid data but good content", function(){
+					then( "it should display an error message", function(){
+						var event = this.post(
+							"cbapi/v1/sites/default/contentStore",
+							{ content : "Hello from bdd test land!" }
+						);
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is required" );
+						expect( event.getResponse() ).toHaveInvalidData( "title", "is required" );
 					} );
 				} );
 			} ); // end create story
 
-			xstory( "I want to edit a content store item", function(){
+			story( "I want to edit a content store item", function(){
 				given( "a valid id/slug and valid data", function(){
-					then( "then it should update a site", function(){
-						withRollback( function(){
-							var event = this.put(
-								"/cbapi/v1/sites/default",
-								{ description : "bdd test baby!", isActive : false }
-							);
-							expect( event.getResponse() ).toHaveStatus( 200 );
-							expect( event.getResponse().getData().description ).toInclude(
-								"bdd test baby!"
-							);
-							expect( event.getResponse().getData().isActive ).toBeFalse();
-						} );
+					then( "then it should update a content item", function(){
+						var event = this.put(
+							"/cbapi/v1/sites/default/contentstore/foot",
+							{
+								content   : "I am a new piece of content for the footer!",
+								changelog : "Update from a bdd test!"
+							}
+						);
+						writeDump( event.getResponse().getData() )
+						expect( event.getResponse() ).toHaveStatus( 200 );
+						expect( event.getResponse().getData().renderedContent ).toInclude(
+							"I am a new piece of content for the footer!"
+						);
+						expect( event.getResponse().getData().activeContent.changelog ).toInclude(
+							"bdd!"
+						);
+					} );
+				} );
+				given( "duplicate content slug", function(){
+					then( "it should display an error message", function(){
+						var event = this.put(
+							"cbapi/v1/sites/default/contentStore/foot",
+							{
+								title   : "foot",
+								slug    : "my-awesome-news",
+								content : "Footer is here"
+							}
+						);
+						expect( event.getResponse() ).toHaveStatus(
+							400,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.put( "/cbapi/v1/sites/123" );
-						expect( event.getResponse() ).toHaveStatus( 404 );
+						var event = this.put(
+							"/cbapi/v1/sites/default/contentstore/bogusbaby",
+							{ content : "bogus" }
+						);
+						expect( event.getResponse() ).toHaveStatus(
+							404,
+							event.getResponse().getMessagesString()
+						);
 					} );
 				} );
 			} ); // end edit story
