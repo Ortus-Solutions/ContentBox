@@ -1,18 +1,18 @@
 [
 	{
-		"subscriberEmail": "lmajano@ortussolutions.com",
-		"subscriberToken": "9160905AD002614B9A06E7A59F6F137F",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"subscriberID": "78205bf4-a444-11eb-ab6f-0290cc502ae3"
+		"subscriberemail": "lmajano@ortussolutions.com",
+		"subscribertoken": "9160905AD002614B9A06E7A59F6F137F",
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"subscriberid": "78205bf4-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"subscriberEmail": "lmajano@gmail.com",
-		"subscriberToken": "28B937F6F2F970189DB7ED3C909DE922",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"subscriberID": "78205d52-a444-11eb-ab6f-0290cc502ae3"
+		"subscriberemail": "lmajano@gmail.com",
+		"subscribertoken": "28B937F6F2F970189DB7ED3C909DE922",
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"subscriberid": "78205d52-a444-11eb-ab6f-0290cc502ae3"
 	}
 ]

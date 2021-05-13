@@ -2,46 +2,46 @@
 	{
 		"key": "age",
 		"value": "30",
-		"createdDate": "2016-05-03 16:23:25",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"customFieldID": "783ceee0-a444-11eb-ab6f-0290cc502ae3",
-		"FK_contentID": "779ccc62-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:25",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"customfieldid": "783ceee0-a444-11eb-ab6f-0290cc502ae3",
+		"fk_contentid": "779ccc62-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"key": "subtitle",
 		"value": "4",
-		"createdDate": "2016-05-03 16:23:25",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"customFieldID": "783cf188-a444-11eb-ab6f-0290cc502ae3",
-		"FK_contentID": "779ccc62-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:25",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"customfieldid": "783cf188-a444-11eb-ab6f-0290cc502ae3",
+		"fk_contentid": "779ccc62-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"key": "premium",
 		"value": "true",
-		"createdDate": "2021-05-05 15:17:48",
-		"modifiedDate": "2021-05-05 15:17:48",
-		"isDeleted": 0,
-		"customFieldID": "ff808081793cf2c801793e2ded9a0030",
-		"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2021-05-05 15:17:48",
+		"modifieddate": "2021-05-05 15:17:48",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"customfieldid": "ff808081793cf2c801793e2ded9a0030",
+		"fk_contentid": "779cd234-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"key": "rows",
 		"value": "3",
-		"createdDate": "2021-05-05 15:17:48",
-		"modifiedDate": "2021-05-05 15:17:48",
-		"isDeleted": 0,
-		"customFieldID": "ff808081793cf2c801793e2ded9a0031",
-		"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2021-05-05 15:17:48",
+		"modifieddate": "2021-05-05 15:17:48",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"customfieldid": "ff808081793cf2c801793e2ded9a0031",
+		"fk_contentid": "779cd234-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"key": "name",
 		"value": "luis majano",
-		"createdDate": "2021-05-05 15:17:48",
-		"modifiedDate": "2021-05-05 15:17:48",
-		"isDeleted": 0,
-		"customFieldID": "ff808081793cf2c801793e2ded9a0032",
-		"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2021-05-05 15:17:48",
+		"modifieddate": "2021-05-05 15:17:48",
+		"isdeleted": { "value": 0, "cfsqltype": "bit" },
+		"customfieldid": "ff808081793cf2c801793e2ded9a0032",
+		"fk_contentid": "779cd234-a444-11eb-ab6f-0290cc502ae3"
 	}
 ]

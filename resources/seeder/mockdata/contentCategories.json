@@ -1,50 +1,50 @@
 [
 	{
-		"FK_contentID": "779ccc62-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a9660-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779ccc62-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a9660-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779ccc62-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779ccc62-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cc4e2-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a9660-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cc4e2-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a9660-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cc4e2-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cc4e2-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cc906-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a9660-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cc906-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a9660-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cc906-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cc906-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cc9ba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a9660-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cc9ba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a9660-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cc9ba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cc9ba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cd2de-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a98cc-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cd2de-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a98cc-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cd234-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a97f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a9660-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779cd234-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a9660-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"FK_contentID": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
-		"FK_categoryID": "786a98cc-a444-11eb-ab6f-0290cc502ae3"
+		"fk_contentid": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
+		"fk_categoryid": "786a98cc-a444-11eb-ab6f-0290cc502ae3"
 	}
 ]

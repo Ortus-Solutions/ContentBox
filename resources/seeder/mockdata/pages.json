@@ -1,182 +1,182 @@
 [
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 6,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd2de-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd2de-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "-no-layout-",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 3,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd432-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd432-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pagesNoSidebar",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 5,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd4dc-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd4dc-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 4,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd806-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd806-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd8b0-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd8b0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd950-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd950-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 2,
-		"showInMenu": 0,
+		"showinmenu": { "value": 0, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cd9fa-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cd9fa-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 1,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdaa4-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdaa4-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 2,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdb4e-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdb4e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 1,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdbee-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdbee-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 2,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdc8e-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdc8e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 6,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdd38-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdd38-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 4,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cddd8-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cddd8-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 8,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cde82-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cde82-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 1,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdf22-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdf22-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779cdfc2-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779cdfc2-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779ce06c-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779ce06c-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779ce10c-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779ce10c-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779ce1ac-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779ce1ac-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"layout": "pages",
-		"mobileLayout": "",
+		"mobilelayout": "",
 		"order": 0,
-		"showInMenu": 1,
+		"showinmenu": { "value": 1, "cfsqltype": "bit" },
 		"excerpt": "",
-		"SSLOnly": 0,
-		"contentID": "779ce256-a444-11eb-ab6f-0290cc502ae3"
+		"sslonly": { "value": 0, "cfsqltype": "bit" },
+		"contentid": "779ce256-a444-11eb-ab6f-0290cc502ae3"
 	}
 ]

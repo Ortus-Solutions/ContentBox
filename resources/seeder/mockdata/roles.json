@@ -2,33 +2,33 @@
 	{
 		"role": "Editor",
 		"description": "A ContentBox editor",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"roleID": "77c2c476-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"roleid": "77c2c476-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"role": "Administrator",
 		"description": "A ContentBox Administrator",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"roleID": "77c2c62e-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"roleid": "77c2c62e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"role": "MegaAdmin",
 		"description": "A ContentBox Mega Admin",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"roleID": "77c2c70a-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"roleid": "77c2c70a-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"role": "Test",
 		"description": "Test",
-		"createdDate": "2016-09-23 14:35:41",
-		"modifiedDate": "2016-09-23 14:35:41",
-		"isDeleted": 0,
-		"roleID": "77c2c796-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-09-23 14:35:41",
+		"modifieddate": "2016-09-23 14:35:41",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"roleid": "77c2c796-a444-11eb-ab6f-0290cc502ae3"
 	}
 ]

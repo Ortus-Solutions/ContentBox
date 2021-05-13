@@ -1,1807 +1,2698 @@
 [
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "An awesome blog entry",
 		"slug": "an-awesome-blog-entry",
-		"createdDate": "2013-07-12 09:53:01",
-		"publishedDate": "2013-07-20 16:05:46",
-		"expireDate": {
+		"createddate": "2013-07-12 09:53:01",
+		"publisheddate": "2013-07-20 16:05:46",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc2bc-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc2bc-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Another Test",
 		"slug": "another-test",
-		"createdDate": "2013-07-12 09:53:31",
-		"publishedDate": "2013-07-20 16:39:53",
-		"expireDate": {
+		"createddate": "2013-07-12 09:53:31",
+		"publisheddate": "2013-07-20 16:39:53",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc4e2-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc4e2-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "ContentBox Modular CMS at the South Florida CFUG",
 		"slug": "contentbox-modular-cms-at-the-south-florida-cfug",
-		"createdDate": "2012-09-13 15:55:12",
-		"publishedDate": "2013-07-20 16:39:39",
-		"expireDate": {
+		"createddate": "2012-09-13 15:55:12",
+		"publisheddate": "2013-07-20 16:39:39",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc5e6-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc5e6-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Test with an excerpt",
 		"slug": "test-with-an-excerpt",
-		"createdDate": "2013-07-15 17:56:10",
-		"publishedDate": "2013-07-20 16:39:39",
-		"expireDate": {
+		"createddate": "2013-07-15 17:56:10",
+		"publisheddate": "2013-07-20 16:39:39",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc6b8-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc6b8-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Updating an ORM entity",
 		"slug": "updating-an-orm-entity",
-		"createdDate": "2013-07-19 18:45:08",
-		"publishedDate": "2013-07-20 16:39:39",
-		"expireDate": {
+		"createddate": "2013-07-19 18:45:08",
+		"publisheddate": "2013-07-20 16:39:39",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc76c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc76c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Copy of Updating an ORM entity",
 		"slug": "copy-of-updating-an-orm-entity",
-		"createdDate": "2013-07-20 16:10:43",
-		"publishedDate": "2013-07-20 16:39:39",
-		"expireDate": {
+		"createddate": "2013-07-20 16:10:43",
+		"publisheddate": "2013-07-20 16:39:39",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc820-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc820-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Copy of Another Test",
 		"slug": "copy-of-another-test",
-		"createdDate": "2013-07-20 16:12:16",
-		"publishedDate": "2013-07-20 16:39:39",
-		"expireDate": {
+		"createddate": "2013-07-20 16:12:16",
+		"publisheddate": "2013-07-20 16:39:39",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc906-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc906-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Copy of Copy of Another Test",
 		"slug": "copy-of-copy-of-another-test",
-		"createdDate": "2013-07-20 16:12:23",
-		"publishedDate": "2013-07-20 16:12:00",
-		"expireDate": {
+		"createddate": "2013-07-20 16:12:23",
+		"publisheddate": "2013-07-20 16:12:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cc9ba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cc9ba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Couchbase Infrastructure",
 		"slug": "couchbase-infrastructure",
-		"createdDate": "2013-07-26 16:53:43",
-		"publishedDate": "2013-07-26 16:53:00",
-		"expireDate": {
+		"createddate": "2013-07-26 16:53:43",
+		"publisheddate": "2013-07-26 16:53:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cca64-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cca64-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Couchbase Details",
 		"slug": "couchbase-details",
-		"createdDate": "2013-07-26 16:55:00",
-		"publishedDate": "2013-10-11 10:31:00",
-		"expireDate": {
+		"createddate": "2013-07-26 16:55:00",
+		"publisheddate": "2013-10-11 10:31:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2021-02-19 10:54:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2021-02-19 10:54:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccb0e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccb0e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "First Content Store",
 		"slug": "first-content-store",
-		"createdDate": "2013-08-12 11:59:12",
-		"publishedDate": "2013-08-12 12:02:00",
-		"expireDate": {
+		"createddate": "2013-08-12 11:59:12",
+		"publisheddate": "2013-08-12 12:02:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccbb8-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccbb8-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "My News",
 		"slug": "my-awesome-news",
-		"createdDate": "2013-08-14 18:14:43",
-		"publishedDate": "2013-08-14 18:14:00",
-		"expireDate": {
+		"createddate": "2013-08-14 18:14:43",
+		"publisheddate": "2013-08-14 18:14:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccc62-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccc62-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "blog-sidebar-top",
 		"slug": "blog-sidebar-top",
-		"createdDate": "2013-08-22 20:42:37",
-		"publishedDate": "2013-08-22 20:42:00",
-		"expireDate": {
+		"createddate": "2013-08-22 20:42:37",
+		"publisheddate": "2013-08-22 20:42:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccd02-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccd02-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "footer",
 		"slug": "foot",
-		"createdDate": "2013-08-22 20:43:59",
-		"publishedDate": "2013-08-22 20:43:00",
-		"expireDate": {
+		"createddate": "2013-08-22 20:43:59",
+		"publisheddate": "2013-08-22 20:43:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2021-05-05 15:18:36",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2021-05-05 15:18:36",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "support options",
 		"slug": "support-options-baby",
-		"createdDate": "2013-08-22 20:45:19",
-		"publishedDate": "2013-08-22 20:45:00",
-		"expireDate": {
+		"createddate": "2013-08-22 20:45:19",
+		"publisheddate": "2013-08-22 20:45:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cce56-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cce56-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "FireFox Test",
 		"slug": "firefox-test",
-		"createdDate": "2013-08-29 08:29:36",
-		"publishedDate": "2013-08-29 08:29:00",
-		"expireDate": {
+		"createddate": "2013-08-29 08:29:36",
+		"publisheddate": "2013-08-29 08:29:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccef6-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abe0a8-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccef6-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abe0a8-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Couchbase Conference",
 		"slug": "couchbase-conference",
-		"createdDate": "2013-09-13 16:54:52",
-		"publishedDate": "2013-09-13 16:54:00",
-		"expireDate": {
+		"createddate": "2013-09-13 16:54:52",
+		"publisheddate": "2013-09-13 16:54:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ccfa0-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779ccfa0-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Disk Queues",
 		"slug": "disk-queues",
-		"createdDate": "2013-09-13 16:55:05",
-		"publishedDate": "2013-09-13 16:54:00",
-		"expireDate": {
+		"createddate": "2013-09-13 16:55:05",
+		"publisheddate": "2013-09-13 16:54:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd040-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd040-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "This is just awesome",
 		"slug": "this-is-just-awesome",
-		"createdDate": "2013-10-15 16:48:56",
-		"publishedDate": "2013-10-15 16:48:00",
-		"expireDate": {
+		"createddate": "2013-10-15 16:48:56",
+		"publisheddate": "2013-10-15 16:48:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd0ea-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd0ea-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Closures cannot be declared outside of cfscript",
 		"slug": "closures-cannot-be-declared-outside-of-cfscript",
-		"createdDate": "2013-11-11 11:53:03",
-		"publishedDate": "2013-11-11 11:52:00",
-		"expireDate": {
+		"createddate": "2013-11-11 11:53:03",
+		"publisheddate": "2013-11-11 11:52:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd18a-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd18a-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Entry",
+		"contenttype": "Entry",
 		"title": "Disk Queues ",
 		"slug": "disk-queues-77caf",
-		"createdDate": "2014-01-31 14:41:16",
-		"publishedDate": "2014-01-31 14:41:00",
-		"expireDate": {
+		"createddate": "2014-01-31 14:41:16",
+		"publisheddate": "2014-01-31 14:41:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 1,
-		"passwordProtection": "",
-		"HTMLKeywords": "these are nice keywords",
-		"HTMLDescription": "Disk Queues are amazing and they rock SEO",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "these are nice keywords",
+		"htmldescription": "Disk Queues are amazing and they rock SEO",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2021-05-05 15:17:18",
-		"isDeleted": 0,
-		"HTMLTitle": "Disk Queues are amazing",
-		"contentID": "779cd234-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2021-05-05 15:17:18",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": "Disk Queues are amazing",
+		"contentid": "779cd234-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "support",
 		"slug": "support",
-		"createdDate": "2013-07-20 15:38:47",
-		"publishedDate": "2013-07-20 15:38:00",
-		"expireDate": {
+		"createddate": "2013-07-20 15:38:47",
+		"publisheddate": "2013-07-20 15:38:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-08-05 14:42:30",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-08-05 14:42:30",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd2de-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd2de-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "Small Footer",
 		"slug": "foot/small-footer",
-		"createdDate": "2014-09-26 16:00:44",
-		"publishedDate": "2014-09-26 16:00:00",
-		"expireDate": {
+		"createddate": "2014-09-26 16:00:44",
+		"publisheddate": "2014-09-26 16:00:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd388-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cd388-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779ccdac-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "No Layout Test",
 		"slug": "no-layout-test",
-		"createdDate": "2015-03-29 10:13:59",
-		"publishDate": "2015-03-29 10:13:00",
-		"expireDate": {
+		"createddate": "2015-03-29 10:13:59",
+		"publisheddate": "2015-03-29 10:13:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "test",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "test",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-08-05 14:42:30",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-08-05 14:42:30",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd432-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd432-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "No Sidebar",
 		"slug": "email-test",
-		"createdDate": "2015-09-16 10:33:56",
-		"publishedDate": "2015-09-16 10:33:00",
-		"expireDate": {
+		"createddate": "2015-09-16 10:33:56",
+		"publisheddate": "2015-09-16 10:33:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": {
 			"value": "",
 			"null": true
 		},
-		"featuredImageURL": {
+		"featuredimageurl": {
 			"value": "",
 			"null": true
 		},
-		"modifiedDate": "2016-08-05 14:42:30",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"modifieddate": "2016-08-05 14:42:30",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd4dc-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd4dc-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "Lucee 4.5.2.018",
 		"slug": "lucee-452018",
-		"createdDate": "2016-01-14 11:44:58",
-		"publishedDate": "2016-01-14 11:42:00",
-		"expireDate": {
+		"createddate": "2016-01-14 11:44:58",
+		"publisheddate": "2016-01-14 11:42:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd57c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd57c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "Another test",
 		"slug": "another-test-a161b",
-		"createdDate": "2016-01-14 11:45:35",
-		"publishedDate": "2016-01-14 11:45:00",
-		"expireDate": {
+		"createddate": "2016-01-14 11:45:35",
+		"publisheddate": "2016-01-14 11:45:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-05 15:56:12",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-05 15:56:12",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd61c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd61c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "parent page",
 		"slug": "parent-page",
-		"createdDate": "2016-04-12 09:26:56",
-		"publishedDate": "2016-04-12 09:26:00",
-		"expireDate": {
+		"createddate": "2016-04-12 09:26:56",
+		"publisheddate": "2016-04-12 09:26:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd6c6-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd6c6-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "child 1",
 		"slug": "parent-page/child-1",
-		"createdDate": "2016-04-12 09:27:06",
-		"publishedDate": "2016-04-12 09:27:00",
-		"expireDate": {
+		"createddate": "2016-04-12 09:27:06",
+		"publisheddate": "2016-04-12 09:27:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd766-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cd6c6-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cd766-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cd6c6-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "node",
 		"slug": "node",
-		"createdDate": "2016-04-12 13:18:51",
-		"publishedDate": "2016-04-12 13:18:00",
-		"expireDate": {
+		"createddate": "2016-04-12 13:18:51",
+		"publisheddate": "2016-04-12 13:18:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-08-05 14:42:30",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-08-05 14:42:30",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd806-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd806-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "child1",
 		"slug": "node/child1",
-		"createdDate": "2016-04-12 13:19:04",
-		"publishedDate": "2016-04-12 13:18:00",
-		"expireDate": {
+		"createddate": "2016-04-12 13:19:04",
+		"publisheddate": "2016-04-12 13:18:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd8b0-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cd806-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cd8b0-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cd806-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "child2",
 		"slug": "node/child2",
-		"createdDate": "2016-04-12 13:19:10",
-		"publishedDate": "2016-04-12 13:19:00",
-		"expireDate": {
+		"createddate": "2016-04-12 13:19:10",
+		"publisheddate": "2016-04-12 13:19:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd950-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cd806-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cd950-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cd806-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "Test Markdown",
 		"slug": "test-markdown",
-		"createdDate": "2016-05-05 11:12:23",
-		"publishedDate": "2016-05-05 11:11:00",
-		"expireDate": "2016-05-01 00:00:00",
-		"isPublished": 0,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"createddate": "2016-05-05 11:12:23",
+		"publisheddate": "2016-05-05 11:11:00",
+		"expiredate": "2016-05-01 00:00:00",
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "Markdown",
-		"showInSearch": 0,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-08-05 14:42:24",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-08-05 14:42:24",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cd9fa-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cd9fa-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "products",
 		"slug": "products",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2017-06-13 17:08:00",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2017-06-13 17:08:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2017-06-13 17:08:36",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2017-06-13 17:08:36",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdaa4-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"contentid": "779cdaa4-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "coldbox",
 		"slug": "products/coldbox",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-07-11 11:23:00",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-07-11 11:23:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdb4e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdaa4-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cdb4e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdaa4-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "mini",
 		"slug": "products/coldbox/mini",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2015-09-22 10:53:23",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2015-09-22 10:53:23",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdbee-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdb4e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cdbee-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdb4e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "services",
 		"slug": "products/coldbox/services",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2015-09-22 10:53:23",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2015-09-22 10:53:23",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdb4e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdb4e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "servers",
 		"slug": "products/coldbox/services/servers",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-07-20 10:40:00",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-07-20 10:40:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdd38-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cdd38-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "More Servers",
 		"slug": "products/coldbox/services/more-servers",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-07-20 10:40:00",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-07-20 10:40:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cddd8-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cddd8-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "support",
 		"slug": "products/coldbox/services/support",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-07-20 10:40:00",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-07-20 10:40:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cde82-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cde82-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdc8e-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "coldbox-new",
 		"slug": "products/coldbox-new",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2016-04-11 11:32:00",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2016-04-11 11:32:00",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdf22-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdaa4-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cdf22-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdaa4-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "mini",
 		"slug": "products/coldbox-new/mini",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-08-22 10:23:03",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-08-22 10:23:03",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779cdfc2-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdf22-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779cdfc2-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdf22-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "services",
 		"slug": "products/coldbox-new/services",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-08-22 10:23:03",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-08-22 10:23:03",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779cdf22-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779cdf22-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "servers",
 		"slug": "products/coldbox-new/services/servers",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-08-22 10:23:03",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-08-22 10:23:03",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ce10c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779ce10c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "More Servers",
 		"slug": "products/coldbox-new/services/more-servers",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-08-22 10:23:04",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-08-22 10:23:04",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ce1ac-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779ce1ac-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "Page",
+		"contenttype": "Page",
 		"title": "support",
 		"slug": "products/coldbox-new/services/support",
-		"createdDate": "2016-05-18 11:35:32",
-		"publishedDate": "2013-08-22 10:23:04",
-		"expireDate": {
+		"createddate": "2016-05-18 11:35:32",
+		"publisheddate": "2013-08-22 10:23:04",
+		"expiredate": {
 			"value": "",
-			"null": true
+			"null": true,
+			"cfsqltype": "timestamp"
 		},
-		"isPublished": 0,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"ispublished": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "html",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2016-05-18 11:35:32",
-		"isDeleted": 0,
-		"HTMLTitle": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2016-05-18 11:35:32",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": {
 			"value": "",
 			"null": true
 		},
-		"contentID": "779ce256-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"contentid": "779ce256-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": "779ce06c-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
-		"contentType": "ContentStore",
+		"contenttype": "ContentStore",
 		"title": "My Expired Content Store",
 		"slug": "my-expired-content-store",
-		"createdDate": "2018-03-20 09:48:13",
-		"publishedDate": "2018-03-20 09:47:00",
-		"expireDate": "2018-02-01 00:00:00",
-		"isPublished": 1,
-		"allowComments": 0,
-		"passwordProtection": "",
-		"HTMLKeywords": "",
-		"HTMLDescription": "",
-		"cache": 1,
-		"cacheLayout": 1,
-		"cacheTimeout": 0,
-		"cacheLastAccessTimeout": 0,
+		"createddate": "2018-03-20 09:48:13",
+		"publisheddate": "2018-03-20 09:47:00",
+		"expiredate": "2018-02-01 00:00:00",
+		"ispublished": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"allowcomments": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"passwordprotection": "",
+		"htmlkeywords": "",
+		"htmldescription": "",
+		"cache": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachelayout": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"cachetimeout": 0,
+		"cachelastaccesstimeout": 0,
 		"markup": "HTML",
-		"showInSearch": 1,
-		"featuredImage": "",
-		"featuredImageURL": "",
-		"modifiedDate": "2018-03-20 09:48:13",
-		"isDeleted": 0,
-		"HTMLTitle": "",
-		"contentID": "779ce300-a444-11eb-ab6f-0290cc502ae3",
-		"FK_authorID": "77abddba-a444-11eb-ab6f-0290cc502ae3",
-		"FK_parentID": {
+		"showinsearch": {
+			"value": 1,
+			"cfsqltype": "bit"
+		},
+		"featuredimage": "",
+		"featuredimageurl": "",
+		"modifieddate": "2018-03-20 09:48:13",
+		"isdeleted": {
+			"value": 0,
+			"cfsqltype": "bit"
+		},
+		"htmltitle": "",
+		"contentid": "779ce300-a444-11eb-ab6f-0290cc502ae3",
+		"fk_authorid": "77abddba-a444-11eb-ab6f-0290cc502ae3",
+		"fk_parentid": {
 			"value": "",
 			"null": true
 		},
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	}
 ]

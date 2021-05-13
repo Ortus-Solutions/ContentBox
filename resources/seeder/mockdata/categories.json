@@ -2,28 +2,28 @@
 	{
 		"category": "ColdFusion",
 		"slug": "coldfusion",
-		"createdDate": "2016-05-03 16:23:25",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"categoryID": "786a9660-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:25",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"categoryid": "786a9660-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"category": "ContentBox",
 		"slug": "contentbox",
-		"createdDate": "2016-05-03 16:23:25",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:25",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"categoryid": "786a97f0-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"category": "coldbox",
 		"slug": "coldbox",
-		"createdDate": "2016-05-03 16:23:25",
-		"modifiedDate": "2016-05-03 16:23:25",
-		"isDeleted": 0,
-		"categoryID": "786a98cc-a444-11eb-ab6f-0290cc502ae3",
-		"FK_siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:25",
+		"modifieddate": "2016-05-03 16:23:25",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"categoryid": "786a98cc-a444-11eb-ab6f-0290cc502ae3",
+		"fk_siteid": "1c81d376-a481-11eb-ab6f-0290cc502ae3"
 	}
 ]

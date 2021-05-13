@@ -1,19 +1,19 @@
 [
     {
-        "menuType": "Free",
+        "menutype": "Free",
         "title": "",
         "label": "test",
         "data": "",
-        "active": 1,
-        "mediaPath": {
+        "active": { "value": 1, "cfsqltype": "bit" },
+        "mediapath": {
             "value": "",
             "null": true
         },
-        "contentSlug": {
+        "contentslug": {
             "value": "",
             "null": true
         },
-        "menuSlug": {
+        "menuslug": {
             "value": "",
             "null": true
         },
@@ -25,40 +25,40 @@
             "value": "",
             "null": true
         },
-        "itemClass": "",
+        "itemclass": "",
         "target": {
             "value": "",
             "null": true
         },
-        "urlClass": {
+        "urlclass": {
             "value": "",
             "null": true
         },
-        "createdDate": "2021-05-05 15:30:12",
-        "modifiedDate": "2021-05-05 15:30:12",
-        "isDeleted": 0,
-        "menuItemID": "ff808081793cf2c801793e3947b6003b",
-        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
-        "FK_parentID": {
+        "createddate": "2021-05-05 15:30:12",
+        "modifieddate": "2021-05-05 15:30:12",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "menuitemid": "ff808081793cf2c801793e3947b6003b",
+        "fk_menuid": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "fk_parentid": {
             "value": "",
             "null": true
         }
     },
     {
-        "menuType": "URL",
+        "menutype": "URL",
         "title": "",
         "label": "hello",
         "data": "",
-        "active": 1,
-        "mediaPath": {
+        "active": { "value": 1, "cfsqltype": "bit" },
+        "mediapath": {
             "value": "",
             "null": true
         },
-        "contentSlug": {
+        "contentslug": {
             "value": "",
             "null": true
         },
-        "menuSlug": {
+        "menuslug": {
             "value": "",
             "null": true
         },
@@ -67,28 +67,28 @@
             "value": "",
             "null": true
         },
-        "itemClass": "",
+        "itemclass": "",
         "target": "_blank",
-        "urlClass": "test",
-        "createdDate": "2021-05-05 15:30:12",
-        "modifiedDate": "2021-05-05 15:30:12",
-        "isDeleted": 0,
-        "menuItemID": "ff808081793cf2c801793e3947b6003c",
-        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
-        "FK_parentID": "ff808081793cf2c801793e3947b6003b"
+        "urlclass": "test",
+        "createddate": "2021-05-05 15:30:12",
+        "modifieddate": "2021-05-05 15:30:12",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "menuitemid": "ff808081793cf2c801793e3947b6003c",
+        "fk_menuid": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "fk_parentid": "ff808081793cf2c801793e3947b6003b"
     },
     {
-        "menuType": "Content",
+        "menutype": "Content",
         "title": "",
         "label": "Disk Queues ",
         "data": "",
-        "active": 1,
-        "mediaPath": {
+        "active": { "value": 1, "cfsqltype": "bit" },
+        "mediapath": {
             "value": "",
             "null": true
         },
-        "contentSlug": "disk-queues-77caf",
-        "menuSlug": {
+        "contentslug": "disk-queues-77caf",
+        "menuslug": {
             "value": "",
             "null": true
         },
@@ -100,34 +100,34 @@
             "value": "",
             "null": true
         },
-        "itemClass": "",
+        "itemclass": "",
         "target": "",
-        "urlClass": "",
-        "createdDate": "2021-05-05 15:30:12",
-        "modifiedDate": "2021-05-05 15:30:12",
-        "isDeleted": 0,
-        "menuItemID": "ff808081793cf2c801793e3947b6003d",
-        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
-        "FK_parentID": {
+        "urlclass": "",
+        "createddate": "2021-05-05 15:30:12",
+        "modifieddate": "2021-05-05 15:30:12",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "menuitemid": "ff808081793cf2c801793e3947b6003d",
+        "fk_menuid": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "fk_parentid": {
             "value": "",
             "null": true
         }
     },
     {
-        "menuType": "Free",
+        "menutype": "Free",
         "title": "",
         "label": "Sites",
         "data": "",
-        "active": 1,
-        "mediaPath": {
+        "active": { "value": 1, "cfsqltype": "bit" },
+        "mediapath": {
             "value": "",
             "null": true
         },
-        "contentSlug": {
+        "contentslug": {
             "value": "",
             "null": true
         },
-        "menuSlug": {
+        "menuslug": {
             "value": "",
             "null": true
         },
@@ -139,40 +139,40 @@
             "value": "",
             "null": true
         },
-        "itemClass": "",
+        "itemclass": "",
         "target": {
             "value": "",
             "null": true
         },
-        "urlClass": {
+        "urlclass": {
             "value": "",
             "null": true
         },
-        "createdDate": "2021-05-05 15:30:12",
-        "modifiedDate": "2021-05-05 15:30:12",
-        "isDeleted": 0,
-        "menuItemID": "ff808081793cf2c801793e3947b6003e",
-        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
-        "FK_parentID": {
+        "createddate": "2021-05-05 15:30:12",
+        "modifieddate": "2021-05-05 15:30:12",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "menuitemid": "ff808081793cf2c801793e3947b6003e",
+        "fk_menuid": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "fk_parentid": {
             "value": "",
             "null": true
         }
     },
     {
-        "menuType": "URL",
+        "menutype": "URL",
         "title": "",
         "label": "ortus",
         "data": "",
-        "active": 1,
-        "mediaPath": {
+        "active": { "value": 1, "cfsqltype": "bit" },
+        "mediapath": {
             "value": "",
             "null": true
         },
-        "contentSlug": {
+        "contentslug": {
             "value": "",
             "null": true
         },
-        "menuSlug": {
+        "menuslug": {
             "value": "",
             "null": true
         },
@@ -181,31 +181,31 @@
             "value": "",
             "null": true
         },
-        "itemClass": "",
+        "itemclass": "",
         "target": "_blank",
-        "urlClass": "",
-        "createdDate": "2021-05-05 15:30:12",
-        "modifiedDate": "2021-05-05 15:30:12",
-        "isDeleted": 0,
-        "menuItemID": "ff808081793cf2c801793e3947b7003f",
-        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
-        "FK_parentID": "ff808081793cf2c801793e3947b6003e"
+        "urlclass": "",
+        "createddate": "2021-05-05 15:30:12",
+        "modifieddate": "2021-05-05 15:30:12",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "menuitemid": "ff808081793cf2c801793e3947b7003f",
+        "fk_menuid": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "fk_parentid": "ff808081793cf2c801793e3947b6003e"
     },
     {
-        "menuType": "URL",
+        "menutype": "URL",
         "title": "Products",
         "label": "Products",
         "data": "",
-        "active": 1,
-        "mediaPath": {
+        "active": { "value": 1, "cfsqltype": "bit" },
+        "mediapath": {
             "value": "",
             "null": true
         },
-        "contentSlug": {
+        "contentslug": {
             "value": "",
             "null": true
         },
-        "menuSlug": {
+        "menuslug": {
             "value": "",
             "null": true
         },
@@ -214,14 +214,14 @@
             "value": "",
             "null": true
         },
-        "itemClass": "",
+        "itemclass": "",
         "target": "_blank",
-        "urlClass": "",
-        "createdDate": "2021-05-05 15:30:12",
-        "modifiedDate": "2021-05-05 15:30:12",
-        "isDeleted": 0,
-        "menuItemID": "ff808081793cf2c801793e3947b70040",
-        "FK_menuID": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
-        "FK_parentID": "ff808081793cf2c801793e3947b7003f"
+        "urlclass": "",
+        "createddate": "2021-05-05 15:30:12",
+        "modifieddate": "2021-05-05 15:30:12",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "menuitemid": "ff808081793cf2c801793e3947b70040",
+        "fk_menuid": "77cccd4a-a444-11eb-ab6f-0290cc502ae3",
+        "fk_parentid": "ff808081793cf2c801793e3947b7003f"
     }
 ]

@@ -1,29 +1,29 @@
 [
     {
-        "subscriptionToken": "AD2669C5064D113531970A672B887743",
+        "subscriptiontoken": "AD2669C5064D113531970A672B887743",
         "type": "Comment",
-        "createdDate": "2015-08-04 16:17:43",
-        "modifiedDate": "2016-05-03 16:23:25",
-        "isDeleted": 0,
-        "subscriptionID": "77e3796e-a444-11eb-ab6f-0290cc502ae3",
-        "FK_subscriberID": "78205d52-a444-11eb-ab6f-0290cc502ae3"
+        "createddate": "2015-08-04 16:17:43",
+        "modifieddate": "2016-05-03 16:23:25",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "subscriptionid": "77e3796e-a444-11eb-ab6f-0290cc502ae3",
+        "fk_subscriberid": "78205d52-a444-11eb-ab6f-0290cc502ae3"
     },
     {
-        "subscriptionToken": "E880B3507068855A1EA3D333021267B3",
+        "subscriptiontoken": "E880B3507068855A1EA3D333021267B3",
         "type": "Comment",
-        "createdDate": "2016-05-11 16:12:34",
-        "modifiedDate": "2016-05-11 16:12:34",
-        "isDeleted": 0,
-        "subscriptionID": "77e37aae-a444-11eb-ab6f-0290cc502ae3",
-        "FK_subscriberID": "78205d52-a444-11eb-ab6f-0290cc502ae3"
+        "createddate": "2016-05-11 16:12:34",
+        "modifieddate": "2016-05-11 16:12:34",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "subscriptionid": "77e37aae-a444-11eb-ab6f-0290cc502ae3",
+        "fk_subscriberid": "78205d52-a444-11eb-ab6f-0290cc502ae3"
     },
     {
-        "subscriptionToken": "CB8797B8A3C80D045D232DA79C9E6FD9",
+        "subscriptiontoken": "CB8797B8A3C80D045D232DA79C9E6FD9",
         "type": "Comment",
-        "createdDate": "2016-05-12 12:34:18",
-        "modifiedDate": "2016-05-12 12:34:18",
-        "isDeleted": 0,
-        "subscriptionID": "77e37b80-a444-11eb-ab6f-0290cc502ae3",
-        "FK_subscriberID": "78205bf4-a444-11eb-ab6f-0290cc502ae3"
+        "createddate": "2016-05-12 12:34:18",
+        "modifieddate": "2016-05-12 12:34:18",
+        "isdeleted": { "value": 0, "cfsqltype": "bit" },
+        "subscriptionid": "77e37b80-a444-11eb-ab6f-0290cc502ae3",
+        "fk_subscriberid": "78205bf4-a444-11eb-ab6f-0290cc502ae3"
     }
 ]

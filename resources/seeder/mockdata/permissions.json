@@ -2,353 +2,353 @@
 	{
 		"permission": "PAGES_ADMIN",
 		"description": "Ability to manage content pages, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d71f6-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d71f6-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_EDITOR_SELECTOR",
 		"description": "Ability to change the editor to another registered online editor",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d734a-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d734a-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "WIDGET_ADMIN",
 		"description": "Ability to manage widgets, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d73f4-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d73f4-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "TOOLS_IMPORT",
 		"description": "Ability to import data into ContentBox",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7480-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7480-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "GLOBALHTML_ADMIN",
 		"description": "Ability to manage the system's global HTML content used on layouts",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d74f8-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d74f8-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "PAGES_EDITOR",
 		"description": "Ability to manage content pages but not publish pages",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7570-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7570-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SYSTEM_TAB",
 		"description": "Access to the ContentBox System tools",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d761a-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d761a-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SYSTEM_UPDATES",
 		"description": "Ability to view and apply ContentBox updates",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d769c-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d769c-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "CONTENTBOX_ADMIN",
 		"description": "Access to the enter the ContentBox administrator console",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d770a-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d770a-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "RELOAD_MODULES",
 		"description": "Ability to reload modules",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7782-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7782-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "MODULES_ADMIN",
 		"description": "Ability to manage ContentBox Modules",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d77f0-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d77f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "COMMENTS_ADMIN",
 		"description": "Ability to manage comments, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d785e-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d785e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "AUTHOR_ADMIN",
 		"description": "Ability to manage authors, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d78d6-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d78d6-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "PERMISSIONS_ADMIN",
 		"description": "Ability to manage permissions, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7944-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7944-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "MEDIAMANAGER_ADMIN",
 		"description": "Ability to manage the system's media manager",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d79b2-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d79b2-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SYSTEM_RAW_SETTINGS",
 		"description": "Access to the ContentBox raw geek settings panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7a20-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7a20-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "CATEGORIES_ADMIN",
 		"description": "Ability to manage categories, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7a8e-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7a8e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_DISPLAY_OPTIONS",
 		"description": "Ability to view the content display options panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7afc-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7afc-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_HTML_ATTRIBUTES",
 		"description": "Ability to view the content HTML attributes panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7b6a-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7b6a-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "FORGEBOX_ADMIN",
 		"description": "Ability to manage ForgeBox installations and connectivity.",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7be2-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7be2-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "THEME_ADMIN",
 		"description": "Ability to manage themes, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7c50-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7c50-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_CATEGORIES",
 		"description": "Ability to view the content categories panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7cbe-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7cbe-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_MODIFIERS",
 		"description": "Ability to view the content modifiers panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7d2c-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7d2c-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "ENTRIES_ADMIN",
 		"description": "Ability to manage blog entries, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7d9a-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7d9a-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "VERSIONS_ROLLBACK",
 		"description": "Ability to rollback content versions",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7e08-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7e08-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_CACHING",
 		"description": "Ability to view the content caching panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7e76-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7e76-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "ROLES_ADMIN",
 		"description": "Ability to manage roles, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7eee-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7eee-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SYSTEM_SAVE_CONFIGURATION",
 		"description": "Ability to update global configuration data",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7f5c-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7f5c-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "ENTRIES_EDITOR",
 		"description": "Ability to manage blog entries but not publish entries",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d7fca-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d7fca-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "VERSIONS_DELETE",
 		"description": "Ability to delete past content versions",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d8038-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8038-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SECURITYRULES_ADMIN",
 		"description": "Ability to manage the system's security rules, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d80a6-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d80a6-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "TOOLS_EXPORT",
 		"description": "Ability to export data from ContentBox",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d8114-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8114-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "CONTENTSTORE_ADMIN",
 		"description": "Ability to manage the content store, default is view only",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d8182-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8182-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "CONTENTSTORE_EDITOR",
 		"description": "Ability to manage content store elements but not publish them",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d81f0-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d81f0-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "MEDIAMANAGER_LIBRARY_SWITCHER",
 		"description": "Ability to switch media manager libraries for management",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d825e-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d825e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_CUSTOM_FIELDS",
 		"description": "Ability to manage custom fields in any content editors",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d82cc-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d82cc-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "GLOBAL_SEARCH",
 		"description": "Ability to do global searches in the ContentBox Admin",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d8344-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8344-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_RELATED_CONTENT",
 		"description": "Ability to view the related content panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d83b2-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d83b2-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_LINKED_CONTENT",
 		"description": "Ability to view the linked content panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d8420-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8420-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "MENUS_ADMIN",
 		"description": "Ability to manage the menu builder",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d848e-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d848e-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SYSTEM_AUTH_LOGS",
 		"description": "Access to the system auth logs",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d84fc-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d84fc-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EDITORS_FEATURED_IMAGE",
 		"description": "Ability to view the featured image panel",
-		"createdDate": "2016-05-03 16:23:26",
-		"modifiedDate": "2016-05-03 16:23:26",
-		"isDeleted": 0,
-		"permissionID": "785d8574-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2016-05-03 16:23:26",
+		"modifieddate": "2016-05-03 16:23:26",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8574-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "EMAIL_TEMPLATE_ADMIN",
 		"description": "Ability to admin and preview email templates",
-		"createdDate": "2017-06-20 16:13:01",
-		"modifiedDate": "2017-06-20 16:13:01",
-		"isDeleted": 0,
-		"permissionID": "785d85e2-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2017-06-20 16:13:01",
+		"modifieddate": "2017-06-20 16:13:01",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d85e2-a444-11eb-ab6f-0290cc502ae3"
 	},
 	{
 		"permission": "SITES_ADMIN",
 		"description": "Ability to manage sites",
-		"createdDate": "2020-09-09 17:16:59",
-		"modifiedDate": "2020-09-09 17:16:59",
-		"isDeleted": 0,
-		"permissionID": "785d8650-a444-11eb-ab6f-0290cc502ae3"
+		"createddate": "2020-09-09 17:16:59",
+		"modifieddate": "2020-09-09 17:16:59",
+		"isdeleted": { "value" : 0, "cfsqltype" : "bit" },
+		"permissionid": "785d8650-a444-11eb-ab6f-0290cc502ae3"
 	}
 ]
