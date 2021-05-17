@@ -73,11 +73,11 @@ component extends="baseHandler" {
 		param rc.ignoreDefaults = false;
 		// param content fields
 		param rc.id             = "";
-		param rc.changelog      = "";
-		param rc.content        = len( rc.id ) ? "Update from the ContentBox API" : "Creation from the ContentBox API";
+		param rc.content        = "";
+		param rc.changelog      = len( rc.id ) ? "Update from the ContentBox API" : "Creation from the ContentBox API";
 
-		// Verify content exists
-		if ( !len( rc.content ) ) {
+		// Verify content exists ONLY for new objects
+		if ( !len( rc.id ) && !len( rc.content ) ) {
 			arguments.event
 				.getResponse()
 				.setErrorMessage( "Content is required", arguments.event.STATUS.BAD_REQUEST );
@@ -87,13 +87,10 @@ component extends="baseHandler" {
 		if ( !isNull( rc.parent ) && len( rc.parent ) ) {
 			rc.parent = getByIdOrSlugOrFail( rc.parent );
 		}
-		// Setup Site
-		rc.site = prc.oCurrentSite;
 		// slugify the incoming title or slug
 		if ( !isNull( rc.slug ) && len( rc.slug ) ) {
 			rc.slug = variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) );
 		}
-
 		// Verify permission for publishing, else save as draft
 		if ( !prc.oCurrentAuthor.checkPermission( "#arguments.contentType#_ADMIN" ) ) {
 			rc.isPublished = "false";
@@ -125,12 +122,17 @@ component extends="baseHandler" {
 
 		// Start save transaction procedures
 		transaction {
-			// Validate + Inflate New Content Version
-			prc.oEntity = validateOrFail( argumentCollection = arguments.validate ).addNewContentVersion(
-				content  : rc.content,
-				changelog: rc.changelog,
-				author   : prc.oCurrentAuthor
-			);
+			// Validate or fail
+			prc.oEntity = validateOrFail( argumentCollection = arguments.validate );
+
+			// Do we have any incoming content to create a version for?
+			if ( len( rc.content ) ) {
+				prc.oEntity.addNewContentVersion(
+					content  : rc.content,
+					changelog: rc.changelog,
+					author   : prc.oCurrentAuthor
+				);
+			}
 
 			// Inflate Categories if they come as a list of slugs
 			if ( !isNull( rc.categories ) ) {

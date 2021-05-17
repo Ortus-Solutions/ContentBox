@@ -140,9 +140,10 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 	 * @return struct of { user:logged in user, token: their token}
 	 */
 	struct function loginUser( username = variables.testAdminUsername ){
+		var oUser = variables.securityService.authenticate( username : arguments.username, password : variables.testAdminPassword, logThemIn : true);
 		request.testUserData = {
-			"token" : variables.jwt.attempt( arguments.username, variables.testAdminPassword ),
-			"user"  : variables.securityService.getUser()
+			"token" : variables.jwt.fromUser( oUser ),
+			"user"  : oUser
 		};
 		return request.testUserData;
 	}

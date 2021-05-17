@@ -206,6 +206,8 @@ component extends="tests.resources.BaseApiTest" {
 							400,
 							event.getResponse().getMessagesString()
 						);
+						debug( event.getResponse().getMemento() );
+
 						expect( event.getResponse().getMessages() ).toInclude(
 							"content is required"
 						);
@@ -230,21 +232,25 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to edit a content store item", function(){
 				given( "a valid id/slug and valid data", function(){
 					then( "then it should update a content item", function(){
-						var event = this.put(
-							"/cbapi/v1/sites/default/contentstore/foot",
-							{
-								content   : "I am a new piece of content for the footer!",
-								changelog : "Update from a bdd test!"
-							}
-						);
-						writeDump( event.getResponse().getData() )
-						expect( event.getResponse() ).toHaveStatus( 200 );
-						expect( event.getResponse().getData().renderedContent ).toInclude(
-							"I am a new piece of content for the footer!"
-						);
-						expect( event.getResponse().getData().activeContent.changelog ).toInclude(
-							"bdd!"
-						);
+						withRollback( function(){
+							var event = this.put(
+								"/cbapi/v1/sites/default/contentstore/foot",
+								{
+									content   : "I am a new piece of content for the footer!",
+									changelog : "Update from a bdd test!"
+								}
+							);
+							expect( event.getResponse() ).toHaveStatus(
+								200,
+								event.getResponse().getMessagesString()
+							);
+							expect( event.getResponse().getData().renderedContent ).toInclude(
+								"I am a new piece of content for the footer!"
+							);
+							expect( event.getResponse().getData().activeContent.changelog ).toInclude(
+								"bdd test"
+							);
+						} );
 					} );
 				} );
 				given( "duplicate content slug", function(){
@@ -278,29 +284,42 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} ); // end edit story
 
-			xstory( "I want to delete a content store item", function(){
+			story( "I want to delete a content store item", function(){
 				given( "a valid id/slug", function(){
 					then( "then I should see the confirmation", function(){
-						var testSite = variables.siteService.save(
-							variables.siteService.new( {
-								name        : "bddtest",
-								slug        : "bddtest",
-								description : "my bdd test site",
-								domain      : "bddtest.com",
-								domainRegex : "bddtest\.com",
-								activeTheme : "default",
-								homepage    : "cbBlog"
+						var testContent = variables.contentstoreService.save(
+							variables.contentstoreService.new( {
+								title         : "bddtest",
+								slug          : "bddtest",
+								description   : "my bdd test site",
+								content       : "This is my awesome bdd test content store item",
+								publishedDate : dateTimeFormat(
+									now(),
+									"yyyy-mm-dd'T'HH:mm:ssZ",
+									"utc"
+								),
+								changelog : "My first creation from the bdd test",
+								site      : variables.siteService.getDefaultSite(),
+								creator   : variables.loggedInData.user
 							} )
 						);
-						var event = this.delete( "/cbapi/v1/sites/#testSite.getSiteId()#" );
-						expect( event.getResponse() ).toHaveStatus( 200 );
+						var event = this.delete(
+							"/cbapi/v1/sites/default/contentstore/#testContent.getContentID()#"
+						);
+						expect( event.getResponse() ).toHaveStatus(
+							200,
+							event.getResponse().getMessagesString()
+						);
 						expect( event.getResponse().getMessagesString() ).toInclude( "deleted" );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.delete( "/cbapi/v1/sites/123" );
-						expect( event.getResponse() ).toHaveStatus( 404 );
+						var event = this.delete( "/cbapi/v1/sites/default/contentstore/bogusbogus" );
+						expect( event.getResponse() ).toHaveStatus(
+							404,
+							event.getResponse().getMessagesString()
+						);
 					} );
 				} );
 			} ); // end delete story
