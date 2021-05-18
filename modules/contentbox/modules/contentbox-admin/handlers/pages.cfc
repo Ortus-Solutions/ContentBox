@@ -249,7 +249,9 @@ component extends="baseContentHandler" {
 
 		// slugify the incoming title or slug
 		rc.slug = (
-			NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) )
+			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(
+				listLast( rc.slug, "/" )
+			)
 		);
 
 		// Verify permission for publishing, else save as draft
@@ -282,10 +284,10 @@ component extends="baseContentHandler" {
 		else if (
 			!isNew and
 			prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" ) and
-			rc.creatorID.len() and
+			len( rc.creatorID ) and
 			page.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
-			page.setCreator( authorService.get( rc.creatorID ) );
+			page.setCreator( variables.authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
@@ -295,15 +297,11 @@ component extends="baseContentHandler" {
 			author    = prc.oCurrentAuthor
 		);
 
-		// attach a parent page if it exists and not the same
-		if ( rc.parentPage neq "null" AND page.getContentID() NEQ rc.parentPage ) {
-			page.setParent( variables.pageService.get( rc.parentPage ) );
-			// update slug according to hierarchy
-			page.setSlug( page.getParent().getSlug() & "/" & page.getSlug() );
-		}
-		// Remove parent
-		else if ( rc.parentPage EQ "null" OR !rc.parentPage.len() ) {
+		// Inflate parent
+		if ( rc.parentPage EQ "null" OR rc.parentPage EQ "" ) {
 			page.setParent( javacast( "null", "" ) );
+		} else {
+			page.setParent( variables.pageService.get( rc.parentPage ) );
 		}
 
 		// Create new categories?

@@ -383,7 +383,9 @@ component extends="baseContentHandler" {
 		}
 
 		// get new/persisted content and populate it
-		var content = populateModel( variables.contentStoreService.get( rc.contentID ) )
+		var content      = variables.contentStoreService.get( rc.contentID )
+		var originalSlug = content.getSlug();
+		var content      = populateModel( content )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( variables.siteService.get( rc.site ) );
@@ -439,11 +441,25 @@ component extends="baseContentHandler" {
 		// Inflate Related Content into the content
 		content.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announce( "cbadmin_preContentStoreSave", { content : content, isNew : isNew } );
+		announce(
+			"cbadmin_preContentStoreSave",
+			{
+				content      : content,
+				isNew        : isNew,
+				originalSlug : originalSlug
+			}
+		);
 		// save content
-		contentStoreService.save( content );
+		contentStoreService.save( content, originalSlug );
 		// announce event
-		announce( "cbadmin_postContentStoreSave", { content : content, isNew : isNew } );
+		announce(
+			"cbadmin_postContentStoreSave",
+			{
+				content      : content,
+				isNew        : isNew,
+				originalSlug : originalSlug
+			}
+		);
 
 		// Ajax?
 		if ( event.isAjax() ) {
