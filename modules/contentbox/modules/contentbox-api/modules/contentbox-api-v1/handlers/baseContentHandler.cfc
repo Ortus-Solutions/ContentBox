@@ -118,6 +118,7 @@ component extends="baseHandler" {
 		}
 
 		// populate it
+		var originalSlug          = arguments.populate.model.getSlug();
 		arguments.validate.target = populateModel( argumentCollection = arguments.populate );
 
 		// Start save transaction procedures
@@ -168,20 +169,20 @@ component extends="baseHandler" {
 			// announce it
 			announceInterception(
 				"#variables.settings.resources.eventPrefix#pre#variables.entity##len( rc.id ) ? "Update" : "Save"#",
-				{ entity : prc.oEntity }
+				{ entity : prc.oEntity, originalSlug : originalSlug }
 			);
 
 			// Save it
 			invoke(
 				variables.ormService,
 				arguments.saveMethod,
-				[ prc.oEntity ]
+				[ prc.oEntity, originalSlug ]
 			);
 
 			// announce it
 			announceInterception(
 				"#variables.settings.resources.eventPrefix#post#variables.entity##len( rc.id ) ? "Update" : "Save"#",
-				{ entity : prc.oEntity }
+				{ entity : prc.oEntity, originalSlug : originalSlug }
 			);
 		}
 		// end transaction
