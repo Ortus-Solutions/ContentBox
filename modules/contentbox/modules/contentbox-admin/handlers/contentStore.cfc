@@ -370,11 +370,6 @@ component extends="baseContentHandler" {
 			rc.publishedDate = dateFormat( now() );
 		}
 
-		// Quick content check
-		if ( structKeyExists( rc, "quickcontent" ) ) {
-			rc.content = rc.quickcontent;
-		}
-
 		// slugify the incoming title or slug
 		rc.slug = (
 			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(

@@ -308,11 +308,6 @@ component extends="baseContentHandler" {
 			rc.publishedDate = dateFormat( now() );
 		}
 
-		// Quick content check
-		if ( structKeyExists( rc, "quickcontent" ) ) {
-			rc.content = rc.quickcontent;
-		}
-
 		// slugify the incoming title or slug
 		if ( NOT len( rc.slug ) ) {
 			rc.slug = rc.title;
