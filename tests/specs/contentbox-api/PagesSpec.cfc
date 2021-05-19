@@ -2,7 +2,7 @@ component extends="tests.resources.BaseApiTest" {
 
 	property name="siteService" inject="siteService@cb";
 	property name="categoryService" inject="categoryService@cb";
-	property name="pagesService" inject="pagesService@cb";
+	property name="pageService" inject="pageService@cb";
 
 	/*********************************** LIFE CYCLE Methods ***********************************/
 
