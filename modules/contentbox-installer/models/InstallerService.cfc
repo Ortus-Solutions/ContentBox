@@ -437,7 +437,7 @@ component accessors="true" {
 		entry.addComment( comment );
 
 		// save entry
-		entryService.saveEntry( entry );
+		entryService.save( entry );
 
 		// create a page
 		var page = pageService.new(
