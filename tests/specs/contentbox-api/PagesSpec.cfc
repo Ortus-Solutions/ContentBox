@@ -26,7 +26,7 @@ component extends="tests.resources.BaseApiTest" {
 
 	function run( testResults, testBox ){
 		// all your suites go here.
-		describe( "Content Store API Suite", function(){
+		xdescribe( "Content Store API Suite", function(){
 			beforeEach( function( currentSpec ){
 				// Setup as a new ColdBox request for this suite, VERY IMPORTANT. ELSE EVERYTHING LOOKS LIKE THE SAME REQUEST.
 				setup();
