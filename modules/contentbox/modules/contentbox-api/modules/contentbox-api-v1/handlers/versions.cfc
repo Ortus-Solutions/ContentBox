@@ -36,7 +36,7 @@ component
 	/**
 	 * Display all versions for the requested contentype
 	 *
-	 * @tags Versions,ContentStore,Pages,Entries
+	 * @tags Versions
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function index( event, rc, prc ){
@@ -69,7 +69,7 @@ component
 	/**
 	 * Show a content version individually
 	 *
-	 * @tags Versions,ContentStore,Pages,Entries
+	 * @tags Versions
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function show( event, rc, prc ){
@@ -82,7 +82,7 @@ component
 	/**
 	 * Delete a version from a specific content item
 	 *
-	 * @tags Versions,ContentStore,Pages,Entries
+	 * @tags Versions
 	 * @x-contentbox-permissions VERSIONS_DELETE
 	 */
 	function delete( event, rc, prc ) secured="VERSIONS_DELETE"{

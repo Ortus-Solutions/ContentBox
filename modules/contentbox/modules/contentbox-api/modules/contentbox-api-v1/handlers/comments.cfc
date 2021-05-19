@@ -33,7 +33,7 @@ component extends="baseHandler" {
 	/**
 	 * Display all comments for the requested content object
 	 *
-	 * @tags Comments,ContentStore,Pages,Entries
+	 * @tags Comments
 	 */
 	function index( event, rc, prc ){
 		param rc.page       = 1;
@@ -62,7 +62,7 @@ component extends="baseHandler" {
 	/**
 	 * Show a comment using an ID
 	 *
-	 * @tags Comments,ContentStore,Pages,Entries
+	 * @tags Comments
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "relatedContentSnapshot:relatedContent";
@@ -74,7 +74,7 @@ component extends="baseHandler" {
 	/**
 	 * Create a new comment
 	 *
-	 * @tags Comments,ContentStore,Pages,Entries
+	 * @tags Comments
 	 */
 	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );
@@ -83,7 +83,7 @@ component extends="baseHandler" {
 	/**
 	 * Update an existing comment
 	 *
-	 * @tags Comments,ContentStore,Pages,Entries
+	 * @tags Comments
 	 * @x-contentbox-permissions COMMENTS_ADMIN
 	 */
 	function update( event, rc, prc ) secured="COMMENTS_ADMIN"{
@@ -93,7 +93,7 @@ component extends="baseHandler" {
 	/**
 	 * Delete a comment from a specific content item
 	 *
-	 * @tags Comments,ContentStore,Pages,Entries
+	 * @tags Comments
 	 * @x-contentbox-permissions COMMENTS_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="COMMENTS_ADMIN"{
