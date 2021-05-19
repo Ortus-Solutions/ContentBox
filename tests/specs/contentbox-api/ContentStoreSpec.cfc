@@ -152,7 +152,7 @@ component extends="tests.resources.BaseApiTest" {
 									publishedDate : dateTimeFormat(
 										now(),
 										"yyyy-mm-dd'T'HH:mm:ssZ",
-										"utc"
+										"UTC"
 									),
 									changelog    : "My first creation from the bdd test",
 									categories   : "coldbox,news",
@@ -296,7 +296,7 @@ component extends="tests.resources.BaseApiTest" {
 								publishedDate : dateTimeFormat(
 									now(),
 									"yyyy-mm-dd'T'HH:mm:ssZ",
-									"utc"
+									"UTC"
 								),
 								changelog : "My first creation from the bdd test",
 								site      : variables.siteService.getDefaultSite(),

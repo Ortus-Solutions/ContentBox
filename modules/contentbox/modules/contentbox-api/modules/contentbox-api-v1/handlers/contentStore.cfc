@@ -16,15 +16,6 @@ component extends="baseContentHandler" {
 	variables.useGetOrFail = false;
 
 	/**
-	 * Executes before all handler actions
-	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
-		// Verify incoming site
-		param rc.site    = "";
-		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
-	}
-
-	/**
 	 * Display all content store items using different filters
 	 *
 	 * @tags ContentStore
