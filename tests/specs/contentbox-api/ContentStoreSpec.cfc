@@ -30,6 +30,7 @@ component extends="tests.resources.BaseApiTest" {
 			beforeEach( function( currentSpec ){
 				// Setup as a new ColdBox request for this suite, VERY IMPORTANT. ELSE EVERYTHING LOOKS LIKE THE SAME REQUEST.
 				setup();
+				getCache( "template" ).clearAll();
 			} );
 
 			story( "I want to view a content item by id or slug", function(){

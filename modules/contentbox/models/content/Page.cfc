@@ -121,6 +121,7 @@ component
 
 		appendToMemento(
 			[
+				"excerpt",
 				"layout",
 				"mobileLayout",
 				"order",

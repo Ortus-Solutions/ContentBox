@@ -26,37 +26,38 @@ component extends="tests.resources.BaseApiTest" {
 
 	function run( testResults, testBox ){
 		// all your suites go here.
-		xdescribe( "Content Store API Suite", function(){
+		describe( "Pages API Suite", function(){
 			beforeEach( function( currentSpec ){
 				// Setup as a new ColdBox request for this suite, VERY IMPORTANT. ELSE EVERYTHING LOOKS LIKE THE SAME REQUEST.
 				setup();
+				getCache( "template" ).clearAll();
 			} );
 
-			story( "I want to view a content item by id or slug", function(){
+			story( "I want to view a page item by id or slug", function(){
 				given( "an valid id", function(){
-					then( "then I should get the requested content store item", function(){
-						var testContent = variables.contentStoreService.findWhere( { slug : "foot" } );
+					then( "then I should get the requested page", function(){
+						var testContent = variables.pageService.findWhere( { slug : "products" } );
 						var event       = this.get(
-							"/cbapi/v1/sites/default/contentstore/#testContent.getContentID()#"
+							"/cbapi/v1/sites/default/pages/#testContent.getContentID()#"
 						);
 						expect( event.getResponse() ).toHaveStatus(
 							200,
 							event.getResponse().getMessagesString()
 						);
-						expect( event.getResponse().getData().slug ).toBe( "foot" );
+						expect( event.getResponse().getData().slug ).toBe( "products" );
 						expect( event.getResponse().getData() ).toHaveKey(
 							"activeContent,children,customFields,linkedContent,relatedContent,renderedContent"
 						);
 					} );
 				} );
-				given( "an valid slug", function(){
-					then( "then I should get the requested content store item", function(){
-						var event = this.get( "/cbapi/v1/sites/default/contentstore/foot" );
+				given( "a valid slug", function(){
+					then( "then I should get the requested page", function(){
+						var event = this.get( "/cbapi/v1/sites/default/pages/products" );
 						expect( event.getResponse() ).toHaveStatus(
 							200,
 							event.getResponse().getMessagesString()
 						);
-						expect( event.getResponse().getData().slug ).toBe( "foot" );
+						expect( event.getResponse().getData().slug ).toBe( "products" );
 						expect( event.getResponse().getData() ).toHaveKey(
 							"activeContent,children,customFields,linkedContent,relatedContent,renderedContent"
 						);
@@ -64,7 +65,7 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.get( "/cbapi/v1/sites/default/contentstore/123kkdabugosu" );
+						var event = this.get( "/cbapi/v1/sites/default/pages/123kkdabugosu" );
 						expect( event.getResponse() ).toHaveStatus(
 							404,
 							event.getResponse().getMessagesString()
@@ -73,10 +74,10 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} ); // end story view site by id or slug
 
-			story( "I want to list all content store items", function(){
+			story( "I want to list all pages", function(){
 				given( "no options", function(){
 					then( "it can display all items with default filters", function(){
-						var event = this.get( "/cbapi/v1/sites/default/contentstore" );
+						var event = this.get( "/cbapi/v1/sites/default/pages" );
 						expect( event.getResponse() ).toHaveStatus(
 							200,
 							event.getResponse().getMessagesString()
@@ -85,10 +86,10 @@ component extends="tests.resources.BaseApiTest" {
 					} );
 				} );
 				given( "a parent search", function(){
-					then( "it can display content store items from a parent", function(){
-						var testContent = variables.contentStoreService.findWhere( { slug : "foot" } );
+					then( "it can display pages from a parent", function(){
+						var testContent = variables.pageService.findWhere( { slug : "products" } );
 						var event       = this.get(
-							"/cbapi/v1/sites/default/contentstore?parent=#testContent.getContentID()#"
+							"/cbapi/v1/sites/default/pages?parent=#testContent.getContentID()#"
 						);
 						expect( event.getResponse() ).toHaveStatus(
 							200,
@@ -98,13 +99,13 @@ component extends="tests.resources.BaseApiTest" {
 							.getResponse()
 							.getData()
 							.each( function( thisItem ){
-								expect( thisItem.parent.slug ).toBe( "foot" );
+								expect( thisItem.parent.slug ).toBe( "products" );
 							} );
 					} );
 				} );
 				given( "a content search", function(){
-					then( "it can find the content store item", function(){
-						var event = this.get( "/cbapi/v1/sites/default/contentstore?search=foot" );
+					then( "it can find the page", function(){
+						var event = this.get( "/cbapi/v1/sites/default/pages?search=products" );
 						expect( event.getResponse() ).toHaveStatus(
 							200,
 							event.getResponse().getMessagesString()
@@ -113,10 +114,8 @@ component extends="tests.resources.BaseApiTest" {
 					} );
 				} );
 				given( "a slug prefix search", function(){
-					then( "it can find the content store items", function(){
-						var event = this.get(
-							"/cbapi/v1/sites/default/contentstore?slugPrefix=foot"
-						);
+					then( "it can find the pages", function(){
+						var event = this.get( "/cbapi/v1/sites/default/pages?slugPrefix=products" );
 						expect( event.getResponse() ).toHaveStatus(
 							200,
 							event.getResponse().getMessagesString()
@@ -125,10 +124,8 @@ component extends="tests.resources.BaseApiTest" {
 					} );
 				} );
 				given( "a slug search", function(){
-					then( "it can find the content store items", function(){
-						var event = this.get(
-							"/cbapi/v1/sites/default/contentstore?slugSearch=foot"
-						);
+					then( "it can find the pages", function(){
+						var event = this.get( "/cbapi/v1/sites/default/pages?slugSearch=products" );
 						expect( event.getResponse() ).toHaveStatus(
 							200,
 							event.getResponse().getMessagesString()
@@ -136,24 +133,36 @@ component extends="tests.resources.BaseApiTest" {
 						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
 					} );
 				} );
+				given( "a show on menu search", function(){
+					then( "it can find pages with showInMenu = false", function(){
+						var event = this.get( "/cbapi/v1/sites/default/pages?showInMenu=false" );
+						expect( event.getResponse() ).toHaveStatus(
+							200,
+							event.getResponse().getMessagesString()
+						);
+						expect( event.getResponse().getData() ).toBeArray().toBeEmpty();
+					} );
+				} );
 			} ); // end story list all sites
 
-			story( "I want to create a content store item", function(){
+			story( "I want to create a page", function(){
 				given( "valid data", function(){
 					then( "then it should create a new content object", function(){
 						withRollback( function(){
 							var event = this.post(
-								"cbapi/v1/sites/default/contentstore",
+								"cbapi/v1/sites/default/pages",
 								{
 									title         : "bddtest",
 									slug          : "bddtest",
-									description   : "my bdd test site",
-									content       : "This is my awesome bdd test content store item",
+									excerpt       : "bdd rules!",
+									content       : "This is my awesome bdd test page",
 									publishedDate : dateTimeFormat(
 										now(),
 										"yyyy-mm-dd'T'HH:mm:ssZ",
-										"utc"
+										"UTC"
 									),
+									layout       : "pages",
+									showInMenu   : "false",
 									changelog    : "My first creation from the bdd test",
 									categories   : "coldbox,news",
 									customFields : [
@@ -169,6 +178,9 @@ component extends="tests.resources.BaseApiTest" {
 							debug( event.getResponse().getData() );
 							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
+							expect( event.getResponse().getData().excerpt ).toInclude( "bdd" );
+							expect( event.getResponse().getData().showInMenu ).toBeFalse();
+							expect( event.getResponse().getData().layout ).toBe( "pages" );
 							expect( event.getResponse().getData().categories )
 								.toBeArray()
 								.notToBeEmpty();
@@ -181,11 +193,11 @@ component extends="tests.resources.BaseApiTest" {
 				given( "duplicate content slug", function(){
 					then( "it should display an error message", function(){
 						var event = this.post(
-							"cbapi/v1/sites/default/contentStore",
+							"cbapi/v1/sites/default/pages",
 							{
-								title   : "foot",
-								slug    : "foot",
-								content : "Footer is here",
+								title   : "products",
+								slug    : "products",
+								content : "Products are here",
 								order   : 10
 							}
 						);
@@ -196,10 +208,10 @@ component extends="tests.resources.BaseApiTest" {
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
-				given( "invalid content", function(){
+				given( "no content on a new content object", function(){
 					then( "it should display an error message", function(){
 						var event = this.post(
-							"cbapi/v1/sites/default/contentStore",
+							"cbapi/v1/sites/default/pages",
 							{ slug : "A nice site" }
 						);
 						expect( event.getResponse() ).toHaveStatus(
@@ -216,7 +228,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "invalid data but good content", function(){
 					then( "it should display an error message", function(){
 						var event = this.post(
-							"cbapi/v1/sites/default/contentStore",
+							"cbapi/v1/sites/default/pages",
 							{ content : "Hello from bdd test land!" }
 						);
 						expect( event.getResponse() ).toHaveStatus(
@@ -229,14 +241,14 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} ); // end create story
 
-			story( "I want to edit a content store item", function(){
+			story( "I want to edit a page", function(){
 				given( "a valid id/slug and valid data", function(){
 					then( "then it should update a content item", function(){
 						withRollback( function(){
 							var event = this.put(
-								"/cbapi/v1/sites/default/contentstore/foot",
+								"/cbapi/v1/sites/default/pages/products",
 								{
-									content   : "I am a new piece of content for the footer!",
+									content   : "I am a new piece of content for the products!",
 									changelog : "Update from a bdd test!"
 								}
 							);
@@ -245,7 +257,7 @@ component extends="tests.resources.BaseApiTest" {
 								event.getResponse().getMessagesString()
 							);
 							expect( event.getResponse().getData().renderedContent ).toInclude(
-								"I am a new piece of content for the footer!"
+								"I am a new piece of content for the products!"
 							);
 							expect( event.getResponse().getData().activeContent.changelog ).toInclude(
 								"bdd test"
@@ -256,11 +268,11 @@ component extends="tests.resources.BaseApiTest" {
 				given( "duplicate content slug", function(){
 					then( "it should display an error message", function(){
 						var event = this.put(
-							"cbapi/v1/sites/default/contentStore/foot",
+							"cbapi/v1/sites/default/pages/products",
 							{
-								title   : "foot",
-								slug    : "my-awesome-news",
-								content : "Footer is here"
+								title   : "products",
+								slug    : "support",
+								content : "Products are here"
 							}
 						);
 						expect( event.getResponse() ).toHaveStatus(
@@ -273,7 +285,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.put(
-							"/cbapi/v1/sites/default/contentstore/bogusbaby",
+							"/cbapi/v1/sites/default/pages/bogusbaby",
 							{ content : "bogus" }
 						);
 						expect( event.getResponse() ).toHaveStatus(
@@ -284,19 +296,18 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} ); // end edit story
 
-			story( "I want to delete a content store item", function(){
+			story( "I want to delete a page", function(){
 				given( "a valid id/slug", function(){
 					then( "then I should see the confirmation", function(){
-						var testContent = variables.contentstoreService.save(
-							variables.contentstoreService.new( {
+						var testContent = variables.pageService.save(
+							variables.pageService.new( {
 								title         : "bddtest",
 								slug          : "bddtest",
-								description   : "my bdd test site",
-								content       : "This is my awesome bdd test content store item",
+								content       : "This is my awesome bdd test page",
 								publishedDate : dateTimeFormat(
 									now(),
 									"yyyy-mm-dd'T'HH:mm:ssZ",
-									"utc"
+									"UTC"
 								),
 								changelog : "My first creation from the bdd test",
 								site      : variables.siteService.getDefaultSite(),
@@ -304,7 +315,7 @@ component extends="tests.resources.BaseApiTest" {
 							} )
 						);
 						var event = this.delete(
-							"/cbapi/v1/sites/default/contentstore/#testContent.getContentID()#"
+							"/cbapi/v1/sites/default/pages/#testContent.getContentID()#"
 						);
 						expect( event.getResponse() ).toHaveStatus(
 							200,
@@ -315,7 +326,7 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.delete( "/cbapi/v1/sites/default/contentstore/bogusbogus" );
+						var event = this.delete( "/cbapi/v1/sites/default/pages/bogusbogus" );
 						expect( event.getResponse() ).toHaveStatus(
 							404,
 							event.getResponse().getMessagesString()

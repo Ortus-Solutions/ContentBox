@@ -3,7 +3,7 @@
  *
  * An incoming site identifier is required
  */
-component extends="baseHandler" {
+component extends="baseContentHandler" {
 
 	// DI
 	property name="ormService" inject="PageService@cb";
@@ -14,15 +14,6 @@ component extends="baseHandler" {
 	variables.entity       = "Page";
 	// Use getOrFail() or getByIdOrSlugOrFail() for show/delete/update actions
 	variables.useGetOrFail = false;
-
-	/**
-	 * Executes before all handler actions
-	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
-		// Verify incoming site
-		param rc.site    = "";
-		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
-	}
 
 	/**
 	 * Display all pages using different filters
@@ -97,38 +88,13 @@ component extends="baseHandler" {
 	/**
 	 * Create a page
 	 *
-	 * @tags Pages
+	 * @tags ContentStore
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
-		// params
-		event
-			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
-			.paramValue( "newCategories", "" )
-			.paramValue( "isPublished", true )
-			.paramValue( "slug", "" )
-			.paramValue( "changelog", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "publishedDate", now() )
-			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
-			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue(
-				"publishedTime",
-				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-			)
-			.paramValue( "expireHour", "" )
-			.paramValue( "expireMinute", "" )
-			.paramValue( "expireTime", "" )
-			.paramValue( "content", "" )
-			.paramValue( "creatorID", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() );
-
-		// Set author to logged in user and override it
-		rc.creator = jwtAuth().getUser().getAuthorID();
 		// Supersize it
-		super.create( argumentCollection = arguments );
+		arguments.contentType = "PAGES";
+		super.save( argumentCollection = arguments );
 	}
 
 	/**
@@ -138,7 +104,9 @@ component extends="baseHandler" {
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
-		super.update( argumentCollection = arguments );
+		// Supersize it
+		arguments.contentType = "PAGES";
+		super.save( argumentCollection = arguments );
 	}
 
 	/**

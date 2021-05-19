@@ -677,7 +677,8 @@ component
 
 			// Activate the new version
 			oNewVersion.setIsActive( true );
-			variables.activeContent = oNewVersion;
+			variables.activeContent   = oNewVersion;
+			variables.renderedContent = "";
 			// Add it to the content versions array so it can be saved as part of this content object
 			addContentVersion( oNewVersion );
 		}
