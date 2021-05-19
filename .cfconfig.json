@@ -1,6 +1,8 @@
 {
 	"systemErr":"System",
 	"systemOut":"System",
+	"componentCacheEnabled":false,
+	"saveClassFiles":false,
 	"adminPassword" : "contentbox",
 	"requestTimeout": "0,0,10,0",
 	"thistimezone":"UTC",
