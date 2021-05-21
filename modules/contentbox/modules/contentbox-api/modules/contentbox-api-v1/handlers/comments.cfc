@@ -91,7 +91,7 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Delete a comment from a specific content item
+	 * Delete a comment
 	 *
 	 * @tags Comments
 	 * @x-contentbox-permissions COMMENTS_ADMIN
