@@ -74,6 +74,8 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	 * @x-contentbox-permissions SITES_ADMIN
 	 */
 	function update( event, rc, prc ){
+		// You cannot update site slugs
+		arguments.populate.exclude = "slug";
 		super.update( argumentCollection = arguments );
 	}
 

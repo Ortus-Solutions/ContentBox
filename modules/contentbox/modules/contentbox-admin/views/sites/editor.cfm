@@ -64,24 +64,41 @@
 								size    		= "255",
 								class   		= "form-control",
 								title 			= "The human readable name",
+								placeholder = "My Awesome Site",
 								wrapper 		= "div class=controls",
 								labelClass 		= "control-label",
 								groupWrapper 	= "div class=form-group"
 							)#
 
-							#html.textField(
-								name    		= "slug",
-								bind    		= prc.site,
-								label   		= "*Slug:",
-								required		= "required",
-								size    		= "255",
-								title 			= "The internal unique identifier for the site",
-								class   		= "form-control",
-								wrapper 		= "div class=controls",
-								labelClass 		= "control-label",
-								groupWrapper 	= "div class=form-group",
-								disabled 		= prc.site.getSlug() eq 'default' ? true : false
-							)#
+							<div class="form-group">
+								#html.label(
+									class   = "control-label",
+									field   = "slug",
+									content = "*Unique Slug:"
+								)#
+
+								<cfif prc.site.isLoaded()>
+									<div class="alert alert-warning">
+										The slug cannot be changed once the site has been created.
+									</div>
+								<cfelse>
+									<div class="alert alert-danger">
+										The slug cannot be changed once the site has been created. Choose wisely!
+									</div>
+								</cfif>
+
+								#html.textField(
+									name    		= "slug",
+									bind    		= prc.site,
+									required		= "required",
+									size    		= "255",
+									title 			= "The internal unique identifier for the site",
+									class   		= "form-control",
+									wrapper 		= "div class=controls",
+									placeholder = "my-awesome-site",
+									disabled 		= prc.site.isLoaded() ? true : false
+								)#
+							</div>
 
 							#html.textField(
 								name            = "tagline",

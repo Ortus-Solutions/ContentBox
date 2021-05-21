@@ -51,8 +51,8 @@ component extends="baseHandler" {
 		// tab
 		prc.tabSystem_sites = true;
 		// get new or persisted
-		if( isNull( prc.site ) ){
-			prc.site   = variables.siteService.get( event.getValue( "siteID", 0 ) );
+		if ( isNull( prc.site ) ) {
+			prc.site = variables.siteService.get( event.getValue( "siteID", 0 ) );
 		}
 		// Get all registered themes
 		prc.themes = variables.themeService.getThemes();
@@ -75,7 +75,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		prc.site    = populateModel( variables.siteService.get( rc.siteID ) );
+		prc.site     = populateModel( variables.siteService.get( rc.siteID ) );
 		// validate it
 		var vResults = validate( prc.site );
 		if ( !vResults.hasErrors() ) {
