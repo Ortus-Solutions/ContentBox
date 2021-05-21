@@ -144,8 +144,10 @@ component extends="baseContentHandler" {
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
-		// Check if the entry's markup matches the choosen editor
-		if ( prc.page.getMarkup() == "markdown" && prc.defaultEditor != "simplemde" ) {
+		// Check if the markup matches the choosen editor
+		if (
+			listFindNoCase( "markdown,json", prc.page.getMarkup() ) && prc.defaultEditor != "simplemde"
+		) {
 			prc.defaultEditor = "simplemde";
 		}
 		// Get the editor driver object

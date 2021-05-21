@@ -60,7 +60,7 @@ component
 		index    ="idx_showInMenu";
 
 	/**
-	 * The raw markup excerpt. This can be empty.
+	 * The excerpt for this page. This can be empty.
 	 */
 	property
 		name   ="excerpt"
