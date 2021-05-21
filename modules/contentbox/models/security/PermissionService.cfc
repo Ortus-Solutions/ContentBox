@@ -1,31 +1,13 @@
 ﻿/**
-********************************************************************************
-ContentBox - A Modular Content Platform
-Copyright 2012 by Luis Majano and Ortus Solutions, Corp
-www.ortussolutions.com
-********************************************************************************
-Apache License, Version 2.0
-
-Copyright Since [2012] [Luis Majano and Ortus Solutions,Corp]
-
-Licensed under the Apache License, Version 2.0 (the "License" );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-********************************************************************************
-* Permissions service for contentbox
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Permissions service for contentbox
+ */
 component extends="cborm.models.VirtualEntityService" singleton {
 
 	// DI
-	property name="populator" inject="wirebox:populator";
 	property name="dateUtil" inject="DateUtil@cb";
 
 	/**
@@ -82,20 +64,35 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Get all data prepared for export
+	 *
+	 * @return Array of struct permission data
 	 */
 	array function getAllForExport(){
-		var c = newCriteria();
-
-		return c
+		return newCriteria()
 			.withProjections(
 				property = "permissionID,permission,description,createdDate,modifiedDate,isDeleted"
 			)
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder = "permission" );
+			.asStruct()
+			.list( sortOrder = "permission" )
+			// output conversions
+			.map( function( item ){
+				item[ "createdDate" ]  = variables.dateUtil.toUTC( item[ "createdDate" ], "", "UTC" );
+				item[ "modifiedDate" ] = variables.dateUtil.toUTC(
+					item[ "modifiedDate" ],
+					"",
+					"UTC"
+				);
+				return item;
+			} );
 	}
 
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
+	 *
+	 * @importFile The file to import
+	 * @override To override data in the database or skip if found
+	 *
+	 * @return A string console log
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -148,7 +145,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			thisPermission.modifiedDate = dateUtil.epochToLocal( thisPermission.modifiedDate );
 
 			// populate content from data
-			populator.populateFromStruct(
+			populate(
 				target               = oPermission,
 				memento              = thisPermission,
 				exclude              = "permissionID",
@@ -163,13 +160,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				arrayAppend( allPermissions, oPermission );
 			} else if ( oPermission.isLoaded() and arguments.override ) {
 				arguments.importLog.append(
-					"Persisted permission overriden: #thisPermission.permission#<br>"
+					"Permission overriden: #thisPermission.permission#<br>"
 				);
 				arrayAppend( allPermissions, oPermission );
 			} else {
-				arguments.importLog.append(
-					"Skipping persisted permission: #thisPermission.permission#<br>"
-				);
+				arguments.importLog.append( "Permission skipped: #thisPermission.permission#<br>" );
 			}
 		}
 		// end import loop
