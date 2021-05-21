@@ -21,6 +21,18 @@ component extends="ContentService" singleton {
 	}
 
 	/**
+	 * Save an entry
+	 *
+	 * @entry The entry to save or update
+	 * @originalSlug The original slug if the save is an update
+	 *
+	 * @return Saved entry
+	 */
+	function save( required any entry, string originalSlug = "" ){
+		return super.save( arguments.entry );
+	}
+
+	/**
 	 * Search for blog entries according to many filters
 	 *
 	 * @search The search term to search on

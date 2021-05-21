@@ -3,7 +3,7 @@
  *
  * An incoming site identifier is required
  */
-component extends="baseHandler" {
+component extends="baseContentHandler" {
 
 	// DI
 	property name="ormService" inject="EntryService@cb";
@@ -16,18 +16,9 @@ component extends="baseHandler" {
 	variables.useGetOrFail = false;
 
 	/**
-	 * Executes before all handler actions
-	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
-		// Verify incoming site
-		param rc.site    = "";
-		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
-	}
-
-	/**
 	 * Display all entries using different filters
 	 *
-	 * @tags Entries
+	 * @tags Entry
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
@@ -63,7 +54,7 @@ component extends="baseHandler" {
 	/**
 	 * Show an entry using the id
 	 *
-	 * @tags Entries
+	 * @tags Entry
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
@@ -81,56 +72,33 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Create a blog entry
+	 * Create an entry
 	 *
-	 * @tags Entries
+	 * @tags ContentStore
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
-		// params
-		event
-			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
-			.paramValue( "newCategories", "" )
-			.paramValue( "isPublished", true )
-			.paramValue( "slug", "" )
-			.paramValue( "changelog", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "publishedDate", now() )
-			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
-			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue(
-				"publishedTime",
-				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-			)
-			.paramValue( "expireHour", "" )
-			.paramValue( "expireMinute", "" )
-			.paramValue( "expireTime", "" )
-			.paramValue( "content", "" )
-			.paramValue( "creatorID", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() );
-
-		// Set author to logged in user and override it
-		rc.creator = jwtAuth().getUser().getAuthorID();
 		// Supersize it
-		super.create( argumentCollection = arguments );
+		arguments.contentType = "ENTRIES";
+		super.save( argumentCollection = arguments );
 	}
 
 	/**
 	 * Update an existing entry
 	 *
-	 * @tags Entries
+	 * @tags Entry
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
-		super.update( argumentCollection = arguments );
+		// Supersize it
+		arguments.contentType = "ENTRIES";
+		super.save( argumentCollection = arguments );
 	}
 
 	/**
-	 * Delete a entry using an id or slug
+	 * Delete an entry using an id or slug
 	 *
-	 * @tags Entries
+	 * @tags Entry
 	 * @x-contentbox-permissions ENTRIES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="ENTRIES_ADMIN"{

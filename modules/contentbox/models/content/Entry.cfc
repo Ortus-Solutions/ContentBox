@@ -105,25 +105,25 @@ component
 	 */
 	any function renderExcerpt(){
 		// Check if we need to translate
-		if ( NOT len( renderedExcerpt ) ) {
+		if ( NOT len( variables.renderedExcerpt ) ) {
 			lock
 				name          ="contentbox.excerptrendering.#getContentID()#"
 				type          ="exclusive"
 				throwontimeout="true"
 				timeout       ="10" {
-				if ( NOT len( renderedExcerpt ) ) {
+				if ( NOT len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
 					var b     = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					var iData = { builder : b, content : this };
 					interceptorService.announce( "cb_onContentRendering", iData );
 					// store processed content
-					renderedExcerpt = b.toString();
+					variables.renderedExcerpt = b.toString();
 				}
 			}
 		}
 
-		return renderedExcerpt;
+		return variables.renderedExcerpt;
 	}
 
 	/**
