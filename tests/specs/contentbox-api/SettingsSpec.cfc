@@ -8,7 +8,7 @@ component extends="tests.resources.BaseApiTest" {
 	function beforeAll(){
 		super.beforeAll();
 		// Log in admin
-		// variables.loggedInData = loginUser();
+		variables.loggedInData = loginUser();
 	}
 
 	/**

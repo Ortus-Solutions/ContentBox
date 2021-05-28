@@ -18,6 +18,7 @@ component
 	property name="requestService" inject="coldbox:requestService";
 	property name="settingService" inject="provider:settingService@cb";
 	property name="themeService" inject="provider:themeService@cb";
+	property name="mediaService" inject="provider:mediaService@cb";
 
 	/**
 	 * Constructor
@@ -102,6 +103,9 @@ component
 				name: arguments.site.getActiveTheme(),
 				site: arguments.site
 			);
+
+			// Create media root folder
+			ensureSiteMediaFolder( arguments.site );
 		}
 		// end transaction
 
@@ -109,6 +113,23 @@ component
 		variables.settingService.flushSettingsCache();
 
 		return arguments.site;
+	}
+
+	/**
+	 * This method makes sure the site has a media root folder by convention in the media library
+	 * following the patter: /{root}/sites/{slug}
+	 *
+	 * @site The site to ensure the media directory for
+	 *
+	 * @return True if it created it, false if it already existed.
+	 */
+	boolean function ensureSiteMediaFolder( required site ){
+		var siteRoot = variables.mediaService.getCoreMediaRoot( absolute: true ) & "/sites/" & arguments.site.getSlug();
+		if ( !directoryExists( siteRoot ) ) {
+			directoryCreate( siteRoot );
+			return true;
+		}
+		return false;
 	}
 
 	/**

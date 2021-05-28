@@ -236,8 +236,10 @@ component extends="baseContentHandler" {
 		prc.editors       = editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
-		// Check if the entry's markup matches the choosen editor
-		if ( prc.content.getMarkup() == "markdown" && prc.defaultEditor != "simplemde" ) {
+		// Check if the markup matches the choosen editor
+		if (
+			listFindNoCase( "markdown,json", prc.content.getMarkup() ) && prc.defaultEditor != "simplemde"
+		) {
 			prc.defaultEditor = "simplemde";
 		}
 		// Get the editor driver object
@@ -370,14 +372,11 @@ component extends="baseContentHandler" {
 			rc.publishedDate = dateFormat( now() );
 		}
 
-		// Quick content check
-		if ( structKeyExists( rc, "quickcontent" ) ) {
-			rc.content = rc.quickcontent;
-		}
-
 		// slugify the incoming title or slug
 		rc.slug = (
-			NOT len( rc.slug ) ? rc.title : variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) )
+			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(
+				listLast( rc.slug, "/" )
+			)
 		);
 
 		// Verify permission for publishing, else save as draft
@@ -386,7 +385,9 @@ component extends="baseContentHandler" {
 		}
 
 		// get new/persisted content and populate it
-		var content = populateModel( variables.contentStoreService.get( rc.contentID ) )
+		var content      = variables.contentStoreService.get( rc.contentID )
+		var originalSlug = content.getSlug();
+		var content      = populateModel( content )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( variables.siteService.get( rc.site ) );
@@ -411,7 +412,7 @@ component extends="baseContentHandler" {
 				rc.creatorID
 			) and content.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
-			content.setCreator( authorService.get( rc.creatorID ) );
+			content.setCreator( variables.authorService.get( rc.creatorID ) );
 		}
 
 		// Register a new content in the page, versionized!
@@ -421,15 +422,11 @@ component extends="baseContentHandler" {
 			author    = prc.oCurrentAuthor
 		);
 
-		// attach a parent page if it exists and not the same
-		if ( isNumeric( rc.parentContent ) AND content.getContentID() NEQ rc.parentContent ) {
-			content.setParent( variables.contentStoreService.get( rc.parentContent ) );
-			// update slug
-			content.setSlug( content.getParent().getSlug() & "/" & content.getSlug() );
-		}
-		// Remove parent
-		else if ( rc.parentContent EQ "null" OR rc.parentContent EQ "" ) {
+		// Inflate parent
+		if ( rc.parentContent EQ "null" OR rc.parentContent EQ "" ) {
 			content.setParent( javacast( "null", "" ) );
+		} else {
+			content.setParent( variables.contentStoreService.get( rc.parentContent ) );
 		}
 
 		// Create new categories?
@@ -446,11 +443,25 @@ component extends="baseContentHandler" {
 		// Inflate Related Content into the content
 		content.inflateRelatedContent( rc.relatedContentIDs );
 		// announce event
-		announce( "cbadmin_preContentStoreSave", { content : content, isNew : isNew } );
+		announce(
+			"cbadmin_preContentStoreSave",
+			{
+				content      : content,
+				isNew        : isNew,
+				originalSlug : originalSlug
+			}
+		);
 		// save content
-		contentStoreService.save( content );
+		contentStoreService.save( content, originalSlug );
 		// announce event
-		announce( "cbadmin_postContentStoreSave", { content : content, isNew : isNew } );
+		announce(
+			"cbadmin_postContentStoreSave",
+			{
+				content      : content,
+				isNew        : isNew,
+				originalSlug : originalSlug
+			}
+		);
 
 		// Ajax?
 		if ( event.isAjax() ) {
@@ -499,10 +510,6 @@ component extends="baseContentHandler" {
 				var title     = content.getTitle();
 				// announce event
 				announce( "cbadmin_preContentStoreRemove", { content : content } );
-				// Diassociate it
-				if ( content.hasParent() ) {
-					content.getParent().removeChild( content );
-				}
 				// Delete it
 				contentStoreService.delete( content );
 				arrayAppend( messages, "content '#title#' removed" );

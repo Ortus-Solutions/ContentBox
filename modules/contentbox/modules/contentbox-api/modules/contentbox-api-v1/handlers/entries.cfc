@@ -1,7 +1,9 @@
 /**
- * RESTFul CRUD for Entries
+ * RESTFul CRUD for Blog Entries
+ *
+ * An incoming site identifier is required
  */
-component extends="baseHandler" {
+component extends="baseContentHandler" {
 
 	// DI
 	property name="ormService" inject="EntryService@cb";
@@ -14,21 +16,14 @@ component extends="baseHandler" {
 	variables.useGetOrFail = false;
 
 	/**
-	 * Executes before all handler actions
-	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
-		// Verify incoming site
-		param rc.site    = "";
-		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
-	}
-
-	/**
 	 * Display all entries using different filters
 	 *
-	 * @override
+	 * @tags Entry
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		param rc.page      = 1;
+		param rc.excludes  = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
 		param rc.sortOrder = "publishedDate DESC";
 		// Search terms
@@ -59,9 +54,10 @@ component extends="baseHandler" {
 	/**
 	 * Show an entry using the id
 	 *
-	 * @override
+	 * @tags Entry
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		param rc.includes = arrayToList( [
 			"activeContent",
 			"childrenSnapshot:children",
@@ -76,37 +72,37 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Create a blog entry
+	 * Create an entry
+	 *
+	 * @tags ContentStore
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
-	function create( event, rc, prc ){
-		// params
-		event
-			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
-			.paramValue( "newCategories", "" )
-			.paramValue( "isPublished", true )
-			.paramValue( "slug", "" )
-			.paramValue( "changelog", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "publishedDate", now() )
-			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
-			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue(
-				"publishedTime",
-				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-			)
-			.paramValue( "expireHour", "" )
-			.paramValue( "expireMinute", "" )
-			.paramValue( "expireTime", "" )
-			.paramValue( "content", "" )
-			.paramValue( "creatorID", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() );
-
-		// Set author to logged in user and override it
-		rc.creator = jwtAuth().getUser().getAuthorID();
+	function create( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
 		// Supersize it
-		super.create( argumentCollection = arguments );
+		arguments.contentType = "ENTRIES";
+		super.save( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing entry
+	 *
+	 * @tags Entry
+	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
+	 */
+	function update( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
+		// Supersize it
+		arguments.contentType = "ENTRIES";
+		super.save( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete an entry using an id or slug
+	 *
+	 * @tags Entry
+	 * @x-contentbox-permissions ENTRIES_ADMIN
+	 */
+	function delete( event, rc, prc ) secured="ENTRIES_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

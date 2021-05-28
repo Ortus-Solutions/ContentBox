@@ -509,6 +509,7 @@ component
 	 */
 	function init(){
 		variables.isPublished            = true;
+		variables.publishedDate          = now();
 		variables.allowComments          = true;
 		variables.cache                  = true;
 		variables.cacheLayout            = true;
@@ -676,6 +677,8 @@ component
 
 			// Activate the new version
 			oNewVersion.setIsActive( true );
+			variables.activeContent   = oNewVersion;
+			variables.renderedContent = "";
 			// Add it to the content versions array so it can be saved as part of this content object
 			addContentVersion( oNewVersion );
 		}
@@ -784,7 +787,7 @@ component
 	}
 
 	/**
-	 * Override the setCustomFields
+	 * Override the setter
 	 */
 	BaseContent function setCustomFields( required array customFields ){
 		if ( hasCustomField() ) {
@@ -1664,6 +1667,28 @@ component
 
 		// Object test
 		return getsiteID() == arguments.site.getsiteID();
+	}
+
+	/**
+	 * Override setter as we do some hiearchy slug magic when setting a parent
+	 *
+	 * @parent The parent object or null
+	 */
+	BaseContent function setParent( parent ){
+		// Welcome home papa!
+		variables.parent = arguments.parent;
+
+		// Nulllify?
+		if ( isNull( arguments.parent ) ) {
+			return this;
+		}
+
+		// Update slug, if parent slug is not set
+		if ( !variables.slug.findNoCase( arguments.parent.getSlug() ) ) {
+			variables.slug = arguments.parent.getSlug() & "/" & variables.slug;
+		}
+
+		return this;
 	}
 
 }

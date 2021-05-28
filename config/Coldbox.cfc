@@ -216,7 +216,9 @@ component {
 				// The default value for relationships/getters which return null
 				nullDefaultValue = '',
 				// Don't check for getters before invoking them
-				trustedGetters = false
+				trustedGetters = false,
+				// If not empty, convert all date/times to the specific timezone
+				convertToTimezone = "UTC"
 			},
 
 			/**
@@ -349,8 +351,9 @@ component {
 							"name"        : "x-auth-token",
 							"in"          : "query"
 						},
-						"bearerAuth" : {
+						"BearerAuth" : {
 							"type"         : "http",
+							"description" : "User your JWT in the bearer Authorization header",
 							"scheme"       : "bearer",
 							"bearerFormat" : "JWT"
 						}
@@ -358,10 +361,26 @@ component {
 				},
 				// A declaration of which security mechanisms can be used across the API.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#securityRequirementObject
-				"security"     : [],
+				"security"     : [
+					{ "ApiKeyAuth" : [] },
+					{ "ApiKeyQueryAuth" : [] },
+					{ "BearerAuth" : [] }
+				],
 				// A list of tags used by the specification with additional metadata.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#tagObject
-				"tags"         : [],
+				"tags"         : [
+					{ "name" : "Authors", "description" : "Author operations" },
+					{ "name" : "Authentication", "description" : "Authentication operations" },
+					{ "name" : "Categories", "description" : "Category operations" },
+					{ "name" : "Comments", "description" : "Comment operations" },
+					{ "name" : "ContentStore", "description" : "Content store operations" },
+					{ "name" : "Entries", "description" : "Blog entry operations" },
+					{ "name" : "Menus", "description" : "Menu operations" },
+					{ "name" : "Pages", "description" : "Pages operations" },
+					{ "name" : "Sites", "description" : "Site operations" },
+					{ "name" : "Settings", "description" : "Global setting operations" },
+					{ "name" : "Versions", "description" : "Content versions operations" }
+				],
 				// Additional external documentation.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#externalDocumentationObject
 				"externalDocs" : { "description" : "Find more info here", "url" : "https://contentbox.ortusbooks.com" }

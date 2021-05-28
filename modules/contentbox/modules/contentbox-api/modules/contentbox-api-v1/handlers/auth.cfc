@@ -8,6 +8,8 @@ component extends="baseHandler" {
 
 	/**
 	 * Login to ContentBox and get your JWT Token
+	 *
+	 * @tags Authentication
 	 */
 	function login( event, rc, prc ){
 		param rc.username       = "";
@@ -52,6 +54,8 @@ component extends="baseHandler" {
 
 	/**
 	 * Logout from ContentBox, you must pass in your JWT Token else we don't know who you are :)
+	 *
+	 * @tags Authentication
 	 */
 	function logout( event, rc, prc ){
 		jwtAuth().logout();
@@ -60,6 +64,8 @@ component extends="baseHandler" {
 
 	/**
 	 * If logged in, you will be able to see your user information.
+	 *
+	 * @tags Authentication
 	 */
 	function whoami( event, rc, prc ) secure{
 		param rc.includes       = "permissions,permissionGroups,role.permissions";

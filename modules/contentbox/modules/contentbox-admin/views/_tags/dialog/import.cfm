@@ -29,7 +29,8 @@
 
 						#getInstance( "BootstrapFileUpload@cbadmin" ).renderIt(
 							name        = "importFile",
-							required    = true
+							required    = true,
+							accept = "application/json"
 						)#
 
 						<label for="overrideContent">Override content?</label>

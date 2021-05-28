@@ -1,7 +1,7 @@
 /**
  * RESTFul CRUD for Sites
  */
-component extends="baseHandler" {
+component extends="baseHandler" secured="SITES_ADMIN" {
 
 	// DI
 	property name="ormService" inject="SiteService@cb";
@@ -16,7 +16,8 @@ component extends="baseHandler" {
 	/**
 	 * Display all sites
 	 *
-	 * @override
+	 * @tags Sites
+	 * @x-contentbox-permissions SITES_ADMIN
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -43,6 +44,49 @@ component extends="baseHandler" {
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
+	}
+
+	/**
+	 * Show a site using the id
+	 *
+	 * @tags Sites
+	 * @x-contentbox-permissions SITES_ADMIN
+	 */
+	function show( event, rc, prc ){
+		super.show( argumentCollection = arguments );
+	}
+
+	/**
+	 * Create a site
+	 *
+	 * @tags Sites
+	 * @x-contentbox-permissions SITES_ADMIN
+	 */
+	function create( event, rc, prc ){
+		// Supersize it
+		super.create( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing site
+	 *
+	 * @tags Sites
+	 * @x-contentbox-permissions SITES_ADMIN
+	 */
+	function update( event, rc, prc ){
+		// You cannot update site slugs
+		arguments.populate.exclude = "slug";
+		super.update( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a site using an id or slug
+	 *
+	 * @tags Sites
+	 * @x-contentbox-permissions SITES_ADMIN
+	 */
+	function delete( event, rc, prc ){
+		super.delete( argumentCollection = arguments );
 	}
 
 }

@@ -104,49 +104,41 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Export all permissions
+	 * Export all permissions as json/xml
 	 */
 	function exportAll( event, rc, prc ){
 		event.paramValue( "format", "json" );
 		// get all prepared content objects
-		var data = permissionService.getAllForExport();
+		var data = variables.permissionService.getAllForExport();
 
 		switch ( rc.format ) {
 			case "xml":
 			case "json": {
-				var filename = "Permissions." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "permissions"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				;
+				event.renderData(
+					data        = data,
+					type        = rc.format,
+					xmlRootName = "permissions"
+				);
 				break;
 			}
 			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
+				event.renderData(
+					data       = "Invalid export type: #encodeForHTML( rc.format )#",
+					statusCode = 400
+				);
 			}
 		}
 	}
 
 	/**
 	 * Import permissions
-	 *
-	 * @event
-	 * @rc
-	 * @prc
 	 */
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = permissionService.importFromFile(
+				var importLog = variables.permissionService.importFromFile(
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);

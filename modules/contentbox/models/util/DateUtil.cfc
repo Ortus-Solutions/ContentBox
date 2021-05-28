@@ -8,6 +8,27 @@
 component singleton {
 
 	/**
+	 * Return now() in UTC
+	 */
+	function nowUTC(){
+		return toUTC( now() );
+	}
+
+	/**
+	 * Conver the incoming date time to UTC using the dateTimeFormat() method
+	 * @see https://cfdocs.org/datetimeformat
+	 *
+	 * @dateTime The date time object/string to convert
+	 */
+	function toUTC( required dateTime ){
+		return dateTimeFormat(
+			arguments.dateTime,
+			"yyyy-mm-dd'T'HH:mm:ssZ",
+			"UTC"
+		);
+	}
+
+	/**
 	 * Convert epoch milliseconds into local time object.
 	 *
 	 * @epoch The epoch time in milliseconds

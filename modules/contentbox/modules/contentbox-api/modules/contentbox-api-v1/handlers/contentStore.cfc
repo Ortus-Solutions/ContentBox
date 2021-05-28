@@ -1,7 +1,9 @@
 /**
- * RESTFul CRUD for Pages
+ * RESTFul CRUD for Content Store items
+ *
+ * An incoming site identifier is required
  */
-component extends="baseHandler" {
+component extends="baseContentHandler" {
 
 	// DI
 	property name="ormService" inject="ContentStoreService@cb";
@@ -14,21 +16,15 @@ component extends="baseHandler" {
 	variables.useGetOrFail = false;
 
 	/**
-	 * Executes before all handler actions
-	 */
-	any function preHandler( event, rc, prc, action, eventArguments ){
-		// Verify incoming site
-		param rc.site    = "";
-		prc.oCurrentSite = rc.site = getSiteByIdOrSlugOrFail( rc.site );
-	}
-
-	/**
-	 * Display all pages using different filters
+	 * Display all content store items using different filters
 	 *
-	 * @override
+	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+		// Paging + Mementifier
 		param rc.page       = 1;
+		param rc.excludes   = "HTMLTitle,HTMLKeywords,HTMLDescription";
 		// Criterias and Filters
 		param rc.sortOrder  = "publishedDate DESC";
 		// Search terms
@@ -41,6 +37,8 @@ component extends="baseHandler" {
 		param rc.parent     = "";
 		// If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 		param rc.slugPrefix = "";
+		// If passed, we can do a slug wildcard search
+		param rc.slugSearch = "";
 
 		// Build up a search criteria and let the base execute it
 		arguments.results = variables.ormService.findPublishedContent(
@@ -52,7 +50,8 @@ component extends="baseHandler" {
 			siteId     = prc.oCurrentSite.getSiteID(),
 			authorID   = rc.author,
 			parent     = rc.parent,
-			slugPrefix = rc.slugPrefix
+			slugPrefix = rc.slugPrefix,
+			slugSearch = rc.slugSearch
 		);
 
 		// Build to match interface
@@ -63,11 +62,12 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Show an page using the id
+	 * Show a content store item using the id
 	 *
-	 * @override
+	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function show( event, rc, prc ){
+	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		param rc.includes = arrayToList( [
 			"activeContent",
 			"childrenSnapshot:children",
@@ -82,37 +82,36 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Create a page
+	 * Create a content store item
+	 *
+	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
-	function create( event, rc, prc ){
-		// params
-		event
-			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
-			.paramValue( "newCategories", "" )
-			.paramValue( "isPublished", true )
-			.paramValue( "slug", "" )
-			.paramValue( "changelog", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "publishedDate", now() )
-			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
-			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
-			.paramValue(
-				"publishedTime",
-				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
-			)
-			.paramValue( "expireHour", "" )
-			.paramValue( "expireMinute", "" )
-			.paramValue( "expireTime", "" )
-			.paramValue( "content", "" )
-			.paramValue( "creatorID", "" )
-			.paramValue( "customFieldsCount", 0 )
-			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() );
-
-		// Set author to logged in user and override it
-		rc.creator = jwtAuth().getUser().getAuthorID();
+	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// Supersize it
-		super.create( argumentCollection = arguments );
+		arguments.contentType = "CONTENTSTORE";
+		super.save( argumentCollection = arguments );
+	}
+
+	/**
+	 * Update an existing content store item
+	 *
+	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 */
+	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
+		arguments.contentType = "CONTENTSTORE";
+		super.save( argumentCollection = arguments );
+	}
+
+	/**
+	 * Delete a content store item using an id or slug
+	 *
+	 * @tags ContentStore
+	 * @x-contentbox-permissions CONTENTSTORE_ADMIN
+	 */
+	function delete( event, rc, prc ) secured="CONTENTSTORE_ADMIN"{
+		super.delete( argumentCollection = arguments );
 	}
 
 }

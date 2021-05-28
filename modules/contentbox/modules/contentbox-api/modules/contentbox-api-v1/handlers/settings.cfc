@@ -1,5 +1,5 @@
 /**
- * RESTFul CRUD for Settings
+ * RESTFul API for Settings
  */
 component extends="baseHandler" {
 
@@ -14,8 +14,11 @@ component extends="baseHandler" {
 
 	/**
 	 * Display all system settings
+	 *
+	 * @tags Settings
+	 * @x-contentbox-permissions SYSTEM_RAW_SETTINGS
 	 */
-	function index( event, rc, prc ){
+	function index( event, rc, prc ) secured="SYSTEM_RAW_SETTINGS"{
 		event
 			.getResponse()
 			.setData(

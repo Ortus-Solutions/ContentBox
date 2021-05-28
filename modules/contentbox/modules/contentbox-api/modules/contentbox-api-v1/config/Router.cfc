@@ -10,10 +10,10 @@ component {
 		get( "/whoami", "auth.whoami" );
 
 		// Global Settings
-		get( "/settings", "settings" );
+		get( "/settings", "settings.index" );
 
 		// Site Settings
-		get( "/sites/:slug/settings", "siteSettings" );
+		get( "/sites/:slug/settings", "siteSettings.index" );
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -55,7 +55,7 @@ component {
 		resources(
 			resource: "versions",
 			pattern = "#siteprefix#/entries/:contentIdOrSlug/versions",
-			except  : except,
+			except  : "new,edit,create,update",
 			meta    : { contentType : "entry" }
 		);
 		resources(
@@ -72,7 +72,7 @@ component {
 		resources(
 			resource: "versions",
 			pattern = "#siteprefix#/contentStore/:contentIdOrSlug/versions",
-			except  : except,
+			except  : "new,edit,create,update",
 			meta    : { contentType : "contentStore" }
 		);
 		resources(
@@ -89,7 +89,7 @@ component {
 		resources(
 			resource: "versions",
 			pattern = "#siteprefix#/pages/:contentIdOrSlug/versions",
-			except  : except,
+			except  : "new,edit,create,update",
 			meta    : { contentType : "page" }
 		);
 		resources(

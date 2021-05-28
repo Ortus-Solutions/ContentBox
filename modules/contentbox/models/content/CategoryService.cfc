@@ -55,6 +55,37 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
+	 * This function allows you to receive a category slug string from a site and
+	 * tries to see if it exists in a new site via slug comparison.
+	 * If it exists, it returns it, else it creates it and returns it.
+	 *
+	 * @category The target category slug to check
+	 * @site The target site this category should be created in
+	 *
+	 * @return The target site category object
+	 */
+	Category function getOrCreateBySlug( required string category, required site ){
+		// Verify the incoming category exists in the target site or not
+		var oTargetCategory = newCriteria()
+			.isEq( "site.siteID", arguments.site.getsiteID() )
+			.isEq( "slug", arguments.category )
+			.get();
+
+		// Return or Create
+		if ( isNull( oTargetCategory ) ) {
+			oTargetCategory = save(
+				new ( {
+					category : arguments.category,
+					slug     : arguments.category,
+					site     : arguments.site
+				} )
+			);
+		}
+
+		return oTargetCategory;
+	}
+
+	/**
 	 * Get the total category counts
 	 *
 	 * @siteID The site to filter on

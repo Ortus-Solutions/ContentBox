@@ -60,7 +60,7 @@ component
 	 * Get the display name of an editor
 	 */
 	function getDisplayName(){
-		return "Code Editor (Markdown+HTML)";
+		return "Code Editor";
 	};
 
 	/**

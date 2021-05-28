@@ -403,6 +403,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @properties The list of properties to project on instead of giving you full object graphs
 	 * @authorID The authorID to filter on
 	 * @criteria The criteria object to use if passed, else we create a new one.
+	 * @slugSearch If passed, we will search for content items with this field as a full text search on slugs
 	 *
 	 * @return struct as { count, content }
 	 */
@@ -418,10 +419,26 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		string siteID     = "",
 		string properties,
 		string authorID = "",
-		any criteria
+		any criteria,
+		string slugSearch = ""
 	){
 		var results = { "count" : 0, "content" : [] };
 		var c       = ( isNull( arguments.criteria ) ? newCriteria() : arguments.criteria );
+
+		// Do we evaluate parent roots or not?
+		var nullParentFields = [
+			arguments.searchTerm,
+			arguments.category,
+			arguments.authorID,
+			arguments.slugPrefix,
+			arguments.slugSearch
+		];
+		var hasSearchContext = nullParentFields.reduce( function( results, thisItem ){
+			if ( len( arguments.thisItem ) ) {
+				return true;
+			}
+			return results;
+		}, false );
 
 		// only published pages
 		c.isTrue( "isPublished" )
@@ -450,31 +467,37 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					)
 					.$or(
 						arguments.c.restrictions.like( "title", "%#searchTerm#%" ),
+						arguments.c.restrictions.like( "slug", "%#searchTerm#%" ),
 						arguments.c.restrictions.like( "ac.content", "%#searchTerm#%" )
 					);
+			} )
+			// Slug Search Criteria
+			.when( len( arguments.slugSearch ), function( c ){
+				arguments.c.ilike( "slug", "%#slugSearch#%" );
 			} )
 			// Site Filter
 			.when( len( arguments.siteID ), function( c ){
 				arguments.c.isEq( "site.siteID", siteID );
 			} )
-			// Slug Prefix hierarchy search
-			.when( len( arguments.slugPrefix ), function( c ){
-				arguments.c.ilike( "slug", "#slugPrefix#/%" );
-			} )
 			// Creator Filter
 			.when( len( arguments.authorID ), function( c ){
 				arguments.c.isEq( "creator.authorID", authorID );
 			} )
-			// Parent Filter
-			.when( !isNull( arguments.parent ), function( c ){
-				if ( len( trim( parent ) ) ) {
-					arguments.c.isEq( "parent.contentID", parent );
-				} else {
-					arguments.c.isNull( "parent" );
-				}
+			// Slug Prefix hierarchy search
+			.when( len( arguments.slugPrefix ), function( c ){
+				arguments.c.ilike( "slug", "#slugPrefix#/%" );
+			} )
+			// Parent Included Filter
+			.when( !isNull( arguments.parent ) && len( arguments.parent ), function( c ){
+				arguments.c.isEq( "parent.contentID", parent );
+			} )
+			// Parent Root when parent = ''
+			.when( !isNull( arguments.parent ) && !len( arguments.parent ) && !hasSearchContext, function( c ){
 				// change sort by parent
+				arguments.c.isNull( "parent" );
 				sortOrder = "order asc";
-			} );
+			} )
+		;
 
 		// run criteria query and projections count
 		results.count   = c.count( "contentID" );

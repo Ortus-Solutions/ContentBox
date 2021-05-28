@@ -44,7 +44,7 @@ component
 	// Global Setting Defaults
 	this.DEFAULTS = {
 		// ContentBox Global Version
-		"cb_version" : "@version.number@+@build.number@",
+		"cb_version"                            : "@version.number@+@build.number@",
 		// Installation security salt
 		"cb_salt"                               : hash( createUUID() & getTickCount() & now(), "SHA-512" ),
 		// Global Notifications
@@ -294,6 +294,9 @@ component
 					.getAll()
 					.each( function( site ){
 						var targetSite = arguments.site;
+						// Ensure Site Media Folder
+						variables.siteService.ensureSiteMediaFolder( targetSite );
+						// Setup Site Settings
 						this.SITE_DEFAULTS
 							// only process defaults that do not exist in the database
 							.filter( function( key, value ){

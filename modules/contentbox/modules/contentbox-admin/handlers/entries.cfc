@@ -192,8 +192,10 @@ component extends="baseContentHandler" {
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
-		// Check if the entry's markup matches the choosen editor
-		if ( prc.entry.getMarkup() == "markdown" && prc.defaultEditor != "simplemde" ) {
+		// Check if the markup matches the choosen editor
+		if (
+			listFindNoCase( "markdown,json", prc.entry.getMarkup() ) && prc.defaultEditor != "simplemde"
+		) {
 			prc.defaultEditor = "simplemde";
 		}
 
@@ -306,11 +308,6 @@ component extends="baseContentHandler" {
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
-		}
-
-		// Quick content check
-		if ( structKeyExists( rc, "quickcontent" ) ) {
-			rc.content = rc.quickcontent;
 		}
 
 		// slugify the incoming title or slug
