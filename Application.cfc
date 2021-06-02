@@ -87,15 +87,14 @@ component {
 			// Custom Module Entities
 			"modules_app"
 		],
-		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
+		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
+		// THE DEFAULT IS MYSQL WITH INNODB
+		dialect			  		: "org.hibernate.dialect.MySQL5InnoDBDialect", // MySQL Dialect
 		//dialect				: "PostgreSQL", // PostgreSQL Dialect
-		//dialect 			  	: "MySQLDialect", // Basic MySQL Dialect
-		//dialect 			  	: "MySQLwithInnoDB", // MySQL With InnoDB engine
-		//dialect			  	: "org.hibernate.dialect.MySQL5InnoDBDialect", // Adobe 2016 + MySQL Dialect
 		//dialect 				: "MicrosoftSQLServer", // SQL Server Dialect
 		//dialect 				: "Oracle10g", // Oracle 10G+
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate              : "update",
+		dbcreate              : "dropcreate",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 		secondarycacheenabled : false,
 		cacheprovider         : "ehCache",
