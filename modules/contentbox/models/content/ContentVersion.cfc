@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbContentVersion"
-	table     ="cb_contentVersion"
+	table     ="""cb_contentVersion"""
 	batchsize ="25"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbContentVersion"
@@ -30,6 +30,7 @@ component
 
 	property
 		name     ="contentVersionID"
+		column   ="""contentVersionID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -37,6 +38,7 @@ component
 
 	property
 		name   ="content"
+		column ="""content"""
 		notnull="true"
 		ormtype="text"
 		length ="8000"
@@ -44,6 +46,7 @@ component
 
 	property
 		name   ="changelog"
+		column ="""changelog"""
 		notnull="false"
 		ormtype="text"
 		length ="8000"
@@ -51,6 +54,7 @@ component
 
 	property
 		name   ="version"
+		column ="""version"""
 		notnull="true"
 		ormtype="integer"
 		default="1"
@@ -58,6 +62,7 @@ component
 
 	property
 		name     ="isActive"
+		column   ="""isActive"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"
@@ -74,7 +79,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.security.Author"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_authorID"
+		fkcolumn ="""FK_authorID"""
 		lazy     ="true"
 		fetch    ="join";
 
@@ -84,7 +89,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_contentID"
+		fkcolumn ="""FK_contentID"""
 		lazy     ="true"
 		fetch    ="join"
 		index    ="idx_contentVersions";

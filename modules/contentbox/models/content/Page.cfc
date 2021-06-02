@@ -8,12 +8,12 @@
 component
 	persistent        ="true"
 	entityname        ="cbPage"
-	table             ="cb_page"
+	table             ="""cb_page"""
 	batchsize         ="25"
 	cachename         ="cbPage"
 	cacheuse          ="read-write"
 	extends           ="BaseContent"
-	joinColumn        ="contentID"
+	joinColumn        ="""contentID"""
 	discriminatorValue="Page"
 {
 
@@ -26,6 +26,7 @@ component
 	 */
 	property
 		name   ="layout"
+		column ="""layout"""
 		notnull="false"
 		length ="200"
 		default="";
@@ -35,6 +36,7 @@ component
 	 */
 	property
 		name   ="mobileLayout"
+		column ="""mobileLayout"""
 		notnull="false"
 		length ="200"
 		default="";
@@ -44,6 +46,7 @@ component
 	 */
 	property
 		name   ="order"
+		column ="""order"""
 		notnull="false"
 		ormtype="integer"
 		default="0";
@@ -53,6 +56,7 @@ component
 	 */
 	property
 		name     ="showInMenu"
+		column   ="""showInMenu"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
@@ -64,6 +68,7 @@ component
 	 */
 	property
 		name   ="excerpt"
+		column ="""excerpt"""
 		notnull="false"
 		ormtype="text"
 		default=""
@@ -74,6 +79,7 @@ component
 	 */
 	property
 		name     ="SSLOnly"
+		column   ="""SSLOnly"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"

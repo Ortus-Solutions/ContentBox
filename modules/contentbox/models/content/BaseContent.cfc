@@ -8,11 +8,11 @@
 component
 	persistent         ="true"
 	entityname         ="cbContent"
-	table              ="cb_content"
+	table              ="""cb_content"""
 	extends            ="contentbox.models.BaseEntityMethods"
 	cachename          ="cbContent"
 	cacheuse           ="read-write"
-	discriminatorColumn="contentType"
+	discriminatorColumn="""contentType"""
 {
 
 	/* *********************************************************************
@@ -79,6 +79,7 @@ component
 
 	property
 		name   ="createdDate"
+		column ="""createdDate"""
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
@@ -86,14 +87,15 @@ component
 
 	property
 		name   ="modifiedDate"
+		column ="""modifiedDate"""
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true";
 
 	property
 		name     ="isDeleted"
+		column   ="""isDeleted"""
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false";
@@ -104,6 +106,7 @@ component
 
 	property
 		name     ="contentID"
+		column   ="""contentID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -111,6 +114,7 @@ component
 
 	property
 		name   ="contentType"
+		column ="""contentType"""
 		setter ="false"
 		update ="false"
 		insert ="false"
@@ -119,6 +123,7 @@ component
 
 	property
 		name   ="title"
+		column ="""title"""
 		notnull="true"
 		length ="200"
 		default=""
@@ -126,6 +131,7 @@ component
 
 	property
 		name   ="slug"
+		column ="""slug"""
 		notnull="true"
 		length ="200"
 		default=""
@@ -133,12 +139,14 @@ component
 
 	property
 		name   ="publishedDate"
+		column ="""publishedDate"""
 		notnull="false"
 		ormtype="timestamp"
 		index  ="idx_publishedDate";
 
 	property
 		name   ="expireDate"
+		column ="""expireDate"""
 		notnull="false"
 		ormtype="timestamp"
 		default=""
@@ -146,6 +154,7 @@ component
 
 	property
 		name     ="isPublished"
+		column   ="""isPublished"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		dbdefault="true"
@@ -154,6 +163,7 @@ component
 
 	property
 		name     ="allowComments"
+		column   ="""allowComments"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
@@ -161,6 +171,7 @@ component
 
 	property
 		name   ="passwordProtection"
+		column ="""passwordProtection"""
 		notnull="false"
 		length ="100"
 		default=""
@@ -168,24 +179,28 @@ component
 
 	property
 		name   ="HTMLKeywords"
+		column ="""HTMLKeywords"""
 		notnull="false"
 		length ="160"
 		default="";
 
 	property
 		name   ="HTMLDescription"
+		column ="""HTMLDescription"""
 		notnull="false"
 		length ="160"
 		default="";
 
 	property
 		name   ="HTMLTitle"
+		column ="""HTMLTitle"""
 		notnull="false"
 		length ="255"
 		default="";
 
 	property
 		name     ="cache"
+		column   ="""cache"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
@@ -194,6 +209,7 @@ component
 
 	property
 		name     ="cacheLayout"
+		column   ="""cacheLayout"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
@@ -202,6 +218,7 @@ component
 
 	property
 		name   ="cacheTimeout"
+		column ="""cacheTimeout"""
 		notnull="false"
 		ormtype="integer"
 		default="0"
@@ -209,6 +226,7 @@ component
 
 	property
 		name   ="cacheLastAccessTimeout"
+		column ="""cacheLastAccessTimeout"""
 		notnull="false"
 		ormtype="integer"
 		default="0"
@@ -216,12 +234,14 @@ component
 
 	property
 		name   ="markup"
+		column ="""markup"""
 		notnull="true"
 		length ="100"
 		default="HTML";
 
 	property
 		name     ="showInSearch"
+		column   ="""showInSearch"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
@@ -230,12 +250,14 @@ component
 
 	property
 		name   ="featuredImage"
+		column ="""featuredImage"""
 		notnull="false"
 		default=""
 		length ="255";
 
 	property
 		name   ="featuredImageURL"
+		column ="""featuredImageURL"""
 		notnull="false"
 		default=""
 		length ="255";
@@ -250,7 +272,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.security.Author"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_authorID"
+		fkcolumn ="""FK_authorID"""
 		lazy     ="true"
 		fetch    ="join";
 
@@ -260,7 +282,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteID"
+		fkcolumn ="""FK_siteID"""
 		lazy     ="true"
 		fetch    ="join";
 
@@ -274,7 +296,7 @@ component
 		batchsize   ="25"
 		orderby     ="createdDate"
 		cfc         ="contentbox.models.comments.Comment"
-		fkcolumn    ="FK_contentID"
+		fkcolumn    ="""FK_contentID"""
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
@@ -287,7 +309,7 @@ component
 		lazy        ="extra"
 		batchsize   ="25"
 		cfc         ="contentbox.models.content.CustomField"
-		fkcolumn    ="FK_contentID"
+		fkcolumn    ="""FK_contentID"""
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
@@ -301,7 +323,7 @@ component
 		batchsize   ="25"
 		cfc         ="contentbox.models.content.ContentVersion"
 		orderby     ="version desc"
-		fkcolumn    ="FK_contentID"
+		fkcolumn    ="""FK_contentID"""
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
@@ -310,7 +332,7 @@ component
 		name     ="parent"
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_parentID"
+		fkcolumn ="""FK_parentID"""
 		lazy     ="true";
 
 	// O2M -> Sub Content Inverse
@@ -323,7 +345,7 @@ component
 		batchsize   ="25"
 		orderby     ="createdDate"
 		cfc         ="contentbox.models.content.BaseContent"
-		fkcolumn    ="FK_parentID"
+		fkcolumn    ="""FK_parentID"""
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
@@ -336,7 +358,7 @@ component
 		lazy        ="extra"
 		batchsize   ="25"
 		cfc         ="contentbox.models.subscriptions.CommentSubscription"
-		fkcolumn    ="FK_contentID"
+		fkcolumn    ="""FK_contentID"""
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
@@ -349,9 +371,9 @@ component
 		orderby          ="category"
 		cascade          ="save-update"
 		cfc              ="contentbox.models.content.Category"
-		fkcolumn         ="FK_contentID"
-		linktable        ="cb_contentCategories"
-		inversejoincolumn="FK_categoryID";
+		fkcolumn         ="""FK_contentID"""
+		linktable        ="""cb_contentCategories"""
+		inversejoincolumn="""FK_categoryID""";
 
 	// M2M -> Related Content - Content related from this content to other content
 	property
@@ -362,9 +384,9 @@ component
 		orderby          ="title"
 		cascade          ="save-update"
 		cfc              ="contentbox.models.content.BaseContent"
-		fkcolumn         ="FK_contentID"
-		linktable        ="cb_relatedContent"
-		inversejoincolumn="FK_relatedContentID";
+		fkcolumn         ="""FK_contentID"""
+		linktable        ="""cb_relatedContent"""
+		inversejoincolumn="""FK_relatedContentID""";
 
 	// M2M -> Linked Content - Content related to this content from other content
 	property
@@ -376,9 +398,9 @@ component
 		inverse          ="true"
 		orderby          ="title"
 		cfc              ="contentbox.models.content.BaseContent"
-		fkcolumn         ="FK_relatedContentID"
-		linktable        ="cb_relatedContent"
-		inversejoincolumn="FK_contentID";
+		fkcolumn         ="""FK_relatedContentID"""
+		linktable        ="""cb_relatedContent"""
+		inversejoincolumn="""FK_contentID""";
 
 	// O2O -> Content Stats
 	property

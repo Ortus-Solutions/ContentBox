@@ -7,7 +7,7 @@
  */
 component
 	persistent="true"
-	table     ="cb_loginAttempts"
+	table     ="""cb_loginAttempts"""
 	entityName="cbLoginAttempt"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="loginAttempt"
@@ -23,6 +23,7 @@ component
 	 */
 	property
 		name     ="loginAttemptsID"
+		column   ="""loginAttemptsID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -33,6 +34,7 @@ component
 	 */
 	property
 		name   ="value"
+		column ="""value"""
 		notnull="true"
 		default=""
 		length ="255"
@@ -42,6 +44,7 @@ component
 	 */
 	property
 		name   ="attempts"
+		column ="""attempts"""
 		ormtype="integer"
 		notnull="true"
 		default="0";
@@ -50,6 +53,7 @@ component
 	 */
 	property
 		name   ="lastLoginSuccessIP"
+		column ="""lastLoginSuccessIP"""
 		notnull="false"
 		length ="100";
 	/**
@@ -57,6 +61,7 @@ component
 	 */
 	property
 		name      ="isBlocked"
+		column    ="""isBlocked"""
 		persistent="false"
 		default   ="false"
 		type      ="boolean";

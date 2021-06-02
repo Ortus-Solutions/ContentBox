@@ -8,7 +8,7 @@
 component
 	persistent        ="true"
 	entityName        ="cbMediaMenuItem"
-	table             ="cb_menuItem"
+	table             ="""cb_menuItem"""
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="Media"
 {
@@ -27,18 +27,21 @@ component
 
 	property
 		name   ="mediaPath"
+		column ="""mediaPath"""
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
 		name   ="target"
+		column ="""target"""
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
 		name   ="urlClass"
+		column ="""urlClass"""
 		notnull="false"
 		ormtype="string"
 		default="";

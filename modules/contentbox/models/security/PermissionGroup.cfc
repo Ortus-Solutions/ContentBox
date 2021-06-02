@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityName="cbPermissionGroup"
-	table     ="cb_permissionGroup"
+	table     ="""cb_permissionGroup"""
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbPermissionGroup"
 	cacheuse  ="read-write"
@@ -26,6 +26,7 @@ component
 
 	property
 		name     ="permissionGroupID"
+		column   ="""permissionGroupID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -33,6 +34,7 @@ component
 
 	property
 		name   ="name"
+		column ="""name"""
 		ormtype="string"
 		notnull="true"
 		length ="255"
@@ -42,6 +44,7 @@ component
 
 	property
 		name   ="description"
+		column ="""description"""
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -62,9 +65,9 @@ component
 		cascade          ="save-update"
 		cacheuse         ="read-write"
 		cfc              ="contentbox.models.security.Permission"
-		fkcolumn         ="FK_permissionGroupID"
-		linktable        ="cb_groupPermissions"
-		inversejoincolumn="FK_permissionID";
+		fkcolumn         ="""FK_permissionGroupID"""
+		linktable        ="""cb_groupPermissions"""
+		inversejoincolumn="""FK_permissionID""";
 
 	// M2M -> Authors
 	property
@@ -76,9 +79,9 @@ component
 		cascade          ="save-update"
 		cacheuse         ="read-write"
 		cfc              ="contentbox.models.security.Author"
-		fkcolumn         ="FK_permissionGroupID"
-		linktable        ="cb_authorPermissionGroups"
-		inversejoincolumn="FK_authorID";
+		fkcolumn         ="""FK_permissionGroupID"""
+		linktable        ="""cb_authorPermissionGroups"""
+		inversejoincolumn="""FK_authorID""";
 
 	/* *********************************************************************
 	 **							CALCULATED FIELDS

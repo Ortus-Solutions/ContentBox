@@ -10,7 +10,7 @@
 component
 	persistent="true"
 	entityname="cbSetting"
-	table     ="cb_setting"
+	table     ="""cb_setting"""
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbSetting"
 	cacheuse  ="read-write"
@@ -22,6 +22,7 @@ component
 
 	property
 		name     ="settingID"
+		column   ="""settingID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -29,16 +30,19 @@ component
 
 	property
 		name   ="name"
+		column ="""name"""
 		notnull="true"
 		length ="100";
 
 	property
 		name   ="value"
+		column ="""value"""
 		notnull="true"
 		ormtype="text";
 
 	property
 		name     ="isCore"
+		column   ="""isCore"""
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
@@ -55,7 +59,7 @@ component
 		notnull  ="false"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteID"
+		fkcolumn ="""FK_siteID"""
 		lazy     ="true";
 
 	/* *********************************************************************
