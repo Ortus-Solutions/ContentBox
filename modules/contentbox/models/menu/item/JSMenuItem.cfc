@@ -8,7 +8,7 @@
 component
 	persistent        ="true"
 	entityName        ="cbJSMenuItem"
-	table             ="cb_menuItem"
+	table             ="""cb_menuItem"""
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="JS"
 {
@@ -28,12 +28,14 @@ component
 
 	property
 		name   ="js"
+		column ="""js"""
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
 		name   ="urlClass"
+		column ="""urlClass"""
 		notnull="false"
 		ormtype="string"
 		default="";

@@ -8,7 +8,7 @@
 component
 	persistent        ="true"
 	entityName        ="cbFreeMenuItem"
-	table             ="cb_menuItem"
+	table             ="""cb_menuItem"""
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="Free"
 {

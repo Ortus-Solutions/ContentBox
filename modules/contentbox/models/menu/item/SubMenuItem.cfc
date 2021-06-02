@@ -8,7 +8,7 @@
 component
 	persistent        ="true"
 	entityName        ="cbSubMenuItem"
-	table             ="cb_menuItem"
+	table             ="""cb_menuItem"""
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="SubMenu"
 {
@@ -27,6 +27,7 @@ component
 
 	property
 		name   ="menuSlug"
+		column ="""menuSlug"""
 		notnull="false"
 		ormtype="string"
 		default="";

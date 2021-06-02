@@ -21,7 +21,7 @@
 		{
 			"label": "Open ContentBox Admin",
 			"action": "openbrowser",
-			"url": "http://\\${runwar.host}:\\${runwar.port}/cbadmin",
+			"url": "/cbadmin",
 			"disabled": false,
 			"image": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }

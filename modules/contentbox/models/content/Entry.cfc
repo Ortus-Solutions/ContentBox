@@ -8,12 +8,12 @@
 component
 	persistent        ="true"
 	entityname        ="cbEntry"
-	table             ="cb_entry"
+	table             ="""cb_entry"""
 	batchsize         ="25"
 	cachename         ="cbEntry"
 	cacheuse          ="read-write"
 	extends           ="BaseContent"
-	joinColumn        ="contentID"
+	joinColumn        ="""contentID"""
 	discriminatorValue="Entry"
 {
 
@@ -23,6 +23,7 @@ component
 
 	property
 		name   ="excerpt"
+		column ="""excerpt"""
 		notnull="false"
 		ormtype="text"
 		default=""

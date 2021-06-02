@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbCategory"
-	table     ="cb_category"
+	table     ="""cb_category"""
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbCategory"
 	cacheuse  ="read-write"
@@ -51,6 +51,7 @@ component
 
 	property
 		name     ="categoryID"
+		column   ="""categoryID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -58,12 +59,14 @@ component
 
 	property
 		name   ="category"
+		column ="""category"""
 		notnull="true"
 		length ="200"
 		index  ="idx_categoryName";
 
 	property
 		name   ="slug"
+		column ="""slug"""
 		notnull="true"
 		length ="200"
 		index  ="idx_categorySlug";
@@ -78,7 +81,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteID"
+		fkcolumn ="""FK_siteID"""
 		lazy     ="true"
 		fetch    ="join";
 

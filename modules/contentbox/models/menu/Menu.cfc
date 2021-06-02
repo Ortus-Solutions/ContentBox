@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityName="cbMenu"
-	table     ="cb_menu"
+	table     ="""cb_menu"""
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbMenu"
 	cacheuse  ="read-write"
@@ -37,6 +37,7 @@ component
 
 	property
 		name     ="menuID"
+		column   ="""menuID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -44,6 +45,7 @@ component
 
 	property
 		name   ="title"
+		column ="""title"""
 		notnull="true"
 		ormtype="string"
 		length ="200"
@@ -52,6 +54,7 @@ component
 
 	property
 		name   ="slug"
+		column ="""slug"""
 		notnull="true"
 		ormtype="string"
 		length ="200"
@@ -60,18 +63,21 @@ component
 
 	property
 		name   ="menuClass"
+		column ="""menuClass"""
 		ormtype="string"
 		length ="160"
 		default="";
 
 	property
 		name   ="listClass"
+		column ="""listClass"""
 		ormtype="string"
 		length ="160"
 		default="";
 
 	property
 		name   ="listType"
+		column ="""listType"""
 		ormtype="string"
 		length ="20"
 		default="ul";
@@ -86,7 +92,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.system.Site"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_siteID"
+		fkcolumn ="""FK_siteID"""
 		lazy     ="true"
 		fetch    ="join";
 
@@ -97,7 +103,7 @@ component
 		fieldtype   ="one-to-many"
 		type        ="array"
 		cfc         ="contentbox.models.menu.item.BaseMenuItem"
-		fkcolumn    ="FK_menuID"
+		fkcolumn    ="""FK_menuID"""
 		cascade     ="all-delete-orphan"
 		inverse     ="true"
 		lazy        ="extra";

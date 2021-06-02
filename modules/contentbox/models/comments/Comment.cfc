@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbComment"
-	table     ="cb_comment"
+	table     ="""cb_comment"""
 	batchsize ="25"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbComment"
@@ -30,6 +30,7 @@ component
 
 	property
 		name     ="commentID"
+		column   ="""commentID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -47,21 +48,25 @@ component
 
 	property
 		name   ="authorIP"
+		column ="""authorIP"""
 		length ="100"
 		notnull="true";
 
 	property
 		name   ="authorEmail"
+		column ="""authorEmail"""
 		length ="255"
 		notnull="true";
 
 	property
 		name   ="authorURL"
+		column ="""authorURL"""
 		length ="255"
 		notnull="false";
 
 	property
 		name     ="isApproved"
+		column   ="""isApproved"""
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"
@@ -78,7 +83,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_contentID"
+		fkcolumn ="""FK_contentID"""
 		lazy     ="true"
 		index    ="idx_contentComment";
 

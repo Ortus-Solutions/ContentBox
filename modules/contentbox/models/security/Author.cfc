@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbAuthor"
-	table     ="cb_author"
+	table     ="""cb_author"""
 	batchsize ="25"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbAuthor"
@@ -35,6 +35,7 @@ component
 
 	property
 		name     ="authorID"
+		column   ="""authorID"""
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -42,18 +43,21 @@ component
 
 	property
 		name   ="firstName"
+		column ="""firstName"""
 		length ="100"
 		notnull="true"
 		default="";
 
 	property
 		name   ="lastName"
+		column ="""lastName"""
 		length ="100"
 		notnull="true"
 		default="";
 
 	property
 		name   ="email"
+		column ="""email"""
 		length ="255"
 		notnull="true"
 		index  ="idx_email"
@@ -61,6 +65,7 @@ component
 
 	property
 		name   ="username"
+		column ="""username"""
 		length ="100"
 		notnull="true"
 		index  ="idx_login"
@@ -69,6 +74,7 @@ component
 
 	property
 		name   ="password"
+		column ="""password"""
 		length ="100"
 		notnull="true"
 		index  ="idx_login"
@@ -76,19 +82,21 @@ component
 
 	property
 		name   ="isActive"
+		column ="""isActive"""
 		ormtype="boolean"
-		// sqltype  = "smallInt"
 		notnull="true"
 		default="false"
 		index  ="idx_login,idx_activeAuthor";
 
 	property
 		name   ="lastLogin"
+		column ="""lastLogin"""
 		ormtype="timestamp"
 		notnull="false";
 
 	property
 		name   ="biography"
+		column ="""biography"""
 		ormtype="text"
 		notnull="false"
 		length ="8000"
@@ -96,6 +104,7 @@ component
 
 	property
 		name   ="preferences"
+		column ="""preferences"""
 		ormtype="text"
 		notnull="false"
 		length ="8000"
@@ -103,8 +112,8 @@ component
 
 	property
 		name     ="isPasswordReset"
+		column   ="""isPasswordReset"""
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
@@ -112,8 +121,8 @@ component
 
 	property
 		name     ="is2FactorAuth"
+		column   ="""is2FactorAuth"""
 		ormtype  ="boolean"
-		// sqltype  = "smallInt"
 		notnull  ="true"
 		default  ="false"
 		dbdefault="false"
@@ -130,7 +139,7 @@ component
 		type        ="array"
 		fieldtype   ="one-to-many"
 		cfc         ="contentbox.models.content.Entry"
-		fkcolumn    ="FK_authorID"
+		fkcolumn    ="""FK_authorID"""
 		inverse     ="true"
 		lazy        ="extra"
 		cascade     ="save-update"
@@ -144,7 +153,7 @@ component
 		type        ="array"
 		fieldtype   ="one-to-many"
 		cfc         ="contentbox.models.content.Page"
-		fkcolumn    ="FK_authorID"
+		fkcolumn    ="""FK_authorID"""
 		inverse     ="true"
 		lazy        ="extra"
 		cascade     ="save-update"
@@ -157,7 +166,7 @@ component
 		notnull  ="true"
 		fieldtype="many-to-one"
 		cfc      ="contentbox.models.security.Role"
-		fkcolumn ="FK_roleID"
+		fkcolumn ="""FK_roleID"""
 		lazy     ="true";
 
 	// M2M -> A-la-carte Author Permissions
@@ -169,9 +178,9 @@ component
 		type             ="array"
 		lazy             ="extra"
 		cfc              ="contentbox.models.security.Permission"
-		fkcolumn         ="FK_authorID"
-		linktable        ="cb_authorPermissions"
-		inversejoincolumn="FK_permissionID"
+		fkcolumn         ="""FK_authorID"""
+		linktable        ="""cb_authorPermissions"""
+		inversejoincolumn="""FK_permissionID"""
 		orderby          ="permission";
 
 	// M2M -> A-la-carte Author Permission Groups
@@ -184,9 +193,9 @@ component
 		inverse          ="true"
 		cfc              ="contentbox.models.security.PermissionGroup"
 		cascade          ="save-update"
-		fkcolumn         ="FK_authorID"
-		linktable        ="cb_authorPermissionGroups"
-		inversejoincolumn="FK_permissionGroupID"
+		fkcolumn         ="""FK_authorID"""
+		linktable        ="""cb_authorPermissionGroups"""
+		inversejoincolumn="""FK_permissionGroupID"""
 		orderby          ="name";
 
 	/* *********************************************************************
