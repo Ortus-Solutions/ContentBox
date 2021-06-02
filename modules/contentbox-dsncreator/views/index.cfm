@@ -107,7 +107,7 @@
 								<a href="/CFIDE/administrator" target="_blank">click here</a>
 							</cfif>
 							 to set one up)<br/></small>
-							<input type="password" class="form-control" size="40" name="cfpassword" id="cfpassword" required="required" />
+							<input type="password" class="form-control" size="40" name="cfpassword" id="cfpassword" required="required" placeholder="contentbox" />
 						</div>
 					</div>
 
