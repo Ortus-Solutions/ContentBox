@@ -66,6 +66,7 @@ before_script:
   - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
   # Startup testing engine
   - box server start serverConfigFile="server-${ENGINE}.json" --debug
+  - curl http://127.0.0.1:8589/
 
 script:
   ## Run web tests
