@@ -60,6 +60,8 @@ before_script:
   - printf "DB_BUNDLEVERSION=8.0.19\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_BUNDLENAME=com.mysql.cj\n" >> $TRAVIS_BUILD_DIR/.env
   # Log4j Hibernate Debug
+  - mkdir -p $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/lib/
+  - mkdir -p $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
   - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/lib/
   - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
   # Startup testing engine
