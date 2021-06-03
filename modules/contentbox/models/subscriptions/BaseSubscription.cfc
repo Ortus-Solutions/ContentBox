@@ -57,7 +57,8 @@ component
 	 * This token identifies subscribers (emails) to appropriate subscriptions
 	 */
 	property
-		name   ="""subscriptionToken"""
+		name   ="subscriptionToken"
+		column ="""subscriptionToken"""
 		ormtype="string"
 		length ="255"
 		notnull="true";
@@ -66,7 +67,8 @@ component
 	 * The type of subscriptions. Available subscriptions are : comment
 	 */
 	property
-		name   ="""type"""
+		name   ="type"
+		column ="""type"""
 		ormtype="string"
 		notnull="true";
 
