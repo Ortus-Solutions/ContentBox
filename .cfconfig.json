@@ -3,6 +3,8 @@
 	"systemOut":"System",
 	"componentCacheEnabled":false,
 	"saveClassFiles":false,
+	"robustExceptionEnabled":true,
+	"debuggingEnabled" : true,
 	"adminPassword" : "contentbox",
 	"requestTimeout": "0,0,10,0",
 	"thistimezone":"UTC",
