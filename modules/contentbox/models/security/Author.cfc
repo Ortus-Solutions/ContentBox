@@ -117,7 +117,6 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_passwordReset";
 
 	property
@@ -126,7 +125,6 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_2factorauth";
 
 	/* *********************************************************************

@@ -91,7 +91,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_activeModule";
 
 	property

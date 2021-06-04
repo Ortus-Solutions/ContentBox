@@ -38,7 +38,6 @@ component
 		ormtype   ="boolean"
 		notnull   ="true"
 		default   ="false"
-		dbdefault ="false"
 		persistent="true";
 
 }

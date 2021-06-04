@@ -51,7 +51,6 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_BaseMenuItem_deleted";
 
 	/* *********************************************************************
@@ -103,7 +102,6 @@ component
 		name     ="active"
 		column   ="active"
 		ormtype  ="boolean"
-		dbdefault="true"
 		default  ="true";
 
 	property

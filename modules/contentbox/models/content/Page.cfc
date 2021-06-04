@@ -60,7 +60,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
-		dbdefault="true"
 		index    ="idx_showInMenu";
 
 	/**
@@ -83,7 +82,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_ssl";
 
 	/* *********************************************************************

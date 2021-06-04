@@ -89,8 +89,7 @@ component
 		column   ="useSSL"
 		ormtype  ="boolean"
 		notnull  ="false"
-		default  ="false"
-		dbdefault="false";
+		default  ="false";
 
 	property
 		name     ="action"

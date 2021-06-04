@@ -97,8 +97,7 @@ component
 		column   ="isDeleted"
 		ormtype  ="boolean"
 		notnull  ="true"
-		default  ="false"
-		dbdefault="false";
+		default  ="false";
 
 	/* *********************************************************************
 	 **							PROPERTIES
@@ -158,7 +157,6 @@ component
 		column   ="isPublished"
 		notnull  ="true"
 		ormtype  ="boolean"
-		dbdefault="true"
 		default  ="true"
 		index    ="idx_published,idx_search,idx_publishedSlug";
 
@@ -167,8 +165,7 @@ component
 		column   ="allowComments"
 		notnull  ="true"
 		ormtype  ="boolean"
-		default  ="true"
-		dbdefault="true";
+		default  ="true";
 
 	property
 		name   ="passwordProtection"
@@ -205,7 +202,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
-		dbdefault="true"
 		index    ="idx_cache";
 
 	property
@@ -214,7 +210,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
-		dbdefault="true"
 		index    ="idx_cachelayout";
 
 	property
@@ -246,7 +241,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="true"
-		dbdefault="true"
 		index    ="idx_showInSearch";
 
 	property

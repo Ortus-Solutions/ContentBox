@@ -107,16 +107,14 @@ component
 		column   ="isBlogEnabled"
 		ormtype  ="boolean"
 		notnull  ="true"
-		default  ="true"
-		dbdefault="true";
+		default  ="true";
 
 	property
 		name     ="isSitemapEnabled"
 		column   ="isSitemapEnabled"
 		ormtype  ="boolean"
 		notnull  ="true"
-		default  ="true"
-		dbdefault="true";
+		default  ="true";
 
 	property
 		name     ="poweredByHeader"
@@ -124,7 +122,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		;
 
 	property
 		name     ="adminBar"
@@ -132,7 +130,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		;
 
 	property
 		name     ="isSSL"
@@ -140,7 +138,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false";
+		;
 
 	property
 		name     ="isActive"
@@ -148,7 +146,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		;
 
 	property
 		name   ="activeTheme"
@@ -172,7 +170,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		;
 
 	property
 		name     ="notifyOnPages"
@@ -180,7 +178,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		;
 
 	property
 		name     ="notifyOnContentStore"
@@ -188,7 +186,7 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
-		dbdefault="true";
+		;
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS

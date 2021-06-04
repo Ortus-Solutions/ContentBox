@@ -38,8 +38,7 @@ component
 		column   ="isDeleted"
 		ormtype  ="boolean"
 		notnull  ="true"
-		default  ="false"
-		dbdefault="false";
+		default  ="false";
 
 	/* *********************************************************************
 	 **                          PROPERTIES

@@ -91,7 +91,7 @@ component {
 		// THE DEFAULT IS MYSQL WITH INNODB
 		//dialect			  	: "org.hibernate.dialect.MySQL5InnoDBDialect",
 		//dialect				: "PostgreSQL",
-		//dialect 				: "MicrosoftSQLServer",
+		//dialect 				: "org.hibernate.dialect.SQLServer2008Dialect",
 		//dialect 				: "Oracle10g",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate              : "update",

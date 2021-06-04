@@ -47,7 +47,6 @@ component
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_core";
 
 	/* *********************************************************************

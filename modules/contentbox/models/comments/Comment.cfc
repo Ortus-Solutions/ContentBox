@@ -71,7 +71,6 @@ component
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"
-		dbdefault="false"
 		index    ="idx_contentComment,idx_approved";
 
 	/* *********************************************************************
