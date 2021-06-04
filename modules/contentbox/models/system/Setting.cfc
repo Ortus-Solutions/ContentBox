@@ -25,7 +25,7 @@ component
 		column   ="settingID"
 		fieldtype="id"
 		generator="uuid"
-ormtype="string"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 
