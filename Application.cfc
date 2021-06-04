@@ -6,10 +6,11 @@
  * Application Bootstrap
  */
 component {
-
+	// cfformat-ignore-start
 	// THIS LOADS THE DSN CREATOR WHEN INSTALLING CONTENTBOX FOR THE FIRST TIME
 	// THIS CAN BE REMOVED AFTER INSTALLATION, USUALLY IT IS REMOVED BY THE INSTALLER
 	// include "modules/contentbox-installer/includes/dsn_relocation.cfm";
+	// cfformat-ignore-end
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -77,6 +78,7 @@ component {
 	this.datasource  = "contentbox";
 	// ORM SETTINGS
 	this.ormEnabled  = true;
+	// cfformat-ignore-start
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation           : [
@@ -110,6 +112,7 @@ component {
 		// Useful for debugging to see the hibernate XML maps
 		savemapping : false
 	};
+	// cfformat-ignore-end
 
 	// Local ORM SQL Logging
 	if ( reFindNoCase( "^(dev\.|localhost)", cgi.http_host ) ) {
