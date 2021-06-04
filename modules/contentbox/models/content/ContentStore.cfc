@@ -8,12 +8,12 @@
 component
 	persistent        ="true"
 	entityname        ="cbContentStore"
-	table             ="""cb_contentStore"""
+	table             ="cb_contentStore"
 	batchsize         ="25"
 	cachename         ="cbContentStore"
 	cacheuse          ="read-write"
 	extends           ="BaseContent"
-	joinColumn        ="""contentID"""
+	joinColumn        ="contentID"
 	discriminatorValue="ContentStore"
 {
 
@@ -26,7 +26,7 @@ component
 	 */
 	property
 		name   ="description"
-		column ="""description"""
+		column ="description"
 		notnull="false"
 		length ="500"
 		default="";
@@ -36,7 +36,7 @@ component
 	 */
 	property
 		name     ="order"
-		column   ="""order"""
+		column   ="order"
 		notnull  ="false"
 		ormtype  ="integer"
 		default  ="0"

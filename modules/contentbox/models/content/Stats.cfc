@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbStats"
-	table     ="""cb_stats"""
+	table     ="cb_stats"
 	batchsize ="25"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbStats"
@@ -21,7 +21,7 @@ component
 
 	property
 		name     ="statsID"
-		column   ="""statsID"""
+		column   ="statsID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -29,7 +29,7 @@ component
 
 	property
 		name   ="hits"
-		column ="""hits"""
+		column ="hits"
 		notnull="false"
 		ormtype="long"
 		default="0";
@@ -44,7 +44,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="one-to-one"
-		fkcolumn ="""FK_contentID"""
+		fkcolumn ="FK_contentID"
 		lazy     ="true"
 		fetch    ="join";
 

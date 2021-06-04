@@ -8,11 +8,11 @@
 component
 	persistent         ="true"
 	entityName         ="cbMenuItem"
-	table              ="""cb_menuItem"""
+	table              ="cb_menuItem"
 	extends            ="contentbox.models.BaseEntityMethods"
 	cachename          ="cbMenuItem"
 	cacheuse           ="read-write"
-	discriminatorColumn="""menuType"""
+	discriminatorColumn="menuType"
 {
 
 	/* *********************************************************************
@@ -30,7 +30,7 @@ component
 
 	property
 		name   ="createdDate"
-		column ="""createdDate"""
+		column ="createdDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
@@ -39,7 +39,7 @@ component
 
 	property
 		name   ="modifiedDate"
-		column ="""modifiedDate"""
+		column ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
@@ -47,7 +47,7 @@ component
 
 	property
 		name     ="isDeleted"
-		column   ="""isDeleted"""
+		column   ="isDeleted"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
@@ -60,7 +60,7 @@ component
 
 	property
 		name     ="menuItemID"
-		column   ="""menuItemID"""
+		column   ="menuItemID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -68,7 +68,7 @@ component
 
 	property
 		name   ="title"
-		column ="""title"""
+		column ="title"
 		notnull="true"
 		ormtype="string"
 		length ="200"
@@ -77,7 +77,7 @@ component
 
 	property
 		name   ="label"
-		column ="""label"""
+		column ="label"
 		notnull="false"
 		ormtype="string"
 		length ="200"
@@ -85,7 +85,7 @@ component
 
 	property
 		name   ="itemClass"
-		column ="""itemClass"""
+		column ="itemClass"
 		notnull="false"
 		ormtype="string"
 		length ="200"
@@ -93,21 +93,21 @@ component
 
 	property
 		name   ="data"
-		column ="""data"""
+		column ="data"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
 		name     ="active"
-		column   ="""active"""
+		column   ="active"
 		ormtype  ="boolean"
 		dbdefault="true"
 		default  ="true";
 
 	property
 		name  ="menuType"
-		column="""menuType"""
+		column="menuType"
 		insert="false"
 		update="false";
 
@@ -120,7 +120,7 @@ component
 		name     ="menu"
 		cfc      ="contentbox.models.menu.Menu"
 		fieldtype="many-to-one"
-		fkcolumn ="""FK_menuID"""
+		fkcolumn ="FK_menuID"
 		lazy     ="true"
 		fetch    ="join"
 		notnull  ="true";
@@ -130,7 +130,7 @@ component
 		name     ="parent"
 		cfc      ="BaseMenuItem"
 		fieldtype="many-to-one"
-		fkcolumn ="""FK_parentID"""
+		fkcolumn ="FK_parentID"
 		lazy     ="true";
 
 	// O2M - Child Menu Item
@@ -142,7 +142,7 @@ component
 		lazy        ="extra"
 		batchsize   ="25"
 		cfc         ="BaseMenuItem"
-		fkcolumn    ="""FK_parentID"""
+		fkcolumn    ="FK_parentID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 

@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbSubscriber"
-	table     ="""cb_subscribers"""
+	table     ="cb_subscribers"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbSubscriber"
 	cacheuse  ="read-write"
@@ -20,7 +20,7 @@ component
 
 	property
 		name     ="subscriberID"
-		column   ="""subscriberID"""
+		column   ="subscriberID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -28,14 +28,14 @@ component
 
 	property
 		name   ="subscriberEmail"
-		column ="""subscriberEmail"""
+		column ="subscriberEmail"
 		notnull="true"
 		length ="255"
 		index  ="idx_subscriberEmail";
 
 	property
 		name   ="subscriberToken"
-		column ="""subscriberToken"""
+		column ="subscriberToken"
 		ormtype="string"
 		length ="255"
 		notnull="true";
@@ -53,7 +53,7 @@ component
 		batchsize   ="25"
 		orderby     ="createdDate"
 		cfc         ="contentbox.models.subscriptions.BaseSubscription"
-		fkcolumn    ="""FK_subscriberID"""
+		fkcolumn    ="FK_subscriberID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 

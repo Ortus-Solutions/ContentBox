@@ -8,9 +8,9 @@
 component
 	persistent="true"
 	entityname="cbCommentSubscription"
-	table     ="""cb_commentSubscriptions"""
+	table     ="cb_commentSubscriptions"
 	extends   ="BaseSubscription"
-	joinColumn="""subscriptionID"""
+	joinColumn="subscriptionID"
 	cachename ="cbCommentSubscription"
 	cacheuse  ="read-write"
 {
@@ -34,7 +34,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="""FK_contentID"""
+		fkcolumn ="FK_contentID"
 		lazy     ="true"
 		index    ="idx_contentCommentSubscription"
 		orderBy  ="Title ASC";

@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityName="cbPermission"
-	table     ="""cb_permission"""
+	table     ="cb_permission"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbPermission"
 	cacheuse  ="read-write"
@@ -20,7 +20,7 @@ component
 
 	property
 		name     ="permissionID"
-		column   ="""permissionID"""
+		column   ="permissionID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -28,7 +28,7 @@ component
 
 	property
 		name   ="permission"
-		column ="""permission"""
+		column ="permission"
 		ormtype="string"
 		notnull="true"
 		length ="255"
@@ -38,7 +38,7 @@ component
 
 	property
 		name   ="description"
-		column ="""description"""
+		column ="description"
 		ormtype="string"
 		notnull="false"
 		default=""

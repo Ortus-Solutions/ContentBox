@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbSite"
-	table     ="""cb_site"""
+	table     ="cb_site"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbSite"
 	cacheuse  ="read-write"
@@ -29,7 +29,7 @@ component
 
 	property
 		name     ="siteID"
-		column   ="""siteID"""
+		column   ="siteID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -37,7 +37,7 @@ component
 
 	property
 		name   ="name"
-		column ="""name"""
+		column ="name"
 		ormtype="string"
 		notnull="true"
 		length ="255"
@@ -45,7 +45,7 @@ component
 
 	property
 		name   ="slug"
-		column ="""slug"""
+		column ="slug"
 		ormtype="string"
 		notnull="true"
 		length ="255"
@@ -55,7 +55,7 @@ component
 
 	property
 		name   ="description"
-		column ="""description"""
+		column ="description"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -63,7 +63,7 @@ component
 
 	property
 		name   ="keywords"
-		column ="""keywords"""
+		column ="keywords"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -71,7 +71,7 @@ component
 
 	property
 		name   ="domain"
-		column ="""domain"""
+		column ="domain"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -79,7 +79,7 @@ component
 
 	property
 		name   ="domainRegex"
-		column ="""domainRegex"""
+		column ="domainRegex"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -87,7 +87,7 @@ component
 
 	property
 		name   ="tagline"
-		column ="""tagline"""
+		column ="tagline"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -95,7 +95,7 @@ component
 
 	property
 		name   ="homepage"
-		column ="""homepage"""
+		column ="homepage"
 		ormtype="string"
 		notnull="false"
 		default="cbBlog"
@@ -103,7 +103,7 @@ component
 
 	property
 		name     ="isBlogEnabled"
-		column   ="""isBlogEnabled"""
+		column   ="isBlogEnabled"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -111,7 +111,7 @@ component
 
 	property
 		name     ="isSitemapEnabled"
-		column   ="""isSitemapEnabled"""
+		column   ="isSitemapEnabled"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -119,7 +119,7 @@ component
 
 	property
 		name     ="poweredByHeader"
-		column   ="""poweredByHeader"""
+		column   ="poweredByHeader"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -127,7 +127,7 @@ component
 
 	property
 		name     ="adminBar"
-		column   ="""adminBar"""
+		column   ="adminBar"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -135,7 +135,7 @@ component
 
 	property
 		name     ="isSSL"
-		column   ="""isSSL"""
+		column   ="isSSL"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
@@ -143,7 +143,7 @@ component
 
 	property
 		name     ="isActive"
-		column   ="""isActive"""
+		column   ="isActive"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -151,7 +151,7 @@ component
 
 	property
 		name   ="activeTheme"
-		column ="""activeTheme"""
+		column ="activeTheme"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -159,7 +159,7 @@ component
 
 	property
 		name   ="notificationEmails"
-		column ="""notificationEmails"""
+		column ="notificationEmails"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -167,7 +167,7 @@ component
 
 	property
 		name     ="notifyOnEntries"
-		column   ="""notifyOnEntries"""
+		column   ="notifyOnEntries"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -175,7 +175,7 @@ component
 
 	property
 		name     ="notifyOnPages"
-		column   ="""notifyOnPages"""
+		column   ="notifyOnPages"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -183,7 +183,7 @@ component
 
 	property
 		name     ="notifyOnContentStore"
-		column   ="""notifyOnContentStore"""
+		column   ="notifyOnContentStore"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="true"
@@ -203,7 +203,7 @@ component
 		batchsize   ="25"
 		orderby     ="name"
 		cfc         ="contentbox.models.system.Setting"
-		fkcolumn    ="""FK_siteID"""
+		fkcolumn    ="FK_siteID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 

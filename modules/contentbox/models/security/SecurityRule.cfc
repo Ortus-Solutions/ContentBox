@@ -7,7 +7,7 @@
  */
 component
 	persistent="true"
-	table     ="""cb_securityRule"""
+	table     ="cb_securityRule"
 	entityName="cbSecurityRule"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbSecurityRule"
@@ -20,7 +20,7 @@ component
 
 	property
 		name     ="ruleID"
-		column   ="""ruleID"""
+		column   ="ruleID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -28,7 +28,7 @@ component
 
 	property
 		name   ="whitelist"
-		column ="""whitelist"""
+		column ="whitelist"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -36,7 +36,7 @@ component
 
 	property
 		name   ="securelist"
-		column ="""securelist"""
+		column ="securelist"
 		ormtype="string"
 		notnull="true"
 		default=""
@@ -44,7 +44,7 @@ component
 
 	property
 		name     ="match"
-		column   ="""match"""
+		column   ="match"
 		ormtype  ="string"
 		notnull  ="false"
 		default  ="event"
@@ -53,7 +53,7 @@ component
 
 	property
 		name   ="roles"
-		column ="""roles"""
+		column ="roles"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -61,7 +61,7 @@ component
 
 	property
 		name   ="permissions"
-		column ="""permissions"""
+		column ="permissions"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -69,7 +69,7 @@ component
 
 	property
 		name   ="redirect"
-		column ="""redirect"""
+		column ="redirect"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -77,7 +77,7 @@ component
 
 	property
 		name   ="overrideEvent"
-		column ="""overrideEvent"""
+		column ="overrideEvent"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -85,7 +85,7 @@ component
 
 	property
 		name     ="useSSL"
-		column   ="""useSSL"""
+		column   ="useSSL"
 		ormtype  ="boolean"
 		notnull  ="false"
 		default  ="false"
@@ -93,7 +93,7 @@ component
 
 	property
 		name     ="action"
-		column   ="""action"""
+		column   ="action"
 		ormtype  ="string"
 		notnull  ="false"
 		default  ="redirect"
@@ -102,7 +102,7 @@ component
 
 	property
 		name   ="module"
-		column ="""module"""
+		column ="module"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -110,14 +110,14 @@ component
 
 	property
 		name   ="order"
-		column ="""order"""
+		column ="order"
 		ormtype="integer"
 		notnull="true"
 		default="0";
 
 	property
 		name   ="message"
-		column ="""message"""
+		column ="message"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -125,7 +125,7 @@ component
 
 	property
 		name     ="messageType"
-		column   ="""messageType"""
+		column   ="messageType"
 		ormtype  ="string"
 		notnull  ="false"
 		default  ="info"

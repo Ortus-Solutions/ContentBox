@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityName="cbRole"
-	table     ="""cb_role"""
+	table     ="cb_role"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbRole"
 	cacheuse  ="read-write"
@@ -29,7 +29,7 @@ component
 
 	property
 		name     ="roleID"
-		column   ="""roleID"""
+		column   ="roleID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -37,7 +37,7 @@ component
 
 	property
 		name   ="role"
-		column ="""role"""
+		column ="role"
 		ormtype="string"
 		notnull="true"
 		length ="255"
@@ -47,7 +47,7 @@ component
 
 	property
 		name   ="description"
-		column ="""description"""
+		column ="description"
 		ormtype="string"
 		notnull="false"
 		default=""
@@ -68,9 +68,9 @@ component
 		cascade          ="save-update"
 		cacheuse         ="read-write"
 		cfc              ="contentbox.models.security.Permission"
-		fkcolumn         ="""FK_roleID"""
-		linktable        ="""cb_rolePermissions"""
-		inversejoincolumn="""FK_permissionID""";
+		fkcolumn         ="FK_roleID"
+		linktable        ="cb_rolePermissions"
+		inversejoincolumn="FK_permissionID";
 
 	/* *********************************************************************
 	 **							CALUCLATED FIELDS

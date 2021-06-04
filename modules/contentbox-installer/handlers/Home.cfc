@@ -48,14 +48,14 @@ component cache=false {
 	 */
 	function install( event, rc, prc ){
 		// Verify installed?
-		if ( settingService.isCBReady() ) {
+		if ( variables.settingService.isCBReady() ) {
 			getInstance( "messagebox@cbMessagebox" ).warn(
 				cb.r( "validation.alreadyinstalled@installer" )
 			);
 			relocate( prc.adminEntryPoint );
 		}
 		// start installation
-		installerService.execute( populateModel( "Setup@cbi" ) );
+		variables.installerService.execute( populateModel( "Setup@cbi" ) );
 
 		// Construct finishing URI
 		var xehFinished = event.buildLink( "cbInstaller/finished" );

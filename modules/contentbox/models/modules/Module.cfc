@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbModule"
-	table     ="""cb_module"""
+	table     ="cb_module"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbModule"
 	cacheuse  ="read-write"
@@ -20,7 +20,7 @@ component
 
 	property
 		name     ="moduleID"
-		column   ="""moduleID"""
+		column   ="moduleID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -28,28 +28,28 @@ component
 
 	property
 		name   ="name"
-		column ="""name"""
+		column ="name"
 		notnull="true"
 		length ="255"
 		index  ="idx_moduleName";
 
 	property
 		name   ="title"
-		column ="""title"""
+		column ="title"
 		notnull="false"
 		length ="255"
 		default="";
 
 	property
 		name   ="version"
-		column ="""version"""
+		column ="version"
 		notnull="false"
 		length ="255"
 		default="0";
 
 	property
 		name   ="entryPoint"
-		column ="""entryPoint"""
+		column ="entryPoint"
 		notnull="false"
 		length ="255"
 		default=""
@@ -57,28 +57,28 @@ component
 
 	property
 		name   ="author"
-		column ="""author"""
+		column ="author"
 		notnull="false"
 		length ="255"
 		default="";
 
 	property
 		name   ="webURL"
-		column ="""webURL"""
+		column ="webURL"
 		notnull="false"
 		length ="500"
 		default="";
 
 	property
 		name   ="forgeBoxSlug"
-		column ="""forgeBoxSlug"""
+		column ="forgeBoxSlug"
 		notnull="false"
 		length ="255"
 		default="";
 
 	property
 		name   ="description"
-		column ="""description"""
+		column ="description"
 		notnull="false"
 		ormtype="text"
 		length ="8000"
@@ -86,7 +86,7 @@ component
 
 	property
 		name     ="isActive"
-		column   ="""isActive"""
+		column   ="isActive"
 		notnull  ="true"
 		ormtype  ="boolean"
 		default  ="false"
@@ -95,7 +95,7 @@ component
 
 	property
 		name     ="moduleType"
-		column   ="""moduleType"""
+		column   ="moduleType"
 		default  ="core"
 		dbdefault="'unknown'"
 		index    ="idx_moduleType";

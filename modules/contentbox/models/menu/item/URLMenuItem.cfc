@@ -8,7 +8,7 @@
 component
 	persistent        ="true"
 	entityName        ="cbURLMenuItem"
-	table             ="""cb_menuItem"""
+	table             ="cb_menuItem"
 	extends           ="contentbox.models.menu.item.BaseMenuItem"
 	discriminatorValue="URL"
 {
@@ -28,21 +28,21 @@ component
 
 	property
 		name   ="url"
-		column ="""url"""
+		column ="url"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
 		name   ="target"
-		column ="""target"""
+		column ="target"
 		notnull="false"
 		ormtype="string"
 		default="";
 
 	property
 		name   ="urlClass"
-		column ="""urlClass"""
+		column ="urlClass"
 		notnull="false"
 		ormtype="string"
 		default="";

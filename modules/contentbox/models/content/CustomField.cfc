@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbCustomField"
-	table     ="""cb_customfield"""
+	table     ="cb_customfield"
 	extends   ="contentbox.models.BaseEntity"
 	cachename ="cbCustomField"
 	cacheuse  ="read-write"
@@ -20,7 +20,7 @@ component
 
 	property
 		name     ="customFieldID"
-		column   ="""customFieldID"""
+		column   ="customFieldID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -28,14 +28,14 @@ component
 
 	property
 		name   ="key"
-		column ="""key"""
+		column ="key"
 		notnull="true"
 		ormtype="string"
 		length ="255";
 
 	property
 		name   ="value"
-		column ="""value"""
+		column ="value"
 		notnull="true"
 		ormtype="text"
 		length ="8000";
@@ -50,7 +50,7 @@ component
 		notnull  ="false"
 		cfc      ="contentbox.models.content.BaseContent"
 		fieldtype="many-to-one"
-		fkcolumn ="""FK_contentID"""
+		fkcolumn ="FK_contentID"
 		lazy     ="true"
 		index    ="idx_contentCustomFields";
 

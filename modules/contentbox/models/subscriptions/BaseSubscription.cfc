@@ -8,7 +8,7 @@
 component
 	persistent="true"
 	entityname="cbSubscription"
-	table     ="""cb_subscriptions"""
+	table     ="cb_subscriptions"
 	extends   ="contentbox.models.BaseEntityMethods"
 	cachename ="cbSubscription"
 	cacheuse  ="read-write"
@@ -20,7 +20,7 @@ component
 
 	property
 		name   ="createdDate"
-		column ="""createdDate"""
+		column ="createdDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
@@ -28,14 +28,14 @@ component
 
 	property
 		name   ="modifiedDate"
-		column ="""modifiedDate"""
+		column ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true";
 
 	property
 		name     ="isDeleted"
-		column   ="""isDeleted"""
+		column   ="isDeleted"
 		ormtype  ="boolean"
 		notnull  ="true"
 		default  ="false"
@@ -47,7 +47,7 @@ component
 
 	property
 		name     ="subscriptionID"
-		column   ="""subscriptionID"""
+		column   ="subscriptionID"
 		fieldtype="id"
 		generator="uuid"
 		setter   ="false"
@@ -58,7 +58,7 @@ component
 	 */
 	property
 		name   ="subscriptionToken"
-		column ="""subscriptionToken"""
+		column ="subscriptionToken"
 		ormtype="string"
 		length ="255"
 		notnull="true";
@@ -68,7 +68,7 @@ component
 	 */
 	property
 		name   ="type"
-		column ="""type"""
+		column ="type"
 		ormtype="string"
 		notnull="true";
 
@@ -82,7 +82,7 @@ component
 		notnull  ="true"
 		cfc      ="contentbox.models.subscriptions.Subscriber"
 		fieldtype="many-to-one"
-		fkcolumn ="""FK_subscriberID"""
+		fkcolumn ="FK_subscriberID"
 		lazy     ="true"
 		index    ="idx_subscriber"
 		inverse  ="true"

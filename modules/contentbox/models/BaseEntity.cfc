@@ -17,7 +17,7 @@ component
 
 	property
 		name      ="createdDate"
-		column    ="""createdDate"""
+		column    ="createdDate"
 		type      ="date"
 		ormtype   ="timestamp"
 		notnull   ="true"
@@ -26,7 +26,7 @@ component
 
 	property
 		name      ="modifiedDate"
-		column    ="""modifiedDate"""
+		column    ="modifiedDate"
 		type      ="date"
 		ormtype   ="timestamp"
 		notnull   ="true"
@@ -34,7 +34,7 @@ component
 
 	property
 		name      ="isDeleted"
-		column    ="""isDeleted"""
+		column    ="isDeleted"
 		ormtype   ="boolean"
 		notnull   ="true"
 		default   ="false"
