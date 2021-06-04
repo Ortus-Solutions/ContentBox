@@ -23,6 +23,7 @@ component
 		column   ="customFieldID"
 		fieldtype="id"
 		generator="uuid"
+ormtype="string"
 		setter   ="false"
 		update   ="false";
 

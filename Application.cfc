@@ -89,24 +89,26 @@ component {
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
 		// THE DEFAULT IS MYSQL WITH INNODB
-		dialect			  		: "org.hibernate.dialect.MySQL5InnoDBDialect", // MySQL Dialect
-		//dialect				: "PostgreSQL", // PostgreSQL Dialect
-		//dialect 				: "MicrosoftSQLServer", // SQL Server Dialect
-		//dialect 				: "Oracle10g", // Oracle 10G+
+		//dialect			  	: "org.hibernate.dialect.MySQL5InnoDBDialect",
+		//dialect				: "PostgreSQL",
+		//dialect 				: "MicrosoftSQLServer",
+		//dialect 				: "Oracle10g",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate              : "update",
 		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
 		secondarycacheenabled : false,
 		cacheprovider         : "ehCache",
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		logSQL                : false,
+		logSQL                : true,
 		flushAtRequestEnd     : false,
 		autoManageSession     : false,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
 		eventHandling         : true,
 		eventHandler          : "cborm.models.EventHandler",
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
-		skipCFCWithError      : true
+		skipCFCWithError      : true,
+		// Useful for debugging to see the hibernate XML maps
+		savemapping : false
 	};
 
 	// Local ORM SQL Logging

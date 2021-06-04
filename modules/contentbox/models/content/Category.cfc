@@ -54,6 +54,7 @@ component
 		column   ="categoryID"
 		fieldtype="id"
 		generator="uuid"
+ormtype="string"
 		setter   ="false"
 		update   ="false";
 

@@ -50,6 +50,7 @@ component
 		column   ="subscriptionID"
 		fieldtype="id"
 		generator="uuid"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

@@ -38,6 +38,7 @@ component
 		column   ="authorID"
 		fieldtype="id"
 		generator="uuid"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

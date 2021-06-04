@@ -29,6 +29,7 @@ component
 		column   ="permissionGroupID"
 		fieldtype="id"
 		generator="uuid"
+ormtype="string"
 		setter   ="false"
 		update   ="false";
 

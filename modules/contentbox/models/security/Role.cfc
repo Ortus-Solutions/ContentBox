@@ -32,6 +32,7 @@ component
 		column   ="roleID"
 		fieldtype="id"
 		generator="uuid"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

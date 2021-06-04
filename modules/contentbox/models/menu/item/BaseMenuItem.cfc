@@ -63,6 +63,7 @@ component
 		column   ="menuItemID"
 		fieldtype="id"
 		generator="uuid"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

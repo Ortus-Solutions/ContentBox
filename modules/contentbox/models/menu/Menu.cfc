@@ -40,6 +40,7 @@ component
 		column   ="menuID"
 		fieldtype="id"
 		generator="uuid"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 
