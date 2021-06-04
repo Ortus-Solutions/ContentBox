@@ -37,33 +37,28 @@ component{
 	// Modular ORM Dependencies
 	this.mappings[ "/cborm" ]				= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
-	// Datasource definitions For Standalone mode/travis mode.
-	if( directoryExists( "/home/travis" ) ){
-		this.datasources[ "contentbox" ] = {
-			driver 				: "MySQL5",
-			type 				: "mysql",
-			connectionString	: 'jdbc:mysql://localhost:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true',
-			url					: 'jdbc:mysql://localhost:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true',
-			username 			: 'root'
-		};
-		if( structKeyExists( server, "lucee" ) ){
-			this.datasources[ "contentbox" ].class = 'com.mysql.jdbc.Driver';
-		}
-	}
-
 	// ORM Settings
 	this.ormEnabled = true;
 	this.datasource = "contentbox";
 	this.ormSettings = {
-		cfclocation			= [ rootPath & "/modules/contentbox/models" ],
-		//logSQL 				= true, //Uncomment when needed
-		logSQL 				= ( directoryExists( expandPath( "/home/travis" ) ) ? true : false ),
-		flushAtRequestEnd 	= false,
-		autoManageSession	= false,
-		eventHandling 		= true,
-		eventHandler		= "cborm.models.EventHandler",
-		skipCFCWithError	= true,
-		secondarycacheenabled = false
+		cfclocation			: [
+			// If you create your own app entities
+			rootPath & "models",
+			// The ContentBox Core Entities
+			rootPath & "modules/contentbox/models",
+			// Custom Module Entities
+			rootPath & "modules_app"
+		],
+		dialect			  		: "org.hibernate.dialect.MySQL5InnoDBDialect", // MySQL Dialect
+		dbcreate 				: "update",
+		secondarycacheenabled 	: false,
+		cacheprovider			: "ehCache",
+		logSQL 					: ( directoryExists( expandPath( "/home/travis" ) ) ? true : false ),
+		flushAtRequestEnd 		: false,
+		autoManageSession		: false,
+		eventHandling 			: true,
+		eventHandler			: "cborm.models.EventHandler",
+		skipCFCWithError		: true
 	};
 
 	public boolean function onRequestStart(String targetPage){
