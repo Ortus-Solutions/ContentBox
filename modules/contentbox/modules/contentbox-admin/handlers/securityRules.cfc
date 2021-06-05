@@ -156,65 +156,12 @@ component extends="baseHandler" {
 
 	// Export Entry
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get role
-		prc.rule = ruleService.get( event.getValue( "ruleID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.rule.isLoaded() ) {
-			cbMessagebox.warn( "ruleID sent is not valid" );
-			relocate( "#prc.cbAdminEntryPoint#.securityrules" );
-		}
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "SecurityRule-#prc.rule.getRuleID()#." & (
-					rc.format eq "xml" ? "xml" : "json"
-				);
-				event
-					.renderData(
-						data        = prc.rule.getMemento(),
-						type        = rc.format,
-						xmlRootName = "securityrule"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.ruleService.get( event.getValue( "ruleID", 0 ) ).getMemento();
 	}
 
 	// Export All Entries
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = ruleService.getAllForExport();
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "SecurityRules." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "securityrules"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.ruleService.getAllForExport();
 	}
 
 	// import entries
