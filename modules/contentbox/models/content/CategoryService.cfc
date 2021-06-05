@@ -244,7 +244,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	array function getAllForExport(){
 		return newCriteria()
 			.withProjections(
-				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteID:site"
+				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteID:siteID"
 			)
 			.asStruct()
 			.list( sortOrder: "category" );
