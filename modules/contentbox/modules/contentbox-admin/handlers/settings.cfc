@@ -177,22 +177,7 @@ component extends="baseHandler" {
 	 * @return xml,json
 	 */
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-
-		// get all prepared content objects
-		var data     = settingsService.getAllForExport();
-		var filename = "Settings." & ( rc.format eq "xml" ? "xml" : "json" );
-
-		event
-			.renderData(
-				data        = data,
-				formats     = "xml,json",
-				xmlRootName = "settings"
-			)
-			.setHTTPHeader(
-				name  = "Content-Disposition",
-				value = " attachment; filename=#fileName#"
-			);
+		return variables.settingsService.getAllForExport();
 	}
 
 	/**
