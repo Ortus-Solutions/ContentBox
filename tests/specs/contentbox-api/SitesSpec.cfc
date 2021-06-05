@@ -172,6 +172,7 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to delete a site", function(){
 				given( "a valid id/slug", function(){
 					then( "then I should see the confirmation", function(){
+						ormClearSession();
 						var testSite = variables.siteService.save(
 							variables.siteService.new( {
 								name        : "bddtest",
