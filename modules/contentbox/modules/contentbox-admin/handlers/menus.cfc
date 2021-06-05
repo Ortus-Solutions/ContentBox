@@ -265,36 +265,11 @@ component extends="baseHandler" {
 	 * @return json,xml
 	 */
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" ).paramValue( "menuID", 0 );
-		// get menu
-		var oMenu = menuService.get( rc.menuID );
-
-		// relocate if not existent
-		if ( !oMenu.isLoaded() ) {
-			cbMessagebox.warn( "MenuID sent is not valid" );
-			relocate( prc.xehMenus );
-		}
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#oMenu.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = oMenu.getMemento(),
-						type        = rc.format,
-						xmlRootName = "menu"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.menuService
+			.get( rc.menuID )
+			.getMemento(
+				includes = "siteID,menuItems,menuItems.isDeleted,menuItems.parentSnapshot:parent"
+			);
 	}
 
 	/**
@@ -302,30 +277,7 @@ component extends="baseHandler" {
 	 * @return json,xml
 	 */
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = menuService.getAllForExport();
-		// export based on format
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "Menus." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "menus"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.menuService.getAllForExport();
 	}
 
 	/**
