@@ -132,40 +132,12 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Export permission group
+	 * Export a permission group
 	 */
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get group
-		prc.oGroup = permissionGroupService.get( event.getValue( "permissionGroupID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.oGroup.isLoaded() ) {
-			cbMessagebox.warn( "permissionGroupID sent is not valid" );
-			relocate( prc.xehPermissionGroups );
-		}
-
-		// writeDump( prc.oGroup.getMemento() );abort;
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#prc.oGroup.getName()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = prc.oGroup.getMemento(),
-						type        = rc.format,
-						xmlRootName = "permissionGroup"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.permissionGroupService
+			.get( event.getValue( "permissionGroupID", 0 ) )
+			.getMemento();
 	}
 
 	/**

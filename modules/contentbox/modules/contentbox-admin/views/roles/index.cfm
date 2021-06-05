@@ -167,15 +167,7 @@
 															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.json"
 															target="_blank"
 														>
-															<i class="fas fa-file-export fa-lg"></i> Export as JSON
-														</a>
-													</li>
-													<li>
-														<a
-															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.xml"
-															target="_blank"
-														>
-															<i class="fas fa-file-export fa-lg"></i> Export as XML
+															<i class="fas fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>

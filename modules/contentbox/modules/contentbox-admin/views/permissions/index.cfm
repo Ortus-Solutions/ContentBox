@@ -96,9 +96,11 @@
 							<tr>
 								<td>
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-									<a href="javascript:edit('#permission.getPermissionID()#',
-									   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-									   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')"
+									<a href="javascript:edit(
+										'#permission.getPermissionID()#',
+										'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+										'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#'
+										)"
 									   title="Edit #permission.getPermission()#">#permission.getPermission()#</a>
 									<cfelse>
 										#permission.getPermission()#
