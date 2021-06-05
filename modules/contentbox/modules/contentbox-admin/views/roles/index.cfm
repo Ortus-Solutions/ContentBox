@@ -63,13 +63,8 @@
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 												<li>
-													<a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
-													</a>
-												</li>
-												<li>
-													<a href="#event.buildLink( to=prc.xehExportAll )#.xml" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as XML
+													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export
 													</a>
 												</li>
 											</cfif>

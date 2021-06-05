@@ -107,27 +107,7 @@ component extends="baseHandler" {
 	 * Export all permissions as json/xml
 	 */
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = variables.permissionService.getAllForExport();
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				event.renderData(
-					data        = data,
-					type        = rc.format,
-					xmlRootName = "permissions"
-				);
-				break;
-			}
-			default: {
-				event.renderData(
-					data       = "Invalid export type: #encodeForHTML( rc.format )#",
-					statusCode = 400
-				);
-			}
-		}
+		return variables.permissionService.getAllForExport();
 	}
 
 	/**
