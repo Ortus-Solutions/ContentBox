@@ -139,8 +139,10 @@ component
 	 */
 	SiteService function delete( required site ){
 		transaction {
-			// Remove all settings
-			variables.settingService.deleteWhere( site : arguments.site );
+			// If on Adobe, run a hard delete
+			if( !server.keyExists( "lucee" ) ){
+				variables.settingService.deleteWhere( site : arguments.site );
+			}
 			arguments.site.removeAllSettings();
 
 			// Now destroy the site
