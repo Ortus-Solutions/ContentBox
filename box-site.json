@@ -43,14 +43,14 @@
     "ignores":[
 	],
 	"cfmigrations":{
-        "schema":"${MIGRATIONS_DATABASE}",
+        "schema":"${DB_DATABASE}",
         "connectionInfo":{
-            "password":"${MIGRATIONS_PASSWORD}",
-            "connectionString":"${MIGRATIONS_CONNECTIONSTRING}",
-            "class":"${MIGRATIONS_CLASS}",
-            "username":"${MIGRATIONS_USER}",
-            "bundleName":"${MIGRATIONS_BUNDLENAME}",
-            "bundleVersion":"${MIGRATIONS_BUNDLEVERSION}"
+            "class":"${DB_CLASS}",
+			"connectionString":"${DB_CONNECTIONSTRING}",
+            "bundleName":"${DB_BUNDLENAME}",
+            "bundleVersion":"${DB_BUNDLEVERSION}",
+            "username":"${DB_USER}",
+            "password":"${DB_PASSWORD}"
         },
         "defaultGrammar":"AutoDiscover@qb"
     }

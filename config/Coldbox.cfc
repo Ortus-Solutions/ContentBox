@@ -23,7 +23,7 @@ component {
 			appName                  : getSystemSetting( "APPNAME", "ContentBox Modular CMS" ),
 			eventName                : "event",
 			// Development Settings
-			reinitPassword           : "@fwPassword@",
+			reinitPassword           : getSystemSetting( "COLDBOX_REINITPASSWORD", "@fwPassword@" ),
 			reinitKey                : "fwreinit",
 			handlersIndexAutoReload  : false,
 			// Implicit Events
@@ -126,7 +126,7 @@ component {
 			// Cache Storage Settings
 			cacheStorage : {
 				cachename : "sessions",
-				timeout   : 60 // The default timeout of the session bucket, defaults to 60 minutes
+				timeout   : getSystemSetting( "COLDBOX_SESSION_TIMEOUT", 60 ) // The default timeout of the session bucket, defaults to 60 minutes
 			}
 		};
 
