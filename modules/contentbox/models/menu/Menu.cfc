@@ -22,10 +22,12 @@ component
 		name      ="menuService"
 		inject    ="menuService@cb"
 		persistent="false";
+
 	property
 		name      ="menuItemService"
 		inject    ="menuItemService@cb"
 		persistent="false";
+
 	property
 		name      ="ORMService"
 		inject    ="entityservice"

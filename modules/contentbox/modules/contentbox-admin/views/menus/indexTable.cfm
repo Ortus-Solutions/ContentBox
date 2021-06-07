@@ -47,8 +47,11 @@
                                 </li>
                                 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
-                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export as JSON</a></li>
-                                    <li><a href="#event.buildLink(to=prc.xehMenuExport)#/menuID/#menu.getMenuID()#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export as XML</a></li>
+                                    <li>
+										<a href="#event.buildLink( prc.xehMenuExport )#/menuID/#menu.getMenuID()#.json" target="_blank">
+											<i class="fas fa-file-export fa-lg"></i> Export
+										</a>
+									</li>
                                 </cfif>
                             </cfif>
                         </ul>

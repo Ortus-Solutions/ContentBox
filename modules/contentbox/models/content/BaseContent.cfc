@@ -454,6 +454,7 @@ component
 			"HTMLKeywords",
 			"HTMLTitle",
 			"isPublished",
+			"isDeleted",
 			"lastEditorSnapshot:lastEditor",
 			"markup",
 			"modifiedDate",

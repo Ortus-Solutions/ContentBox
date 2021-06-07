@@ -38,13 +38,15 @@
 							<a
 								href="#event.buildLink( prc.xehModuleReset )#"
 								title="Deactivate + Rescan"
-								class="btn btn-info">
+								class="btn btn-primary text-white"
+							>
 								<i class="far fa-hdd"></i> Reset
 							</a>
 							<a
 								href="#event.buildLink( prc.xehModuleRescan )#"
 								title="Scans For New Modules"
-								class="btn btn-info">
+								class="btn btn-primary text-white"
+							>
 								<i class="fas fa-recycle"></i> Rescan
 							</a>
 						</div>

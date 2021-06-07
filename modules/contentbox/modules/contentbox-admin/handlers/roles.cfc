@@ -144,36 +144,9 @@ component extends="baseHandler" {
 	 * @prc
 	 */
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get role
-		prc.role = roleService.get( event.getValue( "roleID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.role.isLoaded() ) {
-			cbMessagebox.warn( "roleID sent is not valid" );
-			relocate( "#prc.cbAdminEntryPoint#.roles" );
-		}
-		// writeDump( prc.role.getMemento() );abort;
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#prc.role.getRole()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = prc.role.getMemento(),
-						type        = rc.format,
-						xmlRootName = "role"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.roleService
+			.get( event.getValue( "roleID", 0 ) )
+			.getMemento( includes = "permissions" );
 	}
 
 	/**
@@ -184,30 +157,7 @@ component extends="baseHandler" {
 	 * @prc
 	 */
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = roleService.getAllForExport();
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "Roles." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "roles"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.roleService.getAllForExport();
 	}
 
 	/**

@@ -37,7 +37,7 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
 							<div class="text-right">
 								<button
-									class="btn btn-info"
+									class="btn btn-primary"
 									onclick="return to('#event.buildLink( prc.xehFlushRegistry )#')"
 									title="Rescan Themes directory and rebuild registry"
 								>

@@ -140,7 +140,9 @@ component
 	SiteService function delete( required site ){
 		transaction {
 			// Remove all settings
+			variables.settingService.deleteWhere( site : arguments.site );
 			arguments.site.removeAllSettings();
+
 			// Now destroy the site
 			super.delete( arguments.site );
 		}

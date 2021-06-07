@@ -63,12 +63,7 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
-													</a>
-												</li>
-												<li>
-													<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as XML
+														<i class="fas fa-file-export fa-lg"></i> Export
 													</a>
 												</li>
 											</cfif>
@@ -170,14 +165,7 @@
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
-															<i class="fas fa-file-export fa-lg"></i> Export as JSON
-														</a>
-													</li>
-													<li>
-														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.xml"
-															target="_blank"
-														>
-															<i class="fas fa-file-export fa-lg"></i> Export as XML
+															<i class="fas fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>

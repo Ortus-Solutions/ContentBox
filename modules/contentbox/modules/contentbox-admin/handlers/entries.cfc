@@ -565,66 +565,30 @@ component extends="baseContentHandler" {
 	 * Export an entry
 	 */
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get entry
-		prc.entry = variables.entryService.get( event.getValue( "contentID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.entry.isLoaded() ) {
-			cbMessageBox.warn( "ContentID sent is not valid" );
-			relocate( "#prc.cbAdminEntryPoint#.entries" );
-		}
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#prc.entry.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = prc.entry.getMemento(),
-						type        = rc.format,
-						xmlRootName = "entry"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.entryService
+			.get( event.getValue( "contentID", 0 ) )
+			.getMemento(
+				includes = [
+					"siteID" ,
+					"customFields",
+					"contentVersions",
+					"commentSubscriptions",
+					"relatedContent",
+					"linkedContent",
+					"stats",
+					"comments"
+				],
+				excludes = [
+					"commentSubscriptions.relatedContent"
+				]
+			);
 	}
 
 	/**
 	 * Export All Entries
 	 */
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = variables.entryService.getAllForExport();
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "Entries." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "entries"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.entryService.getAllForExport();
 	}
 
 	/**

@@ -108,14 +108,9 @@ component
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		var result = [];
-		var data   = getAll();
-
-		for ( var menu in data ) {
-			arrayAppend( result, menu.getMemento() );
-		}
-
-		return result;
+		return getAll().map( function( thisItem ){
+			return thisItem.getMemento();
+		});
 	}
 
 	/**

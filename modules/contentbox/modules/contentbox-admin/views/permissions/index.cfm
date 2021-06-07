@@ -54,11 +54,18 @@
 										</button>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
+								    			<li>
+													<a href="javascript:importContent()">
+														<i class="fas fa-file-import fa-lg"></i> Import
+													</a>
+												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank"><i class="fas fa-file-export fa-lg"></i> Export All as XML</a></li>
+												<li>
+													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export
+													</a>
+												</li>
 											</cfif>
 								    	</ul>
 								    </div>
@@ -89,9 +96,11 @@
 							<tr>
 								<td>
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-									<a href="javascript:edit('#permission.getPermissionID()#',
-									   						 '#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-									   						 '#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#')"
+									<a href="javascript:edit(
+										'#permission.getPermissionID()#',
+										'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+										'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#'
+										)"
 									   title="Edit #permission.getPermission()#">#permission.getPermission()#</a>
 									<cfelse>
 										#permission.getPermission()#

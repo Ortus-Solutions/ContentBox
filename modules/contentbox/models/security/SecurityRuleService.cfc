@@ -98,12 +98,29 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		var c        = newCriteria();
-		var propList = "ruleID,whitelist,securelist,roles,permissions,redirect,useSSL,order,match,createdDate,modifiedDate,isDeleted";
+		var propList = [
+			"ruleID",
+			"whitelist",
+			"securelist",
+			"match",
+			"roles",
+			"permissions",
+			"redirect",
+			"overrideEvent",
+			"useSSL",
+			"action",
+			"module",
+			"order",
+			"message",
+			"messageType",
+			"createdDate",
+			"modifiedDate",
+			"isDeleted"
+		];
 
-		return c
-			.withProjections( property = propList )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
+		return newCriteria()
+			.withProjections( property = arrayToList( propList ) )
+			.asStruct()
 			.list( sortOrder = "order" );
 	}
 

@@ -172,10 +172,11 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to delete a site", function(){
 				given( "a valid id/slug", function(){
 					then( "then I should see the confirmation", function(){
+						var siteId = createUUID();
 						var testSite = variables.siteService.save(
 							variables.siteService.new( {
-								name        : "bddtest",
-								slug        : "bddtest",
+								name        : "bddtest-#siteId#",
+								slug        : "bddtest-#siteId#",
 								description : "my bdd test site",
 								domain      : "bddtest.com",
 								domainRegex : "bddtest\.com",

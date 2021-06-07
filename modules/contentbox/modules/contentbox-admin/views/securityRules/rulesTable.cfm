@@ -99,12 +99,7 @@
 							<!--- Export --->
 							<li>
 								<a href="#event.buildLink(to=prc.xehExport)#/ruleID/#rule.getRuleID()#.json" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export as JSON
-								</a>
-							</li>
-							<li>
-								<a href="#event.buildLink(to=prc.xehExport)#/ruleID/#rule.getRuleID()#.xml" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export as XML
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 						</cfif>

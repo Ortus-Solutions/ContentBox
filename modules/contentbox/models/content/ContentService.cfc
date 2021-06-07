@@ -703,23 +703,32 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Get all content for export as flat data
+	 *
 	 * @inData The data to use for exporting, usually concrete implementtions can override this.
 	 */
 	array function getAllForExport( any inData ){
-		var result = [];
-
-		if ( !structKeyExists( arguments, "inData" ) ) {
-			// export from the root node, instead of everything.
-			var data = newCriteria().isNull( "parent" ).list();
-		} else {
-			data = arguments.inData;
+		// export from the root node, instead of everything.
+		if ( isNull( arguments.inData ) ) {
+			arguments.inData = newCriteria().isNull( "parent" ).list();
 		}
 
-		for ( var thisItem in data ) {
-			arrayAppend( result, thisItem.getMemento() );
-		}
-
-		return result;
+		return arguments.inData.map( function( thisItem ){
+			return thisItem.getMemento(
+				includes = [
+					"siteID" ,
+					"customFields",
+					"contentVersions",
+					"commentSubscriptions",
+					"relatedContent",
+					"linkedContent",
+					"stats",
+					"comments"
+				],
+				excludes = [
+					"commentSubscriptions.relatedContent"
+				]
+			);
+		});
 	}
 
 	/**
