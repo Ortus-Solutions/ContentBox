@@ -47,8 +47,6 @@ component
 	 * constructor
 	 */
 	function init(){
-		super.init();
-
 		variables.categories      = [];
 		variables.customFields    = [];
 		variables.renderedContent = "";
@@ -58,6 +56,8 @@ component
 
 		appendToMemento( [ "excerpt" ], "defaultIncludes" );
 		appendToMemento( [], "defaultExcludes" );
+
+		super.init();
 
 		return this;
 	}

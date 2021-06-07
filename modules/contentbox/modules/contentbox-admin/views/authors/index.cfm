@@ -61,15 +61,9 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
-												<li>
-													<a href="#event.buildLink( prc.xehExportAll )#.xml" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as XML
-													</a>
-												</li>
-
 												<li>
 													<a 	href="#event.buildLink( prc.xehGlobalPasswordReset )#"
 														class="confirmIt"

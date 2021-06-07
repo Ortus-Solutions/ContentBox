@@ -67,8 +67,8 @@
 
 							    		<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 											<li>
-												<a href="#event.buildLink (to=prc.xehExportAll )#.json" target="_blank">
-													<i class="fas fa-file-export fa-lg"></i> Export
+												<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
+													<i class="fas fa-file-export fa-lg"></i> Export All
 												</a>
 											</li>
 										</cfif>

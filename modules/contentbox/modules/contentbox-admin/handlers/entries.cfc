@@ -569,18 +569,16 @@ component extends="baseContentHandler" {
 			.get( event.getValue( "contentID", 0 ) )
 			.getMemento(
 				includes = [
-					"siteID" ,
-					"customFields",
-					"contentVersions",
+					"comments",
 					"commentSubscriptions",
-					"relatedContent",
+					"contentVersions",
+					"customFields",
 					"linkedContent",
-					"stats",
-					"comments"
+					"relatedContent",
+					"siteID",
+					"stats"
 				],
-				excludes = [
-					"commentSubscriptions.relatedContent"
-				]
+				excludes = [ "commentSubscriptions.relatedContentSnapshot:relatedContent" ]
 			);
 	}
 
@@ -588,6 +586,8 @@ component extends="baseContentHandler" {
 	 * Export All Entries
 	 */
 	function exportAll( event, rc, prc ){
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
 		return variables.entryService.getAllForExport();
 	}
 

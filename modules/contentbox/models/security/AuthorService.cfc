@@ -367,14 +367,11 @@ component
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		var result = [];
-		var data   = getAll();
-
-		for ( var thisItem in data ) {
-			arrayAppend( result, thisItem.getMemento() );
-		}
-
-		return result;
+		return getAll().map( function( thisItem ){
+			return arguments.thisItem.getMemento(
+				includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth"
+			);
+		} );
 	}
 
 	/**

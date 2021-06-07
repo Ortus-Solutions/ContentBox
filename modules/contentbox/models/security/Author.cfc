@@ -112,20 +112,20 @@ component
 		default="";
 
 	property
-		name     ="isPasswordReset"
-		column   ="isPasswordReset"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false"
-		index    ="idx_passwordReset";
+		name   ="isPasswordReset"
+		column ="isPasswordReset"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_passwordReset";
 
 	property
-		name     ="is2FactorAuth"
-		column   ="is2FactorAuth"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false"
-		index    ="idx_2factorauth";
+		name   ="is2FactorAuth"
+		column ="is2FactorAuth"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_2factorauth";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -228,6 +228,7 @@ component
 			"email",
 			"username",
 			"isActive",
+			"isDeleted",
 			"lastLogin",
 			"biography",
 			"preferences",
@@ -243,9 +244,11 @@ component
 			"pages",
 			"permissions",
 			"permissionGroups",
-			"role.permissions"
+			"role.permissions",
+			"isPasswordReset",
+			"is2FactorAuth"
 		],
-		neverInclude : [ "password", "isPasswordReset", "is2FactorAuth" ],
+		neverInclude : [ "password" ],
 		// Defaults
 		defaults     : { "role" : {} }
 	};

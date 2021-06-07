@@ -634,64 +634,16 @@ component extends="baseContentHandler" {
 
 	// Export content
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get content
-		prc.content = variables.contentStoreService.get( event.getValue( "contentID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.content.isLoaded() ) {
-			cbMessageBox.warn( "ContentID sent is not valid" );
-			relocate( prc.xehContentStore );
-		}
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#prc.content.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = prc.content.getMemento(),
-						type        = rc.format,
-						xmlRootName = "content"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.contentStoreService
+			.get( event.getValue( "contentID", 0 ) )
+			.getMemento( profile: "export" );
 	}
 
 	// Export All content
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = variables.contentStoreService.getAllForExport();
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "ContentStore." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "ContentStore"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
+		return variables.contentStoreService.getAllForExport();
 	}
 
 	// import contentstore

@@ -747,66 +747,16 @@ component extends="baseHandler" {
 	 * Export a user
 	 */
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get user
-		prc.user = authorService.get( event.getValue( "authorID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.user.isLoaded() ) {
-			cbMessagebox.warn( "authorID sent is not valid" );
-			relocate( "#prc.cbAdminEntryPoint#.authors" );
-		}
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#prc.user.getUsername()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = prc.user.getMemento(),
-						type        = rc.format,
-						xmlRootName = "user"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.authorService
+			.get( event.getValue( "authorID", 0 ) )
+			.getMemento( includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth" );
 	}
 
 	/**
 	 * Export all users
 	 */
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = authorService.getAllForExport();
-
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "Users." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "users"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.authorService.getAllForExport();
 	}
 
 	/**

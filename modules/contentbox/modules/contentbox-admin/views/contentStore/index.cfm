@@ -87,13 +87,8 @@
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li>
-													<a href="#event.buildLink (to=prc.xehContentExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as JSON
-													</a>
-												</li>
-												<li>
-													<a href="#event.buildLink( to=prc.xehContentExportAll )#.xml" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All as XML
+													<a href="#event.buildLink ( prc.xehContentExportAll )#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export
 													</a>
 												</li>
 											</cfif>
@@ -105,7 +100,12 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<button class="btn btn-primary" onclick="return to('#event.buildLink( to=prc.xehContentEditor, queryString="parentID=#rc.parent#")#');">Create Content</button>
+								<button
+									class="btn btn-primary"
+									onclick="return to( '#event.buildLink( to=prc.xehContentEditor, queryString="parentID=#rc.parent#")#' );"
+								>
+									Create Content
+								</button>
 							</div>
 						</div>
 					</div>

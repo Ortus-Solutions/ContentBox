@@ -241,15 +241,7 @@
 										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
 										target="_blank"
 									>
-										<i class="fas fa-file-export fa-lg"></i> Export as JSON
-									</a>
-								</li>
-								<li class="mb5">
-									<a
-										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.xml"
-										target="_blank"
-									>
-										<i class="fas fa-file-export fa-lg"></i> Export as XML
+										<i class="fas fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>

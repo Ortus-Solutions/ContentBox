@@ -108,17 +108,12 @@
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
-								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export as JSON
+								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( to=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export as XML
-								</a>
-							</li>
-							<li>
-								<a href="#event.buildLink( to=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
+								<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
 									title="Email User a password reset token and link to reset password.">
 									<i class="fas fa-key fa-lg"></i> Reset Password
 								</a>

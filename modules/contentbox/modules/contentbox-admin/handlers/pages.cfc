@@ -683,62 +683,16 @@ component extends="baseContentHandler" {
 	 * Export a page hierarchy
 	 */
 	function export( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get page
-		prc.page = variables.pageService.get( event.getValue( "contentID", 0 ) );
-
-		// relocate if not existent
-		if ( !prc.page.isLoaded() ) {
-			cbMessageBox.warn( "ContentID sent is not valid" );
-			relocate( "#prc.cbAdminEntryPoint#.pages" );
-		}
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "#prc.page.getSlug()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = prc.page.getMemento(),
-						type        = rc.format,
-						xmlRootName = "page"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		return variables.pageService
+			.get( event.getValue( "contentID", 0 ) )
+			.getMemento( profile: "export" );
 	}
 
 	// Export All Pages
 	function exportAll( event, rc, prc ){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data = variables.pageService.getAllForExport();
-		switch ( rc.format ) {
-			case "xml":
-			case "json": {
-				var filename = "Pages." & ( rc.format eq "xml" ? "xml" : "json" );
-				event
-					.renderData(
-						data        = data,
-						type        = rc.format,
-						xmlRootName = "pages"
-					)
-					.setHTTPHeader(
-						name  = "Content-Disposition",
-						value = " attachment; filename=#fileName#"
-					);
-				break;
-			}
-			default: {
-				event.renderData( data = "Invalid export type: #rc.format#" );
-			}
-		}
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
+		return variables.pageService.getAllForExport();
 	}
 
 	// import settings

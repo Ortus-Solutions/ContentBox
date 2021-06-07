@@ -156,12 +156,7 @@
 						<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export as JSON
-								</a>
-							</li>
-							<li>
-								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.xml" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export as XML
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 						</cfif>

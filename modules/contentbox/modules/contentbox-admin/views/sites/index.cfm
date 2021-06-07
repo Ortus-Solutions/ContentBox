@@ -63,16 +63,7 @@
 													target="_blank"
 												>
 													<i class="fas fa-file-export fa-lg"></i>
-													Export All as JSON
-												</a>
-											</li>
-											<li>
-												<a
-													href="#event.buildLink( prc.xehExportAll )#.xml"
-													target="_blank"
-												>
-													<i class="fas fa-file-export fa-lg"></i>
-													Export All as XML
+													Export All
 												</a>
 											</li>
 										</cfif>

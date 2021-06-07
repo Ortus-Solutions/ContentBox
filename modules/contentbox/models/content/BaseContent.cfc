@@ -93,11 +93,11 @@ component
 		notnull="true";
 
 	property
-		name     ="isDeleted"
-		column   ="isDeleted"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false";
+		name   ="isDeleted"
+		column ="isDeleted"
+		ormtype="boolean"
+		notnull="true"
+		default="false";
 
 	/* *********************************************************************
 	 **							PROPERTIES
@@ -153,19 +153,19 @@ component
 		index  ="idx_expireDate";
 
 	property
-		name     ="isPublished"
-		column   ="isPublished"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="true"
-		index    ="idx_published,idx_search,idx_publishedSlug";
+		name   ="isPublished"
+		column ="isPublished"
+		notnull="true"
+		ormtype="boolean"
+		default="true"
+		index  ="idx_published,idx_search,idx_publishedSlug";
 
 	property
-		name     ="allowComments"
-		column   ="allowComments"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="true";
+		name   ="allowComments"
+		column ="allowComments"
+		notnull="true"
+		ormtype="boolean"
+		default="true";
 
 	property
 		name   ="passwordProtection"
@@ -197,20 +197,20 @@ component
 		default="";
 
 	property
-		name     ="cache"
-		column   ="cache"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="true"
-		index    ="idx_cache";
+		name   ="cache"
+		column ="cache"
+		notnull="true"
+		ormtype="boolean"
+		default="true"
+		index  ="idx_cache";
 
 	property
-		name     ="cacheLayout"
-		column   ="cacheLayout"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="true"
-		index    ="idx_cachelayout";
+		name   ="cacheLayout"
+		column ="cacheLayout"
+		notnull="true"
+		ormtype="boolean"
+		default="true"
+		index  ="idx_cachelayout";
 
 	property
 		name   ="cacheTimeout"
@@ -236,12 +236,12 @@ component
 		default="HTML";
 
 	property
-		name     ="showInSearch"
-		column   ="showInSearch"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="true"
-		index    ="idx_showInSearch";
+		name   ="showInSearch"
+		column ="showInSearch"
+		notnull="true"
+		ormtype="boolean"
+		default="true"
+		index  ="idx_showInSearch";
 
 	property
 		name   ="featuredImage"
@@ -442,7 +442,7 @@ component
 			"cacheLastAccessTimeout",
 			"cacheLayout",
 			"cacheTimeout",
-			"categoriesList:categories",
+			"categoriesArray:categories",
 			"contentID",
 			"contentType",
 			"createdDate",
@@ -481,9 +481,29 @@ component
 			"stats"
 		],
 		neverInclude : [ "passwordProtection" ],
-		mappers      : {
-			"categories" : function( item, memento ){
-				return listToArray( arguments.item );
+		mappers      : {},
+		defaults     : { stats : {} },
+		profiles     : {
+			export : {
+				defaultIncludes : [
+					"children",
+					"comments",
+					"commentSubscriptions",
+					"contentVersions",
+					"customFields",
+					"linkedContentSnapshot:linkedContent",
+					"relatedContentSnapshot:relatedContent",
+					"siteID",
+					"stats"
+				],
+				defaultExcludes : [
+					"commentSubscriptions.relatedContentSnapshot:relatedContent",
+					"children.parentSnapshot:parent",
+					"linkedContent",
+					"parent",
+					"relatedContent",
+					"site"
+				]
 			}
 		}
 	};
@@ -539,6 +559,12 @@ component
 		variables.renderedContent        = "";
 
 		super.init();
+
+		// Incorporate all defaults into export profile to avoid duplicate writing them
+		this.memento.profiles[ "export" ].defaultIncludes.append(
+			this.memento.defaultIncludes,
+			true
+		);
 
 		return this;
 	}
@@ -1633,17 +1659,24 @@ component
 	}
 
 	/**
+	 * Get an array of category slugs for this content object
+	 */
+	array function getCategoriesArray(){
+		if ( NOT hasCategories() ) {
+			return [];
+		}
+		return arrayMap( variables.categories, function( item ){
+			return arguments.item.getCategory();
+		} );
+	}
+
+	/**
 	 * Get a list string of the categories this content object has.
 	 *
 	 * @return The category list or `Uncategorized` if it doesn't have any
 	 */
-	function getCategoriesList(){
-		if ( NOT hasCategories() ) {
-			return "Uncategorized";
-		}
-		return arrayMap( variables.categories, function( item ){
-			return item.getCategory();
-		} ).toList();
+	string function getCategoriesList(){
+		return getCategoriesArray().toList();
 	}
 
 	/**

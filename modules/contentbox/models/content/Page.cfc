@@ -55,12 +55,12 @@ component
 	 * If true, this page is used when building automated menus. Else it is ignored.
 	 */
 	property
-		name     ="showInMenu"
-		column   ="showInMenu"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="true"
-		index    ="idx_showInMenu";
+		name   ="showInMenu"
+		column ="showInMenu"
+		notnull="true"
+		ormtype="boolean"
+		default="true"
+		index  ="idx_showInMenu";
 
 	/**
 	 * The excerpt for this page. This can be empty.
@@ -77,12 +77,12 @@ component
 	 * If true, it will force the page to be viewed in SSL. ContentBox will redirect with a 301
 	 */
 	property
-		name     ="SSLOnly"
-		column   ="SSLOnly"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="false"
-		index    ="idx_ssl";
+		name   ="SSLOnly"
+		column ="SSLOnly"
+		notnull="true"
+		ormtype="boolean"
+		default="false"
+		index  ="idx_ssl";
 
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
@@ -105,8 +105,6 @@ component
 	 ********************************************************************* */
 
 	function init(){
-		super.init();
-
 		variables.categories      = [];
 		variables.customFields    = [];
 		variables.renderedContent = "";
@@ -134,6 +132,8 @@ component
 			],
 			"defaultIncludes"
 		);
+
+		super.init();
 
 		return this;
 	}

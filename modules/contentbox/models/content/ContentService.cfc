@@ -25,6 +25,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="dateUtil" inject="DateUtil@cb";
 	property name="commentSubscriptionService" inject="CommentSubscriptionService@cb";
 	property name="subscriberService" inject="subscriberService@cb";
+	property name="asyncManager" inject="coldbox:asyncManager";
 
 	/**
 	 * Constructor
@@ -713,22 +714,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		return arguments.inData.map( function( thisItem ){
-			return thisItem.getMemento(
-				includes = [
-					"siteID" ,
-					"customFields",
-					"contentVersions",
-					"commentSubscriptions",
-					"relatedContent",
-					"linkedContent",
-					"stats",
-					"comments"
-				],
-				excludes = [
-					"commentSubscriptions.relatedContent"
-				]
-			);
-		});
+			return arguments.thisItem.getMemento( profile: "export" );
+		} );
 	}
 
 	/**
