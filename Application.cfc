@@ -36,7 +36,7 @@ component {
 	this.bufferOutput                   = true;
 	// Activate Gzip Compression
 	this.compression                    = false;
-	// Turn on/off white space managemetn
+	// Turn on/off white space management
 	this.whiteSpaceManagement           = "smart";
 	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
@@ -47,10 +47,11 @@ component {
 	 * --------------------------------------------------------------------------
 	 * Modify only if you need to, else default them.
 	 */
-	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
-	COLDBOX_APP_MAPPING   = "";
-	COLDBOX_CONFIG_FILE   = "";
-	COLDBOX_APP_KEY       = "";
+	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
+	COLDBOX_APP_MAPPING   	= "";
+	COLDBOX_CONFIG_FILE   	= "";
+	COLDBOX_APP_KEY       	= "";
+	COLDBOX_FAIL_FAST 		= true;
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -74,6 +75,7 @@ component {
 	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
 	 * So Make sure you select one.
 	 */
+	request.$coldboxUtil = new coldbox.system.core.util.Util();
 	// THE CONTENTBOX DATASOURCE NAME
 	this.datasource  = "contentbox";
 	// ORM SETTINGS
@@ -90,34 +92,25 @@ component {
 			"modules_app"
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
-		// THE DEFAULT IS MYSQL WITH INNODB
-		//dialect			  	: "org.hibernate.dialect.MySQL5InnoDBDialect",
-		//dialect				: "PostgreSQL",
-		//dialect 				: "org.hibernate.dialect.SQLServer2008Dialect",
-		//dialect 				: "Oracle10g",
+		dialect 				: request.$coldboxUtil.getSystemSetting( "ORM_DIALECT", "" ),
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate              : "update",
-		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
-		secondarycacheenabled : false,
-		cacheprovider         : "ehCache",
+		dbcreate              	: "update",
+		secondarycacheenabled 	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
+		cacheprovider         	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
+		logSQL                	: request.$coldboxUtil.getSystemSetting( "ORM_LOGSQL", false ),
+		sqlScript				: request.$coldboxUtil.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		logSQL                : true,
-		flushAtRequestEnd     : false,
-		autoManageSession     : false,
-		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
-		eventHandling         : true,
-		eventHandler          : "cborm.models.EventHandler",
+		flushAtRequestEnd     	: false,
+		autoManageSession     	: false,
+		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK DO NOT CHANGE
+		eventHandling         	: true,
+		eventHandler          	: "cborm.models.EventHandler",
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
-		skipCFCWithError      : true,
-		// Useful for debugging to see the hibernate XML maps
-		savemapping : false
+		skipCFCWithError      	: true,
+		// TURN ON FOR Debugging if ORM mappings are not working.
+		savemapping 			: false
 	};
 	// cfformat-ignore-end
-
-	// Local ORM SQL Logging
-	if ( reFindNoCase( "^(dev\.|localhost)", cgi.http_host ) ) {
-		//this.ormSettings.logSQL = true;
-	}
 
 	/************************************** METHODS *********************************************/
 
