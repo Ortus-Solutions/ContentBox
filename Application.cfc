@@ -14,6 +14,16 @@ component {
 
 	/**
 	 * --------------------------------------------------------------------------
+	 * NON COMMANDBOX INSTALLS
+	 * --------------------------------------------------------------------------
+	 * If you are NOT using CommandBox as your server, then uncomment the line below
+	 * and ContentBox will load the `.env` environment file that is needed for operation.
+	 * Without this, your NON CommandBox ContentBox install will fail.
+	 */
+	// loadEnv();
+
+	/**
+	 * --------------------------------------------------------------------------
 	 * Application Properties: Modify as you see fit!
 	 * --------------------------------------------------------------------------
 	 */
@@ -179,6 +189,39 @@ component {
 	private void function reinitApplication(){
 		// Run onAppStart
 		onApplicationStart();
+	}
+
+	/**
+	 * This method is only called if you are in a NON CommandBox install.
+	 */
+	private void function loadEnv(){
+		var javaSystem = createObject( "java", "java.lang.System" );
+		var value = javaSystem.getProperty( "contentbox_runtime_env" );
+		// If not loaded, lock and load.
+		if ( isNull( value ) ) {
+			lock
+				name="contentbox_runtime_env"
+				timeout="15"
+				throwOnTimeout="true"
+				type="exclusive"
+			{
+				// Double lock
+				if( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) ){
+					// Load .env file
+					var props = createObject( "java", "java.util.Properties" ).init();
+					props.load(
+						createObject( "java", "java.io.FileInputStream" ).init( expandPath( "/.env" ) )
+					);
+					// Iterate and add
+					var availableProps = props.propertyNames();
+					while( availableProps.hasNext() ){
+						var propName = availableProps.next();
+						javaSystem.setProperty( propName,  props.getProperty( propName ) );
+					}
+					javaSystem.setProperty( "contentbox_runtime_env", true );
+				} // end double lock
+			} // end lock
+		} // end lock check
 	}
 
 }
