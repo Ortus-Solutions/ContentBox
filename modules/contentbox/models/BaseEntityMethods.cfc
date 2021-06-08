@@ -30,6 +30,9 @@ component {
 	 * Constructor
 	 */
 	function init(){
+		// Calculate name via md
+		getEntityName();
+
 		variables.createdDate  = now();
 		variables.modifiedDate = now();
 		variables.isDeleted    = false;
@@ -50,6 +53,20 @@ component {
 		}
 
 		return this;
+	}
+
+	/**
+	 * Get the entity name
+	 */
+	function getEntityName(){
+		if ( isNull( variables.entityName ) ) {
+			var md               = getMetadata( this );
+			variables.entityName = (
+				md.keyExists( "entityName" ) ? md.entityName : listLast( md.name, "." )
+			);
+		}
+
+		return variables.entityName;
 	}
 
 	/**
