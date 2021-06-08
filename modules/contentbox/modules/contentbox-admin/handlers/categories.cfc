@@ -13,29 +13,19 @@ component extends="baseHandler" {
 
 	/**
 	 * Pre handler
-	 *
-	 * @event
-	 * @action
-	 * @eventArguments
-	 * @rc
-	 * @prc
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
-		// Tab control
 		prc.tabContent = true;
 	}
 
 	/**
 	 * Manage categories
-	 *
-	 * @event
-	 * @rc
-	 * @prc
 	 */
 	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehCategoryRemove = "#prc.cbAdminEntryPoint#.categories.remove";
 		prc.xehCategoriesSave = "#prc.cbAdminEntryPoint#.Categories.save";
+		prc.xehExport         = "#prc.cbAdminEntryPoint#.Categories.export";
 		prc.xehExportAll      = "#prc.cbAdminEntryPoint#.Categories.exportAll";
 		prc.xehImportAll      = "#prc.cbAdminEntryPoint#.Categories.importAll";
 		// Get all categories
@@ -52,10 +42,6 @@ component extends="baseHandler" {
 
 	/**
 	 * Save categories
-	 *
-	 * @event
-	 * @rc
-	 * @prc
 	 */
 	function save( event, rc, prc ){
 		// slugify if not passed, and allow passed slugs to be saved as-is
@@ -92,10 +78,6 @@ component extends="baseHandler" {
 
 	/**
 	 * Remove categories
-	 *
-	 * @event
-	 * @rc
-	 * @prc
 	 */
 	function remove( event, rc, prc ){
 		// params
@@ -139,11 +121,14 @@ component extends="baseHandler" {
 	}
 
 	/**
+	 * Export a category
+	 */
+	function export( event, rc, prc ){
+		return variables.categoryService.get( event.getValue( "categoryID", 0 ) ).getMemento();
+	}
+
+	/**
 	 * Export all categories
-	 *
-	 * @event
-	 * @rc
-	 * @prc
 	 */
 	function exportAll( event, rc, prc ){
 		return variables.categoryService.getAllForExport();
@@ -151,10 +136,6 @@ component extends="baseHandler" {
 
 	/**
 	 * Import all categories
-	 *
-	 * @event
-	 * @rc
-	 * @prc
 	 */
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );

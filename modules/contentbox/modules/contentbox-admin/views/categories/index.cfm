@@ -146,12 +146,23 @@
 											<!--- Edit Command --->
 											<li>
 												<a
-													href="javascript:edit( '#category.getCategoryID()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-													'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
+													href="javascript:edit(
+														'#category.getCategoryID()#',
+														'#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+														'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#'
+														)"
 													>
 														<i class="fas fa-pen fa-lg"></i> Edit
 												</a>
 											</li>
+
+											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+												<li>
+													<a href="#event.buildLink( prc.xehExport )#/categoryID/#category.getCategoryID()#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export
+													</a>
+												</li>
+											</cfif>
 
 											<li>
 												<!--- Delete Command --->

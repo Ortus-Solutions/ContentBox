@@ -54,7 +54,7 @@ component
 		column   ="categoryID"
 		fieldtype="id"
 		generator="uuid"
-ormtype="string"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 
@@ -84,7 +84,8 @@ ormtype="string"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
 		lazy     ="true"
-		fetch    ="join";
+		fetch    ="join"
+		inverse  ="true";
 
 	/* *********************************************************************
 	 **							CALCULATED FIELDS
