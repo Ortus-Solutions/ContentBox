@@ -268,8 +268,7 @@ component
 		cfc      ="contentbox.models.security.Author"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_authorID"
-		lazy     ="true"
-		fetch    ="join";
+		lazy     ="true";
 
 	// M20 -> site loaded as a proxy and fetched immediately
 	property
@@ -314,7 +313,7 @@ component
 		singularName="contentVersion"
 		fieldtype   ="one-to-many"
 		type        ="array"
-		lazy        ="extra"
+		lazy        ="true"
 		batchsize   ="25"
 		cfc         ="contentbox.models.content.ContentVersion"
 		orderby     ="version desc"
@@ -405,8 +404,7 @@ component
 		fieldtype="one-to-one"
 		mappedBy ="relatedContent"
 		cascade  ="all-delete-orphan"
-		lazy     ="true"
-		fetch    ="join";
+		lazy     ="true";
 
 	/* *********************************************************************
 	 **							CALCULATED FIELDS
@@ -562,7 +560,9 @@ component
 
 		// Incorporate all defaults into export profile to avoid duplicate writing them
 		this.memento.profiles[ "export" ].defaultIncludes.append(
-			this.memento.defaultIncludes,
+			this.memento.defaultIncludes.filter( function( item ){
+				return !listFindNoCase( "lastEditorSnapshot:lastEditor", arguments.item );
+			} ),
 			true
 		);
 

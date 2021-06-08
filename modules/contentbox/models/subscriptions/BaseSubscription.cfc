@@ -34,11 +34,11 @@ component
 		notnull="true";
 
 	property
-		name     ="isDeleted"
-		column   ="isDeleted"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false";
+		name   ="isDeleted"
+		column ="isDeleted"
+		ormtype="boolean"
+		notnull="true"
+		default="false";
 
 	/* *********************************************************************
 	 **                          PROPERTIES

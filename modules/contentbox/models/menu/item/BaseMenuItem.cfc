@@ -46,12 +46,12 @@ component
 		index  ="idx_BaseMenuItem_modifiedDate";
 
 	property
-		name     ="isDeleted"
-		column   ="isDeleted"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false"
-		index    ="idx_BaseMenuItem_deleted";
+		name   ="isDeleted"
+		column ="isDeleted"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_BaseMenuItem_deleted";
 
 	/* *********************************************************************
 	 **                          PROPERTIES
@@ -99,10 +99,10 @@ component
 		default="";
 
 	property
-		name     ="active"
-		column   ="active"
-		ormtype  ="boolean"
-		default  ="true";
+		name   ="active"
+		column ="active"
+		ormtype="boolean"
+		default="true";
 
 	property
 		name  ="menuType"
@@ -130,6 +130,7 @@ component
 		cfc      ="BaseMenuItem"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_parentID"
+		fetch    ="join"
 		lazy     ="true";
 
 	// O2M - Child Menu Item

@@ -23,7 +23,7 @@ component
 		column   ="customFieldID"
 		fieldtype="id"
 		generator="uuid"
-ormtype="string"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 
@@ -53,6 +53,7 @@ ormtype="string"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_contentID"
 		lazy     ="true"
+		fetch    ="join"
 		index    ="idx_contentCustomFields";
 
 	/* *********************************************************************
