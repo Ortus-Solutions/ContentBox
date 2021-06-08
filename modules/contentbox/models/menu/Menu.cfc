@@ -262,8 +262,11 @@ component
 	/**
 	 * Shortcut to get the site id
 	 */
-	function getsiteID(){
-		return getSite().getsiteID();
+	function getSiteId(){
+		if ( hasSite() ) {
+			return getSite().getsiteID();
+		}
+		return "";
 	}
 
 }

@@ -217,7 +217,10 @@ component
 	 * Shortcut to get the site id
 	 */
 	function getSiteID(){
-		return getSite().getsiteID();
+		if ( hasSite() ) {
+			return getSite().getsiteID();
+		}
+		return "";
 	}
 
 	/********************************** PRIVATE **********************************/
