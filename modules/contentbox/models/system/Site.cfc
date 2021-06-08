@@ -103,50 +103,46 @@ component
 		length ="255";
 
 	property
-		name     ="isBlogEnabled"
-		column   ="isBlogEnabled"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true";
+		name   ="isBlogEnabled"
+		column ="isBlogEnabled"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
-		name     ="isSitemapEnabled"
-		column   ="isSitemapEnabled"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true";
+		name   ="isSitemapEnabled"
+		column ="isSitemapEnabled"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
-		name     ="poweredByHeader"
-		column   ="poweredByHeader"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true"
-		;
+		name   ="poweredByHeader"
+		column ="poweredByHeader"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
-		name     ="adminBar"
-		column   ="adminBar"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true"
-		;
+		name   ="adminBar"
+		column ="adminBar"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
-		name     ="isSSL"
-		column   ="isSSL"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false"
-		;
+		name   ="isSSL"
+		column ="isSSL"
+		ormtype="boolean"
+		notnull="true"
+		default="false";
 
 	property
-		name     ="isActive"
-		column   ="isActive"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true"
-		;
+		name   ="isActive"
+		column ="isActive"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
 		name   ="activeTheme"
@@ -165,28 +161,25 @@ component
 		length ="500";
 
 	property
-		name     ="notifyOnEntries"
-		column   ="notifyOnEntries"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true"
-		;
+		name   ="notifyOnEntries"
+		column ="notifyOnEntries"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
-		name     ="notifyOnPages"
-		column   ="notifyOnPages"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true"
-		;
+		name   ="notifyOnPages"
+		column ="notifyOnPages"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	property
-		name     ="notifyOnContentStore"
-		column   ="notifyOnContentStore"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="true"
-		;
+		name   ="notifyOnContentStore"
+		column ="notifyOnContentStore"
+		ormtype="boolean"
+		notnull="true"
+		default="true";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -202,6 +195,20 @@ component
 		batchsize   ="25"
 		orderby     ="name"
 		cfc         ="contentbox.models.system.Setting"
+		fkcolumn    ="FK_siteID"
+		inverse     ="true"
+		cascade     ="all-delete-orphan";
+
+	// O2M -> Categories
+	property
+		name        ="categories"
+		singularName="category"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="extra"
+		batchsize   ="25"
+		orderby     ="slug"
+		cfc         ="contentbox.models.content.Category"
 		fkcolumn    ="FK_siteID"
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
@@ -309,7 +316,8 @@ component
 	 * Constructor
 	 */
 	function init(){
-		variables.settings = [];
+		variables.settings   = [];
+		variables.categories = [];
 
 		super.init();
 
@@ -331,6 +339,18 @@ component
 			variables.settings.clear();
 		} else {
 			variables.settings = [];
+		}
+		return this;
+	}
+
+	/*
+	 * I remove all category associations
+	 */
+	Site function removeAllCategories(){
+		if ( hasCategory() ) {
+			variables.categories.clear();
+		} else {
+			variables.categories = [];
 		}
 		return this;
 	}

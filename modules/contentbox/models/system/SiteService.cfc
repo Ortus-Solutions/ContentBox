@@ -17,6 +17,7 @@ component
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
 	property name="settingService" inject="provider:settingService@cb";
+	property name="categoryService" inject="provider:categoryService@cb";
 	property name="themeService" inject="provider:themeService@cb";
 	property name="mediaService" inject="provider:mediaService@cb";
 
@@ -139,11 +140,12 @@ component
 	 */
 	SiteService function delete( required site ){
 		transaction {
-			// If on Adobe, run a hard delete
-			if( !server.keyExists( "lucee" ) ){
-				variables.settingService.deleteWhere( site : arguments.site );
+			// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
+			if ( !server.keyExists( "lucee" ) ) {
+				variables.settingService.deleteWhere( site: arguments.site );
+				variables.categoryService.deleteWhere( site: arguments.site );
 			}
-			arguments.site.removeAllSettings();
+			arguments.site.removeAllSettings().removeAllCategories();
 
 			// Now destroy the site
 			super.delete( arguments.site );

@@ -84,8 +84,7 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
 		lazy     ="true"
-		fetch    ="join"
-		inverse  ="true";
+		fetch    ="join";
 
 	/* *********************************************************************
 	 **							CALCULATED FIELDS
