@@ -42,12 +42,12 @@ component
 		ormtype="text";
 
 	property
-		name     ="isCore"
-		column   ="isCore"
-		ormtype  ="boolean"
-		notnull  ="true"
-		default  ="false"
-		index    ="idx_core";
+		name   ="isCore"
+		column ="isCore"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_core";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -74,7 +74,13 @@ component
 	};
 
 	this.memento = {
-		defaultIncludes : [ "name", "value", "isCore", "siteSnapshot" ],
+		defaultIncludes : [
+			"name",
+			"value",
+			"isCore",
+			"siteSnapshot",
+			"siteID"
+		],
 		defaultExcludes : [ "site" ]
 	};
 
@@ -105,7 +111,7 @@ component
 	 *
 	 * @return The associated site id or empty if none
 	 */
-	function getsiteID(){
+	function getSiteID(){
 		if ( hasSite() ) {
 			return getSite().getsiteID();
 		}

@@ -10,12 +10,6 @@ component extends="baseHandler" {
 
 	/**
 	 * Pre handler
-	 *
-	 * @event
-	 * @action
-	 * @eventArguments
-	 * @rc
-	 * @prc
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
@@ -42,7 +36,6 @@ component extends="baseHandler" {
 		// view
 		event.setView( "sites/index" );
 	}
-
 
 	/**
 	 * Site Editor
@@ -118,6 +111,22 @@ component extends="baseHandler" {
 	function changeSite( event, rc, prc ){
 		siteService.setCurrentWorkingsiteID( rc.siteID );
 		relocate( prc.xehDashboard );
+	}
+
+	/**
+	 * Export a site
+	 */
+	function export( event, rc, prc ){
+		return variables.siteService
+			.get( event.getValue( "siteID", 0 ) )
+			.getMemento( profile: "export" );
+	}
+
+	/**
+	 * Export all sites
+	 */
+	function exportAll( event, rc, prc ){
+		return variables.siteService.getAllForExport();
 	}
 
 }

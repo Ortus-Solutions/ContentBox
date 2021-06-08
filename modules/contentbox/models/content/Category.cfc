@@ -126,7 +126,8 @@ component
 			"numberOfContentStore",
 			"numberOfEntries",
 			"numberOfPages",
-			"slug"
+			"slug",
+			"siteID"
 		],
 		defaultExcludes : [ "site" ]
 	};
@@ -210,6 +211,13 @@ component
 	 */
 	struct function getSiteSnapshot(){
 		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
+	}
+
+	/**
+	 * Shortcut to get the site id
+	 */
+	function getSiteID(){
+		return getSite().getsiteID();
 	}
 
 	/********************************** PRIVATE **********************************/

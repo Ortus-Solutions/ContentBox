@@ -189,13 +189,6 @@
 												</a>
 											</li>
 
-											<!--- Open site --->
-											<li>
-												<a href="#site.getSiteRoot()#" target="_blank">
-													<i class="fas fa-external-link-alt fa-lg"></i>Open site
-												</a>
-											</li>
-
 											<!--- Export --->
 											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
 												<li>
@@ -203,18 +196,17 @@
 														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.json"
 														target="_blank"
 													>
-														<i class="fas fa-file-export fa-lg"></i> Export as JSON
-													</a>
-												</li>
-												<li>
-													<a
-														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.xml"
-														target="_blank"
-													>
-														<i class="fas fa-file-export fa-lg"></i> Export as XML
+														<i class="fas fa-file-export fa-lg"></i> Export
 													</a>
 												</li>
 											</cfif>
+
+											<!--- Open site --->
+											<li>
+												<a href="#site.getSiteRoot()#" target="_blank">
+													<i class="fas fa-external-link-alt fa-lg"></i>Open site
+												</a>
+											</li>
 
 										</ul>
 									</div>

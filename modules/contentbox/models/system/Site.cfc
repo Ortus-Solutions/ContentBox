@@ -213,6 +213,47 @@ component
 		inverse     ="true"
 		cascade     ="all-delete-orphan";
 
+	// O2M -> Entries
+	property
+		name        ="entries"
+		singularName="entry"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="extra"
+		batchsize   ="25"
+		orderby     ="createdDate desc"
+		cfc         ="contentbox.models.content.Entry"
+		fkcolumn    ="FK_siteID"
+		inverse     ="true"
+		cascade     ="all-delete-orphan";
+
+	// O2M -> Pages
+	property
+		name        ="pages"
+		singularName="page"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="extra"
+		batchsize   ="25"
+		orderby     ="createdDate desc"
+		cfc         ="contentbox.models.content.Page"
+		fkcolumn    ="FK_siteID"
+		inverse     ="true"
+		cascade     ="all-delete-orphan";
+
+	// O2M -> ContentStore
+	property
+		name     ="contentStore"
+		fieldtype="one-to-many"
+		type     ="array"
+		lazy     ="extra"
+		batchsize="25"
+		orderby  ="createdDate desc"
+		cfc      ="contentbox.models.content.ContentStore"
+		fkcolumn ="FK_siteID"
+		inverse  ="true"
+		cascade  ="all-delete-orphan";
+
 	/* *********************************************************************
 	 **							CALUCLATED FIELDS
 	 ********************************************************************* */
@@ -283,7 +324,25 @@ component
 			"slug",
 			"tagline"
 		],
-		defaultExcludes : [ "settings" ]
+		defaultExcludes : [
+			"settings",
+			"categories",
+			"entries",
+			"pages",
+			"contentStore"
+		],
+		profiles : {
+			export : {
+				defaultIncludes : [
+					"settings",
+					"categories",
+					"entries",
+					"pages",
+					"contentStore"
+				],
+				defaultExcludes : [ "settings.siteSnapshot" ]
+			}
+		}
 	};
 
 	this.constraints = {
@@ -316,10 +375,16 @@ component
 	 * Constructor
 	 */
 	function init(){
-		variables.settings   = [];
-		variables.categories = [];
+		variables.settings     = [];
+		variables.categories   = [];
+		variables.entries      = [];
+		variables.pages        = [];
+		variables.contentStore = [];
 
 		super.init();
+
+		// Incorporate all includes to the export profile
+		this.memento.profiles.export.defaultIncludes.append( this.memento.defaultIncludes, true );
 
 		return this;
 	}
@@ -331,7 +396,7 @@ component
 		return variables.contentService.getTotalContentCount( getsiteID() );
 	}
 
-	/*
+	/**
 	 * I remove all setting associations
 	 */
 	Site function removeAllSettings(){
@@ -343,7 +408,7 @@ component
 		return this;
 	}
 
-	/*
+	/**
 	 * I remove all category associations
 	 */
 	Site function removeAllCategories(){
@@ -351,6 +416,42 @@ component
 			variables.categories.clear();
 		} else {
 			variables.categories = [];
+		}
+		return this;
+	}
+
+	/**
+	 * I remove all entry associations
+	 */
+	Site function removeAllEntries(){
+		if ( hasEntry() ) {
+			variables.entries.clear();
+		} else {
+			variables.entries = [];
+		}
+		return this;
+	}
+
+	/**
+	 * I remove all page associations
+	 */
+	Site function removeAllPages(){
+		if ( hasPage() ) {
+			variables.pages.clear();
+		} else {
+			variables.pages = [];
+		}
+		return this;
+	}
+
+	/**
+	 * I remove all contentStore associations
+	 */
+	Site function removeAllContentStore(){
+		if ( hasContentStore() ) {
+			variables.contentStore.clear();
+		} else {
+			variables.contentStore = [];
 		}
 		return this;
 	}

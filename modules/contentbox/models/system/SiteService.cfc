@@ -18,6 +18,7 @@ component
 	property name="requestService" inject="coldbox:requestService";
 	property name="settingService" inject="provider:settingService@cb";
 	property name="categoryService" inject="provider:categoryService@cb";
+	property name="contentService" inject="provider:contentService@cb";
 	property name="themeService" inject="provider:themeService@cb";
 	property name="mediaService" inject="provider:mediaService@cb";
 
@@ -143,9 +144,15 @@ component
 			// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
 			if ( !server.keyExists( "lucee" ) ) {
 				variables.settingService.deleteWhere( site: arguments.site );
+				variables.contentService.deleteWhere( site: arguments.site );
 				variables.categoryService.deleteWhere( site: arguments.site );
 			}
-			arguments.site.removeAllSettings().removeAllCategories();
+			arguments.site
+				.removeAllSettings()
+				.removeAllEntries()
+				.removeAllPages()
+				.removeAllContentStore()
+				.removeAllCategories();
 
 			// Now destroy the site
 			super.delete( arguments.site );
