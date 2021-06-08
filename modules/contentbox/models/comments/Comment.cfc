@@ -66,12 +66,12 @@ component
 		notnull="false";
 
 	property
-		name     ="isApproved"
-		column   ="isApproved"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="false"
-		index    ="idx_contentComment,idx_approved";
+		name   ="isApproved"
+		column ="isApproved"
+		notnull="true"
+		ormtype="boolean"
+		default="false"
+		index  ="idx_contentComment,idx_approved";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -85,6 +85,7 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_contentID"
 		lazy     ="true"
+		fetch    ="join"
 		index    ="idx_contentComment";
 
 	/* *********************************************************************
