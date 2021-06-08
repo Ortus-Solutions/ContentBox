@@ -756,6 +756,8 @@ component extends="baseHandler" {
 	 * Export all users
 	 */
 	function exportAll( event, rc, prc ){
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
 		return variables.authorService.getAllForExport();
 	}
 

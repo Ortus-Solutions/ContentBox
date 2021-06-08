@@ -117,6 +117,8 @@ component extends="baseHandler" {
 	 * Export a site
 	 */
 	function export( event, rc, prc ){
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
 		return variables.siteService
 			.get( event.getValue( "siteID", 0 ) )
 			.getMemento( profile: "export" );
@@ -126,6 +128,8 @@ component extends="baseHandler" {
 	 * Export all sites
 	 */
 	function exportAll( event, rc, prc ){
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
 		return variables.siteService.getAllForExport();
 	}
 
