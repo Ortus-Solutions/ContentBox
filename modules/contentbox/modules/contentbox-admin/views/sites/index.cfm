@@ -86,8 +86,7 @@
 					<!--- Info Bar --->
 					<div class="alert alert-warning">
 						<i class="fa fa-warning fa-lg"></i>
-						You cannot delete sites that have content attached to them.
-						You will need to deactivate the site unless all content is removed.
+						If you delete a site, all of the content will be deleted as well. Be very very careful!
 					</div>
 
 					<!--- sites --->
@@ -170,7 +169,7 @@
 										<ul class="dropdown-menu text-left pull-right">
 
 											<!--- Delete Command --->
-											<cfif site.getNumberOfContent() eq 0>
+											<cfif site.getSlug() neq "default">
 												<li>
 													<a
 														href="javascript:remove( '#site.getsiteID()#' )"
