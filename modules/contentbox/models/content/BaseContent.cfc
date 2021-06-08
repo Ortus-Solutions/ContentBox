@@ -444,7 +444,7 @@ component
 			"contentID",
 			"contentType",
 			"createdDate",
-			"creatorSnapshot:creator", // Creator
+			"creatorSnapshot:creator",
 			"expireDate",
 			"featuredImage",
 			"featuredImageURL",
@@ -460,10 +460,11 @@ component
 			"numberOfComments",
 			"numberOfHits",
 			"numberOfVersions",
-			"parentSnapshot:parent", // Parent
+			"parentSnapshot:parent",
 			"publishedDate",
 			"showInSearch",
 			"slug",
+			"siteID",
 			"title"
 		],
 		defaultExcludes : [
@@ -484,14 +485,40 @@ component
 		profiles     : {
 			export : {
 				defaultIncludes : [
+					"allowComments",
+					"cache",
+					"cacheLastAccessTimeout",
+					"cacheLayout",
+					"cacheTimeout",
+					"categoriesArray:categories",
+					"contentID",
+					"contentType",
+					"createdDate",
+					"creatorSnapshot:creator",
+					"expireDate",
+					"featuredImage",
+					"featuredImageURL",
+					"HTMLDescription",
+					"HTMLKeywords",
+					"HTMLTitle",
+					"isPublished",
+					"isDeleted",
+					"markup",
+					"modifiedDate",
+					"parentSnapshot:parent",
+					"publishedDate",
+					"showInSearch",
+					"siteID",
+					"slug",
+					"title",
 					"children",
+					// Relationships
 					"comments",
 					"commentSubscriptions",
 					"contentVersions",
 					"customFields",
 					"linkedContentSnapshot:linkedContent",
 					"relatedContentSnapshot:relatedContent",
-					"siteID",
 					"stats"
 				],
 				defaultExcludes : [
@@ -557,15 +584,6 @@ component
 		variables.renderedContent        = "";
 
 		super.init();
-
-		// Incorporate all defaults into export profile to avoid duplicate writing them
-		this.memento.profiles[ "export" ].defaultIncludes.append(
-			this.memento.defaultIncludes.filter( function( item ){
-				return !listFindNoCase( "lastEditorSnapshot:lastEditor", arguments.item );
-			} ),
-			true
-		);
-
 		return this;
 	}
 
