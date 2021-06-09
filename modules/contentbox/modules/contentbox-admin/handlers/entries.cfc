@@ -567,19 +567,7 @@ component extends="baseContentHandler" {
 	function export( event, rc, prc ){
 		return variables.entryService
 			.get( event.getValue( "contentID", 0 ) )
-			.getMemento(
-				includes = [
-					"comments",
-					"commentSubscriptions",
-					"contentVersions",
-					"customFields",
-					"linkedContent",
-					"relatedContent",
-					"siteID",
-					"stats"
-				],
-				excludes = [ "commentSubscriptions.relatedContentSnapshot:relatedContent" ]
-			);
+			.getMemento( profile: "export" );
 	}
 
 	/**
