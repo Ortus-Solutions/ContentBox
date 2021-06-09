@@ -427,6 +427,11 @@ component
 		formula="select count(*) from cb_comment comment where comment.FK_contentID=contentID"
 		default="0";
 
+	property
+		name   ="numberOfVersions"
+		formula="select count(*) from cb_contentVersion versions where versions.FK_contentID=contentID"
+		default="0";
+
 	/* *********************************************************************
 	 **							PK + CONSTRAINTS + STATIC VARS
 	 ********************************************************************* */
@@ -675,9 +680,7 @@ component
 	 * Get the total number of versions this content object has
 	 */
 	numeric function getNumberOfVersions(){
-		return (
-			isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId() ) : 0
-		);
+		return ( isNull( variables.numberOfVersions ) ? 0 : variables.numberOfVersions );
 	}
 
 	/**
@@ -1714,8 +1717,11 @@ component
 	/**
 	 * Shortcut to get the site id
 	 */
-	function getsiteID(){
-		return getSite().getsiteID();
+	function getSiteID(){
+		if ( hasSite() ) {
+			return getSite().getsiteID();
+		}
+		return "";
 	}
 
 	/**
