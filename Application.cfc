@@ -16,11 +16,11 @@ component {
 	 * --------------------------------------------------------------------------
 	 * NON COMMANDBOX INSTALLS
 	 * --------------------------------------------------------------------------
-	 * If you are NOT using CommandBox as your server, then uncomment the line below
+	 * If you are NOT using CommandBox as your server, then set the variable to true
 	 * and ContentBox will load the `.env` environment file that is needed for operation.
 	 * Without this, your NON CommandBox ContentBox install will fail.
 	 */
-	// loadEnv();
+	this._loadDynamicEnvironment = false;
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -86,6 +86,9 @@ component {
 	 * So Make sure you select one.
 	 */
 	request.$coldboxUtil = new coldbox.system.core.util.Util();
+	if( this._loadDynamicEnvironment ){
+		loadEnv();
+	}
 	// THE CONTENTBOX DATASOURCE NAME
 	this.datasource  = "contentbox";
 	// ORM SETTINGS
@@ -146,6 +149,9 @@ component {
 			||
 			!structKeyExists( application, "cbController" )
 		) {
+			if( this._loadDynamicEnvironment ){
+				loadEnv( force : true );
+			}
 			reinitApplication();
 		}
 
@@ -157,6 +163,9 @@ component {
 			&&
 			application.cbBootstrap.isFWReinit()
 		) {
+			if( this._loadDynamicEnvironment ){
+				loadEnv( force : true );
+			}
 			if ( structKeyExists( server, "lucee" ) ) {
 				pagePoolClear();
 			}
@@ -194,11 +203,11 @@ component {
 	/**
 	 * This method is only called if you are in a NON CommandBox install.
 	 */
-	private void function loadEnv(){
+	private void function loadEnv( boolean force = false){
 		var javaSystem = createObject( "java", "java.lang.System" );
 		var value = javaSystem.getProperty( "contentbox_runtime_env" );
 		// If not loaded, lock and load.
-		if ( isNull( value ) ) {
+		if ( isNull( value ) || arguments.force ) {
 			lock
 				name="contentbox_runtime_env"
 				timeout="15"
@@ -206,7 +215,7 @@ component {
 				type="exclusive"
 			{
 				// Double lock
-				if( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) ){
+				if( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) || arguments.force ){
 					// Load .env file
 					var props = createObject( "java", "java.util.Properties" ).init();
 					props.load(
