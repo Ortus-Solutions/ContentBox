@@ -88,7 +88,7 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehContentExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 											</cfif>

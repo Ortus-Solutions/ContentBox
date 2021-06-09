@@ -21,28 +21,14 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li>
+									<a href="#event.buildLink( prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
+										<i class="fas fa-file-export fa-lg"></i> Export
+									</a>
+								</li>
+								<li>
 									<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
 										title="Issue a password reset for the user upon next login.">
 										<i class="fas fa-key"></i> Reset Password
-									</a>
-								</li>
-							</ul>
-						</div>
-
-						<div class="btn-group" role="group">
-							<button type="button" class="btn btn-sms btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-file-export fa-lg"></i> Export
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										<i class="fas fa-file-export fa-lg"></i> Export as JSON
-									</a>
-								</li>
-								<li>
-									<a href="#event.buildLink( to=prc.xehExport )#/authorID/#prc.author.getAuthorID()#.xml" target="_blank">
-										<i class="fas fa-file-export fa-lg"></i> Export as XML
 									</a>
 								</li>
 							</ul>
