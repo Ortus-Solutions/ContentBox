@@ -66,6 +66,11 @@
 														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
+												<li>
+													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
+													</a>
+												</li>
 											</cfif>
 								    	</ul>
 								    </div>
@@ -95,6 +100,9 @@
 
 						<thead>
 							<tr>
+								<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
+									<input type="checkbox" onClick="checkAll( this.checked, 'permissionGroupID' )"/>
+								</th>
 								<th>Group</th>
 								<th width="95" class="text-center">Permissions</th>
 								<th width="95" class="text-center">Authors</th>
@@ -105,7 +113,14 @@
 						<tbody>
 							<cfloop array="#prc.aGroups#" index="group">
 							<tr>
-
+								<!--- check box --->
+								<td class="text-center">
+									<input
+										type="checkbox"
+										name="permissionGroupID"
+										id="permissionGroupID"
+										value="#group.getPermissionGroupID()#" />
+								</td>
 								<td>
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 									<a

@@ -9,6 +9,9 @@
 	width="100%">
 	<thead>
 		<tr>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
+				<input type="checkbox" onClick="checkAll( this.checked, 'securityRuleID' )"/>
+			</th>
 			<th>Security Rule</th>
 			<th width="50" class="text-center">Order Index</th>
 			<th width="50" class="text-center {sorter:false}">Actions</th>
@@ -21,6 +24,14 @@
 			<!--- We convert the - in the id to _ since the order plugin doesn't like dashes--->
 			id="contentID-#rule.getRuleId().replace( "-", "_", "all" )#"
 		>
+			<!--- check box --->
+			<td class="text-center">
+				<input
+					type="checkbox"
+					name="securityRuleID"
+					id="securityRuleID"
+					value="#rule.getRuleId()#" />
+			</td>
 			<td class="breakCellWords">
 				<cfif rule.getMatch() eq "event">
 					<span class="badge badge-info" title="Matches an event string">#rule.getMatch()#</span>
@@ -92,13 +103,13 @@
 							</li>
 							<!--- Edit Command --->
 							<li>
-								<a href="#event.buildLink(prc.xehEditorRule)#/ruleID/#rule.getRuleID()#" title="Edit Rule">
+								<a href="#event.buildLink( prc.xehEditorRule )#/ruleID/#rule.getRuleID()#" title="Edit Rule">
 									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 							<!--- Export --->
 							<li>
-								<a href="#event.buildLink(to=prc.xehExport)#/ruleID/#rule.getRuleID()#.json" target="_blank">
+								<a href="#event.buildLink( prc.xehExport )#/ruleID/#rule.getRuleID()#.json" target="_blank">
 									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>

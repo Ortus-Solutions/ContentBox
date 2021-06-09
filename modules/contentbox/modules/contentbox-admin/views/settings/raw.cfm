@@ -80,11 +80,18 @@
 												</a>
 
                                                 <ul class="dropdown-menu">
-													<li>
-														<a href="javascript:openRemoteModal('#event.buildLink( prc.xehViewCached )#');">
-															<i class="far fa-hdd fa-lg"></i> View Cached Settings
-														</a>
-													</li>
+													<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+														<li>
+															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
+																<i class="fas fa-file-export fa-lg"></i> Export All
+															</a>
+														</li>
+														<li>
+															<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+																<i class="fas fa-file-export fa-lg"></i> Export Selected
+															</a>
+														</li>
+													</cfif>
 													<li>
 														<a href="javascript:flushSettingsCache()">
 															<i class="fas fa-recycle fa-lg"></i> Flush Settings Cache
@@ -97,13 +104,11 @@
 															</a>
 														</li>
                                                     </cfif>
-                                                    <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-														<li>
-															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-																<i class="fas fa-file-export fa-lg"></i> Export All
-															</a>
-														</li>
-													</cfif>
+													<li>
+														<a href="javascript:openRemoteModal('#event.buildLink( prc.xehViewCached )#');">
+															<i class="far fa-hdd fa-lg"></i> View Cached Settings
+														</a>
+													</li>
                                                 </ul>
                                             </div>
 

@@ -3,6 +3,9 @@
 <table name="settings" id="settings" class="table table-striped-removed table-hover">
 	<thead>
 		<tr>
+			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
+				<input type="checkbox" onClick="checkAll( this.checked, 'settingID' )"/>
+			</th>
 			<th width="280">Name</th>
 			<th width="80">Site</th>
 			<th class="text-center" width="25">Core</th>
@@ -13,6 +16,14 @@
 	<tbody>
 		<cfloop array="#prc.settings#" index="setting">
 		<tr>
+			<!--- check box --->
+			<td class="text-center">
+				<input
+					type="checkbox"
+					name="settingID"
+					id="settingID"
+					value="#setting.getSettingID()#" />
+			</td>
 			<td>
 				<a 	href="javascript:edit(
 					'#setting.getSettingId()#',

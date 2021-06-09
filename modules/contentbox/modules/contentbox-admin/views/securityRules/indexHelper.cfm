@@ -62,7 +62,7 @@ $( document ).ready(function() {
 	</cfif>
 } );
 
-<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 function remove(recordID){
 	if( recordID != null ){
 		$( "##delete_" + recordID )
@@ -72,6 +72,18 @@ function remove(recordID){
 	}
 	//Submit Form
 	$ruleForm.submit();
+}
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##securityRuleID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'securityRuleID' );
+		window.open( exportEvent + "/securityRuleID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
 }
 </cfif>
 </script>

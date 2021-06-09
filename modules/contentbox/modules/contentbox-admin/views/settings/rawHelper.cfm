@@ -129,5 +129,17 @@ function createSetting(){
 function submitSettingForm(){
 	$( "##settingEditor" ).submit();
 }
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##settingID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'settingID' );
+		window.open( exportEvent + "/settingID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
+}
 </script>
 </cfoutput>
