@@ -131,7 +131,19 @@ component extends="baseHandler" {
 	 * Export all categories
 	 */
 	function exportAll( event, rc, prc ){
-		return variables.categoryService.getAllForExport();
+		param rc.categoryID = "";
+		// Export all or some
+		if ( len( rc.categoryID ) ) {
+			return rc.categoryID
+				.listToArray()
+				.map( function( id ){
+					return variables.categoryService
+						.get( arguments.id )
+						.getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.categoryService.getAllForExport();
+		}
 	}
 
 	/**

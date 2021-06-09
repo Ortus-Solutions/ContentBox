@@ -144,6 +144,18 @@ function removeAuthor( authorID ){
 	$( "##targetAuthorID" ).val( authorID );
 	$( "##authorForm" ).submit();
 }
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##authorID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'authorID' );
+		window.open( exportEvent + "/authorID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
+}
 </cfif>
 </script>
 </cfoutput>

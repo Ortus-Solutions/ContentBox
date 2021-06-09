@@ -273,11 +273,26 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Export all menus
-	 * @return json,xml
+	 * Export Multiple menus
 	 */
 	function exportAll( event, rc, prc ){
-		return variables.menuService.getAllForExport();
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
+		param rc.menuID       = "";
+		// Export all or some
+		if ( len( rc.menuID ) ) {
+			return rc.menuID
+				.listToArray()
+				.map( function( id ){
+					return variables.menuService
+						.get( arguments.id )
+						.getMemento(
+							includes = "siteID,menuItems,menuItems.isDeleted,menuItems.parentSnapshot:parent"
+						);
+				} );
+		} else {
+			return variables.menuService.getAllForExport();
+		}
 	}
 
 	/**

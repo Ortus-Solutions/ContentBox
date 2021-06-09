@@ -571,12 +571,24 @@ component extends="baseContentHandler" {
 	}
 
 	/**
-	 * Export All Entries
+	 * Export Multiple Entries
 	 */
 	function exportAll( event, rc, prc ){
 		// Set a high timeout for long exports
 		setting requestTimeout="9999";
-		return variables.entryService.getAllForExport();
+		param rc.contentID    = "";
+		// Export all or some
+		if ( len( rc.contentID ) ) {
+			return rc.contentID
+				.listToArray()
+				.map( function( id ){
+					return variables.entryService
+						.get( arguments.id )
+						.getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.entryService.getAllForExport();
+		}
 	}
 
 	/**

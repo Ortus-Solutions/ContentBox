@@ -151,5 +151,17 @@ function importContent(){
         $importForm.submit();
     } );
 }
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##menuID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'menuID' );
+		window.open( exportEvent + "/menuID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
+}
 </script>
 </cfoutput>

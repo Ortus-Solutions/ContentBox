@@ -753,12 +753,26 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Export all users
+	 * Export multiple users
 	 */
 	function exportAll( event, rc, prc ){
 		// Set a high timeout for long exports
 		setting requestTimeout="9999";
-		return variables.authorService.getAllForExport();
+		param rc.authorID     = "";
+		// Export all or some
+		if ( len( rc.authorID ) ) {
+			return rc.authorID
+				.listToArray()
+				.map( function( id ){
+					return variables.authorService
+						.get( arguments.id )
+						.getMemento(
+							includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth"
+						);
+				} );
+		} else {
+			return variables.authorService.getAllForExport();
+		}
 	}
 
 	/**

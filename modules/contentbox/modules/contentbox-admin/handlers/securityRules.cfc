@@ -161,7 +161,17 @@ component extends="baseHandler" {
 
 	// Export All Entries
 	function exportAll( event, rc, prc ){
-		return variables.ruleService.getAllForExport();
+		param rc.securityRuleID = "";
+		// Export all or some
+		if ( len( rc.securityRuleID ) ) {
+			return rc.securityRuleID
+				.listToArray()
+				.map( function( id ){
+					return variables.ruleService.get( arguments.id ).getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.ruleService.getAllForExport();
+		}
 	}
 
 	// import entries

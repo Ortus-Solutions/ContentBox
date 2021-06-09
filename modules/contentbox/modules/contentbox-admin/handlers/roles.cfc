@@ -69,10 +69,7 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		prc.oRole = populateModel(
-			model               : roleService.get( rc.roleID ),
-			composeRelationships: true
-		);
+		prc.oRole = populateModel( model: roleService.get( rc.roleID ), composeRelationships: true );
 
 		// Validate
 		var vResults = validate( prc.oRole );
@@ -120,9 +117,9 @@ component extends="baseHandler" {
 	 * Create or Edit Roles
 	 */
 	function editor( event, rc, prc ){
-		param rc.roleId  = 0;
+		param rc.roleId = 0;
 		// Get or fail
-		if( isNull( prc.oRole ) ){
+		if ( isNull( prc.oRole ) ) {
 			prc.oRole = variables.roleService.get( rc.roleId );
 		}
 		// Load permissions
@@ -157,7 +154,17 @@ component extends="baseHandler" {
 	 * @prc
 	 */
 	function exportAll( event, rc, prc ){
-		return variables.roleService.getAllForExport();
+		param rc.roleID = "";
+		// Export all or some
+		if ( len( rc.roleID ) ) {
+			return rc.roleID
+				.listToArray()
+				.map( function( id ){
+					return variables.roleService.get( arguments.id ).getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.roleService.getAllForExport();
+		}
 	}
 
 	/**

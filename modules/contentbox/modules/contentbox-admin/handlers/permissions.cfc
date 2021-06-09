@@ -107,7 +107,19 @@ component extends="baseHandler" {
 	 * Export all permissions as json/xml
 	 */
 	function exportAll( event, rc, prc ){
-		return variables.permissionService.getAllForExport();
+		param rc.permissionID = "";
+		// Export all or some
+		if ( len( rc.permissionID ) ) {
+			return rc.permissionID
+				.listToArray()
+				.map( function( id ){
+					return variables.permissionService
+						.get( arguments.id )
+						.getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.permissionService.getAllForExport();
+		}
 	}
 
 	/**

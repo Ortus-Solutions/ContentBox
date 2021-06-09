@@ -63,6 +63,11 @@
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
+													<li>
+														<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+															<i class="fas fa-file-export fa-lg"></i> Export Selected
+														</a>
+													</li>
 												</li>
 												<li>
 													<a 	href="#event.buildLink( prc.xehGlobalPasswordReset )#"

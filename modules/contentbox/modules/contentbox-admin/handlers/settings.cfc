@@ -173,11 +173,22 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Export all settings as either xml or json
-	 * @return xml,json
+	 * Export multiple settings
 	 */
 	function exportAll( event, rc, prc ){
-		return variables.settingsService.getAllForExport();
+		param rc.settingID = "";
+		// Export all or some
+		if ( len( rc.settingID ) ) {
+			return rc.settingID
+				.listToArray()
+				.map( function( id ){
+					return variables.settingsService
+						.get( arguments.id )
+						.getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.settingsService.getAllForExport();
+		}
 	}
 
 	/**

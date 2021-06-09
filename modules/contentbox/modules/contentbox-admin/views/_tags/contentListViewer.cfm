@@ -164,15 +164,27 @@ function remove( contentID, id ){
 function bulkRemove(){
 	$contentForm.submit();
 }
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##contentID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'contentID' );
+		window.open( exportEvent + "/contentID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
+}
 // Bulk change status
-function bulkChangeStatus(status, contentID){
+function bulkChangeStatus( status, contentID ){
 	// Setup the right form actions and status
 	$contentForm.attr( "action", $bulkStatusURL );
 	$contentForm.find( "##contentStatus" ).val( status );
 	// only submit if something selected
 	if( contentID != null ){
 		$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );
-		checkByValue('contentID',contentID);
+		checkByValue( 'contentID', contentID );
 	}
 	$contentForm.submit();
 }

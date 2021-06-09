@@ -82,14 +82,19 @@
 														<i class="fas fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
-												</cfif>
-												<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
-												<li>
-													<a href="#event.buildLink( prc.xehEntryExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All
-													</a>
-												</li>
 											</cfif>
+												<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
+													<li>
+														<a href="#event.buildLink( prc.xehEntryExportAll )#.json" target="_blank">
+															<i class="fas fa-file-export fa-lg"></i> Export All
+														</a>
+													</li>
+													<li>
+														<a href="javascript:exportSelected( '#event.buildLink( prc.xehEntryExportAll )#' )">
+															<i class="fas fa-file-export fa-lg"></i> Export Selected
+														</a>
+													</li>
+												</cfif>
 											<li>
 												<a href="javascript:resetBulkHits()">
 													<i class="fas fa-recycle fa-lg"></i> Reset Hits Selected

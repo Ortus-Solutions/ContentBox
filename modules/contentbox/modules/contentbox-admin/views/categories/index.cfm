@@ -71,6 +71,11 @@
 													<i class="fas fa-file-export fa-lg"></i> Export All
 												</a>
 											</li>
+											<li>
+												<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+													<i class="fas fa-file-export fa-lg"></i> Export Selected
+												</a>
+											</li>
 										</cfif>
 							    	</ul>
 							    </div>

@@ -144,7 +144,19 @@ component extends="baseHandler" {
 	 * Export all entries
 	 */
 	function exportAll( event, rc, prc ){
-		return variables.permissionGroupService.getAllForExport();
+		param rc.permissionGroupID = "";
+		// Export all or some
+		if ( len( rc.permissionGroupID ) ) {
+			return rc.permissionGroupID
+				.listToArray()
+				.map( function( id ){
+					return variables.permissionGroupService
+						.get( arguments.id )
+						.getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.permissionGroupService.getAllForExport();
+		}
 	}
 
 	/**

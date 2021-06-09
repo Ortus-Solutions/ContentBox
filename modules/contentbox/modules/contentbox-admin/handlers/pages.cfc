@@ -688,14 +688,28 @@ component extends="baseContentHandler" {
 			.getMemento( profile: "export" );
 	}
 
-	// Export All Pages
+	/**
+	 * Export Multiple Pages
+	 */
 	function exportAll( event, rc, prc ){
 		// Set a high timeout for long exports
 		setting requestTimeout="9999";
-		return variables.pageService.getAllForExport();
+		param rc.contentID    = "";
+		// Export all or some
+		if ( len( rc.contentID ) ) {
+			return rc.contentID
+				.listToArray()
+				.map( function( id ){
+					return variables.pageService.get( arguments.id ).getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.pageService.getAllForExport();
+		}
 	}
 
-	// import settings
+	/**
+	 * Import pages
+	 */
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );

@@ -60,6 +60,11 @@
 														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
+												<li>
+													<a href="javascript:exportSelected( '#event.buildLink( prc.xehMenuExportAll )#' )">
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
+													</a>
+												</li>
 											</cfif>
                                             <li><a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All</a></li>
                                         </ul>

@@ -58,6 +58,18 @@ function createCategory(){
 	$categoryEditor.find( "##slug" ).val( '' );
 	return false;
 }
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##categoryID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'categoryID' );
+		window.open( exportEvent + "/categoryID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
+}
 </cfif>
 </script>
 </cfoutput>
