@@ -219,6 +219,26 @@ component
 	}
 
 	/**
+	 * Get by slug or fail
+	 *
+	 * @slug The site slug
+	 *
+	 * @throws EntityNotFound
+	 */
+	function getBySlugOrFail( required slug ){
+		var site = newCriteria().isEq( "slug", arguments.slug ).get();
+
+		if ( !isNull( site ) ) {
+			return site;
+		}
+
+		throw(
+			type   : "EntityNotFound",
+			message: "No site with slug #arguments.slug.toString()# found"
+		);
+	}
+
+	/**
 	 * This method discovers which site you are on and returns it depending on the following markers:
 	 *
 	 * - Are we in the admin, use the current working site

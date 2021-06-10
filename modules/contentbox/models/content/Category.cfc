@@ -127,7 +127,7 @@ component
 			"numberOfEntries",
 			"numberOfPages",
 			"slug",
-			"siteID"
+			"siteSnapshot:site"
 		],
 		defaultExcludes : [ "site" ]
 	};

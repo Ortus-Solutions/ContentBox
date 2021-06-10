@@ -259,10 +259,10 @@
 	#renderView(
 		view 	= "_tags/dialog/import",
 		args 	= {
-			title 		= "Import Users",
-			contentArea = "user",
+			title 		= "Import Categories",
+			contentArea = "category",
 			action 		= prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> file to import."
 		},
 		prePostExempt = true
 	)#
