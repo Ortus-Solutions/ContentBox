@@ -629,11 +629,15 @@ table.diff {
 
 .consoleLog{
 	border:2px solid #eaeaea;
-	padding:5px;
-	font-size:11px;
+	padding:10px;
+	font-size:12px;
 	font-family: courier;
 	background-color:black;
-	color:#66E10D
+	color:#66E10D;
+	margin: 20px 0px;
+	border-radius: 10px;
+	overflow-y: auto;
+	max-height: 400px;
 }
 
 /**============================== Utility Classes | Tailwind Polyfill For When We Move ==============================**/
