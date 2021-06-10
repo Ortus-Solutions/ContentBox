@@ -89,10 +89,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
-	 * @importFile The file to import
-	 * @override To override data in the database or skip if found
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
 	 *
-	 * @return A string console log
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -116,7 +118,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures of permissions or just one structure of permissions
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
@@ -136,16 +146,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			var oPermission = this.findByPermission( thisPermission.permission );
 			oPermission     = ( isNull( oPermission ) ? new () : oPermission );
 
-			// date cleanups, just in case.
-			var badDateRegex            = " -\d{4}$";
-			thisPermission.createdDate  = reReplace( thisPermission.createdDate, badDateRegex, "" );
-			thisPermission.modifiedDate = reReplace( thisPermission.modifiedDate, badDateRegex, "" );
-			// Epoch to Local
-			thisPermission.createdDate  = dateUtil.epochToLocal( thisPermission.createdDate );
-			thisPermission.modifiedDate = dateUtil.epochToLocal( thisPermission.modifiedDate );
-
 			// populate content from data
-			populate(
+			getBeanPopulator().populateFromStruct(
 				target               = oPermission,
 				memento              = thisPermission,
 				exclude              = "permissionID",

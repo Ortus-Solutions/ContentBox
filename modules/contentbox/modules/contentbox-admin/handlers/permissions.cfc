@@ -35,6 +35,7 @@ component extends="baseHandler" {
 		// exit Handlers
 		prc.xehPermissionRemove = "#prc.cbAdminEntryPoint#.permissions.remove";
 		prc.xehPermissionSave   = "#prc.cbAdminEntryPoint#.permissions.save";
+		prc.xehExport           = "#prc.cbAdminEntryPoint#.permissions.export";
 		prc.xehExportAll        = "#prc.cbAdminEntryPoint#.permissions.exportAll";
 		prc.xehImportAll        = "#prc.cbAdminEntryPoint#.permissions.importAll";
 
@@ -101,6 +102,13 @@ component extends="baseHandler" {
 			cbMessagebox.setMessage( "info", "Permission and all relationships Removed!" );
 		}
 		relocate( prc.xehPermissions );
+	}
+
+	/**
+	 * Export a permission
+	 */
+	function export( event, rc, prc ){
+		return variables.permissionService.get( event.getValue( "permissionID", 0 ) ).getMemento();
 	}
 
 	/**

@@ -138,7 +138,11 @@
 								<td class="text-center">
 									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
 										<div class="btn-group">
-											<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+											<a
+												class="btn btn-sm btn-default btn-more dropdown-toggle"
+												data-toggle="dropdown"
+												href="##"
+												title="Actions">
 												<i class="fas fa-ellipsis-v fa-lg"></i>
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">
@@ -146,16 +150,31 @@
 												<li>
 													<a
 														class=""
-														href="javascript:edit( '#permission.getPermissionID()#',
-																			'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
-																			'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#' );"
+														href="javascript:edit(
+															'#permission.getPermissionID()#',
+															'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
+															'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#'
+															)"
 														title="Edit #permission.getPermission()#">
 														<i class="fas fa-pen fa-lg"></i> Edit
 													</a>
 												</li>
+												<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+													<li>
+														<a
+															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
+															target="_blank">
+															<i class="fas fa-file-export fa-lg"></i> Export
+														</a>
+													</li>
+												</cfif>
 												<!--- Delete Command --->
 												<li>
-													<a class="confirmIt" title="Delete Permission" href="javascript:remove('#permission.getPermissionID()#');" data-title="Delete Permission?">
+													<a
+														class="confirmIt"
+														title="Delete Permission"
+														href="javascript:remove( '#permission.getPermissionID()#' );"
+														data-title="Delete Permission?">
 														<i id="delete_#permission.getPermissionID()#" class="far fa-trash-alt fa-lg"></i> Delete
 													</a>
 												</li>
