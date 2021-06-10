@@ -75,13 +75,7 @@ component
 	};
 
 	this.memento = {
-		defaultIncludes : [
-			"name",
-			"value",
-			"isCore",
-			"siteSnapshot",
-			"siteID"
-		],
+		defaultIncludes : [ "name", "value", "isCore", "siteSnapshot:site" ],
 		defaultExcludes : [ "site" ]
 	};
 

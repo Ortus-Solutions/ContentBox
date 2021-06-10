@@ -302,7 +302,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures of categories or just one structure of categories
+	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
 	 * @override Override content if found in the database, defaults to false

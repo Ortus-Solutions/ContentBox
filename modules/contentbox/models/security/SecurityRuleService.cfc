@@ -98,36 +98,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		var propList = [
-			"ruleID",
-			"whitelist",
-			"securelist",
-			"match",
-			"roles",
-			"permissions",
-			"redirect",
-			"overrideEvent",
-			"useSSL",
-			"action",
-			"module",
-			"order",
-			"message",
-			"messageType",
-			"createdDate",
-			"modifiedDate",
-			"isDeleted"
-		];
-
-		return newCriteria()
-			.withProjections( property = arrayToList( propList ) )
-			.asStruct()
-			.list( sortOrder = "order" );
+		return getAll().map( function( thisItem ){
+			return thisItem.getMemento( profile: "export" );
+		} );
 	}
 
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
-	 * @importFile The file to import
-	 * @override Override data
+	 *
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -151,10 +135,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures
-	 * @importData data to import
-	 * @override Override data
-	 * @importLog The import log
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
@@ -171,27 +160,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// iterate and import
 		for ( var thisRule in arguments.importData ) {
 			// Get new or persisted with enough info to match
-			var args = {
-				match       : thisRule.match,
-				whitelist   : thisRule.whitelist,
-				securelist  : thisRule.securelist,
-				redirect    : thisRule.redirect,
-				roles       : thisRule.roles,
-				permissions : thisRule.permissions
-			};
-			var oRule = this.findWhere( criteria = args );
-			oRule     = ( isNull( oRule ) ? new () : oRule );
-
-			// date cleanups, just in case.
-			var badDateRegex      = " -\d{4}$";
-			thisRule.createdDate  = reReplace( thisRule.createdDate, badDateRegex, "" );
-			thisRule.modifiedDate = reReplace( thisRule.modifiedDate, badDateRegex, "" );
-			// Epoch to Local
-			thisRule.createdDate  = dateUtil.epochToLocal( thisRule.createdDate );
-			thisRule.modifiedDate = dateUtil.epochToLocal( thisRule.modifiedDate );
+			var oRule = this.findWhere(
+				criteria = {
+					match       : thisRule.match,
+					whitelist   : thisRule.whitelist,
+					securelist  : thisRule.securelist,
+					redirect    : thisRule.redirect,
+					roles       : thisRule.roles,
+					permissions : thisRule.permissions
+				}
+			);
+			oRule = ( isNull( oRule ) ? new () : oRule );
 
 			// populate content from data
-			populator.populateFromStruct(
+			getBeanPopulator().populateFromStruct(
 				target               = oRule,
 				memento              = thisRule,
 				exclude              = "ruleID",
