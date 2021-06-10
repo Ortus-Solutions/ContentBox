@@ -68,8 +68,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @override Override content if found in the database, defaults to false
 	 * @importLog The import log buffer
 	 *
-	 * @throws InvalidImportFormat
-	 *
 	 * @return The console log of the import
 	 */
 	string function importFromData(
@@ -84,70 +82,78 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisGroup in arguments.importData ) {
-			// Get new or persisted
-			var oGroup = this.findByName( thisGroup.name );
-			oGroup     = ( isNull( oGroup ) ? new () : oGroup );
+		transaction {
+			// iterate and import
+			for ( var thisGroup in arguments.importData ) {
+				// Get new or persisted
+				var oGroup = this.findByName( thisGroup.name );
+				oGroup     = ( isNull( oGroup ) ? new () : oGroup );
 
-			// populate content from data
-			getBeanPopulator().populateFromStruct(
-				target               = oGroup,
-				memento              = thisGroup,
-				exclude              = "permissionGroupID,permissions",
-				composeRelationships = false
-			);
-
-			// PERMISSIONS
-			if ( arrayLen( thisGroup.permissions ) ) {
-				// Create permissions that don't exist first
-				var allPermissions = [];
-				for ( var thisPermission in thisGroup.permissions ) {
-					var oPerm = variables.permissionService.findByPermission(
-						thisPermission.permission
-					);
-					oPerm = (
-						isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
-							target  = variables.permissionService.new(),
-							memento = thisPermission,
-							exclude = "permissionID"
-						) : oPerm
-					);
-					// save oPerm if new only
-					if ( !oPerm.isLoaded() ) {
-						variables.permissionService.save( entity = oPerm, transactional = false );
-					}
-					// append to add.
-					arrayAppend( allPermissions, oPerm );
-				}
-				// detach permissions and re-attach
-				oGroup.setPermissions( allPermissions );
-			}
-
-			// if new or persisted with override then save.
-			if ( !oGroup.isLoaded() ) {
-				arguments.importLog.append( "New permission group imported: #thisGroup.name#<br>" );
-				arrayAppend( allGroups, oGroup );
-			} else if ( oGroup.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Persisted permission group overriden: #thisGroup.name#<br>"
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target               = oGroup,
+					memento              = thisGroup,
+					exclude              = "permissionGroupID,permissions",
+					composeRelationships = false
 				);
-				arrayAppend( allGroups, oGroup );
+
+				// PERMISSIONS
+				if ( arrayLen( thisGroup.permissions ) ) {
+					// Create permissions that don't exist first
+					var allPermissions = [];
+					for ( var thisPermission in thisGroup.permissions ) {
+						var oPerm = variables.permissionService.findByPermission(
+							thisPermission.permission
+						);
+						oPerm = (
+							isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
+								target  = variables.permissionService.new(),
+								memento = thisPermission,
+								exclude = "permissionID"
+							) : oPerm
+						);
+						// save oPerm if new only
+						if ( !oPerm.isLoaded() ) {
+							variables.permissionService.save(
+								entity        = oPerm,
+								transactional = false
+							);
+						}
+						// append to add.
+						arrayAppend( allPermissions, oPerm );
+					}
+					// detach permissions and re-attach
+					oGroup.setPermissions( allPermissions );
+				}
+
+				// if new or persisted with override then save.
+				if ( !oGroup.isLoaded() ) {
+					arguments.importLog.append(
+						"New permission group imported: #thisGroup.name#<br>"
+					);
+					arrayAppend( allGroups, oGroup );
+				} else if ( oGroup.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted permission group overriden: #thisGroup.name#<br>"
+					);
+					arrayAppend( allGroups, oGroup );
+				} else {
+					arguments.importLog.append( "Skipping permission group: #thisGroup.name#<br>" );
+				}
+			}
+			// end import loop
+
+			// Save them?
+			if ( arrayLen( allGroups ) ) {
+				saveAll( allGroups );
+				arguments.importLog.append( "Saved all imported and overriden permission groups!" );
 			} else {
-				arguments.importLog.append( "Skipping permission group: #thisGroup.name#<br>" );
+				arguments.importLog.append(
+					"No permission groups imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allGroups ) ) {
-			saveAll( allGroups );
-			arguments.importLog.append( "Saved all imported and overriden permission groups!" );
-		} else {
-			arguments.importLog.append(
-				"No permission groups imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end of transaction
 
 		return arguments.importLog.toString();
 	}

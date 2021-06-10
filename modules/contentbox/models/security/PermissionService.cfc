@@ -140,46 +140,51 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisPermission in arguments.importData ) {
-			// Get new or persisted
-			var oPermission = this.findByPermission( thisPermission.permission );
-			oPermission     = ( isNull( oPermission ) ? new () : oPermission );
+		transaction {
+			// iterate and import
+			for ( var thisPermission in arguments.importData ) {
+				// Get new or persisted
+				var oPermission = this.findByPermission( thisPermission.permission );
+				oPermission     = ( isNull( oPermission ) ? new () : oPermission );
 
-			// populate content from data
-			getBeanPopulator().populateFromStruct(
-				target               = oPermission,
-				memento              = thisPermission,
-				exclude              = "permissionID",
-				composeRelationships = false
-			);
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target               = oPermission,
+					memento              = thisPermission,
+					exclude              = "permissionID",
+					composeRelationships = false
+				);
 
-			// if new or persisted with override then save.
-			if ( !oPermission.isLoaded() ) {
-				arguments.importLog.append(
-					"New permission imported: #thisPermission.permission#<br>"
-				);
-				arrayAppend( allPermissions, oPermission );
-			} else if ( oPermission.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Permission overriden: #thisPermission.permission#<br>"
-				);
-				arrayAppend( allPermissions, oPermission );
+				// if new or persisted with override then save.
+				if ( !oPermission.isLoaded() ) {
+					arguments.importLog.append(
+						"New permission imported: #thisPermission.permission#<br>"
+					);
+					arrayAppend( allPermissions, oPermission );
+				} else if ( oPermission.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Permission overriden: #thisPermission.permission#<br>"
+					);
+					arrayAppend( allPermissions, oPermission );
+				} else {
+					arguments.importLog.append(
+						"Permission skipped: #thisPermission.permission#<br>"
+					);
+				}
+			}
+			// end import loop
+
+			// Save them?
+			if ( arrayLen( allPermissions ) ) {
+				saveAll( allPermissions );
+				arguments.importLog.append( "Saved all imported and overriden permissions!" );
 			} else {
-				arguments.importLog.append( "Permission skipped: #thisPermission.permission#<br>" );
+				arguments.importLog.append(
+					"No permissions imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allPermissions ) ) {
-			saveAll( allPermissions );
-			arguments.importLog.append( "Saved all imported and overriden permissions!" );
-		} else {
-			arguments.importLog.append(
-				"No permissions imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end of transaction
 
 		return arguments.importLog.toString();
 	}

@@ -325,47 +325,52 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisCategory in arguments.importData ) {
-			// Get new or persisted
-			var oCategory = this.findBySlug( slug: thisCategory.slug );
-			oCategory     = ( isNull( oCategory ) ? new () : oCategory );
+		transaction {
+			// iterate and import
+			for ( var thisCategory in arguments.importData ) {
+				// Get new or persisted
+				var oCategory = this.findBySlug( slug: thisCategory.slug );
+				oCategory     = ( isNull( oCategory ) ? new () : oCategory );
 
-			// populate content from data
-			getBeanPopulator().populateFromStruct(
-				target              : oCategory,
-				memento             : thisCategory,
-				exclude             : "categoryID",
-				composeRelationships: false
-			);
-
-			// Link the site
-			oCategory.setSite( siteService.getBySlugOrFail( thisCategory.site.slug ) );
-
-			// if new or persisted with override then save.
-			if ( !oCategory.isLoaded() ) {
-				arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
-				arrayAppend( allCategories, oCategory );
-			} else if ( oCategory.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Persisted category overriden: #thisCategory.slug#<br>"
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target              : oCategory,
+					memento             : thisCategory,
+					exclude             : "categoryID",
+					composeRelationships: false
 				);
-				arrayAppend( allCategories, oCategory );
+
+				// Link the site
+				oCategory.setSite( siteService.getBySlugOrFail( thisCategory.site.slug ) );
+
+				// if new or persisted with override then save.
+				if ( !oCategory.isLoaded() ) {
+					arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
+					arrayAppend( allCategories, oCategory );
+				} else if ( oCategory.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted category overriden: #thisCategory.slug#<br>"
+					);
+					arrayAppend( allCategories, oCategory );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted category: #thisCategory.slug#<br>"
+					);
+				}
+			}
+			// end import loop
+
+			// Save them?
+			if ( arrayLen( allCategories ) ) {
+				saveAll( allCategories );
+				arguments.importLog.append( "Saved all imported and overriden categories!" );
 			} else {
-				arguments.importLog.append( "Skipping persisted category: #thisCategory.slug#<br>" );
+				arguments.importLog.append(
+					"No categories imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allCategories ) ) {
-			saveAll( allCategories );
-			arguments.importLog.append( "Saved all imported and overriden categories!" );
-		} else {
-			arguments.importLog.append(
-				"No categories imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end of transaction
 
 		return arguments.importLog.toString();
 	}

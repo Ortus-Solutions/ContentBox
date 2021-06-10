@@ -141,8 +141,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @override Override content if found in the database, defaults to false
 	 * @importLog The import log buffer
 	 *
-	 * @throws InvalidImportFormat
-	 *
 	 * @return The console log of the import
 	 */
 	string function importFromData(
@@ -157,57 +155,60 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisRule in arguments.importData ) {
-			// Get new or persisted with enough info to match
-			var oRule = this.findWhere(
-				criteria = {
-					match       : thisRule.match,
-					whitelist   : thisRule.whitelist,
-					securelist  : thisRule.securelist,
-					redirect    : thisRule.redirect,
-					roles       : thisRule.roles,
-					permissions : thisRule.permissions
+		transaction {
+			// iterate and import
+			for ( var thisRule in arguments.importData ) {
+				// Get new or persisted with enough info to match
+				var oRule = this.findWhere(
+					criteria = {
+						match       : thisRule.match,
+						whitelist   : thisRule.whitelist,
+						securelist  : thisRule.securelist,
+						redirect    : thisRule.redirect,
+						roles       : thisRule.roles,
+						permissions : thisRule.permissions
+					}
+				);
+				oRule = ( isNull( oRule ) ? new () : oRule );
+
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target               = oRule,
+					memento              = thisRule,
+					exclude              = "ruleID",
+					composeRelationships = false
+				);
+
+				// if new or persisted with override then save.
+				if ( !oRule.isLoaded() ) {
+					arguments.importLog.append(
+						"New security rule imported: #thisRule.toString()#<br>"
+					);
+					arrayAppend( allRules, oRule );
+				} else if ( oRule.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted security rule overriden: #thisRule.toString()#<br>"
+					);
+					arrayAppend( allRules, oRule );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted security rule: #thisRule.toString()#<br>"
+					);
 				}
-			);
-			oRule = ( isNull( oRule ) ? new () : oRule );
+			}
+			// end import loop
 
-			// populate content from data
-			getBeanPopulator().populateFromStruct(
-				target               = oRule,
-				memento              = thisRule,
-				exclude              = "ruleID",
-				composeRelationships = false
-			);
-
-			// if new or persisted with override then save.
-			if ( !oRule.isLoaded() ) {
-				arguments.importLog.append(
-					"New security rule imported: #thisRule.toString()#<br>"
-				);
-				arrayAppend( allRules, oRule );
-			} else if ( oRule.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Persisted security rule overriden: #thisRule.toString()#<br>"
-				);
-				arrayAppend( allRules, oRule );
+			// Save them?
+			if ( arrayLen( allRules ) ) {
+				saveAll( allRules );
+				arguments.importLog.append( "Saved all imported and overriden security rules!" );
 			} else {
 				arguments.importLog.append(
-					"Skipping persisted security rule: #thisRule.toString()#<br>"
+					"No security rules imported as none where found or able to be overriden from the import file."
 				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allRules ) ) {
-			saveAll( allRules );
-			arguments.importLog.append( "Saved all imported and overriden security rules!" );
-		} else {
-			arguments.importLog.append(
-				"No security rules imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end transaction
 
 		return arguments.importLog.toString();
 	}

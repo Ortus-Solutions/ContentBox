@@ -812,51 +812,58 @@ component
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisSetting in arguments.importData ) {
-			var oSetting = findWhere( { name : thisSetting.name } );
-			oSetting     = ( isNull( oSetting ) ? new () : oSetting );
+		transaction {
+			// iterate and import
+			for ( var thisSetting in arguments.importData ) {
+				var oSetting = findWhere( { name : thisSetting.name } );
+				oSetting     = ( isNull( oSetting ) ? new () : oSetting );
 
-			// Check for boolean values
-			if ( isSimpleValue( thisSetting.value ) && isBoolean( thisSetting.value ) ) {
-				thisSetting.value = toString( thisSetting.value );
+				// Check for boolean values
+				if ( isSimpleValue( thisSetting.value ) && isBoolean( thisSetting.value ) ) {
+					thisSetting.value = toString( thisSetting.value );
+				}
+
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target              : oSetting,
+					memento             : thisSetting,
+					exclude             : "settingID,site",
+					composeRelationships: false
+				);
+
+				// Link the site if it exists
+				if ( !isNull( thisSetting.site.slug ) ) {
+					oSetting.setSite( siteService.getBySlugOrFail( thisSetting.site.slug ) );
+				}
+
+				// if new or persisted with override then save.
+				if ( !oSetting.isLoaded() ) {
+					arguments.importLog.append( "New setting imported: #thisSetting.name#<br>" );
+					arrayAppend( allSettings, oSetting );
+				} else if ( oSetting.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted setting overriden: #thisSetting.name#<br>"
+					);
+					arrayAppend( allSettings, oSetting );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted setting: #thisSetting.name#<br>"
+					);
+				}
 			}
+			// end import loop
 
-			// populate content from data
-			getBeanPopulator().populateFromStruct(
-				target              : oSetting,
-				memento             : thisSetting,
-				exclude             : "settingID,site",
-				composeRelationships: false
-			);
-
-			// Link the site if it exists
-			if ( !isNull( thisSetting.site.slug ) ) {
-				oSetting.setSite( siteService.getBySlugOrFail( thisSetting.site.slug ) );
-			}
-
-			// if new or persisted with override then save.
-			if ( !oSetting.isLoaded() ) {
-				arguments.importLog.append( "New setting imported: #thisSetting.name#<br>" );
-				arrayAppend( allSettings, oSetting );
-			} else if ( oSetting.isLoaded() and arguments.override ) {
-				arguments.importLog.append( "Persisted setting overriden: #thisSetting.name#<br>" );
-				arrayAppend( allSettings, oSetting );
+			// Save them?
+			if ( arrayLen( allSettings ) ) {
+				saveAll( allSettings );
+				arguments.importLog.append( "Saved all imported and overriden settings!" );
 			} else {
-				arguments.importLog.append( "Skipping persisted setting: #thisSetting.name#<br>" );
+				arguments.importLog.append(
+					"No settings imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allSettings ) ) {
-			saveAll( allSettings );
-			arguments.importLog.append( "Saved all imported and overriden settings!" );
-		} else {
-			arguments.importLog.append(
-				"No settings imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end of transaction
 
 		return arguments.importLog.toString();
 	}
