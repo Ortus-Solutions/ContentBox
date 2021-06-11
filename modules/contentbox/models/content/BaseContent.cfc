@@ -286,7 +286,7 @@ component
 		singularName="comment"
 		fieldtype   ="one-to-many"
 		type        ="array"
-		lazy        ="extra"
+		lazy        ="true"
 		batchsize   ="25"
 		orderby     ="createdDate"
 		cfc         ="contentbox.models.comments.Comment"
@@ -349,7 +349,7 @@ component
 		singularName="commentSubscription"
 		fieldtype   ="one-to-many"
 		type        ="array"
-		lazy        ="extra"
+		lazy        ="true"
 		batchsize   ="25"
 		cfc         ="contentbox.models.subscriptions.CommentSubscription"
 		fkcolumn    ="FK_contentID"
@@ -361,7 +361,7 @@ component
 		name             ="categories"
 		fieldtype        ="many-to-many"
 		type             ="array"
-		lazy             ="extra"
+		lazy             ="true"
 		orderby          ="category"
 		cascade          ="save-update"
 		cfc              ="contentbox.models.content.Category"
@@ -374,7 +374,7 @@ component
 		name             ="relatedContent"
 		fieldtype        ="many-to-many"
 		type             ="array"
-		lazy             ="extra"
+		lazy             ="true"
 		orderby          ="title"
 		cascade          ="save-update"
 		cfc              ="contentbox.models.content.BaseContent"
@@ -387,7 +387,7 @@ component
 		name             ="linkedContent"
 		fieldtype        ="many-to-many"
 		type             ="array"
-		lazy             ="extra"
+		lazy             ="true"
 		cascade          ="save-update"
 		inverse          ="true"
 		orderby          ="title"
@@ -513,7 +513,7 @@ component
 					"parentSnapshot:parent",
 					"publishedDate",
 					"showInSearch",
-					"siteID",
+					"siteSnapshot:site",
 					"slug",
 					"title",
 					"children",
@@ -945,6 +945,18 @@ component
 			variables.categories.clear();
 		} else {
 			variables.categories = [];
+		}
+		return this;
+	}
+
+	/*
+	 * I remove all custom fields
+	 */
+	BaseContent function removeAllCustomFields(){
+		if ( hasCustomField() ) {
+			variables.customFields.clear();
+		} else {
+			variables.customFields = [];
 		}
 		return this;
 	}

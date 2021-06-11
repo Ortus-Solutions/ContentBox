@@ -70,41 +70,43 @@
 														<i class="fas fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
-												<li>
-													<a href="javascript:bulkChangeStatus('publish')">
-														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
-													</a>
-												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
 														<i class="fas fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-												<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
-													<li>
-														<a href="#event.buildLink( prc.xehEntryExportAll )#.json" target="_blank">
-															<i class="fas fa-file-export fa-lg"></i> Export All
-														</a>
-													</li>
-													<li>
-														<a href="javascript:exportSelected( '#event.buildLink( prc.xehEntryExportAll )#' )">
-															<i class="fas fa-file-export fa-lg"></i> Export Selected
-														</a>
-													</li>
-												</cfif>
-											<li>
-												<a href="javascript:resetBulkHits()">
-													<i class="fas fa-recycle fa-lg"></i> Reset Hits Selected
-												</a>
-											</li>
-											<li>
-												<a href="javascript:contentShowAll()">
-													<i class="fas fa-list fa-lg"></i> Show All
-												</a>
-											</li>
+											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+												<li>
+													<a href="#event.buildLink( prc.xehEntryExportAll )#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export All
+													</a>
+												</li>
+												<li>
+													<a href="javascript:exportSelected( '#event.buildLink( prc.xehEntryExportAll )#' )">
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
+													</a>
+												</li>
+											</cfif>
+											<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
+												<li>
+													<a href="javascript:bulkChangeStatus('publish')">
+														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
+													</a>
+												</li>
+												<li>
+													<a href="javascript:resetBulkHits()">
+														<i class="fas fa-recycle fa-lg"></i> Reset Hits Selected
+													</a>
+												</li>
+												<li>
+													<a href="javascript:contentShowAll()">
+														<i class="fas fa-list fa-lg"></i> Show All
+													</a>
+												</li>
+											</cfif>
 								    	</ul>
 								    </div>
 								</cfif>

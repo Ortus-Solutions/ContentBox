@@ -118,7 +118,9 @@ function isEmailFound( email ){
 }
 <cfif prc.author.isLoaded()>
 function loadPermissions(){
-	$permissions.load( '#event.buildLink( prc.xehAuthorPermissions )#/authorID/' + #prc.author.getAuthorID()# );
+	$permissions.load(
+		'#event.buildLink( prc.xehAuthorPermissions )#/authorID/#prc.author.getAuthorID()#'
+	);
 }
 </cfif>
 </script>

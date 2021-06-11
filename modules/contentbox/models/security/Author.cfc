@@ -140,7 +140,7 @@ component
 		cfc         ="contentbox.models.content.Entry"
 		fkcolumn    ="FK_authorID"
 		inverse     ="true"
-		lazy        ="extra"
+		lazy        ="true"
 		cascade     ="save-update"
 		batchsize   ="10"
 		orderby     ="publishedDate DESC";
@@ -154,7 +154,7 @@ component
 		cfc         ="contentbox.models.content.Page"
 		fkcolumn    ="FK_authorID"
 		inverse     ="true"
-		lazy        ="extra"
+		lazy        ="true"
 		cascade     ="save-update"
 		batchsize   ="10"
 		orderby     ="publishedDate DESC";
@@ -175,7 +175,7 @@ component
 		fieldtype        ="many-to-many"
 		cascade          ="save-update"
 		type             ="array"
-		lazy             ="extra"
+		lazy             ="true"
 		cfc              ="contentbox.models.security.Permission"
 		fkcolumn         ="FK_authorID"
 		linktable        ="cb_authorPermissions"
@@ -188,10 +188,10 @@ component
 		singularName     ="permissionGroup"
 		fieldtype        ="many-to-many"
 		type             ="array"
-		lazy             ="extra"
+		lazy             ="true"
 		inverse          ="true"
 		cfc              ="contentbox.models.security.PermissionGroup"
-		cascade          ="save-update"
+		cascade          ="all"
 		fkcolumn         ="FK_authorID"
 		linktable        ="cb_authorPermissionGroups"
 		inversejoincolumn="FK_permissionGroupID"
@@ -384,10 +384,26 @@ component
 	}
 
 	/**
-	 * Clear all permissions
+	 * Remove all permissions
 	 */
 	Author function clearPermissions(){
-		permissions = [];
+		if ( hasPermission() ) {
+			variables.permissions.clear();
+		} else {
+			variables.permissions = [];
+		}
+		return this;
+	}
+
+	/**
+	 * Remove all permission groups
+	 */
+	Author function clearPermissionGroups(){
+		if ( hasPermissionGroup() ) {
+			variables.permissionGroups.clear();
+		} else {
+			variables.permissionGroups = [];
+		}
 		return this;
 	}
 

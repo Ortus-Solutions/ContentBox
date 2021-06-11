@@ -152,10 +152,11 @@ component
 	 *
 	 * @author The author to delete
 	 */
-	function deleteAuthor( required author ){
+	AuthorService function delete( required author ){
 		transaction {
 			// Clear out relationships
 			arguments.author.clearPermissions();
+			arguments.author.clearPermissionGroups();
 
 			// send for deletion
 			super.delete( arguments.author );
@@ -472,31 +473,25 @@ component
 					oUser.setPermissions( allPermissions );
 				}
 
-				// Permission Groups
-				if ( arrayLen( thisUser.permissiongroups ) ) {
-					// Create group permissions that don't exist first
-					var allGroups = [];
-					for ( var thisGroup in thisUser.permissiongroups ) {
-						var oGroup = variables.permissionGroupService.findByName( thisGroup.name );
-						oGroup     = (
-							isNull( oGroup ) ? getBeanPopulator().populateFromStruct(
-								target  = variables.permissionGroupService.new(),
-								memento = thisGroup,
-								exclude = "permissionGroupID,permissions"
-							) : oGroup
+				// Create group permissions that don't exist first
+				for ( var thisGroup in thisUser.permissionGroups ) {
+					var oGroup = variables.permissionGroupService.findByName( thisGroup.name );
+					oGroup     = (
+						isNull( oGroup ) ? getBeanPopulator().populateFromStruct(
+							target  = variables.permissionGroupService.new(),
+							memento = thisGroup,
+							exclude = "permissionGroupID,permissions"
+						) : oGroup
+					);
+					// save oGroup if new only
+					if ( !oGroup.isLoaded() ) {
+						variables.permissionGroupService.save(
+							entity        = oGroup,
+							transactional = false
 						);
-						// save oGroup if new only
-						if ( !oGroup.isLoaded() ) {
-							variables.permissionGroupService.save(
-								entity        = oGroup,
-								transactional = false
-							);
-						}
-						// append to add.
-						arrayAppend( allGroups, oPerm );
 					}
-					// attach the new permissions
-					oUser.setPermissionGroups( allGroups );
+					// Add to author
+					oUser.addPermissionGroup( oGroup );
 				}
 
 				// ROLE
