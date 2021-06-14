@@ -133,4 +133,31 @@ component extends="baseHandler" {
 		return variables.siteService.getAllForExport();
 	}
 
+	/**
+	 * Import sites
+	 */
+	function importAll( event, rc, prc ){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+		try {
+			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
+				var importLog = variables.siteService.importFromFile(
+					importFile = rc.importFile,
+					override   = rc.overrideContent
+				);
+				cbMessagebox.info( "Site(s) imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			} else {
+				cbMessagebox.error(
+					"The import file is invalid: #rc.importFile# cannot continue with import"
+				);
+			}
+		} catch ( any e ) {
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			cbMessagebox.error( errorMessage );
+		}
+		relocate( prc.xehSitesManager );
+	}
+
 }
