@@ -265,11 +265,7 @@ component extends="baseHandler" {
 	 * @return json,xml
 	 */
 	function export( event, rc, prc ){
-		return variables.menuService
-			.get( rc.menuID )
-			.getMemento(
-				includes = "siteID,menuItems,menuItems.isDeleted,menuItems.parentSnapshot:parent"
-			);
+		return variables.menuService.get( rc.menuID ).getMemento( profile: "export" );
 	}
 
 	/**
@@ -284,11 +280,7 @@ component extends="baseHandler" {
 			return rc.menuID
 				.listToArray()
 				.map( function( id ){
-					return variables.menuService
-						.get( arguments.id )
-						.getMemento(
-							includes = "siteID,menuItems,menuItems.isDeleted,menuItems.parentSnapshot:parent"
-						);
+					return variables.menuService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
 			return variables.menuService.getAllForExport();
@@ -302,7 +294,7 @@ component extends="baseHandler" {
 		event.paramValue( "importFile", "" ).paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = menuService.importFromFile(
+				var importLog = variables.menuService.importFromFile(
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);

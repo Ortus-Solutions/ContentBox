@@ -159,7 +159,8 @@ component
 			"itemClass",
 			"label",
 			"menuType",
-			"children"
+			"children",
+			"parentSnapshot:parent"
 		],
 		defaultExcludes : [ "menu", "parent" ]
 	};
@@ -196,7 +197,12 @@ component
 	 */
 	struct function getInfoSnapshot(){
 		if ( isLoaded() ) {
-			return getMemento( excludes = "children,parent" );
+			return {
+				"menuItemID" : getId(),
+				"title"      : getTitle(),
+				"active"     : getActive(),
+				"menuType"   : getMenuType()
+			};
 		}
 		return {};
 	}
