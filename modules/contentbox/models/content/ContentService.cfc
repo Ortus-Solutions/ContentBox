@@ -1053,7 +1053,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					var oEditor = variables.authorService.findByEmail( thisVersion.author.email );
 					return oVersion
 						.setAuthor( isNull( oEditor ) ? oAuthor : oEditor )
-						.setRelatedContent( results.content )
+						.setRelatedContent( results.content );
 				} )
 			);
 		}
