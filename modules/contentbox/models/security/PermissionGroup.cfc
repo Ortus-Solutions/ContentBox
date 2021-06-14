@@ -77,7 +77,6 @@ component
 		fieldtype        ="many-to-many"
 		type             ="array"
 		lazy             ="true"
-		cascade          ="none"
 		cacheuse         ="read-write"
 		cfc              ="contentbox.models.security.Author"
 		fkcolumn         ="FK_permissionGroupID"
