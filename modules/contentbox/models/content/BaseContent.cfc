@@ -404,6 +404,7 @@ component
 		fieldtype="one-to-one"
 		mappedBy ="relatedContent"
 		cascade  ="all-delete-orphan"
+		fetch    ="join"
 		lazy     ="true";
 
 	/* *********************************************************************

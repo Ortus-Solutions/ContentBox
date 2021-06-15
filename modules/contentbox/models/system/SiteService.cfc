@@ -9,6 +9,7 @@ component
 	extends  ="cborm.models.VirtualEntityService"
 	accessors="true"
 	threadsafe
+	singleton
 {
 
 	// DI

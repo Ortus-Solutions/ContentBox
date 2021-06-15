@@ -24,7 +24,7 @@ component
 		column   ="statsID"
 		fieldtype="id"
 		generator="uuid"
-ormtype="string"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

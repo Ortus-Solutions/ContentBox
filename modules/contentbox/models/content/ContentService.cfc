@@ -914,12 +914,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// STATS
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
-			results.content.setStats(
-				variables.statsService.new( {
-					hits           : thisContent.stats.hits,
-					relatedContent : results.content
-				} )
-			);
+			if ( results.content.hasStats() ) {
+				results.content.getStats().setHits( thisContent.stats.hits );
+			} else {
+				variables.statsService.save(
+					variables.statsService.new( {
+						hits           : thisContent.stats.hits,
+						relatedContent : results.content
+					} )
+				);
+			}
 		}
 
 		// CHILDREN
@@ -1040,14 +1044,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						subscriberToken : thisSubscription.subscriber.subscriberToken
 					} );
 				}
-				oSubscription.setSubscriber( oSubscriber );
 				oSubscriber.addSubscription( oSubscription );
+				oSubscription.setSubscriber( oSubscriber );
 				// Save subscriber subscription
 				variables.subscriberService.save( oSubscriber );
 				// add to import
-				arrayAppend( allSubscriptions, oSubscription );
+				// arrayAppend( allSubscriptions, oSubscription );
 			}
-			results.content.setCommentSubscriptions( allSubscriptions );
+			// results.content.setCommentSubscriptions( allSubscriptions );
 		}
 
 		// CONTENT VERSIONS
