@@ -304,4 +304,175 @@ component
 		return getDefaultSite();
 	}
 
+	/**
+	 * Import data from a ContentBox JSON file. Returns the import log
+	 *
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
+	 */
+	string function importFromFile( required importFile, boolean override = false ){
+		var data      = fileRead( arguments.importFile );
+		var importLog = createObject( "java", "java.lang.StringBuilder" ).init(
+			"Starting import with override = #arguments.override#...<br>"
+		);
+
+		if ( !isJSON( data ) ) {
+			throw(
+				message: "Cannot import file as the contents is not JSON",
+				type   : "InvalidImportFormat"
+			);
+		}
+
+		// deserialize packet: Should be array of { settingID, name, value }
+		return importFromData(
+			deserializeJSON( data ),
+			arguments.override,
+			importLog
+		);
+	}
+
+	/**
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @return The console log of the import
+	 */
+	string function importFromData(
+		required any importData,
+		boolean override = false,
+		required any importLog
+	){
+		var allSites = [];
+
+		// if struct, inflate into an array
+		if ( isStruct( arguments.importData ) ) {
+			arguments.importData = [ arguments.importData ];
+		}
+
+		transaction {
+			// iterate and import
+			for ( var thisSite in arguments.importData ) {
+				var oSite = this.findBySlug( slug: thisSite.slug );
+				oSite     = ( isNull( oSite ) ? new () : oSite );
+
+				// if new or persisted with override then save.
+				if ( !oSite.isLoaded() ) {
+					arguments.importLog.append( "New site will be imported: #thisSite.slug#<br>" );
+					importSite(
+						site     : oSite,
+						memento  : thisSite,
+						importLog: arguments.importLog
+					);
+					arrayAppend( allSites, oSite );
+				} else if ( oSite.isLoaded() and arguments.override ) {
+					arguments.importLog.append( "Overiding site: #thisSite.slug#<br>" );
+					importSite(
+						site     : oSite,
+						memento  : thisSite,
+						importLog: arguments.importLog
+					);
+					arrayAppend( allSites, oSite );
+				} else {
+					arguments.importLog.append( "Skipping persisted site: #thisSite.slug#<br>" );
+				}
+			}
+			// end import loop
+
+			// Final Report
+			if ( arrayLen( allSites ) ) {
+				arguments.importLog.append( "Saved all imported and overriden content!" );
+			} else {
+				arguments.importLog.append(
+					"No content imported as none where found or able to be overriden from the import file."
+				);
+			}
+		}
+		// end transaction
+
+		return arguments.importLog.toString();
+	}
+
+	/**
+	 * Import a site into ContentBox.
+	 *
+	 * @site The site object that will be used to import
+	 * @memento The site memento that we will import
+	 * @importLog The string buffer that represents the import log
+	 */
+	function importSite(
+		required site,
+		required memento,
+		required importLog
+	){
+		// Aliases
+		var oSite          = arguments.site;
+		var siteData       = arguments.memento;
+		var populator      = getBeanPopulator();
+		// populate content from data and ignore relationships, we need to build those manually.
+		var excludedFields = [
+			"categories",
+			"contentStore",
+			"entries",
+			"pages",
+			"siteID",
+			"settings"
+		];
+		populator.populateFromStruct(
+			target               = oSite,
+			memento              = siteData,
+			exclude              = arrayToList( excludedFields ),
+			composeRelationships = false
+		);
+
+		// Settings
+		// If we are persited, clean up and do new settings
+		if ( oSite.isLoaded() ) {
+			// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
+			if ( !server.keyExists( "lucee" ) ) {
+				variables.settingService.deleteWhere( site: oSite );
+			}
+			oSite.removeAllSettings();
+		}
+		oSite.setSettings(
+			siteData.settings.map( function( thisSetting ){
+				return populator
+					.populateFromStruct(
+						target               = variables.settingService.new(),
+						memento              = thisSetting,
+						exclude              = "site",
+						composeRelationships = false
+					)
+					.setSite( oSite );
+			} )
+		);
+
+		// Categories
+		if ( arrayLen( siteData.categories ) ) {
+			oSite.setCategories(
+				siteData.categories.map( function( thisCategory ){
+					return variables.categoryService.getOrCreateBySlug(
+						thisCategory.slug,
+						oSite.getSite()
+					);
+				} )
+			);
+		}
+
+		// Note it for persistence so we can do the rest of the relationships
+		entitySave( oSite );
+
+		// ContentStore
+
+		// Entries
+
+		// Pages
+	}
+
 }
