@@ -50,7 +50,7 @@ component
 		singularName="subscription"
 		fieldtype   ="one-to-many"
 		type        ="array"
-		lazy        ="extra"
+		lazy        ="true"
 		batchsize   ="25"
 		orderby     ="createdDate"
 		cfc         ="contentbox.models.subscriptions.BaseSubscription"
@@ -94,7 +94,8 @@ component
 		if ( isLoaded() ) {
 			return {
 				"subscriberID"    : getSubscriberID(),
-				"subscriberEmail" : getSubscriberEmail()
+				"subscriberEmail" : getSubscriberEmail(),
+				"subscriberToken" : getSubscriberToken()
 			};
 		}
 		return {};

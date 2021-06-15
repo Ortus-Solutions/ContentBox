@@ -9,7 +9,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	// Dependencies
 	property name="htmlHelper" inject="HTMLHelper@coldbox";
-	property name="populator" inject="wirebox:populator";
 	property name="contentService" inject="contentService@cb";
 	property name="dateUtil" inject="DateUtil@cb";
 
@@ -242,12 +241,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		return newCriteria()
-			.withProjections(
-				property: "categoryID,category,slug,createdDate,modifiedDate,isDeleted,site.siteID:siteID"
-			)
-			.asStruct()
-			.list( sortOrder: "category" );
+		return getAll().map( function( thisItem ){
+			return thisItem.getMemento( profile: "export" );
+		} );
 	}
 
 	/**
@@ -276,6 +272,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
+	 *
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -299,7 +302,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures of categories or just one structure of categories
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
@@ -307,58 +318,59 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		importLog
 	){
 		var allCategories = [];
+		var siteService   = getWireBox().getInstance( "siteService@cb" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisCategory in arguments.importData ) {
-			// Get new or persisted
-			var oCategory = this.findBySlug( slug = thisCategory.slug );
-			oCategory     = ( isNull( oCategory ) ? new () : oCategory );
+		transaction {
+			// iterate and import
+			for ( var thisCategory in arguments.importData ) {
+				// Get new or persisted
+				var oCategory = this.findBySlug( slug: thisCategory.slug );
+				oCategory     = ( isNull( oCategory ) ? new () : oCategory );
 
-			// date cleanups, just in case.
-			var badDateRegex          = " -\d{4}$";
-			thisCategory.createdDate  = reReplace( thisCategory.createdDate, badDateRegex, "" );
-			thisCategory.modifiedDate = reReplace( thisCategory.modifiedDate, badDateRegex, "" );
-			// Epoch to Local
-			thisCategory.createdDate  = dateUtil.epochToLocal( thisCategory.createdDate );
-			thisCategory.modifiedDate = dateUtil.epochToLocal( thisCategory.modifiedDate );
-
-			// populate content from data
-			populator.populateFromStruct(
-				target               = oCategory,
-				memento              = thisCategory,
-				exclude              = "categoryID",
-				composeRelationships = false
-			);
-
-			// if new or persisted with override then save.
-			if ( !oCategory.isLoaded() ) {
-				arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
-				arrayAppend( allCategories, oCategory );
-			} else if ( oCategory.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Persisted category overriden: #thisCategory.slug#<br>"
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target              : oCategory,
+					memento             : thisCategory,
+					exclude             : "categoryID",
+					composeRelationships: false
 				);
-				arrayAppend( allCategories, oCategory );
+
+				// Link the site
+				oCategory.setSite( siteService.getBySlugOrFail( thisCategory.site.slug ) );
+
+				// if new or persisted with override then save.
+				if ( !oCategory.isLoaded() ) {
+					arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
+					arrayAppend( allCategories, oCategory );
+				} else if ( oCategory.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted category overriden: #thisCategory.slug#<br>"
+					);
+					arrayAppend( allCategories, oCategory );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted category: #thisCategory.slug#<br>"
+					);
+				}
+			}
+			// end import loop
+
+			// Save them?
+			if ( arrayLen( allCategories ) ) {
+				saveAll( allCategories );
+				arguments.importLog.append( "Saved all imported and overriden categories!" );
 			} else {
-				arguments.importLog.append( "Skipping persisted category: #thisCategory.slug#<br>" );
+				arguments.importLog.append(
+					"No categories imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allCategories ) ) {
-			saveAll( allCategories );
-			arguments.importLog.append( "Saved all imported and overriden categories!" );
-		} else {
-			arguments.importLog.append(
-				"No categories imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end of transaction
 
 		return arguments.importLog.toString();
 	}

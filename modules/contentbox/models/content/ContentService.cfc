@@ -19,7 +19,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="contentStoreService" inject="contentStoreService@cb";
 	property name="pageService" inject="pageService@cb";
 	property name="entryService" inject="entryService@cb";
-	property name="populator" inject="wirebox:populator";
 	property name="systemUtil" inject="SystemUtil@cb";
 	property name="statsService" inject="statsService@cb";
 	property name="dateUtil" inject="DateUtil@cb";
@@ -721,8 +720,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
-	 * @importFile The absolute file path to use for importing
-	 * @override Override records or not
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -746,326 +749,316 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures of content or just one structure of a content entry
-	 * @importData The data to import
-	 * @override Override records or not
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
 	 * @importLog The import log buffer
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required any importData,
 		boolean override = false,
 		required any importLog
 	){
-		var allContent = [];
+		var allContent  = [];
+		var siteService = getWireBox().getInstance( "siteService@cb" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisContent in arguments.importData ) {
-			// Inflate content from data
-			var inflateResults = inflateFromStruct( thisContent, arguments.importLog );
+		transaction {
+			// iterate and import
+			for ( var thisContent in arguments.importData ) {
+				// Inflate content from data: { content, authorFound }
+				var inflatedResults = inflateFromStruct( thisContent, arguments.importLog );
 
-			// continue to next record if author not found
-			if ( !inflateResults.authorFound ) {
-				continue;
+				// continue to next record if author not found
+				if ( !inflatedResults.authorFound ) {
+					continue;
+				}
+
+				// if new or persisted with override then save.
+				if ( !inflatedResults.content.isLoaded() ) {
+					arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
+					arrayAppend( allContent, inflatedResults.content );
+				} else if ( inflatedResults.content.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted content overriden: #thisContent.slug#<br>"
+					);
+					arrayAppend( allContent, inflatedResults.content );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted content: #thisContent.slug#<br>"
+					);
+				}
 			}
+			// end import loop
 
-			// if new or persisted with override then save.
-			if ( !inflateResults.content.isLoaded() ) {
-				arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
-				arrayAppend( allContent, inflateResults.content );
-			} else if ( inflateResults.content.isLoaded() and arguments.override ) {
-				arguments.importLog.append( "Persisted content overriden: #thisContent.slug#<br>" );
-				arrayAppend( allContent, inflateResults.content );
+			// Save content
+			if ( arrayLen( allContent ) ) {
+				saveAll( allContent );
+				arguments.importLog.append( "Saved all imported and overriden content!" );
 			} else {
-				arguments.importLog.append( "Skipping persisted content: #thisContent.slug#<br>" );
+				arguments.importLog.append(
+					"No content imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save content
-		if ( arrayLen( allContent ) ) {
-			saveAll( allContent );
-			arguments.importLog.append( "Saved all imported and overriden content!" );
-		} else {
-			arguments.importLog.append(
-				"No content imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end transaction
 
 		return arguments.importLog.toString();
 	}
 
 	/**
 	 * Inflate a content object from a ContentBox JSON structure
+	 *
 	 * @contentData The content structure inflated from JSON
 	 * @importLog The string builder import log
 	 * @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
 	 * @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
+	 *
+	 * @return struct of { content:contentObject, authorFound: }
 	 */
-	public function inflateFromStruct(
+	struct function inflateFromStruct(
 		required any contentData,
 		required any importLog,
 		any parent,
 		struct newContent = {}
 	){
+		var results     = { "content" : "", "authorFound" : false };
 		// setup
-		var thisContent                = arguments.contentData;
+		var thisContent = arguments.contentData;
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
-		var oContent                   = findBySlug( slug = thisContent.slug, showUnpublished = true );
-		// add to newContent map so we can avoid slug collisions in recursive relationships
-		newContent[ thisContent.slug ] = oContent;
+		results.content = this.findBySlug(
+			slug            = thisContent.slug,
+			showUnpublished = true,
+			siteID          = thisContent.site.siteID
+		);
+		results.content = ( isNull( results.content ) ? this.new() : results.content );
 
-		// date cleanups, just in case.
-		var badDateRegex          = " -\d{4}$";
-		thisContent.createdDate   = reReplace( thisContent.createdDate, badDateRegex, "" );
-		thisContent.modifiedDate  = reReplace( thisContent.modifiedDate, badDateRegex, "" );
-		thisContent.publishedDate = reReplace( thisContent.publishedDate, badDateRegex, "" );
-		thisContent.expireDate    = reReplace( thisContent.expireDate, badDateRegex, "" );
-		// Epoch to Local
-		thisContent.createdDate   = dateUtil.epochToLocal( thisContent.createdDate );
-		thisContent.modifiedDate  = dateUtil.epochToLocal( thisContent.modifiedDate );
-		thisContent.publishedDate = dateUtil.epochToLocal( thisContent.publishedDate );
-		thisContent.expireDate    = dateUtil.epochToLocal( thisContent.expireDate );
+		// add to newContent map so we can avoid slug collisions in recursive relationships
+		arguments.newContent[ thisContent.slug ] = results.content;
 
 		// populate content from data and ignore relationships, we need to build those manually.
-		populator.populateFromStruct(
-			target               = oContent,
+		var excludedFields = [
+			"categories",
+			"children",
+			"comments",
+			"commentSubscriptions",
+			"contentversions",
+			"creator",
+			"customfields",
+			"linkedContent",
+			"parent",
+			"relatedContent",
+			"stats"
+		];
+		getBeanPopulator().populateFromStruct(
+			target               = results.content,
 			memento              = thisContent,
-			exclude              = "creator,parent,children,categories,customfields,contentversions,comments,stats,activeContent,commentSubscriptions,linkedContent",
+			exclude              = arrayToList( excludedFields ),
 			composeRelationships = false,
 			nullEmptyInclude     = "publishedDate,expireDate"
 		);
 
+		// Link the site
+		results.content.setSite( siteService.getBySlugOrFail( thisContent.site.slug ) );
+
 		// determine author else ignore import
-		var oAuthor = authorService.findByUsername(
-			( structKeyExists( thisContent.creator, "username" ) ? thisContent.creator.username : "" )
-		);
-		if ( !isNull( oAuthor ) ) {
-			// AUTHOR CREATOR
-			oContent.setCreator( oAuthor );
-			arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+		var oAuthor = variables.authorService.findByEmail( thisContent.creator.email );
+		if ( isNull( oAuthor ) ) {
+			arguments.importLog.append(
+				"Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>"
+			);
+			return results;
+		}
+		results.authorFound = true;
 
-			// PARENT
-			if ( structKeyExists( arguments, "parent" ) and isObject( arguments.parent ) ) {
-				oContent.setParent( arguments.parent );
+		// AUTHOR CREATOR
+		results.content.setCreator( oAuthor );
+		arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+
+		// PARENT
+		if ( !isNull( arguments.parent ) and isObject( arguments.parent ) ) {
+			results.content.setParent( arguments.parent );
+			arguments.importLog.append(
+				"Content parent passed and linked: #arguments.parent.getSlug()#<br>"
+			);
+		} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
+			var oParent = this.findBySlug( slug = thisContent.parent.slug, showUnpublished = true );
+			// assign if persisted
+			if ( oParent.isLoaded() ) {
+				results.content.setParent( oParent );
 				arguments.importLog.append(
-					"Content parent passed and linked: #arguments.parent.getSlug()#<br>"
+					"Content parent found and linked: #thisContent.parent.slug#<br>"
 				);
-			} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
-				var oParent = findBySlug( slug = thisContent.parent.slug, showUnpublished = true );
-				// assign if persisted
-				if ( oParent.isLoaded() ) {
-					oContent.setParent( oParent );
-					arguments.importLog.append(
-						"Content parent found and linked: #thisContent.parent.slug#<br>"
+			} else {
+				arguments.importLog.append(
+					"Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>"
+				);
+			}
+		}
+
+		// STATS
+		if ( thisContent.stats.hits > 0 ) {
+			results.content.setStats(
+				variables.statsService.new( {
+					hits           : thisContent.stats.hits,
+					relatedContent : results.content
+				} )
+			);
+		}
+
+		// CHILDREN
+		if ( arrayLen( thisContent.children ) ) {
+			var allChildren = [];
+			// recurse on them and inflate hiearchy
+			for ( var thisChild in thisContent.children ) {
+				var inflateResults = inflateFromStruct(
+					contentData = thisChild,
+					importLog   = arguments.importLog,
+					parent      = results.content
+				);
+				// continue to next record if author not found
+				if ( !inflateResults.authorFound ) {
+					continue;
+				}
+				// Add to array of children to add, we have a good content object with a creator
+				arrayAppend( allChildren, inflateResults.content );
+			}
+			results.content.setChildren( allChildren );
+		}
+
+		// CUSTOM FIELDS
+		if ( arrayLen( thisContent.customfields ) ) {
+			// wipe out custom fileds if they exist
+			results.content.removeAllCustomFields();
+			// add new custom fields
+			for ( var thisCF in thisContent.customfields ) {
+				// explicitly convert value to string...
+				// ACF doesn't handle string values well when they look like numbers :)
+				results.content.addCustomField(
+					customFieldService.new( {
+						key            : thisCF.key,
+						value          : toString( thisCF.value ),
+						relatedContent : results.content
+					} )
+				);
+			}
+		}
+
+		// CATEGORIES
+		if ( arrayLen( thisContent.categories ) ) {
+			results.content.setCategories(
+				thisContent.categories.map( function( thisCategory ){
+					return variables.categoryService.getOrCreateBySlug(
+						thisCategory,
+						results.content.getSite()
 					);
-				} else {
-					arguments.importLog.append(
-						"Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>"
+				} )
+			);
+		}
+
+		// RELATED CONTENT
+		if ( arrayLen( thisContent.relatedContent ) ) {
+			var allRelatedContent = [];
+			for ( var thisRelatedContent in thisContent.relatedContent ) {
+				// if content has already been inflated as part of another process, just use that instance so we don't collide keys
+				if ( structKeyExists( arguments.newContent, thisRelatedContent.slug ) ) {
+					arrayAppend(
+						allRelatedContent,
+						arguments.newContent[ thisRelatedContent.slug ]
 					);
 				}
-			}
-
-			// STATS
-			if ( structKeyExists( thisContent, "stats" ) && thisContent.stats.hits > 0 ) {
-				var oStat = variables.statsService.new( { hits : thisContent.stats.hits } );
-				oStat.setRelatedContent( oContent );
-				oContent.setStats( oStat );
-			}
-
-			// CHILDREN
-			if ( arrayLen( thisContent.children ) ) {
-				var allChildren = [];
-				// recurse on them and inflate hiearchy
-				for ( var thisChild in thisContent.children ) {
-					var inflateResults = inflateFromStruct(
-						contentData = thisChild,
-						importLog   = arguments.importLog,
-						parent      = oContent
+				// otherwise, we need to get it
+				else {
+					var oRelatedContent = getServiceByType( thisRelatedContent.contentType ).findBySlug(
+						slug            = thisRelatedContent.slug,
+						showUnpublished = true,
+						siteID          = thisContent.site.siteID
 					);
-					// continue to next record if author not found
-					if ( !inflateResults.authorFound ) {
-						continue;
-					}
-					// Add to array of children to add.
-					arrayAppend( allChildren, inflateResults.content );
-				}
-				oContent.setChildren( allChildren );
-			}
-
-			// CUSTOM FIELDS
-			if ( arrayLen( thisContent.customfields ) ) {
-				// wipe out custom fileds if they exist
-				if ( oContent.hasCustomField() ) {
-					oContent.getCustomFields().clear();
-				}
-				// add new custom fields
-				for ( var thisCF in thisContent.customfields ) {
-					// explicitly convert value to string...
-					// ACF doesn't handle string values well when they look like numbers :)
-					var args   = { key : thisCF.key, value : toString( thisCF.value ) };
-					var oField = customFieldService.new( properties = args );
-					oField.setRelatedContent( oContent );
-					oContent.addCustomField( oField );
-				}
-			}
-
-			// CATEGORIES
-			if ( arrayLen( thisContent.categories ) ) {
-				// Create categories that don't exist first
-				var allCategories = [];
-				for ( var thisCategory in thisContent.categories ) {
-					var oCategory = categoryService.findBySlug( thisCategory.slug );
-					oCategory     = (
-						isNull( oCategory ) ? populator.populateFromStruct(
-							target  = categoryService.new(),
-							memento = thisCategory,
-							exclude = "categoryID"
-						) : oCategory
-					);
-					// save category if new only
-					if ( !oCategory.isLoaded() ) {
-						categoryService.save( entity = oCategory );
-					}
-					// append to add.
-					arrayAppend( allCategories, oCategory );
-				}
-				// detach categories and re-attach
-				oContent.setCategories( allCategories );
-			}
-
-			// RELATED CONTENT
-			if ( arrayLen( thisContent.relatedContent ) ) {
-				var allRelatedContent = [];
-				for ( var thisRelatedContent in thisContent.relatedContent ) {
-					var instanceService = "";
-					switch ( thisRelatedContent.contentType ) {
-						case "Page":
-							instanceService = PageService;
-							break;
-						case "Entry":
-							instanceService = EntryService;
-							break;
-						case "ContentStore":
-							instanceService = ContentStoreService;
-							break;
-					}
-					// if content has already been inflated as part of another process, just use that instance so we don't collide keys
-					if ( structKeyExists( arguments.newContent, thisRelatedContent.slug ) ) {
-						arrayAppend(
-							allRelatedContent,
-							arguments.newContent[ thisRelatedContent.slug ]
+					if ( !isNull( oRelatedContent ) ) {
+						arrayAppend( allRelatedContent, oRelatedContent );
+					} else {
+						arguments.importLog.append(
+							"Related content not found, so skipping link: #thisRelatedContent.toString()#<br>"
 						);
 					}
-					// otherwise, we need to inflate the new instance
-					else {
-						var inflateResults = instanceService.inflateFromStruct(
-							contentData = thisRelatedContent,
-							importLog   = arguments.importLog,
-							newContent  = newContent
-						);
-						arrayAppend( allRelatedContent, inflateResults.content );
-					}
 				}
-				oContent.setRelatedContent( allRelatedContent );
 			}
+			results.content.setRelatedContent( allRelatedContent );
+		}
 
-			// COMMENTS
-			if ( arrayLen( thisContent.comments ) ) {
-				var allComments = [];
-				for ( var thisComment in thisContent.comments ) {
-					// some conversions
-					thisComment.createdDate = reReplace( thisComment.createdDate, badDateRegex, "" );
-					// population
-					var oComment            = populator.populateFromStruct(
-						target               = commentService.new(),
-						memento              = thisComment,
-						exclude              = "commentID",
-						composeRelationships = false
-					);
-					oComment.setRelatedContent( oContent );
-					arrayAppend( allComments, oComment );
-				}
-				oContent.setComments( allComments );
-			}
+		// COMMENTS
+		if ( arrayLen( thisContent.comments ) ) {
+			results.content.setComments(
+				thisContent.comments.map( function( thisComment ){
+					return getBeanPopulator()
+						.populateFromStruct(
+							target               = variables.commentService.new(),
+							memento              = thisComment,
+							exclude              = "commentID",
+							composeRelationships = false
+						)
+						.setRelatedContent( results.content );
+				} )
+			);
+		}
 
-			// Subscriptions
-			if (
-				isArray( thisContent.commentSubscriptions ) && arrayLen(
-					thisContent.commentSubscriptions
-				)
-			) {
-				var allSubscriptions = [];
-				// recurse on them and inflate hiearchy
-				for ( var thisSubscription in thisContent.commentSubscriptions ) {
-					// Subscription
-					var oSubscription = commentSubscriptionService.new( {
-						relatedContent    : oContent,
-						subscriptionToken : thisSubscription.subscriptionToken,
-						type              : thisSubscription.type
+		// SUBSCRIPTIONS
+		if ( arrayLen( thisContent.commentSubscriptions ) ) {
+			var allSubscriptions = [];
+			// recurse on them and inflate hiearchy
+			for ( var thisSubscription in thisContent.commentSubscriptions ) {
+				// Subscription
+				var oSubscription = variables.commentSubscriptionService.new( {
+					relatedContent    : results.content,
+					subscriptionToken : thisSubscription.subscriptionToken,
+					type              : thisSubscription.type
+				} );
+				// Subscriber
+				var oSubscriber = variables.inflateFromStruct.findBySubscriberEmail(
+					thisSubscription.subscriber.subscriberEmail
+				);
+				if ( isNull( oSubscriber ) ) {
+					oSubscriber = variables.subscriberService.new( {
+						subscriberEmail : thisSubscription.subscriber.subscriberEmail,
+						subscriberToken : thisSubscription.subscriber.subscriberToken
 					} );
-					// Subscriber
-					var oSubscriber = subscriberService.findBySubscriberEmail(
-						thisSubscription.subscriber.subscriberEmail
-					);
-					if ( isNull( oSubscriber ) ) {
-						oSubscriber = subscriberService.new( {
-							subscriberEmail : thisSubscription.subscriber.subscriberEmail,
-							subscriberToken : thisSubscription.subscriber.subscriberToken
-						} );
-					}
-					oSubscription.setSubscriber( oSubscriber );
-					oSubscriber.addSubscription( oSubscription );
-					// Save subscriber subscription
-					entitySave( oSubscriber );
-					// add to import
-					arrayAppend( allSubscriptions, oSubscription );
 				}
-				oContent.setCommentSubscriptions( allSubscriptions );
+				oSubscription.setSubscriber( oSubscriber );
+				oSubscriber.addSubscription( oSubscription );
+				// Save subscriber subscription
+				variables.subscriberService.save( oSubscriber );
+				// add to import
+				arrayAppend( allSubscriptions, oSubscription );
 			}
+			results.content.setCommentSubscriptions( allSubscriptions );
+		}
 
-			// CONTENT VERSIONS
-			if ( arrayLen( thisContent.contentversions ) ) {
-				var allContentVersions = [];
-				for ( var thisVersion in thisContent.contentversions ) {
-					// some conversions
-					thisVersion.createdDate = reReplace( thisVersion.createdDate, badDateRegex, "" );
-
-					// population
-					var oVersion = populator.populateFromStruct(
-						target               = contentVersionService.new(),
+		// CONTENT VERSIONS
+		if ( arrayLen( thisContent.contentversions ) ) {
+			results.content.setContentVersions(
+				thisContent.contentVersions.map( function( thisVersion ){
+					var oVersion = getBeanPopulator().populateFromStruct(
+						target               = variables.contentVersionService.new(),
 						memento              = thisVersion,
 						exclude              = "contentVersionID,author",
 						composeRelationships = false
 					);
-					// Get author
-					var oAuthor = authorService.findByUsername( thisVersion.author.username );
-					// Only add if author found
-					if ( !isNull( oAuthor ) ) {
-						oVersion.setAuthor( oAuthor );
-						oVersion.setRelatedContent( oContent );
-						arrayAppend( allContentVersions, oVersion );
-					} else {
-						arguments.importLog.append(
-							"Skipping importing version content #thisVersion.version# as author (#thisVersion.author.toString()#) not found!<br>"
-						);
-					}
-				}
-				oContent.setContentVersions( allContentVersions );
-			}
-		}
-		// end if author found
-		else {
-			arguments.importLog.append(
-				"Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>"
+					var oEditor = variables.authorService.findByEmail( thisVersion.author.email );
+					return oVersion
+						.setAuthor( isNull( oEditor ) ? oAuthor : oEditor )
+						.setRelatedContent( results.content );
+				} )
 			);
 		}
 
-		return { content : oContent, authorFound : ( !isNull( oAuthor ) ) };
+		return results;
 	}
 
 	/**
@@ -1155,6 +1148,26 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/********************************************* PRIVATE *********************************************/
 
+	/**
+	 * Get the appropriate service by passed content type.
+	 * If an invalid type is passed, we return ourselves
+	 *
+	 * @type The content type to detect
+	 */
+	private function getServiceByType( required type ){
+		switch ( thisRelatedContent.contentType ) {
+			case "Page":
+				return variables.pageService;
+				break;
+			case "Entry":
+				return variables.entryService;
+				break;
+			case "ContentStore":
+				return variables.contentStoreService;
+				break;
+		}
+		return this;
+	}
 	/**
 	 * Get a unique slug hash
 	 *

@@ -23,7 +23,7 @@ component
 		column   ="permissionID"
 		fieldtype="id"
 		generator="uuid"
-ormtype="string"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

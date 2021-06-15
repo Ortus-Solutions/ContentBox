@@ -64,7 +64,7 @@ component
 		singularName     ="permission"
 		fieldtype        ="many-to-many"
 		type             ="array"
-		lazy             ="extra"
+		lazy             ="true"
 		orderby          ="permission"
 		cascade          ="save-update"
 		cacheuse         ="read-write"

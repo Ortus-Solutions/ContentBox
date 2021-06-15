@@ -98,36 +98,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		var propList = [
-			"ruleID",
-			"whitelist",
-			"securelist",
-			"match",
-			"roles",
-			"permissions",
-			"redirect",
-			"overrideEvent",
-			"useSSL",
-			"action",
-			"module",
-			"order",
-			"message",
-			"messageType",
-			"createdDate",
-			"modifiedDate",
-			"isDeleted"
-		];
-
-		return newCriteria()
-			.withProjections( property = arrayToList( propList ) )
-			.asStruct()
-			.list( sortOrder = "order" );
+		return getAll().map( function( thisItem ){
+			return thisItem.getMemento( profile: "export" );
+		} );
 	}
 
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
-	 * @importFile The file to import
-	 * @override Override data
+	 *
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -151,10 +135,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures
-	 * @importData data to import
-	 * @override Override data
-	 * @importLog The import log
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
@@ -168,64 +155,60 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisRule in arguments.importData ) {
-			// Get new or persisted with enough info to match
-			var args = {
-				match       : thisRule.match,
-				whitelist   : thisRule.whitelist,
-				securelist  : thisRule.securelist,
-				redirect    : thisRule.redirect,
-				roles       : thisRule.roles,
-				permissions : thisRule.permissions
-			};
-			var oRule = this.findWhere( criteria = args );
-			oRule     = ( isNull( oRule ) ? new () : oRule );
-
-			// date cleanups, just in case.
-			var badDateRegex      = " -\d{4}$";
-			thisRule.createdDate  = reReplace( thisRule.createdDate, badDateRegex, "" );
-			thisRule.modifiedDate = reReplace( thisRule.modifiedDate, badDateRegex, "" );
-			// Epoch to Local
-			thisRule.createdDate  = dateUtil.epochToLocal( thisRule.createdDate );
-			thisRule.modifiedDate = dateUtil.epochToLocal( thisRule.modifiedDate );
-
-			// populate content from data
-			populator.populateFromStruct(
-				target               = oRule,
-				memento              = thisRule,
-				exclude              = "ruleID",
-				composeRelationships = false
-			);
-
-			// if new or persisted with override then save.
-			if ( !oRule.isLoaded() ) {
-				arguments.importLog.append(
-					"New security rule imported: #thisRule.toString()#<br>"
+		transaction {
+			// iterate and import
+			for ( var thisRule in arguments.importData ) {
+				// Get new or persisted with enough info to match
+				var oRule = this.findWhere(
+					criteria = {
+						match       : thisRule.match,
+						whitelist   : thisRule.whitelist,
+						securelist  : thisRule.securelist,
+						redirect    : thisRule.redirect,
+						roles       : thisRule.roles,
+						permissions : thisRule.permissions
+					}
 				);
-				arrayAppend( allRules, oRule );
-			} else if ( oRule.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Persisted security rule overriden: #thisRule.toString()#<br>"
+				oRule = ( isNull( oRule ) ? new () : oRule );
+
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target               = oRule,
+					memento              = thisRule,
+					exclude              = "ruleID",
+					composeRelationships = false
 				);
-				arrayAppend( allRules, oRule );
+
+				// if new or persisted with override then save.
+				if ( !oRule.isLoaded() ) {
+					arguments.importLog.append(
+						"New security rule imported: #thisRule.toString()#<br>"
+					);
+					arrayAppend( allRules, oRule );
+				} else if ( oRule.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted security rule overriden: #thisRule.toString()#<br>"
+					);
+					arrayAppend( allRules, oRule );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted security rule: #thisRule.toString()#<br>"
+					);
+				}
+			}
+			// end import loop
+
+			// Save them?
+			if ( arrayLen( allRules ) ) {
+				saveAll( allRules );
+				arguments.importLog.append( "Saved all imported and overriden security rules!" );
 			} else {
 				arguments.importLog.append(
-					"Skipping persisted security rule: #thisRule.toString()#<br>"
+					"No security rules imported as none where found or able to be overriden from the import file."
 				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allRules ) ) {
-			saveAll( allRules );
-			arguments.importLog.append( "Saved all imported and overriden security rules!" );
-		} else {
-			arguments.importLog.append(
-				"No security rules imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end transaction
 
 		return arguments.importLog.toString();
 	}

@@ -89,10 +89,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
-	 * @importFile The file to import
-	 * @override To override data in the database or skip if found
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
 	 *
-	 * @return A string console log
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -116,7 +118,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Import data from an array of structures of permissions or just one structure of permissions
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
@@ -130,54 +140,51 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importData = [ arguments.importData ];
 		}
 
-		// iterate and import
-		for ( var thisPermission in arguments.importData ) {
-			// Get new or persisted
-			var oPermission = this.findByPermission( thisPermission.permission );
-			oPermission     = ( isNull( oPermission ) ? new () : oPermission );
+		transaction {
+			// iterate and import
+			for ( var thisPermission in arguments.importData ) {
+				// Get new or persisted
+				var oPermission = this.findByPermission( thisPermission.permission );
+				oPermission     = ( isNull( oPermission ) ? new () : oPermission );
 
-			// date cleanups, just in case.
-			var badDateRegex            = " -\d{4}$";
-			thisPermission.createdDate  = reReplace( thisPermission.createdDate, badDateRegex, "" );
-			thisPermission.modifiedDate = reReplace( thisPermission.modifiedDate, badDateRegex, "" );
-			// Epoch to Local
-			thisPermission.createdDate  = dateUtil.epochToLocal( thisPermission.createdDate );
-			thisPermission.modifiedDate = dateUtil.epochToLocal( thisPermission.modifiedDate );
-
-			// populate content from data
-			populate(
-				target               = oPermission,
-				memento              = thisPermission,
-				exclude              = "permissionID",
-				composeRelationships = false
-			);
-
-			// if new or persisted with override then save.
-			if ( !oPermission.isLoaded() ) {
-				arguments.importLog.append(
-					"New permission imported: #thisPermission.permission#<br>"
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target               = oPermission,
+					memento              = thisPermission,
+					exclude              = "permissionID",
+					composeRelationships = false
 				);
-				arrayAppend( allPermissions, oPermission );
-			} else if ( oPermission.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Permission overriden: #thisPermission.permission#<br>"
-				);
-				arrayAppend( allPermissions, oPermission );
+
+				// if new or persisted with override then save.
+				if ( !oPermission.isLoaded() ) {
+					arguments.importLog.append(
+						"New permission imported: #thisPermission.permission#<br>"
+					);
+					arrayAppend( allPermissions, oPermission );
+				} else if ( oPermission.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Permission overriden: #thisPermission.permission#<br>"
+					);
+					arrayAppend( allPermissions, oPermission );
+				} else {
+					arguments.importLog.append(
+						"Permission skipped: #thisPermission.permission#<br>"
+					);
+				}
+			}
+			// end import loop
+
+			// Save them?
+			if ( arrayLen( allPermissions ) ) {
+				saveAll( allPermissions );
+				arguments.importLog.append( "Saved all imported and overriden permissions!" );
 			} else {
-				arguments.importLog.append( "Permission skipped: #thisPermission.permission#<br>" );
+				arguments.importLog.append(
+					"No permissions imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
-		// end import loop
-
-		// Save them?
-		if ( arrayLen( allPermissions ) ) {
-			saveAll( allPermissions );
-			arguments.importLog.append( "Saved all imported and overriden permissions!" );
-		} else {
-			arguments.importLog.append(
-				"No permissions imported as none where found or able to be overriden from the import file."
-			);
-		}
+		// end of transaction
 
 		return arguments.importLog.toString();
 	}

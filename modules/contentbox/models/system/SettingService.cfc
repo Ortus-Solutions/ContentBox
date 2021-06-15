@@ -752,21 +752,20 @@ component
 	 * Get all data prepared for export
 	 */
 	array function getAllForExport(){
-		return newCriteria()
-			.withProjections(
-				property = "settingID,name,value,createdDate,modifiedDate,isDeleted,isCore,site.siteID:siteID"
-			)
-			.asStruct()
-			.list( sortOrder = "name" );
+		return getAll().map( function( thisItem ){
+			return thisItem.getMemento( profile: "export" );
+		} );
 	}
 
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
-	 * @importFile The import file location
-	 * @override Are we override previous values or not
+	 * @importFile The json file to import
+	 * @override Override content if found in the database, defaults to false
 	 *
-	 * @return The import log
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -790,7 +789,15 @@ component
 	}
 
 	/**
-	 * Import data from an array of structures of settings
+	 * Import data from an array of structures or a single structure of data
+	 *
+	 * @importData A struct or array of data to import
+	 * @override Override content if found in the database, defaults to false
+	 * @importLog The import log buffer
+	 *
+	 * @throws InvalidImportFormat
+	 *
+	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
@@ -798,69 +805,67 @@ component
 		importLog
 	){
 		var allSettings = [];
+		var siteService = getWireBox().getInstance( "siteService@cb" );
 
-		// iterate and import
-		for ( var thisSetting in arguments.importData ) {
-			var args     = { name : thisSetting.name };
-			var oSetting = findWhere( criteria = args );
+		// if struct, inflate into an array
+		if ( isStruct( arguments.importData ) ) {
+			arguments.importData = [ arguments.importData ];
+		}
 
-			// date cleanups, just in case.
-			var badDateRegex         = " -\d{4}$";
-			thisSetting.createdDate  = reReplace( thisSetting.createdDate, badDateRegex, "" );
-			thisSetting.modifiedDate = reReplace( thisSetting.modifiedDate, badDateRegex, "" );
-			// Epoch to Local
-			thisSetting.createdDate  = dateUtil.epochToLocal( thisSetting.createdDate );
-			thisSetting.modifiedDate = dateUtil.epochToLocal( thisSetting.modifiedDate );
+		transaction {
+			// iterate and import
+			for ( var thisSetting in arguments.importData ) {
+				var oSetting = findWhere( { name : thisSetting.name } );
+				oSetting     = ( isNull( oSetting ) ? new () : oSetting );
 
-			// if null, then create it
-			if ( isNull( oSetting ) ) {
-				oSetting = this.new( {
-					name         : thisSetting.name,
-					value        : javacast( "string", thisSetting.value ),
-					createdDate  : thisSetting.createdDate,
-					modifiedDate : thisSetting.modifiedDate,
-					isDeleted    : thisSetting.isDeleted,
-					isCore       : ( isNull( thisSetting.isCore ) ? false : thisSetting.isCore )
-				} );
-
-				// TODO: Site Inflation
-				if ( !isNull( thisSetting.site ) ) {
+				// Check for boolean values
+				if ( isSimpleValue( thisSetting.value ) && isBoolean( thisSetting.value ) ) {
+					thisSetting.value = toString( thisSetting.value );
 				}
 
-				arrayAppend( allSettings, oSetting );
+				// populate content from data
+				getBeanPopulator().populateFromStruct(
+					target              : oSetting,
+					memento             : thisSetting,
+					exclude             : "settingID,site",
+					composeRelationships: false
+				);
 
-				// logs
-				importLog.append( "New setting imported: #thisSetting.name#<br>" );
+				// Link the site if it exists
+				if ( !isNull( thisSetting.site.slug ) ) {
+					oSetting.setSite( siteService.getBySlugOrFail( thisSetting.site.slug ) );
+				}
+
+				// if new or persisted with override then save.
+				if ( !oSetting.isLoaded() ) {
+					arguments.importLog.append( "New setting imported: #thisSetting.name#<br>" );
+					arrayAppend( allSettings, oSetting );
+				} else if ( oSetting.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted setting overriden: #thisSetting.name#<br>"
+					);
+					arrayAppend( allSettings, oSetting );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted setting: #thisSetting.name#<br>"
+					);
+				}
 			}
-			// else only override if true
-			else if ( arguments.override ) {
-				oSetting.setValue( javacast( "string", thisSetting.value ) );
-				oSetting.setIsDeleted( thisSetting.isDeleted );
-				oSetting.setIsCore( thisSetting.isCore );
+			// end import loop
 
-				// TODO: Site Inflation
-				if ( !isNull( thisSetting.site ) ) {
-					// oSetting.setSite();
-				}
-
-				arrayAppend( allSettings, oSetting );
-				importLog.append( "Overriding setting: #thisSetting.name#<br>" );
+			// Save them?
+			if ( arrayLen( allSettings ) ) {
+				saveAll( allSettings );
+				arguments.importLog.append( "Saved all imported and overriden settings!" );
 			} else {
-				importLog.append( "Skipping setting: #thisSetting.name#<br>" );
+				arguments.importLog.append(
+					"No settings imported as none where found or able to be overriden from the import file."
+				);
 			}
 		}
+		// end of transaction
 
-		// Save them?
-		if ( arrayLen( allSettings ) ) {
-			saveAll( allSettings );
-			importLog.append( "Saved all imported and overriden settings!" );
-		} else {
-			importLog.append(
-				"No settings imported as none where found or able to be overriden from the import file."
-			);
-		}
-
-		return importLog.toString();
+		return arguments.importLog.toString();
 	}
 
 	/**

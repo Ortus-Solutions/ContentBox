@@ -254,6 +254,20 @@ component
 		inverse  ="true"
 		cascade  ="all-delete-orphan";
 
+	// O2M -> menus
+	property
+		name        ="menus"
+		singularName="menu"
+		fieldtype   ="one-to-many"
+		type        ="array"
+		lazy        ="true"
+		batchsize   ="25"
+		orderby     ="createdDate desc"
+		cfc         ="contentbox.models.menu.Menu"
+		fkcolumn    ="FK_siteID"
+		inverse     ="true"
+		cascade     ="all-delete-orphan";
+
 	/* *********************************************************************
 	 **							CALUCLATED FIELDS
 	 ********************************************************************* */
@@ -325,22 +339,27 @@ component
 			"tagline"
 		],
 		defaultExcludes : [
-			"settings",
 			"categories",
+			"contentStore",
 			"entries",
+			"menus",
 			"pages",
-			"contentStore"
+			"settings"
 		],
 		profiles : {
 			export : {
 				defaultIncludes : [
-					"settings",
 					"categories",
+					"contentStore",
 					"entries",
+					"menus",
 					"pages",
-					"contentStore"
+					"settings"
 				],
-				defaultExcludes : [ "settings.siteSnapshot" ]
+				defaultExcludes : [
+					"settings.siteSnapshot",
+					"menus.siteSnapshot:site"
+				]
 			}
 		}
 	};

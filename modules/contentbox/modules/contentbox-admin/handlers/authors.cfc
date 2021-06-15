@@ -629,7 +629,7 @@ component extends="baseHandler" {
 	function remove( event, rc, prc ){
 		event.paramValue( "targetAuthorID", 0 );
 
-		var oAuthor = authorService.get( rc.targetAuthorID );
+		var oAuthor = variables.authorService.get( rc.targetAuthorID );
 
 		if ( isNull( oAuthor ) ) {
 			cbMessagebox.setMessage( "warning", "Invalid Author!" );
@@ -638,7 +638,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_preAuthorRemove", { author : oAuthor, authorID : rc.targetAuthorID } );
 		// remove
-		authorService.deleteAuthor( oAuthor );
+		variables.authorService.delete( oAuthor );
 		// announce event
 		announce( "cbadmin_postAuthorRemove", { authorID : rc.targetAuthorID } );
 		// message

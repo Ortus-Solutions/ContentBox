@@ -125,7 +125,23 @@ component
 			"slug",
 			"title"
 		],
-		defaultExcludes : [ "site", "menuItems" ]
+		defaultExcludes : [ "site", "menuItems" ],
+		profiles        : {
+			export : {
+				defaultIncludes : [
+					"listClass",
+					"listType",
+					"menuClass",
+					"slug",
+					"title",
+					"menuItems",
+					"menuItems.isDeleted",
+					"menuItems.parentSnapshot:parent",
+					"siteSnapshot:site"
+				],
+				defaultExcludes : []
+			}
+		}
 	};
 
 	this.constraints = {
@@ -184,9 +200,10 @@ component
 
 	/**
 	 * Creates menu items from raw data object
-	 * @rawData.hint The raw data from which to create menu items
+	 *
+	 * @rawData The raw data from which to create menu items
 	 */
-	public Menu function populateMenuItems( required array rawData ){
+	Menu function populateMenuItems( required array rawData ){
 		var items = createMenuItems( arguments.rawData );
 		for ( var item in items ) {
 			addMenuItem( item );
@@ -219,18 +236,17 @@ component
 		var items = [];
 		// loop over rawData and create items :)
 		for ( var data in arguments.rawData ) {
-			var provider = menuItemService.getProvider( data.menuType );
-			var entity   = ORMService.get( entityName = provider.getEntityName(), id = 0 );
+			var provider = variables.menuItemService.getProvider( data.menuType );
+			var entity   = variables.ORMService.get( entityName = provider.getEntityName(), id = 0 );
 			var newItem  = menuItemService.populate(
 				target  = entity,
 				memento = data,
 				exclude = "children"
 			);
 			newItem.setMenu( this );
-			newItem.setActive( true );
 
 			// populate the children
-			if ( structKeyExists( data, "children" ) && isArray( data.children ) ) {
+			if ( isArray( data.children ) && arrayLen( data.children ) ) {
 				var children = createMenuItems( data.children );
 				var setter   = [];
 				for ( var child in children ) {
@@ -267,6 +283,13 @@ component
 			return getSite().getsiteID();
 		}
 		return "";
+	}
+
+	/**
+	 * Build a site snapshot
+	 */
+	struct function getSiteSnapshot(){
+		return ( hasSite() ? getSite().getInfoSnapshot() : {} );
 	}
 
 }

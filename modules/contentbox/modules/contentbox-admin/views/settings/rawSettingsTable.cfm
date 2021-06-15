@@ -89,6 +89,13 @@
 									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
+							<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+								<li>
+									<a href="#event.buildLink( prc.xehExport )#/settingID/#setting.getSettingID()#.json" target="_blank">
+										<i class="fas fa-file-export fa-lg"></i> Export
+									</a>
+								</li>
+							</cfif>
 							<!--- Delete Command --->
 							<li>
 								<cfif setting.getIsCore()>

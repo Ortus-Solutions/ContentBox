@@ -151,6 +151,7 @@ component extends="baseHandler" {
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = event.buildLink( "#prc.xehRawSettings#.page.@page@?" );
 		prc.pagingLink = "javascript:settingsPaginate(@page@)";
+		prc.xehExport  = "#prc.cbAdminEntryPoint#.settings.export";
 
 		// View all?
 		var offset = prc.paging.startRow - 1;
@@ -160,7 +161,7 @@ component extends="baseHandler" {
 		}
 
 		// Get settings
-		var results = settingsService.search(
+		var results = variables.settingsService.search(
 			search   : rc.search,
 			offset   : offset,
 			max      : max,
@@ -170,6 +171,13 @@ component extends="baseHandler" {
 		prc.settingsCount = results.count;
 
 		event.setView( view = "settings/rawSettingsTable", layout = "ajax" );
+	}
+
+	/**
+	 * Export a setting
+	 */
+	function export( event, rc, prc ){
+		return variables.settingsService.get( event.getValue( "settingID", 0 ) ).getMemento();
 	}
 
 	/**

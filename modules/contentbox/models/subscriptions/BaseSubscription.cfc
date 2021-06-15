@@ -95,7 +95,11 @@ component
 	this.pk = "subscriptionID";
 
 	this.memento = {
-		defaultIncludes : [ "subscriptionToken", "type" ],
+		defaultIncludes : [
+			"subscriptionToken",
+			"type",
+			"subscriberSnapshot:subscriber"
+		],
 		defaultExcludes : []
 	};
 
