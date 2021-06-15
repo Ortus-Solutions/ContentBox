@@ -98,7 +98,12 @@ component
 			}
 
 			// Persist the site
-			super.save( arguments.site );
+			try {
+				super.save( arguments.site );
+			} catch ( any e ) {
+				writeDump( var = arguments.site, top = 5 );
+				abort;
+			}
 
 			// Activate the site's theme
 			variables.themeService.startupTheme(
@@ -349,8 +354,6 @@ component
 		boolean override = false,
 		required any importLog
 	){
-		var allSites = [];
-
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
 			arguments.importData = [ arguments.importData ];
@@ -370,7 +373,6 @@ component
 						memento  : thisSite,
 						importLog: arguments.importLog
 					);
-					arrayAppend( allSites, oSite );
 				} else if ( oSite.isLoaded() and arguments.override ) {
 					arguments.importLog.append( "Overiding site: #thisSite.slug#<br>" );
 					importSite(
@@ -378,7 +380,6 @@ component
 						memento  : thisSite,
 						importLog: arguments.importLog
 					);
-					arrayAppend( allSites, oSite );
 				} else {
 					arguments.importLog.append( "Skipping persisted site: #thisSite.slug#<br>" );
 				}
@@ -386,7 +387,7 @@ component
 			// end import loop
 
 			// Final Report
-			if ( arrayLen( allSites ) ) {
+			if ( arrayLen( arguments.importData ) ) {
 				arguments.importLog.append( "Saved all imported and overriden content!" );
 			} else {
 				arguments.importLog.append(
@@ -411,68 +412,142 @@ component
 		required memento,
 		required importLog
 	){
-		// Aliases
-		var oSite          = arguments.site;
-		var siteData       = arguments.memento;
-		var populator      = getBeanPopulator();
-		// populate content from data and ignore relationships, we need to build those manually.
-		var excludedFields = [
-			"categories",
-			"contentStore",
-			"entries",
-			"pages",
-			"siteID",
-			"settings"
-		];
-		populator.populateFromStruct(
-			target               = oSite,
-			memento              = siteData,
-			exclude              = arrayToList( excludedFields ),
-			composeRelationships = false
-		);
+		transaction {
+			// Aliases
+			var oSite          = arguments.site;
+			var siteData       = arguments.memento;
+			var populator      = getBeanPopulator();
+			// populate content from data and ignore relationships, we need to build those manually.
+			var excludedFields = [
+				"categories",
+				"contentStore",
+				"entries",
+				"pages",
+				"siteID",
+				"settings"
+			];
+			populator.populateFromStruct(
+				target               = oSite,
+				memento              = siteData,
+				exclude              = arrayToList( excludedFields ),
+				composeRelationships = false
+			);
 
-		// Settings
-		// If we are persited, clean up and do new settings
-		if ( oSite.isLoaded() ) {
-			// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
-			if ( !server.keyExists( "lucee" ) ) {
-				variables.settingService.deleteWhere( site: oSite );
+			// Import Settings
+			if ( oSite.isLoaded() ) {
+				// If persisted, do cleanups
+				// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
+				if ( !server.keyExists( "lucee" ) ) {
+					variables.settingService.deleteWhere( site: oSite );
+				}
+				oSite.removeAllSettings();
 			}
-			oSite.removeAllSettings();
-		}
-		oSite.setSettings(
-			siteData.settings.map( function( thisSetting ){
-				return populator
-					.populateFromStruct(
-						target               = variables.settingService.new(),
-						memento              = thisSetting,
-						exclude              = "site",
-						composeRelationships = false
-					)
-					.setSite( oSite );
-			} )
-		);
-
-		// Categories
-		if ( arrayLen( siteData.categories ) ) {
-			oSite.setCategories(
-				siteData.categories.map( function( thisCategory ){
-					return variables.categoryService.getOrCreateBySlug(
-						thisCategory.slug,
-						oSite.getSite()
-					);
+			oSite.setSettings(
+				siteData.settings.map( function( thisSetting ){
+					// Avoid the boolean casting to string of hell!!
+					arguments.thisSetting.value = toString( arguments.thisSetting.value );
+					return populator
+						.populateFromStruct(
+							target               = variables.settingService.new(),
+							memento              = thisSetting,
+							exclude              = "site",
+							composeRelationships = false
+						)
+						.setSite( oSite );
 				} )
 			);
+
+			// IMPORT CATEGORIES
+			if ( arrayLen( siteData.categories ) ) {
+				oSite.setCategories(
+					siteData.categories.map( function( thisCategory ){
+						if ( oSite.isLoaded() ) {
+							return variables.categoryService.getOrCreateBySlug(
+								category: thisCategory.slug,
+								site    : oSite
+							);
+						}
+						return variables.categoryService.new( {
+							category : arguments.thisCategory.slug,
+							slug     : arguments.thisCategory.slug,
+							site     : oSite
+						} );
+					} )
+				);
+			}
+
+			// Note it for persistence so we can do the rest of the relationships
+			this.save( oSite );
+
+			// IMPORT ENTRIES
+			importSiteContentFromData(
+				contentType: "entry",
+				service    : getWireBox().getInstance( "entryService@cb" ),
+				data       : siteData.entries,
+				site       : oSite
+			);
+
+			// IMPORT PAGES
+			importSiteContentFromData(
+				contentType: "page",
+				service    : getWireBox().getInstance( "pageService@cb" ),
+				data       : siteData.pages,
+				site       : oSite
+			);
+
+			// IMPORT CONTENTSTORE
+			importSiteContentFromData(
+				contentType: "contentstore",
+				service    : getWireBox().getInstance( "contentStoreService@cb" ),
+				data       : siteData.contentStore,
+				site       : oSite
+			);
 		}
+		// end site transaction
+	}
 
-		// Note it for persistence so we can do the rest of the relationships
-		entitySave( oSite );
-
-		// ContentStore
-
-		// Entries
-
-		// Pages
+	/**
+	 * Import content objects from raw data
+	 *
+	 * @contentType The content type we are importing
+	 * @service the content service
+	 * @data The raw data struct
+	 * @site The site we are importing into
+	 */
+	function importSiteContentFromData(
+		required contentType,
+		required service,
+		required data,
+		required site
+	){
+		arguments.data.each( function( thisContent ){
+			var results = arguments.service.inflateFromStruct(
+				contentData: arguments.thisContent,
+				importLog  : arguments.importLog,
+				site       : oSite
+			);
+			// continue to next record if author not found
+			if ( !results.authorFound ) {
+				return;
+			}
+			// if new or persisted with override then save.
+			if ( !results.content.isLoaded() ) {
+				arguments.importLog.append(
+					"New #arguments.contentType# imported: #thisContent.slug#<br>"
+				);
+				entitySave( results.content );
+			} else if ( inflatedResults.content.isLoaded() and arguments.override ) {
+				arguments.importLog.append(
+					"Persisted #arguments.contentType# overriden: #thisContent.slug#<br>"
+				);
+				entitySave( results.content );
+			} else {
+				arguments.importLog.append(
+					"Skipping persisted #arguments.contentType#: #thisContent.slug#<br>"
+				);
+			}
+		} );
+		return this;
 	}
 
 }

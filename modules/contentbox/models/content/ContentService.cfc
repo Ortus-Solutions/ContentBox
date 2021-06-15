@@ -762,8 +762,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		boolean override = false,
 		required any importLog
 	){
-		var allContent  = [];
-		var siteService = getWireBox().getInstance( "siteService@cb" );
+		var allContent = [];
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
@@ -820,6 +819,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @importLog The string builder import log
 	 * @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
 	 * @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
+	 * @site If passed, we use this specific site, else we discover it via content data
 	 *
 	 * @return struct of { content:contentObject, authorFound: }
 	 */
@@ -827,7 +827,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required any contentData,
 		required any importLog,
 		any parent,
-		struct newContent = {}
+		struct newContent = {},
+		site
 	){
 		var results     = { "content" : "", "authorFound" : false };
 		// setup
@@ -865,8 +866,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			nullEmptyInclude     = "publishedDate,expireDate"
 		);
 
-		// Link the site
-		results.content.setSite( siteService.getBySlugOrFail( thisContent.site.slug ) );
+		// Link the site from incoming data or arguments
+		if ( isNull( arguments.site ) ) {
+			results.content.setSite(
+				getWireBox()
+					.getInstance( "siteService@cb" )
+					.getBySlugOrFail( thisContent.site.slug )
+			);
+		} else {
+			result.content.setSite( arguments.site );
+		}
 
 		// determine author else ignore import
 		var oAuthor = variables.authorService.findByEmail( thisContent.creator.email );

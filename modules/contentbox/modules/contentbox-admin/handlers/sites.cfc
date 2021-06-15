@@ -153,6 +153,7 @@ component extends="baseHandler" {
 				);
 			}
 		} catch ( any e ) {
+			rethrow;
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );

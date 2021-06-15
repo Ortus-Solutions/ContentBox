@@ -65,14 +65,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	Category function getOrCreateBySlug( required string category, required site ){
 		// Verify the incoming category exists in the target site or not
-		var oTargetCategory = newCriteria()
-			.isEq( "site.siteID", arguments.site.getsiteID() )
-			.isEq( "slug", arguments.category )
-			.get();
+		if ( arguments.site.isLoaded() ) {
+			var oTargetCategory = newCriteria()
+				.isEq( "site.siteID", arguments.site.getsiteID() )
+				.isEq( "slug", arguments.category )
+				.get();
+		}
 
 		// Return or Create
 		if ( isNull( oTargetCategory ) ) {
-			oTargetCategory = save(
+			var oTargetCategory = save(
 				new ( {
 					category : arguments.category,
 					slug     : arguments.category,
