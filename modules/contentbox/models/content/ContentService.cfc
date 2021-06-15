@@ -874,7 +874,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					.getBySlugOrFail( thisContent.site.slug )
 			);
 		} else {
-			result.content.setSite( arguments.site );
+			results.content.setSite( arguments.site );
 		}
 
 		// determine author else ignore import
@@ -913,7 +913,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// STATS
-		if ( thisContent.stats.hits > 0 ) {
+		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
 			results.content.setStats(
 				variables.statsService.new( {
 					hits           : thisContent.stats.hits,
@@ -930,7 +930,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				var inflateResults = inflateFromStruct(
 					contentData = thisChild,
 					importLog   = arguments.importLog,
-					parent      = results.content
+					parent      = results.content,
+					site        = ( !isNull( arguments.site ) ? arguments.site : javacast( "null", "" ) )
 				);
 				// continue to next record if author not found
 				if ( !inflateResults.authorFound ) {
@@ -1030,7 +1031,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					type              : thisSubscription.type
 				} );
 				// Subscriber
-				var oSubscriber = variables.inflateFromStruct.findBySubscriberEmail(
+				var oSubscriber = variables.subscriberService.findBySubscriberEmail(
 					thisSubscription.subscriber.subscriberEmail
 				);
 				if ( isNull( oSubscriber ) ) {
@@ -1164,7 +1165,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @type The content type to detect
 	 */
 	private function getServiceByType( required type ){
-		switch ( thisRelatedContent.contentType ) {
+		switch ( arguments.type ) {
 			case "Page":
 				return variables.pageService;
 				break;

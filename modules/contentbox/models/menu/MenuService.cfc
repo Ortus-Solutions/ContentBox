@@ -162,13 +162,15 @@ component
 	 * @importData A struct or array of data to import
 	 * @override Override content if found in the database, defaults to false
 	 * @importLog The import log buffer
+	 * @site If passed, we use this specific site, else we discover it via content data
 	 *
 	 * @return The console log of the import
 	 */
 	string function importFromData(
 		required importData,
 		boolean override = false,
-		importLog
+		importLog,
+		site
 	){
 		var allMenus    = [];
 		var siteService = getWireBox().getInstance( "siteService@cb" );
@@ -192,8 +194,13 @@ component
 					composeRelationships = false,
 					exclude              = "menuID,menuItems"
 				);
+
 				// Link the site
-				oMenu.setSite( siteService.getBySlugOrFail( oMenu.site.slug ) );
+				if ( isNull( arguments.site ) ) {
+					oMenu.setSite( siteService.getBySlugOrFail( oMenu.site.slug ) );
+				} else {
+					oMenu.setSite( arguments.site );
+				}
 
 				// Compose Menu Items
 				if ( arrayLen( menu.menuItems ) ) {

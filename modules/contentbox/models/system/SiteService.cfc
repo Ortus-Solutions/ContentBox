@@ -9,7 +9,6 @@ component
 	extends  ="cborm.models.VirtualEntityService"
 	accessors="true"
 	threadsafe
-	singleton
 {
 
 	// DI
@@ -101,6 +100,7 @@ component
 			try {
 				super.save( arguments.site );
 			} catch ( any e ) {
+				writeDump( var = e );
 				writeDump( var = arguments.site, top = 5 );
 				abort;
 			}
@@ -371,14 +371,16 @@ component
 					importSite(
 						site     : oSite,
 						memento  : thisSite,
-						importLog: arguments.importLog
+						importLog: arguments.importLog,
+						override : arguments.override
 					);
 				} else if ( oSite.isLoaded() and arguments.override ) {
 					arguments.importLog.append( "Overiding site: #thisSite.slug#<br>" );
 					importSite(
 						site     : oSite,
 						memento  : thisSite,
-						importLog: arguments.importLog
+						importLog: arguments.importLog,
+						override : arguments.override
 					);
 				} else {
 					arguments.importLog.append( "Skipping persisted site: #thisSite.slug#<br>" );
@@ -406,11 +408,13 @@ component
 	 * @site The site object that will be used to import
 	 * @memento The site memento that we will import
 	 * @importLog The string buffer that represents the import log
+	 * @override Override content if found in the database, defaults to false
 	 */
 	function importSite(
 		required site,
 		required memento,
-		required importLog
+		required importLog,
+		required override
 	){
 		transaction {
 			// Aliases
@@ -422,6 +426,7 @@ component
 				"categories",
 				"contentStore",
 				"entries",
+				"menus",
 				"pages",
 				"siteID",
 				"settings"
@@ -484,7 +489,9 @@ component
 				contentType: "entry",
 				service    : getWireBox().getInstance( "entryService@cb" ),
 				data       : siteData.entries,
-				site       : oSite
+				site       : oSite,
+				importLog  : arguments.importLog,
+				override   : arguments.override
 			);
 
 			// IMPORT PAGES
@@ -492,7 +499,9 @@ component
 				contentType: "page",
 				service    : getWireBox().getInstance( "pageService@cb" ),
 				data       : siteData.pages,
-				site       : oSite
+				site       : oSite,
+				importLog  : arguments.importLog,
+				override   : arguments.override
 			);
 
 			// IMPORT CONTENTSTORE
@@ -500,8 +509,20 @@ component
 				contentType: "contentstore",
 				service    : getWireBox().getInstance( "contentStoreService@cb" ),
 				data       : siteData.contentStore,
-				site       : oSite
+				site       : oSite,
+				importLog  : arguments.importLog,
+				override   : arguments.override
 			);
+
+			// IMPORT MENUS
+			getWireBox()
+				.getInstance( "menuService@cb" )
+				.importFromData(
+					importData: siteData.menus,
+					override  : arguments.override,
+					importLog : arguments.importLog,
+					site      : oSite
+				);
 		}
 		// end site transaction
 	}
@@ -513,40 +534,51 @@ component
 	 * @service the content service
 	 * @data The raw data struct
 	 * @site The site we are importing into
+	 * @importLog The import log
+	 * @override Override data
 	 */
 	function importSiteContentFromData(
 		required contentType,
 		required service,
 		required data,
-		required site
+		required site,
+		required importLog,
+		required override
 	){
-		arguments.data.each( function( thisContent ){
-			var results = arguments.service.inflateFromStruct(
-				contentData: arguments.thisContent,
-				importLog  : arguments.importLog,
-				site       : oSite
-			);
-			// continue to next record if author not found
-			if ( !results.authorFound ) {
-				return;
+		for ( var thisContent in arguments.data ) {
+			try {
+				var results = arguments.service.inflateFromStruct(
+					contentData: thisContent,
+					importLog  : arguments.importLog,
+					site       : arguments.site
+				);
+				// continue to next record if author not found
+				if ( !results.authorFound ) {
+					return;
+				}
+				// if new or persisted with override then save.
+				if ( !results.content.isLoaded() ) {
+					arguments.importLog.append(
+						"New #arguments.contentType# imported: #thisContent.slug#<br>"
+					);
+					entitySave( results.content );
+				} else if ( results.content.isLoaded() and arguments.override ) {
+					arguments.importLog.append(
+						"Persisted #arguments.contentType# overriden: #thisContent.slug#<br>"
+					);
+					entitySave( results.content );
+				} else {
+					arguments.importLog.append(
+						"Skipping persisted #arguments.contentType#: #thisContent.slug#<br>"
+					);
+				}
+			} catch ( any e ) {
+				writeDump( var = arguments.contentType );
+				writeDump( var = thisContent );
+				writeDump( var = e );
+				abort;
 			}
-			// if new or persisted with override then save.
-			if ( !results.content.isLoaded() ) {
-				arguments.importLog.append(
-					"New #arguments.contentType# imported: #thisContent.slug#<br>"
-				);
-				entitySave( results.content );
-			} else if ( inflatedResults.content.isLoaded() and arguments.override ) {
-				arguments.importLog.append(
-					"Persisted #arguments.contentType# overriden: #thisContent.slug#<br>"
-				);
-				entitySave( results.content );
-			} else {
-				arguments.importLog.append(
-					"Skipping persisted #arguments.contentType#: #thisContent.slug#<br>"
-				);
-			}
-		} );
+		}
 		return this;
 	}
 

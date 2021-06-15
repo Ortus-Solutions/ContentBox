@@ -241,7 +241,7 @@ component
 			var newItem  = menuItemService.populate(
 				target  = entity,
 				memento = data,
-				exclude = "children"
+				exclude = "children,parent"
 			);
 			newItem.setMenu( this );
 
