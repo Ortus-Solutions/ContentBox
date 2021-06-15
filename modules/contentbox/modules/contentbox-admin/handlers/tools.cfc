@@ -136,10 +136,10 @@ component extends="baseHandler" {
 
 		// tab
 		prc.tabTools_export = true;
-		prc.modules         = moduleService.findModules( moduleType = "custom" ).modules;
-		prc.themes          = themeService.getCustomThemes();
-		prc.widgets         = widgetService.getWidgets();
-		prc.widgetService   = widgetService;
+		prc.modules         = variables.moduleService.findModules( moduleType = "custom" ).modules;
+		prc.themes          = variables.themeService.getCustomThemes();
+		prc.widgets         = variables.widgetService.getWidgets();
+		prc.widgetService   = variables.widgetService;
 
 		// view
 		event.setView( "tools/exporter" );
@@ -174,9 +174,10 @@ component extends="baseHandler" {
 		var filename           = variables.HTMLHelper.slugify( prc.oCurrentSite.getName() );
 		// send it
 		event.sendFile(
-			file       = exportFilePath,
-			name       = fileName,
-			abortAtEnd = true
+			file      : exportFilePath,
+			name      : fileName,
+			mimetype  : "application/zip",
+			abortAtEnd: true
 		);
 	}
 
@@ -191,7 +192,8 @@ component extends="baseHandler" {
 			includeBlog = rc.blogContent,
 			event       = event,
 			rc          = rc,
-			prc         = prc
+			prc         = prc,
+			site        = prc.oCurrentSite
 		);
 
 		// export the content
@@ -200,9 +202,10 @@ component extends="baseHandler" {
 		var filename       = variables.HTMLHelper.slugify( prc.oCurrentSite.getName() );
 		// send it
 		event.sendFile(
-			file       = exportFilePath,
-			name       = fileName,
-			abortAtEnd = true
+			file      : exportFilePath,
+			name      : fileName,
+			mimetype  : "application/zip",
+			abortAtEnd: true
 		);
 	}
 

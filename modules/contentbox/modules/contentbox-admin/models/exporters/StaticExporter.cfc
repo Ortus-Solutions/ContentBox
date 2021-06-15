@@ -8,16 +8,16 @@
 component accessors=true threadSafe singleton {
 
 	// DI
-	property name="settingService"     inject="SettingService@cb";
-	property name="pageService"        inject="PageService@cb";
-	property name="siteService"        inject="siteService@cb";
-	property name="entryService"       inject="entryService@cb";
-	property name="themeService"       inject="ThemeService@cb";
-	property name="categoryService"    inject="CategoryService@cb";
-	property name="uiConfig"           inject="coldbox:moduleconfig:contentbox-ui";
+	property name="settingService" inject="SettingService@cb";
+	property name="pageService" inject="PageService@cb";
+	property name="siteService" inject="siteService@cb";
+	property name="entryService" inject="entryService@cb";
+	property name="themeService" inject="ThemeService@cb";
+	property name="categoryService" inject="CategoryService@cb";
+	property name="uiConfig" inject="coldbox:moduleconfig:contentbox-ui";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="zipUtil"            inject="zipUtil@cb";
-	property name="Renderer"           inject="Provider:Renderer@coldbox";
+	property name="zipUtil" inject="zipUtil@cb";
+	property name="Renderer" inject="Provider:Renderer@coldbox";
 
 	/**
 	 * Constructor
@@ -34,6 +34,7 @@ component accessors=true threadSafe singleton {
 	 * @event Request Context
 	 * @rc RC
 	 * @prc PRC
+	 * @site The site to export
 	 *
 	 * @return struct with keys: { exportLog:builder, exportDirectory, exportArchive }
 	 */
@@ -43,15 +44,16 @@ component accessors=true threadSafe singleton {
 		modifiedDate,
 		required event,
 		required rc,
-		required prc
+		required prc,
+		required site
 	){
 		var lb      = chr( 13 ) & chr( 10 );
 		var results = {
-			exportLog : createObject( "java", "java.lang.StringBuilder" ).init(
+			"exportLog" : createObject( "java", "java.lang.StringBuilder" ).init(
 				"Starting static site generation with the following options: #arguments.toString()#. #lb#"
 			),
-			exportDirectory : arguments.exportDirectory,
-			exportFile      : getTempDirectory() & "/" & createUUID() & ".zip"
+			"exportDirectory" : arguments.exportDirectory,
+			"exportFile"      : getTempDirectory() & "/" & createUUID() & ".zip"
 		};
 		var allSettings = variables.settingService.getAllSettings();
 
@@ -70,8 +72,12 @@ component accessors=true threadSafe singleton {
 		arguments.prc.cbEntryPoint   = variables.uiConfig.entryPoint;
 		// Place global cb options on scope
 		arguments.prc.cbSettings     = allSettings;
+		// Place the site to export
+		arguments.prc.oCurrentSite   = arguments.site;
+		// Place the default theme
+		arguments.prc.cbTheme        = arguments.prc.oCurrentSite.getActiveTheme();
 		// Place the default theme record
-		arguments.prc.cbThemeRecord  = themeService.getThemeRecord( arguments.prc.cbTheme );
+		arguments.prc.cbThemeRecord  = variables.themeService.getThemeRecord( arguments.prc.cbTheme );
 		// Place theme root location
 		arguments.prc.cbthemeRoot    = arguments.prc.cbRoot & "/themes/" & arguments.prc.cbTheme;
 		// Place widgets root location
@@ -79,12 +85,9 @@ component accessors=true threadSafe singleton {
 		// Marker to tell layouts we are in static export mode
 		arguments.prc.staticExport   = true;
 		// Current Site
-		arguments.prc.oCurrentSite   = variables.siteService.getCurrentWorkingSite();
 		arguments.prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
 			arguments.prc.oCurrentSite.getSlug()
 		);
-		// Place the default theme
-		arguments.prc.cbTheme = arguments.prc.oCurrentSite.getActiveTheme();
 
 		/******************************************************************************/
 
@@ -111,10 +114,17 @@ component accessors=true threadSafe singleton {
 		interceptorService.announce( "cbadmin_preStaticSiteExport", { options : arguments } );
 
 		// Get root pages, we need objects in order to render out the site
-		var aPages = pageService.search( parent = "", sortOrder = "order asc" );
+		var aPages = variables.pageService.search(
+			parent   = "",
+			siteID   : arguments.site.getSiteID(),
+			sortOrder= "order asc"
+		);
 
 		// Process Homepage
-		var oHomePage = pageService.findBySlug( arguments.prc.oCurrentSite.getHomepage() );
+		var oHomePage = variables.pageService.findBySlug(
+			slug  : arguments.prc.oCurrentSite.getHomepage(),
+			siteID= arguments.site.getSiteID()
+		);
 		if ( !isNull( oHomePage ) ) {
 			// put in scope for fake access
 			prc.page = oHomePage;
@@ -148,9 +158,13 @@ component accessors=true threadSafe singleton {
 
 		// Process blog entries
 		if ( arguments.includeBlog ) {
-			var aEntries   = entryService.search();
+			var aEntries   = variables.entryService.search( siteID: arguments.site.getSiteID() );
 			// Put all categories in prc for processing
-			prc.categories = categoryService.list( sortOrder = "category", asQuery = false );
+			prc.categories = variables.categoryService.list(
+				criteria : { "site" : arguments.site },
+				sortOrder: "category",
+				asQuery  : false
+			);
 			// Process all entries
 			for ( var thisEntry in aEntries.entries ) {
 				// put in scope for fake access
@@ -229,7 +243,7 @@ component accessors=true threadSafe singleton {
 		// replace local server addresses
 		outputContent = replaceNoCase(
 			outputContent,
-			arguments.event.buildLink( "" ),
+			arguments.content.getSite().getSiteRoot(),
 			"/",
 			"all"
 		);
@@ -237,7 +251,7 @@ component accessors=true threadSafe singleton {
 		outputContent = replaceNoCase(
 			outputContent,
 			arguments.prc.cbThemeRoot,
-			"/__theme/#arguments.prc.cbTheme#",
+			"__theme/#arguments.prc.cbTheme#",
 			"all"
 		);
 		// **********************************
@@ -300,7 +314,7 @@ component accessors=true threadSafe singleton {
 		// replace local server addresses
 		outputContent = replaceNoCase(
 			outputContent,
-			arguments.event.buildLink( "" ),
+			arguments.content.getSite().getSiteRoot(),
 			"/",
 			"all"
 		);
@@ -308,7 +322,7 @@ component accessors=true threadSafe singleton {
 		outputContent = replaceNoCase(
 			outputContent,
 			arguments.prc.cbThemeRoot,
-			"/__theme",
+			"__theme/#arguments.prc.cbTheme#",
 			"all"
 		);
 		// **********************************
