@@ -830,11 +830,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			var thisContent = arguments.contentData;
 			// Get content by slug, if not found then it returns a new entity so we can persist it.
 			var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
-			writeDump(
-				var    = [ oContent ?: "" ],
-				top    = 2,
-				expand = false
-			);
+			// writeDump(
+			// 	var    = [ oContent ?: "" ],
+			// 	top    = 2,
+			// 	expand = false
+			// );
 
 			if ( isNull( oContent ) ) {
 				oContent = this.new();
@@ -842,9 +842,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// Link the site
 			oContent.setSite( arguments.site );
 		} catch ( any e ) {
-			writeDump( var = oContent, top = 9 );
-			writeDump( var = e );
-			abort;
+			// writeDump( var = oContent, top = 9 );
+			// writeDump( var = e );
+			// abort;
+			rethrow;
 		}
 
 		// add to newContent map so we can avoid slug collisions in recursive relationships
