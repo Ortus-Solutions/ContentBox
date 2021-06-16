@@ -825,28 +825,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required site,
 		boolean override = false
 	){
-		try {
-			// setup
-			var thisContent = arguments.contentData;
-			// Get content by slug, if not found then it returns a new entity so we can persist it.
-			var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
-			// writeDump(
-			// 	var    = [ oContent ?: "" ],
-			// 	top    = 2,
-			// 	expand = false
-			// );
+		// setup
+		var thisContent = arguments.contentData;
+		// Get content by slug, if not found then it returns a new entity so we can persist it.
+		var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
 
-			if ( isNull( oContent ) ) {
-				oContent = this.new();
-			}
-			// Link the site
-			oContent.setSite( arguments.site );
-		} catch ( any e ) {
-			// writeDump( var = oContent, top = 9 );
-			// writeDump( var = e );
-			// abort;
-			rethrow;
+		if ( isNull( oContent ) ) {
+			oContent = this.new();
 		}
+		// Link the site
+		oContent.setSite( arguments.site );
 
 		// add to newContent map so we can avoid slug collisions in recursive relationships
 		arguments.newContent[ thisContent.slug ] = oContent;
@@ -919,7 +907,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				"site" : arguments.site
 			} );
 			// assign if persisted
-			if ( oParent.isLoaded() ) {
+			if ( !isNull( oParent ) ) {
 				oContent.setParent( oParent );
 				arguments.importLog.append(
 					"Content parent (#oParent.getSlug()#) found and linked to #thisContent.parent.slug#<br>"
@@ -961,6 +949,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			}
 		}
 
+		// We now persist it to do child relationships
+		entitySave( oContent );
+
 		// CATEGORIES
 		if ( arrayLen( thisContent.categories ) ) {
 			oContent.setCategories(
@@ -972,9 +963,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				"+ Categories (#thisContent.categories.toString()#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		}
-
-		// We now persist it to do child relationships
-		entitySave( oContent );
 
 		// STATS
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {

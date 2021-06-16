@@ -591,7 +591,7 @@ component
 					"+ Importing contentStore (#arrayLen( siteData.contentStore )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "contentStoreervice@cb" )
+					.getInstance( "contentStoreService@cb" )
 					.importFromData(
 						importData: siteData.contentStore,
 						override  : arguments.override,
