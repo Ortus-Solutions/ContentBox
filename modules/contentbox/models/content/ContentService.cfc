@@ -225,8 +225,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count = c.count( "contentID" );
-		oContent      = c
+		results.count   = c.count( "contentID" );
+		results.content = c
 			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 			.list(
 				offset    = arguments.offset,
@@ -500,8 +500,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		;
 
 		// run criteria query and projections count
-		results.count = c.count( "contentID" );
-		oContent      = c
+		results.count   = c.count( "contentID" );
+		results.content = c
 			// Do we want array of simple projections?
 			.when( !isNull( arguments.properties ), function( c ){
 				arguments.c.withProjections( property: properties ).asStruct();
