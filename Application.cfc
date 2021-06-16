@@ -110,7 +110,7 @@ component {
 		dbcreate              	: "update",
 		secondarycacheenabled 	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
 		cacheprovider         	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
-		logSQL                	: true,//request.$coldboxUtil.getSystemSetting( "ORM_LOGSQL", false ),
+		logSQL                	: request.$coldboxUtil.getSystemSetting( "ORM_LOGSQL", false ),
 		sqlScript				: request.$coldboxUtil.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
 		flushAtRequestEnd     	: false,

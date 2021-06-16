@@ -19,6 +19,7 @@ component
 	property name="settingService" inject="provider:settingService@cb";
 	property name="categoryService" inject="provider:categoryService@cb";
 	property name="contentService" inject="provider:contentService@cb";
+	property name="menuService" inject="provider:menuService@cb";
 	property name="themeService" inject="provider:themeService@cb";
 	property name="mediaService" inject="provider:mediaService@cb";
 
@@ -57,7 +58,9 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		return newCriteria().isEq( "siteID", getCurrentWorkingsiteID() ).get();
+		var oSite = newCriteria().isEq( "siteID", getCurrentWorkingsiteID() ).get();
+		// Check if null, just in case
+		return ( !isNull( oSite ) ? oSite : getDefaultSite() );
 	}
 
 	/**
@@ -152,11 +155,13 @@ component
 				variables.settingService.deleteWhere( site: arguments.site );
 				variables.contentService.deleteWhere( site: arguments.site );
 				variables.categoryService.deleteWhere( site: arguments.site );
+				variables.menuService.deleteWhere( site: arguments.site );
 			}
 			arguments.site
 				.removeAllSettings()
 				.removeAllEntries()
 				.removeAllPages()
+				.removeAllMenus()
 				.removeAllContentStore()
 				.removeAllCategories();
 
@@ -333,6 +338,8 @@ component
 			);
 		}
 
+		variables.logger.info( "Site import from file requested." );
+
 		// deserialize packet: Should be array of { settingID, name, value }
 		return importFromData(
 			deserializeJSON( data ),
@@ -360,6 +367,10 @@ component
 			arguments.importData = [ arguments.importData ];
 		}
 
+		variables.logger.info(
+			"+ Site import will try to import (#arrayLen( arguments.importData )#) sites."
+		);
+
 		transaction {
 			// iterate and import
 			for ( var thisSite in arguments.importData ) {
@@ -368,6 +379,7 @@ component
 
 				// if new or persisted with override then save.
 				if ( !oSite.isLoaded() ) {
+					variables.logger.info( "+ New site will be imported: #thisSite.slug#" );
 					arguments.importLog.append( "New site will be imported: #thisSite.slug#<br>" );
 					importSite(
 						site     : oSite,
@@ -376,7 +388,8 @@ component
 						override : arguments.override
 					);
 				} else if ( oSite.isLoaded() and arguments.override ) {
-					arguments.importLog.append( "Overiding site: #thisSite.slug#<br>" );
+					variables.logger.info( "+ Overidding site: #thisSite.slug#" );
+					arguments.importLog.append( "Overriding site: #thisSite.slug#<br>" );
 					importSite(
 						site     : oSite,
 						memento  : thisSite,
@@ -384,21 +397,19 @@ component
 						override : arguments.override
 					);
 				} else {
+					variables.logger.info( "!! Skipping persisted site: #thisSite.slug#" );
 					arguments.importLog.append( "Skipping persisted site: #thisSite.slug#<br>" );
 				}
 			}
 			// end import loop
 
-			// Final Report
-			if ( arrayLen( arguments.importData ) ) {
-				arguments.importLog.append( "Saved all imported and overriden content!" );
-			} else {
-				arguments.importLog.append(
-					"No content imported as none where found or able to be overriden from the import file."
-				);
-			}
+			variables.logger.info( "√ Site import finalized!" );
+			arguments.importLog.append( "√ Site import finalized!<br>" );
 		}
 		// end transaction
+
+		// Rebuild Settings Cache
+		variables.settingService.flushSettingsCache();
 
 		return arguments.importLog.toString();
 	}
@@ -441,6 +452,10 @@ component
 
 			// Import Settings
 			if ( oSite.isLoaded() ) {
+				variables.logger.info( "!! Overriding site settings for #oSite.getSlug()#" );
+				arguments.importLog.append(
+					"!! Overriding site settings for #oSite.getSlug()#<br>"
+				);
 				// If persisted, do cleanups
 				// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
 				if ( !server.keyExists( "lucee" ) ) {
@@ -452,6 +467,12 @@ component
 				siteData.settings.map( function( thisSetting ){
 					// Avoid the boolean casting to string of hell!!
 					arguments.thisSetting.value = toString( arguments.thisSetting.value );
+					variables.logger.info(
+						"+ Importing setting: (#thisSetting.name#) to site #oSite.getSlug()#"
+					);
+					importLog.append(
+						"+ Importing setting: (#thisSetting.name#) to site #oSite.getSlug()#<br>"
+					);
 					return populator
 						.populateFromStruct(
 							target               = variables.settingService.new(),
@@ -462,11 +483,16 @@ component
 						.setSite( oSite );
 				} )
 			);
+			variables.logger.info( "+ Site settings for #oSite.getSlug()# imported." );
+			arguments.importLog.append( "+ Site settings for #oSite.getSlug()# imported." );
 
 			// IMPORT CATEGORIES
 			if ( arrayLen( siteData.categories ) ) {
 				oSite.setCategories(
 					siteData.categories.map( function( thisCategory ){
+						variables.logger.info(
+							"+ Importing category: (#thisCategory.slug#) to site #oSite.getSlug()#"
+						);
 						if ( oSite.isLoaded() ) {
 							return variables.categoryService.getOrCreateBySlug(
 								category: thisCategory.slug,
@@ -474,113 +500,113 @@ component
 							);
 						}
 						return variables.categoryService.new( {
-							category : arguments.thisCategory.slug,
+							category : arguments.thisCategory.category,
 							slug     : arguments.thisCategory.slug,
 							site     : oSite
 						} );
 					} )
 				);
+				variables.logger.info( "+ Site categories for #oSite.getSlug()# imported." );
 			}
 
 			// Note it for persistence so we can do the rest of the relationships
 			this.save( oSite );
-
-			// IMPORT ENTRIES
-			importSiteContentFromData(
-				contentType: "entry",
-				service    : getWireBox().getInstance( "entryService@cb" ),
-				data       : siteData.entries,
-				site       : oSite,
-				importLog  : arguments.importLog,
-				override   : arguments.override
-			);
-
-			// IMPORT PAGES
-			importSiteContentFromData(
-				contentType: "page",
-				service    : getWireBox().getInstance( "pageService@cb" ),
-				data       : siteData.pages,
-				site       : oSite,
-				importLog  : arguments.importLog,
-				override   : arguments.override
-			);
-
-			// IMPORT CONTENTSTORE
-			importSiteContentFromData(
-				contentType: "contentstore",
-				service    : getWireBox().getInstance( "contentStoreService@cb" ),
-				data       : siteData.contentStore,
-				site       : oSite,
-				importLog  : arguments.importLog,
-				override   : arguments.override
+			variables.logger.info(
+				"+ Site (#oSite.getSlug()#) saved to session, starting to import content now..."
 			);
 
 			// IMPORT MENUS
-			getWireBox()
-				.getInstance( "menuService@cb" )
-				.importFromData(
-					importData: siteData.menus,
-					override  : arguments.override,
-					importLog : arguments.importLog,
-					site      : oSite
+			if ( arrayLen( siteData.menus ) ) {
+				variables.logger.info(
+					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#"
 				);
-		}
-		// end site transaction
-	}
+				arguments.importLog.append(
+					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#<br>"
+				);
+				getWireBox()
+					.getInstance( "menuService@cb" )
+					.importFromData(
+						importData: siteData.menus,
+						override  : arguments.override,
+						importLog : arguments.importLog,
+						site      : oSite
+					);
 
-	/**
-	 * Import content objects from raw data
-	 *
-	 * @contentType The content type we are importing
-	 * @service the content service
-	 * @data The raw data struct
-	 * @site The site we are importing into
-	 * @importLog The import log
-	 * @override Override data
-	 */
-	function importSiteContentFromData(
-		required contentType,
-		required service,
-		required data,
-		required site,
-		required importLog,
-		required override
-	){
-		for ( var thisContent in arguments.data ) {
-			try {
-				var results = arguments.service.inflateFromStruct(
-					contentData: thisContent,
-					importLog  : arguments.importLog,
-					site       : arguments.site
+				variables.logger.info(
+					"+ Imported (#arrayLen( siteData.menus )#) menus to site #arguments.site.getSlug()#"
 				);
-				// continue to next record if author not found
-				if ( !results.authorFound ) {
-					return;
-				}
-				// if new or persisted with override then save.
-				if ( !results.content.isLoaded() ) {
-					arguments.importLog.append(
-						"New #arguments.contentType# imported: #thisContent.slug#<br>"
+				arguments.importLog.append(
+					"+ Imported (#arrayLen( siteData.menus )#) menus to site #arguments.site.getSlug()#<Br>"
+				);
+			} else {
+				variables.logger.info( "!! No menus found on import data, skipping..." );
+				arguments.importLog.append( "!! No menus found on import data, skipping...<Br>44" );
+			}
+
+			// IMPORT ENTRIES
+			if ( arrayLen( siteData.entries ) ) {
+				variables.logger.info(
+					"+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#"
+				);
+				getWireBox()
+					.getInstance( "entryService@cb" )
+					.importFromData(
+						importData: siteData.entries,
+						override  : arguments.override,
+						importLog : arguments.importLog,
+						site      : oSite
 					);
-					entitySave( results.content );
-				} else if ( results.content.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted #arguments.contentType# overriden: #thisContent.slug#<br>"
+
+				variables.logger.info(
+					"+ Imported (#arrayLen( siteData.entries )#) entries to site #arguments.site.getSlug()#"
+				);
+			} else {
+				variables.logger.info( "!! No entries found on import data, skipping..." );
+			}
+
+			// IMPORT PAGES
+			if ( arrayLen( siteData.pages ) ) {
+				variables.logger.info(
+					"+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#"
+				);
+				getWireBox()
+					.getInstance( "pageService@cb" )
+					.importFromData(
+						importData: siteData.pages,
+						override  : arguments.override,
+						importLog : arguments.importLog,
+						site      : oSite
 					);
-					entitySave( results.content );
-				} else {
-					arguments.importLog.append(
-						"Skipping persisted #arguments.contentType#: #thisContent.slug#<br>"
+
+				variables.logger.info(
+					"+ Imported (#arrayLen( siteData.pages )#) pages to site #arguments.site.getSlug()#"
+				);
+			} else {
+				variables.logger.info( "!! No pages found on import data, skipping..." );
+			}
+
+			// IMPORT CONTENT STORE
+			if ( arrayLen( siteData.contentStore ) ) {
+				variables.logger.info(
+					"+ Importing contentStore (#arrayLen( siteData.contentStore )#) to site #arguments.site.getSlug()#"
+				);
+				getWireBox()
+					.getInstance( "contentStoreervice@cb" )
+					.importFromData(
+						importData: siteData.contentStore,
+						override  : arguments.override,
+						importLog : arguments.importLog,
+						site      : oSite
 					);
-				}
-			} catch ( any e ) {
-				writeDump( var = arguments.contentType );
-				writeDump( var = thisContent );
-				writeDump( var = e );
-				abort;
+
+				variables.logger.info(
+					"+ Imported (#arrayLen( siteData.contentStore )#) contentStore to site #arguments.site.getSlug()#"
+				);
+			} else {
+				variables.logger.info( "!! No contentStore found on import data, skipping..." );
 			}
 		}
-		return this;
+		// end site transaction
 	}
 
 }

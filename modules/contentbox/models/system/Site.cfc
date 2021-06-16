@@ -446,6 +446,18 @@ component
 	}
 
 	/**
+	 * I remove all menu associations
+	 */
+	Site function removeAllMenus(){
+		if ( hasMenu() ) {
+			variables.menus.clear();
+		} else {
+			variables.menus = [];
+		}
+		return this;
+	}
+
+	/**
 	 * I remove all page associations
 	 */
 	Site function removeAllPages(){

@@ -169,7 +169,7 @@ component
 	string function importFromData(
 		required importData,
 		boolean override = false,
-		importLog,
+		required importLog,
 		site
 	){
 		var allMenus    = [];
@@ -183,37 +183,52 @@ component
 		transaction {
 			// iterate and import
 			for ( var menu in arguments.importData ) {
-				// Get new or persisted
-				var oMenu = this.findBySlug( menu.slug );
+				// Determine Site if not passed from import data
+				if ( isNull( arguments.site ) ) {
+					arguments.site = siteService.getBySlugOrFail( menu.site.slug );
+				}
+
+				variables.logger.info(
+					"+ Importing menu (#menu.slug#) to site (#arguments.site.getSlug()#)"
+				);
+
+				// Get new or persisted from site by slug
+				var oMenu = this.findBySlug( slug: menu.slug, siteId: arguments.site.getSiteID() );
 				oMenu     = ( isNull( oMenu ) ? new () : oMenu );
+
+				// Link the site
+				oMenu.setSite( arguments.site );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
 					target               = oMenu,
 					memento              = menu,
 					composeRelationships = false,
-					exclude              = "menuID,menuItems"
+					exclude              = "menuID,menuItems,site"
 				);
-
-				// Link the site
-				if ( isNull( arguments.site ) ) {
-					oMenu.setSite( siteService.getBySlugOrFail( oMenu.site.slug ) );
-				} else {
-					oMenu.setSite( arguments.site );
-				}
 
 				// Compose Menu Items
 				if ( arrayLen( menu.menuItems ) ) {
 					oMenu.populateMenuItems( menu.menuItems );
 				}
+
 				// if new or persisted with override then save.
 				if ( !oMenu.isLoaded() ) {
 					arguments.importLog.append( "New menu imported: #menu.slug#<br>" );
+					variables.logger.info(
+						"+ Imported menu (#menu.slug#) to site (#arguments.site.getSlug()#)"
+					);
 					arrayAppend( allMenus, oMenu );
 				} else if ( oMenu.isLoaded() and arguments.override ) {
 					arguments.importLog.append( "Persisted menu overriden: #menu.slug#<br>" );
+					variables.logger.info(
+						"+ Persisted menu overriden (#menu.slug#) to site (#arguments.site.getSlug()#)"
+					);
 					arrayAppend( allMenus, oMenu );
 				} else {
+					variables.logger.info(
+						"!! Skipped persisted menu (#menu.slug#) to site (#arguments.site.getSlug()#)"
+					);
 					arguments.importLog.append( "Skipping persisted menu: #menu.slug#<br>" );
 				}
 			}
@@ -222,10 +237,10 @@ component
 			// Save them?
 			if ( arrayLen( allMenus ) ) {
 				saveAll( allMenus );
-				arguments.importLog.append( "Saved all imported and overriden menus!" );
+				arguments.importLog.append( "Saved all imported and overriden menus!<br>" );
 			} else {
 				arguments.importLog.append(
-					"No menus imported as none where found or able to be overriden from the import file."
+					"No menus imported as none where found or able to be overriden from the import file.<br>"
 				);
 			}
 		}

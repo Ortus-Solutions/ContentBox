@@ -225,8 +225,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
-		results.content = c
+		results.count = c.count( "contentID" );
+		oContent      = c
 			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
 			.list(
 				offset    = arguments.offset,
@@ -500,8 +500,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		;
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
-		results.content = c
+		results.count = c.count( "contentID" );
+		oContent      = c
 			// Do we want array of simple projections?
 			.when( !isNull( arguments.properties ), function( c ){
 				arguments.c.withProjections( property: properties ).asStruct();
@@ -754,15 +754,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @importData A struct or array of data to import
 	 * @override Override content if found in the database, defaults to false
 	 * @importLog The import log buffer
+	 * @site If passed, we use this specific site, else we discover it via content data
 	 *
 	 * @return The console log of the import
 	 */
 	string function importFromData(
-		required any importData,
+		required importData,
 		boolean override = false,
-		required any importLog
+		required importLog,
+		site
 	){
-		var allContent = [];
+		var siteService = getWireBox().getInstance( "siteService@cb" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
@@ -772,36 +774,27 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		transaction {
 			// iterate and import
 			for ( var thisContent in arguments.importData ) {
-				// Inflate content from data: { content, authorFound }
-				var inflatedResults = inflateFromStruct( thisContent, arguments.importLog );
-
-				// continue to next record if author not found
-				if ( !inflatedResults.authorFound ) {
-					continue;
+				// Determine Site if not passed from import data
+				if ( isNull( arguments.site ) ) {
+					arguments.site = siteService.getBySlugOrFail( thisContent.site.slug );
 				}
 
-				// if new or persisted with override then save.
-				if ( !inflatedResults.content.isLoaded() ) {
-					arguments.importLog.append( "New content imported: #thisContent.slug#<br>" );
-					arrayAppend( allContent, inflatedResults.content );
-				} else if ( inflatedResults.content.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted content overriden: #thisContent.slug#<br>"
-					);
-					arrayAppend( allContent, inflatedResults.content );
-				} else {
-					arguments.importLog.append(
-						"Skipping persisted content: #thisContent.slug#<br>"
-					);
-				}
+				variables.logger.info(
+					"+ Importing content (#thisContent.contentType#:#thisContent.slug#) to site (#arguments.site.getSlug()#)"
+				);
+
+				// Import it
+				importFromStruct(
+					contentData: thisContent,
+					importLog  : arguments.importLog,
+					site       : arguments.site,
+					override   : arguments.override
+				);
 			}
 			// end import loop
 
 			// Save content
-			if ( arrayLen( allContent ) ) {
-				saveAll( allContent );
-				arguments.importLog.append( "Saved all imported and overriden content!" );
-			} else {
+			if ( !arrayLen( arguments.importData ) ) {
 				arguments.importLog.append(
 					"No content imported as none where found or able to be overriden from the import file."
 				);
@@ -813,36 +806,60 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Inflate a content object from a ContentBox JSON structure
+	 * Import a content object from a ContentBox JSON structure
 	 *
 	 * @contentData The content structure inflated from JSON
 	 * @importLog The string builder import log
 	 * @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
 	 * @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
-	 * @site If passed, we use this specific site, else we discover it via content data
+	 * @site The site we are using for the content
+	 * @override Are we overriding persisted data or not?
 	 *
-	 * @return struct of { content:contentObject, authorFound: }
+	 * @return The content object representing the struct
 	 */
-	struct function inflateFromStruct(
+	any function importFromStruct(
 		required any contentData,
 		required any importLog,
 		any parent,
 		struct newContent = {},
-		site
+		required site,
+		boolean override = false
 	){
-		var results     = { "content" : "", "authorFound" : false };
-		// setup
-		var thisContent = arguments.contentData;
-		// Get content by slug, if not found then it returns a new entity so we can persist it.
-		results.content = this.findBySlug(
-			slug            = thisContent.slug,
-			showUnpublished = true,
-			siteID          = thisContent.site.siteID
-		);
-		results.content = ( isNull( results.content ) ? this.new() : results.content );
+		try {
+			// setup
+			var thisContent = arguments.contentData;
+			// Get content by slug, if not found then it returns a new entity so we can persist it.
+			var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
+			writeDump(
+				var    = [ oContent ?: "" ],
+				top    = 2,
+				expand = false
+			);
+
+			if ( isNull( oContent ) ) {
+				oContent = this.new();
+			}
+			// Link the site
+			oContent.setSite( arguments.site );
+		} catch ( any e ) {
+			writeDump( var = oContent, top = 9 );
+			writeDump( var = e );
+			abort;
+		}
 
 		// add to newContent map so we can avoid slug collisions in recursive relationships
-		arguments.newContent[ thisContent.slug ] = results.content;
+		arguments.newContent[ thisContent.slug ] = oContent;
+
+		// Check if loaded and override selected
+		if ( oContent.isLoaded() && !arguments.override ) {
+			arguments.importLog.append(
+				"Skipping persisted content (#thisContent.contentType#:#thisContent.slug#) no override selected.<br>"
+			);
+			variables.logger.info(
+				"!! Skipping persisted content (#thisContent.contentType#:#thisContent.slug#) no override selected"
+			);
+			return;
+		}
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		var excludedFields = [
@@ -856,26 +873,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			"linkedContent",
 			"parent",
 			"relatedContent",
+			"site",
 			"stats"
 		];
 		getBeanPopulator().populateFromStruct(
-			target               = results.content,
+			target               = oContent,
 			memento              = thisContent,
 			exclude              = arrayToList( excludedFields ),
 			composeRelationships = false,
 			nullEmptyInclude     = "publishedDate,expireDate"
 		);
-
-		// Link the site from incoming data or arguments
-		if ( isNull( arguments.site ) ) {
-			results.content.setSite(
-				getWireBox()
-					.getInstance( "siteService@cb" )
-					.getBySlugOrFail( thisContent.site.slug )
-			);
-		} else {
-			results.content.setSite( arguments.site );
-		}
 
 		// determine author else ignore import
 		var oAuthor = variables.authorService.findByEmail( thisContent.creator.email );
@@ -883,103 +890,144 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			arguments.importLog.append(
 				"Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>"
 			);
-			return results;
+			variables.logger.info(
+				"!! Author (#thisContent.creator.email#) not found in ContentBox for: (#oContent.getContentType()#:#thisContent.slug#) "
+			);
+			return oContent;
 		}
-		results.authorFound = true;
 
 		// AUTHOR CREATOR
-		results.content.setCreator( oAuthor );
+		oContent.setCreator( oAuthor );
 		arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
+		variables.logger.info(
+			"+ Content author linked for: (#oContent.getContentType()#:#thisContent.slug#)"
+		);
 
 		// PARENT
 		if ( !isNull( arguments.parent ) and isObject( arguments.parent ) ) {
-			results.content.setParent( arguments.parent );
+			oContent.setParent( arguments.parent );
 			arguments.importLog.append(
 				"Content parent passed and linked: #arguments.parent.getSlug()#<br>"
 			);
+			variables.logger.info(
+				"+ Content parent (#arguments.parent.getSlug()#) passed and linked for: (#oContent.getContentType()#:#thisContent.slug#)"
+			);
 		} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
-			var oParent = this.findBySlug( slug = thisContent.parent.slug, showUnpublished = true );
+			var oParent = findWhere( {
+				"slug" : thisContent.parent.slug,
+				"site" : arguments.site
+			} );
 			// assign if persisted
 			if ( oParent.isLoaded() ) {
-				results.content.setParent( oParent );
+				oContent.setParent( oParent );
 				arguments.importLog.append(
-					"Content parent found and linked: #thisContent.parent.slug#<br>"
+					"Content parent (#oParent.getSlug()#) found and linked to #thisContent.parent.slug#<br>"
+				);
+				variables.logger.info(
+					"+ Content parent (#oParent.getSlug()#) found and linked to: (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			} else {
 				arguments.importLog.append(
 					"Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>"
 				);
-			}
-		}
-
-		// STATS
-		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
-			if ( results.content.hasStats() ) {
-				results.content.getStats().setHits( thisContent.stats.hits );
-			} else {
-				variables.statsService.save(
-					variables.statsService.new( {
-						hits           : thisContent.stats.hits,
-						relatedContent : results.content
-					} )
+				variables.logger.info(
+					"+ Content parent (#thisContent.parent.toString()#) not found for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			}
-		}
-
-		// CHILDREN
-		if ( arrayLen( thisContent.children ) ) {
-			var allChildren = [];
-			// recurse on them and inflate hiearchy
-			for ( var thisChild in thisContent.children ) {
-				var inflateResults = inflateFromStruct(
-					contentData = thisChild,
-					importLog   = arguments.importLog,
-					parent      = results.content,
-					site        = ( !isNull( arguments.site ) ? arguments.site : javacast( "null", "" ) )
-				);
-				// continue to next record if author not found
-				if ( !inflateResults.authorFound ) {
-					continue;
-				}
-				// Add to array of children to add, we have a good content object with a creator
-				arrayAppend( allChildren, inflateResults.content );
-			}
-			results.content.setChildren( allChildren );
 		}
 
 		// CUSTOM FIELDS
 		if ( arrayLen( thisContent.customfields ) ) {
 			// wipe out custom fileds if they exist
-			results.content.removeAllCustomFields();
+			oContent.removeAllCustomFields();
+			variables.logger.info(
+				"+ Content custom fields (#arrayLen( thisContent.customfields )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
 			// add new custom fields
 			for ( var thisCF in thisContent.customfields ) {
 				// explicitly convert value to string...
 				// ACF doesn't handle string values well when they look like numbers :)
-				results.content.addCustomField(
+				oContent.addCustomField(
 					customFieldService.new( {
 						key            : thisCF.key,
 						value          : toString( thisCF.value ),
-						relatedContent : results.content
+						relatedContent : oContent
 					} )
+				);
+				variables.logger.info(
+					"+ Custom field (#thisCF.key#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			}
 		}
 
 		// CATEGORIES
 		if ( arrayLen( thisContent.categories ) ) {
-			results.content.setCategories(
+			oContent.setCategories(
 				thisContent.categories.map( function( thisCategory ){
-					return variables.categoryService.getOrCreateBySlug(
-						thisCategory,
-						results.content.getSite()
-					);
+					return variables.categoryService.getOrCreateBySlug( thisCategory, site );
 				} )
 			);
+			variables.logger.info(
+				"+ Categories (#thisContent.categories.toString()#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
+		}
+
+		// We now persist it to do child relationships
+		entitySave( oContent );
+
+		// STATS
+		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
+			if ( oContent.hasStats() ) {
+				oContent.getStats().setHits( thisContent.stats.hits );
+				variables.logger.info(
+					"+ Content stats found and updated for : (#oContent.getContentType()#:#thisContent.slug#)"
+				);
+			} else {
+				variables.logger.info(
+					"+ Content stats imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+				);
+				variables.statsService.save(
+					variables.statsService.new( { hits : thisContent.stats.hits, relatedContent : oContent } )
+				);
+			}
+		}
+
+		// CHILDREN
+		if ( arrayLen( thisContent.children ) ) {
+			variables.logger.info(
+				"+ Content children (#arrayLen( thisContent.children )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
+			// recurse on them and inflate hiearchy
+			for ( var thisChild in thisContent.children ) {
+				var oChild = importFromStruct(
+					contentData = thisChild,
+					importLog   = arguments.importLog,
+					parent      = oContent,
+					site        = arguments.site
+				);
+
+				// continue to next record if author not found
+				if ( !oChild.hasCreator() ) {
+					variables.logger.info(
+						"!! Import skipped, Author (#thisChild.creator.email#) not found when importing child (#thisChild.slug#) for : (#oContent.getContentType()#:#thisContent.slug#)"
+					);
+					continue;
+				}
+
+				// Add child
+				oContent.addChild( oChild );
+				variables.logger.info(
+					"+ Content child (#thisChild.slug#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+				);
+			}
 		}
 
 		// RELATED CONTENT
 		if ( arrayLen( thisContent.relatedContent ) ) {
 			var allRelatedContent = [];
+			variables.logger.info(
+				"+ Content related content (#arrayLen( thisContent.relatedContent )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
 			for ( var thisRelatedContent in thisContent.relatedContent ) {
 				// if content has already been inflated as part of another process, just use that instance so we don't collide keys
 				if ( structKeyExists( arguments.newContent, thisRelatedContent.slug ) ) {
@@ -987,29 +1035,40 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						allRelatedContent,
 						arguments.newContent[ thisRelatedContent.slug ]
 					);
+					variables.logger.info(
+						"+ Related content (#thisRelatedContent.slug#) already imported, linking to : (#oContent.getContentType()#:#thisContent.slug#)"
+					);
 				}
 				// otherwise, we need to get it
 				else {
-					var oRelatedContent = getServiceByType( thisRelatedContent.contentType ).findBySlug(
-						slug            = thisRelatedContent.slug,
-						showUnpublished = true,
-						siteID          = thisContent.site.siteID
-					);
+					var oRelatedContent = getServiceByType( thisRelatedContent.contentType ).findWhere( {
+						"slug" : thisRelatedContent.slug,
+						"site" : arguments.site
+					} );
 					if ( !isNull( oRelatedContent ) ) {
 						arrayAppend( allRelatedContent, oRelatedContent );
+						variables.logger.info(
+							"+ Related content (#thisRelatedContent.slug#) linked to : (#oContent.getContentType()#:#thisContent.slug#)"
+						);
 					} else {
 						arguments.importLog.append(
 							"Related content not found, so skipping link: #thisRelatedContent.toString()#<br>"
 						);
+						variables.logger.info(
+							"!! Skipping related content (#thisRelatedContent.slug#) as it was not found for : (#oContent.getContentType()#:#thisContent.slug#)"
+						);
 					}
 				}
 			}
-			results.content.setRelatedContent( allRelatedContent );
+			oContent.setRelatedContent( allRelatedContent );
 		}
 
 		// COMMENTS
 		if ( arrayLen( thisContent.comments ) ) {
-			results.content.setComments(
+			variables.logger.info(
+				"+ Content comments (#arrayLen( thisContent.comments )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
+			oContent.setComments(
 				thisContent.comments.map( function( thisComment ){
 					return getBeanPopulator()
 						.populateFromStruct(
@@ -1018,19 +1077,25 @@ component extends="cborm.models.VirtualEntityService" singleton {
 							exclude              = "commentID",
 							composeRelationships = false
 						)
-						.setRelatedContent( results.content );
+						.setRelatedContent( oContent );
 				} )
+			);
+			variables.logger.info(
+				"+ Content comments imported to: (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		}
 
 		// SUBSCRIPTIONS
 		if ( arrayLen( thisContent.commentSubscriptions ) ) {
 			var allSubscriptions = [];
+			variables.logger.info(
+				"+ Content comment subscriptions (#arrayLen( thisContent.commentSubscriptions )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
 			// recurse on them and inflate hiearchy
 			for ( var thisSubscription in thisContent.commentSubscriptions ) {
 				// Subscription
 				var oSubscription = variables.commentSubscriptionService.new( {
-					relatedContent    : results.content,
+					relatedContent    : oContent,
 					subscriptionToken : thisSubscription.subscriptionToken,
 					type              : thisSubscription.type
 				} );
@@ -1050,14 +1115,26 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				variables.subscriberService.save( oSubscriber );
 				// add to import
 				// arrayAppend( allSubscriptions, oSubscription );
+				variables.logger.info(
+					"+ Content comment subscription for (#thisSubscription.subscriber.subscriberEmail#) imported to: (#oContent.getContentType()#:#thisContent.slug#)"
+				);
 			}
-			// results.content.setCommentSubscriptions( allSubscriptions );
+			// oContent.setCommentSubscriptions( allSubscriptions );
+			variables.logger.info(
+				"+ Content comment subscriptions imported to: (#oContent.getContentType()#:#thisContent.slug#)"
+			);
 		}
 
 		// CONTENT VERSIONS
 		if ( arrayLen( thisContent.contentversions ) ) {
-			results.content.setContentVersions(
+			variables.logger.info(
+				"+ Content versions (#arrayLen( thisContent.contentversions )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+			);
+			oContent.setContentVersions(
 				thisContent.contentVersions.map( function( thisVersion ){
+					variables.logger.info(
+						"+ Importing content version (#thisVersion.version#) to : (#oContent.getContentType()#:#thisContent.slug#)"
+					);
 					var oVersion = getBeanPopulator().populateFromStruct(
 						target               = variables.contentVersionService.new(),
 						memento              = thisVersion,
@@ -1067,12 +1144,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					var oEditor = variables.authorService.findByEmail( thisVersion.author.email );
 					return oVersion
 						.setAuthor( isNull( oEditor ) ? oAuthor : oEditor )
-						.setRelatedContent( results.content );
+						.setRelatedContent( oContent );
 				} )
 			);
 		}
 
-		return results;
+		return oContent;
 	}
 
 	/**
