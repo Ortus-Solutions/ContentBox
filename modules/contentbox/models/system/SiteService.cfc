@@ -428,6 +428,12 @@ component
 		required importLog,
 		required override
 	){
+		// Setup logging function
+		var logThis = function( message ){
+			variables.logger.info( arguments.message );
+			importLog.append( arguments.message & "<br>" );
+		};
+
 		transaction {
 			// Aliases
 			var oSite          = arguments.site;
@@ -452,10 +458,7 @@ component
 
 			// Import Settings
 			if ( oSite.isLoaded() ) {
-				variables.logger.info( "!! Overriding site settings for #oSite.getSlug()#" );
-				arguments.importLog.append(
-					"!! Overriding site settings for #oSite.getSlug()#<br>"
-				);
+				logThis( "!! Overriding site settings for #oSite.getSlug()#" );
 				// If persisted, do cleanups
 				// If on Adobe, run hard deletes due to Hibernate issue with cascade on integration tests.
 				if ( !server.keyExists( "lucee" ) ) {
@@ -467,12 +470,7 @@ component
 				siteData.settings.map( function( thisSetting ){
 					// Avoid the boolean casting to string of hell!!
 					arguments.thisSetting.value = toString( arguments.thisSetting.value );
-					variables.logger.info(
-						"+ Importing setting: (#thisSetting.name#) to site #oSite.getSlug()#"
-					);
-					importLog.append(
-						"+ Importing setting: (#thisSetting.name#) to site #oSite.getSlug()#<br>"
-					);
+					logThis( "+ Importing setting: (#thisSetting.name#) to site #oSite.getSlug()#" );
 					return populator
 						.populateFromStruct(
 							target               = variables.settingService.new(),
@@ -483,14 +481,13 @@ component
 						.setSite( oSite );
 				} )
 			);
-			variables.logger.info( "+ Site settings for #oSite.getSlug()# imported." );
-			arguments.importLog.append( "+ Site settings for #oSite.getSlug()# imported." );
+			logThis( "+ Site settings for #oSite.getSlug()# imported." );
 
 			// IMPORT CATEGORIES
 			if ( arrayLen( siteData.categories ) ) {
 				oSite.setCategories(
 					siteData.categories.map( function( thisCategory ){
-						variables.logger.info(
+						logThis(
 							"+ Importing category: (#thisCategory.slug#) to site #oSite.getSlug()#"
 						);
 						if ( oSite.isLoaded() ) {
@@ -506,22 +503,19 @@ component
 						} );
 					} )
 				);
-				variables.logger.info( "+ Site categories for #oSite.getSlug()# imported." );
+				logThis( "+ Site categories for #oSite.getSlug()# imported." );
 			}
 
 			// Note it for persistence so we can do the rest of the relationships
 			this.save( oSite );
-			variables.logger.info(
+			logThis(
 				"+ Site (#oSite.getSlug()#) saved to session, starting to import content now..."
 			);
 
 			// IMPORT MENUS
 			if ( arrayLen( siteData.menus ) ) {
-				variables.logger.info(
+				logThis(
 					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#"
-				);
-				arguments.importLog.append(
-					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#<br>"
 				);
 				getWireBox()
 					.getInstance( "menuService@cb" )
@@ -532,20 +526,16 @@ component
 						site      : oSite
 					);
 
-				variables.logger.info(
+				logThis(
 					"+ Imported (#arrayLen( siteData.menus )#) menus to site #arguments.site.getSlug()#"
 				);
-				arguments.importLog.append(
-					"+ Imported (#arrayLen( siteData.menus )#) menus to site #arguments.site.getSlug()#<Br>"
-				);
 			} else {
-				variables.logger.info( "!! No menus found on import data, skipping..." );
-				arguments.importLog.append( "!! No menus found on import data, skipping...<Br>44" );
+				logThis( "!! No menus found on import data, skipping..." );
 			}
 
 			// IMPORT ENTRIES
 			if ( arrayLen( siteData.entries ) ) {
-				variables.logger.info(
+				logThis(
 					"+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
@@ -556,17 +546,16 @@ component
 						importLog : arguments.importLog,
 						site      : oSite
 					);
-
-				variables.logger.info(
+				logThis(
 					"+ Imported (#arrayLen( siteData.entries )#) entries to site #arguments.site.getSlug()#"
 				);
 			} else {
-				variables.logger.info( "!! No entries found on import data, skipping..." );
+				logThis( "!! No entries found on import data, skipping..." );
 			}
 
 			// IMPORT PAGES
 			if ( arrayLen( siteData.pages ) ) {
-				variables.logger.info(
+				logThis(
 					"+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
@@ -578,16 +567,16 @@ component
 						site      : oSite
 					);
 
-				variables.logger.info(
+				logThis(
 					"+ Imported (#arrayLen( siteData.pages )#) pages to site #arguments.site.getSlug()#"
 				);
 			} else {
-				variables.logger.info( "!! No pages found on import data, skipping..." );
+				logThis( "!! No pages found on import data, skipping..." );
 			}
 
 			// IMPORT CONTENT STORE
 			if ( arrayLen( siteData.contentStore ) ) {
-				variables.logger.info(
+				logThis(
 					"+ Importing contentStore (#arrayLen( siteData.contentStore )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
@@ -599,11 +588,11 @@ component
 						site      : oSite
 					);
 
-				variables.logger.info(
+				logThis(
 					"+ Imported (#arrayLen( siteData.contentStore )#) contentStore to site #arguments.site.getSlug()#"
 				);
 			} else {
-				variables.logger.info( "!! No contentStore found on import data, skipping..." );
+				logThis( "!! No contentStore found on import data, skipping..." );
 			}
 		}
 		// end site transaction

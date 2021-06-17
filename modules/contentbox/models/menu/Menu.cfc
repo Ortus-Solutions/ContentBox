@@ -204,11 +204,7 @@ component
 	 * @rawData The raw data from which to create menu items
 	 */
 	Menu function populateMenuItems( required array rawData ){
-		var items = createMenuItems( arguments.rawData );
-		for ( var item in items ) {
-			addMenuItem( item );
-		}
-		return this;
+		return setMenuItems( createMenuItems( arguments.rawData ) );
 	}
 
 	/**
@@ -238,26 +234,30 @@ component
 		for ( var data in arguments.rawData ) {
 			var provider = variables.menuItemService.getProvider( data.menuType );
 			var entity   = variables.ORMService.get( entityName = provider.getEntityName(), id = 0 );
-			var newItem  = menuItemService.populate(
+			var newItem  = variables.menuItemService.populate(
 				target  = entity,
 				memento = data,
 				exclude = "children,parent"
 			);
+			// Link the item to this menu
 			newItem.setMenu( this );
 
 			// populate the children
-			if ( isArray( data.children ) && arrayLen( data.children ) ) {
+			if ( arrayLen( data.children ) ) {
 				var children = createMenuItems( data.children );
 				var setter   = [];
 				for ( var child in children ) {
+					// Link the child to this parent
 					child.setParent( newItem );
 					arrayAppend( setter, child );
 				}
 				newItem.setChildren( setter );
 			}
+
 			// add to menu
 			arrayAppend( items, newItem );
 		}
+
 		return items;
 	}
 

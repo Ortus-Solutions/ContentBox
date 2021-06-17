@@ -782,6 +782,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				variables.logger.info(
 					"+ Importing content (#thisContent.contentType#:#thisContent.slug#) to site (#arguments.site.getSlug()#)"
 				);
+				arguments.importLog.append(
+					"+ Importing content (#thisContent.contentType#:#thisContent.slug#) to site (#arguments.site.getSlug()#)<br>"
+				);
 
 				// Import it
 				importFromStruct(
@@ -795,8 +798,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 			// Save content
 			if ( !arrayLen( arguments.importData ) ) {
-				arguments.importLog.append(
+				variables.logger.info(
 					"No content imported as none where found or able to be overriden from the import file."
+				);
+				arguments.importLog.append(
+					"No content imported as none where found or able to be overriden from the import file.<br>"
 				);
 			}
 		}
@@ -825,6 +831,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required site,
 		boolean override = false
 	){
+		// Setup logging function
+		var logThis = function( message ){
+			variables.logger.info( arguments.message );
+			importLog.append( arguments.message & "<br>" );
+		};
 		// setup
 		var thisContent = arguments.contentData;
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
@@ -841,10 +852,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Check if loaded and override selected
 		if ( oContent.isLoaded() && !arguments.override ) {
-			arguments.importLog.append(
-				"Skipping persisted content (#thisContent.contentType#:#thisContent.slug#) no override selected.<br>"
-			);
-			variables.logger.info(
+			logThis(
 				"!! Skipping persisted content (#thisContent.contentType#:#thisContent.slug#) no override selected"
 			);
 			return;
@@ -876,10 +884,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// determine author else ignore import
 		var oAuthor = variables.authorService.findByEmail( thisContent.creator.email );
 		if ( isNull( oAuthor ) ) {
-			arguments.importLog.append(
-				"Content author not found (#thisContent.creator.toString()#) skipping: #thisContent.slug#<br>"
-			);
-			variables.logger.info(
+			logThis(
 				"!! Author (#thisContent.creator.email#) not found in ContentBox for: (#oContent.getContentType()#:#thisContent.slug#) "
 			);
 			return oContent;
@@ -887,18 +892,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// AUTHOR CREATOR
 		oContent.setCreator( oAuthor );
-		arguments.importLog.append( "Content author found and linked: #thisContent.slug#<br>" );
-		variables.logger.info(
-			"+ Content author linked for: (#oContent.getContentType()#:#thisContent.slug#)"
-		);
+		logThis( "+ Content author linked for: (#oContent.getContentType()#:#thisContent.slug#)" );
 
 		// PARENT
 		if ( !isNull( arguments.parent ) and isObject( arguments.parent ) ) {
 			oContent.setParent( arguments.parent );
-			arguments.importLog.append(
-				"Content parent passed and linked: #arguments.parent.getSlug()#<br>"
-			);
-			variables.logger.info(
+			logThis(
 				"+ Content parent (#arguments.parent.getSlug()#) passed and linked for: (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
@@ -909,17 +908,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// assign if persisted
 			if ( !isNull( oParent ) ) {
 				oContent.setParent( oParent );
-				arguments.importLog.append(
-					"Content parent (#oParent.getSlug()#) found and linked to #thisContent.parent.slug#<br>"
-				);
-				variables.logger.info(
+				logThis(
 					"+ Content parent (#oParent.getSlug()#) found and linked to: (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			} else {
-				arguments.importLog.append(
-					"Content parent slug: #thisContent.parent.toString()# was not found so not assigned!<br>"
-				);
-				variables.logger.info(
+				logThis(
 					"+ Content parent (#thisContent.parent.toString()#) not found for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			}
@@ -929,7 +922,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if ( arrayLen( thisContent.customfields ) ) {
 			// wipe out custom fileds if they exist
 			oContent.removeAllCustomFields();
-			variables.logger.info(
+			logThis(
 				"+ Content custom fields (#arrayLen( thisContent.customfields )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 			// add new custom fields
@@ -943,7 +936,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						relatedContent : oContent
 					} )
 				);
-				variables.logger.info(
+				logThis(
 					"+ Custom field (#thisCF.key#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			}
@@ -962,7 +955,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					);
 				} )
 			);
-			variables.logger.info(
+			logThis(
 				"+ Categories (#thisContent.categories.toString()#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		}
@@ -974,11 +967,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
 			if ( oContent.hasStats() ) {
 				oContent.getStats().setHits( thisContent.stats.hits );
-				variables.logger.info(
+				logThis(
 					"+ Content stats found and updated for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			} else {
-				variables.logger.info(
+				logThis(
 					"+ Content stats imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 				variables.statsService.save(
@@ -989,7 +982,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// CHILDREN
 		if ( arrayLen( thisContent.children ) ) {
-			variables.logger.info(
+			logThis(
 				"+ Content children (#arrayLen( thisContent.children )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 			// recurse on them and inflate hiearchy
@@ -1003,7 +996,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// continue to next record if author not found
 				if ( !oChild.hasCreator() ) {
-					variables.logger.info(
+					logThis(
 						"!! Import skipped, Author (#thisChild.creator.email#) not found when importing child (#thisChild.slug#) for : (#oContent.getContentType()#:#thisContent.slug#)"
 					);
 					continue;
@@ -1011,7 +1004,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// Add child
 				oContent.addChild( oChild );
-				variables.logger.info(
+				logThis(
 					"+ Content child (#thisChild.slug#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			}
@@ -1020,7 +1013,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// RELATED CONTENT
 		if ( arrayLen( thisContent.relatedContent ) ) {
 			var allRelatedContent = [];
-			variables.logger.info(
+			logThis(
 				"+ Content related content (#arrayLen( thisContent.relatedContent )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 			for ( var thisRelatedContent in thisContent.relatedContent ) {
@@ -1030,7 +1023,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						allRelatedContent,
 						arguments.newContent[ thisRelatedContent.slug ]
 					);
-					variables.logger.info(
+					logThis(
 						"+ Related content (#thisRelatedContent.slug#) already imported, linking to : (#oContent.getContentType()#:#thisContent.slug#)"
 					);
 				}
@@ -1042,14 +1035,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					} );
 					if ( !isNull( oRelatedContent ) ) {
 						arrayAppend( allRelatedContent, oRelatedContent );
-						variables.logger.info(
+						logThis(
 							"+ Related content (#thisRelatedContent.slug#) linked to : (#oContent.getContentType()#:#thisContent.slug#)"
 						);
 					} else {
-						arguments.importLog.append(
-							"Related content not found, so skipping link: #thisRelatedContent.toString()#<br>"
-						);
-						variables.logger.info(
+						logThis(
 							"!! Skipping related content (#thisRelatedContent.slug#) as it was not found for : (#oContent.getContentType()#:#thisContent.slug#)"
 						);
 					}
@@ -1060,7 +1050,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// COMMENTS
 		if ( arrayLen( thisContent.comments ) ) {
-			variables.logger.info(
+			logThis(
 				"+ Content comments (#arrayLen( thisContent.comments )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 			oContent.setComments(
@@ -1075,7 +1065,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						.setRelatedContent( oContent );
 				} )
 			);
-			variables.logger.info(
+			logThis(
 				"+ Content comments imported to: (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		}
@@ -1083,7 +1073,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// SUBSCRIPTIONS
 		if ( arrayLen( thisContent.commentSubscriptions ) ) {
 			var allSubscriptions = [];
-			variables.logger.info(
+			logThis(
 				"+ Content comment subscriptions (#arrayLen( thisContent.commentSubscriptions )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 			// recurse on them and inflate hiearchy
@@ -1110,24 +1100,24 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				variables.subscriberService.save( oSubscriber );
 				// add to import
 				// arrayAppend( allSubscriptions, oSubscription );
-				variables.logger.info(
+				logThis(
 					"+ Content comment subscription for (#thisSubscription.subscriber.subscriberEmail#) imported to: (#oContent.getContentType()#:#thisContent.slug#)"
 				);
 			}
 			// oContent.setCommentSubscriptions( allSubscriptions );
-			variables.logger.info(
+			logThis(
 				"+ Content comment subscriptions imported to: (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		}
 
 		// CONTENT VERSIONS
 		if ( arrayLen( thisContent.contentversions ) ) {
-			variables.logger.info(
+			logThis(
 				"+ Content versions (#arrayLen( thisContent.contentversions )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 			oContent.setContentVersions(
 				thisContent.contentVersions.map( function( thisVersion ){
-					variables.logger.info(
+					logThis(
 						"+ Importing content version (#thisVersion.version#) to : (#oContent.getContentType()#:#thisContent.slug#)"
 					);
 					var oVersion = getBeanPopulator().populateFromStruct(
