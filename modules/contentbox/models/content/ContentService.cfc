@@ -949,20 +949,26 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			}
 		}
 
-		// We now persist it to do child relationships
-		entitySave( oContent );
-
 		// CATEGORIES
 		if ( arrayLen( thisContent.categories ) ) {
 			oContent.setCategories(
 				thisContent.categories.map( function( thisCategory ){
-					return variables.categoryService.getOrCreateBySlug( thisCategory, site );
+					var oSiteCategory = site.getCategory( arguments.thisCategory );
+					return (
+						!isNull( oSiteCategory ) ? oSiteCategory : variables.categoryService.getOrCreateBySlug(
+							arguments.thisCategory,
+							site
+						)
+					);
 				} )
 			);
 			variables.logger.info(
 				"+ Categories (#thisContent.categories.toString()#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
 			);
 		}
+
+		// We now persist it to do child relationships
+		entitySave( oContent );
 
 		// STATS
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {

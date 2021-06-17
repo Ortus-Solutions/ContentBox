@@ -507,4 +507,20 @@ component
 		return {};
 	}
 
+	/**
+	 * Tries to get a category object by slug if assigned to this site
+	 *
+	 * @return The category object or null if not found
+	 */
+	function getCategory( required slug ){
+		if ( hasCategory() ) {
+			var aFound = variables.categories.filter( function( thisCategory ){
+				return arguments.thisCategory.getSlug() == slug;
+			} );
+			if ( aFound.len() ) {
+				return aFound[ 1 ];
+			}
+		}
+	}
+
 }

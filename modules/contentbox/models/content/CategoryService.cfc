@@ -35,7 +35,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	Category function getOrCreate( required category, required site ){
 		// Verify the incoming category exists in the target site or not
 		var oTargetCategory = newCriteria()
-			.isEq( "site.siteID", arguments.site.getsiteID() )
+			.isEq( "site.slug", arguments.site.getSlug() )
 			.isEq( "slug", arguments.category.getSlug() )
 			.get();
 
