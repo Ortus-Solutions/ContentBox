@@ -190,6 +190,9 @@ component
 			for ( var menu in arguments.importData ) {
 				// Determine Site if not passed from import data
 				if ( isNull( arguments.site ) ) {
+					logThis(
+						"+ Site not sent via arguments, inflating from menu data (#menu.site.slug#)"
+					);
 					arguments.site = siteService.getBySlugOrFail( menu.site.slug );
 				}
 
@@ -226,7 +229,7 @@ component
 
 				// Compose Menu Items
 				if ( arrayLen( menu.menuItems ) ) {
-					// oMenu.populateMenuItems( menu.menuItems );
+					oMenu.populateMenuItems( menu.menuItems );
 				}
 
 				entitySave( oMenu );
