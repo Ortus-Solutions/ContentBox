@@ -172,7 +172,6 @@ component
 		required importLog,
 		site
 	){
-		var allMenus    = [];
 		var siteService = getWireBox().getInstance( "siteService@cb" );
 
 		// if struct, inflate into an array
@@ -197,8 +196,13 @@ component
 				logThis( "+ Importing menu (#menu.slug#) to site (#arguments.site.getSlug()#)" );
 
 				// Get new or persisted from site by slug
-				var oMenu = this.findBySlug( slug: menu.slug, siteId: arguments.site.getSiteID() );
-				oMenu     = ( isNull( oMenu ) ? new () : oMenu );
+				var oMenu = findWhere( { "slug" : menu.slug, "site" : arguments.site } );
+				if ( isNull( oMenu ) ) {
+					logThis( "+ New menu (#menu.slug#) to import" );
+					oMenu = this.new();
+				} else {
+					logThis( "+ Persisted menu (#menu.slug#) to import" );
+				}
 
 				// Can we override
 				if ( oMenu.isLoaded() && !arguments.override ) {
@@ -210,6 +214,7 @@ component
 
 				// Link the site
 				oMenu.setSite( arguments.site );
+				arguments.site.addMenu( oMenu );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
@@ -221,7 +226,7 @@ component
 
 				// Compose Menu Items
 				if ( arrayLen( menu.menuItems ) ) {
-					oMenu.populateMenuItems( menu.menuItems );
+					// oMenu.populateMenuItems( menu.menuItems );
 				}
 
 				entitySave( oMenu );

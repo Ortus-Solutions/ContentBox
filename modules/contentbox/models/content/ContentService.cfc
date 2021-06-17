@@ -840,7 +840,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var thisContent = arguments.contentData;
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
 		var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
-
 		if ( isNull( oContent ) ) {
 			oContent = this.new();
 		}
