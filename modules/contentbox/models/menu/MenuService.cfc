@@ -187,30 +187,30 @@ component
 
 		transaction {
 			// iterate and import
-			for ( var menu in arguments.importData ) {
+			for ( var thisMenu in arguments.importData ) {
 				// Determine Site if not passed from import data
 				if ( isNull( arguments.site ) ) {
 					logThis(
-						"+ Site not sent via arguments, inflating from menu data (#menu.site.slug#)"
+						"+ Site not sent via arguments, inflating from menu data (#thisMenu.site.slug#)"
 					);
-					arguments.site = siteService.getBySlugOrFail( menu.site.slug );
+					arguments.site = siteService.getBySlugOrFail( thisMenu.site.slug );
 				}
 
-				logThis( "+ Importing menu (#menu.slug#) to site (#arguments.site.getSlug()#)" );
+				logThis( "+ Importing menu (#thisMenu.slug#) to site (#arguments.site.getSlug()#)" );
 
 				// Get new or persisted from site by slug
-				var oMenu = findWhere( { "slug" : menu.slug, "site" : arguments.site } );
+				var oMenu = findWhere( { "slug" : thisMenu.slug, "site" : arguments.site } );
 				if ( isNull( oMenu ) ) {
-					logThis( "+ New menu (#menu.slug#) to import" );
+					logThis( "+ New menu (#thisMenu.slug#) to import" );
 					oMenu = this.new();
 				} else {
-					logThis( "+ Persisted menu (#menu.slug#) to import" );
+					logThis( "+ Persisted menu (#thisMenu.slug#) to import" );
 				}
 
 				// Can we override
 				if ( oMenu.isLoaded() && !arguments.override ) {
 					logThis(
-						"!! Skipped persisted menu (#menu.slug#) to site (#arguments.site.getSlug()#) due to override being false"
+						"!! Skipped persisted menu (#thisMenu.slug#) to site (#arguments.site.getSlug()#) due to override being false"
 					);
 					continue;
 				}
@@ -222,18 +222,18 @@ component
 				// populate content from data
 				getBeanPopulator().populateFromStruct(
 					target               = oMenu,
-					memento              = menu,
+					memento              = thisMenu,
 					composeRelationships = false,
 					exclude              = "menuID,menuItems,site"
 				);
 
 				// Compose Menu Items
-				if ( arrayLen( menu.menuItems ) ) {
-					oMenu.populateMenuItems( menu.menuItems );
+				if ( arrayLen( thisMenu.menuItems ) ) {
+					oMenu.populateMenuItems( thisMenu.menuItems );
 				}
 
 				entitySave( oMenu );
-				logThis( "+ Imported menu (#menu.slug#) to site (#arguments.site.getSlug()#)" );
+				logThis( "+ Imported menu (#thisMenu.slug#) to site (#arguments.site.getSlug()#)" );
 			}
 			// end import loop
 

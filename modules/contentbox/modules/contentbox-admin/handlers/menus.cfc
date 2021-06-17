@@ -37,7 +37,11 @@ component extends="baseHandler" {
 		prc.xehMenuSearch    = "#prc.cbAdminEntryPoint#.menus";
 		prc.xehMenuTable     = "#prc.cbAdminEntryPoint#.menus.menuTable";
 		// Get all menus
-		prc.menus            = menuService.list( sortOrder = "title", asQuery = false );
+		prc.menus            = variables.menuService.list(
+			criteria : { "site" : prc.oCurrentSite },
+			sortOrder: "title",
+			asQuery  : false
+		);
 
 		// Light up
 		prc.tabContent_menu = true;
@@ -146,7 +150,8 @@ component extends="baseHandler" {
 		// search content with filters and all
 		var results = menuService.search(
 			searchTerm = rc.searchMenu,
-			sortOrder  = "createdDate desc"
+			sortOrder  = "createdDate desc",
+			siteID     = prc.oCurrentSite.getSiteID()
 		);
 		prc.menus     = results.menus;
 		prc.menuCount = results.count;
@@ -185,7 +190,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_preMenuSave", { menu : oMenu, menuID : rc.menuID } );
 		// save menu
-		variables.menuService.save( oMenu );
+		variables.menuService.save( oMenu.setSite( prc.oCurrentSite ) );
 		// announce event
 		announce( "cbadmin_postMenuSave", { menu : oMenu, originalSlug : originalSlug } );
 		// messagebox
