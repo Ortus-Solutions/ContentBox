@@ -764,6 +764,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required importLog,
 		site
 	){
+		// Setup logging function
+		var logThis = function( message ){
+			variables.logger.info( arguments.message );
+			importLog.append( arguments.message & "<br>" );
+		};
+
 		var siteService = getWireBox().getInstance( "siteService@cb" );
 
 		// if struct, inflate into an array
@@ -776,14 +782,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisContent in arguments.importData ) {
 				// Determine Site if not passed from import data
 				if ( isNull( arguments.site ) ) {
+					logThis(
+						"+ Site not passed, inflating from import data (#thisContent.site.slug#)"
+					);
 					arguments.site = siteService.getBySlugOrFail( thisContent.site.slug );
 				}
 
-				variables.logger.info(
-					"+ Importing content (#thisContent.contentType#:#thisContent.slug#) to site (#arguments.site.getSlug()#)"
-				);
-				arguments.importLog.append(
-					"+ Importing content (#thisContent.contentType#:#thisContent.slug#) to site (#arguments.site.getSlug()#)<br>"
+				logThis(
+					"+ Starting to import content (#thisContent.contentType#:#thisContent.slug#) to site (#arguments.site.getSlug()#)"
 				);
 
 				// Import it
@@ -798,11 +804,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 			// Save content
 			if ( !arrayLen( arguments.importData ) ) {
-				variables.logger.info(
+				logThis(
 					"No content imported as none where found or able to be overriden from the import file."
-				);
-				arguments.importLog.append(
-					"No content imported as none where found or able to be overriden from the import file.<br>"
 				);
 			}
 		}
@@ -884,20 +887,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var oAuthor = variables.authorService.findByEmail( thisContent.creator.email );
 		if ( isNull( oAuthor ) ) {
 			logThis(
-				"!! Author (#thisContent.creator.email#) not found in ContentBox for: (#oContent.getContentType()#:#thisContent.slug#) "
+				"!! Author (#thisContent.creator.email#) not found in ContentBox for: (#thisContent.contentType#:#thisContent.slug#) "
 			);
 			return oContent;
 		}
 
 		// AUTHOR CREATOR
 		oContent.setCreator( oAuthor );
-		logThis( "+ Content author linked for: (#oContent.getContentType()#:#thisContent.slug#)" );
+		logThis( "+ Content author linked for: (#thisContent.contentType#:#thisContent.slug#)" );
 
 		// PARENT
 		if ( !isNull( arguments.parent ) and isObject( arguments.parent ) ) {
 			oContent.setParent( arguments.parent );
 			logThis(
-				"+ Content parent (#arguments.parent.getSlug()#) passed and linked for: (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content parent (#arguments.parent.getSlug()#) passed and linked for: (#thisContent.contentType#:#thisContent.slug#)"
 			);
 		} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
 			var oParent = findWhere( {
@@ -908,11 +911,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if ( !isNull( oParent ) ) {
 				oContent.setParent( oParent );
 				logThis(
-					"+ Content parent (#oParent.getSlug()#) found and linked to: (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Content parent (#oParent.getSlug()#) found and linked to: (#thisContent.contentType#:#thisContent.slug#)"
 				);
 			} else {
 				logThis(
-					"+ Content parent (#thisContent.parent.toString()#) not found for : (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Content parent (#thisContent.parent.toString()#) not found for : (#thisContent.contentType#:#thisContent.slug#)"
 				);
 			}
 		}
@@ -922,7 +925,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// wipe out custom fileds if they exist
 			oContent.removeAllCustomFields();
 			logThis(
-				"+ Content custom fields (#arrayLen( thisContent.customfields )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content custom fields (#arrayLen( thisContent.customfields )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			// add new custom fields
 			for ( var thisCF in thisContent.customfields ) {
@@ -936,7 +939,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					} )
 				);
 				logThis(
-					"+ Custom field (#thisCF.key#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Custom field (#thisCF.key#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
 				);
 			}
 		}
@@ -955,7 +958,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				} )
 			);
 			logThis(
-				"+ Categories (#thisContent.categories.toString()#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Categories (#thisContent.categories.toString()#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 		}
 
@@ -967,11 +970,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if ( oContent.hasStats() ) {
 				oContent.getStats().setHits( thisContent.stats.hits );
 				logThis(
-					"+ Content stats found and updated for : (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Content stats found and updated for : (#thisContent.contentType#:#thisContent.slug#)"
 				);
 			} else {
 				logThis(
-					"+ Content stats imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Content stats imported for : (#thisContent.contentType#:#thisContent.slug#)"
 				);
 				variables.statsService.save(
 					variables.statsService.new( { hits : thisContent.stats.hits, relatedContent : oContent } )
@@ -982,7 +985,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// CHILDREN
 		if ( arrayLen( thisContent.children ) ) {
 			logThis(
-				"+ Content children (#arrayLen( thisContent.children )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content children (#arrayLen( thisContent.children )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			// recurse on them and inflate hiearchy
 			for ( var thisChild in thisContent.children ) {
@@ -996,7 +999,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				// continue to next record if author not found
 				if ( !oChild.hasCreator() ) {
 					logThis(
-						"!! Import skipped, Author (#thisChild.creator.email#) not found when importing child (#thisChild.slug#) for : (#oContent.getContentType()#:#thisContent.slug#)"
+						"!! Import skipped, Author (#thisChild.creator.email#) not found when importing child (#thisChild.slug#) for : (#thisContent.contentType#:#thisContent.slug#)"
 					);
 					continue;
 				}
@@ -1004,7 +1007,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				// Add child
 				oContent.addChild( oChild );
 				logThis(
-					"+ Content child (#thisChild.slug#) imported for : (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Content child (#thisChild.slug#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
 				);
 			}
 		}
@@ -1013,7 +1016,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if ( arrayLen( thisContent.relatedContent ) ) {
 			var allRelatedContent = [];
 			logThis(
-				"+ Content related content (#arrayLen( thisContent.relatedContent )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content related content (#arrayLen( thisContent.relatedContent )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			for ( var thisRelatedContent in thisContent.relatedContent ) {
 				// if content has already been inflated as part of another process, just use that instance so we don't collide keys
@@ -1023,7 +1026,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						arguments.newContent[ thisRelatedContent.slug ]
 					);
 					logThis(
-						"+ Related content (#thisRelatedContent.slug#) already imported, linking to : (#oContent.getContentType()#:#thisContent.slug#)"
+						"+ Related content (#thisRelatedContent.slug#) already imported, linking to : (#thisContent.contentType#:#thisContent.slug#)"
 					);
 				}
 				// otherwise, we need to get it
@@ -1035,11 +1038,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					if ( !isNull( oRelatedContent ) ) {
 						arrayAppend( allRelatedContent, oRelatedContent );
 						logThis(
-							"+ Related content (#thisRelatedContent.slug#) linked to : (#oContent.getContentType()#:#thisContent.slug#)"
+							"+ Related content (#thisRelatedContent.slug#) linked to : (#thisContent.contentType#:#thisContent.slug#)"
 						);
 					} else {
 						logThis(
-							"!! Skipping related content (#thisRelatedContent.slug#) as it was not found for : (#oContent.getContentType()#:#thisContent.slug#)"
+							"!! Skipping related content (#thisRelatedContent.slug#) as it was not found for : (#thisContent.contentType#:#thisContent.slug#)"
 						);
 					}
 				}
@@ -1050,7 +1053,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// COMMENTS
 		if ( arrayLen( thisContent.comments ) ) {
 			logThis(
-				"+ Content comments (#arrayLen( thisContent.comments )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content comments (#arrayLen( thisContent.comments )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			oContent.setComments(
 				thisContent.comments.map( function( thisComment ){
@@ -1065,7 +1068,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				} )
 			);
 			logThis(
-				"+ Content comments imported to: (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content comments imported to: (#thisContent.contentType#:#thisContent.slug#)"
 			);
 		}
 
@@ -1073,7 +1076,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if ( arrayLen( thisContent.commentSubscriptions ) ) {
 			var allSubscriptions = [];
 			logThis(
-				"+ Content comment subscriptions (#arrayLen( thisContent.commentSubscriptions )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content comment subscriptions (#arrayLen( thisContent.commentSubscriptions )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			// recurse on them and inflate hiearchy
 			for ( var thisSubscription in thisContent.commentSubscriptions ) {
@@ -1100,24 +1103,24 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				// add to import
 				// arrayAppend( allSubscriptions, oSubscription );
 				logThis(
-					"+ Content comment subscription for (#thisSubscription.subscriber.subscriberEmail#) imported to: (#oContent.getContentType()#:#thisContent.slug#)"
+					"+ Content comment subscription for (#thisSubscription.subscriber.subscriberEmail#) imported to: (#thisContent.contentType#:#thisContent.slug#)"
 				);
 			}
 			// oContent.setCommentSubscriptions( allSubscriptions );
 			logThis(
-				"+ Content comment subscriptions imported to: (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content comment subscriptions imported to: (#thisContent.contentType#:#thisContent.slug#)"
 			);
 		}
 
 		// CONTENT VERSIONS
 		if ( arrayLen( thisContent.contentversions ) ) {
 			logThis(
-				"+ Content versions (#arrayLen( thisContent.contentversions )#) found, about to start import for : (#oContent.getContentType()#:#thisContent.slug#)"
+				"+ Content versions (#arrayLen( thisContent.contentversions )#) found, about to start import for : (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			oContent.setContentVersions(
 				thisContent.contentVersions.map( function( thisVersion ){
 					logThis(
-						"+ Importing content version (#thisVersion.version#) to : (#oContent.getContentType()#:#thisContent.slug#)"
+						"+ Importing content version (#thisVersion.version#) to : (#thisContent.contentType#:#thisContent.slug#)"
 					);
 					var oVersion = getBeanPopulator().populateFromStruct(
 						target               = variables.contentVersionService.new(),
