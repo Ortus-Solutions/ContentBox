@@ -13,13 +13,13 @@ component
 {
 
 	// DI
-	property name="settingService"       inject="settingService@cb";
-	property name="widgetService"        inject="provider:widgetService@cb";
-	property name="contentBoxSettings"   inject="coldbox:moduleConfig:contentbox";
+	property name="settingService" inject="settingService@cb";
+	property name="widgetService" inject="provider:widgetService@cb";
+	property name="contentBoxSettings" inject="coldbox:moduleConfig:contentbox";
 	property name="customModuleSettings" inject="coldbox:moduleConfig:contentbox-custom";
 	property name="coldboxModuleService" inject="coldbox:moduleService";
-	property name="log"                  inject="logbox:logger:{this}";
-	property name="zipUtil"              inject="zipUtil@cb";
+	property name="log" inject="logbox:logger:{this}";
+	property name="zipUtil" inject="zipUtil@cb";
 
 
 	/**
@@ -364,9 +364,15 @@ component
 	 * registered, it will register it.  If it loads a module that is registered and marked as active it will activate it.
 	 */
 	ModuleService function startup(){
-		// Register ColdBox Closure
+		// Get all modules
+		var aModules = getAll();
+
+		// Register ColdBox Module Closure
 		var registerColdBoxModule = function( name, moduleType, invocationPath, path ){
-			var oModule = findWhere( { name : arguments.name } );
+			// var oModule = findWhere( { name : arguments.name } );
+			var oModule = aModules.reduce( function( results, thisModule ){
+				return ( thisModule.getName() == name ? thisModule : results );
+			}, {} );
 
 			// Register type lookup for faster finding, instead of querying the db.
 			variables.moduleMap[ arguments.name ] = {
@@ -376,9 +382,10 @@ component
 			};
 
 			// check if module already in database records or new
-			if ( isNull( oModule ) ) {
+			if ( !isObject( oModule ) ) {
 				// new record, so register it
 				oModule = registerNewModule( arguments.name, arguments.moduleType );
+				arrayAppend( aModules, oModule );
 			}
 
 			// If we get here, the module is loaded in the database now
@@ -430,20 +437,31 @@ component
 			} );
 
 		// build widget cache
-		buildModuleWidgetsCache();
+		buildModuleWidgetsCache(
+			aModules.filter( function( thisModule ){
+				return arguments.thisModule.getIsActive();
+			} )
+		);
 
 		return this;
 	}
 
 	/**
 	 * Iterates over all registered, active modules and sets any found widgets into a cache in moduleservice
+	 *
+	 * @modules Optional passed array to use to build the module cache with, else query the database
 	 */
-	private ModuleService function buildModuleWidgetsCache(){
+	private ModuleService function buildModuleWidgetsCache( array modules ){
 		// Init Module Widget Cache
 		variables.moduleWidgetCache = {};
 
+		// Did we pass or discover?
+		if ( isNull( arguments.modules ) ) {
+			arguments.modules = findModules( isActive = true ).modules;
+		}
+
 		// Process Module Widgets
-		findModules( isActive = true ).modules
+		arguments.modules
 			.filter( function( thisModule ){
 				// Active and On Disk Module?
 				if ( variables.moduleMap.keyExists( thisModule.getName() ) ) {

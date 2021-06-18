@@ -243,6 +243,7 @@ component
 	SettingService function preFlightCheck(){
 		// Log it
 		variables.log.info( "> Running ContentBox pre flight checks..." );
+		var sTime = getTickCount();
 
 		// Iterate over default core settings and check they exist
 		lock
@@ -271,7 +272,7 @@ component
 						variables.log.info(
 							"- Missing core setting (#arguments.key#) found in pre-flight, adding it!"
 						);
-						this.save(
+						entitySave(
 							this.new( {
 								name   : arguments.key,
 								value  : trim( arguments.value ),
@@ -311,7 +312,7 @@ component
 								variables.log.info(
 									"- Site (#targetSite.getSlug()#) missing setting (#arguments.key#), adding it!"
 								);
-								this.save(
+								entitySave(
 									this.new( {
 										name   : arguments.key,
 										value  : trim( arguments.value ),
@@ -328,7 +329,7 @@ component
 			loadCacheProviderName();
 		}
 
-		variables.log.info( "√ ContentBox Global Settings pre-flight checks finalized!" );
+		variables.log.info( "√ ContentBox pre flight checks done in (#getTickCount() - sTime#)ms!" );
 
 		return this;
 	}
