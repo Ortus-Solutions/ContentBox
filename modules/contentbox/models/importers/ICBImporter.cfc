@@ -22,8 +22,15 @@ limitations under the License.
 ********************************************************************************
 * This is the main importer for importing databases into contentbox
 */
-interface{
+interface {
 
-	function execute( required dsn, dsnUsername="", dsnPassword="", defaultPassword="", required roleID, tableprefix="" );
+	function execute(
+		required dsn,
+		dsnUsername     = "",
+		dsnPassword     = "",
+		defaultPassword = "",
+		required roleID,
+		tableprefix = ""
+	);
 
 }

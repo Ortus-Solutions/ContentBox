@@ -11,51 +11,55 @@ component accessors=true {
 	 * The exporters to use
 	 */
 	property name="exporters" type="array";
+
 	/**
 	 * Describes what will be exported
 	 */
 	property name="descriptor" type="struct";
+
 	/**
 	 * The location of the data services used for exporting
 	 */
 	property name="dataServiceMappings" type="struct";
+
 	/**
 	 * The location of the file mappings used for exporting
 	 */
 	property name="filePathMappings" type="struct";
 
 	// DI
-	property name="moduleSettings"      inject="coldbox:setting:modules";
-	property name="entryService"        inject="id:entryService@cb";
-	property name="pageService"         inject="id:pageService@cb";
-	property name="categoryService"     inject="id:categoryService@cb";
+	property name="moduleSettings" inject="coldbox:setting:modules";
+	property name="entryService" inject="id:entryService@cb";
+	property name="pageService" inject="id:pageService@cb";
+	property name="categoryService" inject="id:categoryService@cb";
 	property name="contentStoreService" inject="id:contentStoreService@cb";
-	property name="menuService"         inject="id:menuService@cb";
+	property name="menuService" inject="id:menuService@cb";
 	property name="securityRuleService" inject="id:securityRuleService@cb";
-	property name="authorService"       inject="id:authorService@cb";
-	property name="roleService"         inject="id:roleService@cb";
-	property name="permissionService"   inject="id:permissionService@cb";
-	property name="settingService"      inject="id:settingService@cb";
-	property name="securityService"     inject="id:securityService@cb";
-	property name="moduleService"       inject="id:moduleService@cb";
-	property name="themeService"        inject="id:themeService@cb";
-	property name="widgetService"       inject="id:widgetService@cb";
-	property name="templateService"     inject="id:emailtemplateService@cb";
-	property name="log"                 inject="logbox:logger:{this}";
-	property name="zipUtil"             inject="zipUtil@cb";
-	property name="dataExporter"        inject="id:dataExporter@cbadmin";
-	property name="fileExporter"        inject="id:fileExporter@cbadmin";
-	property name="wirebox"             inject="wirebox";
-	property name="HTMLHelper"          inject="HTMLHelper@coldbox";
+	property name="authorService" inject="id:authorService@cb";
+	property name="roleService" inject="id:roleService@cb";
+	property name="permissionService" inject="id:permissionService@cb";
+	property name="settingService" inject="id:settingService@cb";
+	property name="securityService" inject="id:securityService@cb";
+	property name="moduleService" inject="id:moduleService@cb";
+	property name="themeService" inject="id:themeService@cb";
+	property name="widgetService" inject="id:widgetService@cb";
+	property name="siteService" inject="id:siteService@cb";
+	property name="templateService" inject="id:emailtemplateService@cb";
+	property name="log" inject="logbox:logger:{this}";
+	property name="zipUtil" inject="zipUtil@cb";
+	property name="dataExporter" inject="id:dataExporter@cbadmin";
+	property name="fileExporter" inject="id:fileExporter@cbadmin";
+	property name="wirebox" inject="wirebox";
+	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	/**
 	 * Constructor
 	 */
-	public ContentBoxExporter function init(){
-		exporters           = [];
-		descriptor          = {};
-		dataServiceMappings = {};
-		filePathMappings    = {};
+	ContentBoxExporter function init(){
+		variables.exporters           = [];
+		variables.descriptor          = {};
+		variables.dataServiceMappings = {};
+		variables.filePathMappings    = {};
 
 		return this;
 	}
@@ -64,10 +68,10 @@ component accessors=true {
 	 * On DI Complete
 	 */
 	function onDIComplete(){
-		var contentBoxPath = moduleSettings[ "contentbox" ].path;
-		var customPath     = moduleSettings[ "contentbox-custom" ].path;
+		var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
+		var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
 
-		dataServiceMappings = {
+		variables.dataServiceMappings = {
 			"authors" : {
 				fileName    : "authors",
 				service     : "authorService",
@@ -86,17 +90,35 @@ component accessors=true {
 				displayName : "Content Store",
 				priority    : 4
 			},
+			"entries" : {
+				fileName    : "entries",
+				service     : "entryService",
+				displayName : "Entries",
+				priority    : 4
+			},
 			"menus" : {
 				fileName    : "menus",
 				service     : "menuService",
 				displayName : "Menus",
 				priority    : 5
 			},
+			"pages" : {
+				fileName    : "pages",
+				service     : "pageService",
+				displayName : "Pages",
+				priority    : 4
+			},
 			"permissions" : {
 				fileName    : "permissions",
 				service     : "permissionService",
 				displayName : "Permissions",
 				priority    : 1
+			},
+			"permissionGroups" : {
+				fileName    : "permissionGroups",
+				service     : "permissionGroupService",
+				displayName : "Permission Groups",
+				priority    : 2
 			},
 			"roles" : {
 				fileName    : "roles",
@@ -116,21 +138,15 @@ component accessors=true {
 				displayName : "Settings",
 				priority    : 1
 			},
-			"entries" : {
-				fileName    : "entries",
-				service     : "entryService",
-				displayName : "Entries",
-				priority    : 4
-			},
-			"pages" : {
-				fileName    : "pages",
-				service     : "pageService",
-				displayName : "Pages",
-				priority    : 4
+			"sites" : {
+				fileName    : "site",
+				service     : "siteService",
+				displayName : "Site",
+				priority    : 1
 			}
 		};
 
-		filePathMappings = {
+		variables.filePathMappings = {
 			"emailtemplates" : {
 				fileName    : "emailtemplates",
 				displayName : "Email Templates",
@@ -139,18 +155,12 @@ component accessors=true {
 				extension   : "",
 				priority    : 1
 			},
-			"themes" : {
-				fileName    : "themes",
-				displayName : "Themes",
-				directory   : customPath & "/_themes",
-				type        : "folder",
-				extension   : "",
-				priority    : 1
-			},
 			"medialibrary" : {
-				fileName     : "medialibrary",
-				displayName  : "Media Library",
-				directory    : expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
+				fileName    : "medialibrary",
+				displayName : "Media Library",
+				directory   : expandPath(
+					variables.settingService.getSetting( "cb_media_directoryRoot" )
+				),
 				includeFiles : "*",
 				type         : "folder",
 				extension    : "",
@@ -160,6 +170,14 @@ component accessors=true {
 				fileName    : "modules",
 				displayName : "Modules",
 				directory   : customPath & "/_modules",
+				type        : "folder",
+				extension   : "",
+				priority    : 1
+			},
+			"themes" : {
+				fileName    : "themes",
+				displayName : "Themes",
+				directory   : customPath & "/_themes",
 				type        : "folder",
 				extension   : "",
 				priority    : 1
@@ -177,42 +195,45 @@ component accessors=true {
 
 	/**
 	 * Setup method to configure service
-	 * @targets Targets for the upload
+	 *
+	 * @targets The struct of targets to prepare for export
 	 */
-	public ContentBoxExporter function setup( required struct targets ){
+	ContentBoxExporter function setup( required struct targets ){
 		// loop over targets and build up exporters
 		for ( var key in arguments.targets ) {
 			// find config for the given key
 			var config = findConfig( key );
-			// if config was found
-			if ( structCount( config ) ) {
-				switch ( config.type ) {
-					// add data exporter
-					case "data":
-						var exporter = wirebox.getInstance( "dataExporter@cbadmin" );
-						exporter.setFileName( config.def.fileName );
-						exporter.setDisplayName( config.def.displayName );
-						exporter.setContent( variables[ config.def.service ].getAllForExport() );
-						exporter.setPriority( config.def.priority );
-						break;
-						// add file exporter
-					case "file":
-						var includedFiles = !isBoolean( targets[ key ] ) && listLen(
-							targets[ key ]
-						) ? targets[ key ] : "*";
-						var exporter = wirebox.getInstance( "fileExporter@cbadmin" );
-						exporter.setFileName( config.def.fileName );
-						exporter.setDisplayName( config.def.displayName );
-						exporter.setDirectory( config.def.directory );
-						exporter.setType( config.def.type );
-						exporter.setExtension( config.def.extension );
-						// set included files dynamically from arguments
-						exporter.setIncludeFiles( includedFiles );
-						break;
-						// add exporter
-				}
-				addExporter( exporter );
+			// if config was not found, continue to next one.
+			if ( !structCount( config ) ) {
+				continue;
 			}
+
+			switch ( config.type ) {
+				// add data exporter
+				case "data":
+					var exporter = wirebox.getInstance( "dataExporter@cbadmin" );
+					exporter.setFileName( config.def.fileName );
+					exporter.setDisplayName( config.def.displayName );
+					exporter.setContent( variables[ config.def.service ].getAllForExport() );
+					exporter.setPriority( config.def.priority );
+					break;
+					// add file exporter
+				case "file":
+					var includedFiles = !isBoolean( arguments.targets[ key ] ) && listLen(
+						arguments.targets[ key ]
+					) ? arguments.targets[ key ] : "*";
+					var exporter = wirebox.getInstance( "fileExporter@cbadmin" );
+					exporter.setFileName( config.def.fileName );
+					exporter.setDisplayName( config.def.displayName );
+					exporter.setDirectory( config.def.directory );
+					exporter.setType( config.def.type );
+					exporter.setExtension( config.def.extension );
+					// set included files dynamically from arguments
+					exporter.setIncludeFiles( includedFiles );
+					break;
+					// add exporter
+			}
+			addExporter( exporter );
 		}
 		return this;
 	}
@@ -222,7 +243,7 @@ component accessors=true {
 	 * @exporter.hint The exporter that is added
 	 * return SiteExporterService
 	 */
-	public ContentBoxExporter function addExporter( required any exporter ){
+	ContentBoxExporter function addExporter( required any exporter ){
 		arrayAppend( exporters, arguments.exporter );
 		return this;
 	}
@@ -230,7 +251,7 @@ component accessors=true {
 	/**
 	 * Gets the descriptor def for the export
 	 */
-	public struct function getDescriptor(){
+	struct function getDescriptor(){
 		// build descriptor
 		buildDescriptor();
 		return variables.descriptor;
@@ -239,7 +260,7 @@ component accessors=true {
 	/**
 	 * Processes export!
 	 */
-	public struct function export(){
+	struct function export(){
 		var exportLog = createObject( "java", "java.lang.StringBuilder" ).init(
 			"Starting ContentBox package export...<br>"
 		);
@@ -330,32 +351,34 @@ component accessors=true {
 
 	/**
 	 * Retrieves correct config defintion based on key arguments
-	 * @key.hint The key of the definition to find.
+	 *
+	 * @key The key of the definition to find.
+	 *
+	 * @return Struct of { type : "data|file", def : data service mapping }
 	 */
 	private struct function findConfig( required string key ){
-		var isData = structKeyExists( dataServiceMappings, arguments.key );
-		var isFile = structKeyExists( filePathMappings, arguments.key );
-		var config = {};
+		var isData = structKeyExists( variables.dataServiceMappings, arguments.key );
+		var isFile = structKeyExists( variables.filePathMappings, arguments.key );
 		if ( isData ) {
-			config = {
+			return {
 				"type" : "data",
-				"def"  : dataServiceMappings[ arguments.key ]
+				"def"  : variables.dataServiceMappings[ arguments.key ]
 			};
 		}
 		if ( isFile ) {
-			config = {
+			return {
 				"type" : "file",
-				"def"  : filePathMappings[ arguments.key ]
+				"def"  : variables.filePathMappings[ arguments.key ]
 			};
 		}
-		return config;
+		return {};
 	}
 
 	/**
 	 * Creates descriptor structure
 	 */
 	private void function buildDescriptor(){
-		var loggedInUser        = securityService.getAuthorSession();
+		var loggedInUser        = variables.securityService.getAuthorSession();
 		var content             = {};
 		// set static descriptor values
 		content[ "exportDate" ] = now();
