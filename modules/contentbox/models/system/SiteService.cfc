@@ -14,6 +14,7 @@ component
 
 	// DI
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
+	property name="requestStorage" inject="requestStorage@cbStorages";
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
 	property name="settingService" inject="provider:settingService@cb";
@@ -58,9 +59,15 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	Site function getCurrentWorkingSite(){
-		var oSite = newCriteria().isEq( "siteID", getCurrentWorkingsiteID() ).get();
-		// Check if null, just in case
-		return ( !isNull( oSite ) ? oSite : getDefaultSite() );
+		// Use request storage for acceleration
+		return variables.requestStorage.getOrSet(
+			name   : "contentbox-current-working-site",
+			produce: function(){
+				var oSite = newCriteria().isEq( "siteID", getCurrentWorkingsiteID() ).get();
+				// Check if null, just in case
+				return ( !isNull( oSite ) ? oSite : getDefaultSite() );
+			}
+		);
 	}
 
 	/**
