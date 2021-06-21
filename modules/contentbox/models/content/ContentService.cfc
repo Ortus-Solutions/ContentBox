@@ -844,13 +844,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Get content by slug, if not found then it returns a new entity so we can persist it.
 		var oContent    = findWhere( { "slug" : thisContent.slug, "site" : arguments.site } );
 		if ( isNull( oContent ) ) {
+			logThis(
+				"! Content (#thisContent.contentType#:#thisContent.slug#) not found in site, proceeding to import as new content."
+			);
 			oContent = this.new();
+		} else {
+			logThis(
+				"! Content (#thisContent.contentType#:#thisContent.slug#) found in site, proceeding to check if we can import."
+			);
 		}
-		// Link the site
-		oContent.setSite( arguments.site );
-
-		// add to newContent map so we can avoid slug collisions in recursive relationships
-		arguments.newContent[ thisContent.slug ] = oContent;
 
 		// Check if loaded and override selected
 		if ( oContent.isLoaded() && !arguments.override ) {
@@ -859,6 +861,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			);
 			return;
 		}
+		// Link to site
+		oContent.setSite( arguments.site );
+		// add to newContent map so we can avoid slug collisions in recursive relationships
+		arguments.newContent[ thisContent.slug ] = oContent;
 
 		// populate content from data and ignore relationships, we need to build those manually.
 		var excludedFields = [
@@ -887,7 +893,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		var oAuthor = variables.authorService.findByEmail( thisContent.creator.email );
 		if ( isNull( oAuthor ) ) {
 			logThis(
-				"!! Author (#thisContent.creator.email#) not found in ContentBox for: (#thisContent.contentType#:#thisContent.slug#) "
+				"!! Author (#thisContent.creator.email#) not found in ContentBox for: (#thisContent.contentType#:#thisContent.slug#)"
 			);
 			return oContent;
 		}
@@ -899,10 +905,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// PARENT
 		if ( !isNull( arguments.parent ) and isObject( arguments.parent ) ) {
 			oContent.setParent( arguments.parent );
+			arguments.parent.addChild( oContent );
 			logThis(
 				"+ Content parent (#arguments.parent.getSlug()#) passed and linked for: (#thisContent.contentType#:#thisContent.slug#)"
 			);
-		} else if ( isStruct( thisContent.parent ) and structCount( thisContent.parent ) ) {
+		} else if ( structCount( thisContent.parent ) ) {
 			var oParent = findWhere( {
 				"slug" : thisContent.parent.slug,
 				"site" : arguments.site
@@ -993,7 +1000,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					contentData = thisChild,
 					importLog   = arguments.importLog,
 					parent      = oContent,
-					site        = arguments.site
+					newContent  = arguments.newContent,
+					site        = arguments.site,
+					override    = arguments.override
 				);
 
 				// continue to next record if author not found
@@ -1001,14 +1010,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					logThis(
 						"!! Import skipped, Author (#thisChild.creator.email#) not found when importing child (#thisChild.slug#) for : (#thisContent.contentType#:#thisContent.slug#)"
 					);
-					continue;
+				} else {
+					logThis(
+						"+ Content child (#thisChild.slug#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
+					);
 				}
-
-				// Add child
-				oContent.addChild( oChild );
-				logThis(
-					"+ Content child (#thisChild.slug#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
-				);
 			}
 		}
 

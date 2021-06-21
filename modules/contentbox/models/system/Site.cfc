@@ -231,7 +231,7 @@ component
 		fieldtype   ="one-to-many"
 		type        ="array"
 		lazy        ="true"
-		orderby     ="createdDate desc"
+		orderby     ="parent"
 		cfc         ="contentbox.models.content.Page"
 		fkcolumn    ="FK_siteID"
 		inverse     ="true"
@@ -243,7 +243,7 @@ component
 		fieldtype="one-to-many"
 		type     ="array"
 		lazy     ="true"
-		orderby  ="createdDate desc"
+		orderby  ="parent"
 		cfc      ="contentbox.models.content.ContentStore"
 		fkcolumn ="FK_siteID"
 		inverse  ="true"
@@ -521,6 +521,36 @@ component
 				return aFound[ 1 ];
 			}
 		}
+	}
+
+	/**
+	 * @override
+	 * We make sure we only return pages that have no parent to simulate the root hierarchy.
+	 *
+	 * @root Show only root level pages if enabled
+	 */
+	function getPages( boolean root = true ){
+		if ( !arguments.root ) {
+			return variables.pages;
+		}
+		return variables.pages.filter( function( thisPage ){
+			return !arguments.thisPage.hasParent();
+		} );
+	}
+
+	/**
+	 * @override
+	 * We make sure we only return contentStore that have no parent to simulate the root hierarchy.
+	 *
+	 * @root Show only root level contentStore if enabled
+	 */
+	function getContentStore( boolean root = true ){
+		if ( !arguments.root ) {
+			return variables.contentStore;
+		}
+		return variables.contentStore.filter( function( thisContent ){
+			return !arguments.thisContent.hasParent();
+		} );
 	}
 
 }
