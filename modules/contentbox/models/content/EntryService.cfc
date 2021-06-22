@@ -266,10 +266,12 @@ component extends="ContentService" singleton {
 	}
 
 	/**
-	 * Get all content for export as flat data
+	 * Get all site content for export as flat data
+	 *
+	 * @site The site to get the export from
 	 */
-	array function getAllForExport(){
-		return super.getAllForExport( getAll() );
+	array function getAllForExport( required site ){
+		return super.getAllForExport( findAllWhere( { site : arguments.site } ) );
 	}
 
 }

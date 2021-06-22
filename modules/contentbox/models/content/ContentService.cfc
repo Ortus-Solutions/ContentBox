@@ -707,11 +707,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @inData The data to use for exporting, usually concrete implementtions can override this.
 	 */
 	array function getAllForExport( any inData ){
-		// export from the root node, instead of everything.
 		if ( isNull( arguments.inData ) ) {
 			arguments.inData = newCriteria().isNull( "parent" ).list();
 		}
-
 		return arguments.inData.map( function( thisItem ){
 			return arguments.thisItem.getMemento( profile: "export" );
 		} );

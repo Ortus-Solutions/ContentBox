@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-file-export fa-lg"></i> Export Site
+			<i class="fas fa-file-export fa-lg"></i> ContentBox Export
 		</h1>
 	</div>
 </div>
@@ -34,13 +34,17 @@
 
 				<div class="panel-body">
 
-					<p>From this panel you can choose to export your entire site or parts of it as a <strong>*.box</strong> archive package.</p>
+					<p>
+						From this panel you can choose to export your entire ContentBox site(s) or parts of it as a <strong>*.box</strong> archive package.
+					</p>
 
 					<div class="row">
+
+						<!--- EVERYTHING --->
 						<div class="col-md-6">
 							<div class="well well-sm text-center alert-success rounded" style="min-height: 185px">
 								<h2>Option ##1: Everything!</h2>
-								<small>No mess, no fuss, just a full and beautiful export of your ContentBox site. </small><br /><br />
+								<small>No mess, no fuss, just a full export of EVERYTHING! </small><br /><br />
 								<label class="btn btn-success btn-toggle radio" for="export_everything">
 									#html.radioButton(
 										name 	= "export_type",
@@ -52,6 +56,7 @@
 							</div>
 						</div>
 
+						<!--- Mr Picky --->
 						<div class="col-md-6">
 							<div class="well well-sm text-center rounded" style="min-height: 185px">
 								<h2>Option ##2: Mr. Picky</h2>
@@ -68,6 +73,7 @@
 						</div>
 					</div>
 
+					<!--- Mr Picky Controls --->
 					<fieldset style="display:none;" id="selective_controls" class="well">
 						<div class="row">
 							<div class="col-md-3">

@@ -587,7 +587,7 @@ component extends="baseContentHandler" {
 						.getMemento( profile: "export" );
 				} );
 		} else {
-			return variables.entryService.getAllForExport();
+			return variables.entryService.getAllForExport( prc.oCurrentSite );
 		}
 	}
 

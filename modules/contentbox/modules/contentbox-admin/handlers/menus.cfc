@@ -288,7 +288,7 @@ component extends="baseHandler" {
 					return variables.menuService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
-			return variables.menuService.getAllForExport();
+			return variables.menuService.getAllForExport( prc.oCurrentSite );
 		}
 	}
 

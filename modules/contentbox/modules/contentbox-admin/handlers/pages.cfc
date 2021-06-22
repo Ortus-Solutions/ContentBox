@@ -703,7 +703,7 @@ component extends="baseContentHandler" {
 					return variables.pageService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
-			return variables.pageService.getAllForExport();
+			return variables.pageService.getAllForExport( prc.oCurrentSite );
 		}
 	}
 

@@ -241,9 +241,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Get all data prepared for export
+	 *
+	 * @site The site to export from
 	 */
-	array function getAllForExport(){
-		return getAll().map( function( thisItem ){
+	array function getAllForExport( required site ){
+		return findAllWhere( { site : arguments.site } ).map( function( thisItem ){
 			return thisItem.getMemento( profile: "export" );
 		} );
 	}
