@@ -129,6 +129,7 @@ module.exports = function(grunt) {
 					"app_modules/jquery-validation/dist/jquery.validate.min.js",
 					"app_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
 					"app_modules/moment/min/moment-with-locales.min.js",
+					"node_modules/moment-timezone/builds/moment-timezone.min.js",
 					"app_modules/lz-string/libs/lz-string.min.js",
 					"app_modules/lodash/dist/lodash.min.js",
 					"app_modules/history.js/scripts/bundled/html4+html5/jquery.history.js",

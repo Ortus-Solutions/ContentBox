@@ -19,7 +19,6 @@
         "matchdep": "^2.0.0"
     },
     "dependencies": {
-        "global": "^4.3.2",
         "@app_modules/Bootstrap-Confirmation": "rochappy/Bootstrap-Confirmation#*",
         "@app_modules/TableDnD": "isocra/TableDnD#^1.0.3",
         "@app_modules/animate.css": "daneden/animate.css#^3.5.2",
@@ -51,7 +50,9 @@
         "@app_modules/simplemde": "sparksuite/simplemde-markdown-editor#^1.11.2",
         "@app_modules/switchery": "abpetkov/switchery#^0.8.2",
         "@app_modules/toastr": "johnpapa/toastr-bower#^2.1.3",
-        "@app_modules/transitionize": "abpetkov/transitionize#*"
+        "@app_modules/transitionize": "abpetkov/transitionize#*",
+        "global": "^4.3.2",
+        "moment-timezone": "^0.5.33"
     },
     "engines": {
         "yarn": ">= 1.0.0"
