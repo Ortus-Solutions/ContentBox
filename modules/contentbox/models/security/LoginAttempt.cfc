@@ -26,7 +26,8 @@ component
 		column   ="loginAttemptsID"
 		fieldtype="id"
 		generator="uuid"
-ormtype="string"
+		length   ="36"
+		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
 

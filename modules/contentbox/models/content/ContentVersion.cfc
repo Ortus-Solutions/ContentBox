@@ -33,6 +33,7 @@ component
 		column   ="contentVersionID"
 		fieldtype="id"
 		generator="uuid"
+		length   ="36"
 		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
@@ -62,12 +63,12 @@ component
 		index  ="idx_version";
 
 	property
-		name     ="isActive"
-		column   ="isActive"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="false"
-		index    ="idx_activeContentVersion,idx_contentVersions";
+		name   ="isActive"
+		column ="isActive"
+		notnull="true"
+		ormtype="boolean"
+		default="false"
+		index  ="idx_activeContentVersion,idx_contentVersions";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS

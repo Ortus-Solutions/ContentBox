@@ -23,6 +23,7 @@ component
 		column   ="ruleID"
 		fieldtype="id"
 		generator="uuid"
+		length   ="36"
 		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
@@ -85,11 +86,11 @@ component
 		length ="500";
 
 	property
-		name     ="useSSL"
-		column   ="useSSL"
-		ormtype  ="boolean"
-		notnull  ="false"
-		default  ="false";
+		name   ="useSSL"
+		column ="useSSL"
+		ormtype="boolean"
+		notnull="false"
+		default="false";
 
 	property
 		name     ="action"

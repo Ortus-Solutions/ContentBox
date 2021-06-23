@@ -23,6 +23,7 @@ component
 		column   ="moduleID"
 		fieldtype="id"
 		generator="uuid"
+		length   ="36"
 		ormtype  ="string"
 		setter   ="false"
 		update   ="false";
@@ -86,12 +87,12 @@ component
 		default="";
 
 	property
-		name     ="isActive"
-		column   ="isActive"
-		notnull  ="true"
-		ormtype  ="boolean"
-		default  ="false"
-		index    ="idx_activeModule";
+		name   ="isActive"
+		column ="isActive"
+		notnull="true"
+		ormtype="boolean"
+		default="false"
+		index  ="idx_activeModule";
 
 	property
 		name     ="moduleType"
