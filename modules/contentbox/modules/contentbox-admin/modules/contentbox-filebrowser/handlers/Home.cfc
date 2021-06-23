@@ -405,9 +405,8 @@ component {
 			// Announce it
 			var iData = { original : rc.path, newName : rc.name };
 			announce( "fb_preFileRename", iData );
-
 			if ( fileExists( rc.path ) ) {
-				fileMove( rc.path, rc.name );
+				fileMove( rc.path, getDirectoryFromPath( rc.path ) & rc.name );
 			} else if ( directoryExists( rc.path ) ) {
 				directoryRename( rc.path, rc.name );
 			}
