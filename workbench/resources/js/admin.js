@@ -740,3 +740,12 @@ function passwordValidator(value) {
         &&
         value.length >= minLength // at least characters
 }
+
+/**
+ * Convert an iso8601 to local browser date time
+ * @param {*} dateTime The iso8601 date time object
+ * @returns A local browser date time
+ */
+function toLocal( dateTime ){
+	return moment.utc( dateTime ).local().format();
+}
