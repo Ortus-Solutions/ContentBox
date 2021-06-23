@@ -21,7 +21,7 @@
 								onclick="setPreviewSize( this ); return false;"
 								class="btn btn-primary btn-sm"
 						>
-							<i class="fa fa-2x fa-desktop"></i>
+							<i class="fas fa-2x fa-desktop"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -29,7 +29,7 @@
 								onclick="setPreviewSize( this, 768 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fa fa-2x fa-tablet-alt"></i>
+							<i class="fas fa-2x fa-tablet-alt"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -37,12 +37,12 @@
 								onclick="setPreviewSize( this, 1024 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fa fa-2x fa-tablet-alt fa-rotate-90"></i>
+							<i class="fas fa-2x fa-tablet-alt fa-rotate-90"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
 								title="Phone View"
-								onclick="setPreviewSize( this, 320 ); return false;"
+								onclick="setPreviewSize( this, 375 ); return false;"
 								class="btn btn-info btn-sm"
 						>
 							<i class="fas fa-2x fa-mobile-alt"></i>
@@ -50,7 +50,7 @@
 						<button href="javascript:void( 0 )"
 								role="group"
 								title="Horizontal Phone View"
-								onclick="setPreviewSize( this, 568 ); return false;"
+								onclick="setPreviewSize( this, 667 ); return false;"
 								class="btn btn-info btn-sm"
 						>
 							<i class="fas fa-2x fa-mobile-alt fa-rotate-90"></i>
