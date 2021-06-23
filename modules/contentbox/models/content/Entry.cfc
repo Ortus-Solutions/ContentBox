@@ -47,17 +47,17 @@ component
 	 * constructor
 	 */
 	function init(){
+		appendToMemento( [ "excerpt" ], "defaultIncludes" );
+		appendToMemento( [], "defaultExcludes" );
+
+		super.init();
+
 		variables.categories      = [];
 		variables.customFields    = [];
 		variables.renderedContent = "";
 		variables.renderedExcerpt = "";
 		variables.createdDate     = now();
 		variables.contentType     = "Entry";
-
-		appendToMemento( [ "excerpt" ], "defaultIncludes" );
-		appendToMemento( [], "defaultExcludes" );
-
-		super.init();
 
 		return this;
 	}

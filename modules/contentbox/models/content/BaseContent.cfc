@@ -578,6 +578,7 @@ component
 	 * Base constructor
 	 */
 	function init(){
+		super.init();
 		variables.isPublished            = true;
 		variables.publishedDate          = now();
 		variables.allowComments          = true;
@@ -589,8 +590,6 @@ component
 		variables.contentType            = "";
 		variables.showInSearch           = true;
 		variables.renderedContent        = "";
-
-		super.init();
 		return this;
 	}
 
@@ -1766,7 +1765,7 @@ component
 	BaseContent function setParent( parent ){
 		// Nulllify?
 		if ( isNull( arguments.parent ) ) {
-			variables.parent = javaCast( "null", "" );
+			variables.parent = javacast( "null", "" );
 			return this;
 		} else {
 			// Welcome home papa!

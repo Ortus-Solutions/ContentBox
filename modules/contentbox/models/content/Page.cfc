@@ -105,6 +105,20 @@ component
 	 ********************************************************************* */
 
 	function init(){
+		appendToMemento(
+			[
+				"excerpt",
+				"layout",
+				"mobileLayout",
+				"order",
+				"showInMenu",
+				"SSLOnly"
+			],
+			"defaultIncludes"
+		);
+
+		super.init();
+
 		variables.categories      = [];
 		variables.customFields    = [];
 		variables.renderedContent = "";
@@ -120,20 +134,6 @@ component
 
 		// INHERITANCE LAYOUT STATIC
 		variables.LAYOUT_INHERITANCE_KEY = "-inherit-";
-
-		appendToMemento(
-			[
-				"excerpt",
-				"layout",
-				"mobileLayout",
-				"order",
-				"showInMenu",
-				"SSLOnly"
-			],
-			"defaultIncludes"
-		);
-
-		super.init();
 
 		return this;
 	}
