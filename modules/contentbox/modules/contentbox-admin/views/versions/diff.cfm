@@ -8,15 +8,17 @@
                 <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="diffTitle">
-                	<i class="fa fa-clock-o fa-lg"></i>
+                	<i class="fas fa-history fa-lg"></i>
 					Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
+					> #prc.currentContent.getRelatedContent().getTitle()#
 				</h4>
-            </div>
+			</div>
+
             <!--body-->
             <div class="modal-body">
                 <h3>Version Info Comparison</h3>
 				<!--- Info Table --->
-				<table class="table table-hover table-condensed table-bordered">
+				<table class="table table-hover table-bordered">
 					<tbody>
 					<tr class="info">
 						<th class="text-center" width="150">Info</th>
@@ -27,7 +29,7 @@
 						<td><strong>Author</strong></td>
 						<td><a href="mailto:#prc.oldContent.getAuthorEmail()#">#prc.oldContent.getAuthorName()#</a></td>
 						<td><a href="mailto:#prc.currentContent.getAuthorEmail()#">#prc.currentContent.getAuthorName()#</a></td>
-						
+
 					</tr>
 					<tr>
 						<td><strong>Created Date</strong></td>
@@ -55,7 +57,7 @@
 				</div>
 
 				<!--- Simple Comparisons --->
-				<table class="diff table table-condensed">
+				<table class="diff table ">
 					<thead>
 						<tr>
 							<th colspan="2" class="text-center">Version #prc.oldVersion#</th>
@@ -76,7 +78,7 @@
 										</cfif>
 									</div>
 								</td>
-								
+
 								<!--- Right --->
 								<td class="linenum"><cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif></td>
 								<td width="50%" class="code#codeCSS#">

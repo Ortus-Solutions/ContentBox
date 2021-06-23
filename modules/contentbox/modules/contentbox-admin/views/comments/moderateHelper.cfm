@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$commentForm = $( "##commentForm" );
 } );
 function removeComment(){

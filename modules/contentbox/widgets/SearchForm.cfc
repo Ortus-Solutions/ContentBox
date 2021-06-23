@@ -6,7 +6,7 @@
 * This widget creates a simple ContentBox search form
 */
 component extends="contentbox.models.ui.BaseWidget" singleton{
-	
+
 	SearchForm function init(){
 		// Widget Properties
 		setName( "SearchForm" );
@@ -31,24 +31,24 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @formcss.hint The form css classes
 	*/
 	any function renderIt(
-		string type="content", 
-		string label="Search for", 
-		string title="", 
-		string titleLevel="2", 
+		string type       ="content", 
+		string label      ="Search for", 
+		string title      ="", 
+		string titleLevel ="2", 
 		string placeholder="", 
-		string querycss="", 
-		string buttoncss="", 
-		string formcss="" 
+		string querycss   ="", 
+		string buttoncss  ="", 
+		string formcss    ="" 
 	){
-		var rString	= "";
-		var event = getRequestContext();
+		var rString= "";
+		var event  = getRequestContext();
 
 		// Check type
 		if( !reFindNoCase( "^(content|blog)$", arguments.type ) ){
 			throw( 
 				message = "Invalid type for search form", 
-				detail 	= "Valid types are: content or blog", 
-				type 	= "InvalidSearchType"
+				detail  = "Valid types are: content or blog", 
+				type    = "InvalidSearchType"
 			);
 		}
 		// Action
@@ -63,17 +63,19 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		saveContent variable="rString"{
 			writeOutput('
 			#html.startForm( name="searchForm", action=action, class=arguments.formcss )#
-			    <div class="input-group">
-					#html.textField( name="q", placeholder="Search", value=local.q, class="form-control")#
-			      	<span class="input-group-btn">
-			        	<button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
-			      	</span>
-			    </div>
+<div class="input-group">
+	#html.textField( name="q", placeholder="Search", value=local.q, class="form-control")#
+<span class="input-group-btn">
+		<button class="btn btn-primary" type="submit">
+			<i class="fa fa-search"></i>
+		</button>
+	</span>
+</div>
 			#html.endForm()#
 			');
 		}
 
 		return rString;
 	}
-	
+
 }

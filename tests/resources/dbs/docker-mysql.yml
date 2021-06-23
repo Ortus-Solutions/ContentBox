@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+
+  # MySQL Server 5.7
+  mysql:
+    platform: linux/x86_64 # Needed for Mac's on the M1 chip
+    image: mysql:5.7
+    ports:
+      - 4306:3306
+    environment:
+      MYSQL_DATABASE: "contentbox"
+      MYSQL_ROOT_PASSWORD: "contentbox"
+    volumes:
+      # Store the data locally
+      - .db/mysql/data:/var/lib/mysql
+      # You can uncomment and it will seed the db with our prepared sql data
+      #- ../tests/resources/sql/mysql:/docker-entrypoint-initdb.d

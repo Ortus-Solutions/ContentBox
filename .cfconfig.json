@@ -1,0 +1,56 @@
+{
+	"systemErr":"System",
+	"systemOut":"System",
+	"componentCacheEnabled":false,
+	"saveClassFiles":false,
+	"robustExceptionEnabled":true,
+	"debuggingEnabled" : true,
+	"adminPassword" : "contentbox",
+	"requestTimeout": "0,0,10,0",
+	"thistimezone":"UTC",
+	"debuggingReportExecutionTimes": false,
+    "whitespaceManagement":"white-space-pref",
+	"cacheDefaultObject":"contentbox",
+    "caches":{
+        "contentbox":{
+            "storage":"true",
+            "type":"RAM",
+            "custom":{
+                "timeToIdleSeconds":"1800",
+                "timeToLiveSeconds":"3600"
+            },
+            "class":"lucee.runtime.cache.ram.RamCache",
+            "readOnly":"false"
+		}
+    },
+	"datasources" : {
+		"contentbox":{
+            "allowAlter":true,
+            "allowCreate":true,
+            "allowDelete":true,
+            "allowDrop":true,
+            "allowGrant":true,
+            "allowInsert":true,
+            "allowRevoke":true,
+            "allowSelect":true,
+            "allowUpdate":true,
+            "blob":"true",
+			"bundleName": "${DB_BUNDLENAME}",
+			"bundleVersion": "${DB_BUNDLEVERSION}",
+            "class":"${DB_CLASS}",
+            "clob":"true",
+            "connectionLimit":"100",
+            "connectionTimeout":"1",
+            "custom":"useUnicode=true&characterEncoding=UTF8&serverTimezone=UTC&useLegacyDatetimeCode=true&autoReconnect=true&useSSL=false",
+            "database":"${DB_DATABASE:contentbox}",
+            "dbdriver":"${DB_DRIVER}",
+            "host":"${DB_HOST:127.0.0.1}",
+            "metaCacheTimeout":"60000",
+            "password":"${DB_PASSWORD}",
+            "port":"${DB_PORT:3306}",
+            "storage":"false",
+            "username":"${DB_USER}",
+			"validate":"false"
+		}
+	}
+}

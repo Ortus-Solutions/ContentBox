@@ -1,17 +1,19 @@
 <cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-star fa-lg"></i> Subscribers</h1>
+		<h1 class="h1">
+			<i class="far fa-star fa-lg"></i> Subscribers
+		</h1>
     </div>
 </div>
 <div class="row">
     <div class="col-md-12">
         <!--- MessageBox --->
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #cbMessageBox().renderit()#
     </div>
 </div>
 <div class="row">
-    <div class="col-md-9">
+    <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
@@ -19,7 +21,7 @@
                     <!-- Tabs -->
                     <ul class="nav nav-tabs" id="contentTypes">
                         <li class="active">
-                            <a href="##CommentSubscriptions" data-toggle="tab"><i class="fa fa-quote-left icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
+                            <a href="##CommentSubscriptions" data-toggle="tab"><i class="fas fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
                         </li>
                     </ul>
                     <!-- End Tabs -->
@@ -32,13 +34,13 @@
                                     <div class="col-md-6">
                                         <h3>All Subscriptions</h3>
                                             <!--- comment subscriptions --->
-                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped table-hover" width="98%">
+                                            <table name="commentSubscriptions" id="commentSubscriptions" class="table table-striped-removed table-hover" >
                                                 <thead>
                                                     <tr>
-                                                        <th>Content</th>     
+                                                        <th>Content</th>
                                                         <th width="75" class="text-center">Followers</th>
                                                     </tr>
-                                                </thead>                
+                                                </thead>
                                                 <tbody>
                                                     <cfloop array="#prc.commentSubscriptions#" index="subscription">
                                                     <tr>
@@ -48,7 +50,7 @@
                                                     </cfloop>
                                                 </tbody>
                                             </table>
-                                        
+
                                     </div>
                                     <div class="col-md-6">
                                         <h3>Top #prc.maxCommentSubscriptions# Comment Subscriptions</h3>
@@ -63,25 +65,6 @@
                     <!-- End Tab Content -->
                 </div>
                 <!-- End Vertical Nav -->
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-bar-chart"></i> Quick Stats</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table table-striped">
-                    <tr>
-                        <td><strong>Comment Subscriptions:</strong></td>
-                        <td><span class="label label-info">#prc.commentSubscriptionCount#</span></td>
-                    </tr>
-                    <tr class="info">
-                        <td><strong>Unique Subscribers:</strong></td>
-                        <td><span class="label label-info">#prc.uniqueSubscriberCount#</span></td>
-                    </tr>
-                </table>
             </div>
         </div>
     </div>

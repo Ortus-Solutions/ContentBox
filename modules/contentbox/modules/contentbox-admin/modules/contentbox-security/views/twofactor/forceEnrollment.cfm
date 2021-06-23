@@ -4,14 +4,14 @@
         <div class="panel panel-primary animated fadeInDown">
 
 			<div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel-title p5">
                    <i class="fa fa-key"></i> Enroll in Two Factor Authentication
                 </h3>
             </div>
 
 			<div class="panel-body">
 	        	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
                 <!--- AuthorForm --->
                 #html.startForm(
@@ -63,7 +63,7 @@
                         </cfif>
 
                         <!--- Provider Listener so they can add even more options via events --->
-                        #announceInterception( "cbadmin_onAuthorTwoFactorOptions" )#
+                        #announce( "cbadmin_onAuthorTwoFactorOptions" )#
 
                     </fieldset>
 

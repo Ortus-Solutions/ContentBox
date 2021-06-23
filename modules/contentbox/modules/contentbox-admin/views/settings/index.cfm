@@ -10,61 +10,85 @@
 
 <div class="row">
     <div class="col-md-12">
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #cbMessageBox().renderit()#
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        #html.startForm(name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate" )#
-            #html.anchor(name="top" )#
-            
+        #html.startForm( name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate" )#
+            #html.anchor( name="top" )#
+
             <div class="panel panel-default">
-                
+
                 <div class="panel-body">
-                    
+
                     <!--- Vertical Nav --->
                     <div class="tab-wrapper tab-left tab-primary">
                         <!--- Tabs --->
                         <ul class="nav nav-tabs">
                             <li class="active">
-                                <a href="##site_options" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> Site Options</a>
+								<a href="##site_options" data-toggle="tab">
+									<i class="fas fa-globe fa-lg"></i> All Sites
+								</a>
+							</li>
+                            <li>
+								<a href="##dashboard_options" data-toggle="tab">
+									<i class="fa fa-desktop fa-lg"></i> Administrator
+								</a>
                             </li>
                             <li>
-                                <a href="##dashboard_options" data-toggle="tab"><i class="fa fa-desktop fa-lg"></i> Admin Options</a>
+								<a href="##security_options" data-toggle="tab">
+									<i class="fas fa-key fa-lg"></i> Security
+								</a>
                             </li>
                             <li>
-                                <a href="##security_options" data-toggle="tab"><i class="fa fa-lock fa-lg"></i> Security Options</a>
+								<a href="##login_options" data-toggle="tab">
+									<i class="fa fa-sign-in fa-lg"></i> Login
+								</a>
                             </li>
                             <li>
-                                <a href="##login_options" data-toggle="tab"><i class="fa fa-sign-in fa-lg"></i> Login Options</a>
+								<a href="##content_options" data-toggle="tab">
+									<i class="fas fa-boxes fa-lg"></i> Content
+								</a>
                             </li>
                             <li>
-                                <a href="##content_options" data-toggle="tab"><i class="fa fa-file fa-lg"></i> Content Options</a>
+								<a href="##editor_options" data-toggle="tab">
+									<i class="fas fa-pen fa-lg"></i> Editor Options
+								</a>
                             </li>
                             <li>
-                                <a href="##editor_options" data-toggle="tab"><i class="fa fa-edit fa-lg"></i> Editor Options</a>
+								<a href="##mediamanager" data-toggle="tab">
+									<i class="fas fa-photo-video fa-lg"></i> Media Manager
+								</a>
                             </li>
                             <li>
-                                <a href="##mediamanager" data-toggle="tab"><i class="fa fa-th fa-lg"></i> Media Manager</a>
+								<a href="##gravatars" data-toggle="tab">
+									<i class="fas fa-portrait fa-lg"></i> Gravatars
+								</a>
                             </li>
                             <li>
-                                <a href="##gravatars" data-toggle="tab"><i class="fa fa-user fa-lg"></i> Gravatars</a>
+								<a href="##notifications" data-toggle="tab">
+									<i class="far fa-bell fa-lg"></i> Notifications
+								</a>
                             </li>
                             <li>
-                                <a href="##notifications" data-toggle="tab"><i class="fa fa-bullhorn fa-lg"></i> Notifications</a>
+								<a href="##email_server" data-toggle="tab">
+									<i class="far fa-envelope-open fa-lg"></i> Mail Server
+								</a>
                             </li>
                             <li>
-                                <a href="##email_server" data-toggle="tab"><i class="fa fa-envelope fa-lg"></i> Mail Server</a>
+								<a href="##search_options" data-toggle="tab">
+									<i class="fab fa-searchengin fa-lg"></i> Search Options
+								</a>
                             </li>
                             <li>
-                                <a href="##search_options" data-toggle="tab"><i class="fa fa-search fa-lg"></i> Search Options</a>
-                            </li>
-                            <li>
-                                <a href="##rss_options" data-toggle="tab"><i class="fa fa-rss fa-lg"></i> RSS</a>
+								<a href="##rss_options" data-toggle="tab">
+									<i class="fa fa-rss fa-lg"></i> RSS
+								</a>
                             </li>
                             <!--- cbadmin Event --->
-                            #announceInterception( "cbadmin_onSettingsNav" )#
+                            #announce( "cbadmin_onSettingsNav" )#
                         </ul>
                         <!--- End Tabs --->
                         <!--- Tab Content --->
@@ -72,89 +96,89 @@
                             <!--- ********************************************************************* --->
                             <!---                           SITE OPTIONS                                --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane active" id="site_options">
-                                #renderView( "settings/sections/siteOptions" )#
-                            </div>
+                                #renderView( view = "settings/sections/siteOptions", prePostExempt = true )#
+							</div>
 
                             <!--- ********************************************************************* --->
                             <!---                           ADMIN OPTIONS                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="dashboard_options">
-                                #renderView( "settings/sections/adminOptions" )#
+                                #renderView( view = "settings/sections/adminOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
                             <!---                           SECURITY OPTIONS                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="security_options">
-                                #renderView( "settings/sections/securityOptions" )#
+                                #renderView( view = "settings/sections/securityOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
                             <!---                           LOGIN OPTIONS                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="login_options">
-                                #renderView( "settings/sections/loginOptions" )#
+                                #renderView( view = "settings/sections/loginOptions", prePostExempt = true )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           CONTENT OPTIONS                             --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="content_options">
-                                #renderView( "settings/sections/contentOptions" )#
+                                #renderView( view = "settings/sections/contentOptions", prePostExempt = true )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           EDITOR OPTIONS                              --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="editor_options">
-                                #renderView( "settings/sections/editorOptions" )#
+                                #renderView( view = "settings/sections/editorOptions", prePostExempt = true )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           MEDIA MANAGER                                --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="mediamanager">
-                                #renderView( "settings/sections/mediaManager" )#
+                                #renderView( view = "settings/sections/mediaManager", prePostExempt = true )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           GRAVATARS                                   --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="gravatars">
-                                #renderView( "settings/sections/gravatars" )#
+                                #renderView( view = "settings/sections/gravatars", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
                             <!---                           Notifications                               --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="notifications">
-                                #renderView( "settings/sections/notifications" )#
+                                #renderView( view = "settings/sections/notifications", prePostExempt = true )#
                             </div>
-                            
+
                             <!--- ********************************************************************* --->
                             <!---                           EMAIL SERVER                                --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="email_server">
-                                #renderView( "settings/sections/mailServer" )#
+                                #renderView( view = "settings/sections/mailServer", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
                             <!---                           SEARCH OPTIONS                              --->
                             <!--- ********************************************************************* --->
-                            
+
                             <div class="tab-pane" id="search_options">
-                                #renderView( "settings/sections/searchOptions" )#
+                                #renderView( view = "settings/sections/searchOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -162,15 +186,15 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="rss_options">
-                                #renderView( "settings/sections/rss" )#
+                                #renderView( view = "settings/sections/rss", prePostExempt = true )#
                             </div>
 
                             <!--- cbadmin Event --->
-                            #announceInterception( "cbadmin_onSettingsContent" )#
+                            #announce( "cbadmin_onSettingsContent" )#
 
                             <!--- Button Bar --->
                             <div class="form-actions">
-                                #html.submitButton(value="Save Settings", class="btn btn-danger" )#
+                                #html.submitButton( value="Save Settings", class="btn btn-danger" )#
                             </div>
                         </div>
                         <!--- End Tab Content --->

@@ -16,7 +16,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setCategory( "ColdBox" );
 		setIcon( 'file-text' );
-		
+
 		return this;
 	}
 
@@ -29,9 +29,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @titleLevel.hint The H{level} to use, by default we use H2
 	*/
 	any function renderIt(required string event,boolean private=false,string args="",string title="",string titleLevel="2" ){
-		var rString			= "";
-		var eventArguments 	= {};
-		
+		var rString       = "";
+		var eventArguments= {};
+
 		// Inflate args
 		if( len( arguments.args ) ){
 			var aString = listToArray( arguments.args, "," );
@@ -39,11 +39,12 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 				eventArguments[ listFirst( key, "=" ) ] = getToken( key, 2, "=" );
 			}
 		}
-		
+
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len(arguments.title) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
+			if( len(arguments.title) ){ writeOutput( "<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+" ); }
 			// execute it
 			try{
 				writeOutput( runEvent(event=arguments.event, eventArguments=eventArguments, private=arguments.private) );

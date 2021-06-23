@@ -11,8 +11,6 @@
 		#html.hiddenField( name="relocationURL", value=event.buildLink( prc.xehTwoFactorRelocation ) )#
 
 		<fieldset>
-			<legend>Two-Factor Authentication</legend>
-
 			<p>
 				Increase your account's security by enabling Two-Factor Authentication (2FA).
 			</p>
@@ -72,7 +70,7 @@
             </cfif>
 
 			<!--- Provider Listener so they can add even more options via events --->
-			#announceInterception( "cbadmin_onAuthorTwoFactorOptions" )#
+			#announce( "cbadmin_onAuthorTwoFactorOptions" )#
 
 		</fieldset>
 

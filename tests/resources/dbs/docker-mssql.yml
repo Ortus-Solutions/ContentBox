@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+
+  # Microsoft SQL Server
+  mssql:
+    platform: linux/x86_64 # Needed for Mac's on the M1 chip
+    image: mcr.microsoft.com/mssql/server:2017-latest
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      SA_PASSWORD: "ContentB0x!"
+      ACCEPT_EULA: "Y"
+      # In production, an SQL Server license key would go here
+      MSSQL_PID: "Developer"
+    volumes:
+      # This volume declaration ( mapped to the docker-machine VM ) ensures our databases persist between creations of the container
+      - mssql_data:/var/opt/mssql/data
+    ports:
+      - "1433:1433"
+
+volumes:
+  mssql_data:

@@ -1,160 +1,204 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A cool SecurityRule entity
-*/
-component 	persistent="true" 
-			table="cb_securityRule" 
-			entityName="cbSecurityRule" 
-			extends="contentbox.models.BaseEntity"
-			cachename="cbSecurityRule" 
-			cacheuse="read-write"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A cool SecurityRule entity
+ */
+component
+	persistent="true"
+	table     ="cb_securityRule"
+	entityName="cbSecurityRule"
+	extends   ="contentbox.models.BaseEntity"
+	cachename ="cbSecurityRule"
+	cacheuse  ="read-write"
+{
 
 	/* *********************************************************************
-	**							PROPERTIES									
-	********************************************************************* */
+	 **							PROPERTIES
+	 ********************************************************************* */
 
-	property 	name="ruleID" 
-				fieldtype="id" 
-				column="ruleID" 
-				generator="native" 
-				setter="false" 
-				params="{ allocationSize = 1, sequence = 'ruleID_seq' }";
+	property
+		name     ="ruleID"
+		column   ="ruleID"
+		fieldtype="id"
+		generator="uuid"
+		length   ="36"
+		ormtype  ="string"
+		setter   ="false"
+		update   ="false";
 
-	property 	name="whitelist" 	
-				ormtype="string"  	
-				notnull="false" 	
-				default="" 
-				length="255";
+	property
+		name   ="whitelist"
+		column ="whitelist"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="255";
 
-	property 	name="securelist" 	
-				ormtype="string"  	
-				notnull="true" 		
-				default="" 
-				length="255";
+	property
+		name   ="securelist"
+		column ="securelist"
+		ormtype="string"
+		notnull="true"
+		default=""
+		length ="255";
 
-	property 	name="roles" 		
-				ormtype="string"  	
-				notnull="false"  	
-				default="" 
-				length="255";
+	property
+		name     ="match"
+		column   ="match"
+		ormtype  ="string"
+		notnull  ="false"
+		default  ="event"
+		dbdefault="'event'"
+		length   ="50";
 
-	property 	name="permissions" 	
-				ormtype="string"  	
-				notnull="false"  	
-				default="" 
-				length="500";
+	property
+		name   ="roles"
+		column ="roles"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="255";
 
-	property 	name="redirect"		
-				ormtype="string"  	
-				notnull="true"  	
-				default="" 
-				length="500";
+	property
+		name   ="permissions"
+		column ="permissions"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="500";
 
-	property 	name="useSSL"		
-				ormtype="boolean" 	
-				notnull="false" 	
-				default="false";
+	property
+		name   ="redirect"
+		column ="redirect"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="500";
 
-	property 	name="order"		
-				ormtype="integer" 	
-				notnull="true" 		
-				default="0";
+	property
+		name   ="overrideEvent"
+		column ="overrideEvent"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="500";
 
-	property 	name="match"		
-				ormtype="string"  	
-				notnull="false" 	
-				default="" 
-				length="50";
+	property
+		name   ="useSSL"
+		column ="useSSL"
+		ormtype="boolean"
+		notnull="false"
+		default="false";
 
-	property 	name="message"		
-				ormtype="string"  	
-				notnull="false" 	
-				default="" 
-				length="255";
+	property
+		name     ="action"
+		column   ="action"
+		ormtype  ="string"
+		notnull  ="false"
+		default  ="redirect"
+		dbdefault="'redirect'"
+		length   ="50";
 
-	property 	name="messageType"		
-				ormtype="string"  	
-				notnull="false" 	
-				default="info"
-				dbdefault="'info'"
-				length="50";
+	property
+		name   ="module"
+		column ="module"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="500";
+
+	property
+		name   ="order"
+		column ="order"
+		ormtype="integer"
+		notnull="true"
+		default="0";
+
+	property
+		name   ="message"
+		column ="message"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="255";
+
+	property
+		name     ="messageType"
+		column   ="messageType"
+		ormtype  ="string"
+		notnull  ="false"
+		default  ="info"
+		dbdefault="'info'"
+		length   ="50";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS									
-	********************************************************************* */
+	 **							PK + CONSTRAINTS
+	 ********************************************************************* */
 
 	this.pk = "ruleID";
 
+	this.memento = {
+		defaultIncludes : [
+			"action",
+			"match",
+			"message",
+			"messageType",
+			"module",
+			"order",
+			"overrideEvent",
+			"permissions",
+			"redirect",
+			"roles",
+			"securelist",
+			"useSSL",
+			"whitelist"
+		],
+		defaultExcludes : [ "" ]
+	};
+
 	this.constraints = {
-		"whitelist"	 			= { required = false, size = "1..255" },
-		"securelist"			= { required = false, size = "1..255" },
-		"roles"					= { required = false, size = "1..255" },
-		"permissions"			= { required = false, size = "1..500" },
-		"redirect"				= { required = false, size = "1..500" },
-		"order"					= { required = false, type="numeric" },
-		"match"					= { required = false, size = "1..50" },
-		"message"				= { required = false, size = "1..255" },
-		"messageType"			= { required = false, size = "1..50" }
+		"whitelist"  : { required : false, size : "1..255" },
+		"securelist" : { required : true, size : "1..255" },
+		"match"      : {
+			required : false,
+			size     : "1..50",
+			regex    : "^(event|url)$"
+		},
+		"roles"         : { required : false, size : "1..255" },
+		"permissions"   : { required : false, size : "1..500" },
+		"redirect"      : { required : false, size : "1..500" },
+		"overrideEvent" : { required : false, size : "1..500" },
+		"useSSL"        : { required : false, type : "boolean" },
+		"action"        : {
+			required : false,
+			size     : "1..50",
+			regex    : "^(redirect|override)$"
+		},
+		"module"      : { required : false, size : "1..255" },
+		"order"       : { required : false, type : "numeric" },
+		"message"     : { required : false, size : "1..255" },
+		"messageType" : { required : false, size : "1..50" }
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS									
-	********************************************************************* */
+	 **							PUBLIC FUNCTIONS
+	 ********************************************************************* */
 
 	// Constructor
 	function init(){
-		variables.match 		= 'event';
-		variables.useSSL 		= false;
-		variables.order  		= 0;
-		variables.messageType 	= "info";
+		variables.match         = "event";
+		variables.action        = "redirect";
+		variables.useSSL        = false;
+		variables.order         = 0;
+		variables.messageType   = "info";
+		variables.overrideEvent = "";
+		variables.module        = "";
 
 		super.init();
 
 		return this;
 	}
-	
-	/**
-	* Overriden setter
-	*/
-	SecurityRule function setMatch(required match){
-		if( not reFindnocase( "^(event|url)$", arguments.match) ){
-			throw(message="Invalid match type sent: #arguments.match#",detail="Valid match types are 'event,url'",type="InvalidMatchType" );
-		}
-		variables.match = arguments.match;
-		return this;
-	}
-	
-	/*
-	* Validate entry, returns an array of error or no messages
-	*/
-	array function validate(){
-		var errors = [];
-		
-		// limits
-		securelist		= left(securelist,255);
-		whitelist		= left(whitelist,255);
-		roles			= left(roles,500);
-		permissions		= left(permissions,500);
-		redirect		= left(redirect,255);
-		
-		// Required
-		if( !len(securelist) ){ arrayAppend(errors, "Securelist is required" ); }
-		if( !len(redirect) ){ arrayAppend(errors, "Redirect is required" ); }
-		
-		return errors;
-	}
 
-	/**
-	* Get memento representation
-	*/
-	function getMemento( excludes="" ){
-		var pList = listToArray( "whitelist,securelist,roles,permissions,redirect,useSSL,order,match,message,messageType" );
-		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
-		return result;
-	}
-	
 }

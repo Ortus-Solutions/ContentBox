@@ -26,8 +26,8 @@
     <!---                           EVENTS                                      --->
     <!--- ********************************************************************* --->
     <cfif event.getCurrentLayout() EQ "simple">
-        #announceInterception( "cbadmin_beforeLoginBodyEnd" )#
+        #announce( "cbadmin_beforeLoginBodyEnd" )#
     <cfelse>
-	    #announceInterception( "cbadmin_beforeBodyEnd" )#
+	    #announce( "cbadmin_beforeBodyEnd" )#
 	</cfif>
 </cfoutput>

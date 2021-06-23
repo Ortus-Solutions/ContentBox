@@ -9,13 +9,15 @@ $( document ).ready( function(){
         "info": false,
         "searching": false,
         "columnDefs": [
-            { 
-                "orderable": false, 
-                "targets": '{sorter:false}' 
+            {
+                "orderable": false,
+                "targets": '{sorter:false}'
             }
         ],
         "order": []
-    } );
+	} );
+	// Setup Count Container
+	$( "##authorCountContainer" ).html( "(" + $( "##authorCount" ).val() + ")" );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips

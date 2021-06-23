@@ -48,7 +48,7 @@
             <span class="badge badge-info" id="cb_dashboard_newsfeed_count_label">#prc.cbSettings.cb_dashboard_newsfeed_count#</span>
         </label>
         <div class="controls">
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_dashboard_newsfeed_count"
                     name="cb_dashboard_newsfeed_count"
@@ -60,7 +60,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -71,7 +71,7 @@
             <span class="badge badge-info" id="cb_dashboard_recentEntries_label">#prc.cbSettings.cb_dashboard_recentEntries#</span>
         </label>
         <div class="controls">
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_dashboard_recentEntries"
                     name="cb_dashboard_recentEntries"
@@ -83,7 +83,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -94,7 +94,7 @@
             <span class="badge badge-info" id="cb_dashboard_recentPages_label">#prc.cbSettings.cb_dashboard_recentPages#</span>
         </label>
         <div class="controls">
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_dashboard_recentPages"
                     name="cb_dashboard_recentPages"
@@ -106,7 +106,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -117,7 +117,7 @@
             <span class="badge badge-info" id="cb_dashboard_recentContentStore_label">#prc.cbSettings.cb_dashboard_recentContentStore#</span>
         </label>
         <div class="controls">
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_dashboard_recentContentStore"
                     name="cb_dashboard_recentContentStore"
@@ -129,7 +129,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -140,7 +140,7 @@
             <span class="badge badge-info" id="cb_dashboard_recentComments_label">#prc.cbSettings.cb_dashboard_recentComments#</span>
         </label>
         <div class="controls">
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_dashboard_recentComments"
                     name="cb_dashboard_recentComments"
@@ -152,7 +152,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -163,7 +163,7 @@
             <span class="badge badge-info" id="cb_security_latest_logins_label">#prc.cbSettings.cb_security_latest_logins#</span>
         </label>
         <div class="controls">
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_security_latest_logins"
                     name="cb_security_latest_logins"
@@ -175,14 +175,14 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 </fieldset>
 
 
 <fieldset>
-    <legend><i class="fa fa-copy fa-lg"></i>  Paging Options</legend>
+    <legend><i class="far fa-clone fa-lg"></i>  Paging Options</legend>
 
     <!--- Quick Search --->
     <div class="form-group">
@@ -192,7 +192,7 @@
         </label>
         <div class="controls">
             <small>The number of results to show in the global search results panel.</small><br/>
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_admin_quicksearch_max"
                     name="cb_admin_quicksearch_max"
@@ -204,7 +204,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -216,7 +216,7 @@
         </label>
         <div class="controls">
             <small>The number of entries to show on the blog before paging is done.</small><br/>
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_paging_maxentries"
                     name="cb_paging_maxentries"
@@ -228,7 +228,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -240,7 +240,7 @@
         </label>
         <div class="controls">
             <small>The max rows to use in the administrator.</small><br/>
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
             <input 	type="text"
                     id="cb_paging_maxrows"
                     name="cb_paging_maxrows"
@@ -252,7 +252,7 @@
                     data-slider-step="10"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
         </div>
     </div>
 
@@ -264,7 +264,7 @@
         </label>
         <div class="controls">
             <small>The paging bandgap to use in the administrator.</small><br/>
-            <strong class="margin10">1</strong>
+            <strong class="m10">1</strong>
             <input 	type="text"
                     id="cb_paging_bandgap"
                     name="cb_paging_bandgap"
@@ -276,7 +276,7 @@
                     data-slider-step="1"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">10</strong>
+            <strong class="m10">10</strong>
         </div>
     </div>
 </fieldset>

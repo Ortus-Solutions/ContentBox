@@ -4,10 +4,10 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="contentVersionService"	inject="id:contentVersionService@cb";
-	property name="contentService"			inject="id:contentService@cb";
-	property name="authorService"			inject="id:authorService@cb";
-	property name="CBHelper"				inject="id:CBHelper@cb";
+	property name="contentVersionService"	inject="contentVersionService@cb";
+	property name="contentService"			inject="contentService@cb";
+	property name="authorService"			inject="authorService@cb";
+	property name="CBHelper"				inject="CBHelper@cb";
 
 	/**
 	* Versions History Index
@@ -21,24 +21,24 @@ component extends="baseHandler"{
 		// Do according to type
 		switch( prc.content.getContentType() ){
 			case "Page" : {
-				prc.xehBackTrack 	= "#prc.cbAdminEntryPoint#.pages";
-				prc.xehOpenContent 	= CBHelper.linkContent( prc.content );
+				prc.xehBackTrack   = "#prc.cbAdminEntryPoint#.pages";
+				prc.xehOpenContent = CBHelper.linkContent( prc.content );
 				break;
 			}
 			case "Entry" : {
-				prc.xehBackTrack = "#prc.cbAdminEntryPoint#.entries";
-				prc.xehOpenContent 	= CBHelper.linkContent( prc.content );
+				prc.xehBackTrack   = "#prc.cbAdminEntryPoint#.entries";
+				prc.xehOpenContent = CBHelper.linkContent( prc.content );
 				break;
 			}
 			case "ContentStore" : {
-				prc.xehBackTrack = "#prc.cbAdminEntryPoint#.contentStore";
-				prc.xehOpenContent 	= "";
+				prc.xehBackTrack   = "#prc.cbAdminEntryPoint#.contentStore";
+				prc.xehOpenContent = "";
 				break;
 			}
 		}
 
 		// Announce event
-		announceInterception( "cbadmin_onVersionIndex" );
+		announce( "cbadmin_onVersionIndex" );
 
 		// Pager with all versions
 		prc.versionsPager = pager( event, rc, prc, rc.contentID, 0, false );
@@ -56,17 +56,17 @@ component extends="baseHandler"{
 	function pager( event, rc, prc, required contentID, numeric max=10, boolean viewFullHistory=true ){
 
 		// Incoming
-		prc.versionsPager_max 				= arguments.max;
-		prc.versionsPager_contentID 		= arguments.contentID;
-		prc.versionsPager_viewFullHistory 	= arguments.viewFullHistory;
+		prc.versionsPager_max             = arguments.max;
+		prc.versionsPager_contentID       = arguments.contentID;
+		prc.versionsPager_viewFullHistory = arguments.viewFullHistory;
 
 		// Get Content
 		prc.versionsPager_content = contentService.get( arguments.contentID );
 
 		// Get the latest versions
-		var results = contentVersionService.findRelatedVersions( contentID=arguments.contentID, max=arguments.max );
-		prc.versionsPager_count 	= results.count;
-		prc.versionsPager_versions 	= results.versions;
+		var results                = contentVersionService.findRelatedVersions( contentID=arguments.contentID, max=arguments.max );
+		prc.versionsPager_count    = results.count;
+		prc.versionsPager_versions = results.versions;
 
 		// nice UI number
 		if( prc.versionsPager_max gt prc.versionsPager_count){
@@ -75,10 +75,10 @@ component extends="baseHandler"{
 
 		// exit handlers
 		prc.xehVersionQuickLook = "#prc.cbAdminEntryPoint#.versions.quickLook";
-		prc.xehVersionHistory 	= "#prc.cbAdminEntryPoint#.versions.index";
-		prc.xehVersionRemove 	= "#prc.cbAdminEntryPoint#.versions.remove";
-		prc.xehVersionRollback 	= "#prc.cbAdminEntryPoint#.versions.rollback";
-		prc.xehVersionDiff 		= "#prc.cbAdminEntryPoint#.versions.diff";
+		prc.xehVersionHistory   = "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehVersionRemove    = "#prc.cbAdminEntryPoint#.versions.remove";
+		prc.xehVersionRollback  = "#prc.cbAdminEntryPoint#.versions.rollback";
+		prc.xehVersionDiff      = "#prc.cbAdminEntryPoint#.versions.diff";
 
 		// render out widget
 		return renderView( view="versions/pager", module="contentbox-admin" );
@@ -103,15 +103,15 @@ component extends="baseHandler"{
 		// check for length
 		if( len( rc.versionID ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRemove", { contentVersionID = rc.versionID } );
+			announce( "cbadmin_preContentVersionRemove", { contentVersionID = rc.versionID } );
 			// remove using hibernate bulk
 			contentVersionService.deleteByID( rc.versionID );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRemove", { contentVersionID = rc.versionID } );
+			announce( "cbadmin_postContentVersionRemove", { contentVersionID = rc.versionID } );
 			// results
 			results.messages = "Version removed!";
 		} else {
-			results.error = true;
+			results.error    = true;
 			results.messages = "No versionID sent to remove!";
 		}
 		// return in json
@@ -128,21 +128,21 @@ component extends="baseHandler"{
 		var oVersion = contentVersionService.get( rc.revertID );
 		if( !isNull( oVersion ) ){
 			// announce event
-			announceInterception( "cbadmin_preContentVersionRollback", { contentVersion = oVersion } );
+			announce( "cbadmin_preContentVersionRollback", { contentVersion = oVersion } );
 			// Try to revert this version
 			oVersion.getRelatedContent().addNewContentVersion(
-				content 	= oVersion.getContent(),
-				changelog 	= "Reverting to version #oVersion.getVersion()#",
-				author 	 	= prc.oCurrentAuthor
+				content   = oVersion.getContent(),
+				changelog = "Reverting to version #oVersion.getVersion()#",
+				author    = prc.oCurrentAuthor
 			);
 			// save
 			contentVersionService.save( oVersion );
 			// announce event
-			announceInterception( "cbadmin_postContentVersionRollback", { contentVersion = oVersion } );
+			announce( "cbadmin_postContentVersionRollback", { contentVersion = oVersion } );
 			// results
 			results.messages = "Version #oVersion.getVersion()# rollback was successfull!";
 		} else {
-			results.error = true;
+			results.error    = true;
 			results.messages = "The versionID sent is not valid!";
 		}
 		// return in json
@@ -157,10 +157,10 @@ component extends="baseHandler"{
 		prc.xehVersionDiff 	= "#prc.cbAdminEntryPoint#.versions.diff";
 
 		// Get the Page content
-		prc.currentContent 	= contentVersionService.get( rc.version );
-		prc.oldContent 		= contentVersionService.get( rc.oldVersion );
-		prc.currentVersion  = prc.currentContent.getVersion();
-		prc.oldVersion		= prc.oldContent.getVersion();
+		prc.currentContent= variables.contentVersionService.get( rc.version );
+		prc.oldContent    = variables.contentVersionService.get( rc.oldVersion );
+		prc.currentVersion= prc.currentContent.getVersion();
+		prc.oldVersion    = prc.oldContent.getVersion();
 
 		// Diff them
 		prc.leftA  = listToArray( prc.oldContent.getContent(), chr(10) );
@@ -174,7 +174,7 @@ component extends="baseHandler"{
 			prc.maxA = arrayLen( prc.rightA );
 		}
 
-		announceInterception( "cbadmin_onVersionDiff" );
+		announce( "cbadmin_onVersionDiff" );
 
 		// views
 		event.setView( view="versions/diff", layout="ajax" );

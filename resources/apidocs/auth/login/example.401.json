@@ -1,0 +1,49 @@
+{
+    "data": {
+        "LNAME": [
+            {
+                "MESSAGE": "The 'LNAME' value is required",
+                "VALIDATIONDATA": true,
+                "ERRORMETADATA": {},
+                "REJECTEDVALUE": "",
+                "VALIDATIONTYPE": "Required",
+                "FIELD": "LNAME"
+            }
+        ],
+        "FNAME": [
+            {
+                "MESSAGE": "The 'FNAME' value is required",
+                "VALIDATIONDATA": true,
+                "ERRORMETADATA": {},
+                "REJECTEDVALUE": "",
+                "VALIDATIONTYPE": "Required",
+                "FIELD": "FNAME"
+            }
+        ],
+        "PASSWORD": [
+            {
+                "MESSAGE": "The 'PASSWORD' value is required",
+                "VALIDATIONDATA": true,
+                "ERRORMETADATA": {},
+                "REJECTEDVALUE": "",
+                "VALIDATIONTYPE": "Required",
+                "FIELD": "PASSWORD"
+            }
+        ],
+        "EMAIL": [
+            {
+                "MESSAGE": "The 'EMAIL' value is required",
+                "VALIDATIONDATA": true,
+                "ERRORMETADATA": {},
+                "REJECTEDVALUE": "",
+                "VALIDATIONTYPE": "Required",
+                "FIELD": "EMAIL"
+            }
+        ]
+    },
+    "error": true,
+    "pagination": {},
+    "messages": [
+        "Validation exceptions occurred, please see the data"
+    ]
+}

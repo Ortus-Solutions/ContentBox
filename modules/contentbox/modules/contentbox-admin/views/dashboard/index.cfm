@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-signal fa-lgr"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fas fa-tv"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>
@@ -13,11 +13,11 @@
 		<p class="lead">#prc.welcomeBody#</p>
 
 		<!--- Messagebox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
-		
+		#cbMessageBox().renderit()#
+
 		<!--- Event --->
-		#announceInterception( "cbadmin_preDashboardContent" )#
-		
+		#announce( "cbadmin_preDashboardContent" )#
+
 		<!--- Installer Checks --->
 		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" )>
 		<cfif prc.installerCheck.installer>
@@ -37,20 +37,20 @@
 			</div>
 		</cfif>
 		</cfif>
-		
+
 		<div class="tab-wrapper tab-primary">
 			<ul class="nav nav-tabs" id="dashboardTabs">
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<li>
 						<a href="##contentReports" data-toggle="tab">
-							<i class="fa fa-signal"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+							<i class="fas fa-box"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 						</a>
 					</li>
 				</cfif>
 				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<li>
 						<a href="##latestComments" data-toggle="tab">
-							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
+							<i class="far fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
 						</a>
 					</li>
 				</cfif>
@@ -60,27 +60,27 @@
 					</a>
 				</li>
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_onDashboardTabNav" )#
+				#announce( "cbadmin_onDashboardTabNav" )#
 			</ul>
 			<div class="tab-content">
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_preDashboardTabContent" )#
+				#announce( "cbadmin_preDashboardTabContent" )#
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
 				<!--- ****************************************************************************************** --->
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<div class="tab-pane" id="contentReports">
-						<div class="" id="latestSystemEdits">
-							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						<div class="m5" id="latestSystemEdits">
+							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
 						</div>
-						<div class="" id="futurePublished">
-							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						<div class="m5" id="futurePublished">
+							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
 						</div>
-						<div class="" id="expiredContent">
-							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						<div class="m5" id="expiredContent">
+							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
 						</div>
-						<div class="" id="latestUserDrafts">
-							<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						<div class="m5" id="latestUserDrafts">
+							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
 						</div>
 					</div>
 				</cfif>
@@ -89,57 +89,63 @@
 				<!--- ****************************************************************************************** --->
 				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<div class="tab-pane" id="latestComments">
-						<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+						<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
 					</div>
 				</cfif>
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST NEWS TAB --->
 				<!--- ****************************************************************************************** --->
 				<div class="tab-pane" id="latestNews">
-					<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
+					<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
 				</div>
 				<!--- cbadmin Event --->
-				#announceInterception( "cbadmin_postDashboardTabContent" )#
+				#announce( "cbadmin_postDashboardTabContent" )#
 			</div>
 		</div>
-		
+
 		<!--- Event --->
-		#announceInterception( "cbadmin_postDashboardContent" )#
+		#announce( "cbadmin_postDashboardContent" )#
     </div>
     <div class="col-md-4">
         <!--- Event --->
-		#announceInterception( "cbadmin_preDashboardSideBar" )#
-		
+		#announce( "cbadmin_preDashboardSideBar" )#
+
 		<!---Latest Snapshot --->
 		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
-				<i class="fa fa-spin fa-spinner fa-lg fa-2x"></i>
-			</div>	
+				<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+			</div>
 		</cfif>
 
 		<!--- Latest Logins --->
 		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
-			        <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> #$r( "dashboard.index.latestLogins@admin" )#</h3>
+					<h3 class="panel-title">
+						<i class="fas fa-users fa-lg"></i> #$r( "dashboard.index.latestLogins@admin" )#
+					</h3>
 			    </div>
 			    <div class="panel-body">
-			    	<div id="latestLogins"><i class="fa fa-spin fa-spinner fa-lg -2x"></i></div>
+					<div id="latestLogins">
+						<i class="fas fa-spin fa-circle-notch fa-lg -2x"></i>
+					</div>
 			    </div>
 			</div>
-		</cfif> 
+		</cfif>
 
 		<!--- Info Box --->
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medkit"></i> #$r( "dashboard.index.needHelp@admin" )#</h3>
+				<h3 class="panel-title">
+					<i class="fab fa-medrt fa-lg"></i> #$r( "dashboard.index.needHelp@admin" )#
+				</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
+		    	#renderview( view = "_tags/needhelp", prePostExempt = true )#
 		    </div>
 		</div>
 		<!--- Event --->
-		#announceInterception( "cbadmin_postDashboardSideBar" )#
+		#announce( "cbadmin_postDashboardSideBar" )#
     </div>
 </div>
 </cfoutput>

@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  ## PostgreSQL
+  postgresql:
+    platform: linux/x86_64 # Needed for Mac's on the M1 chip
+    image: postgres:12
+    environment:
+      POSTGRES_PASSWORD: "contentbox"
+      POSTGRES_USER: "contentbox"
+      POSTGRES_DB: "contentbox"
+    ports:
+      - 5432:5432
+    volumes:
+      - .db/postgres/initdb:/docker-entrypoint-initdb.d
+      - .db/postgres/data:/var/lib/postgresql/data

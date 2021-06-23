@@ -1,14 +1,16 @@
 ﻿<cfoutput>
 <div class="modal-dialog modal-lg" role="document" >
-    <div class="modal-content">
+	<div class="modal-content">
+
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             <h3>Cached Settings</h3>
-        </div>
+		</div>
+
         <div class="modal-body">
-            <h2>Cached Metadata</h2>
+            <h4>Cached Metadata</h4>
             <!--- settings --->
-            <table class="table table-hover table-condensed table-striped" width="98%">
+            <table class="table table-hover  table-striped-removed" >
             	<thead>
             		<tr>
             			<th>Hits</th>
@@ -30,25 +32,11 @@
             		</tr>
             	</tbody>
             </table>
-            
-            <h2>Cached Data</h2>
-            <!--- settings --->
-            <table name="settings" id="settings" class="table table-hover table-condensed table-striped" width="98%">
-            	<thead>
-            		<tr>
-            			<th width="250">Name</th>
-            			<th>Value</th>
-            		</tr>
-            	</thead>
-            	<tbody>
-            		<cfloop collection="#prc.settings#" item="setting">
-            		<tr>
-            			<td>#HTMLEditFormat( setting )#</td>
-            			<td>#HTMLEditFormat( prc.settings[setting] )#</td>
-            		</tr>
-            		</cfloop>
-            	</tbody>
-            </table>
+
+            <h4>Cached Data</h4>
+            <div style="overflow: auto">
+				<cfdump var="#prc.settings#">
+			</div>
         </div>
         <!--- Button Bar --->
         <div class="modal-footer">

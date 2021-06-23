@@ -1,0 +1,37 @@
+﻿<?xml version="1.0"?>
+<project name="contentbox.express.refactor" default="refactor" basedir=".">
+    <description>
+    	ContentBox Express Edition, removes indexes on db creation.
+    </description>
+	
+	<!-- Properties -->
+	<property name="dir.userlocation"	value="/Users/lmajano" />
+	<property name="dir.exports"		value="${dir.userlocation}/exports" />
+	<property name="dir.build" 			value="${dir.exports}/contentbox" />
+	
+	<!-- Build it -->
+	<target name="build" description="build the code">
+		<!-- Build it from original build -->
+		<ant antfile="ant/build.xml" target="build" dir="../" />
+		<!-- Create tomcat directory structure -->
+		<mkdir dir="${dir.exports}/www"/>
+		<move todir="${dir.exports}/www/ROOT">
+			<fileset dir="${dir.build}"/>
+		</move>
+		<mkdir dir="${dir.exports}/www/ROOT/WEB-INF"/>
+		<!-- Copy Rewrite Filter -->
+		<copy file="urlrewrite.xml" todir="${dir.exports}/www/ROOT/WEB-INF"/>
+	</target>
+	
+	<!-- Refactor -->
+	<target name="refactor" description="refactor the code for express edition usage." depends="build">
+		
+		<replaceregexp match='index="[^"]*"' replace="" flags="ig" byline="true">
+		  <fileset dir="${dir.exports}/www/ROOT/modules/contentbox/model">
+		  	<include name="**/*.cfc" />
+		  </fileset>
+		</replaceregexp>
+		
+	</target>
+
+</project>

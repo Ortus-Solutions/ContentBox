@@ -7,12 +7,12 @@
     <!--- Robots --->
     <meta name="robots" content="noindex,nofollow" />
     <!--- SES --->
-    <base href="#cb.siteBaseURL()#" />
+	<base href="#event.getHTMLBaseURL()#" />
     <!--- Title --->
     <cfif event.privateValueExists( "htmlTitle" )>
         <title>#prc.htmlTitle# &mdash; ContentBox Administrator</title>
-    <cfelseif structKeyExists( prc, 'cbSettings' )>
-        <title>#prc.cbSettings.cb_site_name# &mdash; ContentBox Administrator</title>
+    <cfelseif structKeyExists( prc, 'oCurrentSite' )>
+        <title>#prc.oCurrentSite.getName()# &mdash; ContentBox Administrator</title>
     <cfelse>
         <title>ContentBox Administrator</title>
     </cfif>
@@ -36,7 +36,8 @@
     <!--- ********************************************************************* --->
     <!---                           CSS                                           --->
     <!--- ********************************************************************* --->
-    <link rel="stylesheet" href="#prc.cbroot#/includes/css/contentbox.min.css">
+	<link rel="stylesheet" href="#prc.cbroot#/includes/css/contentbox.min.css">
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
@@ -60,9 +61,9 @@
     <!--- ********************************************************************* --->
     <!--- cbadmin Events --->
     <cfif event.getCurrentLayout() EQ 'simple'>
-        #announceInterception( "cbadmin_beforeLoginHeadEnd" )#
+        #announce( "cbadmin_beforeLoginHeadEnd" )#
     <cfelse>
-        #announceInterception( "cbadmin_beforeHeadEnd" )#
+        #announce( "cbadmin_beforeHeadEnd" )#
     </cfif>
     <!--- ********************************************************************* --->
     <!---                            JS LIBRARIES FOR IN-PAGE JS                --->

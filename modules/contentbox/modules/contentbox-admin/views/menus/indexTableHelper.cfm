@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
     // tables references
     $menu = $( "##menu" );
     // sorting
@@ -9,13 +9,15 @@ $(document).ready(function() {
         "info": false,
         "searching": false,
         "columnDefs": [
-            { 
-                "orderable": false, 
-                "targets": '{sorter:false}' 
+            {
+                "orderable": false,
+                "targets": '{sorter:false}'
             }
         ],
         "order": []
-    } );
+	} );
+	// Setup Count Container
+	$( "##menusCountContainer" ).html( "(" + $( "##menusCount" ).val() + ")" );
     // activate confirmations
     activateConfirmations();
     // activate tooltips

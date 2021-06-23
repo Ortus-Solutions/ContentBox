@@ -1,0 +1,29 @@
+{
+    "200": {
+        "description": "Authenticate in the application",
+        "content": {
+            "application/json": {
+                "schema": {
+					"$ref" : "../../_schemas/app-response.json"
+                },
+				"example": {
+					"$ref": "example.200.json"
+				}
+            }
+        }
+	},
+
+	"500": {
+        "description": "Invalid token or expired token or no token",
+        "content": {
+            "application/json": {
+                "example": {
+					"$ref": "example.500.json"
+				},
+                "schema": {
+					"$ref" : "../../_schemas/app-response.json"
+                }
+            }
+        }
+    }
+}

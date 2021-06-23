@@ -39,7 +39,7 @@
 				</cfloop>
 
 				<!--- Blog Link, verify active --->
-				<cfif ( !prc.cbSettings.cb_site_disable_blog )>
+				<cfif ( prc.oCurrentSite.getIsBlogEnabled() )>
 					<cfif cb.isBlogView()><li class="active"><cfelse><li></cfif>
 						<a href="#cb.linkBlog()#">Blog</a>
 					</li>
@@ -47,11 +47,10 @@
 			</ul>
 
 			<!--- Blog Search Form ---
-			<cfif ( !prc.cbSettings.cb_site_disable_blog )>
 				<form id="searchForm" class="navbar-form navbar-right" name="searchForm" method="post" action="#cb.linkSearch()#">
 					<input type="text" class="form-control col-lg-8" placeholder="Search">
 				</form>
-			</cfif>--->
+			--->
 		</div>
 	</div>
 </nav>

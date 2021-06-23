@@ -1,6 +1,5 @@
 language: java
 
-# Slack Notifications
 notifications:
   slack:
     secure: FIHlTn/YO7Wgumm1uIqmoEsqjQA7fV0AE94Rjc5yKzM3AquQa8HicgDVVk0d2GrKRnl0xt3j4ZJV//VJyIjlCd/QVKuj48R2ChjEY2im3+99HFPafCUI5/S2uyowKU6mJTFonH9v6p41eqxdbiAxJdDGOT0V2Gpt3UBSNuHz8ED9/aIHqv+P7M+VD6Xd2XYwctPniWlaSWx57sWcnG/VkFG45qFQAyha64uxOOe4M3ZmG/n5FfauZ8cBVLiRKEIr+CyNhh1ujfzi7+4uzMlSNL5t/BbZamAQuZzqGzGQ9RVvIlyPgUGNJtDEE/hWS09aagXF5T6EMj00szizErh4J1/x4qZwml5+TcBN31E0QmAhCtZe85sr3tYgic+hEz9XX1yymQzf/C7n4to2yNvq0r4g51xDk8IuP95WEh7zaqLlvFZvBFgxpHZBMYlRvhytjOYDeIFRMcGwHZcXosaG2ejqDwcGq/LC4oeG4sSwmg9sdRrtcmcanrNqrBka86WYO6LntI3JdZ86/1ACEUHzhCCwvrKELc9Ji1xxGAgS7QKH+s2/hnJuiMyv73gOVLKYC+wPMLt+fvOmPLSEl+PJiAIlToBq1KUBg03RSQLfPOLD7OrJ8VvDZsEPwejqlGDyc4wRglS9OTi7SnN5LYHSDNDdGdREegWqq9qDHEYEVLI=
@@ -11,7 +10,7 @@ branches:
   - master
 
 sudo: required
-dist: trusty
+dist: focal
 
 # Required for patches
 git:
@@ -19,22 +18,17 @@ git:
 
 env:
   matrix:
-    - ENGINE=lucee@4.5
     - ENGINE=lucee@5
-    - ENGINE=adobe@11
     - ENGINE=adobe@2016
+    - ENGINE=adobe@2018
 
-addons:
-  apt:
-    packages:
-    - mysql-server-5.6
-    - mysql-client-core-5.6
-    - mysql-client-5.6
+services:
+  - mysql
 
 before_install:
   # CommandBox Keys
   - curl -fsSl https://downloads.ortussolutions.com/debs/gpg | sudo apt-key add -
-  - sudo echo "deb http://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a
+  - sudo echo "deb https://downloads.ortussolutions.com/debs/noarch /" | sudo tee -a
     /etc/apt/sources.list.d/commandbox.list
 
 install:
@@ -53,25 +47,49 @@ before_script:
   - mysql -u root -e 'create database contentbox;'
   # import database
   - mysql -u root < tests/resources/sql/mysql/contentbox.sql
+  # Seed .env for MySQL 8
+  - echo "Seeding database .env"
+  - touch $TRAVIS_BUILD_DIR/.env
+  - printf "DB_HOST=127.0.0.1\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_DATABASE=contentbox\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_DRIVER=MySQL\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_USER=root\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_PASSWORD=\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_CLASS=com.mysql.cj.jdbc.Driver\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_BUNDLEVERSION=8.0.19\n" >> $TRAVIS_BUILD_DIR/.env
+  - printf "DB_BUNDLENAME=com.mysql.cj\n" >> $TRAVIS_BUILD_DIR/.env
+  # Log4j Hibernate Debug
+  - mkdir -p $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/lib/
+  - mkdir -p $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
+  - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/lib/
+  - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
   # Startup testing engine
-  - box server start cfengine=$ENGINE name=$ENGINE port=8589 rewritesEnable=true
+  - box server start serverConfigFile="server-${ENGINE}.json" --debug
+  - curl http://127.0.0.1:8589/
 
 script:
-  # Run tests
-  - box package set testbox.runner="http://localhost:8589/tests/runner.cfm"
-  - box testbox run verbose=true
-  # Execute build via ANT
-  - ant -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
+  ## Run web tests
+  - box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
+  - box testbox run --verbose
+  ## Run api tests
+  - box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
+  - box testbox run --verbose
   # Get ContentBox Version for rest of build process
-  - PROJECT_VERSION="$(cat build/build-contentbox/version.json | jq -r '.version')"
-  # Spit out debugging info
+  - PROJECT_VERSION=`cat $TRAVIS_BUILD_DIR/box.json | jq '.version' -r`
+  - TRAVIS_TAG=${PROJECT_VERSION}
+  # Build Docs so we don't get any ORM interference later
+  - box run-script build:allDocs
+  ## Execute build via ANT
+  - ant -Dcontentbox.version=$PROJECT_VERSION -DisTravis=true -Dbuild.number=$TRAVIS_BUILD_NUMBER -Dbuild.branch=$TRAVIS_BRANCH -f build/build.xml
+  ## Spit out debugging info
   - cat build/build-contentbox/module/box.json
 
 after_failure:
   - cd $TRAVIS_BUILD_DIR
   - cat $TRAVIS_BUILD_DIR/tests/results/results.txt
-  - box server log name=$ENGINE
-  - cat `box system-log`
+  - cat $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
+  - cat $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
+  - box server log serverConfigFile="server-${ENGINE}.json"
 
 deploy:
   # Upload binaries
@@ -80,7 +98,7 @@ deploy:
       branch:
         - development
         - master
-      condition: "$ENGINE = lucee@4.5"
+      condition: "$ENGINE = lucee@5"
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET
@@ -95,7 +113,7 @@ deploy:
       branch:
         - development
         - master
-      condition: "$ENGINE = lucee@4.5"
+      condition: "$ENGINE = lucee@5"
     skip_cleanup: true
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_ACCESS_SECRET

@@ -44,7 +44,7 @@ $( document ).ready( function(){
         var fieldset = $( '##selective_controls' );
         if( this.id == 'export_selective' ) {
             fieldset.show( 'fast' );
-        }        
+        }
         else {
             fieldset.hide( 'fast' );
             fieldset.find( 'input[type=checkbox]' ).each(function(){
@@ -61,18 +61,22 @@ function doExport(){
         //Wait for the export to start, and the new window to pop, then update the UI
         $( "##uploadBar" ).delay( 3000 ).slideToggle();
         $( "##uploadBarLoader" ).delay( 3000 ).slideToggle();
-        
+
     }
 }
 function previewExport() {
-    $.post( 
-        '#event.buildLink( prc.xehPreviewExport )#', 
-        $( "##exporterForm" ).serialize(), 
+	var $previewButton = $( "##previewButton" );
+	var originalContent = $previewButton.html();
+	$previewButton.html( "<i class='fas fa-circle-notch fa-spin'></i> Building..." );
+    $.post(
+        '#event.buildLink( prc.xehPreviewExport )#',
+        $( "##exporterForm" ).serialize(),
         function( data, textStatus, jqXHR ){
             var target = $( '##exportPreviewDialog' );
             $( '##previewBody' ).html( data );
-            openModal( target );
-        } 
+			openModal( target );
+			$previewButton.html( originalContent );
+        }
     );
 }
 function doSiteExport(){

@@ -3,12 +3,12 @@
     <h1>Manage My Subscriptions</h1>
 
     <!--- MessageBox --->
-    #getModel( "messagebox@cbmessagebox" ).renderit()#
-    
+    #cbMessageBox().renderit()#
+
     <cfif prc.oSubscriber.isLoaded()>
         <cfif structCount( prc.subscriptions )>
-            <form name="removeSubscriptions" action="#event.buildLink( linkto='__removesubscriptions' )#" method="POST" onsubmit="return onSubmitHandler();">
-                
+            <form name="removeSubscriptions" action="#event.buildLink( to='__removesubscriptions' )#" method="POST" onsubmit="return onSubmitHandler();">
+
                 <cfloop collection="#prc.subscriptions#" item="type">
                     <!---<h2>#type# Subscriptions</h2>---->
                     <cfset aSubscriptions = prc.subscriptions[ type ]>

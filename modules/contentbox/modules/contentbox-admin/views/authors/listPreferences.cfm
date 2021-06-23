@@ -6,7 +6,6 @@
 	novalidate	= "novalidate",
 	class		= "form-vertical"
 )#
-	#html.startFieldset( legend="User Preferences" )#
 		#html.hiddenField( name="authorID", bind=prc.author )#
 
 		<!---Editor of Choice --->
@@ -117,12 +116,12 @@
 		</div>
 
 		<!--- Admin Event --->
-		#announceInterception( "cbadmin_UserPreferencePanel" )#
+		#announce( "cbadmin_UserPreferencePanel" )#
 
 		<!--- Action Bar --->
 		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
-			<div>
-				<input type="submit" value="Save Preferences" class="btn btn-danger">
+			<div class="text-center mb10">
+				<input type="submit" value="Save Preferences" class="btn btn-primary btn-lg">
 			</div>
 		</cfif>
 	#html.endFieldSet()#

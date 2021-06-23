@@ -1,47 +1,60 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fa fa-picture-o fa-lg"></i> Installed Themes</h1>
+		<h1 class="h1">
+			<i class="fas fa-swatchbook fa-lg"></i> Installed Themes (#structCount( prc.themes )#)
+		</h1>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-12">
        	<!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
     </div>
 </div>
 
 <div class="row">
 	<div class="col-md-12">
+
 		<div class="panel panel-default">
-		    <div class="panel-body">
 
-				<!--- Content Bar --->
-				<div class="well well-sm">
-					<!--- Rebuild Registry Button --->
-					<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
-						<div class="btn-group btn-sm pull-right">
+			<div class="panel-heading">
+				<div class="row">
 
-							<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink(prc.xehFlushRegistry)#')" title="Rescan Themes directory and rebuild registry"><i class="fa fa-refresh"></i> Rebuild Registry</button>
+					<div class="col-md-6 col-xs-4">
+						<div class="form-group form-inline no-margin">
+							#html.textField(
+								name        = "themeFilter",
+								class       = "form-control rounded quicksearch",
+								placeholder = "Quick Search"
+							)#
 						</div>
-					</cfif>
-					<!--- Filter Bar --->
-					<div class="form-group form-inline no-margin">
-						#html.textField(
-							name="themeFilter",
-							size="30",
-							class="form-control",
-							placeholder="Quick Filter"
-						)#
+					</div>
+
+					<div class="col-md-6 col-xs-8">
+						<!--- Rebuild Registry Button --->
+						<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" )>
+							<div class="text-right">
+								<button
+									class="btn btn-primary"
+									onclick="return to('#event.buildLink( prc.xehFlushRegistry )#')"
+									title="Rescan Themes directory and rebuild registry"
+								>
+									<i class="fas fa-recycle"></i> Rebuild Registry
+								</button>
+							</div>
+						</cfif>
 					</div>
 				</div>
+			</div>
 
+			<div class="panel-body">
 				<!--- Theme Form --->
 				#html.startForm( name="themeForm", action=prc.xehThemeRemove )#
 					#html.hiddenField( name="themeName" )#
 					<!--- themes --->
-					<table name="themes" id="themes" class="table table-striped table-hover table-condensed" width="100%">
+					<table name="themes" id="themes" class="table table-striped-removed table-hover " width="100%">
 						<thead>
 							<tr>
 								<th width="300">Theme Info</th>
@@ -53,13 +66,16 @@
 								<cfset thisTheme = prc.themes[ themeName ]>
 							<tr>
 								<td>
-									<cfif prc.cbSettings.cb_site_theme eq themeName>
-										<i class="fa fa-asterisk fa-lg text-warning" title="Active Theme"></i>
+									<cfif prc.oCurrentSite.getActiveTheme() eq themeName>
+										<i class="fas fa-asterisk fa-lg text-orange" title="Active Theme"></i>
 									</cfif>
+
 									<strong>#thisTheme.themeName#</strong>
-									<br/>
-									Version #thisTheme.version# by
-									<a href="#thisTheme.authorURL#" title="#thisTheme.AuthorURL#" target="_blank">#thisTheme.Author#</a>
+
+									<div>
+										Version #thisTheme.version# by
+										<a href="#thisTheme.authorURL#" title="#thisTheme.AuthorURL#" target="_blank">#thisTheme.Author#</a>
+									</div>
 
 									<p>&nbsp;</p>
 
@@ -67,7 +83,7 @@
 									<div class="btn-group">
 										<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ thisTheme.name>
 											<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#thisTheme.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
-												<i class="fa fa-eye"></i> Preview
+												<i class="far fa-eye"></i> Preview
 											</button>
 											<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#thisTheme.name#')">
 												<i class="fa fa-bolt"></i> Activate
@@ -77,8 +93,8 @@
 										<!--- Delete Command --->
 										<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND thisTheme.name neq prc.activeTheme.name>
 											<a href="javascript:remove('#JSStringFormat(thisTheme.name)#')"
-											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-o'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
-											   <i class="fa fa-trash-o fa-lg"></i> Remove
+											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='far fa-trash-alt'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
+											   <i class="far fa-trash-alt fa-lg"></i> Remove
 											</a>
 										</cfif>
 									</div>

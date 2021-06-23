@@ -5,234 +5,289 @@
  * ---
  * I am a ContentBox User/Author entity
  */
-component 	persistent="true"
-			entityname="cbAuthor"
-			table="cb_author"
-			batchsize="25"
-			extends="contentbox.models.BaseEntity"
-			cachename="cbAuthor"
-			cacheuse="read-write"{
+component
+	persistent="true"
+	entityname="cbAuthor"
+	table     ="cb_author"
+	batchsize ="25"
+	extends   ="contentbox.models.BaseEntity"
+	cachename ="cbAuthor"
+	cacheuse  ="read-write"
+{
 
 	/* *********************************************************************
-	**							DI
-	********************************************************************* */
+	 **							DI
+	 ********************************************************************* */
 
-	property name="authorService"		inject="authorService@cb" persistent="false";
+	property
+		name      ="authorService"
+		inject    ="authorService@cb"
+		persistent="false";
 
-	/* *********************************************************************
-	**							PROPERTIES
-	********************************************************************* */
-
-	property 	name="authorID"
-				fieldtype="id"
-				generator="native"
-				setter="false"
-				params="{ allocationSize = 1, sequence = 'authorID_seq' }";
-
-	property 	name="firstName"
-				length="100"
-				notnull="true"
-				default="";
-
-	property 	name="lastName"
-				length="100"
-				notnull="true"
-				default="";
-
-	property 	name="email"
-				length="255"
-				notnull="true"
-				index="idx_email"
-				default="";
-
-	property 	name="username"
-				length="100"
-				notnull="true"
-				index="idx_login"
-				unique="true"
-				default="";
-
-	property 	name="password"
-				length="100"
-				notnull="true"
-				index="idx_login"
-				default="";
-
-	property 	name="isActive"
-				ormtype="boolean"
-				notnull="true"
-				default="false"
-				index="idx_login,idx_activeAuthor";
-
-	property 	name="lastLogin"
-				ormtype="timestamp"
-				notnull="false";
-
-	property 	name="biography"
-				ormtype="text"
-				notnull="false"
-				length="8000"
-				default="";
-
-	property 	name="preferences"
-				ormtype="text"
-				notnull="false"
-				length="8000"
-				default="";
-
-	property 	name="isPasswordReset"
-				ormtype="boolean"
-				sqltype="bit"
-				notnull="true"
-				default="false"
-				dbdefault="0"
-				index="idx_passwordReset";
-
-	property 	name="is2FactorAuth"
-				ormtype="boolean"
-				sqltype="bit"
-				notnull="true"
-				default="false"
-				dbdefault="0"
-				index="idx_2factorauth";
-
-	property 	name="APIToken"
-				notnull="false"
-				length="255"
-				unique="true"
-				index="idx_apitoken"
-				default="";
+	property
+		name      ="avatar"
+		inject    ="Avatar@CB"
+		persistent="false";
 
 	/* *********************************************************************
-	**							RELATIONSHIPS
-	********************************************************************* */
+	 **							PROPERTIES
+	 ********************************************************************* */
+
+	property
+		name     ="authorID"
+		column   ="authorID"
+		fieldtype="id"
+		generator="uuid"
+		length   ="36"
+		ormtype  ="string"
+		setter   ="false"
+		update   ="false";
+
+	property
+		name   ="firstName"
+		column ="firstName"
+		length ="100"
+		notnull="true"
+		default="";
+
+	property
+		name   ="lastName"
+		column ="lastName"
+		length ="100"
+		notnull="true"
+		default="";
+
+	property
+		name   ="email"
+		column ="email"
+		length ="255"
+		notnull="true"
+		index  ="idx_email"
+		default="";
+
+	property
+		name   ="username"
+		column ="username"
+		length ="100"
+		notnull="true"
+		index  ="idx_login"
+		unique ="true"
+		default="";
+
+	property
+		name   ="password"
+		column ="password"
+		length ="100"
+		notnull="true"
+		index  ="idx_login"
+		default="";
+
+	property
+		name   ="isActive"
+		column ="isActive"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_login,idx_activeAuthor";
+
+	property
+		name   ="lastLogin"
+		column ="lastLogin"
+		ormtype="timestamp"
+		notnull="false";
+
+	property
+		name   ="biography"
+		column ="biography"
+		ormtype="text"
+		notnull="false"
+		length ="8000"
+		default="";
+
+	property
+		name   ="preferences"
+		column ="preferences"
+		ormtype="text"
+		notnull="false"
+		length ="8000"
+		default="";
+
+	property
+		name   ="isPasswordReset"
+		column ="isPasswordReset"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_passwordReset";
+
+	property
+		name   ="is2FactorAuth"
+		column ="is2FactorAuth"
+		ormtype="boolean"
+		notnull="true"
+		default="false"
+		index  ="idx_2factorauth";
+
+	/* *********************************************************************
+	 **							RELATIONSHIPS
+	 ********************************************************************* */
 
 	// O2M -> Entries
-	property 	name="entries"
-				singularName="entry"
-				type="array"
-				fieldtype="one-to-many"
-				cfc="contentbox.models.content.Entry"
-			 	fkcolumn="FK_authorID"
-			 	inverse="true"
-			 	lazy="extra"
-			 	cascade="save-update"
-			 	batchsize="10"
-			 	orderby="publishedDate DESC";
+	property
+		name        ="entries"
+		singularName="entry"
+		type        ="array"
+		fieldtype   ="one-to-many"
+		cfc         ="contentbox.models.content.Entry"
+		fkcolumn    ="FK_authorID"
+		inverse     ="true"
+		lazy        ="true"
+		cascade     ="save-update"
+		batchsize   ="10"
+		orderby     ="publishedDate DESC";
 
 	// O2M -> Pages
-	property 	name="pages"
-				singularName="page"
-				type="array"
-				fieldtype="one-to-many"
-				cfc="contentbox.models.content.Page"
-				fkcolumn="FK_authorID"
-				inverse="true"
-				lazy="extra"
-				cascade="save-update"
-				batchsize="10"
-				orderby="publishedDate DESC";
+	property
+		name        ="pages"
+		singularName="page"
+		type        ="array"
+		fieldtype   ="one-to-many"
+		cfc         ="contentbox.models.content.Page"
+		fkcolumn    ="FK_authorID"
+		inverse     ="true"
+		lazy        ="true"
+		cascade     ="save-update"
+		batchsize   ="10"
+		orderby     ="publishedDate DESC";
 
 	// M20 -> Role
-	property 	name="role"
-				notnull="true"
-				fieldtype="many-to-one"
-				cfc="contentbox.models.security.Role"
-				fkcolumn="FK_roleID"
-				lazy="true";
+	property
+		name     ="role"
+		notnull  ="true"
+		fieldtype="many-to-one"
+		cfc      ="contentbox.models.security.Role"
+		fkcolumn ="FK_roleID"
+		lazy     ="true";
 
 	// M2M -> A-la-carte Author Permissions
-	property 	name="permissions"
-				singularName="permission"
-				fieldtype="many-to-many"
-				cascade="save-update"
-				type="array"
-				lazy="extra"
-			 	cfc="contentbox.models.security.Permission"
-			 	fkcolumn="FK_authorID"
-			 	linktable="cb_authorPermissions"
-			 	inversejoincolumn="FK_permissionID"
-			 	orderby="permission";
+	property
+		name             ="permissions"
+		singularName     ="permission"
+		fieldtype        ="many-to-many"
+		cascade          ="save-update"
+		type             ="array"
+		lazy             ="true"
+		cfc              ="contentbox.models.security.Permission"
+		fkcolumn         ="FK_authorID"
+		linktable        ="cb_authorPermissions"
+		inversejoincolumn="FK_permissionID"
+		orderby          ="permission";
 
 	// M2M -> A-la-carte Author Permission Groups
-	property 	name="permissionGroups"
-				singularName="permissionGroup"
-				fieldtype="many-to-many"
-				type="array"
-				lazy="extra"
-				inverse="true"
-			 	cfc="contentbox.models.security.PermissionGroup"
-			 	cascade="save-update"
-			 	fkcolumn="FK_authorID"
-			 	linktable="cb_authorPermissionGroups"
-			 	inversejoincolumn="FK_permissionGroupID"
-			 	orderby="name";
+	property
+		name             ="permissionGroups"
+		singularName     ="permissionGroup"
+		fieldtype        ="many-to-many"
+		type             ="array"
+		lazy             ="true"
+		inverse          ="true"
+		cfc              ="contentbox.models.security.PermissionGroup"
+		cascade          ="all"
+		fkcolumn         ="FK_authorID"
+		linktable        ="cb_authorPermissionGroups"
+		inversejoincolumn="FK_permissionGroupID"
+		orderby          ="name";
 
 	/* *********************************************************************
-	**							CALCULATED FIELDS
-	********************************************************************* */
-
-	// Calculated properties
-	property 	name="numberOfEntries"
-				formula="select count(*) from cb_content as content
-						where content.FK_authorID=authorID and content.contentType = 'Entry'" ;
-
-	property 	name="numberOfPages"
-				formula="select count(*) from cb_content as content
-						where content.FK_authorID=authorID and content.contentType = 'Page'" ;
-
-	property 	name="numberOfContentStore"
-				formula="select count(*) from cb_content as content
-						where content.FK_authorID=authorID and content.contentType = 'ContentStore'" ;
+	 **							CALCULATED FIELDS
+	 ********************************************************************* */
 
 	/* *********************************************************************
-	**							NON PERSISTED PROPERTIES
-	********************************************************************* */
+	 **							NON PERSISTED PROPERTIES
+	 ********************************************************************* */
 
 	// Non-persisted properties
-	property 	name="loggedIn"
-				persistent="false"
-				default="false"
-				type="boolean";
+	property
+		name      ="loggedIn"
+		persistent="false"
+		default   ="false"
+		type      ="boolean";
 
-	property 	name="permissionList"
-				persistent="false";
+	property name="permissionList" persistent="false";
 
 	/* *********************************************************************
-	**							PK + CONSTRAINTS
-	********************************************************************* */
+	 **							PK + CONSTRAINTS + MEMENTO
+	 ********************************************************************* */
 
 	this.pk = "authorID";
 
-	this.constraints ={
-		"firstName" = { required=true, size="1..100" },
-		"lastName" 	= { required=true, size="1..100" },
-		"email" 	= { required=true, size="1..255", type="email" },
-		"username" 	= { required=true, size="1..100", validator: "UniqueValidator@cborm" },
-		"password"	= { required=true, size="1..100" }
+	this.memento = {
+		// Default properties to serialize
+		defaultIncludes : [
+			"firstName",
+			"lastName",
+			"email",
+			"username",
+			"isActive",
+			"isDeleted",
+			"lastLogin",
+			"biography",
+			"preferences",
+			"role",
+			"numberOfContent",
+			"numberOfEntries",
+			"numberOfPages",
+			"numberOfContentStore"
+		],
+		// Default Exclusions
+		defaultExcludes : [
+			"entries",
+			"pages",
+			"permissions",
+			"permissionGroups",
+			"role.permissions",
+			"isPasswordReset",
+			"is2FactorAuth"
+		],
+		neverInclude : [ "password" ],
+		// Defaults
+		defaults     : { "role" : {} }
+	};
+
+	this.constraints = {
+		"firstName" : { required : true, size : "1..100" },
+		"lastName"  : { required : true, size : "1..100" },
+		"email"     : {
+			required  : true,
+			size      : "1..255",
+			type      : "email",
+			validator : "UniqueValidator@cborm"
+		},
+		"username" : {
+			required  : true,
+			size      : "1..100",
+			validator : "UniqueValidator@cborm"
+		},
+		"password" : { required : true, size : "1..100" }
 	};
 
 	/* *********************************************************************
-	**							PUBLIC FUNCTIONS
-	********************************************************************* */
+	 **							PUBLIC FUNCTIONS
+	 ********************************************************************* */
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	function init(){
-		variables.permissionList 	= "";
-		variables.loggedIn 			= false;
-		variables.isActive 			= true;
-		variables.permissionGroups 	= [];
-		variables.isPasswordReset 	= false;
-		variables.is2FactorAuth		= false;
-		variables.APIToken 			= "";
+		variables.permissionList   = "";
+		variables.loggedIn         = false;
+		variables.isActive         = true;
+		variables.permissionGroups = [];
+		variables.isPasswordReset  = false;
+		variables.is2FactorAuth    = false;
 
 		// Setup empty preferences
 		setPreferences( {} );
-
-		// startup a token
-		generateAPIToken();
 
 		super.init();
 
@@ -240,42 +295,52 @@ component 	persistent="true"
 	}
 
 	/**
-	* Listen to postLoad's from the ORM
-	*/
-	function postLoad(){
-		// Verify if the user has already an API Token, else generate one for them.
-		if( !len( getAPIToken() ) ){
-			generateAPIToken();
-		}
+	 * Get the total number of content items this author has created
+	 */
+	numeric function getNumberOfContent(){
+		return ( isLoaded() ? variables.authorService.getTotalContent( getAuthorId() ) : 0 );
 	}
 
 	/**
-	* Generate new API Token, stores it locally but does not persist it.
-	*/
-	Author function generateAPIToken(){
-		variables.APIToken = hash( createUUID() & now(), "sha-512" );
-		return this;
+	 * Get the total number of entries this author has created
+	 */
+	numeric function getNumberOfEntries(){
+		return ( isLoaded() ? variables.authorService.getTotalEntries( getAuthorId() ) : 0 );
 	}
 
 	/**
-	* Check for permission
-	* @slug The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
-	*/
+	 * Get the total number of pages this author has created
+	 */
+	numeric function getNumberOfPages(){
+		return ( isLoaded() ? variables.authorService.getTotalPages( getAuthorId() ) : 0 );
+	}
+
+	/**
+	 * Get the total number of content store items this author has created
+	 */
+	numeric function getNumberOfContentStore(){
+		return ( isLoaded() ? variables.authorService.getTotalContentStoreItems( getAuthorId() ) : 0 );
+	}
+
+	/**
+	 * Check for permission
+	 * @slug The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
+	 */
 	boolean function checkPermission( required slug ){
 		// cache permission list
-		if( !len( permissionList ) AND hasPermission() ){
-			var q = entityToQuery( getPermissions() );
+		if ( !len( permissionList ) AND hasPermission() ) {
+			var q          = entityToQuery( getPermissions() );
 			permissionList = valueList( q.permission );
 		}
 
 		// checks via role, then group permissions and then local permissions
-		if(
+		if (
 			( hasRole() && getRole().checkPermission( arguments.slug ) )
 			OR
 			checkGroupPermissions( arguments.slug )
 			OR
 			inPermissionList( arguments.slug )
-		){
+		) {
 			return true;
 		}
 
@@ -283,18 +348,18 @@ component 	persistent="true"
 	}
 
 	/**
-	* This utility function checks if a slug is in any permission group this user belongs to.
-	* @slug The slug to check
-	*/
+	 * This utility function checks if a slug is in any permission group this user belongs to.
+	 * @slug The slug to check
+	 */
 	boolean function checkGroupPermissions( required slug ){
 		// If no groups, just return false
-		if( !hasPermissionGroup() ){
+		if ( !hasPermissionGroup() ) {
 			return false;
 		}
 
 		// iterate and check, break if found, short-circuit approach.
-		for( var thisGroup in variables.permissionGroups ){
-			if( thisGroup.checkPermission( arguments.slug ) ){
+		for ( var thisGroup in variables.permissionGroups ) {
+			if ( thisGroup.checkPermission( arguments.slug ) ) {
 				return true;
 			}
 		}
@@ -303,14 +368,14 @@ component 	persistent="true"
 	}
 
 	/**
-	* Verify that a passed in list of perms the user can use
-	*/
+	 * Verify that a passed in list of perms the user can use
+	 */
 	public function inPermissionList( required list ){
-		var aList = listToArray( arguments.list );
+		var aList   = listToArray( arguments.list );
 		var isFound = false;
 
-		for( var thisPerm in aList ){
-			if( listFindNoCase( permissionList, trim( thisPerm ) ) ){
+		for ( var thisPerm in aList ) {
+			if ( listFindNoCase( permissionList, trim( thisPerm ) ) ) {
 				isFound = true;
 				break;
 			}
@@ -320,19 +385,35 @@ component 	persistent="true"
 	}
 
 	/**
-	* Clear all permissions
-	*/
+	 * Remove all permissions
+	 */
 	Author function clearPermissions(){
-		permissions = [];
+		if ( hasPermission() ) {
+			variables.permissions.clear();
+		} else {
+			variables.permissions = [];
+		}
 		return this;
 	}
 
 	/**
-	* Override the setPermissions
-	* @permissions The permissions array to override
-	*/
+	 * Remove all permission groups
+	 */
+	Author function clearPermissionGroups(){
+		if ( hasPermissionGroup() ) {
+			variables.permissionGroups.clear();
+		} else {
+			variables.permissionGroups = [];
+		}
+		return this;
+	}
+
+	/**
+	 * Override the setPermissions
+	 * @permissions The permissions array to override
+	 */
 	Author function setPermissions( required array permissions ){
-		if( hasPermission() ){
+		if ( hasPermission() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
 		} else {
@@ -342,12 +423,12 @@ component 	persistent="true"
 	}
 
 	/**
-	* Shortcut Utlity function to get a list of all the permission groups this user belongs to.
-	*/
+	 * Shortcut Utlity function to get a list of all the permission groups this user belongs to.
+	 */
 	string function getPermissionGroupsList( delimiter = "," ){
-		if( hasPermissionGroup() ){
+		if ( hasPermissionGroup() ) {
 			var aGroups = [];
-			for( var thisGroup in variables.permissionGroups ){
+			for ( var thisGroup in variables.permissionGroups ) {
 				arrayAppend( aGroups, thisGroup.getName() );
 			}
 			return arrayToList( aGroups, arguments.delimiter );
@@ -362,7 +443,7 @@ component 	persistent="true"
 	 */
 	Author function addPermissionGroup( required group ){
 		// Only add if not already there.
-		if ( !hasPermissionGroup( arguments.group ) ){
+		if ( !hasPermissionGroup( arguments.group ) ) {
 			arrayAppend( variables.permissionGroups, arguments.group );
 			arguments.group.addAuthor( this );
 		}
@@ -376,7 +457,7 @@ component 	persistent="true"
 	 */
 	Author function removePermissionGroup( required group ){
 		// Only add if not already there.
-		if ( hasPermissionGroup( arguments.group ) ){
+		if ( hasPermissionGroup( arguments.group ) ) {
 			arrayDelete( variables.permissionGroups, arguments.group );
 			arguments.group.removeAuthor( this );
 		}
@@ -384,87 +465,42 @@ component 	persistent="true"
 	}
 
 	/**
-	* Utility method to verify if an author has been logged in to the system or not.
-	* This method does not account for permissions.  Only for logged in status.
-	*/
+	 * Utility method to verify if an author has been logged in to the system or not.
+	 * This method does not account for permissions.  Only for logged in status.
+	 */
 	function isLoggedIn(){
 		return getLoggedIn();
 	}
 
 	/**
-	* Get formatted lastLogin
-	*/
+	 * Get formatted lastLogin
+	 */
 	string function getDisplayLastLogin(){
 		var lastLogin = getLastLogin();
 
-		if(  NOT isNull( lastLogin ) ){
-			return dateFormat( lastLogin, "dd mmm yyyy" ) & " " & timeFormat(lastLogin, "hh:mm tt" );
+		if ( NOT isNull( lastLogin ) ) {
+			return dateFormat( lastLogin, this.DATE_FORMAt ) & " " & timeFormat(
+				lastLogin,
+				this.TIME_FORMAT_SHORT
+			);
 		}
 
 		return "Never Logged In";
 	}
 
-	/**
-	* Retrieve full name
-	*/
-	string function getName(){
-		return getFirstName() & " " & getLastName();
-	}
-
-	/**
-	* Get a flat representation of this entry
-	* @excludes 			Exclude properties, by default it does pages and entries
-	* @showRole 			Show Roles
-	* @showPermissions 		Show permissions
-	* @showPermissionGroups Show permission groups
-	*/
-	function getMemento(
-		excludes="pages,entries",
-		boolean showRole=true,
-		boolean showPermissions=true,
-		boolean showPermissionGroups=true
-	){
-		// Do this to convert native Array to CF Array for content properties
-		var pList 	= listToArray( arrayToList( authorService.getPropertyNames() ) );
-		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-
-		// Do Role Relationship
-		if( arguments.showRole && hasRole() ){
-			result[ "role" ] = getRole().getMemento();
-		}
-
-		// Permissions
-		if( arguments.showPermissions && hasPermission() ){
-			result[ "permissions" ] = [];
-			for( var thisPerm in variables.permissions ){
-				arrayAppend( result[ "permissions" ], thisPerm.getMemento() );
-			}
-		} else if( arguments.showPermissions ) {
-			result[ "permissions" ] = [];
-		}
-
-		// Permission Groups
-		if( arguments.showPermissionGroups && hasPermissionGroup() ){
-			result[ "permissiongroups" ] = [];
-			for( var thisGroup in variables.permissiongroups ){
-				arrayAppend( result[ "permissiongroups" ], thisGroup.getMemento() );
-			}
-		} else if( arguments.showPermissionGroups ) {
-			result[ "permissiongroups" ] = [];
-		}
-
-		return result;
-	}
-
 	/************************************** PREFERENCE FUNCTIONS *********************************************/
 
 	/**
-	* Store a preferences structure or JSON data in the user prefernces
-	* @preferences.hint A struct of data or a JSON packet to store
-	*/
-	Author function setPreferences(required any preferences){
-		lock name="user.#getAuthorID()#.preferences" type="exclusive" throwontimeout="true" timeout="5"{
-			if( isStruct( arguments.preferences ) ){
+	 * Store a preferences structure or JSON data in the user prefernces
+	 * @preferences.hint A struct of data or a JSON packet to store
+	 */
+	Author function setPreferences( required any preferences ){
+		lock
+			name          ="user.#getAuthorID()#.preferences"
+			type          ="exclusive"
+			throwontimeout="true"
+			timeout       ="5" {
+			if ( isStruct( arguments.preferences ) ) {
 				arguments.preferences = serializeJSON( arguments.preferences );
 			}
 			// store as JSON
@@ -474,43 +510,114 @@ component 	persistent="true"
 	}
 
 	/**
-	* Get all user preferences in inflated format
-	*/
+	 * Get all user preferences in inflated format
+	 */
 	struct function getAllPreferences(){
-		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5"{
-			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structnew() );
+		lock
+			name          ="user.#getAuthorID()#.preferences"
+			type          ="readonly"
+			throwontimeout="true"
+			timeout       ="5" {
+			return (
+				!isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structNew()
+			);
 		}
 	}
 
 	/**
-	* Get a preference, you can pass a default value if preference does not exist
-	*/
-	any function getPreference(required name, defaultValue){
+	 * Get a preference, you can pass a default value if preference does not exist
+	 */
+	any function getPreference( required name, defaultValue ){
 		// get preference
-		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5"{
-			var allPreferences = getAllPreferences();
-			if( structKeyExists( allPreferences, arguments.name ) ){
+		lock
+			name              ="user.#getAuthorID()#.preferences"
+			type              ="readonly"
+			throwontimeout    ="true"
+			timeout           ="5" {
+			var allPreferences= getAllPreferences();
+			if ( structKeyExists( allPreferences, arguments.name ) ) {
 				return allPreferences[ arguments.name ];
 			}
 		}
 		// default values
-		if( structKeyExists( arguments, "defaultValue" ) ){
+		if ( structKeyExists( arguments, "defaultValue" ) ) {
 			return arguments.defaultValue;
 		}
 		// exception
-		throw(message="The preference you requested (#arguments.name#) does not exist",
-			  type="User.PreferenceNotFound",
-			  detail="Valid preferences are #structKeyList( allPreferences )#" );
+		throw(
+			message = "The preference you requested (#arguments.name#) does not exist",
+			type    = "User.PreferenceNotFound",
+			detail  = "Valid preferences are #structKeyList( allPreferences )#"
+		);
 	}
 
 	/**
-	* Set a preference in the user preferences
-	*/
-	Author function setPreference(required name, required value){
-		var allPreferences = getAllPreferences();
+	 * Set a preference in the user preferences
+	 */
+	Author function setPreference( required name, required value ){
+		var allPreferences               = getAllPreferences();
 		allPreferences[ arguments.name ] = arguments.value;
 		// store in lock mode
 		return setPreferences( allPreferences );
+	}
+
+	/******************* IJwtSubject Interface Methods ********************/
+
+	/**
+	 * A struct of custom claims to add to the JWT token
+	 */
+	struct function getJwtCustomClaims(){
+		return {};
+	}
+
+	/**
+	 * This function returns an array of all the scopes that should be attached to the JWT token that will be used for authorization.
+	 */
+	array function getJwtScopes(){
+		return [];
+	}
+
+	/******************* Utilities ********************/
+
+	/**
+	 * Get the user's role name
+	 */
+	string function getRoleName(){
+		return ( hasRole() ? getRole().getRole() : "" );
+	}
+
+	/**
+	 * Retrieve full name
+	 */
+	string function getFullName(){
+		return getFirstname() & " " & getLastName();
+	}
+
+	/**
+	 * Get the avatar link for this user.
+	 *
+	 * @size The size of the avatar, defaults to 40
+	 */
+	string function getAvatarLink( numeric size = 40 ){
+		return (
+			isNull( getEmail() ) ? "" : variables.avatar.generateLink( getEmail(), arguments.size )
+		);
+	}
+
+	/**
+	 * Utility method to get a snapshot of the user information
+	 */
+	struct function getInfoSnapshot(){
+		if ( isLoaded() ) {
+			return {
+				"authorID"   : getAuthorID(),
+				"name"       : getFullName(),
+				"email"      : getEmail(),
+				"avatarLink" : getAvatarLink()
+			};
+		}
+
+		return {};
 	}
 
 }

@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$contentPager = $( "##content_pager" );
 	$contentPagerLoader = $( "##contentPagerLoader" );
 } );

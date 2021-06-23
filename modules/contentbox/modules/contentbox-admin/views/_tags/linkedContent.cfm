@@ -1,7 +1,7 @@
 <cfoutput>
     <script>
         <cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
-            var currentLCContentID = #rc.contentID#;
+            var currentLCContentID = "#rc.contentID#";
         </cfif>
         $( document ).ready(function() {
             $( '##linkedContent-items' ).on( 'click', '.btn', function(){
@@ -34,7 +34,7 @@
         }
     </script>
     <p>The items below have linked to this #args.contentType# as related content.</p>
-    <table class="table table-hover table-striped" id="linkedContent-items">
+    <table class="table table-hover table-striped-removed" id="linkedContent-items">
         <tbody>
             <cfloop array="#args.linkedContent#" index="content">
                 <cfset publishedClass = content.isContentPublished() ? "published" : "selected">
@@ -44,9 +44,9 @@
                         <cfif content.getContentType() eq "Page">
                             <i class="fa fa-file-alt icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
-                            <i class="fa fa-quote-left icon-small" title="Entry"></i>
+                            <i class="fas fa-blog icon-small" title="Entry"></i>
                         <cfelseif content.getContentType() eq "ContentStore">
-                            <i class="fa fa-hdd-o icon-small" title="ContentStore"></i>
+                            <i class="far fa-hdd icon-small" title="ContentStore"></i>
                         </cfif>
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>

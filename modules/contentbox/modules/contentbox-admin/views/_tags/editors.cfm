@@ -18,7 +18,7 @@ $cbEditorConfig = {
 	adminEntryPoint 	: "#prc.cbAdminEntryPoint#",
 	adminEntryURL		: "#event.buildLink( prc.cbAdminEntryPoint )#",
 	changelogMandatory	: #prc.cbSettings.cb_versions_commit_mandatory#,
-	isBlogDisabled		: #prc.cbSettings.cb_site_disable_blog#,
+	isBlogDisabled		: #prc.oCurrentSite.getIsBlogEnabled() ? 'false' : 'true'#,
 	// Set by the content type handler
 	slugifyURL			: "#event.buildLink( prc.xehSlugify )#",
 	slugCheckURL		: "#event.buildLink( prc.xehSlugCheck )#"

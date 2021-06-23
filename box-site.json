@@ -1,10 +1,10 @@
 {
     "name":"ContentBox Modular CMS Site",
     "version":"@version.number@+@build.number@",
-    "location":"http://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
+    "location":"https://downloads.ortussolutions.com/ortussolutions/contentbox/@version.number@/contentbox-site-@version.number@.zip",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "slug":"contentbox-site",
-    "shortDescription":"A ColdBox site configured for ContentBox CMS",
+    "shortDescription":"A ColdBox site configured and deployed with ContentBox CMS",
     "type":"cms",
     "keywords":"cms,content management,modular cms",
     "homepage":"https://www.contentboxcms.org",
@@ -27,16 +27,31 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^5.3.0",
-        "contentbox":"^@version.number@+@build.number@"
+        "coldbox":"^6.0.0",
+		"contentbox":"~@version.number@+@build.number@",
+		"commandbox-dotenv":"*",
+		"commandbox-cfconfig":"*",
+		"commandbox-migrations":"*"
+	},
+	"devDependencies":{
+		"testbox":"*",
+		"commandbox-cfformat":"*",
+		"commandbox-docbox":"*"
     },
     "installPaths":{
-        "coldbox":"coldbox",
-        "testbox":"testbox"
-    },
-    "devDependencies":{
-        "testbox":"^2.8.0"
     },
     "ignores":[
-    ]
+	],
+	"cfmigrations":{
+        "schema":"${DB_DATABASE}",
+        "connectionInfo":{
+            "class":"${DB_CLASS}",
+			"connectionString":"${DB_CONNECTIONSTRING}",
+            "bundleName":"${DB_BUNDLENAME}",
+            "bundleVersion":"${DB_BUNDLEVERSION}",
+            "username":"${DB_USER}",
+            "password":"${DB_PASSWORD}"
+        },
+        "defaultGrammar":"AutoDiscover@qb"
+    }
 }

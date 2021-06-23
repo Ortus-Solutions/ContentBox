@@ -7,8 +7,56 @@
 		novalidate 	= "novalidate",
 		class 		= "form-vertical"
 	)#
-		#html.startFieldset( legend="User Details" )#
+
 		#html.hiddenField( name="authorID", bind=prc.author )#
+
+		<!--- Active --->
+		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+			<div class="m5 mb20 row well well-info rounded">
+
+				<legend>Admin Fields</legend>
+
+				<!--- Active User --->
+				<div class="col-md-6 form-group">
+					#html.label(
+						class   = "control-label",
+						field   = "isActive",
+						content = "Active User:"
+					)#
+
+					<div class="controls">
+						#html.checkbox(
+							name    = "isActive_toggle",
+							data	= { toggle: 'toggle', match: 'isActive' },
+							checked = prc.author.getIsActive()
+						)#
+						#html.hiddenField(
+							name	= "isActive",
+							bind 	= prc.author
+						)#
+					</div>
+				</div>
+
+				<!--- Roles --->
+				#html.select(
+					label     		= "User Role:",
+					name      		= "roleID",
+					options   		= prc.roles,
+					column    		= "roleID",
+					nameColumn		= "role",
+					bind      		= prc.author.getRole(),
+					style     		= "width:200px",
+					class     		= "form-control input-sm",
+					wrapper   		= "div class=controls",
+					labelClass		= "control-label",
+					groupWrapper 	= "div class=col-md-6 form-group"
+				)#
+			</div>
+		</cfif>
+
+		<p>
+			In this section you can update your personal information.
+		</p>
 
 		#html.textField(
 			name    		= "firstName",
@@ -59,56 +107,13 @@
 			groupWrapper	= "div class=form-group"
 		)#
 
-		<!--- Active --->
-		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-			<div class="form-group">
-				#html.label(
-					class   = "control-label",
-					field   = "isActive",
-					content = "Active User:"
-				)#
-
-				<div class="controls">
-					#html.checkbox(
-						name    = "isActive_toggle",
-						data	= { toggle: 'toggle', match: 'isActive' },
-						checked = prc.author.getIsActive()
-					)#
-					#html.hiddenField(
-						name	= "isActive",
-						bind 	= prc.author
-					)#
-				</div>
-			</div>
-
-			<!--- Roles --->
-			#html.select(
-				label     		= "User Role:",
-				name      		= "roleID",
-				options   		= prc.roles,
-				column    		= "roleID",
-				nameColumn		= "role",
-				bind      		= prc.author.getRole(),
-				style     		= "width:200px",
-				class     		= "form-control input-sm",
-				wrapper   		= "div class=controls",
-				labelClass		= "control-label",
-				groupWrapper 	= "div class=form-group"
-			)#
-		<cfelse>
-			<label>Active User: </label> 
-			<span class="label label-info">#prc.author.getIsActive()#</span><br/>
-			<label>User Role: </label> 
-			<span class="label label-info">#prc.author.getRole().getRole()#</span><br/>
-		</cfif>
-
 		<!--- Biography --->
 		#html.textarea(
 			name   			= "biography",
 			label  			= "Biography or Notes About The User:",
 			bind   			= prc.author,
 			rows   			= "10",
-			class  			= "form-control",
+			class  			= "form-control mde",
 			wrapper			= "div class=controls",
 			labelClass  	= "control-label",
 			groupWrapper	= "div class=form-group"
@@ -118,9 +123,9 @@
 
 		<!--- Action Bar --->
 		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.author.getAuthorID() EQ prc.oCurrentAuthor.getAuthorID()>
-		<div class="form-actions">
-			<input type="submit" value="Save Details" class="btn btn-danger">
-		</div>
+			<div class="form-actions">
+				<input type="submit" value="Save Details" class="btn btn-primary btn-lg">
+			</div>
 		</cfif>
 
 	#html.endForm()#

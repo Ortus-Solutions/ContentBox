@@ -1,0 +1,18 @@
+[
+    {
+        "subscriberID": "A79DDE98-0937-4625-BC631EB13DE809D1",
+        "subscriberEmail": "lmajano@ortussolutions.com",
+        "subscriberToken": "9160905AD002614B9A06E7A59F6F137F",
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2016-05-03 16:23:26",
+        "isDeleted": 0
+    },
+    {
+        "subscriberID": "A79DDE98-0937-4625-BC631EB13DE809D2",
+        "subscriberEmail": "lmajano@gmail.com",
+        "subscriberToken": "28B937F6F2F970189DB7ED3C909DE922",
+        "createdDate": "2016-05-03 16:23:26",
+        "modifiedDate": "2016-05-03 16:23:26",
+        "isDeleted": 0
+    }
+]

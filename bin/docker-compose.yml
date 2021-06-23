@@ -1,0 +1,51 @@
+version: "3.9"
+services:
+
+  # MySQL Server 8
+  contentbox_db:
+    platform: linux/x86_64 # Needed for Mac's on the M1 chip
+    image: mysql:8
+    ports:
+      - "4306:3306"
+    environment:
+      MYSQL_DATABASE: "contentbox"
+      MYSQL_ROOT_PASSWORD: "contentbox"
+    volumes:
+      # Store the data locally
+      - .db/mysql8/data:/var/lib/mysql
+      # You can uncomment and it will seed the db with our prepared sql data
+      #- ../tests/resources/sql/mysql:/docker-entrypoint-initdb.d
+
+  # Redis Cache
+  contentbox_cache:
+    platform: linux/x86_64 # Needed for Mac's on the M1 chip
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - .db/redis:/data
+
+  # ContentBox Site
+  contentbox_app:
+    depends_on:
+      - contentbox_db
+      - contentbox_cache
+    platform: linux/x86_64 # Needed for Mac's on the M1 chip
+    image: ortussolutions/commandbox:lucee5-3.2.1
+    # Environment Variables
+    environment:
+      # Admin passowrd
+      CFCONFIG_ADMINPASSWORD: contentbox
+      DB_HOST: contentbox_db
+      DB_PORT: 4306
+      DB_PASSWORD: contentbox
+      DB_CLASS: com.mysql.cj.jdbc.Driver
+      DB_BUNDLEVERSION: 8.0.19
+      DB_BUNDLENAME: com.mysql.cj
+    # Ports
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    # Data & Overrides
+    volumes:
+      - ../:/app

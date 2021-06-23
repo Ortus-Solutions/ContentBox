@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 
         /**
          * CSS Min
-         * Minifies the theme + bower + vendor css
+         * Minifies the theme + vendor css
          */
         cssmin: {
             options: {
@@ -87,11 +87,18 @@ module.exports = function(grunt) {
                 files: {
                     '../modules/contentbox/modules/contentbox-admin/includes/css/contentbox.min.css': [
                         // THEME
-                        '../modules/contentbox/modules/contentbox-admin/includes/css/theme.css'
-                        // BOWER COMPONENTS
-                        , 'bower_components/animate.css/animate.css', 'bower_components/switchery/dist/switchery.min.css', 'bower_components/morris.js/morris.css', 'bower_components/datatables/media/css/dataTables.bootstrap.css', 'bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css', 'bower_components/clockpicker/dist/bootstrap-clockpicker.css', 'bower_components/bootstrap-toggle/css/bootstrap-toggle.min.css', 'bower_components/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css'
+                        '../modules/contentbox/modules/contentbox-admin/includes/css/theme.css',
+                        // APP COMPONENTS
+                        'app_modules/animate.css/animate.css',
+						'app_modules/switchery/dist/switchery.min.css',
+						'app_modules/morris.js/morris.css',
+						'app_modules/datatables/media/css/dataTables.bootstrap.css',
+						'app_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css',
+						'app_modules/clockpicker/dist/bootstrap-clockpicker.css',
+						'app_modules/bootstrap-toggle/css/bootstrap-toggle.min.css',
+						'app_modules/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css',
                         // VENDOR CSS
-                        , 'resources/vendor/css/*.css'
+                        'resources/vendor/css/*.css'
                     ]
                 }
             }
@@ -116,10 +123,18 @@ module.exports = function(grunt) {
             // Pre Lib: Libraries which are brough in the <head> section
             prejs: {
                 src: [
-                    // Bower Libraries
-                    "bower_components/jquery/dist/jquery.min.js", "bower_components/jquery.cookie/jquery.cookie.js", "bower_components/jquery-validation/dist/jquery.validate.min.js", "bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js", "bower_components/moment/min/moment-with-locales.min.js", "bower_components/lz-string/libs/lz-string.min.js", "bower_components/lodash/dist/lodash.min.js", "bower_components/history.js/scripts/bundled/html4+html5/jquery.history.js"
+                    // App Libraries
+                    "app_modules/jquery/dist/jquery.min.js",
+					"app_modules/jquery.cookie/jquery.cookie.js",
+					"app_modules/jquery-validation/dist/jquery.validate.min.js",
+					"app_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
+					"app_modules/moment/min/moment-with-locales.min.js",
+					"app_modules/lz-string/libs/lz-string.min.js",
+					"app_modules/lodash/dist/lodash.min.js",
+					"app_modules/history.js/scripts/bundled/html4+html5/jquery.history.js",
                     // Vendor Libraries
-                    , "resources/vendor/js/jquery.validate.bootstrap.js", "resources/vendor/js/modernizr.min.js"
+					"resources/vendor/js/jquery.validate.bootstrap.js",
+					"resources/vendor/js/modernizr.min.js"
                 ],
                 dest: '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js'
             },
@@ -127,10 +142,28 @@ module.exports = function(grunt) {
             // Post Lib: Libraries which are brought in before the </body> end
             postjs: {
                 src: [
-                    // Bower Libraries
-                    "bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js", "bower_components/es6-shim/es6-shim.min.js", "bower_components/navgoco/src/jquery.navgoco.min.js", "bower_components/switchery/dist/switchery.min.js", "bower_components/raphael/raphael.js", "bower_components/morris.js/morris.min.js", "bower_components/clockpicker/dist/bootstrap-clockpicker.min.js", "bower_components/jwerty/jwerty.js", "bower_components/datatables/media/js/jquery.dataTables.min.js", "bower_components/datatables/media/js/dataTables.bootstrap.min.js", "bower_components/TableDnD/dist/jquery.tablednd.min.js", "bower_components/toastr/toastr.min.js", "bower_components/Bootstrap-Confirmation/bootstrap-confirmation.js", "bower_components/jquery-nestable/jquery.nestable.js", "bower_components/jq-fullscreen/release/jquery.fullscreen.min.js", "bower_components/bootstrap-toggle/js/bootstrap-toggle.min.js", 'bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'
+                    // App Libraries
+                    "app_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+					"app_modules/es6-shim/es6-shim.min.js",
+					"app_modules/navgoco/src/jquery.navgoco.min.js",
+					"app_modules/switchery/dist/switchery.min.js",
+					"app_modules/raphael/raphael.js",
+					"app_modules/morris.js/morris.min.js",
+					"app_modules/clockpicker/dist/bootstrap-clockpicker.min.js",
+					"app_modules/jwerty/jwerty.js",
+					"app_modules/datatables/media/js/jquery.dataTables.min.js",
+					"app_modules/datatables/media/js/dataTables.bootstrap.min.js",
+					"app_modules/TableDnD/dist/jquery.tablednd.min.js",
+					"app_modules/toastr/toastr.min.js",
+					"app_modules/Bootstrap-Confirmation/bootstrap-confirmation.js",
+					"app_modules/jquery-nestable/jquery.nestable.js",
+					"app_modules/jq-fullscreen/release/jquery.fullscreen.min.js",
+					"app_modules/bootstrap-toggle/js/bootstrap-toggle.min.js",
+					'app_modules/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
                     // Vendor libraries
-                    , "resources/vendor/js/bootstrap-fileupload.js", "resources/vendor/js/jquery.uidivfilter.js", "resources/vendor/js/jquery.uitablefilter.js"
+                    "resources/vendor/js/bootstrap-fileupload.js",
+					"resources/vendor/js/jquery.uidivfilter.js",
+					"resources/vendor/js/jquery.uitablefilter.js"
                 ],
                 dest: '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.js'
             }
@@ -175,14 +208,14 @@ module.exports = function(grunt) {
                 files: [{
                         expand: true,
                         flatten: true,
-                        src: 'bower_components/font-awesome-sass/assets/fonts/font-awesome/**',
+                        src: 'app_modules/font-awesome-sass/assets/fonts/font-awesome/**',
                         filter: 'isFile',
                         dest: '../modules/contentbox/modules/contentbox-admin/includes/fonts/font-awesome'
                     },
                     {
                         expand: true,
                         flatten: true,
-                        src: 'bower_components/bootstrap-sass/assets/fonts/bootstrap/**',
+                        src: 'app_modules/bootstrap-sass/assets/fonts/bootstrap/**',
                         filter: 'isFile',
                         dest: '../modules/contentbox/modules/contentbox-admin/includes/fonts/bootstrap'
                     }
@@ -194,11 +227,11 @@ module.exports = function(grunt) {
              **/
             js: {
                 files: [
-                    // Single Javascript files to copy from bower
+                    // Single Javascript files to copy from npm
                     {
                         expand: true,
                         flatten: true,
-                        cwd: 'bower_components/',
+                        cwd: 'app_modules/',
                         src: [
                             "respond/dest/respond.min.js",
                             "html5shiv/dist/html5shiv.min.js"
@@ -209,7 +242,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         flatten: true,
-                        cwd: 'bower_components/',
+                        cwd: 'app_modules/',
                         src: [
                             "jquery/dist/jquery.min.js"
                         ],
@@ -227,7 +260,7 @@ module.exports = function(grunt) {
                     // CKEditor
                     {
                         expand: true,
-                        cwd: 'bower_components/',
+                        cwd: 'app_modules/',
                         src: [
                             'ckeditor/plugins/**',
                             'ckeditor/adapters/**',
@@ -260,7 +293,7 @@ module.exports = function(grunt) {
                     // Simple MDE Editor
                     {
                         expand: true,
-                        cwd: 'bower_components/simplemde/dist',
+                        cwd: 'app_modules/simplemde/dist',
                         src: [
                             '**'
                         ],

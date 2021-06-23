@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$importDialog = $( "##importDialog" );
 	// table sorting + filtering
 	$( "##permissions" ).dataTable( {
@@ -9,9 +9,9 @@ $(document).ready(function() {
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
@@ -35,7 +35,7 @@ $(document).ready(function() {
 	} );
 	</cfif>
 } );
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 function edit(permissionID,permission,description){
 	openModal( $( "##permissionEditorContainer" ), 500, 200 );
 	$permissionEditor.find( "##permissionID" ).val( permissionID );
@@ -54,6 +54,18 @@ function createPermission(){
 	$permissionEditor.find( "##permission" ).val( '' );
 	$permissionEditor.find( "##description" ).val( '' );
 	return false;
+}
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##permissionID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'permissionID' );
+		window.open( exportEvent + "/permissionID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
 }
 </cfif>
 </script>

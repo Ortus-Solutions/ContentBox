@@ -138,11 +138,23 @@ function contentLoad( criteria ){
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 function removeAuthor( authorID ){
 	$( "##delete_"+ authorID )
-		.removeClass( "fa fa-trash-o" )
+		.removeClass( "far fa-trash-alt" )
 		.addClass( "fa fa-spinner fa-spin" );
 	checkAll( false, '##authorID' );
 	$( "##targetAuthorID" ).val( authorID );
 	$( "##authorForm" ).submit();
+}
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##authorID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'authorID' );
+		window.open( exportEvent + "/authorID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
 }
 </cfif>
 </script>

@@ -1,0 +1,75 @@
+{
+    "200": {
+        "description": "Authenticate in the application",
+        "content": {
+            "application/json": {
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "description": "Flag to indicate an error.",
+                            "type": "boolean"
+                        },
+                        "messages": {
+                            "description": "An array of messages related to the request.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+						},
+						"pagination" : {
+							"description": "Pagination information.",
+                            "type": "object",
+                            "properties": {}
+						},
+                        "data": {
+                            "description": "The bearer token created for the user",
+                            "type": "string"
+                        }
+                    }
+				},
+				"example": {
+					"$ref": "example.200.json"
+				}
+            }
+        }
+	},
+
+	"400": {
+        "description": "Invalid or Missing Authentication Credentials",
+        "content": {
+            "application/json": {
+                "example": {
+					"$ref": "example.400.json"
+				},
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "error": {
+                            "description": "Flag to indicate an error.",
+                            "type": "boolean"
+                        },
+                        "messages": {
+                            "description": "An array of messages related to the request.",
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+						},
+						"pagination" : {
+							"description": "Pagination information.",
+                            "type": "object",
+                            "properties": {}
+						},
+                        "data": {
+                            "description": "The data packet",
+                            "type": "object",
+                            "properties": {}
+                        }
+
+                    }
+                }
+            }
+        }
+    }
+}

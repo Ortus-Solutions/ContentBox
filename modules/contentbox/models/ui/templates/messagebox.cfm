@@ -10,6 +10,21 @@
 			local.iconType = "fa fa-frown-o";
 			break;
 		}
+		case "success" : {
+			local.cssType = " alert-success";
+			local.iconType = "fa fa-frown-o";
+			break;
+		}
+		case "dark" : {
+			local.cssType = " alert-dark";
+			local.iconType = "fa fa-frown-o";
+			break;
+		}
+		case "light" : {
+			local.cssType = " alert-light";
+			local.iconType = "fa fa-frown-o";
+			break;
+		}
 		default : {
 			local.cssType = " alert-warning";
 			local.iconType = "fa fa-exclamation-triangle";

@@ -4,7 +4,7 @@
 * www.ortussolutions.com/products/contentbox
 * ---
 * A theme is composed of the following pieces
-* 
+*
 * /ThemeDirectory
 *  + Theme.cfc (The CFC that models your theme implementation)
 *  / layouts (The folder that contains layouts in your theme)
@@ -25,12 +25,12 @@
 * 	 + comment.cfm (The template used to display an iteration of entry or page comments using coldbox collection rendering)
 * 	 + entry.cfm (The template used to display an iteration of entries in the home page using coldbox collection rendering)
 * / widgets (A folder that can contain layout specific widgets which override core ContentBox widgets)
-* 
+*
 * Templates
 * Templates are a single cfm template that is used by ContentBox to iterate over a collection (usually entries or categories or comments) and
 * render out all of them in uniformity.  Please refer to ColdBox Collection Rendering for more information.  Each template recevies
 * the following:
-* 
+*
 * _counter (A variable created for you that tells you in which record we are currently looping on)
 * _items (A variable created for you that tells you how many records exist in the collection)
 * {templateName} The name of the object you will use to display: entry, comment, category
@@ -39,18 +39,18 @@
 * onActivation()
 * onDelete()
 * onDeactivation()
-* 
+*
 * Settings
 * You can declare settings for your layouts that ContentBox will manage for you.
-* 
+*
 * this.settings = [
 * 	{ name="Title", defaultValue="My Awesome Title", required="true", type="text", label="Title:" },
 * 	{ name="Colors", defaultValue="blue", required="false", type="select", label="Color:", options="red,blue,orange,gray" }
 * ];
-* 
+*
 * The value is an array of structures with the following keys:
-* 
-* - name : The name of the setting (required), the setting is saved as cb_layoutname_settingName
+*
+* - name : The name of the setting (required), the setting is saved as cb_themeName_settingName
 * - defaultValue : The default value of the setting (required)
 * - required : Whether the setting is required or not. Defaults to false
 * - type : The type of the HTMl control (text=default, textarea, boolean, select, color)
@@ -61,19 +61,19 @@
 * - group : lets you group inputs under a Group name - settings should be in order for groupings to work as expected
 * - groupIntro : Lets you add a description for a group of fields
 * - fieldDescription : Lets you add a description for an individual field
-* - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' ); 
+* - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' );
 */
 component{
 	// Layout Variables
     this.name       	= "ContentBox 3 Default Theme";
-	this.description 	= "ContentBox Default layout for ContentBox 3 based on Bootstrap 3 and Bootswatch";
-	this.version		= "1.0.0";
-	this.author 		= "Ortus Solutions";
-	this.authorURL		= "https://www.ortussolutions.com";
+	this.description  = "ContentBox Default layout for ContentBox 3 based on Bootstrap 3 and Bootswatch";
+	this.version      = "1.0.0";
+	this.author       = "Ortus Solutions";
+	this.authorURL    = "https://www.ortussolutions.com";
 	// Screenshot URL, can be absolute or locally in your layout package.
-	this.screenShotURL	= "screenshot.png";
+	this.screenShotURL= "screenshot.png";
 	// Layout Settings
-	this.settings = [
+	this.settings     = [
 		{ name="cbBootswatchTheme", group="Colors", defaultValue="green", 	type="select", 		label="ContentBox Bootswatch Theme:", 	required="false", optionsUDF="getSwatches", groupIntro="Control the color scheme of your entire site by changing the Bootswatch theme. Bootswatch is a set of reset colored themes.", fieldHelp="#loadHelpFile( 'cbBootswatchTheme.html' )#" },
 		{ name="overrideHeaderColors", group="Colors", defaultValue="false", type="boolean", label="Override Page Header Colors from Bootswatch:", required="false", fieldDescription="Background and Text color overrides below will only override if this is set to True" },
 		{ name="overrideHeaderBGColor", group="Colors", defaultValue="", type="color", label="Override Page Header BG Color from Bootswatch:", required="false", fieldDescription="Enter a valid CSS color" },
@@ -107,12 +107,12 @@ component{
 	array function getSwatches(){
 		return listToArray( "cerulean,cosmo,cyborg,darkly,flatly,green,journal,lumen,paper,readable,sandstone,simplex,slate,spacelab,superhero,united,yeti" );
 	}
-	
+
 	/**
 	*
 	*/
 	array function getBackgroundPositions(){
-		return [ 
+		return [
 			"Top Left",
 			"Top Center",
 			"Top Right",
@@ -124,12 +124,12 @@ component{
 			"Bottom Right"
 		];
 	}
-	
+
 	/**
 	*
 	*/
 	array function getBootstrapButtonStyles(){
-		return [ 
+		return [
 			"default",
 			"primary",
 			"success",
@@ -138,7 +138,7 @@ component{
 			"danger"
 		];
 	}
-	
+
 	/**
 	* loadHelpFile - helper function for loading html help into a variable for modal
 	* @helpFileName - the name of the file to read and return

@@ -98,7 +98,7 @@ function viewAllSettings(){
 	$( '##settingsTableContainer' ).fadeOut();
 	settingsLoad( "", true );
 }
-function edit( settingID, name, value, isCore ){
+function edit( settingID, name, value, isCore, siteID ){
 	openModal( $( "##settingEditorContainer" ), 500, 300 );
 	$settingEditor.find( "##settingID" ).val( settingID );
 	$settingEditor.find( "##name" ).val( name );
@@ -106,6 +106,7 @@ function edit( settingID, name, value, isCore ){
 	if( isCore === true ){
 		$settingEditor.find( "##isCore" ).attr( "checked", true );
 	}
+	$settingEditor.find( "##site" ).val( siteID );
 	$settingEditor.find( "##btnSave" ).val( "Update" );
 	$settingEditor.find( "##btnReset" ).val( "Cancel" );
 }
@@ -120,12 +121,25 @@ function createSetting(){
 	$settingEditor.find( "##name" ).val( '' );
 	$settingEditor.find( "##value" ).val( '' );
 	$settingEditor.find( "##isCore" ).attr( "checked", false );
+	$settingEditor.find( "##site" ).val( "" );
 	$settingEditor.find( "##btnSave" ).val( "Save" );
 	openModal( $( "##settingEditorContainer" ), 500, 350 );
 	return false;
 }
 function submitSettingForm(){
 	$( "##settingEditor" ).submit();
+}
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##settingID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'settingID' );
+		window.open( exportEvent + "/settingID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
 }
 </script>
 </cfoutput>

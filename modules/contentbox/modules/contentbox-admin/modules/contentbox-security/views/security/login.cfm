@@ -1,15 +1,17 @@
 ﻿<cfoutput>
 <div>
     <div class="col-md-4" id="login-wrapper">
-        <div class="panel panel-primary animated fadeInDown">
+		<div class="panel panel-primary animated fadeInDown">
+
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel-title p5">
                    <i class="fa fa-key"></i> Login
                 </h3>
-            </div>
+			</div>
+
             <div class="panel-body">
 	        	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
                 #html.startForm(
                 	action		= prc.xehDoLogin,
@@ -19,12 +21,13 @@
                 	class		= "form-horizontal"
                 )#
 					#html.hiddenField( name="_securedURL", value=rc._securedURL )#
+					#html.hiddenField( name="_csrftoken", value=csrfToken() )#
 
 					<!--- Sign In Text --->
 					<cfif len( prc.signInText )>#prc.signInText#</cfif>
 
                 	<!--- Event --->
-					#announceInterception( "cbadmin_beforeLoginForm" )#
+					#announce( "cbadmin_beforeLoginForm" )#
 
 	                <div class="form-group">
 	                    <div class="col-md-12 controls">
@@ -48,15 +51,12 @@
 	                        	placeholder		= cb.r( "common.password@security" ),
 	                        	autocomplete	= "off"
 	                        )#
-	                        <i class="fa fa-lock"></i>
-
+	                        <i class="fas fa-key"></i>
 	                    </div>
-	                    <div class="col-md-12">
-							<a href="#event.buildLink( prc.xehLostPassword )#" class="help-block">#cb.r( "lostpassword@security" )#?</a>
-						</div>
+
 	                </div>
 	                <div class="form-group">
-	                	<div class="col-md-12">
+	                	<div class="col-md-12 controls">
 							<label class="checkbox">
 								#cb.r( "rememberme@security" )#<br>
 	                            #html.select(
@@ -71,16 +71,27 @@
 							</label>
 						</div>
 					</div>
+
 	                <div class="form-group">
 	                   <div class="col-md-12 text-center">
-	                   		<button type="submit" class="btn btn-primary">
+	                   		<button type="submit" class="btn btn-primary btn-lg">
 	                   			#cb.r( "common.login@security" )#
 	                   		</button>
 	                    </div>
-	                </div>
+					</div>
+
+					<div class="text-right">
+						<a
+							href="#event.buildLink( prc.xehLostPassword )#"
+							class="help-block"
+						>
+							<i class="far fa-question-circle"></i>
+							#cb.r( "lostpassword@security" )#?
+						</a>
+					</div>
 
 	                <!--- Event --->
-					#announceInterception( "cbadmin_afterLoginForm" )#
+					#announce( "cbadmin_afterLoginForm" )#
 
                 #html.endForm()#
             </div>

@@ -1,0 +1,74 @@
+[
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7f1180123",
+	  "createdDate": "2021-04-22 17:51:28",
+	  "modifiedDate": "2021-04-22 17:51:28",
+	  "isDeleted": 0,
+	  "category": "News",
+	  "slug": "news",
+	  "FK_siteID": "ff80808178fbc7620178fbc7ed020109"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7f1180124",
+	  "createdDate": "2021-04-22 17:51:28",
+	  "modifiedDate": "2021-04-22 17:51:28",
+	  "isDeleted": 0,
+	  "category": " ColdFusion",
+	  "slug": "coldfusion",
+	  "FK_siteID": "ff80808178fbc7620178fbc7ed020109"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7f1180125",
+	  "createdDate": "2021-04-22 17:51:28",
+	  "modifiedDate": "2021-04-22 17:51:28",
+	  "isDeleted": 0,
+	  "category": " ColdBox",
+	  "slug": "coldbox",
+	  "FK_siteID": "ff80808178fbc7620178fbc7ed020109"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7f1180126",
+	  "createdDate": "2021-04-22 17:51:28",
+	  "modifiedDate": "2021-04-22 17:51:28",
+	  "isDeleted": 0,
+	  "category": " ContentBox",
+	  "slug": "contentbox",
+	  "FK_siteID": "ff80808178fbc7620178fbc7ed020109"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7eac900e1",
+	  "createdDate": "2021-04-22 17:51:26",
+	  "modifiedDate": "2021-04-22 17:51:26",
+	  "isDeleted": 0,
+	  "category": "News",
+	  "slug": "news",
+	  "FK_siteID": "ff80808178fbc7620178fbc7e5f400af"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7eac900e2",
+	  "createdDate": "2021-04-22 17:51:26",
+	  "modifiedDate": "2021-04-22 17:51:26",
+	  "isDeleted": 0,
+	  "category": " ColdFusion",
+	  "slug": "coldfusion",
+	  "FK_siteID": "ff80808178fbc7620178fbc7e5f400af"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7eaca00e3",
+	  "createdDate": "2021-04-22 17:51:26",
+	  "modifiedDate": "2021-04-22 17:51:26",
+	  "isDeleted": 0,
+	  "category": " ColdBox",
+	  "slug": "coldbox",
+	  "FK_siteID": "ff80808178fbc7620178fbc7e5f400af"
+	},
+	{
+	  "categoryID": "ff80808178fbc7620178fbc7eaca00e4",
+	  "createdDate": "2021-04-22 17:51:26",
+	  "modifiedDate": "2021-04-22 17:51:26",
+	  "isDeleted": 0,
+	  "category": " ContentBox",
+	  "slug": "contentbox",
+	  "FK_siteID": "ff80808178fbc7620178fbc7e5f400af"
+	}
+  ]

@@ -9,7 +9,7 @@
     <cfinclude template="#prc.cbroot#/layouts/inc/HTMLHead.cfm"/>
 	<body class="animated fadeIn">
 		<!--- cbadmin Event --->
-		#announceInterception( "cbadmin_afterLoginBodyStart" )#
+		#announce( "cbadmin_afterLoginBodyStart" )#
 		<section id="container">
             <header id="header">
 
@@ -41,14 +41,14 @@
     	<!--- Login Container --->
 		<section id="login-container">
 			<!--- cbadmin event --->
-			#announceInterception( "cbadmin_beforeLoginContent" )#
+			#announce( "cbadmin_beforeLoginContent" )#
 			<!--- Main Content --->
 			#renderView()#
 			<!--- cbadmin event --->
-			#announceInterception( "cbadmin_afterLoginContent" )#
+			#announce( "cbadmin_afterLoginContent" )#
 		</section>
 
-		
+
         <cfinclude template="#prc.cbroot#/layouts/inc/HTMLBodyEnd.cfm"/>
 	</body>
 </html>

@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-search fa-lg"></i>  Search Options</legend>
+    <legend><i class="fab fa-searchengin fa-lg"></i>  Search Options</legend>
 
     <!--- Max Search Results --->
     <div class="form-group">
@@ -10,7 +10,7 @@
         </label>
         <div class="controls">
             <small>The number of search results to show before paging kicks in.</small><br/>
-            <strong class="margin10">5</strong>
+            <strong class="m10">5</strong>
             <input 	type="text"
                     id="cb_search_maxResults"
                     name="cb_search_maxResults"
@@ -22,7 +22,7 @@
                     data-slider-step="5"
                     data-slider-tooltip="hide"
             >
-            <strong class="margin10">50</strong>
+            <strong class="m10">50</strong>
 
         </div>
     </div>

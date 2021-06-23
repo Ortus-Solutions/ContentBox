@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$categoryForm = $( "##categoryForm" );
 	$categoryEditor = $( "##categoryEditor" );
 	$importDialog = $( "##importDialog" );
@@ -26,9 +26,9 @@ $(document).ready(function() {
 		"info" : false,
 		"searching" : false,
 		"columnDefs": [
-    		{ 
-    			"orderable": false, 
-    			"targets": '{sorter:false}' 
+    		{
+    			"orderable": false,
+    			"targets": '{sorter:false}'
     		}
   		],
   		"order": []
@@ -57,6 +57,18 @@ function createCategory(){
 	$categoryEditor.find( "##category" ).val( '' );
 	$categoryEditor.find( "##slug" ).val( '' );
 	return false;
+}
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##categoryID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'categoryID' );
+		window.open( exportEvent + "/categoryID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
 }
 </cfif>
 </script>

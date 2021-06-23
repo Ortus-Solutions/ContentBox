@@ -1,4 +1,10 @@
 ﻿<cfoutput>
+<style>
+.CodeMirror, .CodeMirror-scroll {
+	height: 200px;
+	min-height: 200px;
+}
+</style>
 <!--- Custom JS --->
 <script>
 $( document ).ready( function(){
@@ -6,6 +12,20 @@ $( document ).ready( function(){
 	$authorForm 	= $( "##authorForm" );
 	$twofactorForm 	= $( "##twofactorForm" );
 	$authorUsername = $authorForm.find( "##username" );
+
+	// Load all MDEditors for .mde classes
+	var mdEditors =  {};
+	$( ".mde" ).each( function(){
+		mdEditors[ $( this ).prop( "id" ) ] = new SimpleMDE( {
+			element 		: this,
+			autosave 		: { enabled : false },
+			promptURLs 		: true,
+			tabSize 		: 2,
+			forceSync 		: true,
+			placeholder 	: 'Type here...',
+			spellChecker 	: false
+		} );
+	} );
 
 	// initialize validator and add a custom form submission logic
 	$authorForm.validate();
@@ -47,23 +67,24 @@ $( document ).ready( function(){
     $.validator.addMethod(
     	"pwcheck",
     	passwordValidator,
-		'Password should be at least #prc.cbSettings.cb_security_min_password_length# characters long and should contain at least 1 digit, 1 uppercase, 1 lowercase and 1 special chars' 
+		'Password should be at least #prc.cbSettings.cb_security_min_password_length# characters long and should contain at least 1 digit, 1 uppercase, 1 lowercase and 1 special chars'
 	);
 
+	// If users are loaded
 	<cfif prc.author.isLoaded()>
-    $( "##authorPasswordForm" ).validate();
+		$( "##authorPasswordForm" ).validate();
 
-    // Password match validator
-    $.validator.addMethod(
-    	'password',
-    	function( value, element ){
-        	return (value==$( "[name=password]" ).val()) ? true : false;
-    	},
-    	'Passwords need to match'
-    );
+		// Password match validator
+		$.validator.addMethod(
+			'password',
+			function( value, element ){
+				return (value==$( "[name=password]" ).val()) ? true : false;
+			},
+			'Passwords need to match'
+		);
 
-	// Setup Permissions
-	$permissions = $( "##permissions" );
+		// Setup Permissions
+		$permissions = $( "##permissions" );
 	</cfif>
 
 	// Password change rules
@@ -97,7 +118,9 @@ function isEmailFound( email ){
 }
 <cfif prc.author.isLoaded()>
 function loadPermissions(){
-	$permissions.load( '#event.buildLink( prc.xehAuthorPermissions )#/authorID/' + #prc.author.getAuthorID()# );
+	$permissions.load(
+		'#event.buildLink( prc.xehAuthorPermissions )#/authorID/#prc.author.getAuthorID()#'
+	);
 }
 </cfif>
 </script>

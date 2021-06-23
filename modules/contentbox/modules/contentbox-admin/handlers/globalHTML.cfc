@@ -1,17 +1,20 @@
 /**
-* Manage global HTML in the system
-*/
-component extends="baseHandler"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manage global HTML in the system
+ */
+component extends="baseHandler" {
 
 	// Dependencies
-	property name="settingsService"		inject="id:settingService@cb";
-	property name="contentService"		inject="id:contentService@cb";
+	property name="settingsService" inject="settingService@cb";
+	property name="contentService" inject="contentService@cb";
 
-	// index
+	/**
+	 * View HTML
+	 */
 	function index( event, rc, prc ){
-		event.paramValue( "search","" )
-			.paramValue( "page",1);
-
 		// Exit Handler
 		prc.xehSaveHTML = "#prc.cbAdminEntryPoint#.globalHTML.save";
 
@@ -22,17 +25,24 @@ component extends="baseHandler"{
 		event.setView( "globalHTML/index" );
 	}
 
-	// save html
+	/**
+	 * Save HTML
+	 */
 	function save( event, rc, prc ){
 		// announce event
-		announceInterception( "cbadmin_preGlobalHTMLSave", { oldSettings=prc.cbSettings, newSettings=rc } );
+		announce( "cbadmin_preGlobalHTMLSave", { oldSettings : prc.cbSettings, newSettings : rc } );
 		// bulk save the options
-		settingsService.bulkSave( rc );
+		settingsService.bulkSave(
+			rc.filter( function( item ){
+				return item.findNoCase( "cb_html" );
+			} ),
+			prc.oCurrentSite
+		);
 		// clear caches
-		contentService.clearAllCaches( async=false );
+		contentService.clearAllCaches( async = false );
 		settingsService.flushSettingsCache();
 		// announce event
-		announceInterception( "cbadmin_postGlobalHTMLSave" );
+		announce( "cbadmin_postGlobalHTMLSave" );
 		// relocate back to editor
 		cbMessagebox.info( "All Global HTML updated! Yeeehaww!" );
 		// relocate

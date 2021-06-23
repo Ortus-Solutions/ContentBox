@@ -1,194 +1,197 @@
 /**
-* Manage Security Rules
-*/
-component extends="baseHandler"{
+ * Manage Security Rules
+ */
+component extends="baseHandler" {
 
 	// Dependencies
-	property name="ruleService"				inject="id:securityRuleService@cb";
-	property name="securityInterceptor"		inject="coldbox:interceptor:cbSecurity@contentbox-security";
+	property name="ruleService" inject="securityRuleService@cb";
+	property name="permissionService" inject="permissionService@cb";
+	property name="roleService" inject="roleService@cb";
+	property name="securityInterceptor" inject="coldbox:interceptor:cbsecurity@global";
 
 	// index
-	function index(event,rc,prc){
+	function index( event, rc, prc ){
 		// Exit Handler
-		prc.xehSaveRule 	= "#prc.cbAdminEntryPoint#.securityRules.save";
-		prc.xehRemoveRule	= "#prc.cbAdminEntryPoint#.securityRules.remove";
-		prc.xehEditorRule	= "#prc.cbAdminEntryPoint#.securityRules.editor";
-		prc.xehRuleOrder	= "#prc.cbAdminEntryPoint#.securityRules.changeOrder";
-		prc.xehApplyRules	= "#prc.cbAdminEntryPoint#.securityRules.apply";
-		prc.xehResetRules	= "#prc.cbAdminEntryPoint#.securityRules.reset";
-		prc.xehExport 		= "#prc.cbAdminEntryPoint#.securityRules.export";
-		prc.xehExportAll 	= "#prc.cbAdminEntryPoint#.securityRules.exportAll";
-		prc.xehImportAll	= "#prc.cbAdminEntryPoint#.securityRules.importAll";
+		prc.xehSaveRule   = "#prc.cbAdminEntryPoint#.securityRules.save";
+		prc.xehRemoveRule = "#prc.cbAdminEntryPoint#.securityRules.remove";
+		prc.xehEditorRule = "#prc.cbAdminEntryPoint#.securityRules.editor";
+		prc.xehRuleOrder  = "#prc.cbAdminEntryPoint#.securityRules.changeOrder";
+		prc.xehApplyRules = "#prc.cbAdminEntryPoint#.securityRules.apply";
+		prc.xehResetRules = "#prc.cbAdminEntryPoint#.securityRules.reset";
+		prc.xehExport     = "#prc.cbAdminEntryPoint#.securityRules.export";
+		prc.xehExportAll  = "#prc.cbAdminEntryPoint#.securityRules.exportAll";
+		prc.xehImportAll  = "#prc.cbAdminEntryPoint#.securityRules.importAll";
 
 		// get content pieces
-		prc.rules = ruleService.getAll(sortOrder="order asc" );
+		prc.rules = ruleService.getAll( sortOrder = "order asc" );
 
 		// tab
-		prc.tabSystem				= true;
-		prc.tabSystem_securityRules	= true;
+		prc.tabSystem               = true;
+		prc.tabSystem_securityRules = true;
 
 		// view
-		if( event.valueExists( "ajax" ) ){
-			event.setView(view="securityRules/rulesTable",noLayout=true);
-		}
-		else{
+		if ( event.valueExists( "ajax" ) ) {
+			event.setView( view = "securityRules/rulesTable", noLayout = true );
+		} else {
 			event.setView( "securityRules/index" );
 		}
 	}
 
 	// Reset Rules
-	function reset(event,rc,prc){
+	function reset( event, rc, prc ){
 		ruleService.resetRules();
 		securityInterceptor.loadRules();
 		// announce event
-		announceInterception( "cbadmin_onResetSecurityRules" );
+		announce( "cbadmin_onResetSecurityRules" );
 		cbMessagebox.info( "Security Rules Re-created and Re-applied!" );
-		relocate(prc.xehsecurityRules);
+		relocate( prc.xehsecurityRules );
 	}
 
 	// Apply the security rules
-	function apply(event,rc,prc){
+	function apply( event, rc, prc ){
 		securityInterceptor.loadRules();
 		cbMessagebox.info( "Security Rules Applied!" );
-		relocate(prc.xehsecurityRules);
+		relocate( prc.xehsecurityRules );
 	}
 
 	// change order for all rules
-	function changeOrder(event,rc,prc){
-		event.paramValue( "newRulesOrder","" );
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "&rules[]=", ",", "all" );
-		rc.newRulesOrder = ReplaceNoCase(rc.newRulesOrder, "rules[]=,", "", "all" );
-		for(var i=1;i lte listLen(rc.newRulesOrder);i++) {
-			ruleID = listGetAt(rc.newRulesOrder,i);
-			var rule = ruleService.get(ruleID);
-			if( !isNull( rule ) ){
-				rule.setOrder( i );
-				ruleService.saveRule( rule );
-			}
+	function changeOrder( event, rc, prc ){
+		event.paramValue( "tableID", "rules" ).paramValue( "newRulesOrder", "" );
+		// decode + cleanup incoming rules data
+		// We replace _ to - due to the js plugin issue of not liking dashes
+		var aOrderedContent = urlDecode( rc.newRulesOrder )
+			.replace( "_", "-", "all" )
+			.listToArray( "&" )
+			.map( function( thisItem ){
+				return reReplaceNoCase(
+					arguments.thisItem,
+					"#rc.tableID#\[\]\=",
+					"",
+					"all"
+				);
+			} )
+			// Inflate
+			.map( function( thisId, index ){
+				return variables.ruleService.get( arguments.thisId ).setOrder( arguments.index );
+			} );
+
+
+		// save them
+		if ( arrayLen( aOrderedContent ) ) {
+			variables.ruleService.saveAll( aOrderedContent );
 		}
-		event.renderData(type="json",data='true');
+
+		// Send response with the data in the right order
+		event
+			.getResponse()
+			.setData(
+				aOrderedContent.map( function( thisItem ){
+					return arguments.thisItem.getContentID();
+				} )
+			)
+			.addMessage( "Rules ordered successfully!" );
 	}
 
 	// editor
-	function editor(event,rc,prc){
-
+	function editor( event, rc, prc ){
 		// tab
-		prc.tabSystem				= true;
-		prc.tabSystem_securityRules	= true;
+		prc.tabSystem               = true;
+		prc.tabSystem_securityRules = true;
 
 		// get new or persisted
-		prc.rule  = ruleService.get( event.getValue( "ruleID",0) );
-
+		if ( isNull( prc.rule ) ) {
+			prc.rule = ruleService.get( event.getValue( "ruleID", 0 ) );
+		}
+		// Load permissions
+		prc.aPermissions = variables.permissionService.list(
+			sortOrder = "permission",
+			asQuery   = false
+		);
+		// Load roles
+		prc.aRoles      = variables.roleService.list( sortOrder = "role", asQuery = false );
 		// exit handlers
 		prc.xehRuleSave = "#prc.cbAdminEntryPoint#.securityRules.save";
-
 		// view
-		event.setView(view="securityRules/editor" );
+		event.setView( "securityRules/editor" );
 	}
 
-	// save rule
-	function save(event,rc,prc){
-
+	function save( event, rc, prc ){
 		// populate and get content
-		var oRule = populateModel( ruleService.get(id=rc.ruleID) );
+		prc.rule     = populateModel( variables.ruleService.get( rc.ruleID ) );
 		// validate it
-		var errors = oRule.validate();
-		if( !arrayLen(errors) ){
+		var vResults = validate( prc.rule );
+		if ( !vResults.hasErrors() ) {
 			// announce event
-			announceInterception( "cbadmin_preSecurityRulesSave",{rule=oRule,ruleID=rc.ruleID} );
+			announce( "cbadmin_preSecurityRulesSave", { rule : prc.rule, ruleID : rc.ruleID } );
 			// save rule
-			ruleService.saveRule( oRule );
+			variables.ruleService.saveRule( prc.rule );
 			// announce event
-			announceInterception( "cbadmin_postSecurityRulesSave",{rule=oRule} );
-			// Message
+			announce( "cbadmin_postSecurityRulesSave", { rule : prc.rule } );
+			// Message + Relocate
 			cbMessagebox.info( "Security Rule saved! Isn't that awesome!" );
+			relocate( prc.xehsecurityRules );
+		} else {
+			cbMessagebox.warn( vResults.getAllErrors() );
+			return editor( argumentCollection = arguments );
 		}
-		else{
-			cbMessagebox.warn(errorMessages=errors);
-		}
-
-		// relocate back to editor
-		relocate(prc.xehsecurityRules);
 	}
 
-	// remove
-	function remove(event,rc,prc){
-		event.paramValue( "ruleID","" );
+	function remove( event, rc, prc ){
+		event.paramValue( "ruleID", "" );
 		// check for length
-		if( len(rc.ruleID) ){
+		if ( len( rc.ruleID ) ) {
 			// announce event
-			announceInterception( "cbadmin_preSecurityRulesRemove",{ruleID=rc.ruleID} );
+			announce( "cbadmin_preSecurityRulesRemove", { ruleID : rc.ruleID } );
 			// remove using hibernate bulk
-			ruleService.deleteByID( listToArray(rc.ruleID) );
+			ruleService.deleteByID( listToArray( rc.ruleID ) );
 			// announce event
-			announceInterception( "cbadmin_postSecurityRulesRemove",{ruleID=rc.ruleID} );
+			announce( "cbadmin_postSecurityRulesRemove", { ruleID : rc.ruleID } );
 			// message
 			cbMessagebox.info( "Security Rule Removed!" );
-		}
-		else{
+		} else {
 			cbMessagebox.warn( "No ID selected!" );
 		}
-		relocate(event=prc.xehsecurityRules);
+		relocate( event = prc.xehsecurityRules );
 	}
 
 	// Export Entry
-	function export(event,rc,prc){
-		event.paramValue( "format", "json" );
-		// get role
-		prc.rule  = ruleService.get( event.getValue( "ruleID",0) );
-
-		// relocate if not existent
-		if( !prc.rule.isLoaded() ){
-			cbMessagebox.warn( "ruleID sent is not valid" );
-			relocate( "#prc.cbAdminEntryPoint#.securityrules" );
-		}
-		switch( rc.format ){
-			case "xml" : case "json" : {
-				var filename = "SecurityRule-#prc.rule.getRuleID()#." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=prc.rule.getMemento(), type=rc.format, xmlRootName="securityrule" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
-				break;
-			}
-			default:{
-				event.renderData(data="Invalid export type: #rc.format#" );
-			}
-		}
+	function export( event, rc, prc ){
+		return variables.ruleService.get( event.getValue( "ruleID", 0 ) ).getMemento();
 	}
 
 	// Export All Entries
-	function exportAll(event,rc,prc){
-		event.paramValue( "format", "json" );
-		// get all prepared content objects
-		var data  = ruleService.getAllForExport();
-
-		switch( rc.format ){
-			case "xml" : case "json" : {
-				var filename = "SecurityRules." & ( rc.format eq "xml" ? "xml" : "json" );
-				event.renderData(data=data, type=rc.format, xmlRootName="securityrules" )
-					.setHTTPHeader( name="Content-Disposition", value=" attachment; filename=#fileName#" );
-				break;
-			}
-			default:{
-				event.renderData(data="Invalid export type: #rc.format#" );
-			}
+	function exportAll( event, rc, prc ){
+		param rc.securityRuleID = "";
+		// Export all or some
+		if ( len( rc.securityRuleID ) ) {
+			return rc.securityRuleID
+				.listToArray()
+				.map( function( id ){
+					return variables.ruleService.get( arguments.id ).getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.ruleService.getAllForExport();
 		}
 	}
 
 	// import entries
-	function importAll(event,rc,prc){
+	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
-		try{
-			if( len( rc.importFile ) and fileExists( rc.importFile ) ){
-				var importLog = ruleService.importFromFile( importFile=rc.importFile, override=rc.overrideContent );
+		try {
+			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
+				var importLog = ruleService.importFromFile(
+					importFile = rc.importFile,
+					override   = rc.overrideContent
+				);
 				cbMessagebox.info( "Rules imported sucessfully!" );
 				flash.put( "importLog", importLog );
+			} else {
+				cbMessagebox.error(
+					"The import file is invalid: #rc.importFile# cannot continue with import"
+				);
 			}
-			else{
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
-			}
-		}
-		catch(any e){
+		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
 			cbMessagebox.error( errorMessage );

@@ -1,14 +1,17 @@
 ﻿<cfoutput>
 <div class="row">
 	<div class="col-md-12">
-		<h1 class="h1"><i class="fa fa-user"></i> User Management</h1>
+		<h1 class="h1">
+			<i class="fas fa-user"></i> Users
+			<span id="authorCountContainer"></span>
+		</h1>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-md-9">
 		<!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 
 		<!--- Import Log --->
 		<cfif flash.exists( "importLog" )>
@@ -22,65 +25,77 @@
 
 				<div class="panel-heading">
 					<div class="row">
-						
+
 						<!--- Quick Search --->
-						<div class="col-md-6">
+						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "userSearch",
-									class 		= "form-control",
+									class 		= "form-control rounded quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>
 						</div>
 
-						<div class="col-md-6">
+						<div class="col-md-6 col-xs-8">
 
 							<!--- Actions Bar --->
-							<div class="pull-right">
+							<div class="text-right">
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-									<div class="btn-group btn-group-sm">
+									<div class="btn-group">
 
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
-										</a>
+										</button>
 
 								    	<ul class="dropdown-menu">
 
 								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-								    			<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
+												<li>
+													<a href="javascript:importContent()">
+														<i class="fas fa-file-import fa-lg"></i> Import
+													</a>
+												</li>
 											</cfif>
 
 											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
-													<a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-download"></i> Export All as JSON
+													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
+													<li>
+														<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+															<i class="fas fa-file-export fa-lg"></i> Export Selected
+														</a>
+													</li>
 												</li>
 												<li>
-													<a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank">
-														<i class="fa fa-download"></i> Export All as XML
-													</a>
-												</li>
-
-												<li>
-													<a 	href="#event.buildLink( linkto=prc.xehGlobalPasswordReset )#"
+													<a 	href="#event.buildLink( prc.xehGlobalPasswordReset )#"
 														class="confirmIt"
 														data-title="<i class='fa fa-exclamation-triangle'></i> Really issue a global password reset?"
 														title="Users will be prompted to change their passwords upon login"
 													>
-														<i class="fa fa-lock"></i> Reset All Passwords
+														<i class="fas fa-key fa-lg"></i> Reset All Passwords
 													</a>
 												</li>
 											</cfif>
 
-											<li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
+											<li>
+												<a href="javascript:contentShowAll()">
+													<i class="fas fa-list fa-lg"></i> Show All
+												</a>
+											</li>
 								    	</ul>
 								    </div>
 								</cfif>
 
 								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<button class="btn btn-sm btn-primary" onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')">Create User</button>
+									<button
+										class="btn btn-primary"
+										onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')"
+									>
+										Create User
+									</button>
 								</cfif>
 
 							</div>
@@ -106,7 +121,7 @@
 		<div class="panel panel-primary">
 
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
 			</div>
 
 			<div class="panel-body">
@@ -168,8 +183,10 @@
 							</select>
 						</div>
 
-						<a class="btn btn-info btn-sm" href="javascript:contentFilter()">Apply Filters</a>
-						<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+						<div class="text-center">
+							<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
+							<a class="btn btn-primary btn-sm" href="javascript:contentFilter()">Apply</a>
+						</div>
 					#html.endForm()#
 				</div>
 			</div>
@@ -178,14 +195,15 @@
 </div>
 
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title 		= "Import Users",
-			contentArea = "user",
-			action 		= prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+	#renderView(
+		view = "_tags/dialog/import",
+		args = {
+			title 		: "Import Users",
+			contentArea : "user",
+			action 		: prc.xehImportAll,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> users file to import."
+		},
+		prePostExempt = true
+	)#
 </cfif>
 </cfoutput>

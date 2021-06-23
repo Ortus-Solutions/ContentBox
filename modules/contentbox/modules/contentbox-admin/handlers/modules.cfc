@@ -8,7 +8,7 @@
 component extends="baseHandler"{
 
 	// Dependencies
-	property name="moduleService"	inject="id:moduleService@cb";
+	property name="moduleService"	inject="moduleService@cb";
 	property name="cb" 				inject="cbHelper@cb";
 	property name="routingService"	inject="coldbox:routingService";
 
@@ -26,9 +26,9 @@ component extends="baseHandler"{
 	 */
 	function buildModuleLink( event, rc, prc ){
 		return cb.buildModuleLink(
-			module		= event.getValue( "module","" ),
-			linkTo		= event.getValue( "moduleEvent","" ),
-			queryString	= event.getValue( "moduleQS","" ));
+			module     = event.getValue( "module","" ),
+			linkTo     = event.getValue( "moduleEvent","" ),
+			queryString= event.getValue( "moduleQS","" ));
 	}
 
 	/**
@@ -41,7 +41,7 @@ component extends="baseHandler"{
 			.paramValue( "moduleAction", "index" );
 
 		// Clean incoming routed URL from base proxy: cbadmin/module
-		var routedURL = event.getCurrentRoutedURL().replacenocase( "cbadmin/module", "" );
+		var routedURL    = event.getCurrentRoutedURL().replacenocase( "cbadmin/module", "" );
 		// Discover it's route
 		var routeResults = routingService.findRoute( routedURL, event );
 
@@ -85,12 +85,12 @@ component extends="baseHandler"{
 	 */
 	function index( event, rc, prc ){
 		// exit Handlers
-		prc.xehModuleRemove	    = "#prc.cbAdminEntryPoint#.modules.remove";
-		prc.xehModuleUpload     = "#prc.cbAdminEntryPoint#.modules.upload";
-		prc.xehModuleReset      = "#prc.cbAdminEntryPoint#.modules.reset";
-		prc.xehModuleRescan     = "#prc.cbAdminEntryPoint#.modules.rescan";
-		prc.xehModuleActivate   = "#prc.cbAdminEntryPoint#.modules.activate";
-		prc.xehmoduleDeactivate = "#prc.cbAdminEntryPoint#.modules.deactivate";
+		prc.xehModuleRemove    = "#prc.cbAdminEntryPoint#.modules.remove";
+		prc.xehModuleUpload    = "#prc.cbAdminEntryPoint#.modules.upload";
+		prc.xehModuleReset     = "#prc.cbAdminEntryPoint#.modules.reset";
+		prc.xehModuleRescan    = "#prc.cbAdminEntryPoint#.modules.rescan";
+		prc.xehModuleActivate  = "#prc.cbAdminEntryPoint#.modules.activate";
+		prc.xehmoduleDeactivate= "#prc.cbAdminEntryPoint#.modules.deactivate";
 
 		// tab
 		prc.tabModules_manage = true;
@@ -99,8 +99,8 @@ component extends="baseHandler"{
 		if( event.valueExists( "rescan" ) ){ moduleService.startup(); }
 
 		// Get all modules
-		var modules = moduleService.findModules();
-		prc.modules = modules.modules;
+		var modules      = moduleService.findModules();
+		prc.modules      = modules.modules;
 		prc.modulesCount = modules.count;
 
 		// view

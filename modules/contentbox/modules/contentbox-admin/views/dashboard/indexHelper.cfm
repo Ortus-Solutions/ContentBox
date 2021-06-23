@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom Javascript --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
  	// Load My Latest Drafts
 	$( "##latestSystemEdits" ).load( '#event.buildLink( prc.xehLatestSystemEdits )#' );
@@ -24,7 +24,7 @@ $(document).ready(function() {
 	</cfif>
 	<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
 	// Load latest logsin
-	$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );		
+	$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );
 	</cfif>
 	// Select first dashboard tab
 	$( "##dashboardTabs a:first" ).tab( 'show' )

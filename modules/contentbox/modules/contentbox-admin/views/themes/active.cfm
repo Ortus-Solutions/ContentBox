@@ -2,14 +2,16 @@
 <div class="row">
     <div class="col-md-12">
 
-		<div class="pull-right">
-	    	<button class="btn btn-success btn-sm"
-	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#prc.activeTheme.name#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
-				<i class="fa fa-eye"></i> Preview
+		<div class="pull-right mt10">
+	    	<button class="btn btn-success"
+	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#encodeForJavaScript( prc.activeTheme.name )#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
+				<i class="far fa-eye fa-lg"></i> Preview
 			</button>
 		</div>
 
-        <h1 class="h1"><i class="fa fa-picture-o fa-lg"></i> #prc.activeTheme.themeName#</h1>
+		<h1 class="h1">
+			<i class="fas fa-swatchbook fa-lg"></i> #encodeForHTML( prc.activeTheme.themeName )#
+		</h1>
     </div>
 </div>
 
@@ -19,89 +21,95 @@
 		    <div class="panel-body">
 
 		    	<!--- MessageBox --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
 				<!---screenshot --->
 				<div id="theme-screenshot" class="pull-right">
 					<cfif len( prc.activeTheme.screenShotURL )>
-						<a href="#prc.activeTheme.screenShotURL#" target="_blank">
-							<img src="#prc.activeTheme.screenShotURL#" alt="screenshot" height="200" border="0" class="img-screenshot img-thumbnail"/>
+						<a href="#encodeForHTMLAttribute( prc.activeTheme.screenShotURL )#" target="_blank">
+							<img src="#encodeForHTMLAttribute( prc.activeTheme.screenShotURL )#" alt="screenshot" height="200" border="0" class="img-screenshot img-thumbnail"/>
 						</a>
 						<br/>
 					</cfif>
 				</div>
 
 				<!---Description --->
-				<blockquote id="theme-description">#prc.activeTheme.description#</blockquote>
+				<blockquote id="theme-description">#encodeForHTML( prc.activeTheme.description )#</blockquote>
+
 				<!---Author --->
 				<div id="theme-author">
-					<i class="fa fa-user"></i>
-					<strong>Author: </strong> <a href="#prc.activeTheme.authorURL#" title="#prc.activeTheme.AuthorURL#" target="_blank">#prc.activeTheme.Author#</a>
+					<i class="fa fa-user mr5"></i>
+					<strong>Author: </strong> <a href="#encodeForHTMLAttribute( prc.activeTheme.authorURL )#" title="#encodeForHTMLAttribute( prc.activeTheme.AuthorURL )#" target="_blank">#encodeForHTML( prc.activeTheme.Author )#</a>
 				</div>
+
 				<!--- Version --->
 				<div id="theme-version>">
-					<i class="fa fa-clock-o"></i>
+					<i class="fas fa-history mr5"></i>
 					<strong>Version: </strong>
-					#prc.activeTheme.version#
+					#encodeForHTML( prc.activeTheme.version )#
 				</div>
+
 				<!--- ForgeBox Slug --->
 				<div id="theme-forgebox>">
-					<i class="fa fa-cloud-download"></i>
+					<i class="fa fa-cloud mr5"></i>
 					<strong>ForgeBox Slug: </strong>
 					<cfif len( prc.activeTheme.forgeboxSlug )>
-						<a href="http://www.coldbox.org/forgebox/view/#prc.activeTheme.forgeboxSlug#">#prc.activeTheme.forgeboxSlug#</a>
+						<a href="http://www.coldbox.org/forgebox/view/#encodeForHTMLAttribute( prc.activeTheme.forgeboxSlug )#">#encodeForHTMLAttribute( prc.activeTheme.forgeboxSlug )#</a>
 					<cfelse>
 						<em>None</em>
 					</cfif>
 				</div>
+
 				<!---Interceptions --->
 				<div id="theme-interceptions">
-					<i class="fa fa-bullhorn"></i>
+					<i class="fa fa-bullhorn mr5"></i>
 					<strong>Registered Interceptions: </strong>
 					<cfif len( prc.activeTheme.customInterceptionPoints )>
-						#prc.activeTheme.customInterceptionPoints#
+						#encodeForHTML( prc.activeTheme.customInterceptionPoints )#
 					<cfelse>
 						<em>None</em>
 					</cfif>
 				</div>
+
 				<!---Widgets --->
 				<div id="theme-widgets">
-					<i class="fa fa-magic"></i>
+					<i class="fa fa-magic mr5"></i>
 					<strong>Theme Widgets: </strong>
 					<cfif len( prc.activeTheme.widgets )>
-						#prc.activeTheme.widgets#
+						#encodeForHTML( prc.activeTheme.widgets )#
 					<cfelse>
 						<em>None</em>
 					</cfif>
 				</div>
+
 				<!---Modules --->
 				<div id="theme-modules">
-					<i class="fa fa-bolt"></i>
+					<i class="fa fa-bolt mr5"></i>
 					<strong>Theme Modules: </strong>
 					<cfif len( prc.activeTheme.modules )>
-						#prc.activeTheme.modules#
+						#encodeForHTML( prc.activeTheme.modules )#
 					<cfelse>
 						<em>None</em>
 					</cfif>
 				</div>
 
 				<!--- Announce display Event --->
-				#announceInterception( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
+				#announce( "cbadmin_onThemeInfo", { theme=prc.activeTheme } )#
 
 				<!---Theme Settings --->
 				<cfif prc.activeTheme.settings.len()>
 					<h1>Theme Settings:</h1>
 					#html.startForm( action=prc.xehSaveSettings, name="layoutSettingsForm" )#
-						#html.hiddenField( name="themeName", value=prc.activeTheme.name )#
+						#html.hiddenField( name="themeName", value=encodeForHTMLAttribute( prc.activeTheme.name ) )#
 
 						<!--- Build out theme settings --->
 						#prc.themeService.buildSettingsForm( prc.activeTheme )#
 
 						<!--- Announce display Event --->
-						#announceInterception( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
+						#announce( "cbadmin_onThemeSettings", { theme=prc.activeTheme } )#
 
-						<div class="form-group">
-							#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+						<div class="form-group text-center">
+							#html.submitButton( value="Save Settings", class="btn btn-primary btn-lg" )#
 						</div>
 
                     #html.endForm()#

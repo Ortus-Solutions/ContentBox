@@ -2,34 +2,47 @@
 <div id="versionsPager">
 
 	<!--- Loader --->
-	<div class="loaders floatRight" id="versionsPagerLoader">
+	<div class="loaders float-right" id="versionsPagerLoader">
 		<i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
 	</div>
 
-	<p>Here are the past versions of your content. You can compare previous versions and even right click on the rows to get a quick peek at the versioned
-	 content.  Please also remember that the limit of versions per content
-	 object is currently set at <strong>#prc.cbSettings.cb_versions_max_history#</strong>.</p>
+	<p>
+		Here are the past versions of your content. You can compare previous versions and even right click on the rows to get a quick peek at the versioned
+	 content.
+	</p>
 
 	 <!--- History --->
 	<div class="buttonBar">
 		<cfif arrayLen( prc.versionsPager_versions ) gt 1>
-		<button class="btn btn-sm btn-danger" onclick="return versionsPagerDiff();"><i class="fa fa-exchange"></i> Compare Versions</button>
+			<button
+				class="btn btn-sm btn-info"
+				onclick="return versionsPagerDiff();"
+				title="Compare the two selected versions below"
+			>
+				<i class="far fa-object-ungroup"></i> Compare
+			</button>
 		</cfif>
 		<cfif prc.versionsPager_viewFullHistory>
-		<button class="btn btn-sm btn-default" onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"><i class="fa fa-clock-o"></i> Full History</button>
+			<button
+				class="btn btn-sm btn-default"
+				title="Go to the history visualizer"
+				onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"
+			>
+				<i class="fas fa-history"></i> Full History
+			</button>
 		</cfif>
 	</div>
-	
+
 	#html.startForm(name="versionsPagerForm" )#
 
-	<table id="versionsHistoryTable" width="100%" class="table table-hover table-condensed table-striped" border="0">
+	<table id="versionsHistoryTable" width="100%" class="table table-hover  table-striped-removed" border="0">
 		<thead>
 			<tr>
 				<th width="50" class="text-center">Diff</th>
 				<th width="50" class="text-center">Version</th>
-				<th width="50" class="text-center">Active</th>
+				<th width="50" class="text-center">Status</th>
 				<th width="160" class="text-center">Date</th>
-				<th class="text-center">Changelog</th>
+				<th>Changelog</th>
 				<th width="100" class="text-center">Actions</th>
 			</tr>
 		</thead>
@@ -41,49 +54,94 @@
 				<cfset activeVersion = thisVersion.getVersion()>
 			</cfif>
 			<tr id="version_row_#thisVersion.getContentVersionID()#" data-versionID="#thisVersion.getContentVersionID()#">
+				<!--- Diff --->
 				<td class="text-center">
 					<!--- old version --->
-					<input type="radio" class="rb_oldversion" value="#thisVersion.getContentVersionID()#"
-						   name="old_version" id="old_version" <cfif thisVersion.getVersion() eq ( activeVersion - 1 )>checked="checked"</cfif>>
+					<input
+						type="radio"
+						class="rb_oldversion"
+						value="#thisVersion.getContentVersionID()#"
+						name="old_version"
+						id="old_version"
+						<cfif thisVersion.getVersion() eq ( activeVersion - 1 )>checked="checked"</cfif>
+					>
 					<!--- current version --->
-					<input type="radio" class="rb_version" value="#thisVersion.getContentVersionID()#"
-						   name="version" id="version" <cfif thisVersion.getIsActive()>checked="checked"</cfif>>
-				</td>
-				<td class="text-center">
-					<a href="javascript:openRemoteModal('#event.buildLink(prc.xehVersionQuickLook)#/versionID/#thisVersion.getContentVersionID()#')">#thisVersion.getVersion()#</a>
-				</td>
-				<td class="text-center">
-					<cfif thisVersion.getIsActive()>
-						<i class="fa fa-circle fa-lg textGreen"></i>
-					<cfelse>
-						<i class="fa fa-circle fa-lg textRed"></i>
-					</cfif>
-				</td>
-				<td class="text-center">#thisVersion.getDisplayCreatedDate()#</td>
-				<td>
-					<a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a><br>
-					#thisVersion.getChangeLog()#
+					<input
+						type="radio"
+						class="rb_version"
+						value="#thisVersion.getContentVersionID()#"
+						name="version"
+						id="version"
+						<cfif thisVersion.getIsActive()>checked="checked"</cfif>
+					>
 				</td>
 
+				<!--- Version Number --->
+				<td class="text-center">
+					<a href="javascript:openRemoteModal( '#event.buildLink( prc.xehVersionQuickLook )#/versionID/#thisVersion.getContentVersionID()#')">
+						#thisVersion.getVersion()#
+					</a>
+				</td>
+
+				<!--- Status --->
+				<td class="text-center">
+					<cfif thisVersion.getIsActive()>
+						<i class="far fa-dot-circle fa-lg text-red" title="Active Version"></i>
+					<cfelse>
+						<i class="far fa-dot-circle fa-lg text-muted" title="Past Version"></i>
+					</cfif>
+				</td>
+
+				<!--- Created Version Date --->
+				<td class="text-center">
+					#thisVersion.getDisplayCreatedDate()#
+				</td>
+
+				<!--- Author + Changelog --->
+				<td>
+					#getInstance( "Avatar@cb" ).renderAvatar(
+						email	= thisVersion.getAuthorEmail(),
+						size	= "20",
+						class	= "img img-circle"
+					)#
+					<a href="mailto:#thisVersion.getAuthorEmail()#">#thisVersion.getAuthorName()#</a>
+
+					<div class="mt5">
+						#thisVersion.getChangeLog()#
+					</div>
+				</td>
+
+				<!--- Actions --->
 				<td class="text-center">
 					<!--- ACTIVE INDICATOR --->
 					<cfif thisVersion.getIsActive()>
-						<span class="label label-warning">Active</span>
+						<span class="label label-success">Active</span>
 					</cfif>
 
 					<cfif not thisVersion.getIsActive()>
 						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
-						<!--- ROLLBACK BUTTON --->
-						<a href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')" title="Rollback this version"
-						   class="confirmIt"
-						   data-message="Do you really want to rollback to this version?"><i class="fa fa-refresh fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i></a>
+							<!--- ROLLBACK BUTTON --->
+							<a
+								href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')"
+								title="Rollback this version"
+								class="confirmIt"
+								data-message="Do you really want to rollback to this version?"
+							>
+								<i class="fas fa-recycle fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i>
+							</a>
 						</cfif>
 
 						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>
-						<!--- DELETE VERSION --->
-						<a href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')" title="Remove this version" class="confirmIt"
-						   data-title="<i class='fa fa-trash-o'></i> Remove Content Version"
-						   data-message="Do you really want to remove this content version?"><i class="fa fa-trash-o fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i></a>
+							<!--- DELETE VERSION --->
+							<a
+								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"
+								title="Remove this version"
+								class="confirmIt ml5"
+								data-title="<i class='far fa-trash-alt'></i> Remove Content Version"
+								data-message="Do you really want to remove this content version?"
+							>
+								<i class="far fa-trash-alt fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
+							</a>
 						</cfif>
 					</cfif>
 				</td>

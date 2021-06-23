@@ -1,5 +1,6 @@
 {
     "name":"ContentBox Tester Site",
+    "version":"5.0.0-rc",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -23,13 +24,67 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "testbox":"^2.8.0",
-        "coldbox":"^5.3.0"
+        "coldbox":"^6.0.0",
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-migrations":"*"
+    },
+    "devDependencies":{
+        "testbox":"*",
+        "cbdebugger":"^3.0.0",
+        "commandbox-cfformat":"*",
+        "commandbox-docbox":"*",
+        "route-visualizer":"^1.4.0+24"
     },
     "installPaths":{
         "testbox":"testbox/",
-        "coldbox":"coldbox/"
+        "coldbox":"coldbox/",
+        "cbdebugger":"modules/cbdebugger/",
+        "route-visualizer":"modules/route-visualizer/"
     },
-    "devDependencies":{},
-    "ignores":[]
+    "ignores":[],
+    "scripts":{
+        "build:allDocs":"task run taskFile=build/BuildDocs.cfc :version=`package show version`",
+        "build:apidocs":"task run taskFile=build/BuildDocs.cfc target=apiDocs :version=`package show version`",
+        "build:swagger":"task run taskFile=build/BuildDocs.cfc target=swagger :version=`package show version`",
+        "dbseed:mysql":"task run resources/seeder/MSSQL.cfc",
+        "dbseed:mssal":"task run resources/seeder/SeedMySQL.cfc",
+        "dbseed:postgres":"task run resources/seeder/SeedPostgreSQL.cfc",
+        "format":"cfformat run modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
+        "format:watch":"cfformat watch modules/**/*.cfc,tests/specs/**/*.cfc ./.cfformat.json",
+        "format:check":"cfformat check modules/**/*.cfc,tests/specs/**/*.cfc",
+        "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force --debug",
+        "start:2016":"server start serverConfigFile='server-adobe@2016.json' --force --debug",
+        "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force --debug",
+        "start:2021":"server start serverConfigFile='server-adobe@2021.json' --force --debug",
+        "log:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
+        "log:2016":"server log serverConfigFile=server-adobe@2016.json --follow",
+        "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow",
+        "log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
+        "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\"' | run",
+        "cfpm:install":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run",
+        "install:2021":"run-script cfpm:install zip,orm,mysql,postgresql,sqlserver,document,feed"
+    },
+    "cfmigrations":{
+        "schema":"${DB_DATABASE}",
+        "connectionInfo":{
+            "class":"${DB_CLASS}",
+			"connectionString":"${DB_CONNECTIONSTRING}",
+            "bundleName":"${DB_BUNDLENAME}",
+            "bundleVersion":"${DB_BUNDLEVERSION}",
+            "username":"${DB_USER}",
+            "password":"${DB_PASSWORD}"
+        },
+        "defaultGrammar":"AutoDiscover@qb"
+    },
+    "testbox":{
+        "runner":[
+            {
+                "default":"http://127.0.0.1:8589/tests/runner.cfm"
+            },
+            {
+                "api":"http://127.0.0.1:8589/tests/runner-api.cfm"
+            }
+        ]
+    }
 }

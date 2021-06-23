@@ -17,6 +17,7 @@ component hint="My Module Configuration"{
 	this.layoutParentLookup = true;
 	// Module Entry Point
 	this.entryPoint			= "HelloContentBox";
+	this.dependencies 		= [];
 
 	function configure(){
 

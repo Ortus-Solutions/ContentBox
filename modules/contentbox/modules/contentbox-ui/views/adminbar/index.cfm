@@ -6,41 +6,40 @@
 		<cfif !isNull( args.oContent )>
 
 			<cfif args.oContent.getContentType() eq "Page">
-			<span class="icon-info"></span>
-			<span class="admin-bar-label layout">
-				Layout: #args.oContent.getLayout()#
-			</span>
+				<span class="icon-info"></span>
+				<span class="admin-bar-label layout">
+					Layout: #args.oContent.getLayout()#
+				</span>
 			</cfif>
 
 			<cfif args.oContent.getAllowComments()>
-			<span class="admin-bar-label comments">
-				Comments: #args.oContent.getNumberOfComments()#
-			</span>
+				<span class="admin-bar-label comments">
+					Comments: #args.oContent.getNumberOfComments()#
+				</span>
 			</cfif>
-
-			<span class="admin-bar-label hits">
-				Hits: #args.oContent.getNumberOfHits()#
-			</span>
 
 			<cfif !isNull( args.oContent )>
-			<span class="admin-bar-label publisher">
-				#args.oContent.getAuthorName()# published on
-					#args.oContent.getActiveContent().getDisplayCreatedDate()#
-			</span>
+				<span class="admin-bar-label publisher">
+					#getInstance( "Avatar@cb" ).renderAvatar(
+						email	= args.oContent.getAuthorEmail(),
+						size	= "15",
+						class	= "img img-circle"
+					)#
+					#args.oContent.getAuthorName()# published on
+						#args.oContent.getActiveContent().getDisplayCreatedDate()#
+				</span>
 			</cfif>
 
-			<span class="icon-pencil"></span>
-
 			<cfif !args.oContent.getIsPublished()>
-			<span class="admin-bar-label-red">
-				Draft
-			</span>
+				<span class="admin-bar-label-red">
+					Draft
+				</span>
 			</cfif>
 
 			<cfif args.oContent.isPublishedInFuture()>
-			<span class="admin-bar-label-red">
-				Publishes on: #args.oContent.getDisplayPublishedDate()#
-			</span>
+				<span class="admin-bar-label-red">
+					Publishes on: #args.oContent.getDisplayPublishedDate()#
+				</span>
 			</cfif>
 
 			<a href="#args.linkEdit#" class="button edit" target="_blank">
@@ -79,9 +78,13 @@
 
 	<div id="avatar">
 		<h4>
-			#getModel( "Avatar@cb" )
-				.renderAvatar( email=args.oCurrentAuthor.getEmail(), size="30", title="Hola" )#
-			ContentBox Admin Bar
+			#getInstance( "Avatar@cb" )
+				.renderAvatar(
+					email 	: args.oCurrentAuthor.getEmail(),
+					size 	: "30",
+					title	: "Hola"
+				)#
+			<span class="label label-info mr5">#prc.oCurrentSite.getName()#</span>
 		</h4>
 	</div>
 
@@ -185,11 +188,15 @@ body{
     position: fixed;
     z-index: 9999;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-	transition: all 2s ease;
-	-moz-transition: all 2s ease;
-    -webkit-transition: all 2s ease;
+	transition: all 1s ease;
+	-moz-transition: all 1s ease;
+    -webkit-transition: all 1s ease;
 	left: auto !important;
 	right: 0 !important;
+	opacity: 50%
+}
+##cb-admin-bar:hover{
+	opacity: 100%
 }
 .fade_out {
 	width: 60px !important;
@@ -216,6 +223,7 @@ body{
 }
 
 ##cb-admin-bar h4 img{
+	display: inline-block;
 	vertical-align: text-bottom;
 	margin-right: 5px;
     margin-bottom: -5px;

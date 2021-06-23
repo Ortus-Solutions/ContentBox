@@ -1,6 +1,8 @@
 <cfoutput>
+<!--- count --->
+<input type="hidden" name="authorCount" id="authorCount" value="#prc.authorCount#">
 <!--- authors --->
-<table name="authors" id="authors" class="table table-striped table-hover table-condensed" width="100%">
+<table name="authors" id="authors" class="table table-striped-removed table-hover " width="100%">
 	<thead>
 		<tr>
 			<th id="checkboxHolder" class="{sorter:false} text-center" width="15">
@@ -24,94 +26,96 @@
 			<td class="text-center">
 				<input type="checkbox" name="authorID" id="authorID" value="#author.getAuthorID()#" />
 			</td>
-			<td>
-				<div class="pull-left" style="margin-right: 10px">
-					#getModel( "Avatar@cb" )
-						.renderAvatar( email=author.getEmail(), size="40", class="gravatar img-circle" )#
+			<td class="pb5 pt5">
+				<div class="pull-left">
+					#getInstance( "Avatar@cb" )
+						.renderAvatar(
+							email = author.getEmail(),
+							size  = "40",
+							class = "gravatar img img-circle mr10"
+						)#
 				</div>
-				
+
 				<!--- Display Link if Admin Or yourself --->
 				<div>
 					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
-						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">#author.getName()#</a>
+						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">#author.getFullName()#</a>
 					<cfelse>
-						#author.getName()#
+						#author.getFullName()#
 					</cfif>
 
 					<cfif prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
-						<i class="fa fa-star fa-lg textOrange" title="That's you!"></i>
+						<i class="fa fa-star fa-lg text-orange" title="That's you!"></i>
 					</cfif>
 
 					<cfif author.getIs2FactorAuth()>
 						<i class="fa fa-mobile fa-lg" title="2 Factor Auth Enabled"></i>
 					</cfif>
 
-					<br>
-					#author.getEmail()#
+					<div class="mt5">
+						<a href="mailto:#author.getEmail()#" class="text-muted underline">
+							#author.getEmail()#
+						</a>
+					</div>
 				</div>
 			</td>
-			
-			<td>
+
+			<td class="text-center">
 				<span class="label label-info">#author.getRole().getRole()#</span>
 			</td>
-			
+
 			<td>
 				#author.getDisplayLastLogin()#
 			</td>
-			
+
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-primary dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
-						<i class="fa fa-cogs fa-lg"></i>
+			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
+						<i class="fas fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 							<!--- Delete Command --->
 							<cfif prc.oCurrentAuthor.getAuthorID() neq author.getAuthorID()>
 								<li>
-									<a 	title="Delete Author" 
-										href="javascript:removeAuthor( '#author.getAuthorID()#' )" 
-										class="confirmIt" 
-										data-title="<i class='fa fa-trash-o'></i> Delete Author?"
+									<a 	title="Delete Author"
+										href="javascript:removeAuthor( '#author.getAuthorID()#' )"
+										class="confirmIt"
+										data-title="<i class='far fa-trash-alt'></i> Delete Author?"
 									>
-										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Delete
+										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Delete
 									</a>
 								</li>
 							<cfelse>
 								<li>
-									<a 	title="Can't Delete Yourself" 
-										href="javascript:alert('Can\'t delete yourself buddy!')" 
-										class="textRed"
+									<a 	title="Can't Delete Yourself"
+										href="javascript:alert('Can\'t delete yourself buddy!')"
+										class="text-red"
 									>
-										<i id="delete_#author.getAuthorID()#" class="fa fa-trash-o fa-lg"></i> Can't Delete
+										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Can't Delete
 									</a>
 								</li>
 							</cfif>
 
 							<!--- Edit Command --->
 							<li>
-								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getName()#">
-									<i class="fa fa-edit fa-lg"></i> Edit
+								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">
+									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 
 							<!--- Export --->
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
-								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fa fa-download"></i> Export as JSON
+								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 							<li>
-								<a href="#event.buildLink( linkto=prc.xehExport )#/authorID/#author.getAuthorID()#.xml" target="_blank">
-									<i class="fa fa-download"></i> Export as XML
-								</a>
-							</li>
-							<li>
-								<a href="#event.buildLink( linkto=prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
+								<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
 									title="Email User a password reset token and link to reset password.">
-									<i class="fa fa-lock"></i> Reset Password
+									<i class="fas fa-key fa-lg"></i> Reset Password
 								</a>
 							</li>
 							</cfif>

@@ -1,17 +1,19 @@
 <cfoutput>
-    <div class="#args.content.getIsPublished() ? '' : 'selected'#">
-        
+    <div class="mb10 #args.content.getIsPublished() ? '' : 'selected'#">
+
         <!--- is Published --->
         #html.hiddenField( name="isPublished", bind=args.content )#
 
         <!--- Publishing Bar --->
         <div id="publishingBar" style="display: none;" class="well well-sm">
 
-            <h4><i class="fa fa-calendar"></i> Publishing Details</h4> 
+			<h4>
+				<i class="fa fa-calendar"></i> Publishing Details
+			</h4>
 
             <!--- publish date --->
-            <div class="form-group">
-                
+            <div>
+
                 #html.label(
                     class       = "control-label",
                     field       = "publishedDate",
@@ -21,11 +23,11 @@
                 <div class="controls row">
                     <div class="col-md-6">
                         <div class="input-group">
-                            
+
                             #html.inputField(
-                                size    = "9", 
+                                size    = "9",
                                 name    = "publishedDate",
-                                value   = args.content.getPublishedDateForEditor(), 
+                                value   = args.content.getPublishedDateForEditor(),
                                 class   = "form-control datepicker"
                             )#
 
@@ -48,7 +50,7 @@
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
                             <input type="text" class="form-control inline" value="#theTime#" name="publishedTime">
                             <span class="input-group-addon">
-                                <span class="fa fa-clock-o"></span>
+                                <span class="fas fa-history"></span>
                             </span>
                         </div>
                     </div>
@@ -56,18 +58,22 @@
             </div>
 
             <!--- expire date --->
-            <div class="form-group">
-                
-                #html.label( class="control-label", field="expireDate", content="Expiration Date" )#
+            <div>
+
+                #html.label(
+					class   = "control-label",
+					field   = "expireDate",
+					content = "Expiration Date"
+				)#
 
                 <div class="controls row">
                     <div class="col-md-6">
                         <div class="input-group">
-                            
+
                             #html.inputField(
-                                size    = "9", 
+                                size    = "9",
                                 name    = "expireDate",
-                                value   = args.content.getExpireDateForEditor(), 
+                                value   = args.content.getExpireDateForEditor(),
                                 class   = "form-control datepicker"
                             )#
 
@@ -76,7 +82,7 @@
                             </span>
                         </div>
                     </div>
-                   
+
                     <cfscript>
                         theTime = "";
                         hour = prc.ckHelper.ckHour( args.content.getExpireDateForEditor(showTime=true) );
@@ -90,12 +96,12 @@
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
                             <input type="text" class="form-control inline" value="#theTime#" name="expireTime">
                             <span class="input-group-addon">
-                                <span class="fa fa-clock-o"></span>
+                                <span class="fas fa-history"></span>
                             </span>
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
 
             <!--- Changelog --->
             #html.textField(
@@ -106,8 +112,29 @@
                 wrapper           = "div class=controls",
                 labelClass        = "control-label",
                 groupWrapper      = "div class=form-group"
-            )#
+			)#
 
+			<!--- Site To Publish To --->
+			<div class="form-group">
+				<label class="control-label">
+					Site
+				</label>
+
+				<select
+					name="site"
+					id="site"
+					class="form-control rounded"
+				>
+					<cfloop array="#prc.allSites#" index="thisSite">
+						<option
+							value="#thisSite[ 'siteID' ]#"
+							<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()>selected="selected"</cfif>
+						>
+							#thisSite[ 'name' ]#
+						</option>
+					</cfloop>
+				</select>
+			</div>
 
             <div class="text-center">
                 <button type="button"
@@ -127,30 +154,11 @@
             </div>
 
         </div>
-    
+
         <!--- Action Bar --->
         <div class="actionBar" id="actionBar">
 
-            <!--- Published Status --->
-            <cfif args.content.isLoaded()>
-                <cfif args.content.getIsPublished()>
-                    <div class="alert alert-info">
-                        <cfif dateCompare( args.content.getPublishedDate(), now() ) eq 1>
-                            <i class="fa fa-fighter-jet"></i> This content publishes in the future: #args.content.getDisplayPublishedDate()#
-                        <cfelse>
-                            <i class="fa fa-thumbs-up"></i> This content is published!
-                        </cfif>
-                    </div>                
-                <cfelse>
-                    <div class="alert alert-warning">
-                        <i class="fa fa-exclamation-triangle"></i> This content is in draft!
-                    </div>
-                </cfif>
-
-            </cfif>
-
             <div class="btn-group">
-                
                 <button type="button" class="btn btn-info" onclick="quickSave()" title="Save and continue editing">
                     Save
                 </button>
@@ -165,21 +173,19 @@
                 </ul>
             </div>
 
-            <div class="btn-group">
-                <button class="btn btn-success" 
-                        onclick="togglePublishingBar()"
-                        type="button"
-                        title="Open Publishing Details"
-                >
-                        Publish
-                </button>
-            </div>
+			<button class="btn btn-success"
+					onclick="togglePublishingBar()"
+					type="button"
+					title="Open Publishing Details"
+			>
+					Publish
+			</button>
         </div>
 
         <!--- Loader --->
         <div class="loaders" id="uploadBarLoader">
             <i class="fa fa-spinner fa-spin fa-lg fa-2x"></i>
-            <div id="uploadBarLoaderStatus" class="center textRed">Saving...</div>
+            <div id="uploadBarLoaderStatus" class="center text-red">Saving...</div>
         </div>
     </div>
 </cfoutput>

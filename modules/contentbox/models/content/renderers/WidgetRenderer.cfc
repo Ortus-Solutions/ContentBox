@@ -13,10 +13,10 @@ component accessors="true" extends="BaseRenderer"{
 	/**
 	* Execute on content translations for pages and blog entries
 	*/
-	void function cb_onContentRendering( event, struct interceptData ){
+	void function cb_onContentRendering( event, struct data ){
 		translateContent(
-			builder	= arguments.interceptData.builder,
-			content = arguments.interceptData.content,
+			builder	= arguments.data.builder,
+			content = arguments.data.content,
 			event	= arguments.event
 		);
 	}

@@ -1,5 +1,5 @@
 <cfoutput>
-    <cfset ETH = getModel( "EmailTemplateHelper@cb" )>
+    <cfset ETH = getInstance( "EmailTemplateHelper@cb" )>
     #ETH.text( "
         <p>Dear @name@,</p>
 
@@ -8,9 +8,9 @@
         </p>
 
         <p>
-            Please follow the link below to reset your account password.
+            Please follow the link below to reset your account password and finalize the creation of your new account.
             Please note that your link below will only be active for the next @linkTimeout@ minutes.<br /><br />
-            <a href='@linkToken@'>Click here to reset password</a>
+            <a href='@linkToken@'>Click here to reset your password</a>
         </p>
 
         <p>Reset Link: @linkToken@</p>
@@ -20,6 +20,5 @@
             following the reset password link: <a href='@resetLink@'>Reset Password</a> and entering your
             account email: <strong>@email@</strong>.
         </div>
-
     " )#
 </cfoutput>

@@ -1,127 +1,165 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* I am a Comment Entity
-*/
-component	persistent="true" 
-			entityname="cbComment" 
-			table="cb_comment" 
-			batchsize="25" 
-			extends="contentbox.models.BaseEntity"
-			cachename="cbComment" 
-			cacheuse="read-write"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * I am a Comment Entity
+ */
+component
+	persistent="true"
+	entityname="cbComment"
+	table     ="cb_comment"
+	batchsize ="25"
+	extends   ="contentbox.models.BaseEntity"
+	cachename ="cbComment"
+	cacheuse  ="read-write"
+{
 
 	/* *********************************************************************
-	**							PROPERTIES									
-	********************************************************************* */
+	 **							DI
+	 ********************************************************************* */
 
-	property 	name="commentID" 
-				fieldtype="id" 
-				generator="native" 
-				setter="false" 
-				params="{ allocationSize = 1, sequence = 'commentID_seq' }";
-
-	property 	name="content" 		
-				ormtype="text" 	
-				notnull="true";
-
-	property 	name="author"			
-				length="100" 	
-				notnull="true";
-
-	property 	name="authorIP"		
-				length="100" 	
-				notnull="true";
-
-	property 	name="authorEmail"		
-				length="255" 	
-				notnull="true";
-
-	property 	name="authorURL"		
-				length="255" 	
-				notnull="false";
-
-	property 	name="isApproved" 		
-				notnull="true"  
-				ormtype="boolean" 	
-				default="false" 
-				index="idx_contentComment,idx_approved";
+	property
+		name      ="markdown"
+		inject    ="Processor@cbmarkdown"
+		persistent="false";
 
 	/* *********************************************************************
-	**							RELATIONSHIPS									
-	********************************************************************* */
+	 **							PROPERTIES
+	 ********************************************************************* */
+
+	property
+		name     ="commentID"
+		column   ="commentID"
+		fieldtype="id"
+		generator="uuid"
+		length   ="36"
+		ormtype  ="string"
+		setter   ="false"
+		update   ="false";
+
+	property
+		name   ="content"
+		ormtype="text"
+		notnull="true";
+
+	property
+		name   ="author"
+		length ="100"
+		notnull="true";
+
+	property
+		name   ="authorIP"
+		column ="authorIP"
+		length ="100"
+		notnull="true";
+
+	property
+		name   ="authorEmail"
+		column ="authorEmail"
+		length ="255"
+		notnull="true";
+
+	property
+		name   ="authorURL"
+		column ="authorURL"
+		length ="255"
+		notnull="false";
+
+	property
+		name   ="isApproved"
+		column ="isApproved"
+		notnull="true"
+		ormtype="boolean"
+		default="false"
+		index  ="idx_contentComment,idx_approved";
+
+	/* *********************************************************************
+	 **							RELATIONSHIPS
+	 ********************************************************************* */
 
 	// M20 -> Content loaded as a proxy
-	property 	name="relatedContent" 
-				notnull="true" 
-				cfc="contentbox.models.content.BaseContent" 
-				fieldtype="many-to-one" 
-				fkcolumn="FK_contentID" 
-				lazy="true" 
-				index="idx_contentComment";
+	property
+		name     ="relatedContent"
+		notnull  ="true"
+		cfc      ="contentbox.models.content.BaseContent"
+		fieldtype="many-to-one"
+		fkcolumn ="FK_contentID"
+		lazy     ="true"
+		fetch    ="join"
+		index    ="idx_contentComment";
 
 	/* *********************************************************************
-	**							CONSTRAINTS + PK									
-	********************************************************************* */
+	 **							CONSTRAINTS + PK
+	 ********************************************************************* */
 
 	this.pk = "commentID";
 
-	this.constraints = {
-		"content" 		= { required = true },
-		"author" 		= { required = true, size="1..100" },
-		"authorIP" 		= { required = true, size="1..100" },
-		"authorEmail" 	= { required = true, size="1..255", type="email" },	
-		"authorURL" 	= { required = true, size="1..255", type="URL" }
+	this.memento = {
+		defaultIncludes : [
+			"content",
+			"displayContent:renderedContent",
+			"author",
+			"authorIP",
+			"authorEmail",
+			"authorURL",
+			"isApproved"
+		],
+		defaultExcludes : [ "relatedContent" ]
 	};
 
-	/************************************** CONSTRUCTOR *********************************************/
+	this.constraints = {
+		"content"     : { required : true },
+		"author"      : { required : true, size : "1..100" },
+		"authorIP"    : { required : true, size : "1..100" },
+		"authorEmail" : { required : true, size : "1..255", type : "email" },
+		"authorURL"   : { required : true, size : "1..255", type : "URL" },
+		"isApproved"  : { required : true, type : "boolean" }
+	};
 
-	/**
-	* constructor
-	*/
 	function init(){
-		variables.isApproved 	= false;
-		variables.createdDate	= now();
+		variables.isApproved  = false;
+		variables.createdDate = now();
 
 		super.init();
 
 		return this;
 	}
 
-	/************************************** PUBLIC *********************************************/
+	/**
+	 * Build a snapshot of the related content
+	 */
+	struct function getRelatedContentSnapshot(){
+		if ( hasRelatedContent() ) {
+			return getRelatedContent().getInfoSnapshot();
+		}
+		return {};
+	}
 
 	/**
-	* Get memento representation
-	*/
-	function getMemento( excludes="" ){
-		var pList 	= listToArray( "content,author,authorIP,authorEmail,authorURL,isApproved" );
-		var result 	= getBaseMemento( properties=pList, excludes=arguments.excludes );
-		
-		return result;
-	}
-	
-	/**
-	* Get Display Content
-	*/
+	 * Render the comment using markdown and encoding it for HTML output
+	 */
 	string function getDisplayContent(){
-		return paragraphFormat( getContent() );
+		return variables.markdown.toHTML( getContent().reReplace( "##{1,6}\s", "", "all" ) );
 	}
 
 	/**
-	* Get parent slug from either the page it belongs or the entry it belongs to.
-	*/
+	 * Get parent slug from either the page it belongs or the entry it belongs to.
+	 */
 	function getParentSlug(){
-		if( hasRelatedContent() ){ return getRelatedContent().getSlug(); }
+		if ( hasRelatedContent() ) {
+			return getRelatedContent().getSlug();
+		}
 		return "";
 	}
 
 	/**
-	* Get parent title from either the page it belongs or the entry it belongs to.
-	*/
+	 * Get parent title from either the page it belongs or the entry it belongs to.
+	 */
 	function getParentTitle(){
-		if( hasRelatedContent() ){ return getRelatedContent().getTitle(); }
+		if ( hasRelatedContent() ) {
+			return getRelatedContent().getTitle();
+		}
 		return "";
 	}
 

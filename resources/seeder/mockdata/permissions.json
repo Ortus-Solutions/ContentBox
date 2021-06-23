@@ -1,0 +1,354 @@
+[
+	{
+		"permissionID" : 1,
+		"permission" : "PAGES_ADMIN",
+		"description": "Ability to manage content pages, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 2,
+		"permission" : "EDITORS_EDITOR_SELECTOR",
+		"description": "Ability to change the editor to another registered online editor",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 3,
+		"permission" : "WIDGET_ADMIN",
+		"description": "Ability to manage widgets, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 4,
+		"permission" : "TOOLS_IMPORT",
+		"description": "Ability to import data into ContentBox",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 5,
+		"permission" : "GLOBALHTML_ADMIN",
+		"description": "Ability to manage the system's global HTML content used on layouts",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 6,
+		"permission" : "PAGES_EDITOR",
+		"description": "Ability to manage content pages but not publish pages",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 7,
+		"permission" : "SYSTEM_TAB",
+		"description": "Access to the ContentBox System tools",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 9,
+		"permission" : "SYSTEM_UPDATES",
+		"description": "Ability to view and apply ContentBox updates",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 10,
+		"permission" : "CONTENTBOX_ADMIN",
+		"description": "Access to the enter the ContentBox administrator console",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 11,
+		"permission" : "RELOAD_MODULES",
+		"description": "Ability to reload modules",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 12,
+		"permission" : "MODULES_ADMIN",
+		"description": "Ability to manage ContentBox Modules",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 13,
+		"permission" : "COMMENTS_ADMIN",
+		"description": "Ability to manage comments, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 14,
+		"permission" : "AUTHOR_ADMIN",
+		"description": "Ability to manage authors, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 15,
+		"permission" : "PERMISSIONS_ADMIN",
+		"description": "Ability to manage permissions, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 16,
+		"permission" : "MEDIAMANAGER_ADMIN",
+		"description": "Ability to manage the system's media manager",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 17,
+		"permission" : "SYSTEM_RAW_SETTINGS",
+		"description": "Access to the ContentBox raw geek settings panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 18,
+		"permission" : "CATEGORIES_ADMIN",
+		"description": "Ability to manage categories, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 19,
+		"permission" : "EDITORS_DISPLAY_OPTIONS",
+		"description": "Ability to view the content display options panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 20,
+		"permission" : "EDITORS_HTML_ATTRIBUTES",
+		"description": "Ability to view the content HTML attributes panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 22,
+		"permission" : "FORGEBOX_ADMIN",
+		"description": "Ability to manage ForgeBox installations and connectivity.",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 23,
+		"permission" : "THEME_ADMIN",
+		"description": "Ability to manage themes, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 24,
+		"permission" : "EDITORS_CATEGORIES",
+		"description": "Ability to view the content categories panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 25,
+		"permission" : "EDITORS_MODIFIERS",
+		"description": "Ability to view the content modifiers panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 26,
+		"permission" : "ENTRIES_ADMIN",
+		"description": "Ability to manage blog entries, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 27,
+		"permission" : "VERSIONS_ROLLBACK",
+		"description": "Ability to rollback content versions",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 28,
+		"permission" : "EDITORS_CACHING",
+		"description": "Ability to view the content caching panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 29,
+		"permission" : "ROLES_ADMIN",
+		"description": "Ability to manage roles, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 30,
+		"permission" : "SYSTEM_SAVE_CONFIGURATION",
+		"description": "Ability to update global configuration data",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 31,
+		"permission" : "ENTRIES_EDITOR",
+		"description": "Ability to manage blog entries but not publish entries",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 32,
+		"permission" : "VERSIONS_DELETE",
+		"description": "Ability to delete past content versions",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 33,
+		"permission" : "SECURITYRULES_ADMIN",
+		"description": "Ability to manage the system's security rules, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 34,
+		"permission" : "TOOLS_EXPORT",
+		"description": "Ability to export data from ContentBox",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 36,
+		"permission" : "CONTENTSTORE_ADMIN",
+		"description": "Ability to manage the content store, default is view only",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 37,
+		"permission" : "CONTENTSTORE_EDITOR",
+		"description": "Ability to manage content store elements but not publish them",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 38,
+		"permission" : "MEDIAMANAGER_LIBRARY_SWITCHER",
+		"description": "Ability to switch media manager libraries for management",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 39,
+		"permission" : "EDITORS_CUSTOM_FIELDS",
+		"description": "Ability to manage custom fields in any content editors",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 40,
+		"permission" : "GLOBAL_SEARCH",
+		"description": "Ability to do global searches in the ContentBox Admin",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 41,
+		"permission" : "EDITORS_RELATED_CONTENT",
+		"description": "Ability to view the related content panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 42,
+		"permission" : "EDITORS_LINKED_CONTENT",
+		"description": "Ability to view the linked content panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 43,
+		"permission" : "MENUS_ADMIN",
+		"description": "Ability to manage the menu builder",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 44,
+		"permission" : "SYSTEM_AUTH_LOGS",
+		"description": "Access to the system auth logs",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 45,
+		"permission" : "EDITORS_FEATURED_IMAGE",
+		"description": "Ability to view the featured image panel",
+		"createdDate" : { "value" : "2016-05-03 16:23:26", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2016-05-03 16:23:26",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 46,
+		"permission" : "EMAIL_TEMPLATE_ADMIN",
+		"description": "Ability to admin and preview email templates",
+		"createdDate" : { "value" : "2017-06-20 16:13:01", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2017-06-20 16:13:01",
+		"isDeleted" : 0
+	},
+	{
+		"permissionID" : 47,
+		"permission" : "SITES_ADMIN",
+		"description": "Ability to manage sites",
+		"createdDate" : { "value" : "2020-09-09 17:16:59", "cfsqltype" : "timestamp" },
+		"modifiedDate" : "2020-09-09 17:16:59",
+		"isDeleted" : 0
+	}
+]

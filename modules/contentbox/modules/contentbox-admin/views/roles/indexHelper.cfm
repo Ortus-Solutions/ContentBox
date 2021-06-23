@@ -1,29 +1,24 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$( "##roles" ).dataTable( {
 		"paging": false,
 		"info": false,
 		"searching": false,
 	    "columnDefs": [
-	        { 
-	            "orderable": false, 
-	            "targets": '{sorter:false}' 
+	        {
+	            "orderable": false,
+	            "targets": '{sorter:false}'
 	        }
 	    ],
 	    "order": []
 	} );
+
 	<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
 	$importDialog = $( "##importDialog" );
-	$roleEditor = $( "##roleEditor" );
-	// form validator
-	$roleEditor.validate();
-	// reset
-	$('##btnReset').click(function() {
-		$roleEditor.find( "##roleID" ).val( '' );
-	} );
 	</cfif>
+
 	// table sorting + filtering
 	$( "##roleFilter" ).keyup(
 		_.debounce(
@@ -34,25 +29,26 @@ $(document).ready(function() {
         )
 	);
 } );
-<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
-function edit(roleID,role,description){
-	openModal( $( "##roleEditorContainer" ), 500, 200 );
-	$roleEditor.find( "##roleID" ).val( roleID );
-	$roleEditor.find( "##role" ).val( role );
-	$roleEditor.find( "##description" ).val( description );
-}
-function remove(roleID){
+<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+function remove( roleID ){
 	var $roleForm = $( "##roleForm" );
-	$( "##delete_"+ roleID).removeClass( "fa-trash-o" ).addClass( "fa fa-spinner fa-spin" );
+	$( "##delete_"+ roleID )
+		.removeClass( "fa-trash-o" )
+		.addClass( "fa fa-spinner fa-spin" );
 	$roleForm.find( "##roleID" ).val( roleID );
 	$roleForm.submit();
 }
-function createRole(){
-	openModal( $( "##roleEditorContainer" ), 500, 200 );
-	$roleEditor.find( "##roleID" ).val( '' );
-	$roleEditor.find( "##role" ).val( '' );
-	$roleEditor.find( "##description" ).val( '' );
-	return false;
+function exportSelected( exportEvent ){
+	var selected = [];
+	$( "##roleID:checked" ).each( function(){
+		selected.push( $( this ).val() );
+	} );
+	if( selected.length ){
+		checkAll( false, 'roleID' );
+		window.open( exportEvent + "/roleID/" + selected );
+	} else {
+		alert( "Please select something to export!" );
+	}
 }
 </cfif>
 </script>

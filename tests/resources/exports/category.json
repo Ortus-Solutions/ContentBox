@@ -1,0 +1,15 @@
+{
+    "categoryID": "786a97f0-a444-11eb-ab6f-0290cc502ae3",
+    "slug": "test",
+    "createdDate": "2016-05-03T21:23:25+00:00",
+    "numberOfPages": "0",
+    "numberOfEntries": "4",
+    "category": "Test",
+    "numberOfContentStore": "1",
+    "modifiedDate": "2016-05-03T21:23:25+00:00",
+    "site": {
+        "slug": "default",
+        "siteID": "1c81d376-a481-11eb-ab6f-0290cc502ae3",
+        "name": "Default Site"
+    }
+}

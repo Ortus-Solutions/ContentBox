@@ -1,23 +1,23 @@
 /**
-* Manage Themes
-*/
-component extends="baseHandler"{
+ * Manage Themes
+ */
+component extends="baseHandler" {
 
 	// Dependencies
-	property name="themeService"	inject="id:themeService@cb";
-	property name="contentService"	inject="id:contentService@cb";
+	property name="themeService" inject="themeService@cb";
+	property name="contentService" inject="contentService@cb";
 
 	/**
-	* Active Theme
-	*/
+	 * Active Theme
+	 */
 	function active( event, rc, prc ){
 		// exit Handlers
-		prc.xehPreview			= "#prc.cbEntryPoint#.__preview";
-		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.themes.saveSettings";
+		prc.xehPreview      = "#prc.cbEntryPoint#.__preview";
+		prc.xehSaveSettings = "#prc.cbAdminEntryPoint#.themes.saveSettings";
 
 		// Get them info
-		prc.activeTheme 	= themeService.getActiveTheme();
-		prc.themeService	= themeService;
+		prc.activeTheme  = variables.themeService.getActiveTheme();
+		prc.themeService = variables.themeService;
 
 		// Tab
 		prc.tabLookAndFeel_activeTheme = true;
@@ -27,27 +27,27 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Manage themes
-	*/
+	 * Manage themes
+	 */
 	function index( event, rc, prc ){
 		// exit Handlers
-		prc.xehThemes 			= "#prc.cbAdminEntryPoint#.themes.index";
-		prc.xehThemeRemove 		= "#prc.cbAdminEntryPoint#.themes.remove";
-		prc.xehThemeUpload  	= "#prc.cbAdminEntryPoint#.themes.upload";
-		prc.xehFlushRegistry 	= "#prc.cbAdminEntryPoint#.themes.rebuildRegistry";
-		prc.xehActivate			= "#prc.cbAdminEntryPoint#.themes.activate";
-		prc.xehPreview			= "#prc.cbEntryPoint#.__preview";
-		prc.xehSaveSettings 	= "#prc.cbAdminEntryPoint#.themes.saveSettings";
+		prc.xehThemes        = "#prc.cbAdminEntryPoint#.themes.index";
+		prc.xehThemeRemove   = "#prc.cbAdminEntryPoint#.themes.remove";
+		prc.xehThemeUpload   = "#prc.cbAdminEntryPoint#.themes.upload";
+		prc.xehFlushRegistry = "#prc.cbAdminEntryPoint#.themes.rebuildRegistry";
+		prc.xehActivate      = "#prc.cbAdminEntryPoint#.themes.activate";
+		prc.xehPreview       = "#prc.cbEntryPoint#.__preview";
+		prc.xehSaveSettings  = "#prc.cbAdminEntryPoint#.themes.saveSettings";
 
 		// Rescan if newly installed theme?
-		if( event.getValue( "rescan", false ) ){
-			themeService.buildThemeRegistry();
+		if ( event.getValue( "rescan", false ) ) {
+			variables.themeService.buildThemeRegistry();
 		}
 
 		// Get all layouts
-		prc.themes 			= themeService.getThemes();
-		prc.activeTheme 	= themeService.getActiveTheme();
-		prc.themeService	= themeService;
+		prc.themes       = variables.themeService.getThemes();
+		prc.activeTheme  = variables.themeService.getActiveTheme();
+		prc.themeService = variables.themeService;
 
 		// Tab
 		prc.tabLookAndFeel_themes = true;
@@ -57,66 +57,71 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Save theme settings
-	*/
+	 * Save theme settings
+	 */
 	function saveSettings( event, rc, prc ){
 		prc.xehActiveTheme = "#prc.cbAdminEntryPoint#.themes.active";
-		var vResults = validateModel( target=rc, constraints=themeService.getSettingsConstraints( rc.themeName ) );
+		var vResults       = validate(
+			target      = rc,
+			constraints = variables.themeService.getSettingsConstraints( rc.themeName )
+		);
+
 		// Validate results
-		if( vResults.hasErrors() ){
-			cbMessagebox.error( messageArray=vResults.getAllErrors() );
-			return index( argumentCollection=arguments );
+		if ( vResults.hasErrors() ) {
+			variables.cbMessagebox.error( vResults.getAllErrors() );
+			return index( argumentCollection = arguments );
 		}
 
 		// Announce event
-		announceInterception( "cbadmin_preThemeSettingsSave", { name=rc.themeName } );
+		announce( "cbadmin_preThemeSettingsSave", { name : rc.themeName } );
 
 		// Results validated, save settings
-		themeService.saveThemeSettings( name=rc.themeName, settings=rc );
-		settingservice.flushSettingsCache();
-		cbMessagebox.info( message="Theme settings saved!" );
+		variables.themeService.saveThemeSettings( name = rc.themeName, settings = rc );
+		variables.settingservice.flushSettingsCache();
+		variables.cbMessagebox.info( message = "Theme settings saved!" );
 
 		// Announce event
-		announceInterception( "cbadmin_postThemeSettingsSave", { name=rc.themeName } );
+		announce( "cbadmin_postThemeSettingsSave", { name : rc.themeName } );
 
 		// Relocate
-		relocate( event=prc.xehActiveTheme );
+		relocate( event = prc.xehActiveTheme );
 	}
 
 	/**
-	* Activate a theme
-	*/
+	 * Activate a theme
+	 */
 	function activate( event, rc, prc ){
 		// Activate the theme
-		themeService.activateTheme( rc.themeName );
+		variables.themeService.activateTheme( rc.themeName );
 		// clear caches
-		contentService.clearAllCaches();
+		variables.contentService.clearAllCaches();
 		// messages
-		cbMessagebox.info( "#rc.themeName# Activated!" );
+		variables.cbMessagebox.info( "#rc.themeName# Activated!" );
 		// Relocate
-		relocate(prc.xehThemes);
+		relocate( prc.xehThemes );
 	}
 
 	/**
-	* Rebuild theme registry
-	*/
+	 * Rebuild theme registry
+	 */
 	function rebuildRegistry( event, rc, prc ){
-		themeService.buildThemeRegistry();
-		cbMessagebox.info( "Themes re-scanned and registered!" );
-		relocate( event=prc.xehThemes, queryString="##themesPane" );
+		variables.themeService.buildThemeRegistry();
+		variables.cbMessagebox.info( "Themes re-scanned and registered!" );
+		relocate( event = prc.xehThemes, queryString = "##themesPane" );
 	}
 
 	/**
-	* Remove a theme
-	*/
+	 * Remove a theme
+	 */
 	function remove( event, rc, prc ){
-		if( themeService.removeTheme( rc.themeName ) ){
-			cbMessagebox.info( "Theme Removed Forever!" );
+		if ( variables.themeService.removeTheme( rc.themeName ) ) {
+			variables.cbMessagebox.info( "Theme Removed Forever!" );
+		} else {
+			variables.cbMessagebox.error(
+				"Error removing theme, please check your logs for more information!"
+			);
 		}
-		else{
-			cbMessagebox.error( "Error removing theme, please check your logs for more information!" );
-		}
-		relocate(event=prc.xehThemes, queryString="##themesPane" );
+		relocate( event = prc.xehThemes, queryString = "##themesPane" );
 	}
 
 }

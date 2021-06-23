@@ -1,55 +1,101 @@
 <cfoutput>
 <cfif arrayLen( prc.content )>
     <!--- matches --->
-    <table name="content" id="#rc.contentType#" class="table table-hover table-striped table-condensed" width="98%">
+    <table name="content" id="#rc.contentType#" class="table table-hover table-striped-removed " >
         <thead>
             <tr>
-                <th>Content Title</th>
-                <th width="40" class="text-center"><i class="fa fa-globe fa-lg" title="Published?"></i></th>
-                <th width="120" class="text-center">Select</th>
+				<th>
+					Title
+				</th>
+				<th width="40" class="text-center">
+					Status
+				</th>
+				<th width="60" class="text-center">
+					Select
+				</th>
             </tr>
-        </thead>
+		</thead>
+
         <tbody>
             <cfloop array="#prc.content#" index="content">
-            <tr id="contentID-#content.getContentID()#" <cfif NOT content.getIsPublished()>class="warning"</cfif>
-            ondblclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )">
+			<tr
+				id="contentID-#content.getContentID()#"
+				<cfif NOT content.getIsPublished()>
+					class="warning"
+				</cfif>
+				ondblclick="return chooseRelatedContent(
+					'#content.getContentID()#',
+					'#encodeForJavaScript( content.getTitle() )#',
+					'#encodeForJavaScript( content.getContentType() )#',
+					'#encodeForJavaScript( content.getSlug() )#'
+				)"
+				title="Double click to select"
+			>
                 <td>
                     <!--- Title --->
-                    <strong>#content.getTitle()#</strong>
-                    <br>
-                    <span class="label label-primary">Published: #content.getDisplayPublishedDate()#</span>
-                    <cfif content.getContentType() eq "page">
-                        <span class="label label-success">#content.getSlug()#</span>
-                    <cfelseif content.getContentType() eq "contentStore">
-                        #content.getDescription()#
-                    </cfif>
-                </td>
-                <td class="text-center">
-                    <cfif content.getIsPublished()>
-                        <i class="fa fa-circle fa-lg textGreen"></i>
-                        <span class="hidden">published</span>
-                    <cfelse>
-                        <i class="fa fa-remove fa-lg textRed"></i>
-                        <span class="hidden">draft</span>
-                    </cfif>
-                </td>
+					<div class="size16">
+						#content.getTitle()#
+					</div>
+
+					<div class="mt5">
+						<div class="text-muted">
+						<cfif content.getContentType() eq "contentStore">
+							#content.getDescription()#
+						<cfelse>
+							<cfif content.hasExcerpt()>
+								#prc.cbHelper.stripHTML( left( content.getExcerpt(), 100 ) )#
+							<cfelse>
+								#prc.cbHelper.stripHTML( left( content.getContent(), 100 ) )#
+							</cfif>
+							...
+						</cfif>
+						</div>
+					</div>
+				</td>
+
+				<td class="text-center">
+					#renderView(
+						view : "_components/content/TableStatus",
+						args : { content : content },
+						prepostExempt : true
+					)#
+				</td>
+
                 <td class="text-center">
                     <div class="btn-group">
-                        <button class="btn btn-sm btn-success" onclick="return chooseRelatedContent( #content.getContentID()#,'#content.getTitle()#','#content.getContentType()#', '#content.getSlug()#' )" title="Link">
-                            <i class="fa fa-check fa-lg"></i>
+                        <button
+                        	class="btn btn-sm btn-more"
+                        	onclick="return chooseRelatedContent(
+								'#content.getContentID()#',
+								'#encodeForJavaScript( content.getTitle() )#',
+								'#encodeForJavaScript( content.getContentType() )#',
+								'#encodeForJavaScript( content.getSlug() )#'
+							)"
+							title="Select"
+						>
+                            <i class="far fa-check-circle fa-lg"></i>
                         </button>
                     </div>
                 </td>
             </tr>
             </cfloop>
         </tbody>
-    </table>
+	</table>
+
 <cfelse>
-    <div class="alert alert-block">
+    <div class="alert alert-warning">
         <h4>Sorry!</h4>
-        <p>No results were found matching your search.</p>
+		<p>
+			No results were found matching your search
+			<code>#encodeForHTML( rc.search )#</code>
+		</p>
     </div>
 </cfif>
+
 <!--- Paging --->
-#prc.oPaging.renderit( foundRows=prc.contentCount, link=prc.pagingLink, asList=true )#
+#prc.oPaging.renderit(
+	foundRows = prc.contentCount,
+	link      = prc.pagingLink,
+	asList    = true
+)#
 </cfoutput>

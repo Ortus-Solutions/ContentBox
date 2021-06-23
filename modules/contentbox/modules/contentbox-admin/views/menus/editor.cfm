@@ -2,16 +2,16 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fa fa-sort-amount-desc fa-lg"></i> Menu Designer
+            <i class="fas fa-bars fa-lg"></i> Menu Designer
         </h1>
     </div>
 </div>
 
-#html.startForm( 
-    action      = prc.xehMenuSave, 
-    name        = "menuForm", 
-    novalidate  = "novalidate", 
-    class       = "form-vertical" 
+#html.startForm(
+    action      = prc.xehMenuSave,
+    name        = "menuForm",
+    novalidate  = "novalidate",
+    class       = "form-vertical"
 )#
 
 <div class="row">
@@ -21,12 +21,12 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <div class="actions">
-                    <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-reply"></i> Back</a>
+                    <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fas fa-chevron-left"></i> Back</a>
                 </div>
             </div>
             <div class="panel-body">
-                
-                #getModel( "messagebox@cbMessagebox" ).renderit()#
+
+                #cbMessageBox().renderit()#
 
                 <menu class="well well-sm">
                     <p>Click any of the options below to insert a new menu item of that type.</p>
@@ -65,30 +65,32 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fa fa-refresh"></i></a></h3>
+                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fas fa-recycle"></i></a></h3>
                         <p>Here's an instant preview of your menu.</p>
                         <div id="preview-panel" class="well well-sm">No Preview Available</div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <div class="col-md-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-cogs"></i> Menu Data</h3>
+				<h3 class="panel-title">
+					<i class="fas fa-bars fa-lg"></i> Menu Data
+				</h3>
             </div>
             <div class="panel-body">
                 <!--- id --->
                 #html.hiddenField( name="menuID", bind=prc.menu )#
-                #html.hiddenField( name="menuItems" )#      
+                #html.hiddenField( name="menuItems" )#
                 <!--- title --->
                 #html.textfield(
                     label="Title:",
                     name="title",
-                    bind=prc.menu, 
+                    bind=prc.menu,
                     maxlength="100",
                     required="required",
                     title="The title for this menu",
@@ -98,7 +100,7 @@
                     groupWrapper="div class=form-group"
                 )#
                 #html.select(
-                    options="ul,ol", 
+                    options="ul,ol",
                     name="listType",
                     label="List Type:",
                     bind=prc.menu,
@@ -119,7 +121,7 @@
                                 value=prc.menu.getSlug(),
                                 maxlength="100",
                                 class="form-control",
-                                title="The unique slug for this menu", 
+                                title="The unique slug for this menu",
                                 disabled="#prc.menu.isLoaded() ? 'true' : 'false'#"
                             )#
                             <a title="" class="input-group-addon" href="javascript:void(0)" onclick="toggleSlug(); return false;" data-original-title="Lock/Unlock Menu Slug" data-container="body">
@@ -131,7 +133,7 @@
                 #html.textfield(
                     label="CSS Classes:",
                     name="menuClass",
-                    bind=prc.menu, 
+                    bind=prc.menu,
                     maxlength="100",
                     title="Additional CSS classes to use for the main menu HTML element",
                     class="form-control",
@@ -142,7 +144,7 @@
                 #html.textfield(
                     label="List CSS Classes:",
                     name="listClass",
-                    bind=prc.menu, 
+                    bind=prc.menu,
                     maxlength="100",
                     title="CSS classes to apply to all list elements (ul/ol) within this menu",
                     class="form-control",
@@ -159,7 +161,7 @@
         </div>
     </div>
 </div>
-#html.endForm()# 
+#html.endForm()#
 
 <!--- CONTEXT MENU TEMPLATE --->
 <div id="context-menu" class="dropdown clearfix" style="position: absolute;display:none;">
@@ -180,7 +182,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3><i class="fa fa-eye"></i> Menu Preview</h3>
+                <h3><i class="far fa-eye"></i> Menu Preview</h3>
             </div>
             <div class="modal-body"></div>
         </div>

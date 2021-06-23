@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$(document).ready(function() {
+$( document ).ready(function() {
 	$commentForm = $( "##commentForm" );
 	// Comment search
 	$( "##commentSearch" ).keyup(
@@ -40,7 +40,7 @@ $(document).ready(function() {
 } );
 <cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 function changeStatus(status,recordID){
-	$commentForm.attr( "action","#event.buildlink(linkTo=prc.xehCommentstatus)#" );
+	$commentForm.attr( "action","#event.buildlink(to=prc.xehCommentstatus)#" );
 	$commentForm.find( "##commentStatus" ).val(status);
 	if( recordID != null ){
 		$( "##status_"+ recordID).removeClass( "fa fa-minus-circle" ).addClass( "fa fa-spinner fa-spin" );

@@ -1,9 +1,9 @@
 <cfoutput>
 <!--- latest edits --->
-<table 
-	name="contentTable-#args.viewletID#" 
-	id="contentTable-#args.viewletID#" 
-	class="table table-hover table-condensed table-striped" 
+<table
+	name="contentTable-#args.viewletID#"
+	id="contentTable-#args.viewletID#"
+	class="table table-hover  table-striped-removed"
 	width="100%"
 >
 	<thead>
@@ -11,16 +11,16 @@
 			<th>Title</th>
 
 			<th width="175">Date</th>
-			
+
 			<cfif args.showPublishedStatus>
 			<th width="50" class="text-center">
-				<i class="fa fa-globe fa-lg" title="Published"></i>
+				Status
 			</th>
 			</cfif>
 
 			<cfif args.showHits>
 			<th width="40" class="text-center">
-				<i class="fa fa-signal fa-lg" title="Hits"></i>
+				Hits
 			</th>
 			</cfif>
 
@@ -46,17 +46,32 @@
 			<td>
 				<!--- Editor --->
 	    		<cfif thisContent.getContentType() eq "page">
-					<a href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page">#thisContent.getTitle()#</a>
-					<br>
-					<span class="label label-default">#thisContent.getContentType()#</span>
+					<!--- Edit --->
+					<a href="#event.buildLink( prc.xehPagesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Page">
+						#thisContent.getTitle()#
+					</a>
+					<!--- Label --->
+					<div class="mt5">
+						<span class="label label-success">#thisContent.getContentType()#</span>
+					</div>
 				<cfelseif thisContent.getContentType() eq "contentStore">
-					<a href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit ContentStore">#thisContent.getTitle()#</a>
-					<br>
-					<span class="label label-info">#thisContent.getContentType()#</span>
+					<!--- Edit --->
+					<a href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" title="Edit ContentStore">
+						#thisContent.getTitle()#
+					</a>
+					<!--- Label --->
+					<div class="mt5">
+						<span class="label label-default">#thisContent.getContentType()#</span>
+					</div>
 				<cfelse>
-					<a href="#event.buildLink( prc.xehBlogEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry">#thisContent.getTitle()#</a>
-					<br>
-					<span class="label label-primary">#thisContent.getContentType()#</span>
+					<!--- Edit --->
+					<a href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#thisContent.getContentID()#" title="Edit Entry">
+						#thisContent.getTitle()#
+					</a>
+					<!--- Label --->
+					<div class="mt5">
+						<span class="label label-info">#thisContent.getContentType()#</span>
+					</div>
 				</cfif>
 			</td>
 
@@ -65,8 +80,8 @@
 			<!--- ***************************************************************************** --->
 			<td>
 				<cfif args.showAuthor>
-					#getModel( "Avatar@cb" ).renderAvatar( 
-						email 	= thisContent.getAuthorEmail(), 
+					#getInstance( "Avatar@cb" ).renderAvatar(
+						email 	= thisContent.getAuthorEmail(),
 						size 	= "20" ,
 						class 	= "gravatar img-circle"
 					)#
@@ -75,73 +90,84 @@
 				</cfif>
 				#thisContent.getActiveContent().getDisplayCreatedDate()#
 			</td>
-			
+
 			<!--- ***************************************************************************** --->
 			<!--- 								PUBLISHED STATUS								--->
 			<!--- ***************************************************************************** --->
 			<cfif args.showPublishedStatus>
-			<td class="text-center">
-				<cfif thisContent.isExpired()>
-					<i 	class="fa fa-clock-o fa-lg textRed" 
-						title="Content has expired on (#thisContent.getDisplayExpireDate()#)"></i>
-					<span class="hidden">expired</span>
-				<cfelseif thisContent.isPublishedInFuture()>
-					<i 	class="fa fa-fighter-jet fa-lg textBlue" 
-						title="Content Publishes in the future (#thisContent.getDisplayPublishedDate()#)"></i>
-					<span class="hidden">published in future</span>
-				<cfelseif thisContent.isContentPublished()>
-					<i 	class="fa fa-circle fa-lg textGreen" 
-						title="Content Published"></i>
-					<span class="hidden">published in future</span>
-				<cfelse>
-					<i 	class="fa fa-circle fa-lg textRed" 
-						title="Content Draft"></i>
-					<span class="hidden">draft</span>
-				</cfif>
-			</td>
+				<td class="text-center">
+					#renderView(
+						view : "_components/content/TableStatus",
+						args : { content : thisContent },
+						prepostExempt : true
+					)#
+				</td>
 			</cfif>
-			
+
 			<!--- ***************************************************************************** --->
 			<!--- 								HITS 											--->
 			<!--- ***************************************************************************** --->
 			<cfif args.showHits>
-			<td class="text-center">
-				<span class="badge badge-info">#thisContent.getNumberOfHits()#</span>
-			</td>
+				<td class="text-center">
+					<span class="badge badge-info">#thisContent.getNumberOfHits()#</span>
+				</td>
 			</cfif>
-			
+
 			<!--- ***************************************************************************** --->
 			<!--- 								ACTIONS											--->
 			<!--- ***************************************************************************** --->
 			<td class="text-center">
-				<!--- Content Actions --->
-				<div class="btn-group btn-xs">
-					<!--- View in Site --->
-					<cfif listFindNoCase( "page,entry", thisContent.getContentType() )>
-						<a 	class="btn btn-info btn-sm" 
-							href="#prc.CBHelper.linkContent( thisContent )#" 
-							target="_blank" 
-							title="View in Site"
-						>
-							<i class="fa fa-eye fa-lg"></i>
-						</a>
-					<cfelse>
-						<a 	class="btn btn-primary btn-sm" 
-							href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#thisContent.getContentID()#" 
-							title="Edit Page"
-						>
-							<i class="fa fa-edit fa-lg"></i>
-						</a>
-					</cfif>
-			    </div>
+				<!--- Page Actions --->
+				<div class="btn-group btn-group-sm">
+					<a
+						class="btn btn-default btn-more dropdown-toggle"
+						data-toggle="dropdown"
+						href="##"
+						title="Page Actions"
+					>
+						<i class="fas fa-ellipsis-v fa-lg"></i>
+					</a>
+
+					<ul class="dropdown-menu text-left pull-right">
+
+						<!--- View in Site --->
+						<cfif listFindNoCase( "page,entry", thisContent.getContentType() )>
+							<li>
+								<a 	class=""
+									href="#prc.CBHelper.linkContent( thisContent )#"
+									target="_blank"
+								>
+									<i class="far fa-eye fa-lg"></i> View
+								</a>
+							</li>
+						</cfif>
+
+						<!--- Edit --->
+						<li>
+							<cfset targetEditor = prc.xehEntriesEditor>
+							<cfif thisContent.getContentType() eq "page">
+								<cfset targetEditor = prc.xehPagesEditor>
+							<cfelseif thisContent.getContentType() eq "contentStore">
+								<cfset targetEditor = prc.xehContentStoreEditor>
+							</cfif>
+							<a
+								href="#event.buildLink( targetEditor )#/contentID/#thisContent.getContentID()#"
+							>
+								<i class="fas fa-pen fa-lg"></i> Edit
+							</a>
+						</li>
+					</ul>
+				</div>
 			</td>
 		</tr>
 		</cfloop>
 	</tbody>
 </table>
+
+<!--- No Records --->
 <cfif !arrayLen( args.aContent )>
 	<div class="alert alert-info">
-	No Records Found
-	</div>											
+		No Records Found
+	</div>
 </cfif>
 </cfoutput>

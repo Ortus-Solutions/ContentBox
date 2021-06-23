@@ -8,7 +8,7 @@
 component extends="contentbox.models.ui.BaseWidget" singleton{
 
 	/**
-	* Constructor 
+	* Constructor
 	*/
 	RSS function init(){
 		// Widget Properties
@@ -33,25 +33,26 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	*/
 	any function renderIt(
 		required feedURL,
-		numeric maxItems=5,
-		boolean showBody=true,
+		numeric maxItems =5,
+		boolean showBody =true,
 		string linkTarget="_blank",
-		string title="",
-		string titleLevel="2" 
+		string title     ="",
+		string titleLevel="2"
 	){
 		// Detect Feed URL
 		if( !len( arguments.feedURL ) ){
 			return "Please enter a valid RSS Feed URL";
 		}
 
-		var rString	= "";
-		var feed 	= getModel( 'FeedReader@cbfeeds' )
+		var rString= "";
+		var feed   = getInstance( 'FeedReader@cbfeeds' )
 			.readFeed( feedURL=arguments.feedURL, maxItems=arguments.maxItems, itemsType="query" );
 
 		// generate recent comments
 		saveContent variable="rString"{
 			// title
-			if( len( arguments.title ) ){ writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" ); }
+			if( len( arguments.title ) ){ writeOutput( "<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+" ); }
 			// build RSS feed
 			writeOutput( buildList( feed.items, arguments.showBody, arguments.linkTarget ) );
 		}
@@ -66,20 +67,26 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	* @linkTarget the link target
 	*/
 	private function buildList( required entries, required boolean showBody, required linkTarget ){
-		var rString = "";
+		var rString         = "";
 		// generate Items
 		saveContent variable="rString"{
-			writeOutput( '<ul class="rssItems">' );
+			writeOutput( '<ul class="rssItems">
+	' );
 			// iterate and create
 			for( var x=1; x lte arguments.entries.recordcount; x++ ){
-				writeOutput( '<li class="rssItem"><a href="#arguments.entries.URL[ x ]#" target="#arguments.linkTarget#">#arguments.entries.title[ x ]#' );
+				writeOutput( '<li class="rssItem">
+		<a href="#arguments.entries.URL[ x ]#" target="#arguments.linkTarget#">#arguments.entries.title[ x ]#' );
 				if( arguments.showBody ){
 					writeOutput( '<br/>#arguments.entries.body[ x ]#' );
 				}
-				writeOutput( '</li>' );
+				writeOutput( '
+	</li>
+	' );
 			}
 			// close ul
-			writeOutput( '</ul>' );
+			writeOutput( '
+</ul>
+' );
 		}
 		return rString;
 	}

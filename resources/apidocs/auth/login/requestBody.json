@@ -1,0 +1,29 @@
+{
+    "description": "Needed fields to login a user",
+    "required": true,
+    "content": {
+        "application/json": {
+            "schema": {
+                "type": "object",
+                "required": [
+                    "email",
+                    "password"
+                ],
+                "properties": {
+                    "email": {
+                        "description": "The email to use for login in",
+                        "type": "string"
+                    },
+                    "password": {
+                        "description": "The password to use for login in",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "email": "user@email.org",
+                    "password": "test"
+                }
+            }
+        }
+    }
+}

@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fa fa-tag"></i> Content Categories
+			<i class="fas fa-tags"></i> Content Categories (#arrayLen( prc.categories )#)
 		</h1>
 	</div>
 </div>
@@ -10,7 +10,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<!--- MessageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
+		#cbMessageBox().renderit()#
 		<!---Import Log --->
 		<cfif flash.exists( "importLog" )>
 			<div class="consoleLog">#flash.get( "importLog" )#</div>
@@ -29,20 +29,20 @@
 
 				<div class="row">
 
-					<div class="col-md-6">
+					<div class="col-md-6 col-xs-4">
 						<div class="form-group form-inline no-margin">
 							#html.textField(
 								name		= "categorySearch",
-								class		= "form-control",
+								class		= "form-control rounded quicksearch",
 								placeholder	= "Quick Search"
 							)#
 						</div>
 					</div>
 
-					<div class="col-md-6">
-						<div class="pull-right">
+					<div class="col-md-6 col-xs-8">
+						<div class="text-right">
 							<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
-								<div class="btn-group btn-group-sm">
+								<div class="btn-group">
 							    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 										Bulk Actions <span class="caret"></span>
 									</button>
@@ -51,29 +51,29 @@
 										<li>
 											<a 	href="javascript:bulkRemove()"
 												class="confirmIt"
-												data-title="<i class='fa fa-trash-o'></i> Delete Selected Categories?"
+												data-title="<i class='far fa-trash-alt'></i> Delete Selected Categories?"
 												data-message="This will delete the categories and all of its associations, are you sure?"
 											>
-												<i class="fa fa-trash-o"></i> Delete Selected
+												<i class="far fa-trash-alt fa-lg"></i> Delete Selected
 											</a>
 										</li>
 										</cfif>
 
 										<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 										<li>
-											<a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a>
+											<a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a>
 										</li>
 										</cfif>
 
 							    		<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 											<li>
-												<a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank">
-													<i class="fa fa-download"></i> Export All as JSON
+												<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
+													<i class="fas fa-file-export fa-lg"></i> Export All
 												</a>
 											</li>
 											<li>
-												<a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank">
-													<i class="fa fa-download"></i> Export All as XML
+												<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+													<i class="fas fa-file-export fa-lg"></i> Export Selected
 												</a>
 											</li>
 										</cfif>
@@ -85,7 +85,7 @@
 								<!--- Create --->
 								<button
 									onclick="return createCategory()"
-									class="btn btn-primary btn-sm"
+									class="btn btn-primary"
 								>
 									Create Category
 								</button>
@@ -97,7 +97,7 @@
 			</div> <!--- end panel-heading --->
 
 			<div class="panel-body">
-				<table id="categories" class="table table-striped table-hover table-condensed" cellspacing="0" width="100%">
+				<table id="categories" class="table table-striped-removed table-hover " cellspacing="0" width="100%">
 					<thead>
 						<tr>
 							<th id="checkboxHolder" class="{sorter:false} text-center" width="15"><input type="checkbox" onClick="checkAll(this.checked,'categoryID')"/></th>
@@ -117,12 +117,19 @@
 								<input type="checkbox" name="categoryID" id="categoryID" value="#category.getCategoryID()#" />
 							</td>
 							<td>
-								<a href="javascript:edit( '#category.getCategoryID()#',
-								   						  '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-								   						  '#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
-								   	title="Edit #category.getCategory()#">#category.getCategory()#</a>
+								<a href="javascript:edit(
+									'#category.getCategoryID()#',
+									'#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#'
+									)"
+								   title="Edit #category.getCategory()#"
+								>
+									#category.getCategory()#
+								</a>
 							</td>
-							<td>#category.getSlug()#</td>
+							<td>
+								#category.getSlug()#
+							</td>
 							<td class="text-center">
 								<span class="badge badge-info">#category.getNumberOfPages()#</span>
 							</td>
@@ -136,26 +143,45 @@
 								<div class="btn-group">
 									<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
 
-									<!--- Edit Command --->
-									<button
-										type="button"
-										class="btn btn-primary btn-sm"
-										onclick="javascript:edit( '#category.getCategoryID()#', '#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
-									'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#')"
-										title="Edit #category.getCategory()#"
-										>
-											<i class="fa fa-edit"></i>
-									</button>
+									<div class="btn-group btn-group-sm">
+										<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
+											<i class="fas fa-ellipsis-v fa-lg"></i>
+										</a>
+										<ul class="dropdown-menu text-left pull-right">
+											<!--- Edit Command --->
+											<li>
+												<a
+													href="javascript:edit(
+														'#category.getCategoryID()#',
+														'#HTMLEditFormat( JSStringFormat( category.getCategory() ) )#',
+														'#HTMLEditFormat( JSStringFormat( category.getSlug() ) )#'
+														)"
+													>
+														<i class="fas fa-pen fa-lg"></i> Edit
+												</a>
+											</li>
 
-									<!--- Delete Command --->
-									<a 	class="btn btn-danger btn-sm confirmIt"
-										href="javascript:removeCategory( '#category.getcategoryID()#' )"
-										title="Delete Category"
-										data-title="Delete Category?"
-										data-message="Delete the category and all of its associations"
-									>
-										<i class="fa fa-trash-o" id="delete_#category.getCategoryID()#"></i>
-									</a>
+											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+												<li>
+													<a href="#event.buildLink( prc.xehExport )#/categoryID/#category.getCategoryID()#.json" target="_blank">
+														<i class="fas fa-file-export fa-lg"></i> Export
+													</a>
+												</li>
+											</cfif>
+
+											<li>
+												<!--- Delete Command --->
+												<a
+													class="confirmIt"
+													href="javascript:removeCategory( '#category.getcategoryID()#' )"
+													data-title="Delete Category?"
+													data-message="Delete the category and all of its associations"
+												>
+													<i class="far fa-trash-alt fa-lg" id="delete_#category.getCategoryID()#"></i> Delete
+												</a>
+											</li>
+										</ul>
+									</div>
 									</cfif>
 								</div>
 							</td>
@@ -177,7 +203,7 @@
 	        <div class="modal-content" id="modalContent">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-	                <h4 class="modal-title" id="categoryLabel"><i class="fa fa-tag"></i> Category Editor</h4>
+	                <h4 class="modal-title" id="categoryLabel"><i class="fas fa-tags"></i> Category Editor</h4>
 			    </div>
 				<!--- Create/Edit form --->
 				#html.startForm(
@@ -220,7 +246,7 @@
 						class	= "btn btn-default",
 						onclick	= "closeModal( $( '##categoryEditorContainer' ) )"
 					)#
-					#html.submitButton( name="btnSave", value="Save Category", class="btn btn-danger" )#
+					#html.submitButton( name="btnSave", value="Save", class="btn btn-primary" )#
 				</div>
 				#html.endForm()#
 			</div>
@@ -233,11 +259,12 @@
 	#renderView(
 		view 	= "_tags/dialog/import",
 		args 	= {
-			title 		= "Import Users",
-			contentArea = "user",
+			title 		= "Import Categories",
+			contentArea = "category",
 			action 		= prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> users file to import."
-		}
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> file to import."
+		},
+		prePostExempt = true
 	)#
 </cfif>
 </cfoutput>

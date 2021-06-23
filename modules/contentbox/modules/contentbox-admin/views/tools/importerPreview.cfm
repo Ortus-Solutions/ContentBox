@@ -1,12 +1,12 @@
 <cfoutput>
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3><i class="fa fa-copy"></i> Import Preview</h3>
+    <h3><i class="far fa-clone"></i> Import Preview</h3>
 </div>
 <cfif not structKeyExists( prc, "contents" )>
     <div class="modal-body" id="modal-body">
         <!--- messageBox --->
-        #getModel( "messagebox@cbMessagebox" ).renderit()#
+        #cbMessageBox().renderit()#
     </div>
 <cfelse>
     <div class="modal-body" id="modal-body">
@@ -15,11 +15,11 @@
                 <h4><strong>Override Existing Content?</strong></h4>
                 <small>By default all content that exists is not overwritten.</small><br>
                 #html.select(options="true,false", name="overrideContent", selectedValue="false", class="form-control input-sm",wrapper="div class=controls",labelClass="control-label",groupWrapper="div class=form-group" )#
-                
+
                 <div class="alert alert-danger">
                     <i class="fa fa-warning fa-lg"></i> <strong>Non-content</strong> imports (layouts, widgets, modules, etc.) will automatically overwrite any existing assets regardless of the choice above.</strong>
                 </div>
-                
+
                 <!---Notice --->
                 <div class="alert alert-info">
                     <i class="fa fa-info-circle fa-lg"></i> Please note that import is an expensive process, so please be patient when importing.
@@ -28,7 +28,7 @@
             <div class="col-md-7">
                 <h4><strong>Import Summary</strong></h4>
                 <div id="import-preview">
-                    <table class="table table-bordered table-condensed table-hover">
+                    <table class="table table-bordered  table-hover">
                         <tr>
                             <td width="150" class="success">Exported By:</td>
                             <td>#prc.contents.exportedBy#</td>

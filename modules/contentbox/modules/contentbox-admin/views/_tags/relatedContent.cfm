@@ -1,15 +1,8 @@
 <cfoutput>
-    <style>
-        .btn-tiny {
-            padding: 0 3px;
-            font-size: 9.5px;
-            line-height:14px;
-        }
-    </style>
     <script>
         $( document ).ready(function() {
             <cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
-                var currentContentID = #rc.contentID#;
+                var currentContentID = "#rc.contentID#";
             </cfif>
             // listener for add button
             $( '##add-related-content' ).on( 'click', function() {
@@ -89,10 +82,10 @@
                     icon = '<i class="fa fa-file icon-small" title="Page"></i>';
                     break;
                 case 'Entry':
-                    icon = '<i class="fa fa-quote-left icon-small" title="Entry"></i>';
+                    icon = '<i class="fas fa-blog icon-small" title="Entry"></i>';
                     break;
                 case 'ContentStore':
-                    icon = '<i class="fa fa-hdd-o icon-small" title="ContentStore"></i>';
+                    icon = '<i class="far fa-hdd icon-small" title="ContentStore"></i>';
                     break;
             }
             return icon;
@@ -102,7 +95,7 @@
         <i class="fa fa-plus"></i>  Add related content
     </button>
     <br /><br />
-    <table class="table table-hover table-striped" id="relatedContent-items">
+    <table class="table table-hover table-striped-removed" id="relatedContent-items">
         <tbody>
             <cfloop array="#args.relatedContent#" index="content">
                 <cfset publishedClass = content.isContentPublished() ? "published" : "selected">
@@ -112,9 +105,9 @@
                         <cfif content.getContentType() eq "Page">
                             <i class="fa fa-file icon-small" title="Page"></i>
                         <cfelseif content.getContentType() eq "Entry">
-                            <i class="fa fa-quote-left icon-small" title="Entry"></i>
+                            <i class="fas fa-blog icon-small" title="Entry"></i>
                         <cfelseif content.getContentType() eq "ContentStore">
-                            <i class="fa fa-hdd-o icon-small" title="ContentStore"></i>
+                            <i class="far fa-hdd icon-small" title="ContentStore"></i>
                         </cfif>
                     </td>
                     <td class="#publishedClass#">#content.getTitle()#</td>

@@ -1,19 +1,40 @@
 ﻿<cfoutput>
-    <div class="btn-group btn-group-xs">
-        <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink(prc.xehPages)#/?parent=#prc.parentcontentID#';return false;">
-            <i class="fa fa-reply"></i> Back
+    <div class="btn-group btn-group-sm">
+        <button
+			class="btn btn-sm btn-primary"
+			onclick="window.location.href='#event.buildLink( prc.xehPages )#/?parent=#prc.parentcontentID#';return false;">
+			<i class="fas fa-chevron-left"></i> Back
         </button>
 
-        <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-            <span class="fa fa-cog"></span>
+        <button
+			class="btn btn-sm btn-default dropdown-toggle"
+			data-toggle="dropdown"
+			title="Quick Actions">
+			<span class="caret"></span>
         </button>
 
         <ul class="dropdown-menu">
-            <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
-            <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
-            <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
+			<li>
+				<a href="javascript:quickPublish( false )">
+					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickPublish( true )">
+					<i class="fas fa-eraser fa-lg"></i> Save as Draft
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickSave()">
+					<i class="far fa-save fa-lg"></i> Quick Save
+				</a>
+			</li>
             <cfif prc.page.isLoaded()>
-                <li><a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank"><i class="fa fa-eye"></i> Open In Site</a></li>
+				<li>
+					<a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank">
+						<i class="far fa-eye fa-lg"></i> Open In Site
+					</a>
+				</li>
             </cfif>
         </ul>
     </div>
@@ -23,33 +44,33 @@
         action      = prc.xehPageSave,
         name        = "pageForm",
         novalidate  = "novalidate",
-        class       = "form-vertical"
+        class       = "form-vertical mt5"
     )#
 
         <div class="row">
             <div class="col-md-8" id="main-content-slot">
                 <!--- MessageBox --->
-                #getModel( "messagebox@cbMessagebox" ).renderit()#
+                #cbMessageBox().renderit()#
 
-                <!--- id --->
-                #html.hiddenField( name="contentID", bind=prc.page )#
+                <!--- ids --->
+				#html.hiddenField( name="contentID", bind=prc.page )#
                 #html.hiddenField( name="contentType", bind=prc.page )#
 
                 <div class="panel panel-default">
                     <!-- Nav tabs -->
-                    <div class="tab-wrapper margin0">
+                    <div class="tab-wrapper m0">
                         <ul class="nav nav-tabs" role="tablist">
 
                             <li role="presentation" class="active">
                                 <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-                                    <i class="fa fa-edit"></i> Editor
+                                    <i class="fas fa-pen"></i> Editor
                                 </a>
                             </li>
 
                             <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                                 <li role="presentation">
                                     <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-                                        <i class="fa fa-truck"></i> Custom Fields
+                                        <i class="fas fa-microchip"></i> Custom Fields
                                     </a>
                                 </li>
                             </cfif>
@@ -72,13 +93,13 @@
 
                                 <li role="presentation">
                                     <a href="##comments" aria-controls="comments" role="tab" data-toggle="tab">
-                                        <i class="fa fa-comments"></i> Comments
+                                        <i class="far fa-comments"></i> Comments
                                     </a>
                                 </li>
                             </cfif>
 
                             <!--- Event --->
-                            #announceInterception( "cbadmin_pageEditorNav" )#
+                            #announce( "cbadmin_pageEditorNav" )#
 
                         </ul>
                     </div>
@@ -130,7 +151,11 @@
                             </div>
 
                             <!--- ContentToolBar --->
-                            #renderView( view="_tags/content/markup", args={ content = prc.page } )#
+                            #renderView(
+								view 			= "_tags/content/toolbar",
+								args 			= { content = prc.page },
+								prePostExempt 	= true
+							)#
 
                             <!--- content --->
                             #html.textarea(
@@ -155,8 +180,9 @@
                         <!--- Custom Fields --->
                          <div role="tabpanel" class="tab-pane" id="custom_fields">
                              #renderView(
-                                view = "_tags/customFields",
-                                args = { fieldType="Page", customFields=prc.page.getCustomFields() }
+                                view 			= "_tags/customFields",
+								args 			= { fieldType="Page", customFields=prc.page.getCustomFields() },
+								prePostExempt 	= true
                             )#
                         </div>
 
@@ -212,15 +238,15 @@
 						</cfif>
 
 						<!--- Custom tab content --->
-						#announceInterception( "cbadmin_pageEditorNavContent" )#
+						#announce( "cbadmin_pageEditorNavContent" )#
 					</div>
 
                     <!--- Event --->
-                    #announceInterception( "cbadmin_pageEditorInBody" )#
+                    #announce( "cbadmin_pageEditorInBody" )#
                 </div>
 
                 <!--- Event --->
-                #announceInterception( "cbadmin_pageEditorFooter" )#
+                #announce( "cbadmin_pageEditorFooter" )#
             </div>
 
             <!---- SIDEBAR --->
@@ -228,14 +254,17 @@
                 <div class="panel panel-primary">
 
                     <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-info-circle"></i> Details</h3>
+						<h3 class="panel-title">
+							<i class="fa fa-info-circle"></i> Details
+						</h3>
                     </div>
 
                     <div class="panel-body">
 
                         #renderView(
-                            view    = "_tags/content/publishing",
-                            args    = { content = prc.page }
+                            view    		= "_tags/content/publishing",
+							args    		= { content = prc.page },
+							prePostExempt 	= true
                         )#
 
                         <!--- Accordion --->
@@ -244,8 +273,9 @@
                             <!---Begin Page Info--->
                             <cfif prc.page.isLoaded()>
                                 #renderView(
-                                    view    = "_tags/content/infotable",
-                                    args    = { content = prc.page }
+                                    view    		= "_tags/content/infotable",
+									args    		= { content = prc.page },
+									prePostExempt 	= true
                                 )#
                             </cfif>
 
@@ -254,8 +284,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##displayoptions">
-                                        <i class="fa fa-picture-o fa-lg"></i> Display Options
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##displayoptions">
+                                        <i class="fas fa-photo-video"></i> Display Options
                                         </a>
                                     </h4>
                                 </div>
@@ -345,7 +375,7 @@
                                 </div>
                             </div>
                             <cfelse>
-                                #html.hiddenField(name="parentPage", value=prc.parentcontentID)#
+                                #html.hiddenField( name="parentPage", value=prc.parentcontentID )#
                             </cfif>
                             <!---End Display Options--->
 
@@ -354,16 +384,19 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                            <i class="fa fa-sitemap fa-lg"></i> Related Content
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                            <i class="fas fa-sitemap"></i> Related Content
                                         </a>
 
                                     </h4>
                                 </div>
                                 <div id="relatedcontent" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <cfset rcArgs = { relatedContent=prc.relatedContent }>
-                                        #renderView( view="_tags/relatedContent", args=rcArgs )#
+                                        #renderView(
+											view 			= "_tags/relatedContent",
+											args 			= { relatedContent : prc.relatedContent },
+											prePostExempt 	= true
+										)#
                                     </div>
                                 </div>
                             </div>
@@ -377,16 +410,19 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                            <i class="fa fa-link fa-lg"></i> Linked Content
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+                                            <i class="fa fa-link"></i> Linked Content
                                         </a>
 
                                     </h4>
                                 </div>
                                 <div id="linkedcontent" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <cfset rcArgs = { linkedContent=prc.linkedContent, contentType=prc.page.getContentType() }>
-                                        #renderView( view="_tags/linkedContent", args=rcArgs )#
+										#renderView(
+											view 			= "_tags/linkedContent",
+											args 			= { linkedContent : prc.linkedContent, contentType : prc.page.getContentType() },
+											prePostExempt 	= true
+										)#
                                     </div>
                                 </div>
                             </div>
@@ -398,8 +434,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                            <i class="fa fa-cogs fa-lg"></i> Modifiers
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
+                                            <i class="fas fa-toolbox"></i> Modifiers
                                         </a>
                                     </h4>
                                 </div>
@@ -408,7 +444,7 @@
                                         <!--- Creator --->
                                         <cfif prc.page.isLoaded() and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                             <div class="form-group">
-                                                <i class="fa fa-user fa-lg"></i>
+                                                <i class="fa fa-user"></i>
                                                 #html.label(
                                                     field="creatorID",
                                                     content="Creator:",
@@ -416,16 +452,16 @@
                                                 )#
                                                 <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                     <cfloop array="#prc.authors#" index="author">
-                                                    <option value="#author.getAuthorID()#" <cfif prc.page.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+                                                    <option value="#author.getAuthorID()#" <cfif prc.page.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
                                                     </cfloop>
                                                 </select>
                                             </div>
                                         </cfif>
 
                                         <!--- Allow Comments --->
-                                        <cfif prc.cbSettings.cb_comments_enabled>
+                                        <cfif prc.cbSiteSettings.cb_comments_enabled>
                                             <div class="form-group">
-                                                <i class="fa fa-comments fa-lg"></i>
+                                                <i class="far fa-comments"></i>
                                                 #html.label(
                                                     field="allowComments",
                                                     content="Allow Comments:",
@@ -434,7 +470,7 @@
                                                 #html.select(
                                                     name="allowComments",
                                                     options="Yes,No",
-                                                    selectedValue=yesNoFormat(prc.page.getAllowComments()),
+                                                    selectedValue=yesNoFormat( prc.page.getAllowComments() ),
                                                     class="form-control input-sm"
                                                 )#
                                             </div>
@@ -442,7 +478,7 @@
 
                                         <!--- SSL Only --->
                                         <div class="form-group">
-                                            <i class="icon-shield icon-large"></i>
+                                            <i class="fas fa-user-shield"></i>
                                             #html.label(
                                                 field="sslOnly",
                                                 content="SSL Only:",
@@ -458,7 +494,7 @@
 
                                         <!--- Password Protection --->
                                         <div class="form-group">
-                                            <label for="passwordProtection"><i class="fa fa-lock fa-lg"></i> Password Protection:</label>
+                                            <label for="passwordProtection"><i class="fas fa-key"></i> Password Protection:</label>
                                             #html.textfield(
                                                 name="passwordProtection",
                                                 bind=prc.page,
@@ -478,27 +514,47 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                            <i class="fa fa-rocket fa-lg"></i> Cache Settings
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
+                                            <i class="fas fa-database"></i> Cache Settings
                                         </a>
                                     </h4>
-                                </div>
+								</div>
+
                                 <div id="cachesettings" class="panel-collapse collapse">
-                                    <div class="panel-body">
+									<div class="panel-body">
+										<div class="form-group">
+                                            <!--- Cache Settings --->
+                                            #html.label(
+                                                field	= "cacheLayout",
+                                                content	= "Cache Entire Page: (faster)"
+											)#
+
+											<br />
+											<small>Caches the entire page output including translations</small><Br/>
+
+                                            #html.select(
+                                                name			= "cacheLayout",
+                                                options			= "Yes,No",
+                                                selectedValue	= yesNoFormat( prc.page.getCacheLayout() ),
+                                                class			= "form-control input-sm"
+                                            )#
+										</div>
+
                                         <div class="form-group">
                                             <!--- Cache Settings --->
                                             #html.label(
-                                                field="cache",
-                                                content="Cache Content: (fast)"
+                                                field	= "cache",
+                                                content	= "Cache Content: (fast)"
                                             )#
                                             <br /><small>Caches content translation only</small><Br/>
                                             #html.select(
-                                                name="cache",
-                                                options="Yes,No",
-                                                selectedValue=yesNoFormat(prc.page.getCache()),
-                                                class="form-control input-sm"
+                                                name          = "cache",
+                                                options       = "Yes,No",
+                                                selectedValue = yesNoFormat( prc.page.getCache() ),
+                                                class         = "form-control input-sm"
                                             )#
-                                        </div>
+										</div>
+
                                         <div class="form-group">
                                             #html.inputField(
                                                 type="numeric",
@@ -534,8 +590,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                            <i class="fa fa-tags fa-lg"></i> Categories
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##categories">
+                                            <i class="fas fa-tags"></i> Categories
                                         </a>
                                     </h4>
                                 </div>
@@ -576,8 +632,8 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
-                                            <i class="fa fa-picture-o fa-lg"></i> Featured Image
+                                        <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
+                                            <i class="fas fa-photo-video"></i> Featured Image
                                         </a>
                                     </h4>
                                 </div>
@@ -585,26 +641,38 @@
                                     <div class="panel-body">
                                         <div class="form-group text-center">
                                             <!--- Select and Cancel Buttons --->
-                                            <a class="btn btn-primary" href="javascript:loadAssetChooser( 'featuredImageCallback' )">Select Image</a>
+                                            <a
+                                            	class="btn btn-primary"
+												href="javascript:loadAssetChooser( 'featuredImageCallback' )"
+											>
+												Select Image
+											</a>
+
                                             <!--- Featured Image Selection --->
                                             <div class="<cfif !len( prc.page.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
-                                                <a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
-                                                #html.hiddenField(
+												#html.hiddenField(
                                                     name 		= "featuredImage",
-                                                    bind 		= prc.page
+													bind 		= prc.page,
+													class 		= "form-control",
+													readonly 	= true,
+													title 		= "The actual image path to deliver"
                                                 )#
                                                 #html.hiddenField(
                                                     name = "featuredImageURL",
                                                     bind = prc.page
-                                                )#
+												)#
+
                                                 <!--- Image Preview --->
-                                                <div class="margin10">
+                                                <div class="m10">
                                                     <cfif len( prc.page.getFeaturedImageURL() )>
                                                         <img id="featuredImagePreview" src="#prc.page.getFeaturedImageURL()#" class="img-thumbnail" height="75">
                                                     <cfelse>
                                                         <img id="featuredImagePreview" class="img-thumbnail" height="75">
                                                     </cfif>
-                                                </div>
+												</div>
+
+												<!--- Clear Image --->
+												<a class="btn btn-danger" href="javascript:cancelFeaturedImage()">Clear Image</a>
                                             </div>
                                         </div>
                                     </div>
@@ -614,16 +682,16 @@
                             <!---End Featured Image--->
 
                             <!--- Event --->
-                            #announceInterception( "cbadmin_pageEditorSidebarAccordion" )#
+                            #announce( "cbadmin_pageEditorSidebarAccordion" )#
                         </div>
                         <!--- End Accordion --->
 
                         <!--- Event --->
-                        #announceInterception( "cbadmin_pageEditorSidebar" )#
+                        #announce( "cbadmin_pageEditorSidebar" )#
                     </div>
                 </div>
                 <!--- Event --->
-                #announceInterception( "cbadmin_pageEditorSidebarFooter" )#
+                #announce( "cbadmin_pageEditorSidebarFooter" )#
             </div>
         </div>
 

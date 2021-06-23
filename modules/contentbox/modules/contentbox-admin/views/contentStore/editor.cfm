@@ -1,32 +1,49 @@
 ﻿<cfoutput>
-<div class="btn-group btn-group-xs">
-    <button class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
-        <i class="fa fa-reply"></i> Back
-    </button>
+	<div class="btn-group btn-group-sm">
+        <button
+			class="btn btn-sm btn-primary"
+			onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
+			<i class="fas fa-chevron-left"></i> Back
+        </button>
 
-    <button class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" title="Quick Actions">
-        <span class="fa fa-cog"></span>
-    </button>
+        <button
+			class="btn btn-sm btn-default dropdown-toggle"
+			data-toggle="dropdown"
+			title="Quick Actions">
+			<span class="caret"></span>
+        </button>
 
-    <ul class="dropdown-menu">
-        <li><a href="javascript:quickPublish( false )"><i class="fa fa-globe"></i> Publish</a></li>
-        <li><a href="javascript:quickPublish( true )"><i class="fa fa-eraser"></i> Publish as Draft</a></li>
-        <li><a href="javascript:quickSave()"><i class="fa fa-save"></i> Quick Save</a></li>
-    </ul>
-</div>
+        <ul class="dropdown-menu">
+			<li>
+				<a href="javascript:quickPublish( false )">
+					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickPublish( true )">
+					<i class="fas fa-eraser fa-lg"></i> Save as Draft
+				</a>
+			</li>
+			<li>
+				<a href="javascript:quickSave()">
+					<i class="far fa-save fa-lg"></i> Quick Save
+				</a>
+			</li>
+        </ul>
+	</div>
 
-<!--- content Form  --->
-#html.startForm(
-    action      = prc.xehContentSave,
-    name        = "contentForm",
-    novalidate  = "novalidate",
-    class       = "form-vertical",
-    role        = "form"
-)#
+	<!--- content Form  --->
+	#html.startForm(
+		action      = prc.xehContentSave,
+		name        = "contentForm",
+		novalidate  = "novalidate",
+		class       = "form-vertical mt5",
+		role        = "form"
+	)#
     <div class="row">
         <div class="col-md-8" id="main-content-slot">
             <!--- MessageBox --->
-            #getModel( "messagebox@cbMessagebox" ).renderit()#
+            #cbMessageBox().renderit()#
             <!--- form --->
             #html.hiddenField( name="contentID", bind=prc.content)#
             #html.hiddenField( name="contentType", bind=prc.content)#
@@ -35,19 +52,19 @@
             <div class="panel panel-default">
 
                 <!-- Nav tabs -->
-                <div class="tab-wrapper margin0">
+                <div class="tab-wrapper m0">
                     <ul class="nav nav-tabs" role="tablist">
 
                         <li role="presentation" class="active">
                             <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-                                <i class="fa fa-edit"></i> Editor
+                                <i class="fas fa-pen"></i> Editor
                             </a>
                         </li>
 
                         <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
                             <li role="presentation">
                                 <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-                                    <i class="fa fa-truck"></i> Custom Fields
+                                    <i class="fas fa-microchip"></i> Custom Fields
                                 </a>
                             </li>
                         </cfif>
@@ -62,7 +79,7 @@
 						</cfif>
 
 						<!--- Event --->
-						#announceInterception( "cbadmin_ContentStoreEditorNav" )#
+						#announce( "cbadmin_ContentStoreEditorNav" )#
                     </ul>
                 </div>
 
@@ -123,7 +140,11 @@
                         )#
 
                         <!---ContentToolBar --->
-                        #renderView( view="_tags/content/markup", args={ content=prc.content } )#
+                        #renderView(
+							view 			= "_tags/content/toolbar",
+							args 			= { content : prc.content },
+							prePostExempt 	= true
+						)#
 
                         <!--- content --->
                         #html.textarea(
@@ -136,7 +157,11 @@
 
                     <div role="tabpanel" class="tab-pane" id="custom_fields">
                         <!--- Custom Fields --->
-                         #renderView( view="_tags/customFields", args={ fieldType="content", customFields=prc.content.getCustomFields() } )#
+                         #renderView(
+							view 			= "_tags/customFields",
+							args 			= { fieldType : "content", customFields : prc.content.getCustomFields() },
+							prePostExempt 	= true
+						)#
                     </div>
 
                     <!---Loaded Panels--->
@@ -147,15 +172,15 @@
 					</cfif>
 
 					<!--- Custom tab content --->
-					#announceInterception( "cbadmin_contentStoreEditorNavContent" )#
+					#announce( "cbadmin_contentStoreEditorNavContent" )#
 
                 </div>
                 <!--- Event --->
-                #announceInterception( "cbadmin_contentStoreEditorInBody" )#
+                #announce( "cbadmin_contentStoreEditorInBody" )#
             </div>
 
             <!--- Event --->
-            #announceInterception( "cbadmin_contentStoreEditorFooter" )#
+            #announce( "cbadmin_contentStoreEditorFooter" )#
         </div>
         <div class="col-md-4" id="main-content-sidebar">
             <div class="panel panel-primary">
@@ -163,8 +188,11 @@
                     <h3 class="panel-title"><i class="fa fa-info-circle"></i> Content Details</h3>
                 </div>
                 <div class="panel-body">
-                    <cfset pArgs = { content=prc.content }>
-                    #renderView( view="_tags/content/publishing", args=pArgs )#
+                    #renderView(
+						view 			= "_tags/content/publishing",
+						args 			= { content : prc.content },
+						prePostExempt 	= true
+					)#
 
 
                     <!--- Accordion --->
@@ -173,8 +201,9 @@
                         <!---Begin Info--->
                         <cfif prc.content.isLoaded()>
                             #renderView(
-                                view    = "_tags/content/infotable",
-                                args    = { content = prc.content }
+                                view    		= "_tags/content/infotable",
+								args    		= { content : prc.content },
+								prePostExempt 	= true
                             )#
                         </cfif>
 
@@ -183,15 +212,18 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fa fa-sitemap fa-lg"></i> Related Content
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+                                        <i class="fas fa-sitemap"></i> Related Content
                                     </a>
                                 </h4>
                             </div>
                             <div id="relatedcontent" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <cfset rcArgs = { relatedContent=prc.relatedContent }>
-                                    #renderView( view="_tags/relatedContent", args=rcArgs )#
+                                    #renderView(
+										view			= "_tags/relatedContent",
+										args			= { relatedContent : prc.relatedContent },
+										prePostExempt 	= true
+									)#
                                 </div>
                             </div>
                         </div>
@@ -204,15 +236,18 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link fa-lg"></i> Linked Content
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+                                        <i class="fa fa-link"></i> Linked Content
                                     </a>
                                 </h4>
                             </div>
                             <div id="linkedcontent" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <cfset rcArgs = { linkedContent=prc.linkedContent, contentType=prc.content.getContentType() }>
-                                    #renderView( view="_tags/linkedContent", args=rcArgs )#
+									#renderView(
+										view			= "_tags/linkedContent",
+										args			= { linkedContent : prc.linkedContent, contentType : prc.content.getContentType() },
+										prePostExempt 	= true
+									)#
                                 </div>
                             </div>
                         </div>
@@ -224,8 +259,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fa fa-cogs fa-lg"></i> Modifiers
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
+                                        <i class="fas fa-toolbox"></i> Modifiers
                                     </a>
                                 </h4>
                             </div>
@@ -234,7 +269,7 @@
 
 									<!--- Parent Content --->
 									<div class="form-group">
-										<i class="fa fa-sitemap fa-lg"></i>
+										<i class="fas fa-sitemap"></i>
 		         						#html.label( field="parentContent",content='Parent:' )#
 		         						<select name="parentContent" id="parentContent" class="form-control input-sm">
 		         							<option value="null">No Parent</option>
@@ -256,11 +291,11 @@
                                     <!--- Creator --->
                                     <cfif prc.content.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
                                         <div class="form-group">
-                                            <i class="fa fa-user fa-lg"></i>
+                                            <i class="fa fa-user"></i>
                                             #html.label(field="creatorID",content="Creator:",class="inline" )#
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
-                                                <option value="#author.getAuthorID()#" <cfif prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getName()#</option>
+                                                <option value="#author.getAuthorID()#" <cfif prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
                                                 </cfloop>
                                             </select>
                                         </div>
@@ -268,7 +303,7 @@
 
                                     <!--- Retrieval Order --->
                                     <div class="form-group">
-                                        <i class="fa fa-sort fa-lg"></i>
+                                        <i class="fa fa-sort"></i>
                                         <!--- menu order --->
                                         #html.inputfield(
                                             type        = "number",
@@ -296,8 +331,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fa fa-rocket fa-lg"></i> Cache Settings
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
+                                        <i class="fas fa-database"></i> Cache Settings
                                     </a>
                                 </h4>
                             </div>
@@ -352,8 +387,8 @@
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fa fa-tags fa-lg"></i> Categories
+                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##categories">
+                                        <i class="fas fa-tags"></i> Categories
                                     </a>
                                 </h4>
                             </div>
@@ -390,16 +425,16 @@
                         <!---End Categories--->
 
                         <!--- Event --->
-                        #announceInterception( "cbadmin_contentStoreEditorSidebarAccordion" )#
+                        #announce( "cbadmin_contentStoreEditorSidebarAccordion" )#
                     </div>
                     <!--- End Accordion --->
 
                     <!--- Event --->
-                    #announceInterception( "cbadmin_contentStoreEditorSidebar" )#
+                    #announce( "cbadmin_contentStoreEditorSidebar" )#
                 </div>
             </div>
             <!--- Event --->
-            #announceInterception( "cbadmin_contentStoreEditorSidebarFooter" )#
+            #announce( "cbadmin_contentStoreEditorSidebarFooter" )#
         </div>
     </div>
 #html.endForm()#

@@ -1,64 +1,85 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* This is the ContentBox Security Service needed for security to be implemented in ContentBox
-*/
-interface{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * This is the ContentBox Security Service needed for security to be implemented in ContentBox
+ */
+interface {
 
 	/**
-	* User validator via security interceptor
-	*/
-	boolean function userValidator( required struct rule, any controller );
+	 * Validates if a user can access an event. Called via the cbSecurity module.
+	 *
+	 * @rule The security rule being tested for
+	 * @controller The ColdBox controller calling the validation
+	 */
+	boolean function validateSecurity( struct rule, securedValue, any controller );
 
 	/**
-	* Get an author from session, or returns a new empty author entity
-	*/
+	 * Get an author from session, or returns a new empty author entity
+	 */
 	Author function getAuthorSession();
 
 	/**
-	* Set a new author in session
-	*/
-	ISecurityService function setAuthorSession( required Author author );
+	 * Logs in a user into persistence storages for tracking purposes
+	 */
+	ISecurityService function login( required Author author );
 
 	/**
-	* Delete author session
-	*/
+	 * Delete author session
+	 */
 	ISecurityService function logout();
 
 	/**
-	* Authenticate an author via ContentBox credentials.
-	* This method returns a structure containing an indicator if the authentication was valid (`isAuthenticated` and
-	* The `author` object which it represents.
-	* 
-	* @username The username to validate
-	* @password The password to validate
-	*
-	* @return struct:{ isAuthenticated:boolean, author:Author }
-	*/
-	struct function authenticate( required username, required password );
+	 * Authenticate an author via ContentBox credentials. If the user is not valid an InvalidCredentials is thrown. Required for JWT services
+	 *
+	 * The usage of the LogThemIn boolean flag is essential for two-factor authentication, where a user is authenticated
+	 * but not yet validated by a two-factor mechanism.  Thus, the default is to ONLY authenticate but not log them in yet.
+	 *
+	 * For our RESTFul API, we can do an authenticate and login at the same time.
+	 *
+	 * @username The username to validate
+	 * @password The password to validate
+	 * @logThemIn If true, we will log them in automatically, else it will be the caller's job to do so via the `login()` method.
+	 *
+	 * @throws InvalidCredentials
+	 *
+	 * @return User : The logged in user object
+	 */
+	Author function authenticate(
+		required username,
+		required password,
+		boolean logThemIn = false
+	);
 
 	/**
-	* Send password reminder for an author
-	*/
-	struct function sendPasswordReminder( required Author author, boolean adminIssued=false, Author issuer );
+	 * Send password reminder for an author
+	 */
+	struct function sendPasswordReminder(
+		required Author author,
+		boolean adminIssued = false,
+		Author issuer
+	);
 
 	/**
-	* Resets a user's password.
-	*
-	* @returns {error:boolean, messages:string}
-	*/
-	struct function resetUserPassword( required token, required Author author, required password );
+	 * Resets a user's password.
+	 *
+	 * @returns {error:boolean, messages:string}
+	 */
+	struct function resetUserPassword(
+		required token,
+		required Author author,
+		required password
+	);
 
 	/**
-	* Check to authorize a user to view a content entry or page
-	*/
+	 * Check to authorize a user to view a content entry or page
+	 */
 	boolean function authorizeContent( required content, required password );
 
 	/**
-	* Checks Whether a content entry or page is protected and user has credentials for it
-	*/
+	 * Checks Whether a content entry or page is protected and user has credentials for it
+	 */
 	boolean function isContentViewable( required content );
 
 }

@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-    <legend><i class="fa fa-th fa-lg"></i> Media Manager</legend>
+    <legend><i class="fas fa-photo-video fa-lg"></i> Media Manager</legend>
         <p>From here you can control the media manager settings.</p>
 
         <!--- Location --->
@@ -55,7 +55,7 @@
             )#
             <div class="controls">
                 <small>If enabled,
- the media provider system will issue caching headers for all assets. 
+ the media provider system will issue caching headers for all assets.
                 You can use the <em>cbcache=true</em> URL param to issue no caching headers on any asset.</small><br /><br />
                 #html.checkbox(
 					name    = "cb_media_provider_caching_toggle",
@@ -71,7 +71,7 @@
     </fieldset>
     <fieldset>
     <legend><i class="fa fa-cog fa-lg"></i> FileBrowser Options</legend>
-        
+
         <!--- Create Folders --->
         <div class="form-group">
             #html.label(
@@ -200,6 +200,6 @@
             labelClass="control-label",
             groupWrapper="div class=form-group"
         )#
-        
+
     </fieldset>
 </cfoutput>

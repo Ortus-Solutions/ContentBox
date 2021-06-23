@@ -20,7 +20,7 @@
 	>
 
 		<!--- cbadmin Event --->
-		#announceInterception( "cbadmin_afterBodyStart" )#
+		#announce( "cbadmin_afterBodyStart" )#
 
 		<!--- ************************************************************************************************--->
 		<!---                               MAIN CONTAINER					                                      --->
@@ -33,27 +33,84 @@
 			<header id="header">
 
 				<!--Branding-->
-				<div class="brand text-center">
-					<a data-keybinding="ctrl+shift+d"  href="#event.buildLink( prc.xehDashboard )#" class="logo" title="Dashboard ctrl+shift+d" data-placement="left auto">
+				<div class="brand text-center hidden-xs">
+					<a
+						data-keybinding="ctrl+shift+d"
+						href="#event.buildLink( prc.xehDashboard )#"
+						class="logo"
+						title="Dashboard ctrl+shift+d"
+						data-placement="left auto"
+					>
 						<img src="#prc.cbRoot#/includes/images/ContentBox_90.png"/>
 					</a>
 				</div>
 
 				<!-- Toggle Navigation Button -->
 				<div class="toggle-navigation toggle-left">
-					<a onclick="null" class="btn btn-default options toggle" id="toggle-left" data-toggle="tooltip" data-placement="right" title="Toggle Navigation (ctrl+shift+n)" data-keybinding="ctrl+shift+n">
+					<a
+						onclick="null"
+						class="btn btn-default options toggle"
+						id="toggle-left"
+						data-toggle="tooltip"
+						data-placement="right"
+						title="Toggle Navigation (ctrl+shift+n)"
+						data-keybinding="ctrl+shift+n"
+					>
 						<i class="fa fa-bars"></i>
 					</a>
 				</div>
 
+				<!-- Site Switcher -->
+				<span
+					class="form-inline ml10"
+					id="div-siteswitcher"
+					data-toggle="tooltip"
+					data-placement="right"
+					title="Site Switcher"
+				>
+					<i class="fas fa-chevron-down cb-select-arrow"></i>
+					<select
+						name="siteSwitcher"
+						id="siteSwitcher"
+						class="form-control input-sm rounded-sm appearance-none"
+						onChange="to( '#event.buildLink( prc.xehChangeSite )#/siteID/' + this.value )"
+						style="width: 175px;"
+					>
+						<cfloop array="#prc.allSites#" index="thisSite">
+							<option
+								value="#thisSite[ 'siteID' ]#"
+								<cfif thisSite[ 'siteID' ] eq prc.oCurrentSite.getsiteID()>selected="selected"</cfif>
+							>
+								#thisSite[ 'name' ]#
+							</option>
+						</cfloop>
+					</select>
+				</span>
+
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
-				<span class="navbar-search hidden-xs" id="div-search" title="ctrl+shift+s" data-toggle="tooltip" data-placement="right"/>
+				<span
+					class="navbar-search hidden-sm hidden-xs"
+					id="div-search"
+					title="Press 'Ctrl + Shift + S' to focus"
+					data-toggle="tooltip"
+					data-placement="left"
+				>
 					<!---Search Results --->
 					<span id="div-search-results"></span>
 					<!---Search Inputs --->
-					<input type="hidden" value="#event.buildLink( prc.xehSearchGlobal )#" id="nav-search-url">
-					<input type="text" placeholder="Global Search" name="nav-search" id="nav-search" autocomplete="off" class="search-query" size="30"/>
+					<input
+						type="hidden"
+						value="#event.buildLink( prc.xehSearchGlobal )#"
+						id="nav-search-url">
+					<input
+						type="text"
+						placeholder="Global Search"
+						name="nav-search"
+						id="nav-search"
+						autocomplete="off"
+						class="search-query"
+						size="20" />
 				</span>
 				</cfif>
 
@@ -61,83 +118,76 @@
 				<div class="user-nav">
 					<ul>
 						<!--- View Site --->
-						<li class="" data-placement="right auto" title="Visit Site">
-							<a class="btn btn-default options toggle" href="#event.buildLink( linkTo=prc.cbEntryPoint, ssl=prc.cbSettings.cb_site_ssl )#" target="_blank">
+						<li data-placement="right auto" title="Visit Site">
+							<a
+								class="btn btn-default options toggle btn-more"
+								href="#prc.cbHelper.siteRoot()#"
+								target="_blank"
+							>
 								<i class="fa fa-home"></i>
 							</a>
 						</li>
 						<!--- New Quick Links --->
 						<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
-						<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
-							<button data-toggle="dropdown" class="dropdown-toggle btn btn-default options toggle" onclick="javascript:void( null )">
-								<i class="fa fa-plus"></i>
-							</button>
-							<ul class="dropdown-menu">
-								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
-									<li>
-										<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
-											<i class="fa fa-file-o"></i> New Page
-										</a>
-									</li>
-								</cfif>
-								<cfif !prc.cbSettings.cb_site_disable_blog AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
-									<li>
-										<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehBlogEditor )#" title="ctrl+shift+b">
-											<i class="fa fa-quote-left"></i> New Entry
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-									<li>
-										<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-											<i class="fa fa-hdd-o"></i> New Content Store
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-									<li>
-										<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
-											<i class="fa fa-user"></i> New User
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
-									<li>
-										<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-											<i class="fa fa-picture-o"></i> New Media
-										</a>
-									</li>
-								</cfif>
-								<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
-									<li>
-										<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
-											<i class="fa fa-list"></i> New Menu
-										</a>
-									</li>
-								</cfif>
-							</ul>
-						</li>
+							<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
+								<button
+									data-toggle="dropdown"
+									class="dropdown-toggle btn btn-default btn-more options toggle"
+									onclick="javascript:void( null )"
+								>
+									<i class="fa fa-plus"></i>
+								</button>
+								<ul class="dropdown-menu">
+									<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
+												<i class="far fa-file-alt fa-lg width25"></i> New Page
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
+												<i class="fas fa-blog fa-lg width25"></i> New Entry
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
+												<i class="far fa-hdd fa-lg width25"></i> New Content Store
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
+												<i class="fa fa-user fa-lg width25"></i> New User
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
+												<i class="fas fa-photo-video fa-lg width25"></i> New Media
+											</a>
+										</li>
+									</cfif>
+									<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
+										<li class="mb10">
+											<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
+												<i class="fas fa-list fa-lg width25"></i> New Menu
+											</a>
+										</li>
+									</cfif>
+								</ul>
+							</li>
 						</cfif>
 
 						<!--- Utils --->
 						#prc.adminMenuService.generateUtilsMenu()#
 
-						<!--- Support Menu --->
-						<span class="hidden-xs hidden-sm">
-							#prc.adminMenuService.generateSupportMenu()#
-						</span>
-
-						<!--- FullScreen --->
-						<li class="hidden-xs hidden-sm" data-placement="right auto" title="Fullscreen">
-							<a class="btn btn-default options toggle" href="javascript:void( 0 )" onclick="toggleFullScreen()">
-								<i class="fa fa-arrows-alt"></i>
-							</a>
-						</li>
-
 						<!--- Profile --->
-						<li class="profile-photo hidden-xs">
-							#getModel( "Avatar@cb" ).renderAvatar( email=prc.oCurrentAuthor.getEmail(), size="35", class="img-circle" )#
-						</li>
 						#prc.adminMenuService.generateProfileMenu()#
 
 						<!--- Notifications :
@@ -159,7 +209,6 @@
 			<!---                               MAIN NAVBAR					                                      --->
 			<!--- ************************************************************************************************--->
 			<nav class="sidebar sidebar-left" id="main-navbar">
-				<h5 class="sidebar-header">#$r( "global.navigation@admin" )#</h5>
 				<!--- Main Generated Menu --->
 				#prc.adminMenuService.generateMenu()#
 			</nav>
@@ -170,25 +219,28 @@
 			<section class="main-content-wrapper" id="main-content-wrapper">
 				<section id="main-content">
 					<!--- cbadmin event --->
-					#announceInterception( "cbadmin_beforeContent" )#
+					#announce( "cbadmin_beforeContent" )#
 
 					<!--- Side Bar Trigger --->
-					<div 	class="pull-right"
-							id="main-content-sidebar-trigger"
-							style="display: none;"
+					<div
+						class="pull-right"
+						id="main-content-sidebar-trigger"
+						style="display: none;"
 					>
 						<button type="button"
-								class="btn btn-primary btn-xs"
+								class="btn btn-primary btn-sm"
 								title="Toggle Right Sidebar (ctrl+shift+e)"
 								data-keybinding="ctrl+shift+e"
 								onclick="toggleSidebar()"
-						><i class="fa fa-minus-square-o"></i> Sidebar</button>
+							>
+							<i class="far fa-minus-square"></i> Sidebar
+						</button>
 					</div>
 
 					<!--- Main Content --->
 					#renderView()#
 					<!--- cbadmin event --->
-					#announceInterception( "cbadmin_afterContent" )#
+					#announce( "cbadmin_afterContent" )#
 				</section>
 			</section>
 
@@ -219,7 +271,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
-														<i class="fa fa-trash-o"></i> Delete Installer
+														<i class="far fa-trash-alt"></i> Delete Installer
 													</a>
 												</li>
 											</ul>
@@ -242,7 +294,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteDSNCreator()">
-														<i class="fa fa-trash-o"></i> Delete DSN Creator
+														<i class="far fa-trash-alt"></i> Delete DSN Creator
 													</a>
 												</li>
 											</ul>

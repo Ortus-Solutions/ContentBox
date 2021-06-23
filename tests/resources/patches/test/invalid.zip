@@ -1,196 +1,95 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	
-	
 <title></title>
-
-
-
-
 <meta charset="utf-8" /> 
-<meta name="generator" 	 	content="ContentBox powered by ColdBox" />
-<meta name="robots" 	 	content="index,follow" />
-<meta name="viewport" 		content="width=device-width, initial-scale=1">
-<meta name="description" 	content="" />
-<meta name="keywords" 	 	content="" />
-
-<meta property="og:title"              content="" />
-<meta property="og:type"               content="website" />
-
-
-
+<meta name="generator" content="ContentBox powered by ColdBox" />
+<meta name="robots" content="index,follow" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta property="og:title" content="" />
+<meta property="og:type" content="website" />
 <base href="http://localhost:8589/" />
-
-
-
-
-
-	<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="http://localhost:8589/index.cfm/__rss/pages" />
-	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="http://localhost:8589/index.cfm/__rss/pages/comments" />	
-	<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="http://localhost:8589/index.cfm/__rss" />
-	<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="http://localhost:8589/index.cfm/__rss/comments" />
-	
-	
-
-
-
-
-
-
-
+<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="http://127.0.0.1:8589/__rss/pages" />
+<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="http://127.0.0.1:8589/__rss/pages/comments" />	
+<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="http://127.0.0.1:8589/__rss" />
+<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="http://127.0.0.1:8589/__rss/comments" />
+<link rel="alternate" type="application/rss+xml" title="Pages's Recent Comments" href="http://127.0.0.1:8589/__rss/pages/comments/" />
 <link rel="stylesheet" href="/modules/contentbox/themes/default/includes/css/bootstrap/swatches/green/bootstrap.min.css?v=1" />
 <link rel="stylesheet" href="/modules/contentbox/themes/default/includes/css/bootstrap/swatches/green/skin.css?v=1" />
-
 <!-- injector:css -->
 <link rel="stylesheet" href="/modules/contentbox/themes/default/includes/css/218c7e65.theme.min.css">
 <!-- endinjector -->
-
-
-
-
-
-
 <!-- injector:js -->
 <script src="/modules/contentbox/themes/default/includes/js/ae19f5c3.theme.min.js"></script>
 <!-- endinjector -->
-
-
-	
-	
 </head>
 <body>
-	
-	
-
-	
-	
 <nav class="navbar navbar-default" id="header-main">
-	<div class="container">
-
-		<div class="navbar-header" >
-			<button type="button" id="cb-navbar-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cb-nav-collapse">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			
-				<a href="http://localhost:8589/index.cfm/" class="navbar-brand" title="My Awesome Site" data-toggle="tooltip"><strong>ContentBox Site</strong></a>
-			
-		</div>
-
-		
-		<div class="collapse navbar-collapse" id="cb-nav-collapse">
-			<ul class="nav navbar-nav navbar-right">
-				
-				
-				
-					
-						<li class="dropdown">
-							<a href="http://localhost:8589/index.cfm/products" class="dropdown-toggle" data-toggle="dropdown">products <b class="caret"></b></a>
-							<ul class="dropdown-menu"><li><a href="http://localhost:8589/index.cfm/products"><i class="fa fa-chevron-down"></i> <strong>products</strong></a></li><li role="separator" class="divider"></li><li><a href="http://localhost:8589/index.cfm/products/coldbox-new">coldbox-new</a></li><li><a href="http://localhost:8589/index.cfm/products/coldbox">coldbox</a></li></ul>
-						</li>
-					
-				
-					
-						<li class="dropdown">
-							<a href="http://localhost:8589/index.cfm/node" class="dropdown-toggle" data-toggle="dropdown">node <b class="caret"></b></a>
-							<ul class="dropdown-menu"><li><a href="http://localhost:8589/index.cfm/node"><i class="fa fa-chevron-down"></i> <strong>node</strong></a></li><li role="separator" class="divider"></li><li><a href="http://localhost:8589/index.cfm/node/child1">child1</a></li><li><a href="http://localhost:8589/index.cfm/node/child2">child2</a></li></ul>
-						</li>
-					
-				
-					
-						
-							<li>
-						
-							<a href="http://localhost:8589/index.cfm/email-test">No Sidebar</a>
-						</li>
-					
-				
-					
-						
-							<li class="active">
-						
-							<a href="http://localhost:8589/index.cfm/">support</a>
-						</li>
-					
-				
-
-				
-				
-					<li>
-						<a href="http://localhost:8589/index.cfm/blog">Blog</a>
-					</li>
-				
-			</ul>
-
-			
-		</div>
-	</div>
+<div class="container">
+<div class="navbar-header" >
+<button type="button" id="cb-navbar-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#cb-nav-collapse">
+<span class="sr-only">Toggle navigation</span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+<a href="http://127.0.0.1:8589" class="navbar-brand" title="My Awesome Site" data-toggle="tooltip"><strong>Default Site</strong></a>
+</div>
+<div class="collapse navbar-collapse" id="cb-nav-collapse">
+<ul class="nav navbar-nav navbar-right">
+<li class="dropdown">
+<a href="http://127.0.0.1:8589/products" class="dropdown-toggle" data-toggle="dropdown">products <b class="caret"></b></a>
+<ul class="dropdown-menu"><li><a href="http://127.0.0.1:8589/products"><i class="fa fa-chevron-down"></i> <strong>products</strong></a></li><li role="separator" class="divider"></li><li><a href="http://127.0.0.1:8589/products/coldbox-new">coldbox-new</a></li><li><a href="http://127.0.0.1:8589/products/coldbox">coldbox</a></li></ul>
+</li>
+<li class="dropdown">
+<a href="http://127.0.0.1:8589/node" class="dropdown-toggle" data-toggle="dropdown">node <b class="caret"></b></a>
+<ul class="dropdown-menu"><li><a href="http://127.0.0.1:8589/node"><i class="fa fa-chevron-down"></i> <strong>node</strong></a></li><li role="separator" class="divider"></li><li><a href="http://127.0.0.1:8589/node/child1">child1</a></li><li><a href="http://127.0.0.1:8589/node/child2">child2</a></li></ul>
+</li>
+<li>
+<a href="http://127.0.0.1:8589/email-test">No Sidebar</a>
+</li>
+<li>
+<a href="http://127.0.0.1:8589">support</a>
+</li>
+<li>
+<a href="http://127.0.0.1:8589/blog">Blog</a>
+</li>
+</ul>
+</div>
+</div>
 </nav>
-
-
-
 <div id="body-search">
-	<div class="container">
-		<form id="searchForm" name="searchForm" method="post" action="http://localhost:8589/index.cfm/__search">
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Enter search terms..." name="q" id="q" value="">
-				<span class="input-group-btn">
-					<button type="submit" class="btn btn-default">Search</button>
-				</span>
-			</div>
-		</form>
-	</div>
+<div class="container">
+<form id="searchForm" name="searchForm" method="post" action="http://127.0.0.1:8589/__search">
+<div class="input-group">
+<input type="text" class="form-control" placeholder="Enter search terms..." name="q" id="q" value="">
+<span class="input-group-btn">
+<button type="submit" class="btn btn-default">Search</button>
+</span>
 </div>
-
-
-
-
-
-	
-	
-
-	
-	
-<div class="body-header-jumbotron jumbotron World-bg">
-	<div class="container text-center">
-		<h1>
-			<i class="fa fa-ambulance"></i> 
-			Oopsy!
-		</h1>
-
-		<p>The page you requested: <code>tests/resources/invalid.zip</code></p>
-		<p>Does not exist. Please check your info and try again!</p>
-
-		<p>
-			<a class="btn btn-primary btn-lg" href="http://localhost:8589/index.cfm/" role="button">Go Home</a>
-		</p>
-	</div>
+</form>
 </div>
-
-
-	
-	
-	
-	
-	
+</div>
+<div class="body-header-jumbotron jumbotron green-bg">
+<div class="container text-center">
+<h1>
+<i class="fa fa-ambulance"></i> 
+Oopsy!
+</h1>
+<p>The page you requested: <code>tests/resources/patches/invalid.zip</code></p>
+<p>Does not exist. Please check your info and try again!</p>
+<p>
+<a class="btn btn-primary btn-lg" href="http://127.0.0.1:8589" role="button">Go Home</a>
+</p>
+</div>
+</div>
 <footer id="footer">
-	<div class="container">
-		
-		<p class="text-muted">Copyright &copy; ContentBox Site.  All rights reserved.</p>
-		<p class="text-muted">Powered by ContentBox v@version.number@+@build.number@</p>
-		
-		
-	</div>
+<div class="container">
+<p class="text-muted">Copyright &copy; Default Site. All rights reserved.</p>
+<p class="text-muted">Powered by ContentBox v@version.number@+@build.number@</p>
+</div>
 </footer>
-
-
-	
-		
 </body>
 </html>
-

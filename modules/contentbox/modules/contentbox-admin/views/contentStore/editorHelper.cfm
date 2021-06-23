@@ -1,6 +1,9 @@
 ﻿<cfoutput>
 <!--- Render Commong editor functions --->
-#renderView( view="_tags/editors", prePostExempt=true )#
+#renderView(
+	view 			= "_tags/editors",
+	prePostExempt 	= true
+)#
 <!--- Custom Javascript --->
 <script>
 $( document ).ready( function(){

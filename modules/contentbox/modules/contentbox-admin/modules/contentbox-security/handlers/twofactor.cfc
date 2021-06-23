@@ -1,28 +1,28 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* ContentBox two factor authenticator handler
-*/
-component extends="baseHandler"{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * ContentBox two factor authenticator handler
+ */
+component extends="baseHandler" {
 
 	// Method Security
 	this.allowedMethods = {
-		"index" 		= "GET",
-		"doValidation" 	= "POST",
-		"resendCode" 	= "GET"
+		"index"        : "GET",
+		"doValidation" : "POST",
+		"resendCode"   : "GET"
 	};
 
 	/**
-	* Pre handler
-	*/
+	 * Pre handler
+	 */
 	function preHandler( event, currentAction, rc, prc ){
-		super.preHandler( argumentCollection=arguments );
+		super.preHandler( argumentCollection = arguments );
 		// Keep Flash data
 		flash.keep( "authorData" );
 		// Verify if authorData exists, else you can't authenticate via two factor.
-		if( !flash.exists( "authorData" ) ){
+		if ( !flash.exists( "authorData" ) ) {
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
@@ -31,7 +31,7 @@ component extends="baseHandler"{
 		// Inflate author for requested events
 		prc.oAuthor = authorService.get( flash.get( "authorData" ).authorID );
 		// Verify author, just in case
-		if( isNull( prc.oAuthor ) OR !prc.oAuthor.isLoaded() ){
+		if ( isNull( prc.oAuthor ) OR !prc.oAuthor.isLoaded() ) {
 			// message and redirect
 			messagebox.warn( cb.r( "messages.notauthenticated@security" ) );
 			// Relocate
@@ -50,66 +50,71 @@ component extends="baseHandler"{
 	 */
 	function index( event, rc, prc ){
 		prc.xehValidate = "#prc.cbAdminEntryPoint#.security.twofactor.doValidation";
-		prc.xehResend 	= "#prc.cbAdminEntryPoint#.security.twofactor.resendCode";
-		prc.provider 	= twoFactorService.getDefaultProviderObject();
+		prc.xehResend   = "#prc.cbAdminEntryPoint#.security.twofactor.resendCode";
+		prc.provider    = variables.twoFactorService.getDefaultProviderObject();
 
 		event.setView( "twofactor/index" );
 	}
 
 	/**
-	* Validate the two factor code against a provider
-	*/
+	 * Validate the two factor code against a provider
+	 */
 	function doValidation( event, rc, prc ){
-		event.paramValue( "twofactorCode", "" )
-			.paramValue( "trustDevice", false );
+		event.paramValue( "twofactorCode", "" ).paramValue( "trustDevice", false );
 
 		// Get author data
 		var authorData = flash.get( "authorData" );
 
 		// Verify the challenge code
-		var results = twoFactorService.verifyChallenge(
+		var results = variables.twoFactorService.verifyChallenge(
 			code   = rc.twofactorcode,
 			author = prc.oAuthor
 		);
 
 		// Check for errors
-		if( results.error ){
-			announceInterception( "cbadmin_onInvalidTwoFactor", { author = prc.oAuthor } );
+		if ( results.error ) {
+			announce( "cbadmin_onInvalidTwoFactor", { author : prc.oAuthor } );
 			// message and redirect
-			messagebox.error( results.messages );
+			variables.messagebox.error( results.messages );
 			flash.keep( "authorData" );
 			relocate( "#prc.cbAdminEntryPoint#.security.twofactor" );
 		} else {
-			var oTwoFactorProvider = twoFactorService.getDefaultProviderObject();
+			var oTwoFactorProvider = variables.twoFactorService.getDefaultProviderObject();
 			// Are we trusting devices? If so, trust this device if passed
-			if( oTwoFactorProvider.allowTrustedDevice() AND rc.trustDevice ){
-				twoFactorService.setTrustedDevice( prc.oAuthor.getAuthorID() );
+			if ( oTwoFactorProvider.allowTrustedDevice() AND rc.trustDevice ) {
+				variables.twoFactorService.setTrustedDevice( prc.oAuthor.getAuthorID() );
 			}
 			// Call Provider finalize callback, in case something is needed for teardowns
 			oTwoFactorProvider.finalize( rc.twofactorcode, prc.oAuthor );
 			// Set keep me log in remember cookie, if set.
-			securityService.setRememberMe( prc.oAuthor.getUsername(), val( authorData.rememberMe ) );
+			variables.securityService.setRememberMe(
+				username: prc.oAuthor.getUsername(),
+				days    : val( authorData.rememberMe )
+			);
 			// announce valid two factor
-			announceInterception( "cbadmin_onValidTwoFactor", { author = prc.oAuthor } );
+			announce( "cbadmin_onValidTwoFactor", { author : prc.oAuthor } );
 
 			// Are we in enrollment or loging in mode.
-			if( authorData.isEnrollment ){
+			if ( authorData.isEnrollment ) {
 				prc.oAuthor.setIs2FactorAuth( true );
-				authorService.save( prc.oAuthor );
-				messagebox.info( cb.r( "twofactor.enrollmentSuccess@security" ) );
+				variables.authorService.save( prc.oAuthor );
+				variables.messagebox.info( cb.r( "twofactor.enrollmentSuccess@security" ) );
 			}
 
 			// If you are logged in already, then skip this
-			if( !prc.oCurrentAuthor.isLoggedIn() ){
+			if ( !prc.oCurrentAuthor.isLoggedIn() ) {
 				// Set in session, validations are now complete
-				securityService.setAuthorSession( prc.oAuthor );
+				variables.securityService.login( prc.oAuthor );
 				// announce event
-				announceInterception( "cbadmin_onLogin", { author = prc.oAuthor, securedURL = authorData.securedURL } );
+				announce(
+					"cbadmin_onLogin",
+					{ author : prc.oAuthor, securedURL : authorData.securedURL }
+				);
 			}
 
 			// check if securedURL came in?
-			if( len( authorData.securedURL ) ){
-				relocate( uri=authorData.securedURL );
+			if ( len( authorData.securedURL ) ) {
+				relocate( uri = authorData.securedURL );
 			} else {
 				relocate( "#prc.cbAdminEntryPoint#.dashboard" );
 			}
@@ -117,18 +122,18 @@ component extends="baseHandler"{
 	}
 
 	/**
-	* Resend a two-factor validation code
-	*/
+	 * Resend a two-factor validation code
+	 */
 	function resendCode( event, rc, prc ){
 		// Send challenge
-		var twoFactorResults = twoFactorService.sendChallenge( prc.oAuthor );
+		var twoFactorResults = variables.twoFactorService.sendChallenge( prc.oAuthor );
 		// Verify error, if so, log it and setup a messagebox
-		if( twoFactorResults.error ){
+		if ( twoFactorResults.error ) {
 			log.error( twoFactorResults.messages );
-			messagebox.error( cb.r( "twofactor.error@security" ) );
+			variables.messagebox.error( cb.r( "twofactor.error@security" ) );
 		} else {
 			// message and redirect
-			messagebox.info( cb.r( "twofactor.codesent@security" ) );
+			variables.messagebox.info( cb.r( "twofactor.codesent@security" ) );
 		}
 		// Keep Data
 		flash.keep( "authorData" );

@@ -3,12 +3,13 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4><i class="fa fa-comments"></i> Comment Editor</h4>
+            <h4><i class="far fa-comments"></i> Comment Editor</h4>
         </div>
         #html.startForm( name="commentEditForm",action=prc.xehCommentsave,class="form-vertical" )#
             <div class="modal-body">
             	<!--- commentid --->
-            	#html.hiddenField(name="commentID",bind=rc.comment)#
+				#html.hiddenField(name="commentID",bind=rc.comment)#
+
             	<!--- fields --->
             	#html.textField(
                     name="author",
@@ -21,7 +22,8 @@
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=form-group"
-                )#
+				)#
+
             	#html.textField(
                     name="authorEmail",
                     label="Author Email:",
@@ -33,7 +35,8 @@
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=form-group"
-                )#
+				)#
+
             	#html.textField(
                     name="authorURL",
                     label="Author URL:",
@@ -44,8 +47,8 @@
                     wrapper="div class=controls",
                     labelClass="control-label",
                     groupWrapper="div class=form-group"
-                )#
-            	<!--- content --->
+				)#
+
             	#html.textarea(
                     name="content",
                     label="Content:",
@@ -57,11 +60,12 @@
                     class="form-control",
                     groupWrapper="div class=form-group"
                 )#
-            </div>
+			</div>
+
             <!--- Button Bar --->
             <div class="modal-footer">
                 <button class="btn btn-default" onclick="closeRemoteModal();return false;" title="Close Modal"> Close </button>
-                <button type="submit" class="btn btn-danger">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
             </div>
         #html.endForm()#
     </div>

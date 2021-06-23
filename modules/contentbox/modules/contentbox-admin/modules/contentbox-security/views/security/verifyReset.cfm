@@ -4,14 +4,14 @@
         <div class="panel panel-primary animated flipInY">
 
             <div class="panel-heading">
-                <h3 class="panel-title">
+                <h3 class="panel-title p5">
                    <i class="fa fa-key"></i> #cb.r( "resetpassword@security" )#
                 </h3>
             </div>
 
             <div class="panel-body">
             	<!--- Render Messagebox. --->
-				#getModel( "messagebox@cbMessagebox" ).renderit()#
+				#cbMessageBox().renderit()#
 
   				<p>#cb.r( "resetpassword.instructions@security" )#</p>
 
@@ -23,6 +23,7 @@
 				)#
 
 					#html.hiddenField( name="token", value=encodeForHTMLAttribute( rc.token ) )#
+					#html.hiddenField( name="_csrftoken", value=csrfToken() )#
 
 					<div class="form-group">
 						<div class="col-md-12 controls">
@@ -32,18 +33,8 @@
 								class       	= "form-control pwcheck",
 								autocomplete	= "off"
 							)#
-							<i class="fa fa-lock"></i>
+							<i class="fas fa-key"></i>
 						</div>
-					</div>
-
-					<!--- Show Rules --->
-					<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
-						<span class="badge" id="pw_rule_lower">abc</span>
-						<span class="badge" id="pw_rule_upper">ABC</span>
-						<span class="badge" id="pw_rule_digit">123</span>
-						<span class="badge" id="pw_rule_special">!@$</span>
-						<span class="badge" id="pw_rule_count">0</span>
-						<p class="help-block">#cb.r( "common.passwordrules@security" )#</p>
 					</div>
 
 					<div class="form-group">
@@ -59,8 +50,18 @@
 								class       	= "form-control pwcheck",
 								autocomplete	= "off"
 							)#
-							<i class="fa fa-lock"></i>
+							<i class="fas fa-key"></i>
 						</div>
+					</div>
+
+					<!--- Show Rules --->
+					<div id="passwordRules" class="well well-sm" data-min-length="#prc.cbSettings.cb_security_min_password_length#">
+						<span class="badge" id="pw_rule_lower">abc</span>
+						<span class="badge" id="pw_rule_upper">ABC</span>
+						<span class="badge" id="pw_rule_digit">123</span>
+						<span class="badge" id="pw_rule_special">!@$</span>
+						<span class="badge" id="pw_rule_count">0</span>
+						<p class="help-block">#cb.r( "common.passwordrules@security" )#</p>
 					</div>
 
 					<div class="form-group">
@@ -68,7 +69,7 @@
 					 		#html.button(
 					 			type  	= "submit",
 					 			value 	= "#cb.r( "resetpassword@security" )#",
-					 			class 	= "btn btn-primary"
+					 			class 	= "btn btn-primary btn-lg"
 					 		)#
 						</div>
 					</div>

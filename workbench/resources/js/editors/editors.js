@@ -355,20 +355,26 @@ function askLeaveConfirmation(){
  * @param  {string} linkToUse The link to check
  */
 function permalinkUniqueCheck( linkToUse ){
-	var linkToUse = linkToUse || $slug.val();
+	linkToUse = linkToUse || $slug.val();
 	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness
 	if( !linkToUse.length ){ return; }
 	// Verify unique
 	$.getJSON(
 		$cbEditorConfig.slugCheckURL,
-		{ slug : linkToUse, contentID : $( "#contentID" ).val() },
+		{
+			slug : linkToUse,
+			contentID : $( "#contentID" ).val(),
+			contentType : $( "#contentType" ).val()
+		},
 		function( data ){
 			if( !data.UNIQUE ){
 				$( "#slugCheckErrors" )
 					.html( "The permalink slug you entered is already in use, please enter another one or modify it." )
 					.addClass( "alert alert-danger" );
 			} else {
-				$( "#slugCheckErrors" ).html( "" ).removeClass( "alert alert-danger" );
+				$( "#slugCheckErrors" )
+					.html( "" )
+					.removeClass( "alert alert-danger" );
 			}
 		}
 	);

@@ -1,6 +1,6 @@
 <cfoutput>
 <fieldset>
-	<legend><i class="fa fa-lock fa-lg"></i> Password Options</legend>
+	<legend><i class="fas fa-key fa-lg"></i> Password Options</legend>
 
 	<!--- Min Password Length --->
 	<div class="form-group">
@@ -12,7 +12,7 @@
 			<small>The minimum length for user passwords. ContentBox limits the minimum to 8 characters.</small>
 
 			<div>
-				<strong class="margin10">8</strong>
+				<strong class="m10">8</strong>
 				<input 	type="text"
 						class="form-control slider"
 						id="cb_security_min_password_length"
@@ -20,11 +20,42 @@
 						data-slider-value="#prc.cbSettings.cb_security_min_password_length#"
 						data-provide="slider"
 						data-slider-min="8"
-						data-slider-max="100"
+						data-slider-max="50"
 						data-slider-step="1"
 						data-slider-tooltip="hide"
 				>
-				<strong class="margin10">100</strong>
+				<strong class="m10">50</strong>
+			</div>
+		</div>
+	</div>
+
+	<!--- Password Reset Token Expiration --->
+	<div class="form-group">
+		<label class="control-label" for="cb_security_password_reset_expiration">
+			Reset Password Token Expiration:
+			<span class="badge badge-info" id="cb_security_password_reset_expiration_label">
+				#prc.cbSettings.cb_security_password_reset_expiration#
+			</span>
+		</label>
+		<div class="controls">
+			<small>
+				The number of minutes the password reset token is valid until it expires and the user has to issue another reset link.
+			</small>
+
+			<div>
+				<strong class="m10">10</strong>
+				<input 	type="text"
+						class="form-control slider"
+						id="cb_security_password_reset_expiration"
+						name="cb_security_password_reset_expiration"
+						data-slider-value="#prc.cbSettings.cb_security_password_reset_expiration#"
+						data-provide="slider"
+						data-slider-min="10"
+						data-slider-max="300"
+						data-slider-step="5"
+						data-slider-tooltip="hide"
+				>
+				<strong class="m10">300 (Minutes)</strong>
 			</div>
 		</div>
 	</div>
@@ -60,7 +91,7 @@
 		</label>
         <div class="controls">
             <small>The number of invalid login attempts before a user is blocked.</small><br/>
-			<strong class="margin10">5</strong>
+			<strong class="m10">5</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_max_attempts"
@@ -72,7 +103,7 @@
 					data-slider-step="5"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">50</strong>
+			<strong class="m10">50</strong>
         </div>
     </div>
 
@@ -84,7 +115,7 @@
 		</label>
         <div class="controls">
             <small>The number of minutes a user will be blocked if max attempts is triggered.</small><br/>
-			<strong class="margin10">5</strong>
+			<strong class="m10">5</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_blocktime"
@@ -96,7 +127,7 @@
 					data-slider-step="5"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">60</strong>
+			<strong class="m10">60</strong>
         </div>
     </div>
 
@@ -108,7 +139,7 @@
 		</label>
         <div class="controls">
             <small>The number of log entries to keep before rotating logs.</small><br/>
-			<strong class="margin10">100</strong>
+			<strong class="m10">100</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_max_auth_logs"
@@ -121,14 +152,14 @@
 					data-slider-tooltip="hide"
 					data-slider-scale="logarithmic"
 			>
-			<strong class="margin10">5000</strong>
+			<strong class="m10">5000</strong>
         </div>
     </div>
 
 </fieldset>
 
 <fieldset>
-	<legend><i class="fa fa-filter"></i> <strong>Rate Limiter</strong></legend>
+	<legend><i class="fas fa-filter"></i> <strong>Rate Limiter</strong></legend>
 	<!--- Rate Limiter --->
 	<div class="form-group">
         #html.label( class="control-label", field="cb_security_rate_limiter", content="Enable Rate Limiter:" )#
@@ -188,7 +219,7 @@
 		</label>
         <div class="controls">
             <small>Throttle requests made more than this count in the duration specified.</small><br/>
-			<strong class="margin10">1</strong>
+			<strong class="m10">1</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_rate_limiter_count"
@@ -200,7 +231,7 @@
 					data-slider-step="1"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">25</strong>
+			<strong class="m10">25</strong>
         </div>
 	</div>
 
@@ -212,7 +243,7 @@
 		</label>
         <div class="controls">
             <small>Throttle requests made more than the count above in the span of this setting in seconds.</small><br/>
-			<strong class="margin10">1</strong>
+			<strong class="m10">1</strong>
 			<input 	type="text"
 					class="form-control slider"
 					id="cb_security_rate_limiter_duration"
@@ -224,7 +255,7 @@
 					data-slider-step="1"
 					data-slider-tooltip="hide"
 			>
-			<strong class="margin10">60</strong>
+			<strong class="m10">60</strong>
         </div>
 	</div>
 
@@ -257,7 +288,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><i class="fa fa-lock fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
+    <legend><i class="fas fa-key fa-lg"></i>  Secure Sockets Layer (SSL) Encryption</legend>
 	<!--- Admin SSL --->
     <div class="form-group">
         #html.label(
@@ -275,27 +306,6 @@
 			#html.hiddenField(
 				name	= "cb_admin_ssl",
 				value	= prc.cbSettings.cb_admin_ssl
-			)#
-        </div>
-    </div>
-
-	<!--- Site SSL --->
-    <div class="form-group">
-        #html.label(
-            class="control-label",
-            field="cb_site_ssl",
-            content="Site Force SSL (Secure Sockets Layer):"
-        )#
-        <div class="controls">
-            <small>You can enable SSL encryption for the entire site.</small><br /><br />
-            #html.checkbox(
-				name    = "cb_site_ssl_toggle",
-				data	= { toggle: 'toggle', match: 'cb_site_ssl' },
-				checked	= prc.cbSettings.cb_site_ssl
-			)#
-			#html.hiddenField(
-				name	= "cb_site_ssl",
-				value	= prc.cbSettings.cb_site_ssl
 			)#
         </div>
     </div>

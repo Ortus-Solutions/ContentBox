@@ -2,21 +2,26 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-road fa-lg"></i>
+        	<i class="fas fa-passport fa-lg"></i>
 			Security Rules
-        </h1>
-        <!--- messageBox --->
-		#getModel( "messagebox@cbMessagebox" ).renderit()#
-		<!---Import Log --->
-		<cfif flash.exists( "importLog" )>
-			<div class="consoleLog">#flash.get( "importLog" )#</div>
-		</cfif>
+			<span id="rulesCountContainer"></span>
+		</h1>
+
     </div>
 </div>
 
 <div class="row">
 	<div class="col-md-12">
-		<div class="panel panel-primary">
+
+		<!--- messageBox --->
+		#cbMessageBox().renderit()#
+
+		<!---Import Log --->
+		<cfif flash.exists( "importLog" )>
+			<div class="consoleLog">#flash.get( "importLog" )#</div>
+		</cfif>
+
+		<div class="panel panel-info">
 
 		    <div class="panel-heading">
 		        <h3 class="panel-title"><i class="fa fa-info-circle"></i> About Security Rules</h3>
@@ -42,84 +47,115 @@
 
 <div class="row">
 	<div class="col-md-12">
+		#html.startForm( name="ruleForm", action=prc.xehRemoveRule )#
+
 		<div class="panel panel-default">
-			#html.startForm( name="ruleForm", action=prc.xehRemoveRule )#
 			<div class="panel-heading">
 				<div class="row">
-					<div class="col-md-7">
+
+					<!--- Quick Search --->
+					<div class="col-md-6 col-xs-4">
 						<div class="form-group form-inline no-margin">
 							#html.textField(
-								name="ruleFilter",
-								class="form-control",
-								placeholder="Quick Filter"
+								name        = "ruleFilter",
+								class       = "form-control rounded quicksearch",
+								placeholder = "Quick Filter"
 							)#
 						</div>
 					</div>
-					<div class="col-md-5">
-						<div class="pull-right">
-							<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
-								<div class="buttonBar">
-									<!---Global --->
-									<div class="btn-group btn-group-sm">
-								    	<a class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" href="##">
-											Bulk Actions <span class="caret"></span>
-										</a>
-								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
-											<li><a href="#event.buildLink(prc.xehApplyRules)#" class="confirmIt"
+
+					<div class="col-md-6 col-xs-8">
+						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
+							<div class="text-right">
+								<!---Global --->
+								<div class="btn-group">
+									<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+										Bulk Actions <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu">
+										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+										<li>
+											<a
+												href="#event.buildLink( prc.xehApplyRules )#"
+												class="confirmIt"
 												data-title="Really Apply Rules?"
-												data-message="Please be aware that you could be locked out of application if your rules are not correct.">
-												<i class="fa fa-bolt fa-lg"></i> Apply Rules
+												data-message="Please be aware that you could be locked out of application if your rules are not correct."
+											>
+												<i class="fas fa-bolt fa-lg"></i> Apply Rules
+											</a>
+										</li>
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
+											<li>
+												<a href="javascript:importContent()">
+													<i class="fas fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
-											<li><a href="javascript:importContent()"><i class="fa fa-upload"></i> Import</a></li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
-												<li><a href="#event.buildLink (linkto=prc.xehExportAll )#.json" target="_blank"><i class="fa fa-download"></i> Export All as JSON</a></li>
-												<li><a href="#event.buildLink( linkto=prc.xehExportAll )#.xml" target="_blank"><i class="fa fa-download"></i> Export All as XML</a></li>
-											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
-											<li><a href="#event.buildLink(prc.xehResetRules)#"
-												data-title="<i class='fa fa-refresh'></i> Really Reset All Rules?" class="confirmIt"
-												data-message="We will remove all rules and re-create them to ContentBox factory defaults.">
-												<i class="fa fa-eraser"></i> Reset Rules
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+											<li>
+												<a
+													href="#event.buildLink ( prc.xehExportAll )#.json"
+													target="_blank"
+												>
+													<i class="fas fa-file-export fa-lg"></i> Export All
 												</a>
 											</li>
-											</cfif>
-								    	</ul>
-								    </div>
-									<a href="#event.buildLink(prc.xehEditorRule)#" class="btn btn-sm btn-danger">
-										Create Rule
-									</a>
+											<li>
+												<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
+													<i class="fas fa-file-export fa-lg"></i> Export Selected
+												</a>
+											</li>
+										</cfif>
+										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+										<li>
+											<a
+												href="#event.buildLink( prc.xehResetRules )#"
+												data-title="<i class='fas fa-recycle'></i> Really Reset All Rules?"
+												class="confirmIt"
+												data-message="We will remove all rules and re-create them to ContentBox factory defaults."
+											>
+												<i class="fas fa-eraser"></i> Reset Rules
+											</a>
+										</li>
+										</cfif>
+									</ul>
 								</div>
-							</cfif>
-						</div>
+								<button
+									class="btn btn-primary"
+									onclick="return to('#event.buildLink( prc.xehEditorRule )#')"
+								>
+									Create Rule
+								</button>
+							</div>
+						</cfif>
 					</div>
+
 				</div>
 			</div>
 
 		    <div class="panel-body">
 				#html.hiddenField( name="ruleID" )#
-				<div id="rulesTable">#renderView( "securityRules/rulesTable" )#</div>
+				<div id="rulesTable">
+					#renderView( view = "securityRules/rulesTable", prePostExempt = true )#
+				</div>
 			</div>
-
-			#html.endForm()#
-
 		</div>
+
+		#html.endForm()#
 	</div>
 </div>
 
 <cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
-	<cfscript>
-		dialogArgs = {
-			title = "Import Security Rules",
-			contentArea = "security rules",
-			action = prc.xehImportAll,
-			contentInfo = "Choose the ContentBox <strong>JSON</strong> security rules file to import."
-		};
-	</cfscript>
-	#renderView( view="_tags/dialog/import", args=dialogArgs )#
+	#renderView(
+		view 			= "_tags/dialog/import",
+		args 			= {
+			title       : "Import Security Rules",
+			contentArea : "security rules",
+			action      : prc.xehImportAll,
+			contentInfo : "Choose the ContentBox <strong>JSON</strong> security rules file to import."
+		},
+		prePostExempt 	= true
+	)#
 </cfif>
 </cfoutput>
