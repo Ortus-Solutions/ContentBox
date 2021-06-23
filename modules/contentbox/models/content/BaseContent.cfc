@@ -1764,12 +1764,13 @@ component
 	 * @parent The parent object or null
 	 */
 	BaseContent function setParent( parent ){
-		// Welcome home papa!
-		variables.parent = arguments.parent;
-
 		// Nulllify?
 		if ( isNull( arguments.parent ) ) {
+			variables.parent = javaCast( "null", "" );
 			return this;
+		} else {
+			// Welcome home papa!
+			variables.parent = arguments.parent;
 		}
 
 		// Update slug, if parent slug is not set

@@ -1,29 +1,29 @@
 {
-	"app": {
-		"cfengine": "adobe@2018",
-		"serverHomeDirectory": ".engines/acf2018"
-	},
-	"name": "contentbox-adobe2018",
-	"JVM": {
-		"heapSize": "1024"
-	},
-	"web": {
-		"directoryBrowsing": true,
-		"rewrites": {
-			"enable": true
-		},
-		"http": {
-			"port": "8589"
-		}
-	},
-	"trayicon": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
-	"trayOptions": [
-		{
-			"label": "Open ContentBox Admin",
-			"action": "openbrowser",
-			"url": "/cbadmin",
-			"disabled": false,
-			"image": "modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
+    "app":{
+        "cfengine":"adobe@2018",
+        "serverHomeDirectory":".engines/acf2018"
+    },
+    "name":"contentbox-adobe2018",
+    "JVM":{
+        "heapSize":"1024"
+    },
+    "web":{
+        "directoryBrowsing":true,
+        "rewrites":{
+            "enable":true
+        },
+        "http":{
+            "port":"8589"
+        }
+    },
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
+    "trayOptions":[
+        {
+            "label":"Open ContentBox Admin",
+            "action":"openbrowser",
+            "url":"/cbadmin",
+            "disabled":false,
+            "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
     ]
 }
