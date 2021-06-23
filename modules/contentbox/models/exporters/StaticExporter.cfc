@@ -123,9 +123,9 @@ component accessors=true threadSafe singleton {
 		// Process Homepage
 		var oHomePage = variables.pageService.findBySlug(
 			slug  : arguments.prc.oCurrentSite.getHomepage(),
-			siteID= arguments.site.getSiteID()
+			siteID: arguments.site.getSiteID()
 		);
-		if ( !isNull( oHomePage ) ) {
+		if ( !isNull( oHomePage ) && oHomepage.isLoaded() ) {
 			// put in scope for fake access
 			prc.page = oHomePage;
 			// process it
