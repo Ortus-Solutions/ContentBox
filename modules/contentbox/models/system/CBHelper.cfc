@@ -655,6 +655,10 @@ component accessors="true" singleton threadSafe {
 		if ( structKeyExists( prc, "comments" ) ) {
 			return prc.comments;
 		}
+		// If we are in static export, set to empty array
+		if ( !isNull( prc.staticExport ) ) {
+			return [];
+		}
 		throw(
 			message = "Comments not found in collection",
 			detail  = "This probably means you are trying to use the entry or page comments in an non-entry or non-page page",
