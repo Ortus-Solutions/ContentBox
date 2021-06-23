@@ -524,17 +524,18 @@ component extends="baseContentHandler" {
 			} )
 			// Inflate to the page
 			.map( function( thisId, index ){
-				return variables.pageService.get( arguments.thisId ).setOrder( arguments.index );
-			} )
-			// remove caching once ordering changes
-			.each( function( oPage ){
-				variables.pageService.clearPageWrapper( arguments.oPage.getSlug() );
+				var oPage = variables.pageService
+					.get( arguments.thisId )
+					.setOrder( arguments.index );
+				// remove caching once ordering changes
+				variables.pageService.clearPageWrapper( oPage.getSlug() );
 				// Do we have a parent?
-				if ( arguments.oPage.hasParent() ) {
+				if ( oPage.hasParent() ) {
 					variables.pageService.clearPageWrapperCaches(
-						slug = arguments.oPage.getParent().getSlug()
+						slug = oPage.getParent().getSlug()
 					);
 				}
+				return oPage;
 			} );
 
 		// save them

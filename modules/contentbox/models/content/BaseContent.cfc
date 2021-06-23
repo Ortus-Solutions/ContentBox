@@ -578,6 +578,7 @@ component
 	 * Base constructor
 	 */
 	function init(){
+		super.init();
 		variables.isPublished            = true;
 		variables.publishedDate          = now();
 		variables.allowComments          = true;
@@ -589,8 +590,6 @@ component
 		variables.contentType            = "";
 		variables.showInSearch           = true;
 		variables.renderedContent        = "";
-
-		super.init();
 		return this;
 	}
 
@@ -1764,12 +1763,13 @@ component
 	 * @parent The parent object or null
 	 */
 	BaseContent function setParent( parent ){
-		// Welcome home papa!
-		variables.parent = arguments.parent;
-
 		// Nulllify?
 		if ( isNull( arguments.parent ) ) {
+			variables.parent = javacast( "null", "" );
 			return this;
+		} else {
+			// Welcome home papa!
+			variables.parent = arguments.parent;
 		}
 
 		// Update slug, if parent slug is not set

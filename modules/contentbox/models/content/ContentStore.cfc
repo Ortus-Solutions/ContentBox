@@ -54,6 +54,11 @@ component
 	 ********************************************************************* */
 
 	function init(){
+		appendToMemento( [ "description", "order" ], "defaultIncludes" );
+		appendToMemento( [], "defaultExcludes" );
+
+		super.init();
+
 		variables.categories      = [];
 		variables.customFields    = [];
 		variables.renderedContent = "";
@@ -62,11 +67,6 @@ component
 		variables.createdDate     = now();
 		variables.contentType     = "ContentStore";
 		variables.order           = 0;
-
-		appendToMemento( [ "description", "order" ], "defaultIncludes" );
-		appendToMemento( [], "defaultExcludes" );
-
-		super.init();
 
 		return this;
 	}
