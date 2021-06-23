@@ -323,6 +323,15 @@ component
 	}
 
 	/**
+	 * Get all sites for export
+	 */
+	function getAllForExport(){
+		return getAll().map( function( thisItem ){
+			return thisItem.getMemento( profile: "export" );
+		} );
+	}
+
+	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
