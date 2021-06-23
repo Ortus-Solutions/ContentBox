@@ -31,27 +31,31 @@
 					#args.content.getCreatorName()#
 				</span>
 			</a>
+		</div>
 
-			<span title="Created Date">
-				<i class="fas fa-calendar mr5"></i> #args.content.getDisplayCreatedDate()#
-			</span>
-
-
+		<!--- Created Date --->
+		<div
+			class="mt10 mb5 ml5"
+			title="Created Date"
+		>
+			<i class="fas fa-calendar mr5"></i> #args.content.getDisplayCreatedDate()#
 		</div>
 
 		<!--- Categories --->
-		<div class="mt10 mb5 ml5">
-			<div class="text-muted">
-				<span title="Categories">
-					<i class="fas fa-tags"></i> #args.content.getCategoriesList()#
-				</span>
+		<cfif args.content.hasCategories()>
+			<div class="mt10 mb5">
+				<div class="text-muted">
+					<span title="Categories">
+						<i class="fas fa-tags"></i> #args.content.getCategoriesList()#
+					</span>
+				</div>
 			</div>
-		</div>
+		</cfif>
 
-		<!--- Permalink --->
+		<!--- Slug --->
 		<div class="mt5">
 			<div class="text-muted">
-				<span title="Permalink">
+				<span title="Slug">
 					<i class="fas fa-sitemap mr5"></i>
 					<span class="label label-success">#args.content.getSlug()#</span>
 				</span>
