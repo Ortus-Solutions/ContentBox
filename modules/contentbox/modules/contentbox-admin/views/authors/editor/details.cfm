@@ -17,7 +17,7 @@
 				<legend>Admin Fields</legend>
 
 				<!--- Active User --->
-				<div class="col-md-6 form-group">
+				<div class="col-md-6">
 					#html.label(
 						class   = "control-label",
 						field   = "isActive",
@@ -38,19 +38,19 @@
 				</div>
 
 				<!--- Roles --->
-				#html.select(
-					label     		= "User Role:",
-					name      		= "roleID",
-					options   		= prc.roles,
-					column    		= "roleID",
-					nameColumn		= "role",
-					bind      		= prc.author.getRole(),
-					style     		= "width:200px",
-					class     		= "form-control input-sm",
-					wrapper   		= "div class=controls",
-					labelClass		= "control-label",
-					groupWrapper 	= "div class=col-md-6 form-group"
-				)#
+				<div class="col-md-6">
+					#html.select(
+						label     		= "User Role:",
+						name      		= "roleID",
+						options   		= prc.roles,
+						column    		= "roleID",
+						nameColumn		= "role",
+						bind      		= prc.author.getRole(),
+						class     		= "form-control input-sm",
+						wrapper   		= "div class=controls",
+						labelClass		= "control-label"
+					)#
+				</div>
 			</div>
 		</cfif>
 
