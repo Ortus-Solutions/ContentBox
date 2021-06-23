@@ -140,7 +140,6 @@ component
 		fieldtype   ="one-to-many"
 		type        ="array"
 		lazy        ="extra"
-		batchsize   ="25"
 		cfc         ="BaseMenuItem"
 		fkcolumn    ="FK_parentID"
 		inverse     ="true"

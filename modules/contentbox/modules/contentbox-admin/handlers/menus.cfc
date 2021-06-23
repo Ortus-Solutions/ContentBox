@@ -177,16 +177,12 @@ component extends="baseHandler" {
 		if ( !len( rc.slug ) ) {
 			rc.slug = variables.HTMLHelper.slugify( rc.title );
 		}
-		var oMenu        = variables.menuService.get( id = rc.menuID );
+		var oMenu        = variables.menuService.get( rc.menuID );
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
 		populateModel( model = oMenu, exclude = "menuItems" );
-		// clear menu items
-		if ( oMenu.hasMenuItem() ) {
-			oMenu.getMenuItems().clear();
-		}
-		// populate items from form
-		oMenu.populateMenuItems( rawData = deserializeJSON( rc.menuItems ) );
+		writeDump( var = deserializeJSON( rc.menuItems ) );
+		oMenu.populateMenuItems( deserializeJSON( rc.menuItems ) );
 		// announce event
 		announce( "cbadmin_preMenuSave", { menu : oMenu, menuID : rc.menuID } );
 		// save menu

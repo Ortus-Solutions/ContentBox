@@ -199,12 +199,13 @@ component
 	}
 
 	/**
-	 * Creates menu items from raw data object
+	 * Creates menu items from raw data objects and attaches them to this menu.
 	 *
 	 * @rawData The raw data from which to create menu items
 	 */
-	Menu function populateMenuItems( required array rawData ){
-		return setMenuItems( createMenuItems( arguments.rawData ) );
+	array function populateMenuItems( required array rawData ){
+		variables.menuItems.clear();
+		return createMenuItems( arguments.rawData );
 	}
 
 	/**
@@ -233,17 +234,17 @@ component
 		// loop over rawData and create items :)
 		for ( var data in arguments.rawData ) {
 			var provider = variables.menuItemService.getProvider( data.menuType );
-			var entity   = variables.ORMService.get( entityName = provider.getEntityName(), id = 0 );
+			var entity   = variables.ORMService.new( entityName = provider.getEntityName() );
 			var newItem  = variables.menuItemService.populate(
 				target  = entity,
 				memento = data,
-				exclude = "children,parent"
+				exclude = "menuItemId,children,parent"
 			);
 			// Link the item to this menu
-			newItem.setMenu( this );
+			addMenuItem( newItem );
 
 			// populate the children
-			if ( arrayLen( data.children ) ) {
+			if ( !isNull( data.children ) && arrayLen( data.children ) ) {
 				var children = createMenuItems( data.children );
 				var setter   = [];
 				for ( var child in children ) {
