@@ -1,4 +1,4 @@
-name: ContentBox Integration - ${{ GITHUB_REF }}
+name: ContentBox CI
 
 # Only on Development we build snapshots
 on:
