@@ -27,7 +27,8 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v2
         with:
-          java-version: 11
+          distribution: "adopt"
+          java-version: "11"
 
       - name: Setup CommandBox
         uses: elpete/setup-commandbox@v1.0.0
