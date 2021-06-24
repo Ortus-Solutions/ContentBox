@@ -6,16 +6,14 @@ on:
     branches:
       - development
 
-# Global Environment
-env:
-  DB_USER: root
-  DB_PASSWORD: root
-
 jobs:
   # Tests First baby! We fail, no build :(
   tests:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
+    env:
+      DB_USER: root
+      DB_PASSWORD: root
     strategy:
       fail-fast: false
       matrix:
@@ -23,6 +21,12 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+
+      - name: Setup Database and Fixtures
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e 'CREATE DATABASE contentbox;'
+          mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
       - name: Setup Java
         uses: actions/setup-java@v2
@@ -32,12 +36,6 @@ jobs:
 
       - name: Setup CommandBox
         uses: elpete/setup-commandbox@v1.0.0
-
-      - name: Setup Database and Fixtures
-        run: |
-          sudo /etc/init.d/mysql start
-          mysql -e 'CREATE DATABASE contentbox;' -u ${{ env.DB_USER }} -p ${{ env.DB_PASSWORD }}
-          mysql -u ${{ env.DB_USER }} -p ${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
       - name: Setup .env For Runner
         run: |
