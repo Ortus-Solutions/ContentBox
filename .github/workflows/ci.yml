@@ -74,12 +74,19 @@ jobs:
       - name: Run Web App Tests
         run: |
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
-          box testbox run --verbose
+          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
 
       - name: Run API Tests
         run: |
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
-          box testbox run --verbose
+          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v2
+        with:
+          name: ContentBox Test Results => ${{ matrix.cfengine }}
+          path: |
+            tests/results/*
 
       - name: Notify Slack of Failures
         if: ${{ failure() }}
@@ -88,23 +95,22 @@ jobs:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
           status: failure
 
-      - name: Failure Debugging Info
+      - name: Cat Failure Debugging Info
         if: ${{ failure() }}
         run: |
-          cat tests/results/results.txt
           cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
           cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
-      - name: Upload Debugging Info
+      - name: Upload Debugging Info Artifacts
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Failure Debugging Info
+          name: Failure Debugging Info => ${{ matrix.cfengine }}
           path: |
-            tests/results/results.txt
-            .engines/**/WEB-INF/cfusion/logs/hibernatesql.log
-            .engines/**/logs/
+            tests/results/*
+            .engines/**/logs/*
+            .engines/**/WEB-INF/cfusion/logs/*
 
   # Let's build up our software
   build:
@@ -173,11 +179,13 @@ jobs:
           DEST_DIR: "contentbox/${{ env.VERSION }}"
 
       - name: Publish to ForgeBox
+        if: ${{ success() }}
         run: |
           chmod +x build/forgebox-publish-github.sh
           build/forgebox-publish-github.sh
 
       - name: Inform Slack of success
+        if: ${{ success() }}
         uses: craftech-io/slack-action@v1
         with:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}

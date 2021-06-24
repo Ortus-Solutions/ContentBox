@@ -83,7 +83,6 @@ jobs:
       - name: Failure debugging
         if: ${{ failure() }}
         run: |
-          cat tests/results/results.txt
           cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
           cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
