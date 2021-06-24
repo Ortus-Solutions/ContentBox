@@ -11,10 +11,6 @@
  	<property name="groupID"					value="ortussolutions" />
  	<property name="contentbox.slug"			value="contentbox"/>
 
-	<!-- Travis -->
-	<condition property="isTravis" else="false">
-    	<isset property="isTravis"/>
-    </condition>
 	<!-- Branch Building -->
     <condition property="build.branch" else="development">
     	<isset property="build.branch"/>
@@ -456,15 +452,6 @@
 			<fileset dir="${dir.contentbox.exports}" />
 			<mapper type="regexp" from="^(.*)(${contentbox.version})(.*)$" to="\1be\3" />
 		</copy>
-
-		<!-- Cleanup -->
-		<if>
-			<equals arg1="$isTravis" arg2="false" />
-			<then>
-				<delete dir="${dir.build}" />
-				<delete dir="${dir.forgeboxbuild}" />
-			</then>
-		</if>
     </target>
 
  	<!-- Get Dependencies -->
