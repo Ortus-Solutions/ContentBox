@@ -81,17 +81,30 @@ jobs:
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
           box testbox run --verbose
 
-      - name: Failure Procedures
+      - name: Notify Slack of Failures
         if: ${{ failure() }}
         uses: craftech-io/slack-action@v1
         with:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
           status: failure
+
+      - name: Failure Debugging Info
+        if: ${{ failure() }}
         run: |
           cat tests/results/results.txt
           cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
           cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
+
+      - name: Upload Debugging Info
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: Failure Debugging Info
+          path: |
+            tests/results/results.txt
+            .engines/**/WEB-INF/cfusion/logs/hibernatesql.log
+            .engines/**/logs/
 
   # Let's build up our software
   build:
