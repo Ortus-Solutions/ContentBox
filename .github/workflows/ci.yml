@@ -1,4 +1,4 @@
-name: SnapshotBuilds
+name: ContentBox Integration - ${{ GITHUB_REF }}
 
 # Only on Development we build snapshots
 on:
@@ -82,9 +82,10 @@ jobs:
           box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
 
       - name: Upload Test Results
+        if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: ContentBox Test Results => ${{ matrix.cfengine }}
+          name: ContentBox Test Results - ${{ matrix.cfengine }}
           path: |
             tests/results/*
 
@@ -106,7 +107,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Failure Debugging Info => ${{ matrix.cfengine }}
+          name: Failure Debugging Info - ${{ matrix.cfengine }}
           path: |
             tests/results/*
             .engines/**/logs/*
