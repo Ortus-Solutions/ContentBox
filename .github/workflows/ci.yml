@@ -141,7 +141,7 @@ jobs:
       - name: Setup Environment Variables For Build Process
         id: current_version
         run: |
-          echo "VERSION=`cat box.json | jq '.version' -r'`" >> $GITHUB_ENV
+          echo "VERSION=`cat box.json | jq '.version' -r`" >> $GITHUB_ENV
           # master or snapshot
           echo "BRANCH=master" >> $GITHUB_ENV
           if [[ "{{ GITHUB_REF }}" == "refs/heads/development" ]] ; then
