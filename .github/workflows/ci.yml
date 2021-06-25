@@ -59,6 +59,14 @@ jobs:
           cp build/resources/log4j.properties .engines/acf2016/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
 
+      - name: Cache CommandBox Dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.CommandBox/artifacts
+          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+          restore-keys: |
+            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+
       - name: Install Dependencies
         run: |
           # Site dependencies
@@ -149,6 +157,14 @@ jobs:
 
       - name: Setup CommandBox
         uses: elpete/setup-commandbox@v1.0.0
+
+      - name: Cache CommandBox Dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.CommandBox/artifacts
+          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+          restore-keys: |
+            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
 
       - name: Install Build Dependencies
         run: |
