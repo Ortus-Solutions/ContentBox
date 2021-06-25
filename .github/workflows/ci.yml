@@ -85,14 +85,14 @@ jobs:
 
       - name: Run Swagger Tests
         run: |
-          curl http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb -o tests/results/contentbox-swagger.json
+          curl http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb > tests/results/contentbox-swagger.json
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
           files: tests/results/**/*.xml
-          check_name: "ContentBox Test Results"
+          check_name: "${{ matrix.cfengine }} Test Results"
 
       - name: Upload Test Results
         if: always()
@@ -107,13 +107,18 @@ jobs:
         uses: craftech-io/slack-action@v1
         with:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          status: failure
+          status: success
+          #status: failure
 
       - name: Failure Debugging Info
         if: ${{ failure() }}
         run: |
-          cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
-          cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
+          if [[ "{{ matrix.cfengine }}" == "adobe@2016" ]] ; then
+            cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
+          fi
+          if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
+            cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
+          fi
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
       - name: Upload Debugging Info To Artifacts
@@ -122,7 +127,6 @@ jobs:
         with:
           name: Failure Debugging Info - ${{ matrix.cfengine }}
           path: |
-            tests/results/*
             .engines/**/logs/*
             .engines/**/WEB-INF/cfusion/logs/*
 
