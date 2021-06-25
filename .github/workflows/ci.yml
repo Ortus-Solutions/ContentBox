@@ -110,13 +110,13 @@ jobs:
           path: |
             tests/results/**/*
 
-      - name: Notify Slack of Failures
-        if: ${{ failure() }}
-        uses: craftech-io/slack-action@v1
-        with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          status: success
-          #status: failure
+      #- name: Notify Slack of Failures
+      #  if: ${{ failure() }}
+      #  uses: craftech-io/slack-action@v1
+      #  with:
+      #    slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #    status: success
+      #    #status: failure
 
       - name: Failure Debugging Info
         if: ${{ failure() }}
@@ -228,6 +228,8 @@ jobs:
       - name: Publish to ForgeBox
         if: ${{ success() }}
         run: |
+          BRANCH=${{ GITHUB_REF }}
+          WORKSPACE=${{ GITHUB_WORKSPACE }}
           chmod +x build/forgebox-publish-github.sh
           build/forgebox-publish-github.sh
 
@@ -237,11 +239,11 @@ jobs:
         with:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-      - name: Inform Slack of failure
-        if: ${{ failure() }}
-        uses: craftech-io/slack-action@v1
-        with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          status: success
-          #status: failure
+      #- name: Inform 'Slack' of failure
+      #  if: ${{ failure() }}
+      #  uses: craftech-io/slack-action@v1
+      #  with:
+      #    slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #    status: success
+      #    #status: failure
 
