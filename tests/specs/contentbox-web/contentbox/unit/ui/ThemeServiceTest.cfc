@@ -11,6 +11,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Theme Services", function(){
 			beforeEach( function( currentSpec ){
+				setup();
 				model = prepareMock( getInstance( "ThemeService@cb" ) );
 			} );
 
@@ -21,7 +22,6 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can find maintenance view", function(){
-				setup();
 				var prc         = getRequestContext().getPrivateCollection();
 				prc.cbThemeRoot = "/";
 				expect( model.themeMaintenanceViewExists() ).toBeFalse();
@@ -32,7 +32,6 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can find the maintenance layout", function(){
-				setup();
 				var prc         = getRequestContext().getPrivateCollection();
 				prc.cbThemeRoot = "/";
 				expect( model.getThemeMaintenanceLayout() ).toBe( "pages" );
@@ -43,7 +42,6 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can find the search layout", function(){
-				setup();
 				var prc         = getRequestContext().getPrivateCollection();
 				prc.cbThemeRoot = "/";
 				expect( model.getThemeSearchLayout() ).toBe( "pages" );
