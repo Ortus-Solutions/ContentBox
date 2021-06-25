@@ -220,7 +220,7 @@ jobs:
           BRANCH: ${{ env.GITHUB_REF }}
           WORKSPACE: ${{ env.GITHUB_WORKSPACE }}
         run: |
-          build/forgebox-publish-github.sh
+          build/forgebox-publish.sh
 
       - name: Inform Slack of success
         if: ${{ success() }}
