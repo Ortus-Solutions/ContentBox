@@ -218,8 +218,8 @@ jobs:
       - name: Publish to ForgeBox
         if: ${{ success() }}
         env:
-          BRANCH: ${{ GITHUB_REF }}
-          WORKSPACE: ${{ GITHUB_WORKSPACE }}
+          BRANCH: ${{ env.GITHUB_REF }}
+          WORKSPACE: ${{ env.GITHUB_WORKSPACE }}
         run: |
           build/forgebox-publish-github.sh
 
