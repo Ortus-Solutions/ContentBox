@@ -192,6 +192,10 @@ jobs:
           ant -Dcontentbox.version=${{ env.VERSION }} -Dbuild.number=${{ github.run_number }} -Dbuild.branch=${{ env.BRANCH }} -f build/build.xml
           cat build/build-contentbox/module/box.json
 
+      - name: List Artifacts
+        run: ls -R
+        working-directory: build/build-contentbox
+
       - name: Upload Binaries to S3
         uses: jakejarvis/s3-sync-action@master
         with:
