@@ -149,6 +149,8 @@ jobs:
 
       - name: Setup CommandBox
         uses: elpete/setup-commandbox@v1.0.0
+        with:
+          forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
@@ -215,10 +217,10 @@ jobs:
 
       - name: Publish to ForgeBox
         if: ${{ success() }}
+        env:
+          BRANCH: ${{ GITHUB_REF }}
+          WORKSPACE: ${{ GITHUB_WORKSPACE }}
         run: |
-          BRANCH=${{ GITHUB_REF }}
-          WORKSPACE=${{ GITHUB_WORKSPACE }}
-          chmod +x build/forgebox-publish-github.sh
           build/forgebox-publish-github.sh
 
       - name: Inform Slack of success
