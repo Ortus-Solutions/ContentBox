@@ -220,11 +220,11 @@ jobs:
 
       - name: Publish to ForgeBox
         if: ${{ success() }}
-        env:
-          BRANCH: ${{ env.GITHUB_REF }}
-          WORKSPACE: ${{ env.GITHUB_WORKSPACE }}
         run: |
-          build/forgebox-publish.sh
+          cd build/build-contentbox/module && box forgebox publish
+          cd build/build-contentbox/site && box forgebox publish
+          cd build/build-contentbox/installer && box forgebox publish
+          cd build/build-contentbox/installer-module && box forgebox publish
 
       - name: Inform Slack of success
         if: ${{ success() }}
