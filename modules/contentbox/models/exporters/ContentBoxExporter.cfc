@@ -272,14 +272,14 @@ component accessors=true {
 		directoryCreate( tmpDirectory );
 		// process exporters
 		for ( var exporter in exporters ) {
-			if ( isInstanceOf( exporter, "cbadmin.models.exporters.DataExporter" ) ) {
+			if ( isInstanceOf( exporter, "contentbox.models.exporters.DataExporter" ) ) {
 				exportLog.append( "Beginning export of #exporter.getDisplayName()#<br />" );
 				var fileName = tmpDirectory & "/" & exporter.getFileName() & "." & exporter.getFormat();
 				exportLog.append( "#arrayLen( exporter.getContent() )# records found<br />" );
 				fileWrite( fileName, serializeJSON( exporter.getContent() ) );
 				exportLog.append( "Export of #exporter.getDisplayName()# complete!<br />" );
 			}
-			if ( isInstanceOf( exporter, "cbadmin.models.exporters.FileExporter" ) ) {
+			if ( isInstanceOf( exporter, "contentbox.models.exporters.FileExporter" ) ) {
 				var fileName = tmpDirectory & "/" & exporter.getFileName() & "." & exporter.getFormat();
 				// if all files, just grab directory
 				if ( exporter.getIncludeFiles() == "*" ) {

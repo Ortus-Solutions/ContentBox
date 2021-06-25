@@ -7,7 +7,7 @@
  */
 component
 	extends   ="BaseExporter"
-	implements="cbadmin.models.exporters.ICBExporter"
+	implements="contentbox.models.exporters.ICBExporter"
 	accessors =true
 {
 
