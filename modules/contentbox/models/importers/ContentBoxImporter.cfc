@@ -5,7 +5,7 @@
  * ---
  * Import a .cbox package into ContentBOx
  */
-component accessors=true {
+component accessors=true{
 
 	/**
 	 * The import file names found

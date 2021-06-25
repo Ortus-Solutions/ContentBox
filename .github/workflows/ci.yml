@@ -98,7 +98,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name: ContentBox Test Results - ${{ matrix.cfengine }}
+          name: contentbox-test-results-${{ matrix.cfengine }}
           path: |
             tests/results/**/*
 
@@ -171,12 +171,16 @@ jobs:
         with:
           path: tests/results
 
-      - name: Display structure of downloaded files
-        run: ls -R
-        working-directory: tests/results
+      #- name: Display structure of downloaded files
+      #  run: ls -R
+      #  working-directory: tests/results
 
       - name: Build Docs
-        run: box run-script build:allDocs
+        run: |
+          # Normalize swagger doc results
+          cp tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
+          # Run Docs Build
+          box run-script build:allDocs
 
       - name: Build ContentBox Versions
         run: |
@@ -222,4 +226,6 @@ jobs:
         uses: craftech-io/slack-action@v1
         with:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          status: failure
+          status: success
+          #status: failure
+

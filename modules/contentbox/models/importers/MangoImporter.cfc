@@ -5,7 +5,7 @@
  * ---
  * Import a mango database into contentbox
  */
-component implements="cbadmin.models.importers.ICBImporter" {
+component implements="contentbox.models.importers.ICBImporter" {
 
 	// DI
 	property name="categoryService" inject="id:categoryService@cb";

@@ -22,7 +22,7 @@ limitations under the License.
 ********************************************************************************
 * Import a blogcfc database into contentbox
 */
-component implements="cbadmin.models.importers.ICBImporter" {
+component implements="contentbox.models.importers.ICBImporter" {
 
 	property name="categoryService" inject="id:categoryService@cb";
 	property name="entryService" inject="id:entryService@cb";
