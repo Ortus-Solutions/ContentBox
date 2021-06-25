@@ -73,13 +73,26 @@ jobs:
 
       - name: Run Web App Tests
         run: |
+          mkdir tests/results/web
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
-          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
+          box testbox run --verbose outputFile=tests/results/web/test-results outputFormats=json,antjunit
 
       - name: Run API Tests
         run: |
+          mkdir tests/results/api
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
-          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
+          box testbox run --verbose outputFile=tests/results/api/test-results outputFormats=json,antjunit
+
+      - name: Run Swagger Tests
+        run: |
+          curl http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb -o tests/results/contentbox-swagger.json
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1
+        if: always()
+        with:
+          files: tests/results/**/*.xml
+          check_name: "ContentBox Test Results"
 
       - name: Upload Test Results
         if: always()
@@ -87,7 +100,7 @@ jobs:
         with:
           name: ContentBox Test Results - ${{ matrix.cfengine }}
           path: |
-            tests/results/*
+            tests/results/**/*
 
       - name: Notify Slack of Failures
         if: ${{ failure() }}
@@ -96,14 +109,14 @@ jobs:
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
           status: failure
 
-      - name: Cat Failure Debugging Info
+      - name: Failure Debugging Info
         if: ${{ failure() }}
         run: |
           cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
           cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
-      - name: Upload Debugging Info Artifacts
+      - name: Upload Debugging Info To Artifacts
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
@@ -148,6 +161,15 @@ jobs:
             echo "BRANCH=development" >> $GITHUB_ENV
           fi
           echo "Building ContentBox for ${{ env.BRANCH }}"
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: tests/results
+
+      - name: Display structure of downloaded files
+        run: ls -R
+        working-directory: tests/results
 
       - name: Build Docs
         run: box run-script build:allDocs

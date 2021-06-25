@@ -72,13 +72,21 @@ jobs:
 
       - name: Run Web App Tests
         run: |
+          mkdir tests/results/web
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
-          box testbox run --verbose
+          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
 
       - name: Run API Tests
         run: |
+          mkdir tests/results/api
           box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
-          box testbox run --verbose
+          box testbox run --verbose outputFile=tests/results/test-results outputFormats=json,antjunit
+
+      - name: Publish PR Test Reports
+        uses: mikepenz/action-junit-report@v2
+        with:
+          report_paths: 'tests/results/**/*.xml'
+          summary: true
 
       - name: Failure debugging
         if: ${{ failure() }}

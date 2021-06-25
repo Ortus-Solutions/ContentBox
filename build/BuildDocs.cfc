@@ -9,6 +9,7 @@ component{
 		variables.root 		= getCWD();
 		variables.buildDir = variables.root & "build/build-contentbox";
 		variables.apidocsDir = variables.buildDir & "/apidocs";
+		variables.testsDir = variables.root & "tests/results";
 		variables.exportsDir = variables.root & "artifacts/contentbox";
 
 		// Cleanup directories
@@ -53,11 +54,6 @@ component{
 
 		// Build swagger now
 		swagger( arguments.version );
-		// Move Swagger Doc to Exports
-		fileCopy(
-			"#variables.apidocsDir#/contentbox-swagger.json",
-			"#variables.exportsDir#/contentbox-swagger-#arguments.version#.json"
-		);
 	}
 
 	function apiDocs( version="1.0.0" ){
@@ -82,22 +78,41 @@ component{
 	function swagger( version="1.0.0" ){
 		var sTime = getTickCount();
 		print.blueLine( "Generating ContentBox #arguments.version# Swagger json docs..." ).toConsole();
-		command( "tokenReplace" )
-			.params(
-				path        = "#variables.root#/config/Coldbox.cfc",
-				token       = "@version.number@",
-				replacement = arguments.version
-			)
-			.run();
-		cfhttp(
-			url="http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb",
-			path = variables.apidocsDir,
-			file="contentbox-swagger.json"
-		);
-		// Move Rapidoc
+
+		// Test if swagger doc in resutls already
+		if( fileExists( variables.testsDir & "contentbox-swagger.json" ) ){
+			command( "tokenReplace" )
+				.params(
+					path        = "#variables.testsDir#/contentbox-swagger.json",
+					token       = "@version.number@",
+					replacement = arguments.version
+				)
+				.run();
+		} else {
+			command( "tokenReplace" )
+				.params(
+					path        = "#variables.root#/config/Coldbox.cfc",
+					token       = "@version.number@",
+					replacement = arguments.version
+				)
+				.run();
+			cfhttp(
+				url="http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb",
+				path = variables.testsDir,
+				file="contentbox-swagger.json"
+			);
+		}
+
+		// Move Rapidoc Viewer
 		fileCopy(
 			"#variables.root#/build/resources/apidoc.html",
 			"#variables.apidocsDir#/apidoc.html"
+		);
+
+		// Move Swagger Doc to Exports
+		fileCopy(
+			"#variables.testsDir#/contentbox-swagger.json",
+			"#variables.exportsDir#/contentbox-swagger-#arguments.version#.json"
 		);
 
 		print.greenLine( "√ Swagger JSON docs generated in #getTickCount() - sTime#ms and can be found at: #variables.apidocsDir#/contentbox-swagger.json" ).toConsole();
