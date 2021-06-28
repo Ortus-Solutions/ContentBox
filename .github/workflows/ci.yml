@@ -178,7 +178,7 @@ jobs:
 
       - name: Install Build Dependencies
         run: |
-          box install --production
+          box install
 
       - name: Setup Environment Variables For Build Process
         id: current_version
