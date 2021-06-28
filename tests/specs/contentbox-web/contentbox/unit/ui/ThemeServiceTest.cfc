@@ -16,9 +16,10 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can build the theme registry", function(){
-				model.onDICOmplete();
-				var result = model.buildThemeRegistry();
-				expect( result ).notToBeEmpty();
+				expect( model.getThemeRegistry() ).notToBeEmpty();
+				expect( model.getCoreThemesPath() ).notToBeEmpty();
+				expect( model.getCustomThemesPath() ).notToBeEmpty();
+				expect( model.getCBHelper() ).toBeComponent();
 			} );
 
 			it( "can find maintenance view", function(){

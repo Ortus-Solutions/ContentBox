@@ -8,7 +8,9 @@ on:
       - master
 
 jobs:
+  #############################################
   # Tests First baby! We fail, no build :(
+  #############################################
   tests:
     name: Tests
     runs-on: ubuntu-20.04
@@ -61,6 +63,7 @@ jobs:
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
+        if: ${{ false }}
         with:
           path: ~/.CommandBox/artifacts
           key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
@@ -102,13 +105,25 @@ jobs:
           files: tests/results/**/*.xml
           check_name: "${{ matrix.cfengine }} Test Results"
 
-      - name: Upload Test Results
+      - name: Upload Test Results Artifacts
         if: always()
         uses: actions/upload-artifact@v2
         with:
           name: contentbox-test-results-${{ matrix.cfengine }}
           path: |
             tests/results/**/*
+
+      - name: Slack Notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: contentbox
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+          SLACK_ICON_EMOJI: ":bell:"
+          SLACK_MESSAGE: 'ContentBox Tests Failure :cry:'
+          SLACK_TITLE: ContentBox Tests Failed
+          SLACK_USERNAME: CI
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Failure Debugging Info
         if: ${{ failure() }}
@@ -130,7 +145,9 @@ jobs:
             .engines/**/logs/*
             .engines/**/WEB-INF/cfusion/logs/*
 
-  # Let's build up our software
+  #############################################
+  # Build ContentBox
+  #############################################
   build:
     name: Build ContentBox
     needs: tests
@@ -196,6 +213,33 @@ jobs:
         run: ls -R
         working-directory: build/build-contentbox
 
+      - name: Upload Artifacts
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: contentbox-builds
+          path: |
+            artifacts/**/*
+            build/build-contentbox/**/*
+
+      - name: Inform Slack of success
+        if: ${{ success() }}
+        uses: craftech-io/slack-action@v1
+        with:
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+  #############################################
+  # Upload Artifacts to S3
+  #############################################
+  upload_artifacts:
+    name: Upload Artifacts to S3
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: .tmp
+
       - name: Upload Binaries to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -204,7 +248,7 @@ jobs:
           AWS_S3_BUCKET: "downloads.ortussolutions.com"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET }}
-          SOURCE_DIR: "artifacts"
+          SOURCE_DIR: ".tmp/contentbox-builds/artifacts"
           DEST_DIR: "ortussolutions"
 
       - name: Upload API Docs to S3
@@ -215,16 +259,27 @@ jobs:
           AWS_S3_BUCKET: "apidocs.ortussolutions.com"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET }}
-          SOURCE_DIR: "build/build-contentbox/apidocs"
+          SOURCE_DIR: ".tmp/contentbox-builds/build/build-contentbox/apidocs"
           DEST_DIR: "contentbox/${{ env.VERSION }}"
 
-      - name: Publish to ForgeBox
-        if: ${{ success() }}
+  #############################################
+  # Publish To ForgeBox
+  #############################################
+  publish:
+    name: Publish to ForgeBox.io
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          path: .tmp
+
+      - name: Publish
         run: |
-          cd build/build-contentbox/module && box forgebox publish
-          cd build/build-contentbox/site && box forgebox publish
-          cd build/build-contentbox/installer && box forgebox publish
-          cd build/build-contentbox/installer-module && box forgebox publish
+          cd .tmp/contentbox-builds/build/build-contentbox/module && box forgebox publish
+          cd .tmp/contentbox-builds/build/build-contentbox/site && box forgebox publish
+          cd .tmp/contentbox-builds/build/build-contentbox/installer && box forgebox publish
+          cd .tmp/contentbox-builds/build/build-contentbox/installer-module && box forgebox publish
 
       - name: Inform Slack of success
         if: ${{ success() }}

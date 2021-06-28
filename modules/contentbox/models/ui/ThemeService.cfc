@@ -70,7 +70,7 @@ component accessors="true" threadSafe singleton {
 	 * Does the current active theme have a maintenance view
 	 */
 	boolean function themeMaintenanceViewExists(){
-		return fileExists( expandPath( CBHelper.themeRoot() & "/views/maintenance.cfm" ) );
+		return fileExists( expandPath( variables.CBHelper.themeRoot() & "/views/maintenance.cfm" ) );
 	}
 
 	/**
@@ -80,7 +80,7 @@ component accessors="true" threadSafe singleton {
 		var layout = "pages";
 
 		// verify existence of convention
-		if ( fileExists( expandPath( CBHelper.themeRoot() & "/layouts/maintenance.cfm" ) ) ) {
+		if ( fileExists( expandPath( variables.CBHelper.themeRoot() & "/layouts/maintenance.cfm" ) ) ) {
 			layout = "maintenance";
 		}
 
@@ -100,7 +100,7 @@ component accessors="true" threadSafe singleton {
 		if (
 			fileExists(
 				expandPath(
-					CBHelper.themeRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm"
+					variables.CBHelper.themeRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm"
 				)
 			)
 		) {
@@ -117,7 +117,7 @@ component accessors="true" threadSafe singleton {
 		var layout = "pages";
 
 		// verify existence of convention
-		if ( fileExists( expandPath( CBHelper.themeRoot() & "/layouts/search.cfm" ) ) ) {
+		if ( fileExists( expandPath( variables.CBHelper.themeRoot() & "/layouts/search.cfm" ) ) ) {
 			layout = "search";
 		}
 
