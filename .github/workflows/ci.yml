@@ -149,7 +149,7 @@ jobs:
   # Build ContentBox
   #############################################
   build:
-    name: Build ContentBox
+    name: Build & Publish
     needs: tests
     runs-on: ubuntu-20.04
     steps:
@@ -166,6 +166,8 @@ jobs:
 
       - name: Setup CommandBox
         uses: elpete/setup-commandbox@v1.0.0
+        with:
+          forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
@@ -208,43 +210,9 @@ jobs:
           ant -Dcontentbox.version=${{ env.VERSION }} -Dbuild.number=${{ github.run_number }} -Dbuild.branch=${{ env.BRANCH }} -f build/build.xml
           cat build/build-contentbox/module/box.json
 
-      - name: List Artifacts
+      - name: List Variants
         run: ls -R
         working-directory: build/build-contentbox
-
-      - name: Store Artifacts
-        if: success()
-        uses: actions/upload-artifact@v2
-        with:
-          name: contentbox-builds
-          path: |
-            artifacts/**/*
-            build/build-contentbox/**/*
-
-      - name: Inform Slack
-        if: ${{ always() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: contentbox
-          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
-          SLACK_ICON_EMOJI: ":bell:"
-          SLACK_MESSAGE: 'ContentBox Build Variants ${{ job.status }}!'
-          SLACK_TITLE: "ContentBox Build"
-          SLACK_USERNAME: CI
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-  #############################################
-  # Upload Artifacts to S3
-  #############################################
-  upload_artifacts:
-    name: Upload Artifacts to S3
-    runs-on: ubuntu-20.04
-    needs: build
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: .tmp
 
       - name: Upload Binaries to S3
         uses: jakejarvis/s3-sync-action@master
@@ -254,7 +222,7 @@ jobs:
           AWS_S3_BUCKET: "downloads.ortussolutions.com"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET }}
-          SOURCE_DIR: ".tmp/contentbox-builds/artifacts"
+          SOURCE_DIR: "artifacts"
           DEST_DIR: "ortussolutions"
 
       - name: Upload API Docs to S3
@@ -265,46 +233,15 @@ jobs:
           AWS_S3_BUCKET: "apidocs.ortussolutions.com"
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_ACCESS_SECRET }}
-          SOURCE_DIR: ".tmp/contentbox-builds/build/build-contentbox/apidocs"
+          SOURCE_DIR: "build/build-contentbox/apidocs"
           DEST_DIR: "contentbox/${{ env.VERSION }}"
-
-      - name: Inform Slack
-        if: ${{ always() }}
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_CHANNEL: contentbox
-          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
-          SLACK_ICON_EMOJI: ":bell:"
-          SLACK_MESSAGE: 'ContentBox Upload to S3 ${{ job.status }}!'
-          SLACK_TITLE: "ContentBox Artifacts to S3"
-          SLACK_USERNAME: CI
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-
-
-  #############################################
-  # Publish To ForgeBox
-  #############################################
-  publish:
-    name: Publish to ForgeBox.io
-    needs: build
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Download Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          path: .tmp
-
-      - name: Setup CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
-        with:
-          forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
       - name: Publish
         run: |
-          cd .tmp/contentbox-builds/build/build-contentbox/module && box forgebox publish
-          cd .tmp/contentbox-builds/build/build-contentbox/site && box forgebox publish
-          cd .tmp/contentbox-builds/build/build-contentbox/installer && box forgebox publish
-          cd .tmp/contentbox-builds/build/build-contentbox/installer-module && box forgebox publish
+          cd build/build-contentbox/module && box forgebox publish
+          cd build/build-contentbox/site && box forgebox publish
+          cd build/build-contentbox/installer && box forgebox publish
+          cd build/build-contentbox/installer-module && box forgebox publish
 
       - name: Inform Slack
         if: ${{ always() }}
@@ -313,7 +250,7 @@ jobs:
           SLACK_CHANNEL: contentbox
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
-          SLACK_MESSAGE: 'ContentBox Publish to ForgeBox ${{ job.status }}!'
-          SLACK_TITLE: "ContentBox Publish"
+          SLACK_MESSAGE: 'ContentBox Built with ${{ job.status }}!'
+          SLACK_TITLE: "ContentBox Build"
           SLACK_USERNAME: CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
