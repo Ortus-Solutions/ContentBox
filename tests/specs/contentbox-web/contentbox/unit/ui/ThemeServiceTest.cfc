@@ -23,7 +23,7 @@ component extends="tests.resources.BaseTest" {
 				expect( model.getCBHelper() ).toBeComponent();
 			} );
 
-			it( "can find maintenance view", function(){
+			xit( "can find maintenance view", function(){
 				var prc         = getRequestContext().getPrivateCollection();
 				prc.cbThemeRoot = "/";
 				expect( model.themeMaintenanceViewExists() ).toBeFalse();
@@ -33,7 +33,7 @@ component extends="tests.resources.BaseTest" {
 				expect( model.themeMaintenanceViewExists() ).toBeTrue();
 			} );
 
-			it( "can find the maintenance layout", function(){
+			xit( "can find the maintenance layout", function(){
 				var prc         = getRequestContext().getPrivateCollection();
 				prc.cbThemeRoot = "/";
 				expect( model.getThemeMaintenanceLayout() ).toBe( "pages" );
@@ -43,7 +43,7 @@ component extends="tests.resources.BaseTest" {
 				expect( model.getThemeMaintenanceLayout() ).toBe( "maintenance" );
 			} );
 
-			it( "can find the search layout", function(){
+			xit( "can find the search layout", function(){
 				var prc         = getRequestContext().getPrivateCollection();
 				prc.cbThemeRoot = "/";
 				expect( model.getThemeSearchLayout() ).toBe( "pages" );
