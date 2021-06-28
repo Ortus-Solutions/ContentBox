@@ -12,7 +12,7 @@ component extends="tests.resources.BaseTest" {
 		describe( "Theme Services", function(){
 			beforeEach( function( currentSpec ){
 				setup();
-				cbHelper = getInstance( "CBHelper@cb" )
+				cbHelper = getInstance( "CBHelper@cb" );
 				model    = getInstance( "ThemeService@cb" );
 			} );
 
