@@ -63,12 +63,12 @@ jobs:
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
-        if: ${{ false }}
+        if: ${{ true }}
         with:
           path: ~/.CommandBox/artifacts
-          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
           restore-keys: |
-            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
 
       - name: Install Dependencies
         run: |
@@ -77,7 +77,7 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start Server
+      - name: Start ${{ matrix.cfengine }} Server
         run: |
           box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
           curl http://127.0.0.1:8589
@@ -120,8 +120,8 @@ jobs:
           SLACK_CHANNEL: contentbox
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
-          SLACK_MESSAGE: 'ContentBox Tests Failure :cry:'
-          SLACK_TITLE: ContentBox Tests Failed
+          SLACK_MESSAGE: 'ContentBox tests failed :cry:, check them out here: https://github.com/Ortus-Solutions/ContentBox/actions'
+          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }} failed
           SLACK_USERNAME: CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -166,20 +166,19 @@ jobs:
 
       - name: Setup CommandBox
         uses: elpete/setup-commandbox@v1.0.0
-        with:
-          forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
+        if: ${{ true }}
         with:
           path: ~/.CommandBox/artifacts
-          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
           restore-keys: |
-            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}
+            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
 
       - name: Install Build Dependencies
         run: |
-          box install
+          box install --production
 
       - name: Setup Environment Variables For Build Process
         id: current_version
@@ -192,7 +191,7 @@ jobs:
           fi
           echo "Building ContentBox for ${{ env.BRANCH }}"
 
-      - name: Download Artifacts
+      - name: Download Test Artifacts
         uses: actions/download-artifact@v2
         with:
           path: tests/results
@@ -204,7 +203,7 @@ jobs:
           # Run Docs Build
           box run-script build:allDocs
 
-      - name: Build ContentBox Versions
+      - name: Build ContentBox Variants
         run: |
           ant -Dcontentbox.version=${{ env.VERSION }} -Dbuild.number=${{ github.run_number }} -Dbuild.branch=${{ env.BRANCH }} -f build/build.xml
           cat build/build-contentbox/module/box.json
@@ -213,7 +212,7 @@ jobs:
         run: ls -R
         working-directory: build/build-contentbox
 
-      - name: Upload Artifacts
+      - name: Store Artifacts
         if: success()
         uses: actions/upload-artifact@v2
         with:
@@ -222,11 +221,17 @@ jobs:
             artifacts/**/*
             build/build-contentbox/**/*
 
-      - name: Inform Slack of success
-        if: ${{ success() }}
-        uses: craftech-io/slack-action@v1
-        with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Inform Slack
+        if: ${{ always() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: contentbox
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+          SLACK_ICON_EMOJI: ":bell:"
+          SLACK_MESSAGE: 'ContentBox Build Variants ${{ job.status }}!'
+          SLACK_TITLE: "ContentBox Build"
+          SLACK_USERNAME: CI
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
   #############################################
   # Upload Artifacts to S3
@@ -234,6 +239,7 @@ jobs:
   upload_artifacts:
     name: Upload Artifacts to S3
     runs-on: ubuntu-20.04
+    needs: build
     steps:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
@@ -262,17 +268,36 @@ jobs:
           SOURCE_DIR: ".tmp/contentbox-builds/build/build-contentbox/apidocs"
           DEST_DIR: "contentbox/${{ env.VERSION }}"
 
+      - name: Inform Slack
+        if: ${{ always() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: contentbox
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+          SLACK_ICON_EMOJI: ":bell:"
+          SLACK_MESSAGE: 'ContentBox Upload to S3 ${{ job.status }}!'
+          SLACK_TITLE: "ContentBox Artifacts to S3"
+          SLACK_USERNAME: CI
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+
   #############################################
   # Publish To ForgeBox
   #############################################
   publish:
     name: Publish to ForgeBox.io
+    needs: build
     runs-on: ubuntu-20.04
     steps:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
           path: .tmp
+
+      - name: Setup CommandBox
+        uses: elpete/setup-commandbox@v1.0.0
+        with:
+          forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
       - name: Publish
         run: |
@@ -281,8 +306,14 @@ jobs:
           cd .tmp/contentbox-builds/build/build-contentbox/installer && box forgebox publish
           cd .tmp/contentbox-builds/build/build-contentbox/installer-module && box forgebox publish
 
-      - name: Inform Slack of success
-        if: ${{ success() }}
-        uses: craftech-io/slack-action@v1
-        with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Inform Slack
+        if: ${{ always() }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_CHANNEL: contentbox
+          SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
+          SLACK_ICON_EMOJI: ":bell:"
+          SLACK_MESSAGE: 'ContentBox Publish to ForgeBox ${{ job.status }}!'
+          SLACK_TITLE: "ContentBox Publish"
+          SLACK_USERNAME: CI
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
