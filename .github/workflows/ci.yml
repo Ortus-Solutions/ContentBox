@@ -21,6 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         cfengine: [ "lucee@5", "adobe@2016", "adobe@2018" ]
+        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -79,17 +80,21 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start ${{ matrix.cfengine }} Server
+      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
         run: |
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
           # Dumb acf2021 procedures
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             # Copy over stupid mysql connector
+            mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
             cp build/resources/mysql-connector-java-8.0.22.jar .engines/acf2021/WEB-INF/cfusion/lib
-            box run-script install:2021
-            box server stop
-            box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
           fi
+          # Startup the Server
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
+          # Install Adobe 2021 cfpm modules
+          if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+            box run-script install:2021
+          fi
+          # Test site build up
           curl http://127.0.0.1:8589
 
       - name: Run Web App Tests
@@ -113,7 +118,7 @@ jobs:
         if: always()
         with:
           files: tests/results/**/*.xml
-          check_name: "${{ matrix.cfengine }} Test Results"
+          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
 
       - name: Upload Test Results Artifacts
         if: always()
@@ -131,7 +136,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_MESSAGE: 'ContentBox tests failed :cry:, check them out here: https://github.com/Ortus-Solutions/ContentBox/actions'
-          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }} failed
+          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }}/${{ matrix.javaVersion }} failed
           SLACK_USERNAME: CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -150,7 +155,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Failure Debugging Info - ${{ matrix.cfengine }}
+          name: Failure Debugging Info - ${{ matrix.cfengine }} - ${{ matrix.javaVersion }}
           path: |
             .engines/**/logs/*
             .engines/**/WEB-INF/cfusion/logs/*
