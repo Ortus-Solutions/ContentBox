@@ -238,10 +238,11 @@ jobs:
 
       - name: Publish
         run: |
-          cd ${{ env.GITHUB_WORKSPACE }}/build/build-contentbox/module && box forgebox publish
-          cd ${{ env.GITHUB_WORKSPACE }}/build/build-contentbox/site && box forgebox publish
-          cd ${{ env.GITHUB_WORKSPACE }}/build/build-contentbox/installer && box forgebox publish
-          cd ${{ env.GITHUB_WORKSPACE }}/build/build-contentbox/installer-module && box forgebox publish
+          ROOT_DIR=`pwd`
+          cd $ROOT_DIR/build/build-contentbox/module && box forgebox publish
+          cd $ROOT_DIR/build/build-contentbox/site && box forgebox publish
+          cd $ROOT_DIR/build/build-contentbox/installer && box forgebox publish
+          cd $ROOT_DIR/build/build-contentbox/installer-module && box forgebox publish
 
       - name: Inform Slack
         if: ${{ always() }}
