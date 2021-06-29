@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
+        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -82,8 +82,13 @@ jobs:
       - name: Start ${{ matrix.cfengine }} Server
         run: |
           box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
+          # Dumb acf2021 procedures
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+            # Copy over stupid mysql connector
+            cp build/resources/mysql-connector-java-8.0.22.jar .engines/acf2021/WEB-INF/cfusion/lib
             box run-script install:2021
+            box server stop
+            box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
           fi
           curl http://127.0.0.1:8589
 
