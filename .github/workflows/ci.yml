@@ -58,8 +58,10 @@ jobs:
           # Log4j Hibernate Debug
           mkdir -p .engines/acf2016/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2018/WEB-INF/cfusion/lib/
+          mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2016/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
+          cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
@@ -80,7 +82,7 @@ jobs:
       - name: Start ${{ matrix.cfengine }} Server
         run: |
           box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
-          if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+          if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             box run-script install:2021
           fi
           curl http://127.0.0.1:8589
