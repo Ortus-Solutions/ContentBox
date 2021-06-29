@@ -214,6 +214,14 @@ jobs:
         run: ls -R
         working-directory: build/build-contentbox
 
+      - name: Upload Build Artifacts
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: contentbox-variants
+          path: |
+            artifacts/**/*
+
       - name: Upload Binaries to S3
         uses: jakejarvis/s3-sync-action@master
         with:
