@@ -203,10 +203,10 @@ jobs:
           echo "VERSION=`cat box.json | jq '.version' -r`" >> $GITHUB_ENV
           # master or snapshot
           echo "BRANCH=master" >> $GITHUB_ENV
-          if [[ "{{ GITHUB_REF }}" == "refs/heads/development" ]] ; then
+          if [ $GITHUB_REF == 'refs/heads/development' ]
+          then
             echo "BRANCH=development" >> $GITHUB_ENV
           fi
-          echo "Building ContentBox for ${{ env.BRANCH }}"
 
       - name: Download Test Artifacts
         uses: actions/download-artifact@v2
@@ -220,7 +220,7 @@ jobs:
           # Run Docs Build
           box run-script build:allDocs
 
-      - name: Build ContentBox Variants
+      - name: Build ContentBox Variants for ${{ env.BRANCH }} v${{ env.VERSION }}
         run: |
           ant -Dcontentbox.version=${{ env.VERSION }} -Dbuild.number=${{ github.run_number }} -Dbuild.branch=${{ env.BRANCH }} -f build/build.xml
           cat build/build-contentbox/module/box.json
