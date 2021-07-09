@@ -131,7 +131,7 @@
                             name   		= "description",
                             label  		= "Short Description:",
                             bind   		= prc.content,
-                            rows   		= 3,
+                            rows   		= 1,
                             class  		= "form-control",
                             title  		= "A short description for metadata purposes",
                             wrapper		= "div class=controls",
