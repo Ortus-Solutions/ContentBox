@@ -69,7 +69,7 @@
         "schema":"${DB_DATABASE}",
         "connectionInfo":{
             "class":"${DB_CLASS}",
-			"connectionString":"${DB_CONNECTIONSTRING}",
+            "connectionString":"${DB_CONNECTIONSTRING}",
             "bundleName":"${DB_BUNDLENAME}",
             "bundleVersion":"${DB_BUNDLEVERSION}",
             "username":"${DB_USER}",

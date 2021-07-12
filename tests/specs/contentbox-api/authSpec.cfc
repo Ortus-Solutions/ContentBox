@@ -79,7 +79,7 @@ component extends="tests.resources.BaseApiTest" {
 						var event    = post( "/cbapi/v1/logout", { "x-auth-token" : "123" } );
 						var response = event.getPrivateValue( "Response" );
 						expect( response.getError() ).toBeTrue( response.getMessagesString() );
-						expect( response.getStatusCode() ).toBe( 500 );
+						expect( response.getStatusCode() ).toBe( 401 );
 					} );
 				} );
 			} );
@@ -103,7 +103,7 @@ component extends="tests.resources.BaseApiTest" {
 					then( "I should get an error", function(){
 						// Now Logout
 						var event = GET( "/cbapi/v1/whoami", { "x-auth-token" : "123" } );
-						expect( event.getResponse() ).toHaveStatus( 500 );
+						expect( event.getResponse() ).toHaveStatus( 401 );
 					} );
 				} );
 			} );
