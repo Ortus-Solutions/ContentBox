@@ -25,7 +25,7 @@ component accessors="true" singleton threadSafe {
 	property name="requestService" inject="coldbox:requestService";
 	property name="wirebox" inject="wirebox";
 	property name="controller" inject="coldbox";
-	property name="resourceService" inject="resourceService@cbi18n";
+	property name="cbResourceService" inject="resourceService@cbi18n";
 	property name="securityService" inject="securityService@cb";
 	property name="markdown" inject="Processor@cbmarkdown";
 	property name="requestStorage" inject="requestStorage@cbstorages";
@@ -2290,7 +2290,7 @@ component accessors="true" singleton threadSafe {
 			arguments.bundle   = listLast( arguments.resource, "@" );
 			arguments.resource = listFirst( arguments.resource, "@" );
 		}
-		return resourceService.getResource( argumentCollection = arguments );
+		return variables.cbResourceService.getResource( argumentCollection = arguments );
 	}
 
 	/**
