@@ -37,9 +37,9 @@ component extends="baseHandler" {
 		prc.xehLatestLogins      = "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
 
 		// Installer Check
-		prc.installerCheck  = settingService.isInstallationPresent();
+		prc.installerCheck  = variables.settingService.isInstallationPresent();
 		// Welcome Body
-		prc.welcomeBody     = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
+		prc.welcomeBody     = variables.markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
 		// Light up
 		prc.tabContent_home = true;
 		// announce event

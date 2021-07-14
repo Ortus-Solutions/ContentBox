@@ -19,23 +19,25 @@
 		#announce( "cbadmin_preDashboardContent" )#
 
 		<!--- Installer Checks --->
-		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" )>
-		<cfif prc.installerCheck.installer>
+		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) and prc.installerCheck>
 			<div class="alert alert-danger" id="installerCheck">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+				<button
+					type="button"
+					class="close"
+					data-dismiss="alert"
+					aria-hidden="true"
+					>
+					&times;
+				</button>
 				<i class="fa fa-exclamation-triangle fa-2x"></i>
 				#$r( "dashboard.index.installer.notice@admin" )#
-				<button class="btn btn-danger btn-sm" onclick="deleteInstaller()">#$r( "dashboard.index.installer.delete@admin" )#</button>
+				<button
+					class="btn btn-danger btn-sm"
+					onclick="deleteInstaller()"
+				>
+					#$r( "dashboard.index.installer.delete@admin" )#
+				</button>
 			</div>
-		</cfif>
-		<cfif prc.installerCheck.dsncreator>
-			<div class="alert alert-danger" id="dsnCreatorCheck">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-				<i class="fa fa-exclamation-triangle fa-2x"></i>
-				#$r( "dashboard.index.creator.notice@admin" )#
-				<button class="btn btn-danger btn-sm" onclick="deleteDSNCreator()">#$r( "dashboard.index.creator.delete@admin" )#</button>
-			</div>
-		</cfif>
 		</cfif>
 
 		<div class="tab-wrapper tab-primary">

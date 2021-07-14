@@ -6,12 +6,6 @@
  * Application Bootstrap
  */
 component {
-	// cfformat-ignore-start
-	// THIS LOADS THE DSN CREATOR WHEN INSTALLING CONTENTBOX FOR THE FIRST TIME
-	// THIS CAN BE REMOVED AFTER INSTALLATION, USUALLY IT IS REMOVED BY THE INSTALLER
-	// include "modules/contentbox-installer/includes/dsn_relocation.cfm";
-	// cfformat-ignore-end
-
 	/**
 	 * --------------------------------------------------------------------------
 	 * NON COMMANDBOX INSTALLS

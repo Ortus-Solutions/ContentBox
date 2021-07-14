@@ -34,9 +34,6 @@ $( document ).ready(function() {
 function deleteInstaller(){
 	deleteModule( '#event.buildLink( prc.xehDeleteInstaller )#', "installerCheck" );
 }
-function deleteDSNCreator(){
-	deleteModule( '#event.buildLink( prc.xehDeleteDSNCreator )#', "dsnCreatorCheck" );
-}
 function deleteModule(link, id){
 	$.post( link, {}, function( data ){
 		if( data.ERROR ){

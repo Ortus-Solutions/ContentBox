@@ -180,14 +180,6 @@
       		<fileset file="readme.md" />
         </copy>
 
-		<!-- Activate DSN Creator link -->
-		<replace
-			file="${dir.build}/installer/Application.cfc"
-			token='// include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-			value='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-			summary="true"
-			encoding="UTF-8"/>
-
         <!-- Create site box.json -->
         <copy file="box-site.json" toFile="${dir.build}/installer/box.json" overwrite="true"  encoding="UTF-8"/>
 		<!-- Create .env -->
@@ -270,14 +262,6 @@
       			<exclude name="modules/**" />
       		</fileset>
         </copy>
-
-        <!-- Deactivate DSN Creator link -->
-		<replace
-			file="${dir.build}/site/Application.cfc"
-			token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-			value='// include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-			summary="true"
-			encoding="UTF-8"/>
 
         <!-- replace slugs -->
         <replaceregexp match='\-installer' replace="-site" flags="ig" byline="true" encoding="UTF-8">
@@ -393,16 +377,6 @@
  		<copy toDir="${dir.build}/express/webapps/ROOT" overwrite="true" encoding="UTF-8">
 			<fileset dir="${dir.build}/war" />
  		</copy>
-
- 		<!-- Remove DSN creator link For Express Edition -->
-		<replace file="${dir.build}/express/webapps/ROOT/Application.cfc"
-				 value=""
-				 summary="true"
-				 token='include "modules/contentbox-installer/includes/dsn_relocation.cfm";'
-				 encoding="UTF-8"/>
-
-		<!-- Remove DSN Creator Module for Express Edition -->
-		<delete dir="${dir.build}/express/webapps/ROOT/modules/contentbox-dsncreator" />
 
 		<!-- Copy admin password -->
 		<copy file="${dir.resources}/password.txt" toDir="${dir.build}/express/webapps/ROOT/WEB-INF/lucee-server/context" overwrite="true" encoding="UTF-8"/>

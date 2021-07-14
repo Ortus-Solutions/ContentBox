@@ -258,7 +258,7 @@
 				<div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
 					<div class="sidebar-title">system</div>
 					<div class="list-contacts">
-						<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.installer>
+						<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck>
 							<div class="list-item">
 								<div class="list-item-image">
 									<i class="fa fa-warning img-circle"></i>
@@ -278,29 +278,6 @@
 										</span>
 									</h4>
 									<p>The installer module still exists! Please delete it from your server as leaving it online is a security risk.</p>
-								</div>
-							</div>
-						</cfif>
-						<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck.dsncreator>
-							<div class="list-item">
-								<div class="list-item-image">
-									<i class="fa fa-warning img-circle"></i>
-								</div>
-								<div class="list-item-content">
-									<h4>
-										DSN Creator Module
-										<span class="actions dropdown pull-right">
-											<button class="fa fa-cog dropdown-toggle" data-toggle="dropdown"></button>
-											<ul class="dropdown-menu dropdown-menu-right" role="menu">
-												<li role="presentation">
-													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteDSNCreator()">
-														<i class="far fa-trash-alt"></i> Delete DSN Creator
-													</a>
-												</li>
-											</ul>
-										</span>
-									</h4>
-									<p>The DSN creator module still exists! Please delete it from your server as leaving it online is a security risk.</p>
 								</div>
 							</div>
 						</cfif>
