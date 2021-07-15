@@ -1,194 +1,125 @@
-﻿<!-----------------------------------------------------------------------
-********************************************************************************
-Copyright 2005-2007 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
-www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
-********************************************************************************
+﻿/**
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * @author Luis Majano
+ *
+ * COLDBOX SETTINGS
+ * - `PagingMaxRows` : The maximum number of rows per page.
+ * - `PagingBandGap` : The maximum number of pages in the page carrousel
+ *
+ * CSS SETTINGS:
+ * - `.pagingTabs` - The div container
+ * - `.pagingTabsTotals` - The totals
+ * - `.pagingTabsCarrousel` - The carrousel
+ *
+ * To use. You must use a "page" variable to move from page to page.
+ * ex: index.cfm?event=users.list&page=2
+ *
+ * In your handler you must calculate the boundaries to push into your paging query.
+ *
+ * <pre>
+ * rc.boundaries = getInstance( "Paging@cb" ).getBoundaries()
+ * </pre>
+ *
+ * Returns a struct:
+ * - `[startrow]` : the startrow to use
+ * - `[maxrow]` : the max row in this recordset to use.
+ *
+ * Ex: [startrow=11][maxrow=20] if we are using a PagingMaxRows of 10
+ *
+ * To RENDER:
+ *
+ * <pre>
+ * #getInstance( "Paging@cb" ).renderit( FoundRows, link )#
+ * </pre>
+ *
+ * `FoundRows` = The total rows found in the recordset
+ * `link` = The link to use for paging, including a placeholder for the page @page@
+ * ex: index.cfm?event=users.list&page=@page@
+ */
+component accessors="true" {
 
-Author      :	Luis Majano
-Date        :	01/10/2008
-License		: 	Apache 2 License
-Description :
-	A paging model.
+	// DI
+	property name="controller" inject="coldbox";
 
-To use this model you need to create some settings in your coldbox.xml and some
-css entries.
+	// Properties
+	property name="pagingMaxRows";
+	property name="PagingBandGap";
 
-COLDBOX SETTINGS
-- PagingMaxRows : The maximum number of rows per page.
-- PagingBandGap : The maximum number of pages in the page carrousel
+	/**
+	 * Constructor
+	 *
+	 * @settingService The ContentBox setting service
+	 * @settingService.inject settingService@cb
+	 */
+	function init( required settingService ){
+		// Setup Paging Properties
+		setPagingMaxRows( arguments.settingService.getSetting( "cb_paging_maxrows" ) );
+		setPagingBandGap( arguments.settingService.getSetting( "cb_paging_bandgap" ) );
 
-CSS SETTINGS:
-.pagingTabs - The div container
-.pagingTabsTotals - The totals
-.pagingTabsCarrousel - The carrousel
+		// Return instance
+		return this;
+	}
 
-To use. You must use a "page" variable to move from page to page.
-ex: index.cfm?event=users.list&page=2
+	/**
+	 * Calculate the startrow and maxrow
+	 *
+	 * @pagingMaxRows You can override the paging max rows here
+	 *
+	 * @return struct of { startrow:numeric, maxrow:numeric }
+	 */
+	struct function getBoundaries( numeric pagingMaxRows ){
+		var boundaries = { "startrow" : 1, "maxrow" : 0 };
+		var event      = getController().getRequestService().getContext();
+		var maxRows    = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
 
-In your handler you must calculate the boundaries to push into your paging query.
-<cfset rc.boundaries = getInstance( "paging" ).getBoundaries()>
-Gives you a struct:
-[startrow] : the startrow to use
-[maxrow] : the max row in this recordset to use.
-Ex: [startrow=11][maxrow=20] if we are using a PagingMaxRows of 10
+		boundaries.startrow = ( event.getValue( "page", 1 ) * maxrows - maxRows ) + 1;
+		boundaries.maxrow   = boundaries.startrow + maxRows - 1;
 
-To RENDER:
-#getInstance( "paging" ).renderit(FoundRows,link)#
+		return boundaries;
+	}
 
-FoundRows = The total rows found in the recordset
-link = The link to use for paging, including a placeholder for the page @page@
-	ex: index.cfm?event=users.list&page=@page@
------------------------------------------------------------------------>
-<cfcomponent hint="A paging object for ContentBox" output="false" accessors="true">
+	/**
+	 * Render the pagination tabs UI
+	 *
+	 * @foundRows The rows found in the collection to build the pagination for.
+	 * @link The link to use, you must place the `@page@` place holder so the link can be created correctly. ex: /data/page/@page@
+	 * @pagingMaxRows You can override the paging max rows here
+	 * @asList Render the UI as a list of pagination or tabs
+	 */
+	function renderIt(
+		required numeric foundRows,
+		required link,
+		numeric pagingMaxRows,
+		boolean asList = false
+	){
+		var event        = getController().getRequestService().getContext();
+		var currentPage  = event.getValue( "page", 1 );
+		var pagingTabsUI = "";
+		var maxRows      = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
+		var bandGap      = getPagingBandGap();
+		var theLink      = arguments.link;
+		var pageFrom     = 0;
+		var pageTo       = 0;
+		var pageIndex    = 0;
 
-	<!--- DI --->
-	<cfproperty name="controller" inject="coldbox">
+		// Only page if records found
+		if ( arguments.foundRows > 0 ) {
+			// Calculate Total Pages
+			var totalPages = ceiling( arguments.foundRows / maxRows );
 
-	<!---Properties --->
-	<cfproperty name="pagingMaxRows">
-	<cfproperty name="PagingBandGap">
-
-<!------------------------------------------- CONSTRUCTOR ------------------------------------------->
-
-    <cffunction name="init" access="public" returntype="Paging" output="false">
-		<cfargument name="settingService" required="true" inject="id:settingService@cb"/>
-		<cfscript>
-
-  		// Setup Paging Properties
-  		setPagingMaxRows( arguments.settingService.getSetting( "cb_paging_maxrows" ) );
-  		setPagingBandGap( arguments.settingService.getSetting( "cb_paging_bandgap" ) );
-
-  		//Return instance
-  		return this;
-		</cfscript>
-	</cffunction>
-
-<!------------------------------------------- PUBLIC ------------------------------------------->
-
-	<!--- Get boundaries --->
-	<cffunction name="getboundaries" access="public" returntype="struct" hint="Calculate the startrow and maxrow" output="false" >
-		<cfargument name="pagingMaxRows" required="false" type="numeric" hint="You can override the paging max rows here.">
-		<cfscript>
-			var boundaries 	= structnew();
-			var event 		= getController().getRequestService().getContext();
-			var maxRows 	= getPagingMaxRows();
-
-			// Check for Overrides
-			if( structKeyExists( arguments, "PagingMaxRows" ) ){
-				maxRows = arguments.pagingMaxRows;
+			if ( currentPage gt totalPages ) {
+				getController().relocate( url: replace( theLink, "@page@", totalPages ) );
 			}
 
-			boundaries.startrow = ( event.getValue( "page",1 ) * maxrows - maxRows ) + 1;
-			boundaries.maxrow = boundaries.startrow + maxRows - 1;
+			savecontent variable="pagingTabsUI" {
+				include template="Paging.cfm";
+			}
+		}
 
-			return boundaries;
-		</cfscript>
-	</cffunction>
+		return pagingTabsUI;
+	}
 
-	<!--- render paging --->
-	<cffunction name="renderit" access="public" returntype="any" hint="render tabs" output="false" >
-		<!--- ***************************************************************** --->
-		<cfargument name="foundRows"    	required="true"  type="numeric" hint="The found rows to page">
-		<cfargument name="link"   			required="true"  type="string"  hint="The link to use, you must place the @page@ place holder so the link ca be created correctly">
-		<cfargument name="pagingMaxRows" 	required="false" type="numeric" hint="You can override the paging max rows here.">
-		<cfargument name="asList"			required="false" type="boolean" default="false" hint="Render the paging links as lists or not"/>
-		<!--- ***************************************************************** --->
-		<cfset var event = getController().getRequestService().getContext()>
-		<cfset var pagingTabs = "">
-		<cfset var maxRows = getPagingMaxRows()>
-		<cfset var bandGap = getPagingBandGap()>
-		<cfset var totalPages = 0>
-		<cfset var theLink = arguments.link>
-		<!--- Paging vars --->
-		<cfset var currentPage = event.getValue( "page",1)>
-		<cfset var pageFrom = 0>
-		<cfset var pageTo = 0>
-		<cfset var pageIndex = 0>
-
-		<!--- Override --->
-		<cfif structKeyExists(arguments, "pagingMaxRows" )>
-			<cfset maxRows = arguments.pagingMaxRows>
-		</cfif>
-
-		<!--- Only page if records found --->
-		<cfif arguments.FoundRows neq 0>
-			<!--- Calculate Total Pages --->
-			<cfset totalPages = Ceiling( arguments.FoundRows / maxRows )>
-
-			<cfif currentPage gt totalPages>
-				<cflocation url="#replace(theLink,"@page@",totalPages)#" addtoken="false">
-			</cfif>
-
-			<!--- ***************************************************************** --->
-			<!--- Paging Tabs 														--->
-			<!--- ***************************************************************** --->
-			<cfsavecontent variable="pagingtabs">
-			<cfoutput>
-			<div class="row pagingrow">
-				<div class="col-xs-12">
-					<cfset start = ((currentPage*maxRows)-maxRows)+1>
-					<cfset end = currentPage*maxRows GT foundRows ? foundRows : currentPage*maxRows>
-					<div class="dataTables_info" role="alert" aria-live="polite" aria-relevant="all">Showing #start# to #end# of #arguments.FoundRows# entries (#totalPages# pages)
-					</div>
-				</div>
-				<div class="col-xs-12">
-
-						<cfif arguments.asList><ul class="pagination"></cfif>
-
-						<!--- PREVIOUS PAGE --->
-						<cfif currentPage-1 gt 0>
-							<cfif arguments.asList><li class=" previous"  tabindex="0" id="pages_previous"></cfif>
-							<a href="#replace(theLink,"@page@",currentPage-1)#" title="Previous Page">&lt;&lt;</a>
-							<cfif arguments.asList></li></cfif>
-						</cfif>
-
-						<!--- Calcualte PageFrom Carrousel --->
-						<cfset pageFrom=1>
-						<cfif (currentPage-bandGap) gt 1>
-							<cfset pageFrom=currentPage-bandgap>
-							<cfif arguments.asList><li class=""  tabindex="0"></cfif>
-							<a href="#replace(theLink,"@page@",1)#">1</a>
-							<a href="javascript:void(0)">...</a>
-							<cfif arguments.asList></li></cfif>
-						</cfif>
-
-						<!--- Page TO of Carrousel --->
-						<cfset pageTo=currentPage+bandgap>
-						<cfif (currentPage+bandgap) gt totalPages>
-							<cfset pageTo=totalPages>
-						</cfif>
-						<cfloop index="pageIndex" from="#pageFrom#" to="#pageTo#">
-							<cfif arguments.asList><li class="<cfif currentPage eq pageIndex>active"</cfif>"  tabindex="0"></cfif>
-							<a href="#replace(theLink,"@page@",pageIndex)#"
-							   <cfif currentPage eq pageIndex>class="selected active"</cfif>>#pageIndex#</a>
-							<cfif arguments.asList></li></cfif>
-						</cfloop>
-
-						<!--- End Token --->
-						<cfif (currentPage+bandgap) lt totalPages>
-							<cfif arguments.asList><li  tabindex="0"></cfif>
-							<a href="javascript:void(0)">...</a>
-							<a href="#replace(theLink,"@page@",totalPages)#">#totalPages#</a>
-							<cfif arguments.asList></li></cfif>
-						</cfif>
-
-						<!--- NEXT PAGE --->
-						<cfif currentPage lt totalPages >
-							<cfif arguments.asList><li class="next"  tabindex="0" id="pages_next"></cfif>
-							<a href="#replace(theLink,"@page@",currentPage+1)#" title="Next Page">&gt;&gt;</a>
-							<cfif arguments.asList></li></cfif>
-						</cfif>
-
-						<cfif arguments.asList></ul></cfif>
-					</div>
-				</div>
-			</cfoutput>
-			</cfsavecontent>
-		</cfif>
-
-		<cfreturn pagingTabs>
-	</cffunction>
-
-<!------------------------------------------- PRIVATE ------------------------------------------->
-
-</cfcomponent>
+}
