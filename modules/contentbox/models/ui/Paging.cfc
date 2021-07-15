@@ -115,7 +115,7 @@ component accessors="true" {
 			}
 
 			savecontent variable="pagingTabsUI" {
-				include template="Paging.cfm";
+				include "Paging.cfm";
 			}
 		}
 
