@@ -460,7 +460,7 @@ component {
 		required prc
 	){
 		// Get new comment to persist
-		var comment = populateModel( commentService.new() );
+		var comment = populateModel( model: commentService.new(), exclude: "commentID" );
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it

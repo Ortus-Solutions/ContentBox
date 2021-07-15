@@ -117,7 +117,7 @@ component extends="baseHandler" {
 
 	function save( event, rc, prc ){
 		// populate and get content
-		prc.rule     = populateModel( variables.ruleService.get( rc.ruleID ) );
+		prc.rule     = populateModel( model: variables.ruleService.get( rc.ruleID ), exclude: "ruleID" );
 		// validate it
 		var vResults = validate( prc.rule );
 		if ( !vResults.hasErrors() ) {

@@ -103,7 +103,7 @@ component extends="baseHandler" {
 			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id )
 		);
 		arguments.populate.nullEmptyInclude = "parent";
-		arguments.populate.exclude          = "creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
+		arguments.populate.exclude          = "contentID,creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
 
 		// Creator override: Only if you have the right perms
 		arguments.populate.model.setCreator( prc.oCurrentAuthor );

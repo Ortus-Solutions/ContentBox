@@ -69,7 +69,11 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		prc.oRole = populateModel( model: roleService.get( rc.roleID ), composeRelationships: true );
+		prc.oRole = populateModel(
+			model               : roleService.get( rc.roleID ),
+			composeRelationships: true,
+			exclude             : "roleID"
+		);
 
 		// Validate
 		var vResults = validate( prc.oRole );

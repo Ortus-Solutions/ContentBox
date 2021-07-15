@@ -387,7 +387,7 @@ component extends="baseContentHandler" {
 		// get new/persisted content and populate it
 		var content      = variables.contentStoreService.get( rc.contentID )
 		var originalSlug = content.getSlug();
-		var content      = populateModel( content )
+		var content      = populateModel( model: content, exclude = "contentID" )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( variables.siteService.get( rc.site ) );

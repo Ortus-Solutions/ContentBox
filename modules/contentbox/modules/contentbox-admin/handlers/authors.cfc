@@ -305,7 +305,7 @@ component extends="baseHandler" {
 		populateModel(
 			model                = oAuthor,
 			composeRelationships = true,
-			exclude              = "preference"
+			exclude              = "authorID,preference"
 		);
 
 		// iterate rc keys that start with "preference."
@@ -549,7 +549,7 @@ component extends="baseHandler" {
 		// Get new or persisted user
 		var oAuthor = authorService.get( id = rc.authorID );
 		// get and populate author
-		populateModel( oAuthor );
+		populateModel( model: oAuthor, exclude: "authorID" );
 		// Tag new or updated user
 		var newAuthor = ( NOT oAuthor.isLoaded() );
 

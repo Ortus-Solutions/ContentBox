@@ -327,7 +327,7 @@ component extends="baseContentHandler" {
 		var isNew        = ( NOT entry.isLoaded() );
 
 		// Populate the entry
-		populateModel( entry )
+		populateModel( model: entry, exclude = "contentID" )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( variables.siteService.get( rc.site ) );

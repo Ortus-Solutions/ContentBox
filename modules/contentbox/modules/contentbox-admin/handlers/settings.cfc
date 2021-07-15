@@ -249,9 +249,10 @@ component extends="baseHandler" {
 
 		// populate and get setting
 		var setting = populateModel(
-			model               : settingsService.get( id = rc.settingID ),
+			model               : settingsService.get( rc.settingID ),
 			composeRelationships: true,
-			nullEmptyInclude    : "site"
+			nullEmptyInclude    : "site",
+			exclude             : "settingID"
 		);
 
 		// save new setting

@@ -264,7 +264,7 @@ component extends="baseContentHandler" {
 		// get new/persisted page and populate it with incoming data.
 		var page         = variables.pageService.get( rc.contentID );
 		var originalSlug = page.getSlug();
-		populateModel( page )
+		populateModel( model: page, exclude = "contentID" )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( variables.siteService.get( rc.site ) );
