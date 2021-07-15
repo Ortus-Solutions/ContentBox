@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="searchSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
     <legend><i class="fab fa-searchengin fa-lg"></i>  Search Options</legend>
 
@@ -49,4 +50,10 @@
         </div>
     </div>
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

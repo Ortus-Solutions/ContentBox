@@ -16,9 +16,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        #html.startForm( name="settingsForm", action=prc.xehSaveSettings, novalidate="novalidate" )#
             #html.anchor( name="top" )#
-
             <div class="panel panel-default">
 
                 <div class="panel-body">
@@ -186,24 +184,17 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="rss_options">
-                                #renderView( view = "settings/sections/rss", prePostExempt = true )#
+								#renderView( view = "settings/sections/rss", prePostExempt = true )#
                             </div>
 
                             <!--- cbadmin Event --->
                             #announce( "cbadmin_onSettingsContent" )#
-
-                            <!--- Button Bar --->
-                            <div class="form-actions">
-                                #html.submitButton( value="Save Settings", class="btn btn-danger" )#
-                            </div>
                         </div>
                         <!--- End Tab Content --->
                     </div>
                     <!--- End Vertical Nav --->
-
                 </div>
             </div>
-        #html.endForm()#
     </div>
 </div>
 </cfoutput>

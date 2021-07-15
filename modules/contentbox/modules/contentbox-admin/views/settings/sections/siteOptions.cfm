@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="siteSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
 	<legend><i class="fas fa-globe fa-lg"></i> All Site Options</legend>
 
@@ -81,4 +82,11 @@
 			</div>
 		</div>
 	</fieldset>
+
+	<!--- Button Bar --->
+	<div class="form-actions mt20">
+		#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+	</div>
+
+	#html.endForm()#
 </cfoutput>

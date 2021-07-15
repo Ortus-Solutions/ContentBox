@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="notificationsSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
     <legend><i class="far fa-bell fa-lg"></i> Notifications</legend>
     <!--- Site Email --->
@@ -115,4 +116,10 @@
         </div>
     </div>
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

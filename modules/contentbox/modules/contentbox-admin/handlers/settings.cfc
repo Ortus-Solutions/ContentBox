@@ -79,34 +79,37 @@ component extends="baseHandler" {
 	function save( event, rc, prc ){
 		// announce event
 		announce( "cbadmin_preSettingsSave", { oldSettings : prc.cbSettings, newSettings : rc } );
+
 		// bulk save the options
-		settingsService.bulkSave( rc );
+		variables.settingsService.bulkSave( rc );
 
-		// Do blog entry point change
-		var routingService = controller.getRoutingService();
-
-		// Reroute using passed cb_site_blog_entryPoint just in case
-		routingService.setRoutes(
-			routingService
-				.getRoutes()
-				.map( function( item ){
-					if ( item.namespaceRouting eq "blog" ) {
-						item.pattern = item.regexpattern = replace(
-							rc[ "cb_site_blog_entrypoint" ],
-							"/",
-							"-",
-							"all"
-						) & "/";
-					}
-					return item;
-				} )
-		);
-
+		// Do blog entry point change?
+		if (
+			rc.keyExists( "cb_site_blog_entrypoint" ) && prc.cbSettings[ "cb_site_blog_entrypoint" ] != rc.cb_site_blog_entrypoint
+		) {
+			var routingService = variables.controller.getRoutingService();
+			// Reroute using passed cb_site_blog_entryPoint just in case
+			routingService.setRoutes(
+				routingService
+					.getRoutes()
+					.map( function( item ){
+						if ( arguments.item.namespaceRouting eq "blog" ) {
+							arguments.item.pattern = item.regexpattern = replace(
+								rc[ "cb_site_blog_entrypoint" ],
+								"/",
+								"-",
+								"all"
+							) & "/";
+						}
+						return arguments.item;
+					} )
+			);
+		}
 		// announce event
 		announce( "cbadmin_postSettingsSave" );
 
 		// relocate back to editor
-		cbMessagebox.info( "All ContentBox settings updated! Yeeehaww!" );
+		variables.cbMessagebox.info( "Settings saved!" );
 
 		relocate( prc.xehSettings );
 	}
@@ -211,17 +214,17 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideSettings
 				);
-				cbMessagebox.info( "Settings imported sucessfully!" );
+				variables.cbMessagebox.info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
+				variables.cbMessagebox.error(
 					"The import file is invalid: #rc.importFile# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			variables.cbMessagebox.error( errorMessage );
 		}
 		relocate( prc.xehRawSettings );
 	}
@@ -255,7 +258,7 @@ component extends="baseHandler" {
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();
 		// messagebox
-		cbMessagebox.setMessage( "info", "Setting saved!" );
+		variables.cbMessagebox.setMessage( "info", "Setting saved!" );
 		// relocate
 		relocate( event = prc.xehRawSettings, queryString = "page=#rc.page#" );
 	}
@@ -268,13 +271,13 @@ component extends="baseHandler" {
 		announce( "cbadmin_preSettingRemove", { settingID : rc.settingID } );
 		// delete by id
 		if ( !settingsService.deleteByID( rc.settingID ) ) {
-			cbMessagebox.setMessage( "warning", "Invalid Setting detected!" );
+			variables.cbMessagebox.setMessage( "warning", "Invalid Setting detected!" );
 		} else {
 			// announce event
 			announce( "cbadmin_postSettingRemove", { settingID : rc.settingID } );
 			// flush cache
 			settingsService.flushSettingsCache();
-			cbMessagebox.setMessage( "info", "Setting Removed!" );
+			variables.cbMessagebox.setMessage( "info", "Setting Removed!" );
 		}
 		relocate( prc.xehRawSettings );
 	}
@@ -300,7 +303,10 @@ component extends="baseHandler" {
 	 */
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		cbMessagebox.setMessage( "info", "All singletons flushed and awaiting re-creation." );
+		variables.cbMessagebox.setMessage(
+			"info",
+			"All singletons flushed and awaiting re-creation."
+		);
 		relocate( event = prc.xehRawSettings, queryString = "##wirebox" );
 	}
 

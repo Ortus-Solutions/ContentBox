@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="editorSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
 	<legend><i class="fas fa-pen fa-lg"></i> Editor Options</legend>
 
@@ -90,4 +91,10 @@
 		</div>
 
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

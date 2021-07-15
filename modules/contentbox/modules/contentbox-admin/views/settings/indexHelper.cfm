@@ -7,8 +7,6 @@
 </style>
 <script>
 $( document ).ready(function() {
-	// form validators
-	$( "##settingsForm" ).validate();
 	// Slider Label Binders by convention, expecting an ID_label field
 	$( "input.slider" ).on( "slide", function( slideEvt ){
 		$( "##" + slideEvt.target.id + "_label" ).text( slideEvt.value );

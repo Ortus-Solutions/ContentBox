@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="gravatarsSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
     <legend><i class="fas fa-portrait fa-lg"></i> Gravatars</legend>
     <p>An avatar is an image that follows you from site to site appearing beside your name when you comment on avatar enabled sites.(<a href="http://www.gravatar.com/" target="_blank">http://www.gravatar.com/</a>)</p>
@@ -43,4 +44,10 @@
     </div>
 
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>
