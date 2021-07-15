@@ -1,5 +1,4 @@
 ﻿<cfoutput>
-#html.addAsset( "#prc.cbRoot#/includes/css/diff.css" )#
 <div id="diff">
 	<div class="modal-dialog modal-lg" role="document" >
 		<div class="modal-content">
@@ -67,24 +66,28 @@
 					<tbody>
 						<cfloop from="1" to="#prc.maxA#" index="x">
 							<!--- Checks --->
-							<cfset codeCSS = getCodeCSS(prc.rightA, prc.leftA, x)>
+							<cfset codeCSS = getCodeCSS( prc.rightA, prc.leftA, x )>
 							<tr>
 								<!--- Left --->
-								<td class="linenum"><cfif arrayIsDefined( prc.leftA, x )>#x#<cfelse>&nbsp;</cfif></td>
+								<td class="linenum">
+									<cfif arrayIsDefined( prc.leftA, x )>#x#<cfelse>&nbsp;</cfif>
+								</td>
 								<td width="50%" class="code#codeCSS#">
 									<div class="diffContent">
 										<cfif arrayIsDefined( prc.leftA, x )>
-										#Replace(HTMLEditFormat( prc.leftA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL" )#
+											#prc.leftA[ x ]#
 										</cfif>
 									</div>
 								</td>
 
 								<!--- Right --->
-								<td class="linenum"><cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif></td>
+								<td class="linenum">
+									<cfif arrayIsDefined( prc.rightA, x )>#x#<cfelse>&nbsp;</cfif>
+								</td>
 								<td width="50%" class="code#codeCSS#">
 									<div class="diffContent">
 										<cfif arrayIsDefined( prc.rightA, x )>
-										#Replace(HTMLEditFormat( prc.rightA[ x ] ),Chr(9),"&nbsp;&nbsp;&nbsp;","ALL" )#
+											#prc.rightA[ x ]#
 										</cfif>
 									</div>
 								</td>

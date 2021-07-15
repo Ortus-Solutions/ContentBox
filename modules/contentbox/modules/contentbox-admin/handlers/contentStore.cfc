@@ -415,6 +415,15 @@ component extends="baseContentHandler" {
 			content.setCreator( variables.authorService.get( rc.creatorID ) );
 		}
 
+		// Prettify content if json
+		if ( isJSON( rc.content ) ) {
+			rc.content = getInstance( "JSONPrettyPrint@JSONPrettyPrint" ).formatJson(
+				json           : rc.content,
+				lineEnding     : chr( 10 ),
+				spaceAfterColon: true
+			);
+		}
+
 		// Register a new content in the page, versionized!
 		content.addNewContentVersion(
 			content   = rc.content,

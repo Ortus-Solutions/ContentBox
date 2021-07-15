@@ -64,6 +64,11 @@ component
 		inject    ="i18n@cbi18n"
 		persistent="false";
 
+	property
+		name      ="JSONPrettyPrint"
+		inject    ="JSONPrettyPrint@JSONPrettyPrint"
+		persistent="false";
+
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
 	 ********************************************************************* */
@@ -1162,7 +1167,18 @@ component
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
 	string function getContent(){
-		return getActiveContent().getContent();
+		var thisContent = getActiveContent().getContent();
+
+		// Check for json and format it for pretty print
+		if ( isJSON( thisContent ) ) {
+			return variables.JSONPrettyPrint.formatJson(
+				json           : thisContent,
+				lineEnding     : chr( 10 ),
+				spaceAfterColon: true
+			);
+		}
+
+		return thisContent;
 	}
 
 	/**
