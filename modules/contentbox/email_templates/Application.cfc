@@ -1,3 +1,5 @@
-component{
-abort;
+component {
+
+	abort;
+
 }

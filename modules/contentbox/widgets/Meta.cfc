@@ -77,22 +77,21 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 
 	private function buildList(links){
 		var rString = "";
-
+		// cfformat-ignore-start
 		saveContent variable="rString"{
-			writeOutput('<ul id="meta">
-	');
+			writeOutput( '<ul id="meta">' );
 			// iterate and create
 			for(var x=1; x lte arrayLen( arguments.links ); x++){
 				writeOutput('<li class="archives">
-		<a href="#links[ x ].link#">#links[ x ].title#</a>
-	</li>
-	');
+					<a href="#links[ x ].link#">#links[ x ].title#</a>
+					</li>
+				');
 			}
 			// close ul
-			writeOutput( "
-</ul>
-" );
+			writeOutput( "</ul>" );
 		}
+
+		// cfformat-ignore-end
 		return rString;
 	}
 

@@ -51,7 +51,7 @@ component accessors="true" {
 		variables.populateData          = true;
 		variables.fullRewrite           = true;
 		variables.rewrite_engine        = "mod_rewrite";
-		variables.createDevSite 		= true;
+		variables.createDevSite         = true;
 
 		return this;
 	}

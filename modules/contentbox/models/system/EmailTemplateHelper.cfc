@@ -1,60 +1,62 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A helper to create standard email template sections
-*/
-component singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A helper to create standard email template sections
+ */
+component singleton {
 
-    // DI
-    property name="avatar" inject="Avatar@cb";
+	// DI
+	property name="avatar" inject="Avatar@cb";
 
-    /**
-    *  Constructor
-    */
-    EmailTemplateHelper function init(){
-        //Return instance
-        return this;        
-    }
-    
-    public string function author(
-        required string email,
-        required string content
-    ) {
-        var gravatar = variables.avatar.renderAvatar( email=arguments.email, size=40 );
-        savecontent variable="authorContent" {
-            writeoutput(text( "
+	/**
+	 *  Constructor
+	 */
+	EmailTemplateHelper function init(){
+		// Return instance
+		return this;
+	}
+
+	public string function author( required string email, required string content ){
+		var gravatar        = variables.avatar.renderAvatar( email = arguments.email, size = 40 );
+		savecontent variable="authorContent" {
+			writeOutput(
+				text(
+					"
                 <table cellpadding=3 cellspacing=3>
                     <tr>
                         <td width=30>#gravatar#</td>
                         <td>#arguments.content#</td>
                     </tr>
-                </table> 
-            " ));
-        }
-        return authorContent;
-    }
+                </table>
+            "
+				)
+			);
+		}
+		return authorContent;
+	}
 
-    /**
-     * Create a divider
-     * @paddingTop.hint Top padding
-     * @paddingRight.hint Right padding
-     * @paddingBottom.hint Bottom padding
-     * @paddingLeft.hint Left padding
-     * @borderColor.hint Border color
-     * @borderStyle.hint Border style
-     * @borderWidth.hint Border width
-     */
-    public string function divider(
-        required numeric paddingTop=18,
-        required numeric paddingRight=18,
-        required numeric paddingBottom=18,
-        required numeric paddingLeft=18,
-        required string borderColor="DDDDDD",
-        required string borderStyle="solid",
-        required numeric borderWidth=1
-    ) {
+	/**
+	 * Create a divider
+	 * @paddingTop.hint Top padding
+	 * @paddingRight.hint Right padding
+	 * @paddingBottom.hint Bottom padding
+	 * @paddingLeft.hint Left padding
+	 * @borderColor.hint Border color
+	 * @borderStyle.hint Border style
+	 * @borderWidth.hint Border width
+	 */
+	public string function divider(
+		required numeric paddingTop    = 18,
+		required numeric paddingRight  = 18,
+		required numeric paddingBottom = 18,
+		required numeric paddingLeft   = 18,
+		required string borderColor    = "DDDDDD",
+		required string borderStyle    = "solid",
+		required numeric borderWidth   = 1
+	){
+		// cfformat-ignore-start
         savecontent variable="dividerContent" {
             writeoutput('
                 <table border="0" cellpadding="0" cellspacing="0" width="100%" class="kmDividerBlock" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
@@ -73,25 +75,27 @@ component singleton{
                             </td>
                         </tr>
                     </tbody>
-                </table>    
+                </table>
             ');
         }
-        return dividerContent;
-    }
+		// cfformat-ignore-end
+return dividerContent;
+	}
 
-    /**
-     * Create a heading
-     * @content.hint Content for the heading
-     * @level.hint The heading level
-     * @color.hint Text color
-     * @fontSize.hint Heading font size
-     */
-    public string function heading( 
-        required string content, 
-        required string level="h2", 
-        required string color="777", 
-        required numeric fontSize=20 
-    ) {
+	/**
+	 * Create a heading
+	 * @content.hint Content for the heading
+	 * @level.hint The heading level
+	 * @color.hint Text color
+	 * @fontSize.hint Heading font size
+	 */
+	public string function heading(
+		required string content,
+		required string level     = "h2",
+		required string color     = "777",
+		required numeric fontSize = 20
+	){
+		// cfformat-ignore-start
         savecontent variable="headingContent" {
             writeoutput('
                 <#arguments.level# style="color: ###arguments.color#; display: block; font-family: Helvetica; font-size: #arguments.fontSize#px; font-style: normal; font-weight: bold; line-height: 110%; letter-spacing: normal; margin: 0; margin-bottom: 9px; text-align: left">
@@ -99,18 +103,19 @@ component singleton{
                 </#arguments.level#>
             ');
         }
-        return text( headingContent );
-    }
+		// cfformat-ignore-end
+return text(
+			headingContent
+		);
+	}
 
-    /**
-     * Create a text area
-     * @content.hint Content for the text area
-     * @callout.hint If true, will wrap content in a callout box
-     */
-    public string function text( 
-        required string content,
-        required boolean callout=false 
-    ) {
+	/**
+	 * Create a text area
+	 * @content.hint Content for the text area
+	 * @callout.hint If true, will wrap content in a callout box
+	 */
+	public string function text( required string content, required boolean callout = false ){
+		// cfformat-ignore-start
         savecontent variable="textContent" {
             writeoutput('
                 <table border="0" cellpadding="0" cellspacing="0" class="kmTextBlock" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
@@ -140,16 +145,18 @@ component singleton{
                         </tr>
                     </tbody>
                 </table>
-            ');            
+            ');
         }
-        return textContent;
-    }
+		// cfformat-ignore-end
+return textContent;
+	}
 
-    /**
-     * Create a button bar
-     * @buttons.hint Array of buttons to add to the button bar
-     */
-    public string function buttonBar( required Array buttons ) {
+	/**
+	 * Create a button bar
+	 * @buttons.hint Array of buttons to add to the button bar
+	 */
+	public string function buttonBar( required Array buttons ){
+		// cfformat-ignore-start
         savecontent variable="buttonBarContent" {
             writeoutput('
                 #divider( 18, 18, 5, 18 )#
@@ -209,6 +216,8 @@ component singleton{
                 #divider( 0, 18, 18, 18 )#
             ');
         }
-        return buttonBarContent;
-    }
+		// cfformat-ignore-end
+return buttonBarContent;
+	}
+
 }

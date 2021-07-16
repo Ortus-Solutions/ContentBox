@@ -5,7 +5,7 @@
  * ---
  * Handles RSS Feeds
  */
-component extends="content"{
+component extends="content" {
 
 	/**
 	 * Display the RSS feeds for the ContentBox
@@ -18,15 +18,19 @@ component extends="content"{
 
 		// Build out the site RSS feeds
 		var feed = variables.RSSService.getRSS(
-			comments : rc.commentRSS,
-			category : rc.category,
-			slug     : rc.contentSlug,
-			siteID   : prc.oCurrentSite.getsiteID()
+			comments: rc.commentRSS,
+			category: rc.category,
+			slug    : rc.contentSlug,
+			siteID  : prc.oCurrentSite.getsiteID()
 		);
 
 		// Render out the feed xml
 		rc.format = "rss";
-		event.renderData( type="plain", data=feed, contentType="text/xml" );
+		event.renderData(
+			type        = "plain",
+			data        = feed,
+			contentType = "text/xml"
+		);
 	}
 
 	/**
@@ -34,22 +38,26 @@ component extends="content"{
 	 */
 	function pages( event, rc, prc ){
 		// params
-		event.paramValue( "category","" );
-		event.paramValue( "commentRSS",false);
-		event.paramValue( "slug","" );
+		event.paramValue( "category", "" );
+		event.paramValue( "commentRSS", false );
+		event.paramValue( "slug", "" );
 
 		// Build out the site RSS feeds
 		var feed = variables.RSSService.getRSS(
-			category    : rc.category,
-			slug        : rc.slug,
-			comments    : rc.commentRSS,
-			contentType : "Page",
-			siteID      : prc.oCurrentSite.getsiteID()
+			category   : rc.category,
+			slug       : rc.slug,
+			comments   : rc.commentRSS,
+			contentType: "Page",
+			siteID     : prc.oCurrentSite.getsiteID()
 		);
 
 		// Render out the feed xml
 		rc.format = "rss";
-		event.renderData( type="plain", data=feed, contentType="text/xml" );
+		event.renderData(
+			type        = "plain",
+			data        = feed,
+			contentType = "text/xml"
+		);
 	}
 
 }

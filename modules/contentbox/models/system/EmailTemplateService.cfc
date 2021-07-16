@@ -22,40 +22,46 @@ limitations under the License.
 ********************************************************************************
 * Manage the system's email templates for admin purposes
 */
-component accessors="true" singleton{
-	
+component accessors="true" singleton {
+
 	// Dependecnies
-	property name="moduleSettings"		inject="coldbox:setting:modules";
-	property name="log"					inject="logbox:logger:{this}";
-	
+	property name="moduleSettings" inject="coldbox:setting:modules";
+	property name="log" inject="logbox:logger:{this}";
+
 	// Local properties
 	property name="templatesPath" type="string";
-	
+
 	EmailTemplateService function init(){
-		templatesPath = '';
+		templatesPath = "";
 		return this;
 	}
-	
+
 	/**
-	* onDIComplete
-	*/
+	 * onDIComplete
+	 */
 	function onDIComplete(){
-		setTemplatesPath( moduleSettings["contentbox"].path & "/email_templates" );
+		setTemplatesPath( moduleSettings[ "contentbox" ].path & "/email_templates" );
 	}
-	
+
 	/**
-	* Check if template exists
-	*/
-	boolean function templateExists(required string name){
+	 * Check if template exists
+	 */
+	boolean function templateExists( required string name ){
 		return fileExists( getTemplatesPath() & "/#arguments.name#.cfm" );
 	}
 
 	/**
-	* Get installed templates
-	*/
+	 * Get installed templates
+	 */
 	query function getTemplates(){
-		var templates = directoryList(getTemplatesPath(),false,"query","*.cfm","name asc" );
+		var templates = directoryList(
+			getTemplatesPath(),
+			false,
+			"query",
+			"*.cfm",
+			"name asc"
+		);
 		return templates;
 	}
-	
+
 }

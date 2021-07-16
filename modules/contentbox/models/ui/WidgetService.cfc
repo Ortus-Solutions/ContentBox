@@ -1,39 +1,39 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manages ContentBox Widgets
-*/
-component accessors="true" singleton threadSafe{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manages ContentBox Widgets
+ */
+component accessors="true" singleton threadSafe {
 
 	// Dependecnies
-	property name="settingService"		inject="id:settingService@cb";
-	property name="moduleSettings"		inject="coldbox:setting:modules";
-	property name="moduleService"		inject="ModuleService@cb";
-	property name="themeService"		inject="themeService@cb";
-	property name="wirebox"				inject="wirebox";
-	property name="coldbox"				inject="coldbox";
-	property name="log"					inject="logbox:logger:{this}";
+	property name="settingService" inject="id:settingService@cb";
+	property name="moduleSettings" inject="coldbox:setting:modules";
+	property name="moduleService" inject="ModuleService@cb";
+	property name="themeService" inject="themeService@cb";
+	property name="wirebox" inject="wirebox";
+	property name="coldbox" inject="coldbox";
+	property name="log" inject="logbox:logger:{this}";
 
 	/**
-	* The core widgets location path
-	*/
-	property name="coreWidgetsPath" 		type="string";
+	 * The core widgets location path
+	 */
+	property name="coreWidgetsPath" type="string";
 
 	/**
 	 * The custom widgets location path
 	 */
-	property name="customWidgetsPath" 		type="string";
+	property name="customWidgetsPath" type="string";
 
 	/**
 	 * The core widgets map
 	 */
 	property name="coreWidgetsMap" type="struct";
 
-	 /**
-	  * The custom widgets map
-	  */
+	/**
+	 * The custom widgets map
+	 */
 	property name="customWidgetsMap" type="struct";
 
 	/**
@@ -42,22 +42,22 @@ component accessors="true" singleton threadSafe{
 	property name="loadedWidgets";
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	WidgetService function init(){
-		variables.coreWidgetsMap 	= {};
-		variables.customWidgetsMap 	= {};
+		variables.coreWidgetsMap   = {};
+		variables.customWidgetsMap = {};
 
-		variables.loadedWidgets 	= "";
+		variables.loadedWidgets = "";
 		return this;
 	}
 
 	/**
-	* onDIComplete
-	*/
+	 * onDIComplete
+	 */
 	function onDIComplete(){
 		// Verify widgets path location
-		variables.coreWidgetsPath 	= variables.moduleSettings[ "contentbox" ].path & "/widgets";
+		variables.coreWidgetsPath   = variables.moduleSettings[ "contentbox" ].path & "/widgets";
 		variables.customWidgetsPath = variables.moduleSettings[ "contentbox-custom" ].path & "/_widgets";
 	}
 
@@ -75,10 +75,10 @@ component accessors="true" singleton threadSafe{
 	 */
 	query function getWidgetCategories(){
 		var widgets = getWidgets();
-		var q = new Query(
-			dbType 	= "query",
-			QoQ 	= widgets,
-			sql 	= "select distinct category from QoQ order by category ASC"
+		var q       = new Query(
+			dbType = "query",
+			QoQ    = widgets,
+			sql    = "select distinct category from QoQ order by category ASC"
 		);
 		return q.execute().getResult();
 	}
@@ -93,27 +93,26 @@ component accessors="true" singleton threadSafe{
 	 * @reload Widgets are lazy loaded, or you can force a reload
 	 */
 	query function getWidgets( boolean reload = false ){
-
 		// If query is loaded and not a reload then return it.
-		if( isQuery( variables.loadedWidgets ) and !arguments.reload ){
+		if ( isQuery( variables.loadedWidgets ) and !arguments.reload ) {
 			return variables.loadedWidgets;
 		}
 
 		var qAllWidgets = queryNew( "" );
 
 		// Add custom columns
-		QueryAddColumn( qAllWidgets, "name",   					[] );
-		QueryAddColumn( qAllWidgets, "directory",				[] );
-		QueryAddColumn( qAllWidgets, "filename",   				[] );
-		QueryAddColumn( qAllWidgets, "widgettype", 				[] );
-		QueryAddColumn( qAllWidgets, "module",     				[] );
-		QueryAddColumn( qAllWidgets, "category",   				[] );
-		QueryAddColumn( qAllWidgets, "icon",       				[] );
-		QueryAddColumn( qAllWidgets, "debug",      				[] );
-		QueryAddColumn( qAllWidgets, "invocationPath",      	[] );
+		queryAddColumn( qAllWidgets, "name", [] );
+		queryAddColumn( qAllWidgets, "directory", [] );
+		queryAddColumn( qAllWidgets, "filename", [] );
+		queryAddColumn( qAllWidgets, "widgettype", [] );
+		queryAddColumn( qAllWidgets, "module", [] );
+		queryAddColumn( qAllWidgets, "category", [] );
+		queryAddColumn( qAllWidgets, "icon", [] );
+		queryAddColumn( qAllWidgets, "debug", [] );
+		queryAddColumn( qAllWidgets, "invocationPath", [] );
 
 		processWidgets( qAllWidgets, "Core" )
-			.processWidgets( qAllWidgets, "Custom"  )
+			.processWidgets( qAllWidgets, "Custom" )
 			.processModuleWidgets( qAllWidgets )
 			.processThemeWidgets( qAllWidgets );
 
@@ -128,39 +127,71 @@ component accessors="true" singleton threadSafe{
 	 * @qRecords The records query to attach yourself to
 	 * @type The type to process
 	 */
-	WidgetService function processWidgets( query qRecords=getLoadedWidgets(), type ){
+	WidgetService function processWidgets( query qRecords = getLoadedWidgets(), type ){
 		// get core widgets to start with.
 		var qWidgets = getWidgetsFromPath(
 			( arguments.type == "Core" ? variables.coreWidgetsPath : variables.customWidgetsPath )
 		);
 
 		// Iterate and incorporate exta metadata to record
-		for( var x=1; x lte qWidgets.recordCount; x++ ){
+		for ( var x = 1; x lte qWidgets.recordCount; x++ ) {
 			var widgetName = ripExtension( qWidgets.name[ x ] );
 			// Add new row with data
 			queryAddRow( arguments.qRecords );
-			querySetCell( arguments.qRecords, "name", 			widgetName );
-			querySetCell( arguments.qRecords, "directory", 		qWidgets.directory[ x ] );
-			querySetCell( arguments.qRecords, "filename", 		qWidgets.name[ x ] );
-			querySetCell( arguments.qRecords, "widgettype", 	arguments.type );
+			querySetCell( arguments.qRecords, "name", widgetName );
+			querySetCell(
+				arguments.qRecords,
+				"directory",
+				qWidgets.directory[ x ]
+			);
+			querySetCell(
+				arguments.qRecords,
+				"filename",
+				qWidgets.name[ x ]
+			);
+			querySetCell(
+				arguments.qRecords,
+				"widgettype",
+				arguments.type
+			);
 
-			if( arguments.type == "Core" ){
+			if ( arguments.type == "Core" ) {
 				var invocationPath = "contentbox.wigets.#widgetName#";
-				querySetCell( arguments.qRecords, "invocationPath", invocationPath );
+				querySetCell(
+					arguments.qRecords,
+					"invocationPath",
+					invocationPath
+				);
 			} else {
 				var invocationPath = "contentbox-custom._wigets.#widgetName#";
-				querySetCell( arguments.qRecords, "invocationPath", invocationPath );
+				querySetCell(
+					arguments.qRecords,
+					"invocationPath",
+					invocationPath
+				);
 			}
 
 			// Store Map
 			variables[ arguments.type & "widgetsMap" ][ widgetName ] = invocationPath;
 
-			try{
-				querySetCell( arguments.qRecords, "category", 	getWidgetCategory( widgetName, 	arguments.type ) );
-				querySetCell( arguments.qRecords, "icon", 		getWidgetIcon( widgetName, 		arguments.type ) );
-			} catch( any e ) {
+			try {
+				querySetCell(
+					arguments.qRecords,
+					"category",
+					getWidgetCategory( widgetName, arguments.type )
+				);
+				querySetCell(
+					arguments.qRecords,
+					"icon",
+					getWidgetIcon( widgetName, arguments.type )
+				);
+			} catch ( any e ) {
 				log.error( "Error creating #arguments.type# widget: #widgetName#", e );
-				querySetCell( arguments.qRecords, "debug", "Error creating #arguments.type# widget #e.message# #e.detail#. Logged error and stacktrace too." );
+				querySetCell(
+					arguments.qRecords,
+					"debug",
+					"Error creating #arguments.type# widget #e.message# #e.detail#. Logged error and stacktrace too."
+				);
 			}
 		}
 
@@ -171,11 +202,11 @@ component accessors="true" singleton threadSafe{
 	 * Discover modules widgets and attach records to incoming widget records
 	 * @qRecords The records query to attach yourself to
 	 */
-	WidgetService function processModuleWidgets( query qRecords=getLoadedWidgets() ){
+	WidgetService function processModuleWidgets( query qRecords = getLoadedWidgets() ){
 		// get module widgets
 		var moduleWidgets = moduleService.getModuleWidgetCache();
 		// add module widgets
-		for( var widget in moduleWidgets ) {
+		for ( var widget in moduleWidgets ) {
 			var thisRecord = moduleWidgets[ widget ];
 			var widgetName = listGetAt( widget, 1, "@" );
 			var moduleName = listGetAt( widget, 2, "@" );
@@ -186,15 +217,35 @@ component accessors="true" singleton threadSafe{
 			querySetCell( arguments.qRecords, "filename", widgetName );
 			querySetCell( arguments.qRecords, "widgettype", "Module" );
 			querySetCell( arguments.qRecords, "module", moduleName );
-			querySetCell( arguments.qRecords, "directory", getDirectoryFromPath( thisRecord.path ) );
-			querySetCell( arguments.qRecords, "invocationPath", thisRecord.invocationPath );
+			querySetCell(
+				arguments.qRecords,
+				"directory",
+				getDirectoryFromPath( thisRecord.path )
+			);
+			querySetCell(
+				arguments.qRecords,
+				"invocationPath",
+				thisRecord.invocationPath
+			);
 
-			try{
-				querySetCell( arguments.qRecords, "category", getWidgetCategory( name=widget, type="module" ) );
-				querySetCell( arguments.qRecords, "icon", getWidgetIcon( name=widget, type="module" ) );
-			} catch( any e ) {
+			try {
+				querySetCell(
+					arguments.qRecords,
+					"category",
+					getWidgetCategory( name = widget, type = "module" )
+				);
+				querySetCell(
+					arguments.qRecords,
+					"icon",
+					getWidgetIcon( name = widget, type = "module" )
+				);
+			} catch ( any e ) {
 				log.error( "Error creating module (#moduleName#) widget: #widgetName#", e );
-				querySetCell( arguments.qRecords, "debug", "Error creating module widget #e.message# #e.detail#. Logged error and stacktrace too." );
+				querySetCell(
+					arguments.qRecords,
+					"debug",
+					"Error creating module widget #e.message# #e.detail#. Logged error and stacktrace too."
+				);
 			}
 		}
 
@@ -205,27 +256,47 @@ component accessors="true" singleton threadSafe{
 	 * Discover active theme widgets and attach records to incoming widget records
 	 * @qRecords The records query to attach yourself to
 	 */
-	WidgetService function processThemeWidgets( query qRecords=getLoadedWidgets() ){
+	WidgetService function processThemeWidgets( query qRecords = getLoadedWidgets() ){
 		// get theme widgets
 		var themeWidgets = themeService.getWidgetCache();
 
 		// add theme widgets
-		for( var widget in themeWidgets ) {
+		for ( var widget in themeWidgets ) {
 			var thisRecord = themeWidgets[ widget ];
 
 			queryAddRow( qRecords );
 			querySetCell( qRecords, "name", widget );
 			querySetCell( qRecords, "filename", widget );
 			querySetCell( qRecords, "widgettype", "Theme" );
-			querySetCell( qRecords, "invocationPath", thisRecord.invocationPath );
-			querySetCell( qRecords, "directory", getDirectoryFromPath( thisRecord.path ) );
+			querySetCell(
+				qRecords,
+				"invocationPath",
+				thisRecord.invocationPath
+			);
+			querySetCell(
+				qRecords,
+				"directory",
+				getDirectoryFromPath( thisRecord.path )
+			);
 
-			try{
-				querySetCell( qRecords, "category", getWidgetCategory( name=widget, type="theme" ) );
-				querySetCell( qRecords, "icon", getWidgetIcon( name=widget, type="theme" ) );
-			} catch( any e ) {
+			try {
+				querySetCell(
+					qRecords,
+					"category",
+					getWidgetCategory( name = widget, type = "theme" )
+				);
+				querySetCell(
+					qRecords,
+					"icon",
+					getWidgetIcon( name = widget, type = "theme" )
+				);
+			} catch ( any e ) {
 				log.error( "Error creating theme (#thisRecord.theme#) widget: #widget#", e );
-				querySetCell( qRecords, "debug", "Error creating theme widget #e.message# #e.detail#. Logged error and stacktrace too." );
+				querySetCell(
+					qRecords,
+					"debug",
+					"Error creating theme widget #e.message# #e.detail#. Logged error and stacktrace too."
+				);
 			}
 		}
 
@@ -239,24 +310,24 @@ component accessors="true" singleton threadSafe{
 	 * @name The name of the widget
 	 */
 	string function discoverWidgetType( required name ){
-		var isCustom 	= false;
-		var isTheme 	= false;
-		var qWidgets 	= getWidgets();
+		var isCustom = false;
+		var isTheme  = false;
+		var qWidgets = getWidgets();
 
-		for( var thisRow in qWidgets ){
-			if( thisrow.name == arguments.name && thisRow.widgetType == "Custom" ){
+		for ( var thisRow in qWidgets ) {
+			if ( thisrow.name == arguments.name && thisRow.widgetType == "Custom" ) {
 				isCustom = true;
 			}
-			if( thisrow.name == arguments.name && thisRow.widgetType == "Theme" ){
+			if ( thisrow.name == arguments.name && thisRow.widgetType == "Theme" ) {
 				isTheme = true;
 			}
 		}
 
-		if( isCustom ){
+		if ( isCustom ) {
 			return "Custom";
 		}
 
-		if( isTheme ){
+		if ( isTheme ) {
 			return "Theme";
 		}
 
@@ -272,14 +343,14 @@ component accessors="true" singleton threadSafe{
 	 * @name The convention name
 	 */
 	any function getWidgetByDiscovery( required name ){
-		var isModuleWidget 	= findNoCase( "@", arguments.name ) ? true : false;
-		var isThemeWidget 	= findNoCase( "~", arguments.name ) ? true : false;
+		var isModuleWidget = findNoCase( "@", arguments.name ) ? true : false;
+		var isThemeWidget  = findNoCase( "~", arguments.name ) ? true : false;
 
-		if( isModuleWidget ){
+		if ( isModuleWidget ) {
 			return getWidget( arguments.name, "module" );
 		}
 
-		if( isThemeWidget ){
+		if ( isThemeWidget ) {
 			return getWidget( arguments.name, "theme" );
 		}
 
@@ -295,34 +366,34 @@ component accessors="true" singleton threadSafe{
 	 *
 	 * @throws WidgetNotFoundException
 	 */
-	any function getWidget( required name, required string type="core" ){
+	any function getWidget( required name, required string type = "core" ){
 		var widgetPath = "";
 
-		switch( arguments.type ) {
-			case "theme" :
+		switch ( arguments.type ) {
+			case "theme":
 				widgetPath = themeService.getThemeWidgetInvocationPath( arguments.name );
 				break;
-			case "module" :
+			case "module":
 				widgetPath = moduleService.getModuleWidgetInvocationPath( arguments.name );
 				break;
-			case "core" :
+			case "core":
 				widgetPath = "contentbox.widgets." & arguments.name;
 				break;
-			case "custom" :
+			case "custom":
 				widgetPath = "contentbox-custom._widgets." & arguments.name;
 				break;
 		}
 
-		if( len( widgetPath ) ) {
+		if ( len( widgetPath ) ) {
 			// Init Arguments added for backwards compat
 			return wirebox.getInstance(
-				name 			= widgetPath,
-				initArguments	= { "controller" = variables.coldbox }
+				name          = widgetPath,
+				initArguments = { "controller" : variables.coldbox }
 			);
 		} else {
 			throw(
 				message = "The widget (#arguments.name#) could not be located anywhere.",
-				type 	= "WidgetNotFoundException"
+				type    = "WidgetNotFoundException"
 			);
 		}
 	}
@@ -333,16 +404,16 @@ component accessors="true" singleton threadSafe{
 	 * @name The name of the widget
 	 * @type This can be one of the following: core, theme, module
 	 */
-	string function getWidgetIcon( required name, required string type="core" ) {
-		var widget = getWidget( argumentCollection=arguments );
-		var icon = widget.getIcon();
-		if( isNull( icon ) || icon == "" ) {
-			switch( type ) {
+	string function getWidgetIcon( required name, required string type = "core" ){
+		var widget = getWidget( argumentCollection = arguments );
+		var icon   = widget.getIcon();
+		if ( isNull( icon ) || icon == "" ) {
+			switch ( type ) {
 				case "theme":
 					icon = "th-large";
 					break;
 				case "module":
-					icon="archive";
+					icon = "archive";
 					break;
 				default:
 					icon = "puzzle-piece";
@@ -358,16 +429,16 @@ component accessors="true" singleton threadSafe{
 	 * @name The name of the widget
 	 * @type This can be one of the following: core, theme, module
 	 */
-	string function getWidgetCategory( required name, required string type="core" ) {
-		var widget = getWidget( argumentCollection=arguments );
+	string function getWidgetCategory( required name, required string type = "core" ){
+		var widget   = getWidget( argumentCollection = arguments );
 		var category = widget.getCategory();
-		if( isNull( category ) || category == "" ) {
-			switch( type ) {
+		if ( isNull( category ) || category == "" ) {
+			switch ( type ) {
 				case "theme":
 					category = "Theme";
 					break;
 				case "module":
-					category="Module";
+					category = "Module";
 					break;
 				default:
 					category = "Miscellaneous";
@@ -385,13 +456,13 @@ component accessors="true" singleton threadSafe{
 	boolean function removeWidget( required widgetFile ){
 		var wCustomPath = variables.customWidgetsPath & "/" & arguments.widgetFile & ".cfc";
 
-		if( fileExists( wCustomPath ) ){
+		if ( fileExists( wCustomPath ) ) {
 			fileDelete( wCustomPath );
 			return true;
 		}
 
 		// Process widgets
-		getWidgets( reload=true );
+		getWidgets( reload = true );
 
 		return false;
 	}
@@ -414,7 +485,7 @@ component accessors="true" singleton threadSafe{
 	 */
 	function getWidgetRenderArgs( required udf, required widget, required type ){
 		// get widget
-		var p = getWidget( name=arguments.widget, type=arguments.type );
+		var p = getWidget( name = arguments.widget, type = arguments.type );
 		return getMetadata( p[ udf ] );
 	}
 
@@ -424,6 +495,13 @@ component accessors="true" singleton threadSafe{
 	 * @path The path to check
 	 */
 	private query function getWidgetsFromPath( required path ){
-		return directoryList( arguments.path, false, "query", "*.cfc", "name asc" );
+		return directoryList(
+			arguments.path,
+			false,
+			"query",
+			"*.cfc",
+			"name asc"
+		);
 	}
+
 }

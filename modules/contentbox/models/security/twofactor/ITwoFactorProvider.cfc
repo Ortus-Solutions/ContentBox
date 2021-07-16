@@ -1,35 +1,35 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* This is the interface to needed to implement two-factor authentication methods for ContentBox
-*/
-interface{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * This is the interface to needed to implement two-factor authentication methods for ContentBox
+ */
+interface {
 
 	/**
-	* Get the internal name of a provider, used for registration, internal naming and more.
-	*/
+	 * Get the internal name of a provider, used for registration, internal naming and more.
+	 */
 	function getName();
 
 	/**
-	* Get the display name for the provider.  Used in all UI screens
-	*/
-    function getDisplayName();
-
-    /**
-     * Returns html to display to the user for required two-factor fields
-     */
-    function getAuthorSetupForm( required author );
+	 * Get the display name for the provider.  Used in all UI screens
+	 */
+	function getDisplayName();
 
 	/**
-	* Get the display help for the provider.  Used in the UI setup screens for the author
-	*/
-    function getAuthorSetupHelp( required author );
+	 * Returns html to display to the user for required two-factor fields
+	 */
+	function getAuthorSetupForm( required author );
 
 	/**
-	* Get the verification help for the provider.  Used in the UI verification screen.
-	*/
+	 * Get the display help for the provider.  Used in the UI setup screens for the author
+	 */
+	function getAuthorSetupHelp( required author );
+
+	/**
+	 * Get the verification help for the provider.  Used in the UI verification screen.
+	 */
 	function getVerificationHelp();
 
 	/**
