@@ -63,8 +63,8 @@ component extends="content" {
 
 		// Create preview version
 		prc.page.addNewContentVersion(
-			content = urlDecode( rc.content ),
-			author  = prc.oCurrentAuthor,
+			content   = urlDecode( rc.content ),
+			author    = prc.oCurrentAuthor,
 			isPreview = true
 		);
 

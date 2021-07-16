@@ -22,64 +22,89 @@ limitations under the License.
 ********************************************************************************
 * Service to handle menu items.
 */
-component extends="cborm.models.VirtualEntityService" accessors="true" singleton{  
-    
-    // DI
-    property name="wirebox" inject="wirebox";
-    
-    /**
-    * The providers struct holder
-    */
-    property name="providers" type="struct";  
+component
+	extends  ="cborm.models.VirtualEntityService"
+	accessors="true"
+	singleton
+{
 
-    /**
-    * Constructor
-    */
-    MenuItemService function init(){
-        // init it
-        super.init( entityName="cbMenuItem" );
-        variables.providers = {};
+	// DI
+	property name="wirebox" inject="wirebox";
 
-        return this;
-    }
+	/**
+	 * The providers struct holder
+	 */
+	property name="providers" type="struct";
 
-    /**
-    * Runs after constructor to complete DI
-    */
-    function onDIComplete(){
-        registerProvider( type="URL",       providerPath="contentbox.models.menu.providers.URLProvider" );
-        registerProvider( type="Content",   providerPath="contentbox.models.menu.providers.ContentProvider" );
-        registerProvider( type="JS",        providerPath="contentbox.models.menu.providers.JSProvider" );
-        registerProvider( type="Media",     providerPath="contentbox.models.menu.providers.MediaProvider" );
-        registerProvider( type="SubMenu",   providerPath="contentbox.models.menu.providers.SubMenuProvider" );
-        registerProvider( type="Free",      providerPath="contentbox.models.menu.providers.FreeProvider" );
-    }
+	/**
+	 * Constructor
+	 */
+	MenuItemService function init(){
+		// init it
+		super.init( entityName = "cbMenuItem" );
+		variables.providers = {};
 
-    /**
-     * Registers a provider with the service
-     * @type.hint The type of provider
-     * @providerPath.hint Logical path for getting instance of provider
-     */
-    public MenuItemService function registerProvider( required string type, required string providerPath ) {
-        variables.providers[ arguments.type ] = wirebox.getInstance( arguments.providerPath );
-        return this;
-    }
+		return this;
+	}
 
-    /**
-     * Unregisters a provider with the service
-     * @type.hint The type of provider
-     */
-    public MenuItemService function unRegisterProvider( required string type ) {
-        structDelete( variables.providers, arguments.type );
-        return this;
-    }
+	/**
+	 * Runs after constructor to complete DI
+	 */
+	function onDIComplete(){
+		registerProvider(
+			type         = "URL",
+			providerPath = "contentbox.models.menu.providers.URLProvider"
+		);
+		registerProvider(
+			type         = "Content",
+			providerPath = "contentbox.models.menu.providers.ContentProvider"
+		);
+		registerProvider(
+			type         = "JS",
+			providerPath = "contentbox.models.menu.providers.JSProvider"
+		);
+		registerProvider(
+			type         = "Media",
+			providerPath = "contentbox.models.menu.providers.MediaProvider"
+		);
+		registerProvider(
+			type         = "SubMenu",
+			providerPath = "contentbox.models.menu.providers.SubMenuProvider"
+		);
+		registerProvider(
+			type         = "Free",
+			providerPath = "contentbox.models.menu.providers.FreeProvider"
+		);
+	}
 
-    /**
-     * Retrieves a registered provider
-     * @type.hint The type of provider
-     */
-    public any function getProvider( required string type ) {
-        return variables.providers[ arguments.type ];
-    }
+	/**
+	 * Registers a provider with the service
+	 * @type.hint The type of provider
+	 * @providerPath.hint Logical path for getting instance of provider
+	 */
+	public MenuItemService function registerProvider(
+		required string type,
+		required string providerPath
+	){
+		variables.providers[ arguments.type ] = wirebox.getInstance( arguments.providerPath );
+		return this;
+	}
+
+	/**
+	 * Unregisters a provider with the service
+	 * @type.hint The type of provider
+	 */
+	public MenuItemService function unRegisterProvider( required string type ){
+		structDelete( variables.providers, arguments.type );
+		return this;
+	}
+
+	/**
+	 * Retrieves a registered provider
+	 * @type.hint The type of provider
+	 */
+	public any function getProvider( required string type ){
+		return variables.providers[ arguments.type ];
+	}
 
 }
