@@ -72,5 +72,3 @@
 		</cfif>
 	</div>
 </cfoutput>
-
-<script type="text/javascript">console.log( "Did it" );</script>
