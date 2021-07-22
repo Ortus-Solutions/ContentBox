@@ -475,6 +475,7 @@ component
 					);
 				}
 				deactivateModule( thisModule.getName() );
+				return false;
 			} )
 			.each( function( thisModule ){
 				// Module reference maps pointer
