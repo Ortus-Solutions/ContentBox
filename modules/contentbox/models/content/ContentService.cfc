@@ -689,9 +689,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			query: "
 				SELECT new map( content as content, count( comments.commentID ) AS commentCount )
 				FROM cbContent content JOIN content.comments comments
+				WHERE content.site.siteID = :siteID
 				GROUP BY content
 				ORDER BY count( comments.commentID ) DESC
 			",
+			params    : { siteID : arguments.siteID },
 			max       : arguments.max,
 			ignoreCase: true
 		)
