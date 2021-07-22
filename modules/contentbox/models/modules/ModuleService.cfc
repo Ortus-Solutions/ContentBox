@@ -474,7 +474,8 @@ component
 						"Orphaned module discovered: #thisModule.getName()#, deactiving it from the database"
 					);
 				}
-				deactivateModule( module.getName() );
+				deactivateModule( thisModule.getName() );
+				return false;
 			} )
 			.each( function( thisModule ){
 				// Module reference maps pointer
