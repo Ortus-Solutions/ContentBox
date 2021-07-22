@@ -29,30 +29,37 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 		name   ="name"
 		type   ="string"
 		default="";
+
 	property
 		name   ="version"
 		type   ="string"
 		default="";
+
 	property
 		name   ="description"
 		type   ="string"
 		default="";
+
 	property
 		name   ="author"
 		type   ="string"
 		default="";
+
 	property
 		name   ="authorURL"
 		type   ="string"
 		default="";
+
 	property
 		name   ="forgeBoxSlug"
 		type   ="string"
 		default="";
+
 	property
 		name   ="category"
 		type   ="string"
 		default="";
+
 	property
 		name   ="icon"
 		type   ="string"
@@ -75,6 +82,8 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 
 	/**
 	 * This is the main renderit method you will need to implement in concrete widgets
+	 *
+	 * @throws BaseClassException
 	 */
 	any function renderIt(){
 		throw(
@@ -85,6 +94,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 
 	/**
 	 * Get this widget's public methods'
+	 *
 	 * @return array
 	 */
 	array function getPublicMethods(){
