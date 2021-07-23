@@ -124,9 +124,14 @@ component {
 	 * pre insertion procedures
 	 */
 	void function preInsert(){
-		var now                = now();
-		variables.createdDate  = now;
-		variables.modifiedDate = now;
+		var now = now();
+		// prevent override of explicit stamps from imports
+		if ( isNull( variables.createdDate ) ) {
+			variables.createdDate = now;
+		}
+		if ( isNull( variables.modifiedDate ) ) {
+			variables.modifiedDate = now;
+		}
 	}
 
 	/**
