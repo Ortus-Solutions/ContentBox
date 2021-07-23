@@ -293,20 +293,10 @@ component {
 			}
 			case "json": {
 				data.content = dataMarshaller.marshallData(
-					data = oContent.getResponseMemento(),
+					data = oContent.getMemento( profile: "response" ),
 					type = "json"
 				);
 				data.contentType = "application/json";
-				data.isBinary    = false;
-				break;
-			}
-			case "xml": {
-				data.content = dataMarshaller.marshallData(
-					data        = oContent.getResponseMemento(),
-					type        = "xml",
-					xmlRootName = lCase( oContent.getContentType() )
-				);
-				data.contentType = "text/xml";
 				data.isBinary    = false;
 				break;
 			}

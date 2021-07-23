@@ -175,35 +175,6 @@ component
 	}
 
 	/**
-	 * Get a flat representation of this entry but for UI response format which
-	 * restricts the data being generated.
-	 * @slugCache Cache of slugs to prevent infinite recursions
-	 * @showComments Show comments in memento or not
-	 * @showCustomFields Show comments in memento or not
-	 * @showParent Show parent in memento or not
-	 * @showChildren Show children in memento or not
-	 * @showCategories Show categories in memento or not
-	 * @showRelatedContent Show related Content in memento or not
-	 */
-	struct function getResponseMemento(
-		required array slugCache   = [],
-		boolean showAuthor         = true,
-		boolean showComments       = true,
-		boolean showCustomFields   = true,
-		boolean showParent         = true,
-		boolean showChildren       = true,
-		boolean showCategories     = true,
-		boolean showRelatedContent = true
-	){
-		arguments.properties = [ "showInMenu" ];
-		var result           = super.getResponseMemento( argumentCollection = arguments );
-
-		result[ "excerpt" ] = renderExcerpt();
-
-		return result;
-	};
-
-	/**
 	 * Get the layout or if empty the default convention of "pages"
 	 */
 	function getLayoutWithDefault(){
@@ -238,6 +209,7 @@ component
 
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
+	 *
 	 * @author The author doing the cloning
 	 * @original The original content object that will be cloned into this content object
 	 * @originalService The ContentBox content service object

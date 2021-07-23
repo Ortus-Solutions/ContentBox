@@ -131,15 +131,12 @@ component extends="content" {
 
 		// Export Formats?
 		switch ( rc.format ) {
-			case "xml":
 			case "json": {
-				var result = [];
-				for ( var thisContent in prc.entries ) {
-					result.append( thisContent.getResponseMemento() );
-				}
 				event.renderData(
-					type        = rc.format,
-					data        = result,
+					type = rc.format,
+					data = prc.entries.map( function( thisEntry ){
+						return arguments.thisEntry.getMemento( profile: "response" )
+					} ),
 					xmlRootName = "entries"
 				);
 				break;
@@ -200,15 +197,12 @@ component extends="content" {
 
 		// Export Formats?
 		switch ( rc.format ) {
-			case "xml":
 			case "json": {
-				var result = [];
-				for ( var thisContent in prc.entries ) {
-					result.append( thisContent.getResponseMemento() );
-				}
 				event.renderData(
-					type        = rc.format,
-					data        = result,
+					type = rc.format,
+					data = prc.entries.map( function( thisEntry ){
+						return arguments.thisEntry.getMemento( profile: "response" )
+					} ),
 					xmlRootName = "entries"
 				);
 				break;

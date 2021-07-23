@@ -484,6 +484,32 @@ component
 		mappers      : {},
 		defaults     : { stats : {} },
 		profiles     : {
+			response : {
+				defaultIncludes : [
+					"categoriesArray:categories",
+					"contentID",
+					"contentType",
+					"createdDate",
+					"expireDate",
+					"featuredImage",
+					"featuredImageURL",
+					"HTMLDescription",
+					"HTMLKeywords",
+					"HTMLTitle",
+					"markup",
+					"modifiedDate",
+					"numberOfChildren",
+					"numberOfComments",
+					"parentSnapshot:parent",
+					"publishedDate",
+					"slug",
+					"title",
+					"renderedContent",
+					"renderedExcerpt",
+					"childrenSnapshot:children"
+				],
+				defaultExcludes : []
+			},
 			export : {
 				defaultIncludes : [
 					"allowComments",
@@ -993,144 +1019,6 @@ component
 	}
 
 	/**
-	 * Get a flat representation of this entry but for UI response format which
-	 * restricts the data being generated.
-	 * @slugCache Cache of slugs to prevent infinite recursions
-	 * @showComments Show comments in memento or not
-	 * @showCustomFields Show comments in memento or not
-	 * @showParent Show parent in memento or not
-	 * @showChildren Show children in memento or not
-	 * @showCategories Show categories in memento or not
-	 * @showRelatedContent Show related Content in memento or not
-	 * @excludes Excludes
-	 * @properties Additional properties to incorporate in the memento
-	 */
-	struct function getResponseMemento(
-		required array slugCache   = [],
-		boolean showAuthor         = true,
-		boolean showComments       = true,
-		boolean showCustomFields   = true,
-		boolean showParent         = true,
-		boolean showChildren       = true,
-		boolean showCategories     = true,
-		boolean showRelatedContent = true,
-		excludes                   = "",
-		array properties
-	){
-		var pList = [
-			"title",
-			"slug",
-			"allowComments",
-			"HTMLKeywords",
-			"HTMLDescription",
-			"HTMLTitle",
-			"featuredImageURL",
-			"contentType"
-		];
-		// Add incoming properties
-		if ( structKeyExists( arguments, "properties" ) ) {
-			pList.addAll( arguments.properties );
-		}
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Properties
-		result[ "content" ]       = renderContent();
-		result[ "createdDate" ]   = getDisplayCreatedDate();
-		result[ "publishedDate" ] = getDisplayPublishedDate();
-		result[ "expireDate" ]    = getDisplayExpireDate();
-
-		// Comments
-		if ( arguments.showComments && hasComment() ) {
-			result[ "comments" ] = [];
-			for ( var thisComment in variables.comments ) {
-				arrayAppend(
-					result[ "comments" ],
-					{
-						"content"     : thisComment.getContent(),
-						"createdDate" : thisComment.getDisplayCreatedDate(),
-						"authorURL"   : thisComment.getAuthorURL(),
-						"author"      : thisComment.getAuthor()
-					}
-				);
-			}
-		} else if ( arguments.showComments ) {
-			result[ "comments" ] = [];
-		}
-
-		// Custom Fields
-		if ( arguments.showCustomFields && hasCustomField() ) {
-			result[ "customfields" ] = getCustomFieldsAsStruct();
-		} else if ( arguments.showCustomFields ) {
-			result[ "customfields" ] = [];
-		}
-
-		// Parent
-		if ( arguments.showParent && hasParent() ) {
-			result[ "parent" ] = {
-				"slug"        : getParent().getSlug(),
-				"title"       : getParent().getTitle(),
-				"contentType" : getParent().getContentType()
-			};
-		}
-		// Children
-		if ( arguments.showChildren && hasChild() ) {
-			result[ "children" ] = [];
-			for ( var thisChild in variables.children ) {
-				arrayAppend(
-					result[ "children" ],
-					{
-						"slug"  : thisChild.getSlug(),
-						"title" : thisChild.getTitle()
-					}
-				);
-			}
-		} else if ( arguments.showChildren ) {
-			result[ "children" ] = [];
-		}
-		// Categories
-		if ( arguments.showCategories && hasCategories() ) {
-			result[ "categories" ] = [];
-			for ( var thisCategory in variables.categories ) {
-				arrayAppend(
-					result[ "categories" ],
-					{
-						"category" : thisCategory.getCategory(),
-						"slug"     : thisCategory.getSlug()
-					}
-				);
-			}
-		} else if ( arguments.showCategories ) {
-			result[ "categories" ] = [];
-		}
-
-		// Related Content
-		if (
-			arguments.showRelatedContent && hasRelatedContent() && !arrayFindNoCase(
-				arguments.slugCache,
-				getSlug()
-			)
-		) {
-			result[ "relatedcontent" ] = [];
-			// add slug to cache
-			arrayAppend( arguments.slugCache, getSlug() );
-			for ( var content in variables.relatedContent ) {
-				arrayAppend(
-					result[ "relatedcontent" ],
-					{
-						"slug"        : content.getSlug(),
-						"title"       : content.getTitle(),
-						"contentType" : content.getContentType()
-					}
-				);
-			}
-		} else if ( arguments.showRelatedContent ) {
-			result[ "relatedcontent" ] = [];
-		}
-
-		return result;
-	}
-
-	/**
 	 * Verify and rotate maximum content versions
 	 */
 	private function maxContentVersionChecks(){
@@ -1622,6 +1510,16 @@ component
 	 */
 	any function getRenderedContent(){
 		return this.renderContent();
+	}
+
+	/**
+	 * Shortcut to get the rendered excerpt
+	 */
+	any function getRenderedExcerpt(){
+		if ( !isNull( variables.excerpt ) ) {
+			return this.renderExcerpt();
+		}
+		return "";
 	}
 
 	/**
