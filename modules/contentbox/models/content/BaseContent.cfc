@@ -20,43 +20,23 @@ component
 	 ********************************************************************* */
 
 	property
-		name      ="wirebox"
-		inject    ="wirebox"
-		persistent="false";
-
-	property
-		name      ="cachebox"
-		inject    ="cachebox"
-		persistent="false";
-
-	property
-		name      ="settingService"
-		inject    ="id:settingService@cb"
-		persistent="false";
-
-	property
-		name      ="interceptorService"
-		inject    ="coldbox:interceptorService"
-		persistent="false";
-
-	property
-		name      ="customFieldService"
-		inject    ="customFieldService@cb"
-		persistent="false";
-
-	property
 		name      ="categoryService"
-		inject    ="categoryService@cb"
+		inject    ="categoryService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentService"
-		inject    ="contentService@cb"
+		inject    ="contentService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentVersionService"
-		inject    ="contentVersionService@cb"
+		inject    ="contentVersionService@contentbox"
+		persistent="false";
+
+	property
+		name      ="customFieldService"
+		inject    ="customFieldService@contentbox"
 		persistent="false";
 
 	property
@@ -67,6 +47,16 @@ component
 	property
 		name      ="JSONPrettyPrint"
 		inject    ="JSONPrettyPrint@JSONPrettyPrint"
+		persistent="false";
+
+	property
+		name      ="contentboxSettings"
+		inject    ="coldbox:moduleSettings:contentbox"
+		persistent="false";
+
+	property
+		name      ="settingService"
+		inject    ="id:settingService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -596,6 +586,17 @@ component
 		variables.renderedContent        = "";
 		return this;
 	}
+
+	/**
+	 * Prepare the instance for usage
+	 */
+	function onDIComplete(){
+		// Load up content helpers
+		variables.contentboxSettings.contentHelpers.each( function( thisHelper ){
+			includeMixin( arguments.thisHelper );
+		} );
+	}
+
 
 	/**
 	 * Utility method to get a snapshot of this content object

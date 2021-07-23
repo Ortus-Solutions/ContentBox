@@ -8,6 +8,34 @@
  */
 component {
 
+	/* *********************************************************************
+	 **						GLOBAL DI
+	 ********************************************************************* */
+
+	property
+		name      ="coldbox"
+		inject    ="coldbox"
+		persistent="false";
+
+	property
+		name      ="cachebox"
+		inject    ="cachebox"
+		persistent="false";
+
+	property
+		name      ="interceptorService"
+		inject    ="coldbox:interceptorService"
+		persistent="false";
+
+	property
+		name      ="wirebox"
+		inject    ="wirebox"
+		persistent="false";
+
+	/* *********************************************************************
+	 **						CONCRETE PROPERTIES
+	 ********************************************************************* */
+
 	// PK Pointer
 	this.pk          = "PLEASE_SELECT_ONE";
 	// Constraints Default
@@ -145,6 +173,61 @@ component {
 	 */
 	boolean function isLoaded(){
 		return ( !structKeyExists( variables, this.pk ) OR !len( variables[ this.pk ] ) ? false : true );
+	}
+
+	/**
+	 * Pass in a helper path and load it into this object as a mixin
+	 *
+	 * @helper The path to the helper to load.
+	 *
+	 * @throws ContentHelperNotFoundException - When the passed helper is not found
+	 */
+	function includeMixin( required helper ){
+		// Init the mixin location and caches reference
+		var defaultCache     = variables.cachebox.getCache( "default" );
+		var mixinLocationKey = hash( variables.coldbox.getAppHash() & arguments.helper );
+
+		var targetLocation = defaultCache.getOrSet(
+			// Key
+			"contentObjectHelper-#mixinLocationKey#",
+			// Producer
+			function(){
+				var appMapping      = variables.coldbox.getSetting( "AppMapping" );
+				var UDFFullPath     = expandPath( helper );
+				var UDFRelativePath = expandPath( "/" & appMapping & "/" & helper );
+
+				// Relative Checks First
+				if ( fileExists( UDFRelativePath ) ) {
+					targetLocation = "/" & appMapping & "/" & helper;
+				}
+				// checks if no .cfc or .cfm where sent
+				else if ( fileExists( UDFRelativePath & ".cfc" ) ) {
+					targetLocation = "/" & appMapping & "/" & helper & ".cfc";
+				} else if ( fileExists( UDFRelativePath & ".cfm" ) ) {
+					targetLocation = "/" & appMapping & "/" & helper & ".cfm";
+				} else if ( fileExists( UDFFullPath ) ) {
+					targetLocation = "#helper#";
+				} else if ( fileExists( UDFFullPath & ".cfc" ) ) {
+					targetLocation = "#helper#.cfc";
+				} else if ( fileExists( UDFFullPath & ".cfm" ) ) {
+					targetLocation = "#helper#.cfm";
+				} else {
+					throw(
+						message = "Error loading content helper: #helper#",
+						detail  = "Please make sure you verify the file location.",
+						type    = "ContentHelperNotFoundException"
+					);
+				}
+				return targetLocation;
+			},
+			// Timeout: 1 week
+			10080
+		);
+
+		// Include the helper
+		include targetLocation;
+
+		return this;
 	}
 
 	/**
