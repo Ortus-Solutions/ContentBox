@@ -20,12 +20,12 @@ component
 
 	property
 		name      ="menuService"
-		inject    ="menuService@cb"
+		inject    ="menuService@contentbox"
 		persistent="false";
 
 	property
 		name      ="menuItemService"
-		inject    ="menuItemService@cb"
+		inject    ="menuItemService@contentbox"
 		persistent="false";
 
 	property

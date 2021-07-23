@@ -12,7 +12,7 @@ component
 {
 
 	// Dependecnies
-	property name="mediaService" inject="mediaService@cb";
+	property name="mediaService" inject="mediaService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="requestService" inject="coldbox:requestService";
 

@@ -8,7 +8,7 @@
 component extends="baseContentHandler" {
 
 	// Dependencies
-	property name="entryService" inject="entryService@cb";
+	property name="entryService" inject="entryService@contentbox";
 	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
@@ -81,7 +81,7 @@ component extends="baseContentHandler" {
 			.paramValue( "showAll", false );
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:contentPaginate(@page@)";
 
@@ -486,7 +486,7 @@ component extends="baseContentHandler" {
 		prc.xehEntryHistory   = "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging object
-		prc.pager_oPaging    = getInstance( "Paging@cb" );
+		prc.pager_oPaging    = getInstance( "Paging@contentbox" );
 		prc.pager_paging     = prc.pager_oPaging.getBoundaries();
 		prc.pager_pagingLink = "javascript:pagerLink(@page@)";
 		prc.pager_pagination = arguments.pagination;
@@ -534,7 +534,7 @@ component extends="baseContentHandler" {
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.entries.editorSelector";
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:pagerLink(@page@)";
 

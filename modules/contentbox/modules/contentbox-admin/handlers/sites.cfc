@@ -4,9 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="siteService" inject="siteService@cb";
-	property name="themeService" inject="themeService@cb";
-	property name="pageService" inject="pageService@cb";
+	property name="siteService" inject="siteService@contentbox";
+	property name="themeService" inject="themeService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
 
 	/**
 	 * Pre handler

@@ -9,7 +9,7 @@
 component singleton {
 
 	// Dependencies
-	property name="securityService" inject="securityService@cb";
+	property name="securityService" inject="securityService@contentbox";
 
 	SecurityValidator function init(){
 		return this;

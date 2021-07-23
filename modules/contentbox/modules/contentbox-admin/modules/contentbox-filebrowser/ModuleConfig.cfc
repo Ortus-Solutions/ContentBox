@@ -134,7 +134,7 @@ component {
 	 */
 	function onLoad(){
 		// Reset the media root setting to the one loaded in ContentBox Settings.
-		var mediaService       = wirebox.getInstance( "MediaService@cb" );
+		var mediaService       = wirebox.getInstance( "MediaService@contentbox" );
 		settings.directoryRoot = mediaService.getCoreMediaRoot( absolute = true );
 	}
 

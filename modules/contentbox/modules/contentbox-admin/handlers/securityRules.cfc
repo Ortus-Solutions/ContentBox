@@ -4,9 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="ruleService" inject="securityRuleService@cb";
-	property name="permissionService" inject="permissionService@cb";
-	property name="roleService" inject="roleService@cb";
+	property name="ruleService" inject="securityRuleService@contentbox";
+	property name="permissionService" inject="permissionService@contentbox";
+	property name="roleService" inject="roleService@contentbox";
 	property name="securityInterceptor" inject="coldbox:interceptor:cbsecurity@global";
 
 	// index

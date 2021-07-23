@@ -15,8 +15,8 @@ component
 	 **                      DI
 	 ********************************************************************* */
 
-	property name="contentService" inject="id:contentService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="contentService" inject="id:contentService@contentbox";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
 	property name="requestService" inject="coldbox:requestService";
 
 	/* *********************************************************************

@@ -8,11 +8,11 @@
 component extends="content" {
 
 	// DI
-	property name="pageService" inject="pageService@cb";
-	property name="searchService" inject="SearchService@cb";
-	property name="securityService" inject="securityService@cb";
-	property name="mobileDetector" inject="mobileDetector@cb";
-	property name="themeService" inject="themeService@cb";
+	property name="pageService" inject="pageService@contentbox";
+	property name="searchService" inject="SearchService@contentbox";
+	property name="securityService" inject="securityService@contentbox";
+	property name="mobileDetector" inject="mobileDetector@contentbox";
+	property name="themeService" inject="themeService@contentbox";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -234,7 +234,7 @@ component extends="content" {
 		rc.q = htmlEditFormat( trim( rc.q ) );
 
 		// prepare paging object
-		prc.oPaging          = getInstance( "paging@cb" );
+		prc.oPaging          = getInstance( "paging@contentbox" );
 		prc.pagingBoundaries = prc.oPaging.getBoundaries(
 			pagingMaxRows: prc.cbSettings.cb_search_maxResults
 		);
@@ -251,7 +251,7 @@ component extends="content" {
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
-			prc.searchResults        = getInstance( "SearchResults@cb" );
+			prc.searchResults        = getInstance( "SearchResults@contentbox" );
 			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>
 ";
 		}

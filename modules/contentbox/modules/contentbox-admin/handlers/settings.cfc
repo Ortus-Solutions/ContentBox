@@ -8,16 +8,16 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="settingsService" inject="settingService@cb";
-	property name="siteService" inject="siteService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="CBHelper" inject="CBHelper@cb";
-	property name="editorService" inject="editorService@cb";
-	property name="mediaService" inject="mediaService@cb";
-	property name="LoginTrackerService" inject="LoginTrackerService@cb";
+	property name="settingsService" inject="settingService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="CBHelper" inject="CBHelper@contentbox";
+	property name="editorService" inject="editorService@contentbox";
+	property name="mediaService" inject="mediaService@contentbox";
+	property name="LoginTrackerService" inject="LoginTrackerService@contentbox";
 	property name="mailService" inject="mailservice@cbMailservices";
 	property name="markdownEditor" inject="markdownEditor@contentbox-markdowneditor";
-	property name="twoFactorService" inject="twoFactorService@cb";
+	property name="twoFactorService" inject="twoFactorService@contentbox";
 
 	/**
 	 * Settings manager
@@ -150,7 +150,7 @@ component extends="baseHandler" {
 		event.paramValue( "viewAll", false );
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = event.buildLink( "#prc.xehRawSettings#.page.@page@?" );
 		prc.pagingLink = "javascript:settingsPaginate(@page@)";

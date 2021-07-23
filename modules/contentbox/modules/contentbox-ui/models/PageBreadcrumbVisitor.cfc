@@ -8,7 +8,7 @@
 component singleton {
 
 	// DI
-	property name="CBHelper" inject="CBHelper@cb";
+	property name="CBHelper" inject="CBHelper@contentbox";
 
 	/**
 	 * Constructor

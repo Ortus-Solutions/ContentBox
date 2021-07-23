@@ -17,7 +17,7 @@ component
 	/**
 	 * Constructor
 	 * @coldbox.inject coldbox
-	 * @settingService.inject settingService@cb
+	 * @settingService.inject settingService@contentbox
 	 * @html.inject HTMLHelper@coldbox
 	 */
 	function init(

@@ -5,9 +5,9 @@ component extends="coldbox.system.Interceptor" {
 
 	// DI Injections
 	property name="cachebox" inject="cachebox";
-	property name="settingService" inject="settingService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentService" inject="contentService@cb";
+	property name="settingService" inject="settingService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentService" inject="contentService@contentbox";
 
 	/**
 	 * Listen when comments are posted.

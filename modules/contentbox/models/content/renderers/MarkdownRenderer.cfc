@@ -9,7 +9,7 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="cb" inject="id:CBHelper@cb";
+	property name="cb" inject="id:CBHelper@contentbox";
 	property name="markdown" inject="Processor@cbmarkdown";
 
 	// MARKUP EDITOR

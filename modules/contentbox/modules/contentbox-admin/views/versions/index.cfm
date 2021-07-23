@@ -63,7 +63,7 @@
 						<th class="text-right">Creator:</th>
 						<td>
 							<a href="mailto:#prc.content.getCreatorEmail()#">
-								#getInstance( "Avatar@cb" ).renderAvatar(
+								#getInstance( "Avatar@contentbox" ).renderAvatar(
 									email	= prc.content.getCreatorEmail(),
 									size	= "20",
 									class	= "img img-circle"
@@ -94,7 +94,7 @@
 						<th class="text-right">Last Edit:</th>
 						<td>
 							<a href="mailto:#prc.content.getAuthorEmail()#">
-								#getInstance( "Avatar@cb" ).renderAvatar(
+								#getInstance( "Avatar@contentbox" ).renderAvatar(
 									email	= prc.content.getAuthorEmail(),
 									size	= "20",
 									class	= "img img-circle"

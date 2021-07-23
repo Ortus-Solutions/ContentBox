@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="commentService" inject="commentService@cb";
-	property name="settingsService" inject="settingService@cb";
+	property name="commentService" inject="commentService@contentbox";
+	property name="settingsService" inject="settingService@contentbox";
 
 	// Public properties
 	this.preHandler_except = "pager";
@@ -44,7 +44,7 @@ component extends="baseHandler" {
 		event.paramValue( "isFiltering", false );
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = event.buildLink( "#prc.xehComments#.page.@page@?" );
 
@@ -341,7 +341,7 @@ component extends="baseHandler" {
 		prc.xehCommentRemoveAllModerated = "#prc.cbAdminEntryPoint#.comments.removeAllModerated";
 
 		// prepare paging object
-		prc.commentPager_oPaging    = getInstance( "Paging@cb" );
+		prc.commentPager_oPaging    = getInstance( "Paging@contentbox" );
 		prc.commentPager_paging     = prc.commentPager_oPaging.getBoundaries();
 		prc.commentPager_pagingLink = "javascript:commentPagerLink(@page@)";
 		prc.commentPager_pagination = arguments.pagination;

@@ -10,8 +10,8 @@
 component accessors="true" singleton {
 
 	// DI
-	property name="contentService" inject="contentService@cb";
-	property name="cb" inject="cbHelper@cb";
+	property name="contentService" inject="contentService@contentbox";
+	property name="cb" inject="cbHelper@contentbox";
 	property name="wirebox" inject="wirebox";
 
 	/**
@@ -38,7 +38,7 @@ component accessors="true" singleton {
 		string siteID  = ""
 	){
 		// get new search results object
-		var searchResults = variables.wirebox.getInstance( "SearchResults@cb" );
+		var searchResults = variables.wirebox.getInstance( "SearchResults@contentbox" );
 		var sTime         = getTickCount();
 
 		try {

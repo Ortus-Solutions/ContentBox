@@ -8,17 +8,17 @@
 component accessors="true" {
 
 	// DI
-	property name="siteService" inject="siteService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="settingService" inject="settingService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="roleService" inject="roleService@cb";
-	property name="permissionService" inject="permissionService@cb";
-	property name="securityRuleService" inject="securityRuleService@cb";
+	property name="siteService" inject="siteService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="settingService" inject="settingService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="roleService" inject="roleService@contentbox";
+	property name="permissionService" inject="permissionService@contentbox";
+	property name="securityRuleService" inject="securityRuleService@contentbox";
 	property name="appPath" inject="coldbox:setting:applicationPath";
 	property name="coldbox" inject="coldbox";
 

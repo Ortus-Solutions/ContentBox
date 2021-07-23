@@ -8,7 +8,7 @@
 component extends="ContentService" singleton {
 
 	// Inject generic content service
-	property name="contentService" inject="id:ContentService@cb";
+	property name="contentService" inject="id:ContentService@contentbox";
 
 	/**
 	 * Constructor

@@ -8,7 +8,7 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="widgetService" inject="widgetService@cb";
+	property name="widgetService" inject="widgetService@contentbox";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){

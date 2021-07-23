@@ -8,11 +8,11 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="contentService" inject="contentService@cb";
-	property name="statsService" inject="statsService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="CBHelper" inject="CBHelper@cb";
+	property name="contentService" inject="contentService@contentbox";
+	property name="statsService" inject="statsService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="CBHelper" inject="CBHelper@contentbox";
 
 	/**
 	 * Quick Content Preview from editors
@@ -156,7 +156,7 @@ component extends="baseHandler" {
 		prc.xehRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:pagerLink( @page@, '#rc.contentType#' )";
 

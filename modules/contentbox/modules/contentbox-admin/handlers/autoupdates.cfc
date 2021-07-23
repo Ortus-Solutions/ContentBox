@@ -64,7 +64,7 @@ component extends="baseHandler" {
 
 		// Check for forgebox item
 		var forgeboxsdk   = getModel( "ForgeBox@forgeboxsdk" );
-		var updateService = getModel( "UpdateService@cb" );
+		var updateService = getModel( "UpdateService@contentbox" );
 
 		try {
 			prc.entryData    = forgeboxsdk.getEntry( slug = rc.channel );
@@ -108,7 +108,9 @@ component extends="baseHandler" {
 
 		try {
 			// Apply Update
-			var updateResults = getModel( "UpdateService@cb" ).applyUpdateFromURL( rc.downloadURL );
+			var updateResults = getModel( "UpdateService@contentbox" ).applyUpdateFromURL(
+				rc.downloadURL
+			);
 			if ( updateResults.error ) {
 				cbMessagebox.error( "Update Failed! Please check the logs for more information" );
 			} else {
@@ -139,7 +141,7 @@ component extends="baseHandler" {
 			// Upload File
 			try {
 				// Apply Update
-				var updateResults = getModel( "UpdateService@cb" ).applyUpdateFromUpload(
+				var updateResults = getModel( "UpdateService@contentbox" ).applyUpdateFromUpload(
 					"filePatch"
 				);
 				if ( updateResults.error ) {

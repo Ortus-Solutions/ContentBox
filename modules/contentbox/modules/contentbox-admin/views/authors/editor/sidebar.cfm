@@ -7,7 +7,7 @@
 
 				<!--- Big Profile Picture --->
 				<div class="text-center mb20">
-					#getInstance( "Avatar@cb" ).renderAvatar(
+					#getInstance( "Avatar@contentbox" ).renderAvatar(
 						email = prc.author.getEmail(),
 						size  = "100",
 						class = "img img-circle mb10"

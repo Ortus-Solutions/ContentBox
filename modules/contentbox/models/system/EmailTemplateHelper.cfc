@@ -8,7 +8,7 @@
 component singleton {
 
 	// DI
-	property name="avatar" inject="Avatar@cb";
+	property name="avatar" inject="Avatar@contentbox";
 
 	/**
 	 *  Constructor

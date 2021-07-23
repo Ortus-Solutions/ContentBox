@@ -16,11 +16,11 @@ component {
 
 	// DI
 	property name="log" inject="logbox:logger:{this}";
-	property name="settingService" inject="settingService@cb";
-	property name="securityService" inject="securityService@cb";
-	property name="siteService" inject="siteService@cb";
+	property name="settingService" inject="settingService@contentbox";
+	property name="securityService" inject="securityService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
 	property name="renderer" inject="coldbox:renderer";
-	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
 
 	/**
 	 * Constructor

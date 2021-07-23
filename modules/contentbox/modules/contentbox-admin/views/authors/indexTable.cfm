@@ -28,7 +28,7 @@
 			</td>
 			<td class="pb5 pt5">
 				<div class="pull-left">
-					#getInstance( "Avatar@cb" )
+					#getInstance( "Avatar@contentbox" )
 						.renderAvatar(
 							email = author.getEmail(),
 							size  = "40",

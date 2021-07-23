@@ -9,7 +9,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Security Rule Services", function(){
 			beforeEach( function( currentSpec ){
-				model = prepareMock( getInstance( "SecurityRuleService@cb" ) );
+				model = prepareMock( getInstance( "SecurityRuleService@contentbox" ) );
 			} );
 
 			it( "can get max orders", function(){

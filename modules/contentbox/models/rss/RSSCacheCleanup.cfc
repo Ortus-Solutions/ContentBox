@@ -26,17 +26,17 @@ component extends="coldbox.system.Interceptor" {
 
 	// Listen when entries are saved
 	function cbadmin_postEntrySave( event, data ){
-		getInstance( "rssService@cb" ).clearCaches();
+		getInstance( "rssService@contentbox" ).clearCaches();
 	}
 
 	// Listen when entries are removed
 	function cbadmin_postEntryRemove( event, data ){
-		getInstance( "rssService@cb" ).clearCaches();
+		getInstance( "rssService@contentbox" ).clearCaches();
 	}
 
 	// Listen when comments are made
 	function cbui_onCommentPost( event, data ){
-		getInstance( "rssService@cb" ).clearCaches(
+		getInstance( "rssService@contentbox" ).clearCaches(
 			comments = true,
 			slug     = arguments.data.comment.getRelatedContent().getSlug()
 		);

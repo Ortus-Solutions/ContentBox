@@ -8,22 +8,22 @@
 component extends="cborm.models.VirtualEntityService" singleton {
 
 	// DI
-	property name="settingService" inject="id:settingService@cb";
+	property name="settingService" inject="id:settingService@contentbox";
 	property name="cacheBox" inject="cachebox";
 	property name="log" inject="logbox:logger:{this}";
-	property name="customFieldService" inject="customFieldService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentVersionService" inject="contentVersionService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="systemUtil" inject="SystemUtil@cb";
-	property name="statsService" inject="statsService@cb";
-	property name="dateUtil" inject="DateUtil@cb";
-	property name="commentSubscriptionService" inject="CommentSubscriptionService@cb";
-	property name="subscriberService" inject="subscriberService@cb";
+	property name="customFieldService" inject="customFieldService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentVersionService" inject="contentVersionService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="systemUtil" inject="SystemUtil@contentbox";
+	property name="statsService" inject="statsService@contentbox";
+	property name="dateUtil" inject="DateUtil@contentbox";
+	property name="commentSubscriptionService" inject="CommentSubscriptionService@contentbox";
+	property name="subscriberService" inject="subscriberService@contentbox";
 	property name="asyncManager" inject="coldbox:asyncManager";
 
 	/**
@@ -770,7 +770,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			importLog.append( arguments.message & "<br>" );
 		};
 
-		var siteService = getWireBox().getInstance( "siteService@cb" );
+		var siteService = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {

@@ -1,4 +1,4 @@
-<cfset siteService = getInstance( "siteService@cb" )>
+<cfset siteService = getInstance( "siteService@contentbox" )>
 <cfset defaultSite = siteService.getDefaultSite()>
 <!DOCTYPE html>
 <html lang="en">

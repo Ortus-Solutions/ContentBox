@@ -24,7 +24,7 @@ component extends="tests.resources.BaseTest" {
 		describe( "DB Search Adapter", function(){
 			beforeEach( function( currentSpec ){
 				setup();
-				model = getInstance( "DBSearch@cb" );
+				model = getInstance( "DBSearch@contentbox" );
 			} );
 
 			it( "can do search with no results", function(){

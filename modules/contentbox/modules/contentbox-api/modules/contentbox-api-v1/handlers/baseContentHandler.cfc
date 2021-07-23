@@ -4,10 +4,10 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="authorService" inject="authorService@cb";
-	property name="contentService" inject="ContentService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="customFieldService" inject="customFieldService@cb";
+	property name="authorService" inject="authorService@contentbox";
+	property name="contentService" inject="ContentService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="customFieldService" inject="customFieldService@contentbox";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	// The name of the method to use for save persistence on the ORM service

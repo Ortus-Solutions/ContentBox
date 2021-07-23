@@ -23,7 +23,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Content Version Service", function(){
 			beforeEach( function( currentSpec ){
-				model = getInstance( "ContentVersionService@cb" );
+				model = getInstance( "ContentVersionService@contentbox" );
 			} );
 
 			it( "can find related versions", function(){

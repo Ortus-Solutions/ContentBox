@@ -13,8 +13,8 @@ component
 
 	// DI
 	property name="renderer" inject="coldbox:renderer";
-	property name="menuItemService" inject="menuItemService@cb";
-	property name="dateUtil" inject="DateUtil@cb";
+	property name="menuItemService" inject="menuItemService@contentbox";
+	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
@@ -174,7 +174,7 @@ component
 		required importLog,
 		site
 	){
-		var siteService = getWireBox().getInstance( "siteService@cb" );
+		var siteService = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {

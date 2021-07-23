@@ -26,7 +26,7 @@
 					<legend><i class="far fa-eye fa-lg"></i> Details</legend>
 
 						<div class="form-group pull-right">
-							#getInstance( "Avatar@cb" ).renderAvatar(
+							#getInstance( "Avatar@contentbox" ).renderAvatar(
 								email=rc.comment.getAuthorEmail(),
 								class="img-circle"
 							)#

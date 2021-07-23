@@ -17,12 +17,12 @@ component
 	property name="requestStorage" inject="requestStorage@cbStorages";
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
-	property name="settingService" inject="provider:settingService@cb";
-	property name="categoryService" inject="provider:categoryService@cb";
-	property name="contentService" inject="provider:contentService@cb";
-	property name="menuService" inject="provider:menuService@cb";
-	property name="themeService" inject="provider:themeService@cb";
-	property name="mediaService" inject="provider:mediaService@cb";
+	property name="settingService" inject="provider:settingService@contentbox";
+	property name="categoryService" inject="provider:categoryService@contentbox";
+	property name="contentService" inject="provider:contentService@contentbox";
+	property name="menuService" inject="provider:menuService@contentbox";
+	property name="themeService" inject="provider:themeService@contentbox";
+	property name="mediaService" inject="provider:mediaService@contentbox";
 
 	/**
 	 * Constructor
@@ -534,7 +534,7 @@ component
 					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "menuService@cb" )
+					.getInstance( "menuService@contentbox" )
 					.importFromData(
 						importData: siteData.menus,
 						override  : arguments.override,
@@ -555,7 +555,7 @@ component
 					"+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "entryService@cb" )
+					.getInstance( "entryService@contentbox" )
 					.importFromData(
 						importData: siteData.entries,
 						override  : arguments.override,
@@ -575,7 +575,7 @@ component
 					"+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "pageService@cb" )
+					.getInstance( "pageService@contentbox" )
 					.importFromData(
 						importData: siteData.pages,
 						override  : arguments.override,
@@ -596,7 +596,7 @@ component
 					"+ Importing contentStore (#arrayLen( siteData.contentStore )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "contentStoreService@cb" )
+					.getInstance( "contentStoreService@contentbox" )
 					.importFromData(
 						importData: siteData.contentStore,
 						override  : arguments.override,

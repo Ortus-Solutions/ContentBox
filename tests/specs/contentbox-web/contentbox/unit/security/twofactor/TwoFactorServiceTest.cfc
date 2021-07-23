@@ -24,7 +24,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Two Factor Services", function(){
 			beforeEach( function( currentSpec ){
-				model        = prepareMock( getInstance( "TwoFactorService@cb" ) );
+				model        = prepareMock( getInstance( "TwoFactorService@contentbox" ) );
 				mockProvider = createStub(
 					implements = "contentbox.models.security.twofactor.ITwoFactorProvider"
 				).$( "getName", "email" )
@@ -88,7 +88,7 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can send provider challenges", function(){
-				var thisUser = getInstance( "AuthorService@cb" ).findByUsername( "lmajano" );
+				var thisUser = getInstance( "AuthorService@contentbox" ).findByUsername( "lmajano" );
 				var results  = { error : false, messages : "message sent" };
 				mockProvider.$( "sendChallenge", results );
 				expect( model.sendChallenge( thisUser ) ).toBe( results );
@@ -96,7 +96,7 @@ component extends="tests.resources.BaseTest" {
 
 			story( "I can challenge for two factor authentication with trusted device features", function(){
 				beforeEach( function(){
-					thisUser = getInstance( "AuthorService@cb" ).findByUsername( "lmajano" );
+					thisUser = getInstance( "AuthorService@contentbox" ).findByUsername( "lmajano" );
 					model.registerProvider( mockProvider );
 				} );
 				given( "A global force and no trusted device", function(){

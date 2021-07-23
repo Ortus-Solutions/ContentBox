@@ -10,7 +10,7 @@
 component extends="coldbox.system.EventHandler" {
 
 	// Global Used DI
-	property name="settingService" inject="settingService@cb";
+	property name="settingService" inject="settingService@contentbox";
 	property name="cbMessagebox" inject="messagebox@cbmessagebox";
 
 	// Pseudo "constants" used in API Response/Method parsing
@@ -73,7 +73,7 @@ component extends="coldbox.system.EventHandler" {
 			// start a resource timer
 			var stime    = getTickCount();
 			// prepare our response object
-			prc.response = getInstance( "Response@cb" );
+			prc.response = getInstance( "Response@contentbox" );
 			// prepare argument execution
 			var args     = {
 				event : arguments.event,
@@ -178,7 +178,7 @@ component extends="coldbox.system.EventHandler" {
 
 		// Verify response exists, else create one
 		if ( !structKeyExists( prc, "response" ) ) {
-			prc.response = getInstance( "Response@cb" );
+			prc.response = getInstance( "Response@contentbox" );
 		}
 
 		// Setup General Error Response
@@ -215,7 +215,7 @@ component extends="coldbox.system.EventHandler" {
 			getHTTPRequestData()
 		);
 		// Setup Response
-		prc.response = getInstance( "Response@cb" )
+		prc.response = getInstance( "Response@contentbox" )
 			.setError( true )
 			.addMessage(
 				"InvalidHTTPMethod Execution of (#arguments.faultAction#): #event.getHTTPMethod()#"
@@ -244,7 +244,7 @@ component extends="coldbox.system.EventHandler" {
 			getHTTPRequestData()
 		);
 		// Setup Response
-		prc.response = getInstance( "Response@cb" )
+		prc.response = getInstance( "Response@contentbox" )
 			.setError( true )
 			.addMessage( "Action '#arguments.missingAction#' could not be found" )
 			.setStatusCode( STATUS.NOT_ALLOWED )
@@ -268,7 +268,7 @@ component extends="coldbox.system.EventHandler" {
 	 **/
 	private function routeNotFound( event, rc, prc ){
 		if ( !structKeyExists( prc, "response" ) ) {
-			prc.response = getInstance( "Response@cb" );
+			prc.response = getInstance( "Response@contentbox" );
 		}
 
 		prc.response
@@ -287,7 +287,7 @@ component extends="coldbox.system.EventHandler" {
 		prc   = getRequestCollection( private = true )
 	){
 		if ( !structKeyExists( prc, "response" ) ) {
-			prc.response = getInstance( "Response@cb" );
+			prc.response = getInstance( "Response@contentbox" );
 		}
 
 		prc.response
@@ -307,7 +307,7 @@ component extends="coldbox.system.EventHandler" {
 		abort = false
 	){
 		if ( !structKeyExists( prc, "response" ) ) {
-			prc.response = getInstance( "Response@cb" );
+			prc.response = getInstance( "Response@contentbox" );
 		}
 
 		log.warn( "Invalid Authentication", getHTTPRequestData() );
@@ -329,7 +329,7 @@ component extends="coldbox.system.EventHandler" {
 		abort = false
 	){
 		if ( !structKeyExists( prc, "response" ) ) {
-			prc.response = getInstance( "Response@cb" );
+			prc.response = getInstance( "Response@contentbox" );
 		}
 
 		log.warn( "Authorization Failure", getHTTPRequestData() );

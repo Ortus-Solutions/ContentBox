@@ -58,7 +58,7 @@ component hint="My Module Configuration" {
 	 */
 	function onLoad(){
 		// Let's add ourselves to the main menu in the Modules section
-		var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
+		var menuService = controller.getWireBox().getInstance( "AdminMenuService@contentbox" );
 		// Add Menu Contribution
 		menuService.addSubMenu(
 			topMenu = menuService.MODULES,
@@ -79,7 +79,7 @@ component hint="My Module Configuration" {
 	 */
 	function onUnload(){
 		// Let's remove ourselves to the main menu in the Modules section
-		var menuService = controller.getWireBox().getInstance( "AdminMenuService@cb" );
+		var menuService = controller.getWireBox().getInstance( "AdminMenuService@contentbox" );
 		// Remove Menu Contribution
 		menuService.removeSubMenu( topMenu = menuService.MODULES, name = "HelloContentBox" );
 	}

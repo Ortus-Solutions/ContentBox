@@ -8,18 +8,18 @@
 component {
 
 	// DI
-	property name="authorService" inject="id:authorService@cb";
-	property name="categoryService" inject="id:categoryService@cb";
-	property name="contentService" inject="id:contentService@cb";
-	property name="commentService" inject="id:commentService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
-	property name="rssService" inject="id:rssService@cb";
-	property name="themeService" inject="id:themeService@cb";
+	property name="authorService" inject="id:authorService@contentbox";
+	property name="categoryService" inject="id:categoryService@contentbox";
+	property name="contentService" inject="id:contentService@contentbox";
+	property name="commentService" inject="id:commentService@contentbox";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
+	property name="rssService" inject="id:rssService@contentbox";
+	property name="themeService" inject="id:themeService@contentbox";
 	property name="antiSamy" inject="antisamy@cbantisamy";
 	property name="messagebox" inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller" inject="DataMarshaller@coldbox";
 	property name="markdown" inject="Processor@cbmarkdown";
-	property name="siteService" inject="siteService@cb";
+	property name="siteService" inject="siteService@contentbox";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";

@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="settingsService" inject="settingService@cb";
-	property name="contentService" inject="contentService@cb";
+	property name="settingsService" inject="settingService@contentbox";
+	property name="contentService" inject="contentService@contentbox";
 
 	/**
 	 * View HTML
