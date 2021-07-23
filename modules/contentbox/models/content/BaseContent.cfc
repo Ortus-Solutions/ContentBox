@@ -1224,7 +1224,7 @@ component
 	 */
 	boolean function hasActiveContent(){
 		// If we are not persisted, then no exit out.
-		if ( !isLoaded() ) {
+		if ( !hasContentVersion() || !isLoaded() ) {
 			return false;
 		}
 		// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
