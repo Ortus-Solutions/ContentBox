@@ -186,19 +186,17 @@ component extends="ContentService" singleton {
 		// run criteria query and projections count
 		results.count = c.count( "contentID" );
 
-		if( !isNull( arguments.propertyList ) ){
-			c.withProjections( property=arguments.propertyList )
-				.asStruct();
+		if ( !isNull( arguments.propertyList ) ) {
+			c.withProjections( property = arguments.propertyList ).asStruct();
 		} else {
 			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
 		}
-		results.pages = c
-			.list(
-				offset    = arguments.offset,
-				max       = arguments.max,
-				sortOrder = arguments.sortOrder,
-				asQuery   = false
-			);
+		results.pages = c.list(
+			offset    = arguments.offset,
+			max       = arguments.max,
+			sortOrder = arguments.sortOrder,
+			asQuery   = false
+		);
 		return results;
 	}
 
