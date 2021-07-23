@@ -109,7 +109,7 @@ component extends="baseHandler" {
 	 * Change current editing site
 	 */
 	function changeSite( event, rc, prc ){
-		siteService.setCurrentWorkingsiteID( rc.siteID );
+		variables.siteService.setCurrentWorkingsiteID( rc.siteID );
 		relocate( prc.xehDashboard );
 	}
 

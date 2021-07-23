@@ -14,6 +14,7 @@ component
 
 	// DI
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
+	property name="cookieStorage" inject="cookieStorage@cbStorages";
 	property name="requestStorage" inject="requestStorage@cbStorages";
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
@@ -39,7 +40,11 @@ component
 	 * @siteID The site to store as the current working one
 	 */
 	SiteService function setCurrentWorkingsiteID( required siteID ){
-		variables.cacheStorage.set( "adminCurrentSite", arguments.siteID );
+		variables.cookieStorage.set(
+			name   : "contentbox_admin_current_site",
+			value  : arguments.siteID,
+			expires: 7
+		);
 		return this;
 	}
 
@@ -48,8 +53,8 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	function getCurrentWorkingsiteID(){
-		return variables.cacheStorage.get(
-			name        : "adminCurrentSite",
+		return variables.cookieStorage.get(
+			name        : "contentbox_admin_current_site",
 			defaultValue: getDefaultsiteID()
 		);
 	}
