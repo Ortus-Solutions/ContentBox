@@ -53,7 +53,8 @@ component extends="baseHandler" {
 		prc.pages  = variables.pageService.search(
 			sortOrder   = "slug asc",
 			isPublished = true,
-			siteID      = prc.site.getsiteID()
+			siteID      = prc.site.getsiteID(),
+			propertyList = "contentID,slug,title"
 		).pages;
 
 		// exit handlers
