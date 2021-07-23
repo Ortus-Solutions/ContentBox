@@ -540,7 +540,6 @@ component {
 				addAsset( "#adminRoot#/includes/css/contentbox.min.css" );
 				addAsset( "#adminRoot#/includes/js/contentbox-pre.min.js" );
 				addAsset( "#adminRoot#/includes/js/contentbox-app.min.js" );
-				addAsset( "#adminRoot#/includes/js/contentbox-post.min.js" );
 			}
 
 			// LOAD Assets

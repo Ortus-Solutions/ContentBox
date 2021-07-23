@@ -1,14 +1,6 @@
 <!-- dynamic assets -->
 <cfoutput>
     <!--- ********************************************************************* --->
-    <!---                           Post-Libs                                   --->
-    <!--- ********************************************************************* --->
-    <cfif getSetting( "environment" ) eq "development">
-        <script src="#prc.cbroot#/includes/js/contentbox-post.js"></script>
-    <cfelse>
-        <script src="#prc.cbroot#/includes/js/contentbox-post.min.js"></script>
-    </cfif>
-    <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->
     <cfloop list="#event.getValue( "jsAppendList", "", true )#" index="js">
