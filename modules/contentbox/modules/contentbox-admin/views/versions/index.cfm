@@ -55,7 +55,7 @@
 				<table class="table table-hover table-striped-removed" width="100%">
 					<tr>
 						<th class="text-right">Created:</th>
-						<td>
+						<td data-timestamp="#prc.content.getMemento().createdDate#">
 							#prc.content.getDisplayCreatedDate()#
 						</td>
 					</tr>
@@ -74,19 +74,19 @@
 					</tr>
 					<tr>
 						<th class="text-right">Published:</th>
-						<td>
+						<td data-timestamp="#prc.content.getMemento().publishedDate#">
 							#prc.content.getDisplayPublishedDate()#
 						</td>
 					</tr>
 					<tr>
 						<th class="text-right">Expires:</th>
-						<td>
+						<td data-timestamp="#prc.content.getMemento().expireDate#">
 							#prc.content.getDisplayExpireDate()#
 						</td>
 					</tr>
 					<tr>
 						<th class="text-right">Modified:</th>
-						<td>
+						<td data-timestamp="#prc.content.getMemento().modifiedDate#">
 							#prc.content.getDisplayModifiedDate()#
 						</td>
 					</tr>

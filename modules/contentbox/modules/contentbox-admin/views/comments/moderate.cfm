@@ -73,7 +73,7 @@
 						<div class="form-group">
 							<i class="fa fa-calendar"></i>
 							<label>Created Date: </label>
-							#rc.comment.getDisplayCreatedDate()#
+							<span data-timestamp="#rc.comment.getMemento().createdDate#">#rc.comment.getDisplayCreatedDate()#</span>
 						</div>
 
 				</fieldset>

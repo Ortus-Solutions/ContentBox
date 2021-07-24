@@ -93,7 +93,7 @@
 				</td>
 
 				<!--- Created Version Date --->
-				<td class="text-center">
+				<td class="text-center" data-timestamp="#thisVersion.getMemento().modifiedDate#">
 					#thisVersion.getDisplayCreatedDate()#
 				</td>
 

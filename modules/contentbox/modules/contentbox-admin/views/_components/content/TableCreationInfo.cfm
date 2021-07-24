@@ -36,9 +36,10 @@
 		<!--- Created Date --->
 		<div
 			class="mt10 mb5 ml5"
-			onmouseover="this.title = `Created Date ${ Intl.DateTimeFormat().resolvedOptions().timeZone }`"
+			title="Created Date"
 		>
-			<i class="fas fa-calendar mr5"></i> #args.content.getDisplayCreatedDate()# Local timezone
+			<i class="fas fa-calendar mr5"></i>
+			<span data-timestamp="#args.content.getMemento().createdDate#">#args.content.getDisplayCreatedDate()#</span>
 		</div>
 
 		<!--- Categories --->

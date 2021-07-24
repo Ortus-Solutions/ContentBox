@@ -147,7 +147,7 @@
 
 									<div class="ml5 mt10">
 										<i class="far fa-calendar mr5"></i>
-										#comment.getDisplayCreatedDate()#
+										<span data-timestamp="#comment.getMemento().createdDate#">#comment.getDisplayCreatedDate()#</span>
 									</div>
 
 									<cfif len( comment.getauthorIP() )>

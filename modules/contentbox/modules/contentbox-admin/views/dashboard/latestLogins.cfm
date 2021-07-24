@@ -10,7 +10,7 @@
 		<cfloop array="#prc.lastLogins#" index="lastlogin">
 			<tr>
 				<td>#lastlogin.getValue()#</td>
-				<td>#lastLogin.getDisplayCreatedDate()#</td>
+				<td data-timestamp="#lastLogin.getMemento().createdDate#">#lastLogin.getDisplayCreatedDate()#</td>
 			</tr>
 		</cfloop>
 	</tbody>

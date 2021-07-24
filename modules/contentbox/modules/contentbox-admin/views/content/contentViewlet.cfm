@@ -78,7 +78,7 @@
 			<!--- ***************************************************************************** --->
 			<!--- 								AUTHOR + CREATE DATE							--->
 			<!--- ***************************************************************************** --->
-			<td>
+			<td data-timestamp="#thisContent.getMemento().createdDate#">
 				<cfif args.showAuthor>
 					#getInstance( "Avatar@cb" ).renderAvatar(
 						email 	= thisContent.getAuthorEmail(),

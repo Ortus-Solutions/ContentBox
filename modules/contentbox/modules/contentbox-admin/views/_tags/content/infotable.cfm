@@ -41,7 +41,7 @@
 				<cfif len( args.content.getExpireDate() )>
 					<tr>
 						<th class="col-md-4">Expired:</th>
-						<td class="col-md-8">
+						<td class="col-md-8" data-timestamp="#args.content.getMemento().expireDate#">
 							#args.content.getDisplayExpireDate()#
 						</td>
 					</tr>
@@ -70,14 +70,14 @@
 
                 <tr>
                     <th class="col-md-4">Created:</th>
-                    <td class="col-md-8">
+                    <td class="col-md-8" data-timestamp="#args.content.getMemento().createdDate#">
                         #args.content.getDisplayCreatedDate()#
                     </td>
                 </tr>
 
                 <tr>
                     <th class="col-md-4">Published:</th>
-                    <td class="col-md-8">
+                    <td class="col-md-8" data-timestamp="#args.content.getMemento().publishedDate#">
                         #args.content.getDisplayPublishedDate()#
                     </td>
                 </tr>
@@ -98,7 +98,7 @@
 
                 <tr>
                     <th class="col-md-4">Modified:</th>
-                    <td class="col-md-8">
+                    <td class="col-md-8" data-timestamp="#args.content.getMemento().modifiedDate#">
                         #args.content.getActiveContent().getDisplayCreatedDate()#
                     </td>
                 </tr>

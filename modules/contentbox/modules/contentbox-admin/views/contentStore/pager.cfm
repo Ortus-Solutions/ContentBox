@@ -28,7 +28,7 @@
 			<td>
 				<a href="#event.buildLink(prc.xehContentEditor)#/contentID/#content.getContentID()#" title="Edit #content.getTitle()#">#content.getTitle()#</a><br/>
 				<small>
-				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on #content.getActiveContent().getDisplayCreatedDate()#
+				<i class="fa fa-user" title="last edit by"></i> <a href="mailto:#content.getAuthorEmail()#">#content.getAuthorName()#</a> on <span data-timestamp="#content.getActiveContent().getMemento().createdDate#">#content.getActiveContent().getDisplayCreatedDate()#<span>
 				</small>
 			</td>
 			<td class="text-center">

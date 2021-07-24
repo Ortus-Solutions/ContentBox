@@ -31,7 +31,7 @@
 				<td>
 					<!--- Title --->
 					<a href="#event.buildLink(prc.xehPageEditor)#/contentID/#page.getContentID()#">#page.getSlug()#</a><br>
-					<small><i class="fa fa-user" title="last edit by"></i> <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on #page.getActiveContent().getDisplayCreatedDate()#</small>
+					<small><i class="fa fa-user" title="last edit by"></i> <a href="mailto:#page.getAuthorEmail()#">#page.getAuthorName()#</a> on <span data-timestamp="#page.getActiveContent().getMemento().createdDate#">#page.getActiveContent().getDisplayCreatedDate()#</sapn></small>
 				</td>
 				<td class="text-center">
 					<cfif page.isExpired()>

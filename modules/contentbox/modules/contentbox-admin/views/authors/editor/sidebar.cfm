@@ -32,21 +32,21 @@
 				<table class="table table-hover table-striped-removed mt10">
 					<tr>
 						<th width="125" class="text-right">Last Login</th>
-						<td>
+						<td data-timestamp="#prc.author.getMemento().lastLogin#">
 							#prc.author.getDisplayLastLogin()#
 						</td>
 					</tr>
 
 					<tr>
 						<th class="text-right">Created On</th>
-						<td>
+						<td data-timestamp="#prc.author.getMemento().createdDate#">
 							#prc.author.getDisplayCreatedDate()#
 						</td>
 					</tr>
 
 					<tr>
 						<th class="text-right">Modified On</th>
-						<td>
+						<td data-timestamp="#prc.author.getMemento().modifiedDate#">
 							#prc.author.getDisplayModifiedDate()#
 						</td>
 					</tr>

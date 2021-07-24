@@ -48,7 +48,7 @@
 
                     <div class="col-md-6">
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input type="text" class="form-control inline" value="#theTime#" name="publishedTime" id="publishedTime" />
+                            <input type="text" class="form-control inline" value="#theTime#" name="publishedTime">
                             <span class="input-group-addon">
                                 <span class="fas fa-history"></span>
                             </span>
@@ -189,11 +189,3 @@
         </div>
     </div>
 </cfoutput>
-
-<script type="text/javascript">
-    window.onload = function ()
-    {
-        // Get the element and set the value to the element in a local format
-        document.getElementById( "publishedTime" ).value = moment( new Date () ).local().format( "kk:mm" );
-    }
-</script>

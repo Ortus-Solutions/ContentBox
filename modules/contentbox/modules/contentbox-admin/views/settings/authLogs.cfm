@@ -63,7 +63,7 @@
 								<td class="text-center">
 									#thisLog.getAttempts()#
 								</td>
-								<td>#thisLog.getDisplayCreatedDate()#</td>
+								<td data-timestamp="#thisLog.getMemento().modifiedDate#">#thisLog.getDisplayCreatedDate()#</td>
 								<td>
 									<cfif len( thisLog.getLastLoginSuccessIP() )>
 										<a href="#prc.cbSettings.cb_comments_whoisURL#=#thisLog.getLastLoginSuccessIP()#" title="Get IP Information" target="_blank">#thisLog.getLastLoginSuccessIP()#</a>

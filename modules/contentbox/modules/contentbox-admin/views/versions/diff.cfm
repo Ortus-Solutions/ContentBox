@@ -33,8 +33,8 @@
 					</tr>
 					<tr>
 						<td><strong>Created Date</strong></td>
-						<td>#prc.oldContent.getDisplayCreatedDate()#</td>
-						<td>#prc.currentContent.getDisplayCreatedDate()#</td>
+						<td data-timestamp="#prc.oldContent.getMemento().modifiedDate#">#prc.oldContent.getDisplayCreatedDate()#</td>
+						<td data-timestamp="#prc.currentContent.getMemento().modifiedDate#">#prc.currentContent.getDisplayCreatedDate()#</td>
 					</tr>
 					<tr>
 						<td><strong>Changelog</strong></td>

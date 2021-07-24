@@ -11,15 +11,15 @@
 				<!--- Status --->
 				<div class="float-right mr20 mt5">
 					<cfif prc.content.isExpired()>
-						<span class="p5 label label-danger">
+						<span class="p5 label label-danger" data-timestamp="#prc.content.getMemento().expireDate#">
 							Expired on #prc.content.getDisplayExpiredDate()#
 						</span>
 					<cfelseif prc.content.isPublishedInFuture()>
-						<span class="p5 label label-info">
+						<span class="p5 label label-info" data-timestamp="#prc.content.getMemento().publishedDate#">
 							Publishes on #prc.content.getDisplayPublishedDate()#
 						</span>
 					<cfelseif prc.content.isContentPublished()>
-						<span class="p5 label label-success">
+						<span class="p5 label label-success" data-timestamp="#prc.content.getMemento().publishedDate#">
 							#getInstance( "Avatar@cb" ).renderAvatar(
 								email	= prc.content.getAuthorEmail(),
 								size	= "20",
@@ -98,7 +98,8 @@
 								)#
 								<span class="ml5">
 									#prc.content.getAuthorName()#
-									edited on #prc.content.getDisplayModifiedDate()#
+									edited on
+									<span data-timestamp="#prc.content.getMemento().modifiedDate#">#prc.content.getDisplayModifiedDate()#</span>
 								</span>
 							</a>
 						</div>
