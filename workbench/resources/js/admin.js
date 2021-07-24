@@ -39,6 +39,9 @@ $(document).ready(function() {
     // activate fancy toggles
     activateToggleCheckboxes();
 
+    // Activate local client timezones
+    activateLocalDateTimes();
+
     // global Validaiton settings
     $.validator.setDefaults({
         // apparently, the *default* of jQuery validation is to ignore validation of hidden elements (e.g., when using tabs, validation is skipped)
@@ -746,6 +749,22 @@ function passwordValidator(value) {
  * @param {*} dateTime The iso8601 date time object
  * @returns A local browser date time
  */
-function toLocal( dateTime ){
-	return moment.utc( dateTime ).local().format();
+function toLocal( dateTime, mask ){
+    if ( typeof mask == "undefined" ){
+        mask = "LLL"
+    }
+    
+	return moment( dateTime ).local().format( mask );
+}
+
+/**
+ * Activate local datetime zones
+ */
+function activateLocalDateTimes () {
+    $( "[data-timestamp]" ).each( function () {
+        var timestamp = $( this ).data( "timestamp" );
+        var mask = $( this ).data( "mask" ) || "LLL";
+
+        $( this ).html( toLocal( timestamp, mask ) );
+    } );
 }
