@@ -8,7 +8,7 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="categoryService" inject="categoryService@cb";
+	property name="categoryService" inject="categoryService@contentbox";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	/**
@@ -50,9 +50,10 @@ component extends="baseHandler" {
 		}
 
 		// Pop/Get/Set
-		var oCategory = populateModel( variables.categoryService.get( rc.categoryID ) ).setSite(
-			prc.oCurrentSite
-		);
+		var oCategory = populateModel(
+			model  : variables.categoryService.get( rc.categoryID ),
+			exclude: "categoryID"
+		).setSite( prc.oCurrentSite );
 
 		// Validation Results
 		var vResults = validate( oCategory );

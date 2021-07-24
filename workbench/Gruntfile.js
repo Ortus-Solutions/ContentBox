@@ -123,51 +123,68 @@ module.exports = function(grunt) {
             // Pre Lib: Libraries which are brough in the <head> section
             prejs: {
                 src: [
-                    // App Libraries
+                    // YARN/NPM Libraries
+					// ES6 compat
+					"app_modules/es6-shim/es6-shim.min.js",
+					// HTML5 shim detection
+					"resources/vendor/js/modernizr.min.js",
+					// AlpineJS : Will replace majority of js files below
+					"node_modules/alpinejs/dist/cdn/cdn.min.js",
+					// Jquery
                     "app_modules/jquery/dist/jquery.min.js",
+					// For autosaving and js cookies on editors
 					"app_modules/jquery.cookie/jquery.cookie.js",
+					// Form validation
 					"app_modules/jquery-validation/dist/jquery.validate.min.js",
+					// Bootstrap js plugins
 					"app_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
+					// Date/Time Utiolities
 					"app_modules/moment/min/moment-with-locales.min.js",
 					"node_modules/moment-timezone/builds/moment-timezone-with-data-10-year-range.min.js",
+					// String compression utility: Used by autosave features
 					"app_modules/lz-string/libs/lz-string.min.js",
+					// Global utility
 					"app_modules/lodash/dist/lodash.min.js",
+					// Navigation History
 					"app_modules/history.js/scripts/bundled/html4+html5/jquery.history.js",
-                    // Vendor Libraries
-					"resources/vendor/js/jquery.validate.bootstrap.js",
-					"resources/vendor/js/modernizr.min.js"
-                ],
-                dest: '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js'
-            },
-
-            // Post Lib: Libraries which are brought in before the </body> end
-            postjs: {
-                src: [
-                    // App Libraries
-                    "app_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
-					"app_modules/es6-shim/es6-shim.min.js",
+					// Date picker
+					"app_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+					"app_modules/clockpicker/dist/bootstrap-clockpicker.min.js",
+					// Theme navigation
 					"app_modules/navgoco/src/jquery.navgoco.min.js",
+					// Theme navigation
 					"app_modules/switchery/dist/switchery.min.js",
+					// Charting Libraries
 					"app_modules/raphael/raphael.js",
 					"app_modules/morris.js/morris.min.js",
-					"app_modules/clockpicker/dist/bootstrap-clockpicker.min.js",
+					// Keyboard shortcuts
 					"app_modules/jwerty/jwerty.js",
+					// Data tables
 					"app_modules/datatables/media/js/jquery.dataTables.min.js",
 					"app_modules/datatables/media/js/dataTables.bootstrap.min.js",
+					// Table drag and drop
 					"app_modules/TableDnD/dist/jquery.tablednd.min.js",
+					// Toaster notifications
 					"app_modules/toastr/toastr.min.js",
+					// Bootstrap modal confirmations
 					"app_modules/Bootstrap-Confirmation/bootstrap-confirmation.js",
+					// Drag & drop hierarchical list with mouse and touch compatibility
 					"app_modules/jquery-nestable/jquery.nestable.js",
-					"app_modules/jq-fullscreen/release/jquery.fullscreen.min.js",
+					// on/off Toggles
 					"app_modules/bootstrap-toggle/js/bootstrap-toggle.min.js",
+					// setting sliders
 					'app_modules/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js',
-                    // Vendor libraries
-                    "resources/vendor/js/bootstrap-fileupload.js",
+                    // Static Libraries
+					"resources/vendor/js/jquery.validate.bootstrap.js",
+					// File Uploads
+					"resources/vendor/js/bootstrap-fileupload.js",
+					// Luis Majano's div and table filters
 					"resources/vendor/js/jquery.uidivfilter.js",
 					"resources/vendor/js/jquery.uitablefilter.js"
                 ],
-                dest: '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.js'
+                dest: '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js'
             }
+
         },
 
         /**
@@ -194,8 +211,7 @@ module.exports = function(grunt) {
             // JS Libraries
             libraries: {
                 files: {
-                    '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.min.js': ["../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js"],
-                    '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.min.js': ["../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-post.js"]
+                    '../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.min.js': ["../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js"]
                 }
             },
         },
@@ -328,9 +344,8 @@ module.exports = function(grunt) {
 
     });
 
-    // Load tasks
     // Load Tasks
-    require('matchdep')
-        .filterDev('grunt-*')
-        .forEach(grunt.loadNpmTasks);
+    require( 'matchdep' )
+        .filterDev( 'grunt-*' )
+        .forEach( grunt.loadNpmTasks );
 };

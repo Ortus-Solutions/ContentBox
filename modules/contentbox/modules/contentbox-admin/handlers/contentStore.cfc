@@ -8,7 +8,7 @@
 component extends="baseContentHandler" {
 
 	// Dependencies
-	property name="contentStoreService" inject="contentStoreService@cb";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
 	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
@@ -387,7 +387,7 @@ component extends="baseContentHandler" {
 		// get new/persisted content and populate it
 		var content      = variables.contentStoreService.get( rc.contentID )
 		var originalSlug = content.getSlug();
-		var content      = populateModel( content )
+		var content      = populateModel( model: content, exclude = "contentID" )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime )
 			.setSite( variables.siteService.get( rc.site ) );
@@ -413,6 +413,15 @@ component extends="baseContentHandler" {
 			) and content.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
 			content.setCreator( variables.authorService.get( rc.creatorID ) );
+		}
+
+		// Prettify content if json
+		if ( isJSON( rc.content ) ) {
+			rc.content = getInstance( "JSONPrettyPrint@JSONPrettyPrint" ).formatJson(
+				json           : rc.content,
+				lineEnding     : chr( 10 ),
+				spaceAfterColon: true
+			);
 		}
 
 		// Register a new content in the page, versionized!
@@ -556,7 +565,7 @@ component extends="baseContentHandler" {
 		prc.xehContentHistory = "#prc.cbAdminEntryPoint#.versions.index";
 
 		// prepare paging object
-		prc.pager_oPaging    = getInstance( "Paging@cb" );
+		prc.pager_oPaging    = getInstance( "Paging@contentbox" );
 		prc.pager_paging     = prc.pager_oPaging.getBoundaries();
 		prc.pager_pagingLink = "javascript:pagerLink(@page@)";
 		prc.pager_pagination = arguments.pagination;
@@ -606,7 +615,7 @@ component extends="baseContentHandler" {
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.contentStore.editorSelector";
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = "javascript:pagerLink(@page@)";
 

@@ -80,7 +80,7 @@
 			<!--- ***************************************************************************** --->
 			<td data-timestamp="#thisContent.getMemento().createdDate#">
 				<cfif args.showAuthor>
-					#getInstance( "Avatar@cb" ).renderAvatar(
+					#getInstance( "Avatar@contentbox" ).renderAvatar(
 						email 	= thisContent.getAuthorEmail(),
 						size 	= "20" ,
 						class 	= "gravatar img-circle"

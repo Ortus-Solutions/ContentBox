@@ -8,7 +8,7 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="permissionService" inject="permissionService@cb";
+	property name="permissionService" inject="permissionService@contentbox";
 
 	/**
 	 * Pre handler
@@ -58,8 +58,11 @@ component extends="baseHandler" {
 		// UCASE permission
 		rc.permission   = uCase( rc.permission );
 		// populate and get
-		var oPermission = populateModel( permissionService.get( id = rc.permissionID ) );
-		var vResults    = validate( oPermission );
+		var oPermission = populateModel(
+			model  : permissionService.get( rc.permissionID ),
+			exclude: "permissionID"
+		);
+		var vResults = validate( oPermission );
 
 		// Validation Results
 		if ( !vResults.hasErrors() ) {

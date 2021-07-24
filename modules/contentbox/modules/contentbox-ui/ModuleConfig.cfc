@@ -283,7 +283,7 @@ component {
 	 */
 	function onLoad(){
 		// Startup the ContentBox theme service and activate the site themes
-		wirebox.getInstance( "themeService@cb" ).startupSiteThemes();
+		wirebox.getInstance( "themeService@contentbox" ).startupSiteThemes();
 
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
@@ -327,7 +327,7 @@ component {
 		// Get ses handle
 		var routingService = controller.getRoutingService();
 		// Get setting service
-		var settingService = wirebox.getInstance( "settingService@cb" );
+		var settingService = wirebox.getInstance( "settingService@contentbox" );
 		// Get blog entry point from DB
 		var blogEntryPoint = settingService.findWhere( { name : "cb_site_blog_entrypoint" } );
 

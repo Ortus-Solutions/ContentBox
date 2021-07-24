@@ -37,7 +37,7 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			beforeEach( function( currentSpec ){
-				model = getInstance( "ModuleService@cb" );
+				model = getInstance( "ModuleService@contentbox" );
 			} );
 
 			it( "can populate a module", function(){

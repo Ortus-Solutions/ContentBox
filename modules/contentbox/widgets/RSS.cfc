@@ -84,7 +84,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		required boolean showBody,
 		required linkTarget
 	){
-		var rString         = "";
+		var rString = "";
+
+		// cfformat-ignore-start
 		// generate Items
 		saveContent variable="rString" {
 			writeOutput(
@@ -113,6 +115,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 "
 			);
 		}
+
+		// cfformat-ignore-end
+
 		return rString;
 	}
 

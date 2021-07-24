@@ -16,7 +16,7 @@ component {
 	this.viewParentLookup   = true;
 	this.layoutParentLookup = true;
 	this.entryPoint         = "cbcore";
-	this.modelNamespace     = "cb";
+	this.modelNamespace     = "contentbox";
 	this.cfmapping          = "contentbox";
 	// Load ContentBox Dependencies First.
 	this.dependencies       = [ "contentbox-deps" ];
@@ -31,16 +31,27 @@ component {
 		// contentbox settings
 		settings = {
 			// Code name
-			codename     : "Psalm 144:1",
-			codenameLink : "https://www.bible.com/bible/114/psa.144.1.nkjv",
+			"codename"     : "Psalm 144:1",
+			"codenameLink" : "https://www.bible.com/bible/114/psa.144.1.nkjv",
 			// Officially supported languages for modules
-			languages    : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ],
+			"languages"    : [ "de_DE", "en_US", "es_SV", "it_IT", "pt_BR" ],
 			// cbSecurity settings
-			cbSecurity   : {
+			"cbSecurity"   : {
 				// Load the security rules for ContentBox from our db model
 				"rules"            : "model",
-				"rulesModel"       : "securityRuleService@cb",
+				"rulesModel"       : "securityRuleService@contentbox",
 				"rulesModelMethod" : "getSecurityRules"
+			},
+			// Array of mixins to inject into all content objects
+			"contentHelpers" : [],
+			// Setting Overrides
+			"settings"       : {
+				// Global settings
+				"global" : {},
+				// Site specific settings according to site slug
+				"sites"  : {
+					 // siteSlug : { ... }
+				}
 			}
 		};
 
@@ -72,45 +83,45 @@ component {
 			// Rate Limiter
 			{
 				class : "contentbox.models.security.RateLimiter",
-				name  : "RateLimiter@cb"
+				name  : "RateLimiter@contentbox"
 			},
 			// CB RSS Cache Cleanup Ghost
 			{
 				class : "contentbox.models.rss.RSSCacheCleanup",
-				name  : "RSSCacheCleanup@cb"
+				name  : "RSSCacheCleanup@contentbox"
 			},
 			// CB Content Cache Cleanup Ghost
 			{
 				class : "contentbox.models.content.util.ContentCacheCleanup",
-				name  : "ContentCacheCleanup@cb"
+				name  : "ContentCacheCleanup@contentbox"
 			},
 			// Content Subscriptions
 			{
 				class : "contentbox.models.subscriptions.SubscriptionListener",
-				name  : "SubscriptionListener@cb"
+				name  : "SubscriptionListener@contentbox"
 			},
 			// Content Renderers, remember order is important.
 			{
 				class : "contentbox.models.content.renderers.LinkRenderer",
-				name  : "LinkRenderer@cb"
+				name  : "LinkRenderer@contentbox"
 			},
 			{
 				class : "contentbox.models.content.renderers.WidgetRenderer",
-				name  : "WidgetRenderer@cb"
+				name  : "WidgetRenderer@contentbox"
 			},
 			{
 				class : "contentbox.models.content.renderers.SettingRenderer",
-				name  : "SettingRenderer@cb"
+				name  : "SettingRenderer@contentbox"
 			},
 			{
 				class : "contentbox.models.content.renderers.MarkdownRenderer",
-				name  : "MarkdownRenderer@cb"
+				name  : "MarkdownRenderer@contentbox"
 			}
 		];
 
 		// Manual Mappings
-		binder.map( "customFieldService@cb" ).toDSL( "entityService:cbCustomField" );
-		binder.map( "SystemUtil@cb" ).to( "coldbox.system.core.util.Util" );
+		binder.map( "customFieldService@contentbox" ).toDSL( "entityService:cbCustomField" );
+		binder.map( "SystemUtil@contentbox" ).to( "coldbox.system.core.util.Util" );
 	}
 
 	/**
@@ -123,7 +134,7 @@ component {
 	 * Fired when the module is registered and activated.
 	 */
 	function onLoad(){
-		var settingService = wirebox.getInstance( "settingService@cb" );
+		var settingService = wirebox.getInstance( "settingService@contentbox" );
 		// Pre-flight check settings
 		settingService.preFlightCheck();
 		// Loadup Config Overrides
@@ -131,7 +142,7 @@ component {
 		// Load Environment Overrides Now, they take precedence
 		settingService.loadEnvironmentOverrides();
 		// Startup the ContentBox modules, if any
-		wirebox.getInstance( "moduleService@cb" ).startup();
+		wirebox.getInstance( "moduleService@contentbox" ).startup();
 	}
 
 	/**
@@ -148,7 +159,7 @@ component {
 	 */
 	function afterConfigurationLoad( event, data, rc, prc ){
 		// Discover all widgets
-		wirebox.getInstance( "widgetservice@cb" ).getWidgets();
+		wirebox.getInstance( "widgetservice@contentbox" ).getWidgets();
 	}
 
 

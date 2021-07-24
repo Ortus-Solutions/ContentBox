@@ -6,7 +6,7 @@
 component extends="baseContentHandler" {
 
 	// DI
-	property name="ormService" inject="EntryService@cb";
+	property name="ormService" inject="EntryService@contentbox";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "publishedDate DESC";

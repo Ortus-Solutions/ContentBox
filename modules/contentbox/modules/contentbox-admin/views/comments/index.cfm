@@ -125,7 +125,7 @@
 								</td>
 								<td>
 
-									#getInstance( "Avatar@cb" ).renderAvatar(
+									#getInstance( "Avatar@contentbox" ).renderAvatar(
 										email = comment.getAuthorEmail(),
 										size  = "30",
 										class = "img img-circle"

@@ -39,7 +39,7 @@ component {
 	 * Fired when the module is registered and activated.
 	 */
 	function onLoad(){
-		var editorService = wirebox.getInstance( "EditorService@cb" );
+		var editorService = wirebox.getInstance( "EditorService@contentbox" );
 		editorService.registerEditor(
 			wirebox.getInstance( "MarkdownEditor@contentbox-markdowneditor" )
 		);
@@ -49,7 +49,7 @@ component {
 	 * Fired when the module is unregistered and unloaded
 	 */
 	function onUnload(){
-		var editorService = wirebox.getInstance( "EditorService@cb" );
+		var editorService = wirebox.getInstance( "EditorService@contentbox" );
 		editorService.unregisterEditor( "simplemde" );
 	}
 

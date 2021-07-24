@@ -21,32 +21,39 @@ component extends="contentbox.models.ui.BaseWidget" {
 
 	/**
 	 * Render the widget out
-	 * @view.hint The named path of the view to render
-	 * @cache.hint Cache the contents of the render view or not, by default it is false
-	 * @cacheTimeout.hint The cache timeout in minutes
-	 * @cacheLastAccessTimeout.hint The cache idle timeout in minutes
-	 * @cacheSuffix.hint A suffix for the cache entry
-	 * @module.hint The name of the module to render the view from
-	 * @args.hint The arguments to pass to the view, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
+	 *
+	 * @view The named path of the view to render
+	 * @cache Cache the contents of the render view or not, by default it is false
+	 * @cacheTimeout The cache timeout in minutes
+	 * @cacheLastAccessTimeout The cache idle timeout in minutes
+	 * @cacheSuffix A suffix for the cache entry
+	 * @module The name of the module to render the view from
+	 * @args The arguments to pass to the view, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
+	 * @prePostExempt If true, pre/post view interceptors will not be fired. By default they do fire
 	 */
 	any function renderIt(
 		required string view,
 		boolean cache = false,
 		cacheTimeout,
 		cacheLastAccessTimeout,
-		cacheSuffix,
-		module,
-		string args = ""
+		string cacheSuffix,
+		string module,
+		string args           = "",
+		boolean prePostExempt = false
 	){
-		var viewArgs = {};
-
-		// Inflate args
-		if ( len( arguments.args ) ) {
-			var aString = listToArray( arguments.args, "," );
-			for ( var key in aString ) {
-				viewArgs[ listFirst( key, "=" ) ] = getToken( key, 2, "=" );
-			}
+		// If the view is empty, then return a message.
+		if ( !len( arguments.view ) ) {
+			return "Please pass in a view to render";
 		}
+
+		// Inflate args string to struct
+		var viewArgs = arguments.args
+			.listToArray()
+			.reduce( function( results, item ){
+				results[ listFirst( arguments.item, "=" ) ] = getToken( arguments.item, 2, "=" );
+				return results;
+			}, {} );
+
 		// Replace with inflated data
 		arguments.args = viewArgs;
 

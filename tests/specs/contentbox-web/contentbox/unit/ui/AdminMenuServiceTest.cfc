@@ -11,7 +11,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Admin Menu Services", function(){
 			beforeEach( function( currentSpec ){
-				model              = prepareMock( getInstance( "AdminMenuService@cb" ) );
+				model              = prepareMock( getInstance( "AdminMenuService@contentbox" ) );
 				prc                = getRequestContext().getPrivateCollection();
 				prc.oCurrentAuthor = prepareMock( entityNew( "cbAuthor" ) ).$(
 					"checkPermission",

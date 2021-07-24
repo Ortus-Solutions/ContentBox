@@ -8,15 +8,15 @@
 component singleton {
 
 	// Dependencies
-	property name="authorService" inject="authorService@cb";
-	property name="settingService" inject="settingService@cb";
-	property name="siteService" inject="siteService@cb";
+	property name="authorService" inject="authorService@contentbox";
+	property name="settingService" inject="settingService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
 	property name="requestStorage" inject="RequestStorage@cbstorages";
 	property name="mailService" inject="mailService@cbmailservices";
 	property name="renderer" inject="coldbox:renderer";
-	property name="CBHelper" inject="CBHelper@cb";
+	property name="CBHelper" inject="CBHelper@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="cache" inject="cachebox:template";
 	property name="bCrypt" inject="BCrypt@BCrypt";

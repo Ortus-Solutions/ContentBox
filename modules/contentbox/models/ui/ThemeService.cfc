@@ -8,17 +8,17 @@
 component accessors="true" threadSafe singleton {
 
 	// DI
-	property name="settingService" inject="settingService@cb";
-	property name="siteService" inject="siteService@cb";
+	property name="settingService" inject="settingService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
 	// Provide this one in, due to chicken and the egg issues.
-	property name="widgetService" inject="provider:widgetService@cb";
+	property name="widgetService" inject="provider:widgetService@contentbox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="zipUtil" inject="zipUtil@cb";
+	property name="zipUtil" inject="zipUtil@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="wirebox" inject="wirebox";
 	property name="html" inject="HTMLHelper@coldbox";
-	property name="cbHelper" inject="provider:CBHelper@cb";
+	property name="cbHelper" inject="provider:CBHelper@contentbox";
 	property name="moduleService" inject="coldbox:moduleService";
 
 	/**

@@ -8,18 +8,18 @@
 component singleton {
 
 	// DI
-	property name="entryService" inject="entryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="contentService" inject="contentService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="CBHelper" inject="CBHelper@cb";
+	property name="entryService" inject="entryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="contentService" inject="contentService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="CBHelper" inject="CBHelper@contentbox";
 	property name="feedGenerator" inject="feedGenerator@cbfeeds";
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
 	 * Constructor
 	 *
-	 * @settingService.inject id:settingService@cb
+	 * @settingService.inject id:settingService@contentbox
 	 * @cacheBox.inject cachebox
 	 */
 	RSSService function init( required settingService, required cacheBox ){

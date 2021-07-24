@@ -1,5 +1,5 @@
 <cfoutput>
-
+#html.startForm( name="loginSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
 	<legend><i class="fa fa-mobile fa-lg"></i> Two Factor Authentication</legend>
 
@@ -116,4 +116,10 @@
 	</div>
 
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

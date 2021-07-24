@@ -8,7 +8,7 @@
 component singleton {
 
 	// DI
-	property name="avatar" inject="Avatar@cb";
+	property name="avatar" inject="Avatar@contentbox";
 
 	/**
 	 *  Constructor
@@ -29,7 +29,7 @@ component singleton {
                         <td width=30>#gravatar#</td>
                         <td>#arguments.content#</td>
                     </tr>
-                </table> 
+                </table>
             "
 				)
 			);
@@ -56,11 +56,11 @@ component singleton {
 		required string borderStyle    = "solid",
 		required numeric borderWidth   = 1
 	){
-		savecontent variable="dividerContent" {
-			writeOutput(
-				"
-                <table border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"" class=""kmDividerBlock"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0"">
-                    <tbody class=""kmDividerBlockOuter"">
+		// cfformat-ignore-start
+        savecontent variable="dividerContent" {
+            writeoutput('
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" class="kmDividerBlock" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
+                    <tbody class="kmDividerBlockOuter">
                         <tr>
                             <td class=""kmDividerBlockInner"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; padding-top:#arguments.paddingTop#px;padding-bottom:#arguments.paddingBottom#px;padding-left:#arguments.paddingLeft#px;padding-right:#arguments.paddingRight#px;"">
                                 <table class=""kmDividerContent"" border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; border-top-width:#arguments.borderWidth#px;border-top-style:#arguments.borderStyle#;border-top-color:###arguments.borderColor#;"">
@@ -75,11 +75,11 @@ component singleton {
                             </td>
                         </tr>
                     </tbody>
-                </table>    
-            "
-			);
-		}
-		return dividerContent;
+                </table>
+            ');
+        }
+		// cfformat-ignore-end
+return dividerContent;
 	}
 
 	/**
@@ -95,16 +95,18 @@ component singleton {
 		required string color     = "777",
 		required numeric fontSize = 20
 	){
-		savecontent variable="headingContent" {
-			writeOutput(
-				"
-                <#arguments.level# style=""color: ###arguments.color#; display: block; font-family: Helvetica; font-size: #arguments.fontSize#px; font-style: normal; font-weight: bold; line-height: 110%; letter-spacing: normal; margin: 0; margin-bottom: 9px; text-align: left"">
+		// cfformat-ignore-start
+        savecontent variable="headingContent" {
+            writeoutput('
+                <#arguments.level# style="color: ###arguments.color#; display: block; font-family: Helvetica; font-size: #arguments.fontSize#px; font-style: normal; font-weight: bold; line-height: 110%; letter-spacing: normal; margin: 0; margin-bottom: 9px; text-align: left">
                     #arguments.content#
                 </#arguments.level#>
-            "
-			);
-		}
-		return text( headingContent );
+            ');
+        }
+		// cfformat-ignore-end
+return text(
+			headingContent
+		);
 	}
 
 	/**
@@ -113,11 +115,11 @@ component singleton {
 	 * @callout.hint If true, will wrap content in a callout box
 	 */
 	public string function text( required string content, required boolean callout = false ){
-		savecontent variable="textContent" {
-			writeOutput(
-				"
-                <table border=""0"" cellpadding=""0"" cellspacing=""0"" class=""kmTextBlock"" width=""100%"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0"">
-                    <tbody class=""kmTextBlockOuter"">
+		// cfformat-ignore-start
+        savecontent variable="textContent" {
+            writeoutput('
+                <table border="0" cellpadding="0" cellspacing="0" class="kmTextBlock" width="100%" style="border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0">
+                    <tbody class="kmTextBlockOuter">
                         <tr>
                             <td class=""kmTextBlockInner"" valign=""top"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0; "">
                                 <table align=""left"" border=""0"" cellpadding=""0"" cellspacing=""0"" class=""kmTextContentContainer"" width=""100%"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0"">
@@ -147,10 +149,10 @@ component singleton {
                         </tr>
                     </tbody>
                 </table>
-            "
-			);
-		}
-		return textContent;
+            ');
+        }
+		// cfformat-ignore-end
+return textContent;
 	}
 
 	/**
@@ -158,9 +160,9 @@ component singleton {
 	 * @buttons.hint Array of buttons to add to the button bar
 	 */
 	public string function buttonBar( required Array buttons ){
-		savecontent variable="buttonBarContent" {
-			writeOutput(
-				"
+		// cfformat-ignore-start
+        savecontent variable="buttonBarContent" {
+            writeoutput('
                 #divider( 18, 18, 5, 18 )#
                 <table border=""0"" cellpadding=""0"" cellspacing=""0"" class=""kmButtonBarBlock"" width=""100%"" style=""border-collapse: collapse; mso-table-lspace: 0; mso-table-rspace: 0"">
                     <tbody class=""kmButtonBarOuter"">
@@ -220,10 +222,10 @@ component singleton {
                     </tbody>
                 </table>
                 #divider( 0, 18, 18, 18 )#
-            "
-			);
-		}
-		return buttonBarContent;
+            ');
+        }
+		// cfformat-ignore-end
+return buttonBarContent;
 	}
 
 }

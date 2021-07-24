@@ -8,11 +8,11 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="securityService" inject="securityService@cb";
-	property name="settingService" inject="settingService@cb";
-	property name="siteService" inject="siteService@cb";
-	property name="adminMenuService" inject="adminMenuService@cb";
-	property name="cbHelper" inject="CBHelper@cb";
+	property name="securityService" inject="securityService@contentbox";
+	property name="settingService" inject="settingService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
+	property name="adminMenuService" inject="adminMenuService@contentbox";
+	property name="cbHelper" inject="CBHelper@contentbox";
 
 	/**
 	 * Configure CB Request

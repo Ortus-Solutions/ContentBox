@@ -10,6 +10,7 @@
 	"thistimezone":"UTC",
 	"debuggingReportExecutionTimes": false,
     "whitespaceManagement":"white-space-pref",
+	"postParametersLimit" : 200,
 	"cacheDefaultObject":"contentbox",
     "caches":{
         "contentbox":{

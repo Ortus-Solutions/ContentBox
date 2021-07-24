@@ -20,19 +20,19 @@ component
 
 	property
 		name      ="categoryService"
-		inject    ="categoryService@cb"
+		inject    ="categoryService@contentbox"
 		persistent="false";
 	property
 		name      ="pageService"
-		inject    ="pageService@cb"
+		inject    ="pageService@contentbox"
 		persistent="false";
 	property
 		name      ="entryService"
-		inject    ="entryService@cb"
+		inject    ="entryService@contentbox"
 		persistent="false";
 	property
 		name      ="contentStoreService"
-		inject    ="contentStoreService@cb"
+		inject    ="contentStoreService@contentbox"
 		persistent="false";
 
 	property
@@ -42,7 +42,7 @@ component
 
 	property
 		name      ="settingService"
-		inject    ="settingService@cb"
+		inject    ="settingService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

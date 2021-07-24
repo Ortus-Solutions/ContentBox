@@ -70,10 +70,7 @@ component accessors="true" extends="BaseRenderer" {
 						break;
 					}
 					case "entryssl": {
-						linkContent = cb.linkEntry(
-							entry = determineSlug( tagString ),
-							ssl   = true
-						);
+						linkContent = cb.linkEntry( entry = determineSlug( tagString ), ssl = true );
 						break;
 					}
 					case "root": {

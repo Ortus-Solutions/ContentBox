@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="securitySettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
 	<legend><i class="fas fa-key fa-lg"></i> Password Options</legend>
 
@@ -310,4 +311,10 @@
         </div>
     </div>
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

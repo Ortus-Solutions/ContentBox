@@ -8,7 +8,7 @@
 component accessors="true" extends="BaseRenderer" {
 
 	// DI
-	property name="widgetService" inject="id:widgetService@cb";
+	property name="widgetService" inject="id:widgetService@contentbox";
 
 	/**
 	 * Execute on content translations for pages and blog entries

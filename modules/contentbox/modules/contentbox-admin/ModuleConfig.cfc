@@ -252,7 +252,7 @@ component {
 	 */
 	function onLoad(){
 		// Startup the Editor Service, needed for markup translations support
-		wirebox.getInstance( "EditorService@cb" );
+		wirebox.getInstance( "EditorService@contentbox" );
 
 		// Messagebox overrides for admin
 		wirebox

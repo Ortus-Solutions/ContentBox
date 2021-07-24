@@ -20,7 +20,7 @@
 		<cfloop array="#prc.commentPager_comments#" index="comment">
 		<tr <cfif !comment.getIsApproved()>class="error"</cfif> data-commentID="#comment.getCommentID()#">
 			<td>
-				#getInstance( "Avatar@cb" ).renderAvatar(
+				#getInstance( "Avatar@contentbox" ).renderAvatar(
 					email = comment.getAuthorEmail(),
 					size  = "30",
 					class = "img img-circle"

@@ -235,8 +235,7 @@
 
 						instance.zipOutput.closeEntry();
 						instance.ioInput.close();
-					} 
-catch ( java.util.zip.ZipException ex ) {
+					} catch ( java.util.zip.ZipException ex ) {
 						skip = "yes";
 					}
 				}
@@ -247,8 +246,7 @@ catch ( java.util.zip.ZipException ex ) {
 
 			/* Return true */
 			return true;
-		} 
-catch ( Any expr ) {
+		} catch ( Any expr ) {
 			/* Close Zip file */
 			instance.zipOutput.close();
 
@@ -350,8 +348,7 @@ catch ( Any expr ) {
 
 			/* Return true */
 			return true;
-		} 
-catch ( Any expr ) {
+		} catch ( Any expr ) {
 			/* Close the orginal Zip and the temporary Zip file */
 			instance.zipOutput.close();
 			instance.zipFile.close();
@@ -503,8 +500,7 @@ catch ( Any expr ) {
 							inStream.close();
 							instance.ioBufOutput.close();
 							instance.ioOutput.close();
-						} 
-catch ( Any Expr ) {
+						} catch ( Any Expr ) {
 							skip = "yes";
 						}
 					}
@@ -516,8 +512,7 @@ catch ( Any Expr ) {
 
 			/* Return true */
 			return true;
-		} 
-catch ( Any expr ) {
+		} catch ( Any expr ) {
 			/* Close the Zip file */
 			instance.zipFile.close();
 
@@ -667,8 +662,7 @@ catch ( Any expr ) {
 
 			/* Return true */
 			return true;
-		} 
-catch ( Any expr ) {
+		} catch ( Any expr ) {
 			return false;
 		}
 		</cfscript>

@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="rssSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
     <legend><i class="fa fa-rss fa-lg"></i>  RSS Options</legend>
 
@@ -189,4 +190,11 @@
         </div>
     </div>
 </fieldset>
+
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

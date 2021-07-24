@@ -8,8 +8,8 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="settingService" inject="id:settingService@cb";
-	property name="securityService" inject="id:securityService@cb";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="securityService" inject="id:securityService@contentbox";
 
 	/**
 	 * Configure

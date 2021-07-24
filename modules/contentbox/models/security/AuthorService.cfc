@@ -13,17 +13,17 @@ component
 
 	// DI
 	property name="bCrypt" inject="BCrypt@BCrypt";
-	property name="dateUtil" inject="DateUtil@cb";
-	property name="CBHelper" inject="CBHelper@cb";
+	property name="dateUtil" inject="DateUtil@contentbox";
+	property name="CBHelper" inject="CBHelper@contentbox";
 	property name="mailService" inject="mailService@cbmailservices";
-	property name="permissionService" inject="permissionService@cb";
-	property name="permissionGroupService" inject="permissionGroupService@cb";
+	property name="permissionService" inject="permissionService@contentbox";
+	property name="permissionGroupService" inject="permissionGroupService@contentbox";
 	property name="renderer" inject="coldbox:renderer";
 	property name="requestService" inject="coldbox:requestService";
-	property name="roleService" inject="roleService@cb";
-	property name="settingService" inject="provider:settingService@cb";
-	property name="securityService" inject="provider:securityService@cb";
-	property name="siteService" inject="provider:siteService@cb";
+	property name="roleService" inject="roleService@contentbox";
+	property name="settingService" inject="provider:settingService@contentbox";
+	property name="securityService" inject="provider:securityService@contentbox";
+	property name="siteService" inject="provider:siteService@contentbox";
 
 	/**
 	 * Constructor

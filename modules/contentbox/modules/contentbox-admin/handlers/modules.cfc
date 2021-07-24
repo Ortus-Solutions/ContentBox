@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="moduleService" inject="moduleService@cb";
-	property name="cb" inject="cbHelper@cb";
+	property name="moduleService" inject="moduleService@contentbox";
+	property name="cb" inject="cbHelper@contentbox";
 	property name="routingService" inject="coldbox:routingService";
 
 	// PrePost Actions

@@ -19,7 +19,7 @@
 		<div class="modal-body">
 			<div class="row">
 				<div class="col-md-6">
-					#getInstance( "Avatar@cb" ).renderAvatar(
+					#getInstance( "Avatar@contentbox" ).renderAvatar(
 						email = encodeForHTMLAttribute( rc.comment.getAuthorEmail() ),
 						size  = "50",
 						class = "img-circle"

@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="permissionGroupService" inject="permissionGroupService@cb";
-	property name="permissionService" inject="permissionService@cb";
+	property name="permissionGroupService" inject="permissionGroupService@contentbox";
+	property name="permissionService" inject="permissionService@contentbox";
 
 	/**
 	 * Pre handler
@@ -62,8 +62,9 @@ component extends="baseHandler" {
 
 		// populate and get
 		var oGroup = populateModel(
-			model               : permissionGroupService.get( id = rc.permissionGroupID ),
-			composeRelationships: true
+			model               : permissionGroupService.get( rc.permissionGroupID ),
+			composeRelationships: true,
+			exclude             : "permissionGroupID"
 		);
 
 		// Validate

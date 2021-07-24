@@ -14,15 +14,16 @@ component
 
 	// DI
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
+	property name="cookieStorage" inject="cookieStorage@cbStorages";
 	property name="requestStorage" inject="requestStorage@cbStorages";
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
-	property name="settingService" inject="provider:settingService@cb";
-	property name="categoryService" inject="provider:categoryService@cb";
-	property name="contentService" inject="provider:contentService@cb";
-	property name="menuService" inject="provider:menuService@cb";
-	property name="themeService" inject="provider:themeService@cb";
-	property name="mediaService" inject="provider:mediaService@cb";
+	property name="settingService" inject="provider:settingService@contentbox";
+	property name="categoryService" inject="provider:categoryService@contentbox";
+	property name="contentService" inject="provider:contentService@contentbox";
+	property name="menuService" inject="provider:menuService@contentbox";
+	property name="themeService" inject="provider:themeService@contentbox";
+	property name="mediaService" inject="provider:mediaService@contentbox";
 
 	/**
 	 * Constructor
@@ -39,7 +40,11 @@ component
 	 * @siteID The site to store as the current working one
 	 */
 	SiteService function setCurrentWorkingsiteID( required siteID ){
-		variables.cacheStorage.set( "adminCurrentSite", arguments.siteID );
+		variables.cookieStorage.set(
+			name   : "contentbox_admin_current_site",
+			value  : arguments.siteID,
+			expires: 7
+		);
 		return this;
 	}
 
@@ -48,8 +53,8 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	function getCurrentWorkingsiteID(){
-		return variables.cacheStorage.get(
-			name        : "adminCurrentSite",
+		return variables.cookieStorage.get(
+			name        : "contentbox_admin_current_site",
 			defaultValue: getDefaultsiteID()
 		);
 	}
@@ -534,7 +539,7 @@ component
 					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "menuService@cb" )
+					.getInstance( "menuService@contentbox" )
 					.importFromData(
 						importData: siteData.menus,
 						override  : arguments.override,
@@ -555,7 +560,7 @@ component
 					"+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "entryService@cb" )
+					.getInstance( "entryService@contentbox" )
 					.importFromData(
 						importData: siteData.entries,
 						override  : arguments.override,
@@ -575,7 +580,7 @@ component
 					"+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "pageService@cb" )
+					.getInstance( "pageService@contentbox" )
 					.importFromData(
 						importData: siteData.pages,
 						override  : arguments.override,
@@ -596,7 +601,7 @@ component
 					"+ Importing contentStore (#arrayLen( siteData.contentStore )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "contentStoreService@cb" )
+					.getInstance( "contentStoreService@contentbox" )
 					.importFromData(
 						importData: siteData.contentStore,
 						override  : arguments.override,

@@ -8,12 +8,12 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="authorService" inject="authorService@cb";
-	property name="themeService" inject="themeService@cb";
-	property name="CBHelper" inject="CBHelper@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="editorService" inject="editorService@cb";
-	property name="siteService" inject="siteService@cb";
+	property name="authorService" inject="authorService@contentbox";
+	property name="themeService" inject="themeService@contentbox";
+	property name="CBHelper" inject="CBHelper@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="editorService" inject="editorService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
 
 	/**
 	 * Pre Handler

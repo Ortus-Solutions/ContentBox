@@ -8,13 +8,13 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="entryService" inject="entryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="contentService" inject="contentService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="categoryService" inject="categoryService@cb";
+	property name="entryService" inject="entryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="contentService" inject="contentService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
 	property name="feedReader" inject="FeedReader@cbfeeds";
-	property name="loginTrackerService" inject="loginTrackerService@cb";
+	property name="loginTrackerService" inject="loginTrackerService@contentbox";
 	property name="markdown" inject="Processor@cbmarkdown";
 
 	/**
@@ -285,11 +285,11 @@ component extends="baseHandler" {
 					break;
 				}
 				case "rss-purge": {
-					getInstance( "RSSService@cb" ).clearAllCaches( async = false );
+					getInstance( "RSSService@contentbox" ).clearAllCaches( async = false );
 					break;
 				}
 				case "content-purge": {
-					getInstance( "ContentService@cb" ).clearAllCaches( async = false );
+					getInstance( "ContentService@contentbox" ).clearAllCaches( async = false );
 					break;
 				}
 				case "cache-purge": {

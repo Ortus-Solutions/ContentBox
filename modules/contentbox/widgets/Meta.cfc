@@ -100,30 +100,23 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	}
 
 	private function buildList( links ){
-		var rString = "";
-
-		saveContent variable="rString" {
-			writeOutput(
-				"<ul id=""meta"">
-	"
-			);
+		var rString         = "";
+		// cfformat-ignore-start
+		saveContent variable="rString"{
+			writeOutput( '<ul id="meta">' );
 			// iterate and create
-			for ( var x = 1; x lte arrayLen( arguments.links ); x++ ) {
-				writeOutput(
-					"<li class=""archives"">
-		<a href=""#links[ x ].link#"">#links[ x ].title#</a>
-	</li>
-	"
-				);
+			for(var x=1; x lte arrayLen( arguments.links ); x++){
+				writeOutput('<li class="archives">
+					<a href="#links[ x ].link#">#links[ x ].title#</a>
+					</li>
+				');
 			}
 			// close ul
-			writeOutput(
-				"
-</ul>
-"
-			);
+			writeOutput( "</ul>" );
 		}
-		return rString;
+
+		// cfformat-ignore-end
+return rString;
 	}
 
 }

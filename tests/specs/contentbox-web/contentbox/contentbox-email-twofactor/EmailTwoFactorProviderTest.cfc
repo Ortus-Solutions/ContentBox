@@ -9,7 +9,7 @@ component extends="tests.resources.BaseTest" {
 		// all your suites go here.
 		describe( "Email Two Factor Provider", function(){
 			beforeEach( function( currentSpec ){
-				mockUser = getInstance( "authorService@cb" ).findByUsername( "lmajano" );
+				mockUser = getInstance( "authorService@contentbox" ).findByUsername( "lmajano" );
 				provider = getInstance( "EmailTwoFactorProvider@contentbox-email-twofactor" );
 			} );
 

@@ -4,10 +4,10 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="authorService" inject="authorService@cb";
-	property name="contentService" inject="ContentService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="customFieldService" inject="customFieldService@cb";
+	property name="authorService" inject="authorService@contentbox";
+	property name="contentService" inject="ContentService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="customFieldService" inject="customFieldService@contentbox";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
 	// The name of the method to use for save persistence on the ORM service
@@ -103,7 +103,7 @@ component extends="baseHandler" {
 			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id )
 		);
 		arguments.populate.nullEmptyInclude = "parent";
-		arguments.populate.exclude          = "creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
+		arguments.populate.exclude          = "contentID,creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
 
 		// Creator override: Only if you have the right perms
 		arguments.populate.model.setCreator( prc.oCurrentAuthor );

@@ -12,7 +12,7 @@
 component accessors="true" extends="BaseRenderer" {
 
 	// DI
-	property name="settingService" inject="settingService@cb";
+	property name="settingService" inject="settingService@contentbox";
 	property name="cbResourceService" inject="resourceService@cbi18n";
 
 	/**

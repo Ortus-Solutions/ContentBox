@@ -99,7 +99,7 @@
 
 				<!--- Author + Changelog --->
 				<td>
-					#getInstance( "Avatar@cb" ).renderAvatar(
+					#getInstance( "Avatar@contentbox" ).renderAvatar(
 						email	= thisVersion.getAuthorEmail(),
 						size	= "20",
 						class	= "img img-circle"

@@ -4,7 +4,7 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="settingService" inject="SettingService@cb";
+	property name="settingService" inject="SettingService@contentbox";
 
 	variables.RESERVED_SETTINGS = [
 		"cb_enc_key",

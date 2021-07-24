@@ -5,9 +5,9 @@
 component extends="baseHandler" secured="AUTHOR_ADMIN" {
 
 	// DI
-	property name="ormService" inject="AuthorService@cb";
-	property name="roleService" inject="roleService@cb";
-	property name="permissionService" inject="permissionService@cb";
+	property name="ormService" inject="AuthorService@contentbox";
+	property name="roleService" inject="roleService@contentbox";
+	property name="permissionService" inject="permissionService@contentbox";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "lastName";

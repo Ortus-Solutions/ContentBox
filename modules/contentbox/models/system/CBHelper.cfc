@@ -8,25 +8,25 @@
 component accessors="true" singleton threadSafe {
 
 	// DI
-	property name="categoryService" inject="categoryService@cb";
-	property name="settingService" inject="settingService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="widgetService" inject="widgetService@cb";
-	property name="moduleService" inject="moduleService@cb";
-	property name="themeService" inject="themeService@cb";
-	property name="mobileDetector" inject="mobileDetector@cb";
-	property name="menuService" inject="menuService@cb";
-	property name="menuItemService" inject="menuItemService@cb";
-	property name="siteService" inject="siteService@cb";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="settingService" inject="settingService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="widgetService" inject="widgetService@contentbox";
+	property name="moduleService" inject="moduleService@contentbox";
+	property name="themeService" inject="themeService@contentbox";
+	property name="mobileDetector" inject="mobileDetector@contentbox";
+	property name="menuService" inject="menuService@contentbox";
+	property name="menuItemService" inject="menuItemService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
 	property name="requestService" inject="coldbox:requestService";
 	property name="wirebox" inject="wirebox";
 	property name="controller" inject="coldbox";
 	property name="cbResourceService" inject="resourceService@cbi18n";
-	property name="securityService" inject="securityService@cb";
+	property name="securityService" inject="securityService@contentbox";
 	property name="markdown" inject="Processor@cbmarkdown";
 	property name="requestStorage" inject="requestStorage@cbstorages";
 
@@ -1952,7 +1952,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		return wirebox
-			.getInstance( "Avatar@cb" )
+			.getInstance( "Avatar@contentbox" )
 			.renderAvatar(
 				email = targetEmail,
 				size  = arguments.size,
@@ -2040,10 +2040,10 @@ component accessors="true" singleton threadSafe {
 	/************************************** MENUS *********************************************/
 
 	/**
-	 * Build out a menu
+	 * Build out a menu from the defined menus in ContentBox.
 	 *
 	 * @slug The menu slug to build
-	 * @type The type either 'html' or 'data'
+	 * @type The type either 'html' or 'data', default is HTML
 	 * @slugCache The cache of menu slugs already used in this request
 	 *
 	 * @return HTML of the menu or a struct representing the menu
@@ -2053,12 +2053,11 @@ component accessors="true" singleton threadSafe {
 		required type            = "html",
 		required array slugCache = []
 	){
-		var result = "";
-		var menu   = variables.menuService.findBySlug( arguments.slug, site().getsiteID() );
+		var menu = variables.menuService.findBySlug( arguments.slug, site().getsiteID() );
 
 		if ( menu.isLoaded() ) {
 			if ( arguments.type == "data" ) {
-				return menu.getMemento();
+				return menu.getMemento( includes = "menuItems" );
 			} else {
 				return buildProviderMenu( menu = menu, slugCache = arguments.slugCache );
 			}

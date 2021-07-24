@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="commentSubscriptionService" inject="commentSubscriptionService@cb";
-	property name="subscriberService" inject="subscriberService@cb";
+	property name="commentSubscriptionService" inject="commentSubscriptionService@contentbox";
+	property name="subscriberService" inject="subscriberService@contentbox";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){

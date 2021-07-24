@@ -41,7 +41,7 @@ component accessors="true" threadSafe singleton {
 	property
 		name  ="avatar"
 		type  ="any"
-		inject="Avatar@cb";
+		inject="Avatar@contentbox";
 
 	// DI
 	property name="log" inject="logbox:logger:{this}";

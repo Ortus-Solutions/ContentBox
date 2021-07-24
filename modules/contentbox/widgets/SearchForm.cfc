@@ -56,6 +56,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		if ( arguments.type eq "blog" ) {
 			action = cb.linkSearch();
 		}
+
+		// cfformat-ignore-start
+
 		// Check incoming query
 		local.q = htmlEditFormat( event.getValue( "q", "" ) );
 
@@ -82,11 +85,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	</span>
 </div>
 			#html.endForm()#
-			"
-			);
-		}
+			');
 
-		return rString;
+			// cfformat-ignore-end
 	}
+
+	return rString;
+
+}
 
 }

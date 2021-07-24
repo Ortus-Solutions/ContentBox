@@ -20,7 +20,7 @@
 						</span>
 					<cfelseif prc.content.isContentPublished()>
 						<span class="p5 label label-success" data-timestamp="#prc.content.getMemento().publishedDate#">
-							#getInstance( "Avatar@cb" ).renderAvatar(
+							#getInstance( "Avatar@contentbox" ).renderAvatar(
 								email	= prc.content.getAuthorEmail(),
 								size	= "20",
 								class	= "img img-circle"
@@ -71,7 +71,7 @@
 							class="text-muted"
 							title="Created by #prc.content.getCreatorName()#"
 						>
-							#getInstance( "Avatar@cb" ).renderAvatar(
+							#getInstance( "Avatar@contentbox" ).renderAvatar(
 								email	= prc.content.getCreatorEmail(),
 								size	= "30",
 								class	= "img img-circle"
@@ -91,7 +91,7 @@
 								class="text-muted"
 								title="Last edit by #prc.content.getAuthorName()#"
 							>
-								#getInstance( "Avatar@cb" ).renderAvatar(
+								#getInstance( "Avatar@contentbox" ).renderAvatar(
 									email	= prc.content.getAuthorEmail(),
 									size	= "30",
 									class	= "img img-circle"

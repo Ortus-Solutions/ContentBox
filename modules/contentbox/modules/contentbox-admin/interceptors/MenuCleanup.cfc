@@ -8,7 +8,7 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="menuItemService" inject="id:menuItemService@cb";
+	property name="menuItemService" inject="id:menuItemService@contentbox";
 
 	/**
 	 * Configure

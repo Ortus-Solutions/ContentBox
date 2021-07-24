@@ -8,7 +8,7 @@
 component accessors="true" threadSafe singleton {
 
 	// DI
-	property name="settingService" inject="settingService@cb";
+	property name="settingService" inject="settingService@contentbox";
 
 	/**
 	 * Registered ContentBox Editors

@@ -8,6 +8,34 @@
  */
 component {
 
+	/* *********************************************************************
+	 **						GLOBAL DI
+	 ********************************************************************* */
+
+	property
+		name      ="coldbox"
+		inject    ="coldbox"
+		persistent="false";
+
+	property
+		name      ="cachebox"
+		inject    ="cachebox"
+		persistent="false";
+
+	property
+		name      ="interceptorService"
+		inject    ="coldbox:interceptorService"
+		persistent="false";
+
+	property
+		name      ="wirebox"
+		inject    ="wirebox"
+		persistent="false";
+
+	/* *********************************************************************
+	 **						CONCRETE PROPERTIES
+	 ********************************************************************* */
+
 	// PK Pointer
 	this.pk          = "PLEASE_SELECT_ONE";
 	// Constraints Default
@@ -96,9 +124,14 @@ component {
 	 * pre insertion procedures
 	 */
 	void function preInsert(){
-		var now                = now();
-		variables.createdDate  = now;
-		variables.modifiedDate = now;
+		var now = now();
+		// prevent override of explicit stamps from imports
+		if ( isNull( variables.createdDate ) ) {
+			variables.createdDate = now;
+		}
+		if ( isNull( variables.modifiedDate ) ) {
+			variables.modifiedDate = now;
+		}
 	}
 
 	/**
@@ -148,49 +181,58 @@ component {
 	}
 
 	/**
-	 * Build out property mementos
-	 * Date/Time objects are produced as UTC milliseconds since January 1, 1970 (Epoch)
+	 * Pass in a helper path and load it into this object as a mixin
 	 *
-	 * @properties The array properties to incorporate into the base memento
-	 * @excludes The properties to exclude from the memento
+	 * @helper The path to the helper to load.
+	 *
+	 * @throws ContentHelperNotFoundException - When the passed helper is not found
 	 */
-	private struct function getBaseMemento( required array properties, excludes = "" ){
-		var result = {};
-		var pList  = [
-			this.pk,
-			"createdDate",
-			"modifiedDate",
-			"isDeleted"
-		];
+	function includeMixin( required helper ){
+		// Init the mixin location and caches reference
+		var defaultCache     = variables.cachebox.getCache( "default" );
+		var mixinLocationKey = hash( variables.coldbox.getAppHash() & arguments.helper );
 
-		// add in base properties
-		arrayAppend( arguments.properties, pList, true );
+		var targetLocation = defaultCache.getOrSet(
+			// Key
+			"contentObjectHelper-#mixinLocationKey#",
+			// Producer
+			function(){
+				var appMapping      = variables.coldbox.getSetting( "AppMapping" );
+				var UDFFullPath     = expandPath( helper );
+				var UDFRelativePath = expandPath( "/" & appMapping & "/" & helper );
 
-		// properties
-		for ( var thisProp in arguments.properties ) {
-			// If property exists and not excluded and a simple value
-			if (
-				structKeyExists( variables, thisProp ) &&
-				!listFindNoCase( arguments.excludes, thisProp ) &&
-				isSimpleValue( variables[ thisProp ] )
-			) {
-				// Formatted Date/Time
-				if ( isDate( variables[ thisProp ] ) ) {
-					result[ thisProp ] = dateFormat( variables[ thisProp ], "medium" ) & " " & timeFormat(
-						variables[ thisProp ],
-						"full"
-					);
-				} else {
-					result[ thisProp ] = variables[ thisProp ];
+				// Relative Checks First
+				if ( fileExists( UDFRelativePath ) ) {
+					targetLocation = "/" & appMapping & "/" & helper;
 				}
-			}
-			// Else default it
-			else if ( !listFindNoCase( arguments.excludes, thisProp ) ) {
-				result[ thisProp ] = "";
-			}
-		}
+				// checks if no .cfc or .cfm where sent
+				else if ( fileExists( UDFRelativePath & ".cfc" ) ) {
+					targetLocation = "/" & appMapping & "/" & helper & ".cfc";
+				} else if ( fileExists( UDFRelativePath & ".cfm" ) ) {
+					targetLocation = "/" & appMapping & "/" & helper & ".cfm";
+				} else if ( fileExists( UDFFullPath ) ) {
+					targetLocation = "#helper#";
+				} else if ( fileExists( UDFFullPath & ".cfc" ) ) {
+					targetLocation = "#helper#.cfc";
+				} else if ( fileExists( UDFFullPath & ".cfm" ) ) {
+					targetLocation = "#helper#.cfm";
+				} else {
+					throw(
+						message = "Error loading content helper: #helper#",
+						detail  = "Please make sure you verify the file location.",
+						type    = "ContentHelperNotFoundException"
+					);
+				}
+				return targetLocation;
+			},
+			// Timeout: 1 week
+			10080
+		);
 
-		return result;
+		// Include the helper
+		include targetLocation;
+
+		return this;
 	}
 
 }
