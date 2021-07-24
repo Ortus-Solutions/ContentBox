@@ -75,7 +75,6 @@ component {
 				"cbadmin_onValidTwoFactor"
 			]
 		};
-
 	}
 
 }

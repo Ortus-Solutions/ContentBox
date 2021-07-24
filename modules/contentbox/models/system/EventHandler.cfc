@@ -29,9 +29,9 @@ Author     :	Luis Majano
 Date        :	10/16/2007
 Description :
 	A ColdBox Enabled Hibernate Event Handler that ties to the ColdBox proxy for ColdBox Operations.
-	
+
 */
-component extends="cborm.models.EventHandler"{
-	
-	
+component extends="cborm.models.EventHandler" {
+
+
 }
