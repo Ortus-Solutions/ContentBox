@@ -6,8 +6,6 @@ $( () => {
 	REGEX_DIGITS = /[0-9].*[0-9]/,
 	REGEX_SPECIAL = /[^a-zA-Z0-9]/;
 
-	alert( "hello" );
-
 	// If the sidebar preference is off, toggle it
 	if ( $( "body" ).attr( "data-showsidebar" ) == "no" ) {
 		toggleSidebar();

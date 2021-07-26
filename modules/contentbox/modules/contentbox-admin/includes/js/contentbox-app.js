@@ -6,8 +6,6 @@ $( () => {
 	REGEX_DIGITS = /[0-9].*[0-9]/,
 	REGEX_SPECIAL = /[^a-zA-Z0-9]/;
 
-	alert( "hello" );
-
 	// If the sidebar preference is off, toggle it
 	if ( $( "body" ).attr( "data-showsidebar" ) == "no" ) {
 		toggleSidebar();
@@ -863,12 +861,12 @@ var app = function() {
 		} );
 	};
 
-	//Sliders
+	// Sliders
 	var sliders = function() {
 		$( ".slider-span" ).slider();
 	};
 
-	//return functions
+	// return functions
 	return {
 		init      : init,
 		sliders   : sliders,
@@ -876,8 +874,7 @@ var app = function() {
 	};
 }();
 
-//Load global functions
-$( document ).ready( function() {
+$( () => {
 	app.init();
 	// Collapsed nav if <=768 by default
 	var bodyEl = $( "#container" );

@@ -67,7 +67,7 @@ module.exports = function( grunt ) {
 				files : [ "resources/js/**/*.js" ],
 				tasks : [
 					"concat:appjs",
-					"tenser:appjs"
+					"terser:appjs"
 				]
 			}
 		},
@@ -204,7 +204,7 @@ module.exports = function( grunt ) {
 					defaults : true,
 					ecma     : 2018
 				},
-				mangle : false
+				mangle : true
 			},
 
 			// ContentBox App
