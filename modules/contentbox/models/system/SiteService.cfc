@@ -94,47 +94,54 @@ component
 	 */
 	Site function save( required site, boolean transactional = true ){
 		// Added this due to issue in CFML engines and mixed quuery+orm nested transactions. Remove once issue is fixed
-		$transactioned(
-			target: function( site ){
-				// Create all site settings if this is a new site
-				if ( !arguments.site.isLoaded() ) {
-					variables.settingService.saveAll(
-						variables.settingService
-							.getSiteSettingDefaults()
-							.reduce( function( result, setting, value ){
-								arguments.result.append(
-									variables.settingService.new( {
-										name   : arguments.setting,
-										value  : trim( arguments.value ),
-										isCore : true,
-										site   : site
-									} )
-								);
-								return arguments.result;
-							}, [] )
-					);
-				}
-
-				// Persist the site
-				super.save( arguments.site );
-
-				// Activate the site's theme
-				variables.themeService.startupTheme(
-					name: arguments.site.getActiveTheme(),
-					site: arguments.site
-				);
-
-				// Create media root folder for the site
-				ensureSiteMediaFolder( arguments.site );
-			},
-			argCollection= arguments,
-			transactional: arguments.transactional
-		); // end base orm transaction
+		if ( arguments.transactional ) {
+			transaction {
+				_save( arguments.site );
+			}
+		} else {
+			_save( arguments.site );
+		}
 
 		// flush cache to rebuild site settings
 		variables.settingService.flushSettingsCache();
 
 		return arguments.site;
+	}
+
+	/**
+	 * Save operation called by the transactional `save()` method
+	 */
+	private function _save( required site ){
+		// Create all site settings if this is a new site
+		if ( !arguments.site.isLoaded() ) {
+			variables.settingService.saveAll(
+				variables.settingService
+					.getSiteSettingDefaults()
+					.reduce( function( result, setting, value ){
+						arguments.result.append(
+							variables.settingService.new( {
+								name   : arguments.setting,
+								value  : trim( arguments.value ),
+								isCore : true,
+								site   : site
+							} )
+						);
+						return arguments.result;
+					}, [] )
+			);
+		}
+
+		// Persist the site
+		super.save( arguments.site );
+
+		// Activate the site's theme
+		variables.themeService.startupTheme(
+			name: arguments.site.getActiveTheme(),
+			site: arguments.site
+		);
+
+		// Create media root folder for the site
+		ensureSiteMediaFolder( arguments.site );
 	}
 
 	/**

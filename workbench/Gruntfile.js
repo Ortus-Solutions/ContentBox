@@ -232,6 +232,13 @@ module.exports = function( grunt ) {
 						src     : "app_modules/font-awesome-sass/assets/fonts/font-awesome/**",
 						filter  : "isFile",
 						dest    : "../modules/contentbox/modules/contentbox-admin/includes/fonts/font-awesome"
+					},
+					{
+						expand  : true,
+						flatten : true,
+						src     : "app_modules/bootstrap-sass/assets/fonts/bootstrap/**",
+						filter  : "isFile",
+						dest    : "../modules/contentbox/modules/contentbox-admin/includes/fonts/bootstrap"
 					}
 				]
 			},
