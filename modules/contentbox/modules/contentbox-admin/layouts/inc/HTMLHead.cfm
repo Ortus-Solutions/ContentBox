@@ -48,14 +48,7 @@
     <cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
         <cfset addAsset( "#css#" )>
     </cfloop>
-    <!--- ********************************************************************* --->
-    <!---                           IE SUPPORT                                  --->
-    <!--- ********************************************************************* --->
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="#prc.cbroot#/includes/js/html5shiv.min.js"></script>
-    <script src="#prc.cbroot#/includes/js/respond.min.js"></script>
-    <![endif]-->
+
     <!--- ********************************************************************* --->
     <!---                           EVENTS                                      --->
     <!--- ********************************************************************* --->
@@ -65,10 +58,10 @@
     <cfelse>
         #announce( "cbadmin_beforeHeadEnd" )#
     </cfif>
+
     <!--- ********************************************************************* --->
-    <!---                            JS LIBRARIES FOR IN-PAGE JS                --->
+    <!---                            JS LIBRARIES                				--->
     <!--- ********************************************************************* --->
-    <!---  Blocking JS - Libraries required for in-page JS --->
     <cfif getSetting( "environment" ) eq "development">
         <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
         <script type="application/javascript" src="#prc.cbroot#/includes/js/contentbox-app.js"></script>

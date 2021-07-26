@@ -54,10 +54,6 @@ module.exports = {
 			"error",
 			{ "multiline": true, "minItems": 2 }
 		],
-		"camelcase" : [
-			"error" ,
-			{ "properties": "always" }
-		],
 		"indent" : [
 			"error",
 			"tab",
