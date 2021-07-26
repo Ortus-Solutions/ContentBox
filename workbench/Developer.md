@@ -82,4 +82,5 @@ Plugins which are used only for specific handler/actions, should be deployed as 
 - `modules/contentbox-admin/includes/plugins`
 - `modules/contentbox-admin/includes/fonts`
 
-
+## Local Datetimes
+Admin section takes client timezone based on the web browser in order to show reliable and accurate information. Everything is managed and activated on `workbench/resources/js/admin.js` under execution time.
