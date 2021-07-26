@@ -93,7 +93,7 @@ component
 	 * @transactional Transaction the call or leave as is, useful for imports, bulk saves, etc.
 	 */
 	Site function save( required site, boolean transactional = true ){
-		// start base transaction according to `transactional` argument
+		// Added this due to issue in CFML engines and mixed quuery+orm nested transactions. Remove once issue is fixed
 		$transactioned(
 			target: function( site ){
 				// Create all site settings if this is a new site
