@@ -26,7 +26,7 @@ function getPageSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/pages/ed
 /**
  * Blog Editor selector
  */
-function getEntrySelectorURL(){ return $cbEditorConfig.isBlogDisabled ? '' : $cbEditorConfig.adminEntryURL + '/entries/editorselector'; }
+function getEntrySelectorURL(){ return $cbEditorConfig.isBlogDisabled ? "" : $cbEditorConfig.adminEntryURL + "/entries/editorselector"; }
 
 /**
  * Get contentstore selector
@@ -58,9 +58,9 @@ function getModuleURL( module, event, queryString ){
 	var returnURL = "";
 
 	$.ajax( {
-		url 	: $cbEditorConfig.adminEntryURL + '/modules/buildModuleLink',
-		data 	: { module: module, moduleEvent : event, moduleQS : queryString },
-		async 	: false,
+		url    	: $cbEditorConfig.adminEntryURL + "/modules/buildModuleLink",
+		data   	: { module: module, moduleEvent: event, moduleQS: queryString },
+		async  	: false,
 		success : function( data ){
 			returnURL = data;
 		}
@@ -91,15 +91,15 @@ function loadAssetChooser( callback, w, h ){
  */
 function switchEditor( editorType ){
 	// Save work
-	if( confirm( "Would you like to save your work before switching editors?" ) ){
-		$changelog.val( 'Editor Change Quick Save' );
+	if ( confirm( "Would you like to save your work before switching editors?" ) ){
+		$changelog.val( "Editor Change Quick Save" );
 		quickSave();
 	}
 	// Call change user editor preference
 	$.ajax( {
-		url 	: getAuthorEditorPreferenceURL(),
-		data 	: { editor: editorType },
-		async 	: false,
+		url    	: getAuthorEditorPreferenceURL(),
+		data   	: { editor: editorType },
+		async  	: false,
 		success : function( data ){
 			location.reload();
 		}
@@ -124,7 +124,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	$isPublished 			= $targetEditorForm.find( "#isPublished" );
 	$contentID				= $targetEditorForm.find( "#contentID" );
 	$changelog				= $targetEditorForm.find( "#changelog" );
-	$slug 					= $targetEditorForm.find( '#slug' );
+	$slug 					= $targetEditorForm.find( "#slug" );
 	$publishingBar 			= $targetEditorForm.find( "#publishingBar" );
 	$actionBar 				= $targetEditorForm.find( "#actionBar" );
 	$publishButton 			= $targetEditorForm.find( "#publishButton" );
@@ -135,59 +135,59 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	$cbEditorStartup();
 
 	// Activate date pickers
-	$( "[type=date]" ).datepicker( { format: 'yyyy-mm-dd' } );
-	$( ".datepicker" ).datepicker( { format: 'yyyy-mm-dd' } );
+	$( "[type=date]" ).datepicker( { format: "yyyy-mm-dd" } );
+	$( ".datepicker" ).datepicker( { format: "yyyy-mm-dd" } );
 
 	// Activate Form Validators
 	$targetEditorForm.validate( {
-    	ignore  		: 'content',
-        submitHandler 	: function( form ) {
+    	ignore      		: "content",
+		submitHandler	: function( form ) {
 			// Update Editor Content
-        	try{
+        	try {
         		updateEditorContent();
-        	} catch( err ){
+        	} catch ( err ){
         		console.log( err );
         	};
 
 			// Update excerpt
-			if( $withExcerpt ){
-				try{
+			if ( $withExcerpt ){
+				try {
 					updateEditorExcerpt();
-				} catch( err ){
+				} catch ( err ){
 					console.log( err );
 				};
 			}
 
 			// if it's valid, submit form
-            if( $content.val().length ) {
+			if ( $content.val().length ) {
             	// enable slug for saving.
             	$slug.prop( "disabled", false );
             	// Disable Publish Buttons
-            	$publishButton.prop( 'disabled', true );
+            	$publishButton.prop( "disabled", true );
             	// submit
             	form.submit();
-            } else {
-            	alert( 'Please enter some content!' );
+			} else {
+            	alert( "Please enter some content!" );
            	}
-        }
-    } );
+		}
+	} );
 
 	// Changelog mandatory?
-	if( $cbEditorConfig.changelogMandatory ){
+	if ( $cbEditorConfig.changelogMandatory ){
 		$changelog.attr( "required", $cbEditorConfig.changelogMandatory );
 	}
 
 	// Activate blur slugify on titles
 	var $title = $targetEditorForm.find( "#title" );
 	// set up live event for title, do nothing if slug is locked..
-	$title.on( 'blur', function(){
-		if( !$slug.prop( "disabled" ) ){
+	$title.on( "blur", function(){
+		if ( !$slug.prop( "disabled" ) ){
 			createPermalink( $title.val() );
 		}
 	} );
 	// Activate permalink blur
-	$slug.on( 'blur',function(){
-		if( !$( this ).prop( "disabled" ) ){
+	$slug.on( "blur",function(){
+		if ( !$( this ).prop( "disabled" ) ){
 			permalinkUniqueCheck();
 		}
 	} );
@@ -196,26 +196,26 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	window.onbeforeunload = askLeaveConfirmation;
 
 	// counters
-	$( "#htmlKeywords" ).keyup(function(){
+	$( "#htmlKeywords" ).keyup( function(){
 		$( "#html_keywords_count" ).html( $( "#htmlKeywords" ).val().length );
 	} );
-	$( "#htmlDescription" ).keyup(function(){
+	$( "#htmlDescription" ).keyup( function(){
 		$( "#html_description_count" ).html( $( "#htmlDescription" ).val().length );
 	} );
 
 	// setup clockpickers
-    $( '.clockpicker' ).clockpicker();
+	$( ".clockpicker" ).clockpicker();
 
 	// setup autosave
-	autoSave( $content, $contentID, 'contentAutoSave' );
+	autoSave( $content, $contentID, "contentAutoSave" );
 
 	// Collapse navigation for better editing experience
-    var bodyEl = $( '#container' );
-    collapseNav = collapseNav || true;
-    if( collapseNav && !$( bodyEl ).hasClass( 'sidebar-mini' ) ){
-        $( 'body' ).removeClass('off-canvas-open');
-        $( bodyEl ).toggleClass( 'sidebar-mini' );
-    }
+	var bodyEl = $( "#container" );
+	collapseNav = collapseNav || true;
+	if ( collapseNav && !$( bodyEl ).hasClass( "sidebar-mini" ) ){
+		$( "body" ).removeClass( "off-canvas-open" );
+		$( bodyEl ).toggleClass( "sidebar-mini" );
+	}
 }
 
 /**
@@ -224,7 +224,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
  */
 function shouldPublish(){
 	// Confirm if you really want to quick save if content is published already
-	if( $contentID.val().length && $isPublished.val() == 'true' ){
+	if ( $contentID.val().length && $isPublished.val() == "true" ){
 		return confirm( "Your content is published already, quick saving it will draft it and unpublish it" );
 	}
 	return true;
@@ -238,33 +238,33 @@ function quickSave(){
 	$isPublished.val( "false" );
 
 	// Confirm if you really want to quick save if content is published already
-	if( !shouldPublish() ){
+	if ( !shouldPublish() ){
 		return;
 	}
 
 	// Commit Changelog default it to quick save if not set
-	if( !$changelog.val().length ){
+	if ( !$changelog.val().length ){
 		$changelog.val( "quick save" );
 	}
 	// Validation of Form First before quick save
-	if( !$targetEditorForm.valid() ){
+	if ( !$targetEditorForm.valid() ){
 		adminNotifier( "error", "Form is not valid, please verify." );
 		return false;
 	}
 	// Verify Content
-	if( !getEditorContent().length ){
+	if ( !getEditorContent().length ){
 		alert( "Please enter content before saving." );
 		return;
 	}
 	// Activate Loader
 	toggleLoaderBar();
 	// Save current content, just in case editor has not saved it
-	if( !$content.val().length ){
+	if ( !$content.val().length ){
 		$content.val( getEditorContent() );
 	}
 	// enable for quick save, if disabled
 	var disableSlug = false;
-	if( $slug.prop( "disabled" ) ){
+	if ( $slug.prop( "disabled" ) ){
 		$slug.prop( "disabled", false );
 		disableSlug = true;
 	}
@@ -276,12 +276,12 @@ function quickSave(){
 			// Save new id
 			$contentID.val( data.CONTENTID );
 			// finalize
-			$changelog.val( '' );
+			$changelog.val( "" );
 			$uploaderBarLoader.fadeOut( 1500 );
-			$uploaderBarStatus.html( 'Draft Saved!' );
-			$isPublished.val( 'true' );
+			$uploaderBarStatus.html( "Draft Saved!" );
+			$isPublished.val( "true" );
 			// bring back slug if needed.
-			if( disableSlug ){
+			if ( disableSlug ){
 				$slug.prop( "disabled", true );
 			}
 			// notify
@@ -300,17 +300,17 @@ function previewContent(){
 	openRemoteModal(
 		getPreviewSelectorURL(),
 		{
-			content		: getEditorContent(),
-			layout		: $( "#layout" ).val(),
-			title		: $( "#title" ).val(),
-			slug		: $slug.val(),
+			content   		: getEditorContent(),
+			layout    		: $( "#layout" ).val(),
+			title     		: $( "#title" ).val(),
+			slug      		: $slug.val(),
 			contentType : $( "#contentType" ).val(),
-			markup 		: $( "#markup" ).val(),
-			parentPage	: $( "#parentPage" ).val() || ''
+			markup    		: $( "#markup" ).val(),
+			parentPage 	: $( "#parentPage" ).val() || ""
 		},
 		$( window ).width() - 50,
 		$( window ).height() - 200,
-        true
+		true
 	);
 }
 
@@ -328,7 +328,7 @@ function publishNow(){
  * Switch markup type
  * @param  {string} markupType The markup type
  */
-function switchMarkup(markupType){
+function switchMarkup( markupType ){
 	$( "#markup" ).val( markupType );
 	$( "#markupLabel" ).html( markupType );
 }
@@ -357,17 +357,17 @@ function askLeaveConfirmation(){
 function permalinkUniqueCheck( linkToUse ){
 	linkToUse = linkToUse || $slug.val();
 	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness
-	if( !linkToUse.length ){ return; }
+	if ( !linkToUse.length ){ return; }
 	// Verify unique
 	$.getJSON(
 		$cbEditorConfig.slugCheckURL,
 		{
-			slug : linkToUse,
-			contentID : $( "#contentID" ).val(),
+			slug        : linkToUse,
+			contentID   : $( "#contentID" ).val(),
 			contentType : $( "#contentType" ).val()
 		},
 		function( data ){
-			if( !data.UNIQUE ){
+			if ( !data.UNIQUE ){
 				$( "#slugCheckErrors" )
 					.html( "The permalink slug you entered is already in use, please enter another one or modify it." )
 					.addClass( "alert alert-danger" );
@@ -387,13 +387,13 @@ function permalinkUniqueCheck( linkToUse ){
 function createPermalink( linkToUse ){
 	var $title 		= $targetEditorForm.find( "#title" );
 	var linkToUse 	= linkToUse || $title.val();
-	if( !linkToUse.length ){ return; }
+	if ( !linkToUse.length ){ return; }
 
-	togglePermalink()
+	togglePermalink();
 
 	$.get(
 		$cbEditorConfig.slugifyURL,
-		{ slug : linkToUse },
+		{ slug: linkToUse },
 		function( data ){
 			$slug.val( data );
 			permalinkUniqueCheck();
@@ -406,9 +406,9 @@ function createPermalink( linkToUse ){
  * Toggle permalink
  */
 function togglePermalink(){
-	var toggle = $( '#togglePermalink' );
+	var toggle = $( "#togglePermalink" );
 	// Toggle lock icon on click..
-	toggle.hasClass( 'fa fa-lock' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-lock' );
+	toggle.hasClass( "fa fa-lock" ) ? toggle.attr( "class", "fa fa-unlock" ) : toggle.attr( "class", "fa fa-lock" );
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
 }
@@ -419,11 +419,11 @@ function togglePermalink(){
  */
 function toggleDraft(){
 	// Confirm if you really want to quick save if content is published already
-	if( !shouldPublish() ){
+	if ( !shouldPublish() ){
 		return false;
 	}
 	// set published bit to false
-	$isPublished.val( 'false' );
+	$isPublished.val( "false" );
 	// record we are submitting
 	setWasSubmitted();
 	return true;
@@ -434,9 +434,9 @@ function toggleDraft(){
  * @param  {Boolean} isDraft draft mode or publish
  */
 function quickPublish( isDraft ){
-	if( isDraft ){
+	if ( isDraft ){
 		// verify we can draft this content
-		if( !toggleDraft() ){
+		if ( !toggleDraft() ){
 			return false;
 		}
 	} else {
@@ -447,7 +447,7 @@ function quickPublish( isDraft ){
 	}
 
 	// Verify changelogs and open sidebar if closed:
-	if( $cbEditorConfig.changelogMandatory && !isMainSidebarOpen() ){
+	if ( $cbEditorConfig.changelogMandatory && !isMainSidebarOpen() ){
 		toggleSidebar();
 	}
 
@@ -479,20 +479,20 @@ function togglePublishingBar(){
  * @param  {string} fileType Directory or file
  */
 function featuredImageCallback( filePath, fileURL, fileType ){
-	if( $( "#featuredImage" ).val().length ){ cancelFeaturedImage(); }
-    $( "#featuredImageControls" ).toggleClass( "hide" );
-    $( "#featuredImage" ).val( filePath );
-    $( "#featuredImageURL" ).val( fileURL );
-    $( "#featuredImagePreview" ).attr( "src", fileURL );
-    closeRemoteModal();
+	if ( $( "#featuredImage" ).val().length ){ cancelFeaturedImage(); }
+	$( "#featuredImageControls" ).toggleClass( "hide" );
+	$( "#featuredImage" ).val( filePath );
+	$( "#featuredImageURL" ).val( fileURL );
+	$( "#featuredImagePreview" ).attr( "src", fileURL );
+	closeRemoteModal();
 }
 
 /**
  * Cancel featured image
  */
 function cancelFeaturedImage(){
-    $( "#featuredImage" ).val( "" );
-    $( "#featuredImageURL" ).val( "" );
-    $( "#featuredImagePreview" ).attr( "src", "" );
-    $( "#featuredImageControls" ).toggleClass( "hide" );
+	$( "#featuredImage" ).val( "" );
+	$( "#featuredImageURL" ).val( "" );
+	$( "#featuredImagePreview" ).attr( "src", "" );
+	$( "#featuredImageControls" ).toggleClass( "hide" );
 }

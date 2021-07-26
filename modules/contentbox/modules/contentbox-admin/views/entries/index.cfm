@@ -122,7 +122,7 @@
 				</div>
 				<div class="panel-body">
 					<!--- entries container --->
-    				<div id="entriesTableContainer">
+    				<div id="contentTableContainer">
     					<p class="text-center"><i id="entryLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
     				</div>
 				</div>

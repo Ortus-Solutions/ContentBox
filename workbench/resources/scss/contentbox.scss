@@ -5,6 +5,10 @@
 
 /******************** MAIN HTML ELEMENTS ****************************/
 
+html{
+	scroll-behavior: smooth;
+}
+
 body{
 	position: inherit;
 	font-family: 'Source Sans Pro',Arial,sans-serif;

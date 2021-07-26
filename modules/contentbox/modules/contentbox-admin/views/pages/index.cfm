@@ -119,9 +119,11 @@
 					</div>
 				</div>
 				<div class="panel-body">
-					<!--- pages container --->
-    				<div id="pagesTableContainer">
-    					<p class="text-center"><i id="pageLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i></p>
+					<!--- content container --->
+    				<div id="contentTableContainer">
+    					<p class="text-center">
+							<i id="pageLoader" class="fa fa-spinner fa-spin fa-lg icon-4x"></i>
+						</p>
     				</div>
 				</div>
 			</div>

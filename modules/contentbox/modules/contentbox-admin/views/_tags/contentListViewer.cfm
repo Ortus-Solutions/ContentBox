@@ -64,8 +64,8 @@ function contentDrilldown( parent ){
 	$searchField.val( '' );
 	// push history
 	History.pushState( { parent : parent }, document.title, "?parent=" + parent );
-	// load history
-	//contentLoad( { parent: parent } );
+	// Scroll back up
+	scrollToHash( "container" );
 }
 // show all content
 function contentShowAll(){

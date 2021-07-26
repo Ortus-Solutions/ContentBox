@@ -9,7 +9,7 @@
 $( document ).ready( function() {
 	// Setup content view
 	setupContentView( {
-		tableContainer	: $( "##entriesTableContainer" ),
+		tableContainer	: $( "##contentTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehEntryTable )#',
 		searchField 	: $( "##entrySearch" ),
 		searchName		: 'searchEntries',

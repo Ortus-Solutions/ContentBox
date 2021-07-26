@@ -1,6 +1,9 @@
 ﻿<cfoutput>
 <!--- Load Content List Viewer UI --->
-#renderView( view="_tags/contentListViewer", prePostExempt=true )#
+#renderView(
+	view 			= "_tags/contentListViewer",
+	prePostExempt 	= true
+)#
 <!--- page JS --->
 <script>
 $( document ).ready(function() {
@@ -12,12 +15,12 @@ $( document ).ready(function() {
 
 	// Setup content view
 	setupContentView( {
-		tableContainer	: $( "##pagesTableContainer" ),
+		tableContainer	: $( "##contentTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehPageTable )#',
 		searchField 	: $( "##pageSearch" ),
 		searchName		: 'searchPages',
 		contentForm 	: $( "##pageForm" ),
-		bulkStatusURL 	: '#event.buildlink(to=prc.xehPageBulkStatus)#',
+		bulkStatusURL 	: '#event.buildlink( prc.xehPageBulkStatus )#',
 		importDialog 	: $( "##importDialog" ),
 		cloneDialog		: $( "##cloneDialog" )
 	} );
