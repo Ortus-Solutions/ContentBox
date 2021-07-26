@@ -739,11 +739,42 @@ function passwordValidator( value ) {
 
 /**
  * Convert an iso8601 to local browser date time
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleString
+ *
  * @param {*} dateTime The iso8601 date time object
  * @returns A local browser date time
  */
-function toLocal( dateTime ){
-	return moment.utc( dateTime ).local().format();
+function toLocalString( dateTime, options ){
+	return new Date( dateTime ).toLocaleString( undefined, options || getDefaultDateTimeOptions() );
+}
+
+/**
+ * Convert an iso8601 to local browser date object
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+ *
+ * @param {*} dateTime The iso8601 date time object
+ * @returns A local browser date time
+ */
+function toLocaleDateString( dateTime, options ){
+	return new Date( dateTime ).toLocaleDateString( undefined, options || getDefaultDateTimeOptions() );
+}
+
+/**
+ * Convert an iso8601 to local browser time object
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleTimeString
+ *
+ * @param {*} dateTime The iso8601 date time object
+ * @returns A local browser date time
+ */
+function toLocaleTimeString( dateTime, options ){
+	return new Date( dateTime ).toLocaleTimeString( undefined, options || getDefaultDateTimeOptions() );
+}
+
+function getDefaultDateTimeOptions(){
+	return { dateStyle: "medium", timeStyle: "long" };
 }
 
 /**

@@ -146,7 +146,6 @@ module.exports = function( grunt ) {
 					"app_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
 					// Date/Time Utiolities
 					"app_modules/moment/min/moment-with-locales.min.js",
-					"node_modules/moment-timezone/builds/moment-timezone-with-data-10-year-range.min.js",
 					// String compression utility: Used by autosave features
 					"app_modules/lz-string/libs/lz-string.min.js",
 					// Global utility
