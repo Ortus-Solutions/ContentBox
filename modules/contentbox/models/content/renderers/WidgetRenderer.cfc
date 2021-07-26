@@ -96,7 +96,16 @@ component accessors="true" extends="BaseRenderer" {
 					widgetContent = "";
 				}
 			} catch ( Any e ) {
-				widgetContent = "Error translating tag widget: #e.message# #e.detail#";
+				widgetContent = "Error translating tag widget: #e.message#";
+				
+				if( len( e.detail ) ){
+					widgetContent &= "<br><strong>Detail:</strong> #e.detail#";
+				}
+				
+				if( log.canDebug() ){
+					widgetContent &= "<br><strong>StackTrace:</strong> <pre>#e.stacktrace#</pre>";
+				}
+
 				log.error( "Error translating tag widget on target: #targets[ x ]#", e );
 			}
 
