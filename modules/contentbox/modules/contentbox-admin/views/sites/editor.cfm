@@ -214,13 +214,13 @@
 											<!--- The pages list --->
 											<cfloop array="#prc.pages#" index="thisPage" >
 												<option
-													value="#thispage.getSlug()#"
+													value="#thispage["slug"]#"
 													<cfif
 													prc.site.getHomePage()
 													eq
-													thisPage.getSlug()>selected="selected"</cfif>
+													thisPage["slug"]>selected="selected"</cfif>
 												>
-													#thisPage.getSlug()#
+													#thisPage[ "title" ]#
 												</option>
 											</cfloop>
 										</select>

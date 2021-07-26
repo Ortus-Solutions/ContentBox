@@ -51,9 +51,10 @@ component extends="baseHandler" {
 		prc.themes = variables.themeService.getThemes();
 		// pages
 		prc.pages  = variables.pageService.search(
-			sortOrder   = "slug asc",
-			isPublished = true,
-			siteID      = prc.site.getsiteID()
+			sortOrder    = "slug asc",
+			isPublished  = true,
+			siteID       = prc.site.getsiteID(),
+			propertyList = "contentID,slug,title"
 		).pages;
 
 		// exit handlers

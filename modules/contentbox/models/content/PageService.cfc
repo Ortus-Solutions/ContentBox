@@ -82,7 +82,8 @@ component extends="ContentService" singleton {
 		string sortOrder            = "",
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
-		string siteID               = ""
+		string siteID               = "",
+		propertyList
 	){
 		var results = { "count" : 0, "pages" : [] };
 		// criteria queries
@@ -184,14 +185,18 @@ component extends="ContentService" singleton {
 
 		// run criteria query and projections count
 		results.count = c.count( "contentID" );
-		results.pages = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset    = arguments.offset,
-				max       = arguments.max,
-				sortOrder = arguments.sortOrder,
-				asQuery   = false
-			);
+
+		if ( !isNull( arguments.propertyList ) ) {
+			c.withProjections( property = arguments.propertyList ).asStruct();
+		} else {
+			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
+		}
+		results.pages = c.list(
+			offset    = arguments.offset,
+			max       = arguments.max,
+			sortOrder = arguments.sortOrder,
+			asQuery   = false
+		);
 		return results;
 	}
 
