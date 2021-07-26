@@ -20,8 +20,10 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <div class="actions">
-                    <a class="btn btn-sm btn-info" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fas fa-chevron-left"></i> Back</a>
+                <div class="p11 size16">
+                    <div class="actions">
+                        <a class="btn btn-sm btn-info text-white" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fas fa-chevron-left"></i> Back</a>
+                    </div>
                 </div>
             </div>
             <div class="panel-body">
