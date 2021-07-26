@@ -8,7 +8,7 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="permissionService" inject="permissionService@cb";
+	property name="permissionService" inject="permissionService@contentbox";
 
 	/**
 	 * Pre handler

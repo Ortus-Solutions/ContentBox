@@ -20,7 +20,7 @@
  * In your handler you must calculate the boundaries to push into your paging query.
  *
  * <pre>
- * rc.boundaries = getInstance( "Paging@cb" ).getBoundaries()
+ * rc.boundaries = getInstance( "Paging@contentbox" ).getBoundaries()
  * </pre>
  *
  * Returns a struct:
@@ -32,7 +32,7 @@
  * To RENDER:
  *
  * <pre>
- * #getInstance( "Paging@cb" ).renderit( FoundRows, link )#
+ * #getInstance( "Paging@contentbox" ).renderit( FoundRows, link )#
  * </pre>
  *
  * `FoundRows` = The total rows found in the recordset
@@ -52,7 +52,7 @@ component accessors="true" {
 	 * Constructor
 	 *
 	 * @settingService The ContentBox setting service
-	 * @settingService.inject settingService@cb
+	 * @settingService.inject settingService@contentbox
 	 */
 	function init( required settingService ){
 		// Setup Paging Properties

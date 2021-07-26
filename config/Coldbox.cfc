@@ -118,20 +118,6 @@ component {
 
 		/**
 		 * --------------------------------------------------------------------------
-		 * ColdBox Storages
-		 * --------------------------------------------------------------------------
-		 * ContentBox relies on the Cache Storage for tracking sessions, which delegates to a Cache provider
-		 */
-		storages = {
-			// Cache Storage Settings
-			cacheStorage : {
-				cachename : "sessions",
-				timeout   : getSystemSetting( "COLDBOX_SESSION_TIMEOUT", 60 ) // The default timeout of the session bucket, defaults to 60 minutes
-			}
-		};
-
-		/**
-		 * --------------------------------------------------------------------------
 		 * Flash Scope Settings
 		 * --------------------------------------------------------------------------
 		 * The available scopes are : session, client, cluster, cache, or a full instantiation CFC path
@@ -143,24 +129,6 @@ component {
 			inflateToPRC : false, // automatically inflate flash data into the PRC scope
 			autoPurge    : true, // automatically purge flash data for you
 			autoSave     : true // automatically save flash scopes at end of a request and on relocations.
-		};
-
-		/**
-		 * --------------------------------------------------------------------------
-		 * ContentBox Runtime Overrides
-		 * --------------------------------------------------------------------------
-		 * You can override any ContentBox site setting by entering them below according
-		 * to site name or top level for global
-		 */
-		"contentbox" = {
-			"settings" : {
-				// Global settings
-				"global" : {},
-				// Site specific settings according to site slug
-				"sites" : {
-					// siteSlug : { ... }
-				}
-			}
 		};
 
 		/**
@@ -177,6 +145,66 @@ component {
 		 * }
 		 */
 		moduleSettings = {
+
+			/**
+			 * --------------------------------------------------------------------------
+			 * ContentBox Runtime Config
+			 * --------------------------------------------------------------------------
+			 */
+			contentbox : {
+				// Array of mixins (eg: /includes/contentHelpers.cfm) to inject into all content objects
+				"contentHelpers" = [],
+				// Setting Overrides
+				"settings" : {
+					// Global settings
+					"global" : {
+					},
+					// Site specific settings according to site slug
+					"sites" : {
+						// siteSlug : { ... }
+					}
+				}
+			},
+
+			/**
+			 * --------------------------------------------------------------------------
+			 * ColdBox Storages
+			 * --------------------------------------------------------------------------
+			 * ContentBox relies on the Cache Storage for tracking sessions, which delegates to a Cache provider
+			 */
+			cbStorages : {
+				// Cache Storage Settings
+				cacheStorage : {
+					// The CacheBox registered cache to store data in
+					cachename : "sessions",
+					// The default timeout of the session bucket, defaults to 60 minutes
+					timeout   : getSystemSetting( "COLDBOX_SESSION_TIMEOUT", 60 ),
+					// The identifierProvider is a closure/udf that will return a unique identifier according to your rules
+					// If you do not provide one, then we will search in session, cookie and url for the ColdFusion identifier.
+					// identifierProvider : function(){}
+					identifierProvider : "" // If it's a simple value, we ignore it.
+				},
+				// Cookie Storage settings
+				cookieStorage : {
+					// If browser does not support Secure Sockets Layer (SSL) security, the cookie is not sent.
+					// To use the cookie, the page must be accessed using the https protocol.
+					secure 				: false,
+					// If yes, sets cookie as httponly so that it cannot be accessed using JavaScripts
+					httpOnly			: true,
+					// Domain in which cookie is valid and to which cookie content can be sent from the user's system. By default, the cookie
+					// is only available to the server that set it. Use this attribute to make the cookie available to other servers
+					domain 				: "",
+					// Use encryption of values
+					useEncryption 		: false,
+					// The unique seeding key to use: keep it secret, keep it safe
+					encryptionSeed 		: "",
+					// The algorithm to use: https://cfdocs.org/encrypt
+					encryptionAlgorithm : "BLOWFISH",
+					// The encryption encoding to use
+					encryptionEncoding 	: "HEX"
+				}
+			},
+
 			/**
 			 * ColdBox cborm configurations https://forgebox.io/view/cborm
 			 */
@@ -202,7 +230,7 @@ component {
 			/**
 			 * Mementifier settings: https://forgebox.io/view/mementifier
 			 */
-			mementifier = {
+			mementifier : {
 				// Turn on to use the ISO8601 date/time formatting on all processed date/time properites, else use the masks
 				iso8601Format = true,
 				// The default date mask to use for date properties
@@ -237,11 +265,11 @@ component {
 				// specify an array for inline, or a string (db|json|xml|model) for externally
 				"rules"                       : [],
 				// The validator is an object that will validate rules and annotations and provide feedback on either authentication or authorization issues.
-				"validator"                   : "SecurityValidator@cb",
+				"validator"                   : "SecurityValidator@contentbox",
 				// The WireBox ID of the authentication service to use in cbSecurity which must adhere to the cbsecurity.interfaces.IAuthService interface.
-				"authenticationService"       : "SecurityService@cb",
+				"authenticationService"       : "SecurityService@contentbox",
 				// WireBox ID of the user service to use
-				"userService"                 : "AuthorService@cb",
+				"userService"                 : "AuthorService@contentbox",
 				// The name of the variable to use to store an authenticated user in prc scope if using a validator that supports it.
 				"prcUserVariable"             : "oCurrentAuthor",
 				// Use regex in rules
@@ -287,7 +315,9 @@ component {
 				} // end jwt config
 			}, // end security config
 
-			// cbSwagger Documentation for Headless CMS
+			/**
+			 * cbSwagger Documentation for Headless CMS
+			 */
 			cbSwagger : {
 				// The route prefix to search.  Routes beginning with this prefix will be determined to be api routes
 				"routes"        : [ "cbapi" ],

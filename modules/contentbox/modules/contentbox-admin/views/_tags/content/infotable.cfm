@@ -58,7 +58,7 @@
                     <th class="col-md-4">Created By:</th>
                     <td class="col-md-8">
 						<a href="mailto:#args.content.getCreatorEmail()#">
-							#getInstance( "Avatar@cb" ).renderAvatar(
+							#getInstance( "Avatar@contentbox" ).renderAvatar(
 								email	= args.content.getCreatorEmail(),
 								size	= "20",
 								class	= "img img-circle"
@@ -86,7 +86,7 @@
                     <th class="col-md-4">Last Editor:</th>
                     <td class="col-md-8">
 						<a href="mailto:#args.content.getAuthorEmail()#">
-							#getInstance( "Avatar@cb" ).renderAvatar(
+							#getInstance( "Avatar@contentbox" ).renderAvatar(
 								email	= args.content.getAuthorEmail(),
 								size	= "20",
 								class	= "img img-circle"

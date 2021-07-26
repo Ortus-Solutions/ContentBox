@@ -51,6 +51,7 @@
         "@app_modules/switchery": "abpetkov/switchery#^0.8.2",
         "@app_modules/toastr": "johnpapa/toastr-bower#^2.1.3",
         "@app_modules/transitionize": "abpetkov/transitionize#*",
+        "alpinejs": "^3.2.2",
         "global": "^4.3.2",
         "moment-timezone": "^0.5.33"
     },

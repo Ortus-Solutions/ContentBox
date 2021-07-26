@@ -6,7 +6,7 @@
  */
 component extends="tests.resources.BaseTest" {
 
-	property name="categoryService" inject="categoryService@cb";
+	property name="categoryService" inject="categoryService@contentbox";
 
 	function run( testResults, testBox ){
 		describe( "Categories", function(){

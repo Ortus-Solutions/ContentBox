@@ -4,7 +4,7 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="securityService" inject="securityService@cb";
+	property name="securityService" inject="securityService@contentbox";
 
 	/**
 	 * Login to ContentBox and get your JWT Token

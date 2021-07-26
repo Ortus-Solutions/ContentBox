@@ -9,7 +9,7 @@ component accessors="true" singleton {
 
 	// DI
 	property name="log" inject="logbox:logger:{this}";
-	property name="settingService" inject="settingservice@cb";
+	property name="settingService" inject="settingservice@contentbox";
 
 	/**
 	 * ContentBox Providers Map
@@ -32,9 +32,9 @@ component accessors="true" singleton {
 		variables.wirebox = arguments.wirebox;
 
 		// Register Core Media Providers
-		registerProvider( arguments.wirebox.getInstance( "CFContentMediaProvider@cb" ) );
-		registerProvider( arguments.wirebox.getInstance( "RelocationMediaProvider@cb" ) );
-		registerProvider( arguments.wirebox.getInstance( "ForwardMediaProvider@cb" ) );
+		registerProvider( arguments.wirebox.getInstance( "CFContentMediaProvider@contentbox" ) );
+		registerProvider( arguments.wirebox.getInstance( "RelocationMediaProvider@contentbox" ) );
+		registerProvider( arguments.wirebox.getInstance( "ForwardMediaProvider@contentbox" ) );
 
 		return this;
 	}

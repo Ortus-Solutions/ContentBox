@@ -63,7 +63,7 @@
 <cfloop array="#prc.authors.authors#" index="thisAuthor">
 	<li class="list-group-item">
 		<span class="pull-left mr5">
-			#getInstance( "Avatar@cb" ).renderAvatar( email=thisAuthor.getEmail(), size="30" )#
+			#getInstance( "Avatar@contentbox" ).renderAvatar( email=thisAuthor.getEmail(), size="30" )#
 		</span>
 		<span class="label label-info pull-right">#thisAuthor.getRole().getRole()#</span>
 		<a 	title="#thisAuthor.getEmail()#"

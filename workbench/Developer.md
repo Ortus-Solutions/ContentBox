@@ -49,12 +49,7 @@ All JS files in the `workbench/resources/js` are the core ContentBox JavaScript 
 
 **Global Libraries**
 
-Two global libraries are created in ContentBox:
-
 * `contentbox-pre.js` : Loaded in the `<head>` section
-* `contentbox-post.js` : Loaded after the `<body>` section
-
-> Tip: Please look in the `Gruntfile.js` for determination of the libraries loading pre and post.
 
 ## Vendor Libaries ##
 

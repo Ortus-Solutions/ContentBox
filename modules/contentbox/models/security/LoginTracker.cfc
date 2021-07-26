@@ -8,11 +8,11 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="settingService" inject="id:settingService@cb";
-	property name="securityService" inject="id:securityService@cb";
-	property name="loginTrackerService" inject="id:loginTrackerService@cb";
-	property name="cb" inject="cbhelper@cb";
-	property name="systemUtil" inject="SystemUtil@cb";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="securityService" inject="id:securityService@contentbox";
+	property name="loginTrackerService" inject="id:loginTrackerService@contentbox";
+	property name="cb" inject="cbhelper@contentbox";
+	property name="systemUtil" inject="SystemUtil@contentbox";
 	property name="messagebox" inject="messagebox@cbMessagebox";
 
 	/**

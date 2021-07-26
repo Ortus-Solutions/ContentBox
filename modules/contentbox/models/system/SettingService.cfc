@@ -18,13 +18,10 @@ component
 {
 
 	// DI properties
-	property name="siteService" inject="siteService@cb";
+	property name="siteService" inject="siteService@contentbox";
 	property name="cachebox" inject="cachebox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
-	property name="appMapping" inject="coldbox:setting:appMapping";
-	property name="requestService" inject="coldbox:requestService";
-	property name="coldbox" inject="coldbox";
-	property name="dateUtil" inject="DateUtil@cb";
+	property name="contentboxSettings" inject="coldbox:moduleSettings:contentbox";
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
@@ -664,13 +661,7 @@ component
 		};
 
 		// Base MediaPath
-		var mediaPath = "";
-		// I don't think this is needed anymore. As we use build link for everything.
-		// var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
-		// if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
-		// mediaPath = "index.cfm" & mediaPath;
-		// }
-
+		var mediaPath  = "";
 		// add the entry point
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
 		mediaPath &= ( len( entryPoint ) ? "#entryPoint#/" : "" ) & "__media";
@@ -783,7 +774,7 @@ component
 		importLog
 	){
 		var allSettings = [];
-		var siteService = getWireBox().getInstance( "siteService@cb" );
+		var siteService = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
@@ -859,22 +850,18 @@ component
 	 * Load up config overrides
 	 */
 	function loadConfigOverrides(){
-		var oConfig       = coldbox.getSetting( "ColdBoxConfig" );
-		var configStruct  = coldbox.getConfigSettings();
-		var contentboxDSL = oConfig.getPropertyMixin( "contentbox", "variables", structNew() );
-
 		// Global Settings
 		if (
-			structKeyExists( contentboxDSL, "settings" )
+			structKeyExists( variables.contentboxSettings, "settings" )
 			&&
-			structKeyExists( contentboxDSL.settings, "global" )
+			structKeyExists( variables.contentboxSettings.settings, "global" )
 		) {
 			var settingsContainer = getSettingsContainer();
 
 			// Append and override
 			structAppend(
 				settingsContainer.global,
-				contentboxDSL.settings.global,
+				variables.contentboxSettings.settings.global,
 				true
 			);
 
@@ -884,7 +871,7 @@ component
 			// Log it
 			variables.log.info(
 				"ContentBox global config overrides loaded.",
-				contentboxDSL.settings.global
+				variables.contentboxSettings.settings.global
 			);
 		}
 

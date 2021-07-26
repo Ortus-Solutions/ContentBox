@@ -52,7 +52,7 @@
 					</span>
 
 					<span>
-						#getInstance( "Avatar@cb" ).renderAvatar(
+						#getInstance( "Avatar@contentbox" ).renderAvatar(
 							email = prc.author.getEmail(),
 							size  = "30",
 							class = "img img-circle mr5 ml5"

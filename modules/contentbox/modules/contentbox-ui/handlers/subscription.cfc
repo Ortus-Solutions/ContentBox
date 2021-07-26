@@ -8,10 +8,10 @@
 component {
 
 	// DI
-	property name="subscriberService" inject="subscriberService@cb";
-	property name="subscriptionService" inject="id:subscriptionService@cb";
+	property name="subscriberService" inject="subscriberService@contentbox";
+	property name="subscriptionService" inject="id:subscriptionService@contentbox";
 	property name="messagebox" inject="messagebox@cbmessagebox";
-	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
 
 	/**
 	 * Remove subscriptions

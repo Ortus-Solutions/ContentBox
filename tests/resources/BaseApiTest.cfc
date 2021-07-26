@@ -1,7 +1,7 @@
 component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 
 	// DI
-	property name="securityService" inject="securityService@cb";
+	property name="securityService" inject="securityService@contentbox";
 	property name="cbsecure"        inject="CBSecurity@cbsecurity";
 	property name="jwt"             inject="JWTService@cbsecurity";
 

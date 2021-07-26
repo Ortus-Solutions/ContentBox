@@ -23,7 +23,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Base Content", function(){
 			beforeEach( function( currentSpec ){
-				model = getInstance( "BaseContent@cb" );
+				model = getInstance( "BaseContent@contentbox" );
 			} );
 
 			it( "can add expired data time combinations", function(){

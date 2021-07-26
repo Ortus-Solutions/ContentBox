@@ -8,7 +8,7 @@
 component accessors="true" {
 
 	// DI
-	property name="cb" inject="id:CBHelper@cb";
+	property name="cb" inject="id:CBHelper@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 
 	/**

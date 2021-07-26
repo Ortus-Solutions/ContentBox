@@ -26,10 +26,10 @@ component {
 		// Deletes all moderated comments that have expired in the inbox
 		task( "comment-expirations" )
 			.call( function(){
-				getInstance( "siteService@cb" )
+				getInstance( "siteService@contentbox" )
 					.getAll()
 					.each( function( thisSite ){
-						var commentExpirationDays = getInstance( "settingService@cb" ).getSiteSetting(
+						var commentExpirationDays = getInstance( "settingService@contentbox" ).getSiteSetting(
 							arguments.thisSite.getSlug(),
 							"cb_comments_moderation_expiration"
 						);
@@ -40,7 +40,7 @@ component {
 							);
 
 							// now we have the green light to find and kill any old, moderated comments
-							getInstance( "commentService@cb" ).deleteUnApproved(
+							getInstance( "commentService@contentbox" ).deleteUnApproved(
 								expirationDays = commentExpirationDays
 							);
 

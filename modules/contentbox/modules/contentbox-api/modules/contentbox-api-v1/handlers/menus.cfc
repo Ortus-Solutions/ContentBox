@@ -6,7 +6,7 @@
 component extends="baseHandler" secured="MENUS_ADMIN" {
 
 	// DI
-	property name="ormService" inject="MenuService@cb";
+	property name="ormService" inject="MenuService@contentbox";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "slug";

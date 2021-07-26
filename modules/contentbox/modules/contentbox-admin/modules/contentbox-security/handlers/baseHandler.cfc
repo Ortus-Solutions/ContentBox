@@ -8,11 +8,11 @@
 component {
 
 	// DI
-	property name="securityService" inject="securityService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="cb" inject="cbhelper@cb";
+	property name="securityService" inject="securityService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="cb" inject="cbhelper@contentbox";
 	property name="messagebox" inject="messagebox@cbMessagebox";
-	property name="twoFactorService" inject="twoFactorService@cb";
+	property name="twoFactorService" inject="twoFactorService@contentbox";
 
 	/**
 	 * Pre handler

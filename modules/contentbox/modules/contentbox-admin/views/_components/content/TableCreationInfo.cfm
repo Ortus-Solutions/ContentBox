@@ -22,7 +22,7 @@
 				class="text-muted"
 				title="Created by #args.content.getCreatorName()#"
 			>
-				#getInstance( "Avatar@cb" ).renderAvatar(
+				#getInstance( "Avatar@contentbox" ).renderAvatar(
 					email	= args.content.getCreatorEmail(),
 					size	= "20",
 					class	= "img img-circle"

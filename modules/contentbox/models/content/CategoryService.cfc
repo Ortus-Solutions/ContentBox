@@ -9,8 +9,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	// Dependencies
 	property name="htmlHelper" inject="HTMLHelper@coldbox";
-	property name="contentService" inject="contentService@cb";
-	property name="dateUtil" inject="DateUtil@cb";
+	property name="contentService" inject="contentService@contentbox";
+	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
@@ -323,7 +323,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		importLog
 	){
 		var allCategories = [];
-		var siteService   = getWireBox().getInstance( "siteService@cb" );
+		var siteService   = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {

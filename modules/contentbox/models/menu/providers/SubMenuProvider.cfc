@@ -15,7 +15,7 @@ component
 	 **                      DI
 	 ********************************************************************* */
 
-	property name="menuService" inject="id:menuService@cb";
+	property name="menuService" inject="id:menuService@contentbox";
 	property name="requestService" inject="coldbox:requestService";
 
 	/* *********************************************************************

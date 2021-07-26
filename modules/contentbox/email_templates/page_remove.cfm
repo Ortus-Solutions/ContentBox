@@ -1,5 +1,5 @@
 ﻿<cfoutput>
-    <cfset ETH = getInstance( "EmailTemplateHelper@cb" )>
+    <cfset ETH = getInstance( "EmailTemplateHelper@contentbox" )>
     #ETH.author( email=args.gravatarEmail, content="
         <strong>@pageAuthor@</strong> removed a page from your system
     " )#

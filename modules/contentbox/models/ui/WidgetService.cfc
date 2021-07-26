@@ -8,10 +8,10 @@
 component accessors="true" singleton threadSafe {
 
 	// Dependecnies
-	property name="settingService" inject="id:settingService@cb";
+	property name="settingService" inject="id:settingService@contentbox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
-	property name="moduleService" inject="ModuleService@cb";
-	property name="themeService" inject="themeService@cb";
+	property name="moduleService" inject="ModuleService@contentbox";
+	property name="themeService" inject="themeService@contentbox";
 	property name="wirebox" inject="wirebox";
 	property name="coldbox" inject="coldbox";
 	property name="log" inject="logbox:logger:{this}";

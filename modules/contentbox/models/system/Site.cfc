@@ -20,7 +20,7 @@ component
 
 	property
 		name      ="contentService"
-		inject    ="provider:contentService@cb"
+		inject    ="provider:contentService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

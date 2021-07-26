@@ -11,7 +11,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Editor Services", function(){
 			beforeEach( function( currentSpec ){
-				model = getInstance( "EditorService@cb" );
+				model = getInstance( "EditorService@contentbox" );
 			} );
 
 			it( "can get registered editors", function(){

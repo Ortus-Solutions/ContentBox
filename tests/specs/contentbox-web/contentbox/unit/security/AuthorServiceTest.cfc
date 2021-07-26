@@ -9,7 +9,7 @@ component extends="tests.resources.BaseTest" {
 	function beforeAll(){
 		super.beforeAll();
 		setup();
-		authorService = getInstance( "authorService@cb" );
+		authorService = getInstance( "authorService@contentbox" );
 	}
 
 	/*********************************** BDD SUITES ***********************************/

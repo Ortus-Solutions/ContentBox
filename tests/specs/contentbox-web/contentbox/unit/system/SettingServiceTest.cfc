@@ -11,7 +11,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Settings Services", function(){
 			beforeEach( function( currentSpec ){
-				model = prepareMock( getInstance( "SettingService@cb" ) );
+				model = prepareMock( getInstance( "SettingService@contentbox" ) );
 				cache = model.getSettingsCacheProvider();
 			} );
 

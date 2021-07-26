@@ -1,8 +1,8 @@
 component extends="tests.resources.BaseApiTest" {
 
-	property name="siteService" inject="siteService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="entryService" inject="entryService@cb";
+	property name="siteService" inject="siteService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
 
 	/*********************************** LIFE CYCLE Methods ***********************************/
 

@@ -11,7 +11,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Site", function(){
 			beforeEach( function( currentSpec ){
-				model = prepareMock( getInstance( "siteService@cb" ).new() );
+				model = prepareMock( getInstance( "siteService@contentbox" ).new() );
 			} );
 
 			it( "can be created", function(){

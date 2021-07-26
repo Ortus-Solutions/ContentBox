@@ -8,9 +8,9 @@ component extends="tests.resources.BaseTest" skip {
 
 	function setup(){
 		super.setup();
-		mockSettingsService = prepareMock( getInstance( "SettingService@cb" ) );
-		mockCBHelper        = prepareMock( getInstance( "CBHelper@cb" ) );
-		service             = prepareMock( getInstance( "RSSService@cb" ) );
+		mockSettingsService = prepareMock( getInstance( "SettingService@contentbox" ) );
+		mockCBHelper        = prepareMock( getInstance( "CBHelper@contentbox" ) );
+		service             = prepareMock( getInstance( "RSSService@contentbox" ) );
 		service.$property(
 			"settingService",
 			"variables",

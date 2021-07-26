@@ -23,7 +23,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Page Services", function(){
 			beforeEach( function( currentSpec ){
-				model = getInstance( "PageService@cb" );
+				model = getInstance( "PageService@contentbox" );
 			} );
 
 			it( "can search for entries", function(){
