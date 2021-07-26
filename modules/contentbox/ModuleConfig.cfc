@@ -134,6 +134,8 @@ component {
 	 * Fired when the module is registered and activated.
 	 */
 	function onLoad(){
+		// Create `cb` alias : REMOVE BY CONTENTBOX NEXT MAJOR VERSION
+		binder.mapDirectory( packagePath = "contentbox.models", namespace = "@cb" );
 		var settingService = wirebox.getInstance( "settingService@contentbox" );
 		// Pre-flight check settings
 		settingService.preFlightCheck();
