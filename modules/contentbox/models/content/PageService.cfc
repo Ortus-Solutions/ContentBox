@@ -67,6 +67,7 @@ component extends="ContentService" singleton {
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	 * @siteID The site ID to filter on
+	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
 	 *
 	 * @returns struct = { pages, count }
 	 */
@@ -83,7 +84,7 @@ component extends="ContentService" singleton {
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
 		string siteID               = "",
-		propertyList
+		string propertyList
 	){
 		var results = { "count" : 0, "pages" : [] };
 		// criteria queries

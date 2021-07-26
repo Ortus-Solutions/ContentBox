@@ -147,6 +147,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @excludeIDs List of IDs to exclude from search
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
 	 * @siteID The site ID to filter on
+	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
 	 *
 	 * @returns struct = { content, count }
 	 */
@@ -161,7 +162,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		string contentTypes         = "",
 		any excludeIDs              = "",
 		boolean showInSearch,
-		string siteID = ""
+		string siteID = "",
+		string propertyList
 	){
 		var results = { "count" : 0, "content" : [] };
 		var c       = newCriteria();
@@ -225,15 +227,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
-		results.content = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset    = arguments.offset,
-				max       = arguments.max,
-				sortOrder = arguments.sortOrder,
-				asQuery   = arguments.asQuery
-			);
+		results.count = c.count( "contentID" );
+
+		if ( !isNull( arguments.propertyList ) ) {
+			c.withProjections( property = arguments.propertyList ).asStruct();
+		} else {
+			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
+		}
+		results.content = c.list(
+			offset    = arguments.offset,
+			max       = arguments.max,
+			sortOrder = arguments.sortOrder,
+			asQuery   = arguments.asQuery
+		);
 
 		return results;
 	}
