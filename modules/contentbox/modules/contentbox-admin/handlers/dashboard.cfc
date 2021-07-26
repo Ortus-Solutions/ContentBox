@@ -25,7 +25,6 @@ component extends="baseHandler" {
 	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehDeleteInstaller   = "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
-		prc.xehDeleteDSNCreator  = "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
 		// Ajax Loaded handlers
 		prc.xehLatestSystemEdits = "#prc.cbAdminEntryPoint#.dashboard.latestSystemEdits";
 		prc.xehLatestUserDrafts  = "#prc.cbAdminEntryPoint#.dashboard.latestUserDrafts";
@@ -221,14 +220,6 @@ component extends="baseHandler" {
 		event.setView( view = "dashboard/latestLogins", layout = "ajax" );
 	}
 
-	/**
-	 * ContentBox about page
-	 * @return html
-	 */
-	function about( event, rc, prc ){
-		event.setView( "dashboard/about" );
-	}
-
 	/*************************************** UTILITY ACTIONS *********************************/
 
 	/**
@@ -239,29 +230,11 @@ component extends="baseHandler" {
 		var results = { "ERROR" : false, "MESSAGE" : "" };
 
 		try {
-			settingService.deleteInstaller();
+			variables.settingService.deleteInstaller();
 			results[ "MESSAGE" ] = "The installer module has been successfully deleted.";
 		} catch ( Any e ) {
 			results[ "ERROR" ]   = true;
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
-		}
-
-		event.renderData( data = results, type = "json" );
-	}
-
-	/**
-	 * delete DSN Creator module
-	 * @return JSON
-	 */
-	function deleteDSNCreator(){
-		var results = { "ERROR" : false, "MESSAGE" : "" };
-
-		try {
-			settingService.deleteDSNCreator();
-			results[ "MESSAGE" ] = "The DSN Creator module has been successfully deleted.";
-		} catch ( Any e ) {
-			results[ "ERROR" ]   = true;
-			results[ "MESSAGE" ] = "Error removing DSN Creator: #e.message#";
 		}
 
 		event.renderData( data = results, type = "json" );

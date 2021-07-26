@@ -127,6 +127,7 @@
 								<i class="fa fa-home"></i>
 							</a>
 						</li>
+
 						<!--- New Quick Links --->
 						<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
 							<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">

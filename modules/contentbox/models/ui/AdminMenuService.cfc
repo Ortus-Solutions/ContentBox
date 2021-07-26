@@ -325,7 +325,6 @@ component accessors="true" threadSafe singleton {
 
 		// Global Admin Exit Handlers
 		prc.xehDashboard = "#this.ADMIN_ENTRYPOINT#.dashboard";
-		prc.xehAbout     = "#this.ADMIN_ENTRYPOINT#.dashboard.about";
 
 		// Entries Tab
 		prc.xehEntries       = "#this.ADMIN_ENTRYPOINT#.entries";
@@ -369,24 +368,18 @@ component accessors="true" threadSafe singleton {
 		prc.xehSecurityRules = "#this.ADMIN_ENTRYPOINT#.securityrules";
 		prc.xehRawSettings   = "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehAuthLogs      = "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
+		prc.xehAbout         = "#this.ADMIN_ENTRYPOINT#.about";
 
 		// Stats
 		prc.xehSubscribers = "#this.ADMIN_ENTRYPOINT#.subscribers";
 
 		// Dashboard
-		addTopMenu( name = this.DASHBOARD, label = "<i class='fas fa-tv'></i> Dashboard" )
-			.addSubMenu(
-				name    = "home",
-				label   = "Home",
-				href    = variables.buildLink,
-				href_to = prc.xehDashboard
-			)
-			.addSubMenu(
-				name    = "about",
-				label   = "About",
-				href    = variables.buildLink,
-				href_to = prc.xehAbout
-			);
+		addTopMenu(
+			name    = this.DASHBOARD,
+			label   = "<i class='fas fa-tv'></i> Dashboard",
+			href    = variables.buildLink,
+			href_to = prc.xehDashboard
+		);
 
 		// Content
 		addTopMenu( name = this.CONTENT, label = "<i class='fas fa-box'></i> Content" )
@@ -582,6 +575,12 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehSecurityRules,
 				permissions = "SECURITYRULES_ADMIN"
+			)
+			.addSubMenu(
+				name    = "about",
+				label   = "About",
+				href    = variables.buildLink,
+				href_to = prc.xehAbout
 			);
 
 		// STATS
