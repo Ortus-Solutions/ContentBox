@@ -90,47 +90,46 @@ component
 	 * we make sure all proper settings are created and configured.
 	 *
 	 * @site A persisted or new site object
+	 * @transactional Transaction the call or leave as is, useful for imports, bulk saves, etc.
 	 */
-	Site function save( required site ){
-		transaction {
-			// Create all site settings if this is a new site
-			if ( !arguments.site.isLoaded() ) {
-				variables.settingService.saveAll(
-					variables.settingService
-						.getSiteSettingDefaults()
-						.reduce( function( result, setting, value ){
-							arguments.result.append(
-								variables.settingService.new( {
-									name   : arguments.setting,
-									value  : trim( arguments.value ),
-									isCore : true,
-									site   : site
-								} )
-							);
-							return result;
-						}, [] )
-				);
-			}
+	Site function save( required site, boolean transactional = true ){
+		// start base transaction according to `transactional` argument
+		$transactioned(
+			target: function( site ){
+				// Create all site settings if this is a new site
+				if ( !arguments.site.isLoaded() ) {
+					variables.settingService.saveAll(
+						variables.settingService
+							.getSiteSettingDefaults()
+							.reduce( function( result, setting, value ){
+								arguments.result.append(
+									variables.settingService.new( {
+										name   : arguments.setting,
+										value  : trim( arguments.value ),
+										isCore : true,
+										site   : site
+									} )
+								);
+								return arguments.result;
+							}, [] )
+					);
+				}
 
-			// Persist the site
-			try {
+				// Persist the site
 				super.save( arguments.site );
-			} catch ( any e ) {
-				writeDump( var = e );
-				writeDump( var = arguments.site, top = 5 );
-				abort;
-			}
 
-			// Activate the site's theme
-			variables.themeService.startupTheme(
-				name: arguments.site.getActiveTheme(),
-				site: arguments.site
-			);
+				// Activate the site's theme
+				variables.themeService.startupTheme(
+					name: arguments.site.getActiveTheme(),
+					site: arguments.site
+				);
 
-			// Create media root folder
-			ensureSiteMediaFolder( arguments.site );
-		}
-		// end transaction
+				// Create media root folder for the site
+				ensureSiteMediaFolder( arguments.site );
+			},
+			argCollection= arguments,
+			transactional: arguments.transactional
+		); // end base orm transaction
 
 		// flush cache to rebuild site settings
 		variables.settingService.flushSettingsCache();
