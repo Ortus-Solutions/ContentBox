@@ -2,14 +2,15 @@
 
 ## Asset Compilation
 
-All assets for this project are compiled using Grunt and managed via Yarn.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/resources`.  
+All assets for this project are compiled using Grunt and managed via Yarn.  Developers modifying Javascript or SCSS/CSS assets should use the files located in `workbench/resources`.
+
 Files in `modules/contentbox-admin/includes/` will be overwritten on compilation.  Please use `Gruntfile.js` to configure your asset distributions.
 
 ## Setup
 
 To setup your development environment, install [NodeJS](https://nodejs.org/en/) and run in the root of the project: `box recipe workbench/setup.boxr` to install all dependencies.  If not you will have to run these manually.
 
-```
+```bash
 cd workbench
 ## Install Grunt-cli globally
 npm install -g yarn grunt-cli
@@ -23,15 +24,22 @@ To start Grunt compilation, run `grunt` from the workbench directory.  Directori
 
 The directory `workbench/resources/scss` contains all of the SCSS theme files.  Global variables used may be set in `_globals.scss`.  
 
+- `theme` - The ContentBox admin theme sass files
+- `_globals.scss` - Used for global variables
+- `contentbox.scss` - ContentBox Admin additions ontop of the contributed theme
+- `theme.scsss` - The root theme css
+
 ### CSS
+
 All needed CSS from libraries are added via the `cssmin` task.
 
 ### Vendor CSS
-Vendor CSS files are added into `workbench/resources/vendor/css`.
+
+Vendor CSS files are added into `workbench/resources/vendor/css`. These are css files not included in npm files.
 
 ### Output
-The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS.
 
+The build process will produce a `modules/contentbox-admin/includes/css/contentbox.min.css` according to the theme, vendor CSS.
 
 ## Javascript Assets
 
