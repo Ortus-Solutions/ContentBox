@@ -1,10 +1,12 @@
-$( document ).ready( function() {
+$( () => {
 	// GLOBAL STATIC
 	REGEX_LOWER = /[a-z]/,
 	REGEX_UPPER = /[A-Z]/,
 	REGEX_DIGIT = /[0-9]/,
 	REGEX_DIGITS = /[0-9].*[0-9]/,
 	REGEX_SPECIAL = /[^a-zA-Z0-9]/;
+
+	alert( "hello" );
 
 	// If the sidebar preference is off, toggle it
 	if ( $( "body" ).attr( "data-showsidebar" ) == "no" ) {

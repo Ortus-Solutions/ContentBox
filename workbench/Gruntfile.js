@@ -9,16 +9,18 @@ module.exports = function( grunt ) {
 			"watch" // start a watcher
 		]
 	);
+
 	grunt.registerTask(
 		"js", [
 			"clean:js", // clean targets
 			"clean:plugins", // clean plugins
 			"concat", // concat everything
-			"uglify", // uglify everything
+			"terser",
 			"copy:js", // Copy standalone libs
 			"copy:plugins", // Copy plugins
 		]
 	);
+
 	grunt.registerTask(
 		"css", [
 			"clean:css", // clean target
@@ -65,7 +67,7 @@ module.exports = function( grunt ) {
 				files : [ "resources/js/**/*.js" ],
 				tasks : [
 					"concat:appjs",
-					"uglify:appjs"
+					"tenser:appjs"
 				]
 			}
 		},
@@ -128,7 +130,7 @@ module.exports = function( grunt ) {
 			prejs : {
 				src : [
 					// YARN/NPM Libraries
-					// ES6 compat
+					// ES6 compatibility for the browser since we are not using webpack yet: For objects and functions only, not syntax
 					"app_modules/es6-shim/es6-shim.min.js",
 					// HTML5 shim detection
 					"resources/vendor/js/modernizr.min.js",
@@ -192,16 +194,17 @@ module.exports = function( grunt ) {
 		},
 
 		/**
-         * Uglify compress JS
+         * Use terser to compress/minify es6+
          */
-		uglify : {
+		terser : {
 			// Options
 			options : {
-				preserveComments : false,
-				mangle           : false,
-				sourceMap        : true,
-				drop_console     : true,
-				banner           : "/*! ContentBox Modular CMS. Generated: <%= grunt.template.today( \"dd-mm-yyyy\" ) %> */\n\n"
+				ecma     : 2018,
+				compress : {
+					defaults : true,
+					ecma     : 2018
+				},
+				mangle : false
 			},
 
 			// ContentBox App
@@ -213,7 +216,7 @@ module.exports = function( grunt ) {
 			},
 
 			// JS Libraries
-			libraries : { files: { "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.min.js": [ "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js" ] } },
+			libraries : { files: { "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.min.js": [ "../modules/contentbox/modules/contentbox-admin/includes/js/contentbox-pre.js" ] } }
 		},
 
 		/**
