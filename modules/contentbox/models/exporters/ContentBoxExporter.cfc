@@ -191,7 +191,6 @@ component accessors=true {
 				priority    : 1
 			}
 		};
-
 	}
 
 	/**
@@ -215,7 +214,11 @@ component accessors=true {
 					var exporter = variables.dataExporter;
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
-					exporter.setContent( variables[ config.def.service ].getAllForExport( variables.siteService.getCurrentWorkingSite() ) );
+					exporter.setContent(
+						variables[ config.def.service ].getAllForExport(
+							variables.siteService.getCurrentWorkingSite()
+						)
+					);
 					exporter.setPriority( config.def.priority );
 					break;
 					// add file exporter
