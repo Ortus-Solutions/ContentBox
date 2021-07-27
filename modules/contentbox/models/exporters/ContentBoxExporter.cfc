@@ -47,8 +47,8 @@ component accessors=true {
 	property name="templateService" inject="id:emailtemplateService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="zipUtil" inject="zipUtil@contentbox";
-	property name="dataExporter" inject="id:dataExporter@cbadmin";
-	property name="fileExporter" inject="id:fileExporter@cbadmin";
+	property name="dataExporter" inject="id:dataExporter@contentbox";
+	property name="fileExporter" inject="id:fileExporter@contentbox";
 	property name="wirebox" inject="wirebox";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
@@ -191,6 +191,7 @@ component accessors=true {
 				priority    : 1
 			}
 		};
+
 	}
 
 	/**
@@ -211,10 +212,10 @@ component accessors=true {
 			switch ( config.type ) {
 				// add data exporter
 				case "data":
-					var exporter = wirebox.getInstance( "dataExporter@cbadmin" );
+					var exporter = variables.dataExporter;
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
-					exporter.setContent( variables[ config.def.service ].getAllForExport() );
+					exporter.setContent( variables[ config.def.service ].getAllForExport( variables.siteService.getCurrentWorkingSite() ) );
 					exporter.setPriority( config.def.priority );
 					break;
 					// add file exporter
@@ -222,7 +223,7 @@ component accessors=true {
 					var includedFiles = !isBoolean( arguments.targets[ key ] ) && listLen(
 						arguments.targets[ key ]
 					) ? arguments.targets[ key ] : "*";
-					var exporter = wirebox.getInstance( "fileExporter@cbadmin" );
+					var exporter = variables.fileExporter;
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
 					exporter.setDirectory( config.def.directory );
