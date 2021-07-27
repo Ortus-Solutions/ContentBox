@@ -81,7 +81,7 @@
 				#html.hiddenField( name="title", value=rc.title )#
 				#html.hiddenField( name="slug", value=rc.slug )#
 				#html.hiddenField( name="markup", value=rc.markup )#
-				#html.hiddenField( name="parentPage", value=rc.parentPage )#
+				#html.hiddenField( name="parentContent", value=rc.parentContent )#
 				#html.hiddenField( name="siteID", value=prc.oCurrentSite.getsiteID() )#
 			#html.endForm()#
 

@@ -45,8 +45,8 @@
             <!--- MessageBox --->
             #cbMessageBox().renderit()#
             <!--- form --->
-            #html.hiddenField( name="contentID", bind=prc.content)#
-            #html.hiddenField( name="contentType", bind=prc.content)#
+            #html.hiddenField( name="contentID", bind=prc.oContent)#
+            #html.hiddenField( name="contentType", bind=prc.oContent)#
             #html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
 
             <div class="panel panel-default">
@@ -70,7 +70,7 @@
                         </cfif>
 
                         <!---Loaded Panels--->
-                        <cfif prc.content.isLoaded()>
+                        <cfif prc.oContent.isLoaded()>
                             <li role="presentation">
                                 <a href="##history" aria-controls="history" role="tab" data-toggle="tab">
                                     <i class="fa fa-history"></i> History
@@ -89,7 +89,7 @@
                         #html.textfield(
                             label    	= "Title:",
                             name     	= "title",
-                            bind     	= prc.content,
+                            bind     	= prc.oContent,
                             maxlength	= "100",
                             required 	= "required",
                             title    	= "The title for this content",
@@ -107,11 +107,11 @@
                                 <div class="input-group">
                                     #html.textfield(
                                         name      = "slug",
-                                        bind      = prc.content,
+                                        bind      = prc.oContent,
                                         maxlength = "100",
                                         class     = "form-control",
                                         title     = "The unique slug for this content, this is how they are retreived",
-                                        disabled  = "#prc.content.isLoaded() && prc.content.getIsPublished() ? 'true' : 'false'#"
+                                        disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
                                     )#
 									<a title=""
 										class="input-group-addon"
@@ -120,7 +120,7 @@
 										data-original-title="Lock/Unlock permalink"
 										data-container="body"
 									>
-                                        <i id="togglePermalink" class="fa fa-#prc.content.isLoaded() && prc.content.getIsPublished() ? 'lock' : 'unlock'#"></i>
+                                        <i id="togglePermalink" class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"></i>
                                     </a>
                                 </div>
                             </div>
@@ -130,7 +130,7 @@
                         #html.textarea(
                             name   		= "description",
                             label  		= "Short Description:",
-                            bind   		= prc.content,
+                            bind   		= prc.oContent,
                             rows   		= 1,
                             class  		= "form-control",
                             title  		= "A short description for metadata purposes",
@@ -142,14 +142,14 @@
                         <!---ContentToolBar --->
                         #renderView(
 							view 			= "_tags/content/toolbar",
-							args 			= { content : prc.content },
+							args 			= { content : prc.oContent },
 							prePostExempt 	= true
 						)#
 
                         <!--- content --->
                         #html.textarea(
                             name="content",
-                            value=htmlEditFormat( prc.content.getContent() ),
+                            value=htmlEditFormat( prc.oContent.getContent() ),
                             rows="25",
                             class="form-control"
                         )#
@@ -159,13 +159,13 @@
                         <!--- Custom Fields --->
                          #renderView(
 							view 			= "_tags/customFields",
-							args 			= { fieldType : "content", customFields : prc.content.getCustomFields() },
+							args 			= { fieldType : "content", customFields : prc.oContent.getCustomFields() },
 							prePostExempt 	= true
 						)#
                     </div>
 
                     <!---Loaded Panels--->
-                    <cfif prc.content.isLoaded()>
+                    <cfif prc.oContent.isLoaded()>
                         <div role="tabpanel" class="tab-pane" id="history">
                             #prc.versionsViewlet#
                         </div>
@@ -190,7 +190,7 @@
                 <div class="panel-body">
                     #renderView(
 						view 			= "_tags/content/publishing",
-						args 			= { content : prc.content },
+						args 			= { content : prc.oContent },
 						prePostExempt 	= true
 					)#
 
@@ -199,10 +199,10 @@
                     <div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
 
                         <!---Begin Info--->
-                        <cfif prc.content.isLoaded()>
+                        <cfif prc.oContent.isLoaded()>
                             #renderView(
                                 view    		= "_tags/content/infotable",
-								args    		= { content : prc.content },
+								args    		= { content : prc.oContent },
 								prePostExempt 	= true
                             )#
                         </cfif>
@@ -245,7 +245,7 @@
                                 <div class="panel-body">
 									#renderView(
 										view			= "_tags/linkedContent",
-										args			= { linkedContent : prc.linkedContent, contentType : prc.content.getContentType() },
+										args			= { linkedContent : prc.linkedContent, contentType : prc.oContent.getContentType() },
 										prePostExempt 	= true
 									)#
                                 </div>
@@ -289,13 +289,13 @@
 	         						</div>
 
                                     <!--- Creator --->
-                                    <cfif prc.content.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+                                    <cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
                                         <div class="form-group">
                                             <i class="fa fa-user"></i>
                                             #html.label(field="creatorID",content="Creator:",class="inline" )#
                                             <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                 <cfloop array="#prc.authors#" index="author">
-                                                <option value="#author.getAuthorID()#" <cfif prc.content.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
+                                                <option value="#author.getAuthorID()#" <cfif prc.oContent.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
                                                 </cfloop>
                                             </select>
                                         </div>
@@ -309,7 +309,7 @@
                                             type        = "number",
                                             label       = "Retrieval Order: (0-99)",
                                             name        = "order",
-                                            bind        = prc.content,
+                                            bind        = prc.oContent,
                                             title       = "The ordering index used when retrieving content store items",
                                             class       = "form-control",
                                             size        = "5",
@@ -348,7 +348,7 @@
                                         #html.select(
                                             name="cache",
                                             options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.content.getCache()),
+                                            selectedValue=yesNoFormat(prc.oContent.getCache()),
                                             class="form-control input-sm"
                                         )#
                                     </div>
@@ -357,7 +357,7 @@
                                             type="numeric",
                                             name="cacheTimeout",
                                             label="Cache Timeout (0=Use Global):",
-                                            bind=prc.content,
+                                            bind=prc.oContent,
                                             title="Enter the number of minutes to cache your content, 0 means use global default",
                                             class="form-control",
                                             size="10",
@@ -369,7 +369,7 @@
                                             type="numeric",
                                             name="cacheLastAccessTimeout",
                                             label="Idle Timeout: (0=Use Global)",
-                                            bind=prc.content,
+                                            bind=prc.oContent,
                                             title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",
                                             class="form-control",
                                             size="10",
@@ -402,7 +402,7 @@
                                             #html.checkbox(
                                                 name="category_#x#",
                                                 value="#prc.categories[ x ].getCategoryID()#",
-                                                checked=prc.content.hasCategories( prc.categories[ x ] )
+                                                checked=prc.oContent.hasCategories( prc.categories[ x ] )
                                             )#
                                             #prc.categories[ x ].getCategory()#
                                             </label>

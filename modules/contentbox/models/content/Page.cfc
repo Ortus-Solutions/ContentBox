@@ -225,13 +225,16 @@ component
 		required any originalSlugRoot,
 		required any newSlugRoot
 	){
-		// do layout
+		// Do page property cloning
 		setLayout( arguments.original.getLayout() );
+		setMobileLayout( arguments.original.getMobileLayout() );
+		setShowInMenu( arguments.original.getShowInMenu() );
+		setSSLOnly( arguments.original.getSSLOnly() );
 		// do excerpts
 		if ( arguments.original.hasExcerpt() ) {
 			setExcerpt( arguments.original.getExcerpt() );
 		}
-		// do core
+		// do core cloning
 		return super.prepareForClone( argumentCollection = arguments );
 	}
 

@@ -69,8 +69,8 @@ component extends="content" {
 		);
 
 		// Do we have a parent?
-		if ( len( rc.parentPage ) && isNumeric( rc.parentPage ) ) {
-			var parent = variables.contentService.get( rc.parentPage );
+		if ( len( rc.parentContent ) && isNumeric( rc.parentContent ) ) {
+			var parent = variables.contentService.get( rc.parentContent );
 			if ( !isNull( parent ) ) {
 				prc.page.setParent( parent );
 			}

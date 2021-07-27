@@ -60,7 +60,10 @@ component extends="coldbox.system.Interceptor" {
 	 * @data Intercept data
 	 */
 	function cbadmin_postEntrySave( event, data ){
-		doCacheCleanup( arguments.data.entry.buildContentCacheCleanupKey(), arguments.data.entry );
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
 	}
 
 	/**
@@ -70,7 +73,10 @@ component extends="coldbox.system.Interceptor" {
 	 * @data Intercept data
 	 */
 	function cbadmin_preEntryRemove( event, data ){
-		doCacheCleanup( arguments.data.entry.buildContentCacheCleanupKey(), arguments.data.entry );
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
 	}
 
 	/**
@@ -80,7 +86,10 @@ component extends="coldbox.system.Interceptor" {
 	 * @data Intercept data
 	 */
 	function cbadmin_postPageSave( event, data ){
-		doCacheCleanup( arguments.data.page.buildContentCacheCleanupKey(), arguments.data.page );
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
 	}
 
 	/**
@@ -90,7 +99,10 @@ component extends="coldbox.system.Interceptor" {
 	 * @data Intercept data
 	 */
 	function cbadmin_prePageRemove( event, data ){
-		doCacheCleanup( arguments.data.page.buildContentCacheCleanupKey(), arguments.data.page );
+		doCacheCleanup(
+			arguments.data.content.buildContentCacheCleanupKey(),
+			arguments.data.content
+		);
 	}
 
 	/**

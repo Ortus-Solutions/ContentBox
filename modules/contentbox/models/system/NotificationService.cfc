@@ -155,7 +155,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 		}
 
 		// Setup the entry + site
-		var entry    = arguments.data.entry;
+		var entry    = arguments.data.content;
 		var site     = entry.getSite();
 		var settings = variables.settingService.getAllSettings();
 
@@ -222,7 +222,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	 * @buffer Output buffer
 	 */
 	function cbadmin_preEntryRemove( event, data, buffer ){
-		var entry    = arguments.data.entry;
+		var entry    = arguments.data.content;
 		var site     = entry.getSite();
 		// Get settings
 		var settings = variables.settingService.getAllSettings();
@@ -288,7 +288,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 			return;
 		}
 
-		var page     = arguments.data.page;
+		var page     = arguments.data.content;
 		var site     = page.getSite();
 		var settings = variables.settingService.getAllSettings();
 
@@ -354,7 +354,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	 * @buffer Output buffer
 	 */
 	function cbadmin_prePageRemove( event, data, buffer ){
-		var page     = arguments.data.page;
+		var page     = arguments.data.content;
 		var site     = page.getSite();
 		// Get settings
 		var settings = variables.settingService.getAllSettings();

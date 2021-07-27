@@ -300,13 +300,13 @@ function previewContent(){
 	openRemoteModal(
 		getPreviewSelectorURL(),
 		{
-			content   		: getEditorContent(),
-			layout    		: $( "#layout" ).val(),
-			title     		: $( "#title" ).val(),
-			slug      		: $slug.val(),
-			contentType : $( "#contentType" ).val(),
-			markup    		: $( "#markup" ).val(),
-			parentPage 	: $( "#parentPage" ).val() || ""
+			content      	: getEditorContent(),
+			layout       	: $( "#layout" ).val(),
+			title        	: $( "#title" ).val(),
+			slug         	: $slug.val(),
+			contentType  	: $( "#contentType" ).val(),
+			markup       	: $( "#markup" ).val(),
+			parentContent	: $( "#parentContent" ).val() || ""
 		},
 		$( window ).width() - 50,
 		$( window ).height() - 200,

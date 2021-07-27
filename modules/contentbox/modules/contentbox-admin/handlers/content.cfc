@@ -28,7 +28,7 @@ component extends="baseHandler" {
 			.paramValue( "title", "" )
 			.paramValue( "slug", "" )
 			.paramValue( "markup", "HTML" )
-			.paramValue( "parentPage", "" );
+			.paramValue( "parentContent", "" );
 
 		// Determine Type
 		switch ( rc.contentType ) {

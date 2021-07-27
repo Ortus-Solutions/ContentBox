@@ -5,13 +5,13 @@
 		<a href="javascript:contentDrilldown()" title="Go Home!">
 			<i class="fa fa-home fa-lg"></i>
 		</a>
-	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.page )#
+	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
 	</div>
 </cfif>
 
 <!--- Hidden Elements --->
 #html.hiddenField( name="parent", value=event.getValue( "parent","" ) )#
-#html.hiddenField( name="pagesCount", value=prc.pagesCount )#
+#html.hiddenField( name="pagesCount", value=prc.contentCount )#
 
 <!--- pages --->
 <table
@@ -47,7 +47,7 @@
         </tr>
     </thead>
     <tbody>
-        <cfloop array="#prc.pages#" index="page">
+        <cfloop array="#prc.content#" index="page">
 			<tr
 				<!--- We convert the - in the id to _ since the order plugin doesn't like dashes--->
 				id="contentID-#page.getContentID().replace( "-", "_", "all" )#"
@@ -118,7 +118,7 @@
 					</cfif>
 
 					<!--- Search Label --->
-					<cfif len( rc.searchPages ) or prc.isFiltering>
+					<cfif len( rc.searchContent ) or prc.isFiltering>
 						<div class="mt5" title="Root Path">
 							<div class="label label-success">#page.getSlug()#</div>
 						</div>

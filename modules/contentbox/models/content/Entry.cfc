@@ -117,9 +117,11 @@ component
 		required any originalSlugRoot,
 		required any newSlugRoot
 	){
+		// Original cloning!
 		if ( arguments.original.hasExcerpt() ) {
 			setExcerpt( arguments.original.getExcerpt() );
 		}
+		// do core cloning
 		return super.prepareForClone( argumentCollection = arguments );
 	}
 

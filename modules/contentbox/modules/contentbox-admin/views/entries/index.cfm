@@ -39,7 +39,7 @@
 						<div class="col-md-6 col-xs-4">
 							<div class="form-group form-inline no-margin">
 								#html.textField(
-									name        = "entrySearch",
+									name        = "searchContent",
 									class       = "form-control rounded quicksearch",
 									placeholder = "Quick Search"
 								)#

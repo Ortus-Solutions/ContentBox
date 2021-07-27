@@ -11,8 +11,8 @@ $( document ).ready( function() {
 	setupContentView( {
 		tableContainer	: $( "##contentTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehEntryTable )#',
-		searchField 	: $( "##entrySearch" ),
-		searchName		: 'searchEntries',
+		searchField 	: $( "##searchContent" ),
+		searchName		: 'searchContent',
 		contentForm 	: $( "##entryForm" ),
 		bulkStatusURL 	: '#event.buildlink( prc.xehEntryBulkStatus )#',
 		importDialog 	: $( "##importDialog" ),

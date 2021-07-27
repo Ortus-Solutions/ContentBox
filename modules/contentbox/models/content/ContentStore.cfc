@@ -93,9 +93,10 @@ component
 		required any originalSlugRoot,
 		required any newSlugRoot
 	){
-		// description
+		// original cloning!
 		setDescription( arguments.original.getDescription() );
-		// do core
+		setOrder( arguments.original.getOrder() + 1 );
+		// do core cloning
 		return super.prepareForClone( argumentCollection = arguments );
 	}
 

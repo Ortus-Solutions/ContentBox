@@ -215,20 +215,6 @@ component extends="ContentService" singleton {
 	}
 
 	/**
-	 * Returns an array of [contentID, title, slug] structures of all the content store items in the system
-	 *
-	 * @sortOrder The sort order to use, defaults to title
-	 */
-	array function getAllFlatEntries( sortOrder = "title asc" ){
-		var c = newCriteria();
-
-		return c
-			.withProjections( property = "contentID,title,slug" )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder = arguments.sortOrder );
-	}
-
-	/**
 	 * Get all site content for export as flat data
 	 *
 	 * @site The site to get the export from

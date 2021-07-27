@@ -29,9 +29,9 @@
 					<i class="far fa-save fa-lg"></i> Quick Save
 				</a>
 			</li>
-            <cfif prc.page.isLoaded()>
+            <cfif prc.oContent.isLoaded()>
 				<li>
-					<a href="#prc.CBHelper.linkPage( prc.page )#" target="_blank">
+					<a href="#prc.CBHelper.linkPage( prc.oContent )#" target="_blank">
 						<i class="far fa-eye fa-lg"></i> Open In Site
 					</a>
 				</li>
@@ -53,8 +53,8 @@
                 #cbMessageBox().renderit()#
 
                 <!--- ids --->
-				#html.hiddenField( name="contentID", bind=prc.page )#
-                #html.hiddenField( name="contentType", bind=prc.page )#
+				#html.hiddenField( name="contentID", bind=prc.oContent )#
+                #html.hiddenField( name="contentType", bind=prc.oContent )#
 
                 <div class="panel panel-default">
                     <!-- Nav tabs -->
@@ -84,7 +84,7 @@
                             </cfif>
 
                             <!---Loaded Panels--->
-                            <cfif prc.page.isLoaded()>
+                            <cfif prc.oContent.isLoaded()>
                                 <li role="presentation">
                                     <a href="##history" aria-controls="history" role="tab" data-toggle="tab">
                                         <i class="fa fa-history"></i> History
@@ -112,7 +112,7 @@
                             #html.textfield(
                                 label           = "Title:",
                                 name            = "title",
-                                bind            = prc.page,
+                                bind            = prc.oContent,
                                 maxlength       = "100",
                                 required        = "required",
                                 title           = "The title for this page",
@@ -127,8 +127,8 @@
                                 <label for="slug" class="control-label">Permalink:
                                     <i class="fa fa-cloud" title="Convert title to permalink" onclick="createPermalink()"></i>
                                     <small> #prc.CBHelper.linkPageWithSlug('')#</small>
-                                    <cfif prc.page.hasParent()>
-                                        <small>#prc.page.getParent().getSlug()#/</small>
+                                    <cfif prc.oContent.hasParent()>
+                                        <small>#prc.oContent.getParent().getSlug()#/</small>
                                     </cfif>
                                 </label>
                                 <div class="controls">
@@ -136,15 +136,15 @@
                                     <div class="input-group">
                                         #html.textfield(
                                             name="slug",
-                                            bind=prc.page,
+                                            bind=prc.oContent,
                                             maxlength="100",
                                             class="form-control",
                                             title="The URL permalink for this page",
-                                            disabled="#prc.page.isLoaded() && prc.page.getIsPublished() ? 'true' : 'false'#"
+                                            disabled="#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
                                         )#
 
                                         <a title="" class="input-group-addon" href="javascript:void(0)" onclick="togglePermalink(); return false;" data-original-title="Lock/Unlock Permalink" data-container="body">
-                                            <i id="togglePermalink" class="fa fa-#prc.page.isLoaded() && prc.page.getIsPublished() ? 'lock' : 'unlock'#"></i>
+                                            <i id="togglePermalink" class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"></i>
                                         </a>
                                     </div>
                                 </div>
@@ -153,14 +153,14 @@
                             <!--- ContentToolBar --->
                             #renderView(
 								view 			= "_tags/content/toolbar",
-								args 			= { content = prc.page },
+								args 			= { content = prc.oContent },
 								prePostExempt 	= true
 							)#
 
                             <!--- content --->
                             #html.textarea(
                                 name    = "content",
-                                value   = htmlEditFormat( prc.page.getContent() ),
+                                value   = htmlEditFormat( prc.oContent.getContent() ),
                                 rows    = "25",
                                 class   = "form-control"
                             )#
@@ -170,7 +170,7 @@
                                 #html.textarea(
                                     label   = "Excerpt:",
                                     name    = "excerpt",
-                                    bind    = prc.page,
+                                    bind    = prc.oContent,
                                     rows    = "10",
                                     class   = "form-control"
                                 )#
@@ -181,7 +181,7 @@
                          <div role="tabpanel" class="tab-pane" id="custom_fields">
                              #renderView(
                                 view 			= "_tags/customFields",
-								args 			= { fieldType="Page", customFields=prc.page.getCustomFields() },
+								args 			= { fieldType="Page", customFields=prc.oContent.getCustomFields() },
 								prePostExempt 	= true
                             )#
                         </div>
@@ -192,7 +192,7 @@
                                 #html.textfield(
                                     name      = "htmlTitle",
                                     label     = "Title: (Leave blank to use the page name)",
-                                    bind      = prc.page,
+                                    bind      = prc.oContent,
                                     class     = "form-control",
                                     maxlength = "255"
                                 )#
@@ -204,7 +204,7 @@
                                 </label>
                                 #html.textArea(
                                     name        = "htmlKeywords",
-                                    bind        = prc.page,
+                                    bind        = prc.oContent,
                                     class       = "form-control",
                                     maxlength   = "160",
                                     rows        = "5"
@@ -217,7 +217,7 @@
                                 </label>
                                 #html.textArea(
                                     name        = "htmlDescription",
-                                    bind        = prc.page,
+                                    bind        = prc.oContent,
                                     class       = "form-control",
                                     maxlength   = "160",
                                     rows        = "5"
@@ -225,7 +225,7 @@
                             </div>
                         </div>
 
-                        <cfif prc.page.isLoaded()>
+                        <cfif prc.oContent.isLoaded()>
                             <!--- History --->
                             <div role="tabpanel" class="tab-pane" id="history">
                                 #prc.versionsViewlet#
@@ -263,7 +263,7 @@
 
                         #renderView(
                             view    		= "_tags/content/publishing",
-							args    		= { content = prc.page },
+							args    		= { content = prc.oContent },
 							prePostExempt 	= true
                         )#
 
@@ -271,10 +271,10 @@
                         <div id="accordion" class="panel-group accordion" data-stateful="page-sidebar">
 
                             <!---Begin Page Info--->
-                            <cfif prc.page.isLoaded()>
+                            <cfif prc.oContent.isLoaded()>
                                 #renderView(
                                     view    		= "_tags/content/infotable",
-									args    		= { content = prc.page },
+									args    		= { content = prc.oContent },
 									prePostExempt 	= true
                                 )#
                             </cfif>
@@ -294,14 +294,14 @@
                                         <div class="form-group">
                                             <!--- Parent Page --->
                                             #html.label(
-                                                field="parentPage",
+                                                field="parentContent",
                                                 content='Parent:',
                                                 class="control-label"
                                             )#
-                                            <select name="parentPage" id="parentPage" class="form-control input-sm">
+                                            <select name="parentContent" id="parentContent" class="form-control input-sm">
                                                 <option value="null">No Parent</option>
                                                 #html.options(
-                                                    values=prc.pages,
+                                                    values=prc.allContent,
                                                     column="contentID",
                                                     nameColumn="slug",
                                                     selectedValue=prc.parentcontentID
@@ -314,12 +314,12 @@
                                                 class="control-label" )#
                                             <select name="layout" id="layout" class="form-control input-sm">
                                                 <!--- Core Layouts --->
-                                                <option value="-inherit-" <cfif prc.page.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
-                                                <option value="-no-layout-" <cfif prc.page.getLayoutWithDefault() eq "-no-layout-">selected="selected"</cfif>>-no-layout-</option>
+                                                <option value="-inherit-" <cfif prc.oContent.getLayoutWithDefault() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+                                                <option value="-no-layout-" <cfif prc.oContent.getLayoutWithDefault() eq "-no-layout-">selected="selected"</cfif>>-no-layout-</option>
                                                 <!-- Custom Layouts -->
                                                 #html.options(
                                                     values=prc.availableLayouts,
-                                                    selectedValue=prc.page.getLayoutWithDefault()
+                                                    selectedValue=prc.oContent.getLayoutWithDefault()
                                                 )#
                                             </select>
                                         </div>
@@ -328,11 +328,11 @@
                                             #html.label(field="mobileLayout",content='Mobile Layout:',
                                                 class="control-label" )#
                                             <select name="mobileLayout" id="mobileLayout" class="form-control input-sm">
-                                                <option value="" <cfif prc.page.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
-                                                <option value="-inherit-" <cfif prc.page.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
+                                                <option value="" <cfif prc.oContent.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
+                                                <option value="-inherit-" <cfif prc.oContent.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
                                                 #html.options(
                                                     values=prc.availableLayouts,
-                                                    selectedValue=prc.page.getMobileLayout()
+                                                    selectedValue=prc.oContent.getMobileLayout()
                                                 )#
                                             </select>
                                         </div>
@@ -343,7 +343,7 @@
                                                 label="Show In Menus:",
                                                 class="form-control input-sm",
                                                 options="Yes,No",
-                                                selectedValue=yesNoFormat( prc.page.getShowInMenu() )
+                                                selectedValue=yesNoFormat( prc.oContent.getShowInMenu() )
                                             )#
                                         </div>
                                         <div class="form-group">
@@ -353,7 +353,7 @@
                                                 label="Show In Search:",
                                                 class="form-control input-sm",
                                                 options="Yes,No",
-                                                selectedValue=yesNoFormat( prc.page.getShowInSearch() )
+                                                selectedValue=yesNoFormat( prc.oContent.getShowInSearch() )
                                             )#
                                         </div>
                                         <div class="form-group">
@@ -362,7 +362,7 @@
                                                 type="number",
                                                 label="Menu Order: (0-99)",
                                                 name="order",
-                                                bind=prc.page,
+                                                bind=prc.oContent,
                                                 title="The ordering index used when building menus",
                                                 class="form-control",
                                                 size="5",
@@ -375,7 +375,7 @@
                                 </div>
                             </div>
                             <cfelse>
-                                #html.hiddenField( name="parentPage", value=prc.parentcontentID )#
+                                #html.hiddenField( name="parentContent", value=prc.parentcontentID )#
                             </cfif>
                             <!---End Display Options--->
 
@@ -420,7 +420,7 @@
                                     <div class="panel-body">
 										#renderView(
 											view 			= "_tags/linkedContent",
-											args 			= { linkedContent : prc.linkedContent, contentType : prc.page.getContentType() },
+											args 			= { linkedContent : prc.linkedContent, contentType : prc.oContent.getContentType() },
 											prePostExempt 	= true
 										)#
                                     </div>
@@ -442,7 +442,7 @@
                                 <div id="modifiers" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <!--- Creator --->
-                                        <cfif prc.page.isLoaded() and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
+                                        <cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
                                             <div class="form-group">
                                                 <i class="fa fa-user"></i>
                                                 #html.label(
@@ -452,7 +452,7 @@
                                                 )#
                                                 <select name="creatorID" id="creatorID" class="form-control input-sm">
                                                     <cfloop array="#prc.authors#" index="author">
-                                                    <option value="#author.getAuthorID()#" <cfif prc.page.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
+                                                    <option value="#author.getAuthorID()#" <cfif prc.oContent.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
                                                     </cfloop>
                                                 </select>
                                             </div>
@@ -470,7 +470,7 @@
                                                 #html.select(
                                                     name="allowComments",
                                                     options="Yes,No",
-                                                    selectedValue=yesNoFormat( prc.page.getAllowComments() ),
+                                                    selectedValue=yesNoFormat( prc.oContent.getAllowComments() ),
                                                     class="form-control input-sm"
                                                 )#
                                             </div>
@@ -487,7 +487,7 @@
                                             #html.select(
                                                 name="sslOnly",
                                                 options="Yes,No",
-                                                selectedValue=yesNoFormat( prc.page.getSSLOnly() ),
+                                                selectedValue=yesNoFormat( prc.oContent.getSSLOnly() ),
                                                 class="form-control input-sm"
                                             )#
                                         </div>
@@ -497,7 +497,7 @@
                                             <label for="passwordProtection"><i class="fas fa-key"></i> Password Protection:</label>
                                             #html.textfield(
                                                 name="passwordProtection",
-                                                bind=prc.page,
+                                                bind=prc.oContent,
                                                 title="Password protect your page, leave empty for none",
                                                 class="form-control",
                                                 maxlength="100"
@@ -535,7 +535,7 @@
                                             #html.select(
                                                 name			= "cacheLayout",
                                                 options			= "Yes,No",
-                                                selectedValue	= yesNoFormat( prc.page.getCacheLayout() ),
+                                                selectedValue	= yesNoFormat( prc.oContent.getCacheLayout() ),
                                                 class			= "form-control input-sm"
                                             )#
 										</div>
@@ -550,7 +550,7 @@
                                             #html.select(
                                                 name          = "cache",
                                                 options       = "Yes,No",
-                                                selectedValue = yesNoFormat( prc.page.getCache() ),
+                                                selectedValue = yesNoFormat( prc.oContent.getCache() ),
                                                 class         = "form-control input-sm"
                                             )#
 										</div>
@@ -560,7 +560,7 @@
                                                 type="numeric",
                                                 name="cacheTimeout",
                                                 label="Cache Timeout (0=Use Global):",
-                                                bind=prc.page,
+                                                bind=prc.oContent,
                                                 title="Enter the number of minutes to cache your content, 0 means use global default",
                                                 class="form-control",
                                                 size="10",
@@ -572,7 +572,7 @@
                                                 type="numeric",
                                                 name="cacheLastAccessTimeout",
                                                 label="Idle Timeout: (0=Use Global)",
-                                                bind=prc.page,
+                                                bind=prc.oContent,
                                                 title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",
                                                 class="form-control",
                                                 size="10",
@@ -605,7 +605,7 @@
                                                 #html.checkbox(
                                                     name="category_#x#",
                                                     value="#prc.categories[ x ].getCategoryID()#",
-                                                    checked=prc.page.hasCategories( prc.categories[ x ] )
+                                                    checked=prc.oContent.hasCategories( prc.categories[ x ] )
                                                 )#
                                                 #prc.categories[ x ].getCategory()#
                                                 </label>
@@ -649,23 +649,23 @@
 											</a>
 
                                             <!--- Featured Image Selection --->
-                                            <div class="<cfif !len( prc.page.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
+                                            <div class="<cfif !len( prc.oContent.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
 												#html.hiddenField(
                                                     name 		= "featuredImage",
-													bind 		= prc.page,
+													bind 		= prc.oContent,
 													class 		= "form-control",
 													readonly 	= true,
 													title 		= "The actual image path to deliver"
                                                 )#
                                                 #html.hiddenField(
                                                     name = "featuredImageURL",
-                                                    bind = prc.page
+                                                    bind = prc.oContent
 												)#
 
                                                 <!--- Image Preview --->
                                                 <div class="m10">
-                                                    <cfif len( prc.page.getFeaturedImageURL() )>
-                                                        <img id="featuredImagePreview" src="#prc.page.getFeaturedImageURL()#" class="img-thumbnail" height="75">
+                                                    <cfif len( prc.oContent.getFeaturedImageURL() )>
+                                                        <img id="featuredImagePreview" src="#prc.oContent.getFeaturedImageURL()#" class="img-thumbnail" height="75">
                                                     <cfelse>
                                                         <img id="featuredImagePreview" class="img-thumbnail" height="75">
                                                     </cfif>

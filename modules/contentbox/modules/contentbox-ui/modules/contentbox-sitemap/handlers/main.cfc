@@ -95,7 +95,7 @@ component {
 		prc.disableBlog = !prc.oCurrentSite.getIsBlogEnabled();
 
 		// Get Content Data
-		prc.aPages = pageService.getAllFlatPages(
+		prc.aPages = pageService.getAllFlatContent(
 			sortOrder    = "order asc",
 			isPublished  = true,
 			showInSearch = true,
@@ -109,7 +109,7 @@ component {
 				prc.blogEntryPoint = prc.blogEntryPoint & "/";
 			}
 			// Entry Content
-			prc.aEntries = entryService.getAllFlatEntries(
+			prc.aEntries = entryService.getAllFlatContent(
 				sortOrder    = "createdDate asc",
 				isPublished  = true,
 				showInSearch = true,

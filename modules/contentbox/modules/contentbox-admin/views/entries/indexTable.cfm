@@ -1,6 +1,10 @@
 <cfoutput>
 <!--- Entries Count --->
-<input type="hidden" name="entriesCount" id="entriesCount" value="#prc.entriesCount#">
+<input
+	type="hidden"
+	name="contentCount"
+	id="contentCount"
+	value="#prc.contentCount#">
 
 <!--- entries --->
 <table
@@ -36,7 +40,7 @@
 	</thead>
 
 	<tbody>
-		<cfloop array="#prc.entries#" index="entry">
+		<cfloop array="#prc.content#" index="entry">
 		<tr data-contentID="#entry.getContentID()#"
 			<cfif entry.isExpired()>
 				class="danger"
@@ -184,12 +188,12 @@
 <!--- Paging --->
 <cfif !rc.showAll>
 	#prc.oPaging.renderit(
-		foundRows = prc.entriesCount,
+		foundRows = prc.contentCount,
 		link      = prc.pagingLink,
 		asList    = true
 	)#
 <cfelse>
-	<span class="label label-info">Total Records: #prc.entriesCount#</span>
+	<span class="label label-info">Total Records: #prc.contentCount#</span>
 </cfif>
 
 </cfoutput>
