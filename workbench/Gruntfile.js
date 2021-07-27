@@ -138,14 +138,14 @@ module.exports = function( grunt ) {
 					"node_modules/alpinejs/dist/cdn/cdn.min.js",
 					// Jquery
 					"app_modules/jquery/dist/jquery.min.js",
+					// Moment: Used by the Editors JS: Refactor in the future to JavaScript API
+					"node_modules/moment/min/moment.min.js",
 					// For autosaving and js cookies on editors
 					"app_modules/jquery.cookie/jquery.cookie.js",
 					// Form validation
 					"app_modules/jquery-validation/dist/jquery.validate.min.js",
 					// Bootstrap js plugins
 					"app_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js",
-					// Date/Time Utiolities
-					"app_modules/moment/min/moment-with-locales.min.js",
 					// String compression utility: Used by autosave features
 					"app_modules/lz-string/libs/lz-string.min.js",
 					// Global utility

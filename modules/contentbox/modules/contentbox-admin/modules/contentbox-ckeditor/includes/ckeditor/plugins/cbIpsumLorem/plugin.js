@@ -25,7 +25,7 @@
 				editor.ui.addButton( pluginName,{
 					label   : "Insert Ipsum Lorem",
 					icon    : this.path + "text.png",
-					command : b
+					command : pluginName
 				} );
 
 				// context menu
