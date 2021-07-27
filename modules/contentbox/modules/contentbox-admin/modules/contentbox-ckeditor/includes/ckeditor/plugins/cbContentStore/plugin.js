@@ -13,7 +13,7 @@
 				// Add the Command
 				editor.addCommand( pluginName,{
 					// Enable the button for both 'wysiwyg' and 'source' modes
-					modes : { wysiwyg: 1, source: 1 },
+					modes : { wysiwyg: true, source: false },
 					// Command Execution
 					exec  : function( editor ){
 						// Open the selector widget dialog.

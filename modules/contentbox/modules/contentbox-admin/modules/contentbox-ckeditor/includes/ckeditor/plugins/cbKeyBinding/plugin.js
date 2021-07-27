@@ -9,7 +9,7 @@ CKEDITOR.plugins.add( "cbKeyBinding", {
 		// add command for quickSave
 		editor.addCommand( "quickSave", {
 			// Enable the button for both 'wysiwyg' and 'source' modes
-			modes : { wysiwyg: 1, source: 1 },
+			modes : { wysiwyg: true, source: false },
 			exec  : function( editor ) {
 				quickSave();
 			}
@@ -18,7 +18,7 @@ CKEDITOR.plugins.add( "cbKeyBinding", {
 		// add command for quickPreview
 		editor.addCommand( "quickPreview", {
 			// Enable the button for both 'wysiwyg' and 'source' modes
-			modes : { wysiwyg: 1, source: 1 },
+			modes : { wysiwyg: true, source: false },
 			exec  : function( editor ) {
 				previewContent();
 			}
