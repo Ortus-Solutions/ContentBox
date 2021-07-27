@@ -1681,7 +1681,7 @@ component
 		if ( isNull( arguments.parent ) ) {
 			variables.parent = javacast( "null", "" );
 			// remove the hierarchical information from our slug if promoting to the root
-			variables.slug = listLast( variables.slug, "/" );
+			variables.slug   = listLast( variables.slug, "/" );
 			return this;
 		} else {
 			// Welcome home papa!
@@ -1695,4 +1695,5 @@ component
 
 		return this;
 	}
+
 }
