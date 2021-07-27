@@ -1,17 +1,25 @@
-// plugin for adding generic key events to CKEDITOR
+/**
+ * Copyright (c) 2012 Ortus Solutions, Corp. All rights reserved.
+ * plugin for adding generic key events to CKEDITOR
+ */
 CKEDITOR.plugins.add( "cbKeyBinding", {
 	// setup plugin
 	init : function( editor ) {
 		//editor.addCommand( pluginCmd, new CKEDITOR.dialogCommand( pluginCmd, {} ) );
 		// add command for quickSave
 		editor.addCommand( "quickSave", {
-			exec : function( editor ) {
+			// Enable the button for both 'wysiwyg' and 'source' modes
+			modes : { wysiwyg: true, source: false },
+			exec  : function( editor ) {
 				quickSave();
 			}
 		} );
+
 		// add command for quickPreview
 		editor.addCommand( "quickPreview", {
-			exec : function( editor ) {
+			// Enable the button for both 'wysiwyg' and 'source' modes
+			modes : { wysiwyg: true, source: false },
+			exec  : function( editor ) {
 				previewContent();
 			}
 		} );

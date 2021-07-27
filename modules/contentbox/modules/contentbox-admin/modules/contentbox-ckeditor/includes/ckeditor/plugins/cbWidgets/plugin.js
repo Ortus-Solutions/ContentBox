@@ -1,57 +1,65 @@
-﻿/*
-Copyright (c) 2012 Ortus Solutions, Corp. All rights reserved.
-getWidgetSelectorURL() is exposed by the dynamic editor being generated.
-openRemoteModal() is part of contentbox js
-*/
+﻿/**
+ * Copyright (c) 2012 Ortus Solutions, Corp. All rights reserved.
+ * getWidgetSelectorURL() is exposed by the dynamic editor being generated.
+ * openRemoteModal() is part of contentbox js
+ */
 ( function(){
-	//Section 1 : Code to execute when the toolbar button is pressed
-	var insertWidget= {
-    		exec : function( editor ){
-    			// Open the selector widget dialog.
-    			openRemoteModal(
-					getWidgetSelectorURL(),
-					{ editorName: editor.name },
-					$( window ).width() - 200,
-					$( window ).height() - 300,
-					true
-				);
-    		}
-    	},
-    	updateWidget = {
-    	    exec : function( editor ) {
-				var element = editor.widgetSelection,
-					attributes={};
-				// get attributes
-				for ( var i in element.$.attributes ) {
-					var item = element.$.attributes[ i ];
-					if ( item.value != undefined ) {
-						attributes[ item.name ] = item.value;
-					}
-				}
-				attributes.editorName = editor.name;
-				attributes.modal = true;
-				attributes.mode = "Edit";
-    	        openRemoteModal( getWidgetInstanceURL(), attributes, 1000, 650 );
-			}
-    	},
-		removeWidget = {
-			exec : function( editor ) {
-				editor.widgetSelection.remove( false );
-			}
-		};
-    	//Section 2 : Create the button and add the functionality to it
-    	pluginName="cbWidgets";
+	const pluginName = "cbWidgets";
 
 	CKEDITOR.plugins.add( pluginName,{
 		init : function( editor ){
-			editor.addCommand( pluginName, insertWidget );
-			editor.addCommand( "widgetModal", updateWidget );
-			editor.addCommand( "widgetRemove", removeWidget );
+
+			// Insert Widget
+			editor.addCommand( pluginName, {
+				// Enable the button for both 'wysiwyg' and 'source' modes
+				modes : { wysiwyg: true, source: false },
+				exec  : function( editor ){
+					// Open the selector widget dialog.
+					openRemoteModal(
+						getWidgetSelectorURL(),
+						{ editorName: editor.name },
+						$( window ).width() - 200,
+						$( window ).height() - 300,
+						true
+					);
+				}
+			} );
+			// Update Widget
+			editor.addCommand( "widgetModal", {
+				// Enable the button for both 'wysiwyg' and 'source' modes
+				modes : { wysiwyg: true, source: false },
+				exec  : function( editor ) {
+					var element = editor.widgetSelection,
+						attributes={};
+					// get attributes
+					for ( var i in element.$.attributes ) {
+						var item = element.$.attributes[ i ];
+						if ( item.value != undefined ) {
+							attributes[ item.name ] = item.value;
+						}
+					}
+					attributes.editorName = editor.name;
+					attributes.modal = true;
+					attributes.mode = "Edit";
+					openRemoteModal( getWidgetInstanceURL(), attributes, 1000, 650 );
+				}
+			} );
+			// Remove Widget
+			editor.addCommand( "widgetRemove", {
+				// Enable the button for both 'wysiwyg' and 'source' modes
+				modes : { wysiwyg: true, source: false },
+				exec  : function( editor ) {
+					editor.widgetSelection.remove( false );
+				}
+			} );
+
+			// Add Button
 			editor.ui.addButton( pluginName,{
 				label   : "Insert a ContentBox Widget",
 				icon    : this.path + "ContentBox-Circle_16.png",
 				command : pluginName
 			} );
+
 			// context menu
 			if ( editor.addMenuItem ) {
 				// A group menu is required
