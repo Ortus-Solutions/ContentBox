@@ -104,48 +104,8 @@ component extends="baseContentHandler" {
 	 * Remove a page
 	 */
 	function remove( event, rc, prc ){
-		// params
-		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
-
-		// verify if contentID sent
-		if ( !len( rc.contentID ) ) {
-			cbMessageBox.warn( "No pages sent to delete!" );
-			relocate( event = prc.xehPages, queryString = "parent=#rc.parent#" );
-		}
-
-		// Inflate to array
-		rc.contentID = listToArray( rc.contentID );
-		var messages = [];
-
-		// Iterate and remove pages
-		for ( var thisContentID in rc.contentID ) {
-			var page = variables.ormService.get( thisContentID );
-			if ( isNull( page ) ) {
-				arrayAppend(
-					messages,
-					"Invalid page contentID sent: #thisContentID#, so skipped removal"
-				);
-			} else {
-				// GET id to be sent for announcing later
-				var contentID = page.getContentID();
-				var title     = page.getTitle();
-				// announce event
-				announce( "cbadmin_prePageRemove", { page : page } );
-				// Diassociate it, bi-directional relationship
-				if ( page.hasParent() ) {
-					page.getParent().removeChild( page );
-				}
-				// Send for deletion
-				variables.ormService.delete( page );
-				arrayAppend( messages, "Page '#title#' removed" );
-				// announce event
-				announce( "cbadmin_postPageRemove", { contentID : contentID } );
-			}
-		}
-		// messagebox
-		cbMessageBox.info( messages );
-		// relocate
-		relocate( event = prc.xehPages, queryString = "parent=#rc.parent#" );
+		arguments.relocateTo = prc.xehPages;
+		super.save( argumentCollection = arguments );
 	}
 
 	// pager viewlet
@@ -229,11 +189,6 @@ component extends="baseContentHandler" {
 		}
 		// view pager
 		return renderView( view = "pages/pager", module = "contentbox-admin" );
-	}
-
-	// slugify remotely
-	function slugify( event, rc, prc ){
-		event.renderData( data = trim( variables.HTMLHelper.slugify( rc.slug ) ), type = "plain" );
 	}
 
 	// editor selector
