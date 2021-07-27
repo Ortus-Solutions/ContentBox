@@ -67,15 +67,18 @@ component accessors="true" {
 	 * Calculate the startrow and maxrow
 	 *
 	 * @pagingMaxRows You can override the paging max rows here
+	 * @page Which page to bound on, we look into the request context for a `page` if not passed.
 	 *
 	 * @return struct of { startrow:numeric, maxrow:numeric }
 	 */
-	struct function getBoundaries( numeric pagingMaxRows ){
+	struct function getBoundaries( numeric pagingMaxRows, numeric page ){
 		var boundaries = { "startrow" : 1, "maxrow" : 0 };
 		var event      = getController().getRequestService().getContext();
 		var maxRows    = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
 
-		boundaries.startrow = ( event.getValue( "page", 1 ) * maxrows - maxRows ) + 1;
+		arguments.page = isNull( arguments.page ) ? event.getValue( "page", 1 ) : arguments.page;
+
+		boundaries.startrow = ( arguments.page * maxrows - maxRows ) + 1;
 		boundaries.maxrow   = boundaries.startrow + maxRows - 1;
 
 		return boundaries;
@@ -88,15 +91,17 @@ component accessors="true" {
 	 * @link The link to use, you must place the `@page@` place holder so the link can be created correctly. ex: /data/page/@page@
 	 * @pagingMaxRows You can override the paging max rows here
 	 * @asList Render the UI as a list of pagination or tabs
+	 * @page The page we are on, if not passed, we look into the request context for a `page` variable.
 	 */
 	function renderIt(
 		required numeric foundRows,
 		required link,
 		numeric pagingMaxRows,
-		boolean asList = false
+		boolean asList = false,
+		numeric page
 	){
 		var event        = getController().getRequestService().getContext();
-		var currentPage  = event.getValue( "page", 1 );
+		var currentPage  = isNull( arguments.page ) ? event.getValue( "page", 1 ) : arguments.page;
 		var pagingTabsUI = "";
 		var maxRows      = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
 		var bandGap      = getPagingBandGap();

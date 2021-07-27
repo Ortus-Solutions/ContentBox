@@ -250,7 +250,7 @@
 							<!--- History Command --->
 							<li class="mb5">
 								<a
-									href="#event.buildLink( prc.xehPageHistory )#/contentID/#page.getContentID()#"
+									href="#event.buildLink( prc.xehContentHistory )#/contentID/#page.getContentID()#"
 								>
 									<i class="fas fa-history fa-lg"></i> History
 								</a>

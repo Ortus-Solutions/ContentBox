@@ -15,6 +15,7 @@ component extends="baseContentHandler" {
 	variables.defaultOrdering = "order asc, createdDate desc";
 	variables.entry           = "ContentStore";
 	variables.entityPlural    = "content";
+	variables.securityPrefix  = "CONTENTSTORE";
 
 	/**
 	 * Pre Handler interceptions
@@ -38,10 +39,10 @@ component extends="baseContentHandler" {
 		prc.xehContentExportAll  = "#prc.cbAdminEntryPoint#.contentStore.exportAll";
 		prc.xehContentImport     = "#prc.cbAdminEntryPoint#.contentStore.importAll";
 		prc.xehContentClone      = "#prc.cbAdminEntryPoint#.contentStore.clone";
-		prc.xehResetHits         = "#prc.cbAdminEntryPoint#.content.resetHits";
 
 		// Light up
 		prc.tabContent_contentStore = true;
+
 		// Super size it
 		super.index( argumentCollection = arguments );
 	}
@@ -96,90 +97,27 @@ component extends="baseContentHandler" {
 		super.save( argumentCollection = arguments );
 	}
 
-	// remove
+	/**
+	 * Remove a content store item
+	 */
 	function remove( event, rc, prc ){
 		arguments.relocateTo = prc.xehContentStore;
 		super.save( argumentCollection = arguments );
 	}
 
-	// pager viewlet
-	function pager(
-		event,
-		rc,
-		prc,
-		authorID = "all",
-		parent,
-		max        = 0,
-		pagination = true,
-		latest     = false
-	){
-		// check if authorID exists in rc to do an override, maybe it's the paging call
-		if ( event.valueExists( "pager_authorID" ) ) {
-			arguments.authorID = rc.pager_authorID;
-		}
-		// check if parent exists in rc to do an override, maybe it's the paging call
-		if ( event.valueExists( "pager_parentID" ) ) {
-			arguments.parent = rc.pager_parentID;
-		}
-		// Max rows incoming or take default for pagination.
-		if ( arguments.max eq 0 ) {
-			arguments.max = prc.cbSettings.cb_paging_maxrows;
-		}
-
-		// paging default
-		event.paramValue( "page", 1 );
-
-		// exit handlers
-		prc.xehPager          = "#prc.cbAdminEntryPoint#.contentStore.pager";
-		prc.xehContentEditor  = "#prc.cbAdminEntryPoint#.contentStore.editor";
-		prc.xehContentHistory = "#prc.cbAdminEntryPoint#.versions.index";
-
-		// prepare paging object
-		prc.pager_oPaging    = getInstance( "Paging@contentbox" );
-		prc.pager_paging     = prc.pager_oPaging.getBoundaries();
-		prc.pager_pagingLink = "javascript:pagerLink(@page@)";
-		prc.pager_pagination = arguments.pagination;
-
-		// Sorting
-		var sortOrder = "publishedDate DESC";
-		if ( arguments.latest ) {
-			sortOrder = "modifiedDate desc";
-		}
-
-		// search content with filters and all
-		var contentResults = variables.ormService.search(
-			author = arguments.authorID,
-			parent = (
-				structKeyExists( arguments, "parent" ) ? arguments.parent : javacast( "null", "" )
-			),
-			offset    = prc.pager_paging.startRow - 1,
-			max       = arguments.max,
-			sortOrder = sortOrder
-		);
-		prc.pager_content      = contentResults.content;
-		prc.pager_contentCount = contentResults.count;
-		// author in RC
-		prc.pager_authorID     = arguments.authorID;
-		// parent
-		event.paramValue( "pagePager_parentID", "", true );
-		if ( structKeyExists( arguments, "parent" ) ) {
-			prc.pagePager_parentID = arguments.parent;
-		}
-		// view pager
-		return renderView( view = "contentStore/pager", module = "contentbox-admin" );
-	}
-
-	// editor selector
+	/**
+	 * Editor selector for contentstore UI
+	 */
 	function editorSelector( event, rc, prc ){
-		// exit handlers
-		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.contentStore.editorSelector";
 		// Sorting
-		arguments.sortOrder   = "createdDate asc";
+		arguments.sortOrder = "createdDate asc";
 		// Supersize me
 		super.editorSelector( argumentCollection = arguments );
 	}
 
-	// import contentstore
+	/**
+	 * Import content store items
+	 */
 	function importAll( event, rc, prc ){
 		arguments.relocateTo = prc.xehContentStore;
 		super.importAll( argumentCollection = arguments );

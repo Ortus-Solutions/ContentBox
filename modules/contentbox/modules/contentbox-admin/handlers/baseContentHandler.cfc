@@ -51,6 +51,8 @@ component extends="baseHandler" {
 	variables.entityPlural    = "";
 	// The default ordering on collection searches, etc.
 	variables.defaultOrdering = "createdDate desc";
+	// The security prefix
+	variables.securityPrefix  = "";
 
 	/**
 	 * Pre Handler interceptions
@@ -77,7 +79,10 @@ component extends="baseHandler" {
 			asQuery   = false
 		);
 
-		// view
+		// Exit Handlers
+		prc.xehResetHits = "#prc.cbAdminEntryPoint#.content.resetHits";
+
+		// View according to handler section
 		event.setView( "#variables.handler#/index" );
 	}
 
@@ -145,7 +150,10 @@ component extends="baseHandler" {
 			prc.oParent = variables.ormService.get( rc.parent );
 		}
 
-		// view
+		// Exit Handlers
+		prc.xehContentHistory = "#prc.cbAdminEntryPoint#.versions.index";
+
+		// view according to handler
 		event.setView( view = "#variables.handler#/indexTable", layout = "ajax" );
 	}
 
@@ -627,7 +635,7 @@ component extends="baseHandler" {
 			.paramValue( "clear", false );
 
 		// exit handlers
-		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.pages.editorSelector";
+		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.#variables.handler#.editorSelector";
 
 		// prepare paging object
 		prc.oPaging    = getInstance( "Paging@contentbox" );
@@ -718,6 +726,85 @@ component extends="baseHandler" {
 		relocate( arguments.relocateTo );
 	}
 
+	/**
+	 * Content pager viewlet. Used for embedding a table visualizer of content according to arguments
+	 *
+	 * @authorId The author to filter the viewlet on. By default we show all content by all authors
+	 * @parent Do we want to root the content at a specific parent not or not, by default we do not
+	 * @max The maximum number of records to show, default is using the settings maxrows
+	 * @pagination Show pagination caroussel or not, default is true
+	 * @latest Show the latest content ordering or by natural ordering
+	 *
+	 * @return HTML
+	 */
+	function pager(
+		event,
+		rc,
+		prc,
+		authorID = "all",
+		parent,
+		max        = 0,
+		pagination = true,
+		latest     = false
+	){
+		// check if authorID exists in rc to do an override, maybe it's the paging call
+		if ( event.valueExists( "contentPager_authorID" ) ) {
+			arguments.authorID = rc.contentPager_authorID;
+		}
+		// check if parent exists in rc to do an override, maybe it's the paging call
+		if ( event.valueExists( "contentPager_parentID" ) ) {
+			arguments.parent = rc.contentPager_parentID;
+		}
+		// check if pagination exists in rc to do an override, maybe it's the paging call
+		if ( event.valueExists( "contentPager_pagination" ) ) {
+			arguments.pagination = rc.contentPager_pagination;
+		}
+
+		// Max rows incoming or take default for pagination.
+		if ( arguments.max eq 0 ) {
+			arguments.max = prc.cbSettings.cb_paging_maxrows;
+		}
+
+		// Pager defaults
+		event.paramValue( "contentPager_page", 1 );
+		prc.contentPager_id = createUUID();
+
+		// prepare paging object
+		prc.contentPager_oPaging = getInstance( "Paging@contentbox" );
+		prc.contentPager_paging  = prc.contentPager_oPaging.getBoundaries(
+			page: rc.contentPager_page
+		);
+		prc.contentPager_pagingLink = "javascript:pagerLink(@page@)";
+		prc.contentPager_pagination = arguments.pagination;
+
+		// search entries with filters and all
+		var results = variables.ormService.search(
+			author   : arguments.authorID,
+			parent   : ( !isNull( arguments.parent ) ? arguments.parent : javacast( "null", "" ) ),
+			offset   : prc.contentPager_paging.startRow - 1,
+			max      : arguments.max,
+			sortOrder: ( arguments.latest ? "modifiedDate desc" : "title asc" )
+		);
+		prc.contentPager_content      = results[ variables.entityPlural ];
+		prc.contentPager_contentCount = results.count;
+		// author info
+		prc.contentPager_authorID     = arguments.authorID;
+		// parent filters se	// parent filters setup
+		event.paramValue( "pager_parentID", "", true );
+		if ( !isNull( arguments.parent ) ) {
+			prc.contentPager_parentID = arguments.parent;
+		}
+		// Exit Handlers
+		prc.xehContentPager             = "#prc.cbAdminEntryPoint#.#variables.handler#.pager";
+		prc.xehContentPagerHistory      = "#prc.cbAdminEntryPoint#.versions.index";
+		prc.xehContentPagerEditor       = "#prc.cbAdminEntryPoint#.#variables.handler#.editor";
+		prc.xehContentPagerQuickLook    = "#prc.cbAdminEntryPoint#.#variables.handler#.quickLook";
+		// Security Prefix
+		prc.contentPager_securityPrefix = variables.securityPrefix;
+
+		// view pager
+		return renderView( view = "content/pager", module = "contentbox-admin" );
+	}
 
 
 	/****************************************************************/

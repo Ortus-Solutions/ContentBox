@@ -15,6 +15,7 @@ component extends="baseContentHandler" {
 	variables.defaultOrdering = "createdDate desc";
 	variables.entity          = "Entry";
 	variables.entityPlural    = "entries";
+	variables.securityPrefix  = "ENTRIES";
 
 	/**
 	 * Pre Handler interceptions
@@ -45,9 +46,10 @@ component extends="baseContentHandler" {
 		prc.xehEntryExportAll  = "#prc.cbAdminEntryPoint#.entries.exportAll";
 		prc.xehEntryImport     = "#prc.cbAdminEntryPoint#.entries.importAll";
 		prc.xehEntryClone      = "#prc.cbAdminEntryPoint#.entries.clone";
-		prc.xehResetHits       = "#prc.cbAdminEntryPoint#.content.resetHits";
+
 		// Light up
-		prc.tabContent_blog    = true;
+		prc.tabContent_blog = true;
+
 		// Super size it
 		super.index( argumentCollection = arguments );
 	}
@@ -59,7 +61,6 @@ component extends="baseContentHandler" {
 		// exit handlers
 		prc.xehEntrySearch    = "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntryQuickLook = "#prc.cbAdminEntryPoint#.entries.quickLook";
-		prc.xehEntryHistory   = "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehEntryExport    = "#prc.cbAdminEntryPoint#.entries.export";
 		prc.xehEntryClone     = "#prc.cbAdminEntryPoint#.entries.clone";
 		// Super size it
@@ -111,77 +112,11 @@ component extends="baseContentHandler" {
 	}
 
 	/**
-	 * A viewlet for showcasing mini views of blog entries
-	 *
-	 * @authorID Show entries from all authors or only specific author ids
-	 * @max The max number fo entries to show, defaults to 0
-	 * @pagination Show pagination or not
-	 * @latest Show the by latest modified or created
-	 */
-	function pager(
-		event,
-		rc,
-		prc,
-		authorID   = "all",
-		max        = 0,
-		pagination = true,
-		latest     = false
-	){
-		// check if authorID exists in rc to do an override, maybe it's the paging call
-		if ( event.valueExists( "pager_authorID" ) ) {
-			arguments.authorID = rc.pager_authorID;
-		}
-		// Max rows incoming or take default for pagination.
-		if ( arguments.max eq 0 ) {
-			arguments.max = prc.cbSettings.cb_paging_maxrows;
-		}
-
-		// paging default
-		event.paramValue( "page", 1 );
-
-		// exit handlers
-		prc.xehPager          = "#prc.cbAdminEntryPoint#.entries.pager";
-		prc.xehEntryEditor    = "#prc.cbAdminEntryPoint#.entries.editor";
-		prc.xehEntryQuickLook = "#prc.cbAdminEntryPoint#.entries.quickLook";
-		prc.xehEntryHistory   = "#prc.cbAdminEntryPoint#.versions.index";
-
-		// prepare paging object
-		prc.pager_oPaging    = getInstance( "Paging@contentbox" );
-		prc.pager_paging     = prc.pager_oPaging.getBoundaries();
-		prc.pager_pagingLink = "javascript:pagerLink(@page@)";
-		prc.pager_pagination = arguments.pagination;
-
-		// Sorting
-		var sortOrder = "publishedDate DESC";
-		if ( arguments.latest ) {
-			sortOrder = "modifiedDate desc";
-		}
-
-		// search entries with filters and all
-		var entryResults = variables.ormService.search(
-			author    = arguments.authorID,
-			offset    = prc.pager_paging.startRow - 1,
-			max       = arguments.max,
-			sortOrder = sortOrder
-		);
-		prc.pager_entries      = entryResults.entries;
-		prc.pager_entriesCount = entryResults.count;
-
-		// author in RC
-		prc.pager_authorID = arguments.authorID;
-
-		// view pager
-		return renderView( view = "entries/pager", module = "contentbox-admin" );
-	}
-
-	/**
 	 * Editor selector for entries UI
 	 */
 	function editorSelector( event, rc, prc ){
-		// exit handlers
-		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.entries.editorSelector";
 		// Sorting
-		arguments.sortOrder   = "publishedDate asc";
+		arguments.sortOrder = "publishedDate asc";
 		// Supersize me
 		super.editorSelector( argumentCollection = arguments );
 	}

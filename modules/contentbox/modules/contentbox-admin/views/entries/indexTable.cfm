@@ -158,7 +158,7 @@
 						</cfif>
 						<!--- History Command --->
 						<li>
-							<a href="#event.buildLink( prc.xehEntryHistory )#/contentID/#entry.getContentID()#">
+							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#entry.getContentID()#">
 								<i class="fas fa-history fa-lg"></i> History
 							</a>
 						</li>
