@@ -199,62 +199,15 @@ component extends="baseContentHandler" {
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.pages.editorSelector";
 		arguments.sortOrder   = "slug asc";
 		// Supersize me
-		super.editorSelector( argumentCollection=arguments );
-	}
-
-	/**
-	 * Export a page hierarchy
-	 */
-	function export( event, rc, prc ){
-		return variables.ormService
-			.get( event.getValue( "contentID", 0 ) )
-			.getMemento( profile: "export" );
-	}
-
-	/**
-	 * Export Multiple Pages
-	 */
-	function exportAll( event, rc, prc ){
-		// Set a high timeout for long exports
-		setting requestTimeout="9999";
-		param rc.contentID    = "";
-		// Export all or some
-		if ( len( rc.contentID ) ) {
-			return rc.contentID
-				.listToArray()
-				.map( function( id ){
-					return variables.ormService.get( arguments.id ).getMemento( profile: "export" );
-				} );
-		} else {
-			return variables.ormService.getAllForExport( prc.oCurrentSite );
-		}
+		super.editorSelector( argumentCollection = arguments );
 	}
 
 	/**
 	 * Import pages
 	 */
 	function importAll( event, rc, prc ){
-		event.paramValue( "importFile", "" );
-		event.paramValue( "overrideContent", false );
-		try {
-			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = variables.ormService.importFromFile(
-					importFile = rc.importFile,
-					override   = rc.overrideContent
-				);
-				cbMessageBox.info( "Pages imported sucessfully!" );
-				flash.put( "importLog", importLog );
-			} else {
-				cbMessageBox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
-			}
-		} catch ( any e ) {
-			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
-			log.error( errorMessage, e );
-			cbMessageBox.error( errorMessage );
-		}
-		relocate( prc.xehPages );
+		arguments.relocateTo = prc.xehPages;
+		super.importAll( argumentCollection = arguments );
 	}
 
 }

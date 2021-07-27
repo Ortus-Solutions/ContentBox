@@ -495,7 +495,9 @@ component extends="baseHandler" {
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
-			cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			variables.cbMessageBox.warn(
+				"Can't clone the unclonable, meaning no contentID or title passed."
+			);
 			relocate( arguments.relocateTo );
 			return;
 		}
@@ -537,7 +539,7 @@ component extends="baseHandler" {
 		variables.ormService.save( clone );
 
 		// relocate
-		cbMessageBox.info( "#variables.entity# Cloned!" );
+		variables.cbMessageBox.info( "#variables.entity# Cloned!" );
 
 		// Relocate
 		if ( original.hasParent() ) {
@@ -654,6 +656,69 @@ component extends="baseHandler" {
 			event.setView( view = "content/editorSelector", layout = "ajax" );
 		}
 	}
+
+	/**
+	 * Export a piece of content
+	 *
+	 * @return json
+	 */
+	function export( event, rc, prc ){
+		return variables.ormService
+			.get( event.getValue( "contentID", 0 ) )
+			.getMemento( profile: "export" );
+	}
+
+	/**
+	 * Export All or Selected Content
+	 */
+	function exportAll( event, rc, prc ){
+		// Set a high timeout for long exports
+		setting requestTimeout="9999";
+		param rc.contentID    = "";
+		// Export all or some
+		if ( len( rc.contentID ) ) {
+			return rc.contentID
+				.listToArray()
+				.map( function( id ){
+					return variables.ormService.get( arguments.id ).getMemento( profile: "export" );
+				} );
+		} else {
+			return variables.ormService.getAllForExport( prc.oCurrentSite );
+		}
+	}
+
+	/**
+	 * Import content
+	 *
+	 * @relocateTo Where to relocate to when saving is done
+	 */
+	function importAll( event, rc, prc, relocateTo ){
+		event.paramValue( "importFile", "" );
+		event.paramValue( "overrideContent", false );
+
+		try {
+			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
+				var importLog = variables.ormService.importFromFile(
+					importFile = rc.importFile,
+					override   = rc.overrideContent
+				);
+				variables.cbMessageBox.info( "Content imported sucessfully!" );
+				flash.put( "importLog", importLog );
+			} else {
+				variables.cbMessageBox.error(
+					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
+				);
+			}
+		} catch ( any e ) {
+			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
+			log.error( errorMessage, e );
+			variables.cbMessageBox.error( errorMessage );
+		}
+
+		relocate( arguments.relocateTo );
+	}
+
+
 
 	/****************************************************************/
 	/* PRIVATE FUNCTIONS */
