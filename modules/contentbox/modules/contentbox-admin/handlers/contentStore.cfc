@@ -8,7 +8,7 @@
 component extends="baseContentHandler" {
 
 	// Dependencies
-	property name="ormService" inject="ormService@contentbox";
+	property name="ormService" inject="contentStoreService@contentbox";
 
 	// Properties
 	variables.handler         = "contentStore";
@@ -98,44 +98,8 @@ component extends="baseContentHandler" {
 
 	// remove
 	function remove( event, rc, prc ){
-		// params
-		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
-
-		// verify if contentID sent
-		if ( !len( rc.contentID ) ) {
-			cbMessageBox.warn( "No content sent to delete!" );
-			relocate( event = prc.xehContentStore, queryString = "parent=#rc.parent#" );
-		}
-
-		// Inflate to array
-		rc.contentID = listToArray( rc.contentID );
-		var messages = [];
-
-		// Iterate and remove
-		for ( var thisContentID in rc.contentID ) {
-			var content = variables.ormService.get( thisContentID );
-			if ( isNull( content ) ) {
-				arrayAppend(
-					messages,
-					"Invalid content contentID sent: #thisContentID#, so skipped removal"
-				);
-			} else {
-				// GET id to be sent for announcing later
-				var contentID = content.getContentID();
-				var title     = content.getTitle();
-				// announce event
-				announce( "cbadmin_preContentStoreRemove", { content : content } );
-				// Delete it
-				ormService.delete( content );
-				arrayAppend( messages, "content '#title#' removed" );
-				// announce event
-				announce( "cbadmin_postContentStoreRemove", { contentID : contentID } );
-			}
-		}
-		// messagebox
-		cbMessageBox.info( messages );
-		// relocate
-		relocate( event = prc.xehContentStore, queryString = "parent=#rc.parent#" );
+		arguments.relocateTo = prc.xehContentStore;
+		super.save( argumentCollection = arguments );
 	}
 
 	// pager viewlet
@@ -205,46 +169,14 @@ component extends="baseContentHandler" {
 		return renderView( view = "contentStore/pager", module = "contentbox-admin" );
 	}
 
-	// slugify remotely
-	function slugify( event, rc, prc ){
-		event.renderData( data = trim( variables.HTMLHelper.slugify( rc.slug ) ), type = "plain" );
-	}
-
 	// editor selector
 	function editorSelector( event, rc, prc ){
-		// paging default
-		event.paramValue( "page", 1 );
-		event.paramValue( "search", "" );
-		event.paramValue( "clear", false );
-
 		// exit handlers
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.contentStore.editorSelector";
-
-		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
-		prc.pagingLink = "javascript:pagerLink(@page@)";
-
-		// search content with filters and all
-		var contentResults = variables.ormService.search(
-			search             : rc.search,
-			offset             : prc.paging.startRow - 1,
-			max                : prc.cbSettings.cb_paging_maxrows,
-			sortOrder          : "createdDate asc",
-			searchActiveContent: false,
-			siteID             : prc.oCurrentSite.getsiteID()
-		);
-
-		prc.content      = contentResults.content;
-		prc.contentCount = contentResults.count;
-		prc.CBHelper     = CBHelper;
-
-		// if ajax and searching, just return tables
-		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView( view = "contentStore/editorSelectorEntries", prePostExempt = true );
-		} else {
-			event.setView( view = "contentStore/editorSelector", layout = "ajax" );
-		}
+		// Sorting
+		arguments.sortOrder   = "createdDate asc";
+		// Supersize me
+		super.editorSelector( argumentCollection=arguments );
 	}
 
 	// Export content
