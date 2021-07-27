@@ -182,11 +182,7 @@ component accessors="true" threadSafe singleton {
 			arguments.author.getIs2FactorAuth()
 		) {
 			// Verify if using trusted device options and if device is trusted
-			if (
-				oProvider.allowTrustedDevice() AND isTrustedDevice(
-					arguments.author.getAuthorID()
-				)
-			) {
+			if ( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ) {
 				results = false;
 			} else {
 				results = true;
