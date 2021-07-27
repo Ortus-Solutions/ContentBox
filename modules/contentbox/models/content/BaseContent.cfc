@@ -1680,6 +1680,8 @@ component
 		// Nulllify?
 		if ( isNull( arguments.parent ) ) {
 			variables.parent = javacast( "null", "" );
+			// remove the hierarchical information from our slug if promoting to the root
+			variables.slug = listLast( variables.slug, "/" );
 			return this;
 		} else {
 			// Welcome home papa!
@@ -1688,10 +1690,9 @@ component
 
 		// Update slug, if parent slug is not set
 		if ( !variables.slug.findNoCase( arguments.parent.getSlug() ) ) {
-			variables.slug = arguments.parent.getSlug() & "/" & variables.slug;
+			variables.slug = arguments.parent.getSlug() & "/" & listLast( variables.slug, "/" );
 		}
 
 		return this;
 	}
-
 }
