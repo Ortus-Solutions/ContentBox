@@ -73,9 +73,6 @@ component extends="baseContentHandler" {
 	 * Show the editor
 	 */
 	function editor( event, rc, prc ){
-		// exit handlers
-		prc.xehContentSave = "#prc.cbAdminEntryPoint#.contentStore.save";
-		prc.xehSlugify     = "#prc.cbAdminEntryPoint#.contentStore.slugify";
 		// Super size it
 		super.editor( argumentCollection = arguments );
 	}

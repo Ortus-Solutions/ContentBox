@@ -41,7 +41,7 @@
 
 	<!--- Entry Form  --->
 	#html.startForm(
-        action      = prc.xehEntrySave,
+        action      = prc.xehContentSave,
         name        = "entryForm",
         novalidate  = "novalidate",
         class       = "form-vertical mt5"

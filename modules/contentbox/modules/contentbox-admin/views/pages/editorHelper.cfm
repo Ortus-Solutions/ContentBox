@@ -7,7 +7,7 @@ $( document ).ready( function(){
  	// Editor Pointers
 	$pageForm = $( "##pageForm" );
 	// setup editors via _tags/editors.cfm by passing the form container
-	setupEditors( $pageForm, #prc.cbSettings.cb_page_excerpts#, '#event.buildLink( prc.xehPageSave )#' );
+	setupEditors( $pageForm, #prc.cbSettings.cb_page_excerpts#, '#event.buildLink( prc.xehContentSave )#' );
 } );
 </script>
 </cfoutput>

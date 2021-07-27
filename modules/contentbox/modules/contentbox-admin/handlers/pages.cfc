@@ -76,9 +76,6 @@ component extends="baseContentHandler" {
 		// Get active layout record and available page only layouts
 		prc.themeRecord      = variables.themeService.getActiveTheme();
 		prc.availableLayouts = reReplaceNoCase( prc.themeRecord.layouts, "blog,?", "" );
-		// exit handlers
-		prc.xehPageSave      = "#prc.cbAdminEntryPoint#.pages.save";
-		prc.xehSlugify       = "#prc.cbAdminEntryPoint#.pages.slugify";
 		// Super size it
 		super.editor( argumentCollection = arguments );
 	}

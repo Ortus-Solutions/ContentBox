@@ -41,7 +41,7 @@
 
     <!--- Page Form  --->
     #html.startForm(
-        action      = prc.xehPageSave,
+        action      = prc.xehContentSave,
         name        = "pageForm",
         novalidate  = "novalidate",
         class       = "form-vertical mt5"

@@ -325,6 +325,8 @@ component extends="baseHandler" {
 		}
 
 		// exit handlers
+		prc.xehContentSave                = "#prc.cbAdminEntryPoint#.#variables.handler#.save";
+		prc.xehSlugify                    = "#prc.cbAdminEntryPoint#.#variables.handler#.slugify";
 		prc.xehAuthorEditorSave           = "#prc.cbAdminEntryPoint#.authors.changeEditor";
 		prc.xehSlugCheck                  = "#prc.cbAdminEntryPoint#.content.slugUnique";
 		prc.xehRelatedContentSelector     = "#prc.cbAdminEntryPoint#.content.relatedContentSelector";
