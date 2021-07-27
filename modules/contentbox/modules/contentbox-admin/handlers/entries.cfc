@@ -187,58 +187,11 @@ component extends="baseContentHandler" {
 	}
 
 	/**
-	 * Export an entry
-	 */
-	function export( event, rc, prc ){
-		return variables.ormService
-			.get( event.getValue( "contentID", 0 ) )
-			.getMemento( profile: "export" );
-	}
-
-	/**
-	 * Export Multiple Entries
-	 */
-	function exportAll( event, rc, prc ){
-		// Set a high timeout for long exports
-		setting requestTimeout="9999";
-		param rc.contentID    = "";
-		// Export all or some
-		if ( len( rc.contentID ) ) {
-			return rc.contentID
-				.listToArray()
-				.map( function( id ){
-					return variables.ormService.get( arguments.id ).getMemento( profile: "export" );
-				} );
-		} else {
-			return variables.ormService.getAllForExport( prc.oCurrentSite );
-		}
-	}
-
-	/**
 	 * Import entries
 	 */
 	function importAll( event, rc, prc ){
-		event.paramValue( "importFile", "" );
-		event.paramValue( "overrideContent", false );
-		try {
-			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = variables.ormService.importFromFile(
-					importFile = rc.importFile,
-					override   = rc.overrideContent
-				);
-				cbMessageBox.info( "Entries imported sucessfully!" );
-				flash.put( "importLog", importLog );
-			} else {
-				cbMessageBox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
-			}
-		} catch ( any e ) {
-			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
-			log.error( errorMessage, e );
-			cbMessageBox.error( errorMessage );
-		}
-		relocate( prc.xehEntries );
+		arguments.relocateTo = prc.xehEntries;
+		super.importAll( argumentCollection = arguments );
 	}
 
 }
