@@ -41,7 +41,7 @@ function pagerLink( page ){
 	$( "##contentLoader" ).fadeIn( "fast" );
 	$('##modal')
 		.load(
-			'#event.buildLink(prc.xehEditorSelector)#?editorName=#rc.editorName#&page=' + page,
+			'#event.buildLink( prc.xehEditorSelector )#?editorName=#rc.editorName#&page=' + page,
 			function() {
 				$( "##contentLoader" ).fadeOut();
 			}

@@ -176,7 +176,7 @@ component extends="baseContentHandler" {
 		// Sorting
 		arguments.sortOrder   = "createdDate asc";
 		// Supersize me
-		super.editorSelector( argumentCollection=arguments );
+		super.editorSelector( argumentCollection = arguments );
 	}
 
 	// Export content

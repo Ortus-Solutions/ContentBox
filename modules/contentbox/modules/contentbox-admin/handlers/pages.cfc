@@ -191,42 +191,15 @@ component extends="baseContentHandler" {
 		return renderView( view = "pages/pager", module = "contentbox-admin" );
 	}
 
-	// editor selector
+	/**
+	 * Called by editors to bring a modal selector of content
+	 */
 	function editorSelector( event, rc, prc ){
-		// paging default
-		event.paramValue( "page", 1 );
-		event.paramValue( "search", "" );
-		event.paramValue( "clear", false );
-
 		// exit handlers
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.pages.editorSelector";
-
-		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
-		prc.pagingLink = "javascript:pagerLink(@page@)";
-
-		// search entries with filters and all
-		var pageResults = variables.ormService.search(
-			search             : rc.search,
-			offset             : prc.paging.startRow - 1,
-			max                : prc.cbSettings.cb_paging_maxrows,
-			sortOrder          : "slug asc",
-			searchActiveContent: false,
-			siteID             : prc.oCurrentSite.getsiteID()
-		);
-		// setup data for display
-		prc.entries      = pageResults.pages;
-		prc.entriesCount = pageResults.count;
-		prc.CBHelper     = CBHelper;
-		prc.contentType  = "Pages";
-
-		// if ajax and searching, just return tables
-		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView( view = "content/editorSelectorPages", prePostExempt = true );
-		} else {
-			event.setView( view = "content/editorSelector", layout = "ajax" );
-		}
+		arguments.sortOrder   = "slug asc";
+		// Supersize me
+		super.editorSelector( argumentCollection=arguments );
 	}
 
 	/**

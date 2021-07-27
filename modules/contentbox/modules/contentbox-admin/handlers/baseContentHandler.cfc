@@ -550,6 +550,111 @@ component extends="baseHandler" {
 		}
 	}
 
+	/**
+	 * Remove one or more pieces of content
+	 *
+	 * @relocateTo Where to relocate to when saving is done
+	 */
+	function remove( event, rc, prc, relocateTo ){
+		// params
+		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
+
+		// verify if contentID sent
+		if ( !len( rc.contentID ) ) {
+			variables.cbMessageBox.warn( "No content sent to delete!" );
+			relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
+		}
+
+		// Inflate to array
+		rc.contentID = listToArray( rc.contentID );
+		var messages = [];
+
+		// Iterate and remove pages
+		for ( var thisContentID in rc.contentID ) {
+			var oContent = variables.ormService.get( thisContentID );
+			if ( isNull( oContent ) ) {
+				arrayAppend(
+					messages,
+					"Invalid contentID sent: #thisContentID#, so skipped removal"
+				);
+			} else {
+				// GET id to be sent for announcing later
+				var contentID = oContent.getContentID();
+				var title     = oContent.getTitle();
+				// announce event
+				announce( "cbadmin_pre#variables.entity#Remove", { content : oContent } );
+				// Diassociate it, bi-directional relationship
+				if ( oContent.hasParent() ) {
+					oContent.getParent().removeChild( oContent );
+				}
+				// Send for deletion
+				variables.ormService.delete( oContent );
+				arrayAppend( messages, "Content '#title#' removed" );
+				// announce event
+				announce( "cbadmin_post#variables.entity#Remove", { contentID : contentID } );
+			}
+		}
+		// messagebox
+		variables.cbMessageBox.info( messages );
+		// relocate
+		relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
+	}
+
+	/**
+	 * Slugify helper for content slugs
+	 *
+	 * @return plain
+	 */
+	function slugify( event, rc, prc ){
+		param rc.slug = "";
+		return trim( variables.HTMLHelper.slugify( rc.slug ) );
+	}
+
+	/**
+	 * Called by editors to bring a modal selector of content
+	 *
+	 * @sortOrder The sorting for the results table
+	 *
+	 * @return html
+	 */
+	function editorSelector( event, rc, prc, sortOrder ){
+		// paging default
+		event
+			.paramValue( "page", 1 )
+			.paramValue( "search", "" )
+			.paramValue( "clear", false );
+
+		// exit handlers
+		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.pages.editorSelector";
+
+		// prepare paging object
+		prc.oPaging    = getInstance( "Paging@contentbox" );
+		prc.paging     = prc.oPaging.getBoundaries();
+		prc.pagingLink = "javascript:pagerLink(@page@)";
+
+		// search entries with filters and all
+		var results = variables.ormService.search(
+			search             : rc.search,
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			sortOrder          : arguments.sortOrder,
+			searchActiveContent: false,
+			siteID             : prc.oCurrentSite.getsiteID()
+		);
+		// setup data for display
+		prc.content      = results[ variables.entityPlural ];
+		prc.contentCount = results.count;
+		prc.CBHelper     = variables.CBHelper;
+		prc.contentType  = variables.entityPlural;
+
+		// if ajax and searching, just return tables
+		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
+			return renderView( view = "content/editorSelectorEntries", prePostExempt = true );
+		} else {
+			event.setView( view = "content/editorSelector", layout = "ajax" );
+		}
+	}
+
 	/****************************************************************/
 	/* PRIVATE FUNCTIONS */
 	/****************************************************************/

@@ -8,7 +8,7 @@
 component extends="baseContentHandler" {
 
 	// Dependencies
-	property name="ormService" inject="ormService@contentbox";
+	property name="ormService" inject="entryService@contentbox";
 
 	// Properties
 	variables.handler         = "entries";
@@ -106,44 +106,8 @@ component extends="baseContentHandler" {
 	 * Remove an entry
 	 */
 	function remove( event, rc, prc ){
-		// params
-		event.paramValue( "contentID", "" );
-
-		// verify if contentID sent
-		if ( !len( rc.contentID ) ) {
-			cbMessageBox.warn( "No entries sent to delete!" );
-			relocate( event = prc.xehEntries );
-		}
-
-		// Inflate to array
-		rc.contentID = listToArray( rc.contentID );
-		var messages = [];
-
-		// Iterate and remove
-		for ( var thisContentID in rc.contentID ) {
-			var entry = variables.ormService.get( thisContentID );
-			if ( isNull( entry ) ) {
-				arrayAppend(
-					messages,
-					"Invalid entry contentID sent: #thisContentID#, so skipped removal"
-				);
-			} else {
-				// GET id to be sent for announcing later
-				var contentID = entry.getContentID();
-				var title     = entry.getTitle();
-				// announce event
-				announce( "cbadmin_preEntryRemove", { entry : entry } );
-				// Delete it
-				ormService.delete( entry );
-				arrayAppend( messages, "Entry '#title#' removed" );
-				// announce event
-				announce( "cbadmin_postEntryRemove", { contentID : contentID } );
-			}
-		}
-		// messagebox
-		cbMessageBox.info( messages );
-		// relocate
-		relocate( event = prc.xehEntries );
+		arguments.relocateTo = prc.xehEntries;
+		super.save( argumentCollection = arguments );
 	}
 
 	/**
@@ -211,50 +175,15 @@ component extends="baseContentHandler" {
 	}
 
 	/**
-	 * Slugify the incoming slug
-	 */
-	function slugify( event, rc, prc ){
-		event.renderData( data = trim( variables.HTMLHelper.slugify( rc.slug ) ), type = "plain" );
-	}
-
-	/**
 	 * Editor selector for entries UI
 	 */
 	function editorSelector( event, rc, prc ){
-		// paging default
-		event.paramValue( "page", 1 );
-		event.paramValue( "search", "" );
-		event.paramValue( "clear", false );
-
 		// exit handlers
 		prc.xehEditorSelector = "#prc.cbAdminEntryPoint#.entries.editorSelector";
-
-		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@contentbox" );
-		prc.paging     = prc.oPaging.getBoundaries();
-		prc.pagingLink = "javascript:pagerLink(@page@)";
-
-		// search entries with filters and all
-		var entryResults = variables.ormService.search(
-			search             : rc.search,
-			offset             : prc.paging.startRow - 1,
-			max                : prc.cbSettings.cb_paging_maxrows,
-			sortOrder          : "publishedDate desc",
-			searchActiveContent: false,
-			siteID             : prc.oCurrentSite.getsiteID()
-		);
-
-		prc.entries      = entryResults.entries;
-		prc.entriesCount = entryResults.count;
-		prc.CBHelper     = variables.CBHelper;
-		prc.contentType  = "Blog Entries";
-
-		// if ajax and searching, just return tables
-		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView( view = "content/editorSelectorEntries", prePostExempt = true );
-		} else {
-			event.setView( view = "content/editorSelector", layout = "ajax" );
-		}
+		// Sorting
+		arguments.sortOrder   = "publishedDate asc";
+		// Supersize me
+		super.editorSelector( argumentCollection = arguments );
 	}
 
 	/**
