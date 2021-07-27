@@ -366,18 +366,12 @@ component extends="baseContentHandler" {
 			.paramValue( "content", "" )
 			.paramValue( "customFieldsCount", 0 )
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() );
+			.paramValue( "site", prc.oCurrentSite.getsiteID() )
+			.paramValue( "slug", variables.HTMLHelper.slugify( rc.title ) );
 
 		if ( NOT len( rc.publishedDate ) ) {
 			rc.publishedDate = dateFormat( now() );
 		}
-
-		// slugify the incoming title or slug
-		rc.slug = (
-			NOT len( rc.slug ) ? variables.HTMLHelper.slugify( rc.title ) : variables.HTMLHelper.slugify(
-				listLast( rc.slug, "/" )
-			)
-		);
 
 		// Verify permission for publishing, else save as draft
 		if ( !prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" ) ) {
