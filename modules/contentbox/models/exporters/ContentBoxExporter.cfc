@@ -47,8 +47,6 @@ component accessors=true {
 	property name="templateService" inject="id:emailtemplateService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="zipUtil" inject="zipUtil@contentbox";
-	property name="dataExporter" inject="id:dataExporter@contentbox";
-	property name="fileExporter" inject="id:fileExporter@contentbox";
 	property name="wirebox" inject="wirebox";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
@@ -211,7 +209,7 @@ component accessors=true {
 			switch ( config.type ) {
 				// add data exporter
 				case "data":
-					var exporter = variables.dataExporter;
+					var exporter = wirebox.getInstance( "dataExporter@contentbox" );
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
 					exporter.setContent(
@@ -226,7 +224,7 @@ component accessors=true {
 					var includedFiles = !isBoolean( arguments.targets[ key ] ) && listLen(
 						arguments.targets[ key ]
 					) ? arguments.targets[ key ] : "*";
-					var exporter = variables.fileExporter;
+					var exporter = wirebox.getInstance( "fileExporter@contentbox" );
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
 					exporter.setDirectory( config.def.directory );
