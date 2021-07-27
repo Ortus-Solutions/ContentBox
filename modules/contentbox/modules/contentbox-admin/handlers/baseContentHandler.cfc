@@ -334,7 +334,7 @@ component extends="baseHandler" {
 		prc.xehBreakContentLink           = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
 		// view
-		event.setView( "#variables.handler#/editor" );
+		event.setView( "content/editor" );
 	}
 
 	/**

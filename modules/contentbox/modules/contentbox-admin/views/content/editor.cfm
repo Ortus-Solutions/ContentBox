@@ -1,11 +1,15 @@
 ﻿<cfoutput>
+	<!--- Quick Actions Left Button Bar --->
 	<div class="btn-group btn-group-sm">
+
+		<!--- Back Button --->
         <button
 			class="btn btn-sm btn-primary"
 			onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
 			<i class="fas fa-chevron-left"></i> Back
         </button>
 
+		<!--- Drop Actions --->
         <button
 			class="btn btn-sm btn-default dropdown-toggle"
 			data-toggle="dropdown"
@@ -13,26 +17,26 @@
 			<span class="caret"></span>
         </button>
 
-        <ul class="dropdown-menu">
-			<li>
-				<a href="javascript:quickPublish( false )">
-					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
-				</a>
-			</li>
-			<li>
-				<a href="javascript:quickPublish( true )">
-					<i class="fas fa-eraser fa-lg"></i> Save as Draft
-				</a>
-			</li>
-			<li>
-				<a href="javascript:quickSave()">
-					<i class="far fa-save fa-lg"></i> Quick Save
-				</a>
-			</li>
-        </ul>
+			<ul class="dropdown-menu">
+				<li>
+					<a href="javascript:quickPublish( false )">
+						<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
+					</a>
+				</li>
+				<li>
+					<a href="javascript:quickPublish( true )">
+						<i class="fas fa-eraser fa-lg"></i> Save as Draft
+					</a>
+				</li>
+				<li>
+					<a href="javascript:quickSave()">
+						<i class="far fa-save fa-lg"></i> Quick Save
+					</a>
+				</li>
+			</ul>
 	</div>
 
-	<!--- content Form  --->
+	<!--- Content Form --->
 	#html.startForm(
 		action      = prc.xehContentSave,
 		name        = "contentForm",
@@ -40,402 +44,417 @@
 		class       = "form-vertical mt5",
 		role        = "form"
 	)#
-    <div class="row">
-        <div class="col-md-8" id="main-content-slot">
-            <!--- MessageBox --->
-            #cbMessageBox().renderit()#
-            <!--- form --->
-            #html.hiddenField( name="contentID", bind=prc.oContent)#
-            #html.hiddenField( name="contentType", bind=prc.oContent)#
-            #html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
 
-            <div class="panel panel-default">
+		<div class="row">
 
-                <!-- Nav tabs -->
-                <div class="tab-wrapper m0">
-                    <ul class="nav nav-tabs" role="tablist">
+			<!--- Content Editor --->
+			<div class="col-md-8" id="main-content-slot">
+				<!--- MessageBox --->
+				#cbMessageBox().renderit()#
 
-                        <li role="presentation" class="active">
-                            <a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-                                <i class="fas fa-pen"></i> Editor
-                            </a>
-                        </li>
+				<!--- Hidden Values --->
+				#html.hiddenField( name="contentID", bind=prc.oContent )#
+				#html.hiddenField( name="contentType", bind=prc.oContent )#
+				#html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
 
-                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
-                            <li role="presentation">
-                                <a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-                                    <i class="fas fa-microchip"></i> Custom Fields
-                                </a>
-                            </li>
-                        </cfif>
+				<div class="panel panel-default">
 
-                        <!---Loaded Panels--->
-                        <cfif prc.oContent.isLoaded()>
-                            <li role="presentation">
-                                <a href="##history" aria-controls="history" role="tab" data-toggle="tab">
-                                    <i class="fa fa-history"></i> History
-                                </a>
-                            </li>
+					<!-- Nav Tabs -->
+					<div class="tab-wrapper m0">
+						<ul class="nav nav-tabs" role="tablist">
+
+							<!--- Main Editor --->
+							<li role="presentation" class="active">
+								<a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
+									<i class="fas fa-pen"></i> Editor
+								</a>
+							</li>
+
+							<!--- Custom Fields --->
+							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
+								<li role="presentation">
+									<a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
+										<i class="fas fa-microchip"></i> Custom Fields
+									</a>
+								</li>
+							</cfif>
+
+							<!--- Version History --->
+							<cfif prc.oContent.isLoaded()>
+								<li role="presentation">
+									<a href="##history" aria-controls="history" role="tab" data-toggle="tab">
+										<i class="fa fa-history"></i> History
+									</a>
+								</li>
+							</cfif>
+
+							<!--- Event --->
+							#announce( "cbadmin_ContentStoreEditorNav" )#
+						</ul>
+					</div>
+
+					<!--- Nav Content --->
+					<div class="panel-body tab-content">
+
+						<!--- Editor Tab --->
+						<div role="tabpanel" class="tab-pane active" id="editor">
+							<!--- title --->
+							#html.textfield(
+								label    	= "Title:",
+								name     	= "title",
+								bind     	= prc.oContent,
+								maxlength	= "100",
+								required 	= "required",
+								title    	= "The title for this content",
+								class    	= "form-control",
+								wrapper  	= "div class=controls",
+								labelClass	= "control-label",
+								groupWrapper= "div class=form-group"
+							)#
+
+							<!--- slug --->
+							<div class="form-group">
+								<label for="slug" class="control-label">Slug:</label>
+								<div class="controls">
+									<div id='slugCheckErrors'></div>
+									<div class="input-group">
+										#html.textfield(
+											name      = "slug",
+											bind      = prc.oContent,
+											maxlength = "100",
+											class     = "form-control",
+											title     = "The unique slug for this content, this is how they are retreived",
+											disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
+										)#
+										<a title=""
+											class="input-group-addon"
+											href="javascript:void(0)"
+											onclick="togglePermalink(); return false;"
+											data-original-title="Lock/Unlock permalink"
+											data-container="body"
+										>
+											<i id="togglePermalink" class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+
+							<!--- Description --->
+							#html.textarea(
+								name   		= "description",
+								label  		= "Short Description:",
+								bind   		= prc.oContent,
+								rows   		= 1,
+								class  		= "form-control",
+								title  		= "A short description for metadata purposes",
+								wrapper		= "div class=controls",
+								labelClass	= "control-label",
+								groupWrapper= "div class=form-group"
+							)#
+
+							<!---ContentToolBar --->
+							#renderView(
+								view 			= "_tags/content/toolbar",
+								args 			= { content : prc.oContent },
+								prePostExempt 	= true
+							)#
+
+							<!--- content --->
+							#html.textarea(
+								name="content",
+								value=htmlEditFormat( prc.oContent.getContent() ),
+								rows="25",
+								class="form-control"
+							)#
+						</div>
+
+						<!--- Custom Fields Tab --->
+						<div role="tabpanel" class="tab-pane" id="custom_fields">
+							<!--- Custom Fields --->
+							#renderView(
+								view 			= "_tags/customFields",
+								args 			= { fieldType : "content", customFields : prc.oContent.getCustomFields() },
+								prePostExempt 	= true
+							)#
+						</div>
+
+						<!--- Version History Tab --->
+						<cfif prc.oContent.isLoaded()>
+							<div role="tabpanel" class="tab-pane" id="history">
+								#prc.versionsViewlet#
+							</div>
 						</cfif>
 
-						<!--- Event --->
-						#announce( "cbadmin_ContentStoreEditorNav" )#
-                    </ul>
-                </div>
+						<!--- Custom tab content --->
+						#announce( "cbadmin_contentStoreEditorNavContent" )#
 
-                <div class="panel-body tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="editor">
-                        <!--- title --->
-                        #html.textfield(
-                            label    	= "Title:",
-                            name     	= "title",
-                            bind     	= prc.oContent,
-                            maxlength	= "100",
-                            required 	= "required",
-                            title    	= "The title for this content",
-                            class    	= "form-control",
-                            wrapper  	= "div class=controls",
-                            labelClass	= "control-label",
-                            groupWrapper= "div class=form-group"
-                        )#
+					</div>
 
-                        <!--- slug --->
-                        <div class="form-group">
-                            <label for="slug" class="control-label">Slug:</label>
-                            <div class="controls">
-                                <div id='slugCheckErrors'></div>
-                                <div class="input-group">
-                                    #html.textfield(
-                                        name      = "slug",
-                                        bind      = prc.oContent,
-                                        maxlength = "100",
-                                        class     = "form-control",
-                                        title     = "The unique slug for this content, this is how they are retreived",
-                                        disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
-                                    )#
-									<a title=""
-										class="input-group-addon"
-										href="javascript:void(0)"
-										onclick="togglePermalink(); return false;"
-										data-original-title="Lock/Unlock permalink"
-										data-container="body"
-									>
-                                        <i id="togglePermalink" class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+					<!--- Event --->
+					#announce( "cbadmin_contentStoreEditorInBody" )#
+				</div>
 
-                        <!--- Description --->
-                        #html.textarea(
-                            name   		= "description",
-                            label  		= "Short Description:",
-                            bind   		= prc.oContent,
-                            rows   		= 1,
-                            class  		= "form-control",
-                            title  		= "A short description for metadata purposes",
-                            wrapper		= "div class=controls",
-                            labelClass	= "control-label",
-                            groupWrapper= "div class=form-group"
-                        )#
+				<!--- Event --->
+				#announce( "cbadmin_contentStoreEditorFooter" )#
+			</div>
 
-                        <!---ContentToolBar --->
-                        #renderView(
-							view 			= "_tags/content/toolbar",
+			<!--- Content SideBar --->
+			<div class="col-md-4" id="main-content-sidebar">
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title"><i class="fa fa-info-circle"></i> Content Details</h3>
+					</div>
+					<div class="panel-body">
+						#renderView(
+							view 			= "_tags/content/publishing",
 							args 			= { content : prc.oContent },
 							prePostExempt 	= true
 						)#
 
-                        <!--- content --->
-                        #html.textarea(
-                            name="content",
-                            value=htmlEditFormat( prc.oContent.getContent() ),
-                            rows="25",
-                            class="form-control"
-                        )#
-                    </div>
 
-                    <div role="tabpanel" class="tab-pane" id="custom_fields">
-                        <!--- Custom Fields --->
-                         #renderView(
-							view 			= "_tags/customFields",
-							args 			= { fieldType : "content", customFields : prc.oContent.getCustomFields() },
-							prePostExempt 	= true
-						)#
-                    </div>
+						<!--- Accordion --->
+						<div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
 
-                    <!---Loaded Panels--->
-                    <cfif prc.oContent.isLoaded()>
-                        <div role="tabpanel" class="tab-pane" id="history">
-                            #prc.versionsViewlet#
-                        </div>
-					</cfif>
+							<!---Begin Info--->
+							<cfif prc.oContent.isLoaded()>
+								#renderView(
+									view    		= "_tags/content/infotable",
+									args    		= { content : prc.oContent },
+									prePostExempt 	= true
+								)#
+							</cfif>
 
-					<!--- Custom tab content --->
-					#announce( "cbadmin_contentStoreEditorNavContent" )#
+							<!---Begin Related Content--->
+							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
+											<i class="fas fa-sitemap"></i> Related Content
+										</a>
+									</h4>
+								</div>
+								<div id="relatedcontent" class="panel-collapse collapse">
+									<div class="panel-body">
+										#renderView(
+											view			= "_tags/relatedContent",
+											args			= { relatedContent : prc.relatedContent },
+											prePostExempt 	= true
+										)#
+									</div>
+								</div>
+							</div>
+							<cfelse>
+								#html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
+							</cfif>
 
-                </div>
-                <!--- Event --->
-                #announce( "cbadmin_contentStoreEditorInBody" )#
-            </div>
+							<!---Begin Linked Content--->
+							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
+											<i class="fa fa-link"></i> Linked Content
+										</a>
+									</h4>
+								</div>
+								<div id="linkedcontent" class="panel-collapse collapse">
+									<div class="panel-body">
+										#renderView(
+											view			= "_tags/linkedContent",
+											args			= { linkedContent : prc.linkedContent, contentType : prc.oContent.getContentType() },
+											prePostExempt 	= true
+										)#
+									</div>
+								</div>
+							</div>
+							</cfif>
+							<!---End Linked Content--->
 
-            <!--- Event --->
-            #announce( "cbadmin_contentStoreEditorFooter" )#
-        </div>
-        <div class="col-md-4" id="main-content-sidebar">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="fa fa-info-circle"></i> Content Details</h3>
-                </div>
-                <div class="panel-body">
-                    #renderView(
-						view 			= "_tags/content/publishing",
-						args 			= { content : prc.oContent },
-						prePostExempt 	= true
-					)#
+							<!---Begin Modifiers--->
+							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
+											<i class="fas fa-toolbox"></i> Modifiers
+										</a>
+									</h4>
+								</div>
+								<div id="modifiers" class="panel-collapse collapse">
+									<div class="panel-body">
 
+										<!--- Parent Content --->
+										<div class="form-group">
+											<i class="fas fa-sitemap"></i>
+											#html.label( field="parentContent",content='Parent:' )#
+											<select name="parentContent" id="parentContent" class="form-control input-sm">
+												<option value="null">No Parent</option>
+												#html.options(
+													values=prc.allContent,
+													column="contentID",
+													nameColumn="title",
+													selectedValue=prc.parentcontentID
+												)#>
+												#html.options(
+													values=prc.allContent,
+													column="contentID",
+													nameColumn="slug",
+													selectedValue=prc.parentcontentID
+												)#
+											</select>
+										</div>
 
-                    <!--- Accordion --->
-                    <div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
+										<!--- Creator --->
+										<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+											<div class="form-group">
+												<i class="fa fa-user"></i>
+												#html.label(field="creatorID",content="Creator:",class="inline" )#
+												<select name="creatorID" id="creatorID" class="form-control input-sm">
+													<cfloop array="#prc.authors#" index="author">
+													<option value="#author.getAuthorID()#" <cfif prc.oContent.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
+													</cfloop>
+												</select>
+											</div>
+										</cfif>
 
-                        <!---Begin Info--->
-                        <cfif prc.oContent.isLoaded()>
-                            #renderView(
-                                view    		= "_tags/content/infotable",
-								args    		= { content : prc.oContent },
-								prePostExempt 	= true
-                            )#
-                        </cfif>
+										<!--- Retrieval Order --->
+										<div class="form-group">
+											<i class="fa fa-sort"></i>
+											<!--- menu order --->
+											#html.inputfield(
+												type        = "number",
+												label       = "Retrieval Order: (0-99)",
+												name        = "order",
+												bind        = prc.oContent,
+												title       = "The ordering index used when retrieving content store items",
+												class       = "form-control",
+												size        = "5",
+												maxlength   = "2",
+												min         = "0",
+												max         = "99"
+											)#
+										</div>
+									</div>
+								</div>
+							</div>
+							<cfelse>
+								#html.hiddenField( name="parentContent", value=prc.parentcontentID )#
+							</cfif>
+							<!---End Modfiers--->
 
-                        <!---Begin Related Content--->
-                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-                                        <i class="fas fa-sitemap"></i> Related Content
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="relatedcontent" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    #renderView(
-										view			= "_tags/relatedContent",
-										args			= { relatedContent : prc.relatedContent },
-										prePostExempt 	= true
-									)#
-                                </div>
-                            </div>
-                        </div>
-                        <cfelse>
-                            #html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
-                        </cfif>
+							<!---Begin Cache Settings--->
+							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
+											<i class="fas fa-database"></i> Cache Settings
+										</a>
+									</h4>
+								</div>
+								<div id="cachesettings" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="form-group">
+											<!--- Cache Settings --->
+											#html.label(
+												field="cache",
+												content="Cache Content: (fast)"
+											)#
+											<br /><small>Caches content translation only</small><Br/>
+											#html.select(
+												name="cache",
+												options="Yes,No",
+												selectedValue=yesNoFormat(prc.oContent.getCache()),
+												class="form-control input-sm"
+											)#
+										</div>
+										<div class="form-group">
+											#html.inputField(
+												type="numeric",
+												name="cacheTimeout",
+												label="Cache Timeout (0=Use Global):",
+												bind=prc.oContent,
+												title="Enter the number of minutes to cache your content, 0 means use global default",
+												class="form-control",
+												size="10",
+												maxlength="100"
+											)#
+										</div>
+										<div class="form-group">
+											#html.inputField(
+												type="numeric",
+												name="cacheLastAccessTimeout",
+												label="Idle Timeout: (0=Use Global)",
+												bind=prc.oContent,
+												title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",
+												class="form-control",
+												size="10",
+												maxlength="100"
+											)#
+										</div>
+									</div>
+								</div>
+							</div>
+							</cfif>
+							<!---End Cache Settings--->
 
-                        <!---Begin Linked Content--->
-                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-                                        <i class="fa fa-link"></i> Linked Content
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="linkedcontent" class="panel-collapse collapse">
-                                <div class="panel-body">
-									#renderView(
-										view			= "_tags/linkedContent",
-										args			= { linkedContent : prc.linkedContent, contentType : prc.oContent.getContentType() },
-										prePostExempt 	= true
-									)#
-                                </div>
-                            </div>
-                        </div>
-                        </cfif>
-                        <!---End Linked Content--->
+							<!---Begin Categories--->
+							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##categories">
+											<i class="fas fa-tags"></i> Categories
+										</a>
+									</h4>
+								</div>
+								<div id="categories" class="panel-collapse collapse">
+									<div class="panel-body">
+										<!--- Display categories --->
+										<div id="categoriesChecks">
+										<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
+											<div class="checkbox">
+												<label>
+												#html.checkbox(
+													name="category_#x#",
+													value="#prc.categories[ x ].getCategoryID()#",
+													checked=prc.oContent.hasCategories( prc.categories[ x ] )
+												)#
+												#prc.categories[ x ].getCategory()#
+												</label>
+											</div>
+										</cfloop>
+										</div>
 
-                        <!---Begin Modifiers--->
-                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-                                        <i class="fas fa-toolbox"></i> Modifiers
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="modifiers" class="panel-collapse collapse">
-                                <div class="panel-body">
+										<!--- New Categories --->
+										#html.textField(
+											name="newCategories",
+											label="New Categories",
+											size="30",
+											title="Comma delimited list of new categories to create",
+											class="form-control"
+										)#
+									</div>
+								</div>
+							</div>
+							</cfif>
+							<!---End Categories--->
 
-									<!--- Parent Content --->
-									<div class="form-group">
-										<i class="fas fa-sitemap"></i>
-		         						#html.label( field="parentContent",content='Parent:' )#
-		         						<select name="parentContent" id="parentContent" class="form-control input-sm">
-		         							<option value="null">No Parent</option>
-		        							#html.options(
-		        								values=prc.allContent,
-		        								column="contentID",
-		        								nameColumn="title",
-		        								selectedValue=prc.parentcontentID
-		        							)#>
-		        							#html.options(
-		        								values=prc.allContent,
-		        								column="contentID",
-		        								nameColumn="slug",
-		        								selectedValue=prc.parentcontentID
-		        							)#
-		         						</select>
-	         						</div>
+							<!--- Event --->
+							#announce( "cbadmin_contentStoreEditorSidebarAccordion" )#
+						</div>
+						<!--- End Accordion --->
 
-                                    <!--- Creator --->
-                                    <cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
-                                        <div class="form-group">
-                                            <i class="fa fa-user"></i>
-                                            #html.label(field="creatorID",content="Creator:",class="inline" )#
-                                            <select name="creatorID" id="creatorID" class="form-control input-sm">
-                                                <cfloop array="#prc.authors#" index="author">
-                                                <option value="#author.getAuthorID()#" <cfif prc.oContent.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
-                                                </cfloop>
-                                            </select>
-                                        </div>
-                                    </cfif>
+						<!--- Event --->
+						#announce( "cbadmin_contentStoreEditorSidebar" )#
+					</div>
+				</div>
+				<!--- Event --->
+				#announce( "cbadmin_contentStoreEditorSidebarFooter" )#
+			</div>
+		</div>
 
-                                    <!--- Retrieval Order --->
-                                    <div class="form-group">
-                                        <i class="fa fa-sort"></i>
-                                        <!--- menu order --->
-                                        #html.inputfield(
-                                            type        = "number",
-                                            label       = "Retrieval Order: (0-99)",
-                                            name        = "order",
-                                            bind        = prc.oContent,
-                                            title       = "The ordering index used when retrieving content store items",
-                                            class       = "form-control",
-                                            size        = "5",
-                                            maxlength   = "2",
-                                            min         = "0",
-                                            max         = "99"
-                                        )#
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <cfelse>
-                            #html.hiddenField( name="parentContent", value=prc.parentcontentID )#
-                        </cfif>
-                        <!---End Modfiers--->
-
-                        <!---Begin Cache Settings--->
-                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-                                        <i class="fas fa-database"></i> Cache Settings
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="cachesettings" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <!--- Cache Settings --->
-                                        #html.label(
-                                            field="cache",
-                                            content="Cache Content: (fast)"
-                                        )#
-                                        <br /><small>Caches content translation only</small><Br/>
-                                        #html.select(
-                                            name="cache",
-                                            options="Yes,No",
-                                            selectedValue=yesNoFormat(prc.oContent.getCache()),
-                                            class="form-control input-sm"
-                                        )#
-                                    </div>
-                                    <div class="form-group">
-                                        #html.inputField(
-                                            type="numeric",
-                                            name="cacheTimeout",
-                                            label="Cache Timeout (0=Use Global):",
-                                            bind=prc.oContent,
-                                            title="Enter the number of minutes to cache your content, 0 means use global default",
-                                            class="form-control",
-                                            size="10",
-                                            maxlength="100"
-                                        )#
-                                    </div>
-                                    <div class="form-group">
-                                        #html.inputField(
-                                            type="numeric",
-                                            name="cacheLastAccessTimeout",
-                                            label="Idle Timeout: (0=Use Global)",
-                                            bind=prc.oContent,
-                                            title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",
-                                            class="form-control",
-                                            size="10",
-                                            maxlength="100"
-                                        )#
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        </cfif>
-                        <!---End Cache Settings--->
-
-                        <!---Begin Categories--->
-                        <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##categories">
-                                        <i class="fas fa-tags"></i> Categories
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="categories" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    <!--- Display categories --->
-                                    <div id="categoriesChecks">
-                                    <cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
-                                        <div class="checkbox">
-                                            <label>
-                                            #html.checkbox(
-                                                name="category_#x#",
-                                                value="#prc.categories[ x ].getCategoryID()#",
-                                                checked=prc.oContent.hasCategories( prc.categories[ x ] )
-                                            )#
-                                            #prc.categories[ x ].getCategory()#
-                                            </label>
-                                        </div>
-                                    </cfloop>
-                                    </div>
-
-                                    <!--- New Categories --->
-                                    #html.textField(
-                                        name="newCategories",
-                                        label="New Categories",
-                                        size="30",
-                                        title="Comma delimited list of new categories to create",
-                                        class="form-control"
-                                    )#
-                                </div>
-                            </div>
-                        </div>
-                        </cfif>
-                        <!---End Categories--->
-
-                        <!--- Event --->
-                        #announce( "cbadmin_contentStoreEditorSidebarAccordion" )#
-                    </div>
-                    <!--- End Accordion --->
-
-                    <!--- Event --->
-                    #announce( "cbadmin_contentStoreEditorSidebar" )#
-                </div>
-            </div>
-            <!--- Event --->
-            #announce( "cbadmin_contentStoreEditorSidebarFooter" )#
-        </div>
-    </div>
-#html.endForm()#
+	<!--- End Form --->
+	#html.endForm()#
 </cfoutput>
