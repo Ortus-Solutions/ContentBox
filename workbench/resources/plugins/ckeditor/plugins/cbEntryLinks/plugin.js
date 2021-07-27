@@ -1,43 +1,52 @@
-﻿/*
-Copyright (c) 2012 Ortus Solutions, Corp. All rights reserved.
-openRemoteModal() is part of contentbox js
-*/
+﻿/**
+ * Copyright (c) 2012 Ortus Solutions, Corp. All rights reserved.
+ * getEntrySelectorURL() is exposed by the dynamic editor being generated.
+ * openRemoteModal() is part of contentbox js
+ */
 ( function(){
-	//Section 1 : Code to execute when the toolbar button is pressed
-	var a= {
-			exec : function( editor ){
-			// Open the selector widget dialog.
-				openRemoteModal( getEntrySelectorURL(), { editorName: editor.name } );
-			}
-		},
-		//Section 2 : Create the button and add the functionality to it
-		b="cbEntryLinks";
-	CKEDITOR.plugins.add( b,{
-		init : function( editor ){
-			editor.addCommand( b,a );
-			editor.ui.addButton( "cbEntryLinks",{
-				label   : "Link to a ContentBox Entry",
-				icon    : this.path + "pen.png",
-				command : b
-			} );
-			// context menu
-			if ( editor.addMenuItem ) {
-				// A group menu is required
-				editor.addMenuGroup( "contentbox" );
-				// Create a menu item
-				editor.addMenuItem( "cbEntryLinks", {
-					label   : "Link To Blog Entry",
-					command : b,
+	const pluginName = "cbEntryLinks";
+
+	CKEDITOR.plugins.add(
+		pluginName,
+		{
+			init : function( editor ){
+				// Add the Command
+				editor.addCommand( pluginName,{
+					// Enable the button for both 'wysiwyg' and 'source' modes
+					modes : { wysiwyg: 1, source: 1 },
+					// Command Execution
+					exec  : function( editor ){
+					// Open the selector widget dialog.
+						openRemoteModal( getEntrySelectorURL(), { editorName: editor.name } );
+					}
+				} );
+
+				// Add the button
+				editor.ui.addButton( pluginName,{
+					label   : "Link to a ContentBox Entry",
 					icon    : this.path + "pen.png",
-					group   : "contentbox",
-					order   : 4
+					command : pluginName
 				} );
-			}
-			if ( editor.contextMenu ) {
-				editor.contextMenu.addListener( function( element, selection ) {
-					return { cbEntryLinks: CKEDITOR.TRISTATE_ON };
-				} );
+
+				// context menu
+				if ( editor.addMenuItem ) {
+				// A group menu is required
+					editor.addMenuGroup( "contentbox" );
+					// Create a menu item
+					editor.addMenuItem( pluginName, {
+						label   : "Link To Blog Entry",
+						command : pluginName,
+						icon    : this.path + "pen.png",
+						group   : "contentbox",
+						order   : 4
+					} );
+				}
+				if ( editor.contextMenu ) {
+					editor.contextMenu.addListener( function( element, selection ) {
+						return { cbEntryLinks: CKEDITOR.TRISTATE_ON };
+					} );
+				}
 			}
 		}
-	} );
+	);
 } )();
