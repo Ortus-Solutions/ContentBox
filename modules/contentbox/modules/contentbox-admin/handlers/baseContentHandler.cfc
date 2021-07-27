@@ -649,7 +649,7 @@ component extends="baseHandler" {
 
 		// if ajax and searching, just return tables
 		if ( event.isAjax() and len( rc.search ) OR rc.clear ) {
-			return renderView( view = "content/editorSelectorEntries", prePostExempt = true );
+			event.setView( view = "content/editorSelectorEntries", layout = "ajax" );
 		} else {
 			event.setView( view = "content/editorSelector", layout = "ajax" );
 		}

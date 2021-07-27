@@ -26,8 +26,6 @@
 					#thisContent.getTitle()#
 				</div>
 
-				<br>
-
 				<!--- Title --->
 				<div class="mt5">
 					<div class="text-muted">
