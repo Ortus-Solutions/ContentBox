@@ -2196,7 +2196,7 @@ component accessors="true" singleton threadSafe {
 		activeShowChildren = false
 	){
 		// If page not passed,then use current
-		if ( !structKeyExists( arguments, "page" ) ) {
+		if ( isNull( arguments.page ) ) {
 			arguments.page = getCurrentPage();
 		}
 

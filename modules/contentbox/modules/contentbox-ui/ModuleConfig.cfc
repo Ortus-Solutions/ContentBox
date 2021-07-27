@@ -288,7 +288,7 @@ component {
 		// Add Dynamic Blog Namespace
 		registerBlogNamespace();
 
-		// Treat the blog as the Main Application?
+		// Treat ContentBox as the Main Application?
 		if ( !len( this.entryPoint ) ) {
 			// get parent routes so we can re-mix them later
 			var routingService = controller.getRoutingService();
