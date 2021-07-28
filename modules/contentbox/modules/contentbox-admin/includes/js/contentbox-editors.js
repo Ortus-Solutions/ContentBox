@@ -108,6 +108,7 @@ function switchEditor( editorType ){
 
 /**
  * Setup the editors.
+ *
  * @param theForm The form container for the editor
  * @param withExcerpt Using excerpt or not apart from the main 'content' object
  * @param saveURL The URL used for saving the content asynchronously
@@ -300,12 +301,12 @@ function previewContent(){
 	openRemoteModal(
 		getPreviewSelectorURL(),
 		{
-			content     		: getEditorContent(),
-			layout      		: $( "#layout" ).val(),
-			title       		: $( "#title" ).val(),
-			slug        		: $slug.val(),
-			contentType   : $( "#contentType" ).val(),
-			markup      		: $( "#markup" ).val(),
+			content      	: getEditorContent(),
+			layout       	: $( "#layout" ).val(),
+			title        	: $( "#title" ).val(),
+			slug         	: $slug.val(),
+			contentType  	: $( "#contentType" ).val(),
+			markup       	: $( "#markup" ).val(),
 			parentContent	: $( "#parentContent" ).val() || ""
 		},
 		$( window ).width() - 50,

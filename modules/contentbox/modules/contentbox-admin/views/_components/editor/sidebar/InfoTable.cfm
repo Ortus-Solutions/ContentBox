@@ -14,6 +14,7 @@
             <!--- Persisted Info --->
 			<table class="table table-hover table-condensed table-striped-removed">
 
+				<!--- STATUS --->
 				<tr>
                     <th class="col-md-4">Status:</th>
                     <td class="col-md-8">
@@ -38,6 +39,7 @@
                     </td>
 				</tr>
 
+				<!--- EXPIRATION DATE --->
 				<cfif len( prc.oContent.getExpireDate() )>
 					<tr>
 						<th class="col-md-4">Expired:</th>
@@ -47,6 +49,7 @@
 					</tr>
 				</cfif>
 
+				<!--- CONTENT VERSION --->
 				<tr>
                     <th class="col-md-4">Version:</th>
                     <td class="col-md-8">
@@ -54,6 +57,7 @@
                     </td>
 				</tr>
 
+				<!--- CREATION INFO --->
 				<tr>
                     <th class="col-md-4">Created By:</th>
                     <td class="col-md-8">
@@ -68,6 +72,7 @@
                     </td>
                 </tr>
 
+				<!--- CREATED DATE --->
                 <tr>
                     <th class="col-md-4">Created:</th>
                     <td class="col-md-8">
@@ -75,6 +80,7 @@
                     </td>
                 </tr>
 
+				<!--- PUBLISHED DATE --->
                 <tr>
                     <th class="col-md-4">Published:</th>
                     <td class="col-md-8">
@@ -82,6 +88,7 @@
                     </td>
                 </tr>
 
+				<!--- LAST EDITOR --->
                 <tr>
                     <th class="col-md-4">Last Editor:</th>
                     <td class="col-md-8">
@@ -96,6 +103,7 @@
                     </td>
                 </tr>
 
+				<!--- MODIFIED DATE --->
                 <tr>
                     <th class="col-md-4">Modified:</th>
                     <td class="col-md-8">
@@ -103,6 +111,7 @@
                     </td>
                 </tr>
 
+				<!--- NUMBER OF CHILDREN --->
                 <cfif prc.oContent.hasChild()>
                 <tr>
                     <th class="col-md-4">Child Pages:</th>
@@ -114,6 +123,7 @@
                 </tr>
                 </cfif>
 
+				<!--- NUMBER OF VIEWS --->
                 <tr>
                     <th class="col-md-4">Views:</th>
                     <td class="col-md-8">
@@ -123,14 +133,17 @@
                     </td>
                 </tr>
 
-                <tr>
-                    <th class="col-md-4">Comments:</th>
-                    <td class="col-md-8">
-						<span class="badge badge-info">
-							#prc.oContent.getNumberOfComments()#
-						</span>
-                    </td>
-                </tr>
+				<!--- NUMBER OF COMMENTS --->
+				<cfif prc.oContent.commentsAllowed()>
+					<tr>
+						<th class="col-md-4">Comments:</th>
+						<td class="col-md-8">
+							<span class="badge badge-info">
+								#prc.oContent.getNumberOfComments()#
+							</span>
+						</td>
+					</tr>
+				</cfif>
 
             </table>
         </div>

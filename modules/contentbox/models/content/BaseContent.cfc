@@ -871,6 +871,20 @@ component
 	}
 
 	/**
+	 * Determines if the content object can have comments or not
+	 */
+	boolean function commentsAllowed(){
+		return !isContentStore();
+	}
+
+	/**
+	 * Determines if the content object is a content store type
+	 */
+	boolean function isContentStore(){
+		return getContentType() == "contentStore";
+	}
+
+	/**
 	 * Override the setComments
 	 */
 	BaseContent function setComments( required array comments ){

@@ -108,6 +108,7 @@ function switchEditor( editorType ){
 
 /**
  * Setup the editors.
+ *
  * @param theForm The form container for the editor
  * @param withExcerpt Using excerpt or not apart from the main 'content' object
  * @param saveURL The URL used for saving the content asynchronously

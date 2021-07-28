@@ -317,14 +317,11 @@ component extends="baseHandler" {
 		prc.linkedContent     = prc.oContent.hasLinkedContent() ? prc.oContent.getLinkedContent() : [];
 		prc.relatedContentIDs = prc.oContent.getRelatedContentIDs();
 
-		// Get Default Parent
-		prc.parentContentID = prc.oContent.getParentID();
-		// Override the parent page if incoming via URL
-		if ( structKeyExists( rc, "parentID" ) ) {
-			prc.parentContentID = rc.parentID;
-		}
+		// Get default or overriden parent
+		prc.parentContentID = !isNull( rc.parentID ) ? rc.parentID : prc.oContent.getParentID();
 
-		// exit handlers
+		// Exit Handlers
+		prc.xehContentList                = "#prc.cbAdminEntryPoint#.#variables.handler#";
 		prc.xehContentSave                = "#prc.cbAdminEntryPoint#.#variables.handler#.save";
 		prc.xehSlugify                    = "#prc.cbAdminEntryPoint#.#variables.handler#.slugify";
 		prc.xehAuthorEditorSave           = "#prc.cbAdminEntryPoint#.authors.changeEditor";
@@ -333,7 +330,7 @@ component extends="baseHandler" {
 		prc.xehShowRelatedContentSelector = "#prc.cbAdminEntryPoint#.content.showRelatedContentSelector";
 		prc.xehBreakContentLink           = "#prc.cbAdminEntryPoint#.content.breakContentLink";
 
-		// view
+		// View
 		event.setView( "content/editor" );
 	}
 

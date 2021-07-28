@@ -1,60 +1,4 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
-	<div class="panel panel-default">
-
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a
-					class="accordion-toggle collapsed block"
-					data-toggle="collapse"
-					data-parent="##accordion"
-					href="##relatedcontent">
-					<i class="fas fa-sitemap"></i> Related Content
-				</a>
-			</h4>
-		</div>
-
-		<div id="relatedcontent" class="panel-collapse collapse">
-			<div class="panel-body">
-				<button class="btn btn-sm btn-success" type="button" id="add-related-content">
-					<i class="fa fa-plus"></i>  Add related content
-				</button>
-
-				<br /><br />
-
-				<table class="table table-hover table-striped-removed" id="relatedContent-items">
-					<tbody>
-						<cfloop array="#prc.relatedContent#" index="content">
-							<cfset publishedClass = content.isContentPublished() ? "published" : "selected">
-							<cfset publishedTitle = content.isContentPublished() ? "" : "Content is not published!">
-							<tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
-								<td width="14" class="center #publishedClass#">
-									<cfif content.getContentType() eq "Page">
-										<i class="fa fa-file icon-small" title="Page"></i>
-									<cfelseif content.getContentType() eq "Entry">
-										<i class="fas fa-blog icon-small" title="Entry"></i>
-									<cfelseif content.getContentType() eq "ContentStore">
-										<i class="far fa-hdd icon-small" title="ContentStore"></i>
-									</cfif>
-								</td>
-								<td class="#publishedClass#">#content.getTitle()#</td>
-								<td width="14" class="center #publishedClass#">
-									<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>
-									<input type="hidden" name="relatedContentIDs" value="#content.getContentID()#" />
-								</td>
-							</tr>
-						</cfloop>
-					</tbody>
-				</table>
-
-				<div id="related-content-empty" class="alert alert-info">No content has been related!</div>
-			</div>
-		</div>
-	</div>
-<cfelse>
-	#html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
-</cfif>
-
 <script>
 	$( document ).ready(function() {
 		<cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
@@ -147,4 +91,59 @@
 		return icon;
 	}
 </script>
+<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
+	<div class="panel panel-default">
+
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a
+					class="accordion-toggle collapsed block"
+					data-toggle="collapse"
+					data-parent="##accordion"
+					href="##relatedcontent">
+					<i class="fas fa-sitemap"></i> Related Content
+				</a>
+			</h4>
+		</div>
+
+		<div id="relatedcontent" class="panel-collapse collapse">
+			<div class="panel-body">
+				<button class="btn btn-sm btn-success" type="button" id="add-related-content">
+					<i class="fa fa-plus"></i>  Add related content
+				</button>
+
+				<br /><br />
+
+				<table class="table table-hover table-striped-removed" id="relatedContent-items">
+					<tbody>
+						<cfloop array="#prc.relatedContent#" index="content">
+							<cfset publishedClass = content.isContentPublished() ? "published" : "selected">
+							<cfset publishedTitle = content.isContentPublished() ? "" : "Content is not published!">
+							<tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
+								<td width="14" class="center #publishedClass#">
+									<cfif content.getContentType() eq "Page">
+										<i class="fa fa-file icon-small" title="Page"></i>
+									<cfelseif content.getContentType() eq "Entry">
+										<i class="fas fa-blog icon-small" title="Entry"></i>
+									<cfelseif content.getContentType() eq "ContentStore">
+										<i class="far fa-hdd icon-small" title="ContentStore"></i>
+									</cfif>
+								</td>
+								<td class="#publishedClass#">#content.getTitle()#</td>
+								<td width="14" class="center #publishedClass#">
+									<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>
+									<input type="hidden" name="relatedContentIDs" value="#content.getContentID()#" />
+								</td>
+							</tr>
+						</cfloop>
+					</tbody>
+				</table>
+
+				<div id="related-content-empty" class="alert alert-info">No content has been related!</div>
+			</div>
+		</div>
+	</div>
+<cfelse>
+	#html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
+</cfif>
 </cfoutput>

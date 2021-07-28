@@ -1,40 +1,6 @@
 ﻿<cfoutput>
 	<!--- Quick Actions Left Button Bar --->
-	<div class="btn-group btn-group-sm">
-
-		<!--- Back Button --->
-        <button
-			class="btn btn-sm btn-primary"
-			onclick="window.location.href='#event.buildLink( prc.xehContentStore )#/?parent=#prc.parentcontentID#';return false;">
-			<i class="fas fa-chevron-left"></i> Back
-        </button>
-
-		<!--- Drop Actions --->
-        <button
-			class="btn btn-sm btn-default dropdown-toggle"
-			data-toggle="dropdown"
-			title="Quick Actions">
-			<span class="caret"></span>
-        </button>
-
-			<ul class="dropdown-menu">
-				<li>
-					<a href="javascript:quickPublish( false )">
-						<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
-					</a>
-				</li>
-				<li>
-					<a href="javascript:quickPublish( true )">
-						<i class="fas fa-eraser fa-lg"></i> Save as Draft
-					</a>
-				</li>
-				<li>
-					<a href="javascript:quickSave()">
-						<i class="far fa-save fa-lg"></i> Quick Save
-					</a>
-				</li>
-			</ul>
-	</div>
+	#cbAdminComponent( "editor/QuickActionsBar" )#
 
 	<!--- Content Form --->
 	#html.startForm(
@@ -66,7 +32,7 @@
 							<!--- Main Editor --->
 							<li role="presentation" class="active">
 								<a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-									<i class="fas fa-pen"></i> Editor
+									<i class="fas fa-pen"></i> #prc.oContent.getContentType()#
 								</a>
 							</li>
 
@@ -79,6 +45,15 @@
 								</li>
 							</cfif>
 
+							<!--- SEO Panel --->
+							<cfif !prc.oContent.isContentStore() and prc.oCurrentAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>
+                                <li role="presentation">
+                                    <a href="##seo" aria-controls="seo" role="tab" data-toggle="tab">
+                                        <i class="fa fa-cloud"></i> SEO
+                                    </a>
+                                </li>
+                            </cfif>
+
 							<!--- Version History --->
 							<cfif prc.oContent.isLoaded()>
 								<li role="presentation">
@@ -86,6 +61,13 @@
 										<i class="fa fa-history"></i> History
 									</a>
 								</li>
+								<cfif prc.oContent.commentsAllowed()>
+									<li role="presentation">
+										<a href="##comments" aria-controls="comments" role="tab" data-toggle="tab">
+											<i class="far fa-comments"></i> Comments
+										</a>
+									</li>
+								</cfif>
 							</cfif>
 
 							<!--- Event --->
@@ -115,26 +97,40 @@
 
 							<!--- slug --->
 							<div class="form-group">
-								<label for="slug" class="control-label">Slug:</label>
+
+								<label for="slug" class="control-label">
+									Slug:
+									<i class="fa fa-cloud" title="Convert title to slug" onclick="createPermalink()"></i>
+									<cfif !prc.oContent.isContentStore()>
+										<small> #prc.CBHelper.siteRoot()#/</small>
+									</cfif>
+                                    <cfif prc.oContent.hasParent()>
+                                        <small>#prc.oContent.getParent().getSlug()#/</small>
+                                    </cfif>
+								</label>
+
 								<div class="controls">
 									<div id='slugCheckErrors'></div>
 									<div class="input-group">
 										#html.textfield(
 											name      = "slug",
 											bind      = prc.oContent,
-											maxlength = "500",
+											maxlength = "1000",
 											class     = "form-control",
-											title     = "The unique slug for this content, this is how they are retreived",
+											title     = "The unique slug for this content",
 											disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
 										)#
 										<a title=""
 											class="input-group-addon"
 											href="javascript:void(0)"
 											onclick="togglePermalink(); return false;"
-											data-original-title="Lock/Unlock permalink"
+											data-original-title="Lock/Unlock Slug"
 											data-container="body"
 										>
-											<i id="togglePermalink" class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"></i>
+											<i
+												id="togglePermalink"
+												class="fa fa-#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'lock' : 'unlock'#"
+											></i>
 										</a>
 									</div>
 								</div>
@@ -157,70 +153,9 @@
 							</cfif>
 
 							<!---ContentToolBar --->
-							<div id="contentToolBar">
+							#cbAdminComponent( "editor/ContentToolBar" )#
 
-								<!--- editor selector --->
-								<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
-									<div class="btn-group btn-group-sm">
-										<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-											<i class="fa fa-keyboard-o"></i>
-											Editor
-											<span class="caret"></span>
-										</a>
-										<ul class="dropdown-menu">
-											<cfloop array="#prc.editors#" index="thisEditor">
-												<li <cfif thisEditor.name eq prc.defaultEditor>class="active"</cfif>>
-													<a href="javascript:switchEditor( '#thisEditor.name#' )">
-														#thisEditor.displayName#
-													</a>
-												</li>
-											</cfloop>
-										</ul>
-									</div>
-								</cfif>
-
-								<!--- markup --->
-								#html.hiddenField(
-									name	= "markup",
-									value	= prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup
-								)#
-
-								<div class="btn-group btn-group-sm">
-									<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
-										<i class="fa fa-code"></i>
-										Markup : <span id="markupLabel">#prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup#</span>
-										<span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu">
-										<cfloop array="#prc.markups#" index="thismarkup">
-											<li <cfif thisMarkup eq prc.oContent.getMarkup()>class="active"</cfif>>
-												<a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</a>
-											</li>
-										</cfloop>
-									</ul>
-								</div>
-
-								<!--- Auto Save Operations --->
-								<div class="btn-group btn-group-sm" id="contentAutoSave">
-									<a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
-										<i class="far fa-save"></i>
-										Auto Saved
-										<span class="caret"></span>
-									</a>
-									<ul class="dropdown-menu autoSaveMenu">
-
-									</ul>
-								</div>
-
-								<!--- Preview Panel --->
-								<div class="pull-right">
-									<a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-										<i class="far fa-eye fa-lg"></i>
-									</a>
-								</div>
-							</div>
-
-							<!--- content --->
+							<!--- CONTENT EDITOR --->
 							<div class="form-group">
 								<div class="controls">
 									#html.textarea(
@@ -231,6 +166,21 @@
 									)#
 								</div>
 							</div>
+
+							<!--- EXCERPT EDITOR --->
+							<cfif structKeyExists( prc.oContent, "getExcerpt" )>
+								<div class="form-group">
+									<label class="control-label" for="description">Excerpt:</label>
+									<div class="controls">
+										#html.textarea(
+											name 	= "excerpt",
+											value	= htmlEditFormat( prc.oContent.getExcerpt() ),
+											rows	= "10",
+											class	= "form-control"
+										)#
+									</div>
+								</div>
+							</cfif>
 						</div>
 
 						<!--- Custom Fields Tab --->
@@ -242,11 +192,23 @@
 							)#
 						</div>
 
-						<!--- Version History Tab --->
+						<!--- SEO --->
+                        <div role="tabpanel" class="tab-pane" id="seo">
+                            #cbAdminComponent( "editor/SEOPanel" )#
+                        </div>
+
+						<!--- Persisted ONLY panels --->
 						<cfif prc.oContent.isLoaded()>
+							<!--- Version History Tab --->
 							<div role="tabpanel" class="tab-pane" id="history">
 								#prc.versionsViewlet#
 							</div>
+							<!--- Comments --->
+                            <cfif prc.oContent.commentsAllowed()>
+								<div role="tabpanel" class="tab-pane" id="comments">
+									#prc.commentsViewlet#
+								</div>
+							</cfif>
 						</cfif>
 
 						<!--- Custom tab content --->
@@ -267,7 +229,7 @@
 
 				<div class="panel panel-primary">
 					<div class="panel-heading">
-						<h3 class="panel-title"><i class="fa fa-info-circle"></i> Content Details</h3>
+						<h3 class="panel-title"><i class="fa fa-info-circle"></i> #prc.oContent.getContentType()# Details</h3>
 					</div>
 					<div class="panel-body">
 						<!--- Publishing Panel --->
@@ -276,39 +238,37 @@
 						)#
 
 						<!--- Accordion --->
-						<div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
+						<div id="accordion" class="panel-group accordion" data-stateful="content-sidebar">
 
 							<!---Info Table If Loaded--->
 							<cfif prc.oContent.isLoaded()>
-								#cbAdminComponent(
-									"editor/InfoTable"
-								)#
+								#cbAdminComponent( "editor/sidebar/InfoTable" )#
+							</cfif>
+
+							<!--- Page Display Options --->
+							<cfif prc.oContent.getContentType() eq "page">
+								#cbAdminComponent( "editor/sidebar/DisplayOptions" )#
 							</cfif>
 
 							<!---Related Content--->
-							#cbAdminComponent(
-								"editor/RelatedContent"
-							)#
+							#cbAdminComponent( "editor/sidebar/RelatedContent" )#
 
 							<!--- Linked Content--->
-							#cbAdminComponent(
-								"editor/LinkedContent"
-							)#
+							#cbAdminComponent( "editor/sidebar/LinkedContent" )#
 
 							<!---Modifiers--->
-							#cbAdminComponent(
-								"editor/Modifiers"
-							)#
+							#cbAdminComponent( "editor/sidebar/Modifiers" )#
 
 							<!--- Cache Settings--->
-							#cbAdminComponent(
-								"editor/CacheSettings"
-							)#
+							#cbAdminComponent( "editor/sidebar/CacheSettings" )#
 
-							<!---Begin Categories--->
-							#cbAdminComponent(
-								"editor/Categories"
-							)#
+							<!---Categories--->
+							#cbAdminComponent( "editor/sidebar/Categories" )#
+
+							<!--- Feature Image --->
+							<cfif !prc.oContent.isContentStore()>
+								#cbAdminComponent( "editor/sidebar/FeaturedImage" )#
+							</cfif>
 
 							<!--- Event --->
 							#announce( "cbadmin_contentEditorSidebarAccordion" )#
