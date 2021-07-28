@@ -107,7 +107,7 @@ component extends="baseHandler" {
 		// prepare paging object
 		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
-		prc.pagingLink = "javascript:contentPaginate(@page@)";
+		prc.pagingLink = "javascript:contentListHelper.contentPaginate(@page@)";
 
 		// JS null checks
 		if ( rc.parent eq "undefined" ) {

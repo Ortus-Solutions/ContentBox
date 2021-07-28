@@ -64,10 +64,10 @@
     <!--- ********************************************************************* --->
     <cfif getSetting( "environment" ) eq "development">
         <script src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
-        <script defer async src="#prc.cbroot#/includes/js/contentbox-app.js"></script>
+        <script src="#prc.cbroot#/includes/js/contentbox-app.js"></script>
     <cfelse>
         <script src="#prc.cbroot#/includes/js/contentbox-pre.min.js"></script>
-        <script defer async src="#prc.cbroot#/includes/js/contentbox-app.min.js"></script>
+        <script src="#prc.cbroot#/includes/js/contentbox-app.min.js"></script>
     </cfif>
 </head>
 </cfoutput>

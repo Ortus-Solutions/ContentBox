@@ -2,7 +2,7 @@
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
-		<a href="javascript:contentDrilldown()" title="Go Home!">
+		<a href="javascript:contentListHelper.contentDrilldown()" title="Go Home!">
 			<i class="fas fa-home fa-lg"></i>
 		</a>
 		#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
@@ -68,7 +68,7 @@
 				<!--- Children Dig Deeper --->
 				<cfif content.getNumberOfChildren()>
 					<a
-						href="javascript:contentDrilldown( '#content.getContentID()#' )"
+						href="javascript:contentListHelper.contentDrilldown( '#content.getContentID()#' )"
 						class="cursor-pointer text-muted"
 						title="View Children (#content.getNumberOfChildren()#)"
 					>
@@ -127,7 +127,7 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 							<!--- Clone Command --->
 							<li>
-								<a href="javascript:openCloneDialog( '#content.getContentID()#', '#URLEncodedFormat( content.getTitle() )#' )">
+								<a href="javascript:contentListHelper.openCloneDialog( '#content.getContentID()#', '#URLEncodedFormat( content.getTitle() )#' )">
 									<i class="far fa-clone fa-lg"></i> Clone
 								</a>
 							</li>
@@ -140,7 +140,7 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
-									<a href="javascript:remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Content?">
+									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Content?">
 										<i id="delete_#content.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
 									</a>
 								</li>

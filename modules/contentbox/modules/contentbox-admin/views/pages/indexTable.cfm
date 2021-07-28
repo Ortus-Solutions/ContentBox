@@ -2,7 +2,7 @@
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
-		<a href="javascript:contentDrilldown()" title="Go Home!">
+		<a href="javascript:contentListHelper.contentDrilldown()" title="Go Home!">
 			<i class="fa fa-home fa-lg"></i>
 		</a>
 	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
@@ -84,7 +84,7 @@
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
 						<a
-							href="javascript:contentDrilldown( '#page.getContentID()#' )"
+							href="javascript:contentListHelper.contentDrilldown( '#page.getContentID()#' )"
 							class="cursor-pointer text-muted"
 							title="View Child Pages (#page.getNumberOfChildren()#)"
 						>
@@ -190,7 +190,7 @@
 								<!--- Clone Command --->
 								<li class="mb5">
 									<a
-										href="javascript:openCloneDialog(
+										href="javascript:contentListHelper.openCloneDialog(
 											'#page.getContentID()#',
 											'#URLEncodedFormat( page.getTitle() )#'
 										)"
@@ -212,7 +212,7 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 									<li class="mb5">
 										<a
-											href="javascript:remove( '#page.getContentID()#' )"
+											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
 											class="confirmIt"
 											data-title="<i class='far fa-trash-alt'></i> Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
@@ -259,7 +259,7 @@
 							<!--- Reset hits --->
 							<li class="mb5">
 								<a
-									href="javascript:resetHits( '#page.getContentID()#' )"
+									href="javascript:contentListHelper.resetHits( '#page.getContentID()#' )"
 								>
 									<i class="fas fa-recycle fa-lg"></i> Reset Hits
 								</a>

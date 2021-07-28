@@ -23,9 +23,9 @@ $( document ).ready(function() {
 	// activate tooltips
 	activateTooltips();
 	// quick look
-	activateQuickLook( $entries, '#event.buildLink( prc.xehEntryQuickLook )#/contentID/' );
-	// Popovers
-	activateInfoPanels();
+	contentListHelper.activateQuickLook( $entries, '#event.buildLink( prc.xehEntryQuickLook )#/contentID/' );
+	// Info Panels
+	contentListHelper.activateInfoPanels();
 } );
 </script>
 </cfoutput>

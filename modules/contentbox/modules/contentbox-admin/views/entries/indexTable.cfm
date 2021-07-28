@@ -124,7 +124,7 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li>
-							<a href="javascript:openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
+							<a href="javascript:contentListHelper.openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
 								<i class="far fa-clone fa-lg"></i> Clone
 							</a>
 						</li>
@@ -132,7 +132,7 @@
 						<!--- Delete Command --->
 						<li>
 							<a
-								href="javascript:remove( '#entry.getContentID()#' )"
+								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
 								data-title="<i class='far fa-trash-alt'></i> Delete Entry?">
 								<i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
@@ -164,7 +164,7 @@
 						</li>
 						<!-- Reset hits -->
 						<li>
-							<a href="javascript:resetHits( '#entry.getContentID()#' )">
+							<a href="javascript:contentListHelper.resetHits( '#entry.getContentID()#' )">
 								<i class="fas fa-recycle fa-lg"></i> Reset Hits
 							</a>
 						</li>

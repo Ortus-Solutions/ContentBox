@@ -62,18 +62,18 @@
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
-													<a href="javascript:bulkRemove()" class="confirmIt"
+													<a href="javascript:contentListHelper.bulkRemove()" class="confirmIt"
 													data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
 														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
 													</a>
 												</li>
 												<li>
-													<a href="javascript:bulkChangeStatus('draft')">
+													<a href="javascript:contentListHelper.bulkChangeStatus('draft')">
 														<i class="fas fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 												<li>
-													<a href="javascript:bulkChangeStatus('publish')">
+													<a href="javascript:contentListHelper.bulkChangeStatus('publish')">
 														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
@@ -92,13 +92,13 @@
 													</a>
 												</li>
 												<li>
-													<a href="javascript:exportSelected( '#event.buildLink( prc.xehContentExportAll )#' )">
+													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehContentExportAll )#' )">
 														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
 											<li>
-												<a href="javascript:contentShowAll()">
+												<a href="javascript:contentListHelper.contentShowAll()">
 													<i class="fas fa-list fa-lg"></i> Show All
 												</a>
 											</li>
@@ -180,8 +180,8 @@
 					    </div>
 
 						<div class="text-center">
-							<a class="btn btn-sm btn-default" href="javascript:resetFilter( true )">Reset</a>
-							<a class="btn btn-primary btn-sm" href="javascript:contentFilter()">Apply</a>
+							<a class="btn btn-sm btn-default" href="javascript:contentListHelper.resetFilter( true )">Reset</a>
+							<a class="btn btn-primary btn-sm" href="javascript:contentListHelper.contentFilter()">Apply</a>
 						</div>
 					#html.endForm()#
 				</div>
