@@ -1,8 +1,8 @@
 <cfoutput>
-    <div class="mb10 #args.content.getIsPublished() ? '' : 'selected'#">
+    <div class="mb10 #prc.oContent.getIsPublished() ? '' : 'selected'#">
 
         <!--- is Published --->
-        #html.hiddenField( name="isPublished", bind=args.content )#
+        #html.hiddenField( name="isPublished", bind=prc.oContent )#
 
         <!--- Publishing Bar --->
         <div id="publishingBar" style="display: none;" class="well well-sm">
@@ -27,7 +27,7 @@
                             #html.inputField(
                                 size    = "9",
                                 name    = "publishedDate",
-                                value   = args.content.getPublishedDateForEditor(),
+                                value   = prc.oContent.getPublishedDateForEditor(),
                                 class   = "form-control datepicker"
                             )#
 
@@ -39,8 +39,8 @@
 
                     <cfscript>
                         theTime     = "";
-                        hour        = prc.ckHelper.ckHour( args.content.getPublishedDateForEditor( showTime=true ) );
-                        minute      = prc.ckHelper.ckMinute( args.content.getPublishedDateForEditor( showTime=true ) );
+                        hour        = prc.ckHelper.ckHour( prc.oContent.getPublishedDateForEditor( showTime=true ) );
+                        minute      = prc.ckHelper.ckMinute( prc.oContent.getPublishedDateForEditor( showTime=true ) );
                         if( len( hour ) && len( minute ) ) {
                             theTime = hour & ":" & minute;
                         }
@@ -73,7 +73,7 @@
                             #html.inputField(
                                 size    = "9",
                                 name    = "expireDate",
-                                value   = args.content.getExpireDateForEditor(),
+                                value   = prc.oContent.getExpireDateForEditor(),
                                 class   = "form-control datepicker"
                             )#
 
@@ -85,8 +85,8 @@
 
                     <cfscript>
                         theTime = "";
-                        hour = prc.ckHelper.ckHour( args.content.getExpireDateForEditor(showTime=true) );
-                        minute = prc.ckHelper.ckMinute( args.content.getExpireDateForEditor(showTime=true) );
+                        hour = prc.ckHelper.ckHour( prc.oContent.getExpireDateForEditor(showTime=true) );
+                        minute = prc.ckHelper.ckMinute( prc.oContent.getExpireDateForEditor(showTime=true) );
                         if( len( hour ) && len( minute ) ) {
                             theTime = hour & ":" & minute;
                         }

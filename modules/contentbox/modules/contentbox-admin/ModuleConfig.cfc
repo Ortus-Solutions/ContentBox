@@ -253,7 +253,8 @@ component {
 	function onLoad(){
 		// Startup the Editor Service, needed for markup translations support
 		wirebox.getInstance( "EditorService@contentbox" );
-
+		// Load Admin Helpers Manually: Renderer get's created and chicken and the egg issue again.
+		wirebox.getInstance( "Renderer@coldbox" ).includeUDF( "#moduleMapping#/helpers/Mixins.cfm" );
 		// Messagebox overrides for admin
 		wirebox
 			.getInstance( "messagebox@cbmessagebox" )

@@ -89,7 +89,7 @@
 							</cfif>
 
 							<!--- Event --->
-							#announce( "cbadmin_ContentStoreEditorNav" )#
+							#announce( "cbadmin_ContentEditorNav" )#
 						</ul>
 					</div>
 
@@ -99,18 +99,19 @@
 						<!--- Editor Tab --->
 						<div role="tabpanel" class="tab-pane active" id="editor">
 							<!--- title --->
-							#html.textfield(
-								label    	= "Title:",
-								name     	= "title",
-								bind     	= prc.oContent,
-								maxlength	= "100",
-								required 	= "required",
-								title    	= "The title for this content",
-								class    	= "form-control",
-								wrapper  	= "div class=controls",
-								labelClass	= "control-label",
-								groupWrapper= "div class=form-group"
-							)#
+							<div class="form-group">
+								<label class="control-label" for="title">Title:</label>
+								<div class="controls">
+									#html.textfield(
+										name     	= "title",
+										bind     	= prc.oContent,
+										maxlength	= "500",
+										required 	= "required",
+										title    	= "The title for this content",
+										class    	= "form-control"
+									)#
+								</div>
+							</div>
 
 							<!--- slug --->
 							<div class="form-group">
@@ -121,7 +122,7 @@
 										#html.textfield(
 											name      = "slug",
 											bind      = prc.oContent,
-											maxlength = "100",
+											maxlength = "500",
 											class     = "form-control",
 											title     = "The unique slug for this content, this is how they are retreived",
 											disabled  = "#prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false'#"
@@ -140,41 +141,104 @@
 							</div>
 
 							<!--- Description --->
-							#html.textarea(
-								name   		= "description",
-								label  		= "Short Description:",
-								bind   		= prc.oContent,
-								rows   		= 1,
-								class  		= "form-control",
-								title  		= "A short description for metadata purposes",
-								wrapper		= "div class=controls",
-								labelClass	= "control-label",
-								groupWrapper= "div class=form-group"
-							)#
+							<cfif structKeyExists( prc.oContent, "getDescription" )>
+								<div class="form-group">
+									<label class="control-label" for="description">Short Description:</label>
+									<div class="controls">
+										#html.textarea(
+											name   		= "description",
+											bind   		= prc.oContent,
+											rows   		= 1,
+											class  		= "form-control",
+											title  		= "A short description for metadata purposes"
+										)#
+									</div>
+								</div>
+							</cfif>
 
 							<!---ContentToolBar --->
-							#renderView(
-								view 			= "_tags/content/toolbar",
-								args 			= { content : prc.oContent },
-								prePostExempt 	= true
-							)#
+							<div id="contentToolBar">
+
+								<!--- editor selector --->
+								<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_EDITOR_SELECTOR" )>
+									<div class="btn-group btn-group-sm">
+										<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+											<i class="fa fa-keyboard-o"></i>
+											Editor
+											<span class="caret"></span>
+										</a>
+										<ul class="dropdown-menu">
+											<cfloop array="#prc.editors#" index="thisEditor">
+												<li <cfif thisEditor.name eq prc.defaultEditor>class="active"</cfif>>
+													<a href="javascript:switchEditor( '#thisEditor.name#' )">
+														#thisEditor.displayName#
+													</a>
+												</li>
+											</cfloop>
+										</ul>
+									</div>
+								</cfif>
+
+								<!--- markup --->
+								#html.hiddenField(
+									name	= "markup",
+									value	= prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup
+								)#
+
+								<div class="btn-group btn-group-sm">
+									<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+										<i class="fa fa-code"></i>
+										Markup : <span id="markupLabel">#prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup#</span>
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu">
+										<cfloop array="#prc.markups#" index="thismarkup">
+											<li <cfif thisMarkup eq prc.oContent.getMarkup()>class="active"</cfif>>
+												<a href="javascript:switchMarkup( '#thismarkup#' )">#thismarkup#</a>
+											</li>
+										</cfloop>
+									</ul>
+								</div>
+
+								<!--- Auto Save Operations --->
+								<div class="btn-group btn-group-sm" id="contentAutoSave">
+									<a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+										<i class="far fa-save"></i>
+										Auto Saved
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu autoSaveMenu">
+
+									</ul>
+								</div>
+
+								<!--- Preview Panel --->
+								<div class="pull-right">
+									<a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
+										<i class="far fa-eye fa-lg"></i>
+									</a>
+								</div>
+							</div>
 
 							<!--- content --->
-							#html.textarea(
-								name="content",
-								value=htmlEditFormat( prc.oContent.getContent() ),
-								rows="25",
-								class="form-control"
-							)#
+							<div class="form-group">
+								<div class="controls">
+									#html.textarea(
+										name 	= "content",
+										value	= htmlEditFormat( prc.oContent.getContent() ),
+										rows	= "25",
+										class	= "form-control"
+									)#
+								</div>
+							</div>
 						</div>
 
 						<!--- Custom Fields Tab --->
 						<div role="tabpanel" class="tab-pane" id="custom_fields">
-							<!--- Custom Fields --->
-							#renderView(
-								view 			= "_tags/customFields",
-								args 			= { fieldType : "content", customFields : prc.oContent.getCustomFields() },
-								prePostExempt 	= true
+							<!--- Custom Fields Component --->
+							#cbAdminComponent(
+								"editor/CustomFields",
+								{ fieldType : "content", customFields : prc.oContent.getCustomFields() }
 							)#
 						</div>
 
@@ -186,272 +250,77 @@
 						</cfif>
 
 						<!--- Custom tab content --->
-						#announce( "cbadmin_contentStoreEditorNavContent" )#
+						#announce( "cbadmin_contentEditorNavContent" )#
 
 					</div>
 
 					<!--- Event --->
-					#announce( "cbadmin_contentStoreEditorInBody" )#
+					#announce( "cbadmin_contentEditorInBody" )#
 				</div>
 
 				<!--- Event --->
-				#announce( "cbadmin_contentStoreEditorFooter" )#
+				#announce( "cbadmin_contentEditorFooter" )#
 			</div>
 
 			<!--- Content SideBar --->
 			<div class="col-md-4" id="main-content-sidebar">
+
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title"><i class="fa fa-info-circle"></i> Content Details</h3>
 					</div>
 					<div class="panel-body">
-						#renderView(
-							view 			= "_tags/content/publishing",
-							args 			= { content : prc.oContent },
-							prePostExempt 	= true
+						<!--- Publishing Panel --->
+						#cbAdminComponent(
+							"editor/PublishingPanel"
 						)#
-
 
 						<!--- Accordion --->
 						<div id="accordion" class="panel-group accordion" data-stateful="contentstore-sidebar">
 
-							<!---Begin Info--->
+							<!---Info Table If Loaded--->
 							<cfif prc.oContent.isLoaded()>
-								#renderView(
-									view    		= "_tags/content/infotable",
-									args    		= { content : prc.oContent },
-									prePostExempt 	= true
+								#cbAdminComponent(
+									"editor/InfoTable"
 								)#
 							</cfif>
 
-							<!---Begin Related Content--->
-							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##relatedcontent">
-											<i class="fas fa-sitemap"></i> Related Content
-										</a>
-									</h4>
-								</div>
-								<div id="relatedcontent" class="panel-collapse collapse">
-									<div class="panel-body">
-										#renderView(
-											view			= "_tags/relatedContent",
-											args			= { relatedContent : prc.relatedContent },
-											prePostExempt 	= true
-										)#
-									</div>
-								</div>
-							</div>
-							<cfelse>
-								#html.hiddenField( name="relatedContentIDs", value=prc.relatedContentIDs )#
-							</cfif>
+							<!---Related Content--->
+							#cbAdminComponent(
+								"editor/RelatedContent"
+							)#
 
-							<!---Begin Linked Content--->
-							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##linkedcontent">
-											<i class="fa fa-link"></i> Linked Content
-										</a>
-									</h4>
-								</div>
-								<div id="linkedcontent" class="panel-collapse collapse">
-									<div class="panel-body">
-										#renderView(
-											view			= "_tags/linkedContent",
-											args			= { linkedContent : prc.linkedContent, contentType : prc.oContent.getContentType() },
-											prePostExempt 	= true
-										)#
-									</div>
-								</div>
-							</div>
-							</cfif>
-							<!---End Linked Content--->
+							<!--- Linked Content--->
+							#cbAdminComponent(
+								"editor/LinkedContent"
+							)#
 
-							<!---Begin Modifiers--->
-							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##modifiers">
-											<i class="fas fa-toolbox"></i> Modifiers
-										</a>
-									</h4>
-								</div>
-								<div id="modifiers" class="panel-collapse collapse">
-									<div class="panel-body">
+							<!---Modifiers--->
+							#cbAdminComponent(
+								"editor/Modifiers"
+							)#
 
-										<!--- Parent Content --->
-										<div class="form-group">
-											<i class="fas fa-sitemap"></i>
-											#html.label( field="parentContent",content='Parent:' )#
-											<select name="parentContent" id="parentContent" class="form-control input-sm">
-												<option value="null">No Parent</option>
-												#html.options(
-													values=prc.allContent,
-													column="contentID",
-													nameColumn="title",
-													selectedValue=prc.parentcontentID
-												)#>
-												#html.options(
-													values=prc.allContent,
-													column="contentID",
-													nameColumn="slug",
-													selectedValue=prc.parentcontentID
-												)#
-											</select>
-										</div>
-
-										<!--- Creator --->
-										<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
-											<div class="form-group">
-												<i class="fa fa-user"></i>
-												#html.label(field="creatorID",content="Creator:",class="inline" )#
-												<select name="creatorID" id="creatorID" class="form-control input-sm">
-													<cfloop array="#prc.authors#" index="author">
-													<option value="#author.getAuthorID()#" <cfif prc.oContent.getCreator().getAuthorID() eq author.getAuthorID()>selected="selected"</cfif>>#author.getFullName()#</option>
-													</cfloop>
-												</select>
-											</div>
-										</cfif>
-
-										<!--- Retrieval Order --->
-										<div class="form-group">
-											<i class="fa fa-sort"></i>
-											<!--- menu order --->
-											#html.inputfield(
-												type        = "number",
-												label       = "Retrieval Order: (0-99)",
-												name        = "order",
-												bind        = prc.oContent,
-												title       = "The ordering index used when retrieving content store items",
-												class       = "form-control",
-												size        = "5",
-												maxlength   = "2",
-												min         = "0",
-												max         = "99"
-											)#
-										</div>
-									</div>
-								</div>
-							</div>
-							<cfelse>
-								#html.hiddenField( name="parentContent", value=prc.parentcontentID )#
-							</cfif>
-							<!---End Modfiers--->
-
-							<!---Begin Cache Settings--->
-							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CACHING" )>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-											<i class="fas fa-database"></i> Cache Settings
-										</a>
-									</h4>
-								</div>
-								<div id="cachesettings" class="panel-collapse collapse">
-									<div class="panel-body">
-										<div class="form-group">
-											<!--- Cache Settings --->
-											#html.label(
-												field="cache",
-												content="Cache Content: (fast)"
-											)#
-											<br /><small>Caches content translation only</small><Br/>
-											#html.select(
-												name="cache",
-												options="Yes,No",
-												selectedValue=yesNoFormat(prc.oContent.getCache()),
-												class="form-control input-sm"
-											)#
-										</div>
-										<div class="form-group">
-											#html.inputField(
-												type="numeric",
-												name="cacheTimeout",
-												label="Cache Timeout (0=Use Global):",
-												bind=prc.oContent,
-												title="Enter the number of minutes to cache your content, 0 means use global default",
-												class="form-control",
-												size="10",
-												maxlength="100"
-											)#
-										</div>
-										<div class="form-group">
-											#html.inputField(
-												type="numeric",
-												name="cacheLastAccessTimeout",
-												label="Idle Timeout: (0=Use Global)",
-												bind=prc.oContent,
-												title="Enter the number of minutes for an idle timeout for your content, 0 means use global default",
-												class="form-control",
-												size="10",
-												maxlength="100"
-											)#
-										</div>
-									</div>
-								</div>
-							</div>
-							</cfif>
-							<!---End Cache Settings--->
+							<!--- Cache Settings--->
+							#cbAdminComponent(
+								"editor/CacheSettings"
+							)#
 
 							<!---Begin Categories--->
-							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##categories">
-											<i class="fas fa-tags"></i> Categories
-										</a>
-									</h4>
-								</div>
-								<div id="categories" class="panel-collapse collapse">
-									<div class="panel-body">
-										<!--- Display categories --->
-										<div id="categoriesChecks">
-										<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
-											<div class="checkbox">
-												<label>
-												#html.checkbox(
-													name="category_#x#",
-													value="#prc.categories[ x ].getCategoryID()#",
-													checked=prc.oContent.hasCategories( prc.categories[ x ] )
-												)#
-												#prc.categories[ x ].getCategory()#
-												</label>
-											</div>
-										</cfloop>
-										</div>
-
-										<!--- New Categories --->
-										#html.textField(
-											name="newCategories",
-											label="New Categories",
-											size="30",
-											title="Comma delimited list of new categories to create",
-											class="form-control"
-										)#
-									</div>
-								</div>
-							</div>
-							</cfif>
-							<!---End Categories--->
+							#cbAdminComponent(
+								"editor/Categories"
+							)#
 
 							<!--- Event --->
-							#announce( "cbadmin_contentStoreEditorSidebarAccordion" )#
+							#announce( "cbadmin_contentEditorSidebarAccordion" )#
 						</div>
 						<!--- End Accordion --->
 
 						<!--- Event --->
-						#announce( "cbadmin_contentStoreEditorSidebar" )#
+						#announce( "cbadmin_contentEditorSidebar" )#
 					</div>
 				</div>
 				<!--- Event --->
-				#announce( "cbadmin_contentStoreEditorSidebarFooter" )#
+				#announce( "cbadmin_contentEditorSidebarFooter" )#
 			</div>
 		</div>
 

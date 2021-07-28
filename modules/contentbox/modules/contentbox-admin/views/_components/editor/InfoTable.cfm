@@ -18,15 +18,15 @@
                     <th class="col-md-4">Status:</th>
                     <td class="col-md-8">
 						<!--- Status --->
-						<cfif args.content.isExpired()>
+						<cfif prc.oContent.isExpired()>
 							<span class="p5 label label-danger">
 								Expired
 							</span>
-						<cfelseif args.content.isPublishedInFuture()>
+						<cfelseif prc.oContent.isPublishedInFuture()>
 							<span class="p5 label label-info">
 								Future Publish
 							</span>
-						<cfelseif args.content.isContentPublished()>
+						<cfelseif prc.oContent.isContentPublished()>
 							<span class="p5 label label-success">
 								Published
 							</span>
@@ -38,11 +38,11 @@
                     </td>
 				</tr>
 
-				<cfif len( args.content.getExpireDate() )>
+				<cfif len( prc.oContent.getExpireDate() )>
 					<tr>
 						<th class="col-md-4">Expired:</th>
 						<td class="col-md-8">
-							#args.content.getDisplayExpireDate()#
+							#prc.oContent.getDisplayExpireDate()#
 						</td>
 					</tr>
 				</cfif>
@@ -50,20 +50,20 @@
 				<tr>
                     <th class="col-md-4">Version:</th>
                     <td class="col-md-8">
-						<span class="badge badge-info">#args.content.getActiveContent().getVersion()#</span>
+						<span class="badge badge-info">#prc.oContent.getActiveContent().getVersion()#</span>
                     </td>
 				</tr>
 
 				<tr>
                     <th class="col-md-4">Created By:</th>
                     <td class="col-md-8">
-						<a href="mailto:#args.content.getCreatorEmail()#">
+						<a href="mailto:#prc.oContent.getCreatorEmail()#">
 							#getInstance( "Avatar@contentbox" ).renderAvatar(
-								email	= args.content.getCreatorEmail(),
+								email	= prc.oContent.getCreatorEmail(),
 								size	= "20",
 								class	= "img img-circle"
 							)#
-							#args.content.getCreatorName()#
+							#prc.oContent.getCreatorName()#
 						</a>
                     </td>
                 </tr>
@@ -71,27 +71,27 @@
                 <tr>
                     <th class="col-md-4">Created:</th>
                     <td class="col-md-8">
-                        #args.content.getDisplayCreatedDate()#
+                        #prc.oContent.getDisplayCreatedDate()#
                     </td>
                 </tr>
 
                 <tr>
                     <th class="col-md-4">Published:</th>
                     <td class="col-md-8">
-                        #args.content.getDisplayPublishedDate()#
+                        #prc.oContent.getDisplayPublishedDate()#
                     </td>
                 </tr>
 
                 <tr>
                     <th class="col-md-4">Last Editor:</th>
                     <td class="col-md-8">
-						<a href="mailto:#args.content.getAuthorEmail()#">
+						<a href="mailto:#prc.oContent.getAuthorEmail()#">
 							#getInstance( "Avatar@contentbox" ).renderAvatar(
-								email	= args.content.getAuthorEmail(),
+								email	= prc.oContent.getAuthorEmail(),
 								size	= "20",
 								class	= "img img-circle"
 							)#
-							#args.content.getAuthorName()#
+							#prc.oContent.getAuthorName()#
 						</a>
                     </td>
                 </tr>
@@ -99,16 +99,16 @@
                 <tr>
                     <th class="col-md-4">Modified:</th>
                     <td class="col-md-8">
-                        #args.content.getActiveContent().getDisplayCreatedDate()#
+                        #prc.oContent.getActiveContent().getDisplayCreatedDate()#
                     </td>
                 </tr>
 
-                <cfif args.content.hasChild()>
+                <cfif prc.oContent.hasChild()>
                 <tr>
                     <th class="col-md-4">Child Pages:</th>
                     <td class="col-md-8">
 						<span class="badge badge-info">
-							#args.content.getNumberOfChildren()#
+							#prc.oContent.getNumberOfChildren()#
 						</span>
                     </td>
                 </tr>
@@ -118,7 +118,7 @@
                     <th class="col-md-4">Views:</th>
                     <td class="col-md-8">
 						<span class="badge badge-info">
-							#args.content.getNumberOfHits()#
+							#prc.oContent.getNumberOfHits()#
 						</span>
                     </td>
                 </tr>
@@ -127,7 +127,7 @@
                     <th class="col-md-4">Comments:</th>
                     <td class="col-md-8">
 						<span class="badge badge-info">
-							#args.content.getNumberOfComments()#
+							#prc.oContent.getNumberOfComments()#
 						</span>
                     </td>
                 </tr>
