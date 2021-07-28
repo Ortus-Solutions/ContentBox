@@ -1,43 +1,4 @@
 ﻿<cfoutput>
-    <div class="btn-group btn-group-sm">
-        <button
-			class="btn btn-sm btn-primary"
-			onclick="window.location.href='#event.buildLink( prc.xehPages )#/?parent=#prc.parentcontentID#';return false;">
-			<i class="fas fa-chevron-left"></i> Back
-        </button>
-
-        <button
-			class="btn btn-sm btn-default dropdown-toggle"
-			data-toggle="dropdown"
-			title="Quick Actions">
-			<span class="caret"></span>
-        </button>
-
-        <ul class="dropdown-menu">
-			<li>
-				<a href="javascript:quickPublish( false )">
-					<i class="fas fa-satellite-dish fa-lg"></i> Publish Now
-				</a>
-			</li>
-			<li>
-				<a href="javascript:quickPublish( true )">
-					<i class="fas fa-eraser fa-lg"></i> Save as Draft
-				</a>
-			</li>
-			<li>
-				<a href="javascript:quickSave()">
-					<i class="far fa-save fa-lg"></i> Quick Save
-				</a>
-			</li>
-            <cfif prc.oContent.isLoaded()>
-				<li>
-					<a href="#prc.CBHelper.linkPage( prc.oContent )#" target="_blank">
-						<i class="far fa-eye fa-lg"></i> Open In Site
-					</a>
-				</li>
-            </cfif>
-        </ul>
-    </div>
 
     <!--- Page Form  --->
     #html.startForm(
@@ -186,44 +147,7 @@
                             )#
                         </div>
 
-                        <!--- SEO --->
-                        <div role="tabpanel" class="tab-pane" id="seo">
-                            <div class="form-group">
-                                #html.textfield(
-                                    name      = "htmlTitle",
-                                    label     = "Title: (Leave blank to use the page name)",
-                                    bind      = prc.oContent,
-                                    class     = "form-control",
-                                    maxlength = "255"
-                                )#
-                            </div>
 
-                            <div class="form-group">
-                                <label for="htmlKeywords">
-                                    Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)
-                                </label>
-                                #html.textArea(
-                                    name        = "htmlKeywords",
-                                    bind        = prc.oContent,
-                                    class       = "form-control",
-                                    maxlength   = "160",
-                                    rows        = "5"
-                                )#
-                            </div>
-
-                            <div class="form-group">
-                                <label for="htmlKeywords">
-                                    Description: (<span id='html_description_count'>0</span>/160 characters left)
-                                </label>
-                                #html.textArea(
-                                    name        = "htmlDescription",
-                                    bind        = prc.oContent,
-                                    class       = "form-control",
-                                    maxlength   = "160",
-                                    rows        = "5"
-                                )#
-                            </div>
-                        </div>
 
                         <cfif prc.oContent.isLoaded()>
                             <!--- History --->
