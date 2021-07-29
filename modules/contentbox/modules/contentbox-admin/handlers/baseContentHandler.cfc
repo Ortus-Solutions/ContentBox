@@ -15,13 +15,11 @@ component extends="baseHandler" {
 
 	property name="authorService" inject="authorService@contentbox";
 	property name="themeService" inject="themeService@contentbox";
-	property name="CBHelper" inject="CBHelper@contentbox";
 	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 	property name="categoryService" inject="categoryService@contentbox";
 	property name="customFieldService" inject="customFieldService@contentbox";
 	property name="editorService" inject="editorService@contentbox";
-	property name="siteService" inject="siteService@contentbox";
 	property name="contentService" inject="contentService@contentbox";
 
 	/**
@@ -74,9 +72,6 @@ component extends="baseHandler" {
 			sortOrder = "category",
 			asQuery   = false
 		);
-
-		// Exit Handlers
-		prc.xehResetHits = "#prc.cbAdminEntryPoint#.content.resetHits";
 
 		// View according to handler section
 		event.setView( "#variables.handler#/index" );

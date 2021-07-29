@@ -11,7 +11,6 @@ component extends="baseHandler" {
 	property name="settingsService" inject="settingService@contentbox";
 	property name="siteService" inject="siteService@contentbox";
 	property name="pageService" inject="pageService@contentbox";
-	property name="CBHelper" inject="CBHelper@contentbox";
 	property name="editorService" inject="editorService@contentbox";
 	property name="mediaService" inject="mediaService@contentbox";
 	property name="LoginTrackerService" inject="LoginTrackerService@contentbox";

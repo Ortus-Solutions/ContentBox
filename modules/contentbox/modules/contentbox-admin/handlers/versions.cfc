@@ -7,7 +7,6 @@ component extends="baseHandler" {
 	property name="contentVersionService" inject="contentVersionService@contentbox";
 	property name="contentService" inject="contentService@contentbox";
 	property name="authorService" inject="authorService@contentbox";
-	property name="CBHelper" inject="CBHelper@contentbox";
 	property name="JSONPrettyPrint" inject="JSONPrettyPrint@JSONPrettyPrint";
 
 	/**

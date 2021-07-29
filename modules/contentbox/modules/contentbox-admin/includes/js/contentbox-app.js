@@ -784,6 +784,7 @@ function getDefaultDateTimeOptions(){
 function scrollToHash( hashName ) {
 	location.hash = "#" + hashName;
 }
+
 var app = function() {
 
 	var init = function() {
@@ -916,6 +917,8 @@ $( () => {
 } );
 const contentListHelper = ( () => {
 
+	const JSON_HEADER = { "Content-type": "application/json;charset=UTF-8" };
+
 	// Properties
 	var $adminEntryPoint = "";
 	var $tableContainer  = "";
@@ -1004,7 +1007,6 @@ const contentListHelper = ( () => {
 
 			// Create history Listener
 			History.Adapter.bind( window, "statechange", function(){
-				//console.log( "called history: " + data.parent );
 				contentLoad( { parent: History.getState().data.parent } );
 			} );
 
@@ -1175,31 +1177,46 @@ const contentListHelper = ( () => {
 
 		},
 
-		// Reset Hits
+		/**
+		 * Reset the hits on a sepcific content object
+		 *
+		 * @param {*} contentID The content id to reset the hits on
+		 */
 		resetHits : ( contentID ) => {
+			// if no length, exit out
 			if ( !contentID.length ){ return; }
-			// Post it
-			$.post(
-				$adminEntryPoint + "/content/resetHits",
-				{ contentID: contentID }
-			).done( function( data ){
-				if ( data.error ){
-					window.alert( "Error Reseting Hits: " + data.messages.join( "," ) );
-				} else {
-					adminNotifier( "info", data.messages.join( "<br>" ), 3000 );
-					// reload content
-					contentFilter();
-				}
-			} );
+
+			fetch( $adminEntryPoint + "/content/resetHits", {
+				method 	: "POST",
+				headers : JSON_HEADER,
+				body   	: JSON.stringify( { contentID: contentID } )
+			} )
+				.then( response => response.json() )
+				.then( data => {
+					if ( !data.error ){
+						adminNotifier( "info", data.messages.join( "<br>" ), 3000 );
+						contentFilter();
+					} else {
+						alert( "Error Reseting Hits: " + data.messages.join( "," ) );
+					}
+				} )
+				.catch( error => {
+					alert( "Error Reseting Hits: " + error );
+				} )
+			;
 		},
 
-		// Reset Hits
+		/**
+		 * Reset the hits for multiple selected content objects
+		 */
 		resetBulkHits : () => {
 			var selected = [];
 			$( "#contentID:checked" ).each( function(){
 				selected.push( $( this ).val() );
 			} );
-			if ( selected.length ){ resetHits( selected.join( "," ) ); }
+			if ( selected.length ){
+				resetHits( selected.join( "," ) );
+			}
 		}
 	};
 

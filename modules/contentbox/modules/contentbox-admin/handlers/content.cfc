@@ -12,7 +12,6 @@ component extends="baseHandler" {
 	property name="statsService" inject="statsService@contentbox";
 	property name="contentStoreService" inject="contentStoreService@contentbox";
 	property name="authorService" inject="authorService@contentbox";
-	property name="CBHelper" inject="CBHelper@contentbox";
 
 	/**
 	 * Quick Content Preview from editors
@@ -227,42 +226,24 @@ component extends="baseHandler" {
 	 * @return json
 	 */
 	any function resetHits( event, rc, prc ){
-		event.paramValue( "contentID", 0 );
-		var response = {
-			"data"       : { "data" : "", "error" : false, "messages" : [] },
-			"statusCode" : "200",
-			"statusText" : "Ok"
-		};
+		event.paramValue( "contentID", "" );
 		// build to array and iterate
-		rc.contentID = listToArray( rc.contentID );
-		for ( var thisID in rc.contentID ) {
-			var oContent = variables.contentService.get( thisID );
-			// check if loaded
-			if ( !isNull( oContent ) and oContent.isLoaded() ) {
-				// Only update if it has stats
-				if ( oContent.hasStats() ) {
-					oContent.getStats().setHits( 0 );
-					contentService.save( oContent );
-				}
-				arrayAppend( response.data.messages, "Hits reset for '#oContent.getTitle()#'" );
-			} else {
-				response.data.error = true;
-				response.statusCode = 400;
-				arrayAppend(
-					response.data.messages,
-					"The contentID '#thisContentID#' requested does not exist"
-				);
-			}
-		}
-		// Render it out
-		event.renderData(
-			data       = response.data,
-			type       = "json",
-			statusCode = response.statusCode,
-			statusText = (
-				arrayLen( response.data.messages ) ? "Error processing request please look at data messages" : "Ok"
-			)
-		);
+		listToArray( rc.contentID )
+			// Build out each content object
+			.map( function( thisId ){
+				return variables.contentService.get( arguments.thisId );
+			} )
+			// Filter only loaded and content objects that have stats already
+			.filter( function( thisContent ){
+				return ( !isNull( arguments.thisContent ) && arguments.thisContent.hasStats() );
+			} )
+			// Reset Hits
+			.each( function( thisContent ){
+				variables.contentService.save( arguments.thisContent.getStats().setHits( 0 ) );
+				event
+					.getResponse()
+					.addMessage( "Hits reset for (#arguments.thisContent.getTitle()#)" );
+			} );
 	}
 
 	/**
