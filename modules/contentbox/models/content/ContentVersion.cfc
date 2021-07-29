@@ -206,11 +206,14 @@ component
 				timeout       ="10" {
 				if ( NOT len( variables.renderedContent ) ) {
 					// else render content out, prepare builder
-					var builder = createObject( "java", "java.lang.StringBuilder" ).init( content );
-
+					var builder = createObject( "java", "java.lang.StringBuilder" ).init(
+						variables.content
+					);
 					// announce renderings with data, so content renderers can process them
-					var iData = { builder : builder, content : this };
-					interceptorService.announce( "cb_onContentRendering", iData );
+					variables.interceptorService.announce(
+						"cb_onContentRendering",
+						{ builder : builder, content : this }
+					);
 
 					// save content
 					variables.renderedContent = builder.toString();

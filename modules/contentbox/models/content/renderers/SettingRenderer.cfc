@@ -28,8 +28,9 @@ component accessors="true" extends="BaseRenderer" {
 
 	/**
 	 * Translate the content
-	 * @builder A java String Builder
-	 * @content The content object
+	 *
+	 * @builder java.lang.StringBuilder that contains all the content to manipulate
+	 * @content The content object that requested translation
 	 * @event The ColdBox event
 	 */
 	private function translateContent(

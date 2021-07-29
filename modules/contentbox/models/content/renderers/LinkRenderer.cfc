@@ -20,6 +20,7 @@ component accessors="true" extends="BaseRenderer" {
 
 	/**
 	 * Determine slug from incoming string
+	 *
 	 * @tagString The tag string
 	 */
 	private function determineSlug( required tagString ){
@@ -33,10 +34,11 @@ component accessors="true" extends="BaseRenderer" {
 
 	/**
 	 * Translate content
-	 * @builder The Java String Builder
-	 * @content The content object
+	 *
+	 * @builder java.lang.StringBuilder that contains all the content to manipulate
+	 * @content The content object that requested translation
 	 */
-	private function translateContent( required builder, content ){
+	private function translateContent( required builder, required content ){
 		// our mustaches pattern
 		var regex       = "(page|pagessl|entry|entryssl|root)\:\[[^\]]*]";
 		// match contentbox links in our incoming builder and build our targets array and len

@@ -1586,13 +1586,11 @@ component
 	 */
 	any function renderContentSilent( any content = getContent() ) profile{
 		// render content out, prepare builder
-		var b = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
-
+		var builder = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
 		// announce renderings with data, so content renderers can process them
-		interceptorService.announce( "cb_onContentRendering", { builder : b, content : this } );
-
+		interceptorService.announce( "cb_onContentRendering", { builder : builder, content : this } );
 		// return processed content
-		return b.toString();
+		return builder.toString();
 	}
 
 	/**

@@ -159,14 +159,16 @@ component
 				timeout       ="10" {
 				if ( NOT len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
-					var b = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
+					var builder = createObject( "java", "java.lang.StringBuilder" ).init(
+						getExcerpt()
+					);
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
 						"cb_onContentRendering",
-						{ builder : b, content : this }
+						{ builder : builder, content : this }
 					);
 					// store processed content
-					variables.renderedExcerpt = b.toString();
+					variables.renderedExcerpt = builder.toString();
 				}
 			}
 		}

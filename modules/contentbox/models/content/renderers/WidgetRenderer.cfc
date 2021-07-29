@@ -23,8 +23,9 @@ component accessors="true" extends="BaseRenderer" {
 
 	/**
 	 * Executes custom parsing rules on content
-	 * @builder {java.lang.StringBuilder}
-	 * @content {String}
+	 *
+	 * @builder java.lang.StringBuilder that contains all the content to manipulate
+	 * @content The content object that requested translation
 	 */
 	private function translateContent( required builder, content ){
 		parseTagWidgets( argumentCollection = arguments );
@@ -33,9 +34,11 @@ component accessors="true" extends="BaseRenderer" {
 
 	/**
 	 * Parses content to find <widget>...</widget> tags, and renders the associated widget
-	 * @builder {java.lang.StringBuilder}
+	 *
+	 * @builder java.lang.StringBuilder that contains all the content to manipulate
+	 * @content The content object that requested translation
 	 */
-	private void function parseTagWidgets( required builder ){
+	private void function parseTagWidgets( required builder, required content ){
 		// widget tag syntax
 		var regex     = "<widget\b[^>]*>(.*?)</widget>";
 		// match widgets in our incoming builder and build our targets array and len
@@ -120,9 +123,11 @@ component accessors="true" extends="BaseRenderer" {
 
 	/**
 	 * Parses content to find {{{...}}} syntax, and renders the associated widget
-	 * @builder {java.lang.StringBuilder}
+	 *
+	 * @builder java.lang.StringBuilder that contains all the content to manipulate
+	 * @content The content object that requested translation
 	 */
-	private void function parseTripleMustacheWidgets( required builder ){
+	private void function parseTripleMustacheWidgets( required builder, required content ){
 		// Escape values for non-rendering
 		multiStringReplace(
 			builder     = arguments.builder,
