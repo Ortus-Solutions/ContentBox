@@ -79,11 +79,17 @@ component {
 				// Remove unused unique constraints
 				removeUniqueConstraints( argumentCollection = arguments );
 				// Update Slugs/Titles to 1000 characters
+				dropIndexesForTableColumn( "cb_content", "title" );
+				dropIndexesForTableColumn( "cb_content", "slug" );
 				schema.alter( "cb_content", function( table ) {
 					table.modifyColumn( "title", table.string( "title", 1000 ) );
 					table.modifyColumn( "slug", table.string( "slug", 1000 ) );
 					table.modifyColumn( "featuredImage", table.string( "slug", 1000 ) );
 					table.modifyColumn( "featuredImageURL", table.string( "slug", 1000 ) );
+					// Rebuild Indexes
+					table.index( [ "slug" ], "idx_slug" );
+					table.index( [ "slug", "isPublished" ], "idx_publishedSlug" );
+					table.index( [ "title", "isPublished" ], "idx_search" );
 				} );
 			} catch ( any e ) {
 				transactionRollback();

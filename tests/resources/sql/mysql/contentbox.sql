@@ -245,8 +245,8 @@ DROP TABLE IF EXISTS `cb_content`;
 
 CREATE TABLE `cb_content` (
   `contentType` varchar(255) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `slug` varchar(200) NOT NULL,
+  `title` varchar(1000) NOT NULL,
+  `slug` varchar(1000) NOT NULL,
   `createdDate` datetime NOT NULL,
   `publishedDate` datetime DEFAULT NULL,
   `expireDate` datetime DEFAULT NULL,
@@ -261,8 +261,8 @@ CREATE TABLE `cb_content` (
   `cacheLastAccessTimeout` int(11) DEFAULT '0',
   `markup` varchar(100) NOT NULL DEFAULT 'HTML',
   `showInSearch` bit(1) NOT NULL DEFAULT b'1',
-  `featuredImage` varchar(255) DEFAULT NULL,
-  `featuredImageURL` varchar(255) DEFAULT NULL,
+  `featuredImage` varchar(1000) DEFAULT NULL,
+  `featuredImageURL` varchar(1000) DEFAULT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `HTMLTitle` varchar(255) DEFAULT NULL,
