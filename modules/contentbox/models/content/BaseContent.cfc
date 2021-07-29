@@ -120,7 +120,7 @@ component
 		name   ="title"
 		column ="title"
 		notnull="true"
-		length ="1000"
+		length ="500"
 		default=""
 		index  ="idx_search";
 
@@ -128,7 +128,7 @@ component
 		name   ="slug"
 		column ="slug"
 		notnull="true"
-		length ="1000"
+		length ="500"
 		default=""
 		index  ="idx_slug,idx_publishedSlug";
 
@@ -243,14 +243,14 @@ component
 		column ="featuredImage"
 		notnull="false"
 		default=""
-		length ="1000";
+		length ="500";
 
 	property
 		name   ="featuredImageURL"
 		column ="featuredImageURL"
 		notnull="false"
 		default=""
-		length ="1000";
+		length ="500";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS

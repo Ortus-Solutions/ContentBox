@@ -82,10 +82,10 @@ component {
 				dropIndexesForTableColumn( "cb_content", "title" );
 				dropIndexesForTableColumn( "cb_content", "slug" );
 				schema.alter( "cb_content", function( table ) {
-					table.modifyColumn( "title", table.string( "title", 1000 ) );
-					table.modifyColumn( "slug", table.string( "slug", 1000 ) );
-					table.modifyColumn( "featuredImage", table.string( "slug", 1000 ) );
-					table.modifyColumn( "featuredImageURL", table.string( "slug", 1000 ) );
+					table.modifyColumn( "title", table.string( "title", 500 ) );
+					table.modifyColumn( "slug", table.string( "slug", 500 ) );
+					table.modifyColumn( "featuredImage", table.string( "slug", 500 ) );
+					table.modifyColumn( "featuredImageURL", table.string( "slug", 500 ) );
 					// Rebuild Indexes
 					table.index( [ "slug" ], "idx_slug" );
 					table.index( [ "slug", "isPublished" ], "idx_publishedSlug" );
