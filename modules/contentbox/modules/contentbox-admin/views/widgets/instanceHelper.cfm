@@ -2,7 +2,7 @@
 <cfoutput>
 <!--- Custom Javascript --->
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
     // register listeners
     $( '##widget-button-insert' ).off( 'click.inWidget' ).on( 'click.inWidget', insertCBWidget );
     $( '##widget-button-update' ).off( 'click.upWidget' ).on( 'click.upWidget', updateCBWidget );
@@ -16,7 +16,7 @@ document.addEventListener( "DOMContentLoaded", () => {
         }
     } );
     updatePreview();
-} );
+} )();
 
 /*
  * Gets form values from arguments form

@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
 	// tables references
 	$entries = $( "##entries" );
 	// sorting
@@ -26,6 +26,6 @@ document.addEventListener( "DOMContentLoaded", () => {
 	contentListHelper.activateQuickLook( $entries, '#event.buildLink( prc.xehEntryQuickLook )#/contentID/' );
 	// Info Panels
 	contentListHelper.activateInfoPanels();
-} );
+} )();
 </script>
 </cfoutput>

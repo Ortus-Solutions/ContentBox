@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
 	// tables references
 	$pages = $( "##pages" );
 	// datatable
@@ -72,6 +72,6 @@ document.addEventListener( "DOMContentLoaded", () => {
 		}
 	} );
 	</cfif>
-} );
+} )();
 </script>
 </cfoutput>

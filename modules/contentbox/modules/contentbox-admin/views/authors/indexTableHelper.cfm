@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
 	// tables references
 	$authors = $( "##authors" );
 	// datatable
@@ -22,6 +22,6 @@ document.addEventListener( "DOMContentLoaded", () => {
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
-} );
+} )();
 </script>
 </cfoutput>
