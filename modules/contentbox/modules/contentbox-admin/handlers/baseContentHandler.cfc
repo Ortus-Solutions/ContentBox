@@ -353,7 +353,6 @@ component extends="baseHandler" {
 				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
 			)
 			.paramValue( "relatedContentIDs", [] )
-			.paramValue( "site", prc.oCurrentSite.getsiteID() )
 			.paramValue( "slug", "" )
 		;
 
@@ -377,23 +376,14 @@ component extends="baseHandler" {
 		// get new/persisted page and populate it with incoming data.
 		var oContent     = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		populateModel( model: oContent, exclude = "contentID" )
+		populateModel( model: oContent, exclude = "contentID,siteID" )
 			.addJoinedPublishedtime( rc.publishedTime )
-			.addJoinedExpiredTime( rc.expireTime )
-			.setSite( variables.siteService.get( rc.site ) );
+			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT oContent.isLoaded() );
-
-		// Validate Page And Incoming Data
-		var vResults = validate( oContent );
-		if ( vResults.hasErrors() ) {
-			variables.cbMessageBox.warn( vResults.getAllErrors() );
-			editor( argumentCollection = arguments );
-			return;
-		}
 
 		// Attach creator if new page
 		if ( isNew ) {
-			oContent.setCreator( prc.oCurrentAuthor );
+			oContent.setSite( prc.oCurrentSite ).setCreator( prc.oCurrentAuthor );
 		}
 		// Override creator if persisted?
 		else if (
@@ -403,6 +393,14 @@ component extends="baseHandler" {
 			oContent.getCreator().getAuthorID() NEQ rc.creatorID
 		) {
 			oContent.setCreator( variables.authorService.get( rc.creatorID ) );
+		}
+
+		// Validate Page And Incoming Data
+		var vResults = validate( oContent );
+		if ( vResults.hasErrors() ) {
+			variables.cbMessageBox.warn( vResults.getAllErrors() );
+			editor( argumentCollection = arguments );
+			return;
 		}
 
 		// Prettify content if json

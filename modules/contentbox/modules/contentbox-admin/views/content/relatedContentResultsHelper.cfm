@@ -1,6 +1,6 @@
 <cfoutput>
     <script>
-        $( document ).ready(function() {
+        document.addEventListener( "DOMContentLoaded", () => {
             // on load, update tab with result count
             var tab = $( 'a[href="###rc.contentType#"]' );
             var baseHTML = tab.html().replace( /<(span)[^>]*>[^<]*(<\/span>)/ig, '' );

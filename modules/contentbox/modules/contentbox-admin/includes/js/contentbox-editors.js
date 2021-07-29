@@ -466,14 +466,6 @@ function toggleLoaderBar(){
 }
 
 /**
- * Open the publishing bar for publishing
- */
-function togglePublishingBar(){
-	$publishingBar.slideToggle();
-	$actionBar.slideToggle();
-}
-
-/**
  * Featured image callback
  * @param  {string} filePath The file path
  * @param  {string} fileURL  The file URL
@@ -519,7 +511,6 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	var opts 			= $.extend( {}, defaults, options || {} );
 	var editorID 		= editor.attr( "id" );
 	// Retrieve the actual editor driver implementation using ContentBox JS Interface Method
-	var oEditorDriver 	= getContentEditor();
 	var saveStoreKey 	= "autosave_" + window.location + "_" + editorID;
 	var timer 			= 0, savingActive = false;
 
@@ -621,6 +612,7 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	$( "#" + ddMenuID ).on( "click", "li > a", function( evt ){
 		loadContent( $( evt.currentTarget ).data( "id" ) );
 	} );
+
 	// Update auto save menu
 	updateAutoSaveMenu();
 };

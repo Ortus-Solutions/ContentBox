@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( () => {
+document.addEventListener( "DOMContentLoaded", () => {
 	// Setup content view: from workbench/resources/contentList.js
 	contentListHelper.init( {
 		adminEntryPoint : '#event.buildLink( prc.cbAdminEntryPoint )#',

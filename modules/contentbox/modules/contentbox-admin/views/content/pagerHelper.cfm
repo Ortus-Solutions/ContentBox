@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$( document ).ready( function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	// Root elements
 	$pagerLoader 	= $( "##contentPager_#prc.contentPager_id#_loader" );
 	$pagerTable 	= $( "##contentPager_#prc.contentPager_id#_table" );

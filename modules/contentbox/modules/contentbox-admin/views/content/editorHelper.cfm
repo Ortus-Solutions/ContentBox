@@ -27,7 +27,7 @@ $cbEditorConfig = {
 // Load Editor Provider Assets now
 #prc.oEditorDriver.loadAssets()#
 // On Dom Ready
-$( () => {
+document.addEventListener( "DOMContentLoaded", () => {
  	// Editor Form Pointer
 	$contentForm = $( "##contentForm" );
 	// Setup the Editors

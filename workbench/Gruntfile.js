@@ -135,7 +135,7 @@ module.exports = function( grunt ) {
 					// HTML5 shim detection
 					"resources/vendor/js/modernizr.min.js",
 					// AlpineJS : Will replace majority of js files below
-					"node_modules/alpinejs/dist/cdn/cdn.min.js",
+					"node_modules/alpinejs/dist/cdn.js",
 					// Jquery
 					"app_modules/jquery/dist/jquery.min.js",
 					// Moment: Used by the Editors JS: Refactor in the future to JavaScript API

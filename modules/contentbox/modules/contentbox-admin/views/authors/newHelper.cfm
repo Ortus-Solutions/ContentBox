@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	// pointers
 	$authorForm 	= $( "##authorForm" );
 	$authorUsername = $authorForm.find( "##username" );

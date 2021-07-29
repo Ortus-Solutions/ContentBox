@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	// form validators
 	$( "##commentSettingsForm" ).validate( {
         rules: {

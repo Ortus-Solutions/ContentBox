@@ -119,7 +119,7 @@ var app = function() {
 	};
 }();
 
-$( () => {
+document.addEventListener( "DOMContentLoaded", () => {
 	app.init();
 	// Collapsed nav if <=768 by default
 	var bodyEl = $( "#container" );

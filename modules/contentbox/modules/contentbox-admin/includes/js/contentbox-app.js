@@ -1,4 +1,4 @@
-$( () => {
+document.addEventListener( "DOMContentLoaded", () => {
 	// GLOBAL STATIC
 	REGEX_LOWER = /[a-z]/,
 	REGEX_UPPER = /[A-Z]/,
@@ -906,7 +906,7 @@ var app = function() {
 	};
 }();
 
-$( () => {
+document.addEventListener( "DOMContentLoaded", () => {
 	app.init();
 	// Collapsed nav if <=768 by default
 	var bodyEl = $( "#container" );

@@ -7,7 +7,7 @@
 </style>
 <!--- Custom JS --->
 <script>
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	// pointers
 	$authorForm 	= $( "##authorForm" );
 	$twofactorForm 	= $( "##twofactorForm" );

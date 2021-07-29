@@ -1,4 +1,4 @@
-$( () => {
+document.addEventListener( "DOMContentLoaded", () => {
 	// GLOBAL STATIC
 	REGEX_LOWER = /[a-z]/,
 	REGEX_UPPER = /[A-Z]/,

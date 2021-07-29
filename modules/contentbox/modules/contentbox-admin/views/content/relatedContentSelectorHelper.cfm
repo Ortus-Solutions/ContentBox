@@ -20,7 +20,7 @@
 <cfoutput>
     <!--- Custom Javascript --->
     <script>
-    $( document ).ready(function() {
+    document.addEventListener( "DOMContentLoaded", () => {
         // Shared Pointers
         $relatedContentSelectorForm    = $( "##relatedContentSelectorForm" );
         $relatedContentSelectorLoader  = $relatedContentSelectorForm.find( "##relatedContentLoader" );

@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script type="text/javascript">
-$(document).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	//Get Focus
 	$( "##email" ).focus();
 	// form validators

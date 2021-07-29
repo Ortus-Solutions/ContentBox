@@ -19,9 +19,10 @@
 				#cbMessageBox().renderit()#
 
 				<!--- Hidden Values --->
-				#html.hiddenField( name="contentID", bind=prc.oContent )#
-				#html.hiddenField( name="contentType", bind=prc.oContent )#
-				#html.hiddenField( name="sluggerURL", value=event.buildLink( prc.xehSlugify ) )#
+				#html.hiddenField( name="siteID", 		bind=prc.oContent )#
+				#html.hiddenField( name="contentID", 	bind=prc.oContent )#
+				#html.hiddenField( name="contentType", 	bind=prc.oContent )#
+				#html.hiddenField( name="sluggerURL", 	value=event.buildLink( prc.xehSlugify ) )#
 
 				<div class="panel panel-default">
 
@@ -234,7 +235,7 @@
 					<div class="panel-body">
 						<!--- Publishing Panel --->
 						#cbAdminComponent(
-							"editor/PublishingPanel"
+							"editor/sidebar/PublishingPanel"
 						)#
 
 						<!--- Accordion --->

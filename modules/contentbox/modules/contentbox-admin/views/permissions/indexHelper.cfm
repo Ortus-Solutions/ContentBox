@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	$importDialog = $( "##importDialog" );
 	// table sorting + filtering
 	$( "##permissions" ).dataTable( {

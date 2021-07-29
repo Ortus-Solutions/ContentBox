@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	// Setup view
 	setupView( {
 		tableContainer	: $( "##authorTableContainer" ),

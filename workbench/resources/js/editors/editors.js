@@ -466,14 +466,6 @@ function toggleLoaderBar(){
 }
 
 /**
- * Open the publishing bar for publishing
- */
-function togglePublishingBar(){
-	$publishingBar.slideToggle();
-	$actionBar.slideToggle();
-}
-
-/**
  * Featured image callback
  * @param  {string} filePath The file path
  * @param  {string} fileURL  The file URL

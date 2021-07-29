@@ -1,95 +1,95 @@
 <cfoutput>
 <script>
-	$( document ).ready(function() {
-		<cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
-			var currentContentID = "#rc.contentID#";
-		</cfif>
-		// listener for add button
-		$( '##add-related-content' ).on( 'click', function() {
-			var baseURL = '#event.buildLink( prc.xehShowRelatedContentSelector )#';
-			// build up list of excluded IDs
-			var excludeIDs = $( 'input[name=relatedContentIDs]' ).map( function(){
-				return $( this ).val();
-			} ).get();
-			if( typeof currentContentID !== 'undefined' ) {
-				excludeIDs.push( currentContentID );
-			}
-			if( excludeIDs.length ) {
-				baseURL += '?excludeIDs=' + excludeIDs.join( ',' );
-			}
-			openRemoteModal( baseURL, {}, 900, 600 );
-		} );
-		// remove relatedContent listener
-		$( '##relatedContent-items' ).on( 'click', '.btn', function(){
-			// remove row
-			$( this ).closest( 'tr' ).remove();
-			// evaluate if we need to modify the view of the row
-			toggleWarningMessage();
-		} );
+document.addEventListener( "DOMContentLoaded", () => {
+	<cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
+		var currentContentID = "#rc.contentID#";
+	</cfif>
+	// listener for add button
+	$( '##add-related-content' ).on( 'click', function() {
+		var baseURL = '#event.buildLink( prc.xehShowRelatedContentSelector )#';
+		// build up list of excluded IDs
+		var excludeIDs = $( 'input[name=relatedContentIDs]' ).map( function(){
+			return $( this ).val();
+		} ).get();
+		if( typeof currentContentID !== 'undefined' ) {
+			excludeIDs.push( currentContentID );
+		}
+		if( excludeIDs.length ) {
+			baseURL += '?excludeIDs=' + excludeIDs.join( ',' );
+		}
+		openRemoteModal( baseURL, {}, 900, 600 );
+	} );
+	// remove relatedContent listener
+	$( '##relatedContent-items' ).on( 'click', '.btn', function(){
+		// remove row
+		$( this ).closest( 'tr' ).remove();
+		// evaluate if we need to modify the view of the row
 		toggleWarningMessage();
 	} );
-	/**
-	 * Looks at table content to see if we need to hide the table and display a "no content" message or not
-	 */
-	function toggleWarningMessage() {
-		var table = $( '##relatedContent-items' ),
-			warning = $( '##related-content-empty' );
-		// if not empty...
-		if( table.find( 'tr' ).length ) {
-			warning.hide();
-			table.show();
-		}
-		// otherwise, there's nothing there!
-		else {
-			table.hide();
-			warning.show();
-		}
+	toggleWarningMessage();
+} );
+/**
+ * Looks at table content to see if we need to hide the table and display a "no content" message or not
+ */
+function toggleWarningMessage() {
+	var table = $( '##relatedContent-items' ),
+		warning = $( '##related-content-empty' );
+	// if not empty...
+	if( table.find( 'tr' ).length ) {
+		warning.hide();
+		table.show();
 	}
-	/**
-	 * Handler for selection of related content in modal
-	 * @param {Number} id The content's id
-	 * @param {String} title The title of the content
-	 * @param {String} type The content type
-	 */
-	function chooseRelatedContent( id, title, type ) {
-		var table = $( '##relatedContent-items' ),
-			warning = $( '##related-content-empty' ),
-			template = [
-				'<tr id="content_{0}" class="related-content">',
-					'<td width="14" class="text-center">{1}</td>',
-					'<td>{2}</td>',
-					'<td width="14" class="text-center">',
-						'<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>',
-						'<input type="hidden" name="relatedContentIDs" value="{0}" />',
-					'</td>',
-				'</tr>'
-			].join( ' ' ),
-			params = [ id, getIconByContentType( type ), title ];
-		// add to table
-		table.find( 'tbody:last' ).append( $.validator.format( template, params ) );
-		toggleWarningMessage();
-		closeRemoteModal();
-		return false;
+	// otherwise, there's nothing there!
+	else {
+		table.hide();
+		warning.show();
 	}
-	/**
-	 * Helper for figuring out the correct icon based on content type
-	 * @param {String} type The type of the content
-	 */
-	function getIconByContentType( type ) {
-		var icon = '';
-		switch( type ) {
-			case 'Page':
-				icon = '<i class="fa fa-file icon-small" title="Page"></i>';
-				break;
-			case 'Entry':
-				icon = '<i class="fas fa-blog icon-small" title="Entry"></i>';
-				break;
-			case 'ContentStore':
-				icon = '<i class="far fa-hdd icon-small" title="ContentStore"></i>';
-				break;
-		}
-		return icon;
+}
+/**
+ * Handler for selection of related content in modal
+ * @param {Number} id The content's id
+ * @param {String} title The title of the content
+ * @param {String} type The content type
+ */
+function chooseRelatedContent( id, title, type ) {
+	var table = $( '##relatedContent-items' ),
+		warning = $( '##related-content-empty' ),
+		template = [
+			'<tr id="content_{0}" class="related-content">',
+				'<td width="14" class="text-center">{1}</td>',
+				'<td>{2}</td>',
+				'<td width="14" class="text-center">',
+					'<button class="btn btn-xs btn-danger" type="button"><i class="fa fa-minus" title="Remove Related Content"></i></button>',
+					'<input type="hidden" name="relatedContentIDs" value="{0}" />',
+				'</td>',
+			'</tr>'
+		].join( ' ' ),
+		params = [ id, getIconByContentType( type ), title ];
+	// add to table
+	table.find( 'tbody:last' ).append( $.validator.format( template, params ) );
+	toggleWarningMessage();
+	closeRemoteModal();
+	return false;
+}
+/**
+ * Helper for figuring out the correct icon based on content type
+ * @param {String} type The type of the content
+ */
+function getIconByContentType( type ) {
+	var icon = '';
+	switch( type ) {
+		case 'Page':
+			icon = '<i class="fa fa-file icon-small" title="Page"></i>';
+			break;
+		case 'Entry':
+			icon = '<i class="fas fa-blog icon-small" title="Entry"></i>';
+			break;
+		case 'ContentStore':
+			icon = '<i class="far fa-hdd icon-small" title="ContentStore"></i>';
+			break;
 	}
+	return icon;
+}
 </script>
 <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_RELATED_CONTENT" )>
 	<div class="panel panel-default">

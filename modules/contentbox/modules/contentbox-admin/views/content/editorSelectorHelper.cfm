@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Custom Javascript --->
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	// keyup quick search
 	$( "##contentSearch" ).keyup(
 		_.debounce(

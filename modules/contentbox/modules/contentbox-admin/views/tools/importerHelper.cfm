@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	$importForm	 	= $( "##importerForm" );
 	$importDialog 	= $( "##importDialog" );
 	$tabs 			= $( "##import_tabs" );

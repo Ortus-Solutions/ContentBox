@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	$versionsPagerForm 	= $( "##versionsPagerForm" );
 	$versionsPager 		= $( "##versionsHistoryTable" );
 	// quick look
@@ -24,9 +24,9 @@ function versionsPagerDiff(){
 function versionsPagerRemove( versionID ){
 	$( '##version_delete_' + versionID ).removeClass( "fa fa-minus-circle" ).addClass( "fa-spin fa-spinner" );
 	// ajax remove change
-	$.post( 
-		"#event.buildlink( prc.xehVersionRemove )#", 
-		{ versionID : versionID}, 
+	$.post(
+		"#event.buildlink( prc.xehVersionRemove )#",
+		{ versionID : versionID},
 		function( data ){
 			closeConfirmations();
 			if( !data.ERROR ){
@@ -37,29 +37,29 @@ function versionsPagerRemove( versionID ){
 				$( '##version_delete_' + versionID ).removeClass( "fa-spin fa-spinner" ).addClass( "fa fa-minus-circle" );
 			}
 		},
-		"json" 
-	);	
+		"json"
+	);
 }
 </cfif>
 <cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
 function versionsPagerRollback( versionID ){
 	$( '##version_rollback_' + versionID ).addClass( "fa-spin" );
 	// ajax rollback change
-	$.post( 
+	$.post(
 		"#event.buildlink( prc.xehVersionRollback )#",
 		{ revertID : versionID },
 		function( data ){
 			closeConfirmations();
 			if( !data.ERROR ){
 				location.reload();
-				adminNotifier( "info", data.MESSAGES, 10000 );	
+				adminNotifier( "info", data.MESSAGES, 10000 );
 			} else{
 				adminNotifier( "error", data.MESSAGES, 10000 );
 				$( '##version_rollback_' + versionID ).removeClass( "fa-spin" );
 			}
 		},
-		"json" 
-	);	
+		"json"
+	);
 }
 </cfif>
 </script>

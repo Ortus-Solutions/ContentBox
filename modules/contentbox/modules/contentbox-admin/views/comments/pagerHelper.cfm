@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	// quick look
 	$( "##comments_pager" )
 		.find( "tr" )

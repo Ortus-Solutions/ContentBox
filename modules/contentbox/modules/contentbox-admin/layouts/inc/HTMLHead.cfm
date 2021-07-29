@@ -63,11 +63,11 @@
     <!---                            JS LIBRARIES                				--->
     <!--- ********************************************************************* --->
     <cfif getSetting( "environment" ) eq "development">
-        <script src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
-        <script src="#prc.cbroot#/includes/js/contentbox-app.js"></script>
+        <script defer src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
+        <script defer src="#prc.cbroot#/includes/js/contentbox-app.js"></script>
     <cfelse>
-        <script src="#prc.cbroot#/includes/js/contentbox-pre.min.js"></script>
-        <script src="#prc.cbroot#/includes/js/contentbox-app.min.js"></script>
+        <script defer src="#prc.cbroot#/includes/js/contentbox-pre.min.js"></script>
+        <script defer src="#prc.cbroot#/includes/js/contentbox-app.min.js"></script>
     </cfif>
 </head>
 </cfoutput>

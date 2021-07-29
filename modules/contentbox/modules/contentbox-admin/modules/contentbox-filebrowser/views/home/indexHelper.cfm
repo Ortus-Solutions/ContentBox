@@ -55,7 +55,7 @@ function $getURLMediaPath( required fbDirRoot, required filePath ){
 <cfoutput>
 <!--- *************************************** DYNAMIC JS ******************************--->
 <script language="javascript">
-$( document ).ready( function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	// reinitialize tooltip after refresh, do a try in case we are in Popup mode.
 	try{
 		$('[data-toggle="tooltip"]').tooltip();
@@ -421,7 +421,7 @@ function fbChoose(){
 <!--- Uploads Scripts --->
 <cfif prc.fbSettings.allowUploads>
 <script type="text/javascript">
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	// show upload button
 	$( "##file_uploader" ).on( "change", function() {
 		if( $( this ).val().length !=0 ){

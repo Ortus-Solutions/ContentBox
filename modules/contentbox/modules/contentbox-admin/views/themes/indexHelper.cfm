@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	$uploadForm = $( "##themeUploadForm" );
 	$themeForm = $( "##themeForm" );
 	// table sorting + filtering

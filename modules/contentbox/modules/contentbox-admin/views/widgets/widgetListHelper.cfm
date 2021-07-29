@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
     // Widget Filter by text input
     $( '##widgetFilter' ).keyup(
         _.debounce(

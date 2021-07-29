@@ -232,14 +232,14 @@
             } );
         }
 
-        $( document ).ready(function() {
+        document.addEventListener( "DOMContentLoaded", () => {
             //****** setup listeners ********//
             var $contextMenu = $( '##context-menu' );
             var $title = $( '##menuForm' ).find( "##title" );
             var $slug = $( '##slug' );
             var $menuItemClicked;
             // hide context menu
-            $( document ).click( function() {
+			document.addEventListener( "click", () => {
                 $contextMenu.hide();
             } );
             // add contextmenu
