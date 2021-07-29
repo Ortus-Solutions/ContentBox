@@ -39,10 +39,6 @@ component extends="baseHandler" {
 	 * These properties must be set by the concrete content type handler
 	 */
 
-	// The name of the method to use for save persistence on the ORM service
-	variables.saveMethod      = "save";
-	// The name of the method to use for deleting entites on the ORM service
-	variables.deleteMethod    = "delete";
 	// The handler controlling the requests
 	variables.handler         = "";
 	// The name of the entity this resource handler controls. Singular name please.
