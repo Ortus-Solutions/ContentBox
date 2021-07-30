@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Custom Javascript --->
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
 	// keyup quick search
 	$( "##contentSearch" ).keyup(
 		_.debounce(
@@ -14,7 +14,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	<cfif len( rc.search )>
 		$( "##contentSearch" ).focus();
 	</cfif>
-} );
+} )();
 
 function clearSearch(){
 	$( '##contentSearch' ).val( '' );

@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
     <cfif prc.aTopContentTotalHits gt 0>
         Morris.Donut( {
             element     : 'top-visited-chart',
@@ -20,6 +20,6 @@ document.addEventListener( "DOMContentLoaded", () => {
             ]
         } );
     </cfif>
-} );
+} )();
 </script>
 </cfoutput>

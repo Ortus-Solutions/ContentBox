@@ -57,6 +57,5 @@ function emailTest(){
 function chooseAdapter( adapter ){
 	$( "##settingsForm" ).find( "##cb_search_adapter" ).val( adapter );
 }
-
 </script>
 </cfoutput>

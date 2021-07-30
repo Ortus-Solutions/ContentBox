@@ -1,10 +1,10 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
 	$permissionForm = $( "##permissionForm" );
 	$groupsForm 	= $( "##groupsForm" );
-} );
+} )();
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 function addPermission(){
 	// loader

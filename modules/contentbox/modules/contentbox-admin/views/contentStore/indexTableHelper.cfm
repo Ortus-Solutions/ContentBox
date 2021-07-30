@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+( () => {
 	// tables references
 	$content = $( "##content" );
 	// sorting
@@ -73,6 +73,6 @@ document.addEventListener( "DOMContentLoaded", () => {
 	} );
 	</cfif>
 
-} );
+} )();
 </script>
 </cfoutput>
