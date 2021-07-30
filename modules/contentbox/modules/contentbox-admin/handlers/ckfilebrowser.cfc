@@ -57,14 +57,8 @@ component extends="baseHandler" {
 		// prepare filebrowser settings
 		prc.cbCKSetting.loadJQuery = false;
 		var args                   = { widget : true, settings : prc.cbCKSetting };
-		// load filebrowser assets
-		runEvent(
-			event          = "contentbox-filebrowser:home.loadAssets",
-			private        = true,
-			eventArguments = { force : true, settings : prc.cbCKSetting }
-		);
 		// load filebrowser inline
-		prc.fileBrowser = runEvent( event = prc.cbCKfileBrowserDefaultEvent, eventArguments = args );
+		prc.fileBrowser            = runEvent( event = prc.cbCKfileBrowserDefaultEvent, eventArguments = args );
 		// view
 		event.setView( view = "ckfilebrowser/assetChooser", layout = "ajax" );
 	}

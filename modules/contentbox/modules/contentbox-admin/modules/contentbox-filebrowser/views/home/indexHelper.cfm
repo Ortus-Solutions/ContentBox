@@ -403,6 +403,11 @@ fbInit = () => {
 
 	fbInited = true;
 }
-document.addEventListener( 'DOMContentLoaded', fbInit );
+
+<cfif event.isAjax()>
+( ()=> fbInit() )();
+<cfelse>
+	document.addEventListener( 'DOMContentLoaded', fbInit );
+</cfif>
 </script>
 </cfoutput>
