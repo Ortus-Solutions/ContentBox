@@ -8,6 +8,7 @@
 component {
 
 	function configure(){
+		route( "/filelisting" ).to( "home.filelisting" );
 		route( "/createFolder" ).to( "home.createFolder" );
 		route( "/remove" ).to( "home.remove" );
 		route( "/download" ).to( "home.download" );

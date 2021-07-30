@@ -5,7 +5,7 @@
  * ---
  * This is the main controller of events for the filebrowser
  */
-component {
+component extends="cbadmin.handlers.baseHandler" {
 
 	// DI
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
@@ -44,16 +44,15 @@ component {
 		struct settings = {}
 	){
 		// params
-		event.paramValue( "path", "" );
 		event.paramValue( "callback", "" );
 		event.paramValue( "cancelCallback", "" );
 		event.paramValue( "filterType", "" );
 
 		// exit handlers
-		prc.xehFBBrowser   = "#prc.fbModEntryPoint#/";
+		prc.xehFBBrowser   = "#prc.fbModEntryPoint#/filelisting";
+		prc.xehFBDownload  = "#prc.fbModEntryPoint#/download";
 		prc.xehFBNewFolder = "#prc.fbModEntryPoint#/createfolder";
 		prc.xehFBRemove    = "#prc.fbModEntryPoint#/remove";
-		prc.xehFBDownload  = "#prc.fbModEntryPoint#/download";
 		prc.xehFBUpload    = "#prc.fbModEntryPoint#/upload";
 		prc.xehFBRename    = "#prc.fbModEntryPoint#/rename";
 
@@ -80,6 +79,38 @@ component {
 		prc.fbDirRoot     = prc.fbSettings.directoryRoot;
 		prc.fbWebRootPath = expandPath( "./" );
 
+		// Check if the incoming path does not exist so we default to the configuration directory root.
+		prc.fbCurrentRoot     = cleanIncomingPath( prc.fbSettings.directoryRoot );
+		// Web root cleanups
+		prc.fbwebRootPath     = cleanIncomingPath( prc.fbwebRootPath );
+		// Do a safe current root for JS
+		prc.fbSafeCurrentRoot = urlEncodedFormat( prc.fbCurrentRoot );
+		// Get storage preferences
+		prc.fbPreferences     = getPreferences();
+		// set view or render widget?
+		prc.widget            = arguments.widget;
+		if ( arguments.widget ) {
+			return renderView( view = "home/index", module = prc.fbModuleName );
+		} else {
+			event.setView( view = "home/index", noLayout = event.isAjax() );
+		}
+	}
+
+	/**
+	 * Ajax driven file listings
+	 */
+	function filelisting( event, rc, prc ){
+		// params
+		event.paramValue( "path", "" );
+		event.paramValue( "filterType", "" );
+
+		// Exit handlers
+		prc.xehFBDownload = "#prc.fbModEntryPoint#/download";
+
+		// Store directory roots and web root
+		prc.fbDirRoot     = prc.fbSettings.directoryRoot;
+		prc.fbWebRootPath = expandPath( "./" );
+
 		// clean incoming path and decode it.
 		rc.path = cleanIncomingPath( urlDecode( trim( rc.path ) ) );
 		// Check if the incoming path does not exist so we default to the configuration directory root.
@@ -96,7 +127,7 @@ component {
 		// traversal testing
 		if ( NOT isTraversalSecure( prc, prc.fbCurrentRoot ) ) {
 			getInstance( "messagebox@cbMessagebox" ).warn( $r( "messages.traversal@fb" ) );
-			relocate( prc.xehFBBrowser );
+			return "Invalid Path";
 		}
 
 		// Get storage preferences
@@ -148,13 +179,7 @@ component {
 		var iData = { directory : prc.fbCurrentRoot, listing : prc.fbqListing };
 		announce( "fb_postDirectoryRead", iData );
 
-		// set view or render widget?
-		prc.widget = arguments.widget;
-		if ( arguments.widget ) {
-			return renderView( view = "home/index", module = prc.fbModuleName );
-		} else {
-			event.setView( view = "home/index", noLayout = event.isAjax() );
-		}
+		return renderView( view = "home/filelisting" );
 	}
 
 	/**
@@ -538,17 +563,16 @@ component {
 				// Add Main Styles
 				var adminRoot = event.getModuleRoot( "contentbox-admin" );
 				addAsset( "#adminRoot#/includes/css/contentbox.min.css" );
-				addAsset( "#adminRoot#/includes/js/contentbox-pre.min.js" );
-				addAsset( "#adminRoot#/includes/js/contentbox-app.min.js" );
+				addAsset( asset: "#adminRoot#/includes/js/contentbox-pre.min.js", defer: true );
+				addAsset( asset: "#adminRoot#/includes/js/contentbox-app.min.js", defer: true );
 			}
 
 			// LOAD Assets
-
 			// injector:css//
-			addAsset( "#prc.fbModRoot#/includes/css/f00ee02d.fb.min.css" );
+			// addAsset( "#prc.fbModRoot#/includes/css/f00ee02d.fb.min.css" );
 			// endinjector//
 			// injector:js//
-			addAsset( "#prc.fbModRoot#/includes/js/92610417.fb.min.js" );
+			// addAsset( asset: "#prc.fbModRoot#/includes/js/92610417.fb.min.js", defer: true );
 			// endinjector//
 		}
 	}

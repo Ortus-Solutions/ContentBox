@@ -103,6 +103,9 @@ module.exports = function( grunt ) {
 						"app_modules/clockpicker/dist/bootstrap-clockpicker.css",
 						"app_modules/bootstrap-toggle/css/bootstrap-toggle.min.css",
 						"app_modules/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css",
+						// Media Manager Components
+						"node_modules/jquery-contextmenu/dist/jquery.contextMenu.min.css",
+						"node_modules/Jcrop/css/Jcrop.min.css",
 						// VENDOR CSS
 						"resources/vendor/css/*.css"
 					]
@@ -179,9 +182,17 @@ module.exports = function( grunt ) {
 					"app_modules/bootstrap-toggle/js/bootstrap-toggle.min.js",
 					// setting sliders
 					"app_modules/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js",
+					// MEDIAMANAGER: BootBox used by media manager
+					"node_modules/bootbox/dist/bootbox.min.js",
+					// MEDIAMANAGER:  FileDrop used by media manager
+					"resources/vendor/js/jquery.filedrop.js",
+					// MEDIAMANAGER: Context Menu used by media manager
+					"node_modules/jquery-contextmenu/dist/jquery.contextMenu.min.js",
+					// MEDIAMANAGER: Jcropping editor
+					"node_modules/Jcrop/js/Jcrop.min.js",
 					// Static Libraries
 					"resources/vendor/js/jquery.validate.bootstrap.js",
-					// File Uploads
+					// File Uploads components
 					"resources/vendor/js/bootstrap-fileupload.js",
 					// Luis Majano's div and table filters
 					"resources/vendor/js/jquery.uidivfilter.js",
