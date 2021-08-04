@@ -110,7 +110,7 @@ component extends="baseContentHandler" {
 	 */
 	function editorSelector( event, rc, prc ){
 		// Sorting
-		arguments.sortOrder   = "slug asc";
+		arguments.sortOrder = "slug asc";
 		// Supersize me
 		super.editorSelector( argumentCollection = arguments );
 	}

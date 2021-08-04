@@ -1588,7 +1588,10 @@ component
 		// render content out, prepare builder
 		var builder = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
 		// announce renderings with data, so content renderers can process them
-		interceptorService.announce( "cb_onContentRendering", { builder : builder, content : this } );
+		interceptorService.announce(
+			"cb_onContentRendering",
+			{ builder : builder, content : this }
+		);
 		// return processed content
 		return builder.toString();
 	}
