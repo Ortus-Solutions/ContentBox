@@ -2162,7 +2162,8 @@ component accessors="true" singleton threadSafe {
 			parent    : "",
 			showInMenu: true,
 			siteID    : site().getsiteID(),
-			properties: "contentID,slug,title,numberOfChildren"
+			properties: "contentID,slug,title,numberOfChildren",
+			sortOrder : "order ASC, publishedDate ASC"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2211,7 +2212,8 @@ component accessors="true" singleton threadSafe {
 			parent    : page.getContentID(),
 			showInMenu: true,
 			siteID    : site().getsiteID(),
-			properties: "contentID,slug,title,numberOfChildren"
+			properties: "contentID,slug,title,numberOfChildren",
+			sortOrder : "order ASC, publishedDate ASC"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2423,7 +2425,8 @@ component accessors="true" singleton threadSafe {
 									parent    : pageResults.content[ x ][ "contentID" ],
 									showInMenu: true,
 									siteID    : site().getsiteID(),
-									properties: "contentID,slug,title,numberOfChildren"
+									properties: "contentID,slug,title,numberOfChildren",
+									sortOrder : "order ASC, publishedDate ASC"
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2455,7 +2458,8 @@ component accessors="true" singleton threadSafe {
 									parent    : pageResults.content[ x ][ "contentID" ],
 									showInMenu: true,
 									siteID    : site().getsiteID(),
-									properties: "contentID,slug,title,numberOfChildren"
+									properties: "contentID,slug,title,numberOfChildren",
+									sortOrder : "order ASC, publishedDate ASC"
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2487,7 +2491,8 @@ component accessors="true" singleton threadSafe {
 								parent    : pageResults.content[ x ][ "contentID" ],
 								showInMenu: true,
 								siteID    : site().getsiteID(),
-								properties: "contentID,slug,title,numberOfChildren"
+								properties: "contentID,slug,title,numberOfChildren",
+								sortOrder : "order ASC, publishedDate ASC"
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
@@ -2510,7 +2515,8 @@ component accessors="true" singleton threadSafe {
 								parent    : pageResults.content[ x ][ "contentID" ],
 								showInMenu: true,
 								siteID    : site().getsiteID(),
-								properties: "contentID,slug,title,numberOfChildren"
+								properties: "contentID,slug,title,numberOfChildren",
+								sortOrder : "order ASC, publishedDate ASC"
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
