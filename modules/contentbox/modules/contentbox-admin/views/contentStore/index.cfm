@@ -105,12 +105,12 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<button
-									class="btn btn-primary"
-									onclick="return to( '#event.buildLink( to=prc.xehContentEditor, queryString="parentID=#rc.parent#")#' );"
+								<a
+									class="btn btn-primary text-white"
+									href="#event.buildLink( prc.xehContentEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
 								>
 									Create Content
-								</button>
+								</a>
 							</div>
 						</div>
 					</div>

@@ -107,12 +107,12 @@
 											</li>
 								    	</ul>
 								    </div>
-									<button
-										class="btn btn-primary"
-										onclick="return to( '#event.buildLink( prc.xehPageEditor )#/parentID/' + getParentContentID() )"
-										>
+									<a
+										class="btn btn-primary text-white"
+										href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
+									>
 										Create Page
-									</button>
+									</a>
 								</cfif>
 							</div>
 						</div>

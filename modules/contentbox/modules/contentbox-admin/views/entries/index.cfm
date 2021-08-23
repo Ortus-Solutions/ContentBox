@@ -110,12 +110,11 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<button
-									class="btn btn-primary"
-									onclick="return to( '#event.buildLink( prc.xehEntryEditor )#' );"
-								>
+								<a
+									class="btn btn-primary text-white"
+									href="#event.buildLink( prc.xehEntryEditor )#">
 									Create Entry
-								</button>
+								</a>
 							</div>
 						</div>
 					</div>

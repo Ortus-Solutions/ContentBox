@@ -28,7 +28,7 @@ component singleton {
 		// cfformat-ignore-start
 		if ( len( arguments.page.getTitle() ) ) {
 			bc &= "<span class=""fas fa-chevron-right mr5 ml5""></span>
-				<a href=""javascript:contentDrilldown( '#arguments.page.getContentID()#' )"">
+				<a href=""javascript:contentListHelper.contentDrilldown( '#arguments.page.getContentID()#' )"">
 					#arguments.page.getTitle()#
 				</a>";
 		}

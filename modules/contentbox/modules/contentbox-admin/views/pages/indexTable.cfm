@@ -66,7 +66,7 @@
 
 				<!--- double click drill down --->
 				<cfif page.getNumberOfChildren()>
-					ondblclick="contentDrilldown( '#page.getContentID()#' )"
+					ondblclick="contentListHelper.contentDrilldown( '#page.getContentID()#' )"
 				</cfif>
 			>
 				<!--- check box --->

@@ -46,7 +46,7 @@
 
 			<!--- double click drill down --->
 			<cfif content.getNumberOfChildren()>
-				ondblclick="contentDrilldown( '#content.getContentID()#' )"
+				ondblclick="contentListHelper.contentDrilldown( '#content.getContentID()#' )"
 			</cfif>
 
 			<!---Status bits --->
