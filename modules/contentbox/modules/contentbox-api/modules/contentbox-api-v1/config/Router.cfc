@@ -7,6 +7,7 @@ component {
 		// Security endpoints
 		post( "/login", "auth.login" );
 		post( "/logout", "auth.logout" );
+		post( "/refreshToken", "auth.refreshToken" );
 		get( "/whoami", "auth.whoami" );
 
 		// Global Settings

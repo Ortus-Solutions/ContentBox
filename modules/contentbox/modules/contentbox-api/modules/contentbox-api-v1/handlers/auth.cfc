@@ -62,6 +62,37 @@ component extends="baseHandler" {
 		prc.response.addMessage( "Bye bye!" );
 	}
 
+
+	/**
+	 * Refresh your access token, you must pass in your JWT Refresh token
+	 *
+	 * @tags Authentication
+	 */
+	function refreshToken( event, rc, prc ){
+		try {
+			// Do cool refreshments via header/rc discovery
+			prc.newTokens = jwtAuth().refreshToken();
+			// Send valid response
+			event
+				.getResponse()
+				.setData( prc.newTokens )
+				.addMessage( "Tokens refreshed! The passed in refresh token has been invalidated" );
+		} catch ( RefreshTokensNotActive e ) {
+			return event
+				.getResponse()
+				.setErrorMessage( "Refresh Tokens Not Active", 404, "Disabled" );
+		} catch ( TokenNotFoundException e ) {
+			return event
+				.getResponse()
+				.setErrorMessage(
+					"The refresh token was not passed via the header or the rc. Cannot refresh the unrefreshable!",
+					400,
+					"Missing refresh token"
+				);
+		}
+	}
+
+
 	/**
 	 * If logged in, you will be able to see your user information.
 	 *
