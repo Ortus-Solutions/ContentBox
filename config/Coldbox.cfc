@@ -220,6 +220,8 @@ component {
 				resources : {
 					// Enable the ORM Resource Event Loader
 					eventLoader     : true,
+					// Prefix to use on all the registered pre/post{Entity}{Action} events
+					eventPrefix 	: "cb_",
 					// Pagination max rows
 					maxRows         : 25,
 					// Pagination max row limit: 0 = no limit
