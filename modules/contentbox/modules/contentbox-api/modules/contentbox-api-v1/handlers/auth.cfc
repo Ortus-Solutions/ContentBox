@@ -19,7 +19,7 @@ component extends="baseHandler" {
 		param rc.ignoreDefaults = false;
 
 		// Let's try to get log them in
-		prc.token = jwtAuth().attempt( rc.username, rc.password );
+		prc.tokens = jwtAuth().attempt( rc.username, rc.password );
 
 		// If we get here, credentials are good to go!
 
@@ -40,7 +40,7 @@ component extends="baseHandler" {
 		// Build out the response
 		prc.response
 			.setData( {
-				"token"  : prc.token,
+				"tokens" : prc.tokens,
 				"author" : prc.oCurrentAuthor.getMemento(
 					includes       = rc.includes,
 					excludes       = rc.excludes,
@@ -49,6 +49,9 @@ component extends="baseHandler" {
 			} )
 			.addMessage(
 				"Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes"
+			)
+			.addMessage(
+				"Refresh token created and it expires in #jwtAuth().getSettings().jwt.refreshExpiration# minutes"
 			);
 	}
 
