@@ -301,7 +301,7 @@ component {
 					// response headers in the same request according to the `customRefreshHeader` and `customAuthHeader`
 					"enableAutoRefreshValidator" : true,
 					// Enable the POST > /cbsecurity/refreshtoken API endpoint
-					"enableRefreshEndpoint" : false
+					"enableRefreshEndpoint" : false,
 					// encryption algorithm to use, valid algorithms are: HS256, HS384, and HS512
 					"algorithm"           : "HS512",
 					// Which claims neds to be present on the jwt token or `TokenInvalidException` upon verification and decoding
