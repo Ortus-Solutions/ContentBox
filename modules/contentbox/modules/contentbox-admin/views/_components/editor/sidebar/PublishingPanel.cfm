@@ -173,7 +173,7 @@
 			<button
 				type="button"
 				class="btn btn-info"
-				onclick="a()"
+				onclick="quickSave()"
 				title="Save and continue editing"
 			>
 				Save

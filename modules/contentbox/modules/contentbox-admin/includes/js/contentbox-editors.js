@@ -432,6 +432,7 @@ function toggleDraft(){
 
 /**
  * Quick publish
+ *
  * @param  {Boolean} isDraft draft mode or publish
  */
 function quickPublish( isDraft ){
