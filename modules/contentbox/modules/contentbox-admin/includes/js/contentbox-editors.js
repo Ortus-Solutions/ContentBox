@@ -226,7 +226,11 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 function shouldPublish(){
 	// Confirm if you really want to quick save if content is published already
 	if ( $contentID.val().length && $isPublished.val() == "true" ){
-		return confirm( "Your content is published already, quick saving it will draft it and unpublish it" );
+		return confirm(
+			"Your content is published already, quick saving it will draft it and unpublish it." +
+			"If you want to re-publish, just hit Publish again." +
+			"Are you sure you want to draft the content?"
+		);
 	}
 	return true;
 }
@@ -235,13 +239,13 @@ function shouldPublish(){
  * Quick save content
  */
 function quickSave(){
-	// Draft it
-	$isPublished.val( "false" );
-
 	// Confirm if you really want to quick save if content is published already
 	if ( !shouldPublish() ){
 		return;
 	}
+
+	// Draft it
+	$isPublished.val( "false" );
 
 	// Commit Changelog default it to quick save if not set
 	if ( !$changelog.val().length ){
@@ -439,7 +443,7 @@ function quickPublish( isDraft ){
 	if ( isDraft ){
 		// verify we can draft this content
 		if ( !toggleDraft() ){
-			return false;
+			return;
 		}
 	} else {
 		// set published bit
