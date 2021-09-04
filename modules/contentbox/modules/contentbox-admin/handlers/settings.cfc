@@ -132,8 +132,10 @@ component extends="baseHandler" {
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
 		arraySort( prc.interceptionPoints, "textnocase" );
+
 		// Raw tab
 		prc.tabSystem_geekSettings = true;
+
 		// view
 		event.setView( "settings/raw" );
 	}
@@ -144,9 +146,11 @@ component extends="baseHandler" {
 	 */
 	function rawtable( event, rc, prc ){
 		// params
-		event.paramValue( "page", 1 );
-		event.paramValue( "search", "" );
-		event.paramValue( "viewAll", false );
+		event
+			.paramValue( "page", 1 )
+			.paramValue( "search", "" )
+			.paramValue( "viewAll", false )
+			.paramValue( "siteId", "" );
 
 		// prepare paging object
 		prc.oPaging    = getInstance( "Paging@contentbox" );
@@ -165,6 +169,7 @@ component extends="baseHandler" {
 		// Get settings
 		var results = variables.settingsService.search(
 			search   : rc.search,
+			siteId   : rc.siteId,
 			offset   : offset,
 			max      : max,
 			sortOrder: "name asc, site asc"
