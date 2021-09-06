@@ -989,19 +989,6 @@ const contentListHelper = ( () => {
 		} );
 	};
 
-	var resetFilter = ( reload ) => {
-		// reload check
-		if ( reload ){
-			contentLoad();
-		}
-		// reload filters
-		$( "#filterBox" ).removeClass( "selected" );
-		$( "#fAuthors" ).val( "all" );
-		$( "#fCategories" ).val( "all" );
-		$( "#fStatus" ).val( "any" );
-		$( "#fCreators" ).val( "all" );
-	};
-
 	// Return our encapsulated module
 	return {
 
@@ -1047,6 +1034,20 @@ const contentListHelper = ( () => {
 
 		contentLoad   : contentLoad,
 		contentFilter : contentFilter,
+
+		// reset filters
+		resetFilter : ( reload ) => {
+			// reload check
+			if ( reload ){
+				contentLoad();
+			}
+			// reload filters
+			$( "#filterBox" ).removeClass( "selected" );
+			$( "#fAuthors" ).val( "all" );
+			$( "#fCategories" ).val( "all" );
+			$( "#fStatus" ).val( "any" );
+			$( "#fCreators" ).val( "all" );
+		},
 
 		// Content drill down
 		contentDrilldown : ( parent ) => {

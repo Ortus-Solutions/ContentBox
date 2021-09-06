@@ -110,6 +110,7 @@ component
 
 	/**
 	 * Save operation called by the transactional `save()` method
+	 * Due to transactional issues on Lucee
 	 */
 	private function _save( required site ){
 		// Create all site settings if this is a new site

@@ -1,17 +1,15 @@
 <cfoutput>
+<!--- Publishing Panel Component --->
 <div
 	id="publishingPanel"
-	class="mb10 #prc.oContent.getIsPublished() ? '' : 'selected'#"
 	x-data="{
+		isPublished : #prc.oContent.getIsPublished() ? true : false#,
 		publishingPanelOpen : false,
 		togglePublishingPanel(){
 			this.publishingPanelOpen = !this.publishingPanelOpen
 		}
 	}"
 >
-	<!--- is Published --->
-	#html.hiddenField( name="isPublished", bind=prc.oContent )#
-
 	<!--- Publishing Bar --->
 	<div
 		id="publishingBar"
@@ -172,16 +170,18 @@
 			<!--- QUICK SAVE --->
 			<button
 				type="button"
-				class="btn btn-info"
-				onclick="a()"
-				title="Save and continue editing"
+				class="btn"
+				:class="isPublished ? 'btn-default' : 'btn-info'"
+				onclick="quickSave()"
+				title="Save as draft and continue editing"
 			>
-				Save
+				Save As Draft
 			</button>
 			<!--- QUICK SAVE OPTIONS --->
 			<button
 				type="button"
-				class="btn btn-info dropdown-toggle"
+				class="btn dropdown-toggle"
+				:class="isPublished ? 'btn-default' : 'btn-info'"
 				data-toggle="dropdown"
 				aria-haspopup="true"
 				aria-expanded="false"

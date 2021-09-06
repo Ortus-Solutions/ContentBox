@@ -2171,6 +2171,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Create a sub page menu for a given page or current page
+	 *
 	 * @page Optional page to create menu for, else look for current page, this can be a page object or a page slug
 	 * @excludes The list of pages to exclude from the menu
 	 * @type The type of menu, valid choices are: ul,ol,li,none
@@ -2196,12 +2197,12 @@ component accessors="true" singleton threadSafe {
 		activeClass        = "active",
 		activeShowChildren = false
 	){
-		// If page not passed,then use current
-		if ( isNull( arguments.page ) ) {
+		// If page not passed, or empty, then use the current page
+		if ( isNull( arguments.page ) || ( isSimpleValue( arguments.page ) && !len( arguments.page ) ) ) {
 			arguments.page = getCurrentPage();
 		}
 
-		// Is page passed as slug or object
+		// Is page passed as slug string or object
 		if ( isSimpleValue( arguments.page ) ) {
 			// retrieve page by slug
 			arguments.page = pageService.findBySlug( arguments.page );
@@ -2215,6 +2216,7 @@ component accessors="true" singleton threadSafe {
 			properties: "contentID,slug,title,numberOfChildren",
 			sortOrder : "order ASC, publishedDate ASC"
 		);
+
 		// build it out
 		return buildMenu( argumentCollection = arguments );
 	}

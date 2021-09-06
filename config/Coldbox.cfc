@@ -220,6 +220,8 @@ component {
 				resources : {
 					// Enable the ORM Resource Event Loader
 					eventLoader     : true,
+					// Prefix to use on all the registered pre/post{Entity}{Action} events
+					eventPrefix 	: "cb_",
 					// Pagination max rows
 					maxRows         : 25,
 					// Pagination max row limit: 0 = no limit
@@ -290,8 +292,16 @@ component {
 					"expiration"          : 60,
 					// If true, enables refresh tokens, longer lived tokens (not implemented yet)
 					"enableRefreshTokens" : true,
-					// The default expiration for refresh tokens, defaults to 30 days
-					"refreshExpiration"   : 43200,
+					// The default expiration for refresh tokens, defaults to 7 days
+					"refreshExpiration"   : 10080,
+					// The custom header to inspect for refresh tokens
+   	 				"customRefreshHeader"    : "x-refresh-token",
+					// If enabled, the JWT validator will inspect the request for refresh tokens and expired access tokens
+					// It will then automatically refresh them for you and return them back as
+					// response headers in the same request according to the `customRefreshHeader` and `customAuthHeader`
+					"enableAutoRefreshValidator" : true,
+					// Enable the POST > /cbsecurity/refreshtoken API endpoint
+					"enableRefreshEndpoint" : false,
 					// encryption algorithm to use, valid algorithms are: HS256, HS384, and HS512
 					"algorithm"           : "HS512",
 					// Which claims neds to be present on the jwt token or `TokenInvalidException` upon verification and decoding

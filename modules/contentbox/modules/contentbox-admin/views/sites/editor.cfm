@@ -215,10 +215,10 @@
 											<cfloop array="#prc.pages#" index="thisPage" >
 												<option
 													value="#thispage[ "slug" ]#"
-													<cfif
-													prc.site.getHomePage()
-													eq
-													thisPage[ "slug" ]>selected="selected"</cfif>
+
+													<cfif prc.site.getHomePage() eq thisPage[ "slug" ]>
+														selected="selected"
+													</cfif>
 												>
 													#thisPage[ "title" ]#
 												</option>
@@ -245,7 +245,13 @@
 										class="form-control"
 									>
 									<cfloop collection="#prc.themes#" item="themeKey">
-										<option value="#themeKey#">
+										<option
+											value="#themeKey#"
+
+											<cfif prc.site.getActiveTheme() eq themeKey>
+												selected="selected"
+											</cfif>
+										>
 											#prc.themes[ themeKey ].themeName#
 										</option>
 									</cfloop>

@@ -34,11 +34,13 @@ component extends="tests.resources.BaseApiTest" {
 						);
 						var response = event.getPrivateValue( "Response" );
 						expect( response.getError() ).toBeFalse( response.getMessagesString() );
-						expect( response.getData() ).toHaveKey( "token,author" );
+						expect( response.getData() ).toHaveKey( "tokens,author" );
 						// debug( response.getData() );
-						var decoded = jwt.decode( response.getData().token );
+						var decoded = jwt.decode( response.getData().tokens.access_token );
 						expect( decoded.sub ).toBe( response.getData().author.authorID );
 						expect( decoded.exp ).toBeGTE( dateAdd( "h", 1, decoded.iat ) );
+						var decoded = jwt.decode( response.getData().tokens.refresh_token );
+						expect( decoded.sub ).toBe( response.getData().author.authorID );
 						expect( response.getData().author.email ).toBe( variables.testAdminEmail );
 					} );
 				} );
@@ -63,10 +65,13 @@ component extends="tests.resources.BaseApiTest" {
 							variables.testAdminUsername,
 							variables.testAdminPassword
 						);
-						var payload = jwt.decode( token );
+						var payload = jwt.decode( token.access_token );
 
 						// Now Logout
-						var event    = post( "/cbapi/v1/logout", { "x-auth-token" : token } );
+						var event = post(
+							"/cbapi/v1/logout",
+							{ "x-auth-token" : token.access_token }
+						);
 						var response = event.getPrivateValue( "Response" );
 						expect( response.getError() ).toBeFalse( response.getMessagesString() );
 						expect( response.getStatusCode() ).toBe( 200 );
@@ -88,13 +93,16 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an valid token", function(){
 					then( "I should get my information", function(){
 						// Log in
-						var token = jwt.attempt(
+						var tokens = jwt.attempt(
 							variables.testAdminUsername,
 							variables.testAdminPassword
 						);
-						var payload = jwt.decode( token );
+						var payload = jwt.decode( tokens.access_token );
 						// Now Logout
-						var event   = GET( "/cbapi/v1/whoami", { "x-auth-token" : token } );
+						var event   = GET(
+							"/cbapi/v1/whoami",
+							{ "x-auth-token" : tokens.access_token }
+						);
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getData().authorID ).toBe( payload.sub );
 					} );
