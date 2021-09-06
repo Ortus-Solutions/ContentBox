@@ -1,0 +1,14 @@
+{
+	"data": {},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": [
+		"Author deleted!"
+	]
+}

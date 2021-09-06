@@ -1,0 +1,65 @@
+{
+	"data": {
+		"lastName": [
+			{
+				"message": "The 'lastName' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "lastName"
+			}
+		],
+		"role": [
+			{
+				"message": "The 'role' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "role"
+			}
+		],
+		"firstName": [
+			{
+				"message": "The 'firstName' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "firstName"
+			}
+		],
+		"username": [
+			{
+				"message": "The 'username' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "username"
+			}
+		],
+		"email": [
+			{
+				"message": "The 'email' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "email"
+			}
+		]
+	},
+	"error": true,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": [
+		"Validation exceptions occurred, please see the data"
+	]
+}
