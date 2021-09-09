@@ -17,7 +17,7 @@
   		"order": []
 	} );
 	// Setup Count Container
-	$( "##entriesCountContainer" ).html( "(" + $( "##entriesCount" ).val() + ")" );
+	$( "##entriesCountContainer" ).html( "(" + $( "##contentCount" ).val() + ")" );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
