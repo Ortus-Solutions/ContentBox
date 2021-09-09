@@ -25,25 +25,63 @@ component extends="baseHandler" {
 		// exit Handlers
 		prc.xehCategoryRemove = "#prc.cbAdminEntryPoint#.categories.remove";
 		prc.xehCategoriesSave = "#prc.cbAdminEntryPoint#.Categories.save";
+		prc.xehCategories     = "#prc.cbAdminEntryPoint#.Categories";
 		prc.xehExport         = "#prc.cbAdminEntryPoint#.Categories.export";
 		prc.xehExportAll      = "#prc.cbAdminEntryPoint#.Categories.exportAll";
 		prc.xehImportAll      = "#prc.cbAdminEntryPoint#.Categories.importAll";
-		// Get all categories
-		prc.categories        = variables.categoryService.list(
-			criteria : { "site" : prc.oCurrentSite },
-			sortOrder: "category",
-			asQuery  : false
-		);
+
 		// Tab
 		prc.tabContent_categories = true;
+
 		// view
 		event.setView( "categories/index" );
 	}
 
 	/**
+	 * Search categories
+	 *
+	 * @return json
+	 */
+	function search( event, rc, prc ){
+		// Params
+		event
+			.paramValue( "search", "" )
+			.paramValue( "isPublic", "" )
+			.paramValue( "page", 1 );
+
+		// Get all categories by search
+		var results = variables.categoryService.search(
+			search  : rc.search,
+			isPublic: len( rc.isPublic ) ? rc.isPublic : javacast( "null", "" ),
+			siteId  : prc.oCurrentSite.getSiteId()
+		);
+
+		event
+			.getResponse()
+			.setData(
+				results.categories.map( function( thisCategory ){
+					return thisCategory.getMemento( excludes = "siteSnapshot:site" );
+				} )
+			)
+			.setPagination(
+				getPageOffset( rc.page ),
+				getMaxRows(),
+				rc.page,
+				results.count
+			);
+	}
+
+
+	/**
 	 * Save categories
 	 */
 	function save( event, rc, prc ){
+		// Params
+		param rc.categoryID = "";
+		param rc.slug       = "";
+		param rc.category   = "";
+		param rc.isPublic   = false;
+
 		// slugify if not passed, and allow passed slugs to be saved as-is
 		if ( NOT len( rc.slug ) ) {
 			rc.slug = variables.HTMLHelper.slugify( rc.category );
@@ -67,31 +105,36 @@ component extends="baseHandler" {
 			variables.categoryService.save( oCategory );
 			// announce event
 			announce( "cbadmin_postCategorySave", { category : oCategory } );
-			// messagebox
-			cbMessagebox.setMessage( "info", "Category saved!" );
+			// response
+			event
+				.getResponse()
+				.setData( oCategory.getMemento() )
+				.addMessage( "Category saved!" );
 		} else {
-			// messagebox
-			cbMessagebox.warning( vResults.getAllErrors() );
+			event.getResponse().setErrorMessage( vResults.getAllErrors(), 400, "Invalid data" );
 		}
-		// relocate
-		relocate( prc.xehCategories );
 	}
 
 	/**
 	 * Remove categories
 	 */
 	function remove( event, rc, prc ){
-		// params
-		event.paramValue( "categoryID", "" );
+		// Params
+		param rc.categoryID = "";
 
 		// verify if contentID sent
 		if ( !len( rc.categoryID ) ) {
-			cbMessagebox.warn( "No categories sent to delete!" );
-			relocate( event = prc.xehCategories );
+			return event
+				.getResponse()
+				.setErrorMessage(
+					"No categories sent to delete",
+					400,
+					"Invalid Data"
+				);
 		}
 
 		// Inflate to array
-		rc.categoryID = listToArray( rc.categoryID );
+		rc.categoryID = isSimpleValue( rc.categoryID ) ? listToArray( rc.categoryID ) : rc.categoryID;
 		var messages  = [];
 
 		// Iterate and remove
@@ -116,9 +159,8 @@ component extends="baseHandler" {
 			}
 		}
 
-		// messagebox
-		cbMessagebox.info( messages );
-		relocate( prc.xehCategories );
+		// response
+		event.getResponse().addMessage( messages );
 	}
 
 	/**

@@ -691,28 +691,23 @@ component
 		siteID    = ""
 	){
 		var results = { "count" : 0, "settings" : [] };
-		var c       = newCriteria();
-
-		// Search Criteria
-		if ( len( arguments.search ) ) {
-			c.like( "name", "%#arguments.search#%" );
-		}
-
-		// Site
-		if ( len( arguments.siteID ) ) {
-			c.isEq( "site.siteID", arguments.siteID );
-		}
+		var c       = newCriteria()
+			// Search Criteria
+			.when( len( arguments.search ), function( c ){
+				c.like( "name", "%#search#%" );
+			} )
+			// Site Filter
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
+			} );
 
 		// run criteria query and projections count
 		results.count    = c.count( "settingID" );
-		results.settings = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset   : arguments.offset,
-				max      : arguments.max,
-				sortOrder: arguments.sortOrder,
-				asQuery  : false
-			);
+		results.settings = c.list(
+			offset   : arguments.offset,
+			max      : arguments.max,
+			sortOrder: arguments.sortOrder
+		);
 
 		return results;
 	}

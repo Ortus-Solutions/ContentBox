@@ -3,7 +3,7 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * I content category
+ * I am an awesome content category
  */
 component
 	persistent="true"
@@ -72,6 +72,14 @@ component
 		length ="200"
 		index  ="idx_categorySlug";
 
+	property
+		name   ="isPublic"
+		column ="isPublic"
+		ormtype="boolean"
+		notnull="true"
+		default="true"
+		index  ="idx_isPublic";
+
 	/* *********************************************************************
 	 **							RELATIONSHIPS
 	 ********************************************************************* */
@@ -123,6 +131,7 @@ component
 	this.memento = {
 		defaultIncludes : [
 			"category",
+			"isPublic",
 			"numberOfContentStore",
 			"numberOfEntries",
 			"numberOfPages",
@@ -134,6 +143,7 @@ component
 
 	this.constraints = {
 		"category" : { required : true, size : "1..200" },
+		"isPublic" : { required : true, type : "boolean" },
 		"slug"     : {
 			required   : true,
 			size       : "1..200",
@@ -163,6 +173,7 @@ component
 		variables.numberOfPublishedPages        = "";
 		variables.numberOfPublishedEntries      = "";
 		variables.numberOfPublishedContentStore = "";
+		variables.isPublic                      = true;
 
 		super.init();
 

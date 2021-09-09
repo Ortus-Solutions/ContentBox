@@ -28,15 +28,15 @@ component extends="baseHandler" {
 		prc.xehSaveSettings    = "#prc.cbAdminEntryPoint#.settings.save";
 		prc.xehEmailTest       = "#prc.cbAdminEntryPoint#.settings.emailTest";
 		// pages
-		prc.pages              = pageService.search( sortOrder = "slug asc", isPublished = true ).pages;
+		prc.pages              = variables.pageService.search( sortOrder = "slug asc", isPublished = true ).pages;
 		// Get All registered editors so we can display them
-		prc.editors            = editorService.getRegisteredEditorsMap();
+		prc.editors            = variables.editorService.getRegisteredEditorsMap();
 		// Get All registered markups so we can display them
-		prc.markups            = editorService.getRegisteredMarkups();
+		prc.markups            = variables.editorService.getRegisteredMarkups();
 		// Get all registered media providers so we can display them
-		prc.mediaProviders     = mediaService.getRegisteredProvidersMap();
+		prc.mediaProviders     = variables.mediaService.getRegisteredProvidersMap();
 		// Get All registered two factor providers so we can display them
-		prc.twoFactorProviders = twoFactorService.getRegisteredProvidersMap();
+		prc.twoFactorProviders = variables.twoFactorService.getRegisteredProvidersMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper

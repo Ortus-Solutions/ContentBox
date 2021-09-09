@@ -40,7 +40,7 @@ component extends="baseHandler" {
 		prc.xehImportAll        = "#prc.cbAdminEntryPoint#.permissions.importAll";
 
 		// Get all permissions
-		prc.permissions          = permissionService.list( sortOrder = "permission", asQuery = false );
+		prc.permissions          = permissionService.list( sortOrder = "permission" );
 		// Tab
 		prc.tabUsers_Permissions = true;
 		// view
