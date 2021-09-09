@@ -23,12 +23,10 @@ component extends="baseHandler" {
 	 */
 	function index( event, rc, prc ){
 		// exit Handlers
-		prc.xehCategoryRemove = "#prc.cbAdminEntryPoint#.categories.remove";
-		prc.xehCategoriesSave = "#prc.cbAdminEntryPoint#.Categories.save";
-		prc.xehCategories     = "#prc.cbAdminEntryPoint#.Categories";
-		prc.xehExport         = "#prc.cbAdminEntryPoint#.Categories.export";
-		prc.xehExportAll      = "#prc.cbAdminEntryPoint#.Categories.exportAll";
-		prc.xehImportAll      = "#prc.cbAdminEntryPoint#.Categories.importAll";
+		prc.xehCategories = "#prc.cbAdminEntryPoint#.Categories";
+		prc.xehExport     = "#prc.cbAdminEntryPoint#.Categories.export";
+		prc.xehExportAll  = "#prc.cbAdminEntryPoint#.Categories.exportAll";
+		prc.xehImportAll  = "#prc.cbAdminEntryPoint#.Categories.importAll";
 
 		// Tab
 		prc.tabContent_categories = true;

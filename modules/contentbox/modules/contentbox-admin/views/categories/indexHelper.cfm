@@ -1,5 +1,4 @@
 ﻿<cfoutput>
-<!--- Custom JS --->
 <script>
 "use strict";
 function categoriesCrud(){
@@ -134,11 +133,5 @@ function categoriesCrud(){
 
 	};
 }
-
-<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-function bulkRemove(){
-	$categoryForm.submit();
-}
-</cfif>
 </script>
 </cfoutput>
