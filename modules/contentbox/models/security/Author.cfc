@@ -268,7 +268,7 @@ component
 			validator : "UniqueValidator@cborm"
 		},
 		"password" : { required : true, size : "1..100" },
-		"role"     : { required : true, size : "1..100" }
+		"role"     : { required : true }
 	};
 
 	/* *********************************************************************
