@@ -377,7 +377,7 @@ component
 		"adminBar"         : { required : true, type : "boolean" },
 		"isSSL"            : { required : true, type : "boolean" },
 		"isActive"         : { required : true, type : "boolean" },
-		"activeTheme"      : { required : false, size : "0..255" }
+		"activeTheme"      : { required : true, size : "0..255" }
 	};
 
 	/* *********************************************************************
