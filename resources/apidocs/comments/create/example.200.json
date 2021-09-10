@@ -1,0 +1,23 @@
+{
+	"data": {
+		"content": "Content",
+		"commentID": "ff8081817bd16116017bd16b72b10004",
+		"renderedContent": "<p>Content</p>",
+		"createdDate": "2021-09-10T20:34:45+00:00",
+		"authorIP": "localhost",
+		"authorURL": "http://authorURL.com",
+		"authorEmail": "lmajano@ortussolutions.com",
+		"isApproved": false,
+		"modifiedDate": "2021-09-10T20:34:45+00:00",
+		"author": "Luis Majano"
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}

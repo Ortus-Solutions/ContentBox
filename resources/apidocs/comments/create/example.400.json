@@ -1,0 +1,75 @@
+{
+	"data": {
+		"content": [
+			{
+				"message": "The 'content' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "content"
+			}
+		],
+		"relatedContent": [
+			{
+				"message": "The 'relatedContent' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "relatedContent"
+			}
+		],
+		"authorIP": [
+			{
+				"message": "The 'authorIP' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "authorIP"
+			}
+		],
+		"authorURL": [
+			{
+				"message": "The 'authorURL' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "authorURL"
+			}
+		],
+		"authorEmail": [
+			{
+				"message": "The 'authorEmail' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "authorEmail"
+			}
+		],
+		"author": [
+			{
+				"message": "The 'author' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "NULL",
+				"validationType": "Required",
+				"field": "author"
+			}
+		]
+	},
+	"error": true,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": [
+		"Validation exceptions occurred, please see the data"
+	]
+}
