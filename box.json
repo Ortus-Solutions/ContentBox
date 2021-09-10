@@ -27,8 +27,7 @@
         "coldbox":"^6.0.0",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
-        "commandbox-migrations":"*",
-        "cbSwagger":"^2.6.0+147"
+        "commandbox-migrations":"*"
     },
     "devDependencies":{
         "testbox":"*",
@@ -41,8 +40,7 @@
         "testbox":"testbox/",
         "coldbox":"coldbox/",
         "cbdebugger":"modules/cbdebugger/",
-        "route-visualizer":"modules/route-visualizer/",
-        "cbSwagger":"modules/cbSwagger/"
+        "route-visualizer":"modules/route-visualizer/"
     },
     "ignores":[],
     "scripts":{
