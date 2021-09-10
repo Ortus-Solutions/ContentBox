@@ -135,8 +135,6 @@
 						<i class="fas fa-spinner fa-spin fa-lg"></i><br/>
 					</div>
 
-					<div x-text="selectedCategories"></div>
-
 					<!--- Table --->
 					<table id="categories" class="table table-striped-removed table-hover " cellspacing="0" width="100%" x-show="!isLoading">
 						<thead>
