@@ -1,0 +1,110 @@
+{
+	"STATUS_TEXTS": {
+		"300": "Multiple Choices",
+		"503": "Service Unavailable",
+		"101": "Switching Protocols",
+		"406": "Not Acceptable",
+		"207": "Multi-Status",
+		"424": "Failed Dependency",
+		"203": "Non-authoritative Information",
+		"410": "Gone",
+		"502": "Bad Gateway",
+		"508": "Loop Detected",
+		"308": "Permanent Redirect",
+		"403": "Forbidden",
+		"400": "Bad Request",
+		"444": "Connection Closed Without Response",
+		"599": "Network Connect Timeout Error",
+		"506": "Variant Also Negotiates",
+		"404": "Not Found",
+		"102": "Processing",
+		"202": "Accepted",
+		"431": "Request Header Fields Too Large",
+		"412": "Precondition Failed",
+		"510": "Not Extended",
+		"418": "I'm a teapot",
+		"411": "Length Required",
+		"421": "Misdirected Request",
+		"304": "Not Modified",
+		"208": "Already Reported",
+		"226": "IM Used",
+		"428": "Precondition Required",
+		"302": "Found",
+		"416": "Requested Range Not Satisfiable",
+		"204": "No Content",
+		"501": "Not Implemented",
+		"100": "Continue",
+		"429": "Too Many Requests",
+		"305": "Use Proxy",
+		"402": "Payment Required",
+		"303": "See Other",
+		"200": "OK",
+		"499": "Client Closed Request",
+		"417": "Expectation Failed",
+		"401": "Unauthorized",
+		"423": "Locked",
+		"505": "HTTP Version Not Supported",
+		"205": "Reset Content",
+		"405": "Method Not Allowed",
+		"451": "Unavailable For Legal Reasons",
+		"408": "Request Timeout",
+		"413": "Payload Too Large",
+		"307": "Temporary Redirect",
+		"504": "Gateway Timeout",
+		"407": "Proxy Authentication Required",
+		"206": "Partial Content",
+		"422": "Unprocessable Entity",
+		"409": "Conflict",
+		"500": "Internal Server Error",
+		"426": "Upgrade Required",
+		"301": "Moved Permanently",
+		"414": "Request-URI Too Long",
+		"201": "Created",
+		"511": "Network Authentication Required",
+		"507": "Insufficient Storage",
+		"415": "Unsupported Media Type"
+	},
+	"format": "json",
+	"data": {},
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"error": true,
+	"binary": false,
+	"messages": [
+		"The refresh token was not passed via the header or the rc. Cannot refresh the unrefreshable!"
+	],
+	"location": "",
+	"jsonCallback": "",
+	"jsonQueryFormat": "query",
+	"contentType": "",
+	"statusCode": 400,
+	"statusText": "Missing refresh token",
+	"responsetime": 1,
+	"headers": [
+		{
+			"NAME": "x-current-route",
+			"VALUE": "refreshToken/"
+		},
+		{
+			"NAME": "x-current-routed-url",
+			"VALUE": "cbapi/v1/refreshToken/"
+		},
+		{
+			"NAME": "x-current-routed-namespace",
+			"VALUE": ""
+		},
+		{
+			"NAME": "x-current-event",
+			"VALUE": "contentbox-api-v1:auth.refreshToken"
+		},
+		{
+			"NAME": "x-response-time",
+			"VALUE": 1
+		}
+	]
+}

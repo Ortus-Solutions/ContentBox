@@ -1,0 +1,36 @@
+{
+	"data": {
+		"biography": "",
+		"isDeleted": false,
+		"isActive": true,
+		"lastLogin": "",
+		"lastName": "Majano",
+		"createdDate": "2021-09-01T07:22:05-06:00",
+		"numberOfPages": 0,
+		"role": {
+			"createdDate": "2021-06-24T15:51:06-06:00",
+			"roleID": "ff8081817a3ffffe017a4001511d002d",
+			"role": "Editor",
+			"modifiedDate": "2021-06-24T15:51:06-06:00",
+			"description": "A ContentBox editor"
+		},
+		"preferences": "{}",
+		"numberOfEntries": 0,
+		"numberOfContentStore": 0,
+		"firstName": "Luis",
+		"modifiedDate": "2021-09-01T07:22:05-06:00",
+		"authorID": "ff8081817ba0c3a5017ba1861bb20009",
+		"username": "lmajano",
+		"numberOfContent": 0,
+		"email": "lmajano@ortussolutions.com"
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}

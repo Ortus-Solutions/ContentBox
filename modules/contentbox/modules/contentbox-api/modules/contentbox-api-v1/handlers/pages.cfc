@@ -88,7 +88,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Create a page
 	 *
-	 * @tags ContentStore
+	 * @tags Pages
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{

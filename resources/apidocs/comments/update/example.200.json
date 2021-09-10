@@ -1,0 +1,34 @@
+{
+	"data": {
+		"content": "Content",
+		"relatedContent": {
+			"slug": "my-first-entry",
+			"createdDate": "June, 24 2021 21:51:14 +0000",
+			"contentID": "ff8081817a3ffffe017a40016e0500c4",
+			"publishedDate": "June, 24 2021 21:51:14 +0000",
+			"isPublished": true,
+			"contentType": "Entry",
+			"expireDate": null,
+			"modifiedDate": "June, 24 2021 21:51:14 +0000",
+			"title": "My first entry"
+		},
+		"commentID": "ff8081817bd1265c017bd157c76e003e",
+		"renderedContent": "<p>Content</p>",
+		"createdDate": "2021-09-10T20:13:15+00:00",
+		"authorIP": "190.0.0.2",
+		"authorURL": "http://authorURL.com",
+		"authorEmail": "lmajano@ortussolutions.com",
+		"isApproved": false,
+		"modifiedDate": "2021-09-10T20:13:15+00:00",
+		"author": "Luis Majano"
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}
