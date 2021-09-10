@@ -163,7 +163,7 @@ INSERT INTO `cb_category` (`category`, `slug`, `createdDate`, `modifiedDate`, `i
 VALUES
 	('ColdFusion','coldfusion','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a9660-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
 	('ContentBox','contentbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a97f0-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
-	('coldbox','coldbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a98cc-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1')
+	('coldbox','coldbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a98cc-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
 	('News','news','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','A657752D-79AC-42CB-B7A9572AB7B329A1','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'0'),
 	('General','general','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','16B64400-E17B-477C-B0A0C59764CB85F8','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'0');
 

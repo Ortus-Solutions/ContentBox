@@ -32,7 +32,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		boolean showPostCount = true,
 		string title          = "",
 		string titleLevel     = "2",
-		isPublic              = true;
+		boolean isPublic      = true
 	){
 		var categories = variables.categoryService.search(
 			isPublic: (
@@ -43,13 +43,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 		var rString = "";
 
+		// cfformat-ignore-start
 		// generate recent comments
 		saveContent variable="rString" {
 			// title
 			if ( len( arguments.title ) ) {
 				writeOutput(
-					"<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
-"
+					"<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>"
 				);
 			}
 			// Build Type
@@ -59,23 +59,22 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				writeOutput( buildList( categories, arguments.showPostCount ) );
 			}
 		}
+		// cfformat-ignore-end
 
 		return rString;
 	}
 
 	private function buildDropDown( categories, showPostCount ){
-		var rString         = "";
-		// generate recent comments
-		saveContent variable="rString" {
-			writeOutput(
-				"<select
-	name=""categories"" id=""categories"" onchange=""window.location=this.value""
-	)
+		var rString = "";
 
->
-	<option value=""##"">Select Category</option>
-	"
-			);
+		// generate recent comments
+		// cfformat-ignore-start
+		saveContent variable="rString" {
+			writeOutput("
+				<select name=""categories"" id=""categories"" onchange=""window.location=this.value"">
+					<option value=""##"">Select Category</option>
+			");
+
 			// iterate and create
 			for ( var x = 1; x lte arrayLen( arguments.categories ); x++ ) {
 				if ( arguments.categories[ x ].getNumberOfEntries() gt 0 ) {
@@ -86,54 +85,46 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 					if ( arguments.showPostCount ) {
 						writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
 					}
-					writeOutput(
-						"</option>
-	"
-					);
+
+					writeOutput( "</option>" );
 				}
 			}
-			// close ul
-			writeOutput(
-				"
-</select>
-"
-			);
+
+			// close
+			writeOutput( "</select>" );
 		}
 		return rString;
+		// cfformat-ignore-end
 	}
 
 	private function buildList( categories, showPostCount ){
-		var rString         = "";
+		var rString = "";
+
 		// generate recent comments
+		// cfformat-ignore-start
 		saveContent variable="rString" {
-			writeOutput(
-				"<ul id=""categories"">
-	"
-			);
+			writeOutput( "<ul id=""categories""> " );
+
 			for ( var x = 1; x lte arrayLen( arguments.categories ); x++ ) {
 				if ( arguments.categories[ x ].getNumberOfEntries() gt 0 ) {
-					writeOutput(
-						"<li class=""categories"">
-		<a href=""#cb.linkCategory( arguments.categories[ x ] )#"">#arguments.categories[ x ].getCategory()#"
+					writeOutput( "
+						<li class=""categories"">
+							<a href=""#cb.linkCategory( arguments.categories[ x ] )#"">#arguments.categories[ x ].getCategory()#"
 					);
+
 					if ( arguments.showPostCount ) {
 						writeOutput( " (#arguments.categories[ x ].getNumberOfEntries()#)" );
 					}
-					writeOutput(
-						"</a>
-	</li>
-	"
-					);
+
+					writeOutput( "</a></li>" );
 				}
 			}
+
 			// close ul
-			writeOutput(
-				"
-</ul>
-"
-			);
+			writeOutput( "</ul>" );
 		}
 		return rString;
+		// cfformat-ignore-end
 	}
 
 }
