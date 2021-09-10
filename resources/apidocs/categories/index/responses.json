@@ -4,7 +4,32 @@
 		"content": {
 			"application/json": {
 				"schema": {
-					"$ref" : "../../_schemas/app-response.json"
+					"type": "object",
+					"properties": {
+						"error": {
+							"description": "Flag to indicate an error.",
+							"type": "boolean"
+						},
+						"messages": {
+							"description": "An array of messages related to the request.",
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"pagination": {
+							"description": "Pagination information.",
+							"type": "object",
+							"properties": {}
+						},
+						"data": {
+							"description": "The data packet",
+							"type": "array",
+							"items": {
+								"$ref": "../../_schemas/app-user.json"
+							}
+						}
+					}
 				},
 				"example": {
 					"$ref": "example.200.json"
@@ -21,7 +46,34 @@
 					"$ref": "../../_schemas/app-invalid.json"
 				},
 				"schema": {
-					"$ref" : "../../_schemas/app-response.json"
+					"type": "object",
+					"properties": {
+						"error": {
+							"description": "Flag to indicate an error.",
+							"type": "boolean"
+						},
+						"messages": {
+							"description": "An array of messages related to the request.",
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"pagination": {
+							"description": "Pagination information.",
+							"type": "object",
+							"properties": {}
+						},
+						"data": {
+							"description": "The validation data packet",
+							"type": "object",
+							"properties": {
+								"{invalidField}": {
+									"$ref": "../../_schemas/app-validation.json"
+								}
+							}
+						}
+					}
 				}
 			}
 		}
