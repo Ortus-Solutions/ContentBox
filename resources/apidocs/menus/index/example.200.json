@@ -1,0 +1,23 @@
+{
+	"data": [
+		{
+			"listClass": "",
+			"menuID": "ff8081817bd0c176017bd0f003120006",
+			"slug": "slug",
+			"createdDate": "2021-09-10T18:19:55+00:00",
+			"menuClass": "",
+			"listType": "ul",
+			"modifiedDate": "2021-09-10T18:19:55+00:00",
+			"title": "Title"
+		}
+	],
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 25,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 1
+	},
+	"messages": []
+}
