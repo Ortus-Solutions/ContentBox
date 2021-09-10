@@ -25,18 +25,22 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 * @showPostCount Show post counts or not, default is true
 	 * @title The title to show before the dropdown or list, defaults to H2
 	 * @titleLevel The H{level} to use, by default we use H2
+	 * @isPublic Get all public categories by default. False, get private, null or empty, get all
 	 */
 	any function renderIt(
 		boolean dropdown      = false,
 		boolean showPostCount = true,
 		string title          = "",
-		string titleLevel     = "2"
+		string titleLevel     = "2",
+		isPublic              = true;
 	){
-		var categories = variables.categoryService.list(
-			criteria : { "site" : getSite() },
-			sortOrder= "category",
-			asQuery  = false
-		);
+		var categories = variables.categoryService.search(
+			isPublic: (
+				isNull( arguments.isPublic ) || !len( arguments.isPublic ) ? javacast( "null", "" ) : arguments.isPublic
+			),
+			siteId: getSite().getSiteId()
+		).categories;
+
 		var rString = "";
 
 		// generate recent comments

@@ -69,8 +69,7 @@ component extends="baseHandler" {
 		// get all categories
 		prc.categories = variables.categoryService.list(
 			criteria  = { "site" : prc.oCurrentSite },
-			sortOrder = "category",
-			asQuery   = false
+			sortOrder = "category"
 		);
 
 		// View according to handler section
@@ -248,8 +247,7 @@ component extends="baseHandler" {
 		// get all categories
 		prc.categories = variables.categoryService.list(
 			criteria : { "site" : prc.oCurrentSite },
-			sortOrder: "category",
-			asQuery  : false
+			sortOrder: "category"
 		);
 
 		// get new or persisted content object to edit

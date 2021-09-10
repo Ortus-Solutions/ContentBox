@@ -12,15 +12,20 @@
 			<div class="panel-body">
 				<!--- Display categories --->
 				<div id="categoriesChecks">
-				<cfloop from="1" to="#arrayLen(prc.categories)#" index="x">
+				<cfloop from="1" to="#arrayLen( prc.categories )#" index="x">
 					<div class="checkbox">
 						<label>
 						#html.checkbox(
-							name="category_#x#",
-							value="#prc.categories[ x ].getCategoryID()#",
-							checked=prc.oContent.hasCategories( prc.categories[ x ] )
+							name 	= "category_#x#",
+							value 	= "#prc.categories[ x ].getCategoryID()#",
+							checked = prc.oContent.hasCategories( prc.categories[ x ] )
 						)#
 						#prc.categories[ x ].getCategory()#
+						<cfif !prc.categories[ x ].getIsPublic()>
+							<i
+								class="ml5 fas fa-lock"
+								title="Private Category"></i>
+						</cfif>
 						</label>
 					</div>
 				</cfloop>

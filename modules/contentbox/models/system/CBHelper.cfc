@@ -596,16 +596,17 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Get the current array of category entities for the current site
+	 * Get the current array of public category entities for the current site
+	 *
+	 * @isPublic By default return all public categories. If false, return private categories, If null, all categories
 	 *
 	 * @return array of category
 	 */
-	any function getCurrentCategories(){
-		return variables.categoryService.list(
-			criteria : { "site" : site() },
-			sortOrder= "category",
-			asQuery  = false
-		);
+	any function getCurrentCategories( isPublic = true ){
+		return variables.categoryService.search(
+			isPublic: ( isNull( arguments.isPublic ) ? javacast( "null", "" ) : arguments.isPublic ),
+			siteId  : site().getSiteId()
+		).categories;
 	}
 
 	/**
@@ -1851,16 +1852,19 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out categories anywhere using ColdBox collection rendering
+	 *
 	 * @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'category'
 	 * @args A structure of name-value pairs to pass to the template
+	 * @isPublic Return public categories by default. False, return private categories, null return all categories.
 	 */
 	function quickCategories(
 		string template     = "category",
 		string collectionAs = "category",
-		struct args         = structNew()
+		struct args         = structNew(),
+		isPublic            = true
 	){
-		var categories = getCurrentCategories();
+		var categories = getCurrentCategories( argumentCollection = arguments );
 		return controller
 			.getRenderer()
 			.renderView(

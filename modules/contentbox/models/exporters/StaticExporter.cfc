@@ -160,11 +160,10 @@ component accessors=true threadSafe singleton {
 		if ( arguments.includeBlog ) {
 			var aEntries   = variables.entryService.search( siteID: arguments.site.getSiteID() );
 			// Put all categories in prc for processing
-			prc.categories = variables.categoryService.list(
-				criteria : { "site" : arguments.site },
-				sortOrder: "category",
-				asQuery  : false
-			);
+			prc.categories = variables.categoryService.search(
+				isPublic: true,
+				siteId  : arguments.site.getSiteId()
+			).categories;
 			// Process all entries
 			for ( var thisEntry in aEntries.entries ) {
 				// put in scope for fake access

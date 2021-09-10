@@ -306,7 +306,7 @@
 						<button
 							class="close"
 							aria-label="Close"
-							x-on:click="closeEditor">✖</button>
+							@click.prevent="closeEditor">✖</button>
 					</div>
 
 					<div class="alpine-modal-body">
