@@ -2,6 +2,7 @@
 <!--- Setup alpine component --->
 <div x-data="categoriesCrud()">
 
+	<!--- TITLE --->
 	<div class="row">
 		<div class="col-md-12">
 			<h1 class="h1">
@@ -10,6 +11,7 @@
 		</div>
 	</div>
 
+	<!--- MESSAGES --->
 	<div class="row">
 		<div class="col-md-12">
 			<!--- MessageBox --->
@@ -23,6 +25,7 @@
 		</div>
 	</div>
 
+	<!--- DATA TABLES --->
 	<div class="row">
 		<div class="col-md-12">
 			<div class="panel panel-default">
@@ -82,7 +85,7 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a
-													@click="importCategories()"
+													@click="importContent()"
 													class="cursor-pointer"
 												>
 													<i class="fas fa-file-import fa-lg"></i> Import
@@ -290,120 +293,121 @@
 			x-cloak
 			x-transition
 		>
-		<!--- We add a form to have html 5 validations --->
-		<form method="post" @submit.prevent="saveCategory()">
-			<div
-				class="alpine-modal-inner"
-				@click.away="closeEditor"
-				@keyup.escape.window="closeEditor"
-			>
-				<div class="alpine-modal-header">
-					<h3 x-show="!categoryForm.categoryID.length">Create Category</h3>
-					<h3 x-show="categoryForm.categoryID.length">Editing : <span x-text="categoryForm.category"></span></h3>
-					<button
-						class="close"
-						aria-label="Close"
-						x-on:click="closeEditor">✖</button>
-				</div>
+			<!--- We add a form to have html 5 validations --->
+			<form method="post" @submit.prevent="saveCategory()">
+				<div
+					class="alpine-modal-inner"
+					@click.away="closeEditor"
+					@keyup.escape.window="closeEditor"
+				>
+					<div class="alpine-modal-header">
+						<h3 x-show="!categoryForm.categoryID.length">Create Category</h3>
+						<h3 x-show="categoryForm.categoryID.length">Editing : <span x-text="categoryForm.category"></span></h3>
+						<button
+							class="close"
+							aria-label="Close"
+							x-on:click="closeEditor">✖</button>
+					</div>
 
-				<div class="alpine-modal-body">
+					<div class="alpine-modal-body">
 
-					<!--- Messages --->
-					<div
-						class="alert alert-danger"
-						x-show="errorMessages.length"
-						x-html="errorMessages"
-					></div>
+						<!--- Messages --->
+						<div
+							class="alert alert-danger"
+							x-show="errorMessages.length"
+							x-html="errorMessages"
+						></div>
 
-					<!--- Id --->
-					<input
-						type="hidden"
-						id="categoryID"
-						name="categoryID"
-						x-model="categoryForm.categoryID">
+						<!--- Id --->
+						<input
+							type="hidden"
+							id="categoryID"
+							name="categoryID"
+							x-model="categoryForm.categoryID">
 
-					<!--- Category --->
-					<div class="form-group">
-						<label field="category">Category:</label>
-						<div class="controls">
-							#html.textField(
-								name		 	= "category",
-								maxlength	 	= "200",
-								required 		= "true",
-								size		 	= "30",
-								placeholder	 	= "Awesome Category",
-								class		 	= "form-control",
-								x 				= {
-									model : "categoryForm.category"
+						<!--- Category --->
+						<div class="form-group">
+							<label field="category">Category:</label>
+							<div class="controls">
+								#html.textField(
+									name		 	= "category",
+									maxlength	 	= "200",
+									required 		= "true",
+									size		 	= "30",
+									placeholder	 	= "Awesome Category",
+									class		 	= "form-control",
+									x 				= {
+										model : "categoryForm.category"
+									}
+								)#
+							</div>
+						</div>
+
+						<!--- Slug --->
+						<div class="form-group">
+							<label field="category">Slug (blank to generate it):</label>
+							<div class="controls">
+								#html.textField(
+									name		 	= "slug",
+									maxlength	 	= "200",
+									size		 	= "30",
+									placeholder	 	= "awesome-category",
+									class		 	= "form-control",
+									x 				= {
+										model : "categoryForm.slug"
+									}
+								)#
+							</div>
+						</div>
+
+						<div class="form-group">
+							#cbAdminComponent(
+								"ui/Toggle",
+								{
+									name : "isPublic",
+									label : "Public: ",
+									xmodel : "categoryForm.isPublic"
 								}
 							)#
 						</div>
+
 					</div>
 
-					<!--- Slug --->
-					<div class="form-group">
-						<label field="category">Slug (blank to generate it):</label>
-						<div class="controls">
-							#html.textField(
-								name		 	= "slug",
-								maxlength	 	= "200",
-								size		 	= "30",
-								placeholder	 	= "awesome-category",
-								class		 	= "form-control",
-								x 				= {
-									model : "categoryForm.slug"
-								}
-							)#
-						</div>
-					</div>
+					<!--- Footer --->
+					<div class="alpine-modal-footer">
+						<button
+							class="btn btn-default"
+							@click.prevent="closeEditor"
+							:disabled="isSubmitting"
+						>
+							Cancel
+						</button>
 
-					<div class="form-group">
-						#cbAdminComponent(
-							"ui/Toggle",
-							{
-								name : "isPublic",
-								label : "Public: ",
-								xmodel : "categoryForm.isPublic"
-							}
-						)#
+						<button
+							type="submit"
+							class="btn btn-primary"
+							:disabled="isSubmitting"
+						>
+							Save
+						</button>
 					</div>
-
 				</div>
-
-				<!--- Footer --->
-				<div class="alpine-modal-footer">
-					<button
-						class="btn btn-default"
-						@click.prevent="closeEditor"
-						:disabled="isSubmitting"
-					>
-						Cancel
-					</button>
-
-					<button
-						type="submit"
-						class="btn btn-primary"
-						:disabled="isSubmitting"
-					>
-						Save
-					</button>
-				</div>
-			</div>
-		</form>
-	</cfif>
-
-	<!---only show if user has rights to categories admin and tool import--->
-	<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-		#renderView(
-			view 	= "_tags/dialog/import",
-			args 	= {
-				title 		= "Import Categories",
-				contentArea = "category",
-				action 		= prc.xehImportAll,
-				contentInfo = "Choose the ContentBox <strong>JSON</strong> file to import."
-			},
-			prePostExempt = true
-		)#
+			</form>
+		</div>
 	</cfif>
 </div>
+
+<!---only show if user has rights to categories admin and tool import--->
+<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+	#renderView(
+		view 	= "_tags/dialog/import",
+		args 	= {
+			title 		= "Import Categories",
+			contentArea = "category",
+			action 		= prc.xehImportAll,
+			contentInfo = "Choose the ContentBox <strong>JSON</strong> file to import."
+		},
+		prePostExempt = true
+	)#
+</cfif>
 </cfoutput>

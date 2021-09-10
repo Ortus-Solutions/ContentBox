@@ -641,6 +641,10 @@ function importContent(){
 	// local id's
 	var $importForm = $( "#importForm" );
 
+	if( typeof $importDialog == 'undefined' ){
+		$importDialog = $( "#importDialog" );
+	}
+
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 
@@ -1004,6 +1008,7 @@ const contentListHelper = ( () => {
 			$bulkStatusURL  = settings.bulkStatusURL;
 			$cloneDialog	= settings.cloneDialog;
 			$parentID 		= settings.parentID;
+			$importDialog 	= settings.importDialog;
 
 			// Create history Listener
 			History.Adapter.bind( window, "statechange", function(){

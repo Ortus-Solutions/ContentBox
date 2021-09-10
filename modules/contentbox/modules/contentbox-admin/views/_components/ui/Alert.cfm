@@ -1,10 +1,13 @@
 <cfoutput>
-<!--- Default to open or close --->
+<!--- Default to open or close the alert on render --->
 <cfparam name="args.open" 		default="false">
+<!--- Show close button --->
+<cfparam name="args.withClose" 		default="true">
 <!--- Type: info, success, default, warning, danger --->
 <cfparam name="args.type" 		default="info">
 <!--- Messages to show --->
 <cfparam name="args.messages" 		default="">
+<!--- Bind the messages + type to a Alpine model --->
 <cfparam name="args.messageModel" 	default="">
 
 <alert
@@ -13,6 +16,7 @@
 		alertType 		: '#args.type#',
 		alertMessage 	: '#args.messages#',
 		alertModel 		: '#args.messageModel#',
+		alertCloseButton : #args.withClose#,
 		alertClose() {
 			this.alertOpen = false;
 			<cfif len( args.messageModel )>
@@ -41,6 +45,7 @@
 			@click="alertClose()"
 			title="Close Alert"
 			class="far fa-times-circle cursor-pointer float-right text-2xl"
+			x-show="alertCloseButton"
 		></i>
 		<cfif len( args.messageModel )>
 			<div x-html="#args.messageModel#.message"></div>

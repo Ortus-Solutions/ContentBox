@@ -129,6 +129,14 @@ function categoriesCrud(){
 			} else {
 				alert( "Please select something to export!" );
 			}
+		},
+
+		selectAll( toggle ){
+			if( toggle ){
+				this.categories.forEach( ( cat ) => this.selectedCategories.push( cat.categoryID ) );
+			} else {
+				this.selectedCategories = [];
+			}
 		}
 
 	};
