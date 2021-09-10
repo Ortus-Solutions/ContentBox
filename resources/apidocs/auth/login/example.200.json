@@ -1,8 +1,47 @@
 {
-    "data": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE1ODkzMDUwMzEsInNjb3BlcyI6W10sImlzcyI6Imh0dHA6Ly8xMjcuMC4wLjE6NjUxMDAvIiwic3ViIjoxLCJleHAiOjE1ODkzMDg2MzEsImp0aSI6IkQxNkI4Qzg5NTc2OUU5MDcyNUNBQTU3M0I3M0FCNTc2In0.VDsqEDCXtHnrMXZYXqE2To2lQpmQAmHP8asXjhw_c2KsI_1mx2gZETuIrVNXckUl9zdevx2O818PlCkp6znmGw",
+    "data": {
+      "tokens": {
+        "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MzEzMDU2NjIsImlzcyI6ImNvbnRlbnRib3giLCJzdWIiOiJmZjgwODE4MTdhM2ZmZmZlMDE3YTQwMDE1NWZiMDAyZiIsImV4cCI6MTYzMTMwOTI2Miwic2NvcGUiOiIiLCJqdGkiOiI5QUE5MDVBOEVGRjczNzE4QTJBQ0YzREQ0OTFBMEJFRSJ9.sGGiZegrlgiIB1tVSMi6B1__ZQJvCSlUhXTI_VFT2-hdjuHeuU7IGQWGcnQ-Qdv3Rr-7B-vY56b2hYim5Lnj-g",
+        "refresh_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE2MzEzMDU2NjIsImlzcyI6ImNvbnRlbnRib3giLCJzdWIiOiJmZjgwODE4MTdhM2ZmZmZlMDE3YTQwMDE1NWZiMDAyZiIsImV4cCI6MTYzMTkxMDQ2Miwic2NvcGUiOiIiLCJjYnNlY3VyaXR5X3JlZnJlc2giOnRydWUsImp0aSI6IkNFNDhFOTQwQzZBQzNEMzQ0OENDNTRCMzI2RTRGQ0VGIn0.H92BKG5NJqJ8oyJ_A7cu0pGcBTklDqZYtcmB01YWc5R_nGvoIlxXDUDGhufcpz_eLrFU2wBaqAqzoYGsrYV8ng"
+      },
+      "author": {
+        "biography": "",
+        "isDeleted": false,
+        "isActive": true,
+        "lastLogin": "2021-09-10T20:27:42+00:00",
+        "permissions": [],
+        "lastName": "Posada",
+        "createdDate": "2021-06-24T21:51:08+00:00",
+        "numberOfPages": 4,
+        "permissionGroups": [],
+        "preferences": "{\"sidemenuCollapse\":\"yes\",\"editor\":\"simplemde\"}",
+        "role": {
+          "createdDate": "2021-06-24T21:51:06+00:00",
+          "roleID": "ff8081817a3ffffe017a40015137002e",
+          "role": "Administrator",
+          "modifiedDate": "2021-06-24T21:51:06+00:00",
+          "description": "A ContentBox Administrator"
+        },
+        "numberOfEntries": 2,
+        "numberOfContentStore": 2,
+        "firstName": "Abilio",
+        "modifiedDate": "2021-09-10T20:27:42+00:00",
+        "authorID": "ff8081817a3ffffe017a400155fb002f",
+        "username": "aposada",
+        "numberOfContent": 8,
+        "email": "aposada@ortussolutions.com"
+      }
+    },
     "error": false,
-    "pagination": {},
+    "pagination": {
+      "totalPages": 1,
+      "maxRows": 0,
+      "offset": 0,
+      "page": 1,
+      "totalRecords": 0
+    },
     "messages": [
-        "Bearer token created and it expires in 60 minutes"
+      "Bearer token created and it expires in 60 minutes",
+      "Refresh token created and it expires in 10080 minutes"
     ]
-}
+  }
