@@ -81,8 +81,12 @@
 
 											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 											<li>
-												<a href="javascript:importContent()">
+												<a
+													@click="importCategories()"
+													class="cursor-pointer"
+												>
 													<i class="fas fa-file-import fa-lg"></i> Import
+												</a>
 											</li>
 											</cfif>
 
@@ -128,6 +132,8 @@
 						<i class="fas fa-spinner fa-spin fa-lg"></i><br/>
 					</div>
 
+					<div x-text="selectedCategories"></div>
+
 					<!--- Table --->
 					<table id="categories" class="table table-striped-removed table-hover " cellspacing="0" width="100%" x-show="!isLoading">
 						<thead>
@@ -137,8 +143,10 @@
 									width="15"
 								>
 									<input
+										name="selectAll"
 										type="checkbox"
-										onClick="checkAll( this.checked, 'categoryID' )"/>
+										@click="selectAll( $el.checked )"
+									/>
 								</th>
 								<th>Category</th>
 								<th>Slug</th>
