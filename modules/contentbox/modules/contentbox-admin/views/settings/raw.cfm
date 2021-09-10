@@ -72,7 +72,7 @@
 											<select
 												name="siteFilter"
 												id="siteFilter"
-												class="form-control"
+												class="form-control text-light-gray"
 												title="Site Filter"
 												onchange="settingsLoad()"
 											>
