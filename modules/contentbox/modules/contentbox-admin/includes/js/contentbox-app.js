@@ -1001,7 +1001,7 @@ const contentListHelper = ( () => {
 		$( "#fCategories" ).val( "all" );
 		$( "#fStatus" ).val( "any" );
 		$( "#fCreators" ).val( "all" );
-	}
+	};
 
 	// Return our encapsulated module
 	return {
