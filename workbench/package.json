@@ -23,7 +23,6 @@
         "terser": "^5.7.1"
     },
     "dependencies": {
-        "@app_modules/Bootstrap-Confirmation": "rochappy/Bootstrap-Confirmation#*",
         "@app_modules/TableDnD": "isocra/TableDnD#^1.0.3",
         "@app_modules/animate.css": "daneden/animate.css#^3.5.2",
         "@app_modules/bootstrap-datepicker": "eternicode/bootstrap-datepicker#^1.7.1",

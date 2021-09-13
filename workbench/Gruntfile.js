@@ -174,8 +174,6 @@ module.exports = function( grunt ) {
 					"app_modules/TableDnD/dist/jquery.tablednd.min.js",
 					// Toaster notifications
 					"app_modules/toastr/toastr.min.js",
-					// Bootstrap modal confirmations
-					"app_modules/Bootstrap-Confirmation/bootstrap-confirmation.js",
 					// Drag & drop hierarchical list with mouse and touch compatibility
 					"app_modules/jquery-nestable/jquery.nestable.js",
 					// on/off Toggles
