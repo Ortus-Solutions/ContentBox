@@ -2,10 +2,6 @@
 # yarn lockfile v1
 
 
-"@app_modules/Bootstrap-Confirmation@rochappy/Bootstrap-Confirmation#*":
-  version "0.0.2"
-  resolved "https://codeload.github.com/rochappy/Bootstrap-Confirmation/tar.gz/b7495a3639d59f34bf95ede256332dfe72e393e5"
-
 "@app_modules/TableDnD@isocra/TableDnD#^1.0.3":
   version "1.0.5"
   resolved "https://codeload.github.com/isocra/TableDnD/tar.gz/10943ed77b4151fffa27b78f4295e180d0cf2a76"
