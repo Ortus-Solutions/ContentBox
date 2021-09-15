@@ -199,8 +199,7 @@
 			action       : prc.xehContentClone,
 			titleLabel   : "Title",
 			publishLabel : "Publish",
-			publishInfo  : "By default all cloned items are published as drafts.",
-			statusName   : "contentStatus"
+			publishInfo  : "By default all cloned items are published as drafts."
 		},
 		prePostExempt 	= true
 	)#

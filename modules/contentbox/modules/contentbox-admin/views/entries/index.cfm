@@ -226,8 +226,7 @@
 			action       : prc.xehEntryClone,
 			titleLabel   : "Title",
 			publishLabel : "Publish",
-			publishInfo  : "By default all cloned entries are saved as drafts.",
-			statusName   : "entryStatus"
+			publishInfo  : "By default all cloned entries are saved as drafts."
 		},
 		prePostExempt = true
 	)#

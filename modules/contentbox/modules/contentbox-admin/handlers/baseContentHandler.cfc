@@ -207,7 +207,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate when done updating
 	 */
-	function bulkStatus( event, rc, prc, relocateTo ){
+	function bulkStatus( event, rc, prc, required relocateTo ){
 		event
 			.paramValue( "parent", "" )
 			.paramValue( "contentID", "" )
@@ -329,7 +329,7 @@ component extends="baseHandler" {
 	 * @adminPermission The admin permission to apply for publishing, eg: ENTRIES_ADMIN, PAGES_ADMIN
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function save( event, rc, prc, adminPermission, relocateTo ){
+	function save( event, rc, prc, required adminPermission, required relocateTo ){
 		// form params
 		event
 			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
@@ -483,7 +483,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function clone( event, rc, prc, relocateTo ){
+	function clone( event, rc, prc, required relocateTo ){
 		// Defaults
 		event.paramValue( "site", prc.oCurrentSite.getsiteID() );
 
@@ -524,7 +524,7 @@ component extends="baseHandler" {
 			author          : prc.oCurrentAuthor,
 			original        : original,
 			originalService : variables.ormService,
-			publish         : rc.pageStatus,
+			publish         : rc.contentStatus,
 			originalSlugRoot: original.getSlug(),
 			newSlugRoot     : clone.getSlug()
 		);
@@ -551,7 +551,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function remove( event, rc, prc, relocateTo ){
+	function remove( event, rc, prc, required relocateTo ){
 		// params
 		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
 
@@ -686,7 +686,7 @@ component extends="baseHandler" {
 	 *
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function importAll( event, rc, prc, relocateTo ){
+	function importAll( event, rc, prc, required relocateTo ){
 		event.paramValue( "importFile", "" );
 		event.paramValue( "overrideContent", false );
 

@@ -90,8 +90,9 @@ component extends="baseContentHandler" {
 	 * Clone a content store item
 	 */
 	function clone( event, rc, prc ){
+		arguments.adminPermission = "CONTENTSTORE_ADMIN";
 		arguments.relocateTo = prc.xehContentStore;
-		super.save( argumentCollection = arguments );
+		super.clone( argumentCollection = arguments );
 	}
 
 	/**

@@ -97,7 +97,7 @@ component extends="baseContentHandler" {
 	 */
 	function clone( event, rc, prc ){
 		arguments.relocateTo = prc.xehEntries;
-		super.save( argumentCollection = arguments );
+		super.clone( argumentCollection = arguments );
 	}
 
 	/**

@@ -216,8 +216,7 @@
 			action       : prc.xehPageClone,
 			titleLabel   : "Title",
 			publishLabel : "Publish all pages in hierarchy?",
-			publishInfo  : "By default all cloned pages are published as drafts.",
-			statusName   : "pageStatus"
+			publishInfo  : "By default all cloned pages are published as drafts."
 		},
 		prePostExempt 	= true
 	)#
