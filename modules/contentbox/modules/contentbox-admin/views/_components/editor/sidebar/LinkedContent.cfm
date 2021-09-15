@@ -1,39 +1,4 @@
 <cfoutput>
-<script>
-<cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
-	var currentLCContentID = "#rc.contentID#";
-</cfif>
-document.addEventListener( "DOMContentLoaded", () => {
-	$( '##linkedContent-items' ).on( 'click', '.btn', function(){
-		var me = this;
-		$.ajax( {
-			url: '#event.buildLink( prc.xehBreakContentLink )#',
-			type: 'POST',
-			data: {
-				contentID: currentLCContentID,
-				linkedID: this.id
-			}
-		} ).done(function() {
-			$( me ).closest( 'tr' ).remove();
-			toggleLCWarningMessage();
-		} );
-	} );
-	toggleLCWarningMessage();
-} );
-function toggleLCWarningMessage() {
-	var table = $( '##linkedContent-items' ),
-		warning = $( '##linked-content-empty' );
-	if( table.find( 'tr' ).length ) {
-		warning.hide();
-		table.show();
-	}
-	else {
-		table.hide();
-		warning.show();
-	}
-}
-</script>
-
 <cfif prc.oCurrentAuthor.checkPermission( "EDITORS_LINKED_CONTENT" )>
 	<div class="panel panel-default">
 
@@ -78,6 +43,41 @@ function toggleLCWarningMessage() {
 				<div id="linked-content-empty" class="alert alert-info">There are no links to this #prc.oContent.getContentType()#</div>
 			</div>
 		</div>
+
+		<script>
+			<cfif structKeyExists( rc, "contentID" ) and len( rc.contentID )>
+				var currentLCContentID = "#rc.contentID#";
+			</cfif>
+			document.addEventListener( "DOMContentLoaded", () => {
+				$( '##linkedContent-items' ).on( 'click', '.btn', function(){
+					var me = this;
+					$.ajax( {
+						url: '#event.buildLink( prc.xehBreakContentLink )#',
+						type: 'POST',
+						data: {
+							contentID: currentLCContentID,
+							linkedID: this.id
+						}
+					} ).done(function() {
+						$( me ).closest( 'tr' ).remove();
+						toggleLCWarningMessage();
+					} );
+				} );
+				toggleLCWarningMessage();
+			} );
+			function toggleLCWarningMessage() {
+				var table = $( '##linkedContent-items' ),
+					warning = $( '##linked-content-empty' );
+				if( table.find( 'tr' ).length ) {
+					warning.hide();
+					table.show();
+				}
+				else {
+					table.hide();
+					warning.show();
+				}
+			}
+		</script>
 	</div>
 </cfif>
 </cfoutput>
