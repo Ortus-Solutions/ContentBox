@@ -3,7 +3,7 @@
 	/**
 	 * Configure CacheBox for ColdBox Application Operation
 	 */
-	function configure() {
+	function configure(){
 		/**
 		 * --------------------------------------------------------------------------
 		 * CacheBox Configuration (https://cachebox.ortusbooks.com)

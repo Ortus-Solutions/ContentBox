@@ -3,7 +3,7 @@ component {
 	/**
 	 * Configure the ColdBox Scheduler
 	 */
-	function configure() {
+	function configure(){
 		/**
 		 * --------------------------------------------------------------------------
 		 * Configuration Methods
@@ -22,7 +22,6 @@ component {
 		 * You register tasks with the task() method and get back a ColdBoxScheduledTask object
 		 * that you can use to register your tasks configurations.
 		 */
-
 	}
 
 	/**

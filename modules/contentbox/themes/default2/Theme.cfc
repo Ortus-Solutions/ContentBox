@@ -63,8 +63,8 @@
  * - fieldDescription : Lets you add a description for an individual field
  * - fieldHelp : Lets you add a chunk of HTML for a Modal, openable by the User by clicking on question mark next to the field label. Recommended use is to readFiles from the ./includes/help directory, with a helper function, for example: loadHelpFile( 'cbBootswatchTheme.html' );
  */
-component
-{
+component {
+
 	// Layout Variables
 	this.name          = "ContentBox 5 Default Theme";
 	this.description   = "ContentBox Default layout for ContentBox 5";

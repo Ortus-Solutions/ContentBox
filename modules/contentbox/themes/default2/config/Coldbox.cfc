@@ -3,7 +3,7 @@
 	/**
 	 * Configure the ColdBox App For Production
 	 */
-	function configure() {
+	function configure(){
 		/**
 		 * --------------------------------------------------------------------------
 		 * ColdBox Directives
@@ -95,11 +95,13 @@
 		 */
 		logBox = {
 			// Define Appenders
-			appenders : { coldboxTracer : { class : "coldbox.system.logging.appenders.ConsoleAppender" } },
+			appenders : {
+				coldboxTracer : { class : "coldbox.system.logging.appenders.ConsoleAppender" }
+			},
 			// Root Logger
-			root      : { levelmax : "INFO", appenders : "*" },
+			root : { levelmax : "INFO", appenders : "*" },
 			// Implicit Level Categories
-			info      : [ "coldbox.system" ]
+			info : [ "coldbox.system" ]
 		};
 
 		/**
@@ -171,7 +173,7 @@
 	/**
 	 * Development environment
 	 */
-	function development() {
+	function development(){
 		// coldbox.customErrorTemplate = "/coldbox/system/exceptions/BugReport.cfm"; // static bug reports
 		coldbox.customErrorTemplate = "/coldbox/system/exceptions/Whoops.cfm"; // interactive bug report
 	}
