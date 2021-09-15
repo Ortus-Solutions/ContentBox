@@ -82,7 +82,7 @@ component extends="baseHandler" {
 		var data = { "UNIQUE" : false };
 		// check slug if something is passed in
 		if ( len( rc.slug ) ) {
-			data[ "UNIQUE" ] = menuService.isSlugUnique( trim( rc.slug ), trim( rc.menuID ) );
+			data[ "UNIQUE" ] = variables.menuService.isSlugUnique( trim( rc.slug ), trim( rc.menuID ) );
 		}
 		// render result
 		event.renderData( data = data, type = "json" );
@@ -95,9 +95,9 @@ component extends="baseHandler" {
 		event.paramValue( "menuID", 0 );
 		// get new or persisted
 		prc.menuItems = "";
-		prc.menu      = menuService.get( rc.menuID );
+		prc.menu      = variables.menuService.get( rc.menuID );
 		if ( prc.menu.isLoaded() ) {
-			prc.menuItems = menuService.buildEditableMenu( prc.menu.getMenuItems() );
+			prc.menuItems = variables.menuService.buildEditableMenu( prc.menu.getMenuItems() );
 		}
 
 		// exit handlers
@@ -147,7 +147,7 @@ component extends="baseHandler" {
 		event.paramValue( "searchMenu", "" ).paramValue( "isFiltering", false, true );
 
 		// search content with filters and all
-		var results = menuService.search(
+		var results = variables.menuService.search(
 			searchTerm = rc.searchMenu,
 			sortOrder  = "createdDate desc",
 			siteID     = prc.oCurrentSite.getSiteID()
@@ -216,7 +216,7 @@ component extends="baseHandler" {
 		// populate items from form
 		oMenu.populateMenuItems( rawData = deserializeJSON( rc.menuItems ) );
 		// render data
-		event.renderData( data = cb.buildProviderMenu( menu = oMenu ), type = "text" );
+		event.renderData( data = variables.cbHelper.buildProviderMenu( menu = oMenu ), type = "text" );
 	}
 
 	/**
@@ -238,7 +238,7 @@ component extends="baseHandler" {
 
 		// Iterate and remove
 		for ( var thisMenuID in rc.menuID ) {
-			var oMenu = menuService.get( thisMenuID );
+			var oMenu = variables.menuService.get( thisMenuID );
 			if ( isNull( oMenu ) ) {
 				arrayAppend( messages, "Invalid menuID sent: #thisMenuID#, so skipped removal" );
 			} else {
@@ -248,7 +248,7 @@ component extends="baseHandler" {
 				// announce event
 				announce( "cbadmin_preMenuRemove", { menu : oMenu, menuID : menuID } );
 				// Delete it
-				menuService.delete( oMenu );
+				variables.menuService.delete( oMenu );
 				arrayAppend( messages, "Menu '#title#' removed" );
 				// announce event
 				announce( "cbadmin_postMenuRemove", { menuID : menuID } );
