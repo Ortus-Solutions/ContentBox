@@ -1,0 +1,81 @@
+{
+    "output": [],
+    "rule": [],
+    "includes": [
+        {
+            "code": "AVOID_USING_STRUCTNEW"
+        },
+        {
+            "code": "AVOID_USING_ARRAYNEW"
+        },
+        {
+            "code": "AVOID_USING_CFINCLUDE_TAG"
+        },
+        {
+            "code": "AVOID_USING_CFABORT_TAG"
+        },
+        {
+            "code": "AVOID_USING_ABORT"
+        },
+        {
+            "code": "ARG_VAR_CONFLICT"
+        },
+        {
+            "code": "ARG_VAR_MIXED"
+        },
+        {
+            "code": "CFQUERYPARAM_REQ"
+        },
+        {
+            "code": "COMPARE_INSTEAD_OF_ASSIGN"
+        },
+        {
+            "code": "COMPONENT_HINT_MISSING"
+        },
+        {
+            "code": "EXCESSIVE_FUNCTION_LENGTH"
+        },
+        {
+            "code": "EXCESSIVE_COMPONENT_LENGTH"
+        },
+        {
+            "code": "EXCESSIVE_ARGUMENTS"
+        },
+        {
+            "code": "EXCESSIVE_FUNCTIONS"
+        },
+        {
+            "code": "FUNCTION_TOO_COMPLEX"
+        },
+        {
+            "code": "FUNCTION_HINT_MISSING"
+        },
+        {
+            "code": "LOCAL_LITERAL_VALUE_USED_TOO_OFTEN"
+        },
+        {
+            "code": "GLOBAL_LITERAL_VALUE_USED_TOO_OFTEN"
+        },
+        {
+            "code": "MISSING_VAR"
+        },
+        {
+            "code": "OUTPUT_ATTR"
+        },
+        {
+            "code": "UNUSED_LOCAL_VARIABLE"
+        },
+        {
+            "code": "UNUSED_METHOD_ARGUMENT"
+        },
+        {
+            "code": "SQL_SELECT_STAR"
+        },
+        {
+            "code": "VAR_ALLCAPS_NAME"
+        }
+    ],
+    "inheritParent": false,
+    "inheritPlugins": true,
+    "parameters": {}
+}

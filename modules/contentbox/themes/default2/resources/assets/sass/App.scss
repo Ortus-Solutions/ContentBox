@@ -1,0 +1,23 @@
+@import "~bootstrap/scss/bootstrap";
+
+body{ padding-top: 50px; }
+
+.centered { text-align: center !important; }
+.inline{ display: inline !important; }
+.margin10{ margin: 10px; }
+.padding10{ padding: 10px; }
+.margin0{ margin: 0px; }
+.padding0{ padding: 0px; }
+
+.footer {
+	margin-top: 45px;
+	padding: 35px 35px;
+	border-top: 1px solid #e5e5e5;
+
+	p {
+		margin-bottom: 0;
+		color: #555;
+	}
+
+}
+

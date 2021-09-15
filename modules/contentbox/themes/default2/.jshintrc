@@ -1,0 +1,18 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "eqnull": true,
+    "browser": true,
+    "devel": true,
+    "sub": true,
+    "noarg": true,
+    "node": true,
+    "unused": true,
+    "esversion": 6,
+    "globals": {
+        "jQuery": true,
+        "$": true,
+        "module": true
+    }
+}

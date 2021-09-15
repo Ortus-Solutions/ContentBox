@@ -1,0 +1,42 @@
+{
+    "name":"Elixir APP Template",
+    "version":"6.2.0",
+    "location":"forgeboxStorage",
+    "author":"You",
+    "slug":"cbtemplate-elixir",
+    "shortDescription":"A ColdBox application template that leverages ColdBox Elixir for assets",
+    "createPackageDirectory":false,
+    "type":"mvc",
+    "keywords":[],
+    "homepage":"https://github.com/coldbox-templates/elixir",
+    "documentation":"https://github.com/coldbox-templates/elixir",
+    "repository":{
+        "type":"git",
+        "url":"https://github.com/coldbox-templates/elixir"
+    },
+    "bugs":"https://github.com/coldbox-templates/elixir/issues",
+    "contributors":[],
+    "ignore":[
+        "readme.md"
+    ],
+    "devDependencies":{
+        "testbox":"^4.2.1+400",
+        "commandbox-dotenv":"*",
+        "commandbox-cfconfig":"*",
+        "commandbox-cfformat":"*"
+    },
+    "installPaths":{
+        "coldbox":"coldbox/",
+        "testbox":"testbox/"
+    },
+    "dependencies":{
+        "coldbox":"^6.0.0"
+    },
+    "scripts":{
+        "postPublish":"!git push --follow-tags",
+        "postInstall":"pathExists .env || cp env.example .env && mv env.example .env.example",
+        "format":"cfformat run config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc --overwrite",
+        "format:check":"cfformat check config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc",
+        "format:watch":"cfformat watch path='config/,handlers/,interceptors/,models/,modules_app/,tests/specs/,*.cfc' settingsPath='.cfformat.json'"
+    }
+}
