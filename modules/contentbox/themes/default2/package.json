@@ -13,7 +13,8 @@
         "@fortawesome/fontawesome-free": "^5.13.0",
         "bootstrap": "^4.4.1",
         "jquery": "^3.5.1",
-        "popper.js": "^1.16.1"
+        "popper.js": "^1.16.1",
+        "tailwindcss": "^2.2.15"
     },
     "scripts": {
         "dev": "webpack --hide-modules",
