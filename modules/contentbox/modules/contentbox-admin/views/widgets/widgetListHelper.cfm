@@ -1,6 +1,14 @@
 <cfoutput>
 <script>
-document.addEventListener( "DOMContentLoaded", () => {
+<cfif args.mode eq "edit">
+document.addEventListener( "DOMContentLoaded", setupWidgetListing );
+<cfelse>
+( () => {
+	setupWidgetListing();
+})();
+</cfif>
+
+function setupWidgetListing(){
     // Widget Filter by text input
     $( '##widgetFilter' ).keyup(
         _.debounce(
@@ -76,8 +84,8 @@ document.addEventListener( "DOMContentLoaded", () => {
 		} );
 
 		toggleWidgetCount( widgetCount );
-    } );
-} );
+	});
+}
 
 function resetTabs(){
 	$( '##widget-sidebar' )
@@ -86,6 +94,7 @@ function resetTabs(){
 		.find( 'a' )
 		.removeClass( 'current' );
 }
+
 function toggleWidgetCount( count ){
 	if( count ){
 		$( "##widgetCountAlert" ).hide()
@@ -102,23 +111,23 @@ function clearFilter(){
 }
 
 <cfif args.mode eq "edit">
-function getWidgetPreviewURL(){
-	return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#';
-}
-function getWidgetInstanceURL(){
-	return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#';
-}
-function testWidgetCode( name, type ){
-    // Test it
-    $widgetEditorForm = $( "##widgetEditForm" );
-    var attributes = {
-        modal       : true,
-        mode        : 'Test',
-        widgetName  : name,
-        widgetType  : type
-    };
-    return openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes );
-}
+	function getWidgetPreviewURL(){
+		return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#';
+	}
+	function getWidgetInstanceURL(){
+		return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#';
+	}
+	function testWidgetCode( name, type ){
+		// Test it
+		$widgetEditorForm = $( "##widgetEditForm" );
+		var attributes = {
+			modal       : true,
+			mode        : 'Test',
+			widgetName  : name,
+			widgetType  : type
+		};
+		return openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes );
+	}
 </cfif>
 </script>
 </cfoutput>
