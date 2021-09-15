@@ -189,19 +189,13 @@
 												<div class="form-group">
 													<label for="name" class="control-label">Site:</label>
 													<select name="site" id="site" class="form-control">
-														<option value="" selected="selected">GLOBAL</option>
+														<option value="" selected="selected">-- All Sites --</option>
 														<cfloop array=#prc.allSites# index="thisSite">
 															<option value="#thisSite[ 'siteID' ]#">
 																#thisSite[ 'name' ]#
 															</option>
 														</cfloop>
 													</select>
-												</div>
-
-                                                <div class="checkbox">
-                                                    <label>
-                                                    	<input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
-                                                    </label>
 												</div>
 
                                                 <div class="form-group">
@@ -215,6 +209,12 @@
                                                         	class="form-control"></textarea>
                                                     </div>
                                                 </div>
+
+												<div class="checkbox">
+                                                    <label>
+                                                    	<input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
+                                                    </label>
+												</div>
                                             #html.endForm()#
                                         </div>
                                         <div class="modal-footer">
