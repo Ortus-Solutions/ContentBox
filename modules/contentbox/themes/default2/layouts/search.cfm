@@ -4,6 +4,8 @@
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
+			#cb.quickView( "_pageIncludes" )#
+
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeHeadEnd" )#
 		</head>
@@ -11,6 +13,8 @@
 		<body>
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_afterBodyStart" )#
+
+			#cb.quickView( "_header" )#
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeContent" )#
@@ -20,6 +24,8 @@
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_afterContent" )#
+
+			#cb.quickView( "_footer" )#
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeBodyEnd" )#	

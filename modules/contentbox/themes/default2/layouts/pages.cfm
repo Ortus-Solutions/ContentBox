@@ -4,7 +4,8 @@
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
-			<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/App.css" />
+			<!--- Page Includes --->
+			#cb.quickView( "_pageIncludes" )#
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeHeadEnd" )#
@@ -14,6 +15,8 @@
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_afterBodyStart" )#
 
+			#cb.quickView( "_header" )#
+
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeContent" )#
 
@@ -22,6 +25,8 @@
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_afterContent" )#
+
+			#cb.quickView( "_footer" )#
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeBodyEnd" )#

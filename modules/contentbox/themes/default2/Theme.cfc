@@ -72,7 +72,7 @@ component {
 	this.author        = "Ortus Solutions";
 	this.authorURL     = "https://www.ortussolutions.com";
 	// Screenshot URL, can be absolute or locally in your layout package.
-	this.screenShotURL = "screenshot.png";
+	this.screenShotURL = "cb_default.png";
 	// Layout Settings
 	this.settings      = [
 		{
@@ -91,7 +91,32 @@ component {
 			type             : "textarea",
 			label            : "Homepage Header Text:",
 			fieldDescription : "Enter text for your homepage hero image. This is placed below the title, above the homepage button"
-		}
+		},
+		{
+			name             : "headerLogo",
+			group            : "Header",
+			defaultValue     : "",
+			type             : "text",
+			label            : "Logo URL:",
+			groupIntro       : "Customize the header section of your theme. You can change the logo and the search field.",
+			fieldDescription : "Enter a relative or full url for the website logo. This image is not scaled with html or css, so please size it accordingly. Resize the image to approximately 300x50."
+		},
+		{
+			name         : "showSiteSearch",
+			group        : "Header",
+			defaultValue : "true",
+			type         : "boolean",
+			label        : "Show Search Form Field in Header",
+			required     : "false"
+		},
+		{
+			name         : "footerBox",
+			group        : "Footer",
+			defaultValue : "",
+			type         : "textarea",
+			label        : "Footer Text:",
+			groupIntro   : "Customize the footer of your site."
+		},
 	];
 
 	/**

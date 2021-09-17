@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css2?family=Rubik&display=swap);
 /*!
  * Bootstrap v4.6.0 (https://getbootstrap.com/)
  * Copyright 2011-2021 The Bootstrap Authors
@@ -7188,6 +7189,8 @@ a.text-dark:hover, a.text-dark:focus {
 
 body {
   padding-top: 50px; }
+  body h1, body h2, body h3, body h4, body h5, body h6, body .h1, body .h2, body .h3, body .h4, body .h5, body .h6 {
+    font-family: 'Rubik', sans-serif; }
 
 .centered {
   text-align: center !important; }

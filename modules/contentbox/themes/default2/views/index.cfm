@@ -10,7 +10,7 @@
 
 	<!--- Body Main --->
 	<section id="body-main">
-		<div class="container">
+		<div class="container-fluid">
 			<div class="row">
 				<!--- Content --->
 				<div class="col-sm-9">

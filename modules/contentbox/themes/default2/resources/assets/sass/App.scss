@@ -1,6 +1,20 @@
 @import "~bootstrap/scss/bootstrap";
 
-body{ padding-top: 50px; }
+// Import Google Fonts
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
+$theme-colors: (
+  "primary": #8BC34A,
+  "secondary": #DCEDC8
+);
+
+body { 
+	padding-top: 50px; 
+
+	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+		font-family: 'Rubik', sans-serif;
+	}
+}
 
 .centered { text-align: center !important; }
 .inline{ display: inline !important; }

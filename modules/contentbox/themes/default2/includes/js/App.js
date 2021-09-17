@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["includes\\js\\App"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["includes/js/App"],{
 
 /***/ "./resources/assets/js/App.js":
 /*!************************************!*\

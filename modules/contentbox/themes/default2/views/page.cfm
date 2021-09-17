@@ -5,16 +5,9 @@
 
 	<!--- If homepage, present homepage jumbotron --->
 	<cfif cb.isHomePage()>
-		<div class="body-header-jumbotron jumbotron">
-			<div class="container">
-				<h1>#cb.themeSetting( 'hpHeaderTitle' )#</h1>
-
-				<p>#cb.themeSetting( 'hpHeaderText' )#</p>
-			</div>
-		</div>
 	<cfelse>
 		<div id="body-header">
-			<div class="container">
+			<div class="container-fluid">
 				<!--- Title --->
 				<div class="underlined-title">
 					<h1>#prc.page.getTitle()#</h1>
@@ -32,7 +25,7 @@
 
 	<!--- Body Main --->
 	<section id="body-main">
-		<div class="container">
+		<div class="container-fluid">
 
 			<!--- Export and Breadcrumbs Symbols --->
 			<cfif !args.print AND !isNull( "prc.page" ) AND prc.page.getSlug() neq cb.getHomePage()>
@@ -55,14 +48,14 @@
 				</div>
 			</cfif>
 
-			<!--- Determine span length due to sidebar or homepage --->
+			<!--- Determine span length due to sidebar or homepage
 			<cfif cb.isHomePage() OR !args.sidebar>
 				<cfset variables.span = 12>
 			<cfelse>
 				<cfset variables.span = 9>
-			</cfif>
+			</cfif> --->
 
-			<div class="col-sm-#variables.span#">
+			<div>
 
 				<!--- Render Content --->
 				#prc.page.renderContent()#
@@ -104,13 +97,6 @@
 					</section>
 				</cfif>
 			</div>
-
-			<!--- Sidebar --->
-			<cfif args.sidebar and !cb.isHomePage()>
-				<div class="col-sm-3 sidenav">
-					#cb.quickView( view='_pagesidebar' )#
-				</div>
-			</cfif>
 		</div>
 	</section>
 
