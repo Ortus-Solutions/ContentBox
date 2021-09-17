@@ -4,6 +4,8 @@
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
+			<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/App.css" />
+			
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeHeadEnd" )#
 		</head>

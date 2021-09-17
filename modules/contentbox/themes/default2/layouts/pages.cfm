@@ -4,6 +4,8 @@
 	<!DOCTYPE html>
 	<html lang="en">
 		<head>
+			<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/App.css" />
+
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeHeadEnd" )#
 		</head>
@@ -22,7 +24,7 @@
 			#cb.event( "cbui_afterContent" )#
 
 			<!--- ContentBoxEvent --->
-			#cb.event( "cbui_beforeBodyEnd" )#	
+			#cb.event( "cbui_beforeBodyEnd" )#
 		</body>
 	</html>
 </cfoutput>
