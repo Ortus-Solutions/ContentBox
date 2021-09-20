@@ -42,9 +42,7 @@ component extends="content" {
 		super.preview( argumentCollection = arguments );
 
 		// Determine content type service to allow for custom content types
-		var typeService = (
-			rc.contentType == "page" ? variables.pageService : variables.contentService
-		);
+		var typeService = getContentTypeService( rc.contentType );
 
 		// Construct the preview entry according to passed arguments
 		prc.page = typeService.new( {
@@ -70,7 +68,7 @@ component extends="content" {
 
 		// Do we have a parent?
 		if ( len( rc.parentContent ) && isNumeric( rc.parentContent ) ) {
-			var parent = variables.contentService.get( rc.parentContent );
+			var parent = typeService.get( rc.parentContent );
 			if ( !isNull( parent ) ) {
 				prc.page.setParent( parent );
 			}
@@ -140,7 +138,7 @@ component extends="content" {
 		}
 
 		// Try to get the page using the incoming URI
-		prc.page = variables.contentService.findBySlug(
+		prc.page = variables.pageService.findBySlug(
 			slug           : incomingURL,
 			showUnpublished: showUnpublished,
 			siteID         : prc.oCurrentSite.getsiteID()
@@ -157,7 +155,7 @@ component extends="content" {
 				return;
 			}
 			// Record hit
-			variables.contentService.updateHits( prc.page );
+			variables.pageService.updateHits( prc.page );
 			// Retrieve Comments
 			// TODO: paging
 			if ( prc.page.getAllowComments() ) {
@@ -330,6 +328,15 @@ component extends="content" {
 	}
 
 	/************************************** PRIVATE *********************************************/
+
+	/**
+	 * Get the appropriate type service according to passed content type
+	 *
+	 * @contentType The type of service needed
+	 */
+	private function getContentTypeService( contentType = "page" ){
+		return ( arguments.contentType == "page" ? variables.pageService : variables.contentService );
+	}
 
 	/**
 	 * Verify if a chosen page layout exists or not.
