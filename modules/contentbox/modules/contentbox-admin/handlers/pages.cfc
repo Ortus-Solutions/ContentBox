@@ -23,7 +23,7 @@ component extends="baseContentHandler" {
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 		// exit Handlers
-		prc.xehPages      = "#prc.cbAdminEntryPoint#.pages";
+		prc.xehPages      = "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehPageEditor = "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehPageRemove = "#prc.cbAdminEntryPoint#.pages.remove";
 	}
@@ -33,7 +33,7 @@ component extends="baseContentHandler" {
 	 */
 	function index( event, rc, prc ){
 		// exit handlers
-		prc.xehPageSearch     = "#prc.cbAdminEntryPoint#.pages";
+		prc.xehPageSearch     = "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehPageTable      = "#prc.cbAdminEntryPoint#.pages.contentTable";
 		prc.xehPageBulkStatus = "#prc.cbAdminEntryPoint#.pages.bulkstatus";
 		prc.xehPageExportAll  = "#prc.cbAdminEntryPoint#.pages.exportAll";
@@ -52,7 +52,7 @@ component extends="baseContentHandler" {
 	 */
 	function contentTable( event, rc, prc ){
 		// exit handlers
-		prc.xehPageSearch    = "#prc.cbAdminEntryPoint#.pages";
+		prc.xehPageSearch    = "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehPageQuickLook = "#prc.cbAdminEntryPoint#.pages.quickLook";
 		prc.xehPageOrder     = "#prc.cbAdminEntryPoint#.pages.changeOrder";
 		prc.xehPageExport    = "#prc.cbAdminEntryPoint#.pages.export";
@@ -102,7 +102,7 @@ component extends="baseContentHandler" {
 	 */
 	function remove( event, rc, prc ){
 		arguments.relocateTo = prc.xehPages;
-		super.save( argumentCollection = arguments );
+		super.remove( argumentCollection = arguments );
 	}
 
 	/**

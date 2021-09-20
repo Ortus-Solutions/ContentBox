@@ -23,7 +23,7 @@ component extends="baseContentHandler" {
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 		// exit Handlers
-		prc.xehContentStore  = "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentStore  = "#prc.cbAdminEntryPoint#.contentStore.index";
 		prc.xehContentEditor = "#prc.cbAdminEntryPoint#.contentStore.editor";
 		prc.xehContentRemove = "#prc.cbAdminEntryPoint#.contentStore.remove";
 	}
@@ -33,7 +33,7 @@ component extends="baseContentHandler" {
 	 */
 	function index( event, rc, prc ){
 		// exit handlers
-		prc.xehContentSearch     = "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentSearch     = "#prc.cbAdminEntryPoint#.contentStore.index";
 		prc.xehContentTable      = "#prc.cbAdminEntryPoint#.contentStore.contentTable";
 		prc.xehContentBulkStatus = "#prc.cbAdminEntryPoint#.contentStore.bulkstatus";
 		prc.xehContentExportAll  = "#prc.cbAdminEntryPoint#.contentStore.exportAll";
@@ -52,7 +52,7 @@ component extends="baseContentHandler" {
 	 */
 	function contentTable( event, rc, prc ){
 		// exit handlers
-		prc.xehContentSearch  = "#prc.cbAdminEntryPoint#.contentStore";
+		prc.xehContentSearch  = "#prc.cbAdminEntryPoint#.contentStore.index";
 		prc.xehContentHistory = "#prc.cbAdminEntryPoint#.versions.index";
 		prc.xehContentExport  = "#prc.cbAdminEntryPoint#.contentStore.export";
 		prc.xehContentClone   = "#prc.cbAdminEntryPoint#.contentStore.clone";
@@ -100,7 +100,7 @@ component extends="baseContentHandler" {
 	 */
 	function remove( event, rc, prc ){
 		arguments.relocateTo = prc.xehContentStore;
-		super.save( argumentCollection = arguments );
+		super.remove( argumentCollection = arguments );
 	}
 
 	/**

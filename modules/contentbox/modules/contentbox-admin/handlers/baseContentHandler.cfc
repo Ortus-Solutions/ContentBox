@@ -561,17 +561,17 @@ component extends="baseHandler" {
 		// params
 		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
 
-		// verify if contentID sent
+		// verify if contentID sent is valid
 		if ( !len( rc.contentID ) ) {
 			variables.cbMessageBox.warn( "No content sent to delete!" );
 			relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
 		}
 
-		// Inflate to array
+		// Inflate to array for processing.
 		rc.contentID = listToArray( rc.contentID );
 		var messages = [];
 
-		// Iterate and remove pages
+		// Iterate and remove content
 		for ( var thisContentID in rc.contentID ) {
 			var oContent = variables.ormService.get( thisContentID );
 			if ( isNull( oContent ) ) {
@@ -596,6 +596,7 @@ component extends="baseHandler" {
 				announce( "cbadmin_post#variables.entity#Remove", { contentID : contentID } );
 			}
 		}
+
 		// messagebox
 		variables.cbMessageBox.info( messages );
 		// relocate
