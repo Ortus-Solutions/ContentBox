@@ -104,6 +104,9 @@ component extends="cbadmin.handlers.baseHandler" {
 		event.paramValue( "path", "" );
 		event.paramValue( "filterType", "" );
 
+		// Detect sorting changes
+		detectPreferences( event, rc, prc );
+
 		// Exit handlers
 		prc.xehFBDownload = "#prc.fbModEntryPoint#/download";
 
@@ -609,26 +612,23 @@ component extends="cbadmin.handlers.baseHandler" {
 	 * Detect Preferences: Sorting and List Types
 	 */
 	private function detectPreferences( event, rc, prc ){
-		if (
-			structKeyExists( rc, "sorting" ) AND reFindNoCase(
-				"^(name|size|lastModified)$",
-				rc.sorting
-			)
-		) {
+		if ( !isNull( rc.sorting ) AND reFindNoCase( "^(name|size|lastModified)$", rc.sorting ) ) {
 			var prefs = getPreferences();
 			if ( prefs.sorting NEQ rc.sorting ) {
 				prefs.sorting = rc.sorting;
 				cookieStorage.set( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}
-		if ( structKeyExists( rc, "listType" ) AND reFindNoCase( "^(listing|grid)$", rc.listType ) ) {
+
+		if ( !isNull( rc.listType ) AND reFindNoCase( "^(listing|grid)$", rc.listType ) ) {
 			var prefs = getPreferences();
 			if ( NOT structKeyExists( prefs, "listType" ) OR prefs.listType NEQ rc.listType ) {
 				prefs.listType = rc.listType;
 				cookieStorage.set( "fileBrowserPrefs", serializeJSON( prefs ) );
 			}
 		}
-		if ( structKeyExists( rc, "listFolder" ) AND reFindNoCase( "^(all|dir)$", rc.listFolder ) ) {
+
+		if ( !isNull( rc.listFolder ) AND reFindNoCase( "^(all|dir)$", rc.listFolder ) ) {
 			var prefs = getPreferences();
 			if ( NOT structKeyExists( prefs, "listFolder" ) OR prefs.listFolder NEQ rc.listFolder ) {
 				prefs.listFolder = rc.listFolder;

@@ -151,6 +151,16 @@ function fbInfo(){
 	}, $( window ).width() - 200, $( window ).height() - 200 );
 }
 
+function fbListTypeChange( listType, file ){
+	// deselect button
+	let identifier = "##" + $listType.val() + $listFolder.val();
+	$( identifier ).removeClass( "btn-default" ).addClass( "btn-more" );
+
+	$listType.val( listType );
+	$listFolder.val( file );
+	fbVerifyActiveView();
+	fbRefresh();
+}
 
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
