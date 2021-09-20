@@ -82,7 +82,10 @@ component extends="baseHandler" {
 		var data = { "UNIQUE" : false };
 		// check slug if something is passed in
 		if ( len( rc.slug ) ) {
-			data[ "UNIQUE" ] = variables.menuService.isSlugUnique( trim( rc.slug ), trim( rc.menuID ) );
+			data[ "UNIQUE" ] = variables.menuService.isSlugUnique(
+				trim( rc.slug ),
+				trim( rc.menuID )
+			);
 		}
 		// render result
 		event.renderData( data = data, type = "json" );
@@ -216,7 +219,10 @@ component extends="baseHandler" {
 		// populate items from form
 		oMenu.populateMenuItems( rawData = deserializeJSON( rc.menuItems ) );
 		// render data
-		event.renderData( data = variables.cbHelper.buildProviderMenu( menu = oMenu ), type = "text" );
+		event.renderData(
+			data = variables.cbHelper.buildProviderMenu( menu = oMenu ),
+			type = "text"
+		);
 	}
 
 	/**

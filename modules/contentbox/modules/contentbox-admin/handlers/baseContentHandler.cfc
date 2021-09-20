@@ -329,7 +329,13 @@ component extends="baseHandler" {
 	 * @adminPermission The admin permission to apply for publishing, eg: ENTRIES_ADMIN, PAGES_ADMIN
 	 * @relocateTo Where to relocate to when saving is done
 	 */
-	function save( event, rc, prc, required adminPermission, required relocateTo ){
+	function save(
+		event,
+		rc,
+		prc,
+		required adminPermission,
+		required relocateTo
+	){
 		// form params
 		event
 			.paramValue( "allowComments", prc.cbSiteSettings.cb_comments_enabled )
