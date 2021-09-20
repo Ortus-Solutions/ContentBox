@@ -43,7 +43,7 @@ component
 		variables.cookieStorage.set(
 			name   : "contentbox_admin_current_site",
 			value  : arguments.siteID,
-			expires: 7
+			expires: "never"
 		);
 		return this;
 	}
