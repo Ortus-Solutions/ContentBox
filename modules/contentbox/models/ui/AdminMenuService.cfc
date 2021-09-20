@@ -55,7 +55,6 @@ component accessors="true" threadSafe singleton {
 	this.USERS            = "users";
 	this.TOOLS            = "tools";
 	this.SYSTEM           = "system";
-	this.STATS            = "stats";
 	this.ADMIN_ENTRYPOINT = "";
 
 	// Header Menu Slugs
@@ -341,6 +340,7 @@ component accessors="true" threadSafe singleton {
 		// Comments Tab
 		prc.xehComments        = "#this.ADMIN_ENTRYPOINT#.comments";
 		prc.xehCommentsettings = "#this.ADMIN_ENTRYPOINT#.comments.settings";
+		prc.xehSubscribers     = "#this.ADMIN_ENTRYPOINT#.subscribers";
 
 		// Look and Feel Tab
 		prc.xehThemes      = "#this.ADMIN_ENTRYPOINT#.themes";
@@ -369,9 +369,6 @@ component accessors="true" threadSafe singleton {
 		prc.xehRawSettings   = "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehAuthLogs      = "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
 		prc.xehAbout         = "#this.ADMIN_ENTRYPOINT#.about";
-
-		// Stats
-		prc.xehSubscribers = "#this.ADMIN_ENTRYPOINT#.subscribers";
 
 		// Dashboard
 		addTopMenu(
@@ -442,7 +439,15 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehCommentsettings,
 				permissions = "COMMENTS_ADMIN"
-			);
+			)
+			.
+addSubMenu(
+			name    = "Subscribers",
+			label   = "Subscribers",
+			href    = variables.buildLink,
+			href_to = prc.xehSubscribers,
+			title   = "View Subscribers"
+		);
 
 		// Look and Feel
 		addTopMenu( name = this.LOOK_FEEL, label = "<i class='fa fa-tint'></i> Look & Feel" )
@@ -582,18 +587,6 @@ component accessors="true" threadSafe singleton {
 				href    = variables.buildLink,
 				href_to = prc.xehAbout
 			);
-
-		// STATS
-		addTopMenu(
-			name  = this.STATS,
-			label = "<i class='fas fa-sort-amount-down fa-lg'></i> Stats"
-		).addSubMenu(
-			name    = "Subscribers",
-			label   = "Subscribers",
-			href    = variables.buildLink,
-			href_to = prc.xehSubscribers,
-			title   = "View Subscribers"
-		);
 
 		return this;
 	}
