@@ -27,8 +27,6 @@ component extends="baseHandler" {
 		// Exit Handler
 		prc.xehSaveSettings    = "#prc.cbAdminEntryPoint#.settings.save";
 		prc.xehEmailTest       = "#prc.cbAdminEntryPoint#.settings.emailTest";
-		// pages
-		prc.pages              = variables.pageService.search( sortOrder = "slug asc", isPublished = true ).pages;
 		// Get All registered editors so we can display them
 		prc.editors            = variables.editorService.getRegisteredEditorsMap();
 		// Get All registered markups so we can display them
@@ -40,9 +38,9 @@ component extends="baseHandler" {
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper
-		prc.cb                 = CBHelper;
+		prc.cb                 = variables.CBHelper;
 		// caches
-		prc.cacheNames         = cachebox.getCacheNames();
+		prc.cacheNames         = variables.cachebox.getCacheNames();
 		// Markdown Editor Availability
 		variables.markdownEditor.loadAssets();
 		// view
