@@ -339,7 +339,10 @@ component extends="baseHandler" {
 
 		// Check if the feature is enabled
 		if ( prc.featureEnabled ) {
-			prc.logs = loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
+			prc.logs = variables.loginTrackerService.getAll(
+				sortOrder = "attempts",
+				asQuery   = false
+			);
 		} else {
 			prc.featureEnabled = false;
 		}
@@ -354,7 +357,7 @@ component extends="baseHandler" {
 	 * truncate all auth logs
 	 */
 	any function truncateAuthLogs( event, rc, prc ){
-		loginTrackerService.truncate();
+		variables.loginTrackerService.truncate();
 		relocate( "#prc.cbAdminEntryPoint#.settings.authLogs" );
 	}
 
