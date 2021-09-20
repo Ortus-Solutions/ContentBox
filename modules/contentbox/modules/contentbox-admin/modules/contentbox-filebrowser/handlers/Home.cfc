@@ -392,10 +392,9 @@ component extends="cbadmin.handlers.baseHandler" {
 				values   = "#e.message# #e.detail#"
 			);
 			log.error( data.messages, e );
+			// render stuff out
+			event.renderData( data = data, type = "json" );
 		}
-
-		// render stuff out
-		event.renderData( data = data, type = "json" );
 	}
 
 	/**

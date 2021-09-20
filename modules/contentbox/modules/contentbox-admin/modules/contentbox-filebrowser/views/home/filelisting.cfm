@@ -256,7 +256,6 @@
 </div>
 <script>
 ( () => {
-	console.log( "File Listing" );
 	$( '[data-toggle="tooltip"]' ).tooltip();
 
 	// context menus
