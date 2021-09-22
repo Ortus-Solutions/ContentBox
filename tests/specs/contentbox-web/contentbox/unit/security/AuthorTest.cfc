@@ -29,7 +29,7 @@ component extends="tests.resources.BaseTest" {
 				expect( d ).toBe( "Never Logged In" );
 
 				var testUser = entityLoad( "cbAuthor" )[ 1 ];
-				var d        = testUser.getDisplayLastLogin();
+				var d        = testUser.getDisplayLastLogin( timeFormat : "hh:mm tt" );
 				expect( d ).toBeDate();
 			} );
 
