@@ -460,8 +460,19 @@
 					}
 
 					/* Set file path */
-					if ( arguments.useFolderNames EQ "yes" ) filePath = arguments.extractPath & name;
-					else filePath = arguments.extractPath & getFileFromPath( name );
+					if ( arguments.useFolderNames EQ "yes" ){
+						filePath = arguments.extractPath & name;
+					} else{
+						filePath = arguments.extractPath & getFileFromPath( name );
+					}
+
+					// Zip Slip Validation
+					if (!getCanonicalPath( filePath ).startsWith( getCanonicalPath( arguments.extractPath ) ) ) {
+						throw(
+							type : "ArchiverException",
+							message : "Entry is outside of the target destination: #filepath#"
+						);
+					}
 
 					/* Extract files. Files would be extract when following conditions are fulfilled:
 						   If the 'extractFiles' list is not defined,
