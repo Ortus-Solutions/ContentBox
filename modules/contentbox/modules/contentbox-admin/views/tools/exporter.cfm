@@ -35,7 +35,7 @@
 				<div class="panel-body">
 
 					<p>
-						From this panel you can choose to export your entire ContentBox site(s) or parts of it as a <strong>*.box</strong> archive package.
+						From this panel you can choose to export your entire ContentBox site or parts of it as a <strong>*.box</strong> archive package.
 					</p>
 
 					<div class="row">
