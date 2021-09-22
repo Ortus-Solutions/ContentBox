@@ -20,7 +20,7 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can display created dates", function(){
-				var d = model.getDisplayCreatedDate();
+				var d = model.getDisplayCreatedDate( timeFormat : "hh:mm tt" );
 				expect( dateDiff( "d", now(), d ) ).toBe( 0 );
 			} );
 
