@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready(function() {
+( () => {
 	// tables references
 	$content = $( "##content" );
 	// sorting
@@ -22,8 +22,9 @@ $( document ).ready(function() {
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
-	// Popovers
-	activateInfoPanels();
+
+	// Info Panels
+	contentListHelper.activateInfoPanels();
 
 	<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 	// Drag and drop hierarchies
@@ -72,6 +73,6 @@ $( document ).ready(function() {
 	} );
 	</cfif>
 
-} );
+} )();
 </script>
 </cfoutput>

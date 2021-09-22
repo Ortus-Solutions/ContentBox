@@ -6,7 +6,7 @@
 component extends="baseContentHandler" {
 
 	// DI
-	property name="ormService" inject="PageService@cb";
+	property name="ormService" inject="PageService@contentbox";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "publishedDate DESC";
@@ -88,7 +88,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Create a page
 	 *
-	 * @tags ContentStore
+	 * @tags Pages
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{

@@ -2,7 +2,7 @@
 
 <!--- page JS --->
 <script>
-$( document ).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
     // Setup content view
     setupView( {
         tableContainer  : $( "##menuTableContainer" ),

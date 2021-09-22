@@ -50,7 +50,7 @@
 		since the rewrite filter doesn't know what part is the actual file name.  Note, the ses path info servlet filter hasn't fired yet. -->
 		<condition type="request-uri" operator="notequal">^/.*\.cf(m|ml)/.*</condition>
 		<!-- Ignore these ContentBox paths -->
-		<condition type="request-uri" operator="notequal">/(index.cfm|robots.txt|osd.xml|modules/contentbox-dsncreator|modules/contentbox-installer|modules/contentbox|files|images|js|javascripts|css|styles|config).*</condition>
+		<condition type="request-uri" operator="notequal">/(index.cfm|robots.txt|osd.xml|modules|modules/contentbox-installer|modules/contentbox|files|images|js|javascripts|css|styles|config).*</condition>
 
 		<!--
 			<condition type="request-uri" operator="notequal">\.(bmp|gif|jpe?g|png|css|js|txt|xls|ico|swf)$</condition>

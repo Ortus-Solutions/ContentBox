@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready(function() {
+( () => {
     <cfif prc.aTopContentTotalHits gt 0>
         Morris.Donut( {
             element     : 'top-visited-chart',
@@ -20,6 +20,6 @@ $( document ).ready(function() {
             ]
         } );
     </cfif>
-} );
+} )();
 </script>
 </cfoutput>

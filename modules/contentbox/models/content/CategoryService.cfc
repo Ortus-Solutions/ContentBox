@@ -9,8 +9,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	// Dependencies
 	property name="htmlHelper" inject="HTMLHelper@coldbox";
-	property name="contentService" inject="contentService@cb";
-	property name="dateUtil" inject="DateUtil@cb";
+	property name="contentService" inject="contentService@contentbox";
+	property name="dateUtil" inject="DateUtil@contentbox";
 
 	/**
 	 * Constructor
@@ -20,6 +20,52 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		super.init( entityName = "cbCategory", useQueryCaching = true );
 
 		return this;
+	}
+
+	/**
+	 * Category search with filters
+	 *
+	 * @search The search term for the name
+	 * @siteID The site id to filter on
+	 * @isPublic Filter on this public (true) / private (false) or all (null)
+	 * @max The max records
+	 * @offset The offset to use
+	 * @sortOrder The sort order
+	 *
+	 * @return struct of { count, categories }
+	 */
+	struct function search(
+		search = "",
+		siteID = "",
+		boolean isPublic,
+		max       = 0,
+		offset    = 0,
+		sortOrder = "category asc"
+	){
+		var results = { "count" : 0, "categories" : [] };
+		var c       = newCriteria()
+			// Search Criteria
+			.when( len( arguments.search ), function( c ){
+				c.like( "category", "%#search#%" );
+			} )
+			// Site Filter
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
+			} )
+			// IsPublic Filter
+			.when( !isNull( arguments.isPublic ), function( c ){
+				c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
+			} );
+
+		// run criteria query and projections count
+		results.count      = c.count( "categoryID" );
+		results.categories = c.list(
+			offset   : arguments.offset,
+			max      : arguments.max,
+			sortOrder: arguments.sortOrder
+		);
+
+		return results;
 	}
 
 	/**
@@ -88,7 +134,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Get the total category counts
+	 * Get the total category counts for the entire installation or by site
 	 *
 	 * @siteID The site to filter on
 	 */
@@ -143,8 +189,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @categories A list or array of categories to create
 	 * @site The site to attach them to, this must be a site object
+	 * @isPublic Create public or private categories
 	 */
-	array function createCategories( required categories, required site ){
+	array function createCategories(
+		required categories,
+		required site,
+		boolean isPublic = true
+	){
 		// convert to array
 		if ( isSimpleValue( arguments.categories ) ) {
 			arguments.categories = listToArray( arguments.categories );
@@ -162,7 +213,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				return new ( {
 					"category" : thisCategory,
 					"slug"     : variables.htmlHelper.slugify( thisCategory ),
-					"site"     : site
+					"site"     : site,
+					"isPublic" : isPublic
 				} );
 			} );
 
@@ -177,7 +229,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Inflate categories from a collection via 'category_X' pattern and returns an array of category objects
-	 * as its representation
+	 * as its representation. This is done by the content editors to display the categories for selection.
 	 *
 	 * @return array of categories
 	 */
@@ -252,25 +304,37 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
-	 * Get an array of names of all categories in the system
+	 * Get an array of names of all categories in the system or by site
+	 *
+	 * @siteId The site to filter the names from
+	 * @isPublic If passed, show by this filter, else all categories
 	 */
-	array function getAllNames( string siteID = "" ){
+	array function getAllNames( string siteID = "", boolean isPublic ){
 		return newCriteria()
 			.withProjections( property: "category" )
 			.when( len( arguments.siteID ), function( c ){
 				c.isEq( "site.siteID", siteID );
+			} )
+			.when( !isNull( arguments.isPublic ), function( c ){
+				c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
 			} )
 			.list( sortOrder: "category" );
 	}
 
 	/**
 	 * Get an array of slugs of all categories in the system
+	 *
+	 * @siteId The site to filter the names from
+	 * @isPublic If passed, show by this filter, else all categories
 	 */
-	array function getAllSlugs( string siteID = "" ){
+	array function getAllSlugs( string siteID = "", boolean isPublic ){
 		return newCriteria()
 			.withProjections( property: "slug" )
 			.when( len( arguments.siteID ), function( c ){
 				c.isEq( "site.siteID", siteID );
+			} )
+			.when( !isNull( arguments.isPublic ), function( c ){
+				c.isEq( "isPublic", javacast( "Boolean", isPublic ) );
 			} )
 			.list( sortOrder: "slug" );
 	}
@@ -323,7 +387,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		importLog
 	){
 		var allCategories = [];
-		var siteService   = getWireBox().getInstance( "siteService@cb" );
+		var siteService   = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {

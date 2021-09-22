@@ -20,7 +20,7 @@ component
 
 	property
 		name      ="permissionService"
-		inject    ="permissionService@cb"
+		inject    ="permissionService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -34,7 +34,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property

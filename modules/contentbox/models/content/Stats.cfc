@@ -26,7 +26,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property

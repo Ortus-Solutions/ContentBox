@@ -8,7 +8,7 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI
-	property name="menuItemService" inject="id:menuItemService@cb";
+	property name="menuItemService" inject="id:menuItemService@contentbox";
 
 	/**
 	 * Configure
@@ -24,7 +24,7 @@ component extends="coldbox.system.Interceptor" {
 		var criteria        = menuItemService.newCriteria();
 		var menuItemsInNeed = criteria.isEq( "contentSlug", "#arguments.data.originalSlug#" ).list();
 		for ( var menuItem in menuItemsInNeed ) {
-			menuItem.setContentSlug( arguments.data.page.getSlug() );
+			menuItem.setContentSlug( arguments.data.content.getSlug() );
 			menuItemService.save( entity = menuItem );
 		}
 	}
@@ -35,7 +35,7 @@ component extends="coldbox.system.Interceptor" {
 	function cbadmin_prePageRemove( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
 		var menuItemsInNeed = criteria
-			.isEq( "contentSlug", "#arguments.data.page.getSlug()#" )
+			.isEq( "contentSlug", "#arguments.data.content.getSlug()#" )
 			.list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setContentSlug( javacast( "null", "" ) );
@@ -51,7 +51,7 @@ component extends="coldbox.system.Interceptor" {
 		var criteria        = menuItemService.newCriteria();
 		var menuItemsInNeed = criteria.isEq( "contentSlug", "#arguments.data.originalSlug#" ).list();
 		for ( var menuItem in menuItemsInNeed ) {
-			menuItem.setContentSlug( arguments.data.entry.getSlug() );
+			menuItem.setContentSlug( arguments.data.content.getSlug() );
 			menuItemService.save( entity = menuItem );
 		}
 	}
@@ -62,7 +62,7 @@ component extends="coldbox.system.Interceptor" {
 	function cbadmin_preEntryRemove( required any event, required struct data ){
 		var criteria        = menuItemService.newCriteria();
 		var menuItemsInNeed = criteria
-			.isEq( "contentSlug", "#arguments.data.entry.getSlug()#" )
+			.isEq( "contentSlug", "#arguments.data.content.getSlug()#" )
 			.list();
 		for ( var menuItem in menuItemsInNeed ) {
 			menuItem.setContentSlug( javacast( "null", "" ) );

@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready(function() {
+( () => {
     // tables references
     $menu = $( "##menu" );
     // sorting
@@ -22,6 +22,6 @@ $( document ).ready(function() {
     activateConfirmations();
     // activate tooltips
     activateTooltips();
-} );
+} )();
 </script>
 </cfoutput>

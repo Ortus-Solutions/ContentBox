@@ -5,7 +5,7 @@
         var label = null;
         var typeIcon = null;
         var win = null;
-        $( document ).ready(function() {
+        document.addEventListener( "DOMContentLoaded", () => {
             $( '.select-media' ).on( 'click', function() {
                 input = $( this ).siblings( 'input[name^=media]' );
                 hidden= $( this ).siblings( 'input[name^=mediaPath]' );

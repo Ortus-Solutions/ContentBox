@@ -13,14 +13,12 @@ component
 {
 
 	// DI
-	property name="settingService" inject="settingService@cb";
-	property name="widgetService" inject="provider:widgetService@cb";
+	property name="settingService" inject="settingService@contentbox";
+	property name="widgetService" inject="provider:widgetService@contentbox";
 	property name="contentBoxSettings" inject="coldbox:moduleConfig:contentbox";
 	property name="customModuleSettings" inject="coldbox:moduleConfig:contentbox-custom";
 	property name="coldboxModuleService" inject="coldbox:moduleService";
 	property name="log" inject="logbox:logger:{this}";
-	property name="zipUtil" inject="zipUtil@cb";
-
 
 	/**
 	 * The absolute path to custom module locations
@@ -471,10 +469,11 @@ component
 				// Deactivate it, not fond in registry, might be an orphaned record
 				if ( log.canWarn() ) {
 					log.warn(
-						"Orphaned module discovered: #module.getName()#, deactiving it from the database"
+						"Orphaned module discovered: #thisModule.getName()#, deactiving it from the database"
 					);
 				}
-				deactivateModule( module.getName() );
+				deactivateModule( thisModule.getName() );
+				return false;
 			} )
 			.each( function( thisModule ){
 				// Module reference maps pointer

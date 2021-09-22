@@ -8,7 +8,7 @@
 component extends="ContentService" singleton {
 
 	// Inject generic content service
-	property name="contentService" inject="id:ContentService@cb";
+	property name="contentService" inject="id:ContentService@contentbox";
 
 	/**
 	 * Constructor
@@ -46,6 +46,7 @@ component extends="ContentService" singleton {
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	 * @siteId The site ID to filter on
+	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
 	 *
 	 * @returns struct of { entries, count }
 	 */
@@ -60,7 +61,8 @@ component extends="ContentService" singleton {
 		string sortOrder            = "",
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
-		string siteId               = ""
+		string siteId               = "",
+		string propertyList
 	){
 		var results = { "count" : 0, "entries" : [] };
 		// criteria queries
@@ -140,15 +142,19 @@ component extends="ContentService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
-		results.entries = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset    = arguments.offset,
-				max       = arguments.max,
-				sortOrder = arguments.sortOrder,
-				asQuery   = false
-			);
+		results.count = c.count( "contentID" );
+
+		if ( !isNull( arguments.propertyList ) ) {
+			c.withProjections( property = arguments.propertyList ).asStruct();
+		} else {
+			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
+		}
+		results.entries = c.list(
+			offset    = arguments.offset,
+			max       = arguments.max,
+			sortOrder = arguments.sortOrder,
+			asQuery   = false
+		);
 
 		return results;
 	}
@@ -244,25 +250,6 @@ component extends="ContentService" singleton {
 		);
 
 		return results;
-	}
-
-	/**
-	 * Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
-	 *
-	 * @sortOrder The sort ordering of the results
-	 * @isPublished	Show all content or true/false published content
-	 * @showInSearch Show all content or true/false showInSearch flag
-	 * @siteId The site id to use to filter on
-	 *
-	 * @return Array of entry data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
-	 */
-	array function getAllFlatEntries(
-		sortOrder = "title asc",
-		boolean isPublished,
-		boolean showInSearch,
-		string siteId = ""
-	){
-		return super.getAllFlatContent( argumentCollection = arguments );
 	}
 
 	/**

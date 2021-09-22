@@ -4,7 +4,7 @@
 component extends="baseHandler" secured="SITES_ADMIN" {
 
 	// DI
-	property name="ormService" inject="SiteService@cb";
+	property name="ormService" inject="SiteService@contentbox";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "slug";

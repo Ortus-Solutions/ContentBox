@@ -6,7 +6,7 @@
 component extends="baseContentHandler" {
 
 	// DI
-	property name="ormService" inject="EntryService@cb";
+	property name="ormService" inject="EntryService@contentbox";
 
 	// The default sorting order string: permission, name, data desc, etc.
 	variables.sortOrder    = "publishedDate DESC";
@@ -18,7 +18,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Display all entries using different filters
 	 *
-	 * @tags Entry
+	 * @tags Entries
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
@@ -54,7 +54,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Show an entry using the id
 	 *
-	 * @tags Entry
+	 * @tags Entries
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
@@ -74,7 +74,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Create an entry
 	 *
-	 * @tags ContentStore
+	 * @tags Entries
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
@@ -86,7 +86,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Update an existing entry
 	 *
-	 * @tags Entry
+	 * @tags Entries
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="ENTRIES_ADMIN,ENTRIES_EDITOR"{
@@ -98,7 +98,7 @@ component extends="baseContentHandler" {
 	/**
 	 * Delete an entry using an id or slug
 	 *
-	 * @tags Entry
+	 * @tags Entries
 	 * @x-contentbox-permissions ENTRIES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="ENTRIES_ADMIN"{

@@ -8,13 +8,13 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="entryService" inject="entryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="contentService" inject="contentService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="categoryService" inject="categoryService@cb";
+	property name="entryService" inject="entryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="contentService" inject="contentService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
 	property name="feedReader" inject="FeedReader@cbfeeds";
-	property name="loginTrackerService" inject="loginTrackerService@cb";
+	property name="loginTrackerService" inject="loginTrackerService@contentbox";
 	property name="markdown" inject="Processor@cbmarkdown";
 
 	/**
@@ -25,7 +25,6 @@ component extends="baseHandler" {
 	function index( event, rc, prc ){
 		// exit Handlers
 		prc.xehDeleteInstaller   = "#prc.cbAdminEntryPoint#.dashboard.deleteInstaller";
-		prc.xehDeleteDSNCreator  = "#prc.cbAdminEntryPoint#.dashboard.deleteDSNCreator";
 		// Ajax Loaded handlers
 		prc.xehLatestSystemEdits = "#prc.cbAdminEntryPoint#.dashboard.latestSystemEdits";
 		prc.xehLatestUserDrafts  = "#prc.cbAdminEntryPoint#.dashboard.latestUserDrafts";
@@ -37,11 +36,11 @@ component extends="baseHandler" {
 		prc.xehLatestLogins      = "#prc.cbAdminEntryPoint#.dashboard.latestLogins";
 
 		// Installer Check
-		prc.installerCheck  = settingService.isInstallationPresent();
+		prc.installerCheck = variables.settingService.isInstallationPresent();
 		// Welcome Body
-		prc.welcomeBody     = markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
+		prc.welcomeBody    = variables.markdown.toHTML( prc.cbSettings.cb_dashboard_welcome_body );
 		// Light up
-		prc.tabContent_home = true;
+		prc.tabDashboard   = true;
 		// announce event
 		announce( "cbadmin_onDashboard" );
 		// dashboard view
@@ -221,14 +220,6 @@ component extends="baseHandler" {
 		event.setView( view = "dashboard/latestLogins", layout = "ajax" );
 	}
 
-	/**
-	 * ContentBox about page
-	 * @return html
-	 */
-	function about( event, rc, prc ){
-		event.setView( "dashboard/about" );
-	}
-
 	/*************************************** UTILITY ACTIONS *********************************/
 
 	/**
@@ -239,29 +230,11 @@ component extends="baseHandler" {
 		var results = { "ERROR" : false, "MESSAGE" : "" };
 
 		try {
-			settingService.deleteInstaller();
+			variables.settingService.deleteInstaller();
 			results[ "MESSAGE" ] = "The installer module has been successfully deleted.";
 		} catch ( Any e ) {
 			results[ "ERROR" ]   = true;
 			results[ "MESSAGE" ] = "Error removing installer: #e.message#";
-		}
-
-		event.renderData( data = results, type = "json" );
-	}
-
-	/**
-	 * delete DSN Creator module
-	 * @return JSON
-	 */
-	function deleteDSNCreator(){
-		var results = { "ERROR" : false, "MESSAGE" : "" };
-
-		try {
-			settingService.deleteDSNCreator();
-			results[ "MESSAGE" ] = "The DSN Creator module has been successfully deleted.";
-		} catch ( Any e ) {
-			results[ "ERROR" ]   = true;
-			results[ "MESSAGE" ] = "Error removing DSN Creator: #e.message#";
 		}
 
 		event.renderData( data = results, type = "json" );
@@ -285,11 +258,11 @@ component extends="baseHandler" {
 					break;
 				}
 				case "rss-purge": {
-					getInstance( "RSSService@cb" ).clearAllCaches( async = false );
+					getInstance( "RSSService@contentbox" ).clearAllCaches( async = false );
 					break;
 				}
 				case "content-purge": {
-					getInstance( "ContentService@cb" ).clearAllCaches( async = false );
+					getInstance( "ContentService@contentbox" ).clearAllCaches( async = false );
 					break;
 				}
 				case "cache-purge": {

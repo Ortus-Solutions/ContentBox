@@ -14,15 +14,16 @@ component
 
 	// DI
 	property name="cacheStorage" inject="cacheStorage@cbStorages";
+	property name="cookieStorage" inject="cookieStorage@cbStorages";
 	property name="requestStorage" inject="requestStorage@cbStorages";
 	property name="loadedModules" inject="coldbox:setting:modules";
 	property name="requestService" inject="coldbox:requestService";
-	property name="settingService" inject="provider:settingService@cb";
-	property name="categoryService" inject="provider:categoryService@cb";
-	property name="contentService" inject="provider:contentService@cb";
-	property name="menuService" inject="provider:menuService@cb";
-	property name="themeService" inject="provider:themeService@cb";
-	property name="mediaService" inject="provider:mediaService@cb";
+	property name="settingService" inject="provider:settingService@contentbox";
+	property name="categoryService" inject="provider:categoryService@contentbox";
+	property name="contentService" inject="provider:contentService@contentbox";
+	property name="menuService" inject="provider:menuService@contentbox";
+	property name="themeService" inject="provider:themeService@contentbox";
+	property name="mediaService" inject="provider:mediaService@contentbox";
 
 	/**
 	 * Constructor
@@ -39,7 +40,11 @@ component
 	 * @siteID The site to store as the current working one
 	 */
 	SiteService function setCurrentWorkingsiteID( required siteID ){
-		variables.cacheStorage.set( "adminCurrentSite", arguments.siteID );
+		variables.cookieStorage.set(
+			name   : "contentbox_admin_current_site",
+			value  : arguments.siteID,
+			expires: "never"
+		);
 		return this;
 	}
 
@@ -48,8 +53,8 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	function getCurrentWorkingsiteID(){
-		return variables.cacheStorage.get(
-			name        : "adminCurrentSite",
+		return variables.cookieStorage.get(
+			name        : "contentbox_admin_current_site",
 			defaultValue: getDefaultsiteID()
 		);
 	}
@@ -85,52 +90,59 @@ component
 	 * we make sure all proper settings are created and configured.
 	 *
 	 * @site A persisted or new site object
+	 * @transactional Transaction the call or leave as is, useful for imports, bulk saves, etc.
 	 */
-	Site function save( required site ){
-		transaction {
-			// Create all site settings if this is a new site
-			if ( !arguments.site.isLoaded() ) {
-				variables.settingService.saveAll(
-					variables.settingService
-						.getSiteSettingDefaults()
-						.reduce( function( result, setting, value ){
-							arguments.result.append(
-								variables.settingService.new( {
-									name   : arguments.setting,
-									value  : trim( arguments.value ),
-									isCore : true,
-									site   : site
-								} )
-							);
-							return result;
-						}, [] )
-				);
+	Site function save( required site, boolean transactional = true ){
+		// Added this due to issue in CFML engines and mixed quuery+orm nested transactions. Remove once issue is fixed
+		if ( arguments.transactional ) {
+			transaction {
+				_save( arguments.site );
 			}
-
-			// Persist the site
-			try {
-				super.save( arguments.site );
-			} catch ( any e ) {
-				writeDump( var = e );
-				writeDump( var = arguments.site, top = 5 );
-				abort;
-			}
-
-			// Activate the site's theme
-			variables.themeService.startupTheme(
-				name: arguments.site.getActiveTheme(),
-				site: arguments.site
-			);
-
-			// Create media root folder
-			ensureSiteMediaFolder( arguments.site );
+		} else {
+			_save( arguments.site );
 		}
-		// end transaction
 
 		// flush cache to rebuild site settings
 		variables.settingService.flushSettingsCache();
 
 		return arguments.site;
+	}
+
+	/**
+	 * Save operation called by the transactional `save()` method
+	 * Due to transactional issues on Lucee
+	 */
+	private function _save( required site ){
+		// Create all site settings if this is a new site
+		if ( !arguments.site.isLoaded() ) {
+			variables.settingService.saveAll(
+				variables.settingService
+					.getSiteSettingDefaults()
+					.reduce( function( result, setting, value ){
+						arguments.result.append(
+							variables.settingService.new( {
+								name   : arguments.setting,
+								value  : trim( arguments.value ),
+								isCore : true,
+								site   : site
+							} )
+						);
+						return arguments.result;
+					}, [] )
+			);
+		}
+
+		// Persist the site
+		super.save( arguments.site );
+
+		// Activate the site's theme
+		variables.themeService.startupTheme(
+			name: arguments.site.getActiveTheme(),
+			site: arguments.site
+		);
+
+		// Create media root folder for the site
+		ensureSiteMediaFolder( arguments.site );
 	}
 
 	/**
@@ -534,7 +546,7 @@ component
 					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "menuService@cb" )
+					.getInstance( "menuService@contentbox" )
 					.importFromData(
 						importData: siteData.menus,
 						override  : arguments.override,
@@ -555,7 +567,7 @@ component
 					"+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "entryService@cb" )
+					.getInstance( "entryService@contentbox" )
 					.importFromData(
 						importData: siteData.entries,
 						override  : arguments.override,
@@ -575,7 +587,7 @@ component
 					"+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "pageService@cb" )
+					.getInstance( "pageService@contentbox" )
 					.importFromData(
 						importData: siteData.pages,
 						override  : arguments.override,
@@ -596,7 +608,7 @@ component
 					"+ Importing contentStore (#arrayLen( siteData.contentStore )#) to site #arguments.site.getSlug()#"
 				);
 				getWireBox()
-					.getInstance( "contentStoreService@cb" )
+					.getInstance( "contentStoreService@contentbox" )
 					.importFromData(
 						importData: siteData.contentStore,
 						override  : arguments.override,

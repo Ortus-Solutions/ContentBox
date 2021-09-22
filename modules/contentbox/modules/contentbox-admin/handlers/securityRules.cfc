@@ -4,9 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="ruleService" inject="securityRuleService@cb";
-	property name="permissionService" inject="permissionService@cb";
-	property name="roleService" inject="roleService@cb";
+	property name="ruleService" inject="securityRuleService@contentbox";
+	property name="permissionService" inject="permissionService@contentbox";
+	property name="roleService" inject="roleService@contentbox";
 	property name="securityInterceptor" inject="coldbox:interceptor:cbsecurity@global";
 
 	// index
@@ -117,7 +117,7 @@ component extends="baseHandler" {
 
 	function save( event, rc, prc ){
 		// populate and get content
-		prc.rule     = populateModel( variables.ruleService.get( rc.ruleID ) );
+		prc.rule     = populateModel( model: variables.ruleService.get( rc.ruleID ), exclude: "ruleID" );
 		// validate it
 		var vResults = validate( prc.rule );
 		if ( !vResults.hasErrors() ) {

@@ -8,25 +8,24 @@
  */
 autoSave = function( editor, pageID, ddMenuID, options ){
 	// Verify local storage, else disable feature
-	if( !Modernizr.localstorage ){
+	if ( !Modernizr.localstorage ){
 		$( "#" + ddMenuID ).find( ".autoSaveBtn" )
 			.html( "Auto Save Unavailable" )
-			.addClass( 'disabled' );
+			.addClass( "disabled" );
 		return false;
 	}
 
 	// Setup defaults and global options
-	var defaults 		= { storeMax : 10, timeout : 4000 };
+	var defaults 		= { storeMax: 10, timeout: 4000 };
 	var opts 			= $.extend( {}, defaults, options || {} );
-	var editorID 		= editor.attr( 'id' );
+	var editorID 		= editor.attr( "id" );
 	// Retrieve the actual editor driver implementation using ContentBox JS Interface Method
-	var oEditorDriver 	= getContentEditor();
-	var saveStoreKey 	= 'autosave_' + window.location + "_" + editorID;
+	var saveStoreKey 	= "autosave_" + window.location + "_" + editorID;
 	var timer 			= 0, savingActive = false;
 
 	// Setup SavesStore
-	if( !localStorage.getItem( saveStoreKey ) ){
-		localStorage.setItem( saveStoreKey, '[]' );
+	if ( !localStorage.getItem( saveStoreKey ) ){
+		localStorage.setItem( saveStoreKey, "[]" );
 	}
 	var saveStore = JSON.parse( localStorage.getItem( saveStoreKey ) );
 
@@ -36,11 +35,11 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	 */
 	var removeOldSaves = function( callback ){
 		var overMax = saveStore.length - opts.storeMax;
-		for( var i = 0; i < overMax; i++ ){
+		for ( var i = 0; i < overMax; i++ ){
 		  localStorage.removeItem( saveStore[ i ] );
 		  saveStore.splice( i, 1 );
 		}
-		if( callback ){
+		if ( callback ){
 			callback();
 		}
 	};
@@ -51,7 +50,7 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	 */
 	var addToStore = function( saveKey ){
 		saveStore.push( saveKey );
-		if( saveStore.length > opts.storeMax ){
+		if ( saveStore.length > opts.storeMax ){
 		  removeOldSaves( updateAutoSaveMenu );
 		} else {
 		  updateAutoSaveMenu();
@@ -63,15 +62,15 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	 */
 	var updateAutoSaveMenu = function(){
 		localStorage.setItem( saveStoreKey, JSON.stringify( saveStore ) );
-		var ulList = '';
-		for( var i = saveStore.length; i--; ){
-		  var newItemDate 	= moment( saveStore[ i ].replace( editorID + '_', '' ), 'x' );
+		var ulList = "";
+		for ( var i = saveStore.length; i--; ){
+		  var newItemDate 	= moment( saveStore[ i ].replace( editorID + "_", "" ), "x" );
 		  var dateTitle 	= moment().diff( newItemDate, "hours" ) < 1 ? newItemDate.fromNow() : newItemDate.format( "MM/DD/YYYY h:mm a" );
-		  ulList += '<li><a href="javascript:void(0)" data-id="' + saveStore[ i ] + '">' + dateTitle +'</a></li>';
+		  ulList += "<li><a href=\"javascript:void(0)\" data-id=\"" + saveStore[ i ] + "\">" + dateTitle +"</a></li>";
 		}
 		// No records
-		if( !saveStore.length ){
-			ulList = '<li><a href="javascript:void(0)">No Autosaves, type something :)</a></li>';
+		if ( !saveStore.length ){
+			ulList = "<li><a href=\"javascript:void(0)\">No Autosaves, type something :)</a></li>";
 		}
 		// Add records
 		$( "#" + ddMenuID ).find( ".autoSaveMenu" ).html( ulList );
@@ -82,7 +81,7 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	 * @param  {object} event The JS event object
 	 */
 	var startTimer = function( event ){
-	  	if( timer ){ clearTimeout( timer ); }
+	  	if ( timer ){ clearTimeout( timer ); }
 	  	timer = setTimeout( onTimer, opts.timeout, event );
 	};
 
@@ -91,7 +90,7 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	 * @param  {object} event The JS event object
 	 */
 	var onTimer = function( event ){
-		if( savingActive ) {
+		if ( savingActive ) {
 		  startTimer( event );
 		} else {
 			savingActive = true;
@@ -111,17 +110,18 @@ autoSave = function( editor, pageID, ddMenuID, options ){
 	 */
 	var loadContent = function( contentID ){
 		var content = localStorage.getItem( contentID );
-		setEditorContent( 'content', LZString.decompressFromUTF16( content ) );
-		if( timer ){ clearTimeout( timer ); }
+		setEditorContent( "content", LZString.decompressFromUTF16( content ) );
+		if ( timer ){ clearTimeout( timer ); }
 	};
 
 	// Register change event for auto saving
-	getContentEditor().on( 'change', startTimer );
-	
+	getContentEditor().on( "change", startTimer );
+
 	// Load Previous AutoLoad when selected from the Dropdown menu
-	$( '#' + ddMenuID ).on( 'click', 'li > a', function( evt ){
-		loadContent( $( evt.currentTarget ).data( 'id' ) );
+	$( "#" + ddMenuID ).on( "click", "li > a", function( evt ){
+		loadContent( $( evt.currentTarget ).data( "id" ) );
 	} );
+
 	// Update auto save menu
 	updateAutoSaveMenu();
 };

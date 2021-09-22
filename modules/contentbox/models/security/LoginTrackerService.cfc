@@ -8,8 +8,8 @@
 component extends="cborm.models.VirtualEntityService" singleton {
 
 	// DI
-	property name="settingService" inject="id:settingService@cb";
-	property name="cb" inject="cbhelper@cb";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="cb" inject="cbhelper@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
@@ -74,7 +74,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Truncate the entire auth logs
 	 */
 	LoginTrackerService function truncate(){
-		var q = new Query( sql = "truncate cb_loginAttempts" ).execute();
+		new Query( sql = "TRUNCATE TABLE cb_loginAttempts" ).execute();
 		return this;
 	}
 

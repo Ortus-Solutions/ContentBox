@@ -8,15 +8,15 @@
 component accessors=true threadSafe singleton {
 
 	// DI
-	property name="settingService" inject="SettingService@cb";
-	property name="pageService" inject="PageService@cb";
-	property name="siteService" inject="siteService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="themeService" inject="ThemeService@cb";
-	property name="categoryService" inject="CategoryService@cb";
+	property name="settingService" inject="SettingService@contentbox";
+	property name="pageService" inject="PageService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="themeService" inject="ThemeService@contentbox";
+	property name="categoryService" inject="CategoryService@contentbox";
 	property name="uiConfig" inject="coldbox:moduleconfig:contentbox-ui";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="zipUtil" inject="zipUtil@cb";
+	property name="zipUtil" inject="zipUtil@contentbox";
 	property name="Renderer" inject="Provider:Renderer@coldbox";
 
 	/**
@@ -160,11 +160,10 @@ component accessors=true threadSafe singleton {
 		if ( arguments.includeBlog ) {
 			var aEntries   = variables.entryService.search( siteID: arguments.site.getSiteID() );
 			// Put all categories in prc for processing
-			prc.categories = variables.categoryService.list(
-				criteria : { "site" : arguments.site },
-				sortOrder: "category",
-				asQuery  : false
-			);
+			prc.categories = variables.categoryService.search(
+				isPublic: true,
+				siteId  : arguments.site.getSiteId()
+			).categories;
 			// Process all entries
 			for ( var thisEntry in aEntries.entries ) {
 				// put in scope for fake access

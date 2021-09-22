@@ -159,49 +159,22 @@ component
 				timeout       ="10" {
 				if ( NOT len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
-					var b = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
+					var builder = createObject( "java", "java.lang.StringBuilder" ).init(
+						getExcerpt()
+					);
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
 						"cb_onContentRendering",
-						{ builder : b, content : this }
+						{ builder : builder, content : this }
 					);
 					// store processed content
-					variables.renderedExcerpt = b.toString();
+					variables.renderedExcerpt = builder.toString();
 				}
 			}
 		}
 
 		return variables.renderedExcerpt;
 	}
-
-	/**
-	 * Get a flat representation of this entry but for UI response format which
-	 * restricts the data being generated.
-	 * @slugCache Cache of slugs to prevent infinite recursions
-	 * @showComments Show comments in memento or not
-	 * @showCustomFields Show comments in memento or not
-	 * @showParent Show parent in memento or not
-	 * @showChildren Show children in memento or not
-	 * @showCategories Show categories in memento or not
-	 * @showRelatedContent Show related Content in memento or not
-	 */
-	struct function getResponseMemento(
-		required array slugCache   = [],
-		boolean showAuthor         = true,
-		boolean showComments       = true,
-		boolean showCustomFields   = true,
-		boolean showParent         = true,
-		boolean showChildren       = true,
-		boolean showCategories     = true,
-		boolean showRelatedContent = true
-	){
-		arguments.properties = [ "showInMenu" ];
-		var result           = super.getResponseMemento( argumentCollection = arguments );
-
-		result[ "excerpt" ] = renderExcerpt();
-
-		return result;
-	};
 
 	/**
 	 * Get the layout or if empty the default convention of "pages"
@@ -238,6 +211,7 @@ component
 
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
+	 *
 	 * @author The author doing the cloning
 	 * @original The original content object that will be cloned into this content object
 	 * @originalService The ContentBox content service object
@@ -253,13 +227,16 @@ component
 		required any originalSlugRoot,
 		required any newSlugRoot
 	){
-		// do layout
+		// Do page property cloning
 		setLayout( arguments.original.getLayout() );
+		setMobileLayout( arguments.original.getMobileLayout() );
+		setShowInMenu( arguments.original.getShowInMenu() );
+		setSSLOnly( arguments.original.getSSLOnly() );
 		// do excerpts
 		if ( arguments.original.hasExcerpt() ) {
 			setExcerpt( arguments.original.getExcerpt() );
 		}
-		// do core
+		// do core cloning
 		return super.prepareForClone( argumentCollection = arguments );
 	}
 

@@ -4,9 +4,9 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="siteService" inject="siteService@cb";
-	property name="themeService" inject="themeService@cb";
-	property name="pageService" inject="pageService@cb";
+	property name="siteService" inject="siteService@contentbox";
+	property name="themeService" inject="themeService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
 
 	/**
 	 * Pre handler
@@ -51,9 +51,10 @@ component extends="baseHandler" {
 		prc.themes = variables.themeService.getThemes();
 		// pages
 		prc.pages  = variables.pageService.search(
-			sortOrder   = "slug asc",
-			isPublished = true,
-			siteID      = prc.site.getsiteID()
+			sortOrder    = "slug asc",
+			isPublished  = true,
+			siteID       = prc.site.getsiteID(),
+			propertyList = "contentID,slug,title"
 		).pages;
 
 		// exit handlers
@@ -68,7 +69,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		prc.site     = populateModel( variables.siteService.get( rc.siteID ) );
+		prc.site     = populateModel( model: variables.siteService.get( rc.siteID ), exclude: "siteID" );
 		// validate it
 		var vResults = validate( prc.site );
 		if ( !vResults.hasErrors() ) {
@@ -109,7 +110,7 @@ component extends="baseHandler" {
 	 * Change current editing site
 	 */
 	function changeSite( event, rc, prc ){
-		siteService.setCurrentWorkingsiteID( rc.siteID );
+		variables.siteService.setCurrentWorkingsiteID( rc.siteID );
 		relocate( prc.xehDashboard );
 	}
 

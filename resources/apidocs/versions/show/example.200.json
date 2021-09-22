@@ -1,0 +1,37 @@
+{
+	"data": {
+		"content": "<p>Hey welcome to my about page for ContentBox, isn't this great!</p>\r\n\r\n<p>{{{ContentStore slug='contentbox'}}}</p>\r\n\r\n<script type=\"text/javascript\">alert( \"Alert\" );<\/script>\r\n",
+		"isActive": false,
+		"relatedContent": {
+			"slug": "about",
+			"createdDate": "August, 03 2021 15:12:33 +0000",
+			"contentID": "ff8081817a3ffffe017a4001671a0086",
+			"publishedDate": "June, 24 2021 00:00:00 +0000",
+			"isPublished": true,
+			"contentType": "Page",
+			"expireDate": null,
+			"modifiedDate": "August, 03 2021 15:12:33 +0000",
+			"title": "About"
+		},
+		"version": 3,
+		"createdDate": "2021-08-03T15:09:08+00:00",
+		"modifiedDate": "2021-08-03T15:12:33+00:00",
+		"changelog": "quick save",
+		"author": {
+			"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+			"name": "Luis Majano",
+			"authorID": "ff8081817a3ffffe017a400155fb002f",
+			"email": "lmajano@ortussolutions.com"
+		},
+		"contentVersionID": "ff8081817b0c8da1017b0c8fb0b90004"
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}

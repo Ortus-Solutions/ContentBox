@@ -20,48 +20,43 @@ component
 	 ********************************************************************* */
 
 	property
-		name      ="wirebox"
-		inject    ="wirebox"
-		persistent="false";
-
-	property
-		name      ="cachebox"
-		inject    ="cachebox"
-		persistent="false";
-
-	property
-		name      ="settingService"
-		inject    ="id:settingService@cb"
-		persistent="false";
-
-	property
-		name      ="interceptorService"
-		inject    ="coldbox:interceptorService"
-		persistent="false";
-
-	property
-		name      ="customFieldService"
-		inject    ="customFieldService@cb"
-		persistent="false";
-
-	property
 		name      ="categoryService"
-		inject    ="categoryService@cb"
+		inject    ="categoryService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentService"
-		inject    ="contentService@cb"
+		inject    ="contentService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentVersionService"
-		inject    ="contentVersionService@cb"
+		inject    ="contentVersionService@contentbox"
+		persistent="false";
+
+	property
+		name      ="customFieldService"
+		inject    ="customFieldService@contentbox"
 		persistent="false";
 
 	property
 		name      ="i18n"
 		inject    ="i18n@cbi18n"
+		persistent="false";
+
+	property
+		name      ="JSONPrettyPrint"
+		inject    ="JSONPrettyPrint@JSONPrettyPrint"
+		persistent="false";
+
+	property
+		name      ="contentboxSettings"
+		inject    ="coldbox:moduleSettings:contentbox"
+		persistent="false";
+
+	property
+		name      ="settingService"
+		inject    ="id:settingService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -110,7 +105,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property
@@ -126,7 +120,7 @@ component
 		name   ="title"
 		column ="title"
 		notnull="true"
-		length ="200"
+		length ="500"
 		default=""
 		index  ="idx_search";
 
@@ -134,7 +128,7 @@ component
 		name   ="slug"
 		column ="slug"
 		notnull="true"
-		length ="200"
+		length ="500"
 		default=""
 		index  ="idx_slug,idx_publishedSlug";
 
@@ -249,14 +243,14 @@ component
 		column ="featuredImage"
 		notnull="false"
 		default=""
-		length ="255";
+		length ="500";
 
 	property
 		name   ="featuredImageURL"
 		column ="featuredImageURL"
 		notnull="false"
 		default=""
-		length ="255";
+		length ="500";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -490,6 +484,32 @@ component
 		mappers      : {},
 		defaults     : { stats : {} },
 		profiles     : {
+			response : {
+				defaultIncludes : [
+					"categoriesArray:categories",
+					"contentID",
+					"contentType",
+					"createdDate",
+					"expireDate",
+					"featuredImage",
+					"featuredImageURL",
+					"HTMLDescription",
+					"HTMLKeywords",
+					"HTMLTitle",
+					"markup",
+					"modifiedDate",
+					"numberOfChildren",
+					"numberOfComments",
+					"parentSnapshot:parent",
+					"publishedDate",
+					"slug",
+					"title",
+					"renderedContent",
+					"renderedExcerpt",
+					"childrenSnapshot:children"
+				],
+				defaultExcludes : []
+			},
 			export : {
 				defaultIncludes : [
 					"allowComments",
@@ -592,6 +612,17 @@ component
 		variables.renderedContent        = "";
 		return this;
 	}
+
+	/**
+	 * Prepare the instance for usage
+	 */
+	function onDIComplete(){
+		// Load up content helpers
+		variables.contentboxSettings.contentHelpers.each( function( thisHelper ){
+			includeMixin( arguments.thisHelper );
+		} );
+	}
+
 
 	/**
 	 * Utility method to get a snapshot of this content object
@@ -840,6 +871,20 @@ component
 	}
 
 	/**
+	 * Determines if the content object can have comments or not
+	 */
+	boolean function commentsAllowed(){
+		return !isContentStore();
+	}
+
+	/**
+	 * Determines if the content object is a content store type
+	 */
+	boolean function isContentStore(){
+		return getContentType() == "contentStore";
+	}
+
+	/**
 	 * Override the setComments
 	 */
 	BaseContent function setComments( required array comments ){
@@ -988,144 +1033,6 @@ component
 	}
 
 	/**
-	 * Get a flat representation of this entry but for UI response format which
-	 * restricts the data being generated.
-	 * @slugCache Cache of slugs to prevent infinite recursions
-	 * @showComments Show comments in memento or not
-	 * @showCustomFields Show comments in memento or not
-	 * @showParent Show parent in memento or not
-	 * @showChildren Show children in memento or not
-	 * @showCategories Show categories in memento or not
-	 * @showRelatedContent Show related Content in memento or not
-	 * @excludes Excludes
-	 * @properties Additional properties to incorporate in the memento
-	 */
-	struct function getResponseMemento(
-		required array slugCache   = [],
-		boolean showAuthor         = true,
-		boolean showComments       = true,
-		boolean showCustomFields   = true,
-		boolean showParent         = true,
-		boolean showChildren       = true,
-		boolean showCategories     = true,
-		boolean showRelatedContent = true,
-		excludes                   = "",
-		array properties
-	){
-		var pList = [
-			"title",
-			"slug",
-			"allowComments",
-			"HTMLKeywords",
-			"HTMLDescription",
-			"HTMLTitle",
-			"featuredImageURL",
-			"contentType"
-		];
-		// Add incoming properties
-		if ( structKeyExists( arguments, "properties" ) ) {
-			pList.addAll( arguments.properties );
-		}
-		var result = getBaseMemento( properties = pList, excludes = arguments.excludes );
-
-		// Properties
-		result[ "content" ]       = renderContent();
-		result[ "createdDate" ]   = getDisplayCreatedDate();
-		result[ "publishedDate" ] = getDisplayPublishedDate();
-		result[ "expireDate" ]    = getDisplayExpireDate();
-
-		// Comments
-		if ( arguments.showComments && hasComment() ) {
-			result[ "comments" ] = [];
-			for ( var thisComment in variables.comments ) {
-				arrayAppend(
-					result[ "comments" ],
-					{
-						"content"     : thisComment.getContent(),
-						"createdDate" : thisComment.getDisplayCreatedDate(),
-						"authorURL"   : thisComment.getAuthorURL(),
-						"author"      : thisComment.getAuthor()
-					}
-				);
-			}
-		} else if ( arguments.showComments ) {
-			result[ "comments" ] = [];
-		}
-
-		// Custom Fields
-		if ( arguments.showCustomFields && hasCustomField() ) {
-			result[ "customfields" ] = getCustomFieldsAsStruct();
-		} else if ( arguments.showCustomFields ) {
-			result[ "customfields" ] = [];
-		}
-
-		// Parent
-		if ( arguments.showParent && hasParent() ) {
-			result[ "parent" ] = {
-				"slug"        : getParent().getSlug(),
-				"title"       : getParent().getTitle(),
-				"contentType" : getParent().getContentType()
-			};
-		}
-		// Children
-		if ( arguments.showChildren && hasChild() ) {
-			result[ "children" ] = [];
-			for ( var thisChild in variables.children ) {
-				arrayAppend(
-					result[ "children" ],
-					{
-						"slug"  : thisChild.getSlug(),
-						"title" : thisChild.getTitle()
-					}
-				);
-			}
-		} else if ( arguments.showChildren ) {
-			result[ "children" ] = [];
-		}
-		// Categories
-		if ( arguments.showCategories && hasCategories() ) {
-			result[ "categories" ] = [];
-			for ( var thisCategory in variables.categories ) {
-				arrayAppend(
-					result[ "categories" ],
-					{
-						"category" : thisCategory.getCategory(),
-						"slug"     : thisCategory.getSlug()
-					}
-				);
-			}
-		} else if ( arguments.showCategories ) {
-			result[ "categories" ] = [];
-		}
-
-		// Related Content
-		if (
-			arguments.showRelatedContent && hasRelatedContent() && !arrayFindNoCase(
-				arguments.slugCache,
-				getSlug()
-			)
-		) {
-			result[ "relatedcontent" ] = [];
-			// add slug to cache
-			arrayAppend( arguments.slugCache, getSlug() );
-			for ( var content in variables.relatedContent ) {
-				arrayAppend(
-					result[ "relatedcontent" ],
-					{
-						"slug"        : content.getSlug(),
-						"title"       : content.getTitle(),
-						"contentType" : content.getContentType()
-					}
-				);
-			}
-		} else if ( arguments.showRelatedContent ) {
-			result[ "relatedcontent" ] = [];
-		}
-
-		return result;
-	}
-
-	/**
 	 * Verify and rotate maximum content versions
 	 */
 	private function maxContentVersionChecks(){
@@ -1163,7 +1070,18 @@ component
 	 * Retrieves the latest content string from the latest version un-translated
 	 */
 	string function getContent(){
-		return getActiveContent().getContent();
+		var thisContent = getActiveContent().getContent();
+
+		// Check for json and format it for pretty print
+		if ( isJSON( thisContent ) ) {
+			return variables.JSONPrettyPrint.formatJson(
+				json           : thisContent,
+				lineEnding     : chr( 10 ),
+				spaceAfterColon: true
+			);
+		}
+
+		return thisContent;
 	}
 
 	/**
@@ -1208,7 +1126,7 @@ component
 	 */
 	boolean function hasActiveContent(){
 		// If we are not persisted, then no exit out.
-		if ( !isLoaded() ) {
+		if ( !hasContentVersion() || !isLoaded() ) {
 			return false;
 		}
 		// Iterate and find, they are sorted descending, so it should be quick, unless we don't have one and that's ok.
@@ -1450,7 +1368,7 @@ component
 		// get formatted date
 		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT_SHORT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
 		}
 
 		return fDate;
@@ -1471,7 +1389,7 @@ component
 		// get formatted date
 		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT_SHORT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
 		}
 
 		return fDate;
@@ -1487,7 +1405,7 @@ component
 		}
 		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat(
 			publishedDate,
-			this.TIME_FORMAT_SHORT
+			this.TIME_FORMAT
 		);
 	}
 
@@ -1500,7 +1418,7 @@ component
 		}
 		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat(
 			expireDate,
-			this.TIME_FORMAT_SHORT
+			this.TIME_FORMAT
 		);
 	}
 
@@ -1609,6 +1527,16 @@ component
 	}
 
 	/**
+	 * Shortcut to get the rendered excerpt
+	 */
+	any function getRenderedExcerpt(){
+		if ( !isNull( variables.excerpt ) ) {
+			return this.renderExcerpt();
+		}
+		return "";
+	}
+
+	/**
 	 * Render content out using translations, caching, etc.
 	 */
 	any function renderContent(){
@@ -1658,13 +1586,14 @@ component
 	 */
 	any function renderContentSilent( any content = getContent() ) profile{
 		// render content out, prepare builder
-		var b = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
-
+		var builder = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
 		// announce renderings with data, so content renderers can process them
-		interceptorService.announce( "cb_onContentRendering", { builder : b, content : this } );
-
+		interceptorService.announce(
+			"cb_onContentRendering",
+			{ builder : builder, content : this }
+		);
 		// return processed content
-		return b.toString();
+		return builder.toString();
 	}
 
 	/**
@@ -1766,15 +1695,17 @@ component
 		// Nulllify?
 		if ( isNull( arguments.parent ) ) {
 			variables.parent = javacast( "null", "" );
+			// remove the hierarchical information from our slug as we are promoting to the root
+			variables.slug   = listLast( variables.slug, "/" );
 			return this;
 		} else {
 			// Welcome home papa!
 			variables.parent = arguments.parent;
 		}
 
-		// Update slug, if parent slug is not set
+		// Update slug according to parent hierarchy
 		if ( !variables.slug.findNoCase( arguments.parent.getSlug() ) ) {
-			variables.slug = arguments.parent.getSlug() & "/" & variables.slug;
+			variables.slug = arguments.parent.getSlug() & "/" & listLast( variables.slug, "/" );
 		}
 
 		return this;

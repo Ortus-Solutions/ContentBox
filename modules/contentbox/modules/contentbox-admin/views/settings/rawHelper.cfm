@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( document ).ready( function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	$settingEditor 	= $( "##settingEditor" );
 	$importDialog 	= $( "##importDialog" );
 
@@ -69,21 +69,19 @@ function flushSettingsCache(){
 	} );
 
 }
-function settingsLoad(search, viewAll, page){
-	if( search == undefined ){
-		search = "";
-	}
-	if( viewAll == undefined ){
-		viewAll = false;
-	}
-	if( page == undefined ){
-		page = 1;
-	}
-
-	$('##settingsTableContainer')
+/**
+ * Load settings according to filters
+ */
+function settingsLoad( search, viewAll, page ){
+	$( '##settingsTableContainer' )
 		.load(
 			'#event.buildLink( prc.xehRawSettingsTable )#',
-			{ search: search, viewAll: viewAll, page: page },
+			{
+				search 	: search || "",
+				viewAll : viewAll || false,
+				page 	: page || 1 ,
+				siteId 	: $( "##siteFilter" ).val()
+			},
 			function(){
 				$( this ).fadeIn();
 				activateConfirmations();

@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready(function() {
+( () => {
 	// tables references
 	$entries = $( "##entries" );
 	// sorting
@@ -17,15 +17,15 @@ $( document ).ready(function() {
   		"order": []
 	} );
 	// Setup Count Container
-	$( "##entriesCountContainer" ).html( "(" + $( "##entriesCount" ).val() + ")" );
+	$( "##entriesCountContainer" ).html( "(" + $( "##contentCount" ).val() + ")" );
 	// activate confirmations
 	activateConfirmations();
 	// activate tooltips
 	activateTooltips();
 	// quick look
-	activateQuickLook( $entries, '#event.buildLink( prc.xehEntryQuickLook )#/contentID/' );
-	// Popovers
-	activateInfoPanels();
-} );
+	contentListHelper.activateQuickLook( $entries, '#event.buildLink( prc.xehEntryQuickLook )#/contentID/' );
+	// Info Panels
+	contentListHelper.activateInfoPanels();
+} )();
 </script>
 </cfoutput>

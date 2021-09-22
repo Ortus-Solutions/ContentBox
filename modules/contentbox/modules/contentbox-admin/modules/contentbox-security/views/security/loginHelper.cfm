@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script type="text/javascript">
-$(document).ready(function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	// form validators
 	$( "##loginForm" ).validate();
 	<cfif len(prc.rememberMe)>

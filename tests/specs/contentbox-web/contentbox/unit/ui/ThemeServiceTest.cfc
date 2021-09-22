@@ -12,8 +12,8 @@ component extends="tests.resources.BaseTest" {
 		describe( "Theme Services", function(){
 			beforeEach( function( currentSpec ){
 				setup();
-				cbHelper = getInstance( "CBHelper@cb" );
-				model    = getInstance( "ThemeService@cb" );
+				cbHelper = getInstance( "CBHelper@contentbox" );
+				model    = getInstance( "ThemeService@contentbox" );
 			} );
 
 			it( "can build the theme registry", function(){

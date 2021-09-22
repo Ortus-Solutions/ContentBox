@@ -6,6 +6,7 @@
     "numberOfEntries": "4",
     "category": "Test",
     "numberOfContentStore": "1",
+	"isPublic": true,
     "modifiedDate": "2016-05-03T21:23:25+00:00",
     "site": {
         "slug": "default",

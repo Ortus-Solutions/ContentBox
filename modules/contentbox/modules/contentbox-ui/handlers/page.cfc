@@ -8,11 +8,11 @@
 component extends="content" {
 
 	// DI
-	property name="pageService" inject="pageService@cb";
-	property name="searchService" inject="SearchService@cb";
-	property name="securityService" inject="securityService@cb";
-	property name="mobileDetector" inject="mobileDetector@cb";
-	property name="themeService" inject="themeService@cb";
+	property name="pageService" inject="pageService@contentbox";
+	property name="searchService" inject="SearchService@contentbox";
+	property name="securityService" inject="securityService@contentbox";
+	property name="mobileDetector" inject="mobileDetector@contentbox";
+	property name="themeService" inject="themeService@contentbox";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "preview";
@@ -42,9 +42,7 @@ component extends="content" {
 		super.preview( argumentCollection = arguments );
 
 		// Determine content type service to allow for custom content types
-		var typeService = (
-			rc.contentType == "page" ? variables.pageService : variables.contentService
-		);
+		var typeService = getContentTypeService( rc.contentType );
 
 		// Construct the preview entry according to passed arguments
 		prc.page = typeService.new( {
@@ -63,14 +61,14 @@ component extends="content" {
 
 		// Create preview version
 		prc.page.addNewContentVersion(
-			content = urlDecode( rc.content ),
-			author  = prc.oCurrentAuthor,
+			content   = urlDecode( rc.content ),
+			author    = prc.oCurrentAuthor,
 			isPreview = true
 		);
 
 		// Do we have a parent?
-		if ( len( rc.parentPage ) && isNumeric( rc.parentPage ) ) {
-			var parent = variables.contentService.get( rc.parentPage );
+		if ( len( rc.parentContent ) && isNumeric( rc.parentContent ) ) {
+			var parent = typeService.get( rc.parentContent );
 			if ( !isNull( parent ) ) {
 				prc.page.setParent( parent );
 			}
@@ -140,7 +138,7 @@ component extends="content" {
 		}
 
 		// Try to get the page using the incoming URI
-		prc.page = variables.contentService.findBySlug(
+		prc.page = variables.pageService.findBySlug(
 			slug           : incomingURL,
 			showUnpublished: showUnpublished,
 			siteID         : prc.oCurrentSite.getsiteID()
@@ -157,7 +155,7 @@ component extends="content" {
 				return;
 			}
 			// Record hit
-			variables.contentService.updateHits( prc.page );
+			variables.pageService.updateHits( prc.page );
 			// Retrieve Comments
 			// TODO: paging
 			if ( prc.page.getAllowComments() ) {
@@ -234,7 +232,7 @@ component extends="content" {
 		rc.q = htmlEditFormat( trim( rc.q ) );
 
 		// prepare paging object
-		prc.oPaging          = getInstance( "paging@cb" );
+		prc.oPaging          = getInstance( "paging@contentbox" );
 		prc.pagingBoundaries = prc.oPaging.getBoundaries(
 			pagingMaxRows: prc.cbSettings.cb_search_maxResults
 		);
@@ -251,7 +249,7 @@ component extends="content" {
 			);
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
-			prc.searchResults        = getInstance( "SearchResults@cb" );
+			prc.searchResults        = getInstance( "SearchResults@contentbox" );
 			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>
 ";
 		}
@@ -330,6 +328,15 @@ component extends="content" {
 	}
 
 	/************************************** PRIVATE *********************************************/
+
+	/**
+	 * Get the appropriate type service according to passed content type
+	 *
+	 * @contentType The type of service needed
+	 */
+	private function getContentTypeService( contentType = "page" ){
+		return ( arguments.contentType == "page" ? variables.pageService : variables.contentService );
+	}
 
 	/**
 	 * Verify if a chosen page layout exists or not.

@@ -1,0 +1,69 @@
+{
+	"data": [
+		{
+			"isActive": true,
+			"version": 4,
+			"createdDate": "2021-08-03T15:12:33+00:00",
+			"modifiedDate": "2021-08-03T15:12:33+00:00",
+			"changelog": "",
+			"author": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"contentVersionID": "ff8081817b0c8da1017b0c92d28c0005"
+		},
+		{
+			"isActive": false,
+			"version": 3,
+			"createdDate": "2021-08-03T15:09:08+00:00",
+			"modifiedDate": "2021-08-03T15:12:33+00:00",
+			"changelog": "quick save",
+			"author": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"contentVersionID": "ff8081817b0c8da1017b0c8fb0b90004"
+		},
+		{
+			"isActive": false,
+			"version": 2,
+			"createdDate": "2021-08-03T15:08:15+00:00",
+			"modifiedDate": "2021-08-03T15:09:08+00:00",
+			"changelog": "Editor Change Quick Save",
+			"author": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"contentVersionID": "ff8081817b0c8da1017b0c8ee2b30002"
+		},
+		{
+			"isActive": false,
+			"version": 1,
+			"createdDate": "2021-06-24T21:51:12+00:00",
+			"modifiedDate": "2021-08-03T15:08:15+00:00",
+			"changelog": "First creation",
+			"author": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"contentVersionID": "ff8081817a3ffffe017a4001671f0087"
+		}
+	],
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 25,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 4
+	},
+	"messages": []
+}

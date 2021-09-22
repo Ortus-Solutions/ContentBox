@@ -1,6 +1,10 @@
 <cfoutput>
 <!--- Entries Count --->
-<input type="hidden" name="entriesCount" id="entriesCount" value="#prc.entriesCount#">
+<input
+	type="hidden"
+	name="contentCount"
+	id="contentCount"
+	value="#prc.contentCount#">
 
 <!--- entries --->
 <table
@@ -36,7 +40,7 @@
 	</thead>
 
 	<tbody>
-		<cfloop array="#prc.entries#" index="entry">
+		<cfloop array="#prc.content#" index="entry">
 		<tr data-contentID="#entry.getContentID()#"
 			<cfif entry.isExpired()>
 				class="danger"
@@ -120,7 +124,7 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li>
-							<a href="javascript:openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
+							<a href="javascript:contentListHelper.openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
 								<i class="far fa-clone fa-lg"></i> Clone
 							</a>
 						</li>
@@ -128,7 +132,7 @@
 						<!--- Delete Command --->
 						<li>
 							<a
-								href="javascript:remove( '#entry.getContentID()#' )"
+								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
 								data-title="<i class='far fa-trash-alt'></i> Delete Entry?">
 								<i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
@@ -154,13 +158,13 @@
 						</cfif>
 						<!--- History Command --->
 						<li>
-							<a href="#event.buildLink( prc.xehEntryHistory )#/contentID/#entry.getContentID()#">
+							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#entry.getContentID()#">
 								<i class="fas fa-history fa-lg"></i> History
 							</a>
 						</li>
 						<!-- Reset hits -->
 						<li>
-							<a href="javascript:resetHits( '#entry.getContentID()#' )">
+							<a href="javascript:contentListHelper.resetHits( '#entry.getContentID()#' )">
 								<i class="fas fa-recycle fa-lg"></i> Reset Hits
 							</a>
 						</li>
@@ -184,12 +188,12 @@
 <!--- Paging --->
 <cfif !rc.showAll>
 	#prc.oPaging.renderit(
-		foundRows = prc.entriesCount,
+		foundRows = prc.contentCount,
 		link      = prc.pagingLink,
 		asList    = true
 	)#
 <cfelse>
-	<span class="label label-info">Total Records: #prc.entriesCount#</span>
+	<span class="label label-info">Total Records: #prc.contentCount#</span>
 </cfif>
 
 </cfoutput>

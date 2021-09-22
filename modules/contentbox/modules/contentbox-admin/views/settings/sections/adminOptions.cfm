@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="adminSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
     <legend><i class="fa fa-signal fa-lg"></i>  Dashboard Options</legend>
 
@@ -280,4 +281,11 @@
         </div>
     </div>
 </fieldset>
+
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

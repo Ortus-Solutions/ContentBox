@@ -4,7 +4,7 @@
         var hidden = null;
         var label = null;
         var typeIcon = null;
-        $( document ).ready(function() {
+        document.addEventListener( "DOMContentLoaded", () => {
             $( '.select-content' ).on( 'click', function() {
                 input = $( this ).siblings( 'input[name^=contentTitle]' );
                 hidden= $( this ).siblings( 'input[name^=contentSlug]' );

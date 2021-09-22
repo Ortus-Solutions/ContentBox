@@ -1,0 +1,155 @@
+{
+	"data": {
+		"biography": "",
+		"isDeleted": false,
+		"isActive": true,
+		"lastLogin": "",
+		"permissions": [],
+		"lastName": "Majano",
+		"createdDate": "2021-09-01T13:22:05+00:00",
+		"numberOfPages": 0,
+		"permissionGroups": [],
+		"preferences": "{}",
+		"role": {
+			"permissions": [
+				{
+					"permission": "CATEGORIES_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a4001505c0012",
+					"description": "Ability to manage categories, default is view only"
+				},
+				{
+					"permission": "COMMENTS_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a400150600013",
+					"description": "Ability to manage comments, default is view only"
+				},
+				{
+					"permission": "CONTENTBOX_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a400150d9002c",
+					"description": "Access to the enter the ContentBox administrator console"
+				},
+				{
+					"permission": "CONTENTSTORE_EDITOR",
+					"permissionID": "ff8081817a3ffffe017a40015085001c",
+					"description": "Ability to manage content store elements but not publish them"
+				},
+				{
+					"permission": "EDITORS_CACHING",
+					"permissionID": "ff8081817a3ffffe017a400150a10022",
+					"description": "Ability to view the content caching panel"
+				},
+				{
+					"permission": "EDITORS_CATEGORIES",
+					"permissionID": "ff8081817a3ffffe017a4001502c000b",
+					"description": "Ability to view the content categories panel"
+				},
+				{
+					"permission": "EDITORS_CUSTOM_FIELDS",
+					"permissionID": "ff8081817a3ffffe017a4001508d001e",
+					"description": "Ability to manage custom fields in any content editors"
+				},
+				{
+					"permission": "EDITORS_DISPLAY_OPTIONS",
+					"permissionID": "ff8081817a3ffffe017a400150d1002b",
+					"description": "Ability to view the content display options panel"
+				},
+				{
+					"permission": "EDITORS_EDITOR_SELECTOR",
+					"permissionID": "ff8081817a3ffffe017a4001506d0016",
+					"description": "Ability to change the editor to another registered online editor"
+				},
+				{
+					"permission": "EDITORS_FEATURED_IMAGE",
+					"permissionID": "ff8081817a3ffffe017a400150ca0029",
+					"description": "Ability to view the featured image panel"
+				},
+				{
+					"permission": "EDITORS_HTML_ATTRIBUTES",
+					"permissionID": "ff8081817a3ffffe017a40014fec0005",
+					"description": "Ability to view the content HTML attributes panel"
+				},
+				{
+					"permission": "EDITORS_LINKED_CONTENT",
+					"permissionID": "ff8081817a3ffffe017a400150ad0024",
+					"description": "Ability to view the linked content panel"
+				},
+				{
+					"permission": "EDITORS_MODIFIERS",
+					"permissionID": "ff8081817a3ffffe017a40014fb80001",
+					"description": "Ability to view the content modifiers panel"
+				},
+				{
+					"permission": "EDITORS_RELATED_CONTENT",
+					"permissionID": "ff8081817a3ffffe017a400150570011",
+					"description": "Ability to view the related content panel"
+				},
+				{
+					"permission": "EMAIL_TEMPLATE_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a4001504e000f",
+					"description": "Ability to admin and preview email templates"
+				},
+				{
+					"permission": "ENTRIES_EDITOR",
+					"permissionID": "ff8081817a3ffffe017a4001501a0009",
+					"description": "Ability to manage blog entries but not publish entries"
+				},
+				{
+					"permission": "GLOBALHTML_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a40015030000c",
+					"description": "Ability to manage the system's global HTML content used on layouts"
+				},
+				{
+					"permission": "GLOBAL_SEARCH",
+					"permissionID": "ff8081817a3ffffe017a400150520010",
+					"description": "Ability to do global searches in the ContentBox Admin"
+				},
+				{
+					"permission": "MEDIAMANAGER_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a40015081001b",
+					"description": "Ability to manage the system's media manager"
+				},
+				{
+					"permission": "MENUS_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a400150790019",
+					"description": "Ability to manage the menu builder"
+				},
+				{
+					"permission": "PAGES_EDITOR",
+					"permissionID": "ff8081817a3ffffe017a400150650014",
+					"description": "Ability to manage content pages but not publish pages"
+				},
+				{
+					"permission": "THEME_ADMIN",
+					"permissionID": "ff8081817a3ffffe017a40015027000a",
+					"description": "Ability to manage layouts, default is view only"
+				},
+				{
+					"permission": "VERSIONS_ROLLBACK",
+					"permissionID": "ff8081817a3ffffe017a40015091001f",
+					"description": "Ability to rollback content versions"
+				}
+			],
+			"createdDate": "2021-06-24T21:51:06+00:00",
+			"roleID": "ff8081817a3ffffe017a4001511d002d",
+			"role": "Editor",
+			"modifiedDate": "2021-06-24T21:51:06+00:00",
+			"description": "A ContentBox editor"
+		},
+		"numberOfEntries": 0,
+		"numberOfContentStore": 0,
+		"firstName": "Luis",
+		"modifiedDate": "2021-09-01T13:22:05+00:00",
+		"authorID": "ff8081817ba0c3a5017ba1861bb20009",
+		"username": "lmajano",
+		"numberOfContent": 0,
+		"email": "lmajano@ortussolutions.com"
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}

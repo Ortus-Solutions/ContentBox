@@ -1,0 +1,43 @@
+{
+	"200": {
+		"description": "OK",
+		"content": {
+			"application/json": {
+				"schema": {
+					"$ref": "../../_schemas/app-response.json"
+				},
+				"example": {
+					"$ref": "example.200.json"
+				}
+			}
+		}
+	},
+
+	"401": {
+		"description": "Invalid or Missing Authentication Credentials",
+		"content": {
+			"application/json": {
+				"example": {
+					"$ref": "../../_schemas/app-invalid.json"
+				},
+				"schema": {
+					"$ref": "../../_schemas/app-response.json"
+				}
+			}
+		}
+	},
+	
+	"404": {
+		"description": "Not Found",
+		"content": {
+			"application/json": {
+				"example": {
+					"$ref": "example.404.json"
+				},
+				"schema": {
+					"$ref": "../../_schemas/app-response.json"
+				}
+			}
+		}
+	}
+}

@@ -8,16 +8,15 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="settingsService" inject="settingService@cb";
-	property name="siteService" inject="siteService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="CBHelper" inject="CBHelper@cb";
-	property name="editorService" inject="editorService@cb";
-	property name="mediaService" inject="mediaService@cb";
-	property name="LoginTrackerService" inject="LoginTrackerService@cb";
+	property name="settingsService" inject="settingService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="editorService" inject="editorService@contentbox";
+	property name="mediaService" inject="mediaService@contentbox";
+	property name="LoginTrackerService" inject="LoginTrackerService@contentbox";
 	property name="mailService" inject="mailservice@cbMailservices";
 	property name="markdownEditor" inject="markdownEditor@contentbox-markdowneditor";
-	property name="twoFactorService" inject="twoFactorService@cb";
+	property name="twoFactorService" inject="twoFactorService@contentbox";
 
 	/**
 	 * Settings manager
@@ -28,22 +27,20 @@ component extends="baseHandler" {
 		// Exit Handler
 		prc.xehSaveSettings    = "#prc.cbAdminEntryPoint#.settings.save";
 		prc.xehEmailTest       = "#prc.cbAdminEntryPoint#.settings.emailTest";
-		// pages
-		prc.pages              = pageService.search( sortOrder = "slug asc", isPublished = true ).pages;
 		// Get All registered editors so we can display them
-		prc.editors            = editorService.getRegisteredEditorsMap();
+		prc.editors            = variables.editorService.getRegisteredEditorsMap();
 		// Get All registered markups so we can display them
-		prc.markups            = editorService.getRegisteredMarkups();
+		prc.markups            = variables.editorService.getRegisteredMarkups();
 		// Get all registered media providers so we can display them
-		prc.mediaProviders     = mediaService.getRegisteredProvidersMap();
+		prc.mediaProviders     = variables.mediaService.getRegisteredProvidersMap();
 		// Get All registered two factor providers so we can display them
-		prc.twoFactorProviders = twoFactorService.getRegisteredProvidersMap();
+		prc.twoFactorProviders = variables.twoFactorService.getRegisteredProvidersMap();
 		// tab
 		prc.tabSystem_Settings = true;
 		// cb helper
-		prc.cb                 = CBHelper;
+		prc.cb                 = variables.CBHelper;
 		// caches
-		prc.cacheNames         = cachebox.getCacheNames();
+		prc.cacheNames         = variables.cachebox.getCacheNames();
 		// Markdown Editor Availability
 		variables.markdownEditor.loadAssets();
 		// view
@@ -79,34 +76,37 @@ component extends="baseHandler" {
 	function save( event, rc, prc ){
 		// announce event
 		announce( "cbadmin_preSettingsSave", { oldSettings : prc.cbSettings, newSettings : rc } );
+
 		// bulk save the options
-		settingsService.bulkSave( rc );
+		variables.settingsService.bulkSave( rc );
 
-		// Do blog entry point change
-		var routingService = controller.getRoutingService();
-
-		// Reroute using passed cb_site_blog_entryPoint just in case
-		routingService.setRoutes(
-			routingService
-				.getRoutes()
-				.map( function( item ){
-					if ( item.namespaceRouting eq "blog" ) {
-						item.pattern = item.regexpattern = replace(
-							rc[ "cb_site_blog_entrypoint" ],
-							"/",
-							"-",
-							"all"
-						) & "/";
-					}
-					return item;
-				} )
-		);
-
+		// Do blog entry point change?
+		if (
+			rc.keyExists( "cb_site_blog_entrypoint" ) && prc.cbSettings[ "cb_site_blog_entrypoint" ] != rc.cb_site_blog_entrypoint
+		) {
+			var routingService = variables.controller.getRoutingService();
+			// Reroute using passed cb_site_blog_entryPoint just in case
+			routingService.setRoutes(
+				routingService
+					.getRoutes()
+					.map( function( item ){
+						if ( arguments.item.namespaceRouting eq "blog" ) {
+							arguments.item.pattern = item.regexpattern = replace(
+								rc[ "cb_site_blog_entrypoint" ],
+								"/",
+								"-",
+								"all"
+							) & "/";
+						}
+						return arguments.item;
+					} )
+			);
+		}
 		// announce event
 		announce( "cbadmin_postSettingsSave" );
 
 		// relocate back to editor
-		cbMessagebox.info( "All ContentBox settings updated! Yeeehaww!" );
+		variables.cbMessagebox.info( "Settings saved!" );
 
 		relocate( prc.xehSettings );
 	}
@@ -130,8 +130,10 @@ component extends="baseHandler" {
 		// Get Interception Points
 		prc.interceptionPoints = controller.getInterceptorService().getInterceptionPoints();
 		arraySort( prc.interceptionPoints, "textnocase" );
+
 		// Raw tab
 		prc.tabSystem_geekSettings = true;
+
 		// view
 		event.setView( "settings/raw" );
 	}
@@ -142,12 +144,14 @@ component extends="baseHandler" {
 	 */
 	function rawtable( event, rc, prc ){
 		// params
-		event.paramValue( "page", 1 );
-		event.paramValue( "search", "" );
-		event.paramValue( "viewAll", false );
+		event
+			.paramValue( "page", 1 )
+			.paramValue( "search", "" )
+			.paramValue( "viewAll", false )
+			.paramValue( "siteId", "" );
 
 		// prepare paging object
-		prc.oPaging    = getInstance( "Paging@cb" );
+		prc.oPaging    = getInstance( "Paging@contentbox" );
 		prc.paging     = prc.oPaging.getBoundaries();
 		prc.pagingLink = event.buildLink( "#prc.xehRawSettings#.page.@page@?" );
 		prc.pagingLink = "javascript:settingsPaginate(@page@)";
@@ -163,6 +167,7 @@ component extends="baseHandler" {
 		// Get settings
 		var results = variables.settingsService.search(
 			search   : rc.search,
+			siteId   : rc.siteId,
 			offset   : offset,
 			max      : max,
 			sortOrder: "name asc, site asc"
@@ -211,17 +216,17 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideSettings
 				);
-				cbMessagebox.info( "Settings imported sucessfully!" );
+				variables.cbMessagebox.info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
+				variables.cbMessagebox.error(
 					"The import file is invalid: #rc.importFile# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			variables.cbMessagebox.error( errorMessage );
 		}
 		relocate( prc.xehRawSettings );
 	}
@@ -246,16 +251,17 @@ component extends="baseHandler" {
 
 		// populate and get setting
 		var setting = populateModel(
-			model               : settingsService.get( id = rc.settingID ),
+			model               : settingsService.get( rc.settingID ),
 			composeRelationships: true,
-			nullEmptyInclude    : "site"
+			nullEmptyInclude    : "site",
+			exclude             : "settingID"
 		);
 
 		// save new setting
 		settingsService.save( setting );
 		settingsService.flushSettingsCache();
 		// messagebox
-		cbMessagebox.setMessage( "info", "Setting saved!" );
+		variables.cbMessagebox.setMessage( "info", "Setting saved!" );
 		// relocate
 		relocate( event = prc.xehRawSettings, queryString = "page=#rc.page#" );
 	}
@@ -268,13 +274,13 @@ component extends="baseHandler" {
 		announce( "cbadmin_preSettingRemove", { settingID : rc.settingID } );
 		// delete by id
 		if ( !settingsService.deleteByID( rc.settingID ) ) {
-			cbMessagebox.setMessage( "warning", "Invalid Setting detected!" );
+			variables.cbMessagebox.setMessage( "warning", "Invalid Setting detected!" );
 		} else {
 			// announce event
 			announce( "cbadmin_postSettingRemove", { settingID : rc.settingID } );
 			// flush cache
 			settingsService.flushSettingsCache();
-			cbMessagebox.setMessage( "info", "Setting Removed!" );
+			variables.cbMessagebox.setMessage( "info", "Setting Removed!" );
 		}
 		relocate( prc.xehRawSettings );
 	}
@@ -300,7 +306,10 @@ component extends="baseHandler" {
 	 */
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		cbMessagebox.setMessage( "info", "All singletons flushed and awaiting re-creation." );
+		variables.cbMessagebox.setMessage(
+			"info",
+			"All singletons flushed and awaiting re-creation."
+		);
 		relocate( event = prc.xehRawSettings, queryString = "##wirebox" );
 	}
 
@@ -328,7 +337,10 @@ component extends="baseHandler" {
 
 		// Check if the feature is enabled
 		if ( prc.featureEnabled ) {
-			prc.logs = loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
+			prc.logs = variables.loginTrackerService.getAll(
+				sortOrder = "attempts",
+				asQuery   = false
+			);
 		} else {
 			prc.featureEnabled = false;
 		}
@@ -343,7 +355,7 @@ component extends="baseHandler" {
 	 * truncate all auth logs
 	 */
 	any function truncateAuthLogs( event, rc, prc ){
-		loginTrackerService.truncate();
+		variables.loginTrackerService.truncate();
 		relocate( "#prc.cbAdminEntryPoint#.settings.authLogs" );
 	}
 

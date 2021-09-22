@@ -1,6 +1,5 @@
 <cfoutput>
-<!--- entries --->
-<table name="entries" id="entries" class="table  table-striped-removed table-hover">
+<table name="content" id="content" class="table  table-striped-removed table-hover">
 	<thead>
 		<tr>
 			<th>
@@ -16,28 +15,27 @@
 	</thead>
 
 	<tbody>
-		<cfloop array="#prc.entries#" index="entry">
+		<cfloop array="#prc.content#" index="thisContent">
 		<tr
-			id="contentID-#entry.getContentID()#"
-			<cfif NOT entry.getIsPublished()>class="warning"</cfif>
+			id="contentID-#thisContent.getContentID()#"
+			<cfif NOT thisContent.getIsPublished()>class="warning"</cfif>
 		>
 			<td>
 				<!--- Title --->
 				<div class="size16">
-					#entry.getTitle()#
+					#thisContent.getTitle()#
 				</div>
 
-				<br>
 				<!--- Title --->
 				<div class="mt5">
 					<div class="text-muted">
-					<cfif entry.getContentType() eq "contentStore">
-						#entry.getDescription()#
+					<cfif structKeyExists( thisContent, "getDescription" )>
+						#thisContent.getDescription()#
 					<cfelse>
-						<cfif entry.hasExcerpt()>
-							#prc.cbHelper.stripHTML( left( entry.getExcerpt(), 100 ) )#
+						<cfif thisContent.hasExcerpt()>
+							#prc.cbHelper.stripHTML( left( thisContent.getExcerpt(), 100 ) )#
 						<cfelse>
-							#prc.cbHelper.stripHTML( left( entry.getContent(), 100 ) )#
+							#prc.cbHelper.stripHTML( left( thisContent.getContent(), 100 ) )#
 						</cfif>
 						...
 					</cfif>
@@ -48,7 +46,7 @@
 			<td class="text-center">
 				#renderView(
 					view : "_components/content/TableStatus",
-					args : { content : entry },
+					args : { content : thisContent },
 					prepostExempt : true
 				)#
 			</td>
@@ -57,9 +55,9 @@
 				<button
 					class="btn btn-more btn-sm"
 					onclick="return selectCBContent(
-						'#JSStringFormat( entry.getSlug() )#',
-						'#JSStringFormat( entry.getTitle() )#',
-						'#entry.getContentType().lcase()#ssl'
+						'#JSStringFormat( thisContent.getSlug() )#',
+						'#JSStringFormat( thisContent.getTitle() )#',
+						'#thisContent.getContentType().lcase()#ssl'
 					)"
 					title="SSL Link">
 					<i class="fas fa-key"></i>
@@ -67,9 +65,9 @@
 				<button
 					class="btn btn-more btn-sm"
 					onclick="return selectCBContent(
-						'#JSStringFormat( entry.getSlug() )#',
-						'#JSStringFormat( entry.getTitle() )#',
-						'#entry.getContentType().lcase()#'
+						'#JSStringFormat( thisContent.getSlug() )#',
+						'#JSStringFormat( thisContent.getTitle() )#',
+						'#thisContent.getContentType().lcase()#'
 					)"
 					title="Link">
 					<i class="fa fa-link"></i>
@@ -81,5 +79,9 @@
 </table>
 
 <!--- Paging --->
-#prc.oPaging.renderit(foundRows=prc.entriesCount, link=prc.pagingLink, asList=true)#
+#prc.oPaging.renderit(
+	foundRows : prc.contentCount,
+	link      : prc.pagingLink,
+	asList    : true
+)#
 </cfoutput>

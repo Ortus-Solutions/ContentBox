@@ -22,7 +22,7 @@
 				class="text-muted"
 				title="Created by #args.content.getCreatorName()#"
 			>
-				#getInstance( "Avatar@cb" ).renderAvatar(
+				#getInstance( "Avatar@contentbox" ).renderAvatar(
 					email	= args.content.getCreatorEmail(),
 					size	= "20",
 					class	= "img img-circle"
@@ -63,7 +63,7 @@
 		</div>
 
 		<!--- Description --->
-		<cfif args.showDescription>
+		<cfif args.showDescription && len( args.content.getDescription() )>
 			<div class="mt10 mb5 ml5">
 				<div class="text-muted">
 					<i class="fas fa-info-circle mr5"></i> #args.content.getDescription()#

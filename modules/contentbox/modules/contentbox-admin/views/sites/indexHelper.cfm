@@ -1,6 +1,6 @@
 ﻿<cfoutput>
 <script>
-$( document ).ready( function() {
+document.addEventListener( "DOMContentLoaded", () => {
 	$importDialog 	= $( "##importDialog" );
 	$siteForm 		= $( "##siteForm" );
 	$sitesTable 	= $siteForm.find( "##sites" );

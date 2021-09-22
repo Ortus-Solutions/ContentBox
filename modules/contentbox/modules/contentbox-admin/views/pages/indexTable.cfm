@@ -2,16 +2,16 @@
 <!--- Location Bar --->
 <cfif structKeyExists( rc, "parent" ) AND len( rc.parent )>
 	<div class="breadcrumb">
-		<a href="javascript:contentDrilldown()" title="Go Home!">
+		<a href="javascript:contentListHelper.contentDrilldown()" title="Go Home!">
 			<i class="fa fa-home fa-lg"></i>
 		</a>
-	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.page )#
+	  	#getInstance( "PageBreadcrumbVisitor@cbadmin" ).visit( prc.oParent )#
 	</div>
 </cfif>
 
 <!--- Hidden Elements --->
 #html.hiddenField( name="parent", value=event.getValue( "parent","" ) )#
-#html.hiddenField( name="pagesCount", value=prc.pagesCount )#
+#html.hiddenField( name="pagesCount", value=prc.contentCount )#
 
 <!--- pages --->
 <table
@@ -47,7 +47,7 @@
         </tr>
     </thead>
     <tbody>
-        <cfloop array="#prc.pages#" index="page">
+        <cfloop array="#prc.content#" index="page">
 			<tr
 				<!--- We convert the - in the id to _ since the order plugin doesn't like dashes--->
 				id="contentID-#page.getContentID().replace( "-", "_", "all" )#"
@@ -66,7 +66,7 @@
 
 				<!--- double click drill down --->
 				<cfif page.getNumberOfChildren()>
-					ondblclick="contentDrilldown( '#page.getContentID()#' )"
+					ondblclick="contentListHelper.contentDrilldown( '#page.getContentID()#' )"
 				</cfif>
 			>
 				<!--- check box --->
@@ -84,7 +84,7 @@
 					<!--- Children Dig Deeper --->
 					<cfif page.getNumberOfChildren()>
 						<a
-							href="javascript:contentDrilldown( '#page.getContentID()#' )"
+							href="javascript:contentListHelper.contentDrilldown( '#page.getContentID()#' )"
 							class="cursor-pointer text-muted"
 							title="View Child Pages (#page.getNumberOfChildren()#)"
 						>
@@ -118,7 +118,7 @@
 					</cfif>
 
 					<!--- Search Label --->
-					<cfif len( rc.searchPages ) or prc.isFiltering>
+					<cfif len( rc.searchContent ) or prc.isFiltering>
 						<div class="mt5" title="Root Path">
 							<div class="label label-success">#page.getSlug()#</div>
 						</div>
@@ -190,7 +190,7 @@
 								<!--- Clone Command --->
 								<li class="mb5">
 									<a
-										href="javascript:openCloneDialog(
+										href="javascript:contentListHelper.openCloneDialog(
 											'#page.getContentID()#',
 											'#URLEncodedFormat( page.getTitle() )#'
 										)"
@@ -212,7 +212,7 @@
 								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 									<li class="mb5">
 										<a
-											href="javascript:remove( '#page.getContentID()#' )"
+											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
 											class="confirmIt"
 											data-title="<i class='far fa-trash-alt'></i> Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
@@ -250,7 +250,7 @@
 							<!--- History Command --->
 							<li class="mb5">
 								<a
-									href="#event.buildLink( prc.xehPageHistory )#/contentID/#page.getContentID()#"
+									href="#event.buildLink( prc.xehContentHistory )#/contentID/#page.getContentID()#"
 								>
 									<i class="fas fa-history fa-lg"></i> History
 								</a>
@@ -259,7 +259,7 @@
 							<!--- Reset hits --->
 							<li class="mb5">
 								<a
-									href="javascript:resetHits( '#page.getContentID()#' )"
+									href="javascript:contentListHelper.resetHits( '#page.getContentID()#' )"
 								>
 									<i class="fas fa-recycle fa-lg"></i> Reset Hits
 								</a>
@@ -281,4 +281,15 @@
 		</cfloop>
     </tbody>
 </table>
+
+<!--- Paging --->
+<cfif !rc.showAll>
+	#prc.oPaging.renderit(
+		foundRows = prc.contentCount,
+		link      = prc.pagingLink,
+		asList    = true
+	)#
+<cfelse>
+	<span class="label label-info">Total Records: #prc.contentCount#</span>
+</cfif>
 </cfoutput>

@@ -8,18 +8,18 @@
 component {
 
 	// DI
-	property name="authorService" inject="id:authorService@cb";
-	property name="categoryService" inject="id:categoryService@cb";
-	property name="contentService" inject="id:contentService@cb";
-	property name="commentService" inject="id:commentService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
-	property name="rssService" inject="id:rssService@cb";
-	property name="themeService" inject="id:themeService@cb";
+	property name="authorService" inject="id:authorService@contentbox";
+	property name="categoryService" inject="id:categoryService@contentbox";
+	property name="contentService" inject="id:contentService@contentbox";
+	property name="commentService" inject="id:commentService@contentbox";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
+	property name="rssService" inject="id:rssService@contentbox";
+	property name="themeService" inject="id:themeService@contentbox";
 	property name="antiSamy" inject="antisamy@cbantisamy";
 	property name="messagebox" inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller" inject="DataMarshaller@coldbox";
 	property name="markdown" inject="Processor@cbmarkdown";
-	property name="siteService" inject="siteService@cb";
+	property name="siteService" inject="siteService@contentbox";
 
 	// Pre Handler Exceptions
 	this.preHandler_except = "previewSite";
@@ -293,20 +293,10 @@ component {
 			}
 			case "json": {
 				data.content = dataMarshaller.marshallData(
-					data = oContent.getResponseMemento(),
+					data = oContent.getMemento( profile: "response" ),
 					type = "json"
 				);
 				data.contentType = "application/json";
-				data.isBinary    = false;
-				break;
-			}
-			case "xml": {
-				data.content = dataMarshaller.marshallData(
-					data        = oContent.getResponseMemento(),
-					type        = "xml",
-					xmlRootName = lCase( oContent.getContentType() )
-				);
-				data.contentType = "text/xml";
 				data.isBinary    = false;
 				break;
 			}
@@ -460,7 +450,7 @@ component {
 		required prc
 	){
 		// Get new comment to persist
-		var comment = populateModel( commentService.new() );
+		var comment = populateModel( model: commentService.new(), exclude: "commentID" );
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it

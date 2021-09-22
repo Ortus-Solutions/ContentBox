@@ -29,26 +29,24 @@ component accessors=true {
 
 	// DI
 	property name="moduleSettings" inject="coldbox:setting:modules";
-	property name="entryService" inject="id:entryService@cb";
-	property name="pageService" inject="id:pageService@cb";
-	property name="categoryService" inject="id:categoryService@cb";
-	property name="contentStoreService" inject="id:contentStoreService@cb";
-	property name="menuService" inject="id:menuService@cb";
-	property name="securityRuleService" inject="id:securityRuleService@cb";
-	property name="authorService" inject="id:authorService@cb";
-	property name="roleService" inject="id:roleService@cb";
-	property name="permissionService" inject="id:permissionService@cb";
-	property name="settingService" inject="id:settingService@cb";
-	property name="securityService" inject="id:securityService@cb";
-	property name="moduleService" inject="id:moduleService@cb";
-	property name="themeService" inject="id:themeService@cb";
-	property name="widgetService" inject="id:widgetService@cb";
-	property name="siteService" inject="id:siteService@cb";
-	property name="templateService" inject="id:emailtemplateService@cb";
+	property name="entryService" inject="id:entryService@contentbox";
+	property name="pageService" inject="id:pageService@contentbox";
+	property name="categoryService" inject="id:categoryService@contentbox";
+	property name="contentStoreService" inject="id:contentStoreService@contentbox";
+	property name="menuService" inject="id:menuService@contentbox";
+	property name="securityRuleService" inject="id:securityRuleService@contentbox";
+	property name="authorService" inject="id:authorService@contentbox";
+	property name="roleService" inject="id:roleService@contentbox";
+	property name="permissionService" inject="id:permissionService@contentbox";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="securityService" inject="id:securityService@contentbox";
+	property name="moduleService" inject="id:moduleService@contentbox";
+	property name="themeService" inject="id:themeService@contentbox";
+	property name="widgetService" inject="id:widgetService@contentbox";
+	property name="siteService" inject="id:siteService@contentbox";
+	property name="templateService" inject="id:emailtemplateService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
-	property name="zipUtil" inject="zipUtil@cb";
-	property name="dataExporter" inject="id:dataExporter@cbadmin";
-	property name="fileExporter" inject="id:fileExporter@cbadmin";
+	property name="zipUtil" inject="zipUtil@contentbox";
 	property name="wirebox" inject="wirebox";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 
@@ -201,20 +199,26 @@ component accessors=true {
 	ContentBoxExporter function setup( required struct targets ){
 		// loop over targets and build up exporters
 		for ( var key in arguments.targets ) {
-			// find config for the given key
+			// find config data struct for the given key
 			var config = findConfig( key );
+
 			// if config was not found, continue to next one.
 			if ( !structCount( config ) ) {
+				variables.log.warn( "The config for (#key#) is not valid, skipping..." );
 				continue;
 			}
 
 			switch ( config.type ) {
 				// add data exporter
 				case "data":
-					var exporter = wirebox.getInstance( "dataExporter@cbadmin" );
+					var exporter = wirebox.getInstance( "dataExporter@contentbox" );
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
-					exporter.setContent( variables[ config.def.service ].getAllForExport() );
+					exporter.setContent(
+						variables[ config.def.service ].getAllForExport(
+							variables.siteService.getCurrentWorkingSite()
+						)
+					);
 					exporter.setPriority( config.def.priority );
 					break;
 					// add file exporter
@@ -222,7 +226,7 @@ component accessors=true {
 					var includedFiles = !isBoolean( arguments.targets[ key ] ) && listLen(
 						arguments.targets[ key ]
 					) ? arguments.targets[ key ] : "*";
-					var exporter = wirebox.getInstance( "fileExporter@cbadmin" );
+					var exporter = wirebox.getInstance( "fileExporter@contentbox" );
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
 					exporter.setDirectory( config.def.directory );
@@ -233,28 +237,31 @@ component accessors=true {
 					break;
 					// add exporter
 			}
+
 			addExporter( exporter );
 		}
+
 		return this;
 	}
 
 	/**
 	 * Adds an exporter that will define how a particular resource is exported
-	 * @exporter.hint The exporter that is added
-	 * return SiteExporterService
+	 *
+	 * @exporter The exporter that is added to the final array of exporters
+	 *
+	 * @return SiteExporterService
 	 */
 	ContentBoxExporter function addExporter( required any exporter ){
-		arrayAppend( exporters, arguments.exporter );
+		arrayAppend( variables.exporters, arguments.exporter );
 		return this;
 	}
 
 	/**
-	 * Gets the descriptor def for the export
+	 * Gets the descriptor def for the export, it builds it first.
 	 */
 	struct function getDescriptor(){
 		// build descriptor
-		buildDescriptor();
-		return variables.descriptor;
+		return buildDescriptor();
 	}
 
 	/**
@@ -377,16 +384,19 @@ component accessors=true {
 	/**
 	 * Creates descriptor structure
 	 */
-	private void function buildDescriptor(){
+	private struct function buildDescriptor(){
 		var loggedInUser        = variables.securityService.getAuthorSession();
-		var content             = {};
+		var descriptor             = {};
+
 		// set static descriptor values
-		content[ "exportDate" ] = now();
-		content[ "exportedBy" ] = "#loggedInUser.getFirstName()# #loggedInUser.getLastName()# (#loggedInUser.getUsername()#)";
-		content[ "content" ]    = {};
+		descriptor[ "exportDate" ] = now();
+		descriptor[ "exportedBy" ] = "#loggedInUser.getFullName()# (#loggedInUser.getUsername()#)";
+		descriptor[ "content" ]    = {};
+		descriptor[ "site" ] = variables.siteService.getCurrentWorkingSite().getMemento();
+
 		// add dynamic content
-		for ( var exporter in exporters ) {
-			content[ "content" ][ exporter.getFileName() ] = {
+		for ( var exporter in variables.exporters ) {
+			descriptor[ "content" ][ exporter.getFileName() ] = {
 				"total"    : exporter.getTotal(),
 				"name"     : exporter.getDisplayName(),
 				"format"   : exporter.getFormat(),
@@ -394,7 +404,10 @@ component accessors=true {
 				"priority" : exporter.getPriority()
 			};
 		}
-		setDescriptor( content );
+		setDescriptor( descriptor );
+
+
+		return descriptor;
 	}
 
 }

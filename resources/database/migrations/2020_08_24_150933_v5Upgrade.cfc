@@ -78,6 +78,19 @@ component {
 				updateAdminPermissions( argumentCollection = arguments );
 				// Remove unused unique constraints
 				removeUniqueConstraints( argumentCollection = arguments );
+				// Update Slugs/Titles to 1000 characters
+				dropIndexesForTableColumn( "cb_content", "title" );
+				dropIndexesForTableColumn( "cb_content", "slug" );
+				schema.alter( "cb_content", function( table ) {
+					table.modifyColumn( "title", table.string( "title", 500 ) );
+					table.modifyColumn( "slug", table.string( "slug", 500 ) );
+					table.modifyColumn( "featuredImage", table.string( "slug", 500 ) );
+					table.modifyColumn( "featuredImageURL", table.string( "slug", 500 ) );
+					// Rebuild Indexes
+					table.index( [ "slug" ], "idx_slug" );
+					table.index( [ "slug", "isPublished" ], "idx_publishedSlug" );
+					table.index( [ "title", "isPublished" ], "idx_search" );
+				} );
 			} catch ( any e ) {
 				transactionRollback();
 				systemOutput( e.stacktrace, true );
@@ -360,6 +373,9 @@ component {
 		return initialSiteIdentifier;
 	}
 
+	/**
+	 * Migrate numeric IDs to Guids
+	 */
 	function migrateIdentifiersToGUIDs( schema, query ){
 
 		systemOutput( "> Starting to process migration of identifiers to uuid's...", true );
@@ -494,6 +510,9 @@ component {
 		systemOutput( "", true );
 	}
 
+	/**
+	 * Utility functions per database
+	 */
 	function scopeGrammarUDFs( query, schema ){
 
 		variables.idTables = {

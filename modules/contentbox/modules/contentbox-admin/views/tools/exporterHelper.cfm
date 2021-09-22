@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
     // toggle all a-la-carte options based on parent selection
     $( 'input[data-togglegroup]' ).change(function(){
         var checked = this.checked;

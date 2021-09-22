@@ -20,7 +20,7 @@ component
 
 	property
 		name      ="contentService"
-		inject    ="provider:contentService@cb"
+		inject    ="provider:contentService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -34,7 +34,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property
@@ -378,7 +377,7 @@ component
 		"adminBar"         : { required : true, type : "boolean" },
 		"isSSL"            : { required : true, type : "boolean" },
 		"isActive"         : { required : true, type : "boolean" },
-		"activeTheme"      : { required : false, size : "0..255" }
+		"activeTheme"      : { required : true, size : "0..255" }
 	};
 
 	/* *********************************************************************

@@ -1,10 +1,10 @@
 ﻿<cfoutput>
 <!--- Custom JS --->
 <script>
-$( document ).ready(function() {
+( () => {
 	$permissionForm = $( "##permissionForm" );
 	$groupsForm 	= $( "##groupsForm" );
-} );
+} )();
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
 function addPermission(){
 	// loader
@@ -14,12 +14,12 @@ function addPermission(){
 		'#event.buildLink( prc.xehPermissionSave )#',
 		{
 			authorID	 : '#rc.authorID#',
-			permissionID : $permissionForm.find( "##permissionID" ).val() 
+			permissionID : $permissionForm.find( "##permissionID" ).val()
 		},
-		function(){ 
+		function(){
 			$( "##permissionLoader" ).slideUp();
 			// load permissions via container
-			loadPermissions(); 
+			loadPermissions();
 		}
 	);
 }
@@ -31,13 +31,13 @@ function removePermission( permissionID ){
 		'#event.buildLink( prc.xehPermissionRemove )#',
 		{
 			authorID	 : '#rc.authorID#',
-			permissionID : permissionID 
+			permissionID : permissionID
 		},
-		function(){ 
+		function(){
 			$( "##permissionLoader" ).slideUp();
 			// load permissions via container
 			loadPermissions();
-		} 
+		}
 	);
 }
 function addPermissionGroup(){
@@ -48,12 +48,12 @@ function addPermissionGroup(){
 		'#event.buildLink( prc.xehGroupSave )#',
 		{
 			authorID	 		: '#rc.authorID#',
-			permissionGroupID 	: $groupsForm.find( "##permissionGroupID" ).val() 
+			permissionGroupID 	: $groupsForm.find( "##permissionGroupID" ).val()
 		},
-		function(){ 
+		function(){
 			$( "##groupsLoader" ).slideUp();
 			// load permissions via container
-			loadPermissions(); 
+			loadPermissions();
 		}
 	);
 }
@@ -65,13 +65,13 @@ function removePermissionGroup( permissionGroupID ){
 		'#event.buildLink( prc.xehGroupRemove )#',
 		{
 			authorID	 		: '#rc.authorID#',
-			permissionGroupID 	: permissionGroupID 
+			permissionGroupID 	: permissionGroupID
 		},
-		function(){ 
+		function(){
 			$( "##groupsLoader" ).slideUp();
 			// load permissions via container
 			loadPermissions();
-		} 
+		}
 	);
 }
 </cfif>

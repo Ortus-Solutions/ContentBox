@@ -35,7 +35,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property
@@ -109,12 +108,13 @@ component
 	};
 
 	this.constraints = {
-		"content"     : { required : true },
-		"author"      : { required : true, size : "1..100" },
-		"authorIP"    : { required : true, size : "1..100" },
-		"authorEmail" : { required : true, size : "1..255", type : "email" },
-		"authorURL"   : { required : true, size : "1..255", type : "URL" },
-		"isApproved"  : { required : true, type : "boolean" }
+		"content"        : { required : true },
+		"author"         : { required : true, size : "1..100" },
+		"authorIP"       : { required : true, size : "1..100" },
+		"authorEmail"    : { required : true, size : "1..255", type : "email" },
+		"authorURL"      : { required : true, size : "1..255", type : "URL" },
+		"isApproved"     : { required : true, type : "boolean" },
+		"relatedContent" : { required : true }
 	};
 
 	function init(){

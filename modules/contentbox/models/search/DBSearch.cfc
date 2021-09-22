@@ -7,15 +7,12 @@
  *
  * @see contentbox.models.search.ISearchAdapter
  */
-component
-	accessors ="true"
-	singleton
-{
+component accessors="true" singleton {
 
 	// DI
-	property name="contentService" inject="contentService@cb";
-	property name="cb"             inject="cbHelper@cb";
-	property name="wirebox"        inject="wirebox";
+	property name="contentService" inject="contentService@contentbox";
+	property name="cb" inject="cbHelper@contentbox";
+	property name="wirebox" inject="wirebox";
 
 	/**
 	 * Constructor
@@ -34,14 +31,14 @@ component
 	 *
 	 * @return contentbox.models.search.SearchResults Object
 	 */
-	contentbox.models.search.SearchResults function search(
+	SearchResults function search(
 		required string searchTerm,
 		numeric max    = 0,
 		numeric offset = 0,
 		string siteID  = ""
 	){
 		// get new search results object
-		var searchResults = variables.wirebox.getInstance( "SearchResults@cb" );
+		var searchResults = variables.wirebox.getInstance( "SearchResults@contentbox" );
 		var sTime         = getTickCount();
 
 		try {
@@ -97,14 +94,13 @@ component
 	 *
 	 * @searchResults The search results object
 	 */
-	any function renderSearchWithResults(
-		required contentbox.models.search.SearchResults searchResults
-	){
+	any function renderSearchWithResults( required SearchResults searchResults ){
 		var results     = "";
 		var searchItems = arguments.searchResults.getResults();
 		var total       = arguments.searchResults.getTotal();
 		var searchTerm  = arguments.searchResults.getSearchTerm();
 
+		// cfformat-ignore-start
 		savecontent variable="results" {
 			writeOutput(
 				"
@@ -143,6 +139,7 @@ component
 
 			writeOutput( "</div>" );
 		}
+		// cfformat-ignore-end
 
 		return results;
 	}

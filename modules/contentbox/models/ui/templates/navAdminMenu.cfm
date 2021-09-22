@@ -7,13 +7,13 @@
 		<cfif !len( local.topMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.topMenu.permissions )>
 			<!--- LI --->
 			<li
-				class="nav-dropdown<cfif event.getPrivateValue( 'tab#local.topMenu.name#', false )> active open </cfif>#local.topMenu.class#"
+				class="<cfif arrayLen( local.topMenu.subMenu )>nav-dropdown<cfelse>nav</cfif><cfif event.getPrivateValue( 'tab#local.topMenu.name#', false )> active open </cfif>#local.topMenu.class#"
 				data-name="#local.topMenu.name#"
 			>
 
 				<a
 					href="#( isCustomFunction( local.topMenu.href ) ? local.topMenu.href( local.topMenu, event ) : local.topMenu.href )#"
-					class="dropdown-toggle"
+					class="<cfif arrayLen( local.topMenu.subMenu )>dropdown-toggle</cfif>"
 					<cfif arrayLen( local.topMenu.subMenu )>data-toggle="dropdown"</cfif>
 					<cfif len( local.topMenu.title )>title="#local.topMenu.title#"</cfif>
 					<cfif len( local.topMenu.target )>target="#local.topMenu.target#"</cfif>

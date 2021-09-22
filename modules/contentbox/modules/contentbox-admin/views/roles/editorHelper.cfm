@@ -1,6 +1,6 @@
 <cfoutput>
 	<script>
-	$( document ).ready( function() {
+	document.addEventListener( "DOMContentLoaded", () => {
 		$roleForm = $( "##roleForm" );
 		// form validators
 		$roleForm.validate();

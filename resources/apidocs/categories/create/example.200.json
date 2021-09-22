@@ -1,0 +1,26 @@
+{
+	"data": {
+		"categoryID": "ff8081817bbc8127017bbca6f8ff0001",
+		"slug": "new",
+		"createdDate": "2021-09-06T19:47:44+00:00",
+		"numberOfPages": "",
+		"numberOfEntries": "",
+		"category": "New",
+		"numberOfContentStore": "",
+		"modifiedDate": "2021-09-06T19:47:44+00:00",
+		"site": {
+			"slug": "default",
+			"siteID": "ff8081817a3ffffe017a40015861004c",
+			"name": "Web site"
+		}
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}

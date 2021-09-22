@@ -11,8 +11,8 @@ component extends="tests.resources.BaseTest" {
 	// executes before all suites+specs in the run() method
 	function beforeAll(){
 		super.beforeAll();
-		widgetService = getInstance( "widgetService@cb" );
-		cbHelper      = getInstance( "CBHelper@cb" );
+		widgetService = getInstance( "widgetService@contentbox" );
+		cbHelper      = getInstance( "CBHelper@contentbox" );
 
 		cbHelper.prepareUIRequest();
 	}

@@ -8,25 +8,25 @@
 component accessors="true" singleton threadSafe {
 
 	// DI
-	property name="categoryService" inject="categoryService@cb";
-	property name="settingService" inject="settingService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="widgetService" inject="widgetService@cb";
-	property name="moduleService" inject="moduleService@cb";
-	property name="themeService" inject="themeService@cb";
-	property name="mobileDetector" inject="mobileDetector@cb";
-	property name="menuService" inject="menuService@cb";
-	property name="menuItemService" inject="menuItemService@cb";
-	property name="siteService" inject="siteService@cb";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="settingService" inject="settingService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="widgetService" inject="widgetService@contentbox";
+	property name="moduleService" inject="moduleService@contentbox";
+	property name="themeService" inject="themeService@contentbox";
+	property name="mobileDetector" inject="mobileDetector@contentbox";
+	property name="menuService" inject="menuService@contentbox";
+	property name="menuItemService" inject="menuItemService@contentbox";
+	property name="siteService" inject="siteService@contentbox";
 	property name="requestService" inject="coldbox:requestService";
 	property name="wirebox" inject="wirebox";
 	property name="controller" inject="coldbox";
-	property name="resourceService" inject="resourceService@cbi18n";
-	property name="securityService" inject="securityService@cb";
+	property name="cbResourceService" inject="resourceService@cbi18n";
+	property name="securityService" inject="securityService@contentbox";
 	property name="markdown" inject="Processor@cbmarkdown";
 	property name="requestStorage" inject="requestStorage@cbstorages";
 
@@ -596,16 +596,17 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Get the current array of category entities for the current site
+	 * Get the current array of public category entities for the current site
+	 *
+	 * @isPublic By default return all public categories. If false, return private categories, If null, all categories
 	 *
 	 * @return array of category
 	 */
-	any function getCurrentCategories(){
-		return variables.categoryService.list(
-			criteria : { "site" : site() },
-			sortOrder= "category",
-			asQuery  = false
-		);
+	any function getCurrentCategories( isPublic = true ){
+		return variables.categoryService.search(
+			isPublic: ( isNull( arguments.isPublic ) ? javacast( "null", "" ) : arguments.isPublic ),
+			siteId  : site().getSiteId()
+		).categories;
 	}
 
 	/**
@@ -1851,16 +1852,19 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out categories anywhere using ColdBox collection rendering
+	 *
 	 * @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'category'
 	 * @args A structure of name-value pairs to pass to the template
+	 * @isPublic Return public categories by default. False, return private categories, null return all categories.
 	 */
 	function quickCategories(
 		string template     = "category",
 		string collectionAs = "category",
-		struct args         = structNew()
+		struct args         = structNew(),
+		isPublic            = true
 	){
-		var categories = getCurrentCategories();
+		var categories = getCurrentCategories( argumentCollection = arguments );
 		return controller
 			.getRenderer()
 			.renderView(
@@ -1952,7 +1956,7 @@ component accessors="true" singleton threadSafe {
 		}
 
 		return wirebox
-			.getInstance( "Avatar@cb" )
+			.getInstance( "Avatar@contentbox" )
 			.renderAvatar(
 				email = targetEmail,
 				size  = arguments.size,
@@ -2040,10 +2044,10 @@ component accessors="true" singleton threadSafe {
 	/************************************** MENUS *********************************************/
 
 	/**
-	 * Build out a menu
+	 * Build out a menu from the defined menus in ContentBox.
 	 *
 	 * @slug The menu slug to build
-	 * @type The type either 'html' or 'data'
+	 * @type The type either 'html' or 'data', default is HTML
 	 * @slugCache The cache of menu slugs already used in this request
 	 *
 	 * @return HTML of the menu or a struct representing the menu
@@ -2053,12 +2057,11 @@ component accessors="true" singleton threadSafe {
 		required type            = "html",
 		required array slugCache = []
 	){
-		var result = "";
-		var menu   = variables.menuService.findBySlug( arguments.slug, site().getsiteID() );
+		var menu = variables.menuService.findBySlug( arguments.slug, site().getsiteID() );
 
 		if ( menu.isLoaded() ) {
 			if ( arguments.type == "data" ) {
-				return menu.getMemento();
+				return menu.getMemento( includes = "menuItems" );
 			} else {
 				return buildProviderMenu( menu = menu, slugCache = arguments.slugCache );
 			}
@@ -2163,7 +2166,8 @@ component accessors="true" singleton threadSafe {
 			parent    : "",
 			showInMenu: true,
 			siteID    : site().getsiteID(),
-			properties: "contentID,slug,title,numberOfChildren"
+			properties: "contentID,slug,title,numberOfChildren",
+			sortOrder : "order ASC, publishedDate ASC"
 		);
 		// build it out
 		return buildMenu( argumentCollection = arguments );
@@ -2171,6 +2175,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Create a sub page menu for a given page or current page
+	 *
 	 * @page Optional page to create menu for, else look for current page, this can be a page object or a page slug
 	 * @excludes The list of pages to exclude from the menu
 	 * @type The type of menu, valid choices are: ul,ol,li,none
@@ -2196,12 +2201,12 @@ component accessors="true" singleton threadSafe {
 		activeClass        = "active",
 		activeShowChildren = false
 	){
-		// If page not passed,then use current
-		if ( !structKeyExists( arguments, "page" ) ) {
+		// If page not passed, or empty, then use the current page
+		if ( isNull( arguments.page ) || ( isSimpleValue( arguments.page ) && !len( arguments.page ) ) ) {
 			arguments.page = getCurrentPage();
 		}
 
-		// Is page passed as slug or object
+		// Is page passed as slug string or object
 		if ( isSimpleValue( arguments.page ) ) {
 			// retrieve page by slug
 			arguments.page = pageService.findBySlug( arguments.page );
@@ -2212,8 +2217,10 @@ component accessors="true" singleton threadSafe {
 			parent    : page.getContentID(),
 			showInMenu: true,
 			siteID    : site().getsiteID(),
-			properties: "contentID,slug,title,numberOfChildren"
+			properties: "contentID,slug,title,numberOfChildren",
+			sortOrder : "order ASC, publishedDate ASC"
 		);
+
 		// build it out
 		return buildMenu( argumentCollection = arguments );
 	}
@@ -2290,7 +2297,7 @@ component accessors="true" singleton threadSafe {
 			arguments.bundle   = listLast( arguments.resource, "@" );
 			arguments.resource = listFirst( arguments.resource, "@" );
 		}
-		return resourceService.getResource( argumentCollection = arguments );
+		return variables.cbResourceService.getResource( argumentCollection = arguments );
 	}
 
 	/**
@@ -2424,7 +2431,8 @@ component accessors="true" singleton threadSafe {
 									parent    : pageResults.content[ x ][ "contentID" ],
 									showInMenu: true,
 									siteID    : site().getsiteID(),
-									properties: "contentID,slug,title,numberOfChildren"
+									properties: "contentID,slug,title,numberOfChildren",
+									sortOrder : "order ASC, publishedDate ASC"
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2456,7 +2464,8 @@ component accessors="true" singleton threadSafe {
 									parent    : pageResults.content[ x ][ "contentID" ],
 									showInMenu: true,
 									siteID    : site().getsiteID(),
-									properties: "contentID,slug,title,numberOfChildren"
+									properties: "contentID,slug,title,numberOfChildren",
+									sortOrder : "order ASC, publishedDate ASC"
 								),
 								excludes           = arguments.excludes,
 								type               = ( arguments.type eq "li" ? "ul" : arguments.type ),
@@ -2488,7 +2497,8 @@ component accessors="true" singleton threadSafe {
 								parent    : pageResults.content[ x ][ "contentID" ],
 								showInMenu: true,
 								siteID    : site().getsiteID(),
-								properties: "contentID,slug,title,numberOfChildren"
+								properties: "contentID,slug,title,numberOfChildren",
+								sortOrder : "order ASC, publishedDate ASC"
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,
@@ -2511,7 +2521,8 @@ component accessors="true" singleton threadSafe {
 								parent    : pageResults.content[ x ][ "contentID" ],
 								showInMenu: true,
 								siteID    : site().getsiteID(),
-								properties: "contentID,slug,title,numberOfChildren"
+								properties: "contentID,slug,title,numberOfChildren",
+								sortOrder : "order ASC, publishedDate ASC"
 							),
 							excludes           = arguments.excludes,
 							type               = arguments.type,

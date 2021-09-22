@@ -10,7 +10,7 @@
 				</button>
 				<h3>
 					<!--- Title --->
-					<i class="fas fa-link"></i> Insert From #prc.contentType#
+					<i class="fas fa-link"></i> Insert #prc.contentType#
 					<!--- Loader --->
 					<span class="loaders" id="contentLoader">
 						<i class="fa fa-circle-notch fa-spin"></i>

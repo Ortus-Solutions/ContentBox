@@ -18,13 +18,10 @@ component
 {
 
 	// DI properties
-	property name="siteService" inject="siteService@cb";
+	property name="siteService" inject="siteService@contentbox";
 	property name="cachebox" inject="cachebox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
-	property name="appMapping" inject="coldbox:setting:appMapping";
-	property name="requestService" inject="coldbox:requestService";
-	property name="coldbox" inject="coldbox";
-	property name="dateUtil" inject="DateUtil@cb";
+	property name="contentboxSettings" inject="coldbox:moduleSettings:contentbox";
 	property name="log" inject="logbox:logger:{this}";
 
 	/**
@@ -349,26 +346,17 @@ component
 	}
 
 	/**
-	 * Check if the installer and dsn creator modules are present
+	 * Check if the installer is present
 	 */
-	struct function isInstallationPresent(){
-		var results = { installer : false, dsncreator : false };
-
+	boolean function isInstallationPresent(){
 		if (
-			structKeyExists( moduleSettings, "contentbox-installer" ) AND
-			directoryExists( moduleSettings[ "contentbox-installer" ].path )
+			structKeyExists( variables.moduleSettings, "contentbox-installer" ) AND
+			directoryExists( variables.moduleSettings[ "contentbox-installer" ].path )
 		) {
-			results.installer = true;
+			return true;
 		}
 
-		if (
-			structKeyExists( moduleSettings, "contentbox-dsncreator" ) AND
-			directoryExists( moduleSettings[ "contentbox-dsncreator" ].path )
-		) {
-			results.dsncreator = true;
-		}
-
-		return results;
+		return false;
 	}
 
 	/**
@@ -376,24 +364,10 @@ component
 	 */
 	boolean function deleteInstaller(){
 		if (
-			structKeyExists( moduleSettings, "contentbox-installer" ) AND
-			directoryExists( moduleSettings[ "contentbox-installer" ].path )
+			structKeyExists( variables.moduleSettings, "contentbox-installer" ) AND
+			directoryExists( variables.moduleSettings[ "contentbox-installer" ].path )
 		) {
-			directoryDelete( moduleSettings[ "contentbox-installer" ].path, true );
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Delete the dsn creator module
-	 */
-	boolean function deleteDSNCreator(){
-		if (
-			structKeyExists( moduleSettings, "contentbox-dsncreator" ) AND
-			directoryExists( moduleSettings[ "contentbox-dsncreator" ].path )
-		) {
-			directoryDelete( moduleSettings[ "contentbox-dsncreator" ].path, true );
+			directoryDelete( variables.moduleSettings[ "contentbox-installer" ].path, true );
 			return true;
 		}
 		return false;
@@ -687,13 +661,7 @@ component
 		};
 
 		// Base MediaPath
-		var mediaPath = "";
-		// I don't think this is needed anymore. As we use build link for everything.
-		// var mediaPath = ( len( AppMapping ) ? AppMapping : "" ) & "/";
-		// if( findNoCase( "index.cfm", requestService.getContext().getSESBaseURL() ) ){
-		// mediaPath = "index.cfm" & mediaPath;
-		// }
-
+		var mediaPath  = "";
 		// add the entry point
 		var entryPoint = moduleSettings[ "contentbox-ui" ].entryPoint;
 		mediaPath &= ( len( entryPoint ) ? "#entryPoint#/" : "" ) & "__media";
@@ -723,28 +691,23 @@ component
 		siteID    = ""
 	){
 		var results = { "count" : 0, "settings" : [] };
-		var c       = newCriteria();
-
-		// Search Criteria
-		if ( len( arguments.search ) ) {
-			c.like( "name", "%#arguments.search#%" );
-		}
-
-		// Site
-		if ( len( arguments.siteID ) ) {
-			c.isEq( "site.siteID", arguments.siteID );
-		}
+		var c       = newCriteria()
+			// Search Criteria
+			.when( len( arguments.search ), function( c ){
+				c.like( "name", "%#search#%" );
+			} )
+			// Site Filter
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
+			} );
 
 		// run criteria query and projections count
 		results.count    = c.count( "settingID" );
-		results.settings = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset   : arguments.offset,
-				max      : arguments.max,
-				sortOrder: arguments.sortOrder,
-				asQuery  : false
-			);
+		results.settings = c.list(
+			offset   : arguments.offset,
+			max      : arguments.max,
+			sortOrder: arguments.sortOrder
+		);
 
 		return results;
 	}
@@ -806,7 +769,7 @@ component
 		importLog
 	){
 		var allSettings = [];
-		var siteService = getWireBox().getInstance( "siteService@cb" );
+		var siteService = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
@@ -882,22 +845,18 @@ component
 	 * Load up config overrides
 	 */
 	function loadConfigOverrides(){
-		var oConfig       = coldbox.getSetting( "ColdBoxConfig" );
-		var configStruct  = coldbox.getConfigSettings();
-		var contentboxDSL = oConfig.getPropertyMixin( "contentbox", "variables", structNew() );
-
 		// Global Settings
 		if (
-			structKeyExists( contentboxDSL, "settings" )
+			structKeyExists( variables.contentboxSettings, "settings" )
 			&&
-			structKeyExists( contentboxDSL.settings, "global" )
+			structKeyExists( variables.contentboxSettings.settings, "global" )
 		) {
 			var settingsContainer = getSettingsContainer();
 
 			// Append and override
 			structAppend(
 				settingsContainer.global,
-				contentboxDSL.settings.global,
+				variables.contentboxSettings.settings.global,
 				true
 			);
 
@@ -907,7 +866,7 @@ component
 			// Log it
 			variables.log.info(
 				"ContentBox global config overrides loaded.",
-				contentboxDSL.settings.global
+				variables.contentboxSettings.settings.global
 			);
 		}
 

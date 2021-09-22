@@ -8,7 +8,7 @@
 component extends="ContentService" singleton {
 
 	// DI
-	property name="contentService" inject="id:ContentService@cb";
+	property name="contentService" inject="id:ContentService@contentbox";
 
 	/**
 	 * Constructor
@@ -71,6 +71,7 @@ component extends="ContentService" singleton {
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
 	 * @siteID The site ID to filter on
+	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
 	 *
 	 * @returns struct = { content, count }
 	 */
@@ -87,7 +88,8 @@ component extends="ContentService" singleton {
 		boolean searchActiveContent = true,
 		boolean showInSearch        = false,
 		string slugPrefix           = "",
-		string siteID               = ""
+		string siteID               = "",
+		string propertyList
 	){
 		var results = { "count" : 0, "content" : [] };
 		// criteria queries
@@ -196,30 +198,20 @@ component extends="ContentService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
-		results.content = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset   : arguments.offset,
-				max      : arguments.max,
-				sortOrder: arguments.sortOrder,
-				asQuery  : false
-			);
+		results.count = c.count( "contentID" );
+
+		if ( !isNull( arguments.propertyList ) ) {
+			c.withProjections( property = arguments.propertyList ).asStruct();
+		} else {
+			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
+		}
+		results.content = c.list(
+			offset   : arguments.offset,
+			max      : arguments.max,
+			sortOrder: arguments.sortOrder,
+			asQuery  : false
+		);
 		return results;
-	}
-
-	/**
-	 * Returns an array of [contentID, title, slug] structures of all the content store items in the system
-	 *
-	 * @sortOrder The sort order to use, defaults to title
-	 */
-	array function getAllFlatEntries( sortOrder = "title asc" ){
-		var c = newCriteria();
-
-		return c
-			.withProjections( property = "contentID,title,slug" )
-			.resultTransformer( c.ALIAS_TO_ENTITY_MAP )
-			.list( sortOrder = arguments.sortOrder );
 	}
 
 	/**

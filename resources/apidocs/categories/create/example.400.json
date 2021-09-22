@@ -1,0 +1,35 @@
+{
+	"data": {
+		"slug": [
+			{
+				"message": "The 'slug' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "slug"
+			}
+		],
+		"category": [
+			{
+				"message": "The 'category' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "category"
+			}
+		]
+	},
+	"error": true,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": [
+		"Validation exceptions occurred, please see the data"
+	]
+}

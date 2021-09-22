@@ -21,7 +21,7 @@ component
 
 	property
 		name      ="menuItemService"
-		inject    ="menuItemService@cb"
+		inject    ="menuItemService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -64,7 +64,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property

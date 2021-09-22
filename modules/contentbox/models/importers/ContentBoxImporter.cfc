@@ -5,7 +5,7 @@
  * ---
  * Import a .cbox package into ContentBOx
  */
-component accessors=true{
+component accessors=true {
 
 	/**
 	 * The import file names found
@@ -26,53 +26,54 @@ component accessors=true{
 
 	// DI
 	property name="moduleSettings" inject="coldbox:setting:modules";
-	property name="entryService" inject="id:entryService@cb";
-	property name="pageService" inject="id:pageService@cb";
-	property name="categoryService" inject="id:categoryService@cb";
-	property name="contentStoreService" inject="id:contentStoreService@cb";
-	property name="menuService" inject="id:menuService@cb";
-	property name="securityRuleService" inject="id:securityRuleService@cb";
-	property name="authorService" inject="id:authorService@cb";
-	property name="roleService" inject="id:roleService@cb";
-	property name="permissionService" inject="id:permissionService@cb";
-	property name="settingService" inject="id:settingService@cb";
-	property name="securityService" inject="id:securityService@cb";
-	property name="moduleService" inject="id:moduleService@cb";
-	property name="themeService" inject="id:themeService@cb";
-	property name="widgetService" inject="id:widgetService@cb";
-	property name="templateService" inject="id:emailtemplateService@cb";
+	property name="entryService" inject="id:entryService@contentbox";
+	property name="pageService" inject="id:pageService@contentbox";
+	property name="categoryService" inject="id:categoryService@contentbox";
+	property name="contentStoreService" inject="id:contentStoreService@contentbox";
+	property name="menuService" inject="id:menuService@contentbox";
+	property name="securityRuleService" inject="id:securityRuleService@contentbox";
+	property name="authorService" inject="id:authorService@contentbox";
+	property name="roleService" inject="id:roleService@contentbox";
+	property name="permissionService" inject="id:permissionService@contentbox";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="securityService" inject="id:securityService@contentbox";
+	property name="moduleService" inject="id:moduleService@contentbox";
+	property name="themeService" inject="id:themeService@contentbox";
+	property name="widgetService" inject="id:widgetService@contentbox";
+	property name="templateService" inject="id:emailtemplateService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
-	property name="zipUtil" inject="zipUtil@cb";
+	property name="zipUtil" inject="zipUtil@contentbox";
 
 	/**
 	 * Constructor
 	 */
 	ContentBoxImporter function init(){
-		fileNames             = [];
-		contentBoxPackagePath = "";
-		dataServiceMappings   = {};
-		fileServiceMappings   = {};
+		variables.fileNames             = [];
+		variables.contentBoxPackagePath = "";
+		variables.dataServiceMappings   = {};
+		variables.fileServiceMappings   = {};
 		return this;
 	}
 
 	/**
 	 * Setup method to configure service
-	 * @importFile.hint The uploaded .cbox package
+	 *
+	 * @importFile The uploaded .cbox package to import
 	 */
 	public void function setup( required any importFile ){
 		try {
-			var files          = zipUtil.list( zipFilePath = arguments.importFile );
+			var files          = variables.zipUtil.list( zipFilePath = arguments.importFile );
 			// convert files query to array
 			var fileList       = listToArray( valueList( files.entry ) );
-			var contentBoxPath = moduleSettings[ "contentbox" ].path;
-			var customPath     = moduleSettings[ "contentbox-custom" ].path;
+			var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
+			var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
 
 			// now set values
 			setFileNames( fileList );
 			setContentBoxPackagePath( arguments.importFile );
 
 			// set some cheat mappings
-			dataServiceMappings = {
+			variables.dataServiceMappings = {
 				"Authors"        : "authorService",
 				"Categories"     : "categoryService",
 				"Content Store"  : "contentStoreService",
@@ -85,7 +86,7 @@ component accessors=true{
 				"Pages"          : "pageService"
 			};
 
-			filePathMappings = {
+			variables.filePathMappings = {
 				"Email Templates" : contentBoxPath & "/email_templates",
 				"Themes"          : customPath & "/_themes",
 				"Media Library"   : expandPath(
@@ -94,6 +95,7 @@ component accessors=true{
 				"Modules" : customPath & "/_modules",
 				"Widgets" : customPath & "/_widgets"
 			};
+
 		} catch ( any e ) {
 			log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );
 		}
@@ -106,7 +108,7 @@ component accessors=true{
 		var descriptorContents = "";
 		if ( hasFile( "descriptor.json" ) ) {
 			// if we have a descriptor, extract it
-			zipUtil.extract(
+			variables.zipUtil.extract(
 				zipFilePath    = getContentBoxPackagePath(),
 				extractPath    = getTempDirectory(),
 				extractFiles   = "descriptor.json",
@@ -147,13 +149,14 @@ component accessors=true{
 			"Starting ContentBox package import with override = #arguments.overrideContent#...<br>"
 		);
 		// first, unzip entire package
-		zipUtil.extract(
+		variables.zipUtil.extract(
 			zipFilePath    = getContentBoxPackagePath(),
 			extractPath    = getTempDirectory(),
 			overwriteFiles = true
 		);
 		// get all content
 		var descriptorContents = getDescriptorContents( true );
+
 		// prioritize keys
 		var priorityOrder      = structSort(
 			descriptorContents.content,
@@ -161,31 +164,37 @@ component accessors=true{
 			"asc",
 			"priority"
 		);
-		// loop over content areas
-		for ( key in priorityOrder ) {
-			var content  = descriptorContents.content[ key ];
-			var filePath = getTempDirectory() & content.filename;
-			// handle json (data) imports
-			if ( content.format == "json" ) {
-				var service       = dataServiceMappings[ content.name ];
-				var importResults = variables[ service ].importFromFile(
-					importFile = filePath,
-					override   = arguments.overrideContent
-				);
-				importLog.append( importResults );
+
+		// Start import transaction
+		transaction{
+			for ( key in priorityOrder ) {
+				var content  = descriptorContents.content[ key ];
+				var filePath = getTempDirectory() & content.filename;
+
+				// handle json (data) imports
+				if ( content.format == "json" ) {
+					var service       = variables.dataServiceMappings[ content.name ];
+					var importResults = variables[ service ].importFromFile(
+						importFile = filePath,
+						override   = arguments.overrideContent
+					);
+					importLog.append( importResults );
+				}
+
+				// handle zip (file) imports
+				if ( content.format == "zip" ) {
+					importLog.append( "<br>Extracting #content.name#...<br>" );
+					var path = variables.filePathMappings[ content.name ];
+					zipUtil.extract(
+						zipFilePath    = filePath,
+						extractPath    = path,
+						overwriteFiles = true
+					);
+					importLog.append( "Finished extracting #content.name#...<br>" );
+				}
 			}
-			// handle zip (file) imports
-			if ( content.format == "zip" ) {
-				importLog.append( "<br>Extracting #content.name#...<br>" );
-				var path = filePathMappings[ content.name ];
-				zipUtil.extract(
-					zipFilePath    = filePath,
-					extractPath    = path,
-					overwriteFiles = true
-				);
-				importLog.append( "Finished extracting #content.name#...<br>" );
-			}
-		}
+		} // end governing import transaction
+
 		var flattendImportLog = importLog.toString();
 		log.info( flattendImportLog );
 		return flattendImportLog;

@@ -1,6 +1,6 @@
 <cfoutput>
 <script language="javascript">
-$( document ).ready( function(){
+document.addEventListener( "DOMContentLoaded", () => {
 	// Validate hidden tabs
 	$.validator.setDefaults( {
 		errorPlacement : function( error, element ){
@@ -18,25 +18,25 @@ $( document ).ready( function(){
         	}
         }
 	} );
-	
+
 	// password validator
-	$.validator.addMethod( 
-		'passwordmatch', 
+	$.validator.addMethod(
+		'passwordmatch',
 		function( value, element ){
         	return ( value == $( "[name=password]" ).val() ) ? true : false;
-    	}, 
-    	'#cb.r( "validation.passwordmatch@installer" )#' 
+    	},
+    	'#cb.r( "validation.passwordmatch@installer" )#'
     );
-    
+
 	$.validator.addMethod(
-		"pwcheck", 
-		passwordValidator, 
-		'#cb.r( "validation.passwordcheck@installer" )#' 
+		"pwcheck",
+		passwordValidator,
+		'#cb.r( "validation.passwordcheck@installer" )#'
 	);
 
 	// Password change rules
 	$( "##password" ).keyup( passwordMeter );
-	
+
 } );
 
 function nextStep(){

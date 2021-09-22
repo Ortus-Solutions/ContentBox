@@ -1,6 +1,6 @@
 <cfoutput>
 	<script>
-	$( document ).ready( function() {
+	document.addEventListener( "DOMContentLoaded", () => {
 		$groupForm = $( "##groupForm" );
 		// form validators
 		$groupForm.validate();

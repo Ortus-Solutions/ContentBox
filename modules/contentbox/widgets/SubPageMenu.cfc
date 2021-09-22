@@ -42,15 +42,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		activeClass                = "active",
 		boolean activeShowChildren = false
 	){
-		return cb.subPageMenu( argumentCollection = arguments );
+		return variables.cb.subPageMenu( argumentCollection = arguments );
 	}
 
 	/**
 	 * Return an array of slug lists, the @ignore annotation means the ContentBox widget editors do not use it only used internally.
+	 *
 	 * @cbignore
 	 */
 	array function getSlugList(){
-		return pageService.getAllFlatSlugs();
+		return variables.pageService.getAllFlatSlugs();
 	}
 
 }

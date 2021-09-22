@@ -11,7 +11,7 @@ component extends="tests.resources.BaseTest" {
 	// executes before all suites+specs in the run() method
 	function beforeAll(){
 		super.beforeAll();
-		provider = getInstance( "BaseTwoFactorProvider@cb" );
+		provider = getInstance( "BaseTwoFactorProvider@contentbox" );
 	}
 
 	// executes after all suites+specs in the run() method

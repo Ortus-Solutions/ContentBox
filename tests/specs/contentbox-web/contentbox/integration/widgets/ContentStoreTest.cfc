@@ -12,7 +12,7 @@ component extends="tests.resources.BaseTest" {
 	function beforeAll(){
 		super.beforeAll();
 
-		widgetService = getInstance( "widgetService@cb" );
+		widgetService = getInstance( "widgetService@contentbox" );
 	}
 
 	/*********************************** BDD SUITES ***********************************/

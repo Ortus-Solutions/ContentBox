@@ -38,7 +38,7 @@ component {
 	 */
 	function onLoad(){
 		// Register this 2 Auth provider with the TwoFactorService
-		var twoFactorService = wirebox.getInstance( "TwoFactorService@cb" );
+		var twoFactorService = wirebox.getInstance( "TwoFactorService@contentbox" );
 		twoFactorService.registerProvider(
 			wirebox.getInstance( "EmailTwoFactorProvider@contentbox-email-twofactor" )
 		);
@@ -49,7 +49,7 @@ component {
 	 */
 	function onUnload(){
 		// Like a Ninja, remove yourself
-		var twoFactorService = wirebox.getInstance( "TwoFactorService@cb" );
+		var twoFactorService = wirebox.getInstance( "TwoFactorService@contentbox" );
 		twoFactorService.unregisterProvider( "email" );
 	}
 

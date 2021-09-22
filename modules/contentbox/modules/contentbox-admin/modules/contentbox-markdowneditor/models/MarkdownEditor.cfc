@@ -17,7 +17,7 @@ component
 	/**
 	 * Constructor
 	 * @coldbox.inject coldbox
-	 * @settingService.inject settingService@cb
+	 * @settingService.inject settingService@contentbox
 	 * @html.inject HTMLHelper@coldbox
 	 */
 	function init(
@@ -93,6 +93,7 @@ component
 		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.css" );
 		html.addAsset( "#variables.EDITOR_ROOT#/includes/simplemde/simplemde.min.js" );
 		// Custom Styles
+		// cfformat-ignore-start
 		html.addStyleContent(
 			"
 			.CodeMirror{
@@ -109,8 +110,7 @@ component
 		);
 
 		savecontent variable="js" {
-			writeOutput(
-				"
+			writeOutput( "
 			function getContentEditor(){
 				return simpleMDE_content.codemirror;
 			}
@@ -190,9 +190,9 @@ component
 				insertEditorContent( simpleMDETargetEditor, link );
 				closeRemoteModal();
 			}
-			"
-			);
+			");
 		}
+		// cfformat-ignore-end
 
 		return js;
 	};
@@ -209,9 +209,9 @@ component
 			extraConfig = "#arguments.iData2.extraConfig#,";
 		}
 
+		// cfformat-ignore-start
 		savecontent variable="js" {
-			writeOutput(
-				"
+			writeOutput( "
 			// Activate on content object
 			simpleMDE_content = new SimpleMDE( {
 				#extraConfig#
@@ -249,9 +249,9 @@ component
 			simpleMDE_content.codemirror.on( 'change', function(){
 			    simpleMDE_content.isDirty = true;
 			} );
-			"
-			);
+			" );
 		}
+		// cfformat-ignore-end
 
 		return js;
 	}
@@ -260,23 +260,24 @@ component
 	 * Shutdown the editor(s) on a page
 	 */
 	function shutdown(){
-		var js              = "";
+		var js = "";
+
+		// cfformat-ignore-start
 		savecontent variable="js" {
-			writeOutput(
-				"
-			// Activate on content object
-			simpleMDE_content.toTextArea();
-			simpleMDE_content = null;
-			// Active Excerpts
-			try{
-				simpleMDE_excerpt.toTextArea();
-				simpleMDE_excerpt = null;
-			} catch( error ){
-				// ignore.
-			}
-			"
-			);
+			writeOutput( "
+				// Activate on content object
+				simpleMDE_content.toTextArea();
+				simpleMDE_content = null;
+				// Active Excerpts
+				try{
+					simpleMDE_excerpt.toTextArea();
+					simpleMDE_excerpt = null;
+				} catch( error ){
+					// ignore.
+				}
+			");
 		}
+		// cfformat-ignore-end
 
 		return js;
 	}
@@ -286,6 +287,7 @@ component
 	 * @editor The editor name to bind the toolbar to
 	 */
 	private function buildToolbarJS( required editor ){
+		// cfformat-ignore-start
 		return "[
 			{
 				name : 'cbSave',
@@ -348,6 +350,7 @@ component
 				title : 'Insert ContentBox Media'
 			}
 		]";
+		// cfformat-ignore-end
 	}
 
 }

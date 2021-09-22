@@ -8,18 +8,18 @@
 component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 
 	// Shared DI all widgets receive
-	property name="siteService" inject="siteService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="contentService" inject="contentService@cb";
-	property name="contentVersionService" inject="contentVersionService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="menuService" inject="menuService@cb";
-	property name="cb" inject="CBHelper@cb";
-	property name="securityService" inject="securityService@cb";
+	property name="siteService" inject="siteService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="contentService" inject="contentService@contentbox";
+	property name="contentVersionService" inject="contentVersionService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="menuService" inject="menuService@contentbox";
+	property name="cb" inject="CBHelper@contentbox";
+	property name="securityService" inject="securityService@contentbox";
 	property name="html" inject="HTMLHelper@coldbox";
 	property name="controller" inject="coldbox";
 	property name="log" inject="logbox:logger:{this}";
@@ -29,30 +29,37 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 		name   ="name"
 		type   ="string"
 		default="";
+
 	property
 		name   ="version"
 		type   ="string"
 		default="";
+
 	property
 		name   ="description"
 		type   ="string"
 		default="";
+
 	property
 		name   ="author"
 		type   ="string"
 		default="";
+
 	property
 		name   ="authorURL"
 		type   ="string"
 		default="";
+
 	property
 		name   ="forgeBoxSlug"
 		type   ="string"
 		default="";
+
 	property
 		name   ="category"
 		type   ="string"
 		default="";
+
 	property
 		name   ="icon"
 		type   ="string"
@@ -75,6 +82,8 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 
 	/**
 	 * This is the main renderit method you will need to implement in concrete widgets
+	 *
+	 * @throws BaseClassException
 	 */
 	any function renderIt(){
 		throw(
@@ -85,6 +94,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 
 	/**
 	 * Get this widget's public methods'
+	 *
 	 * @return array
 	 */
 	array function getPublicMethods(){

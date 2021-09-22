@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <!--- Custom Javascript --->
 <script>
-$( document ).ready(function() {
+( () => {
     // Handle clicks on widgets
     $( '.widget-selector' ).click( function(){
         var me = $( this );
@@ -32,7 +32,7 @@ $( document ).ready(function() {
         $( '##widget-preview-content' ).html( '' );
         switchWidgetFormMode( 'list' );
     } );
-} );
+} )();
 /*
  * Get selected widget from collection
  */

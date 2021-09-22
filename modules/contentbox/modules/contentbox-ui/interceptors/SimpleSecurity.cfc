@@ -7,7 +7,7 @@
  */
 component {
 
-	property name="securityService" inject="id:securityService@cb";
+	property name="securityService" inject="id:securityService@contentbox";
 
 	void function configure(){
 	}

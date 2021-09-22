@@ -21,6 +21,7 @@ jobs:
       fail-fast: false
       matrix:
         cfengine: [ "lucee@5", "adobe@2016", "adobe@2018" ]
+        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -58,8 +59,10 @@ jobs:
           # Log4j Hibernate Debug
           mkdir -p .engines/acf2016/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2018/WEB-INF/cfusion/lib/
+          mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2016/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
+          cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
 
       - name: Cache CommandBox Dependencies
         uses: actions/cache@v1
@@ -77,9 +80,15 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start ${{ matrix.cfengine }} Server
+      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
         run: |
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
+          # Startup the Server
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
+          # Install Adobe 2021 cfpm modules
+          if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+            box run-script install:2021
+          fi
+          # Test site build up
           curl http://127.0.0.1:8589
 
       - name: Run Web App Tests
@@ -103,7 +112,7 @@ jobs:
         if: always()
         with:
           files: tests/results/**/*.xml
-          check_name: "${{ matrix.cfengine }} Test Results"
+          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
 
       - name: Upload Test Results Artifacts
         if: always()
@@ -121,7 +130,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_MESSAGE: 'ContentBox tests failed :cry:, check them out here: https://github.com/Ortus-Solutions/ContentBox/actions'
-          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }} failed
+          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }}/${{ matrix.javaVersion }} failed
           SLACK_USERNAME: CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -140,7 +149,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Failure Debugging Info - ${{ matrix.cfengine }}
+          name: Failure Debugging Info - ${{ matrix.cfengine }} - ${{ matrix.javaVersion }}
           path: |
             .engines/**/logs/*
             .engines/**/WEB-INF/cfusion/logs/*
@@ -180,7 +189,8 @@ jobs:
 
       - name: Install Build Dependencies
         run: |
-          box install
+          box install --production
+          box install commandbox-docbox
 
       - name: Setup Environment Variables For Build Process
         id: current_version
@@ -188,10 +198,10 @@ jobs:
           echo "VERSION=`cat box.json | jq '.version' -r`" >> $GITHUB_ENV
           # master or snapshot
           echo "BRANCH=master" >> $GITHUB_ENV
-          if [[ "{{ GITHUB_REF }}" == "refs/heads/development" ]] ; then
+          if [ $GITHUB_REF == 'refs/heads/development' ]
+          then
             echo "BRANCH=development" >> $GITHUB_ENV
           fi
-          echo "Building ContentBox for ${{ env.BRANCH }}"
 
       - name: Download Test Artifacts
         uses: actions/download-artifact@v2
@@ -205,7 +215,7 @@ jobs:
           # Run Docs Build
           box run-script build:allDocs
 
-      - name: Build ContentBox Variants
+      - name: Build ContentBox Variants for ${{ env.BRANCH }} v${{ env.VERSION }}
         run: |
           ant -Dcontentbox.version=${{ env.VERSION }} -Dbuild.number=${{ github.run_number }} -Dbuild.branch=${{ env.BRANCH }} -f build/build.xml
           cat build/build-contentbox/module/box.json
@@ -213,6 +223,14 @@ jobs:
       - name: List Variants
         run: ls -R
         working-directory: build/build-contentbox
+
+      - name: Upload Build Artifacts
+        if: success()
+        uses: actions/upload-artifact@v2
+        with:
+          name: contentbox-variants
+          path: |
+            artifacts/**/*
 
       - name: Upload Binaries to S3
         uses: jakejarvis/s3-sync-action@master

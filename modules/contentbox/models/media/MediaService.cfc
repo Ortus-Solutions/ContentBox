@@ -1,15 +1,15 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Manage's the system's media files
-*/
-component accessors="true" singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Manage's the system's media files
+ */
+component accessors="true" singleton {
 
 	// DI
-	property name="log"					inject="logbox:logger:{this}";
-	property name="settingService"		inject="settingservice@cb";
+	property name="log" inject="logbox:logger:{this}";
+	property name="settingService" inject="settingservice@contentbox";
 
 	/**
 	 * ContentBox Providers Map
@@ -32,9 +32,9 @@ component accessors="true" singleton{
 		variables.wirebox = arguments.wirebox;
 
 		// Register Core Media Providers
-		registerProvider( arguments.wirebox.getInstance( "CFContentMediaProvider@cb" ) );
-		registerProvider( arguments.wirebox.getInstance( "RelocationMediaProvider@cb" ) );
-		registerProvider( arguments.wirebox.getInstance( "ForwardMediaProvider@cb" ) );
+		registerProvider( arguments.wirebox.getInstance( "CFContentMediaProvider@contentbox" ) );
+		registerProvider( arguments.wirebox.getInstance( "RelocationMediaProvider@contentbox" ) );
+		registerProvider( arguments.wirebox.getInstance( "ForwardMediaProvider@contentbox" ) );
 
 		return this;
 	}
@@ -67,7 +67,9 @@ component accessors="true" singleton{
 	 *
 	 * @provider The provider object to register
 	 */
-	MediaService function registerProvider( required contentbox.models.media.IMediaProvider provider ){
+	MediaService function registerProvider(
+		required contentbox.models.media.IMediaProvider provider
+	){
 		variables.providers[ arguments.provider.getName() ] = arguments.provider;
 		return this;
 	}
@@ -96,13 +98,13 @@ component accessors="true" singleton{
 		var aProviders = getRegisteredProviders();
 		var result     = [];
 
-		for( var thisProvider in aProviders ){
+		for ( var thisProvider in aProviders ) {
 			arrayAppend(
 				result,
 				{
-					name        = thisProvider,
-					displayName = variables.providers[ thisProvider ].getDisplayName(),
-					description = variables.providers[ thisProvider ].getDescription()
+					name        : thisProvider,
+					displayName : variables.providers[ thisProvider ].getDisplayName(),
+					description : variables.providers[ thisProvider ].getDescription()
 				}
 			);
 		}
@@ -115,8 +117,11 @@ component accessors="true" singleton{
 	 *
 	 * @absolute Return the absolute path or relative, if absolute then it expands the path.
 	 */
-	function getCoreMediaRoot( required boolean absolute=false ){
-		var mRoot = variables.settingService.getSetting( "cb_media_directoryRoot", variables.DEFAULT_MEDIA_ROOT );
+	function getCoreMediaRoot( required boolean absolute = false ){
+		var mRoot = variables.settingService.getSetting(
+			"cb_media_directoryRoot",
+			variables.DEFAULT_MEDIA_ROOT
+		);
 		return ( arguments.absolute ? expandPath( mRoot ) : mRoot );
 	}
 

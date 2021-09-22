@@ -8,11 +8,11 @@
 component {
 
 	// DI
-	property name="entryService" inject="id:entryService@cb";
-	property name="pageService" inject="id:pageService@cb";
-	property name="contentService" inject="id:contentService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
-	property name="settingService" inject="id:settingService@cb";
+	property name="entryService" inject="id:entryService@contentbox";
+	property name="pageService" inject="id:pageService@contentbox";
+	property name="contentService" inject="id:contentService@contentbox";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
+	property name="settingService" inject="id:settingService@contentbox";
 
 	/**
 	 * Executes before all handler actions
@@ -95,7 +95,7 @@ component {
 		prc.disableBlog = !prc.oCurrentSite.getIsBlogEnabled();
 
 		// Get Content Data
-		prc.aPages = pageService.getAllFlatPages(
+		prc.aPages = pageService.getAllFlatContent(
 			sortOrder    = "order asc",
 			isPublished  = true,
 			showInSearch = true,
@@ -109,7 +109,7 @@ component {
 				prc.blogEntryPoint = prc.blogEntryPoint & "/";
 			}
 			// Entry Content
-			prc.aEntries = entryService.getAllFlatEntries(
+			prc.aEntries = entryService.getAllFlatContent(
 				sortOrder    = "createdDate asc",
 				isPublished  = true,
 				showInSearch = true,

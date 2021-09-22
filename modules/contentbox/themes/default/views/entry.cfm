@@ -166,7 +166,7 @@
 
 <!--- Custom JS --->
 <script type="text/javascript">
-	$(document).ready(function() {
+	document.addEventListener( "DOMContentLoaded", () => {
 		<cfif !cb.isCommentFormError()>
 			toggleCommentForm();
 		</cfif>

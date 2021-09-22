@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="mailSettingsForm", action=prc.xehSaveSettings )#
 <!--- Mail Server Settings --->
 <fieldset>
     <legend><i class="far fa-envelope-open fa-lg"></i> <strong>Mail Server</strong></legend>
@@ -122,4 +123,10 @@
         <i class="fa fa-spinner fa-lg" id="iTest"></i> Test Connection
     </button>
 </fieldset>
+<!--- Button Bar --->
+<div class="form-actions mt20">
+	#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+</div>
+
+#html.endForm()#
 </cfoutput>

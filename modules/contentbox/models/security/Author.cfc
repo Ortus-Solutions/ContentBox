@@ -21,12 +21,12 @@ component
 
 	property
 		name      ="authorService"
-		inject    ="authorService@cb"
+		inject    ="authorService@contentbox"
 		persistent="false";
 
 	property
 		name      ="avatar"
-		inject    ="Avatar@CB"
+		inject    ="Avatar@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -40,7 +40,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property
@@ -268,7 +267,8 @@ component
 			size      : "1..100",
 			validator : "UniqueValidator@cborm"
 		},
-		"password" : { required : true, size : "1..100" }
+		"password" : { required : true, size : "1..100" },
+		"role"     : { required : true }
 	};
 
 	/* *********************************************************************
@@ -475,13 +475,13 @@ component
 	/**
 	 * Get formatted lastLogin
 	 */
-	string function getDisplayLastLogin(){
+	string function getDisplayLastLogin( dateFormat = this.DATE_FORMAt, timeFormat = this.TIME_FORMAT ){
 		var lastLogin = getLastLogin();
 
 		if ( NOT isNull( lastLogin ) ) {
-			return dateFormat( lastLogin, this.DATE_FORMAt ) & " " & timeFormat(
+			return dateFormat( lastLogin, arguments.dateFormat ) & " " & timeFormat(
 				lastLogin,
-				this.TIME_FORMAT_SHORT
+				arguments.timeFormat
 			);
 		}
 

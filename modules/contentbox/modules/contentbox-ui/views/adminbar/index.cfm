@@ -20,7 +20,7 @@
 
 			<cfif !isNull( args.oContent )>
 				<span class="admin-bar-label publisher">
-					#getInstance( "Avatar@cb" ).renderAvatar(
+					#getInstance( "Avatar@contentbox" ).renderAvatar(
 						email	= args.oContent.getAuthorEmail(),
 						size	= "15",
 						class	= "img img-circle"
@@ -78,7 +78,7 @@
 
 	<div id="avatar">
 		<h4>
-			#getInstance( "Avatar@cb" )
+			#getInstance( "Avatar@contentbox" )
 				.renderAvatar(
 					email 	: args.oCurrentAuthor.getEmail(),
 					size 	: "30",

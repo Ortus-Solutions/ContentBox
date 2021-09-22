@@ -8,13 +8,13 @@
 component implements="ICBImporter" {
 
 	// DI
-	property name="categoryService" inject="id:categoryService@cb";
-	property name="entryService" inject="id:entryService@cb";
-	property name="pageService" inject="id:pageService@cb";
-	property name="authorService" inject="id:authorService@cb";
-	property name="roleService" inject="id:roleService@cb";
-	property name="commentService" inject="id:commentService@cb";
-	property name="customFieldService" inject="id:customFieldService@cb";
+	property name="categoryService" inject="id:categoryService@contentbox";
+	property name="entryService" inject="id:entryService@contentbox";
+	property name="pageService" inject="id:pageService@contentbox";
+	property name="authorService" inject="id:authorService@contentbox";
+	property name="roleService" inject="id:roleService@contentbox";
+	property name="commentService" inject="id:commentService@contentbox";
+	property name="customFieldService" inject="id:customFieldService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="htmlHelper" inject="HTMLHelper@coldbox";
 	property name="bCrypt" inject="BCrypt@BCrypt";

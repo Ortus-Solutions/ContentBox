@@ -1,27 +1,19 @@
 ﻿<cfoutput>
-<!--- Load Content List Viewer UI --->
-#renderView(
-	view          = "_tags/contentListViewer",
-	prePostExempt = true
-)#
-<!--- page JS --->
 <script>
-$( document ).ready( function() {
-	// Setup content view
-	setupContentView( {
-		tableContainer	: $( "##entriesTableContainer" ),
+document.addEventListener( "DOMContentLoaded", () => {
+	// Setup content view: from workbench/resources/contentList.js
+	contentListHelper.init( {
+		adminEntryPoint : '#event.buildLink( prc.cbAdminEntryPoint )#',
+		tableContainer	: $( "##contentTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehEntryTable )#',
-		searchField 	: $( "##entrySearch" ),
-		searchName		: 'searchEntries',
+		searchField 	: $( "##searchContent" ),
+		searchName		: 'searchContent',
 		contentForm 	: $( "##entryForm" ),
 		bulkStatusURL 	: '#event.buildlink( prc.xehEntryBulkStatus )#',
 		importDialog 	: $( "##importDialog" ),
-		cloneDialog		: $( "##cloneDialog" )
+		cloneDialog		: $( "##cloneDialog" ),
+		parentID 		: ''
 	} );
-
-	// load content on startup, using default parents if passed.
-	contentLoad( {} );
-
 } );
 </script>
 </cfoutput>

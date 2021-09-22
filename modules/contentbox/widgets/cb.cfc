@@ -1,15 +1,15 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* A proxy to our ContentBox Helper Object
-*/
-component extends="contentbox.models.ui.BaseWidget" singleton{
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * A proxy to our ContentBox Helper Object
+ */
+component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	cb function init(){
 		// Widget Properties
 		setName( "CBHelper" );
@@ -23,15 +23,15 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 	}
 
 	/**
-	* Shows the CB Helper Motto
-	*/
+	 * Shows the CB Helper Motto
+	 */
 	any function renderIt(){
 		return "CBHelper Rocks!";
 	}
 
 	/**
-	* Proxy into the CB Helper
-	*/
+	 * Proxy into the CB Helper
+	 */
 	any function onMissingMethod( missingMethodName, missingMethodArguments ){
 		return invoke(
 			variables.cb,
@@ -39,6 +39,5 @@ component extends="contentbox.models.ui.BaseWidget" singleton{
 			missingMethodArguments
 		);
 	}
-
 
 }

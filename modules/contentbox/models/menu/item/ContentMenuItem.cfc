@@ -24,7 +24,7 @@ component
 	property
 		name      ="contentService"
 		persistent="false"
-		inject    ="id:contentService@cb";
+		inject    ="id:contentService@contentbox";
 
 	/* *********************************************************************
 	 **                          PROPERTIES

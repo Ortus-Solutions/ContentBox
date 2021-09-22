@@ -1,7 +1,7 @@
 component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 
 	// DI
-	property name="securityService" inject="securityService@cb";
+	property name="securityService" inject="securityService@contentbox";
 	property name="cbsecure"        inject="CBSecurity@cbsecurity";
 	property name="jwt"             inject="JWTService@cbsecurity";
 
@@ -141,10 +141,16 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 	 */
 	struct function loginUser( username = variables.testAdminUsername ){
 		var oUser = variables.securityService.authenticate( username : arguments.username, password : variables.testAdminPassword, logThemIn : true);
+		var tokens = variables.jwt.fromUser( oUser );
+
+		// Setup request data
 		request.testUserData = {
-			"token" : variables.jwt.fromUser( oUser ),
-			"user"  : oUser
+			"token" : tokens.access_token,
+			"user"  : oUser,
+			"refresh_token" : tokens.refresh_token
 		};
+
+		// Return it.
 		return request.testUserData;
 	}
 

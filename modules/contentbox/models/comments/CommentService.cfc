@@ -10,12 +10,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	// DI
 	property name="mailService" inject="mailService@cbmailservices";
 	property name="renderer" inject="coldbox:renderer";
-	property name="settingService" inject="id:settingService@cb";
-	property name="securityService" inject="id:securityService@cb";
-	property name="CBHelper" inject="id:CBHelper@cb";
+	property name="settingService" inject="id:settingService@contentbox";
+	property name="securityService" inject="id:securityService@contentbox";
+	property name="CBHelper" inject="id:CBHelper@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="loginTrackerService" inject="loginTrackerService@cb";
+	property name="loginTrackerService" inject="loginTrackerService@contentbox";
 
 	/**
 	 * Constructor
@@ -115,12 +115,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// By Content Type Discriminator: class is a special hibernate deal
 			.when( !isNull( arguments.contentType ) AND len( arguments.contentType ), function( c ){
 				c.createCriteria( "relatedContent" ).isEq( "class", contentType );
-			})
+			} )
 			// Site Filter
 			.when( len( arguments.siteID ), function( c ){
 				c.joinTo( "relatedContent", "relatedContent" )
 					.isEq( "relatedContent.site.siteID", siteID );
-			});
+			} );
 
 		// run criteria query and projections count
 		results.count    = c.count();

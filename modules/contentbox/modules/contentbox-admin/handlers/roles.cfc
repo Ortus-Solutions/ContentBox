@@ -8,8 +8,8 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="roleService" inject="roleService@cb";
-	property name="permissionService" inject="permissionService@cb";
+	property name="roleService" inject="roleService@contentbox";
+	property name="permissionService" inject="permissionService@contentbox";
 
 	/**
 	 * Pre handler
@@ -69,7 +69,11 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		prc.oRole = populateModel( model: roleService.get( rc.roleID ), composeRelationships: true );
+		prc.oRole = populateModel(
+			model               : roleService.get( rc.roleID ),
+			composeRelationships: true,
+			exclude             : "roleID"
+		);
 
 		// Validate
 		var vResults = validate( prc.oRole );

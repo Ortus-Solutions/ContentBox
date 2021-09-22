@@ -10,8 +10,8 @@ component cache=false {
 
 	// DI
 	property name="installerService" inject="installerService@cbi";
-	property name="settingService" inject="settingService@cb";
-	property name="cb" inject="cbhelper@cb";
+	property name="settingService" inject="settingService@contentbox";
+	property name="cb" inject="cbhelper@contentbox";
 
 	/**
 	 * Pre Handler

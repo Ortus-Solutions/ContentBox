@@ -12,7 +12,7 @@ component extends="tests.resources.BaseTest" {
 			beforeEach( function( currentSpec ){
 				// Capture the request so the debugger can track our data. since we are in unit mode.
 				getController().getRequestService().requestCapture();
-				commentService = getInstance( "CommentService@cb" );
+				commentService = getInstance( "CommentService@contentbox" );
 			} );
 
 			it( "can get approved comment count", function(){

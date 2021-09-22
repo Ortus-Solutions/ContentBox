@@ -8,13 +8,13 @@
 component extends="baseHandler" {
 
 	// Dependencies
-	property name="commentSubscriptionService" inject="commentSubscriptionService@cb";
-	property name="subscriberService" inject="subscriberService@cb";
+	property name="commentSubscriptionService" inject="commentSubscriptionService@contentbox";
+	property name="subscriberService" inject="subscriberService@contentbox";
 
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
-		prc.tabStats = true;
+		prc.tabComments = true;
 	}
 
 	// index
@@ -27,6 +27,9 @@ component extends="baseHandler" {
 		prc.commentSubscriptions     = commentSubscriptionService.getGroupedSubscriptions();
 		prc.commentSubscriptionCount = commentSubscriptionService.getGroupedSubscriptionCount();
 		prc.uniqueSubscriberCount    = subscriberService.getUniqueSubscriberCount();
+
+		// tab
+		prc.tabComments_subscribers = true;
 
 		// view
 		event.setView( "subscribers/index" );

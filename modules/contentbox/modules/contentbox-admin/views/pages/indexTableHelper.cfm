@@ -1,6 +1,6 @@
 <cfoutput>
 <script>
-$( document ).ready(function() {
+( () => {
 	// tables references
 	$pages = $( "##pages" );
 	// datatable
@@ -23,9 +23,10 @@ $( document ).ready(function() {
 	// activate tooltips
 	activateTooltips();
 	// quick look
-	activateQuickLook( $pages, '#event.buildLink( prc.xehPageQuickLook )#/contentID/' );
-	// Popovers
-	activateInfoPanels();
+	contentListHelper.activateQuickLook( $pages, '#event.buildLink( prc.xehPageQuickLook )#/contentID/' );
+	// Info Panels
+	contentListHelper.activateInfoPanels();
+
 	<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 	// Drag and drop hierarchies
 	$pages.tableDnD( {
@@ -71,6 +72,6 @@ $( document ).ready(function() {
 		}
 	} );
 	</cfif>
-} );
+} )();
 </script>
 </cfoutput>

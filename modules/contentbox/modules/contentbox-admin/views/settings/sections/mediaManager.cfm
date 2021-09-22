@@ -1,4 +1,5 @@
 <cfoutput>
+#html.startForm( name="mediaSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
     <legend><i class="fas fa-photo-video fa-lg"></i> Media Manager</legend>
         <p>From here you can control the media manager settings.</p>
@@ -202,4 +203,10 @@
         )#
 
     </fieldset>
+	<!--- Button Bar --->
+	<div class="form-actions mt20">
+		#html.submitButton( value="Save Settings", class="btn btn-danger" )#
+	</div>
+
+	#html.endForm()#
 </cfoutput>

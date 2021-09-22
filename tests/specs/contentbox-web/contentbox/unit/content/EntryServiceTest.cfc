@@ -23,7 +23,7 @@ component extends="tests.resources.BaseTest" {
 	function run( testResults, testBox ){
 		describe( "Entry Services", function(){
 			beforeEach( function( currentSpec ){
-				model = getInstance( "EntryService@cb" );
+				model = getInstance( "EntryService@contentbox" );
 			} );
 
 			it( "can get archives report", function(){

@@ -1,37 +1,34 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* ContentBox Admin CKEditor Module
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * ContentBox Admin CKEditor Module
+ */
 component {
 
 	// Module Properties
-	this.title 				= "ContentBox CKEditor";
-	this.author 			= "Ortus Solutions, Corp";
-	this.webURL 			= "https://www.ortussolutions.com";
+	this.title              = "ContentBox CKEditor";
+	this.author             = "Ortus Solutions, Corp";
+	this.webURL             = "https://www.ortussolutions.com";
 	this.version            = "@version.number@+@build.number@";
-	this.description 		= "ContentBox CKEditor Module";
-	this.viewParentLookup 	= true;
+	this.description        = "ContentBox CKEditor Module";
+	this.viewParentLookup   = true;
 	this.layoutParentLookup = true;
-	this.entryPoint			= "cbadmin/ckeditor";
-	this.dependencies 		= [ "contentbox-admin" ];
+	this.entryPoint         = "cbadmin/ckeditor";
+	this.dependencies       = [ "contentbox-admin" ];
 
 	/**
-	* Configure
-	*/
+	 * Configure
+	 */
 	function configure(){
-
 		// SES Routes
-		routes = [
-			{ pattern="/:handler/:action?" }
-		];
+		routes = [ { pattern : "/:handler/:action?" } ];
 
 		// Custom Declared Points
 		interceptorSettings = {
 			// CB Admin Custom Events
-			customInterceptionPoints = [
+			customInterceptionPoints : [
 				"cbadmin_ckeditorToolbar",
 				"cbadmin_ckeditorExtraPlugins",
 				"cbadmin_ckeditorExtraConfig",
@@ -40,23 +37,23 @@ component {
 		};
 
 		// interceptors
-		interceptors = [ ];
+		interceptors = [];
 	}
 
 	/**
-	* Fired when the module is registered and activated.
-	*/
+	 * Fired when the module is registered and activated.
+	 */
 	function onLoad(){
-		var editorService = wirebox.getInstance( "EditorService@cb" );
+		var editorService = wirebox.getInstance( "EditorService@contentbox" );
 		editorService.registerEditor( wirebox.getInstance( "CKEditor@contentbox-ckeditor" ) );
 	}
 
 	/**
-	* Fired when the module is unregistered and unloaded
-	*/
+	 * Fired when the module is unregistered and unloaded
+	 */
 	function onUnload(){
-		var editorService = wirebox.getInstance( "EditorService@cb" );
-		editorService.unregisterEditor( 'ckeditor' );
+		var editorService = wirebox.getInstance( "EditorService@contentbox" );
+		editorService.unregisterEditor( "ckeditor" );
 	}
 
 }

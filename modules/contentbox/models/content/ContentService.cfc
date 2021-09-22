@@ -8,22 +8,22 @@
 component extends="cborm.models.VirtualEntityService" singleton {
 
 	// DI
-	property name="settingService" inject="id:settingService@cb";
+	property name="settingService" inject="id:settingService@contentbox";
 	property name="cacheBox" inject="cachebox";
 	property name="log" inject="logbox:logger:{this}";
-	property name="customFieldService" inject="customFieldService@cb";
-	property name="categoryService" inject="categoryService@cb";
-	property name="commentService" inject="commentService@cb";
-	property name="contentVersionService" inject="contentVersionService@cb";
-	property name="authorService" inject="authorService@cb";
-	property name="contentStoreService" inject="contentStoreService@cb";
-	property name="pageService" inject="pageService@cb";
-	property name="entryService" inject="entryService@cb";
-	property name="systemUtil" inject="SystemUtil@cb";
-	property name="statsService" inject="statsService@cb";
-	property name="dateUtil" inject="DateUtil@cb";
-	property name="commentSubscriptionService" inject="CommentSubscriptionService@cb";
-	property name="subscriberService" inject="subscriberService@cb";
+	property name="customFieldService" inject="customFieldService@contentbox";
+	property name="categoryService" inject="categoryService@contentbox";
+	property name="commentService" inject="commentService@contentbox";
+	property name="contentVersionService" inject="contentVersionService@contentbox";
+	property name="authorService" inject="authorService@contentbox";
+	property name="contentStoreService" inject="contentStoreService@contentbox";
+	property name="pageService" inject="pageService@contentbox";
+	property name="entryService" inject="entryService@contentbox";
+	property name="systemUtil" inject="SystemUtil@contentbox";
+	property name="statsService" inject="statsService@contentbox";
+	property name="dateUtil" inject="DateUtil@contentbox";
+	property name="commentSubscriptionService" inject="CommentSubscriptionService@contentbox";
+	property name="subscriberService" inject="subscriberService@contentbox";
 	property name="asyncManager" inject="coldbox:asyncManager";
 
 	/**
@@ -147,6 +147,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @excludeIDs List of IDs to exclude from search
 	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
 	 * @siteID The site ID to filter on
+	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
 	 *
 	 * @returns struct = { content, count }
 	 */
@@ -161,7 +162,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		string contentTypes         = "",
 		any excludeIDs              = "",
 		boolean showInSearch,
-		string siteID = ""
+		string siteID = "",
+		string propertyList
 	){
 		var results = { "count" : 0, "content" : [] };
 		var c       = newCriteria();
@@ -225,15 +227,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		// run criteria query and projections count
-		results.count   = c.count( "contentID" );
-		results.content = c
-			.resultTransformer( c.DISTINCT_ROOT_ENTITY )
-			.list(
-				offset    = arguments.offset,
-				max       = arguments.max,
-				sortOrder = arguments.sortOrder,
-				asQuery   = arguments.asQuery
-			);
+		results.count = c.count( "contentID" );
+
+		if ( !isNull( arguments.propertyList ) ) {
+			c.withProjections( property = arguments.propertyList ).asStruct();
+		} else {
+			c.resultTransformer( c.DISTINCT_ROOT_ENTITY );
+		}
+		results.content = c.list(
+			offset    = arguments.offset,
+			max       = arguments.max,
+			sortOrder = arguments.sortOrder,
+			asQuery   = arguments.asQuery
+		);
 
 		return results;
 	}
@@ -689,9 +695,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			query: "
 				SELECT new map( content as content, count( comments.commentID ) AS commentCount )
 				FROM cbContent content JOIN content.comments comments
+				WHERE content.site.siteID = :siteID
 				GROUP BY content
 				ORDER BY count( comments.commentID ) DESC
 			",
+			params    : { siteID : arguments.siteID },
 			max       : arguments.max,
 			ignoreCase: true
 		)
@@ -768,7 +776,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			importLog.append( arguments.message & "<br>" );
 		};
 
-		var siteService = getWireBox().getInstance( "siteService@cb" );
+		var siteService = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {

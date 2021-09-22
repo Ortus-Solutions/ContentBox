@@ -143,6 +143,7 @@ CREATE TABLE `cb_category` (
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `categoryID` char(36) CHARACTER SET utf8 NOT NULL,
   `FK_siteID` varchar(36) NOT NULL DEFAULT '',
+  `isPublic` bit(1) NOT NULL,
   PRIMARY KEY (`categoryID`),
   UNIQUE KEY `id` (`categoryID`),
   UNIQUE KEY `categoryID` (`categoryID`),
@@ -151,17 +152,20 @@ CREATE TABLE `cb_category` (
   KEY `idx_deleted` (`isDeleted`),
   KEY `idx_categoryName` (`category`),
   KEY `FK_siteID` (`FK_siteID`),
+  KEY `idx_isPublic` (`isPublic`),
   CONSTRAINT `cb_category_ibfk_1` FOREIGN KEY (`FK_siteID`) REFERENCES `cb_site` (`siteID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_category` WRITE;
 /*!40000 ALTER TABLE `cb_category` DISABLE KEYS */;
 
-INSERT INTO `cb_category` (`category`, `slug`, `createdDate`, `modifiedDate`, `isDeleted`, `categoryID`, `FK_siteID`)
+INSERT INTO `cb_category` (`category`, `slug`, `createdDate`, `modifiedDate`, `isDeleted`, `categoryID`, `FK_siteID`, `isPublic` )
 VALUES
-	('ColdFusion','coldfusion','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a9660-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentBox','contentbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a97f0-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('coldbox','coldbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a98cc-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3');
+	('ColdFusion','coldfusion','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a9660-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
+	('ContentBox','contentbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a97f0-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
+	('coldbox','coldbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a98cc-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
+	('News','news','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','A657752D-79AC-42CB-B7A9572AB7B329A1','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'0'),
+	('General','general','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','16B64400-E17B-477C-B0A0C59764CB85F8','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'0');
 
 /*!40000 ALTER TABLE `cb_category` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -245,8 +249,8 @@ DROP TABLE IF EXISTS `cb_content`;
 
 CREATE TABLE `cb_content` (
   `contentType` varchar(255) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `slug` varchar(200) NOT NULL,
+  `title` varchar(500) NOT NULL,
+  `slug` varchar(500) NOT NULL,
   `createdDate` datetime NOT NULL,
   `publishedDate` datetime DEFAULT NULL,
   `expireDate` datetime DEFAULT NULL,
@@ -261,8 +265,8 @@ CREATE TABLE `cb_content` (
   `cacheLastAccessTimeout` int(11) DEFAULT '0',
   `markup` varchar(100) NOT NULL DEFAULT 'HTML',
   `showInSearch` bit(1) NOT NULL DEFAULT b'1',
-  `featuredImage` varchar(255) DEFAULT NULL,
-  `featuredImageURL` varchar(255) DEFAULT NULL,
+  `featuredImage` varchar(500) DEFAULT NULL,
+  `featuredImageURL` varchar(500) DEFAULT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `HTMLTitle` varchar(255) DEFAULT NULL,

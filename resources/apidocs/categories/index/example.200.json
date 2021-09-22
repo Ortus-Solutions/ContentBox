@@ -1,0 +1,73 @@
+{
+	"data": [
+		{
+			"categoryID": "ff8081817a3ffffe017a4001630f0080",
+			"slug": "coldbox",
+			"createdDate": "2021-06-24T21:51:11+00:00",
+			"numberOfPages": "0",
+			"numberOfEntries": "0",
+			"category": " ColdBox",
+			"numberOfContentStore": "0",
+			"modifiedDate": "2021-06-24T21:51:14+00:00",
+			"site": {
+				"slug": "default",
+				"siteID": "ff8081817a3ffffe017a40015861004c",
+				"name": "Web site"
+			}
+		},
+		{
+			"categoryID": "ff8081817a3ffffe017a4001630b007f",
+			"slug": "coldfusion",
+			"createdDate": "2021-06-24T21:51:11+00:00",
+			"numberOfPages": "0",
+			"numberOfEntries": "0",
+			"category": " ColdFusion",
+			"numberOfContentStore": "0",
+			"modifiedDate": "2021-06-24T21:51:14+00:00",
+			"site": {
+				"slug": "default",
+				"siteID": "ff8081817a3ffffe017a40015861004c",
+				"name": "Web site"
+			}
+		},
+		{
+			"categoryID": "ff8081817a3ffffe017a400163130081",
+			"slug": "contentbox",
+			"createdDate": "2021-06-24T21:51:11+00:00",
+			"numberOfPages": "0",
+			"numberOfEntries": "0",
+			"category": " ContentBox",
+			"numberOfContentStore": "0",
+			"modifiedDate": "2021-06-24T21:51:14+00:00",
+			"site": {
+				"slug": "default",
+				"siteID": "ff8081817a3ffffe017a40015861004c",
+				"name": "Web site"
+			}
+		},
+		{
+			"categoryID": "ff8081817a3ffffe017a40016307007e",
+			"slug": "news",
+			"createdDate": "2021-06-24T21:51:11+00:00",
+			"numberOfPages": "0",
+			"numberOfEntries": "0",
+			"category": "News",
+			"numberOfContentStore": "0",
+			"modifiedDate": "2021-06-24T21:51:14+00:00",
+			"site": {
+				"slug": "default",
+				"siteID": "ff8081817a3ffffe017a40015861004c",
+				"name": "Web site"
+			}
+		}
+	],
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 25,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 4
+	},
+	"messages": []
+}

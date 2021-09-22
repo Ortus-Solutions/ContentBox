@@ -3,7 +3,7 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * I content category
+ * I am an awesome content category
  */
 component
 	persistent="true"
@@ -20,19 +20,19 @@ component
 
 	property
 		name      ="categoryService"
-		inject    ="categoryService@cb"
+		inject    ="categoryService@contentbox"
 		persistent="false";
 	property
 		name      ="pageService"
-		inject    ="pageService@cb"
+		inject    ="pageService@contentbox"
 		persistent="false";
 	property
 		name      ="entryService"
-		inject    ="entryService@cb"
+		inject    ="entryService@contentbox"
 		persistent="false";
 	property
 		name      ="contentStoreService"
-		inject    ="contentStoreService@cb"
+		inject    ="contentStoreService@contentbox"
 		persistent="false";
 
 	property
@@ -42,7 +42,7 @@ component
 
 	property
 		name      ="settingService"
-		inject    ="settingService@cb"
+		inject    ="settingService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -56,7 +56,6 @@ component
 		generator="uuid"
 		length   ="36"
 		ormtype  ="string"
-		setter   ="false"
 		update   ="false";
 
 	property
@@ -72,6 +71,14 @@ component
 		notnull="true"
 		length ="200"
 		index  ="idx_categorySlug";
+
+	property
+		name   ="isPublic"
+		column ="isPublic"
+		ormtype="boolean"
+		notnull="true"
+		default="true"
+		index  ="idx_isPublic";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
@@ -124,6 +131,7 @@ component
 	this.memento = {
 		defaultIncludes : [
 			"category",
+			"isPublic",
 			"numberOfContentStore",
 			"numberOfEntries",
 			"numberOfPages",
@@ -135,6 +143,7 @@ component
 
 	this.constraints = {
 		"category" : { required : true, size : "1..200" },
+		"isPublic" : { required : true, type : "boolean" },
 		"slug"     : {
 			required   : true,
 			size       : "1..200",
@@ -164,6 +173,7 @@ component
 		variables.numberOfPublishedPages        = "";
 		variables.numberOfPublishedEntries      = "";
 		variables.numberOfPublishedContentStore = "";
+		variables.isPublic                      = true;
 
 		super.init();
 

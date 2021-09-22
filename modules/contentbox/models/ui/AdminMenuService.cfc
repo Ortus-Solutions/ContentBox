@@ -41,7 +41,7 @@ component accessors="true" threadSafe singleton {
 	property
 		name  ="avatar"
 		type  ="any"
-		inject="Avatar@cb";
+		inject="Avatar@contentbox";
 
 	// DI
 	property name="log" inject="logbox:logger:{this}";
@@ -55,7 +55,6 @@ component accessors="true" threadSafe singleton {
 	this.USERS            = "users";
 	this.TOOLS            = "tools";
 	this.SYSTEM           = "system";
-	this.STATS            = "stats";
 	this.ADMIN_ENTRYPOINT = "";
 
 	// Header Menu Slugs
@@ -325,7 +324,6 @@ component accessors="true" threadSafe singleton {
 
 		// Global Admin Exit Handlers
 		prc.xehDashboard = "#this.ADMIN_ENTRYPOINT#.dashboard";
-		prc.xehAbout     = "#this.ADMIN_ENTRYPOINT#.dashboard.about";
 
 		// Entries Tab
 		prc.xehEntries       = "#this.ADMIN_ENTRYPOINT#.entries";
@@ -342,6 +340,7 @@ component accessors="true" threadSafe singleton {
 		// Comments Tab
 		prc.xehComments        = "#this.ADMIN_ENTRYPOINT#.comments";
 		prc.xehCommentsettings = "#this.ADMIN_ENTRYPOINT#.comments.settings";
+		prc.xehSubscribers     = "#this.ADMIN_ENTRYPOINT#.subscribers";
 
 		// Look and Feel Tab
 		prc.xehThemes      = "#this.ADMIN_ENTRYPOINT#.themes";
@@ -369,24 +368,15 @@ component accessors="true" threadSafe singleton {
 		prc.xehSecurityRules = "#this.ADMIN_ENTRYPOINT#.securityrules";
 		prc.xehRawSettings   = "#this.ADMIN_ENTRYPOINT#.settings.raw";
 		prc.xehAuthLogs      = "#this.ADMIN_ENTRYPOINT#.settings.authLogs";
-
-		// Stats
-		prc.xehSubscribers = "#this.ADMIN_ENTRYPOINT#.subscribers";
+		prc.xehAbout         = "#this.ADMIN_ENTRYPOINT#.about";
 
 		// Dashboard
-		addTopMenu( name = this.DASHBOARD, label = "<i class='fas fa-tv'></i> Dashboard" )
-			.addSubMenu(
-				name    = "home",
-				label   = "Home",
-				href    = variables.buildLink,
-				href_to = prc.xehDashboard
-			)
-			.addSubMenu(
-				name    = "about",
-				label   = "About",
-				href    = variables.buildLink,
-				href_to = prc.xehAbout
-			);
+		addTopMenu(
+			name    = this.DASHBOARD,
+			label   = "<i class='fas fa-tv'></i> Dashboard",
+			href    = variables.buildLink,
+			href_to = prc.xehDashboard
+		);
 
 		// Content
 		addTopMenu( name = this.CONTENT, label = "<i class='fas fa-box'></i> Content" )
@@ -449,7 +439,15 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehCommentsettings,
 				permissions = "COMMENTS_ADMIN"
-			);
+			)
+			.
+addSubMenu(
+			name    = "Subscribers",
+			label   = "Subscribers",
+			href    = variables.buildLink,
+			href_to = prc.xehSubscribers,
+			title   = "View Subscribers"
+		);
 
 		// Look and Feel
 		addTopMenu( name = this.LOOK_FEEL, label = "<i class='fa fa-tint'></i> Look & Feel" )
@@ -582,19 +580,13 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehSecurityRules,
 				permissions = "SECURITYRULES_ADMIN"
+			)
+			.addSubMenu(
+				name    = "about",
+				label   = "About",
+				href    = variables.buildLink,
+				href_to = prc.xehAbout
 			);
-
-		// STATS
-		addTopMenu(
-			name  = this.STATS,
-			label = "<i class='fas fa-sort-amount-down fa-lg'></i> Stats"
-		).addSubMenu(
-			name    = "Subscribers",
-			label   = "Subscribers",
-			href    = variables.buildLink,
-			href_to = prc.xehSubscribers,
-			title   = "View Subscribers"
-		);
 
 		return this;
 	}

@@ -1,30 +1,19 @@
 ﻿<cfoutput>
-<!--- Load Content List Viewer UI --->
-#renderView( view="_tags/contentListViewer", prePostExempt=true )#
-<!--- page JS --->
 <script>
-$( document ).ready(function() {
-	// Create history Listener
-	History.Adapter.bind( window, 'statechange', function(){
-		//console.log( "called history: " + data.parent );
-		contentLoad( { parent: History.getState().data.parent } );
-	} );
-
-	// Setup content view
-	setupContentView( {
-		tableContainer	: $( "##pagesTableContainer" ),
+document.addEventListener( "DOMContentLoaded", () => {
+	// Setup content view: from workbench/resources/contentList.js
+	contentListHelper.init( {
+		adminEntryPoint : '#event.buildLink( prc.cbAdminEntryPoint )#',
+		tableContainer	: $( "##contentTableContainer" ),
 		tableURL		: '#event.buildLink( prc.xehPageTable )#',
-		searchField 	: $( "##pageSearch" ),
-		searchName		: 'searchPages',
+		searchField 	: $( "##searchContent" ),
+		searchName		: 'searchContent',
 		contentForm 	: $( "##pageForm" ),
-		bulkStatusURL 	: '#event.buildlink(to=prc.xehPageBulkStatus)#',
+		bulkStatusURL 	: '#event.buildlink( prc.xehPageBulkStatus )#',
 		importDialog 	: $( "##importDialog" ),
-		cloneDialog		: $( "##cloneDialog" )
+		cloneDialog		: $( "##cloneDialog" ),
+		parentID 		: '#encodeForJavaScript( rc.parent )#'
 	} );
-
-	// load content on startup, using default parents if passed.
-	contentLoad( { parent: '#rc.parent#' } );
-
 } );
 </script>
 </cfoutput>

@@ -57,8 +57,9 @@
                                 <input type="hidden" name="settingID" id="settingID" value="" />
                                 <div class="row well well-sm">
 
-									<div class="col-md-6 col-xs-4">
-                                        <div class="form-group form-inline no-margin">
+									<div class="col-md-6 col-xs-4 flex flex-row">
+
+                                        <div class="form-group m0 mr5">
                                             #html.textField(
                                                 name        = "settingSearch",
                                                 class       = "form-control rounded quicksearch",
@@ -66,6 +67,24 @@
                                                 value       = event.getValue( "search", "" )
                                             )#
                                         </div>
+
+										<div class="form-group m0">
+											<select
+												name="siteFilter"
+												id="siteFilter"
+												class="form-control text-light-gray"
+												title="Site Filter"
+												onchange="settingsLoad()"
+											>
+												<option value="" selected="selected">-- All Sites --</option>
+												<cfloop array=#prc.allSites# index="thisSite">
+													<option value="#thisSite[ 'siteID' ]#">
+														#thisSite[ 'name' ]#
+													</option>
+												</cfloop>
+											</select>
+										</div>
+
 									</div>
 
                                     <div class="col-md-6 col-xs-8">
@@ -170,19 +189,13 @@
 												<div class="form-group">
 													<label for="name" class="control-label">Site:</label>
 													<select name="site" id="site" class="form-control">
-														<option value="" selected="selected">GLOBAL</option>
+														<option value="" selected="selected">-- All Sites --</option>
 														<cfloop array=#prc.allSites# index="thisSite">
 															<option value="#thisSite[ 'siteID' ]#">
 																#thisSite[ 'name' ]#
 															</option>
 														</cfloop>
 													</select>
-												</div>
-
-                                                <div class="checkbox">
-                                                    <label>
-                                                    	<input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
-                                                    </label>
 												</div>
 
                                                 <div class="form-group">
@@ -196,6 +209,12 @@
                                                         	class="form-control"></textarea>
                                                     </div>
                                                 </div>
+
+												<div class="checkbox">
+                                                    <label>
+                                                    	<input type="checkbox" name="isCore" id="isCore" value="true"> <strong>Core Setting</strong>
+                                                    </label>
+												</div>
                                             #html.endForm()#
                                         </div>
                                         <div class="modal-footer">

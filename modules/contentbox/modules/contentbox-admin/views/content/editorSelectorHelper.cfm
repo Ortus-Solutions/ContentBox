@@ -1,7 +1,7 @@
 <cfoutput>
 <!--- Custom Javascript --->
 <script>
-$( document ).ready(function() {
+( () => {
 	// keyup quick search
 	$( "##contentSearch" ).keyup(
 		_.debounce(
@@ -14,7 +14,7 @@ $( document ).ready(function() {
 	<cfif len( rc.search )>
 		$( "##contentSearch" ).focus();
 	</cfif>
-} );
+} )();
 
 function clearSearch(){
 	$( '##contentSearch' ).val( '' );
@@ -41,7 +41,7 @@ function pagerLink( page ){
 	$( "##contentLoader" ).fadeIn( "fast" );
 	$('##modal')
 		.load(
-			'#event.buildLink(prc.xehEditorSelector)#?editorName=#rc.editorName#&page=' + page,
+			'#event.buildLink( prc.xehEditorSelector )#?editorName=#rc.editorName#&page=' + page,
 			function() {
 				$( "##contentLoader" ).fadeOut();
 			}
