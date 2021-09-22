@@ -146,7 +146,7 @@ component {
 	 */
 	string function getDisplayCreatedDate(
 		dateFormat = this.DATE_FORMAT,
-		timeFormat = this.TIME_FORMAT_SHORT
+		timeFormat = this.TIME_FORMAT
 	){
 		if ( isNull( variables.createdDate ) ) {
 			return "";
@@ -162,7 +162,7 @@ component {
 	 */
 	string function getDisplayModifiedDate(
 		dateFormat = this.DATE_FORMAT,
-		timeFormat = this.TIME_FORMAT_SHORT
+		timeFormat = this.TIME_FORMAT
 	){
 		if ( isNull( variables.modifiedDate ) ) {
 			return "";
