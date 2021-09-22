@@ -41,8 +41,8 @@ component extends="coldbox.system.RestHandler" {
 	 * @return The page start offset
 	 */
 	private numeric function getPageOffset( page = 1, maxRows ){
-		var maxRows = getMaxRows( argumentCollection = arguments );
-		return ( arguments.page * maxrows - maxRows );
+		var thisMaxRows = getMaxRows( argumentCollection = arguments );
+		return ( arguments.page * thisMaxRows - thisMaxRows );
 	}
 
 }
