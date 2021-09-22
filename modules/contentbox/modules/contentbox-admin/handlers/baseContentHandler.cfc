@@ -130,7 +130,9 @@ component extends="baseHandler" {
 			creator    : rc.fCreators,
 			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
 			sortOrder  : variables.defaultOrdering,
-			siteID     : prc.oCurrentSite.getsiteID()
+			siteID     : prc.oCurrentSite.getsiteID(),
+			offset     : prc.paging.startRow - 1,
+			max        : prc.cbSettings.cb_paging_maxrows
 		);
 		prc.content      = contentResults[ variables.entityPlural ];
 		prc.contentCount = contentResults.count;
