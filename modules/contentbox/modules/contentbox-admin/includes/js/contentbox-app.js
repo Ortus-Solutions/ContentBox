@@ -1046,8 +1046,9 @@ const contentListHelper = ( () => {
 			}
 		},
 
-		contentLoad   : contentLoad,
-		contentFilter : contentFilter,
+		contentLoad  	: contentLoad,
+		contentFilter	: contentFilter,
+		resetFilter  	: resetFilter,
 
 		// Content drill down
 		contentDrilldown : ( parent ) => {
