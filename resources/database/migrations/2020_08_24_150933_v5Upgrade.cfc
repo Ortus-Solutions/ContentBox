@@ -255,7 +255,6 @@ component {
 	 * Create multi-site support
 	 */
 	private function createDefaultSite( schema, query ){
-
 		// Create the site table
 		arguments.schema.create( "cb_site", ( table ) => {
 			table.uuid( "siteID" ).primaryKey();
@@ -280,6 +279,7 @@ component {
 			table.boolean( "notifyOnPages" ).default( true );
 			table.boolean( "notifyOnContentStore" ).default( true );
 			table.string( "domain" ).nullable();
+			table.boolean( "isActive" ).default( true );
 		} );
 		systemOutput( "√ - Site table created", true );
 
