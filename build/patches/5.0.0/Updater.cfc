@@ -8,7 +8,7 @@ component {
 		variables.cwd = getCWD();
 		variables.tempFolder = variables.cwd & "__temp";
 
-		variables.targetVersion = "5.0.0-beta-snapshot";
+		variables.targetVersion = "5.0.0";
 
 		if( directoryExists( variables.tempFolder ) ){
 			directoryDelete( variables.tempFolder, true );
