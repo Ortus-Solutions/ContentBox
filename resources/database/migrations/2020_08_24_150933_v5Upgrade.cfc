@@ -311,6 +311,7 @@ component {
 				"createdDate"        : today,
 				"modifiedDate"       : today,
 				"isDeleted"          : 0,
+				"isActive"			 : 1,
 				"name"               : allSettings.cb_site_name,
 				"slug"               : "default",
 				"homepage"           : allSettings.cb_site_homepage,
@@ -318,55 +319,54 @@ component {
 				"keywords"           : allSettings.cb_site_keywords,
 				"tagline"            : allSettings.cb_site_tagline,
 				"domainRegex"        : "127\.0\.0\.1",
-				"isBlogEnabled"      : 1,
-				"isSitemapEnabled"   : 1,
-				"poweredByHeader"    : 1,
-				"adminBar"           : 1,
-				"isSSL"              : 0,
-				"activeTheme"        : "default",
+				"isBlogEnabled"      : !allSettings.cb_site_disable_blog,
+				"isSitemapEnabled"   : allSettings.cb_site_sitemap,
+				"poweredByHeader"    : allSettings.cb_site_poweredby,
+				"adminBar"           : allSettings.cb_site_adminbar,
+				"isSSL"              : allSettings.cb_admin_ssl,
+				"activeTheme"        : allSettings.cb_site_theme,
 				"domain"             : "127.0.0.1",
 				"notificationEmails" : allSettings.cb_site_email
 			} );
 		systemOutput( "√ - Default site created", true );
 
 		var siteSettings = [
-				// Global HTML: Panel Section
-				"cb_html_beforeHeadEnd",
-				"cb_html_afterBodyStart",
-				"cb_html_beforeBodyEnd",
-				"cb_html_beforeContent",
-				"cb_html_afterContent",
-				"cb_html_beforeSideBar",
-				"cb_html_afterSideBar",
-				"cb_html_afterFooter",
-				"cb_html_preEntryDisplay",
-				"cb_html_postEntryDisplay",
-				"cb_html_preIndexDisplay",
-				"cb_html_postIndexDisplay",
-				"cb_html_preArchivesDisplay",
-				"cb_html_postArchivesDisplay",
-				"cb_html_preCommentForm",
-				"cb_html_postCommentForm",
-				"cb_html_prePageDisplay",
-				"cb_html_postPageDisplay",
-				// Site Comment Settings
-				"cb_comments_enabled",
-				"cb_comments_maxDisplayChars",
-				"cb_comments_notify",
-				"cb_comments_moderation_notify",
-				"cb_comments_notifyemails",
-				"cb_comments_moderation",
-				"cb_comments_moderation_whitelist",
-				"cb_comments_moderation_blacklist",
-				"cb_comments_moderation_blockedlist",
-				"cb_comments_moderation_expiration"
+			// Global HTML: Panel Section
+			"cb_html_beforeHeadEnd",
+			"cb_html_afterBodyStart",
+			"cb_html_beforeBodyEnd",
+			"cb_html_beforeContent",
+			"cb_html_afterContent",
+			"cb_html_beforeSideBar",
+			"cb_html_afterSideBar",
+			"cb_html_afterFooter",
+			"cb_html_preEntryDisplay",
+			"cb_html_postEntryDisplay",
+			"cb_html_preIndexDisplay",
+			"cb_html_postIndexDisplay",
+			"cb_html_preArchivesDisplay",
+			"cb_html_postArchivesDisplay",
+			"cb_html_preCommentForm",
+			"cb_html_postCommentForm",
+			"cb_html_prePageDisplay",
+			"cb_html_postPageDisplay",
+			// Site Comment Settings
+			"cb_comments_enabled",
+			"cb_comments_maxDisplayChars",
+			"cb_comments_notify",
+			"cb_comments_moderation_notify",
+			"cb_comments_notifyemails",
+			"cb_comments_moderation",
+			"cb_comments_moderation_whitelist",
+			"cb_comments_moderation_blacklist",
+			"cb_comments_moderation_blockedlist",
+			"cb_comments_moderation_expiration"
 		];
 
 		// Assign all null site settings to the default
 		query
 			.newQuery()
 			.from( "cb_setting" )
-			.whereNull( "FK_siteID" )
 			.whereIn( "name", siteSettings )
 			.update( { "FK_siteID" : initialSiteIdentifier } );
 
