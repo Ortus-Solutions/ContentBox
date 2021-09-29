@@ -490,7 +490,7 @@ component
 		& ( this.getIsSSL() ? "s" : "" ) // SSL or not
 		& "://"
 		& this.getDomain() // Site Domain
-		& ( cgi.server_port != 80 ? ":#cgi.server_port#" : "" ); // The right port
+		& ( listFind( "80,443", cgi.server_port ) ? "" : ":#cgi.server_port#" ); // The right port
 	}
 
 	/**
