@@ -44,6 +44,7 @@
     },
     "ignores":[],
     "scripts":{
+		"release":"recipe build/release.boxr",
         "build:allDocs":"task run taskFile=build/BuildDocs.cfc :version=`package show version`",
         "build:apidocs":"task run taskFile=build/BuildDocs.cfc target=apiDocs :version=`package show version`",
         "build:swagger":"task run taskFile=build/BuildDocs.cfc target=swagger :version=`package show version`",
