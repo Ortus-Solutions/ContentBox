@@ -60,12 +60,6 @@ function fbUpload(){
 	$( "#uploadBar" ).slideToggle();
 }
 
-function fbListTypeChange( listType,file ){
-	$listType.val( listType );
-	$listFolder.val( file );
-	fbRefresh();
-}
-
 /** Verifies which view is active */
 function fbVerifyActiveView() {
 	let identifier = "#" + $listType.val() + $listFolder.val();

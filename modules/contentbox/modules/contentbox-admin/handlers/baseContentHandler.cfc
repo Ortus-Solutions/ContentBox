@@ -130,7 +130,9 @@ component extends="baseHandler" {
 			creator    : rc.fCreators,
 			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
 			sortOrder  : variables.defaultOrdering,
-			siteID     : prc.oCurrentSite.getsiteID()
+			siteID     : prc.oCurrentSite.getsiteID(),
+			offset     : prc.paging.startRow - 1,
+			max        : prc.cbSettings.cb_paging_maxrows
 		);
 		prc.content      = contentResults[ variables.entityPlural ];
 		prc.contentCount = contentResults.count;
@@ -561,17 +563,17 @@ component extends="baseHandler" {
 		// params
 		event.paramValue( "contentID", "" ).paramValue( "parent", "" );
 
-		// verify if contentID sent
+		// verify if contentID sent is valid
 		if ( !len( rc.contentID ) ) {
 			variables.cbMessageBox.warn( "No content sent to delete!" );
 			relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
 		}
 
-		// Inflate to array
+		// Inflate to array for processing.
 		rc.contentID = listToArray( rc.contentID );
 		var messages = [];
 
-		// Iterate and remove pages
+		// Iterate and remove content
 		for ( var thisContentID in rc.contentID ) {
 			var oContent = variables.ormService.get( thisContentID );
 			if ( isNull( oContent ) ) {
@@ -596,6 +598,7 @@ component extends="baseHandler" {
 				announce( "cbadmin_post#variables.entity#Remove", { contentID : contentID } );
 			}
 		}
+
 		// messagebox
 		variables.cbMessageBox.info( messages );
 		// relocate

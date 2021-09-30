@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"5.0.0",
+    "version":"5.1.0",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -44,6 +44,7 @@
     },
     "ignores":[],
     "scripts":{
+        "release":"recipe build/release.boxr",
         "build:allDocs":"task run taskFile=build/BuildDocs.cfc :version=`package show version`",
         "build:apidocs":"task run taskFile=build/BuildDocs.cfc target=apiDocs :version=`package show version`",
         "build:swagger":"task run taskFile=build/BuildDocs.cfc target=swagger :version=`package show version`",

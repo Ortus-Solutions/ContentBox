@@ -48,31 +48,32 @@ component accessors=true {
 	 * Constructor
 	 */
 	ContentBoxImporter function init(){
-		fileNames             = [];
-		contentBoxPackagePath = "";
-		dataServiceMappings   = {};
-		fileServiceMappings   = {};
+		variables.fileNames             = [];
+		variables.contentBoxPackagePath = "";
+		variables.dataServiceMappings   = {};
+		variables.fileServiceMappings   = {};
 		return this;
 	}
 
 	/**
 	 * Setup method to configure service
-	 * @importFile.hint The uploaded .cbox package
+	 *
+	 * @importFile The uploaded .cbox package to import
 	 */
 	public void function setup( required any importFile ){
 		try {
-			var files          = zipUtil.list( zipFilePath = arguments.importFile );
+			var files          = variables.zipUtil.list( zipFilePath = arguments.importFile );
 			// convert files query to array
 			var fileList       = listToArray( valueList( files.entry ) );
-			var contentBoxPath = moduleSettings[ "contentbox" ].path;
-			var customPath     = moduleSettings[ "contentbox-custom" ].path;
+			var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
+			var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
 
 			// now set values
 			setFileNames( fileList );
 			setContentBoxPackagePath( arguments.importFile );
 
 			// set some cheat mappings
-			dataServiceMappings = {
+			variables.dataServiceMappings = {
 				"Authors"        : "authorService",
 				"Categories"     : "categoryService",
 				"Content Store"  : "contentStoreService",
@@ -85,7 +86,7 @@ component accessors=true {
 				"Pages"          : "pageService"
 			};
 
-			filePathMappings = {
+			variables.filePathMappings = {
 				"Email Templates" : contentBoxPath & "/email_templates",
 				"Themes"          : customPath & "/_themes",
 				"Media Library"   : expandPath(
@@ -94,6 +95,7 @@ component accessors=true {
 				"Modules" : customPath & "/_modules",
 				"Widgets" : customPath & "/_widgets"
 			};
+
 		} catch ( any e ) {
 			log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );
 		}
@@ -106,7 +108,7 @@ component accessors=true {
 		var descriptorContents = "";
 		if ( hasFile( "descriptor.json" ) ) {
 			// if we have a descriptor, extract it
-			zipUtil.extract(
+			variables.zipUtil.extract(
 				zipFilePath    = getContentBoxPackagePath(),
 				extractPath    = getTempDirectory(),
 				extractFiles   = "descriptor.json",
@@ -147,13 +149,14 @@ component accessors=true {
 			"Starting ContentBox package import with override = #arguments.overrideContent#...<br>"
 		);
 		// first, unzip entire package
-		zipUtil.extract(
+		variables.zipUtil.extract(
 			zipFilePath    = getContentBoxPackagePath(),
 			extractPath    = getTempDirectory(),
 			overwriteFiles = true
 		);
 		// get all content
 		var descriptorContents = getDescriptorContents( true );
+
 		// prioritize keys
 		var priorityOrder      = structSort(
 			descriptorContents.content,
@@ -161,31 +164,37 @@ component accessors=true {
 			"asc",
 			"priority"
 		);
-		// loop over content areas
-		for ( key in priorityOrder ) {
-			var content  = descriptorContents.content[ key ];
-			var filePath = getTempDirectory() & content.filename;
-			// handle json (data) imports
-			if ( content.format == "json" ) {
-				var service       = dataServiceMappings[ content.name ];
-				var importResults = variables[ service ].importFromFile(
-					importFile = filePath,
-					override   = arguments.overrideContent
-				);
-				importLog.append( importResults );
+
+		// Start import transaction
+		transaction{
+			for ( key in priorityOrder ) {
+				var content  = descriptorContents.content[ key ];
+				var filePath = getTempDirectory() & content.filename;
+
+				// handle json (data) imports
+				if ( content.format == "json" ) {
+					var service       = variables.dataServiceMappings[ content.name ];
+					var importResults = variables[ service ].importFromFile(
+						importFile = filePath,
+						override   = arguments.overrideContent
+					);
+					importLog.append( importResults );
+				}
+
+				// handle zip (file) imports
+				if ( content.format == "zip" ) {
+					importLog.append( "<br>Extracting #content.name#...<br>" );
+					var path = variables.filePathMappings[ content.name ];
+					zipUtil.extract(
+						zipFilePath    = filePath,
+						extractPath    = path,
+						overwriteFiles = true
+					);
+					importLog.append( "Finished extracting #content.name#...<br>" );
+				}
 			}
-			// handle zip (file) imports
-			if ( content.format == "zip" ) {
-				importLog.append( "<br>Extracting #content.name#...<br>" );
-				var path = filePathMappings[ content.name ];
-				zipUtil.extract(
-					zipFilePath    = filePath,
-					extractPath    = path,
-					overwriteFiles = true
-				);
-				importLog.append( "Finished extracting #content.name#...<br>" );
-			}
-		}
+		} // end governing import transaction
+
 		var flattendImportLog = importLog.toString();
 		log.info( flattendImportLog );
 		return flattendImportLog;

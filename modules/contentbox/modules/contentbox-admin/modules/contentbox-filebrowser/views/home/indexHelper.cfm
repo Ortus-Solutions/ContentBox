@@ -151,6 +151,16 @@ function fbInfo(){
 	}, $( window ).width() - 200, $( window ).height() - 200 );
 }
 
+function fbListTypeChange( listType, file ){
+	// deselect button
+	let identifier = "##" + $listType.val() + $listFolder.val();
+	$( identifier ).removeClass( "btn-default" ).addClass( "btn-more" );
+
+	$listType.val( listType );
+	$listFolder.val( file );
+	fbVerifyActiveView();
+	fbRefresh();
+}
 
 <!--- Create Folders --->
 <cfif prc.fbSettings.createFolders>
@@ -329,7 +339,9 @@ fbInit = () => {
 		</cfif>
 		url: '#event.buildLink( prc.xehFBUpload )#',
 		data: {
-	        path: $( "##fbRoot" ).val()
+	        path: function(){
+				return document.getElementById( "fbRoot" ).value;
+			}
 	    },
 		dragOver: function() {
 			$fileListing.addClass( "fileListingUploading" );
@@ -343,11 +355,12 @@ fbInit = () => {
 			$fileUploaderMessage.fadeOut();
 	    },
 		uploadFinished:function(i,file,response){
-			$.data(file).addClass('done');
-			fbRefresh();
+			$fileListing.removeClass( "fileListingUploading" );
+			$.data( file ).addClass( 'done' );
 			if( response.ERRORS ){
 				alert( response.MESSAGES );
 			}
+			fbRefresh();
 		},
 		error: function(err, file) {
 			switch(err) {
@@ -370,13 +383,14 @@ fbInit = () => {
 			$fileUploaderMessage.fadeOut();
 		},
 		uploadStarted:function( i, file, len ){
-			//console.log( "uploading starting" + file );
+			//console.log( "root : " + $( "##fbRoot" ).val() );
+			//console.log( "uploading starting " + file );
 			fbinitUploadFile( file );
 		},
 		progressUpdated: function( i, file, progress ) {
-			console.log(progress)
+			//console.log(progress)
+			//console.log( "uploading progress... " + progress );
 			$.data( file ).find( '.progress' ).width( progress );
-			//console.log( "uploading progress" + progress );
 		}
 	} );
 

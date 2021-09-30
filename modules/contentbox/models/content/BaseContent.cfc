@@ -1368,7 +1368,7 @@ component
 		// get formatted date
 		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT_SHORT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
 		}
 
 		return fDate;
@@ -1389,7 +1389,7 @@ component
 		// get formatted date
 		var fDate = dateFormat( pDate, this.DATE_FORMAT );
 		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT_SHORT );
+			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
 		}
 
 		return fDate;
@@ -1405,7 +1405,7 @@ component
 		}
 		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat(
 			publishedDate,
-			this.TIME_FORMAT_SHORT
+			this.TIME_FORMAT
 		);
 	}
 
@@ -1418,7 +1418,7 @@ component
 		}
 		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat(
 			expireDate,
-			this.TIME_FORMAT_SHORT
+			this.TIME_FORMAT
 		);
 	}
 

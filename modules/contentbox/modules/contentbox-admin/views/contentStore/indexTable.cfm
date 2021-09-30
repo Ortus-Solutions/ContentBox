@@ -173,4 +173,15 @@
 		</cfloop>
 	</tbody>
 </table>
+
+<!--- Paging --->
+<cfif !rc.showAll>
+	#prc.oPaging.renderit(
+		foundRows = prc.contentCount,
+		link      = prc.pagingLink,
+		asList    = true
+	)#
+<cfelse>
+	<span class="label label-info">Total Records: #prc.contentCount#</span>
+</cfif>
 </cfoutput>

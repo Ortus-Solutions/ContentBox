@@ -14,7 +14,7 @@ component extends="baseHandler" {
 	// pre handler
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
-		prc.tabStats = true;
+		prc.tabComments = true;
 	}
 
 	// index
@@ -27,6 +27,9 @@ component extends="baseHandler" {
 		prc.commentSubscriptions     = commentSubscriptionService.getGroupedSubscriptions();
 		prc.commentSubscriptionCount = commentSubscriptionService.getGroupedSubscriptionCount();
 		prc.uniqueSubscriberCount    = subscriberService.getUniqueSubscriberCount();
+
+		// tab
+		prc.tabComments_subscribers = true;
 
 		// view
 		event.setView( "subscribers/index" );

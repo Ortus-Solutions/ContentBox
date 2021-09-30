@@ -19,8 +19,6 @@ component
 	property name="customModuleSettings" inject="coldbox:moduleConfig:contentbox-custom";
 	property name="coldboxModuleService" inject="coldbox:moduleService";
 	property name="log" inject="logbox:logger:{this}";
-	property name="zipUtil" inject="zipUtil@contentbox";
-
 
 	/**
 	 * The absolute path to custom module locations

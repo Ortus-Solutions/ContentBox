@@ -1046,8 +1046,9 @@ const contentListHelper = ( () => {
 			}
 		},
 
-		contentLoad   : contentLoad,
-		contentFilter : contentFilter,
+		contentLoad  	: contentLoad,
+		contentFilter	: contentFilter,
+		resetFilter  	: resetFilter,
 
 		// Content drill down
 		contentDrilldown : ( parent ) => {
@@ -1281,12 +1282,6 @@ function fbTestCancel(){
 
 function fbUpload(){
 	$( "#uploadBar" ).slideToggle();
-}
-
-function fbListTypeChange( listType,file ){
-	$listType.val( listType );
-	$listFolder.val( file );
-	fbRefresh();
 }
 
 /** Verifies which view is active */

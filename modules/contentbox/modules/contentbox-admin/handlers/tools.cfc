@@ -44,11 +44,11 @@ component extends="baseHandler" {
 		event.paramValue( "CBUpload", "" );
 		// make sure upload was valid
 		if ( len( rc.CBUpload ) && fileExists( rc.CBUpload ) ) {
-			var ContentBoxImporter = getInstance( "ContentBoxImporter@contentbox" );
-			ContentBoxImporter.setup( importFile = rc.CBUpload );
+			var importer = getInstance( "ContentBoxImporter@contentbox" );
+			importer.setup( importFile = rc.CBUpload );
 			// check validity of package
-			if ( ContentBoxImporter.isValid() ) {
-				prc.contents            = deserializeJSON( ContentBoxImporter.getDescriptorContents() );
+			if ( importer.isValid() ) {
+				prc.contents            = deserializeJSON( importer.getDescriptorContents() );
 				// railo and acf dates don't get along...let's normalize them first
 				var badDateRegex        = " -\d{4}$";
 				prc.contents.exportDate = reReplace( prc.contents.exportDate, badDateRegex, "" );
@@ -71,12 +71,13 @@ component extends="baseHandler" {
 	function doCBImport( event, rc, prc ){
 		event.paramValue( "CBUpload", "" );
 		event.paramValue( "overwrite", false );
+
 		try {
 			if ( len( rc.CBUpload ) and fileExists( rc.CBUpload ) ) {
-				var ContentBoxImporter = getInstance( "ContentBoxImporter@contentbox" );
-				ContentBoxImporter.setup( importFile = rc.CBUpload );
+				var importer = getInstance( "ContentBoxImporter@contentbox" );
+				importer.setup( importFile = rc.CBUpload );
 				// already validated, so just process the import
-				var importLog = ContentBoxImporter.execute( overrideContent = rc.overwrite );
+				var importLog = importer.execute( overrideContent = rc.overwrite );
 				cbMessagebox.info(
 					"ContentBox package imported sucessfully! Please check out your ContentBox now!"
 				);

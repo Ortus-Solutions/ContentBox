@@ -343,6 +343,8 @@
 		<!-- Create Installer With Dependencies -->
 		<zip destfile="${dir.contentbox.exports}/contentbox-installer-with-dependencies-${contentbox.version}.zip" basedir="${dir.build}/war">
 			<patternset>
+				<exclude name="modules/cbdebugger/**"/>
+				<exclude name="modules/route-visualizer/**"/>
 		        <exclude name="WEB-INF/**"/>
 		    </patternset>
 		</zip>

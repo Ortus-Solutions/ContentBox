@@ -23,7 +23,7 @@ component extends="baseContentHandler" {
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 		// exit Handlers
-		prc.xehEntries     = "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntries     = "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehEntryEditor = "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehEntryRemove = "#prc.cbAdminEntryPoint#.entries.remove";
 		// Verify if blog is disabled?
@@ -40,7 +40,7 @@ component extends="baseContentHandler" {
 	 */
 	function index( event, rc, prc ){
 		// exit handlers
-		prc.xehEntrySearch     = "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntrySearch     = "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehEntryTable      = "#prc.cbAdminEntryPoint#.entries.contentTable";
 		prc.xehEntryBulkStatus = "#prc.cbAdminEntryPoint#.entries.bulkstatus";
 		prc.xehEntryExportAll  = "#prc.cbAdminEntryPoint#.entries.exportAll";
@@ -59,7 +59,7 @@ component extends="baseContentHandler" {
 	 */
 	function contentTable( event, rc, prc ){
 		// exit handlers
-		prc.xehEntrySearch    = "#prc.cbAdminEntryPoint#.entries";
+		prc.xehEntrySearch    = "#prc.cbAdminEntryPoint#.entries.index";
 		prc.xehEntryQuickLook = "#prc.cbAdminEntryPoint#.entries.quickLook";
 		prc.xehEntryExport    = "#prc.cbAdminEntryPoint#.entries.export";
 		prc.xehEntryClone     = "#prc.cbAdminEntryPoint#.entries.clone";
@@ -105,7 +105,7 @@ component extends="baseContentHandler" {
 	 */
 	function remove( event, rc, prc ){
 		arguments.relocateTo = prc.xehEntries;
-		super.save( argumentCollection = arguments );
+		super.remove( argumentCollection = arguments );
 	}
 
 	/**

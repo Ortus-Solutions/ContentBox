@@ -14,7 +14,6 @@ component accessors="true" threadSafe singleton {
 	property name="widgetService" inject="provider:widgetService@contentbox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
 	property name="interceptorService" inject="coldbox:interceptorService";
-	property name="zipUtil" inject="zipUtil@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="wirebox" inject="wirebox";
 	property name="html" inject="HTMLHelper@coldbox";

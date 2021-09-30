@@ -199,10 +199,12 @@ component accessors=true {
 	ContentBoxExporter function setup( required struct targets ){
 		// loop over targets and build up exporters
 		for ( var key in arguments.targets ) {
-			// find config for the given key
+			// find config data struct for the given key
 			var config = findConfig( key );
+
 			// if config was not found, continue to next one.
 			if ( !structCount( config ) ) {
+				variables.log.warn( "The config for (#key#) is not valid, skipping..." );
 				continue;
 			}
 
@@ -235,28 +237,31 @@ component accessors=true {
 					break;
 					// add exporter
 			}
+
 			addExporter( exporter );
 		}
+
 		return this;
 	}
 
 	/**
 	 * Adds an exporter that will define how a particular resource is exported
-	 * @exporter.hint The exporter that is added
-	 * return SiteExporterService
+	 *
+	 * @exporter The exporter that is added to the final array of exporters
+	 *
+	 * @return SiteExporterService
 	 */
 	ContentBoxExporter function addExporter( required any exporter ){
-		arrayAppend( exporters, arguments.exporter );
+		arrayAppend( variables.exporters, arguments.exporter );
 		return this;
 	}
 
 	/**
-	 * Gets the descriptor def for the export
+	 * Gets the descriptor def for the export, it builds it first.
 	 */
 	struct function getDescriptor(){
 		// build descriptor
-		buildDescriptor();
-		return variables.descriptor;
+		return buildDescriptor();
 	}
 
 	/**
@@ -379,16 +384,19 @@ component accessors=true {
 	/**
 	 * Creates descriptor structure
 	 */
-	private void function buildDescriptor(){
+	private struct function buildDescriptor(){
 		var loggedInUser        = variables.securityService.getAuthorSession();
-		var content             = {};
+		var descriptor             = {};
+
 		// set static descriptor values
-		content[ "exportDate" ] = now();
-		content[ "exportedBy" ] = "#loggedInUser.getFirstName()# #loggedInUser.getLastName()# (#loggedInUser.getUsername()#)";
-		content[ "content" ]    = {};
+		descriptor[ "exportDate" ] = now();
+		descriptor[ "exportedBy" ] = "#loggedInUser.getFullName()# (#loggedInUser.getUsername()#)";
+		descriptor[ "content" ]    = {};
+		descriptor[ "site" ] = variables.siteService.getCurrentWorkingSite().getMemento();
+
 		// add dynamic content
-		for ( var exporter in exporters ) {
-			content[ "content" ][ exporter.getFileName() ] = {
+		for ( var exporter in variables.exporters ) {
+			descriptor[ "content" ][ exporter.getFileName() ] = {
 				"total"    : exporter.getTotal(),
 				"name"     : exporter.getDisplayName(),
 				"format"   : exporter.getFormat(),
@@ -396,7 +404,10 @@ component accessors=true {
 				"priority" : exporter.getPriority()
 			};
 		}
-		setDescriptor( content );
+		setDescriptor( descriptor );
+
+
+		return descriptor;
 	}
 
 }
