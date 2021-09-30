@@ -460,17 +460,21 @@
 					}
 
 					/* Set file path */
-					if ( arguments.useFolderNames EQ "yes" ){
+					if ( arguments.useFolderNames EQ "yes" ) {
 						filePath = arguments.extractPath & name;
-					} else{
+					} else {
 						filePath = arguments.extractPath & getFileFromPath( name );
 					}
 
 					// Zip Slip Validation
-					if (!getCanonicalPath( filePath ).startsWith( getCanonicalPath( arguments.extractPath ) ) ) {
+					if (
+						!getCanonicalPath( filePath ).startsWith(
+							getCanonicalPath( arguments.extractPath )
+						)
+					) {
 						throw(
-							type : "ArchiverException",
-							message : "Entry is outside of the target destination: #filepath#"
+							type   : "ArchiverException",
+							message: "Entry is outside of the target destination: #filepath#"
 						);
 					}
 

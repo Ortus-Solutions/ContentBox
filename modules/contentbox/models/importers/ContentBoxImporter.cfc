@@ -95,7 +95,6 @@ component accessors=true {
 				"Modules" : customPath & "/_modules",
 				"Widgets" : customPath & "/_widgets"
 			};
-
 		} catch ( any e ) {
 			log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );
 		}
@@ -158,7 +157,7 @@ component accessors=true {
 		var descriptorContents = getDescriptorContents( true );
 
 		// prioritize keys
-		var priorityOrder      = structSort(
+		var priorityOrder = structSort(
 			descriptorContents.content,
 			"numeric",
 			"asc",
@@ -166,7 +165,7 @@ component accessors=true {
 		);
 
 		// Start import transaction
-		transaction{
+		transaction {
 			for ( key in priorityOrder ) {
 				var content  = descriptorContents.content[ key ];
 				var filePath = getTempDirectory() & content.filename;
@@ -193,7 +192,8 @@ component accessors=true {
 					importLog.append( "Finished extracting #content.name#...<br>" );
 				}
 			}
-		} // end governing import transaction
+		}
+		// end governing import transaction
 
 		var flattendImportLog = importLog.toString();
 		log.info( flattendImportLog );

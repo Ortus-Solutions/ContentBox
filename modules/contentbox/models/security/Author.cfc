@@ -475,7 +475,10 @@ component
 	/**
 	 * Get formatted lastLogin
 	 */
-	string function getDisplayLastLogin( dateFormat = this.DATE_FORMAt, timeFormat = this.TIME_FORMAT ){
+	string function getDisplayLastLogin(
+		dateFormat = this.DATE_FORMAt,
+		timeFormat = this.TIME_FORMAT
+	){
 		var lastLogin = getLastLogin();
 
 		if ( NOT isNull( lastLogin ) ) {

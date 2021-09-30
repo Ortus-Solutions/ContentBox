@@ -20,7 +20,7 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can display created dates", function(){
-				var d = model.getDisplayCreatedDate( timeFormat : "hh:mm tt" );
+				var d = model.getDisplayCreatedDate( timeFormat: "hh:mm tt" );
 				expect( dateDiff( "d", now(), d ) ).toBe( 0 );
 			} );
 
@@ -29,7 +29,7 @@ component extends="tests.resources.BaseTest" {
 				expect( d ).toBe( "Never Logged In" );
 
 				var testUser = entityLoad( "cbAuthor" )[ 1 ];
-				var d        = testUser.getDisplayLastLogin( timeFormat : "hh:mm tt" );
+				var d        = testUser.getDisplayLastLogin( timeFormat: "hh:mm tt" );
 				expect( d ).toBeDate();
 			} );
 
