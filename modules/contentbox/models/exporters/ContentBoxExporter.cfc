@@ -385,14 +385,14 @@ component accessors=true {
 	 * Creates descriptor structure
 	 */
 	private struct function buildDescriptor(){
-		var loggedInUser        = variables.securityService.getAuthorSession();
-		var descriptor             = {};
+		var loggedInUser = variables.securityService.getAuthorSession();
+		var descriptor   = {};
 
 		// set static descriptor values
 		descriptor[ "exportDate" ] = now();
 		descriptor[ "exportedBy" ] = "#loggedInUser.getFullName()# (#loggedInUser.getUsername()#)";
 		descriptor[ "content" ]    = {};
-		descriptor[ "site" ] = variables.siteService.getCurrentWorkingSite().getMemento();
+		descriptor[ "site" ]       = variables.siteService.getCurrentWorkingSite().getMemento();
 
 		// add dynamic content
 		for ( var exporter in variables.exporters ) {
