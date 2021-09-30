@@ -116,7 +116,7 @@ component {
 			type         : "textarea",
 			label        : "Footer Text:",
 			groupIntro   : "Customize the footer of your site."
-		},
+		}
 	];
 
 	/**
