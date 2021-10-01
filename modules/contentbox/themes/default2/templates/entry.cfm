@@ -1,62 +1,65 @@
 ﻿<cfoutput>
-	<!--- Post --->
-	<div class="post" id="post_#entry.getContentID()#">
-		<div class="post-title">
-			<!--- Title --->
-			<h2>
-				<a
-					href="#cb.linkEntry( entry )#"
-					rel="bookmark"
-					title="#entry.getTitle()#"
-				>
-					#entry.getTitle()#
-				</a>
-			</h2>
-
-			<!--- Post detail --->
-			<div class="row">
-				<div class="col-sm-7 pull-left">
-					<span class="text-muted">Posted by</span>
-
-					<i class="icon-user"></i>
-
-					<a href="##">#entry.getAuthorName()#</a>
-				</div>
-
-				<div class="col-sm-5 pull-right text-right">
-					<i class="fa fa-calendar"></i> #entry.getDisplayPublishedDate()#
-				</div>
+		<!--- Post --->
+		<div class="card mb-5 shadow-sm" id="post_#entry.getContentID()#">
+			<div class="card-body">
+					<!--- Title --->
+					<div class="card-title ">
+						<h2>
+							<a
+								href="#cb.linkEntry( entry )#"
+								rel="bookmark"
+								title="#entry.getTitle()#"
+							>
+								#entry.getTitle()#
+							</a>
+						</h2>
+						<!--- Post detail --->
+						<div>
+							<small class="text-muted">
+								<span>Posted by</span>
+								<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+								</svg>
+								<a href="##">#entry.getAuthorName()#</a>
+								<div>
+									<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+									</svg>
+									 #entry.getDisplayPublishedDate()#
+								</div>
+							</small>
+						</div>
+					</div>
+	
+					<!--- Content --->
+					<div class="card-text">
+						<!--- Excerpt or content --->
+						<cfif entry.hasExcerpt()>
+							#entry.renderExcerpt()#
+	
+							<div class="post-more">
+								<a href="#cb.linkEntry( entry )#" title="Read The Full Entry!">
+									<button class="btn btn-primary">Read</button>
+								</a>
+							</div>
+						<cfelse>
+							#entry.renderContent()#
+						</cfif>
+					</div>
 			</div>
-
-			<!--- Content --->
-			<div class="post-content">
-				<!--- Excerpt or content --->
-				<cfif entry.hasExcerpt()>
-					#entry.renderExcerpt()#
-
-					<div class="post-more">
-						<a href="#cb.linkEntry( entry )#" title="Read The Full Entry!">
-							<button class="btn btn-success">Read More...</button>
+			<div class="card-footer">
+				<small class="text-muted">
+					<div class="col-xs-9 float-left">
+						<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks( entry )#
+					</div>
+					<div class="col-xs-3 pull-right text-right">
+						<i class="fa fa-comment"></i>
+						<a href="#cb.linkEntry( entry )###comments" title="View Comments">
+							#entry.getNumberOfApprovedComments()# Comments
 						</a>
 					</div>
-				<cfelse>
-					#entry.renderContent()#
-				</cfif>
-			</div>
-
-			<div class="row">
-				<div class="col-xs-9 pull-left">
-					<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks( entry )#
-				</div>
-
-				<div class="col-xs-3 pull-right text-right">
-					<i class="fa fa-comment"></i>
-
-					<a href="#cb.linkEntry( entry )###comments" title="View Comments">
-						#entry.getNumberOfApprovedComments()# Comments
-					</a>
-				</div>
+				</small>
 			</div>
 		</div>
-	</div>
+	
 </cfoutput>

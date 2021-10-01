@@ -1,19 +1,19 @@
 ﻿<cfoutput>
-	<div id="body-header">
+	<div id="body-header" class="bg-light bg-darken-xs">
 		<div class="container">
 			<!--- Title --->
-			<div class="underlined-title">
+			<div class="py-5 text-center">
 				<h1>Blog</h1>
 			</div>
 		</div>
 	</div>
 
 	<!--- Body Main --->
-	<section id="body-main">
-		<div class="container-fluid">
+	<section id="body-main" class="bg-light bg-darken-xs">
+		<div class="container">
 			<div class="row">
 				<!--- Content --->
-				<div class="col-sm-9">
+				<div class="col-sm-12">
 
 					<!--- ContentBoxEvent --->
 					#cb.event( "cbui_preIndexDisplay" )#
@@ -43,20 +43,24 @@
 
 						<br />
 					</cfif>
-
-					<!--- Entries displayed here --->
-					#cb.quickEntries()#
-
-					<!--- Pagination --->
-					<cfif prc.entriesCount>
-						<div class="contentBar">
-							#cb.quickPaging()#
-						</div>
-					</cfif>
-
-					<!--- ContentBoxEvent --->
-					#cb.event( "cbui_postIndexDisplay" )#
 				</div>
+			</div>
+			<div class="row">
+				<!--- Entries displayed here --->
+				<div class="col-md-12">
+					#cb.quickEntries()#
+				</div>
+			</div>
+			<div>
+				<!--- Pagination --->
+				<cfif prc.entriesCount>
+					<div class="contentBar">
+						#cb.quickPaging()#
+					</div>
+				</cfif>
+
+				<!--- ContentBoxEvent --->
+				#cb.event( "cbui_postIndexDisplay" )#
 			</div>
 		</div>
 	</section>

@@ -24,11 +24,8 @@
 					<cfloop array="#menuData#" index="menuItem">
 						<cfif structKeyExists( menuItem, "subPageMenu" )>
 							<li class="nav-item dropdown">
-								<a href="#menuItem.link#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-									#menuItem.title# 
-									<svg xmlns="http://www.w3.org/2000/svg" width="10" viewBox="0 0 20 20" fill="currentColor">
-										<path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-									</svg>
+								<a href="#menuItem.link#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+									#menuItem.title#
 								</a>
 								#buildSubMenu( menuData=menuItem.subPageMenu, parentLink=menuItem.link, parentTitle=menuItem.title )#
 							</li>
@@ -80,10 +77,7 @@
 	
 	<cfscript>
 	any function buildSubMenu( required menuData, required parentLink, required parentTitle ){
-		var menu = '<ul class="dropdown-menu">';
-	
-		// Parent
-		menu &= '<li><a href="#parentLink#"><i class="fa fa-chevron-down"></i> <strong>#parentTitle#</strong></a></li><li role="separator" class="divider"></li>';
+		var menu = '<ul class="dropdown-menu" aria-labelledby="#parentTitle#">';
 	
 		for( var menuItem in arguments.menuData ){
 			if( !structKeyExists( menuItem, "subPageMenu" ) ){
