@@ -1,13 +1,13 @@
 ﻿<cfoutput>
-		<!--- Post --->
-		<div class="card mb-5 shadow-sm" id="post_#entry.getContentID()#">
-			<div class="card-body">
-					<!--- Title --->
-					<div class="card-title ">
+		<div id="post-list" class="col p-4">
+			<div class="card shadow-sm border-0 h-100">
+				<div class="card-body px-4">
+					<div class="card-title py-4">
 						<h2>
 							<a
 								href="#cb.linkEntry( entry )#"
 								rel="bookmark"
+								class="link-unstyled"
 								title="#entry.getTitle()#"
 							>
 								#entry.getTitle()#
@@ -30,35 +30,36 @@
 							</small>
 						</div>
 					</div>
-	
-					<!--- Content --->
-					<div class="card-text">
+					<div class="card-body">
 						<!--- Excerpt or content --->
 						<cfif entry.hasExcerpt()>
 							#entry.renderExcerpt()#
-	
-							<div class="post-more">
-								<a href="#cb.linkEntry( entry )#" title="Read The Full Entry!">
-									<button class="btn btn-primary">Read</button>
+							<cfelse>
+								#entry.renderContent()#
+							</cfif>
+						<div class="mb-3">
+							<a class="btn btn-secondary" href="http://127.0.0.1:8589/blog/disk-queues-77caf">Read entry
+								<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+								</svg>
+							</a>
+						</div>	
+					</div>
+					<div class="card-footer">
+						
+						<small class="text-muted">
+							<div class="col-xs-9 float-left">
+								<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks( entry )#
+							</div>
+							<div class="col-xs-3 pull-right text-right">
+								<i class="fa fa-comment"></i>
+								<a href="#cb.linkEntry( entry )###comments" title="View Comments">
+									#entry.getNumberOfApprovedComments()# Comments
 								</a>
 							</div>
-						<cfelse>
-							#entry.renderContent()#
-						</cfif>
+						</small>
 					</div>
-			</div>
-			<div class="card-footer">
-				<small class="text-muted">
-					<div class="col-xs-9 float-left">
-						<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks( entry )#
-					</div>
-					<div class="col-xs-3 pull-right text-right">
-						<i class="fa fa-comment"></i>
-						<a href="#cb.linkEntry( entry )###comments" title="View Comments">
-							#entry.getNumberOfApprovedComments()# Comments
-						</a>
-					</div>
-				</small>
+				</div>
 			</div>
 		</div>
 	

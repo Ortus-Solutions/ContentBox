@@ -1,7 +1,6 @@
 $primary: #8BC34A;
-$secondary: #DCEDC8;
+$secondary: #ECFCCB;
 
-$card-height: 100%;
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -10,17 +9,57 @@ $card-height: 100%;
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 body { 
+	color: $gray-600;
 	#body-main {
-		padding-top: 100px;
+		padding-top: 50px;
 	}
-	
 	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		font-family: 'Rubik', sans-serif;
+		color: $gray-900;
 	}
+	hr {
+		border-top: 1px solid $gray-400;
+		margin: 4em 0;
+	}
+	
 }
 
 .btn-primary {
   color: white !important;
+}
+
+.link-unstyled {
+	&,
+	&:visited,
+	&:hover,
+	&:active,
+	&:focus,
+	&:active:hover {
+	  font-style: inherit;
+	  color: inherit;
+	  background-color: transparent;
+	  font-size: inherit;
+	  text-decoration: none;
+	  font-variant: inherit;
+	  font-weight: inherit;
+	  line-height: inherit;
+	  font-family: inherit;
+	  border-radius: inherit;
+	  border: inherit;
+	  outline: inherit;
+	  box-shadow: inherit;
+	  padding: inherit;
+	  vertical-align: inherit;
+	}
+}
+
+#recentEntries, #post-list {
+	.card {
+		.card-footer {
+			background-color: white;
+			border: none;
+		}
+	}
 }
 
 .centered { text-align: center !important; }
