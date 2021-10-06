@@ -93,7 +93,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			// iterate and create
 			for ( var x = 1; x lte arguments.max; x++ ) {
 				writeOutput(
-					//Card creation
+					// Card creation
 					"<div class=""col p-4"">
 						<div class=""card shadow-sm border-0 h-100"">
 							<div class=""card-body px-4"">
