@@ -46,10 +46,38 @@
 				</div>
 			</div>
 			<div class="row">
-				<!--- Entries displayed here --->
-				<div class="col-md-12">
-					#cb.quickEntries()#
-				</div>
+				<cfif len( prc.entries ) >
+					<cfset counter = 0>
+					<cfset counterEntries = 0>
+					<cfset totalEntries = ArrayLen(prc.entries)>
+					<cfloop array="#prc.entries#" item="entry" index="x">
+						<cfset template = "entry">
+						<cfset counter = counter + 1>
+						<cfset counterEntries = counterEntries + 1>
+						<cfif x eq 1 && len( prc.entries ) gt 1 && rc.page eq 1 && len( rc.q ) eq 0 && len( rc.category ) eq 0 >
+							<cfset template = "latestEntry">
+							<cfset counter = 0>
+						</cfif>
+						
+						<cfif counter eq 1 >
+							<div class='row row-cols-1 row-cols-md-3 g-4'>
+						</cfif>
+							#cb.quickView( 
+							view = "../templates/#template#",
+							collection = [ entry ],
+							collectionAs = "entry"
+						)#
+						<cfif counter eq 3 || counterEntries eq totalEntries>
+							</div>
+							<cfset counter = 0>
+						</cfif>
+						
+					</cfloop>
+				<cfelse>
+					<div class="container">
+							No Results Found 
+					</div>
+				</cfif>	
 			</div>
 			<div>
 				<!--- Pagination --->

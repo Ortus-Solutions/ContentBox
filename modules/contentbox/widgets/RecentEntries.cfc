@@ -81,28 +81,45 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			// title
 			if ( len( arguments.title ) ) {
 				writeOutput(
-					"<h#arguments.titlelevel#>#arguments.title#</h#arguments.titlelevel#>
+					"<h#arguments.titlelevel# class=""text-center"">#arguments.title#</h#arguments.titlelevel#>
 "
 				);
 			}
-			// UL start
+			// Row Start
 			writeOutput(
-				"<ul id=""recentEntries"">
+				"<div id=""recentEntries"" class=""row row-cols-1 row-cols-md-3 g-4"">
 	"
 			);
 			// iterate and create
 			for ( var x = 1; x lte arguments.max; x++ ) {
 				writeOutput(
-					"<li class=""recentEntries"">
-		<a href=""#cb.linkEntry( entryResults.content[ x ] )#"">#entryResults.content[ x ].getTitle()#</a>
-	</li>
+					// Card creation
+					"<div class=""col p-4"">
+						<div class=""card shadow-sm border-0 h-100"">
+							<div class=""card-body px-4"">
+								<div class=""py-4"">
+									<h3 class=""card=title"">#entryResults.content[ x ].getTitle()#</h3>
+								</div>
+								<p class=""card-text"">
+								#entryResults.content[ x ].getExcerpt()#
+								</p>
+							</div>
+							<div class=""card-footer"">
+								<a class=""btn btn-secondary"" href=""#cb.linkEntry( entryResults.content[ x ] )#"">Read
+									<svg xmlns=""http://www.w3.org/2000/svg"" width=""20"" fill=""currentColor"" viewBox=""0 0 24 24"" stroke=""currentColor"">
+										<path stroke-linecap=""round"" stroke-linejoin=""round"" stroke-width=""2"" d=""M17 8l4 4m0 0l-4 4m4-4H3"" />
+									</svg>
+								</a>
+							</div>
+						</div>
+					</div>
 	"
 				);
 			}
-			// close ul
+			// close row
 			writeOutput(
 				"
-</ul>
+</div>
 "
 			);
 		}
