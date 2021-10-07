@@ -53,7 +53,7 @@ body {
 	}
 }
 
-#recentEntries, #post-list {
+#recentEntries, #postList{
 	.card {
 		.card-footer {
 			background-color: white;
@@ -61,7 +61,36 @@ body {
 		}
 	}
 }
+#featuredPost.card {
+	.card-footer {
+		background-color: white;
+	}
+}
 
+.pagingrow {
+    text-align: center;
+    padding: 40px 0;
+	
+	.dataTables_info {
+		font-size: 12px;
+	}
+
+	.pagination{
+		justify-content: center;
+		a {
+			padding: 0 12px;
+		}
+		a.active {
+			color: #555;
+		}
+	}
+}
+
+.comment.card {
+	.card-header {
+		background-color: white;
+	}
+}
 .centered { text-align: center !important; }
 .inline{ display: inline !important; }
 .margin10{ margin: 10px; }

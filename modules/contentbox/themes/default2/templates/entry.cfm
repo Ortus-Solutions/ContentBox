@@ -1,8 +1,8 @@
 ﻿<cfoutput>
-		<div id="post-list" class="col p-4">
-			<div class="card shadow-sm border-0 h-100">
-				<div class="card-body px-4">
-					<div class="card-title py-4">
+	<div id="postList" class="col p-4">
+		<div class="card shadow-sm border-0 h-100">
+			<div class="card-body px-4">
+				<div class="card-title py-4">
 						<h2>
 							<a
 								href="#cb.linkEntry( entry )#"
@@ -29,38 +29,42 @@
 								</div>
 							</small>
 						</div>
-					</div>
-					<div class="card-body">
-						<!--- Excerpt or content --->
-						<cfif entry.hasExcerpt()>
-							#entry.renderExcerpt()#
-							<cfelse>
-								#entry.renderContent()#
-							</cfif>
-						<div class="mb-3">
-							<a class="btn btn-secondary" href="http://127.0.0.1:8589/blog/disk-queues-77caf">Read entry
-								<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-								</svg>
-							</a>
-						</div>	
-					</div>
-					<div class="card-footer">
-						
-						<small class="text-muted">
-							<div class="col-xs-9 float-left">
-								<i class="fa fa-tag"></i> Tags: #cb.quickCategoryLinks( entry )#
-							</div>
-							<div class="col-xs-3 pull-right text-right">
-								<i class="fa fa-comment"></i>
-								<a href="#cb.linkEntry( entry )###comments" title="View Comments">
-									#entry.getNumberOfApprovedComments()# Comments
-								</a>
-							</div>
-						</small>
-					</div>
 				</div>
+				<div class="card-text">
+					<!--- Excerpt or content --->
+					<cfif entry.hasExcerpt()>
+						#entry.renderExcerpt()#
+						</div>
+						<cfelse>
+						#entry.renderContent()#
+						</div>
+					</cfif>
+			</div>
+			<div class="card-footer">
+				<div class="mb-3">
+						<a class="btn btn-secondary" href="http://127.0.0.1:8589/blog/disk-queues-77caf">Read entry
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+							</svg>
+						</a>
+				</div>
+				<small class="text-muted">
+						<div class="col-xs-9 float-left">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+							</svg>
+							Tags: #cb.quickCategoryLinks( entry )#
+						</div>
+						<div class="col-xs-3 pull-right text-right">
+							<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+							</svg>
+							<a href="#cb.linkEntry( entry )###comments" title="View Comments">
+								#entry.getNumberOfApprovedComments()# Comments
+							</a>
+						</div>
+				</small>
 			</div>
 		</div>
-	
+	</div>
 </cfoutput>
