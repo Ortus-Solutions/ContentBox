@@ -7836,9 +7836,27 @@ body {
   padding: inherit;
   vertical-align: inherit; }
 
-#recentEntries .card .card-footer {
+#recentEntries .card .card-footer, #postList .card .card-footer {
   background-color: white;
   border: none; }
+
+#featuredPost.card .card-footer {
+  background-color: white; }
+
+.pagingrow {
+  text-align: center;
+  padding: 40px 0; }
+  .pagingrow .dataTables_info {
+    font-size: 12px; }
+  .pagingrow .pagination {
+    justify-content: center; }
+    .pagingrow .pagination a {
+      padding: 0 12px; }
+    .pagingrow .pagination a.active {
+      color: #555; }
+
+.comment.card .card-header {
+  background-color: white; }
 
 .centered {
   text-align: center !important; }
