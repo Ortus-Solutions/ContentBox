@@ -17,29 +17,42 @@
 						<div>
 							<small class="text-muted">
 								<span>Posted by</span>
+
 								<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
 								</svg>
+
 								<a href="##">#entry.getAuthorName()#</a>
+
 								<div>
 									<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
 									</svg>
+									
 									 #entry.getDisplayPublishedDate()#
 								</div>
 							</small>
 						</div>
 				</div>
+
 				<div class="card-text">
 					<!--- Excerpt or content --->
 					<cfif entry.hasExcerpt()>
-						#entry.renderExcerpt()#
-						</div>
+						<cfif ( len( entry.renderExcerpt() ) gte 250 )>
+							#mid( entry.renderExcerpt(), 1, 250 )#…
 						<cfelse>
-						#entry.renderContent()#
-						</div>
+							#entry.renderExcerpt()#
+						</cfif>
+					<cfelse>
+						<cfif ( len( entry.renderContent() ) gte 250 )>
+							#mid( entry.renderContent(), 1, 250 )#…
+						<cfelse>
+							#entry.renderContent()#
+						</cfif>
 					</cfif>
+				</div>
 			</div>
+
 			<div class="card-footer">
 				<div class="mb-3">
 						<a class="btn btn-secondary" href="http://127.0.0.1:8589/blog/disk-queues-77caf">Read entry

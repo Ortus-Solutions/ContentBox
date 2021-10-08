@@ -75,7 +75,7 @@
 					</cfloop>
 				<cfelse>
 					<div class="container">
-							No Results Found 
+						No Results Found
 					</div>
 				</cfif>	
 			</div>

@@ -66,7 +66,7 @@
 component {
 
 	// Layout Variables
-	this.name          = "ContentBox 5 Default Theme";
+	this.name          = "Serendipity ContentBox 5 Default Theme";
 	this.description   = "ContentBox Default layout for ContentBox 5";
 	this.version       = "1.0.0";
 	this.author        = "Ortus Solutions";
