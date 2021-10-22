@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 	<div id="body-header" class="bg-light bg-darken-xs">
 		<div class="container">
 
@@ -115,15 +115,16 @@
 									<i class="icon-warning-sign icon-2x"></i>
 			
 									Comments are currently closed
-								<cfelse>
+								<!--- <cfelse>
 									<p>
 										<button class="btn btn-primary" onclick="toggleCommentForm()">
 											<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
 											</svg>
+											
 											Add Comment (#prc.entry.getNumberOfApprovedComments()#)
 										</button>
-									</p>
+									</p> --->
 								</cfif>
 							</div>
 						</div>
@@ -132,6 +133,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="bg-light bg-darken-xs">
 			<div class="container">
 				<div class="row">
