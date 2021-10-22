@@ -55,12 +55,13 @@
 
 			<div class="card-footer">
 				<div class="mb-3">
-						<a class="btn btn-secondary" href="http://127.0.0.1:8589/blog/disk-queues-77caf">Read entry
-							<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-							</svg>
-						</a>
+					<a class="btn btn-secondary" href="http://127.0.0.1:8589/blog/disk-queues-77caf">Read
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" fill="currentColor" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+						</svg>
+					</a>
 				</div>
+
 				<small class="text-muted">
 						<div class="col-xs-9 float-left">
 							<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
