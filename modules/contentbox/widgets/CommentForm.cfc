@@ -82,7 +82,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 				#html.textField(
 					name = "author",
-					label = "Name: (required)",
+					label = "Name:",
 					size = "50",
 					class = "form-control",
 					groupWrapper = "div class=form-group",
@@ -93,7 +93,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				#html.inputField(
 					name = "authorEmail",
 					type = "email",
-					label = "Email: (required)",
+					label = "Email:",
 					size = "50",
 					class = "form-control",
 					groupWrapper = "div class=form-group",
@@ -104,7 +104,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 				#html.inputField(
 					name = "authorURL",
 					type = "url",
-					label = "Website:",
+					label = "Website: (optional)",
 					size = "50",
 					class = "form-control",
 					groupWrapper = "div class=form-group",
