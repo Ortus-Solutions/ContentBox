@@ -1,4 +1,4 @@
-<cfoutput>
+﻿<cfoutput>
 	<div id="postList" class="col p-4">
 		<div class="card shadow-sm border-0 h-100">
 			<div class="card-body px-4">
@@ -13,6 +13,7 @@
 								#entry.getTitle()#
 							</a>
 						</h2>
+
 						<!--- Post detail --->
 						<div>
 							<small class="text-muted">
@@ -63,20 +64,25 @@
 				</div>
 
 				<small class="text-muted">
+					<cfif entry.hasCategories()>
 						<div class="col-xs-9 float-left">
 							<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
 							</svg>
-							Tags: #cb.quickCategoryLinks( entry )#
+
+							#cb.quickCategoryLinks( entry )#
 						</div>
-						<div class="col-xs-3 pull-right text-right">
-							<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-							</svg>
-							<a href="#cb.linkEntry( entry )###comments" title="View Comments">
-								#entry.getNumberOfApprovedComments()# Comments
-							</a>
-						</div>
+					</cfif>
+
+					<div class="col-xs-3 pull-right text-right">
+						<svg xmlns="http://www.w3.org/2000/svg" width="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+						</svg>
+
+						<a href="#cb.linkEntry( entry )###comments" title="View Comments">
+							#entry.getNumberOfApprovedComments()# Comments
+						</a>
+					</div>
 				</small>
 			</div>
 		</div>
