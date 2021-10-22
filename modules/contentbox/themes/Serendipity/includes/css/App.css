@@ -7884,3 +7884,6 @@ body {
     margin-bottom: 0;
     color: #555; }
 
+#postList:hover, #featuredPost:hover {
+  background-color: #EEE;
+}
