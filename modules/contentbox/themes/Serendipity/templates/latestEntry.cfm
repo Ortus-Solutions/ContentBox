@@ -1,4 +1,4 @@
-﻿<cfoutput>
+<cfoutput>
 	<div id="featuredPost" class="card mb-5 shadow-sm border-0" id="post_#entry.getContentID()#">
 		<div class="card-body">
 			<div class="row">
@@ -40,7 +40,7 @@
 					</div>
 
 					<!--- Content --->
-					<div class="card-text">
+					<div class="card-text fs-5">
 						<!--- Excerpt or content --->
 						<cfif entry.hasExcerpt()>
 							#entry.renderExcerpt()#

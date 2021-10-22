@@ -1,4 +1,4 @@
-﻿<cfoutput>
+<cfoutput>
 	<div id="postList" class="col p-4">
 		<div class="card shadow-sm border-0 h-100">
 			<div class="card-body px-4">
@@ -35,7 +35,7 @@
 						</div>
 				</div>
 
-				<div class="card-text">
+				<div class="card-text fs-5">
 					<!--- Excerpt or content --->
 					<cfif entry.hasExcerpt()>
 						<cfif ( len( entry.renderExcerpt() ) gte 250 )>
