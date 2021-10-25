@@ -59,11 +59,48 @@ body {
 			background-color: white;
 			border: none;
 		}
+		.card-title h2 {
+			transition: all 0.2s;
+		}
+		transition: all 0.2s;
+		&:hover {
+			box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+			.card-title h2 {
+				color: $primary;
+			}
+		}
 	}
 }
 #featuredPost.card {
+	transition: all 0.2s;
 	.card-footer {
 		background-color: white;
+	}
+	.card-title h2 {
+		transition: all 0.2s;
+	}
+	&:hover {
+		box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+		.card-title h2 {
+			color: $primary;
+		}
+	}
+}
+
+.searchBlogPage {
+
+	.form-control {
+		width: 80%;
+		padding-right: 50px;
+    	height: 45px;
+		display: inline;
+	}
+	button {
+		margin-left: -100px;
+		margin-top: -4px;
+		border: 0;
+		-webkit-appearance: none;
+		padding: 6px 20px;
 	}
 }
 
@@ -83,6 +120,46 @@ body {
 		a.active {
 			color: #555;
 		}
+	}
+}
+
+.pagingTop {
+	font-size: 12px;
+}
+
+.categories {
+	.badge-category {
+		background-color: transparent;
+		border: 1px solid $primary;
+		color: $primary;
+		font-size: 0.85em;
+		cursor: pointer;
+		margin: 0.2em;
+		.selected, &:hover {
+			background-color: $primary;
+			color: white;
+		}
+	}
+}
+
+.archives {
+	select {
+		@extend .form-control;
+	}
+	.form-control {
+		width: auto;
+		display: inline;
+	}
+	.minimal {
+		background-image:
+		linear-gradient(45deg, transparent 50%, gray 50%),
+		linear-gradient(135deg, gray 50%, transparent 50%);
+		background-position:
+		calc(100% - 20px) calc(1em + 2px),
+		calc(100% - 15px) calc(1em + 2px);
+		background-size: 5px 5px, 5px 5px;
+		background-repeat: no-repeat;
+		padding-right: 30px;
 	}
 }
 

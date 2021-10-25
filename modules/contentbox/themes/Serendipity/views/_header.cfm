@@ -56,11 +56,7 @@
 						</li>
 					</cfif>
 				</ul>
-				<!--- Blog Search Form ---
-					<form id="searchForm" class="navbar-form navbar-right" name="searchForm" method="post" action="#cb.linkSearch()#">
-						<input type="text" class="form-control col-lg-8" placeholder="Search">
-					</form>
-				--->
+				
 			</div>
 			<cfif cb.themeSetting( "showSiteSearch", true )>
 				<!--- Search Bar --->
