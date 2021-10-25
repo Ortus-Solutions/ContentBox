@@ -1,6 +1,5 @@
 ﻿<cfoutput>
 	<!--- Mini RSS --->
-	<li>
 		<a
 			class="float-right"
 			href="#cb.linkRSS( category=category )#"
@@ -13,8 +12,9 @@
 		<a
 			href="#cb.linkCategory( category )#"
 			title="Filter by #category.getCategory()#"
+			class="badge badge-category"
 		>
 			#category.getCategory()# (#category.getNumberOfPublishedEntries()#)
 		</a>
-	</li>
+		
 </cfoutput>
