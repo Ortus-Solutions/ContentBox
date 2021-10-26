@@ -162,12 +162,21 @@ body {
 		padding-right: 30px;
 	}
 }
-
-.comment.card {
-	.card-header {
-		background-color: white;
+.comment-area {
+	padding-top: 3em;
+}
+.comment, .comment-area {
+	h4 {
+		font-size: 1.2em;
+	}
+	p {
+		margin-bottom: 0;
+	}
+	hr {
+		margin: 1em;
 	}
 }
+
 .centered { text-align: center !important; }
 .inline{ display: inline !important; }
 .margin10{ margin: 10px; }
@@ -187,3 +196,6 @@ body {
 
 }
 
+.img-circle {
+	border-radius: 50%;
+}

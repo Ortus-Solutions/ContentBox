@@ -135,9 +135,9 @@
 		</div>
 
 		<div class="bg-light bg-darken-xs">
-			<div class="container">
+			<div class="container comment-area">
 				<div class="row">
-					<div class="col-md-8 offset-md-2 mb-5">
+					<div class="col-md-8 offset-md-2 mb-3">
 						<cfif !args.print>
 							<p>&nbsp;</p>
 				
@@ -151,6 +151,7 @@
 								<div id="commentFormShell">
 									<div class="row">
 										<div class="col-sm-12">
+											<h4>What are your thoughts?</h4>
 											#cb.quickCommentForm( prc.entry )#
 										</div>
 									</div>
@@ -159,13 +160,15 @@
 						</cfif>
 					</div>
 				</div>
-		
-				<hr />
-		
+				
 				<!--- Display Comments --->
 				<div id="comments">
 					<div class="row">
 						<div class="col-md-8 offset-md-2">
+							<cfif len( cb.quickComments() )>
+								<hr />
+								<h4>Comments</h4>
+							</cfif>
 							#cb.quickComments()#
 						</div>
 					</div>
@@ -175,6 +178,7 @@
 				#cb.event( "cbui_postEntryDisplay" )#
 			</div>
 		</div>
+		#cb.quickView( "_footer" )#
 	</section>
 
 	<!--- Custom JS --->

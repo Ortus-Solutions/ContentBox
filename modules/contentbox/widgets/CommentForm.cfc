@@ -79,13 +79,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 				#html.hiddenField( name = "contentID", value = arguments.content.getContentID() )#
 				#html.hiddenField( name = "contentType", value = arguments.content.getContentType() )#
-
+			<div class=""row mt-2"">
 				#html.textField(
 					name = "author",
 					label = "Name:",
 					size = "50",
 					class = "form-control",
-					groupWrapper = "div class=form-group",
+					groupWrapper = "div class=col",
 					required = "required",
 					value = event.getValue( "author", oCurrentauthor.getFullName() )
 				)#
@@ -96,42 +96,44 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 					label = "Email:",
 					size = "50",
 					class = "form-control",
-					groupWrapper = "div class=form-group",
+					groupWrapper = "div class=col",
 					required = "required",
 					value = event.getValue( "authorEmail", oCurrentAuthor.getEmail() )
 				)#
-
+			</div>
+			<div class=""row mt-4"">
 				#html.inputField(
 					name = "authorURL",
 					type = "url",
-					label = "Website: (optional)",
+					label = "Website: <em><small>(optional)</small></em>",
 					size = "50",
 					class = "form-control",
-					groupWrapper = "div class=form-group",
+					groupWrapper = "div class=col",
 					value = event.getValue( "authorURL", "" )
 				)#
-
+			</div>
+			<div class=""row mt-4"">
 				#html.textArea(
 					name = "content",
-					label = "Comment: (Markdown allowed)",
+					label = "Comment: <em><small>(Markdown allowed)</small></em>",
 					class = "form-control",
 					required = "required",
+					groupWrapper = "div class=col",
 					value = event.getValue( "content", "" )
 				)#
-
+			</div>
 				#html.checkBox(
 					name = "subscribe",
 					label = "Notify me of follow-up comments by email.",
 					groupwrapper = "div class=checkbox",
 					checked = event.getValue( "subscribe", false )
 				)#
-
 				#cb.event( "cbui_postCommentForm" )#
 
-<div class=""buttons"">#html.submitButton(
+<div class=""buttons mt-4"">#html.submitButton(
 					name = "commentSubmitButton",
 					value = "Submit",
-					class = "btn btn-primary"
+					class = "btn btn-primary px-3"
 				)#</div>
 			#html.endForm()#
 			"

@@ -7910,8 +7910,17 @@ body {
   background-repeat: no-repeat;
   padding-right: 30px; }
 
-.comment.card .card-header {
-  background-color: white; }
+.comment-area {
+  padding-top: 3em; }
+
+.comment h4, .comment .h4, .comment-area h4, .comment-area .h4 {
+  font-size: 1.2em; }
+
+.comment p, .comment-area p {
+  margin-bottom: 0; }
+
+.comment hr, .comment-area hr {
+  margin: 1em; }
 
 .centered {
   text-align: center !important; }
@@ -7938,4 +7947,7 @@ body {
   .footer p {
     margin-bottom: 0;
     color: #555; }
+
+.img-circle {
+  border-radius: 50%; }
 
