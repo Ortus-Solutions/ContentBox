@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 	<!--- View Arguments --->
 	<cfparam name="args.print" 		default="false" />
-	<cfparam name="args.sidebar" 	default="true" />
+	<cfparam name="args.sidebar" 	default="false" />
 
 	<!--- If homepage, present homepage jumbotron --->
 	<cfif cb.isHomePage()>
@@ -42,13 +42,13 @@
 
 	<!--- Body Main --->
 	<section id="body-main" class="#( cb.isHomePage() ? 'bg-white' : 'bg-light bg-darken-xs' )#">
-		<!--- Determine span length due to sidebar or homepage
+		<!--- Determine span length due to sidebar or homepage--->
 		<cfif cb.isHomePage() OR !args.sidebar>
 			<cfset variables.span = 12>
 		<cfelse>
 			<cfset variables.span = 9>
-		</cfif> --->
-		<div>
+		</cfif> 
+		<div class="col-sm-#variables.span#">
 			<!--- Render Content --->
 			#prc.page.renderContent()#
 			<!--- Comments Bar --->

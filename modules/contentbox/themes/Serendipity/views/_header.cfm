@@ -56,13 +56,13 @@
 			<cfif cb.themeSetting( "showSiteSearch", true )>
 				<!--- Search Bar --->
 				<div id="body-search">
-					<form id="searchForm" name="searchForm" method="post" action="#cb.linkContentSearch()#">
+					<form id="searchForm" name="searchForm" method="post" action="#cb.linkContentSearch()#" onmouseover="showSearch()" onmouseout="hideSearch()">
 						<div class="input-group">
-							<input type="hidden" class="form-control" placeholder="Search" name="q" id="q" value="#cb.getSearchTerm()#" />
+							<input type="text" class="form-control hidden" placeholder="Search" name="q" id="q" value="#cb.getSearchTerm()#" />
 
-							<button type="submit" class="btn nav-link" onmouseover="document.getElementById( 'q' ).type = 'text'">
+							<button type="submit" class="btn nav-link">
 								<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="20" >
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
 								</svg>
 							</button>
 						</div>
@@ -90,5 +90,16 @@
 		return menu;
 	}
 	</cfscript>
+	<script>
+		function showSearch(q) {
+			document.getElementById( 'q' ).classList.remove( 'hidden' )
+			document.getElementById( 'q' ).classList.add( 'show' );
+			
+		}
+		function hideSearch(q) {
+			document.getElementById( 'q' ).classList.remove( 'show' )
+			document.getElementById( 'q' ).classList.add( 'hidden' )
+		}
+	</script>
 </cfoutput>
 	
