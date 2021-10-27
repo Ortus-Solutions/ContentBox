@@ -8,7 +8,7 @@
 		<div class="container">
 			<div class="py-4 text-center">
 				<h2>Search Results</h2>
-				<!---<cfif !args.print AND !isNull( "prc.page" ) AND prc.page.getSlug() neq cb.getHomePage()>
+				<!---<cfif !isNull( "prc.page" ) AND prc.page.getSlug() neq cb.getHomePage()>
 					 BreadCrumbs 
 					<div id="body-breadcrumbs" class="col-sm-12 text-muted">
 						<small>
