@@ -24,7 +24,7 @@
 			<!--- Main View --->
 			#cb.mainView( args=args )#
 
-			<a href="blog##body-main" class="btn btn-primary float-end" id="goToTop">&uarr;</a>
+			<a href="blog##body-main" title="Back to top" class="btn btn-primary float-end" id="goToTop"> <span class="visually-hidden">Back to top</span>&uarr;</a>
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_afterContent" )#

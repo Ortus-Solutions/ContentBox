@@ -223,8 +223,27 @@ body {
 	left: 0;
 }
 
+#goToTop {
+	position: fixed;
+    bottom: 150px;
+	right: 40px;
+	z-index: 1;
+	background-color: $gray-600;
+	-webkit-transition: all .3s ease-in-out;
+	-moz-transition: all .3s ease-in-out;
+	transition: all .3s ease-in-out;
+	border: none;
+	border-radius: 50%;
+	padding: 15px 20px;
+	opacity: 0.5;
+	&:hover {
+		background-color: $primary;
+		opacity: 1;
+	}
+}
 
-@media only screen and (orientation: landscape) {
+
+@media only screen and (max-device-width: 640px) and (orientation: landscape) {
 	body {
 		#body-main {
 			padding-bottom: 5.5em;

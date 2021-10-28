@@ -28,7 +28,7 @@
 
 			#cb.quickView( "_footer" )#
 
-			<a href="##body-main" class="btn btn-primary float-end" id="goToTop">&uarr;</a>
+			<a href="##body-main" title="Back to top" class="btn btn-primary float-end" id="goToTop"> <span class="visually-hidden">Back to top</span>&uarr;</a>
 
 			<!--- ContentBoxEvent --->
 			#cb.event( "cbui_beforeBodyEnd" )#
