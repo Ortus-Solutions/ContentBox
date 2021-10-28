@@ -9,9 +9,14 @@ $secondary: #ECFCCB;
 @import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
 
 body { 
+	position: relative;
 	color: $gray-600;
+	box-sizing: border-box;
 	#body-main {
 		padding-top: 50px;
+		min-height: calc(90vh - 200px - 2.5em);
+		box-sizing: border-box;
+		padding-bottom: 2.5em;
 	}
 	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		font-family: 'Rubik', sans-serif;
@@ -21,7 +26,20 @@ body {
 		border-top: 1px solid $gray-400;
 		margin: 4em 0;
 	}
-	
+	footer {
+		position: absolute;
+		min-height: 200px;
+		bottom: -200px;
+		width: 100%;
+		margin-top: 45px;
+		padding: 35px 35px;
+		border-top: 1px solid #e5e5e5;
+		
+		p {
+			margin-bottom: 0;
+			color: #555;
+		}
+	}
 }
 
 .btn-primary {
@@ -184,18 +202,6 @@ body {
 .margin0{ margin: 0px; }
 .padding0{ padding: 0px; }
 
-.footer {
-	margin-top: 45px;
-	padding: 35px 35px;
-	border-top: 1px solid #e5e5e5;
-
-	p {
-		margin-bottom: 0;
-		color: #555;
-	}
-
-}
-
 .img-circle {
 	border-radius: 50%;
 }
@@ -215,4 +221,13 @@ body {
 .show {
 	opacity: 1;
 	left: 0;
+}
+
+
+@media only screen and (orientation: landscape) {
+	body {
+		#body-main {
+			padding-bottom: 5.5em;
+		}
+	}
 }
