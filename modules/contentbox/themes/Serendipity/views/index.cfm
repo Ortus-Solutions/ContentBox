@@ -4,11 +4,11 @@
 			<!--- Title --->
 			<div class="py-4 text-center">
 				<h1>Blog</h1>
-				<div class="searchBlogPage p-5">
+				<div id="body-search" class="searchBlogPage p-5">
 					<!--- Blog Search Form --->
 					<form id="searchForm" class="navbar-form navbar-right" name="searchForm" method="post" action="#cb.linkSearch()#">
-						<input type="text" class="form-control col-lg-8" placeholder="Search">
-						<button type="submit" class="btn btn-primary" onmouseover="document.getElementById( 'q' ).type = 'text'">
+						<input type="text" class="form-control col-lg-8" placeholder="Search" value="#cb.getSearchTerm()#">
+						<button type="submit" class="btn btn-primary">
 							Search
 						</button>
 					</form>
