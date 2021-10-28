@@ -23,12 +23,17 @@
 					<!--- Iterate and build pages --->
 					<cfloop array="#menuData#" index="menuItem">
 						<cfif structKeyExists( menuItem, "subPageMenu" )>
-							<li class="nav-item dropdown">
-								<a href="#menuItem.link#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<div class="btn-group dropend">
+								<a href="#menuItem.link#" type="button" class="btn">
 									#menuItem.title#
 								</a>
-								#buildSubMenu( menuData=menuItem.subPageMenu, parentLink=menuItem.link, parentTitle=menuItem.title )#
-							</li>
+
+								<button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+									<span class="visually-hidden">Toggle Dropright</span>
+								</button>
+
+								#buildSubMenu( menuItem.subPageMenu, menuItem.link, menuItem.title )#
+							</div>
 						<cfelse>
 							<li class="nav-item">
 								<cfif cb.isPageView() AND event.buildLink( cb.getCurrentPage().getSlug() ) eq menuItem.link>
