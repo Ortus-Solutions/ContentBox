@@ -261,7 +261,7 @@ body {
 
 .sidenav {
 	.sidebar-nav {
-		background-color: white;
+		background-color: $gray-100;
 		padding: 20px 10px;
 		border-radius: 10px;
 		ul {
@@ -272,7 +272,7 @@ body {
 			li {
 				padding-bottom: 0.5em;
 				margin-bottom: 1em;
-				border-bottom: $gray-100 1px solid;
+				border-bottom: white 1px solid;
 				a {
 					text-decoration: none;
 				}
