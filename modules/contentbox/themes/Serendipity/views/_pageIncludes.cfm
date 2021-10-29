@@ -43,5 +43,6 @@
 <!--- 					JAVASCRIPT														--->
 <!--- ********************************************************************************* --->
 <!-- injector:js -->
+<script src="#cb.themeRoot()#/resources/assets/js/App.js" type="text/javascript"></script>
 <!-- endinjector -->
 </cfoutput>

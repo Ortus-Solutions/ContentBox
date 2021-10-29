@@ -1,13 +1,15 @@
-$( document ).ready(function() {
+// When the user scrolls down 20px from the top of the document, show the button
+var mybutton = null;
 
-    console.log("testing document ready");
+window.onscroll = function() { scrollFunction() };
 
-});
-console.log("testing");
+window.onload = function () {
+    mybutton = document.getElementById("goToTop");
+};
+
 function showSearch(q) {
     document.getElementById( 'q' ).classList.remove( 'hidden' )
     document.getElementById( 'q' ).classList.add( 'show' );
-    
 }
 
 function hideSearch(q) {
@@ -15,17 +17,13 @@ function hideSearch(q) {
     document.getElementById( 'q' ).classList.add( 'hidden' )
 }
 
-// When the user scrolls down 20px from the top of the document, show the button
-var mybutton = document.getElementById("goToTop");
-window.onscroll = function() {scrollFunction()};
-
 function scrollFunction() {
-if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-    mybutton.classList.remove("hidden");
-    mybutton.classList.add("show")
+if ( document.body.scrollTop > 20 || document.documentElement.scrollTop > 20 && mybutton != null ) {
+    mybutton.classList.remove( "hidden" );
+    mybutton.classList.add( "show")
     } else {
-        mybutton.classList.remove("show");
-        mybutton.classList.add("hidden");	
+        mybutton.classList.remove( "show" );
+        mybutton.classList.add( "hidden" );	
     }
 }
 
