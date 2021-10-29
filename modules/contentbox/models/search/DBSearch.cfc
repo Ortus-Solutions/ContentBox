@@ -104,9 +104,9 @@ component accessors="true" singleton {
 		savecontent variable="results" {
 			writeOutput(
 				"
-			<div class=""searchResults"">
-				<div class=""well well-sm searchResultsCount"">
-					Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
+			<div class=""searchResults row"">
+				<div class=""well well-sm searchResultsCount text-center mb-5"">
+				 	<small> Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!</small>
 				</div>
 			"
 			);
@@ -114,27 +114,29 @@ component accessors="true" singleton {
 			for ( var item in searchItems ) {
 				writeOutput(
 					"
-				<div class=""panel panel-default"">
-  					<div class=""panel-heading"">
-						<a href=""#cb.linkContent( item )#"" class=""panel-title"">#item.getTitle()#</a>
-					</div>
-					<div class=""panel-body"">
-						<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ) )#</p>
-						<cite><span class=""label label-primary"">#item.getContentType()#</span> : <a href=""#cb.linkContent( item )#"">#cb.linkContent( item )#</a></cite><br/>
-					</div>
+				<div class=""col-md-6""> 
+				<div class=""card mb-5"">
+  					<h4 class=""card-header card-title "">
+						<a href=""#cb.linkContent( item )#"" class=""link-unstyled"">#item.getTitle()#</a>
+					</h4>
+					<div class=""card-body"">
+						<p class=""card-text"">#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ) )#</p>
+						<small>
+							<a class=""nav-link"" href=""#cb.linkContent( item )#"">#item.getContentType()#: #cb.linkContent( item )#</a></span>
+						</small>
+					
 				"
 				);
 
-
 				if ( item.hasCategories() ) {
-					writeOutput( "<div class=""panel-footer""><cite>Categories: " );
+					writeOutput( "<small> Categories:" );
 					for ( var categoryItem in #item.getCategoriesList()# ) {
 						writeOutput( " <span class=""label label-primary"">#categoryItem#</span>" );
 					}
-					writeOutput( "</cite></div>" );
+					writeOutput( "</small>" );
 				}
 
-				writeOutput( "</div>" );
+				writeOutput( "</div> </div> </div>" );
 			};
 
 			writeOutput( "</div>" );

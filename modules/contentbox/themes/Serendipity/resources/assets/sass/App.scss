@@ -14,9 +14,9 @@ body {
 	box-sizing: border-box;
 	#body-main {
 		padding-top: 50px;
-		min-height: calc(90vh - 200px - 2.5em);
+		min-height: calc(90vh - 200px - 6.5em);
 		box-sizing: border-box;
-		padding-bottom: 2.5em;
+		padding-bottom: 6.5em;
 	}
 	h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 		font-family: 'Rubik', sans-serif;
@@ -71,19 +71,19 @@ body {
 	}
 }
 
-#recentEntries, #postList{
+#recentEntries, #postList, .searchResults{
 	.card {
 		.card-footer {
 			background-color: white;
 			border: none;
 		}
-		.card-title h2 {
+		.card-title h2, h4 {
 			transition: all 0.2s;
 		}
 		transition: all 0.2s;
 		&:hover {
 			box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
-			.card-title h2 {
+			.card-title h2, h4 {
 				color: $primary;
 			}
 		}
@@ -103,6 +103,27 @@ body {
 			color: $primary;
 		}
 	}
+}
+
+.searchResults {
+	.card {
+		.card-header {
+			border-bottom: none;
+		}
+		a {
+			padding: 0;;
+		}
+	}
+}
+
+.subtitle {
+	font-size: 18px;
+}
+.icon-box {
+	background-color: $primary;
+	color: white;
+	padding: 2em 3em;
+	border-radius: 25px;
 }
 
 .searchBlogPage {
@@ -226,7 +247,7 @@ body {
     bottom: 150px;
 	right: 40px;
 	z-index: 1;
-	background-color: $gray-600;
+	background-color: $gray-500;
 	-webkit-transition: all .3s ease-in-out;
 	-moz-transition: all .3s ease-in-out;
 	transition: all .3s ease-in-out;
@@ -238,6 +259,28 @@ body {
 	}
 }
 
+.sidenav {
+	.sidebar-nav {
+		background-color: white;
+		padding: 20px 10px;
+		border-radius: 10px;
+		ul {
+			position: relative;
+			list-style: none;
+			margin-bottom: 0;
+			padding-left: 1em;
+			li {
+				padding-bottom: 0.5em;
+				margin-bottom: 1em;
+				border-bottom: $gray-100 1px solid;
+				a {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+	
+}
 
 @media only screen and (max-device-width: 640px) and (orientation: landscape) {
 	body {
