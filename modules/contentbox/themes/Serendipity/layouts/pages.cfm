@@ -30,6 +30,9 @@
 
 			<button onclick="topFunction()" title="Back to top" class="btn btn-primary hidden" id="goToTop"> <span class="visually-hidden">Back to top</span>&uarr;</button>
 
+			<!--- ContentBoxEvent --->
+			#cb.event( "cbui_beforeBodyEnd" )#
+
 			<script type="application/javascript">
 				// When the user scrolls down 20px from the top of the document, show the button
 				var mybutton = document.getElementById("goToTop");
@@ -52,8 +55,6 @@
 				}
 				
 			</script>
-			<!--- ContentBoxEvent --->
-			#cb.event( "cbui_beforeBodyEnd" )#
 		</body>
 	</html>
 </cfoutput>
