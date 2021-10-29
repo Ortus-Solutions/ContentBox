@@ -41,7 +41,7 @@
 	#cb.event( "cbui_prePageDisplay" )#
 
 	<!--- Body Main --->
-	<section id="body-main" class="#( cb.isHomePage() ? 'bg-white' : 'bg-light bg-darken-xs' )#">
+	<section id="body-main">
 		<!--- Determine span length due to sidebar or homepage--->
 		<cfif cb.isHomePage() OR !args.sidebar>
 			<cfset variables.span = 12>
