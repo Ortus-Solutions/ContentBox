@@ -48,40 +48,51 @@
 		<cfelse>
 			<cfset variables.span = 9>
 		</cfif> 
-		<div class="col-sm-#variables.span#">
-			<!--- Render Content --->
-			#prc.page.renderContent()#
-			<!--- Comments Bar --->
-			<cfif cb.isCommentsEnabled( prc.page )>
-				<section id="comments">
-					#html.anchor( name="comments" )#
-					<div class="post-comments">
-						<div class="infoBar">
-							<p>
-								<button class="button2" onclick="toggleCommentForm()"> <i class="icon-comments"></i> Add Comment (#prc.page.getNumberOfApprovedComments()#)</button>
-							</p>
-						</div>
-						<br />
-					</div>
-					<!--- Separator --->
-					<div class="separator"></div>
-					<!--- Comment Form: I can build it or I can quick it? --->
-					<div id="commentFormShell">
-						<div class="row">
-							<div class="col-sm-12">
-								#cb.quickCommentForm( prc.page )#
+		<div class="#(variables.span == 9) ? 'container' : '' #">
+			<div class="#(variables.span == 9) ? 'row' : '' #">
+				<div class="col-sm-#variables.span#">
+					<!--- Render Content --->
+					#prc.page.renderContent()#
+					<!--- Comments Bar --->
+					<cfif cb.isCommentsEnabled( prc.page )>
+						<section id="comments">
+							#html.anchor( name="comments" )#
+							<div class="post-comments">
+								<div class="infoBar">
+									<p>
+										<button class="button2" onclick="toggleCommentForm()"> <i class="icon-comments"></i> Add Comment (#prc.page.getNumberOfApprovedComments()#)</button>
+									</p>
+								</div>
+								<br />
 							</div>
-						</div>
+							<!--- Separator --->
+							<div class="separator"></div>
+							<!--- Comment Form: I can build it or I can quick it? --->
+							<div id="commentFormShell">
+								<div class="row">
+									<div class="col-sm-12">
+										#cb.quickCommentForm( prc.page )#
+									</div>
+								</div>
+							</div>
+							<!--- Clear --->
+							<hr />
+							<!--- Display Comments --->
+							<div id="comments">
+								#cb.quickComments()#
+							</div>
+						</section>
+					</cfif>
+				</div>
+				<!--- Sidebar --->
+				<cfif args.sidebar and !cb.isHomePage()>
+					<div class="col-sm-3 sidenav">
+						#cb.quickView( view='_pagesidebar' )#
 					</div>
-					<!--- Clear --->
-					<hr />
-					<!--- Display Comments --->
-					<div id="comments">
-						#cb.quickComments()#
-					</div>
-				</section>
-			</cfif>
+				</cfif>
+			</div>
 		</div>
+		
 	</section>
 	<!--- ContentBoxEvent --->
 	#cb.event("cbui_postPageDisplay")#
