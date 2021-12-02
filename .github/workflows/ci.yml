@@ -191,6 +191,8 @@ jobs:
         run: |
           box install --production
           box install commandbox-docbox
+          cd modules/contentbox && box install --production
+
 
       - name: Setup Environment Variables For Build Process
         id: current_version
