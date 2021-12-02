@@ -1,9 +1,9 @@
-abstract component{
+abstract     component {
 
 	// DI
 	property name="packageService" inject="PackageService";
-	property name="JSONService"    inject="JSONService";
-	property name="qb"             inject="provider:QueryBuilder@qb";
+	property name="JSONService" inject="JSONService";
+	property name="qb" inject="provider:QueryBuilder@qb";
 
 	// Site Defaults
 	this.SITE_DEFAULTS = {
@@ -41,15 +41,12 @@ abstract component{
 
 	function init(){
 		// Create mockDataCFC mapping: Must be in `modules` folder.
-		fileSystemUtil.createMapping(
-			"mockdatacfc",
-			"#getCWD()#testbox/system/modules/mockdatacfc"
-		);
+		fileSystemUtil.createMapping( "mockdatacfc", "#getCWD()#testbox/system/modules/mockdatacfc" );
 		// create mock data
 		variables.mockData   = new mockdatacfc.models.MockData();
 		// Bcrypt hash of the word "test"
 		variables.bcryptTest = "$2a$12$FE2J7ZLWaI2rSqejAu/84uLy7qlSufQsDsSE1lNNKyA05GG30gr8C";
-		variables.uuidLib = createobject("java", "java.util.UUID");
+		variables.uuidLib    = createObject( "java", "java.util.UUID" );
 		return this;
 	}
 
@@ -59,9 +56,7 @@ abstract component{
 
 	function onDIComplete(){
 		variables.cfmigrationsInfo = getCFMigrationsInfo();
-		print.cyanLine(
-			"Please wait, connecting to your database: #variables.cfmigrationsInfo.schema#"
-		);
+		print.cyanLine( "Please wait, connecting to your database: #variables.cfmigrationsInfo.schema#" );
 		var appSettings         = getApplicationSettings();
 		var dataSources         = appSettings.datasources ?: {};
 		dataSources[ "seeder" ] = variables.cfmigrationsInfo.connectionInfo
@@ -92,11 +87,7 @@ abstract component{
 	}
 
 	function run(){
-		if (
-			!confirm(
-				"This seeder will wipe out your entire data and replace it with mock data, are you sure?"
-			)
-		) {
+		if ( !confirm( "This seeder will wipe out your entire data and replace it with mock data, are you sure?" ) ) {
 			print.line().redLine( "Bye Bye!" );
 			return;
 		}
@@ -109,8 +100,7 @@ abstract component{
 				/******************** PERMISSIONS ********************/
 				print.line().greenLine( "Generating user permissions..." );
 				truncate( "cb_permission" );
-				var aPerms = deserializeJSON( fileRead( "mockdata/permissions.json" ) )
-					.each( ( thisRecord ) => thisRecord[ "permissionID" ] = uuidLib.randomUUID().toString() );
+				var aPerms = deserializeJSON( fileRead( "mockdata/permissions.json" ) ).each( ( thisRecord ) => thisRecord[ "permissionID" ] = uuidLib.randomUUID().toString() );
 				qb.from( "cb_permission" ).insert( aPerms );
 				print.cyanLine( "   ==> (#aPerms.len()#) User Permissions inserted" );
 
@@ -120,20 +110,20 @@ abstract component{
 				truncate( "cb_permissionGroup" );
 				var aPermissionGroups = [
 					{
-						"permissionGroupID": uuidLib.randomUUID().toString(),
-						"createdDate": "2017-06-12 16:01:13",
-						"modifiedDate": "2017-06-12 20:31:52",
-						"isDeleted": 0,
-						"name": "Finance",
-						"description": "Finance team permissions"
+						"permissionGroupID" : uuidLib.randomUUID().toString(),
+						"createdDate"       : "2017-06-12 16:01:13",
+						"modifiedDate"      : "2017-06-12 20:31:52",
+						"isDeleted"         : 0,
+						"name"              : "Finance",
+						"description"       : "Finance team permissions"
 					},
 					{
-						"permissionGroupID": uuidLib.randomUUID().toString(),
-						"createdDate": "2017-06-16 13:02:12",
-						"modifiedDate": "2017-06-16 13:02:12",
-						"isDeleted": 0,
-						"name": "Security",
-						"description": ""
+						"permissionGroupID" : uuidLib.randomUUID().toString(),
+						"createdDate"       : "2017-06-16 13:02:12",
+						"modifiedDate"      : "2017-06-16 13:02:12",
+						"isDeleted"         : 0,
+						"name"              : "Security",
+						"description"       : ""
 					}
 				];
 				qb.from( "cb_permissionGroup" ).insert( aPermissionGroups );
@@ -145,24 +135,24 @@ abstract component{
 				truncate( "cb_groupPermissions" );
 				var aGroupPermissions = [
 					{
-						"FK_permissionGroupID":  aPermissionGroups[1].permissionGroupID,
-						"FK_permissionID": aPerms[ randRange( 1, aPerms.len() ) ].permissionID
+						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID,
+						"FK_permissionID"      : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
 					},
 					{
-						"FK_permissionGroupID": aPermissionGroups[1].permissionGroupID,
-						"FK_permissionID": aPerms[ randRange( 1, aPerms.len() ) ].permissionID
+						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID,
+						"FK_permissionID"      : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
 					},
 					{
-						"FK_permissionGroupID": aPermissionGroups[1].permissionGroupID,
-						"FK_permissionID": aPerms[ randRange( 1, aPerms.len() ) ].permissionID
+						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID,
+						"FK_permissionID"      : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
 					},
 					{
-						"FK_permissionGroupID": aPermissionGroups[2].permissionGroupID,
-						"FK_permissionID": aPerms[ randRange( 1, aPerms.len() ) ].permissionID
+						"FK_permissionGroupID" : aPermissionGroups[ 2 ].permissionGroupID,
+						"FK_permissionID"      : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
 					},
 					{
-						"FK_permissionGroupID": aPermissionGroups[2].permissionGroupID,
-						"FK_permissionID": aPerms[ randRange( 1, aPerms.len() ) ].permissionID
+						"FK_permissionGroupID" : aPermissionGroups[ 2 ].permissionGroupID,
+						"FK_permissionID"      : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
 					}
 				];
 
@@ -209,14 +199,14 @@ abstract component{
 					var aSettings = [];
 					this.SITE_DEFAULTS.each( ( key, value ) => {
 						aSettings.append( {
-							"settingID" : uuidLib.randomUUID().toString(),
-							"name" : key,
-							"value" : value,
-							"isCore" : 0,
-							"createdDate": "2020-09-09 17:34:50",
-							"modifiedDate": "2020-09-09 17:34:50",
-							"isDeleted" : 0,
-							"FK_siteID" : thisSite.siteID
+							"settingID"    : uuidLib.randomUUID().toString(),
+							"name"         : key,
+							"value"        : value,
+							"isCore"       : 0,
+							"createdDate"  : "2020-09-09 17:34:50",
+							"modifiedDate" : "2020-09-09 17:34:50",
+							"isDeleted"    : 0,
+							"FK_siteID"    : thisSite.siteID
 						} );
 					} );
 					qb.from( "cb_setting" ).insert( aSettings );
@@ -252,11 +242,11 @@ abstract component{
 				/******************** AUTHOR PERMISSIONS *********************/
 				print.line().greenLine( "Generating authors a-la-carte permissions..." );
 				truncate( "cb_authorPermissions" );
-				var testAuthor = aAuthors.filter( (thisAuthor) => thisAuthor.username == "testermajano" )[ 1 ];
+				var testAuthor         = aAuthors.filter( ( thisAuthor ) => thisAuthor.username == "testermajano" )[ 1 ];
 				var aAuthorPermissions = [];
-				for( var x=1; x lte 4; x++ ){
+				for ( var x = 1; x lte 4; x++ ) {
 					aAuthorPermissions.append( {
-						"FK_authorID": testAuthor.authorID,
+						"FK_authorID"     : testAuthor.authorID,
 						"FK_permissionID" : aPerms[ randRange( 1, aPerms.len() ) ].permissionID
 					} );
 				}
@@ -267,19 +257,19 @@ abstract component{
 				/******************** AUTHOR PERMISSION GROUPS *********************/
 				print.line().greenLine( "Generating authors permissions groups..." );
 				truncate( "cb_authorPermissionGroups" );
-				var testUser1 = aAuthors.filter( (thisAuthor) => thisAuthor.username == "joejoe" )[ 1 ];
-				var testUser2 = aAuthors.filter( (thisAuthor) => thisAuthor.username == "joremorelos@morelos.com" )[ 1 ];
+				var testUser1               = aAuthors.filter( ( thisAuthor ) => thisAuthor.username == "joejoe" )[ 1 ];
+				var testUser2               = aAuthors.filter( ( thisAuthor ) => thisAuthor.username == "joremorelos@morelos.com" )[ 1 ];
 				var aAuthorPermissionGroups = [
 					{
-						"FK_authorID" : testUser1.authorID,
+						"FK_authorID"          : testUser1.authorID,
 						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID
 					},
 					{
-						"FK_authorID" : testUser2.authorID,
+						"FK_authorID"          : testUser2.authorID,
 						"FK_permissionGroupID" : aPermissionGroups[ 1 ].permissionGroupID
 					},
 					{
-						"FK_authorID" : testUser2.authorID,
+						"FK_authorID"          : testUser2.authorID,
 						"FK_permissionGroupID" : aPermissionGroups[ 2 ].permissionGroupID
 					}
 				]
@@ -307,17 +297,17 @@ abstract component{
 
 				var aCommentSubscriptions = [
 					{
-						"subscriptionID": "F6B464C7-7E47-4991-A0B28121EFFB67F5",
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141"
+						"subscriptionID" : "F6B464C7-7E47-4991-A0B28121EFFB67F5",
+						"FK_contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502141"
 					},
 					{
-						"subscriptionID": "F6B464C7-7E47-4991-A0B28121EFFB67F6",
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502141"
+						"subscriptionID" : "F6B464C7-7E47-4991-A0B28121EFFB67F6",
+						"FK_contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502141"
 					},
 					{
-						"subscriptionID": "F6B464C7-7E47-4991-A0B28121EFFB67F4",
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502142"
-					},
+						"subscriptionID" : "F6B464C7-7E47-4991-A0B28121EFFB67F4",
+						"FK_contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502142"
+					}
 				];
 
 				qb.from( "cb_commentSubscriptions" ).insert( aCommentSubscriptions );
@@ -329,40 +319,40 @@ abstract component{
 
 				var aContentCategories = [
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
-						"FK_categoryID": 2
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
+						"FK_categoryID" : 2
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
-						"FK_categoryID": 4
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
+						"FK_categoryID" : 4
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a64",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180124"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a64",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180124"
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a64",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180126"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a64",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180126"
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a87",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180124"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a87",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180124"
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a87",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180126"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a87",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180126"
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180124"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a88",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180124"
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502a88",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180126"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502a88",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180126"
 					},
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502147",
-						"FK_categoryID": "ff80808178fbc7620178fbc7f1180125"
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502147",
+						"FK_categoryID" : "ff80808178fbc7620178fbc7f1180125"
 					}
 				];
 
@@ -375,54 +365,54 @@ abstract component{
 
 				aContentStore = [
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502111",
-						"description": "My very first content",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502111",
+						"description" : "My very first content",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
-						"description": "Most greatest news",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502114",
+						"description" : "Most greatest news",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502122",
-						"description": "",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502122",
+						"description" : "",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502123",
-						"description": "footer",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502123",
+						"description" : "footer",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502124",
-						"description": "support options",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502124",
+						"description" : "support options",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
-						"description": "Test",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502127",
+						"description" : "Test",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502159",
-						"description": "A small footer",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502159",
+						"description" : "A small footer",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502168",
-						"description": "test",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502168",
+						"description" : "test",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502169",
-						"description": "asdf",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502169",
+						"description" : "asdf",
+						"order"       : 0
 					},
 					{
-						"contentID": "0e35bbec-a441-11eb-ab6f-0290cc502219",
-						"description": "",
-						"order": 0
+						"contentID"   : "0e35bbec-a441-11eb-ab6f-0290cc502219",
+						"description" : "",
+						"order"       : 0
 					}
 				];
 
@@ -444,22 +434,22 @@ abstract component{
 
 				var aCustomFields = [
 					{
-						"customFieldID": "3E0AB238-1783-4DD6-93518F0B67B9B5F3",
-						"key": "age",
-						"value": '30',
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
-						"createdDate": "2016-05-03 16:23:25",
-						"modifiedDate": "2016-05-03 16:23:25",
-						"isDeleted": 0
+						"customFieldID" : "3E0AB238-1783-4DD6-93518F0B67B9B5F3",
+						"key"           : "age",
+						"value"         : "30",
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
+						"createdDate"   : "2016-05-03 16:23:25",
+						"modifiedDate"  : "2016-05-03 16:23:25",
+						"isDeleted"     : 0
 					},
 					{
-						"customFieldID": "3E0AB238-1783-4DD6-93518F0B67B9B5F4",
-						"key": "subtitle",
-						"value": '4',
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502114",
-						"createdDate": "2016-05-03 16:23:25",
-						"modifiedDate": "2016-05-03 16:23:25",
-						"isDeleted": 0
+						"customFieldID" : "3E0AB238-1783-4DD6-93518F0B67B9B5F4",
+						"key"           : "subtitle",
+						"value"         : "4",
+						"FK_contentID"  : "0e35bbec-a441-11eb-ab6f-0290cc502114",
+						"createdDate"   : "2016-05-03 16:23:25",
+						"modifiedDate"  : "2016-05-03 16:23:25",
+						"isDeleted"     : 0
 					}
 				];
 
@@ -483,28 +473,28 @@ abstract component{
 
 				var aMenus = [
 					{
-						"menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE72",
-						"title": "Test",
-						"slug": "test",
-						"listType": "ul",
-						"createdDate": "2016-05-04 17:00:14",
-						"menuClass": "",
-						"listClass": "",
-						"modifiedDate": "2016-05-04 17:20:11",
-						"isDeleted": 0,
-						"FK_siteId": "ff80808178fbc7620178fbc7e5f400af"
+						"menuID"       : "69C9F53E-A13C-4D4C-A39641562E5EAE72",
+						"title"        : "Test",
+						"slug"         : "test",
+						"listType"     : "ul",
+						"createdDate"  : "2016-05-04 17:00:14",
+						"menuClass"    : "",
+						"listClass"    : "",
+						"modifiedDate" : "2016-05-04 17:20:11",
+						"isDeleted"    : 0,
+						"FK_siteId"    : "ff80808178fbc7620178fbc7e5f400af"
 					},
 					{
-						"menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE73",
-						"title": "test",
-						"slug": "test -e123c",
-						"listType": "ul",
-						"createdDate": "2016-05-04 17:02:54",
-						"menuClass": "",
-						"listClass": "",
-						"modifiedDate": "2016-05-04 17:02:54",
-						"isDeleted": 0,
-						"FK_siteId": "ff80808178fbc7620178fbc7e5f400af"
+						"menuID"       : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
+						"title"        : "test",
+						"slug"         : "test -e123c",
+						"listType"     : "ul",
+						"createdDate"  : "2016-05-04 17:02:54",
+						"menuClass"    : "",
+						"listClass"    : "",
+						"modifiedDate" : "2016-05-04 17:02:54",
+						"isDeleted"    : 0,
+						"FK_siteId"    : "ff80808178fbc7620178fbc7e5f400af"
 					}
 				];
 
@@ -517,46 +507,46 @@ abstract component{
 
 				var aMenuItems = [
 					{
-						"menuItemID": "2508B7D0-F3B7-4395-BDFBD12BCBB8CE97",
-						"menuType": "Free",
-						"title": "",
-						"label": "test",
-						"data": "",
-						"active": 1,
-						"FK_menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE73",
-						"FK_parentID": { "value": "", "null": true },
-						"mediaPath": { "value": "", "null": true },
-						"contentSlug": { "value": "", "null": true },
-						"menuSlug": { "value": "", "null": true },
-						"url": { "value": "", "null": true },
-						"js": { "value": "", "null": true },
-						"itemClass": "",
-						"target": { "value": "", "null": true },
-						"urlClass": { "value": "", "null": true },
-						"createdDate": "2016-05-04 17:22:08",
-						"modifiedDate": "2016-05-04 17:22:08",
-						"isDeleted": 0
+						"menuItemID"   : "2508B7D0-F3B7-4395-BDFBD12BCBB8CE97",
+						"menuType"     : "Free",
+						"title"        : "",
+						"label"        : "test",
+						"data"         : "",
+						"active"       : 1,
+						"FK_menuID"    : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
+						"FK_parentID"  : { "value" : "", "null" : true },
+						"mediaPath"    : { "value" : "", "null" : true },
+						"contentSlug"  : { "value" : "", "null" : true },
+						"menuSlug"     : { "value" : "", "null" : true },
+						"url"          : { "value" : "", "null" : true },
+						"js"           : { "value" : "", "null" : true },
+						"itemClass"    : "",
+						"target"       : { "value" : "", "null" : true },
+						"urlClass"     : { "value" : "", "null" : true },
+						"createdDate"  : "2016-05-04 17:22:08",
+						"modifiedDate" : "2016-05-04 17:22:08",
+						"isDeleted"    : 0
 					},
 					{
-						"menuItemID": "2508B7D0-F3B7-4395-BDFBD12BCBB8CE98",
-						"menuType": "URL",
-						"title": "",
-						"label": "hello",
-						"data": "",
-						"active": 1,
-						"FK_menuID": "69C9F53E-A13C-4D4C-A39641562E5EAE73",
-						"FK_parentID": { "value": "", "null": true },
-						"mediaPath": { "value": "", "null": true },
-						"contentSlug": { "value": "", "null": true },
-						"menuSlug": { "value": "", "null": true },
-						"url": "http://www.ortussolutions.com",
-						"js": { "value": "", "null": true },
-						"itemClass": "",
-						"target": "_blank",
-						"urlClass": "test",
-						"createdDate": "2016-05-04 17:22:08",
-						"modifiedDate": "2016-05-04 17:22:08",
-						"isDeleted": 0
+						"menuItemID"   : "2508B7D0-F3B7-4395-BDFBD12BCBB8CE98",
+						"menuType"     : "URL",
+						"title"        : "",
+						"label"        : "hello",
+						"data"         : "",
+						"active"       : 1,
+						"FK_menuID"    : "69C9F53E-A13C-4D4C-A39641562E5EAE73",
+						"FK_parentID"  : { "value" : "", "null" : true },
+						"mediaPath"    : { "value" : "", "null" : true },
+						"contentSlug"  : { "value" : "", "null" : true },
+						"menuSlug"     : { "value" : "", "null" : true },
+						"url"          : "http://www.ortussolutions.com",
+						"js"           : { "value" : "", "null" : true },
+						"itemClass"    : "",
+						"target"       : "_blank",
+						"urlClass"     : "test",
+						"createdDate"  : "2016-05-04 17:22:08",
+						"modifiedDate" : "2016-05-04 17:22:08",
+						"isDeleted"    : 0
 					}
 				];
 
@@ -579,8 +569,8 @@ abstract component{
 
 				var aRelatedContent = [
 					{
-						"FK_contentID": "0e35bbec-a441-11eb-ab6f-0290cc502127",
-						"FK_relatedContentID": "0e35bbec-a441-11eb-ab6f-0290cc502111"
+						"FK_contentID"        : "0e35bbec-a441-11eb-ab6f-0290cc502127",
+						"FK_relatedContentID" : "0e35bbec-a441-11eb-ab6f-0290cc502111"
 					}
 				];
 
@@ -623,18 +613,15 @@ abstract component{
 		} finally {
 			keysOn();
 		}
-
 	}
 
 	function seedLoginAttempts(){
 		/******************** LOGIN ATTEMPTS *************************/
 		print.line().greenLine( "Generating login attempts..." );
 		truncate( "cb_loginAttempts" );
-		var aLoginAttempts = deserializeJSON( fileRead( "mockdata/loginAttempts.json" ) )
-			.each( ( thisRecord ) => thisRecord[ "loginAttemptsID" ] = uuidLib.randomUUID().toString() );
+		var aLoginAttempts = deserializeJSON( fileRead( "mockdata/loginAttempts.json" ) ).each( ( thisRecord ) => thisRecord[ "loginAttemptsID" ] = uuidLib.randomUUID().toString() );
 		qb.from( "cb_loginAttempts" ).insert( aLoginAttempts );
 		print.cyanLine( "   ==> (#aLoginAttempts.len()#) Login Attempts inserted" );
 	}
-
 
 }

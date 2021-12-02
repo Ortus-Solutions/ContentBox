@@ -1,7 +1,7 @@
 /**
  * Task that seeds my database with test data
  */
-component extends="BaseSeeder"{
+component extends="BaseSeeder" {
 
 	function init(){
 		super.init();

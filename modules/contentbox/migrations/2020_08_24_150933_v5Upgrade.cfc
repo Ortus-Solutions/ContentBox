@@ -26,12 +26,12 @@ component {
 			type  = "columns",
 			table = arguments.targetTable
 		);
-		if(
+		if (
 			qSettingColumns.filter( ( thisRow ) => {
 				// systemOutput( thisRow, true );
 				return thisRow.column_name == targetColumn
 			} ).recordCount > 0
-		){
+		) {
 			return true;
 		}
 		return false;
@@ -44,20 +44,23 @@ component {
 	function up( schema, query ){
 		// If you are on version 4 continue, else skip
 		// If cb_setting doesn't have a FK_siteID then it's 4
-		if( !isContentBox4() ){
-			systemOutput( "- Skipping ContentBox v4 -> v5 Migration as we have detected you are already on the v5 schema", true );
+		if ( !isContentBox4() ) {
+			systemOutput(
+				"- Skipping ContentBox v4 -> v5 Migration as we have detected you are already on the v5 schema",
+				true
+			);
 			return;
 		}
 
 		// Get the db schema name, we might need it when dropping keys
 		variables.dbSchema = migrationService.getSchema();
-		variables.uuidLib = createobject( "java", "java.util.UUID" );
+		variables.uuidLib  = createObject( "java", "java.util.UUID" );
 
-		scopeGrammarUDFs( argumentCollection=arguments );
+		scopeGrammarUDFs( argumentCollection = arguments );
 
-		try{
-			migrateIdentifiersToGUIDs( argumentCollection=arguments );
-		} catch( any e ){
+		try {
+			migrateIdentifiersToGUIDs( argumentCollection = arguments );
+		} catch ( any e ) {
 			systemOutput( e.message, true );
 			systemOutput( e.stacktrace, true );
 			transactionRollback();
@@ -81,7 +84,7 @@ component {
 				// Update Slugs/Titles to 1000 characters
 				dropIndexesForTableColumn( "cb_content", "title" );
 				dropIndexesForTableColumn( "cb_content", "slug" );
-				schema.alter( "cb_content", function( table ) {
+				schema.alter( "cb_content", function( table ){
 					table.modifyColumn( "title", table.string( "title", 500 ) );
 					table.modifyColumn( "slug", table.string( "slug", 500 ) );
 					table.modifyColumn( "featuredImage", table.string( "featuredImage", 500 ) );
@@ -92,13 +95,12 @@ component {
 					table.index( [ "title", "isPublished" ], "idx_search" );
 				} );
 				// Create Category isPublic with indexes
-				if( !hasColumn( "cb_category", "isPublic" ) ){
+				if ( !hasColumn( "cb_category", "isPublic" ) ) {
 					schema.alter( "cb_category", ( table ) => {
 						table.addColumn( table.boolean( "isPublic" ).default( true ) );
 						table.index( [ "isPublic" ], "idx_isPublic" );
 					} );
 				}
-
 			} catch ( any e ) {
 				transactionRollback();
 				systemOutput( e.stacktrace, true );
@@ -108,7 +110,7 @@ component {
 	}
 
 	function down( schema, query ){
-		if( !isContentBox4() ){
+		if ( !isContentBox4() ) {
 			return;
 		}
 
@@ -153,8 +155,7 @@ component {
 
 	private function createSiteRelationships( schema, query, siteId ){
 		variables.siteTables.each( ( thisTable ) => {
-
-			if( !hasColumn( thisTable, "FK_siteID" ) ){
+			if ( !hasColumn( thisTable, "FK_siteID" ) ) {
 				// Add site id relationship
 				schema.alter( thisTable, ( table ) => {
 					table.addColumn( table.string( "FK_siteID", 36 ).nullable() );
@@ -172,7 +173,7 @@ component {
 			}
 
 			// Seed with site id
-			if( thisTable != "cb_setting" ){
+			if ( thisTable != "cb_setting" ) {
 				query
 					.newQuery()
 					.from( thisTable )
@@ -181,7 +182,6 @@ component {
 
 				systemOutput( "√ - Populated '#thisTable#' with default site data", true );
 			}
-
 		} );
 	}
 
@@ -239,10 +239,7 @@ component {
 				.isEmpty();
 
 			if ( !isNewPermission ) {
-				systemOutput(
-					"√ - #thisPermission.name# permission already in database skipping",
-					true
-				);
+				systemOutput( "√ - #thisPermission.name# permission already in database skipping", true );
 				return;
 			}
 
@@ -293,13 +290,15 @@ component {
 		} );
 		systemOutput( "√ - Site table created", true );
 
-		schema.alter(
-			"cb_setting",
-			function( table ){
-				table.addColumn( table.string( "FK_siteID", 36 ).nullable() );
-				table.addConstraint( table.string( "FK_siteID", 36 ).references( "siteID" ).onTable( "cb_site" ) )
-			}
-		);
+		schema.alter( "cb_setting", function( table ){
+			table.addColumn( table.string( "FK_siteID", 36 ).nullable() );
+			table.addConstraint(
+				table
+					.string( "FK_siteID", 36 )
+					.references( "siteID" )
+					.onTable( "cb_site" )
+			)
+		} );
 
 		var allSettings = arguments.query
 			.newQuery()
@@ -321,7 +320,7 @@ component {
 				"createdDate"        : today,
 				"modifiedDate"       : today,
 				"isDeleted"          : 0,
-				"isActive"			 : 1,
+				"isActive"           : 1,
 				"name"               : allSettings.cb_site_name,
 				"slug"               : "default",
 				"homepage"           : allSettings.cb_site_homepage,
@@ -387,23 +386,22 @@ component {
 	 * Migrate numeric IDs to Guids
 	 */
 	function migrateIdentifiersToGUIDs( schema, query ){
-
 		systemOutput( "> Starting to process migration of identifiers to uuid's...", true );
 
 		// Create new master table identifiers with a temp name so we can migrate
-		variables.idTables.keyArray().each( function( tableName ){
-			var pkColumn = idTables[ tableName ];
-			schema.alter( tableName, function( table ){
-				table.addColumn( table.string( "id", 36 ).default( "#guidFn#" ) );
+		variables.idTables
+			.keyArray()
+			.each( function( tableName ){
+				var pkColumn = idTables[ tableName ];
+				schema.alter( tableName, function( table ){
+					table.addColumn( table.string( "id", 36 ).default( "#guidFn#" ) );
+				} );
+				query
+					.newQuery()
+					.from( tableName )
+					.update( { "id" : query.raw( "#guidFn#" ) } );
+				systemOutput( "	√ - #tablename# new uuid pk created and populated", true );
 			} );
-			query
-				.newQuery()
-				.from( tableName )
-				.update( {
-					"id" : query.raw( "#guidFn#" )
-				});
-			systemOutput( "	√ - #tablename# new uuid pk created and populated", true );
-		} );
 
 		systemOutput( "√√ - Finalized adding new primary keys to all tables", true );
 		systemOutput( "", true );
@@ -411,20 +409,22 @@ component {
 		systemOutput( "", true );
 
 		// Create child table foreign and future PKs
-		childTables.keyArray().each( function( tableName ){
-			systemOutput( "> Starting to process child table: #tableName#", true );
+		childTables
+			.keyArray()
+			.each( function( tableName ){
+				systemOutput( "> Starting to process child table: #tableName#", true );
 
-			var pkColumn = childTables[ tableName ].key;
-			dropForeignKeysAndConstraints( tableName, pkColumn );
-			systemOutput( "	√ - (#tableName#) Dropped foreign key and constraints", true );
+				var pkColumn = childTables[ tableName ].key;
+				dropForeignKeysAndConstraints( tableName, pkColumn );
+				systemOutput( "	√ - (#tableName#) Dropped foreign key and constraints", true );
 
-			var tmpColumn = "tmp_" & pkColumn;
-			schema.alter( tableName, function( table ){
-				table.addColumn( table.string( tmpColumn, 36 ).nullable() );
+				var tmpColumn = "tmp_" & pkColumn;
+				schema.alter( tableName, function( table ){
+					table.addColumn( table.string( tmpColumn, 36 ).nullable() );
+				} );
+				populateChildFKValues( tmpColumn, tableName );
+				systemOutput( "	√ - (#tableName#) rekeyed to new parent uuid", true );
 			} );
-			populateChildFKValues( tmpColumn, tableName );
-			systemOutput( "	√ - (#tableName#) rekeyed to new parent uuid", true );
-		} );
 
 		systemOutput( "√√ - Finalized rekeying all child tables", true );
 		systemOutput( "", true );
@@ -432,29 +432,34 @@ component {
 		systemOutput( "", true );
 
 		// Update all foreign keys
-		FKMap.keyArray().each( function( tableName ){
+		FKMap
+			.keyArray()
+			.each( function( tableName ){
+				systemOutput( "> Starting to process (#arguments.tableName#) foreign keys...", true );
 
-			systemOutput( "> Starting to process (#arguments.tableName#) foreign keys...", true );
+				var FKeys = FKMap[ arguments.tableName ];
+				FKeys.each( function( keyConfig ){
+					dropForeignKeysAndConstraints( tableName, arguments.keyConfig.column );
+					systemOutput(
+						"	√ - (#tableName#) Dropped foreign key and constraints (#arguments.keyConfig.column#)",
+						true
+					);
 
-			var FKeys = FKMap[ arguments.tableName ];
-			FKeys.each( function( keyConfig ){
-
-				dropForeignKeysAndConstraints( tableName, arguments.keyConfig.column );
-				systemOutput( "	√ - (#tableName#) Dropped foreign key and constraints (#arguments.keyConfig.column#)", true );
-
-				var tmpColumn = "tmp_" & arguments.keyConfig.column;
-				schema.alter( tableName, function( table ){
-					table.addColumn( table.string( tmpColumn, 36 ).nullable() );
+					var tmpColumn = "tmp_" & arguments.keyConfig.column;
+					schema.alter( tableName, function( table ){
+						table.addColumn( table.string( tmpColumn, 36 ).nullable() );
+					} );
+					populateFKValues( tmpColumn, tableName, arguments.keyConfig );
+					schema.alter( tableName, function( table ){
+						table.dropColumn( keyConfig.column );
+						table.renameColumn( tmpColumn, table.string( keyConfig.column, 36 ).nullable() );
+					} );
+					systemOutput(
+						"	√ - (#tableName#) foreign key (#arguments.keyConfig.column#) rekeyed as a uuid into (#tmpColumn#)",
+						true
+					);
 				} );
-				populateFKValues( tmpColumn, tableName, arguments.keyConfig );
-				schema.alter( tableName, function( table ){
-					table.dropColumn( keyConfig.column );
-					table.renameColumn( tmpColumn, table.string( keyConfig.column, 36 ).nullable() );
-				} );
-				systemOutput( "	√ - (#tableName#) foreign key (#arguments.keyConfig.column#) rekeyed as a uuid into (#tmpColumn#)", true );
 			} );
-
-		} );
 
 		systemOutput( "√√ - Finalized rekeying all foreign keys to new uuid's", true );
 		systemOutput( "", true );
@@ -462,18 +467,20 @@ component {
 		systemOutput( "", true );
 
 		// Change primary keys over on master tables
-		idTables.keyArray().each( function( tableName ){
-			systemOutput( "> Starting to process (#arguments.tableName#)...", true );
-			var pkColumn = idTables[ tableName ];
-			schema.alter( tableName, function( table ){
-				queryExecute( pkDropSQL( tableName, pkColumn ) );
-				table.dropColumn( pkColumn );
-				// Rename it back to what it was called
-				table.renameColumn( "id", table.string( pkColumn, 36 ).unique() )
-				table.addConstraint( table.primaryKey( pkColumn ) );
+		idTables
+			.keyArray()
+			.each( function( tableName ){
+				systemOutput( "> Starting to process (#arguments.tableName#)...", true );
+				var pkColumn = idTables[ tableName ];
+				schema.alter( tableName, function( table ){
+					queryExecute( pkDropSQL( tableName, pkColumn ) );
+					table.dropColumn( pkColumn );
+					// Rename it back to what it was called
+					table.renameColumn( "id", table.string( pkColumn, 36 ).unique() )
+					table.addConstraint( table.primaryKey( pkColumn ) );
+				} );
+				systemOutput( "	√ (#arguments.tableName#) new uuid key set and finalized!", true );
 			} );
-			systemOutput( "	√ (#arguments.tableName#) new uuid key set and finalized!", true );
-		} );
 
 		systemOutput( "√√ - Finalized rekeying all tables with new identifiers and old identifiers dropped", true );
 		systemOutput( "", true );
@@ -481,17 +488,24 @@ component {
 		systemOutput( "", true );
 
 		// Now restore the foreign key constraints
-		FKMap.keyArray().each( function( tableName ){
-			systemOutput( "> Starting to process (#arguments.tableName#)...", true );
-			var FKeys = FKMap[ tableName ];
-			FKeys.each( function( keyConfig ){
-				var tmpColumn = "tmp_" & keyConfig.column;
-				schema.alter( tableName, function( table ){
-					table.addConstraint( table.string( keyConfig.column, 36 ).references( keyConfig.reference.column ).onTable( keyConfig.reference.table ) );
+		FKMap
+			.keyArray()
+			.each( function( tableName ){
+				systemOutput( "> Starting to process (#arguments.tableName#)...", true );
+				var FKeys = FKMap[ tableName ];
+				FKeys.each( function( keyConfig ){
+					var tmpColumn = "tmp_" & keyConfig.column;
+					schema.alter( tableName, function( table ){
+						table.addConstraint(
+							table
+								.string( keyConfig.column, 36 )
+								.references( keyConfig.reference.column )
+								.onTable( keyConfig.reference.table )
+						);
+					} );
 				} );
+				systemOutput( "	√ (#arguments.tableName#) foreign key constraints finalized!", true );
 			} );
-			systemOutput( "	√ (#arguments.tableName#) foreign key constraints finalized!", true );
-		} );
 
 		systemOutput( "√√ - All foreign key constraints finalized", true );
 		systemOutput( "", true );
@@ -499,27 +513,34 @@ component {
 		systemOutput( "", true );
 
 		// Change primary keys over on child tables
-		childTables.keyArray().each( function( tableName ){
-			systemOutput( "> Processing child table (#arguments.tableName#)...", true );
-			var pkColumn = childTables[ tableName ].key;
-			var tmpColumn = "tmp_" & pkColumn;
-			schema.alter( tableName, function( table ){
-				queryExecute( pkDropSQL( tableName, pkColumn ) );
-				// ensure it is a not null field before we make it PK
-				table.modifyColumn( tmpColumn, table.string( tmpColumn, 36 ) );
+		childTables
+			.keyArray()
+			.each( function( tableName ){
+				systemOutput( "> Processing child table (#arguments.tableName#)...", true );
+				var pkColumn  = childTables[ tableName ].key;
+				var tmpColumn = "tmp_" & pkColumn;
+				schema.alter( tableName, function( table ){
+					queryExecute( pkDropSQL( tableName, pkColumn ) );
+					// ensure it is a not null field before we make it PK
+					table.modifyColumn( tmpColumn, table.string( tmpColumn, 36 ) );
+				} );
+				schema.alter( tableName, function( table ){
+					table.addConstraint( table.primaryKey( tmpColumn ) );
+				} );
+				schema.alter( tableName, function( table ){
+					table.dropColumn( pkColumn );
+					table.renameColumn( tmpColumn, table.string( pkColumn, 36 ) );
+				} );
+				schema.alter( tableName, function( table ){
+					table.addConstraint(
+						table
+							.string( pkColumn, 36 )
+							.references( pkColumn )
+							.onTable( childTables[ tableName ].parent )
+					);
+				} );
+				systemOutput( "	√ (#arguments.tableName#) finalized!", true );
 			} );
-			schema.alter( tableName, function( table ){
-				table.addConstraint( table.primaryKey( tmpColumn ) );
-			} );
-			schema.alter( tableName, function( table ){
-				table.dropColumn( pkColumn );
-				table.renameColumn( tmpColumn, table.string( pkColumn, 36 ) );
-			} );
-			schema.alter( tableName, function( table ){
-				table.addConstraint( table.string( pkColumn, 36 ).references( pkColumn ).onTable( childTables[ tableName ].parent ) );
-			} );
-			systemOutput( "	√ (#arguments.tableName#) finalized!", true );
-		} );
 
 		systemOutput( "√√√ - All tables migrated from incremental identifiers to GUIDs", true );
 		systemOutput( "", true );
@@ -530,262 +551,288 @@ component {
 	 * Utility functions per database
 	 */
 	function scopeGrammarUDFs( query, schema ){
-
 		variables.idTables = {
-			"cb_author" : "authorID",
-			"cb_category" : "categoryID",
-			"cb_comment" : "commentID",
-			"cb_content" : "contentID",
-			"cb_contentVersion" : "contentVersionID",
-			"cb_customfield" : "customFieldID",
-			"cb_loginAttempts" : "loginAttemptsID",
-			"cb_menu" : "menuID",
-			"cb_menuItem" : "menuItemID",
-			"cb_module" : "moduleID",
-			"cb_permission" : "permissionID",
+			"cb_author"          : "authorID",
+			"cb_category"        : "categoryID",
+			"cb_comment"         : "commentID",
+			"cb_content"         : "contentID",
+			"cb_contentVersion"  : "contentVersionID",
+			"cb_customfield"     : "customFieldID",
+			"cb_loginAttempts"   : "loginAttemptsID",
+			"cb_menu"            : "menuID",
+			"cb_menuItem"        : "menuItemID",
+			"cb_module"          : "moduleID",
+			"cb_permission"      : "permissionID",
 			"cb_permissionGroup" : "permissionGroupID",
-			"cb_role" : "roleID",
-			"cb_securityRule" : "ruleID",
-			"cb_setting" : "settingID",
-			"cb_stats" : "statsID",
-			"cb_subscribers" : "subscriberID",
-			"cb_subscriptions" : "subscriptionID"
+			"cb_role"            : "roleID",
+			"cb_securityRule"    : "ruleID",
+			"cb_setting"         : "settingID",
+			"cb_stats"           : "statsID",
+			"cb_subscribers"     : "subscriberID",
+			"cb_subscriptions"   : "subscriptionID"
 		};
 
 		variables.childTables = {
-			"cb_entry" : { "parent" : "cb_content", "key" : "contentID" },
-			"cb_page" : { "parent" : "cb_content", "key" : "contentID" },
-			"cb_contentStore" : {"parent" : "cb_content", "key" : "contentID"},
-			"cb_commentSubscriptions" : { "parent": "cb_subscriptions", "key" : "subscriptionID"}
+			"cb_entry"                : { "parent" : "cb_content", "key" : "contentID" },
+			"cb_page"                 : { "parent" : "cb_content", "key" : "contentID" },
+			"cb_contentStore"         : { "parent" : "cb_content", "key" : "contentID" },
+			"cb_commentSubscriptions" : { "parent" : "cb_subscriptions", "key" : "subscriptionID" }
 		};
 
 		variables.FKMap = {
 			"cb_authorPermissionGroups" : [
 				{
-					"column" : "FK_permissionGroupID",
-					"reference" : { "table" : "cb_permissionGroup", "column" : "permissionGroupID" }
+					"column"    : "FK_permissionGroupID",
+					"reference" : {
+						"table"  : "cb_permissionGroup",
+						"column" : "permissionGroupID"
+					}
 				},
 				{
-					"column" : "FK_authorID",
+					"column"    : "FK_authorID",
 					"reference" : { "table" : "cb_author", "column" : "authorID" }
 				}
 			],
 			"cb_authorPermissions" : [
 				{
-					"column" : "FK_permissionID",
+					"column"    : "FK_permissionID",
 					"reference" : { "table" : "cb_permission", "column" : "permissionID" }
 				},
 				{
-					"column" : "FK_authorID",
+					"column"    : "FK_authorID",
 					"reference" : { "table" : "cb_author", "column" : "authorID" }
 				}
 			],
 			"cb_rolePermissions" : [
 				{
-					"column" : "FK_permissionID",
+					"column"    : "FK_permissionID",
 					"reference" : { "table" : "cb_permission", "column" : "permissionID" }
 				},
 				{
-					"column" : "FK_roleID",
+					"column"    : "FK_roleID",
 					"reference" : { "table" : "cb_role", "column" : "roleID" }
 				}
 			],
 			"cb_relatedContent" : [
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				},
 				{
-					"column" : "FK_relatedContentID",
+					"column"    : "FK_relatedContentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_groupPermissions" : [
 				{
-					"column" : "FK_permissionGroupID",
-					"reference" : { "table" : "cb_permissionGroup", "column" : "permissionGroupID" }
+					"column"    : "FK_permissionGroupID",
+					"reference" : {
+						"table"  : "cb_permissionGroup",
+						"column" : "permissionGroupID"
+					}
 				},
 				{
-					"column" : "FK_permissionID",
+					"column"    : "FK_permissionID",
 					"reference" : { "table" : "cb_permission", "column" : "permissionID" }
 				}
 			],
 			"cb_contentCategories" : [
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				},
 				{
-					"column" : "FK_categoryID",
+					"column"    : "FK_categoryID",
 					"reference" : { "table" : "cb_category", "column" : "categoryID" }
 				}
 			],
 			"cb_commentSubscriptions" : [
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_author" : [
 				{
-					"column" : "FK_roleID",
+					"column"    : "FK_roleID",
 					"reference" : { "table" : "cb_role", "column" : "roleID" }
 				}
 			],
 			"cb_menuItem" : [
 				{
-					"column" : "FK_menuID",
+					"column"    : "FK_menuID",
 					"reference" : { "table" : "cb_menu", "column" : "menuID" }
 				},
 				{
-					"column" : "FK_parentID",
+					"column"    : "FK_parentID",
 					"reference" : { "table" : "cb_menuItem", "column" : "menuItemID" }
 				}
 			],
 			"cb_customField" : [
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_stats" : [
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_comment" : [
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_content" : [
 				{
-					"column" : "FK_authorID",
+					"column"    : "FK_authorID",
 					"reference" : { "table" : "cb_author", "column" : "authorID" }
 				},
 				{
-					"column" : "FK_parentID",
+					"column"    : "FK_parentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_contentVersion" : [
 				{
-					"column" : "FK_authorID",
+					"column"    : "FK_authorID",
 					"reference" : { "table" : "cb_author", "column" : "authorID" }
 				},
 				{
-					"column" : "FK_contentID",
+					"column"    : "FK_contentID",
 					"reference" : { "table" : "cb_content", "column" : "contentID" }
 				}
 			],
 			"cb_subscriptions" : [
 				{
-					"column" : "FK_subscriberID",
+					"column"    : "FK_subscriberID",
 					"reference" : { "table" : "cb_subscribers", "column" : "subscriberID" }
 				}
 			]
 		};
 
 		var grammar = query.getGrammar();
-		if( isInstanceOf( grammar, "AutoDiscover" ) ){
+		if ( isInstanceOf( grammar, "AutoDiscover" ) ) {
 			grammar = grammar.autoDiscoverGrammar();
 		}
 
-		switch( listLast( getMetadata( grammar ).name, "." ) ){
-			case "MySQLGrammar":{
-				variables.guidFn = 'UUID()';
+		switch ( listLast( getMetadata( grammar ).name, "." ) ) {
+			case "MySQLGrammar": {
+				variables.guidFn           = "UUID()";
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
-					queryExecute("
+					queryExecute(
+						"
 						UPDATE #arguments.tableName# as target
 						JOIN #arguments.keyConfig.reference.table# as ref
 							ON target.#arguments.keyConfig.column# = ref.#arguments.keyConfig.reference.column#
 						SET target.#arguments.tmpColumn# = ref.id
-					");
+					"
+					);
 				};
 
 				variables.populateChildFKValues = function( tmpColumn, tableName ){
-					queryExecute("
+					queryExecute(
+						"
 						UPDATE #arguments.tableName#
 						SET #arguments.tmpColumn# = (
 							SELECT id from #childTables[ arguments.tableName ].parent#
 							WHERE #childTables[ arguments.tableName ].parent#.#childTables[ arguments.tableName ].key# = #arguments.tableName#.#childTables[ arguments.tableName ].key#
 						)
-					");
+					"
+					);
 				};
 
 				variables.pkDropSQL = function( tableName, pkColumn ){
 					return "ALTER TABLE #arguments.tableName# DROP PRIMARY KEY, MODIFY #arguments.pkColumn# int(11)";
 				}
 
-				variables.dropForeignKeysAndConstraints = function( tableName, columnName, dropReferenced=true ){
-
+				variables.dropForeignKeysAndConstraints = function( tableName, columnName, dropReferenced = true ){
 					// Drop FKs
-					query.newQuery().select( [ "CONSTRAINT_NAME" ] )
-							.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
-							.where( "TABLE_NAME", tableName )
-							.where( "COLUMN_NAME", columnName )
-							.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
-							.where( "TABLE_SCHEMA", variables.dbSchema )
-							.whereNotNull( "REFERENCED_TABLE_NAME" )
-							.get()
-							.map( function( row ){ return row.constraint_name; } )
-							.each( function( constraintName ){
-								queryExecute( "ALTER TABLE #tableName# DROP FOREIGN KEY #constraintName#");
-							} );
+					query
+						.newQuery()
+						.select( [ "CONSTRAINT_NAME" ] )
+						.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
+						.where( "TABLE_NAME", tableName )
+						.where( "COLUMN_NAME", columnName )
+						.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
+						.where( "TABLE_SCHEMA", variables.dbSchema )
+						.whereNotNull( "REFERENCED_TABLE_NAME" )
+						.get()
+						.map( function( row ){
+							return row.constraint_name;
+						} )
+						.each( function( constraintName ){
+							queryExecute( "ALTER TABLE #tableName# DROP FOREIGN KEY #constraintName#" );
+						} );
 
 					// Drop Indexes
-					query.newQuery().select( [ "INDEX_NAME" ] )
-							.from( "INFORMATION_SCHEMA.STATISTICS" )
-							.where( "TABLE_NAME", tableName )
-							.where( "COLUMN_NAME", columnName )
-							.where( "INDEX_NAME", "!=", "PRIMARY" )
-							.where( "TABLE_SCHEMA", variables.dbSchema )
-							.get()
-							.map( function( row ){ return row.index_name; } )
-							.each( function( indexName ){
-								schema.alter( tableName, function( table ){
-									table.dropConstraint( indexName );
-								} );
+					query
+						.newQuery()
+						.select( [ "INDEX_NAME" ] )
+						.from( "INFORMATION_SCHEMA.STATISTICS" )
+						.where( "TABLE_NAME", tableName )
+						.where( "COLUMN_NAME", columnName )
+						.where( "INDEX_NAME", "!=", "PRIMARY" )
+						.where( "TABLE_SCHEMA", variables.dbSchema )
+						.get()
+						.map( function( row ){
+							return row.index_name;
+						} )
+						.each( function( indexName ){
+							schema.alter( tableName, function( table ){
+								table.dropConstraint( indexName );
 							} );
+						} );
 
 					// Drop any foreign keys which reference this table
-					if( arguments.dropReferenced && idTables.keyExists( tableName ) ){
-						query.newQuery().select( [ "CONSTRAINT_NAME", "TABLE_NAME" ] )
-								.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
-								.where( "REFERENCED_TABLE_NAME", tableName )
-								.where( "REFERENCED_COLUMN_NAME", idTables[ tableName ] )
-								.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
-								.where( "TABLE_SCHEMA", variables.dbSchema )
-								.whereNotNull( "TABLE_NAME" )
-								.get()
-								.map( function( row ){ return { "table" : row.table_name, "constraint" : row.constraint_name }; } )
-								.each( function( row ){
-									queryExecute( "ALTER TABLE #row.table# DROP FOREIGN KEY #row.constraint#");
-								} );
+					if ( arguments.dropReferenced && idTables.keyExists( tableName ) ) {
+						query
+							.newQuery()
+							.select( [ "CONSTRAINT_NAME", "TABLE_NAME" ] )
+							.from( "INFORMATION_SCHEMA.KEY_COLUMN_USAGE" )
+							.where( "REFERENCED_TABLE_NAME", tableName )
+							.where( "REFERENCED_COLUMN_NAME", idTables[ tableName ] )
+							.where( "CONSTRAINT_NAME", "!=", "PRIMARY" )
+							.where( "TABLE_SCHEMA", variables.dbSchema )
+							.whereNotNull( "TABLE_NAME" )
+							.get()
+							.map( function( row ){
+								return {
+									"table"      : row.table_name,
+									"constraint" : row.constraint_name
+								};
+							} )
+							.each( function( row ){
+								queryExecute( "ALTER TABLE #row.table# DROP FOREIGN KEY #row.constraint#" );
+							} );
 					}
-
 				};
 				variables.dropIndexesForTableColumn = function( tableName, columnName ){
-					query.newQuery().select( [ "INDEX_NAME" ] )
-							.from( "INFORMATION_SCHEMA.STATISTICS" )
-							.where( "TABLE_NAME", tableName )
-							.where( "COLUMN_NAME", columnName )
-							.where( "INDEX_NAME", "!=", "PRIMARY" )
-							.where( "TABLE_SCHEMA", variables.dbSchema )
-							.get()
-							.map( function( row ){ return row.index_name; } )
-							.each( function( indexName ){
-								schema.alter( tableName, function( table ){
-									table.dropConstraint( indexName );
-								} );
+					query
+						.newQuery()
+						.select( [ "INDEX_NAME" ] )
+						.from( "INFORMATION_SCHEMA.STATISTICS" )
+						.where( "TABLE_NAME", tableName )
+						.where( "COLUMN_NAME", columnName )
+						.where( "INDEX_NAME", "!=", "PRIMARY" )
+						.where( "TABLE_SCHEMA", variables.dbSchema )
+						.get()
+						.map( function( row ){
+							return row.index_name;
+						} )
+						.each( function( indexName ){
+							schema.alter( tableName, function( table ){
+								table.dropConstraint( indexName );
 							} );
+						} );
 				}
 				break;
 			}
-			case "SqlServerGrammar":{
-				variables.guidFn = 'NEWID()';
+			case "SqlServerGrammar": {
+				variables.guidFn    = "NEWID()";
 				variables.pkDropSQL = function( tableName ){
 					var constraintName = queryExecute(
 						"SELECT name
@@ -796,94 +843,149 @@ component {
 					return "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#";
 				}
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
-					queryExecute("
+					queryExecute(
+						"
 						UPDATE target
 							SET target.#arguments.tmpColumn# = ref.id
 						FROM #arguments.tableName# as target
 						JOIN #arguments.keyConfig.reference.table# as ref
 							ON target.#arguments.keyConfig.column# = ref.#arguments.keyConfig.reference.column#
-					");
+					"
+					);
 				};
 
 				variables.populateChildFKValues = function( tmpColumn, tableName ){
-					queryExecute("
+					queryExecute(
+						"
 						UPDATE #arguments.tableName#
 						SET #arguments.tmpColumn# = (
 							SELECT id
 							FROM #childTables[ arguments.tableName ].parent#
 							WHERE #childTables[ arguments.tableName ].parent#.#childTables[ arguments.tableName ].key# = #arguments.tableName#.#childTables[ arguments.tableName ].key#
 						)
-					");
+					"
+					);
 				};
 
-				variables.dropForeignKeysAndConstraints = function( tableName, columnName, dropReferenced=true  ){
+				variables.dropForeignKeysAndConstraints = function( tableName, columnName, dropReferenced = true ){
+					query
+						.newQuery()
+						.select( [ "sys.foreign_keys.name" ] )
+						.from( "sys.foreign_keys" )
+						.join(
+							"sys.foreign_key_columns",
+							"sys.foreign_key_columns.constraint_object_id",
+							"sys.foreign_keys.OBJECT_ID"
+						)
+						.join(
+							"sys.tables",
+							"sys.tables.OBJECT_ID",
+							"sys.foreign_keys.referenced_object_id"
+						)
+						.whereRaw( "OBJECT_NAME( sys.foreign_keys.parent_object_id ) = '#tableName#'" )
+						.whereRaw(
+							"COL_NAME(sys.foreign_key_columns.parent_object_id,sys.foreign_key_columns.parent_column_id) = '#columnName#'"
+						)
+						.get()
+						.map( function( row ){
+							return row.name;
+						} )
+						.each( function( constraintName ){
+							queryExecute( "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#" );
+						} );
 
-					query.newQuery().select( [ "sys.foreign_keys.name" ] )
-								.from( "sys.foreign_keys" )
-								.join( "sys.foreign_key_columns", "sys.foreign_key_columns.constraint_object_id", "sys.foreign_keys.OBJECT_ID" )
-								.join( "sys.tables", "sys.tables.OBJECT_ID", "sys.foreign_keys.referenced_object_id" )
-								.whereRaw( "OBJECT_NAME( sys.foreign_keys.parent_object_id ) = '#tableName#'" )
-								.whereRaw( "COL_NAME(sys.foreign_key_columns.parent_object_id,sys.foreign_key_columns.parent_column_id) = '#columnName#'" )
-								.get()
-								.map( function( row ){ return row.name; } )
-								.each( function( constraintName ){
-									queryExecute( "ALTER TABLE #tableName# DROP CONSTRAINT #constraintName#");
-								} );
-
-					query.newQuery().select( [ "name" ] )
-							.from( "sys.indexes" )
-							.join( "sys.index_columns", "sys.indexes.index_id", "sys.index_columns.index_id" )
-							.where( "sys.indexes.is_hypothetical", 0 )
-							.whereRaw( "sys.indexes.object_id = OBJECT_ID( '#tableName#' ) and COL_NAME(sys.index_columns.object_id,sys.index_columns.column_id) = '#columnName#' AND name NOT LIKE 'PK_%'" )
-							.get()
-							.map( function( row ){ return row.name; } )
-							.each( function( indexName ){
-								queryExecute( listFirst( indexName, "_" ) == 'UQ' ? "ALTER TABLE #tableName# DROP CONSTRAINT #indexName#" : "DROP INDEX IF EXISTS #indexName# on #tableName#");
-							} );
+					query
+						.newQuery()
+						.select( [ "name" ] )
+						.from( "sys.indexes" )
+						.join(
+							"sys.index_columns",
+							"sys.indexes.index_id",
+							"sys.index_columns.index_id"
+						)
+						.where( "sys.indexes.is_hypothetical", 0 )
+						.whereRaw(
+							"sys.indexes.object_id = OBJECT_ID( '#tableName#' ) and COL_NAME(sys.index_columns.object_id,sys.index_columns.column_id) = '#columnName#' AND name NOT LIKE 'PK_%'"
+						)
+						.get()
+						.map( function( row ){
+							return row.name;
+						} )
+						.each( function( indexName ){
+							queryExecute(
+								listFirst( indexName, "_" ) == "UQ" ? "ALTER TABLE #tableName# DROP CONSTRAINT #indexName#" : "DROP INDEX IF EXISTS #indexName# on #tableName#"
+							);
+						} );
 
 					// Drop any foreign keys which reference this table
-					if( arguments.dropReferenced && idTables.keyExists( tableName ) ){
-						query.newQuery().selectRaw( "sys.foreign_keys.name as constraint_name, OBJECT_NAME( sys.foreign_keys.parent_object_id ) as table_name")
-								.from( "sys.foreign_keys" )
-								.join( "sys.foreign_key_columns", "sys.foreign_key_columns.constraint_object_id", "sys.foreign_keys.OBJECT_ID" )
-								.join( "sys.tables", "sys.tables.OBJECT_ID", "sys.foreign_keys.referenced_object_id" )
-								.whereRaw( "OBJECT_NAME (sys.foreign_keys.referenced_object_id) = '#tableName#'" )
-								.get()
-								.map( function( row ){ return { "table" : row.table_name, "constraint" : row.constraint_name }; } )
-								.each( function( row ){
-									queryExecute( "ALTER TABLE #row.table# DROP CONSTRAINT #row.constraint#");
-								} );
+					if ( arguments.dropReferenced && idTables.keyExists( tableName ) ) {
+						query
+							.newQuery()
+							.selectRaw(
+								"sys.foreign_keys.name as constraint_name, OBJECT_NAME( sys.foreign_keys.parent_object_id ) as table_name"
+							)
+							.from( "sys.foreign_keys" )
+							.join(
+								"sys.foreign_key_columns",
+								"sys.foreign_key_columns.constraint_object_id",
+								"sys.foreign_keys.OBJECT_ID"
+							)
+							.join(
+								"sys.tables",
+								"sys.tables.OBJECT_ID",
+								"sys.foreign_keys.referenced_object_id"
+							)
+							.whereRaw( "OBJECT_NAME (sys.foreign_keys.referenced_object_id) = '#tableName#'" )
+							.get()
+							.map( function( row ){
+								return {
+									"table"      : row.table_name,
+									"constraint" : row.constraint_name
+								};
+							} )
+							.each( function( row ){
+								queryExecute( "ALTER TABLE #row.table# DROP CONSTRAINT #row.constraint#" );
+							} );
 					}
-
 				}
 
 				variables.dropIndexesForTableColumn = function( tableName, columnName ){
-					query.newQuery().select( [ "name" ] )
-							.from( "sys.indexes" )
-							.join( "sys.index_columns", "sys.indexes.index_id", "sys.index_columns.index_id" )
-							.where( "sys.indexes.is_hypothetical", 0 )
-							.whereRaw( "sys.indexes.object_id = OBJECT_ID( '#tableName#' ) and COL_NAME(sys.index_columns.object_id,sys.index_columns.column_id) = '#columnName#' AND sys.indexes.type > 2" )
-							.get()
-							.map( function( row ){ return row.name; } )
-							.each( function( indexName ){
-								// These may be either constraints or indexes, depending.  Try both
-								try{
-									queryExecute( "ALTER TABLE #tableName# DROP CONSTRAINT #indexName#" );
-								} catch( any e ){
-									queryExecute( "DROP INDEX #indexName# on #tableName#" );
-								}
-							} );
+					query
+						.newQuery()
+						.select( [ "name" ] )
+						.from( "sys.indexes" )
+						.join(
+							"sys.index_columns",
+							"sys.indexes.index_id",
+							"sys.index_columns.index_id"
+						)
+						.where( "sys.indexes.is_hypothetical", 0 )
+						.whereRaw(
+							"sys.indexes.object_id = OBJECT_ID( '#tableName#' ) and COL_NAME(sys.index_columns.object_id,sys.index_columns.column_id) = '#columnName#' AND sys.indexes.type > 2"
+						)
+						.get()
+						.map( function( row ){
+							return row.name;
+						} )
+						.each( function( indexName ){
+							// These may be either constraints or indexes, depending.  Try both
+							try {
+								queryExecute( "ALTER TABLE #tableName# DROP CONSTRAINT #indexName#" );
+							} catch ( any e ) {
+								queryExecute( "DROP INDEX #indexName# on #tableName#" );
+							}
+						} );
 				}
 				break;
 			}
 			case "PostgresGrammar":
-			case "OracleGrammar":{
-				throw(
-					"Database Migrations from ContentBox v4 to v5 are not supported for this DBMS platform"
-				);
+			case "OracleGrammar": {
+				throw( "Database Migrations from ContentBox v4 to v5 are not supported for this DBMS platform" );
 			}
-			default:{
-				throw( "DBMS Grammatical type could not be determined from the grammar #getMetadata( grammar ).name#.  The migration must be aborted." );
+			default: {
+				throw(
+					"DBMS Grammatical type could not be determined from the grammar #getMetadata( grammar ).name#.  The migration must be aborted."
+				);
 			}
 		}
 	}

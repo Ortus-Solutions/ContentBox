@@ -35,6 +35,7 @@
 	},
 	"devDependencies":{
 		"testbox":"*",
+		"cbdebugger":"^3.0.0",
 		"commandbox-cfformat":"*",
 		"commandbox-docbox":"*"
     },
@@ -53,5 +54,10 @@
             "password":"${DB_PASSWORD}"
         },
         "defaultGrammar":"AutoDiscover@qb"
-    }
+    },
+	"scripts" : {
+		"contentbox:migrate" : "migrate up migrationsDirectory=modules/contentbox/migrations",
+		"contentbox:migrate:up" : "run-script contentbox:migrate",
+		"contentbox:migrate:down" : "migrate down migrationsDirectory=modules/contentbox/migrations"
+	}
 }
