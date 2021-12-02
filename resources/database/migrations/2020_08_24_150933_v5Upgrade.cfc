@@ -157,7 +157,7 @@ component {
 			if( !hasColumn( thisTable, "FK_siteID" ) ){
 				// Add site id relationship
 				schema.alter( thisTable, ( table ) => {
-					table.addColumn( table.uuid( "FK_siteID" ).nullable() );
+					table.addColumn( table.string( "FK_siteID", 36 ).nullable() );
 					table.addConstraint(
 						table
 							.foreignKey( "FK_siteID" )
@@ -172,13 +172,15 @@ component {
 			}
 
 			// Seed with site id
-			query
-				.newQuery()
-				.from( thisTable )
-				.whereNull( "FK_siteID" )
-				.update( { "FK_siteID" : siteId } );
+			if( thisTable != "cb_setting" ){
+				query
+					.newQuery()
+					.from( thisTable )
+					.whereNull( "FK_siteID" )
+					.update( { "FK_siteID" : siteId } );
 
-			systemOutput( "√ - Populated '#thisTable#' with default site data", true );
+				systemOutput( "√ - Populated '#thisTable#' with default site data", true );
+			}
 
 		} );
 	}
@@ -265,7 +267,7 @@ component {
 	private function createDefaultSite( schema, query ){
 		// Create the site table
 		arguments.schema.create( "cb_site", ( table ) => {
-			table.uuid( "siteID" ).primaryKey();
+			table.string( "siteID", 36 ).primaryKey();
 			table.dateTime( "createdDate" );
 			table.dateTime( "modifiedDate" );
 			table.boolean( "isDeleted" ).default( false );
@@ -294,8 +296,8 @@ component {
 		schema.alter(
 			"cb_setting",
 			function( table ){
-				table.addColumn( table.uuid( "FK_siteID" ).nullable() );
-				table.addConstraint( table.uuid( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" ) )
+				table.addColumn( table.string( "FK_siteID", 36 ).nullable() );
+				table.addConstraint( table.string( "FK_siteID", 36 ).references( "siteID" ).onTable( "cb_site" ) )
 			}
 		);
 
@@ -392,13 +394,13 @@ component {
 		variables.idTables.keyArray().each( function( tableName ){
 			var pkColumn = idTables[ tableName ];
 			schema.alter( tableName, function( table ){
-				table.addColumn( table.uuid( "id" ).unique().nullable() );
+				table.addColumn( table.string( "id", 36 ).default( "#guidFn#" ) );
 			} );
 			query
 				.newQuery()
 				.from( tableName )
 				.update( {
-					"id" : query.raw( "#guidFn#")
+					"id" : query.raw( "#guidFn#" )
 				});
 			systemOutput( "	√ - #tablename# new uuid pk created and populated", true );
 		} );
@@ -418,7 +420,7 @@ component {
 
 			var tmpColumn = "tmp_" & pkColumn;
 			schema.alter( tableName, function( table ){
-				table.addColumn( table.uuid( tmpColumn ).nullable() );
+				table.addColumn( table.string( tmpColumn, 36 ).nullable() );
 			} );
 			populateChildFKValues( tmpColumn, tableName );
 			systemOutput( "	√ - (#tableName#) rekeyed to new parent uuid", true );
@@ -442,12 +444,12 @@ component {
 
 				var tmpColumn = "tmp_" & arguments.keyConfig.column;
 				schema.alter( tableName, function( table ){
-					table.addColumn( table.uuid( tmpColumn ).nullable() );
+					table.addColumn( table.string( tmpColumn, 36 ).nullable() );
 				} );
 				populateFKValues( tmpColumn, tableName, arguments.keyConfig );
 				schema.alter( tableName, function( table ){
 					table.dropColumn( keyConfig.column );
-					table.renameColumn( tmpColumn, table.uuid( keyConfig.column ).nullable() );
+					table.renameColumn( tmpColumn, table.string( keyConfig.column, 36 ).nullable() );
 				} );
 				systemOutput( "	√ - (#tableName#) foreign key (#arguments.keyConfig.column#) rekeyed as a uuid into (#tmpColumn#)", true );
 			} );
@@ -467,7 +469,7 @@ component {
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
 				table.dropColumn( pkColumn );
 				// Rename it back to what it was called
-				table.renameColumn( "id", table.uuid( pkColumn ).unique() )
+				table.renameColumn( "id", table.string( pkColumn, 36 ).unique() )
 				table.addConstraint( table.primaryKey( pkColumn ) );
 			} );
 			systemOutput( "	√ (#arguments.tableName#) new uuid key set and finalized!", true );
@@ -485,7 +487,7 @@ component {
 			FKeys.each( function( keyConfig ){
 				var tmpColumn = "tmp_" & keyConfig.column;
 				schema.alter( tableName, function( table ){
-					table.addConstraint( table.uuid( keyConfig.column ).references( keyConfig.reference.column ).onTable( keyConfig.reference.table ) );
+					table.addConstraint( table.string( keyConfig.column, 36 ).references( keyConfig.reference.column ).onTable( keyConfig.reference.table ) );
 				} );
 			} );
 			systemOutput( "	√ (#arguments.tableName#) foreign key constraints finalized!", true );
@@ -504,11 +506,17 @@ component {
 			schema.alter( tableName, function( table ){
 				queryExecute( pkDropSQL( tableName, pkColumn ) );
 				// ensure it is a not null field before we make it PK
-				table.modifyColumn( tmpColumn, table.uuid( tmpColumn ) );
+				table.modifyColumn( tmpColumn, table.string( tmpColumn, 36 ) );
+			} );
+			schema.alter( tableName, function( table ){
 				table.addConstraint( table.primaryKey( tmpColumn ) );
+			} );
+			schema.alter( tableName, function( table ){
 				table.dropColumn( pkColumn );
-				table.renameColumn( tmpColumn, table.uuid( pkColumn ) );
-				table.addConstraint( table.uuid( pkColumn ).references( pkColumn ).onTable( childTables[ tableName ].parent ) );
+				table.renameColumn( tmpColumn, table.string( pkColumn, 36 ) );
+			} );
+			schema.alter( tableName, function( table ){
+				table.addConstraint( table.string( pkColumn, 36 ).references( pkColumn ).onTable( childTables[ tableName ].parent ) );
 			} );
 			systemOutput( "	√ (#arguments.tableName#) finalized!", true );
 		} );
@@ -789,10 +797,11 @@ component {
 				}
 				variables.populateFKValues = function( tmpColumn, tableName, keyConfig ){
 					queryExecute("
-						UPDATE #arguments.tableName# as target
+						UPDATE target
+							SET target.#arguments.tmpColumn# = ref.id
+						FROM #arguments.tableName# as target
 						JOIN #arguments.keyConfig.reference.table# as ref
 							ON target.#arguments.keyConfig.column# = ref.#arguments.keyConfig.reference.column#
-						SET target.#arguments.tmpColumn# = ref.id
 					");
 				};
 
@@ -800,7 +809,8 @@ component {
 					queryExecute("
 						UPDATE #arguments.tableName#
 						SET #arguments.tmpColumn# = (
-							SELECT id from #childTables[ arguments.tableName ].parent#
+							SELECT id
+							FROM #childTables[ arguments.tableName ].parent#
 							WHERE #childTables[ arguments.tableName ].parent#.#childTables[ arguments.tableName ].key# = #arguments.tableName#.#childTables[ arguments.tableName ].key#
 						)
 					");
