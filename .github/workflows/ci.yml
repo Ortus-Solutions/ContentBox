@@ -105,7 +105,7 @@ jobs:
 
       - name: Run Swagger Tests
         run: |
-          curl http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb > tests/results/contentbox-swagger.json
+          curl http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb -o tests/results/contentbox-swagger.json
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
