@@ -135,7 +135,7 @@ component {
 
 	private function removeUniqueConstraints( schema, query ){
 		// Remove Setting Name Unique Constraint
-		dropIndexesForTableColumn( "cb_settings", "name" );
+		dropIndexesForTableColumn( "cb_setting", "name" );
 		systemOutput( "√ - Setting name unique constraint dropped", true );
 
 		// Remove Content Unique Constraint
