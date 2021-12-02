@@ -212,6 +212,7 @@ jobs:
         run: |
           # Normalize swagger doc results
           cp tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
+          ls -lR tests/results
           # Run Docs Build
           box run-script build:allDocs
 

@@ -1,32 +1,38 @@
 /**
  * Generate API Docs for ContentBox
  */
-component{
+component {
 
 	function init(){
 		// Setup Directories
-		variables.util 		= shell.getUtil();
-		variables.root 		= getCWD();
-		variables.buildDir = variables.root & "build/build-contentbox";
+		variables.util       = shell.getUtil();
+		variables.root       = getCWD();
+		variables.buildDir   = variables.root & "build/build-contentbox";
 		variables.apidocsDir = variables.buildDir & "/apidocs";
-		variables.testsDir = variables.root & "tests/results";
+		variables.testsDir   = variables.root & "tests/results";
 		variables.exportsDir = variables.root & "artifacts/contentbox";
 
 		// Cleanup directories
 		[ variables.apidocsDir, variables.exportsDir ].each( ( thisDir ) => {
-			if( directoryExists( arguments.thisDir ) ){
+			if ( directoryExists( arguments.thisDir ) ) {
 				directoryDelete( arguments.thisDir, true );
 			}
 			// Create it now
 			directoryCreate( arguments.thisDir, true );
-		});
+		} );
 
 		// Create all necessary mappings for this build
 		variables.util
-			.addMapping( '/coldbox', 		    '#variables.root#/coldbox' )
-			.addMapping( '/contentbox', 		'#variables.root#/modules/contentbox' )
-			.addMapping( '/cbadmin', 			'#variables.root#/modules/contentbox/modules/contentbox-admin' )
-			.addMapping( '/cborm', 		        '#variables.root#/modules/contentbox/modules/contentbox-deps/modules/cborm' );
+			.addMapping( "/coldbox", "#variables.root#/coldbox" )
+			.addMapping( "/contentbox", "#variables.root#/modules/contentbox" )
+			.addMapping(
+				"/cbadmin",
+				"#variables.root#/modules/contentbox/modules/contentbox-admin"
+			)
+			.addMapping(
+				"/cborm",
+				"#variables.root#/modules/contentbox/modules/contentbox-deps/modules/cborm"
+			);
 	}
 
 	/**
@@ -34,10 +40,10 @@ component{
 	 *
 	 * @version The version to add to the title output
 	 */
-	function run( version="1.0.0" ){
+	function run( version = "1.0.0" ){
 		// Prepare exports via passed version
 		variables.exportsDir &= "/#arguments.version#";
-		if( !directoryExists( variables.exportsDir ) ){
+		if ( !directoryExists( variables.exportsDir ) ) {
 			directoryCreate( variables.exportsDir, true );
 		}
 
@@ -56,31 +62,40 @@ component{
 		swagger( arguments.version );
 	}
 
-	function apiDocs( version="1.0.0" ){
+	function apiDocs( version = "1.0.0" ){
 		var sTime = getTickCount();
 		print.blueLine( "Generating ContentBox v#arguments.version# CFC Docs..." ).toConsole();
 
 		command( "docbox generate" )
 			.params(
-				"source" 					= "/contentbox",
-				"mapping" 					= "contentbox",
-				"strategy-projectTitle"		= 'ContentBox Modular CMS #arguments.version#',
-				"strategy-outputdir" 		= variables.apidocsDir,
-				"excludes"					= "contentbox-deps"
+				"source"                = "/contentbox",
+				"mapping"               = "contentbox",
+				"strategy-projectTitle" = "ContentBox Modular CMS #arguments.version#",
+				"strategy-outputdir"    = variables.apidocsDir,
+				"excludes"              = "contentbox-deps"
 			)
 			.run();
-			print.greenLine( "√ CFC Docs completed in #getTickCount() - sTime#ms and can be found at: #variables.apidocsDir#" ).toConsole();
+		variables.print
+			.greenLine(
+				"√ CFC Docs completed in #getTickCount() - sTime#ms and can be found at: #variables.apidocsDir#"
+			)
+			.toConsole();
 	}
 
 	/**
 	 * Build the swagger docs
 	 */
-	function swagger( version="1.0.0" ){
+	function swagger( version = "1.0.0" ){
 		var sTime = getTickCount();
-		print.blueLine( "Generating ContentBox #arguments.version# Swagger json docs..." ).toConsole();
+		variables.print
+			.blueLine( "Generating ContentBox #arguments.version# Swagger json docs..." )
+			.toConsole();
 
 		// Test if swagger doc in resutls already
-		if( fileExists( variables.testsDir & "contentbox-swagger.json" ) ){
+		if ( fileExists( variables.testsDir & "/contentbox-swagger.json" ) ) {
+			variables.print
+				.greenLine( "Swagger docs already created, just doing token replacements..." )
+				.toConsole();
 			command( "tokenReplace" )
 				.params(
 					path        = "#variables.testsDir#/contentbox-swagger.json",
@@ -89,6 +104,9 @@ component{
 				)
 				.run();
 		} else {
+			variables.print
+				.orangeLine( "Swagger docs not found, recreating..." )
+				.toConsole();
 			command( "tokenReplace" )
 				.params(
 					path        = "#variables.root#/config/Coldbox.cfc",
@@ -97,9 +115,9 @@ component{
 				)
 				.run();
 			cfhttp(
-				url="http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb",
+				url  = "http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb",
 				path = variables.testsDir,
-				file="contentbox-swagger.json"
+				file = "contentbox-swagger.json"
 			);
 		}
 
@@ -115,7 +133,11 @@ component{
 			"#variables.exportsDir#/contentbox-swagger-#arguments.version#.json"
 		);
 
-		print.greenLine( "√ Swagger JSON docs generated in #getTickCount() - sTime#ms and can be found at: #variables.apidocsDir#/contentbox-swagger.json" ).toConsole();
+		variables.print
+			.greenLine(
+				"√ Swagger JSON docs generated in #getTickCount() - sTime#ms and can be found at: #variables.apidocsDir#/contentbox-swagger.json"
+			)
+			.toConsole();
 	}
 
 }
