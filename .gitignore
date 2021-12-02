@@ -1,16 +1,15 @@
 # Global Ignores
 .DS_Store
-.sass-cache
-.settings/**
-settings.xml
 .project
 *.cache.*
 .idea
 web.config
 "Icon\r"
 WEB-INF/**
+.env
 
 # Build Dependencies
+coldbox/*
 artifacts/**
 build/build.number
 build/apidocs/docbox
@@ -19,22 +18,20 @@ build/build-contentbox/**
 build/build-forgebox/**
 build/dependencies
 
-# Global Dependencies
+# Logs
 config/logs/**
-logs/**
-coldbox/*
-testbox/*
-**/node_modules/**
-**/app_modules/**
-**/bower_components/**
-**/app_modules/**
-workbench/app_modules
-.env
 
 # Engines + Docker Libraries
 .engines
 bin/.db/**
 tests/resources/dbs/.db/**
+
+# UI Dependencies
+**/node_modules/**
+**/app_modules/**
+**/bower_components/**
+**/app_modules/**
+workbench/app_modules
 
 # Module Dependencies
 modules/contentbox/themes/default/bower_components
@@ -45,8 +42,9 @@ modules/cbdebugger
 # ContentBox Dependency Modules
 modules/contentbox/modules/contentbox-deps/modules/*
 
-
-# Testing
+# Testing Dependencies
+modules/contentbox/themes/_test/**
+testbox/*
 /tests/**/logs/**
 /tests/test-results/*
 tests/resources/patches/tmp/

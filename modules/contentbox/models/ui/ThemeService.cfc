@@ -98,9 +98,7 @@ component accessors="true" threadSafe singleton {
 		// verify existence of convention
 		if (
 			fileExists(
-				expandPath(
-					variables.CBHelper.themeRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm"
-				)
+				expandPath( variables.CBHelper.themeRoot() & "/layouts/#arguments.layout#_#arguments.format#.cfm" )
 			)
 		) {
 			return "#arguments.layout#_#arguments.format#";
@@ -149,10 +147,7 @@ component accessors="true" threadSafe singleton {
 		variables.siteService
 			.getAllSiteThemes()
 			.each( function( record ){
-				startupTheme(
-					name: arguments.record[ "activeTheme" ],
-					site: arguments.record[ "siteID" ]
-				);
+				startupTheme( name: arguments.record[ "activeTheme" ], site: arguments.record[ "siteID" ] );
 			} );
 
 		// Flush the settings now
@@ -164,7 +159,7 @@ component accessors="true" threadSafe singleton {
 	 *
 	 * @name The name of the theme to activate
 	 * @processWidgets Process widget registration on activation, defaults to true.
-	 * @siteID The site id or object we are starting up this theme for
+	 * @site The site id or object we are starting up this theme for
 	 */
 	function startupTheme(
 		required name,
@@ -296,7 +291,7 @@ component accessors="true" threadSafe singleton {
 	}
 
 	/**
-	 * Activate a theme by name
+	 * Activate a specific theme for the current working site
 	 *
 	 * @themeName The theme name to activate
 	 */
@@ -305,7 +300,7 @@ component accessors="true" threadSafe singleton {
 			var currentSite = variables.siteService.getCurrentWorkingSite();
 			var themeRecord = getThemeRecord( currentSite.getActiveTheme() );
 
-			// Call deactivation event
+			// Call deactivation event for the previous active theme
 			variables.interceptorService.announce(
 				"cbadmin_onThemeDeactivation",
 				{
@@ -315,12 +310,12 @@ component accessors="true" threadSafe singleton {
 				}
 			);
 
-			// Call Theme Callback: onDeactivation
+			// Call Old Theme Callback: onDeactivation
 			if ( structKeyExists( themeRecord.descriptor, "onDeactivation" ) ) {
 				themeRecord.descriptor.onDeactivation();
 			}
 
-			// unload theme modules
+			// Unload old theme modules
 			for ( var thisModule in themeRecord.modules.listToArray() ) {
 				variables.moduleService.unload( thisModule );
 			}
@@ -334,19 +329,12 @@ component accessors="true" threadSafe singleton {
 			currentSite.setActiveTheme( arguments.themeName );
 			variables.siteService.save( currentSite );
 
-			// Startup the theme
-			startupTheme(
-				name          : arguments.themeName,
-				processWidgets: false,
-				site          : currentSite
-			);
-
 			// Force Recreation of all Widgets, since we need to deactivate the old widgets
 			variables.widgetService.getWidgets( reload = true );
-
-			// flush the settings just in case
-			variables.settingService.flushSettingsCache();
 		}
+
+		// Flush the settings from the cache, now that they are persisted
+		variables.settingService.flushSettingsCache();
 
 		return this;
 	}
@@ -453,9 +441,7 @@ component accessors="true" threadSafe singleton {
 			descriptorPath     = arguments.path & "/#arguments.name#/#arguments.name#.cfc";
 			descriptorInstance = arguments.invocationPath & ".#arguments.name#.#arguments.name#";
 			if ( !fileExists( descriptorPath ) ) {
-				log.warn(
-					"The theme: #arguments.name# has no theme descriptor, skipping registration."
-				);
+				log.warn( "The theme: #arguments.name# has no theme descriptor, skipping registration." );
 				variables.themeRegistry[ arguments.name ] = record;
 				return;
 			}
@@ -917,10 +903,7 @@ component accessors="true" threadSafe singleton {
 			arguments.settings
 				// only load defaults that do not exist
 				.filter( function( thisSetting ){
-					return !arrayContainsNoCase(
-						loadedSiteSettings,
-						"cb_theme_#name#_#thisSetting.name#"
-					);
+					return !arrayContainsNoCase( loadedSiteSettings, "cb_theme_#name#_#thisSetting.name#" );
 				} )
 				// Create the missing setting
 				.each( function( thisSetting ){

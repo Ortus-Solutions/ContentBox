@@ -62,8 +62,8 @@ component extends="baseHandler" {
 	function saveSettings( event, rc, prc ){
 		prc.xehActiveTheme = "#prc.cbAdminEntryPoint#.themes.active";
 		var vResults       = validate(
-			target      = rc,
-			constraints = variables.themeService.getSettingsConstraints( rc.themeName )
+			target     : rc,
+			constraints: variables.themeService.getSettingsConstraints( rc.themeName )
 		);
 
 		// Validate results
@@ -84,11 +84,11 @@ component extends="baseHandler" {
 		announce( "cbadmin_postThemeSettingsSave", { name : rc.themeName } );
 
 		// Relocate
-		relocate( event = prc.xehActiveTheme );
+		relocate( prc.xehActiveTheme );
 	}
 
 	/**
-	 * Activate a theme
+	 * Activate a theme for the site
 	 */
 	function activate( event, rc, prc ){
 		// Activate the theme
@@ -107,7 +107,7 @@ component extends="baseHandler" {
 	function rebuildRegistry( event, rc, prc ){
 		variables.themeService.buildThemeRegistry();
 		variables.cbMessagebox.info( "Themes re-scanned and registered!" );
-		relocate( event = prc.xehThemes, queryString = "##themesPane" );
+		relocate( prc.xehThemes );
 	}
 
 	/**
@@ -117,11 +117,9 @@ component extends="baseHandler" {
 		if ( variables.themeService.removeTheme( rc.themeName ) ) {
 			variables.cbMessagebox.info( "Theme Removed Forever!" );
 		} else {
-			variables.cbMessagebox.error(
-				"Error removing theme, please check your logs for more information!"
-			);
+			variables.cbMessagebox.error( "Error removing theme, please check your logs for more information!" );
 		}
-		relocate( event = prc.xehThemes, queryString = "##themesPane" );
+		relocate( prc.xehThemes );
 	}
 
 }
