@@ -22,14 +22,17 @@ component
 		name      ="categoryService"
 		inject    ="categoryService@contentbox"
 		persistent="false";
+
 	property
 		name      ="pageService"
 		inject    ="pageService@contentbox"
 		persistent="false";
+
 	property
 		name      ="entryService"
 		inject    ="entryService@contentbox"
 		persistent="false";
+
 	property
 		name      ="contentStoreService"
 		inject    ="contentStoreService@contentbox"
@@ -76,7 +79,7 @@ component
 		name   ="isPublic"
 		column ="isPublic"
 		ormtype="boolean"
-		notnull="true"
+		notnull="false"
 		default="true"
 		index  ="idx_isPublic";
 

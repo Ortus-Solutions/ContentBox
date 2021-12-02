@@ -51,7 +51,7 @@ component {
 
 		// Get the db schema name, we might need it when dropping keys
 		variables.dbSchema = migrationService.getSchema();
-		variables.uuidLib = createobject("java", "java.util.UUID");
+		variables.uuidLib = createobject( "java", "java.util.UUID" );
 
 		scopeGrammarUDFs( argumentCollection=arguments );
 
@@ -91,6 +91,14 @@ component {
 					table.index( [ "slug", "isPublished" ], "idx_publishedSlug" );
 					table.index( [ "title", "isPublished" ], "idx_search" );
 				} );
+				// Create Category isPublic with indexes
+				if( !hasColumn( "cb_category", "isPublic" ) ){
+					schema.alter( "cb_category", ( table ) => {
+						table.addColumn( table.boolean( "isPublic" ).default( true ) );
+						table.index( [ "isPublic" ], "idx_isPublic" );
+					} );
+				}
+
 			} catch ( any e ) {
 				transactionRollback();
 				systemOutput( e.stacktrace, true );
