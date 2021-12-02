@@ -127,10 +127,14 @@ component {
 			"#variables.apidocsDir#/apidoc.html"
 		);
 
-		// Move Swagger Doc to Exports
+		// Move Swagger Doc to Exports + Apidocs
 		fileCopy(
 			"#variables.testsDir#/contentbox-swagger.json",
 			"#variables.exportsDir#/contentbox-swagger-#arguments.version#.json"
+		);
+		fileCopy(
+			"#variables.testsDir#/contentbox-swagger.json",
+			"#variables.apidocsDir#/contentbox-swagger.json"
 		);
 
 		variables.print
