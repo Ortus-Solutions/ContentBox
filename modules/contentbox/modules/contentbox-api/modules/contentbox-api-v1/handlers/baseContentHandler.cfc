@@ -41,11 +41,12 @@ component extends="baseHandler" {
 	}
 
 	/***************************************************************************/
-	/** PRIVATE **/
+	/** PRIVATE HELPERS **/
 	/***************************************************************************/
 
 	/**
 	 * Shared method for create and update to be DRY
+	 *
 	 * @populate Population arguments
 	 * @validate Validation arguments
 	 * @saveMethod The method to use for saving entities

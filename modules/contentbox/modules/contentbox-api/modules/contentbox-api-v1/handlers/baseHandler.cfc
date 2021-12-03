@@ -81,7 +81,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		// Get by id or slug
 		prc.oEntity = (
 			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id
+				rc.id, prc
 			)
 		);
 
@@ -136,7 +136,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		arguments.populate.memento = rc;
 		arguments.populate.model   = (
 			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id
+				rc.id, prc
 			)
 		);
 
@@ -188,7 +188,7 @@ component extends="cborm.models.resources.BaseHandler" {
 
 		prc.oEntity = (
 			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id
+				rc.id, prc
 			)
 		);
 
@@ -218,18 +218,25 @@ component extends="cborm.models.resources.BaseHandler" {
 	/**
 	 * This utility tries to get the incoming resource by id or slug or fails
 	 *
+	 * @id The id/slug identifier to retrieve the entity
+	 * @prc The ColdBox PRC
+	 *
 	 * @throws EntityNotFound
 	 *
 	 * @return The found entity
 	 */
-	private function getByIdOrSlugOrFail( required id ){
-		var c       = newCriteria();
+	private function getByIdOrSlugOrFail( required id, required prc ){
+		var c       = variables.ormService.newCriteria();
 		var oEntity = c
 			.$or(
 				// note: id is a shortcut in Hibernate for the Primary Key
 				c.restrictions.isEq( "id", arguments.id ),
 				c.restrictions.isEq( "slug", arguments.id )
 			)
+			// If the site exists, seed it
+			.when( !isNull( prc.oCurrentSite ), function( c ){
+				c.isEq( "site", prc.oCurrentSite );
+			} )
 			.get();
 
 		if ( isNull( oEntity ) ) {
