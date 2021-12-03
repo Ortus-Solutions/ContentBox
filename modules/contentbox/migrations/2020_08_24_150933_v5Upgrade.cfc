@@ -26,6 +26,7 @@ component {
 			type  = "columns",
 			table = arguments.targetTable
 		);
+
 		if (
 			qSettingColumns.filter( ( thisRow ) => {
 				// systemOutput( thisRow, true );
@@ -38,7 +39,16 @@ component {
 	}
 
 	private function isContentBox4(){
-		return !hasColumn( "cb_setting", "FK_siteID" );
+		try{
+			return !hasColumn( "cb_setting", "FK_siteID" );
+		} catch( any e ){
+			// check if we don't have a database yet.
+			if( findNoCase( "there is no table", e.message ) ){
+				return false;
+			} else {
+				rethrow;
+			}
+		}
 	}
 
 	function up( schema, query ){
