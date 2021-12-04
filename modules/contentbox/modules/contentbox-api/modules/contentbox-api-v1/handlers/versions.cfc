@@ -30,7 +30,7 @@ component
 
 		prc.oCurrentSite    = rc.site = getSiteByIdOrSlugOrFail( rc.site );
 		prc.contentType     = event.getCurrentRouteMeta().contentType;
-		prc.oRelatedContent = variables.contentService.getByIdOrSlugOrFail( rc.contentIdOrSlug );
+		prc.oRelatedContent = variables.contentService.getByIdOrSlugOrFail( rc.contentIdOrSlug, prc );
 	}
 
 	/**

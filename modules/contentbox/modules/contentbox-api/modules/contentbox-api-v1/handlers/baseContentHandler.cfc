@@ -86,7 +86,7 @@ component extends="baseHandler" {
 		}
 		// Setup Parent if sent!
 		if ( !isNull( rc.parent ) && len( rc.parent ) ) {
-			rc.parent = getByIdOrSlugOrFail( rc.parent );
+			rc.parent = getByIdOrSlugOrFail( rc.parent, prc );
 		}
 		// slugify the incoming title or slug
 		if ( !isNull( rc.slug ) && len( rc.slug ) ) {
@@ -101,7 +101,7 @@ component extends="baseHandler" {
 		arguments.populate.memento = rc;
 		// Check if creation or editing
 		arguments.populate.model   = (
-			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id )
+			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id, prc )
 		);
 		arguments.populate.nullEmptyInclude = "parent";
 		arguments.populate.exclude          = "contentID,creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
