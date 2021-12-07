@@ -21,7 +21,7 @@ component
 
 	property
 		name      ="commentSubscriptionService"
-		inject    ="commentSubscriptionService@contentbox"
+		inject    ="provider:commentSubscriptionService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

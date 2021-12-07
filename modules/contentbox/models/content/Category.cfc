@@ -20,32 +20,27 @@ component
 
 	property
 		name      ="categoryService"
-		inject    ="categoryService@contentbox"
+		inject    ="provider:categoryService@contentbox"
 		persistent="false";
 
 	property
 		name      ="pageService"
-		inject    ="pageService@contentbox"
+		inject    ="provider:pageService@contentbox"
 		persistent="false";
 
 	property
 		name      ="entryService"
-		inject    ="entryService@contentbox"
+		inject    ="provider:entryService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentStoreService"
-		inject    ="contentStoreService@contentbox"
-		persistent="false";
-
-	property
-		name      ="cachebox"
-		inject    ="cachebox"
+		inject    ="provider:contentStoreService@contentbox"
 		persistent="false";
 
 	property
 		name      ="settingService"
-		inject    ="settingService@contentbox"
+		inject    ="provider:settingService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

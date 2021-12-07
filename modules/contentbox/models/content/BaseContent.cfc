@@ -21,42 +21,42 @@ component
 
 	property
 		name      ="categoryService"
-		inject    ="categoryService@contentbox"
+		inject    ="provider:categoryService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentService"
-		inject    ="contentService@contentbox"
+		inject    ="provider:contentService@contentbox"
 		persistent="false";
 
 	property
 		name      ="contentVersionService"
-		inject    ="contentVersionService@contentbox"
+		inject    ="provider:contentVersionService@contentbox"
 		persistent="false";
 
 	property
 		name      ="customFieldService"
-		inject    ="customFieldService@contentbox"
+		inject    ="provider:customFieldService@contentbox"
 		persistent="false";
 
 	property
 		name      ="i18n"
-		inject    ="i18n@cbi18n"
+		inject    ="provider:i18n@cbi18n"
 		persistent="false";
 
 	property
 		name      ="JSONPrettyPrint"
-		inject    ="JSONPrettyPrint@JSONPrettyPrint"
+		inject    ="provider:JSONPrettyPrint@JSONPrettyPrint"
 		persistent="false";
 
 	property
 		name      ="contentboxSettings"
-		inject    ="coldbox:moduleSettings:contentbox"
+		inject    ="provider:coldbox:moduleSettings:contentbox"
 		persistent="false";
 
 	property
 		name      ="settingService"
-		inject    ="id:settingService@contentbox"
+		inject    ="provider:settingService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

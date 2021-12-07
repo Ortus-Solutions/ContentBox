@@ -14,22 +14,22 @@ component {
 
 	property
 		name      ="coldbox"
-		inject    ="coldbox"
+		inject    ="provider:coldbox"
 		persistent="false";
 
 	property
 		name      ="cachebox"
-		inject    ="cachebox"
+		inject    ="provider:cachebox"
 		persistent="false";
 
 	property
 		name      ="interceptorService"
-		inject    ="coldbox:interceptorService"
+		inject    ="provider:coldbox:interceptorService"
 		persistent="false";
 
 	property
 		name      ="wirebox"
-		inject    ="wirebox"
+		inject    ="provider:wirebox"
 		persistent="false";
 
 	/* *********************************************************************

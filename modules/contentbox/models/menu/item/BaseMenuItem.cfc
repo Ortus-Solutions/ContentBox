@@ -21,7 +21,7 @@ component
 
 	property
 		name      ="menuItemService"
-		inject    ="menuItemService@contentbox"
+		inject    ="provider:menuItemService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

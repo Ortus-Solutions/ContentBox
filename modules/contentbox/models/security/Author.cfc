@@ -21,12 +21,12 @@ component
 
 	property
 		name      ="authorService"
-		inject    ="authorService@contentbox"
+		inject    ="provider:authorService@contentbox"
 		persistent="false";
 
 	property
 		name      ="avatar"
-		inject    ="Avatar@contentbox"
+		inject    ="provider:Avatar@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

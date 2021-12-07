@@ -20,7 +20,7 @@ component
 
 	property
 		name      ="permissionService"
-		inject    ="permissionService@contentbox"
+		inject    ="provider:permissionService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************

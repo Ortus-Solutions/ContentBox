@@ -20,17 +20,17 @@ component
 
 	property
 		name      ="menuService"
-		inject    ="menuService@contentbox"
+		inject    ="provider:menuService@contentbox"
 		persistent="false";
 
 	property
 		name      ="menuItemService"
-		inject    ="menuItemService@contentbox"
+		inject    ="provider:menuItemService@contentbox"
 		persistent="false";
 
 	property
 		name      ="ORMService"
-		inject    ="entityservice"
+		inject    ="provider:entityservice"
 		persistent="false";
 
 	/* *********************************************************************
