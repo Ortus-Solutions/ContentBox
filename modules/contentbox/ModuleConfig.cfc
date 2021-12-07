@@ -76,7 +76,7 @@ component {
 		};
 
 		// Async Executors for ContentBox Core
-		//executors = { "contentbox-tasks" : { type : "scheduled", threads : 20 } };
+		// executors = { "contentbox-tasks" : { type : "scheduled", threads : 20 } };
 
 		// interceptors
 		interceptors = [
@@ -135,8 +135,8 @@ component {
 	 */
 	function onLoad(){
 		// Create `cb` alias : REMOVE BY CONTENTBOX NEXT MAJOR VERSION
-		var s = getTickCount();
 		binder.mapDirectory( packagePath = "contentbox.models", namespace = "@cb" );
+		var settingService = wirebox.getInstance( "settingService@contentbox" );
 		// Pre-flight check settings
 		settingService.preFlightCheck();
 		// Loadup Config Overrides
