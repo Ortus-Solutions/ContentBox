@@ -50,11 +50,6 @@ component
 		persistent="false";
 
 	property
-		name      ="contentboxSettings"
-		inject    ="provider:coldbox:moduleSettings:contentbox"
-		persistent="false";
-
-	property
 		name      ="settingService"
 		inject    ="provider:settingService@contentbox"
 		persistent="false";
@@ -618,9 +613,10 @@ component
 	 */
 	function onDIComplete(){
 		// Load up content helpers
-		variables.contentboxSettings.$get().contentHelpers.each( function( thisHelper ){
-			includeMixin( arguments.thisHelper );
-		} );
+		variables.wirebox.getInstance( dsl : "coldbox:moduleSettings:contentbox" )
+			.contentHelpers.each( function( thisHelper ){
+				includeMixin( arguments.thisHelper );
+			} );
 	}
 
 

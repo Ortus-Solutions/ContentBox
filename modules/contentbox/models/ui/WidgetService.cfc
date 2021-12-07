@@ -175,15 +175,16 @@ component accessors="true" singleton threadSafe {
 			variables[ arguments.type & "widgetsMap" ][ widgetName ] = invocationPath;
 
 			try {
+				var oWidget = getWidget( widgetName, arguments.type );
 				querySetCell(
 					arguments.qRecords,
 					"category",
-					getWidgetCategory( widgetName, arguments.type )
+					getWidgetCategory( oWidget, arguments.type )
 				);
 				querySetCell(
 					arguments.qRecords,
 					"icon",
-					getWidgetIcon( widgetName, arguments.type )
+					getWidgetIcon( oWidget, arguments.type )
 				);
 			} catch ( any e ) {
 				log.error( "Error creating #arguments.type# widget: #widgetName#", e );
@@ -229,15 +230,16 @@ component accessors="true" singleton threadSafe {
 			);
 
 			try {
+				var oWidget = getWidget( widgetName, arguments.type );
 				querySetCell(
 					arguments.qRecords,
 					"category",
-					getWidgetCategory( name = widget, type = "module" )
+					getWidgetCategory( name = oWidget, type = "module" )
 				);
 				querySetCell(
 					arguments.qRecords,
 					"icon",
-					getWidgetIcon( name = widget, type = "module" )
+					getWidgetIcon( name = oWidget, type = "module" )
 				);
 			} catch ( any e ) {
 				log.error( "Error creating module (#moduleName#) widget: #widgetName#", e );
@@ -280,15 +282,16 @@ component accessors="true" singleton threadSafe {
 			);
 
 			try {
+				var oWidget = getWidget( widget, "theme" );
 				querySetCell(
 					qRecords,
 					"category",
-					getWidgetCategory( name = widget, type = "theme" )
+					getWidgetCategory( name = oWidget, type = "theme" )
 				);
 				querySetCell(
 					qRecords,
 					"icon",
-					getWidgetIcon( name = widget, type = "theme" )
+					getWidgetIcon( name = oWidget, type = "theme" )
 				);
 			} catch ( any e ) {
 				log.error( "Error creating theme (#thisRecord.theme#) widget: #widget#", e );
@@ -386,10 +389,7 @@ component accessors="true" singleton threadSafe {
 
 		if ( len( widgetPath ) ) {
 			// Init Arguments added for backwards compat
-			return wirebox.getInstance(
-				name          = widgetPath,
-				initArguments = { "controller" : variables.coldbox }
-			);
+			return wirebox.getInstance( name = widgetPath, initArguments = { "controller" : variables.coldbox } );
 		} else {
 			throw(
 				message = "The widget (#arguments.name#) could not be located anywhere.",
@@ -401,12 +401,16 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get a widget icon representation
 	 *
-	 * @name The name of the widget
+	 * @name The name of the widget or the widget instance
 	 * @type This can be one of the following: core, theme, module
 	 */
 	string function getWidgetIcon( required name, required string type = "core" ){
-		var widget = getWidget( argumentCollection = arguments );
-		var icon   = widget.getIcon();
+		if ( isSimpleValue( arguments.name ) ) {
+			var widget = getWidget( argumentCollection = arguments );
+		} else {
+			var widget = arguments.name;
+		}
+		var icon = widget.getIcon();
 		if ( isNull( icon ) || icon == "" ) {
 			switch ( type ) {
 				case "theme":
@@ -426,11 +430,15 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get a widget category
 	 *
-	 * @name The name of the widget
+	 * @name The name of the widget or the actual widget object
 	 * @type This can be one of the following: core, theme, module
 	 */
 	string function getWidgetCategory( required name, required string type = "core" ){
-		var widget   = getWidget( argumentCollection = arguments );
+		if ( isSimpleValue( arguments.name ) ) {
+			var widget = getWidget( argumentCollection = arguments );
+		} else {
+			widget = arguments.name;
+		}
 		var category = widget.getCategory();
 		if ( isNull( category ) || category == "" ) {
 			switch ( type ) {
