@@ -29,7 +29,7 @@ component {
 
 	property
 		name      ="wirebox"
-		inject    ="provider:wirebox"
+		inject    ="wirebox"
 		persistent="false";
 
 	/* *********************************************************************
