@@ -618,7 +618,7 @@ component
 	 */
 	function onDIComplete(){
 		// Load up content helpers
-		variables.contentboxSettings.contentHelpers.each( function( thisHelper ){
+		variables.contentboxSettings.$get().contentHelpers.each( function( thisHelper ){
 			includeMixin( arguments.thisHelper );
 		} );
 	}

@@ -2,7 +2,7 @@
 <!--- CPU Integration --->
 <cfparam name="url.cpu" default="false">
 <!--- SETUP THE ROOTS OF THE BROWSER RIGHT HERE --->
-<cfset rootMapping 	= "/tests/specs">
+<cfset rootMapping 	= "/tests">
 <cfif directoryExists( rootMapping )>
 	<cfset rootPath = rootMapping>
 <cfelse>
@@ -91,8 +91,15 @@
 					<fieldset>
 						<legend>Contents: #executePath#</legend>
 						<cfif url.path neq "/">
-							<a href="index.cfm?path=#URLEncodedFormat( backPath )#"><button type="button" class="btn btn-secondary btn-sm my-1"><i class="fas fa-angle-double-left"></i> Back</button></a><br><hr>
+							<a href="index.cfm?path=#URLEncodedFormat( backPath )#">
+								<button type="button" class="btn btn-secondary btn-sm my-1">
+									<i class="fas fa-angle-double-left"></i> Back
+								</button>
+							</a>
+							<br>
+							<hr>
 						</cfif>
+
 						<cfloop query="qResults">
 							<cfif refind( "^\.", qResults.name )>
 								<cfcontinue>
