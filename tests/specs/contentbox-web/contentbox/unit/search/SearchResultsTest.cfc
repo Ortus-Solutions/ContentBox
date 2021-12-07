@@ -4,37 +4,37 @@
  * www.ortussolutions.com/products/contentbox
  * ---
  */
-component
-	extends="coldbox.system.testing.BaseModelTest"
-	model  ="contentbox.models.search.SearchResults"
-{
+component extends="tests.resources.BaseTest" {
 
-	this.unLoadColdBox = false;
+	function run( testResults, testBox ){
+		describe( "Search Results", function(){
+			beforeEach( function( currentSpec ){
+				setup();
+				model = getInstance( "SearchResults@contentbox" );
+			} );
 
-	function setup(){
-		super.setup();
-		model.init();
-	}
 
-	function testMemento(){
-		r = model.getmemento();
-		assertTrue( structCount( r ) );
-	}
+			it( "can get the memento", function(){
+				var results = model.getMemento();
+				expect( results ).toBeStruct();
+			} );
 
-	function testPopulate(){
-		r = {
-			results       : [],
-			searchTime    : getTickCount(),
-			total         : 0,
-			metadata      : { name : "luis", value : "awesome" },
-			error         : false,
-			errorMessages : [],
-			searchTerm    : "luis"
-		};
+			it( "can populate", function(){
+				var r = {
+					results       : [],
+					searchTime    : getTickCount(),
+					total         : 0,
+					metadata      : { name : "luis", value : "awesome" },
+					error         : false,
+					errorMessages : [],
+					searchTerm    : "luis"
+				};
 
-		model.populate( r );
-		m = model.getMemento();
-		assertEquals( r, m );
+				model.populate( r );
+				var m = model.getMemento();
+				assertEquals( r, m );
+			} );
+		} );
 	}
 
 }

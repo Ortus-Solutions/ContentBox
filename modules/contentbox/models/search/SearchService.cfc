@@ -11,6 +11,9 @@ component accessors="true" {
 	property name="wirebox" inject="wirebox";
 	property name="settingService" inject="settingService@contentbox";
 
+	/**
+	 * Constructor
+	 */
 	SearchService function init(){
 		return this;
 	}
@@ -20,7 +23,7 @@ component accessors="true" {
 	 * the following interface: contentbox.models.search.ISearchAdapter
 	 */
 	any function getSearchAdapter(){
-		return wirebox.getInstance( variables.settingService.getSetting( "cb_search_adapter" ) );
+		return variables.wirebox.getInstance( variables.settingService.getSetting( "cb_search_adapter" ) );
 	}
 
 }
