@@ -42,9 +42,7 @@ component
 		variables.toolbarExcerptJS = buildToolbarJS( "excerpt" );
 
 		// Register our Editor events
-		interceptorService.appendInterceptionPoints(
-			"cbadmin_mdEditorToolbar,cbadmin_mdEditorExtraConfig"
-		);
+		interceptorService.appendInterceptionPoints( "cbadmin_mdEditorToolbar,cbadmin_mdEditorExtraConfig" );
 
 		return this;
 	}

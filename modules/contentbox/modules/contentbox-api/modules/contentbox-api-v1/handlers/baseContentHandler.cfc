@@ -79,9 +79,7 @@ component extends="baseHandler" {
 
 		// Verify content exists ONLY for new objects
 		if ( !len( rc.id ) && !len( rc.content ) ) {
-			arguments.event
-				.getResponse()
-				.setErrorMessage( "Content is required", arguments.event.STATUS.BAD_REQUEST );
+			arguments.event.getResponse().setErrorMessage( "Content is required", arguments.event.STATUS.BAD_REQUEST );
 			return;
 		}
 		// Setup Parent if sent!
@@ -98,11 +96,9 @@ component extends="baseHandler" {
 		}
 
 		// Population arguments
-		arguments.populate.memento = rc;
+		arguments.populate.memento          = rc;
 		// Check if creation or editing
-		arguments.populate.model   = (
-			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id, prc )
-		);
+		arguments.populate.model            = ( !len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id, prc ) );
 		arguments.populate.nullEmptyInclude = "parent";
 		arguments.populate.exclude          = "contentID,creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
 
@@ -113,9 +109,7 @@ component extends="baseHandler" {
 				.oCurrentAuthor()
 				.checkPermission( "#arguments.contentType#_ADMIN" )
 		) {
-			arguments.populate.model.setCreator(
-				variables.authorService.retrieveUserById( rc.creator )
-			);
+			arguments.populate.model.setCreator( variables.authorService.retrieveUserById( rc.creator ) );
 		}
 
 		// populate it
@@ -143,10 +137,7 @@ component extends="baseHandler" {
 				}
 				prc.oEntity.setCategories(
 					rc.categories.map( function( thisCategory ){
-						return variables.categoryService.getOrCreateBySlug(
-							arguments.thisCategory,
-							rc.site
-						);
+						return variables.categoryService.getOrCreateBySlug( arguments.thisCategory, rc.site );
 					} )
 				);
 			}

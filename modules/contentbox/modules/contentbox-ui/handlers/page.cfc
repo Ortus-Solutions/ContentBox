@@ -148,9 +148,7 @@ component extends="content" {
 		if ( prc.page.isLoaded() ) {
 			// Verify SSL?
 			if ( prc.page.getSSLOnly() and !event.isSSL() ) {
-				log.warn(
-					"Page requested: #incomingURL# without SSL and SSL required. Relocating..."
-				);
+				log.warn( "Page requested: #incomingURL# without SSL and SSL required. Relocating..." );
 				relocate( event = incomingURL, ssl = true );
 				return;
 			}
@@ -185,10 +183,7 @@ component extends="content" {
 			} else {
 				// set skin view
 				event
-					.setLayout(
-						name   = "#prc.cbTheme#/layouts/#thisLayout#",
-						module = prc.cbThemeRecord.module
-					)
+					.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
 					.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			}
 		} else {
@@ -206,10 +201,7 @@ component extends="content" {
 			);
 			// set skin not found
 			event
-				.setLayout(
-					name   = "#prc.cbTheme#/layouts/pages",
-					module = prc.cbThemeRecord.module
-				)
+				.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
 				.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
 				.setHTTPHeader( "404", "Page not found" );
 		}
@@ -233,10 +225,8 @@ component extends="content" {
 
 		// prepare paging object
 		prc.oPaging          = getInstance( "paging@contentbox" );
-		prc.pagingBoundaries = prc.oPaging.getBoundaries(
-			pagingMaxRows: prc.cbSettings.cb_search_maxResults
-		);
-		prc.pagingLink = variables.CBHelper.linkContentSearch() & "/#urlEncodedFormat( rc.q )#/@page@";
+		prc.pagingBoundaries = prc.oPaging.getBoundaries( pagingMaxRows: prc.cbSettings.cb_search_maxResults );
+		prc.pagingLink       = variables.CBHelper.linkContentSearch() & "/#urlEncodedFormat( rc.q )#/@page@";
 
 		// get search results
 		if ( len( rc.q ) ) {

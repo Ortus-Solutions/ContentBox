@@ -92,10 +92,7 @@ component extends="baseHandler" {
 
 		// Search for Authors
 		if ( !len( prc.context ) || listFindNoCase( "author", prc.context ) ) {
-			prc.authors = authorService.search(
-				searchTerm: rc.search,
-				max       : prc.cbSettings.cb_admin_quicksearch_max
-			);
+			prc.authors        = authorService.search( searchTerm: rc.search, max: prc.cbSettings.cb_admin_quicksearch_max );
 			prc.minAuthorCount = (
 				prc.authors.count lt prc.cbSettings.cb_admin_quicksearch_max ? prc.authors.count : prc.cbSettings.cb_admin_quicksearch_max
 			);
@@ -240,9 +237,7 @@ component extends="baseHandler" {
 			// Reset Hits
 			.each( function( thisContent ){
 				variables.contentService.save( arguments.thisContent.getStats().setHits( 0 ) );
-				event
-					.getResponse()
-					.addMessage( "Hits reset for (#arguments.thisContent.getTitle()#)" );
+				event.getResponse().addMessage( "Hits reset for (#arguments.thisContent.getTitle()#)" );
 			} );
 	}
 
@@ -351,9 +346,7 @@ component extends="baseHandler" {
 		}
 		// Future Published Content
 		else {
-			aContent = variables.contentService.findFuturePublishedContent(
-				argumentCollection = args
-			);
+			aContent = variables.contentService.findFuturePublishedContent( argumentCollection = args );
 		}
 
 		// view pager

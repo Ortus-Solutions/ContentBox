@@ -26,9 +26,7 @@ component extends="coldbox.system.RestHandler" {
 	 * @return The max rows to return for pagination
 	 */
 	private numeric function getMaxRows( maxRows ){
-		var results = isNull( arguments.maxRows ) ? variables.settingService.getSetting(
-			"cb_paging_maxrows"
-		) : arguments.maxRows;
+		var results = isNull( arguments.maxRows ) ? variables.settingService.getSetting( "cb_paging_maxrows" ) : arguments.maxRows;
 		return val( results );
 	}
 

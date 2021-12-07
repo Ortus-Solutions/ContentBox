@@ -22,9 +22,7 @@ component {
 		// check to make sure that at least one subscription AND subscriber token are found
 		if ( len( rc.keysToRemove ) && len( rc.subscriberToken ) ) {
 			// try to find subscriber by token
-			var oSubscriber = subscriberService.findWhere(
-				criteria = { "subscriberToken" : rc.subscriberToken }
-			);
+			var oSubscriber = subscriberService.findWhere( criteria = { "subscriberToken" : rc.subscriberToken } );
 			if ( !isNull( oSubscriber ) ) {
 				var targets = listToArray( rc.keysToRemove );
 				// loop over remove targets
@@ -50,9 +48,7 @@ component {
 		event.paramValue( "subscriberToken", "" );
 		if ( len( rc.subscriberToken ) ) {
 			// get subscriber
-			prc.oSubscriber = subscriberService.findWhere(
-				criteria = { "subscriberToken" : rc.subscriberToken }
-			);
+			prc.oSubscriber = subscriberService.findWhere( criteria = { "subscriberToken" : rc.subscriberToken } );
 			if ( !isNull( prc.oSubscriber ) ) {
 				prc.subscriptions = prc.oSubscriber.getSubscriptionsByContentType();
 			} else {

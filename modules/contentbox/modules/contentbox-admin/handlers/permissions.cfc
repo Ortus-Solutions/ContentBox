@@ -58,19 +58,13 @@ component extends="baseHandler" {
 		// UCASE permission
 		rc.permission   = uCase( rc.permission );
 		// populate and get
-		var oPermission = populateModel(
-			model  : permissionService.get( rc.permissionID ),
-			exclude: "permissionID"
-		);
-		var vResults = validate( oPermission );
+		var oPermission = populateModel( model: permissionService.get( rc.permissionID ), exclude: "permissionID" );
+		var vResults    = validate( oPermission );
 
 		// Validation Results
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce(
-				"cbadmin_prePermissionSave",
-				{ permission : oPermission, permissionID : rc.permissionID }
-			);
+			announce( "cbadmin_prePermissionSave", { permission : oPermission, permissionID : rc.permissionID } );
 			// save permission
 			permissionService.save( oPermission );
 			// announce event
@@ -124,9 +118,7 @@ component extends="baseHandler" {
 			return rc.permissionID
 				.listToArray()
 				.map( function( id ){
-					return variables.permissionService
-						.get( arguments.id )
-						.getMemento( profile: "export" );
+					return variables.permissionService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
 			return variables.permissionService.getAllForExport();
@@ -148,9 +140,7 @@ component extends="baseHandler" {
 				cbMessagebox.info( "Permissions imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";

@@ -217,19 +217,14 @@ component extends="baseHandler" {
 
 		// check if id list has length
 		if ( len( rc.contentID ) ) {
-			variables.ormService.bulkPublishStatus(
-				contentID: rc.contentID,
-				status   : rc.contentStatus
-			);
+			variables.ormService.bulkPublishStatus( contentID: rc.contentID, status: rc.contentStatus );
 			// announce event
 			announce(
 				"cbadmin_on#variables.entity#StatusUpdate",
 				{ contentID : rc.contentID, status : rc.contentStatus }
 			);
 			// Message
-			variables.cbMessageBox.info(
-				"#listLen( rc.contentID )# content where set to '#rc.contentStatus#'"
-			);
+			variables.cbMessageBox.info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
 		} else {
 			variables.cbMessageBox.warn( "No content selected!" );
 		}
@@ -287,20 +282,15 @@ component extends="baseHandler" {
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Check if the markup matches the choosen editor
-		if (
-			listFindNoCase( "markdown,json", prc.oContent.getMarkup() ) && prc.defaultEditor != "simplemde"
-		) {
+		if ( listFindNoCase( "markdown,json", prc.oContent.getMarkup() ) && prc.defaultEditor != "simplemde" ) {
 			prc.defaultEditor = "simplemde";
 		}
 		// Get the editor driver object
-		prc.oEditorDriver = variables.editorService.getEditor( prc.defaultEditor );
+		prc.oEditorDriver     = variables.editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
-		prc.markups       = variables.editorService.getRegisteredMarkups();
+		prc.markups           = variables.editorService.getRegisteredMarkups();
 		// Get User's default markup
-		prc.defaultMarkup = prc.oCurrentAuthor.getPreference(
-			"markup",
-			variables.editorService.getDefaultMarkup()
-		);
+		prc.defaultMarkup     = prc.oCurrentAuthor.getPreference( "markup", variables.editorService.getDefaultMarkup() );
 		// get all authors
 		prc.authors           = variables.authorService.getAll( sortOrder = "lastName" );
 		// get related content
@@ -476,10 +466,7 @@ component extends="baseHandler" {
 			// relocate
 			variables.cbMessageBox.info( "Page Saved!" );
 			if ( oContent.hasParent() ) {
-				relocate(
-					event       = arguments.relocateTo,
-					querystring = "parent=#oContent.getParent().getContentID()#"
-				);
+				relocate( event = arguments.relocateTo, querystring = "parent=#oContent.getParent().getContentID()#" );
 			} else {
 				relocate( event = arguments.relocateTo );
 			}
@@ -497,9 +484,7 @@ component extends="baseHandler" {
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
-			variables.cbMessageBox.warn(
-				"Can't clone the unclonable, meaning no contentID or title passed."
-			);
+			variables.cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			relocate( arguments.relocateTo );
 			return;
 		}
@@ -522,9 +507,7 @@ component extends="baseHandler" {
 
 		// attach to the original's parent.
 		if ( original.hasParent() ) {
-			clone
-				.setParent( original.getParent() )
-				.setSlug( original.getSlug() & "/" & clone.getSlug() );
+			clone.setParent( original.getParent() ).setSlug( original.getSlug() & "/" & clone.getSlug() );
 		}
 
 		// prepare descendants for cloning, might take a while if lots of children to copy.
@@ -545,10 +528,7 @@ component extends="baseHandler" {
 
 		// Relocate
 		if ( original.hasParent() ) {
-			relocate(
-				event       = arguments.relocateTo,
-				querystring = "parent=#original.getParent().getContentID()#"
-			);
+			relocate( event = arguments.relocateTo, querystring = "parent=#original.getParent().getContentID()#" );
 		} else {
 			relocate( event = arguments.relocateTo );
 		}
@@ -577,10 +557,7 @@ component extends="baseHandler" {
 		for ( var thisContentID in rc.contentID ) {
 			var oContent = variables.ormService.get( thisContentID );
 			if ( isNull( oContent ) ) {
-				arrayAppend(
-					messages,
-					"Invalid contentID sent: #thisContentID#, so skipped removal"
-				);
+				arrayAppend( messages, "Invalid contentID sent: #thisContentID#, so skipped removal" );
 			} else {
 				// GET id to be sent for announcing later
 				var contentID = oContent.getContentID();
@@ -666,9 +643,7 @@ component extends="baseHandler" {
 	 * @return json
 	 */
 	function export( event, rc, prc ){
-		return variables.ormService
-			.get( event.getValue( "contentID", 0 ) )
-			.getMemento( profile: "export" );
+		return variables.ormService.get( event.getValue( "contentID", 0 ) ).getMemento( profile: "export" );
 	}
 
 	/**
@@ -765,10 +740,8 @@ component extends="baseHandler" {
 		prc.contentPager_id = createUUID();
 
 		// prepare paging object
-		prc.contentPager_oPaging = getInstance( "Paging@contentbox" );
-		prc.contentPager_paging  = prc.contentPager_oPaging.getBoundaries(
-			page: rc.contentPager_page
-		);
+		prc.contentPager_oPaging    = getInstance( "Paging@contentbox" );
+		prc.contentPager_paging     = prc.contentPager_oPaging.getBoundaries( page: rc.contentPager_page );
 		prc.contentPager_pagingLink = "javascript:pagerLink(@page@)";
 		prc.contentPager_pagination = arguments.pagination;
 
@@ -815,10 +788,7 @@ component extends="baseHandler" {
 	 */
 	private function getUserDefaultEditor( required author ){
 		// get user default editor
-		var userEditor = arguments.author.getPreference(
-			"editor",
-			editorService.getDefaultEditor()
-		);
+		var userEditor = arguments.author.getPreference( "editor", editorService.getDefaultEditor() );
 
 		// verify if editor exists
 		if ( editorService.hasEditor( userEditor ) ) {

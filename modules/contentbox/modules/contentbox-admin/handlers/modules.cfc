@@ -48,9 +48,7 @@ component extends="baseHandler" {
 
 		// Check if route is discovered, basically if we get handler => contentbox-ui:page then it was not found
 		if ( routeResults.route.handler == "contentbox-ui:page" ) {
-			cbMessagebox.warn(
-				"No module where found with the incoming route: #encodeForHTML( routedURL )#"
-			);
+			cbMessagebox.warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
 			return relocate( prc.xehModules );
 		}
 

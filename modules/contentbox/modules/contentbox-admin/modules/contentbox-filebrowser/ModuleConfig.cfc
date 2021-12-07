@@ -77,10 +77,7 @@ component {
 		// clean directory root
 		settings.directoryRoot = reReplace( settings.directoryRoot, "\\", "/", "all" );
 		if ( right( settings.directoryRoot, 1 ) EQ "/" ) {
-			settings.directoryRoot = left(
-				settings.directoryRoot,
-				len( settings.directoryRoot ) - 1
-			);
+			settings.directoryRoot = left( settings.directoryRoot, len( settings.directoryRoot ) - 1 );
 		}
 
 		// i18n

@@ -29,18 +29,9 @@ component {
 		}
 
 		// Verify Incoming Headers to see if we are authorizing already or we can view the page already
-		if (
-			!securityService.isContentViewable( content ) OR len(
-				event.getHTTPHeader( "Authorization", "" )
-			)
-		) {
+		if ( !securityService.isContentViewable( content ) OR len( event.getHTTPHeader( "Authorization", "" ) ) ) {
 			// Verify incoming authorization for content
-			if (
-				securityService.authorizeContent(
-					content,
-					event.getHTTPBasicCredentials().password
-				)
-			) {
+			if ( securityService.authorizeContent( content, event.getHTTPBasicCredentials().password ) ) {
 				// we are secured woot woot!
 				return;
 			};

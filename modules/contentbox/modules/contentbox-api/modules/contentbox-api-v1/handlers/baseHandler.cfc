@@ -73,16 +73,11 @@ component extends="cborm.models.resources.BaseHandler" {
 		param rc.id             = 0;
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#pre#variables.entity#Show",
-			{}
-		);
+		announceInterception( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
 
 		// Get by id or slug
 		prc.oEntity = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id, prc
-			)
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
 		// announce it
@@ -135,9 +130,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		// Population arguments
 		arguments.populate.memento = rc;
 		arguments.populate.model   = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id, prc
-			)
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
 		// Validation Arguments
@@ -187,9 +180,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		param rc.id = 0;
 
 		prc.oEntity = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id, prc
-			)
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
 		// announce it
@@ -206,10 +197,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#post#variables.entity#Delete",
-			{ id : rc.id }
-		);
+		announceInterception( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
 
 		// Marshall it out
 		prc.response.addMessage( "#variables.entity# deleted!" );

@@ -30,11 +30,7 @@ component {
 	function preHandler( event, rc, prc, action, eventArguments ){
 		// Maintenance Mode?
 		if ( prc.cbSettings.cb_site_maintenance ) {
-			if (
-				prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.checkPermission(
-					"MAINTENANCE_MODE_VIEWER"
-				)
-			) {
+			if ( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.checkPermission( "MAINTENANCE_MODE_VIEWER" ) ) {
 				addAsset( "#prc.cbRoot#/includes/js/maintenance.js" );
 			} else {
 				event.overrideEvent( "contentbox-ui:page.maintenance" );
@@ -97,10 +93,7 @@ component {
 				var eArgs        = { noCache : true };
 				runEvent( event = "contentbox-ui:page.index", eventArguments = eArgs );
 				// Override the layout
-				event.setLayout(
-					name   = "#prc.cbTheme#/layouts/pages",
-					module = prc.cbThemeRecord.module
-				);
+				event.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module );
 			} else {
 				// Override layout and event so we can display it
 				event.setLayout( "#rc.l#/layouts/blog" ).overrideEvent( "contentbox-ui:blog.index" );
@@ -119,9 +112,7 @@ component {
 	function maintenance( event, rc, prc ){
 		// If no maintenance view exists, just output data
 		if ( !themeService.themeMaintenanceViewExists() ) {
-			event.renderData(
-				data = variables.markdown.toHTML( prc.cbSettings.cb_site_maintenance_message )
-			);
+			event.renderData( data = variables.markdown.toHTML( prc.cbSettings.cb_site_maintenance_message ) );
 		} else {
 			// output maintenance view
 			event
@@ -129,10 +120,7 @@ component {
 					name   = "#prc.cbTheme#/layouts/#themeService.getThemeMaintenanceLayout()#",
 					module = prc.cbThemeRecord.module
 				)
-				.setView(
-					view   = "#prc.cbTheme#/views/maintenance",
-					module = prc.cbThemeRecord.module
-				);
+				.setView( view = "#prc.cbTheme#/views/maintenance", module = prc.cbThemeRecord.module );
 		}
 	}
 
@@ -212,9 +200,7 @@ component {
 			}
 
 			// Incorporate internal hash + rc distinct hash + formats
-			cacheKey &= hash(
-				".#getFWLocale()#.#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash
-			);
+			cacheKey &= hash( ".#getFWLocale()#.#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash );
 
 			// get content data from cache
 			prc.contentCacheData = cache.get( cacheKey );
@@ -314,18 +300,14 @@ component {
 		);
 
 		// verify if caching is possible by testing the content parameters
-		if (
-			cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.isContentPublished()
-		) {
+		if ( cacheEnabled AND oContent.isLoaded() AND oContent.getCacheLayout() AND oContent.isContentPublished() ) {
 			// store content ID as we have it by now
 			data.contentID = oContent.getContentID();
 			// Cache data
 			cache.set(
 				cachekey,
 				data,
-				(
-					oContent.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : oContent.getCacheTimeout()
-				),
+				( oContent.getCacheTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeout : oContent.getCacheTimeout() ),
 				(
 					oContent.getCacheLastAccessTimeout() eq 0 ? prc.cbSettings.cb_content_cachingTimeoutIdle : oContent.getCacheLastAccessTimeout()
 				)
@@ -454,10 +436,7 @@ component {
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it
-		var results = commentService.saveComment(
-			comment      = comment,
-			loggedInUser = prc.oCurrentAuthor
-		);
+		var results = commentService.saveComment( comment = comment, loggedInUser = prc.oCurrentAuthor );
 
 		// announce event
 		announce(

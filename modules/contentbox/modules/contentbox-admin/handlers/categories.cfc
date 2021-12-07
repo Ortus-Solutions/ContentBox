@@ -86,19 +86,15 @@ component extends="baseHandler" {
 		}
 
 		// Pop/Get/Set
-		var oCategory = populateModel(
-			model  : variables.categoryService.get( rc.categoryID ),
-			exclude: "categoryID"
-		).setSite( prc.oCurrentSite );
+		var oCategory = populateModel( model: variables.categoryService.get( rc.categoryID ), exclude: "categoryID" ).setSite(
+			prc.oCurrentSite
+		);
 
 		// Validation Results
 		var vResults = validate( oCategory );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce(
-				"cbadmin_preCategorySave",
-				{ category : oCategory, categoryID : rc.categoryID }
-			);
+			announce( "cbadmin_preCategorySave", { category : oCategory, categoryID : rc.categoryID } );
 			// save category
 			variables.categoryService.save( oCategory );
 			// announce event
@@ -145,10 +141,7 @@ component extends="baseHandler" {
 				var categoryID = category.getCategoryID();
 				var title      = category.getSlug();
 				// announce event
-				announce(
-					"cbadmin_preCategoryRemove",
-					{ category : category, categoryID : categoryID }
-				);
+				announce( "cbadmin_preCategoryRemove", { category : category, categoryID : categoryID } );
 				// Delete category via service
 				variables.categoryService.delete( category );
 				arrayAppend( messages, "Category '#title#' removed" );
@@ -178,9 +171,7 @@ component extends="baseHandler" {
 			return rc.categoryID
 				.listToArray()
 				.map( function( id ){
-					return variables.categoryService
-						.get( arguments.id )
-						.getMemento( profile: "export" );
+					return variables.categoryService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
 			return variables.categoryService.getAllForExport( prc.oCurrentSite );
@@ -202,9 +193,7 @@ component extends="baseHandler" {
 				cbMessagebox.info( "Categories imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";

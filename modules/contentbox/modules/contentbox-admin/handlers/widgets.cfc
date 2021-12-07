@@ -76,10 +76,7 @@ component extends="baseHandler" {
 			event.renderData( data = invoke( widget, rc.widgetudf, rc ), type = "html" );
 		} catch ( any e ) {
 			log.error( "Error rendering widget: #e.message# #e.detail#", e );
-			event.renderData(
-				data = "Error rendering widget: #e.message# #e.detail# #e.stacktrace#",
-				type = "html"
-			);
+			event.renderData( data = "Error rendering widget: #e.message# #e.detail# #e.stacktrace#", type = "html" );
 		}
 	}
 

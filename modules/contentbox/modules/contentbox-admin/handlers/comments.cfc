@@ -108,10 +108,7 @@ component extends="baseHandler" {
 		if ( len( rc.commentID ) ) {
 			commentService.bulkStatus( commentID = rc.commentID, status = rc.commentStatus );
 			// announce event
-			announce(
-				"cbadmin_onCommentStatusUpdate",
-				{ commentID : rc.commentID, status : rc.commentStatus }
-			);
+			announce( "cbadmin_onCommentStatusUpdate", { commentID : rc.commentID, status : rc.commentStatus } );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
 			cbMessagebox.info( data.messages );
@@ -193,10 +190,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get comment
-		var oComment = populateModel(
-			model  : commentService.get( id = rc.commentID ),
-			exclude: "commentID"
-		);
+		var oComment = populateModel( model: commentService.get( id = rc.commentID ), exclude: "commentID" );
 		// announce event
 		announce( "cbadmin_preCommentSave", { comment : oComment, commentID : rc.commentID } );
 		// save comment
@@ -261,16 +255,10 @@ component extends="baseHandler" {
 				var oComment = commentService.get( thisCommentID );
 				// null checks
 				if ( isNull( oComment ) ) {
-					arrayAppend(
-						data.messages,
-						"Invalid commentID sent: #thisCommentID#, so skipped removal"
-					);
+					arrayAppend( data.messages, "Invalid commentID sent: #thisCommentID#, so skipped removal" );
 				} else {
 					// announce event
-					announce(
-						"cbadmin_preCommentRemove",
-						{ comment : oComment, commentID : thisCommentID }
-					);
+					announce( "cbadmin_preCommentRemove", { comment : oComment, commentID : thisCommentID } );
 					// remove
 					commentService.delete( oComment );
 					arrayAppend( data.messages, "Comment #thisCommentID# removed" );
@@ -382,10 +370,7 @@ component extends="baseHandler" {
 	 */
 	function saveSettings( event, rc, prc ){
 		// announce event
-		announce(
-			"cbadmin_preCommentSettingsSave",
-			{ oldSettings : prc.cbSettings, newSettings : rc }
-		);
+		announce( "cbadmin_preCommentSettingsSave", { oldSettings : prc.cbSettings, newSettings : rc } );
 		// bulk save the options
 		settingsService.bulkSave(
 			rc.filter( function( key ){

@@ -31,9 +31,7 @@ component extends="baseHandler" {
 		prc.xehDoLogin      = "#prc.cbAdminEntryPoint#.security.doLogin";
 		prc.xehLostPassword = "#prc.cbAdminEntryPoint#.security.lostPassword";
 		// remember me
-		prc.rememberMe      = variables.antiSamy.htmlSanitizer(
-			variables.securityService.getRememberMe()
-		);
+		prc.rememberMe      = variables.antiSamy.htmlSanitizer( variables.securityService.getRememberMe() );
 		// secured URL from security interceptor
 		arguments.event.paramValue( "_securedURL", "" );
 		rc._securedURL = variables.antiSamy.htmlSanitizer( rc._securedURL );
@@ -81,10 +79,7 @@ component extends="baseHandler" {
 			if ( prc.oAuthor.getIsPasswordReset() ) {
 				var token = variables.securityService.generateResetToken( prc.oAuthor );
 				variables.messagebox.info( cb.r( "messages.password_reset_detected@security" ) );
-				return relocate(
-					event       = "#prc.cbAdminEntryPoint#.security.verifyReset",
-					queryString = "token=#token#"
-				);
+				return relocate( event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString = "token=#token#" );
 			}
 
 			// If Global MFA is turned on and the user is not enrolled to a provider, then force it to enroll
@@ -123,10 +118,7 @@ component extends="baseHandler" {
 			}
 
 			// Set keep me log in remember cookie, if set.
-			variables.securityService.setRememberMe(
-				username: rc.username,
-				days    : val( rc.rememberMe )
-			);
+			variables.securityService.setRememberMe( username: rc.username, days: val( rc.rememberMe ) );
 			// Set in session, validations are now complete
 			variables.securityService.login( prc.oAuthor );
 
@@ -207,9 +199,7 @@ component extends="baseHandler" {
 			oAuthor = authorService.findWhere( { email : rc.email, isActive : 1 } );
 			if ( isNull( oAuthor ) OR NOT oAuthor.isLoaded() ) {
 				// Don't give away that the email did not exist.
-				messagebox.info(
-					cb.r( resource = "messages.lostpassword_check@security", values = "5" )
-				);
+				messagebox.info( cb.r( resource = "messages.lostpassword_check@security", values = "5" ) );
 				return relocate( "#prc.cbAdminEntryPoint#.security.lostPassword" );
 			}
 		}
@@ -276,30 +266,21 @@ component extends="baseHandler" {
 		if ( !csrfVerify( rc._csrftoken ) ) {
 			messagebox.warning( cb.r( "messages.invalid_token@security" ) );
 
-			return relocate(
-				event       = "#prc.cbAdminEntryPoint#.security.verifyReset",
-				queryString = "token=#rc.token#"
-			);
+			return relocate( event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString = "token=#rc.token#" );
 		}
 
 		// Validate passwords
 		if ( !len( rc.password ) || !len( rc.password_confirmation ) ) {
 			// Exception
 			messagebox.error( cb.r( "messages.invalid_password@security" ) );
-			relocate(
-				event       = "#prc.cbAdminEntryPoint#.security.verifyReset",
-				queryString = "token=#rc.token#"
-			);
+			relocate( event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString = "token=#rc.token#" );
 			return;
 		}
 
 		// Validate confirmed password
 		if ( compare( rc.password, rc.password_confirmation ) neq 0 ) {
 			messagebox.error( cb.r( "messages.password_mismatch@security" ) );
-			relocate(
-				event       = "#prc.cbAdminEntryPoint#.security.verifyReset",
-				queryString = "token=#rc.token#"
-			);
+			relocate( event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString = "token=#rc.token#" );
 			return;
 		}
 
@@ -320,10 +301,7 @@ component extends="baseHandler" {
 			announce( "cbadmin_onInvalidPasswordReset", { token : rc.token } );
 			// Exception
 			messagebox.error( cb.r( "messages.password_used@security" ) );
-			relocate(
-				event       = "#prc.cbAdminEntryPoint#.security.verifyReset",
-				queryString = "token=#rc.token#"
-			);
+			relocate( event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString = "token=#rc.token#" );
 			return;
 		}
 

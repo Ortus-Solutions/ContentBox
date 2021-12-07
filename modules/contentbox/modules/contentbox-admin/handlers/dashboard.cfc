@@ -178,10 +178,7 @@ component extends="baseHandler" {
 			max        : prc.cbSettings.cb_dashboard_recentComments,
 			pagination : false
 		};
-		prc.commentsViewlet = runEvent(
-			event          = "contentbox-admin:comments.pager",
-			eventArguments = eArgs
-		);
+		prc.commentsViewlet = runEvent( event = "contentbox-admin:comments.pager", eventArguments = eArgs );
 		event.setView( view = "dashboard/latestComments", layout = "ajax" );
 	}
 
@@ -214,9 +211,7 @@ component extends="baseHandler" {
 	 * @return html
 	 */
 	function latestLogins( event, rc, prc ){
-		prc.lastLogins = loginTrackerService.getLastLogins(
-			max = prc.cbsettings.cb_security_blocktime
-		);
+		prc.lastLogins = loginTrackerService.getLastLogins( max = prc.cbsettings.cb_security_blocktime );
 		event.setView( view = "dashboard/latestLogins", layout = "ajax" );
 	}
 
@@ -297,9 +292,7 @@ component extends="baseHandler" {
 				event.renderData( type = "json", data = data );
 			} else {
 				// MessageBox
-				cbMessagebox.error(
-					"Error running admin reload module action: #e.message# #e.detail#"
-				);
+				cbMessagebox.error( "Error running admin reload module action: #e.message# #e.detail#" );
 				// relocate back to dashboard
 				relocate( prc.xehDashboard );
 			}

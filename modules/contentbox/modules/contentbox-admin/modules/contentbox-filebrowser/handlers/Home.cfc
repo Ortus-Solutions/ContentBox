@@ -190,12 +190,7 @@ component extends="cbadmin.handlers.baseHandler" {
 	 */
 	private boolean function isTraversalSecure( required prc, required targetPath ){
 		// Do some cleanup just in case in the incoming root.
-		if (
-			prc.fbSettings.traversalSecurity AND NOT findNoCase(
-				prc.fbSettings.directoryRoot,
-				arguments.targetPath
-			)
-		) {
+		if ( prc.fbSettings.traversalSecurity AND NOT findNoCase( prc.fbSettings.directoryRoot, arguments.targetPath ) ) {
 			return false;
 		}
 		return true;
@@ -244,19 +239,13 @@ component extends="cbadmin.handlers.baseHandler" {
 			announce( "fb_preFolderCreation", iData );
 			directoryCreate( rc.path & "/" & rc.dName );
 			data.errors   = false;
-			data.messages = $r(
-				resource = "messages.folder_created@fb",
-				values   = "#rc.path#/#rc.dName#"
-			);
+			data.messages = $r( resource = "messages.folder_created@fb", values = "#rc.path#/#rc.dName#" );
 
 			// Announce it
 			announce( "fb_postFolderCreation", iData );
 		} catch ( Any e ) {
 			data.errors   = true;
-			data.messages = $r(
-				resource = "messages.error_creating_folder@fb",
-				values   = "#e.message# #e.detail#"
-			);
+			data.messages = $r( resource = "messages.error_creating_folder@fb", values = "#e.message# #e.detail#" );
 			log.error( data.messages, e );
 		}
 		// render stuff out
@@ -315,10 +304,7 @@ component extends="cbadmin.handlers.baseHandler" {
 				announce( "fb_postFileRemoval", iData );
 			} catch ( Any e ) {
 				data.errors   = true;
-				data.messages = $r(
-					resource = "messages.error_removing@fb",
-					values   = "#e.message# #e.detail#"
-				);
+				data.messages = $r( resource = "messages.error_removing@fb", values = "#e.message# #e.detail#" );
 				log.error( data.messages, e );
 			}
 		}
@@ -349,8 +335,7 @@ component extends="cbadmin.handlers.baseHandler" {
 			return;
 		}
 		rc.pathsArray = listToArray( rc.path, "||" );
-		if ( fileExists( "#getTempDirectory()#\download.zip" ) )
-			fileDelete( "#getTempDirectory()#\download.zip" );
+		if ( fileExists( "#getTempDirectory()#\download.zip" ) ) fileDelete( "#getTempDirectory()#\download.zip" );
 		if ( arrayLen( rc.pathsArray ) > 1 ) {
 			cfzip( action = "zip", file = "#getTempDirectory()#\download.zip" ) {
 				for ( var thisFile in rc.pathsArray ) {
@@ -390,10 +375,7 @@ component extends="cbadmin.handlers.baseHandler" {
 			announce( "fb_postFileDownload", iData );
 		} catch ( Any e ) {
 			data.errors   = true;
-			data.messages = $r(
-				resource = "messages.error_downloading@fb",
-				values   = "#e.message# #e.detail#"
-			);
+			data.messages = $r( resource = "messages.error_downloading@fb", values = "#e.message# #e.detail#" );
 			log.error( data.messages, e );
 			// render stuff out
 			event.renderData( data = data, type = "json" );
@@ -444,10 +426,7 @@ component extends="cbadmin.handlers.baseHandler" {
 			announce( "fb_postFileRename", iData );
 		} catch ( Any e ) {
 			data.errors   = true;
-			data.messages = $r(
-				resource = "messages.error_renaming@fb",
-				values   = "#e.message# #e.detail#"
-			);
+			data.messages = $r( resource = "messages.error_renaming@fb", values = "#e.message# #e.detail#" );
 			log.error( data.messages, e );
 		}
 		// render stuff out
@@ -506,10 +485,7 @@ component extends="cbadmin.handlers.baseHandler" {
 			announce( "fb_postFileUpload", iData );
 		} catch ( Any e ) {
 			data.errors   = true;
-			data.messages = $r(
-				resource = "messages.error_uploading@fb",
-				values   = "#e.message# #e.detail#"
-			);
+			data.messages = $r( resource = "messages.error_uploading@fb", values = "#e.message# #e.detail#" );
 			if ( getSetting( "environment" ) == "development" ) {
 				data.messages &= "Stack: #e.stacktrace#";
 			}
@@ -670,11 +646,7 @@ component extends="cbadmin.handlers.baseHandler" {
 	 */
 	private function inflateFlashParams( event, rc, prc ){
 		// Check if callbacks stored in flash.
-		if (
-			structKeyExists( flash.get( "fileBrowser", {} ), "callback" ) and len(
-				flash.get( "fileBrowser" ).callback
-			)
-		) {
+		if ( structKeyExists( flash.get( "fileBrowser", {} ), "callback" ) and len( flash.get( "fileBrowser" ).callback ) ) {
 			rc.callback = flash.get( "fileBrowser" ).callback;
 		}
 		// cancel callback

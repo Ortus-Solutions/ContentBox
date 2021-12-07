@@ -195,9 +195,7 @@ component extends="baseHandler" {
 			return rc.settingID
 				.listToArray()
 				.map( function( id ){
-					return variables.settingsService
-						.get( arguments.id )
-						.getMemento( profile: "export" );
+					return variables.settingsService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
 			return variables.settingsService.getAllForExport();
@@ -306,10 +304,7 @@ component extends="baseHandler" {
 	 */
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		variables.cbMessagebox.setMessage(
-			"info",
-			"All singletons flushed and awaiting re-creation."
-		);
+		variables.cbMessagebox.setMessage( "info", "All singletons flushed and awaiting re-creation." );
 		relocate( event = prc.xehRawSettings, queryString = "##wirebox" );
 	}
 
@@ -337,10 +332,7 @@ component extends="baseHandler" {
 
 		// Check if the feature is enabled
 		if ( prc.featureEnabled ) {
-			prc.logs = variables.loginTrackerService.getAll(
-				sortOrder = "attempts",
-				asQuery   = false
-			);
+			prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
 		} else {
 			prc.featureEnabled = false;
 		}

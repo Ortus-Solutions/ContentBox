@@ -127,12 +127,9 @@ component extends="baseHandler" {
 			prc.oRole = variables.roleService.get( rc.roleId );
 		}
 		// Load permissions
-		prc.aPermissions = variables.permissionService.list(
-			sortOrder = "permission",
-			asQuery   = false
-		);
+		prc.aPermissions = variables.permissionService.list( sortOrder = "permission", asQuery = false );
 		// Exit handlers
-		prc.xehRoleSave = "#prc.cbAdminEntryPoint#.roles.save";
+		prc.xehRoleSave  = "#prc.cbAdminEntryPoint#.roles.save";
 		// View
 		event.setView( "roles/editor" );
 	}
@@ -145,9 +142,7 @@ component extends="baseHandler" {
 	 * @prc
 	 */
 	function export( event, rc, prc ){
-		return variables.roleService
-			.get( event.getValue( "roleID", 0 ) )
-			.getMemento( includes = "permissions" );
+		return variables.roleService.get( event.getValue( "roleID", 0 ) ).getMemento( includes = "permissions" );
 	}
 
 	/**
@@ -183,10 +178,7 @@ component extends="baseHandler" {
 		event.paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = roleService.importFromFile(
-					importFile = rc.importFile,
-					override   = rc.overrideContent
-				);
+				var importLog = roleService.importFromFile( importFile = rc.importFile, override = rc.overrideContent );
 				cbMessagebox.info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {

@@ -18,10 +18,7 @@ component extends="coldbox.system.Interceptor" {
 	 * Configure CB Request
 	 */
 	function configure(){
-		variables.childModulesRegex = arrayToList(
-			getModuleConfig( "contentbox-admin" ).childModules,
-			"|"
-		);
+		variables.childModulesRegex = arrayToList( getModuleConfig( "contentbox-admin" ).childModules, "|" );
 	}
 
 	/**
@@ -29,12 +26,7 @@ component extends="coldbox.system.Interceptor" {
 	 */
 	function preProcess( event, data, rc, prc ){
 		// Only execute for admin or child modules
-		if (
-			!reFindNoCase(
-				"^(contentbox-admin|#variables.childModulesRegex#)",
-				event.getCurrentEvent()
-			)
-		) {
+		if ( !reFindNoCase( "^(contentbox-admin|#variables.childModulesRegex#)", event.getCurrentEvent() ) ) {
 			return;
 		}
 
@@ -60,16 +52,14 @@ component extends="coldbox.system.Interceptor" {
 			prc.cbEntryPoint = "";
 		}
 		// Place user in prc
-		prc.oCurrentAuthor = variables.securityService.getAuthorSession();
+		prc.oCurrentAuthor   = variables.securityService.getAuthorSession();
 		// Place all sites in prc for usage by the UI switcher
-		prc.allSites       = variables.siteService.getAllFlat( isActive: true );
+		prc.allSites         = variables.siteService.getAllFlat( isActive: true );
 		// Get the current working site object on PRC
-		prc.oCurrentSite   = variables.siteService.getCurrentWorkingSite();
+		prc.oCurrentSite     = variables.siteService.getCurrentWorkingSite();
 		// Place global cb options on scope
-		prc.cbSettings     = variables.settingService.getAllSettings();
-		prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
-			prc.oCurrentSite.getSlug()
-		);
+		prc.cbSettings       = variables.settingService.getAllSettings();
+		prc.cbSiteSettings   = variables.settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
 		// Place widgets root location
 		prc.cbWidgetRoot     = getContextRoot() & event.getModuleRoot( "contentbox" ) & "/widgets";
 		// store admin menu service
@@ -99,10 +89,7 @@ component extends="coldbox.system.Interceptor" {
 			getInstance( "messagebox@cbMessagebox" ).info(
 				prc.CBHelper.r( "messages.password_reset_detected@security" )
 			);
-			relocate(
-				event       = "#prc.cbAdminEntryPoint#.security.verifyReset",
-				queryString = "token=#token#"
-			);
+			relocate( event = "#prc.cbAdminEntryPoint#.security.verifyReset", queryString = "token=#token#" );
 			return;
 		}
 

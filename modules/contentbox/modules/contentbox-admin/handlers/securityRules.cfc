@@ -103,14 +103,11 @@ component extends="baseHandler" {
 			prc.rule = ruleService.get( event.getValue( "ruleID", 0 ) );
 		}
 		// Load permissions
-		prc.aPermissions = variables.permissionService.list(
-			sortOrder = "permission",
-			asQuery   = false
-		);
+		prc.aPermissions = variables.permissionService.list( sortOrder = "permission", asQuery = false );
 		// Load roles
-		prc.aRoles      = variables.roleService.list( sortOrder = "role", asQuery = false );
+		prc.aRoles       = variables.roleService.list( sortOrder = "role", asQuery = false );
 		// exit handlers
-		prc.xehRuleSave = "#prc.cbAdminEntryPoint#.securityRules.save";
+		prc.xehRuleSave  = "#prc.cbAdminEntryPoint#.securityRules.save";
 		// view
 		event.setView( "securityRules/editor" );
 	}
@@ -180,16 +177,11 @@ component extends="baseHandler" {
 		event.paramValue( "overrideContent", false );
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
-				var importLog = ruleService.importFromFile(
-					importFile = rc.importFile,
-					override   = rc.overrideContent
-				);
+				var importLog = ruleService.importFromFile( importFile = rc.importFile, override = rc.overrideContent );
 				cbMessagebox.info( "Rules imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";

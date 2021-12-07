@@ -70,10 +70,7 @@ component extends="baseHandler" {
 		prc.versionsPager_content = contentService.get( arguments.contentID );
 
 		// Get the latest versions
-		var results = contentVersionService.findRelatedVersions(
-			contentID = arguments.contentID,
-			max       = arguments.max
-		);
+		var results                = contentVersionService.findRelatedVersions( contentID = arguments.contentID, max = arguments.max );
 		prc.versionsPager_count    = results.count;
 		prc.versionsPager_versions = results.versions;
 
