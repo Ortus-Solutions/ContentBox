@@ -11,26 +11,32 @@ component accessors="true" {
 		name="results"
 		type="any"
 		hint="The search results in query or array or whatever format";
+
 	property
 		name="total"
 		type="numeric"
 		hint="The total number of records found";
+
 	property
 		name="searchTime"
 		type="numeric"
 		hint="The amount of time it took for the search in milliseconds";
+
 	property
 		name="searchTerm"
 		type="string"
 		hint="The search term used";
+
 	property
 		name="error"
 		type="boolean"
 		hint="Mark if the search results produce an error or not";
+
 	property
 		name="errorMessages"
 		type="array"
 		hint="An array of error messagse if any";
+
 	property
 		name="metadata"
 		type="struct"
