@@ -105,7 +105,7 @@ component accessors="true" singleton {
 
 			// Render out the results or error if the results had errors
 			if( arguments.searchResults.getError() ){
-				writeOutput("
+				writeOutput( "
 					<div class='searchResults'>
 						<h2>Error Running Search</h2>
 						<p>
@@ -115,14 +115,14 @@ component accessors="true" singleton {
 							)#
 						</p>
 					</div>
-				")
+				" );
 			} else {
-				writeOutput(
-				"<div class=""searchResults"">
+				writeOutput( "
+				<div class=""searchResults"">
 					<div class=""well well-sm searchResultsCount"">
 						Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
 				</div>
-				");
+				" );
 			}
 
 			// Render out the items
