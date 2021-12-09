@@ -7,14 +7,30 @@
  */
 component accessors="true" singleton {
 
-	// DI
+	/**
+	 * --------------------------------------------------------------------------
+	 * DI
+	 * --------------------------------------------------------------------------
+	 */
 	property name="log" inject="logbox:logger:{this}";
 	property name="settingService" inject="settingservice@contentbox";
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Properties
+	 * --------------------------------------------------------------------------
+	 */
 
 	/**
 	 * ContentBox Providers Map
 	 */
 	property name="providers" type="struct";
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Static
+	 * --------------------------------------------------------------------------
+	 */
 
 	// Static default media root, just in case it is not loaded.
 	variables.DEFAULT_MEDIA_ROOT = "/contentbox-custom/_content";
@@ -40,7 +56,7 @@ component accessors="true" singleton {
 	}
 
 	/**
-	 * Get the default system media provider name
+	 * Get the default system media provider name as a string
 	 */
 	function getDefaultProviderName(){
 		return variables.settingService.getSetting( "cb_media_provider" );
@@ -48,6 +64,8 @@ component accessors="true" singleton {
 
 	/**
 	 * Get the default system media provider object
+	 *
+	 * @return contentbox.models.media.IMediaProvider
 	 */
 	function getDefaultProvider(){
 		return getProvider( getDefaultProviderName() );
@@ -57,6 +75,8 @@ component accessors="true" singleton {
 	 * Get a named provider object
 	 *
 	 * @name The provider to get,that must be registered
+	 *
+	 * @return contentbox.models.media.IMediaProvider
 	 */
 	function getProvider( required name ){
 		return variables.providers[ arguments.name ];
@@ -67,9 +87,7 @@ component accessors="true" singleton {
 	 *
 	 * @provider The provider object to register
 	 */
-	MediaService function registerProvider(
-		required contentbox.models.media.IMediaProvider provider
-	){
+	MediaService function registerProvider( required contentbox.models.media.IMediaProvider provider ){
 		variables.providers[ arguments.provider.getName() ] = arguments.provider;
 		return this;
 	}
@@ -93,23 +111,17 @@ component accessors="true" singleton {
 
 	/**
 	 * Get an array of registered provider names in alphabetical order with their display names
+	 *
+	 * @return array of structs { name, displayName, description }
 	 */
 	array function getRegisteredProvidersMap(){
-		var aProviders = getRegisteredProviders();
-		var result     = [];
-
-		for ( var thisProvider in aProviders ) {
-			arrayAppend(
-				result,
-				{
-					name        : thisProvider,
-					displayName : variables.providers[ thisProvider ].getDisplayName(),
-					description : variables.providers[ thisProvider ].getDescription()
-				}
-			);
-		}
-
-		return result;
+		return getRegisteredProviders().map( function( thisProvider ){
+			return {
+				name        : arguments.thisProvider,
+				displayName : variables.providers[ arguments.thisProvider ].getDisplayName(),
+				description : variables.providers[ arguments.thisProvider ].getDescription()
+			};
+		} );
 	}
 
 	/**
@@ -118,10 +130,7 @@ component accessors="true" singleton {
 	 * @absolute Return the absolute path or relative, if absolute then it expands the path.
 	 */
 	function getCoreMediaRoot( required boolean absolute = false ){
-		var mRoot = variables.settingService.getSetting(
-			"cb_media_directoryRoot",
-			variables.DEFAULT_MEDIA_ROOT
-		);
+		var mRoot = variables.settingService.getSetting( "cb_media_directoryRoot", variables.DEFAULT_MEDIA_ROOT );
 		return ( arguments.absolute ? expandPath( mRoot ) : mRoot );
 	}
 
