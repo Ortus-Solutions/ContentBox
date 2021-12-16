@@ -1208,6 +1208,7 @@ component
 		return (
 			isContentPublished() AND
 			!isNull( variables.expireDate ) AND
+			len( variables.expireDate ) AND // In case of some odd empty string cases
 			dateCompare( variables.expireDate, now() ) lte 0
 		) ? true : false;
 	}
@@ -1362,66 +1363,63 @@ component
 	}
 
 	/**
-	 * Get's the published date of the content object in UI format.
-	 * If no publish date is found, we use now()
+	 * This method retrieves the time of the publishing for the content object in UTC timezone.
+	 * The format expected back is {hour}:{minute}. If the publish date is null an empty string is returned.
 	 *
-	 * @showTime Show time on return string or not
+	 * @return The published date time as {hour}:{minute}.
 	 */
-	string function getPublishedDateForEditor( boolean showTime = false ){
-		var pDate = getPublishedDate();
-		if ( isNull( pDate ) ) {
-			pDate = now();
-		}
-
-		// get formatted date
-		var fDate = dateFormat( pDate, this.DATE_FORMAT );
-		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
-		}
-
-		return fDate;
-	}
-
-	/**
-	 * Get the expire date for the content object in UI format
-	 * If no expire date is found, we return an empty string
-	 *
-	 * @showTime Show time on return string or not
-	 */
-	string function getExpireDateForEditor( boolean showTime = false ){
-		var pDate = getExpireDate();
-		if ( isNull( pDate ) ) {
-			pDate = "";
-		}
-
-		// get formatted date
-		var fDate = dateFormat( pDate, this.DATE_FORMAT );
-		if ( arguments.showTime ) {
-			fDate &= " " & timeFormat( pDate, this.TIME_FORMAT );
-		}
-
-		return fDate;
-	}
-
-	/**
-	 * Get display publishedDate
-	 */
-	string function getDisplayPublishedDate(){
-		var publishedDate = getPublishedDate();
-		if ( isNull( publishedDate ) ) {
+	string function getPublishedDateTime(){
+		if ( isNull( variables.publishedDate ) || !len( variables.publishedDate ) ) {
 			return "";
 		}
-		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat( publishedDate, this.TIME_FORMAT );
+		return hour( variables.publishedDate ) & ":" & minute( variables.publishedDate );
 	}
 
 	/**
-	 * Get formatted expireDate
+	 * This method retrieves the time of the expiration for the content object in UTC timezone.
+	 * The format expected back is {hour}:{minute}. If the expire date is null an empty string is returned.
+	 *
+	 * @return The expire date time as {hour}:{minute}.
 	 */
-	string function getDisplayExpireDate(){
-		if ( isNull( expireDate ) ) {
-			return "N/A";
+	string function getExpireDateTime(){
+		if ( isNull( variables.expireDate ) || !len( variables.expireDate ) ) {
+			return "";
 		}
-		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat( expireDate, this.TIME_FORMAT );
+		return hour( variables.expireDate ) & ":" & minute( variables.expireDate );
+	}
+
+	/**
+	 * Get the published date using the default date format and time format
+	 * If the publish date is null or empty an empty string is returned.
+	 *
+	 * @dateFormat The date format to use, defaulted by ContentBox to mmm dd, yyyy
+	 * @timeFormat The time format to use, defaulted by ContentBox to HH:mm:ss z
+	 */
+	string function getDisplayPublishedDate( dateFormat = this.DATE_FORMAT, timeFormat = this.TIME_FORMAT ){
+		if ( isNull( variables.publishedDate ) || !len( variables.publishedDate ) ) {
+			return "";
+		}
+		return dateFormat( variables.publishedDate, arguments.dateFormat ) & " " & timeFormat(
+			variables.publishedDate,
+			arguments.timeFormat
+		);
+	}
+
+	/**
+	 * Get the expire date using the default date format and time format
+	 * If the expire date is null or empty an empty string is returned.
+	 *
+	 * @dateFormat The date format to use, defaulted by ContentBox to mmm dd, yyyy
+	 * @timeFormat The time format to use, defaulted by ContentBox to HH:mm:ss z
+	 */
+	string function getDisplayExpireDate( dateFormat = this.DATE_FORMAT, timeFormat = this.TIME_FORMAT ){
+		if ( isNull( variables.expireDate ) || !len( variables.expireDate ) ) {
+			return "";
+		}
+		return dateFormat( variables.expireDate, arguments.dateFormat ) & " " & timeFormat(
+			variables.expireDate,
+			arguments.timeFormat
+		);
 	}
 
 	/**

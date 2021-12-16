@@ -68,10 +68,7 @@ component {
 		if ( isNull( this.memento.baseIncluded ) ) {
 			// Incorporate default includes for the base class.
 			if ( !isNull( this.memento.defaultIncludes ) ) {
-				this.memento.defaultIncludes.append(
-					[ this.pk, "createdDate", "modifiedDate" ],
-					true
-				);
+				this.memento.defaultIncludes.append( [ this.pk, "createdDate", "modifiedDate" ], true );
 			}
 			// Incorporate default excludes for the base class.
 			if ( !isNull( this.memento.defaultExcludes ) ) {
@@ -89,9 +86,7 @@ component {
 	function getEntityName(){
 		if ( isNull( variables.entityName ) ) {
 			var md               = getMetadata( this );
-			variables.entityName = (
-				md.keyExists( "entityName" ) ? md.entityName : listLast( md.name, "." )
-			);
+			variables.entityName = ( md.keyExists( "entityName" ) ? md.entityName : listLast( md.name, "." ) );
 		}
 
 		return variables.entityName;
@@ -101,7 +96,7 @@ component {
 	 * Append an incoming array of properties to a memento list target
 	 *
 	 * @collection The array to append
-	 * @target The target to append to: defaultIncludes, defaultExcludes, neverInclude, defaults, etc.
+	 * @target     The target to append to: defaultIncludes, defaultExcludes, neverInclude, defaults, etc.
 	 */
 	function appendToMemento( required collection, target = "defaultIncludes" ){
 		var filtered = arguments.collection.filter( function( item ){
@@ -142,12 +137,12 @@ component {
 	}
 
 	/**
-	 * Get formatted createdDate
+	 * Get the created date in the default or specific date/time format
+	 *
+	 * @dateFormat The date format to use, defaulted by ContentBox to mmm dd, yyyy
+	 * @timeFormat The time format to use, defaulted by ContentBox to HH:mm:ss z
 	 */
-	string function getDisplayCreatedDate(
-		dateFormat = this.DATE_FORMAT,
-		timeFormat = this.TIME_FORMAT
-	){
+	string function getDisplayCreatedDate( dateFormat = this.DATE_FORMAT, timeFormat = this.TIME_FORMAT ){
 		if ( isNull( variables.createdDate ) ) {
 			return "";
 		}
@@ -158,12 +153,12 @@ component {
 	}
 
 	/**
-	 * Get formatted modified date
+	 * Get the modified date in the default or specific date/time format
+	 *
+	 * @dateFormat The date format to use, defaulted by ContentBox to mmm dd, yyyy
+	 * @timeFormat The time format to use, defaulted by ContentBox to HH:mm:ss z
 	 */
-	string function getDisplayModifiedDate(
-		dateFormat = this.DATE_FORMAT,
-		timeFormat = this.TIME_FORMAT
-	){
+	string function getDisplayModifiedDate( dateFormat = this.DATE_FORMAT, timeFormat = this.TIME_FORMAT ){
 		if ( isNull( variables.modifiedDate ) ) {
 			return "";
 		}

@@ -49,15 +49,6 @@
 					</div>
 				</div>
 
-				<cfscript>
-					theTime     = "";
-					hour        = prc.ckHelper.ckHour( prc.oContent.getPublishedDateForEditor( showTime=true ) );
-					minute      = prc.ckHelper.ckMinute( prc.oContent.getPublishedDateForEditor( showTime=true ) );
-					if( len( hour ) && len( minute ) ) {
-						theTime = hour & ":" & minute;
-					}
-				</cfscript>
-
 				<div class="col-md-6">
 					<div
 						class="input-group clockpicker"
@@ -68,7 +59,7 @@
 						<input
 							type="text"
 							class="form-control inline"
-							value="#theTime#"
+							value="#prc.oContent.getPublishedDateTime()#"
 							name="publishedTime"
 						>
 						<span class="input-group-addon">
@@ -105,18 +96,17 @@
 					</div>
 				</div>
 
-				<cfscript>
-					theTime = "";
-					hour = prc.ckHelper.ckHour( prc.oContent.getExpireDateForEditor(showTime=true) );
-					minute = prc.ckHelper.ckMinute( prc.oContent.getExpireDateForEditor(showTime=true) );
-					if( len( hour ) && len( minute ) ) {
-						theTime = hour & ":" & minute;
-					}
-				</cfscript>
-
 				<div class="col-md-6">
-					<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-						<input type="text" class="form-control inline" value="#theTime#" name="expireTime">
+					<div
+						class="input-group clockpicker"
+						data-placement="left"
+						data-align="top"
+						data-autoclose="true">
+						<input
+							type="text"
+							class="form-control inline"
+							value="#prc.oContent.getExpireDateTime()#"
+							name="expireTime">
 						<span class="input-group-addon">
 							<span class="fas fa-history"></span>
 						</span>

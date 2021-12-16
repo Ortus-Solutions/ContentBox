@@ -15,7 +15,6 @@ component extends="baseHandler" {
 
 	property name="authorService" inject="authorService@contentbox";
 	property name="themeService" inject="themeService@contentbox";
-	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 	property name="categoryService" inject="categoryService@contentbox";
 	property name="customFieldService" inject="customFieldService@contentbox";
@@ -275,8 +274,6 @@ component extends="baseHandler" {
 			sortOrder: "slug asc",
 			siteID   : prc.oCurrentSite.getsiteID()
 		);
-		// CK Editor Helper
-		prc.ckHelper      = variables.CKHelper;
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
@@ -319,7 +316,7 @@ component extends="baseHandler" {
 	 * Save Content
 	 *
 	 * @adminPermission The admin permission to apply for publishing, eg: ENTRIES_ADMIN, PAGES_ADMIN
-	 * @relocateTo Where to relocate to when saving is done
+	 * @relocateTo      Where to relocate to when saving is done
 	 */
 	function save(
 		event,
@@ -699,11 +696,11 @@ component extends="baseHandler" {
 	/**
 	 * Content pager viewlet. Used for embedding a table visualizer of content according to arguments
 	 *
-	 * @authorId The author to filter the viewlet on. By default we show all content by all authors
-	 * @parent Do we want to root the content at a specific parent not or not, by default we do not
-	 * @max The maximum number of records to show, default is using the settings maxrows
+	 * @authorId   The author to filter the viewlet on. By default we show all content by all authors
+	 * @parent     Do we want to root the content at a specific parent not or not, by default we do not
+	 * @max        The maximum number of records to show, default is using the settings maxrows
 	 * @pagination Show pagination caroussel or not, default is true
-	 * @latest Show the latest content ordering or by natural ordering
+	 * @latest     Show the latest content ordering or by natural ordering
 	 *
 	 * @return HTML
 	 */
