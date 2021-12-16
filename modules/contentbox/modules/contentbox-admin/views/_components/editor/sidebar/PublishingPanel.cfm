@@ -1,4 +1,10 @@
 <cfoutput>
+	<cfscript>
+		// writeDump( var=[
+		// 	prc.oContent.getPublishedDate()
+		// ], top = 5 );
+		// abort;
+	</cfscript>
 <!--- Publishing Panel Component --->
 <div
 	id="publishingPanel"
@@ -39,7 +45,7 @@
 						#html.inputField(
 							size    = "9",
 							name    = "publishedDate",
-							value   = prc.oContent.getDisplayPublishedDate(),
+							value   = prc.oContent.getDisplayPublishedDate( dateFormat : "yyyy-mm-dd", showTime : false ),
 							class   = "form-control datepicker"
 						)#
 
@@ -86,7 +92,7 @@
 						#html.inputField(
 							size    = "9",
 							name    = "expireDate",
-							value   = prc.oContent.getDisplayExpireDate(),
+							value   = prc.oContent.getDisplayExpireDate( dateFormat : "yyyy-mm-dd", showTime : false ),
 							class   = "form-control datepicker"
 						)#
 

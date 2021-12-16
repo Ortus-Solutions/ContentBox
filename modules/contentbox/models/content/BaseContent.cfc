@@ -1394,10 +1394,18 @@ component
 	 *
 	 * @dateFormat The date format to use, defaulted by ContentBox to mmm dd, yyyy
 	 * @timeFormat The time format to use, defaulted by ContentBox to HH:mm:ss z
+	 * @showTime   Show the time or just the date
 	 */
-	string function getDisplayPublishedDate( dateFormat = this.DATE_FORMAT, timeFormat = this.TIME_FORMAT ){
+	string function getDisplayPublishedDate(
+		dateFormat       = this.DATE_FORMAT,
+		timeFormat       = this.TIME_FORMAT,
+		boolean showTime = true
+	){
 		if ( isNull( variables.publishedDate ) || !len( variables.publishedDate ) ) {
 			return "";
+		}
+		if ( !arguments.showTime ) {
+			return dateFormat( variables.publishedDate, arguments.dateFormat );
 		}
 		return dateFormat( variables.publishedDate, arguments.dateFormat ) & " " & timeFormat(
 			variables.publishedDate,
@@ -1411,10 +1419,18 @@ component
 	 *
 	 * @dateFormat The date format to use, defaulted by ContentBox to mmm dd, yyyy
 	 * @timeFormat The time format to use, defaulted by ContentBox to HH:mm:ss z
+	 * @showTime   Show the time or just the date
 	 */
-	string function getDisplayExpireDate( dateFormat = this.DATE_FORMAT, timeFormat = this.TIME_FORMAT ){
+	string function getDisplayExpireDate(
+		dateFormat       = this.DATE_FORMAT,
+		timeFormat       = this.TIME_FORMAT,
+		boolean showTime = true
+	){
 		if ( isNull( variables.expireDate ) || !len( variables.expireDate ) ) {
 			return "";
+		}
+		if ( !arguments.showTime ) {
+			return dateFormat( variables.expireDate, arguments.dateFormat );
 		}
 		return dateFormat( variables.expireDate, arguments.dateFormat ) & " " & timeFormat(
 			variables.expireDate,
