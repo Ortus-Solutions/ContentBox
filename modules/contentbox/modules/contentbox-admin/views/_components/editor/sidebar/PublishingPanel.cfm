@@ -39,7 +39,7 @@
 						#html.inputField(
 							size    = "9",
 							name    = "publishedDate",
-							value   = prc.oContent.getPublishedDateForEditor(),
+							value   = prc.oContent.getDisplayPublishedDate(),
 							class   = "form-control datepicker"
 						)#
 
@@ -86,7 +86,7 @@
 						#html.inputField(
 							size    = "9",
 							name    = "expireDate",
-							value   = prc.oContent.getExpireDateForEditor(),
+							value   = prc.oContent.getDisplayExpireDate(),
 							class   = "form-control datepicker"
 						)#
 
