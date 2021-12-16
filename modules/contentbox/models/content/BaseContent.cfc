@@ -3,7 +3,8 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * A mapped super class used for contentbox content: entries and pages
+ * A mapped super class used for any ContentBox content object.  All concrete content objects
+ * will inherit from this one.
  */
 component
 	persistent         ="true"
@@ -15,9 +16,12 @@ component
 	discriminatorColumn="contentType"
 {
 
-	/* *********************************************************************
-	 **							DI INJECTIONS
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * DI
+	 * --------------------------------------------------------------------------
+	 * All DI is done lazyly to avoid any performance issues. Thus the provider annotation
+	 */
 
 	property
 		name      ="categoryService"
@@ -54,18 +58,24 @@ component
 		inject    ="provider:settingService@contentbox"
 		persistent="false";
 
-	/* *********************************************************************
-	 **							NON PERSISTED PROPERTIES
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * NON PERSISTED PROPERTIES
+	 * --------------------------------------------------------------------------
+	 */
 
 	property
 		name      ="renderedContent"
 		persistent="false"
 		default   ="";
 
-	/* *********************************************************************
-	 **							STUPID PROPERTIES DUE TO ACF BUG
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * STUPID PROPERTIES DUE TO ACF BUG
+	 * --------------------------------------------------------------------------
+	 * There is a bug in acf2016, 2018, 2021 dealing with table inheritance. It
+	 * has never been fixed. Until it does, keep these.
+	 */
 
 	property
 		name   ="createdDate"
@@ -89,9 +99,11 @@ component
 		notnull="true"
 		default="false";
 
-	/* *********************************************************************
-	 **							PROPERTIES
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * PROPERTIES
+	 * --------------------------------------------------------------------------
+	 */
 
 	property
 		name     ="contentID"
@@ -247,9 +259,11 @@ component
 		default=""
 		length ="500";
 
-	/* *********************************************************************
-	 **							RELATIONSHIPS
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * RELATIONSHIPS
+	 * --------------------------------------------------------------------------
+	 */
 
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property
@@ -397,9 +411,11 @@ component
 		fetch    ="join"
 		lazy     ="true";
 
-	/* *********************************************************************
-	 **							CALCULATED FIELDS
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * CALCULATED FIELDS
+	 * --------------------------------------------------------------------------
+	 */
 
 	property
 		name   ="numberOfHits"
@@ -423,9 +439,11 @@ component
 		formula="select count(*) from cb_contentVersion versions where versions.FK_contentID=contentID"
 		default="0";
 
-	/* *********************************************************************
-	 **							PK + CONSTRAINTS + STATIC VARS
-	 ********************************************************************* */
+	/**
+	 * --------------------------------------------------------------------------
+	 * MEMENTIFIER + CONSTRAINTS
+	 * --------------------------------------------------------------------------
+	 */
 
 	this.pk = "contentID";
 
@@ -585,10 +603,6 @@ component
 		"title" : { required : true, size : "1..200" }
 	};
 
-	/* *********************************************************************
-	 **							PUBLIC FUNCTIONS
-	 ********************************************************************* */
-
 	/**
 	 * Base constructor
 	 */
@@ -613,8 +627,10 @@ component
 	 */
 	function onDIComplete(){
 		// Load up content helpers
-		variables.wirebox.getInstance( dsl : "coldbox:moduleSettings:contentbox" )
-			.contentHelpers.each( function( thisHelper ){
+		variables.wirebox
+			.getInstance( dsl: "coldbox:moduleSettings:contentbox" )
+			.contentHelpers
+			.each( function( thisHelper ){
 				includeMixin( arguments.thisHelper );
 			} );
 	}
@@ -715,9 +731,7 @@ component
 	 * Get the total number of active versions this content object has
 	 */
 	numeric function getNumberOfActiveVersions(){
-		return (
-			isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0
-		);
+		return ( isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0 );
 	}
 
 	/**
@@ -726,9 +740,9 @@ component
 	 * deactivates the previous version.  Persisting is done by the handler/service not by
 	 * this method.
 	 *
-	 * @content The incoming content string to store as the new version content
+	 * @content   The incoming content string to store as the new version content
 	 * @changelog The changelog commit message, defaults to empty string
-	 * @author The author object that is making the edit
+	 * @author    The author object that is making the edit
 	 * @isPreview Is this a preview version or a real version
 	 *
 	 * @return The same content object
@@ -740,13 +754,9 @@ component
 		boolean isPreview = false
 	){
 		// lock it for new content creation to avoid version overlaps
-		lock
-			name           ="contentbox.addNewContentVersion.#getSlug()#"
-			type           ="exclusive"
-			timeout        ="10"
-			throwOnTimeout =true {
+		lock name="contentbox.addNewContentVersion.#getSlug()#" type="exclusive" timeout="10" throwOnTimeout=true {
 			// get a new version object with our incoming content + relationships
-			var oNewVersion= variables.contentVersionService.new( {
+			var oNewVersion = variables.contentVersionService.new( {
 				content        : arguments.content,
 				changelog      : arguments.changelog,
 				author         : arguments.author,
@@ -928,7 +938,7 @@ component
 	/**
 	 * Shortcut to get a custom field value
 	 *
-	 * @key The custom field key to get
+	 * @key          The custom field key to get
 	 * @defaultValue The default value if the key is not found.
 	 */
 	any function getCustomField( required key, defaultValue ){
@@ -1043,11 +1053,7 @@ component
 			.count();
 
 		// Have we passed the limit?
-		if (
-			( versionCounts + 1 ) GT variables.settingService.getSetting(
-				"cb_versions_max_history"
-			)
-		) {
+		if ( ( versionCounts + 1 ) GT variables.settingService.getSetting( "cb_versions_max_history" ) ) {
 			var oldestVersion = contentVersionService
 				.newCriteria()
 				.isEq( "relatedContent.contentID", getContentID() )
@@ -1199,21 +1205,32 @@ component
 	 * Bit that denotes if the content has expired or not, in order to be expired the content must have been published as well
 	 */
 	boolean function isExpired(){
-		return ( isContentPublished() AND !isNull( expireDate ) AND expireDate lte now() ) ? true : false;
+		return (
+			isContentPublished() AND
+			!isNull( variables.expireDate ) AND
+			dateCompare( variables.expireDate, now() ) lte 0
+		) ? true : false;
 	}
 
 	/**
 	 * Bit that denotes if the content has been published or not
 	 */
 	boolean function isContentPublished(){
-		return ( getIsPublished() AND !isNull( publishedDate ) AND getPublishedDate() LTE now() ) ? true : false;
+		return (
+			getIsPublished() AND
+			!isNull( variables.publishedDate ) AND
+			dateCompare( variables.publishedDate, now() ) lte 0
+		) ? true : false;
 	}
 
 	/**
 	 * Bit that denotes if the content has been published or not in the future
 	 */
 	boolean function isPublishedInFuture(){
-		return ( getIsPublished() AND getPublishedDate() GT now() ) ? true : false;
+		return (
+			getIsPublished() AND
+			dateCompare( variables.publishedDate, now() ) eq 1
+		) ? true : false;
 	}
 
 	/**
@@ -1230,12 +1247,12 @@ component
 	 * - Prepare for cloning of entire hierarchies
 	 * - Make sure categories are cloned
 	 *
-	 * @author The author doing the cloning
-	 * @original The original content object that will be cloned into this content object
-	 * @originalService The ContentBox content service object
-	 * @publish Publish pages or leave as drafts
+	 * @author           The author doing the cloning
+	 * @original         The original content object that will be cloned into this content object
+	 * @originalService  The ContentBox content service object
+	 * @publish          Publish pages or leave as drafts
 	 * @originalSlugRoot The original slug that will be replaced in all cloned content
-	 * @newSlugRoot The new slug root that will be replaced in all cloned content
+	 * @newSlugRoot      The new slug root that will be replaced in all cloned content
 	 */
 	BaseContent function prepareForClone(
 		required any author,
@@ -1306,9 +1323,7 @@ component
 		arguments.original
 			.getCategories()
 			.each( function( thisCategory ){
-				addCategories(
-					variables.categoryService.getOrCreate( arguments.thisCategory, getSite() )
-				);
+				addCategories( variables.categoryService.getOrCreate( arguments.thisCategory, getSite() ) );
 			} );
 
 		// now clone children
@@ -1322,11 +1337,8 @@ component
 							parent  : this,
 							creator : author,
 							title   : arguments.thisChild.getTitle(),
-							slug    : this.getSlug() & "/" & listLast(
-								arguments.thisChild.getSlug(),
-								"/"
-							),
-							site : getSite()
+							slug    : this.getSlug() & "/" & listLast( arguments.thisChild.getSlug(), "/" ),
+							site    : getSite()
 						} )
 						// now deep clone until no more child is left behind.
 						.prepareForClone(
@@ -1399,10 +1411,7 @@ component
 		if ( isNull( publishedDate ) ) {
 			return "";
 		}
-		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat(
-			publishedDate,
-			this.TIME_FORMAT
-		);
+		return dateFormat( publishedDate, this.DATE_FORMAT ) & " " & timeFormat( publishedDate, this.TIME_FORMAT );
 	}
 
 	/**
@@ -1412,10 +1421,7 @@ component
 		if ( isNull( expireDate ) ) {
 			return "N/A";
 		}
-		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat(
-			expireDate,
-			this.TIME_FORMAT
-		);
+		return dateFormat( expireDate, this.DATE_FORMAT ) & " " & timeFormat( expireDate, this.TIME_FORMAT );
 	}
 
 	/**
@@ -1565,9 +1571,7 @@ component
 				cacheKey,
 				variables.renderedContent,
 				( getCacheTimeout() eq 0 ? settings.cb_content_cachingTimeout : getCacheTimeout() ),
-				(
-					getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout()
-				)
+				( getCacheLastAccessTimeout() eq 0 ? settings.cb_content_cachingTimeoutIdle : getCacheLastAccessTimeout() )
 			);
 		}
 
@@ -1584,10 +1588,7 @@ component
 		// render content out, prepare builder
 		var builder = createObject( "java", "java.lang.StringBuilder" ).init( arguments.content );
 		// announce renderings with data, so content renderers can process them
-		interceptorService.announce(
-			"cb_onContentRendering",
-			{ builder : builder, content : this }
-		);
+		interceptorService.announce( "cb_onContentRendering", { builder : builder, content : this } );
 		// return processed content
 		return builder.toString();
 	}
