@@ -33,8 +33,7 @@
 		return URLOut;
 	}
 	function validQuickView( ext ){
-		if( listFindNoCase( "png,jpg,jpeg,bmp,gif", ext ) ){ return "true"; }
-		return "false";
+		return ( listFindNoCase( "png,jpg,jpeg,bmp,gif", arguments.ext ) ? true : false );
 	}
 	function getImageFile( ext ){
 		switch( arguments.ext ){
@@ -121,7 +120,7 @@
 			<cfif NOT reFindNoCase( prc.fbNameFilter, prc.fbqListing.name )><cfcontinue></cfif>
 
 			<!--- ID Name of the div --->
-			<cfset validIDName = encodeForHTMLAttribute( prc.fbqListing.name ) >
+			<cfset validIDName = encodeForHTMLAttribute( replace( prc.fbqListing.name, ".", "_" ) ) >
 
 			<!--- URL used for selection --->
 			<cfset plainURL = prc.fbCurrentRoot & "/" & prc.fbqListing.name>
@@ -256,99 +255,109 @@
 </div>
 <script>
 ( () => {
+	// activate tooltips
 	$( '[data-toggle="tooltip"]' ).tooltip();
 
-	// context menus
+	// Build out the context menus for files
     $.contextMenu({
         selector: '.files',
-        callback: function(key, options) {
+        callback: ( key, options ) => {
             var m = "clicked: " + key;
             window.console && console.log( m ) || alert( m );
         },
         items: {
-            "Quick view": {name: "#$r( "quickview@fb" )#", callback: function(){
-            	return fbQuickView();
-            }},
-            "Rename": {name: "#$r( "rename@fb" )#", callback: function(){
-            	return fbRename();
-            }},
-           "Delete": {name: "#$r( "delete@fb" )#", callback: function(){
-           	return fbDelete();
-           }},
-            "Download": {name: "#$r( "download@fb" )#", callback: function(){
-            	return fbDownload();
-            }},
-            "URL": {name: "URL", callback: function(){
-            	return fbUrl();
-            }},
+            "Quick view": {
+				name: "#$r( "quickview@fb" )#",
+				callback: () => { return fbQuickView(); }
+			},
+            "Rename": {
+				name: "#$r( "rename@fb" )#",
+				callback: () => { return fbRename(); }
+			},
+           "Delete": {
+			   name: "#$r( "delete@fb" )#",
+			   callback: () => { return fbDelete(); }
+			},
+            "Download": {
+				name: "#$r( "download@fb" )#",
+				callback: () => { return fbDownload(); }
+			},
+            "URL": {
+				name: "URL",
+				callback: () => { return fbUrl(); }
+			},
             "sep1": "---------",
-            "edit": {name: "#$r( "edit@fb" )#", callback: function(){
-            	return fbEdit();
-            }},
-            "info": {name: "#$r( "info@fb" )#", callback: function(){
-            	return fbInfo();
-            }}
+            "edit": {
+				name: "#$r( "edit@fb" )#",
+				callback: () => { return fbEdit(); }
+			},
+            "info": {
+				name: "#$r( "info@fb" )#",
+				callback: () => { return fbInfo(); }
+			}
         }
     });
 
+	// Context menu for folders
     $.contextMenu({
         selector: '.folders',
-        callback: function(key, options) {
+        callback: ( key, options ) => {
             var m = "clicked: " + key;
             window.console && console.log(m) || alert(m);
         },
         items: {
-            "Rename": {name: "Rename", callback: function(){
-            	return fbRename();
-            }},
-           "Delete": {name: "Delete", callback: function(){
-           	return fbDelete();
-           }}
+            "Rename": {
+				name: "Rename",
+				callback: () => { return fbRename(); }
+			},
+           "Delete": {
+			   name: "Delete", callback: () => { return fbDelete(); }
+			}
         }
     });
 
-	$('.files,.folders').on( 'click contextmenu', function(e){
+	$('.files,.folders').on( 'click contextmenu', function( e ){
 		// history cleanup
-		if(!e.ctrlKey){
-			$selectedItemType.val('');
-			$selectedItemID.val('');
-			$selectedItem.val('');
-			$selectedItemURL.val('');
-			for (var i in fbSelectHistory) {
-				$( "##" + fbSelectHistory[i] ).removeClass( "selected" );
+		if( !e.ctrlKey ){
+			$selectedItemType.val( '' );
+			$selectedItemID.val( '' );
+			$selectedItem.val( '' );
+			$selectedItemURL.val( '' );
+			for ( var i in fbSelectHistory ){
+				$( "##" + fbSelectHistory[ i ] ).removeClass( "selected" );
 			}
 			fbSelectHistory = [];
 		}
 		// highlight selection
-		var $sItem = $(this);
+		var $sItem = $( this );
 		$sItem.addClass( "selected" );
-		if($selectedItemType.val() != ''){
+		if( $selectedItemType.val() != '' ){
 			var selectedDataType = $selectedItemType.val();
 			$selectedItemType.val( selectedDataType + '||' + $sItem.attr( "data-type" ) );
 		}else{
 			$selectedItemType.val( $sItem.attr( "data-type" ) );
 		}
-		if($selectedItemID.val() != ''){
+		if( $selectedItemID.val() != '' ){
 			var selectedIds = $selectedItemID.val();
 			$selectedItemID.val( selectedIds + '||' + $sItem.attr( "id" ) );
 		}else{
 			$selectedItemID.val( $sItem.attr( "id" ) );
 		}
 		// save selection
-		if($selectedItem.val() != ''){
+		if( $selectedItem.val() != '' ){
 			var selectedFiles = $selectedItem.val();
 			$selectedItem.val( selectedFiles + '||' + $sItem.attr( "data-fullURL" ) );
 		}else{
 			$selectedItem.val( $sItem.attr( "data-fullURL" ) );
 		}
-		if($selectedItemURL.val() != ''){
+		if( $selectedItemURL.val() != '' ){
 			var selectedURL = $selectedItemURL.val();
 			$selectedItemURL.val( selectedURL + '||' + $sItem.attr( "data-relURL" ) );
 		}else{
 			$selectedItemURL.val( $sItem.attr( "data-relURL" ) );
 		}
 		// history set
-		fbSelectHistory.push($sItem.attr( "id" ));
+		fbSelectHistory.push( $sItem.attr( "id" ) );
 		// status text
 		$statusText.text( $sItem.attr( "data-name" )+' ('+ $sItem.attr( "data-size" )+'KB '+$sItem.attr( "data-lastModified" )+')');
 		// enable selection button

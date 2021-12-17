@@ -277,7 +277,7 @@ fbInit = () => {
 	// Sorting
 	$sorting.change( function(){ fbRefresh(); } );
 
-	// Quick div filter
+	// fbQuickViewdiv filter
 	$fileBrowser.find( "##fbQuickFilter" ).keyup(function(){
 		$.uiDivFilter( $( ".filterDiv" ), this.value);
 	} );
