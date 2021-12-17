@@ -95,7 +95,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get a global setting value by key or by default value
 	 *
-	 * @key The setting key to get
+	 * @key          The setting key to get
 	 * @defaultValue The default value to return if not found
 	 *
 	 * @throw InvalidSettingException
@@ -121,7 +121,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get a site setting value by key or by default value
 	 *
-	 * @key The setting key to get
+	 * @key          The setting key to get
 	 * @defaultValue The default value to return if not found
 	 *
 	 * @throws InvalidSettingException
@@ -183,19 +183,16 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get a published content store and return its latest active content
 	 *
-	 * @slug The content slug to retrieve
+	 * @slug         The content slug to retrieve
 	 * @defaultValue The default value to use if the content element not found.
-	 * @siteID The site to get it from, defaults to current site
+	 * @siteID       The site to get it from, defaults to current site
 	 */
 	function contentStore(
 		required slug,
 		defaultValue  = "",
 		string siteID = site().getsiteID()
 	){
-		var content = variables.contentStoreService.findBySlug(
-			slug  : arguments.slug,
-			siteID: arguments.siteID
-		);
+		var content = variables.contentStoreService.findBySlug( slug: arguments.slug, siteID: arguments.siteID );
 
 		// Render if the object is loaded
 		return ( !content.isLoaded() ? arguments.defaultValue : content.renderContent() );
@@ -249,7 +246,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get a theme setting
 	 *
-	 * @key The name of the theme setting
+	 * @key          The name of the theme setting
 	 * @defaultValue The default value if the layout setting does not exist
 	 */
 	function themeSetting( required key, defaultValue ){
@@ -397,10 +394,10 @@ component accessors="true" singleton threadSafe {
 	 * automatically for you on the UI module. However, you can use it a-la-carte if you are building
 	 * ajax or module extensions
 	 *
-	 * @layout An optional layout to set for you in the request.
-	 * @title Optional request page metadata title
+	 * @layout      An optional layout to set for you in the request.
+	 * @title       Optional request page metadata title
 	 * @description Optional request page metadata description
-	 * @keywords Optional request page metadata keywords
+	 * @keywords    Optional request page metadata keywords
 	 */
 	CBHelper function prepareUIRequest(
 		string layout,
@@ -437,9 +434,7 @@ component accessors="true" singleton threadSafe {
 		prc.oCurrentSite   = variables.siteService.discoverSite();
 		// Place global cb options on scope
 		prc.cbSettings     = variables.settingService.getAllSettings();
-		prc.cbSiteSettings = variables.settingService.getAllSiteSettings(
-			prc.oCurrentSite.getSlug()
-		);
+		prc.cbSiteSettings = variables.settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
 		// Place the default layout on scope
 		prc.cbTheme        = prc.oCurrentSite.getActiveTheme();
 		prc.cbThemeRecord  = variables.themeService.getThemeRecord( prc.cbTheme );
@@ -743,7 +738,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get a current page's or blog entrie's custom field by key, you can pass a default value if not found
-	 * @key The custom field key
+	 * @key          The custom field key
 	 * @defaultValue The default value to return if not found
 	 */
 	any function getCustomField( required key, defaultValue ){
@@ -1089,16 +1084,10 @@ component accessors="true" singleton threadSafe {
 	function getOpenGraphMeta(){
 		var content         = "";
 		savecontent variable="content" {
-			writeOutput(
-				"<meta property=""og:title""              content=""#getContentTitle()#"" />#chr( 10 )#"
-			);
-			writeOutput(
-				"<meta property=""og:type""               content=""#getContentOGType()#"" />#chr( 10 )#"
-			);
+			writeOutput( "<meta property=""og:title""              content=""#getContentTitle()#"" />#chr( 10 )#" );
+			writeOutput( "<meta property=""og:type""               content=""#getContentOGType()#"" />#chr( 10 )#" );
 			if ( len( getContentURL() ) ) {
-				writeOutput(
-					"<meta property=""og:url""                content=""#getContentURL()#"" />#chr( 10 )#"
-				);
+				writeOutput( "<meta property=""og:url""                content=""#getContentURL()#"" />#chr( 10 )#" );
 			}
 			if ( len( getContentURL() ) ) {
 				writeOutput(
@@ -1202,10 +1191,10 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Build out ContentBox module links
 	 *
-	 * @module The module to link this URL to
-	 * @to The handler action combination to link to
+	 * @module      The module to link this URL to
+	 * @to          The handler action combination to link to
 	 * @queryString The query string to append in SES format
-	 * @ssl Create the link in SSL or not
+	 * @ssl         Create the link in SSL or not
 	 */
 	function buildModuleLink(
 		required string module,
@@ -1247,18 +1236,18 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Relocate to a ContentBox module event
 	 *
-	 * @module The module to link this URL to
-	 * @event The name of the event to run, if not passed, then it will use the default event found in your configuration file
-	 * @URL The full URL you would like to relocate to instead of an event: ex: URL='http://www.google.com'
-	 * @URI The relative URI you would like to relocate to instead of an event: ex: URI='/mypath/awesome/here'
-	 * @queryString The query string to append, if needed. If in SES mode it will be translated to convention name value pairs
-	 * @persist What request collection keys to persist in flash ram
-	 * @persistStruct A structure key-value pairs to persist in flash ram
-	 * @addToken Wether to add the tokens or not. Default is false
-	 * @ssl Whether to relocate in SSL or not
-	 * @baseURL Use this baseURL instead of the index.cfm that is used by default. You can use this for ssl or any full base url you would like to use. Ex: https://mysite.com/index.cfm
+	 * @module            The module to link this URL to
+	 * @event             The name of the event to run, if not passed, then it will use the default event found in your configuration file
+	 * @URL               The full URL you would like to relocate to instead of an event: ex: URL='http://www.google.com'
+	 * @URI               The relative URI you would like to relocate to instead of an event: ex: URI='/mypath/awesome/here'
+	 * @queryString       The query string to append, if needed. If in SES mode it will be translated to convention name value pairs
+	 * @persist           What request collection keys to persist in flash ram
+	 * @persistStruct     A structure key-value pairs to persist in flash ram
+	 * @addToken          Wether to add the tokens or not. Default is false
+	 * @ssl               Whether to relocate in SSL or not
+	 * @baseURL           Use this baseURL instead of the index.cfm that is used by default. You can use this for ssl or any full base url you would like to use. Ex: https://mysite.com/index.cfm
 	 * @postProcessExempt Do not fire the postProcess interceptors
-	 * @statusCode The status code to use in the relocation
+	 * @statusCode        The status code to use in the relocation
 	 */
 	function moduleRelocate(
 		required string module,
@@ -1282,13 +1271,10 @@ component accessors="true" singleton threadSafe {
 	 * Link to the admin
 	 *
 	 * @event An optional event to link to
-	 * @ssl	Use SSL or not, defaults to event context.
+	 * @ssl   Use SSL or not, defaults to event context.
 	 */
 	function linkAdmin( event = "", boolean ssl = getRequestContext().isSSL() ){
-		return getRequestContext().buildLink(
-			to  = adminRoot() & ".#arguments.event#",
-			ssl = arguments.ssl
-		);
+		return getRequestContext().buildLink( to = adminRoot() & ".#arguments.event#", ssl = arguments.ssl );
 	}
 
 	/**
@@ -1297,10 +1283,7 @@ component accessors="true" singleton threadSafe {
 	 * @ssl	Use SSL or not, defaults to event context.
 	 */
 	function linkAdminLogout( boolean ssl = getRequestContext().isSSL() ){
-		return getRequestContext().buildLink(
-			to  = adminRoot() & "/security/doLogout",
-			ssl = arguments.ssl
-		);
+		return getRequestContext().buildLink( to = adminRoot() & "/security/doLogout", ssl = arguments.ssl );
 	}
 
 	/**
@@ -1309,10 +1292,7 @@ component accessors="true" singleton threadSafe {
 	 * @ssl	Use SSL or not, defaults to event context.
 	 */
 	function linkAdminLogin( boolean ssl = getRequestContext().isSSL() ){
-		return getRequestContext().buildLink(
-			to  = adminRoot() & "/security/login",
-			ssl = arguments.ssl
-		);
+		return getRequestContext().buildLink( to = adminRoot() & "/security/login", ssl = arguments.ssl );
 	}
 
 	/**
@@ -1351,8 +1331,8 @@ component accessors="true" singleton threadSafe {
 	 * Link to RSS feeds that ContentBox generates, by default it is the recent updates feed
 	 * @category You can optionally pass the category to filter on
 	 * @comments A boolean flag that determines if you want the comments RSS feed
-	 * @entry You can optionally pass the entry to filter the comment's RSS feed
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @entry    You can optionally pass the entry to filter the comment's RSS feed
+	 * @ssl      Use SSL or not, defaults to false.
 	 */
 	function linkRSS(
 		category,
@@ -1386,8 +1366,8 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @category The category to filter on
 	 * @comments Do comments RSS feeds
-	 * @slug The content slug to filter on when using comments
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @slug     The content slug to filter on when using comments
+	 * @ssl      Use SSL or not, defaults to false.
 	 */
 	function linkSiteRSS(
 		any category,
@@ -1423,8 +1403,8 @@ component accessors="true" singleton threadSafe {
 	 * Link to the ContentBox Page RSS Feeds
 	 * @category The category to filter on
 	 * @comments Page comments or not, defaults to false
-	 * @page The page you want to filter on
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @page     The page you want to filter on
+	 * @ssl      Use SSL or not, defaults to false.
 	 */
 	function linkPageRSS(
 		any category,
@@ -1460,7 +1440,7 @@ component accessors="true" singleton threadSafe {
 	 * Link to a specific filtered category view of blog entries
 	 *
 	 * @category The category object or slug to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl      Use SSL or not, defaults to false.
 	 */
 	function linkCategory( required any category, boolean ssl = getRequestContext().isSSL() ){
 		var categorySlug = "";
@@ -1477,22 +1457,19 @@ component accessors="true" singleton threadSafe {
 	 * Link to a specific filtered category view of blog entries
 	 *
 	 * @categorySlug The category slug as a string to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl          Use SSL or not, defaults to false.
 	 */
-	function linkCategoryWithSlug(
-		required string categorySlug,
-		boolean ssl = getRequestContext().isSSL()
-	){
+	function linkCategoryWithSlug( required string categorySlug, boolean ssl = getRequestContext().isSSL() ){
 		return linkBlog() & "/category/#arguments.categorySlug#";
 	}
 
 	/**
 	 * Link to a specific filtered archive of entries
 	 *
-	 * @year The year of the archive
+	 * @year  The year of the archive
 	 * @month The month of the archive
-	 * @day The day of the archive
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @day   The day of the archive
+	 * @ssl   Use SSL or not, defaults to false.
 	 */
 	function linkArchive(
 		year,
@@ -1546,18 +1523,15 @@ component accessors="true" singleton threadSafe {
 	 * Link to the ContentBox Content Subscription unsubscribe URL
 	 * @token The token to use for unsubscribing
 	 */
-	function linkContentUnsubscribe(
-		required string token,
-		boolean ssl = getRequestContext().isSSL()
-	){
+	function linkContentUnsubscribe( required string token, boolean ssl = getRequestContext().isSSL() ){
 		return siteRoot() & sep() & "__unsubscribe/#arguments.token#";
 	}
 
 	/**
 	 * Link to a specific blog entry's page
 	 *
-	 * @entry The entry to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @entry  The entry to link to
+	 * @ssl    Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	 */
 	function linkEntry(
@@ -1582,8 +1556,8 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to a specific entry's page using a slug only
 	 *
-	 * @slug The entry slug to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @slug   The entry slug to link to
+	 * @ssl    Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	 */
 	function linkEntryWithSlug(
@@ -1603,8 +1577,8 @@ component accessors="true" singleton threadSafe {
 	 * Link to a specific content object
 	 *
 	 * @content The content object to link to
-	 * @ssl	Use SSL or not, defaults to false.
-	 * @format The format output of the content default is HTML but you can pass pdf,print or doc.
+	 * @ssl     Use SSL or not, defaults to false.
+	 * @format  The format output of the content default is HTML but you can pass pdf,print or doc.
 	 */
 	function linkContent(
 		required content,
@@ -1630,8 +1604,8 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to a specific page
 	 *
-	 * @page The page to link to. This can be a simple value or a page object
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @page   The page to link to. This can be a simple value or a page object
+	 * @ssl    Use SSL or not, defaults to false.
 	 * @format The format extension output of the content default is HTML but you can pass pdf, print or doc.
 	 *
 	 * @return The link to this page
@@ -1660,8 +1634,8 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to a specific page using a slug only
 	 *
-	 * @slug The page slug to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @slug   The page slug to link to
+	 * @ssl    Use SSL or not, defaults to false.
 	 * @format The format output of the content default is HTML bu you can pass pdf,print or doc.
 	 */
 	function linkPageWithSlug(
@@ -1681,7 +1655,7 @@ component accessors="true" singleton threadSafe {
 	 * Create a link to a specific comment in a page or in an entry
 	 *
 	 * @comment The comment to link to
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl     Use SSL or not, defaults to false.
 	 */
 	function linkComment( required comment, boolean ssl = getRequestContext().isSSL() ){
 		var xeh = "";
@@ -1698,7 +1672,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Create a link to an entry's or page's comments section
 	 * @content The entry or page to link to its comments
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl     Use SSL or not, defaults to false.
 	 */
 	function linkComments( required content, boolean ssl = getRequestContext().isSSL() ){
 		var xeh = "";
@@ -1715,7 +1689,7 @@ component accessors="true" singleton threadSafe {
 	 * Link to the commenting post action, this is where comments are submitted to
 	 *
 	 * @content The entry or page to link to its comments
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl     Use SSL or not, defaults to false.
 	 *
 	 * @return The URL to submit to.
 	 */
@@ -1808,9 +1782,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out entries in the home page by using our ColdBox collection rendering
-	 * @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	 * @template     The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'entry'
-	 * @args A structure of name-value pairs to pass to the template
+	 * @args         A structure of name-value pairs to pass to the template
 	 */
 	function quickEntries(
 		string template     = "entry",
@@ -1830,9 +1804,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out an entry using your pre-defined 'entry' template
-	 * @template The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
+	 * @template     The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'entry'
-	 * @args A structure of name-value pairs to pass to the template
+	 * @args         A structure of name-value pairs to pass to the template
 	 */
 	function quickEntry(
 		string template     = "entry",
@@ -1853,10 +1827,10 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Render out categories anywhere using ColdBox collection rendering
 	 *
-	 * @template The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
+	 * @template     The name of the template to use, by default it looks in the 'templates/category.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'category'
-	 * @args A structure of name-value pairs to pass to the template
-	 * @isPublic Return public categories by default. False, return private categories, null return all categories.
+	 * @args         A structure of name-value pairs to pass to the template
+	 * @isPublic     Return public categories by default. False, return private categories, null return all categories.
 	 */
 	function quickCategories(
 		string template     = "category",
@@ -1877,9 +1851,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out related content anywhere using ColdBox collection rendering
-	 * @template The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
+	 * @template     The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'relatedContent'
-	 * @args A structure of name-value pairs to pass to the template
+	 * @args         A structure of name-value pairs to pass to the template
 	 */
 	function quickRelatedContent(
 		string template     = "relatedContent",
@@ -1907,9 +1881,7 @@ component accessors="true" singleton threadSafe {
 		savecontent variable="content" {
 			writeOutput( "<ul class='customFields'>" );
 			for ( var thisField in customFields ) {
-				writeOutput(
-					"<li><span class='customField-key'>#thisField#:</span> #customFields[ thisField ]#</li>"
-				);
+				writeOutput( "<li><span class='customField-key'>#thisField#:</span> #customFields[ thisField ]#</li>" );
 			}
 			writeOutput( "</ul>" );
 		}
@@ -1919,9 +1891,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out comments anywhere using ColdBox collection rendering
-	 * @template The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
+	 * @template     The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'comment'
-	 * @args A structure of name-value pairs to pass to the template
+	 * @args         A structure of name-value pairs to pass to the template
 	 */
 	function quickComments(
 		string template     = "comment",
@@ -1942,7 +1914,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Renders out an author's avatar
 	 * @author The author object to render an avatar from
-	 * @size The size of the gravatar, by default we use 25 pixels
+	 * @size   The size of the gravatar, by default we use 25 pixels
 	 */
 	string function quickAvatar(
 		required author,
@@ -1967,20 +1939,20 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
 	 * theme you are using. All the arguments are the same as `renderView()'s` methods
-	 * @view The view in the theme to render
-	 * @cache Cache the output or not
-	 * @cacheTimeout The time in minutes to cache the view
+	 * @view                   The view in the theme to render
+	 * @cache                  Cache the output or not
+	 * @cacheTimeout           The time in minutes to cache the view
 	 * @cacheLastAccessTimeout The time in minutes the view will be removed from cache if idle or requested
-	 * @cacheSuffix The suffix to add into the cache entry for this view rendering
-	 * @cacheProvider The provider to cache this view in, defaults to 'template'
-	 * @module The module to render the view from explicitly
-	 * @args A struct of arguments to pass into the view for rendering, will be available as 'args' in the view.
-	 * @collection A collection to use by this Renderer to render the view as many times as the items in the collection (Array or Query)
-	 * @collectionAs The name of the collection variable in the partial rendering.  If not passed, we will use the name of the view by convention
-	 * @collectionStartRow The start row to limit the collection rendering with
-	 * @collectionMaxRows The max rows to iterate over the collection rendering with
-	 * @collectionDelim  A string to delimit the collection renderings by
-	 * @prePostExempt If true, pre/post view interceptors will not be fired. By default they do fire
+	 * @cacheSuffix            The suffix to add into the cache entry for this view rendering
+	 * @cacheProvider          The provider to cache this view in, defaults to 'template'
+	 * @module                 The module to render the view from explicitly
+	 * @args                   A struct of arguments to pass into the view for rendering, will be available as 'args' in the view.
+	 * @collection             A collection to use by this Renderer to render the view as many times as the items in the collection (Array or Query)
+	 * @collectionAs           The name of the collection variable in the partial rendering.  If not passed, we will use the name of the view by convention
+	 * @collectionStartRow     The start row to limit the collection rendering with
+	 * @collectionMaxRows      The max rows to iterate over the collection rendering with
+	 * @collectionDelim        A string to delimit the collection renderings by
+	 * @prePostExempt          If true, pre/post view interceptors will not be fired. By default they do fire
 	 */
 	function quickView(
 		required view,
@@ -2006,11 +1978,11 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	 * layout theme you are using. All the arguments are the same as renderLayout()'s methods
-	 * @layout The layout to render out
-	 * @view The view to render within this layout
-	 * @module The module to explicitly render this layout from
-	 * @args An optional set of arguments that will be available to this layouts/view rendering ONLY
-	 * @viewModule The module to explicitly render the view from
+	 * @layout        The layout to render out
+	 * @view          The view to render within this layout
+	 * @module        The module to explicitly render this layout from
+	 * @args          An optional set of arguments that will be available to this layouts/view rendering ONLY
+	 * @viewModule    The module to explicitly render the view from
 	 * @prePostExempt If true, pre/post layout interceptors will not be fired. By default they do fire
 	 */
 	function quickLayout(
@@ -2046,8 +2018,8 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Build out a menu from the defined menus in ContentBox.
 	 *
-	 * @slug The menu slug to build
-	 * @type The type either 'html' or 'data', default is HTML
+	 * @slug      The menu slug to build
+	 * @type      The type either 'html' or 'data', default is HTML
 	 * @slugCache The cache of menu slugs already used in this request
 	 *
 	 * @return HTML of the menu or a struct representing the menu
@@ -2072,9 +2044,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Builds out a custom menu
-	 * @menu The root menu object that should be rendered
+	 * @menu             The root menu object that should be rendered
 	 * @menu.doc_generic contentbox.models.menu.Menu
-	 * @slugCache The cache of menu slugs already used in this request
+	 * @slugCache        The cache of menu slugs already used in this request
 	 */
 	public string function buildProviderMenu( required any menu, required array slugCache = [] ){
 		var listType   = arguments.menu.getListType();
@@ -2099,8 +2071,8 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Builds out a level of a custom menu
-	 * @items An array of menu items for this level
-	 * @listType The type of list to create (derived from owning menu)
+	 * @items     An array of menu items for this level
+	 * @listType  The type of list to create (derived from owning menu)
 	 * @slugCache The cache of menu slugs already used in this request
 	 */
 	private string function buildProviderMenuLevel(
@@ -2141,14 +2113,14 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out a quick menu for root level pages
-	 * @excludes The list of pages to exclude from the menu
-	 * @type The type of menu, valid choices are: ul,ol,li,data,none
-	 * @typeClass The CSS class(es) to add to the type tag, defaults to 'submenu'
-	 * @separator Used if type eq none, to separate the list of href's
-	 * @levels The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
+	 * @excludes     The list of pages to exclude from the menu
+	 * @type         The type of menu, valid choices are: ul,ol,li,data,none
+	 * @typeClass    The CSS class(es) to add to the type tag, defaults to 'submenu'
+	 * @separator    Used if type eq none, to separate the list of href's
+	 * @levels       The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
 	 * @elementClass The name of the CSS class to attach to the menu <li> element
-	 * @parentClass The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
-	 * @activeClass The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
+	 * @parentClass  The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
+	 * @activeClass  The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
 	 */
 	function rootMenu(
 		excludes     = "",
@@ -2176,16 +2148,16 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Create a sub page menu for a given page or current page
 	 *
-	 * @page Optional page to create menu for, else look for current page, this can be a page object or a page slug
-	 * @excludes The list of pages to exclude from the menu
-	 * @type The type of menu, valid choices are: ul,ol,li,none
-	 * @typeClass The CSS class(es) to add to the type tag, defaults to 'submenu'
-	 * @separator Used if type eq none, to separate the list of href's
-	 * @showNone Shows a 'No Sub Pages' message or not
-	 * @levels The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
-	 * @elementClass The name of the CSS class to attach to the menu <li> element
-	 * @parentClass The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
-	 * @activeClass The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
+	 * @page               Optional page to create menu for, else look for current page, this can be a page object or a page slug
+	 * @excludes           The list of pages to exclude from the menu
+	 * @type               The type of menu, valid choices are: ul,ol,li,none
+	 * @typeClass          The CSS class(es) to add to the type tag, defaults to 'submenu'
+	 * @separator          Used if type eq none, to separate the list of href's
+	 * @showNone           Shows a 'No Sub Pages' message or not
+	 * @levels             The number of levels to nest hierarchical pages, by default it does only 1 level, * does all levels
+	 * @elementClass       The name of the CSS class to attach to the menu <li> element
+	 * @parentClass        The name of the CSS class to attach to the menu <li> element when it has nested elements, by default it is 'parent'
+	 * @activeClass        The name of the CSS class to attach to the menu <li> element when that element is the current page you are on, by default it is 'active'
 	 * @activeShowChildren If true, then we will show the children of the active menu element, else we just show the active element
 	 */
 	function subPageMenu(
@@ -2248,7 +2220,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Create breadcrumbs for a UI page
-	 * @page Optional page to create link for, else look for current page
+	 * @page      Optional page to create link for, else look for current page
 	 * @separator Breadcrumb separator, defaults to '>'
 	 */
 	function breadCrumbs( any page, string separator = ">" ){
@@ -2256,9 +2228,7 @@ component accessors="true" singleton threadSafe {
 		if ( !structKeyExists( arguments, "page" ) ) {
 			arguments.page = getCurrentPage();
 		}
-		return wirebox
-			.getInstance( "PageBreadcrumbVisitor@contentbox-ui" )
-			.visit( arguments.page, arguments.separator );
+		return wirebox.getInstance( "PageBreadcrumbVisitor@contentbox-ui" ).visit( arguments.page, arguments.separator );
 	}
 
 	/************************************** UTILITIES *********************************************/
@@ -2279,11 +2249,11 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Retrieve i18n resources
-	 * @resource The resource (key) to retrieve from a loaded bundle or pass a @bundle
+	 * @resource     The resource (key) to retrieve from a loaded bundle or pass a @bundle
 	 * @defaultValue A default value to send back if the resource (key) not found
-	 * @locale Pass in which locale to take the resource from. By default it uses the user's current set locale
-	 * @values An array, struct or simple string of value replacements to use on the resource string
-	 * @bundle The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
+	 * @locale       Pass in which locale to take the resource from. By default it uses the user's current set locale
+	 * @values       An array, struct or simple string of value replacements to use on the resource string
+	 * @bundle       The bundle alias to use to get the resource from when using multiple resource bundles. By default the bundle name used is 'default'
 	 */
 	any function r(
 		required string resource,
@@ -2358,10 +2328,7 @@ component accessors="true" singleton threadSafe {
 			// If this is subnav, add ancestry trail
 			while ( locPage.hasParent() ) {
 				locPage                = locPage.getParent();
-				pageAncestorContentIDs = listAppend(
-					pageAncestorContentIDs,
-					locPage.getContentID()
-				);
+				pageAncestorContentIDs = listAppend( pageAncestorContentIDs, locPage.getContentID() );
 			}
 		}
 
@@ -2382,18 +2349,11 @@ component accessors="true" singleton threadSafe {
 			}
 			classText = duplicate( arguments.elementClass );
 
-			if (
-				!len( arguments.excludes ) OR !listFindNoCase(
-					arguments.excludes,
-					pageResults.content[ x ][ "title" ]
-				)
-			) {
+			if ( !len( arguments.excludes ) OR !listFindNoCase( arguments.excludes, pageResults.content[ x ][ "title" ] ) ) {
 				// Do we need to nest?
 				try {
 					var doNesting = (
-						arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][
-							"numberOfChildren"
-						] > 0
+						arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][ "numberOfChildren" ] > 0
 					);
 				} catch ( any e ) {
 					writeDump( var = callStackGet() );
@@ -2404,10 +2364,7 @@ component accessors="true" singleton threadSafe {
 				// Is element active (or one of its decendants)
 				var isElementActive         = currentPageID eq pageResults.content[ x ][ "contentID" ];
 				var isElementActiveAncestor = (
-					listFindNoCase(
-						pageAncestorContentIDs,
-						pageResults.content[ x ][ "contentID" ]
-					)
+					listFindNoCase( pageAncestorContentIDs, pageResults.content[ x ][ "contentID" ] )
 				);
 				// class = active? Then add to class text
 				if ( isElementActive ) {
@@ -2447,9 +2404,7 @@ component accessors="true" singleton threadSafe {
 					}
 					// Do we nest active and activeShowChildren flag is activated?
 					else if (
-						activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.content[
-							x
-						].hasChild()
+						activeShowChildren AND ( isElementActive OR isElementActiveAncestor ) AND pageResults.content[ x ].hasChild()
 					) {
 						// Setup Parent class, we are going down the wormhole
 						arrayAppend( classText, arguments.parentClass );
@@ -2512,9 +2467,7 @@ component accessors="true" singleton threadSafe {
 					}
 					// Do we nest active and activeShowChildren flag is activated?
 					else if (
-						activeShowChildren AND isElementActive AND pageResults.content[ x ][
-							"numberOfChildren"
-						] > 0
+						activeShowChildren AND isElementActive AND pageResults.content[ x ][ "numberOfChildren" ] > 0
 					) {
 						pageData.subPageMenu = buildMenu(
 							pageRecords = pageService.findPublishedContent(
