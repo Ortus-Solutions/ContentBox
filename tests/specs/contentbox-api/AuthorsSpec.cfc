@@ -74,20 +74,14 @@ component extends="tests.resources.BaseApiTest" {
 					then( "then I should get the requested author", function(){
 						var testUser = variables.authorService.findWhere( { "username" : "lmajano" } );
 						var event    = this.get( "/cbapi/v1/authors/#testUser.getAuthorID()#" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData().username ).toBe( "lmajano" );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.get( "/cbapi/v1/authors/123122" );
-						expect( event.getResponse() ).toHaveStatus(
-							404,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 404, event.getResponse().getMessagesString() );
 					} );
 				} );
 			} ); // end view author
@@ -109,14 +103,9 @@ component extends="tests.resources.BaseApiTest" {
 									permissions : testPermission.getPermissionID()
 								}
 							);
-							expect( event.getResponse() ).toHaveStatus(
-								200,
-								event.getResponse().getMessagesString()
-							);
+							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 							expect( event.getResponse().getData().authorID ).notToBeEmpty();
-							expect( event.getResponse().getData().username ).toBe(
-								"bdd@ortussolutions.com"
-							);
+							expect( event.getResponse().getData().username ).toBe( "bdd@ortussolutions.com" );
 						} );
 					} );
 				} );
@@ -135,14 +124,8 @@ component extends="tests.resources.BaseApiTest" {
 								permissions : testPermission.getPermissionID()
 							}
 						);
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
-						expect( event.getResponse() ).toHaveInvalidData(
-							"username",
-							"is not unique"
-						);
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
+						expect( event.getResponse() ).toHaveInvalidData( "username", "is not unique" );
 					} );
 				} );
 				given( "duplicate email", function(){
@@ -160,24 +143,15 @@ component extends="tests.resources.BaseApiTest" {
 								permissions : testPermission.getPermissionID()
 							}
 						);
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
 						expect( event.getResponse() ).toHaveInvalidData( "email", "is not unique" );
 					} );
 				} );
 				given( "basic invalid data", function(){
 					then( "it should display an error message", function(){
 						var event = this.post( "cbapi/v1/authors", {} );
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
-						expect( event.getResponse() ).toHaveInvalidData(
-							"firstName",
-							"is required"
-						);
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
+						expect( event.getResponse() ).toHaveInvalidData( "firstName", "is required" );
 						expect( event.getResponse() ).toHaveInvalidData( "lastName", "is required" );
 						expect( event.getResponse() ).toHaveInvalidData( "email", "is required" );
 						expect( event.getResponse() ).toHaveInvalidData( "username", "is required" );
@@ -194,23 +168,15 @@ component extends="tests.resources.BaseApiTest" {
 								"/cbapi/v1/authors/#testAuthor.getAuthorID()#",
 								{ biography : "ColdBox Daddy!" }
 							);
-							expect( event.getResponse() ).toHaveStatus(
-								200,
-								event.getResponse().getMessagesString()
-							);
-							expect( event.getResponse().getData().biography ).toInclude(
-								"ColdBox Daddy!"
-							);
+							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
+							expect( event.getResponse().getData().biography ).toInclude( "ColdBox Daddy!" );
 						} );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.put( "/cbapi/v1/authors/1232222" );
-						expect( event.getResponse() ).toHaveStatus(
-							404,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 404, event.getResponse().getMessagesString() );
 					} );
 				} );
 			} ); // end edit author
@@ -231,13 +197,8 @@ component extends="tests.resources.BaseApiTest" {
 									permissions : testPermission.getPermissionID()
 								} )
 							);
-							var event = this.delete(
-								"/cbapi/v1/authors/#testAuthor.getAuthorId()#"
-							);
-							expect( event.getResponse() ).toHaveStatus(
-								200,
-								event.getResponse().getMessagesString()
-							);
+							var event = this.delete( "/cbapi/v1/authors/#testAuthor.getAuthorId()#" );
+							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 							expect( event.getResponse().getMessagesString() ).toInclude( "deleted" );
 						} finally {
 							queryExecute(
@@ -250,10 +211,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.delete( "/cbapi/v1/sites/default/categories/1232222" );
-						expect( event.getResponse() ).toHaveStatus(
-							404,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 404, event.getResponse().getMessagesString() );
 					} );
 				} );
 			} ); // end delete author

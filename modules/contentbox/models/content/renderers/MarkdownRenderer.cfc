@@ -2,9 +2,10 @@
  * Copyright 2009 ColdBox Framework by Luis Majano and Ortus Solutions, Corp
  * www.coldboxframework.com | www.luismajano.com | www.ortussolutions.com
  * ---
- * @author Luis Majano
  * This interceptor listens to ContentBox content renderings and it will
  * translate content within ContentBox from Markdown to HTML
+ *
+ * @author Luis Majano
  */
 component extends="coldbox.system.Interceptor" {
 
@@ -36,9 +37,7 @@ component extends="coldbox.system.Interceptor" {
 				results
 			);
 		} else if ( log.canDebug() ) {
-			log.debug(
-				"Skipping Markdown translation as content markup is #arguments.data.content.getMarkup()#"
-			);
+			log.debug( "Skipping Markdown translation as content markup is #arguments.data.content.getMarkup()#" );
 		}
 	}
 

@@ -81,6 +81,7 @@ component {
 
 	/**
 	 * Single entry point, outputs the sitemap according to the incoming `rc.format`
+	 *
 	 * @return { data, contentType }
 	 */
 	private struct function _index( event, rc, prc ){

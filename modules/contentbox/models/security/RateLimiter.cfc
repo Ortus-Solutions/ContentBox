@@ -26,9 +26,7 @@ component extends="coldbox.system.Interceptor" {
 		var allSettings = variables.settingService.getAllSettings();
 
 		// If turned off, just exist
-		if (
-			!structKeyExists( allSettings, "cb_security_rate_limiter" ) || allSettings.cb_security_rate_limiter == false
-		) {
+		if ( !structKeyExists( allSettings, "cb_security_rate_limiter" ) || allSettings.cb_security_rate_limiter == false ) {
 			return false;
 		}
 
@@ -48,10 +46,11 @@ component extends="coldbox.system.Interceptor" {
 	 * Written by Charlie Arehart, charlie@carehart.org, in 2009, updated 2012, modified by Luis Majano 2016
 	 * - Throttles requests made more than "count" times within "duration" seconds from single IP.
 	 * - Duck typed for performance
-	 * @count	The throttle counter
-	 * @duration	The time in seconds to limit
-	 * @event	The request context object
-	 * @settings	The settings structure
+	 *
+	 * @count    The throttle counter
+	 * @duration The time in seconds to limit
+	 * @event    The request context object
+	 * @settings The settings structure
 	 */
 	private function limiter( count, duration, event, settings ){
 		// Get real IP address of requester
@@ -59,11 +58,7 @@ component extends="coldbox.system.Interceptor" {
 
 		// If first time visit, create record.
 		if ( !structKeyExists( variables.limitData, realIP ) ) {
-			lock
-				name          ="cb-ratelimiter-#hash( realIP )#"
-				type          ="exclusive"
-				throwontimeout="true"
-				timeout       ="5" {
+			lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5" {
 				if ( !structKeyExists( variables.limitData, realIP ) ) {
 					variables.limitData[ realIP ] = { attempts : 1, lastAttempt : now() };
 					return this;
@@ -91,11 +86,7 @@ component extends="coldbox.system.Interceptor" {
 				}
 
 				// Log attempt
-				lock
-					name          ="cb-ratelimiter-#hash( realIP )#"
-					type          ="exclusive"
-					throwontimeout="true"
-					timeout       ="5" {
+				lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5" {
 					targetData.attempts++;
 					targetData.lastAttempt = now();
 				}
@@ -130,24 +121,16 @@ component extends="coldbox.system.Interceptor" {
 				abort;
 			} else {
 				// Log attempt
-				lock
-					name          ="cb-ratelimiter-#hash( realIP )#"
-					type          ="exclusive"
-					throwontimeout="true"
-					timeout       ="5" {
+				lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5" {
 					targetData.attempts++;
 					targetData.lastAttempt = now();
 				}
 			}
 		} else {
 			// Reset attempts counter, since we are in the safe zone, just log the last attempt timestamp
-			lock
-				name                  ="cb-ratelimiter-#hash( realIP )#"
-				type                  ="exclusive"
-				throwontimeout        ="true"
-				timeout               ="5" {
-				targetData.attempts   = 0;
-				targetData.lastAttempt= now();
+			lock name="cb-ratelimiter-#hash( realIP )#" type="exclusive" throwontimeout="true" timeout="5" {
+				targetData.attempts    = 0;
+				targetData.lastAttempt = now();
 			}
 		}
 

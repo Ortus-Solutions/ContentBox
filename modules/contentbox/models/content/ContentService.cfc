@@ -41,7 +41,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total content counts according to the passed filters
 	 *
-	 * @siteID The site to filter on
+	 * @siteID     The site to filter on
 	 * @categoryId The category Id to filter on
 	 */
 	numeric function getTotalContentCount( siteID = "", categoryId = "" ){
@@ -106,7 +106,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Clear a specific page wrapper caches according to slug prefix
 	 *
-	 * @slug The slug partial to clean on
+	 * @slug  The slug partial to clean on
 	 * @async Run it asynchronously or not, defaults to false
 	 */
 	ContentService function clearPageWrapperCaches( required any slug, boolean async = false ){
@@ -123,7 +123,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Clear a page wrapper cache for a specific content object
 	 *
-	 * @slug The slug to clear
+	 * @slug  The slug to clear
 	 * @async Run it asynchronously or not, defaults to false
 	 */
 	ContentService function clearPageWrapper( required any slug, boolean async = false ){
@@ -136,20 +136,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Searches published content with cool paramters, remember published content only
 	 *
-	 * @searchTerm The search term to search
-	 * @max The maximum number of records to paginate
-	 * @offset The offset in the pagination
-	 * @asQuery Return as query or array of objects, defaults to array of objects
-	 * @sortOrder The sorting of the search results, defaults to publishedDate DESC
-	 * @isPublished Search for published, non-published or both content objects [true, false, 'all']
+	 * @searchTerm          The search term to search
+	 * @max                 The maximum number of records to paginate
+	 * @offset              The offset in the pagination
+	 * @asQuery             Return as query or array of objects, defaults to array of objects
+	 * @sortOrder           The sorting of the search results, defaults to publishedDate DESC
+	 * @isPublished         Search for published, non-published or both content objects [true, false, 'all']
 	 * @searchActiveContent Search only content titles or both title and active content. Defaults to both.
-	 * @contentTypes Limit search to list of content types (comma-delimited). Leave blank to search all content types
-	 * @excludeIDs List of IDs to exclude from search
-	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
-	 * @siteID The site ID to filter on
-	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
+	 * @contentTypes        Limit search to list of content types (comma-delimited). Leave blank to search all content types
+	 * @excludeIDs          List of IDs to exclude from search
+	 * @showInSearch        If true, it makes sure content has been stored as searchable, defaults to null, which means it searches no matter what this bit says
+	 * @siteID              The site ID to filter on
+	 * @propertyList        A list of properties to retrieve as a projection instead of array of objects
 	 *
-	 * @returns struct = { content, count }
+	 * @return struct = { content, count }
 	 */
 	function searchContent(
 		any searchTerm              = "",
@@ -176,10 +176,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// Published eq true evaluate other params
 			if ( arguments.isPublished ) {
 				c.isLt( "publishedDate", now() )
-					.$or(
-						c.restrictions.isNull( "expireDate" ),
-						c.restrictions.isGT( "expireDate", now() )
-					)
+					.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 					.isEq( "passwordProtection", "" );
 			}
 		}
@@ -247,7 +244,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get an id from a slug of a content object
 	 *
-	 * @slug The slug to search an ID for.
+	 * @slug   The slug to search an ID for.
 	 * @siteID The site this slug belongs to
 	 *
 	 * @return The id of the content object or empty string if not found
@@ -268,9 +265,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * This utility tries to get the content type by id/slug or fails
 	 *
-	 * @throws EntityNotFound
-	 *
 	 * @return The found entity
+	 *
+	 * @throws EntityNotFound
 	 */
 	function getByIdOrSlugOrFail( required id ){
 		var c       = newCriteria();
@@ -283,10 +280,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.get();
 
 		if ( isNull( oEntity ) ) {
-			throw(
-				message = "No entity found for ID/Slug #arguments.id.toString()#",
-				type    = "EntityNotFound"
-			);
+			throw( message = "No entity found for ID/Slug #arguments.id.toString()#", type = "EntityNotFound" );
 		}
 
 		return oEntity;
@@ -296,9 +290,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Find a published content object by slug and published unpublished flags, if not found it returns
 	 * a new content object
 	 *
-	 * @slug The slug to search
+	 * @slug            The slug to search
 	 * @showUnpublished To also show unpublished content, defaults to false.
-	 * @siteID The site this slug belongs to
+	 * @siteID          The site this slug belongs to
 	 *
 	 * @return The content object or a new unpersisted content object
 	 */
@@ -315,10 +309,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.when( !showUnpublished, function( c ){
 				c.isTrue( "isPublished" )
 					.isLT( "publishedDate", now() )
-					.$or(
-						c.restrictions.isNull( "expireDate" ),
-						c.restrictions.isGT( "expireDate", now() )
-					);
+					.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) );
 			} )
 			.get();
 
@@ -329,9 +320,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Verify an incoming slug is unique or not
 	 *
-	 * @slug The slug to search for uniqueness
-	 * @contentID Limit the search to the passed contentID usually for updates
-	 * @siteID The site to filter on
+	 * @slug        The slug to search for uniqueness
+	 * @contentID   Limit the search to the passed contentID usually for updates
+	 * @siteID      The site to filter on
 	 * @contentType The content type uniqueness
 	 *
 	 * @return True if the slug is unique or false if it's already used
@@ -397,18 +388,18 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Find published content objects by different filters and output formats
 	 *
-	 * @max The maximum number of records to paginate
-	 * @offset The offset in the pagination
+	 * @max        The maximum number of records to paginate
+	 * @offset     The offset in the pagination
 	 * @searchTerm The search term to search
-	 * @category The category to filter the content on
-	 * @asQuery Return as query or array of objects, defaults to array of objects
-	 * @sortOrder how we need to sort the results
-	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category   The category to filter the content on
+	 * @asQuery    Return as query or array of objects, defaults to array of objects
+	 * @sortOrder  how we need to sort the results
+	 * @parent     The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
-	 * @siteID If passed, filter by site id
+	 * @siteID     If passed, filter by site id
 	 * @properties The list of properties to project on instead of giving you full object graphs
-	 * @authorID The authorID to filter on
-	 * @criteria The criteria object to use if passed, else we create a new one.
+	 * @authorID   The authorID to filter on
+	 * @criteria   The criteria object to use if passed, else we create a new one.
 	 * @slugSearch If passed, we will search for content items with this field as a full text search on slugs
 	 *
 	 * @return struct as { count, content }
@@ -449,18 +440,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// only published pages
 		c.isTrue( "isPublished" )
 			.isLT( "publishedDate", now() )
-			.$or(
-				c.restrictions.isNull( "expireDate" ),
-				c.restrictions.isGT( "expireDate", now() )
-			)
+			.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 			// only non-password pages
 			.isEq( "passwordProtection", "" )
 			// Category Filter
 			.when( len( arguments.category ), function( c ){
 				// create association with categories by slug.
-				arguments.c
-					.joinTo( "categories", "cats" )
-					.isIn( "cats.slug", listToArray( category ) );
+				arguments.c.joinTo( "categories", "cats" ).isIn( "cats.slug", listToArray( category ) );
 			} )
 			// Search Criteria
 			.when( len( arguments.searchTerm ), function( c ){
@@ -526,7 +512,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Bulk Publish Status Updates
 	 *
 	 * @contentID The list or array of ID's to bulk update
-	 * @status The status either 'publish' or 'draft'
+	 * @status    The status either 'publish' or 'draft'
 	 */
 	any function bulkPublishStatus( required any contentID, required any status ){
 		var publish = false;
@@ -553,7 +539,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get all the expired content in the system by filters
 	 *
 	 * @author The author filtering if passed.
-	 * @max The maximum number of records to return
+	 * @max    The maximum number of records to return
 	 * @offset The pagination offset
 	 * @siteID The site to filter on
 	 */
@@ -596,7 +582,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get all the future published content in the system by filters
 	 *
 	 * @author The author filtering if passed.
-	 * @max The maximum number of records to return
+	 * @max    The maximum number of records to return
 	 * @offset The pagination offset
 	 * @siteID The site to filter on
 	 */
@@ -636,10 +622,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get latest edits according to criteria
 	 *
-	 * @author The author object to use for retrieval
-	 * @isPublished	If passed, check if content is published or in draft mode. Else defaults to all states
-	 * @max The maximum number of records to return
-	 * @siteID The site to get edits from
+	 * @author      The author object to use for retrieval
+	 * @isPublished If passed, check if content is published or in draft mode. Else defaults to all states
+	 * @max         The maximum number of records to return
+	 * @siteID      The site to get edits from
 	 */
 	array function getLatestEdits(
 		any author,
@@ -672,7 +658,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the top visited content entries
 	 *
-	 * @max The maximum to retrieve, defaults to 5 entries
+	 * @max    The maximum to retrieve, defaults to 5 entries
 	 * @siteID The site to filter on
 	 */
 	array function getTopVisitedContent( numeric max = 5, string siteID = "" ){
@@ -687,7 +673,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the top commented content entries
 	 *
-	 * @max The maximum to retrieve, defaults to 5 entries
+	 * @max    The maximum to retrieve, defaults to 5 entries
 	 * @siteID The site to filter on
 	 */
 	array function getTopCommentedContent( numeric max = 5, string siteID = "" ){
@@ -727,11 +713,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -740,10 +726,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message: "Cannot import file as the contents is not JSON",
-				type   : "InvalidImportFormat"
-			);
+			throw( message: "Cannot import file as the contents is not JSON", type: "InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -758,9 +741,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
-	 * @site If passed, we use this specific site, else we discover it via content data
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
+	 * @site       If passed, we use this specific site, else we discover it via content data
 	 *
 	 * @return The console log of the import
 	 */
@@ -788,9 +771,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisContent in arguments.importData ) {
 				// Determine Site if not passed from import data
 				if ( isNull( arguments.site ) ) {
-					logThis(
-						"+ Site not passed, inflating from import data (#thisContent.site.slug#)"
-					);
+					logThis( "+ Site not passed, inflating from import data (#thisContent.site.slug#)" );
 					arguments.site = siteService.getBySlugOrFail( thisContent.site.slug );
 				}
 
@@ -810,9 +791,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 			// Save content
 			if ( !arrayLen( arguments.importData ) ) {
-				logThis(
-					"No content imported as none where found or able to be overriden from the import file."
-				);
+				logThis( "No content imported as none where found or able to be overriden from the import file." );
 			}
 		}
 		// end transaction
@@ -824,11 +803,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import a content object from a ContentBox JSON structure
 	 *
 	 * @contentData The content structure inflated from JSON
-	 * @importLog The string builder import log
-	 * @parent If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
-	 * @newContent Map of new content by slug; useful for avoiding new content collisions with recusive relationships
-	 * @site The site we are using for the content
-	 * @override Are we overriding persisted data or not?
+	 * @importLog   The string builder import log
+	 * @parent      If the inflated content object has a parent then it can be linked directly, no inflating necessary. Usually for recursions
+	 * @newContent  Map of new content by slug; useful for avoiding new content collisions with recusive relationships
+	 * @site        The site we are using for the content
+	 * @override    Are we overriding persisted data or not?
 	 *
 	 * @return The content object representing the struct
 	 */
@@ -951,9 +930,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						relatedContent : oContent
 					} )
 				);
-				logThis(
-					"+ Custom field (#thisCF.key#) imported for : (#thisContent.contentType#:#thisContent.slug#)"
-				);
+				logThis( "+ Custom field (#thisCF.key#) imported for : (#thisContent.contentType#:#thisContent.slug#)" );
 			}
 		}
 
@@ -982,13 +959,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if ( structCount( thisContent.stats ) && thisContent.stats.hits > 0 ) {
 			if ( oContent.hasStats() ) {
 				oContent.getStats().setHits( thisContent.stats.hits );
-				logThis(
-					"+ Content stats found and updated for : (#thisContent.contentType#:#thisContent.slug#)"
-				);
+				logThis( "+ Content stats found and updated for : (#thisContent.contentType#:#thisContent.slug#)" );
 			} else {
-				logThis(
-					"+ Content stats imported for : (#thisContent.contentType#:#thisContent.slug#)"
-				);
+				logThis( "+ Content stats imported for : (#thisContent.contentType#:#thisContent.slug#)" );
 				variables.statsService.save(
 					variables.statsService.new( { hits : thisContent.stats.hits, relatedContent : oContent } )
 				);
@@ -1033,10 +1006,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisRelatedContent in thisContent.relatedContent ) {
 				// if content has already been inflated as part of another process, just use that instance so we don't collide keys
 				if ( structKeyExists( arguments.newContent, thisRelatedContent.slug ) ) {
-					arrayAppend(
-						allRelatedContent,
-						arguments.newContent[ thisRelatedContent.slug ]
-					);
+					arrayAppend( allRelatedContent, arguments.newContent[ thisRelatedContent.slug ] );
 					logThis(
 						"+ Related content (#thisRelatedContent.slug#) already imported, linking to : (#thisContent.contentType#:#thisContent.slug#)"
 					);
@@ -1079,9 +1049,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						.setRelatedContent( oContent );
 				} )
 			);
-			logThis(
-				"+ Content comments imported to: (#thisContent.contentType#:#thisContent.slug#)"
-			);
+			logThis( "+ Content comments imported to: (#thisContent.contentType#:#thisContent.slug#)" );
 		}
 
 		// SUBSCRIPTIONS
@@ -1119,9 +1087,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				);
 			}
 			// oContent.setCommentSubscriptions( allSubscriptions );
-			logThis(
-				"+ Content comment subscriptions imported to: (#thisContent.contentType#:#thisContent.slug#)"
-			);
+			logThis( "+ Content comment subscriptions imported to: (#thisContent.contentType#:#thisContent.slug#)" );
 		}
 
 		// CONTENT VERSIONS
@@ -1141,9 +1107,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						composeRelationships = false
 					);
 					var oEditor = variables.authorService.findByEmail( thisVersion.author.email );
-					return oVersion
-						.setAuthor( isNull( oEditor ) ? oAuthor : oEditor )
-						.setRelatedContent( oContent );
+					return oVersion.setAuthor( isNull( oEditor ) ? oAuthor : oEditor ).setRelatedContent( oContent );
 				} )
 			);
 		}
@@ -1155,7 +1119,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Update a content's hits with some async flava
 	 *
 	 * @content A content object or id to update the hits on
-	 * @async Async or not
+	 * @async   Async or not
 	 */
 	ContentService function updateHits( required content, boolean async = true ){
 		// Inflate it if it's just an ID
@@ -1179,10 +1143,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Returns an array of [contentID, title, slug, createdDate, modifiedDate, featuredImageURL] structures of all the content in the system
 	 *
-	 * @sortOrder The sort ordering of the results
-	 * @isPublished	Show all content or true/false published content
+	 * @sortOrder    The sort ordering of the results
+	 * @isPublished  Show all content or true/false published content
 	 * @showInSearch Show all content or true/false showInSearch flag
-	 * @siteID The site id to use to filter on
+	 * @siteID       The site id to use to filter on
 	 *
 	 * @return Array of content data {contentID, title, slug, createdDate, modifiedDate, featuredImageURL}
 	 */
@@ -1205,10 +1169,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// Published eq true evaluate other params
 			if ( arguments.isPublished ) {
 				c.isLt( "publishedDate", now() )
-					.$or(
-						c.restrictions.isNull( "expireDate" ),
-						c.restrictions.isGT( "expireDate", now() )
-					)
+					.$or( c.restrictions.isNull( "expireDate" ), c.restrictions.isGT( "expireDate", now() ) )
 					.isEq( "passwordProtection", "" );
 			}
 		}
@@ -1229,9 +1190,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		}
 
 		return c
-			.withProjections(
-				property = "contentID,title,slug,createdDate,modifiedDate,featuredImageURL"
-			)
+			.withProjections( property = "contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
 			.asStruct()
 			.list( sortOrder = arguments.sortOrder );
 	}

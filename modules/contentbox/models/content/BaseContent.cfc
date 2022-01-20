@@ -853,6 +853,7 @@ component
 
 	/**
 	 * Inflates from comma-delimited list (or array) of id's
+	 *
 	 * @relatedContent The list or array of relatedContent ids
 	 */
 	BaseContent function inflateRelatedContent( required any relatedContent ){
@@ -1459,6 +1460,7 @@ component
 
 	/**
 	 * add published timestamp to property
+	 *
 	 * @timeString The joined time string (e.g., 12:00)
 	 */
 	any function addJoinedPublishedTime( required string timeString ){
@@ -1492,6 +1494,7 @@ component
 
 	/**
 	 * add expired timestamp to property
+	 *
 	 * @timeString The joined time string (e.g., 12:00)
 	 */
 	any function addJoinedExpiredTime( required string timeString ){

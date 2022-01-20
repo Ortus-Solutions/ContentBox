@@ -46,6 +46,7 @@ component
 
 	/**
 	 * Validate if a media requested exists
+	 *
 	 * @mediaPath.hint the media path to verify if it exists
 	 */
 	boolean function mediaExists( required mediaPath ){
@@ -54,6 +55,7 @@ component
 
 	/**
 	 * Deliver the media
+	 *
 	 * @mediaPath.hint the media path to deliver back to the user
 	 */
 	any function deliverMedia( required mediaPath ){

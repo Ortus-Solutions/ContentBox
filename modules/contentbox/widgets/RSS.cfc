@@ -24,11 +24,12 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * A widget that reads an RSS feed and displays the items
-	 * @feedURL The rss feed URL
-	 * @maxItems The maximum number of items to display, default is 5
-	 * @showBody Show the body of the feed item or not, default is true
+	 *
+	 * @feedURL    The rss feed URL
+	 * @maxItems   The maximum number of items to display, default is 5
+	 * @showBody   Show the body of the feed item or not, default is true
 	 * @linkTarget The link target (HTML) for the RSS item link, defaults to _blank
-	 * @title The title to show before the dropdown or list, defaults to H2
+	 * @title      The title to show before the dropdown or list, defaults to H2
 	 * @titleLevel The H{level} to use, by default we use H2
 	 */
 	any function renderIt(
@@ -75,8 +76,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Build List of rss items
-	 * @entries query
-	 * @showBody show body of content or not
+	 *
+	 * @entries    query
+	 * @showBody   show body of content or not
 	 * @linkTarget the link target
 	 */
 	private function buildList(

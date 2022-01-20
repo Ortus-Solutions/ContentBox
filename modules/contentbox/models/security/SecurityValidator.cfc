@@ -43,16 +43,13 @@ component singleton {
 	 * @return { allow:boolean, type:authentication|authorization, messages:string }
 	 */
 	struct function annotationValidator( required securedValue, required controller ){
-		return validateSecurity(
-			securedValue: arguments.securedValue,
-			controller  : arguments.controller
-		);
+		return validateSecurity( securedValue: arguments.securedValue, controller: arguments.controller );
 	}
 
 	/**
 	 * Validates if a user can access an event. Called via the cbSecurity module.
 	 *
-	 * @rule The security rule being tested for
+	 * @rule       The security rule being tested for
 	 * @controller The ColdBox controller calling the validation
 	 *
 	 * @return Validation struct of: { allow:boolean, type:(authentication|authorization), messages }
@@ -115,9 +112,7 @@ component singleton {
 				.getWireBox()
 				.getInstance( "messagebox@cbmessagebox" )
 				.setMessage(
-					type: (
-						structKeyExists( rule, "messageType" ) && len( rule.messageType ) ? rule.messageType : "info"
-					),
+					type   : ( structKeyExists( rule, "messageType" ) && len( rule.messageType ) ? rule.messageType : "info" ),
 					message: rule.message
 				);
 		}

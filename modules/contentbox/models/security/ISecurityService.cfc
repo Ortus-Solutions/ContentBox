@@ -10,7 +10,7 @@ interface {
 	/**
 	 * Validates if a user can access an event. Called via the cbSecurity module.
 	 *
-	 * @rule The security rule being tested for
+	 * @rule       The security rule being tested for
 	 * @controller The ColdBox controller calling the validation
 	 */
 	boolean function validateSecurity( struct rule, securedValue, any controller );
@@ -38,13 +38,13 @@ interface {
 	 *
 	 * For our RESTFul API, we can do an authenticate and login at the same time.
 	 *
-	 * @username The username to validate
-	 * @password The password to validate
+	 * @username  The username to validate
+	 * @password  The password to validate
 	 * @logThemIn If true, we will log them in automatically, else it will be the caller's job to do so via the `login()` method.
 	 *
-	 * @throws InvalidCredentials
-	 *
 	 * @return User : The logged in user object
+	 *
+	 * @throws InvalidCredentials
 	 */
 	Author function authenticate(
 		required username,
@@ -64,7 +64,7 @@ interface {
 	/**
 	 * Resets a user's password.
 	 *
-	 * @returns {error:boolean, messages:string}
+	 * @return {error:boolean, messages:string}
 	 */
 	struct function resetUserPassword(
 		required token,

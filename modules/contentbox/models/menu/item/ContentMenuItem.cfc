@@ -73,6 +73,7 @@ component
 
 	/**
 	 * Available precheck to determine display-ability of menu item
+	 *
 	 * @options.hint Additional arguments to be used in the method
 	 */
 	public boolean function canDisplay( required struct options = {} ){

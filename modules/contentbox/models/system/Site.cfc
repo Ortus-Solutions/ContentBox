@@ -524,10 +524,10 @@ component
 	}
 
 	/**
-	 * @override
 	 * We make sure we only return pages that have no parent to simulate the root hierarchy.
 	 *
-	 * @root Show only root level pages if enabled
+	 * @override
+	 * @root     Show only root level pages if enabled
 	 */
 	function getPages( boolean root = true ){
 		if ( !arguments.root ) {
@@ -539,10 +539,10 @@ component
 	}
 
 	/**
-	 * @override
 	 * We make sure we only return contentStore that have no parent to simulate the root hierarchy.
 	 *
-	 * @root Show only root level contentStore if enabled
+	 * @override
+	 * @root     Show only root level contentStore if enabled
 	 */
 	function getContentStore( boolean root = true ){
 		if ( !arguments.root ) {

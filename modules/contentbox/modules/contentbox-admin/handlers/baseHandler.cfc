@@ -33,7 +33,7 @@ component extends="coldbox.system.RestHandler" {
 	/**
 	 * Calculate the starting record offset for the incoming page and maxrows per page
 	 *
-	 * @page The page to pagination on
+	 * @page    The page to pagination on
 	 * @maxRows Max rows per page override or use global setting
 	 *
 	 * @return The page start offset

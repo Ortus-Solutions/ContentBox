@@ -21,8 +21,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Renders a ContentBox page by slug name
-	 * @slug.hint The page slug to render
-	 * @slug.optionsUDF getSlugList
+	 *
+	 * @slug.hint         The page slug to render
+	 * @slug.optionsUDF   getSlugList
 	 * @defaultValue.hint The string to show if the page does not exist
 	 */
 	any function renderIt( required string slug, string defaultValue ){
@@ -45,6 +46,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Return an array of slug lists, the @ignore annotation means the ContentBox widget editors do not use it only used internally.
+	 *
 	 * @cbignore
 	 */
 	array function getSlugList(){

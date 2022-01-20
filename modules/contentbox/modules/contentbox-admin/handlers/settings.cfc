@@ -49,6 +49,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Email Testing of settings
+	 *
 	 * @return json
 	 */
 	function emailTest( event, rc, prc ){
@@ -113,6 +114,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Raw settings manager
+	 *
 	 * @return html
 	 */
 	function raw( event, rc, prc ){
@@ -140,6 +142,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Present the raw settings table
+	 *
 	 * @return html
 	 */
 	function rawtable( event, rc, prc ){
@@ -231,6 +234,7 @@ component extends="baseHandler" {
 
 	/**
 	 * WireBox mapping dump
+	 *
 	 * @return html
 	 */
 	function mappingDump( event, rc, prc ){
@@ -310,6 +314,7 @@ component extends="baseHandler" {
 
 	/**
 	 * View settings cached data
+	 *
 	 * @return html
 	 */
 	function viewCached( event, rc, prc ){
@@ -324,6 +329,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Display the auth logs manager
+	 *
 	 * @return html
 	 */
 	function authLogs( event, rc, prc ){

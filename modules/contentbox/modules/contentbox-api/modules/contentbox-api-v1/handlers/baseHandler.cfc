@@ -1,5 +1,4 @@
 /**
- * @see https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
  *
  * This is our base handler for our API which is bassed off the cborm resources base handler.
  *
@@ -32,6 +31,8 @@
  *
  * That's it!  All resource methods: <code>index, create, show, update, delete</code> will be implemented for you.
  * You can create more actions or override them as needed.
+ *
+ * @see https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
  */
 component extends="cborm.models.resources.BaseHandler" {
 
@@ -48,7 +49,7 @@ component extends="cborm.models.resources.BaseHandler" {
 	 * GET /api/v1/{resource}
 	 *
 	 * @criteria If you pass a criteria object, then we will use that instead of creating a new one
-	 * @results If you pass in a results struct, it must contain the following: { count:numeric, records: array of objects }
+	 * @results  If you pass in a results struct, it must contain the following: { count:numeric, records: array of objects }
 	 */
 	function index( event, rc, prc, criteria, struct results ){
 		param rc.page      = 1;
@@ -206,12 +207,12 @@ component extends="cborm.models.resources.BaseHandler" {
 	/**
 	 * This utility tries to get the incoming resource by id or slug or fails
 	 *
-	 * @id The id/slug identifier to retrieve the entity
+	 * @id  The id/slug identifier to retrieve the entity
 	 * @prc The ColdBox PRC
 	 *
-	 * @throws EntityNotFound
-	 *
 	 * @return The found entity
+	 *
+	 * @throws EntityNotFound
 	 */
 	private function getByIdOrSlugOrFail( required id, required prc ){
 		var c       = variables.ormService.newCriteria();
@@ -241,9 +242,9 @@ component extends="cborm.models.resources.BaseHandler" {
 	/**
 	 * This utility tries to get a site by id or slug
 	 *
-	 * @throws EntityNotFound
-	 *
 	 * @return The found site
+	 *
+	 * @throws EntityNotFound
 	 */
 	private function getSiteByIdOrSlugOrFail( required id ){
 		var c     = variables.siteService.newCriteria();

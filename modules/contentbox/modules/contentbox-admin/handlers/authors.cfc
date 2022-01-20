@@ -54,6 +54,7 @@ component extends="baseHandler" {
 
 	/**
 	 * List system authors
+	 *
 	 * @return html
 	 */
 	function index( event, rc, prc ){
@@ -109,6 +110,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Build out system author's table + filters
+	 *
 	 * @return html
 	 */
 	function indexTable( event, rc, prc ){
@@ -198,6 +200,7 @@ component extends="baseHandler" {
 
 	/**
 	 * System username checks
+	 *
 	 * @return json
 	 */
 	function usernameCheck( event, rc, prc ){
@@ -215,6 +218,7 @@ component extends="baseHandler" {
 
 	/**
 	 * System email checks
+	 *
 	 * @return json
 	 */
 	function emailCheck( event, rc, prc ){
@@ -337,6 +341,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Author editor panel
+	 *
 	 * @return html
 	 */
 	function editor( event, rc, prc ){
@@ -411,6 +416,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Shortcut to author profile
+	 *
 	 * @return html
 	 */
 	function myprofile( event, rc, prc ){
@@ -765,6 +771,7 @@ component extends="baseHandler" {
 
 	/**
 	 * List author preferences
+	 *
 	 * @return view
 	 */
 	private function listPreferences( event, rc, prc ){

@@ -42,10 +42,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	function isUserAgentABot(){
 		var userAgent = lCase( CGI.http_user_agent );
-		var aBotRegex = listToArray(
-			settingService.getSetting( "cb_content_bot_regex" ),
-			chr( 13 )
-		);
+		var aBotRegex = listToArray( settingService.getSetting( "cb_content_bot_regex" ), chr( 13 ) );
 		// iterate and try to match
 		for ( var thisBot in aBotRegex ) {
 			if ( arrayLen( reMatch( thisBot, userAgent ) ) gt 0 ) {
@@ -79,9 +76,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		if ( variables.settingService.getSetting( "cb_content_hit_count" ) ) {
 			try {
 				// try to match a bot? or ignored bots?
-				if (
-					variables.settingService.getSetting( "cb_content_hit_ignore_bots" ) OR !isUserAgentABot()
-				) {
+				if ( variables.settingService.getSetting( "cb_content_hit_ignore_bots" ) OR !isUserAgentABot() ) {
 					var q = new Query(
 						sql = "UPDATE cb_stats
 							SET hits = hits + 1,

@@ -243,14 +243,15 @@ component extends="baseHandler" {
 
 	/**
 	 * This viewlet shows latest content edits via arguments
-	 * @author 				The optional author to look for latest edits only
-	 * @author.generic 		contentbox.models.security.Author
-	 * @isPublished 			Boolean indicator if you need to search on all published states, only published, or only draft
-	 * @max 					The maximum number of records, capped at 25 by default
-	 * @showHits 			Show hit count on content item, defaults to true
-	 * @colorCodings 		Show content row color codings
-	 * @showPublishedStatus 	Show published status columns
-	 * @showAuthor 			Show the author in the table
+	 *
+	 * @author              The optional author to look for latest edits only
+	 * @author.generic      contentbox.models.security.Author
+	 * @isPublished         Boolean indicator if you need to search on all published states, only published, or only draft
+	 * @max                 The maximum number of records, capped at 25 by default
+	 * @showHits            Show hit count on content item, defaults to true
+	 * @colorCodings        Show content row color codings
+	 * @showPublishedStatus Show published status columns
+	 * @showAuthor          Show the author in the table
 	 *
 	 * @return html
 	 */
@@ -304,15 +305,15 @@ component extends="baseHandler" {
 	/**
 	 * This viewlet shows future or expired content using filters. By default it shows future published content
 	 *
-	 * @author 				The optional author to look for latest edits only
-	 * @author.generic 		contentbox.models.security.Author
-	 * @showExpired 			Show expired content, defaults to false (future published content)
-	 * @offset 				The offset when doing pagination
-	 * @max 					The maximum number of records, capped at 25 by default
-	 * @showHits 			Show hit count on content item, defaults to true
-	 * @colorCodings 		Show content row color codings
-	 * @showPublishedStatus 	Show published status columns
-	 * @showAuthor 			Show the author in the table
+	 * @author              The optional author to look for latest edits only
+	 * @author.generic      contentbox.models.security.Author
+	 * @showExpired         Show expired content, defaults to false (future published content)
+	 * @offset              The offset when doing pagination
+	 * @max                 The maximum number of records, capped at 25 by default
+	 * @showHits            Show hit count on content item, defaults to true
+	 * @colorCodings        Show content row color codings
+	 * @showPublishedStatus Show published status columns
+	 * @showAuthor          Show the author in the table
 	 *
 	 * @return html
 	 */

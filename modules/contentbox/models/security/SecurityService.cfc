@@ -66,10 +66,7 @@ component singleton {
 	 */
 	Author function getAuthorSession(){
 		// Check if valid author id in session or request respectively
-		var oAuthor = variables.requestStorage.get(
-			variables.AUTHOR_KEY,
-			variables.authorService.new()
-		);
+		var oAuthor = variables.requestStorage.get( variables.AUTHOR_KEY, variables.authorService.new() );
 		if ( oAuthor.isLoggedIn() ) {
 			return oAuthor;
 		}
@@ -139,13 +136,13 @@ component singleton {
 	 *
 	 * For our RESTFul API, we can do an authenticate and login at the same time.
 	 *
-	 * @username The username to validate
-	 * @password The password to validate
+	 * @username  The username to validate
+	 * @password  The password to validate
 	 * @logThemIn If true, we will log them in automatically, else it will be the caller's job to do so via the `login()` method.
 	 *
-	 * @throws InvalidCredentials
-	 *
 	 * @return User : The logged in user object
+	 *
+	 * @throws InvalidCredentials
 	 */
 	Author function authenticate(
 		required username,
@@ -165,10 +162,7 @@ component singleton {
 
 		// Validate password using bcrypt
 		try {
-			var isSamePassword = variables.bcrypt.checkPassword(
-				arguments.password,
-				oAuthor.getPassword()
-			);
+			var isSamePassword = variables.bcrypt.checkPassword( arguments.password, oAuthor.getPassword() );
 		} catch ( any e ) {
 			var isSamePassword = false;
 		}
@@ -208,11 +202,9 @@ component singleton {
 	 * @author The author to create the reset token for.
 	 */
 	string function generateResetToken( required Author author ){
-		var tokenTimeout = variables.settingService.getSetting(
-			"cb_security_password_reset_expiration"
-		);
+		var tokenTimeout = variables.settingService.getSetting( "cb_security_password_reset_expiration" );
 		// Store Security Token For X minutes
-		var token = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
+		var token        = hash( arguments.author.getEmail() & arguments.author.getAuthorID() & now() );
 		cache.set(
 			"reset-token-#token#",
 			arguments.author.getAuthorID(),
@@ -225,9 +217,10 @@ component singleton {
 	/**
 	 * Send password reminder email, this verifies that the email is valid and they must click on the token
 	 * link in order to reset their password.
-	 * @author 		The author to send the reminder to
-	 * @adminIssued 	Was this reset issued by a user or an admin
-	 * @issuer 		The admin that issued the reset
+	 *
+	 * @author      The author to send the reminder to
+	 * @adminIssued Was this reset issued by a user or an admin
+	 * @issuer      The admin that issued the reset
 	 *
 	 * @return The mailing results of the password reminder: struct.
 	 */
@@ -249,10 +242,7 @@ component singleton {
 			ip          : getRealIP(),
 			linkTimeout : settings.cb_security_password_reset_expiration,
 			siteName    : defaultSite.getName(),
-			linkToken   : CBHelper.linkAdmin(
-				event = "security.verifyReset",
-				ssl   = settings.cb_admin_ssl
-			) & "?token=#token#",
+			linkToken   : CBHelper.linkAdmin( event = "security.verifyReset", ssl = settings.cb_admin_ssl ) & "?token=#token#",
 			issuedBy    : "",
 			issuedEmail : ""
 		};
@@ -298,9 +288,10 @@ component singleton {
 	/**
 	 * This function validates an incoming pw reset token to figure out their user.
 	 * The token is not removed just yet. It will be removed once the password has been reset.
+	 *
 	 * @token The security token
 	 *
-	 * @returns {error, author}
+	 * @return {error, author}
 	 */
 	struct function validateResetToken( required token ){
 		var results  = { "error" : false, "author" : "" };
@@ -325,8 +316,9 @@ component singleton {
 
 	/**
 	 * Resets a user's password.
-	 * @token 	Security token
-	 * @author 	The author you are reseting the password for
+	 *
+	 * @token    Security token
+	 * @author   The author you are reseting the password for
 	 * @password The password you have chosen
 	 *
 	 * @return {error:boolean, messages:string}
@@ -402,7 +394,8 @@ component singleton {
 
 	/**
 	 * Check to authorize a user to view a content entry or page
-	 * @content The content object
+	 *
+	 * @content  The content object
 	 * @password The password to check
 	 */
 	boolean function authorizeContent( required content, required password ){
@@ -421,13 +414,11 @@ component singleton {
 
 	/**
 	 * Checks Whether a content entry or page is protected and user has credentials for it
+	 *
 	 * @content The content object to check
 	 */
 	boolean function isContentViewable( required content ){
-		var protectedHash = cacheStorage.get(
-			"protection-#hash( arguments.content.getSlug() )#",
-			""
-		);
+		var protectedHash = cacheStorage.get( "protection-#hash( arguments.content.getSlug() )#", "" );
 		// check hash against validated content
 		if ( compare( protectedHash, getContentProtectedHash( arguments.content ) ) EQ 0 ) {
 			return true;
@@ -437,13 +428,11 @@ component singleton {
 
 	/**
 	 * Get password content protected salt
+	 *
 	 * @content The content object
 	 */
 	private string function getContentProtectedHash( required content ){
-		return hash(
-			arguments.content.getSlug() & arguments.content.getPasswordProtection(),
-			"SHA-256"
-		);
+		return hash( arguments.content.getSlug() & arguments.content.getPasswordProtection(), "SHA-256" );
 	}
 
 	/**
@@ -473,10 +462,7 @@ component singleton {
 			return decryptIt( cookieValue );
 		} catch ( Any e ) {
 			// Errors on decryption
-			log.error(
-				"Error decrypting Keep Me Logged in key: #e.message# #e.detail#",
-				cookieValue
-			);
+			log.error( "Error decrypting Keep Me Logged in key: #e.message# #e.detail#", cookieValue );
 			cookieStorage.delete( "contentbox_keep_logged_in" );
 			return "";
 		}
@@ -484,8 +470,9 @@ component singleton {
 
 	/**
 	 * Set remember me cookie
+	 *
 	 * @username The username to store
-	 * @days The days to store
+	 * @days     The days to store
 	 */
 	SecurityService function setRememberMe( required username, required numeric days = 0 ){
 		// If the user now only wants to be remembered for this session, remove any existing cookies.
@@ -522,6 +509,7 @@ component singleton {
 
 	/**
 	 * ContentBox encryption
+	 *
 	 * @encValue value to encrypt
 	 */
 	string function encryptIt( required encValue ){
@@ -539,6 +527,7 @@ component singleton {
 
 	/**
 	 * ContentBox Decryption
+	 *
 	 * @decValue value to decrypt
 	 */
 	string function decryptIt( required decValue ){

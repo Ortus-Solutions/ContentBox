@@ -195,9 +195,7 @@ component
 	numeric function getNumberOfPublishedContentStore(){
 		// Caching per load basis
 		if ( !len( variables.numberOfPublishedContentStore ) ) {
-			variables.numberOfPublishedContentStore = getNumberOfPublishedContent(
-				variables.contentStoreService
-			);
+			variables.numberOfPublishedContentStore = getNumberOfPublishedContent( variables.contentStoreService );
 		}
 		return variables.numberOfPublishedContentStore;
 	}
@@ -208,9 +206,7 @@ component
 	numeric function getNumberOfPublishedEntries(){
 		// Caching per load basis
 		if ( !len( variables.numberOfPublishedEntries ) ) {
-			variables.numberOfPublishedEntries = getNumberOfPublishedContent(
-				variables.entryService
-			);
+			variables.numberOfPublishedEntries = getNumberOfPublishedContent( variables.entryService );
 		}
 		return variables.numberOfPublishedEntries;
 	}

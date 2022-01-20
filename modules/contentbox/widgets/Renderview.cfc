@@ -22,14 +22,14 @@ component extends="contentbox.models.ui.BaseWidget" {
 	/**
 	 * Render the widget out
 	 *
-	 * @view The named path of the view to render
-	 * @cache Cache the contents of the render view or not, by default it is false
-	 * @cacheTimeout The cache timeout in minutes
+	 * @view                   The named path of the view to render
+	 * @cache                  Cache the contents of the render view or not, by default it is false
+	 * @cacheTimeout           The cache timeout in minutes
 	 * @cacheLastAccessTimeout The cache idle timeout in minutes
-	 * @cacheSuffix A suffix for the cache entry
-	 * @module The name of the module to render the view from
-	 * @args The arguments to pass to the view, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
-	 * @prePostExempt If true, pre/post view interceptors will not be fired. By default they do fire
+	 * @cacheSuffix            A suffix for the cache entry
+	 * @module                 The name of the module to render the view from
+	 * @args                   The arguments to pass to the view, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
+	 * @prePostExempt          If true, pre/post view interceptors will not be fired. By default they do fire
 	 */
 	any function renderIt(
 		required string view,

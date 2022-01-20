@@ -9,9 +9,9 @@ component extends="baseHandler" {
 	/**
 	 * Login to ContentBox and get your JWT Token
 	 *
-	 * @tags Authentication
+	 * @tags        Authentication
 	 * @requestBody contentbox/apidocs/auth/login/requestBody.json
-	 * @responses contentbox/apidocs/auth/login/responses.json
+	 * @responses   contentbox/apidocs/auth/login/responses.json
 	 */
 	function login( event, rc, prc ){
 		param rc.username       = "";

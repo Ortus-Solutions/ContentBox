@@ -25,9 +25,8 @@ component extends="tests.resources.BaseTest" {
 		describe( "Two Factor Services", function(){
 			beforeEach( function( currentSpec ){
 				model        = prepareMock( getInstance( "TwoFactorService@contentbox" ) );
-				mockProvider = createStub(
-					implements = "contentbox.models.security.twofactor.ITwoFactorProvider"
-				).$( "getName", "email" )
+				mockProvider = createStub( implements = "contentbox.models.security.twofactor.ITwoFactorProvider" )
+					.$( "getName", "email" )
 					.$( "getDisplayName", "email" )
 					.$( "allowTrustedDevice", true );
 				// Register a mock provider for testing usages
@@ -66,9 +65,9 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can unregister providers", function(){
-				var provider = createStub(
-					implements = "contentbox.models.security.twofactor.ITwoFactorProvider"
-				).$( "getName", "mock" ).$( "getDisplayName", "mock" );
+				var provider = createStub( implements = "contentbox.models.security.twofactor.ITwoFactorProvider" )
+					.$( "getName", "mock" )
+					.$( "getDisplayName", "mock" );
 
 				model.registerProvider( provider );
 				model.unRegisterProvider( "mock" );

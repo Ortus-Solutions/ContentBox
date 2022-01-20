@@ -53,10 +53,7 @@ component
 	 * if none is set, we use the `default` site.
 	 */
 	function getCurrentWorkingsiteID(){
-		return variables.cookieStorage.get(
-			name        : "contentbox_admin_current_site",
-			defaultValue: getDefaultsiteID()
-		);
+		return variables.cookieStorage.get( name: "contentbox_admin_current_site", defaultValue: getDefaultsiteID() );
 	}
 
 	/**
@@ -89,7 +86,7 @@ component
 	 * Save a site object in the system. If the site is a new site,
 	 * we make sure all proper settings are created and configured.
 	 *
-	 * @site A persisted or new site object
+	 * @site          A persisted or new site object
 	 * @transactional Transaction the call or leave as is, useful for imports, bulk saves, etc.
 	 */
 	Site function save( required site, boolean transactional = true ){
@@ -136,10 +133,7 @@ component
 		super.save( arguments.site );
 
 		// Activate the site's theme
-		variables.themeService.startupTheme(
-			name: arguments.site.getActiveTheme(),
-			site: arguments.site
-		);
+		variables.themeService.startupTheme( name: arguments.site.getActiveTheme(), site: arguments.site );
 
 		// Create media root folder for the site
 		ensureSiteMediaFolder( arguments.site );
@@ -242,10 +236,7 @@ component
 			return site;
 		}
 
-		throw(
-			type   : "EntityNotFound",
-			message: "No site with ID #arguments.siteID.toString()# found"
-		);
+		throw( type: "EntityNotFound", message: "No site with ID #arguments.siteID.toString()# found" );
 	}
 
 	/**
@@ -262,10 +253,7 @@ component
 			return site;
 		}
 
-		throw(
-			type   : "EntityNotFound",
-			message: "No site with slug #arguments.slug.toString()# found"
-		);
+		throw( type: "EntityNotFound", message: "No site with slug #arguments.slug.toString()# found" );
 	}
 
 	/**
@@ -286,10 +274,7 @@ component
 		if (
 			structKeyExists( variables.loadedModules, "contentbox-admin" )
 			&&
-			findNoCase(
-				variables.loadedModules[ "contentbox-admin" ].entryPoint,
-				event.getCurrentRoutedUrl()
-			)
+			findNoCase( variables.loadedModules[ "contentbox-admin" ].entryPoint, event.getCurrentRoutedUrl() )
 		) {
 			return getCurrentWorkingSite();
 		}
@@ -347,11 +332,11 @@ component
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -360,10 +345,7 @@ component
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message: "Cannot import file as the contents is not JSON",
-				type   : "InvalidImportFormat"
-			);
+			throw( message: "Cannot import file as the contents is not JSON", type: "InvalidImportFormat" );
 		}
 
 		variables.logger.info( "Site import from file requested." );
@@ -380,8 +362,8 @@ component
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
 	 *
 	 * @return The console log of the import
 	 */
@@ -395,9 +377,7 @@ component
 			arguments.importData = [ arguments.importData ];
 		}
 
-		variables.logger.info(
-			"+ Site import will try to import (#arrayLen( arguments.importData )#) sites."
-		);
+		variables.logger.info( "+ Site import will try to import (#arrayLen( arguments.importData )#) sites." );
 
 		transaction {
 			// iterate and import
@@ -445,10 +425,10 @@ component
 	/**
 	 * Import a site into ContentBox.
 	 *
-	 * @site The site object that will be used to import
-	 * @memento The site memento that we will import
+	 * @site      The site object that will be used to import
+	 * @memento   The site memento that we will import
 	 * @importLog The string buffer that represents the import log
-	 * @override Override content if found in the database, defaults to false
+	 * @override  Override content if found in the database, defaults to false
 	 */
 	function importSite(
 		required site,
@@ -515,9 +495,7 @@ component
 			if ( arrayLen( siteData.categories ) ) {
 				oSite.setCategories(
 					siteData.categories.map( function( thisCategory ){
-						logThis(
-							"+ Importing category: (#thisCategory.slug#) to site #oSite.getSlug()#"
-						);
+						logThis( "+ Importing category: (#thisCategory.slug#) to site #oSite.getSlug()#" );
 						if ( oSite.isLoaded() ) {
 							return variables.categoryService.getOrCreateBySlug(
 								category: thisCategory.slug,
@@ -536,15 +514,11 @@ component
 
 			// Note it for persistence so we can do the rest of the relationships
 			this.save( oSite );
-			logThis(
-				"+ Site (#oSite.getSlug()#) saved to session, starting to import content now..."
-			);
+			logThis( "+ Site (#oSite.getSlug()#) saved to session, starting to import content now..." );
 
 			// IMPORT MENUS
 			if ( arrayLen( siteData.menus ) ) {
-				logThis(
-					"+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#"
-				);
+				logThis( "+ Importing menus (#arrayLen( siteData.menus )#) to site #arguments.site.getSlug()#" );
 				getWireBox()
 					.getInstance( "menuService@contentbox" )
 					.importFromData(
@@ -554,18 +528,14 @@ component
 						site      : oSite
 					);
 
-				logThis(
-					"+ Imported (#arrayLen( siteData.menus )#) menus to site #arguments.site.getSlug()#"
-				);
+				logThis( "+ Imported (#arrayLen( siteData.menus )#) menus to site #arguments.site.getSlug()#" );
 			} else {
 				logThis( "!! No menus found on import data, skipping..." );
 			}
 
 			// IMPORT ENTRIES
 			if ( arrayLen( siteData.entries ) ) {
-				logThis(
-					"+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#"
-				);
+				logThis( "+ Importing entries (#arrayLen( siteData.entries )#) to site #arguments.site.getSlug()#" );
 				getWireBox()
 					.getInstance( "entryService@contentbox" )
 					.importFromData(
@@ -574,18 +544,14 @@ component
 						importLog : arguments.importLog,
 						site      : oSite
 					);
-				logThis(
-					"+ Imported (#arrayLen( siteData.entries )#) entries to site #arguments.site.getSlug()#"
-				);
+				logThis( "+ Imported (#arrayLen( siteData.entries )#) entries to site #arguments.site.getSlug()#" );
 			} else {
 				logThis( "!! No entries found on import data, skipping..." );
 			}
 
 			// IMPORT PAGES
 			if ( arrayLen( siteData.pages ) ) {
-				logThis(
-					"+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#"
-				);
+				logThis( "+ Importing pages (#arrayLen( siteData.pages )#) to site #arguments.site.getSlug()#" );
 				getWireBox()
 					.getInstance( "pageService@contentbox" )
 					.importFromData(
@@ -595,9 +561,7 @@ component
 						site      : oSite
 					);
 
-				logThis(
-					"+ Imported (#arrayLen( siteData.pages )#) pages to site #arguments.site.getSlug()#"
-				);
+				logThis( "+ Imported (#arrayLen( siteData.pages )#) pages to site #arguments.site.getSlug()#" );
 			} else {
 				logThis( "!! No pages found on import data, skipping..." );
 			}

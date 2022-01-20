@@ -82,9 +82,7 @@ component accessors="true" extends="BaseRenderer" {
 
 				// lucee 4.5 split due to invoke bug
 				if ( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ) {
-					widgetContent = evaluate(
-						"oWidget.#oWidgetMethod#( argumentCollection=tagAttributes )"
-					);
+					widgetContent = evaluate( "oWidget.#oWidgetMethod#( argumentCollection=tagAttributes )" );
 				} else {
 					// Render out the widgets
 					widgetContent = invoke( oWidget, oWidgetMethod, tagAttributes );
@@ -214,10 +212,7 @@ component accessors="true" extends="BaseRenderer" {
 					);
 					oWidgetMethod = getToken( widgetName, 2, "." );
 				} else if ( isModuleWidget ) {
-					oWidget = widgetService.getWidget(
-						name = widgetName & "@" & moduleName,
-						type = "module"
-					);
+					oWidget       = widgetService.getWidget( name = widgetName & "@" & moduleName, type = "module" );
 					oWidgetMethod = widgetArgs.widgetUDF;
 				} else if ( isThemeWidget ) {
 					oWidget       = widgetService.getWidget( name = widgetName, type = "theme" );
@@ -232,9 +227,7 @@ component accessors="true" extends="BaseRenderer" {
 
 				// lucee 4.5 split due to invoke bug
 				if ( server.keyExists( "lucee" ) and server.lucee.version.getToken( 1, "." ) == 4 ) {
-					widgetContent = evaluate(
-						"oWidget.#oWidgetMethod#( argumentCollection=widgetArgs )"
-					);
+					widgetContent = evaluate( "oWidget.#oWidgetMethod#( argumentCollection=widgetArgs )" );
 				} else {
 					// Render out the widgets
 					widgetContent = invoke( oWidget, oWidgetMethod, widgetArgs );

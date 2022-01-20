@@ -139,7 +139,7 @@ component accessors="true" {
 	 * Create global settings from setup
 	 *
 	 * @setup The setup object
-	 * @site The site object
+	 * @site  The site object
 	 */
 	function createSettings( required setup, required site ){
 		var settings = {
@@ -167,6 +167,7 @@ component accessors="true" {
 
 	/**
 	 * Create security rules
+	 *
 	 * @setup The setup object
 	 */
 	function createSecurityRules( required setup ){
@@ -189,6 +190,7 @@ component accessors="true" {
 
 	/**
 	 * Process ColdBox Passwords
+	 *
 	 * @setup The setup object
 	 */
 	function processColdBoxPasswords( required setup ){
@@ -205,6 +207,7 @@ component accessors="true" {
 
 	/**
 	 * Process Rewrite Scripts
+	 *
 	 * @setup The setup object
 	 */
 	function processRewrite( required setup ){
@@ -242,6 +245,7 @@ component accessors="true" {
 
 	/**
 	 * Create permissions
+	 *
 	 * @setup The setup object
 	 */
 	function createPermissions( required setup ){
@@ -305,6 +309,7 @@ component accessors="true" {
 
 	/**
 	 * Create roles and return the admin
+	 *
 	 * @setup The setup object
 	 */
 	function createRoles( required setup ){
@@ -312,9 +317,7 @@ component accessors="true" {
 		createPermissions( arguments.setup );
 
 		// Create Editor
-		var oRole = roleService.new(
-			properties = { role : "Editor", description : "A ContentBox editor" }
-		);
+		var oRole = roleService.new( properties = { role : "Editor", description : "A ContentBox editor" } );
 		// Add Editor Permissions
 		oRole.addPermission( permissions[ "COMMENTS_ADMIN" ] );
 		oRole.addPermission( permissions[ "CONTENTSTORE_EDITOR" ] );
@@ -360,7 +363,7 @@ component accessors="true" {
 	/**
 	 * Create author
 	 *
-	 * @setup The setup object
+	 * @setup     The setup object
 	 * @adminRole The role of the admin string
 	 */
 	function createAuthor( required setup, required adminRole ){
@@ -375,16 +378,13 @@ component accessors="true" {
 	/**
 	 * Create Sample Data
 	 *
-	 * @setup The setup object
+	 * @setup  The setup object
 	 * @author The author created
-	 * @site The default site
+	 * @site   The default site
 	 */
 	function createSampleData( required setup, required author, required site ){
 		// create a few categories
-		variables.categoryService.createCategories(
-			"News, ColdFusion, ColdBox, ContentBox",
-			arguments.site
-		);
+		variables.categoryService.createCategories( "News, ColdFusion, ColdBox, ContentBox", arguments.site );
 
 		// create some blog entries
 		var entry = entryService.new(

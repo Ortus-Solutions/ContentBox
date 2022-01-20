@@ -37,13 +37,8 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an valid id", function(){
 					then( "then I should get the requested page", function(){
 						var testContent = variables.pageService.findWhere( { slug : "products" } );
-						var event       = this.get(
-							"/cbapi/v1/sites/default/pages/#testContent.getContentID()#"
-						);
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						var event       = this.get( "/cbapi/v1/sites/default/pages/#testContent.getContentID()#" );
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData().slug ).toBe( "products" );
 						expect( event.getResponse().getData() ).toHaveKey(
 							"activeContent,children,customFields,linkedContent,relatedContent,renderedContent"
@@ -53,10 +48,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "a valid slug", function(){
 					then( "then I should get the requested page", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages/products" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData().slug ).toBe( "products" );
 						expect( event.getResponse().getData() ).toHaveKey(
 							"activeContent,children,customFields,linkedContent,relatedContent,renderedContent"
@@ -66,10 +58,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages/123kkdabugosu" );
-						expect( event.getResponse() ).toHaveStatus(
-							404,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 404, event.getResponse().getMessagesString() );
 					} );
 				} );
 			} ); // end story view site by id or slug
@@ -78,23 +67,15 @@ component extends="tests.resources.BaseApiTest" {
 				given( "no options", function(){
 					then( "it can display all items with default filters", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
 					} );
 				} );
 				given( "a parent search", function(){
 					then( "it can display pages from a parent", function(){
 						var testContent = variables.pageService.findWhere( { slug : "products" } );
-						var event       = this.get(
-							"/cbapi/v1/sites/default/pages?parent=#testContent.getContentID()#"
-						);
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						var event       = this.get( "/cbapi/v1/sites/default/pages?parent=#testContent.getContentID()#" );
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						event
 							.getResponse()
 							.getData()
@@ -106,40 +87,28 @@ component extends="tests.resources.BaseApiTest" {
 				given( "a content search", function(){
 					then( "it can find the page", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages?search=products" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
 					} );
 				} );
 				given( "a slug prefix search", function(){
 					then( "it can find the pages", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages?slugPrefix=products" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
 					} );
 				} );
 				given( "a slug search", function(){
 					then( "it can find the pages", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages?slugSearch=products" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData() ).toBeArray().notToBeEmpty();
 					} );
 				} );
 				given( "a show on menu search", function(){
 					then( "it can find pages with showInMenu = false", function(){
 						var event = this.get( "/cbapi/v1/sites/default/pages?showInMenu=false" );
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getData() ).toBeArray().toBeEmpty();
 					} );
 				} );
@@ -156,37 +125,26 @@ component extends="tests.resources.BaseApiTest" {
 									slug          : "bddtest",
 									excerpt       : "bdd rules!",
 									content       : "This is my awesome bdd test page",
-									publishedDate : dateTimeFormat(
-										now(),
-										"yyyy-mm-dd'T'HH:mm:ssZ",
-										"UTC"
-									),
-									layout       : "pages",
-									showInMenu   : "false",
-									changelog    : "My first creation from the bdd test",
-									categories   : "coldbox,news",
-									customFields : [
+									publishedDate : dateTimeFormat( now(), "yyyy-mm-dd'T'HH:mm:ssZ", "UTC" ),
+									layout        : "pages",
+									showInMenu    : "false",
+									changelog     : "My first creation from the bdd test",
+									categories    : "coldbox,news",
+									customFields  : [
 										{ key : "test", value : "true" },
 										{ key : "data", value : "#now()#" }
 									]
 								}
 							);
-							expect( event.getResponse() ).toHaveStatus(
-								200,
-								event.getResponse().getMessagesString()
-							);
+							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 							debug( event.getResponse().getData() );
 							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
 							expect( event.getResponse().getData().excerpt ).toInclude( "bdd" );
 							expect( event.getResponse().getData().showInMenu ).toBeFalse();
 							expect( event.getResponse().getData().layout ).toBe( "pages" );
-							expect( event.getResponse().getData().categories )
-								.toBeArray()
-								.notToBeEmpty();
-							expect( event.getResponse().getData().customFields )
-								.toBeStruct()
-								.notToBeEmpty();
+							expect( event.getResponse().getData().categories ).toBeArray().notToBeEmpty();
+							expect( event.getResponse().getData().customFields ).toBeStruct().notToBeEmpty();
 						} );
 					} );
 				} );
@@ -201,28 +159,17 @@ component extends="tests.resources.BaseApiTest" {
 								order   : 10
 							}
 						);
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
 				given( "no content on a new content object", function(){
 					then( "it should display an error message", function(){
-						var event = this.post(
-							"cbapi/v1/sites/default/pages",
-							{ slug : "A nice site" }
-						);
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
+						var event = this.post( "cbapi/v1/sites/default/pages", { slug : "A nice site" } );
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
 						debug( event.getResponse().getMemento() );
 
-						expect( event.getResponse().getMessages() ).toInclude(
-							"content is required"
-						);
+						expect( event.getResponse().getMessages() ).toInclude( "content is required" );
 					} );
 				} );
 				given( "invalid data but good content", function(){
@@ -231,10 +178,7 @@ component extends="tests.resources.BaseApiTest" {
 							"cbapi/v1/sites/default/pages",
 							{ content : "Hello from bdd test land!" }
 						);
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is required" );
 						expect( event.getResponse() ).toHaveInvalidData( "title", "is required" );
 					} );
@@ -252,16 +196,11 @@ component extends="tests.resources.BaseApiTest" {
 									changelog : "Update from a bdd test!"
 								}
 							);
-							expect( event.getResponse() ).toHaveStatus(
-								200,
-								event.getResponse().getMessagesString()
-							);
+							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 							expect( event.getResponse().getData().renderedContent ).toInclude(
 								"I am a new piece of content for the products!"
 							);
-							expect( event.getResponse().getData().activeContent.changelog ).toInclude(
-								"bdd test"
-							);
+							expect( event.getResponse().getData().activeContent.changelog ).toInclude( "bdd test" );
 						} );
 					} );
 				} );
@@ -275,23 +214,14 @@ component extends="tests.resources.BaseApiTest" {
 								content : "Products are here"
 							}
 						);
-						expect( event.getResponse() ).toHaveStatus(
-							400,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
-						var event = this.put(
-							"/cbapi/v1/sites/default/pages/bogusbaby",
-							{ content : "bogus" }
-						);
-						expect( event.getResponse() ).toHaveStatus(
-							404,
-							event.getResponse().getMessagesString()
-						);
+						var event = this.put( "/cbapi/v1/sites/default/pages/bogusbaby", { content : "bogus" } );
+						expect( event.getResponse() ).toHaveStatus( 404, event.getResponse().getMessagesString() );
 					} );
 				} );
 			} ); // end edit story
@@ -304,33 +234,21 @@ component extends="tests.resources.BaseApiTest" {
 								title         : "bddtest",
 								slug          : "bddtest",
 								content       : "This is my awesome bdd test page",
-								publishedDate : dateTimeFormat(
-									now(),
-									"yyyy-mm-dd'T'HH:mm:ssZ",
-									"UTC"
-								),
-								changelog : "My first creation from the bdd test",
-								site      : variables.siteService.getDefaultSite(),
-								creator   : variables.loggedInData.user
+								publishedDate : dateTimeFormat( now(), "yyyy-mm-dd'T'HH:mm:ssZ", "UTC" ),
+								changelog     : "My first creation from the bdd test",
+								site          : variables.siteService.getDefaultSite(),
+								creator       : variables.loggedInData.user
 							} )
 						);
-						var event = this.delete(
-							"/cbapi/v1/sites/default/pages/#testContent.getContentID()#"
-						);
-						expect( event.getResponse() ).toHaveStatus(
-							200,
-							event.getResponse().getMessagesString()
-						);
+						var event = this.delete( "/cbapi/v1/sites/default/pages/#testContent.getContentID()#" );
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
 						expect( event.getResponse().getMessagesString() ).toInclude( "deleted" );
 					} );
 				} );
 				given( "an invalid id or slug", function(){
 					then( "then I should see an error message", function(){
 						var event = this.delete( "/cbapi/v1/sites/default/pages/bogusbogus" );
-						expect( event.getResponse() ).toHaveStatus(
-							404,
-							event.getResponse().getMessagesString()
-						);
+						expect( event.getResponse() ).toHaveStatus( 404, event.getResponse().getMessagesString() );
 					} );
 				} );
 			} ); // end delete story

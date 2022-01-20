@@ -13,10 +13,7 @@ component extends="tests.resources.BaseTest" {
 			beforeEach( function( currentSpec ){
 				model              = prepareMock( getInstance( "AdminMenuService@contentbox" ) );
 				prc                = getRequestContext().getPrivateCollection();
-				prc.oCurrentAuthor = prepareMock( entityNew( "cbAuthor" ) ).$(
-					"checkPermission",
-					true
-				);
+				prc.oCurrentAuthor = prepareMock( entityNew( "cbAuthor" ) ).$( "checkPermission", true );
 			} );
 
 			it( "can generate the menu", function(){

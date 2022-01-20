@@ -20,7 +20,7 @@ component singleton {
 	 * Constructor
 	 *
 	 * @settingService.inject id:settingService@contentbox
-	 * @cacheBox.inject cachebox
+	 * @cacheBox.inject       cachebox
 	 */
 	RSSService function init( required settingService, required cacheBox ){
 		// Dependencies
@@ -40,7 +40,7 @@ component singleton {
 	 * Clean RSS caches asynchronously
 	 *
 	 * @comments Clear comment caches or not, defaults to false
-	 * @slug The content slug to clear on
+	 * @slug     The content slug to clear on
 	 */
 	RSSService function clearCaches( boolean comments = false, string slug = "" ){
 		var cacheKey = "";
@@ -76,11 +76,11 @@ component singleton {
 	/**
 	 * Build RSS feeds for contentbox content objects
 	 *
-	 * @slug The page or entry slug to filter on.
-	 * @comments Retrieve the comments RSS feed or content feed, defaults to false
-	 * @category Filter the content feed with categories
+	 * @slug        The page or entry slug to filter on.
+	 * @comments    Retrieve the comments RSS feed or content feed, defaults to false
+	 * @category    Filter the content feed with categories
 	 * @contentType The contentType to build an RSS feed on. Empty is for the site. Available content types are [page,entry]
-	 * @siteID The site Id to filter on
+	 * @siteID      The site Id to filter on
 	 */
 	function getRSS(
 		string slug      = "",
@@ -166,7 +166,7 @@ component singleton {
 	 * Build entries feeds
 	 *
 	 * @category The category to filter on
-	 * @siteID The site to filter on
+	 * @siteID   The site to filter on
 	 */
 	private function buildEntryFeed( string category = "", string siteID = "" ){
 		var settings     = settingService.getAllSettings();
@@ -210,10 +210,8 @@ component singleton {
 			qEntries.guid_string[ i ]    = variables.CBHelper.linkEntry( qEntries.slug[ i ] );
 			;
 			qEntries.author[ i ]       = "#entryResults.content[ i ].getAuthorEmail()# (#entryResults.content[ i ].getAuthorName()#)";
-			qEntries.linkComments[ i ] = variables.CBHelper.linkComments(
-				entryResults.content[ i ]
-			);
-			qEntries.categories[ i ] = entryResults.content[ i ].getCategoriesList();
+			qEntries.linkComments[ i ] = variables.CBHelper.linkComments( entryResults.content[ i ] );
+			qEntries.categories[ i ]   = entryResults.content[ i ].getCategoriesList();
 			if ( entryResults.content[ i ].hasExcerpt() ) {
 				qEntries.content[ i ] = entryResults.content[ i ].renderExcerpt();
 			} else {
@@ -240,7 +238,7 @@ component singleton {
 	 * Build pages feeds
 	 *
 	 * @category The category to filter on
-	 * @siteID The site to filter on
+	 * @siteID   The site to filter on
 	 */
 	private function buildPageFeed( string category = "", string siteID = "" ){
 		var settings    = settingService.getAllSettings();
@@ -311,7 +309,7 @@ component singleton {
 	 * Build content feeds
 	 *
 	 * @category The category to filter on
-	 * @siteID The site to filter on
+	 * @siteID   The site to filter on
 	 */
 	private function buildContentFeed( string category = "", string siteID = "" ){
 		var settings       = variables.settingService.getAllSettings();
@@ -350,12 +348,8 @@ component singleton {
 		// Attach permalinks
 		for ( var i = 1; i lte contentResults.count; i++ ) {
 			// Check for empty authors, just in case.
-			var authorEmail = len( contentResults.content[ i ].getAuthorEmail() ) ? contentResults.content[
-				i
-			].getAuthorEmail() : "nobody@nobody.com";
-			var authorName = len( contentResults.content[ i ].getAuthorName() ) ? contentResults.content[
-				i
-			].getAuthorName() : "nobody";
+			var authorEmail = len( contentResults.content[ i ].getAuthorEmail() ) ? contentResults.content[ i ].getAuthorEmail() : "nobody@nobody.com";
+			var authorName  = len( contentResults.content[ i ].getAuthorName() ) ? contentResults.content[ i ].getAuthorName() : "nobody";
 
 			// build URL to entry
 			qContent.link[ i ]           = CBHelper.linkContent( contentResults.content[ i ] );
@@ -384,9 +378,9 @@ component singleton {
 	/**
 	 * Build comment feeds according to filtering elements
 	 *
-	 * @slug The content slug to filter on
+	 * @slug        The content slug to filter on
 	 * @contentType The content type discriminator to filter on
-	 * @siteID The site to filter on
+	 * @siteID      The site to filter on
 	 */
 	private function buildCommentFeed(
 		string slug        = "",

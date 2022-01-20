@@ -64,10 +64,10 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Constructor
 	 *
-	 * @requestService The ColdBox request service
+	 * @requestService        The ColdBox request service
 	 * @requestService.inject coldbox:requestService
-	 * @coldbox ColdBox Handler
-	 * @coldbox.inject coldbox
+	 * @coldbox               ColdBox Handler
+	 * @coldbox.inject        coldbox
 	 */
 	AdminMenuService function init( required requestService, required coldbox ){
 		// init menu array
@@ -104,8 +104,9 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Build LI attributes
+	 *
 	 * @event The event context
-	 * @menu The menu struct
+	 * @menu  The menu struct
 	 */
 	function buildLIAttributes( required any event, required any menu ){
 		var attributes = { "class" : "#menu.class#", "data-name" : "#menu.name#" };
@@ -120,8 +121,9 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Build Item Attributes
-	 * @event The event context
-	 * @menu The menu struct
+	 *
+	 * @event          The event context
+	 * @menu           The menu struct
 	 * @structDefaults The struct defaults for the item
 	 */
 	function buildItemAttributes(
@@ -129,9 +131,7 @@ component accessors="true" threadSafe singleton {
 		required any menu,
 		structDefaults = {}
 	){
-		var attributes = {
-			"class" : structKeyExists( structDefaults, "class" ) ? structDefaults.class : ""
-		};
+		var attributes = { "class" : structKeyExists( structDefaults, "class" ) ? structDefaults.class : "" };
 
 		if ( len( arguments.menu.itemClass ) ) {
 			attributes.class &= " #arguments.menu.itemClass#";
@@ -179,6 +179,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Create the attribute list
+	 *
 	 * @attributes The struct of attributes to build the list from
 	 */
 	function createAttributeList( required struct attributes ){
@@ -281,7 +282,8 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Dynamic href's due to cgi host or site changes.
 	 * This expects a menu.href_to or menu.href_jsAction to exist.
-	 * @menu The menu info
+	 *
+	 * @menu  The menu info
 	 * @event The request context
 	 */
 	function buildLink( required menu, required event ){
@@ -594,10 +596,10 @@ addSubMenu(
 	/**
 	 * Build out ContentBox module links
 	 *
-	 * @module The module name
-	 * @to The link
+	 * @module      The module name
+	 * @to          The link
 	 * @queryString The query string
-	 * @ssl Using ssl or not
+	 * @ssl         Using ssl or not
 	 */
 	function buildModuleLink(
 		required string module,
@@ -627,6 +629,7 @@ addSubMenu(
 
 	/**
 	 * Use a header menu
+	 *
 	 * @name The name of the header menu
 	 */
 	AdminMenuService function withHeaderMenu( required name ){
@@ -636,18 +639,19 @@ addSubMenu(
 
 	/**
 	 * Add top level menus
-	 * @name The unique name for this top level menu
-	 * @label The label for the menu item, this can be a closure/udf and it will be called at generation
-	 * @title The optional title element
-	 * @href The href, if any to locate when clicked, this can be a closure/udf and it will be called at generation
-	 * @target The target to execute the link in, default is same page.
+	 *
+	 * @name        The unique name for this top level menu
+	 * @label       The label for the menu item, this can be a closure/udf and it will be called at generation
+	 * @title       The optional title element
+	 * @href        The href, if any to locate when clicked, this can be a closure/udf and it will be called at generation
+	 * @target      The target to execute the link in, default is same page.
 	 * @permissions The list of permissions needed to view this menu
-	 * @data A structure of data attributes to add to the link
-	 * @class A CSS class list to append to the element
-	 * @id An id to apply to the element
-	 * @itemType The type of element to create (e.g., a tag, button, etc.)
-	 * @itemClass A CSS class list to append to the element
-	 * @itemId An id to apply to the item element
+	 * @data        A structure of data attributes to add to the link
+	 * @class       A CSS class list to append to the element
+	 * @id          An id to apply to the element
+	 * @itemType    The type of element to create (e.g., a tag, button, etc.)
+	 * @itemClass   A CSS class list to append to the element
+	 * @itemId      An id to apply to the item element
 	 */
 	AdminMenuService function addTopMenu(
 		required name,
@@ -680,18 +684,19 @@ addSubMenu(
 
 	/**
 	 * Add header top level menu
-	 * @name The unique name for this header level menu
-	 * @label The label for the menu item, this can be a closure/udf and it will be called at generation
-	 * @title The optional title element
-	 * @href The href, if any to locate when clicked, this can be a closure/udf and it will be called at generation
-	 * @target The target to execute the link in, default is same page.
+	 *
+	 * @name        The unique name for this header level menu
+	 * @label       The label for the menu item, this can be a closure/udf and it will be called at generation
+	 * @title       The optional title element
+	 * @href        The href, if any to locate when clicked, this can be a closure/udf and it will be called at generation
+	 * @target      The target to execute the link in, default is same page.
 	 * @permissions The list of permissions needed to view this menu
-	 * @data A structure of data attributes to add to the link
-	 * @class A CSS class list to append to the element
-	 * @id An id to apply to the element
-	 * @itemType The type of element to create (e.g., a tag, button, etc.)
-	 * @itemClass A CSS class list to append to the element
-	 * @itemId An id to apply to the item element
+	 * @data        A structure of data attributes to add to the link
+	 * @class       A CSS class list to append to the element
+	 * @id          An id to apply to the element
+	 * @itemType    The type of element to create (e.g., a tag, button, etc.)
+	 * @itemClass   A CSS class list to append to the element
+	 * @itemId      An id to apply to the item element
 	 */
 	AdminMenuService function addHeaderMenu(
 		required name,
@@ -725,19 +730,20 @@ addSubMenu(
 
 	/**
 	 * Add a sub level menu
-	 * @topMenu The optional top menu name to add this sub level menu to or if concatenated then it uses that one.
-	 * @name The unique name for this sub level menu
-	 * @label The label for the menu item, this can be a closure/udf and it will be called at generation
-	 * @title The optional title element
-	 * @href The href, if any to locate when clicked, this can be a closure/udf and it will be called at generation
-	 * @target The target to execute the link in, default is same page.
+	 *
+	 * @topMenu     The optional top menu name to add this sub level menu to or if concatenated then it uses that one.
+	 * @name        The unique name for this sub level menu
+	 * @label       The label for the menu item, this can be a closure/udf and it will be called at generation
+	 * @title       The optional title element
+	 * @href        The href, if any to locate when clicked, this can be a closure/udf and it will be called at generation
+	 * @target      The target to execute the link in, default is same page.
 	 * @permissions The list of permissions needed to view this menu
-	 * @data A structure of data attributes to add to the link
-	 * @class A CSS class list to append to the element
-	 * @id An id to apply to the element
-	 * @itemType The type of element to create (e.g., a tag, button, etc.)
-	 * @itemClass A CSS class list to append to the element
-	 * @itemId An id to apply to the item element
+	 * @data        A structure of data attributes to add to the link
+	 * @class       A CSS class list to append to the element
+	 * @id          An id to apply to the element
+	 * @itemType    The type of element to create (e.g., a tag, button, etc.)
+	 * @itemClass   A CSS class list to append to the element
+	 * @itemId      An id to apply to the item element
 	 */
 	AdminMenuService function addSubMenu(
 		topMenu,
@@ -766,9 +772,7 @@ addSubMenu(
 		if ( variables.topMenuMap.keyExists( arguments.topMenu ) ) {
 			arrayAppend( variables.topMenuMap[ arguments.topMenu ].submenu, arguments );
 		} else {
-			log.warn(
-				"requested top menu (#arguments.topMenu#) does not exist when calling addSubMenu()"
-			);
+			log.warn( "requested top menu (#arguments.topMenu#) does not exist when calling addSubMenu()" );
 		}
 		// return
 		return this;
@@ -776,19 +780,20 @@ addSubMenu(
 
 	/**
 	 * Add a sub level header menu
-	 * @headerMenu The optional header menu name to add this sub level menu to or if concatenated then it uses that one.
-	 * @name The unique name for this sub level menu
-	 * @label The label for the menu item
-	 * @title The optional title element
-	 * @href The href, if any to locate when clicked
-	 * @target The target to execute the link in, default is same page.
+	 *
+	 * @headerMenu  The optional header menu name to add this sub level menu to or if concatenated then it uses that one.
+	 * @name        The unique name for this sub level menu
+	 * @label       The label for the menu item
+	 * @title       The optional title element
+	 * @href        The href, if any to locate when clicked
+	 * @target      The target to execute the link in, default is same page.
 	 * @permissions The list of permissions needed to view this menu
-	 * @data A structure of data attributes to add to the link
-	 * @class A CSS class list to append to the element
-	 * @id An id to apply to the element
-	 * @itemType The type of element to create (e.g., a tag, button, etc.)
-	 * @itemClass A CSS class list to append to the element
-	 * @itemId An id to apply to the item element
+	 * @data        A structure of data attributes to add to the link
+	 * @class       A CSS class list to append to the element
+	 * @id          An id to apply to the element
+	 * @itemType    The type of element to create (e.g., a tag, button, etc.)
+	 * @itemClass   A CSS class list to append to the element
+	 * @itemId      An id to apply to the item element
 	 */
 	AdminMenuService function addHeaderSubMenu(
 		headerMenu,
@@ -819,9 +824,7 @@ addSubMenu(
 		if ( headerMenuMap.keyExists( arguments.headerMenu ) ) {
 			arrayAppend( headerMenuMap[ arguments.headerMenu ].submenu, arguments );
 		} else {
-			log.warn(
-				"requested header menu (#arguments.headerMenu#) does not exist when calling addHeaderSubMenu()"
-			);
+			log.warn( "requested header menu (#arguments.headerMenu#) does not exist when calling addHeaderSubMenu()" );
 		}
 
 		// return
@@ -832,7 +835,7 @@ addSubMenu(
 	 * Remove a sub level menu
 	 *
 	 * @topMenu The optional top menu name to add this sub level menu to or if concatenated then it uses that one.
-	 * @name The unique name for this sub level menu
+	 * @name    The unique name for this sub level menu
 	 */
 	AdminMenuService function removeSubMenu( required topMenu, required name ){
 		// Verify top menu exists, else just return
@@ -856,8 +859,9 @@ addSubMenu(
 
 	/**
 	 * Remove a sub level menu from the header
+	 *
 	 * @headerMenu The optional header menu name to remove from
-	 * @name The sub menu to remove
+	 * @name       The sub menu to remove
 	 */
 	AdminMenuService function removeHeaderSubMenu( required headerMenu, required name ){
 		// Verify top menu exists, else just return
@@ -868,9 +872,7 @@ addSubMenu(
 			return this;
 		}
 
-		for (
-			var x = 1; x lte arrayLen( variables.headerMenuMap[ arguments.headerMenu ].subMenu ); x++
-		) {
+		for ( var x = 1; x lte arrayLen( variables.headerMenuMap[ arguments.headerMenu ].subMenu ); x++ ) {
 			if ( variables.headerMenuMap[ arguments.headerMenu ].subMenu[ x ].name eq arguments.name ) {
 				arrayDeleteAt( variables.headerMenuMap[ arguments.headerMenu ].subMenu, x );
 				break;
@@ -908,6 +910,7 @@ addSubMenu(
 
 	/**
 	 * Remove a header top level menu
+	 *
 	 * @headerMenu The header menu unique name to remove
 	 */
 	AdminMenuService function removeHeaderMenu( required headerMenu ){
@@ -923,9 +926,7 @@ addSubMenu(
 		}
 
 		if ( !found ) {
-			log.warn(
-				"Header menu: #arguments.headerMenu# not found when calling removeHeaderMenu"
-			);
+			log.warn( "Header menu: #arguments.headerMenu# not found when calling removeHeaderMenu" );
 		}
 
 		// return
@@ -1002,6 +1003,7 @@ addSubMenu(
 
 	/**
 	 * Generate a flat representation of data elements
+	 *
 	 * @data The data struct
 	 */
 	string function parseADataAttributes( required struct data ){

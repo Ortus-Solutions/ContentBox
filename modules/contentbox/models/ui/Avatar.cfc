@@ -32,7 +32,7 @@ component singleton {
 	 * Render an avatar image
 	 *
 	 * @email The email to render
-	 * @size The pixel size, defaults to 80
+	 * @size  The pixel size, defaults to 80
 	 * @class An optional class to add to the img tag produced
 	 */
 	function renderAvatar(

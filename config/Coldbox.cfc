@@ -85,13 +85,11 @@ component {
 		 */
 		logBox = {
 			// Define Appenders
-			appenders : {
-				coldboxTracer : { class : "coldbox.system.logging.appenders.ConsoleAppender" }
-			},
+			appenders : { coldboxTracer : { class : "coldbox.system.logging.appenders.ConsoleAppender" } },
 			// Root Logger
-			root : { levelmax : "INFO", appenders : "*" },
+			root      : { levelmax : "INFO", appenders : "*" },
 			// Implicit Level Categories
-			info : [ "coldbox.system", "contentbox" ]
+			info      : [ "coldbox.system", "contentbox" ]
 		};
 
 		/**
@@ -145,7 +143,6 @@ component {
 		 * }
 		 */
 		moduleSettings = {
-
 			/**
 			 * --------------------------------------------------------------------------
 			 * ContentBox Runtime Config
@@ -153,19 +150,17 @@ component {
 			 */
 			contentbox : {
 				// Array of mixins (eg: /includes/contentHelpers.cfm) to inject into all content objects
-				"contentHelpers" = [],
+				"contentHelpers" : [],
 				// Setting Overrides
-				"settings" : {
+				"settings"       : {
 					// Global settings
-					"global" : {
-					},
+					"global" : {},
 					// Site specific settings according to site slug
-					"sites" : {
-						// siteSlug : { ... }
+					"sites"  : {
+						 // siteSlug : { ... }
 					}
 				}
 			},
-
 			/**
 			 * --------------------------------------------------------------------------
 			 * ColdBox Storages
@@ -176,9 +171,9 @@ component {
 				// Cache Storage Settings
 				cacheStorage : {
 					// The CacheBox registered cache to store data in
-					cachename : "sessions",
+					cachename          : "sessions",
 					// The default timeout of the session bucket, defaults to 60 minutes
-					timeout   : getSystemSetting( "COLDBOX_SESSION_TIMEOUT", 60 ),
+					timeout            : getSystemSetting( "COLDBOX_SESSION_TIMEOUT", 60 ),
 					// The identifierProvider is a closure/udf that will return a unique identifier according to your rules
 					// If you do not provide one, then we will search in session, cookie and url for the ColdFusion identifier.
 					// identifierProvider : function(){}
@@ -188,23 +183,22 @@ component {
 				cookieStorage : {
 					// If browser does not support Secure Sockets Layer (SSL) security, the cookie is not sent.
 					// To use the cookie, the page must be accessed using the https protocol.
-					secure 				: false,
+					secure              : false,
 					// If yes, sets cookie as httponly so that it cannot be accessed using JavaScripts
-					httpOnly			: true,
+					httpOnly            : true,
 					// Domain in which cookie is valid and to which cookie content can be sent from the user's system. By default, the cookie
 					// is only available to the server that set it. Use this attribute to make the cookie available to other servers
-					domain 				: "",
+					domain              : "",
 					// Use encryption of values
-					useEncryption 		: false,
+					useEncryption       : false,
 					// The unique seeding key to use: keep it secret, keep it safe
-					encryptionSeed 		: "",
+					encryptionSeed      : "",
 					// The algorithm to use: https://cfdocs.org/encrypt
 					encryptionAlgorithm : "BLOWFISH",
 					// The encryption encoding to use
-					encryptionEncoding 	: "HEX"
+					encryptionEncoding  : "HEX"
 				}
 			},
-
 			/**
 			 * ColdBox cborm configurations https://forgebox.io/view/cborm
 			 */
@@ -219,38 +213,36 @@ component {
 				},
 				resources : {
 					// Enable the ORM Resource Event Loader
-					eventLoader     : true,
+					eventLoader  : true,
 					// Prefix to use on all the registered pre/post{Entity}{Action} events
-					eventPrefix 	: "cb_",
+					eventPrefix  : "cb_",
 					// Pagination max rows
-					maxRows         : 25,
+					maxRows      : 25,
 					// Pagination max row limit: 0 = no limit
-					maxRowsLimit     : 500
+					maxRowsLimit : 500
 				}
 			},
-
 			/**
 			 * Mementifier settings: https://forgebox.io/view/mementifier
 			 */
 			mementifier : {
 				// Turn on to use the ISO8601 date/time formatting on all processed date/time properites, else use the masks
-				iso8601Format = true,
+				iso8601Format     : true,
 				// The default date mask to use for date properties
-				dateMask      = "yyyy-MM-dd",
+				dateMask          : "yyyy-MM-dd",
 				// The default time mask to use for date properties
-				timeMask      = "HH:mm: ss",
+				timeMask          : "HH:mm: ss",
 				// Enable orm auto default includes: If true and an object doesn't have any `memento` struct defined
 				// this module will create it with all properties and relationships it can find for the target entity
 				// leveraging the cborm module.
-				ormAutoIncludes = true,
+				ormAutoIncludes   : true,
 				// The default value for relationships/getters which return null
-				nullDefaultValue = '',
+				nullDefaultValue  : "",
 				// Don't check for getters before invoking them
-				trustedGetters = false,
+				trustedGetters    : false,
 				// If not empty, convert all date/times to the specific timezone
-				convertToTimezone = "UTC"
+				convertToTimezone : "UTC"
 			},
-
 			/**
 			 * ColdBox Security Module Global Settings
 			 */
@@ -283,31 +275,31 @@ component {
 				// JWT Settings
 				"jwt"                         : {
 					// The issuer authority for the tokens, placed in the `iss` claim
-					"issuer"              : "contentbox",
+					"issuer"                     : "contentbox",
 					// The jwt secret encoding key to use
-					"secretKey"           : getSystemSetting( "JWT_SECRET", "" ),
+					"secretKey"                  : getSystemSetting( "JWT_SECRET", "" ),
 					// by default it uses the authorization bearer header, but you can also pass a custom one as well or as an rc variable.
-					"customAuthHeader"    : "x-auth-token",
+					"customAuthHeader"           : "x-auth-token",
 					// The expiration in minutes for the jwt tokens
-					"expiration"          : 60,
+					"expiration"                 : 60,
 					// If true, enables refresh tokens, longer lived tokens (not implemented yet)
-					"enableRefreshTokens" : true,
+					"enableRefreshTokens"        : true,
 					// The default expiration for refresh tokens, defaults to 7 days
-					"refreshExpiration"   : 10080,
+					"refreshExpiration"          : 10080,
 					// The custom header to inspect for refresh tokens
-   	 				"customRefreshHeader"    : "x-refresh-token",
+					"customRefreshHeader"        : "x-refresh-token",
 					// If enabled, the JWT validator will inspect the request for refresh tokens and expired access tokens
 					// It will then automatically refresh them for you and return them back as
 					// response headers in the same request according to the `customRefreshHeader` and `customAuthHeader`
 					"enableAutoRefreshValidator" : true,
 					// Enable the POST > /cbsecurity/refreshtoken API endpoint
-					"enableRefreshEndpoint" : false,
+					"enableRefreshEndpoint"      : false,
 					// encryption algorithm to use, valid algorithms are: HS256, HS384, and HS512
-					"algorithm"           : "HS512",
+					"algorithm"                  : "HS512",
 					// Which claims neds to be present on the jwt token or `TokenInvalidException` upon verification and decoding
-					"requiredClaims"      : [],
+					"requiredClaims"             : [],
 					// The token storage settings
-					"tokenStorage"        : {
+					"tokenStorage"               : {
 						// enable or not, default is true
 						"enabled"    : true,
 						// A cache key prefix to use when storing the tokens
@@ -324,7 +316,6 @@ component {
 					}
 				} // end jwt config
 			}, // end security config
-
 			/**
 			 * cbSwagger Documentation for Headless CMS
 			 */
@@ -367,15 +358,15 @@ component {
 				},
 				// An array of Server Objects, which provide connectivity information to a target server. If the servers property is not provided, or is an empty array, the default value would be a Server Object with a url value of /.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#serverObject
-				"servers"      : [
+				"servers" : [
 					{
-						"url" : "http://127.0.0.1:8589",
+						"url"         : "http://127.0.0.1:8589",
 						"description" : "Development Server"
 					}
 				],
 				// An element to hold various schemas for the specification.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#componentsObject
-				"components"   : {
+				"components" : {
 					// Define your security schemes here
 					// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#securitySchemeObject
 					"securitySchemes" : {
@@ -393,7 +384,7 @@ component {
 						},
 						"BearerAuth" : {
 							"type"         : "http",
-							"description" : "User your JWT in the bearer Authorization header",
+							"description"  : "User your JWT in the bearer Authorization header",
 							"scheme"       : "bearer",
 							"bearerFormat" : "JWT"
 						}
@@ -401,29 +392,53 @@ component {
 				},
 				// A declaration of which security mechanisms can be used across the API.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#securityRequirementObject
-				"security"     : [
+				"security" : [
 					{ "ApiKeyAuth" : [] },
 					{ "ApiKeyQueryAuth" : [] },
 					{ "BearerAuth" : [] }
 				],
 				// A list of tags used by the specification with additional metadata.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#tagObject
-				"tags"         : [
+				"tags" : [
 					{ "name" : "Authors", "description" : "Author operations" },
-					{ "name" : "Authentication", "description" : "Authentication operations" },
-					{ "name" : "Categories", "description" : "Category operations" },
-					{ "name" : "Comments", "description" : "Comment operations" },
-					{ "name" : "ContentStore", "description" : "Content store operations" },
-					{ "name" : "Entries", "description" : "Blog entry operations" },
+					{
+						"name"        : "Authentication",
+						"description" : "Authentication operations"
+					},
+					{
+						"name"        : "Categories",
+						"description" : "Category operations"
+					},
+					{
+						"name"        : "Comments",
+						"description" : "Comment operations"
+					},
+					{
+						"name"        : "ContentStore",
+						"description" : "Content store operations"
+					},
+					{
+						"name"        : "Entries",
+						"description" : "Blog entry operations"
+					},
 					{ "name" : "Menus", "description" : "Menu operations" },
 					{ "name" : "Pages", "description" : "Pages operations" },
 					{ "name" : "Sites", "description" : "Site operations" },
-					{ "name" : "Settings", "description" : "Global setting operations" },
-					{ "name" : "Versions", "description" : "Content versions operations" }
+					{
+						"name"        : "Settings",
+						"description" : "Global setting operations"
+					},
+					{
+						"name"        : "Versions",
+						"description" : "Content versions operations"
+					}
 				],
 				// Additional external documentation.
 				// https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.0.md#externalDocumentationObject
-				"externalDocs" : { "description" : "Find more info here", "url" : "https://contentbox.ortusbooks.com" }
+				"externalDocs" : {
+					"description" : "Find more info here",
+					"url"         : "https://contentbox.ortusbooks.com"
+				}
 			}
 		};
 	}
@@ -440,13 +455,16 @@ component {
 
 		// No Singletons for easy testing
 		wirebox = {
-			//singletonReload : true
+			 // singletonReload : true
 		};
 
 		// debugging file
 		logbox.appenders.files = {
 			class      : "coldbox.system.logging.appenders.RollingFileAppender",
-			properties : { filename : "contentbox", filePath : "/cbapp/config/logs/app" }
+			properties : {
+				filename : "contentbox",
+				filePath : "/cbapp/config/logs/app"
+			}
 		};
 
 		// Mail settings for writing to log files instead of sending mail on dev.
@@ -459,17 +477,17 @@ component {
 		variables.modulesettings.cbdebugger = {
 			// This flag enables/disables the tracking of request data to our storage facilities
 			// To disable all tracking, turn this master key off
-			enabled   : getSystemSetting( "CBDEBUGGER_ENABLED", false ),
+			enabled        : getSystemSetting( "CBDEBUGGER_ENABLED", false ),
 			// This setting controls if you will activate the debugger for visualizations ONLY
 			// The debugger will still track requests even in non debug mode.
-			debugMode : true,
+			debugMode      : true,
 			// The URL password to use to activate it on demand
 			debugPassword  : "cb",
 			// Request Tracker Options
 			requestTracker : {
 				storage                      : "cachebox",
 				cacheName                    : "template",
-				trackDebuggerEvents : false,
+				trackDebuggerEvents          : false,
 				// Expand by default the tracker panel or not
 				expanded                     : false,
 				// Slow request threshold in milliseconds, if execution time is above it, we mark those transactions as red
@@ -532,10 +550,7 @@ component {
 				// Log the binding parameters
 				logParams : false
 			},
-			async : {
-				enabled : true,
-				expanded : false
-			}
+			async : { enabled : true, expanded : false }
 		};
 
 		// Specific Debugging + Logging

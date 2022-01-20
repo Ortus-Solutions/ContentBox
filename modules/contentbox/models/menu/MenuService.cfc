@@ -28,7 +28,7 @@ component
 	/**
 	 * Save a menu and do necessary updates
 	 *
-	 * @menu The menu to save or update
+	 * @menu         The menu to save or update
 	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
 	 *
 	 * @return The saved menu
@@ -41,11 +41,11 @@ component
 	 * Menu search using different filters and return options
 	 *
 	 * @searchTerm Search in firstname, lastname and email fields
-	 * @max The max returned objects
-	 * @offset The offset for pagination
-	 * @asQuery Query or objects
-	 * @sortOrder The sort order to apply
-	 * @siteID The site to filter on
+	 * @max        The max returned objects
+	 * @offset     The offset for pagination
+	 * @asQuery    Query or objects
+	 * @sortOrder  The sort order to apply
+	 * @siteID     The site to filter on
 	 */
 	function search(
 		string searchTerm = "",
@@ -86,7 +86,7 @@ component
 	/**
 	 * Find a menu object by slug, if not found it returns a new menu object
 	 *
-	 * @slug The slug to search
+	 * @slug   The slug to search
 	 * @siteID The site this slug is on
 	 *
 	 * @return The menu found or a new menu blank
@@ -132,11 +132,11 @@ component
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -145,10 +145,7 @@ component
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message = "Cannot import file as the contents is not JSON",
-				type    = "InvalidImportFormat"
-			);
+			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
 		}
 		// deserialize packet: Should be array of { settingID, name, value }
 		return importFromData(
@@ -162,9 +159,9 @@ component
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
-	 * @site If passed, we use this specific site, else we discover it via content data
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
+	 * @site       If passed, we use this specific site, else we discover it via content data
 	 *
 	 * @return The console log of the import
 	 */
@@ -192,9 +189,7 @@ component
 			for ( var thisMenu in arguments.importData ) {
 				// Determine Site if not passed from import data
 				if ( isNull( arguments.site ) ) {
-					logThis(
-						"+ Site not sent via arguments, inflating from menu data (#thisMenu.site.slug#)"
-					);
+					logThis( "+ Site not sent via arguments, inflating from menu data (#thisMenu.site.slug#)" );
 					arguments.site = siteService.getBySlugOrFail( thisMenu.site.slug );
 				}
 
@@ -241,9 +236,7 @@ component
 
 			// Save them?
 			if ( !arrayLen( arguments.importData ) ) {
-				logThis(
-					"No menus imported as none where found or able to be overriden from the import file."
-				);
+				logThis( "No menus imported as none where found or able to be overriden from the import file." );
 			}
 		}
 		// end for transaction
@@ -253,9 +246,10 @@ component
 
 	/**
 	 * Builds editable menu for interface
-	 * @menu the menu to parse
+	 *
+	 * @menu       the menu to parse
 	 * @menuString build-up string for menu content
-	 * @inChild flag for whether the content item is being evaluated as itself, or as a child of another item
+	 * @inChild    flag for whether the content item is being evaluated as itself, or as a child of another item
 	 */
 	public String function buildEditableMenu(
 		required array menu,
@@ -306,7 +300,7 @@ component
 	/**
 	 * Verify an incoming slug is unique or not
 	 *
-	 * @slug The slug to search for uniqueness
+	 * @slug   The slug to search for uniqueness
 	 * @menuID Limit the search to the passed menuID usually for updates
 	 * @siteID The site to filter on
 	 */
@@ -328,6 +322,7 @@ component
 
 	/**
 	 * Get a unique slug hash
+	 *
 	 * @slug The slug to make unique
 	 */
 	private function getUniqueSlugHash( required string slug ){

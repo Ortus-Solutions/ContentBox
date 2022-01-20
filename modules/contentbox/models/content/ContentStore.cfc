@@ -78,12 +78,12 @@ component
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	 *
-	 * @author The author doing the cloning
-	 * @original The original content object that will be cloned into this content object
-	 * @originalService The ContentBox content service object
-	 * @publish Publish pages or leave as drafts
+	 * @author           The author doing the cloning
+	 * @original         The original content object that will be cloned into this content object
+	 * @originalService  The ContentBox content service object
+	 * @publish          Publish pages or leave as drafts
 	 * @originalSlugRoot The original slug that will be replaced in all cloned content
-	 * @newSlugRoot The new slug root that will be replaced in all cloned content
+	 * @newSlugRoot      The new slug root that will be replaced in all cloned content
 	 */
 	BaseContent function prepareForClone(
 		required any author,

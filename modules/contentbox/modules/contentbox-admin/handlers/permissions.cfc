@@ -13,11 +13,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event
-	 * @action
+	 * @event         
+	 * @action        
 	 * @eventArguments
-	 * @rc
-	 * @prc
+	 * @rc            
+	 * @prc           
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
@@ -28,8 +28,8 @@ component extends="baseHandler" {
 	 * Manage permissions
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function index( event, rc, prc ){
 		// exit Handlers
@@ -51,8 +51,8 @@ component extends="baseHandler" {
 	 * Save permissions
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function save( event, rc, prc ){
 		// UCASE permission
@@ -83,8 +83,8 @@ component extends="baseHandler" {
 	 * Remove permissions
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function remove( event, rc, prc ){
 		// announce event

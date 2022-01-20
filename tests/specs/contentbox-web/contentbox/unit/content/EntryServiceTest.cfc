@@ -75,9 +75,7 @@ component extends="tests.resources.BaseTest" {
 				expect( arrayLen( r.entries ) ).toBeFalse( "Year 2000" );
 
 				// year
-				var r = model.findPublishedEntriesByDate(
-					year = dateFormat( entry.getPublishedDate(), "yyyy" )
-				);
+				var r = model.findPublishedEntriesByDate( year = dateFormat( entry.getPublishedDate(), "yyyy" ) );
 				expect( arrayLen( r.entries ) ).toBeGTE( 1, "Using entry publish year" );
 
 				// year + Month
@@ -93,10 +91,7 @@ component extends="tests.resources.BaseTest" {
 					month = dateFormat( entry.getPublishedDate(), "mm" ),
 					day   = dateFormat( entry.getPublishedDate(), "dd" )
 				);
-				expect( arrayLen( r.entries ) ).toBeGTE(
-					1,
-					"Using entry publish year, month, and day"
-				);
+				expect( arrayLen( r.entries ) ).toBeGTE( 1, "Using entry publish year, month, and day" );
 			} );
 
 			it( "can find published entries by criteria", function(){

@@ -124,8 +124,9 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Discover the custom location widgets
+	 *
 	 * @qRecords The records query to attach yourself to
-	 * @type The type to process
+	 * @type     The type to process
 	 */
 	WidgetService function processWidgets( query qRecords = getLoadedWidgets(), type ){
 		// get core widgets to start with.
@@ -201,6 +202,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Discover modules widgets and attach records to incoming widget records
+	 *
 	 * @qRecords The records query to attach yourself to
 	 */
 	WidgetService function processModuleWidgets( query qRecords = getLoadedWidgets() ){
@@ -256,6 +258,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Discover active theme widgets and attach records to incoming widget records
+	 *
 	 * @qRecords The records query to attach yourself to
 	 */
 	WidgetService function processThemeWidgets( query qRecords = getLoadedWidgets() ){
@@ -477,6 +480,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Rip Extensions from file name
+	 *
 	 * @fileName The target to rip
 	 */
 	function ripExtension( required filename ){
@@ -485,9 +489,10 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get widget rendering arguments
-	 * @udf The target UDF to render out arguments for
+	 *
+	 * @udf    The target UDF to render out arguments for
 	 * @widget The widget name
-	 * @type The widget type
+	 * @type   The widget type
 	 *
 	 * @return The argument metadata structure
 	 */

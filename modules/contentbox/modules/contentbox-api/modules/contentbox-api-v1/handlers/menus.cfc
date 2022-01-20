@@ -28,7 +28,7 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Display all menus
 	 *
 	 * @tags Menus
-	 * @x-contentbox-permissions MENUS_ADMIN
+	 * @x    -contentbox-permissions MENUS_ADMIN
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -45,7 +45,7 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Show a category using the id
 	 *
 	 * @tags Menus
-	 * @x-contentbox-permissions MENUS_ADMIN
+	 * @x    -contentbox-permissions MENUS_ADMIN
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "rootMenuItems:menuItems";
@@ -58,7 +58,7 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Create a menu
 	 *
 	 * @tags Menus
-	 * @x-contentbox-permissions MENUS_ADMIN
+	 * @x    -contentbox-permissions MENUS_ADMIN
 	 */
 	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );
@@ -68,7 +68,7 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Update an existing menu
 	 *
 	 * @tags Menus
-	 * @x-contentbox-permissions MENUS_ADMIN
+	 * @x    -contentbox-permissions MENUS_ADMIN
 	 */
 	function update( event, rc, prc ){
 		super.update( argumentCollection = arguments );
@@ -78,7 +78,7 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Delete a menu using an id or slug
 	 *
 	 * @tags Menus
-	 * @x-contentbox-permissions MENUS_ADMIN
+	 * @x    -contentbox-permissions MENUS_ADMIN
 	 */
 	function delete( event, rc, prc ){
 		super.delete( argumentCollection = arguments );
