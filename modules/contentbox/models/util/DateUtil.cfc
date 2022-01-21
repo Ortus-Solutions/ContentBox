@@ -16,8 +16,8 @@ component singleton {
 
 	/**
 	 * Conver the incoming date time to UTC using the dateTimeFormat() method
-	 * @see https://cfdocs.org/datetimeformat
 	 *
+	 * @see      https://cfdocs.org/datetimeformat
 	 * @dateTime The date time object/string to convert
 	 */
 	function toUTC( required dateTime ){

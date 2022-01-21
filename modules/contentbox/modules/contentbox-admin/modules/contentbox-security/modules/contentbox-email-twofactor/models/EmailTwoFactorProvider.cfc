@@ -175,7 +175,7 @@ component
 	/**
 	 * Verify the challenge
 	 *
-	 * @code The verification code
+	 * @code   The verification code
 	 * @author The author to verify challenge
 	 *
 	 * @return struct:{ error:boolean, messages:string }
@@ -199,9 +199,8 @@ component
 	 * This method is called once a two factor challenge is accepted and valid.
 	 * Meaning the user has completed the validation and will be logged in to ContentBox now.
 	 *
-	 * @code The verification code
+	 * @code   The verification code
 	 * @author The author to verify challenge
-	 *
 	 */
 	function finalize( required string code, required author ){
 		// clear out the codes

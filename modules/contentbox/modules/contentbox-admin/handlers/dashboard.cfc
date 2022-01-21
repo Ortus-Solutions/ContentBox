@@ -103,6 +103,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the latest currently logged in user drafts
+	 *
 	 * @return html
 	 */
 	function latestUserDrafts( event, rc, prc ){
@@ -138,6 +139,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the publish in the future content
+	 *
 	 * @return html
 	 */
 	function futurePublishedContent( event, rc, prc ){
@@ -151,6 +153,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the expired content report
+	 *
 	 * @return html
 	 */
 	function expiredContent( event, rc, prc ){
@@ -184,6 +187,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the latest system news
+	 *
 	 * @return html
 	 */
 	function latestNews( event, rc, prc ){
@@ -208,6 +212,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the latest system logins
+	 *
 	 * @return html
 	 */
 	function latestLogins( event, rc, prc ){
@@ -219,6 +224,7 @@ component extends="baseHandler" {
 
 	/**
 	 * delete installer module
+	 *
 	 * @return JSON
 	 */
 	function deleteInstaller(){

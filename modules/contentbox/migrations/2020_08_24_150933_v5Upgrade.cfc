@@ -39,11 +39,11 @@ component {
 	}
 
 	private function isContentBox4(){
-		try{
+		try {
 			return !hasColumn( "cb_setting", "FK_siteID" );
-		} catch( any e ){
+		} catch ( any e ) {
 			// check if we don't have a database yet.
-			if( findNoCase( "there is no table", e.message ) ){
+			if ( findNoCase( "there is no table", e.message ) ) {
 				return false;
 			} else {
 				rethrow;

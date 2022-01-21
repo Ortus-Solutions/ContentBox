@@ -21,8 +21,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Renders a ContentBox menu by slug name
-	 * @slug.hint The menu slug to render
-	 * @slug.optionsUDF getSlugList
+	 *
+	 * @slug.hint         The menu slug to render
+	 * @slug.optionsUDF   getSlugList
 	 * @defaultValue.hint The string to show if the menu does not exist
 	 */
 	any function renderIt( string slug = "EmptyMenuList", string defaultValue ){
@@ -48,14 +49,12 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			return arguments.defaultValue;
 		}
 
-		throw(
-			message = "The menu slug '#arguments.slug#' does not exist",
-			type    = "MenuWidget.InvalidMenuSlug"
-		);
+		throw( message = "The menu slug '#arguments.slug#' does not exist", type = "MenuWidget.InvalidMenuSlug" );
 	}
 
 	/**
 	 * Return an array of slug lists, the @ignore annotation means the ContentBox widget editors do not use it only used internally.
+	 *
 	 * @cbignore
 	 */
 	array function getSlugList(){

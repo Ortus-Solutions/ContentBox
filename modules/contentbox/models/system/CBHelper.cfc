@@ -97,8 +97,7 @@ component accessors="true" singleton threadSafe {
 	 *
 	 * @key          The setting key to get
 	 * @defaultValue The default value to return if not found
-	 *
-	 * @throw InvalidSettingException
+	 * @throw        InvalidSettingException
 	 */
 	any function setting( required key, defaultValue ){
 		var prc = getPrivateRequestCollection();
@@ -558,8 +557,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the index page entries, else throws exception
 	 *
-	 * @throws ContentBox.CBHelper.InvalidEntriesContext
 	 * @return array of entries
+	 *
+	 * @throws ContentBox.CBHelper.InvalidEntriesContext
 	 */
 	any function getCurrentEntries(){
 		var prc = getRequestCollection( private = true );
@@ -607,8 +607,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the viewed entry if in entry view, else throws exception
 	 *
-	 * @throws ContentBox.CBHelper.InvalidEntryContext
 	 * @return Entry
+	 *
+	 * @throws ContentBox.CBHelper.InvalidEntryContext
 	 */
 	any function getCurrentEntry(){
 		var prc = getRequestCollection( private = true );
@@ -625,8 +626,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the viewed page if in page view, else throws exception
 	 *
-	 * @throws ContentBox.CBHelper.InvalidPageContext
 	 * @return Page
+	 *
+	 * @throws ContentBox.CBHelper.InvalidPageContext
 	 */
 	any function getCurrentPage(){
 		var prc = getRequestCollection( private = true );
@@ -643,8 +645,9 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Get the viewed page's or entry's comments, else throw exception
 	 *
-	 * @throws ContentBox.CBHelper.InvalidCommentContext
 	 * @return array of comments
+	 *
+	 * @throws ContentBox.CBHelper.InvalidCommentContext
 	 */
 	any function getCurrentComments(){
 		var prc = getRequestCollection( private = true );
@@ -713,6 +716,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get the current page or entries related content array
+	 *
 	 * @return array
 	 */
 	any function getCurrentRelatedContent(){
@@ -738,6 +742,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get a current page's or blog entrie's custom field by key, you can pass a default value if not found
+	 *
 	 * @key          The custom field key
 	 * @defaultValue The default value to return if not found
 	 */
@@ -770,6 +775,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Set the Meta Title for the request
+	 *
 	 * @title - The new title
 	 */
 	function setMetaTitle( required string title ){
@@ -793,6 +799,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Set the Meta Description for the request
+	 *
 	 * @description - The new Description
 	 */
 	function setMetaDescription( required string description ){
@@ -816,6 +823,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Set the Meta Keywords for the request
+	 *
 	 * @keywords - The new Keywords
 	 */
 	function setMetaKeywords( required string keywords ){
@@ -939,6 +947,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Set the Meta Canonical URL for the request
+	 *
 	 * @url - The new url
 	 */
 	function setMetaURL( required string url ){
@@ -989,6 +998,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Set the Meta ImageURL for the request
+	 *
 	 * @ImageURL - The new ImageURL
 	 */
 	function setMetaImageURL( required string ImageURL ){
@@ -1035,6 +1045,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Set the Meta OGType for the request
+	 *
 	 * @OGType - The new OGType
 	 */
 	function setMetaOGType( required string OGType ){
@@ -1141,6 +1152,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Get the curent search results object
+	 *
 	 * @return contentbox.models.search.SearchResults
 	 */
 	function getSearchResults(){
@@ -1280,7 +1292,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to the admin logout
 	 *
-	 * @ssl	Use SSL or not, defaults to event context.
+	 * @ssl Use SSL or not, defaults to event context.
 	 */
 	function linkAdminLogout( boolean ssl = getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( to = adminRoot() & "/security/doLogout", ssl = arguments.ssl );
@@ -1289,7 +1301,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to the admin login
 	 *
-	 * @ssl	Use SSL or not, defaults to event context.
+	 * @ssl Use SSL or not, defaults to event context.
 	 */
 	function linkAdminLogin( boolean ssl = getRequestContext().isSSL() ){
 		return getRequestContext().buildLink( to = adminRoot() & "/security/login", ssl = arguments.ssl );
@@ -1329,6 +1341,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to RSS feeds that ContentBox generates, by default it is the recent updates feed
+	 *
 	 * @category You can optionally pass the category to filter on
 	 * @comments A boolean flag that determines if you want the comments RSS feed
 	 * @entry    You can optionally pass the entry to filter the comment's RSS feed
@@ -1401,6 +1414,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to the ContentBox Page RSS Feeds
+	 *
 	 * @category The category to filter on
 	 * @comments Page comments or not, defaults to false
 	 * @page     The page you want to filter on
@@ -1495,7 +1509,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to the search route for this blog
 	 *
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl Use SSL or not, defaults to false.
 	 */
 	function linkSearch( boolean ssl = getRequestContext().isSSL() ){
 		return linkBlog() & "/search";
@@ -1504,7 +1518,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to the content search route
 	 *
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl Use SSL or not, defaults to false.
 	 */
 	function linkContentSearch( boolean ssl = getRequestContext().isSSL() ){
 		return siteRoot() & sep() & "__search";
@@ -1513,7 +1527,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * Link to the content subscription route
 	 *
-	 * @ssl	Use SSL or not, defaults to false.
+	 * @ssl Use SSL or not, defaults to false.
 	 */
 	function linkContentSubscription( boolean ssl = getRequestContext().isSSL() ){
 		return siteRoot() & sep() & "__subscribe";
@@ -1521,6 +1535,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to the ContentBox Content Subscription unsubscribe URL
+	 *
 	 * @token The token to use for unsubscribing
 	 */
 	function linkContentUnsubscribe( required string token, boolean ssl = getRequestContext().isSSL() ){
@@ -1671,6 +1686,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Create a link to an entry's or page's comments section
+	 *
 	 * @content The entry or page to link to its comments
 	 * @ssl     Use SSL or not, defaults to false.
 	 */
@@ -1703,6 +1719,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Link to the __changeLang route, this is where the fwLocale is changed
+	 *
 	 * @lang The iso language code
 	 */
 	function linkLanguageChange( string lang = "en_US" ){
@@ -1782,6 +1799,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out entries in the home page by using our ColdBox collection rendering
+	 *
 	 * @template     The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'entry'
 	 * @args         A structure of name-value pairs to pass to the template
@@ -1804,6 +1822,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out an entry using your pre-defined 'entry' template
+	 *
 	 * @template     The name of the template to use, by default it looks in the 'templates/entry.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'entry'
 	 * @args         A structure of name-value pairs to pass to the template
@@ -1851,6 +1870,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out related content anywhere using ColdBox collection rendering
+	 *
 	 * @template     The name of the template to use, by default it looks in the 'templates/relatedContent.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'relatedContent'
 	 * @args         A structure of name-value pairs to pass to the template
@@ -1891,6 +1911,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out comments anywhere using ColdBox collection rendering
+	 *
 	 * @template     The name of the template to use, by default it looks in the 'templates/comment.cfm' convention, no '.cfm' please
 	 * @collectionAs The name of the iterating object in the template, by default it is called 'comment'
 	 * @args         A structure of name-value pairs to pass to the template
@@ -1913,6 +1934,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Renders out an author's avatar
+	 *
 	 * @author The author object to render an avatar from
 	 * @size   The size of the gravatar, by default we use 25 pixels
 	 */
@@ -1939,6 +1961,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
 	 * theme you are using. All the arguments are the same as `renderView()'s` methods
+	 *
 	 * @view                   The view in the theme to render
 	 * @cache                  Cache the output or not
 	 * @cacheTimeout           The time in minutes to cache the view
@@ -1978,6 +2001,7 @@ component accessors="true" singleton threadSafe {
 	/**
 	 * QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
 	 * layout theme you are using. All the arguments are the same as renderLayout()'s methods
+	 *
 	 * @layout        The layout to render out
 	 * @view          The view to render within this layout
 	 * @module        The module to explicitly render this layout from
@@ -1999,6 +2023,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * quickCommentForm will build a standard ContentBox Comment Form according to the CommentForm widget
+	 *
 	 * @content The content this comment form will be linked to, page or entry
 	 */
 	function quickCommentForm( required content ){
@@ -2007,6 +2032,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().renderView().
+	 *
 	 * @args
 	 */
 	function mainView( struct args = structNew() ){
@@ -2044,6 +2070,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Builds out a custom menu
+	 *
 	 * @menu             The root menu object that should be rendered
 	 * @menu.doc_generic contentbox.models.menu.Menu
 	 * @slugCache        The cache of menu slugs already used in this request
@@ -2071,6 +2098,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Builds out a level of a custom menu
+	 *
 	 * @items     An array of menu items for this level
 	 * @listType  The type of list to create (derived from owning menu)
 	 * @slugCache The cache of menu slugs already used in this request
@@ -2113,6 +2141,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Render out a quick menu for root level pages
+	 *
 	 * @excludes     The list of pages to exclude from the menu
 	 * @type         The type of menu, valid choices are: ul,ol,li,data,none
 	 * @typeClass    The CSS class(es) to add to the type tag, defaults to 'submenu'
@@ -2199,6 +2228,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Create an href to a page's parent
+	 *
 	 * @page Optional page to create link for, else look for current page
 	 * @text The optional text to use for the link, else it uses the page's title
 	 */
@@ -2220,6 +2250,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Create breadcrumbs for a UI page
+	 *
 	 * @page      Optional page to create link for, else look for current page
 	 * @separator Breadcrumb separator, defaults to '>'
 	 */
@@ -2249,6 +2280,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * Retrieve i18n resources
+	 *
 	 * @resource     The resource (key) to retrieve from a loaded bundle or pass a @bundle
 	 * @defaultValue A default value to send back if the resource (key) not found
 	 * @locale       Pass in which locale to take the resource from. By default it uses the user's current set locale

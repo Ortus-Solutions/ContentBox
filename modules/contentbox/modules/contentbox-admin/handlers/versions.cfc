@@ -49,8 +49,9 @@ component extends="baseHandler" {
 
 	/**
 	 * Pager Viewlet for version records
-	 * @contentID The contentID to iterate records on
-	 * @max The maximum records to show
+	 *
+	 * @contentID       The contentID to iterate records on
+	 * @max             The maximum records to show
 	 * @viewFullHistory View full history or partial paginated results
 	 */
 	function pager(

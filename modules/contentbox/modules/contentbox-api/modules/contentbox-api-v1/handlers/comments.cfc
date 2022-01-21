@@ -84,7 +84,7 @@ component extends="baseHandler" {
 	 * Update an existing comment
 	 *
 	 * @tags Comments
-	 * @x-contentbox-permissions COMMENTS_ADMIN
+	 * @x    -contentbox-permissions COMMENTS_ADMIN
 	 */
 	function update( event, rc, prc ) secured="COMMENTS_ADMIN"{
 		super.update( argumentCollection = arguments );
@@ -94,7 +94,7 @@ component extends="baseHandler" {
 	 * Delete a comment
 	 *
 	 * @tags Comments
-	 * @x-contentbox-permissions COMMENTS_ADMIN
+	 * @x    -contentbox-permissions COMMENTS_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="COMMENTS_ADMIN"{
 		super.delete( argumentCollection = arguments );

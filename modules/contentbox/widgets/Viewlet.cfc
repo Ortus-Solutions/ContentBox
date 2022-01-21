@@ -22,10 +22,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Execute an internal coldbox event viewlet
-	 * @event.hint The ColdBox event to execute
-	 * @private.hint Private event or not
-	 * @args.hint Event arguments to pass to the viewlet execution, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
-	 * @title.hint The title to show before the dropdown or list, defaults to H2
+	 *
+	 * @event.hint      The ColdBox event to execute
+	 * @private.hint    Private event or not
+	 * @args.hint       Event arguments to pass to the viewlet execution, this should be a comma delimitted list of name value pairs. Ex: widget=true,name=Test
+	 * @title.hint      The title to show before the dropdown or list, defaults to H2
 	 * @titleLevel.hint The H{level} to use, by default we use H2
 	 */
 	any function renderIt(
@@ -65,13 +66,8 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 					)
 				);
 			} catch ( Any e ) {
-				writeOutput(
-					"Error executing viewlet: #arguments.event#(#arguments.args.toString()#). #e.message#"
-				);
-				log.error(
-					"Error executing viewlet: #arguments.event#(#arguments.args.toString()#)",
-					e
-				);
+				writeOutput( "Error executing viewlet: #arguments.event#(#arguments.args.toString()#). #e.message#" );
+				log.error( "Error executing viewlet: #arguments.event#(#arguments.args.toString()#)", e );
 			}
 		}
 

@@ -33,7 +33,7 @@ component extends="cbadmin.handlers.baseHandler" {
 	}
 
 	/**
-	 * @widget Determines if this will run as a viewlet or normal MVC
+	 * @widget   Determines if this will run as a viewlet or normal MVC
 	 * @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	 */
 	function index(
@@ -519,7 +519,7 @@ component extends="cbadmin.handlers.baseHandler" {
 	/**
 	 * Load Assets for FileBrowser
 	 *
-	 * @force Force the loading of assets on demand
+	 * @force    Force the loading of assets on demand
 	 * @settings A structure of settings for the filebrowser to be overriden with in the viewlet most likely.
 	 */
 	private function loadAssets(

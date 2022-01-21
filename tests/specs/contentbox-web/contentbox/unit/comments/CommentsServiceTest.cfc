@@ -31,14 +31,10 @@ component extends="tests.resources.BaseTest" {
 					expect( r.count ).toBeGT( 0 );
 				} );
 				it( "can find by content ID", function(){
-					var r = commentService.findAllApproved(
-						contentID = "779cd806-a444-11eb-ab6f-0290cc502ae3"
-					);
+					var r = commentService.findAllApproved( contentID = "779cd806-a444-11eb-ab6f-0290cc502ae3" );
 					expect( r.count ).toBe( 0 );
 
-					var r = commentService.findAllApproved(
-						contentID = "779cd18a-a444-11eb-ab6f-0290cc502ae3"
-					);
+					var r = commentService.findAllApproved( contentID = "779cd18a-a444-11eb-ab6f-0290cc502ae3" );
 					expect( r.count ).toBeGT( 0 );
 				} );
 				it( "can find by content types", function(){
@@ -66,16 +62,10 @@ component extends="tests.resources.BaseTest" {
 				expect( r.count ).toBeGT( 0 );
 
 				// disjunction with content
-				var r = commentService.search(
-					contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3",
-					search    = "awesome"
-				);
+				var r = commentService.search( contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3", search = "awesome" );
 				expect( r.count ).toBeGTE( 1 );
 				// disjunction with author
-				var r = commentService.search(
-					contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3",
-					search    = "luis"
-				);
+				var r = commentService.search( contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3", search = "luis" );
 				expect( r.count ).toBeGTE( 1 );
 				// disjunction with authorEmail
 				var r = commentService.search(

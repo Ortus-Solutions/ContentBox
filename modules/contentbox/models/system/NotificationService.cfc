@@ -29,8 +29,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when authors are created in the system.
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_postNewAuthorSave( event, data, buffer ){
@@ -89,8 +89,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when authors are removed
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_preAuthorRemove( event, data, buffer ){
@@ -144,8 +144,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when entries are saved
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_postEntrySave( event, data, buffer ){
@@ -182,9 +182,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 		if ( entry.hasExcerpt() ) {
 			bodyTokens.entryExcerpt = entry.renderExcerpt();
 		} else {
-			bodyTokens.entryExcerpt = entry.renderContentSilent(
-				entry.getActiveContent().getContent()
-			);
+			bodyTokens.entryExcerpt = entry.renderContentSilent( entry.getActiveContent().getContent() );
 		}
 
 		var mail = variables.mailservice.newMail(
@@ -217,8 +215,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when entries are removed
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_preEntryRemove( event, data, buffer ){
@@ -278,8 +276,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when pages are saved
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_postPageSave( event, data, buffer ){
@@ -314,9 +312,7 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 		if ( page.hasExcerpt() ) {
 			bodyTokens.pageExcerpt = page.renderExcerpt();
 		} else {
-			bodyTokens.pageExcerpt = page.renderContentSilent(
-				page.getActiveContent().getContent()
-			);
+			bodyTokens.pageExcerpt = page.renderContentSilent( page.getActiveContent().getContent() );
 		}
 
 		var mail = variables.mailservice.newMail(
@@ -349,8 +345,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when pages are removed
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_prePageRemove( event, data, buffer ){
@@ -411,8 +407,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when contentstore are saved
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_postContentStoreSave( event, data, buffer ){
@@ -479,8 +475,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Listen to when content store objects are removed
 	 *
-	 * @event ColdBox Event
-	 * @data Intercept Data
+	 * @event  ColdBox Event
+	 * @data   Intercept Data
 	 * @buffer Output buffer
 	 */
 	function cbadmin_preContentStoreRemove( event, data, buffer ){
@@ -543,9 +539,8 @@ component extends="coldbox.system.Interceptor" accessors="true" {
 	/**
 	 * Assemble a list of the notifiers to send a notification to
 	 *
-	 * @site The site the notification is from
+	 * @site     The site the notification is from
 	 * @settings The global settings
-	 *
 	 */
 	private function getNotifiers( required site, required settings ){
 		var notifiers = "";

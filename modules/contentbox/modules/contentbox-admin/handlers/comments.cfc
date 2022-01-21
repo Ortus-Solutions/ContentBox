@@ -17,11 +17,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event
-	 * @action
+	 * @event         
+	 * @action        
 	 * @eventArguments
-	 * @rc
-	 * @prc
+	 * @rc            
+	 * @prc           
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab selection
@@ -32,8 +32,8 @@ component extends="baseHandler" {
 	 * Main display of comments
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function index( event, rc, prc ){
 		// params
@@ -95,8 +95,8 @@ component extends="baseHandler" {
 	 * Submit a status udpate on a comment
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function doStatusUpdate( event, rc, prc ){
 		// param values
@@ -131,8 +131,8 @@ component extends="baseHandler" {
 	 * Show the comment editor
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function editor( event, rc, prc ){
 		// get new or persisted
@@ -147,8 +147,8 @@ component extends="baseHandler" {
 	 * Show the comment moderator
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function moderate( event, rc, prc ){
 		// get new or persisted
@@ -169,8 +169,8 @@ component extends="baseHandler" {
 	 * Comment quick look
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 *
 	 * @return HTML
 	 */
@@ -185,8 +185,8 @@ component extends="baseHandler" {
 	 * Save a comment
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function save( event, rc, prc ){
 		// populate and get comment
@@ -207,8 +207,8 @@ component extends="baseHandler" {
 	 * Remove all Moderated comments
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 *
 	 * @return JSON or relocation
 	 */
@@ -236,8 +236,8 @@ component extends="baseHandler" {
 	 * Remove comments from the database
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 *
 	 * @return JSON or relocation
 	 */
@@ -286,11 +286,11 @@ component extends="baseHandler" {
 	/**
 	 * Comment Pager
 	 *
-	 * @event
-	 * @rc
-	 * @prc
-	 * @contentID The content ID to filter the comments on, defaults to all
-	 * @max Max number of comments to show, shows the global default
+	 * @event     
+	 * @rc        
+	 * @prc       
+	 * @contentID  The content ID to filter the comments on, defaults to all
+	 * @max        Max number of comments to show, shows the global default
 	 * @pagination Turn pagination on or off
 	 */
 	function pager(
@@ -356,8 +356,8 @@ component extends="baseHandler" {
 	 * Show comment settings panel
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function settings( event, rc, prc ){
 		rc.xehSaveSettings       = "#prc.cbAdminEntryPoint#.comments.saveSettings";

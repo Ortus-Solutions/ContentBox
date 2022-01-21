@@ -25,6 +25,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Constructor
+	 *
 	 * @wirebox.inject wirebox
 	 */
 	TwoFactorService function init( required wirebox ){
@@ -68,6 +69,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Register a new two factor authenticator in ContentBox
+	 *
 	 * @provider The provider instance to register
 	 */
 	TwoFactorService function registerProvider(
@@ -79,6 +81,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * UnRegister a provider in ContentBox
+	 *
 	 * @name The name of the provider to unregister
 	 */
 	TwoFactorService function unRegisterProvider( required name ){
@@ -113,6 +116,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Get a registered provider instance
+	 *
 	 * @name The name of the provider
 	 */
 	contentbox.models.security.twofactor.ITwoFactorProvider function getProvider( required name ){
@@ -121,6 +125,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Check if an provider exists or not
+	 *
 	 * @name The name of the provider
 	 */
 	boolean function hasProvider( required name ){
@@ -129,6 +134,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Set a trusted device cookie for a user, usually called if the two factor authentication was valid.
+	 *
 	 * @trustedID The trusted ID to track in the tracking cookie
 	 */
 	TwoFactorService function setTrustedDevice( required trustedID ){
@@ -142,13 +148,11 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Verify if the incoming trusted ID is valid
+	 *
 	 * @trustedID The trusted ID to verify
 	 */
 	boolean function isTrustedDevice( required trustedID ){
-		var cookieValue = cookieStorage.get(
-			name         = variables.TRUSTED_DEVICE_COOKIE,
-			defaultValue = ""
-		);
+		var cookieValue = cookieStorage.get( name = variables.TRUSTED_DEVICE_COOKIE, defaultValue = "" );
 
 		try {
 			// decrypt the target id
@@ -169,6 +173,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Can we challenge this author for two factor authentication
+	 *
 	 * @author The author to challenge or not
 	 */
 	boolean function canChallenge( required author ){
@@ -182,11 +187,7 @@ component accessors="true" threadSafe singleton {
 			arguments.author.getIs2FactorAuth()
 		) {
 			// Verify if using trusted device options and if device is trusted
-			if (
-				oProvider.allowTrustedDevice() AND isTrustedDevice(
-					arguments.author.getAuthorID()
-				)
-			) {
+			if ( oProvider.allowTrustedDevice() AND isTrustedDevice( arguments.author.getAuthorID() ) ) {
 				results = false;
 			} else {
 				results = true;
@@ -213,16 +214,13 @@ component accessors="true" threadSafe singleton {
 	 * Leverage the default provider to verify a challenge for the specific user.
 	 * The return is a structure containing an error flag and a messages string.
 	 *
-	 * @code The verification code
+	 * @code   The verification code
 	 * @author The author to verify challenge
 	 *
 	 * @return struct:{ error:boolean, messages:string }
 	 */
 	struct function verifyChallenge( required string code, required author ){
-		return getProvider( getDefaultProvider() ).verifyChallenge(
-			arguments.code,
-			arguments.author
-		);
+		return getProvider( getDefaultProvider() ).verifyChallenge( arguments.code, arguments.author );
 	}
 
 }

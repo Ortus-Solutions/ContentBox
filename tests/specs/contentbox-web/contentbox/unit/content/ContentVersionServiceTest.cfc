@@ -27,9 +27,7 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can find related versions", function(){
-				var r = model.findRelatedVersions(
-					contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3"
-				);
+				var r = model.findRelatedVersions( contentID = "779cd234-a444-11eb-ab6f-0290cc502ae3" );
 				expect( r.count ).toBeGT( 0 );
 			} );
 		} );

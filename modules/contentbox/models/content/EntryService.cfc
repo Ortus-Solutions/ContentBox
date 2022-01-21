@@ -23,7 +23,7 @@ component extends="ContentService" singleton {
 	/**
 	 * Save an entry
 	 *
-	 * @entry The entry to save or update
+	 * @entry        The entry to save or update
 	 * @originalSlug The original slug if the save is an update
 	 *
 	 * @return Saved entry
@@ -35,20 +35,20 @@ component extends="ContentService" singleton {
 	/**
 	 * Search for blog entries according to many filters
 	 *
-	 * @search The search term to search on
-	 * @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore. Default is `any`
-	 * @author The authorID to filter on, pass 'all' to ignore filter
-	 * @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	 * @category The categorie(s) to filter on. You can also pass 'all' or 'none'
-	 * @max The maximum records to return
-	 * @offset The offset on the pagination
-	 * @sortOrder Sorting of the results, defaults to page title asc
+	 * @search              The search term to search on
+	 * @isPublished         Boolean bit to search if page is published or not, pass 'any' or not to ignore. Default is `any`
+	 * @author              The authorID to filter on, pass 'all' to ignore filter
+	 * @creator             The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category            The categorie(s) to filter on. You can also pass 'all' or 'none'
+	 * @max                 The maximum records to return
+	 * @offset              The offset on the pagination
+	 * @sortOrder           Sorting of the results, defaults to page title asc
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
-	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	 * @siteId The site ID to filter on
-	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
+	 * @showInSearch        If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	 * @siteId              The site ID to filter on
+	 * @propertyList        A list of properties to retrieve as a projection instead of array of objects
 	 *
-	 * @returns struct of { entries, count }
+	 * @return struct of { entries, count }
 	 */
 	struct function search(
 		string search               = "",
@@ -118,8 +118,7 @@ component extends="ContentService" singleton {
 			// With categories
 			else {
 				// search the association
-				c.createAlias( "categories", "cats" )
-					.isIn( "cats.categoryID", [ arguments.category ] );
+				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category ] );
 			}
 		}
 		// Site Filter
@@ -178,15 +177,15 @@ component extends="ContentService" singleton {
 	/**
 	 * Find published entries by date filters
 	 *
-	 * @year The year to filter on
-	 * @month The month to filter on
-	 * @day The day to filter on
-	 * @max The maximum records to return
-	 * @offset The offset on the pagination
+	 * @year    The year to filter on
+	 * @month   The month to filter on
+	 * @day     The day to filter on
+	 * @max     The maximum records to return
+	 * @offset  The offset on the pagination
 	 * @asQuery Return query or array of structs
-	 * @siteId The site ID to filter on
+	 * @siteId  The site ID to filter on
 	 *
-	 * @returns struct of { entries, count }
+	 * @return struct of { entries, count }
 	 */
 	function findPublishedEntriesByDate(
 		numeric year    = 0,

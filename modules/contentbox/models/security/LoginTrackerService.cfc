@@ -23,6 +23,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Verify if an attempt is being blocked or not
+	 *
 	 * @attempt The login attempt object
 	 */
 	boolean function isblocked( LoginAttempt attempt ){
@@ -58,6 +59,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Get the last successful logins
+	 *
 	 * @max How many to retrieve
 	 */
 	function getLastLogins( required numeric max ){

@@ -165,6 +165,7 @@ component accessors="true" singleton {
 
 	/**
 	 * Utility function to help you highlight search terms in content
+	 *
 	 * @term    The search term
 	 * @content The content searched
 	 */

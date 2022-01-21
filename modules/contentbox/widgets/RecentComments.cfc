@@ -21,9 +21,10 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Show n recent comments
-	 * @ma.hint The number of recent comments to show. By default it shows 5
-	 * @maxChars.hint The maximum character length to show for comment contents
-	 * @title.hint An optional title to display using an H2 tag.
+	 *
+	 * @ma.hint         The number of recent comments to show. By default it shows 5
+	 * @maxChars.hint   The maximum character length to show for comment contents
+	 * @title.hint      An optional title to display using an H2 tag.
 	 * @titleLevel.hint The H{level} to use, by default we use H2
 	 */
 	any function renderIt(

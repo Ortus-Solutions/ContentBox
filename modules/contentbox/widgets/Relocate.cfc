@@ -22,9 +22,9 @@ component extends="contentbox.models.ui.BaseWidget" {
 	/**
 	 * Relocate a page
 	 *
-	 * @page The page to relocate to
-	 * @url The full URL to relocate to
-	 * @ssl Relocate using SSL or not, default is false.
+	 * @page       The page to relocate to
+	 * @url        The full URL to relocate to
+	 * @ssl        Relocate using SSL or not, default is false.
 	 * @statusCode The status code, default is 302
 	 */
 	any function renderIt(

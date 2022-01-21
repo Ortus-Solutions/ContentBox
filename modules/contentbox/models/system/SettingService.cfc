@@ -266,9 +266,7 @@ component
 					} )
 					// Create the missing global setting
 					.each( function( key, value ){
-						variables.log.info(
-							"- Missing core setting (#arguments.key#) found in pre-flight, adding it!"
-						);
+						variables.log.info( "- Missing core setting (#arguments.key#) found in pre-flight, adding it!" );
 						entitySave(
 							this.new( {
 								name   : arguments.key,
@@ -405,11 +403,12 @@ component
 	/**
 	 * Get a global setting
 	 *
-	 * @name The name of the seting
+	 * @name         The name of the seting
 	 * @defaultValue The default value if setting not found.
 	 *
-	 * @throws SettingNotFoundException
 	 * @return The setting value or default value if not found
+	 *
+	 * @throws SettingNotFoundException
 	 */
 	function getSetting( required name, defaultValue ){
 		var allSettings = getAllSettings();
@@ -435,12 +434,13 @@ component
 	/**
 	 * Get a site setting
 	 *
-	 * @siteSlug The site to get the setting from
-	 * @name The name of the seting
+	 * @siteSlug     The site to get the setting from
+	 * @name         The name of the seting
 	 * @defaultValue The default value if setting not found.
 	 *
-	 * @throws SettingNotFoundException
 	 * @return The setting value or default value if not found
+	 *
+	 * @throws SettingNotFoundException
 	 */
 	function getSiteSetting( required siteSlug, required name, defaultValue ){
 		var allSettings = getAllSiteSettings( arguments.siteSlug );
@@ -475,7 +475,7 @@ component
 	/**
 	 * Get all site settings
 	 *
-	 * @slug The site slug to use to retrieve the settings
+	 * @slug  The site slug to use to retrieve the settings
 	 * @force To force clear the cache
 	 */
 	struct function getAllSiteSettings( required siteSlug, boolean force = false ){
@@ -596,14 +596,12 @@ component
 	 * This is usually done from the settings display manager
 	 *
 	 * @memento The struct of settings
-	 * @site Optional site to attach the settings to
+	 * @site    Optional site to attach the settings to
 	 *
 	 * @return SettingService
 	 */
 	SettingService function bulkSave( struct memento, site ){
-		var settings = isNull( arguments.site ) ? getAllSettings() : getAllSiteSettings(
-			arguments.site.getSlug()
-		);
+		var settings    = isNull( arguments.site ) ? getAllSettings() : getAllSiteSettings( arguments.site.getSlug() );
 		var newSettings = [];
 
 		arguments.memento
@@ -675,11 +673,11 @@ component
 	/**
 	 * Setting search with filters
 	 *
-	 * @search The search term for the name
-	 * @max The max records
-	 * @offset The offset to tuse
+	 * @search    The search term for the name
+	 * @max       The max records
+	 * @offset    The offset to tuse
 	 * @sortOrder The sort order
-	 * @siteID The site id to filter on
+	 * @siteID    The site id to filter on
 	 *
 	 * @return struct of { count, settings }
 	 */
@@ -725,11 +723,11 @@ component
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -738,10 +736,7 @@ component
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message = "Cannot import file as the contents is not JSON",
-				type    = "InvalidImportFormat"
-			);
+			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -756,12 +751,12 @@ component
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromData(
 		required importData,
@@ -805,14 +800,10 @@ component
 					arguments.importLog.append( "New setting imported: #thisSetting.name#<br>" );
 					arrayAppend( allSettings, oSetting );
 				} else if ( oSetting.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted setting overriden: #thisSetting.name#<br>"
-					);
+					arguments.importLog.append( "Persisted setting overriden: #thisSetting.name#<br>" );
 					arrayAppend( allSettings, oSetting );
 				} else {
-					arguments.importLog.append(
-						"Skipping persisted setting: #thisSetting.name#<br>"
-					);
+					arguments.importLog.append( "Skipping persisted setting: #thisSetting.name#<br>" );
 				}
 			}
 			// end import loop
@@ -834,6 +825,7 @@ component
 
 	/**
 	 * Get the cache provider object to be used for settings
+	 *
 	 * @return coldbox.system.cache.ICacheProvider
 	 */
 	function getSettingsCacheProvider(){
@@ -885,9 +877,7 @@ component
 		// iterate and override
 		for ( var thisKey in environmentSettings ) {
 			if ( reFindNoCase( "^contentbox\_", thisKey ) ) {
-				overrides[ reReplaceNoCase( thisKey, "^contentbox\_", "" ) ] = environmentSettings[
-					thisKey
-				];
+				overrides[ reReplaceNoCase( thisKey, "^contentbox\_", "" ) ] = environmentSettings[ thisKey ];
 			}
 		}
 

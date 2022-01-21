@@ -139,6 +139,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Check if an editor exists or not
+	 *
 	 * @name The name of the editor
 	 */
 	boolean function hasEditor( required name ){
@@ -147,6 +148,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Check if an markup exists or not
+	 *
 	 * @markup The name of the markup
 	 */
 	boolean function hasMarkup( required markup ){

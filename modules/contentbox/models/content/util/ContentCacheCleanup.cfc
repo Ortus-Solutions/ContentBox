@@ -13,20 +13,17 @@ component extends="coldbox.system.Interceptor" {
 	 * Listen when comments are posted.
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbui_onCommentPost( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when comments are moderated
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_onCommentStatusUpdate( event, data ){
 		variables.commentService
@@ -43,92 +40,71 @@ component extends="coldbox.system.Interceptor" {
 	 * Listen when comments are removed
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_preCommentRemove( event, data ){
 		var oComment = variables.commentService.get( arguments.data.commentID );
-		doCacheCleanup(
-			oComment.getRelatedContent().buildContentCacheCleanupKey(),
-			oComment.getRelatedContent()
-		);
+		doCacheCleanup( oComment.getRelatedContent().buildContentCacheCleanupKey(), oComment.getRelatedContent() );
 	}
 
 	/**
 	 * Listen when entries are saved
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_postEntrySave( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when entries are removed
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_preEntryRemove( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when pages are saved
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_postPageSave( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when pages are removed
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_prePageRemove( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when a content store item is saved
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_postContentStoreSave( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/**
 	 * Listen when a content store item is removed
 	 *
 	 * @event The request context
-	 * @data Intercept data
+	 * @data  Intercept data
 	 */
 	function cbadmin_preContentStoreRemove( event, data ){
-		doCacheCleanup(
-			arguments.data.content.buildContentCacheCleanupKey(),
-			arguments.data.content
-		);
+		doCacheCleanup( arguments.data.content.buildContentCacheCleanupKey(), arguments.data.content );
 	}
 
 	/*********************************************************************************************************/
@@ -139,7 +115,7 @@ component extends="coldbox.system.Interceptor" {
 	 * Clear the content caches according to incoming key and content object
 	 *
 	 * @cacheKey The cache key to use
-	 * @content The content object
+	 * @content  The content object
 	 */
 	private function doCacheCleanup( required string cacheKey, any content ){
 		// Log it
@@ -158,9 +134,7 @@ component extends="coldbox.system.Interceptor" {
 		variables.log.info( "+ Cleared content translation caches for: #arguments.cacheKey#" );
 
 		// clear content wrapper caches
-		var blogPrefix = (
-			arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : ""
-		);
+		var blogPrefix = ( arguments.content.getContentType() eq "Entry" ? "#settings.cb_site_blog_entrypoint#/" : "" );
 		var wrapperKey = "#blogPrefix##arguments.content.getSlug()#";
 		variables.contentService.clearPageWrapperCaches( slug = wrapperKey, async = true );
 		// log it

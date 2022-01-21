@@ -86,10 +86,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 	 * @throws BaseClassException
 	 */
 	any function renderIt(){
-		throw(
-			message = "This is a base method that you must implement",
-			type    = "BaseClassException"
-		);
+		throw( message = "This is a base method that you must implement", type = "BaseClassException" );
 	}
 
 	/**
@@ -112,10 +109,7 @@ component accessors="true" extends="coldbox.system.FrameworkSupertype" {
 			if ( !listContains( "init,onMissingMethod", method.name ) ) {
 				if (
 					!structKeyExists( method, "access" ) || (
-						structKeyExists( method, "access" ) && !listContains(
-							"private,package",
-							method.access
-						)
+						structKeyExists( method, "access" ) && !listContains( "private,package", method.access )
 					)
 				) {
 					arrayAppend( publicMethods, method );

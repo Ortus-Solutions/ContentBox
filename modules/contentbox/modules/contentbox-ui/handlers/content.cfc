@@ -159,11 +159,12 @@ component {
 
 	/**
 	 * Content display around advice that provides caching for content display and multi-format capabilities
-	 * @event Request context
-	 * @rc Request collection
-	 * @prc Private request collection
+	 *
+	 * @event          Request context
+	 * @rc             Request collection
+	 * @prc            Private request collection
 	 * @eventArguments Event arguments
-	 * @action The action to wrap
+	 * @action         The action to wrap
 	 * @contentCaching Wether content caching is enabled or not
 	 */
 	private function wrapContentAdvice(
@@ -345,6 +346,7 @@ component {
 
 	/**
 	 * Validate incoming comment post, if not valid, it redirects back
+	 *
 	 * @thisContent The content object to validate the comment post for
 	 *
 	 * @return content handler
@@ -423,8 +425,8 @@ component {
 	 * Save the comment for a content object
 	 *
 	 * @thisContent.hint The content object
-	 * @subscribe Subscribing to comments or not
-	 * @prc The prc reference
+	 * @subscribe        Subscribing to comments or not
+	 * @prc              The prc reference
 	 */
 	private function saveComment(
 		required thisContent,

@@ -14,11 +14,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event
-	 * @action
+	 * @event         
+	 * @action        
 	 * @eventArguments
-	 * @rc
-	 * @prc
+	 * @rc            
+	 * @prc           
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
@@ -29,8 +29,8 @@ component extends="baseHandler" {
 	 * Manage roles
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function index( event, rc, prc ){
 		// exit Handlers
@@ -54,8 +54,8 @@ component extends="baseHandler" {
 	 * Save Roles
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function save( event, rc, prc ){
 		// Inflate the right Permissions according to toggle pattern: permissions_id_toggle
@@ -99,8 +99,8 @@ component extends="baseHandler" {
 	 * Remove Roles
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function remove( event, rc, prc ){
 		// announce event
@@ -138,8 +138,8 @@ component extends="baseHandler" {
 	 * Export a role
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function export( event, rc, prc ){
 		return variables.roleService.get( event.getValue( "roleID", 0 ) ).getMemento( includes = "permissions" );
@@ -149,8 +149,8 @@ component extends="baseHandler" {
 	 * Export all roles
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function exportAll( event, rc, prc ){
 		param rc.roleID = "";
@@ -170,8 +170,8 @@ component extends="baseHandler" {
 	 * Import roles
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );

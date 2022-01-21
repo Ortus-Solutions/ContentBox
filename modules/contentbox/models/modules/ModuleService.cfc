@@ -100,7 +100,7 @@ component
 	/**
 	 * Populate module from Module Configuration CFC and returns the module
 	 *
-	 * @model The module object
+	 * @model  The module object
 	 * @config The config object to populate with
 	 *
 	 * @return The module populated
@@ -131,7 +131,7 @@ component
 	/**
 	 * Find modules in ContentBox using the active criteria or `any`
 	 *
-	 * @isActive The active criteria, true, false or any for all modules
+	 * @isActive   The active criteria, true, false or any for all modules
 	 * @moduleType The module type criteria
 	 *
 	 * @return struct:{ count:numeric, modules:array of objects }

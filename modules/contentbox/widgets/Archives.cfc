@@ -24,10 +24,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Show the blog archives
-	 * @dropdown.hint Display as a dropdown or a list, default is list
+	 *
+	 * @dropdown.hint      Display as a dropdown or a list, default is list
 	 * @showPostCount.hint Show post counts or not, default is true
-	 * @title.hint The title to show before the dropdown or list, defaults to H2
-	 * @titleLevel.hint The H{level} to use, by default we use H2
+	 * @title.hint         The title to show before the dropdown or list, defaults to H2
+	 * @titleLevel.hint    The H{level} to use, by default we use H2
 	 */
 	any function renderIt(
 		boolean dropdown      = false,
@@ -72,9 +73,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			);
 			// iterate and create
 			for ( var x = 1; x lte arrayLen( arguments.archives ); x++ ) {
-				var thisDate = arguments.archives[ x ][ "year" ] & "-" & arguments.archives[ x ][
-					"month"
-				] & "-1";
+				var thisDate = arguments.archives[ x ][ "year" ] & "-" & arguments.archives[ x ][ "month" ] & "-1";
 				writeOutput(
 					"<option
 		value=""#cb.linkArchive(
@@ -111,9 +110,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			);
 			// iterate and create
 			for ( var x = 1; x lte arrayLen( arguments.archives ); x++ ) {
-				var thisDate = arguments.archives[ x ][ "year" ] & "-" & arguments.archives[ x ][
-					"month"
-				] & "-1";
+				var thisDate = arguments.archives[ x ][ "year" ] & "-" & arguments.archives[ x ][ "month" ] & "-1";
 				writeOutput(
 					"<li class=""archives"">
 		<a

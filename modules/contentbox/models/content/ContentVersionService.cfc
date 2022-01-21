@@ -21,7 +21,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get the total version counts by content object and if the versions are active or not or all
 	 *
 	 * @contentId The content id to count on
-	 * @isActive If passed, it evaluated the total using active or non-active versions. If not passed, it does them all
+	 * @isActive  If passed, it evaluated the total using active or non-active versions. If not passed, it does them all
 	 *
 	 * @return The number of versions a content object has by filters
 	 */
@@ -60,8 +60,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Find all the versions related to the passed content Id
 	 *
 	 * @contentID The content id to get the versions for
-	 * @max Maximum records to get
-	 * @offset  The pagination offset
+	 * @max       Maximum records to get
+	 * @offset    The pagination offset
 	 *
 	 * @return struct of { count : numeric, versions : array}
 	 */

@@ -152,16 +152,10 @@ component
 	any function renderExcerpt(){
 		// Check if we need to translate
 		if ( NOT len( variables.renderedExcerpt ) ) {
-			lock
-				name          ="contentbox.excerptrendering.#getContentID()#"
-				type          ="exclusive"
-				throwontimeout="true"
-				timeout       ="10" {
+			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10" {
 				if ( NOT len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
-					var builder = createObject( "java", "java.lang.StringBuilder" ).init(
-						getExcerpt()
-					);
+					var builder = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
 						"cb_onContentRendering",
@@ -212,12 +206,12 @@ component
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	 *
-	 * @author The author doing the cloning
-	 * @original The original content object that will be cloned into this content object
-	 * @originalService The ContentBox content service object
-	 * @publish Publish pages or leave as drafts
+	 * @author           The author doing the cloning
+	 * @original         The original content object that will be cloned into this content object
+	 * @originalService  The ContentBox content service object
+	 * @publish          Publish pages or leave as drafts
 	 * @originalSlugRoot The original slug that will be replaced in all cloned content
-	 * @newSlugRoot The new slug root that will be replaced in all cloned content
+	 * @newSlugRoot      The new slug root that will be replaced in all cloned content
 	 */
 	BaseContent function prepareForClone(
 		required any author,

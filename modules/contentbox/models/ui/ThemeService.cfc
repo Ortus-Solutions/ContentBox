@@ -157,9 +157,9 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Startup a theme in the system, processes interceptions, modules, widgets, etc
 	 *
-	 * @name The name of the theme to activate
+	 * @name           The name of the theme to activate
 	 * @processWidgets Process widget registration on activation, defaults to true.
-	 * @site The site id or object we are starting up this theme for
+	 * @site           The site id or object we are starting up this theme for
 	 */
 	function startupTheme(
 		required name,
@@ -234,8 +234,8 @@ component accessors="true" threadSafe singleton {
 	 * Save theme settings as they are coming from form submissions as a struct with a common prefix
 	 * cb_theme_{themeName}_{settingName}
 	 *
-	 * @name 		The theme name
-	 * @settings 	The settings struct
+	 * @name     The theme name
+	 * @settings The settings struct
 	 *
 	 * @return ThemeService
 	 */
@@ -395,12 +395,12 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Process a theme record and store appropriate data and cfc registries
 	 *
-	 * @name The name of the theme on disk
-	 * @path The path of the theme
+	 * @name           The name of the theme on disk
+	 * @path           The path of the theme
 	 * @invocationPath The invocation path of the theme
-	 * @includePath The include path of the theme
-	 * @type The type of theme it is: core, custom
-	 * @module The module this theme exists under
+	 * @includePath    The include path of the theme
+	 * @type           The type of theme it is: core, custom
+	 * @module         The module this theme exists under
 	 */
 	function processThemeRecord(
 		name,
@@ -572,6 +572,7 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * Get constraints for setting fields
+	 *
 	 * @themeName The name of the theme
 	 */
 	struct function getSettingsConstraints( required themeName ){
@@ -807,7 +808,8 @@ component accessors="true" threadSafe singleton {
 
 	/**
 	 * generateModal - Generate the modal for Theme Setting Help
-	 * @settingName - The name of the setting the Theme Setting Help modal will be created for
+	 *
+	 * @settingName   - The name of the setting the Theme Setting Help modal will be created for
 	 * @thisSettingMD - The setting struct itself
 	 */
 	function generateModal( required settingName, required thisSettingMD ){
@@ -879,9 +881,9 @@ component accessors="true" threadSafe singleton {
 	/**
 	 * Register a theme's settings
 	 *
-	 * @name The theme name
+	 * @name     The theme name
 	 * @settings The settings struct
-	 * @site The site this theme is activated on
+	 * @site     The site this theme is activated on
 	 *
 	 * @return ThemeService
 	 */

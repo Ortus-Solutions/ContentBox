@@ -19,7 +19,7 @@ component extends="baseContentHandler" {
 	 * Display all pages using different filters
 	 *
 	 * @tags Pages
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @x    -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.page       = 1;
@@ -69,7 +69,7 @@ component extends="baseContentHandler" {
 	 * Show an page using the id
 	 *
 	 * @tags Pages
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @x    -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -89,7 +89,7 @@ component extends="baseContentHandler" {
 	 * Create a page
 	 *
 	 * @tags Pages
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @x    -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// Supersize it
@@ -101,7 +101,7 @@ component extends="baseContentHandler" {
 	 * Update an existing page
 	 *
 	 * @tags Pages
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @x    -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// Supersize it
@@ -113,7 +113,7 @@ component extends="baseContentHandler" {
 	 * Delete a page using an id or slug
 	 *
 	 * @tags Pages
-	 * @x-contentbox-permissions PAGES_ADMIN
+	 * @x    -contentbox-permissions PAGES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
 		super.delete( argumentCollection = arguments );

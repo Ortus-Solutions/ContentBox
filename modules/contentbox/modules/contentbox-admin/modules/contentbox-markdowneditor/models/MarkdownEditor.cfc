@@ -16,9 +16,10 @@ component
 
 	/**
 	 * Constructor
-	 * @coldbox.inject coldbox
+	 *
+	 * @coldbox.inject        coldbox
 	 * @settingService.inject settingService@contentbox
-	 * @html.inject HTMLHelper@coldbox
+	 * @html.inject           HTMLHelper@coldbox
 	 */
 	function init(
 		required coldbox,
@@ -282,6 +283,7 @@ component
 
 	/**
 	 * Build the toolbar JS according to editor name
+	 *
 	 * @editor The editor name to bind the toolbar to
 	 */
 	private function buildToolbarJS( required editor ){

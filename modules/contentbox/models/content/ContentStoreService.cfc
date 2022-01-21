@@ -24,10 +24,10 @@ component extends="ContentService" singleton {
 	 * Save the content store object and if an original slug is passed, we will update the entire
 	 * hierarchy if the slug changed.
 	 *
-	 * @content The content store object
+	 * @content      The content store object
 	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
 	 *
-	 * @returns ContentStoreService
+	 * @return ContentStoreService
 	 */
 	function save( required any content, string originalSlug = "" ){
 		transaction {
@@ -36,9 +36,7 @@ component extends="ContentService" singleton {
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
 			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
-				var entriesInNeed = newCriteria()
-					.like( "slug", "#arguments.originalSlug#/%" )
-					.list();
+				var entriesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
 				for ( var thisContent in entriesInNeed ) {
 					thisContent.setSlug(
 						replaceNoCase(
@@ -58,22 +56,22 @@ component extends="ContentService" singleton {
 	/**
 	 * Search for content store items according to many filters
 	 *
-	 * @search The search term to search on
-	 * @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
-	 * @author The authorID to filter on, pass 'all' to ignore filter
-	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	 * @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	 * @category The categorie(s) to filter on. You can also pass 'all' or 'none'
-	 * @max The maximum records to return
-	 * @offset The offset on the pagination
-	 * @sortOrder Sorting of the results, defaults to page title asc
+	 * @search              The search term to search on
+	 * @isPublished         Boolean bit to search if page is published or not, pass 'any' or not to ignore.
+	 * @author              The authorID to filter on, pass 'all' to ignore filter
+	 * @parent              The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @creator             The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category            The categorie(s) to filter on. You can also pass 'all' or 'none'
+	 * @max                 The maximum records to return
+	 * @offset              The offset on the pagination
+	 * @sortOrder           Sorting of the results, defaults to page title asc
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
-	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
-	 * @siteID The site ID to filter on
-	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
+	 * @showInSearch        If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	 * @slugPrefix          If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
+	 * @siteID              The site ID to filter on
+	 * @propertyList        A list of properties to retrieve as a projection instead of array of objects
 	 *
-	 * @returns struct = { content, count }
+	 * @return struct = { content, count }
 	 */
 	struct function search(
 		string search      = "",
@@ -178,8 +176,7 @@ component extends="ContentService" singleton {
 			// With categories
 			else {
 				// search the association
-				c.createAlias( "categories", "cats" )
-					.isIn( "cats.categoryID", [ arguments.category ] );
+				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category ] );
 			}
 		}
 

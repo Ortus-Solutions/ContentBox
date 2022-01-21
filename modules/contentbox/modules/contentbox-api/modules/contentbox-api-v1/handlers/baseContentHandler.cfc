@@ -47,8 +47,8 @@ component extends="baseHandler" {
 	/**
 	 * Shared method for create and update to be DRY
 	 *
-	 * @populate Population arguments
-	 * @validate Validation arguments
+	 * @populate   Population arguments
+	 * @validate   Validation arguments
 	 * @saveMethod The method to use for saving entities
 	 * @contenType The type used for permission checks
 	 */

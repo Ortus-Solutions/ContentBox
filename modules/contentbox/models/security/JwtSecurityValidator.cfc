@@ -39,16 +39,13 @@ component extends="cbsecurity.models.jwt.JwtService" singleton {
 	 * @return { allow:boolean, type:authentication|authorization, messages:string }
 	 */
 	struct function annotationValidator( required securedValue, required controller ){
-		return validateSecurity(
-			securedValue: arguments.securedValue,
-			controller  : arguments.controller
-		);
+		return validateSecurity( securedValue: arguments.securedValue, controller: arguments.controller );
 	}
 
 	/**
 	 * Validates if a user can access an event. Called via the cbSecurity module.
 	 *
-	 * @rule The security rule being tested for
+	 * @rule       The security rule being tested for
 	 * @controller The ColdBox controller calling the validation
 	 *
 	 * @return Validation struct of: { allow:boolean, type:(authentication|authorization), messages }
@@ -78,14 +75,8 @@ component extends="cbsecurity.models.jwt.JwtService" singleton {
 				// Send back as headers now that they are refreshed
 				variables.requestService
 					.getContext()
-					.setHTTPHeader(
-						name : variables.settings.jwt.customAuthHeader,
-						value: newTokens.access_token
-					)
-					.setHTTPHeader(
-						name : variables.settings.jwt.customRefreshHeader,
-						value: newTokens.refresh_token
-					);
+					.setHTTPHeader( name: variables.settings.jwt.customAuthHeader, value: newTokens.access_token )
+					.setHTTPHeader( name: variables.settings.jwt.customRefreshHeader, value: newTokens.refresh_token );
 			} else {
 				// Error out as normal
 				results.messages = e.type & ":" & e.message;

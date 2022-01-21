@@ -35,9 +35,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "a valid id", function(){
 					then( "then I should get the requested category", function(){
 						var testCategory = variables.categoryService.findWhere( { "slug" : "coldbox", "site" : getDefaultSite() } );
-						var event        = this.get(
-							"/cbapi/v1/sites/default/categories/#testCategory.getCategoryID()#"
-						);
+						var event        = this.get( "/cbapi/v1/sites/default/categories/#testCategory.getCategoryID()#" );
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getData().slug ).toBe( "coldbox" );
 					} );
@@ -93,10 +91,7 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 				given( "invalid data", function(){
 					then( "it should display an error message", function(){
-						var event = this.post(
-							"cbapi/v1/sites/default/categories",
-							{ name : "A nice category" }
-						);
+						var event = this.post( "cbapi/v1/sites/default/categories", { name : "A nice category" } );
 						expect( event.getResponse() ).toHaveStatus( 400 );
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is required" );
 					} );
@@ -112,18 +107,13 @@ component extends="tests.resources.BaseApiTest" {
 								{ category : "ColdBox Rocks" }
 							);
 							expect( event.getResponse() ).toHaveStatus( 200 );
-							expect( event.getResponse().getData().category ).toInclude(
-								"ColdBox Rocks"
-							);
+							expect( event.getResponse().getData().category ).toInclude( "ColdBox Rocks" );
 						} );
 					} );
 				} );
 				given( "a non-unique slug", function(){
 					then( "then I should see a validation message", function(){
-						var event = this.put(
-							"/cbapi/v1/sites/default/categories/coldbox",
-							{ slug : "coldfusion" }
-						);
+						var event = this.put( "/cbapi/v1/sites/default/categories/coldbox", { slug : "coldfusion" } );
 						expect( event.getResponse() ).toHaveStatus( 400 );
 						expect( event.getResponse() ).toHaveInvalidData( "slug", "is not unique" );
 					} );
