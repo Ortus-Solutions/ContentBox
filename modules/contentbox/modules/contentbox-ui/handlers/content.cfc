@@ -191,11 +191,11 @@ component {
 		);
 		if ( cacheEnabled ) {
 			// Build cache references
-			var cache          = variables.cachebox.getCache( prc.cbSettings.cb_content_cacheName );
+			var cache           = variables.cachebox.getCache( prc.cbSettings.cb_content_cacheName );
 			var oEventURLFacade = cache.getEventURLFacade();
 			var cacheKey        = oEventURLFacade.buildEventKey(
-				keySuffix   = len( event.getPrivateValue( "pageOverride", "" ) ) ? prc.pageOverride : 'cbContent',
-				targetEvent = event.getCurrentEvent(),
+				keySuffix     = len( event.getPrivateValue( "pageOverride", "" ) ) ? prc.pageOverride : "cbContent",
+				targetEvent   = event.getCurrentEvent(),
 				targetContext = arguments.event
 			);
 
