@@ -106,15 +106,14 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Clear a specific page wrapper caches according to slug prefix
 	 *
-	 * @slug  The slug partial to clean on
+	 * @slug The slug partial to clean on
 	 * @async Run it asynchronously or not, defaults to false
 	 */
 	ContentService function clearPageWrapperCaches( required any slug, boolean async = false ){
 		variables.cacheBox
 			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
 			.clearByKeySnippet(
-				keySnippet = "cb-content-wrapper-[^-]*-#arguments.slug#",
-				regex      = true,
+				keySnippet = "cb-content-wrapper-#listChangeDelims( arguments.slug, "-", "/" )#",
 				async      = arguments.async
 			);
 		return this;
@@ -123,16 +122,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Clear a page wrapper cache for a specific content object
 	 *
-	 * @slug  The slug to clear
+	 * @slug The slug to clear
 	 * @async Run it asynchronously or not, defaults to false
 	 */
 	ContentService function clearPageWrapper( required any slug, boolean async = false ){
-		variables.cacheBox
-			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
-			.clear( "cb-content-wrapper-#cgi.HTTP_HOST#-#arguments.slug#/" );
-		return this;
+		return clearPageWrapperCaches( argumumentCollection=arguments );
 	}
-
+	
 	/**
 	 * Searches published content with cool paramters, remember published content only
 	 *
