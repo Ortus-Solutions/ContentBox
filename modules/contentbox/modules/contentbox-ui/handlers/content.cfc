@@ -190,18 +190,14 @@ component {
 			!flash.exists( "commentErrors" )
 		);
 		if ( cacheEnabled ) {
-			// Get appropriate cache provider from settings
-			var cache    = cacheBox.getCache( prc.cbSettings.cb_content_cacheName );
-			var cacheKey = "";
-			// Do we have an override page setup by the settings?
-			if ( structKeyExists( prc, "pageOverride" ) and len( prc.pageOverride ) ) {
-				cacheKey = "cb-content-wrapper-#cgi.HTTP_HOST#-#prc.pageOverride#/";
-			} else {
-				cacheKey = "cb-content-wrapper-#cgi.HTTP_HOST#-#left( event.getCurrentRoutedURL(), 500 )#";
-			}
-
-			// Incorporate internal hash + rc distinct hash + formats
-			cacheKey &= hash( ".#getFWLocale()#.#rc.format#.#event.isSSL()#" & prc.cbox_incomingContextHash );
+			// Build cache references
+			var cache          = variables.cachebox.getCache( prc.cbSettings.cb_content_cacheName );
+			var oEventURLFacade = cache.getEventURLFacade();
+			var cacheKey        = oEventURLFacade.buildEventKey(
+				keySuffix   = len( event.getPrivateValue( "pageOverride", "" ) ) ? prc.pageOverride : 'cbContent',
+				targetEvent = event.getCurrentEvent(),
+				targetContext = arguments.event
+			);
 
 			// get content data from cache
 			prc.contentCacheData = cache.get( cacheKey );
