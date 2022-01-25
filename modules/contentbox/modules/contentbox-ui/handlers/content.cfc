@@ -191,13 +191,16 @@ component {
 		);
 		if ( cacheEnabled ) {
 			// Build cache references
-			var cache          = variables.cachebox.getCache( prc.cbSettings.cb_content_cacheName );
+			var cache           = variables.cachebox.getCache( prc.cbSettings.cb_content_cacheName );
 			var oEventURLFacade = cache.getEventURLFacade();
 			// We need to create this manually, until CONTENTBOX-1368 is resolved
-			var requestedSlug = len( event.getPrivateValue( "pageOverride", "" ) ) ? prc.pageOverride : listToArray( event.getCurrentRoutedURL(), "/" ).toList( "/" );
-			var cacheKey        = oEventURLFacade.buildEventKey(
-				keySuffix   = 'cb-content-wrapper-' & listChangeDelims( requestedSlug, "-", "/" ),
-				targetEvent = event.getCurrentEvent(),
+			var requestedSlug   = len( event.getPrivateValue( "pageOverride", "" ) ) ? prc.pageOverride : listToArray(
+				event.getCurrentRoutedURL(),
+				"/"
+			).toList( "/" );
+			var cacheKey = oEventURLFacade.buildEventKey(
+				keySuffix     = "cb-content-wrapper-" & listChangeDelims( requestedSlug, "-", "/" ),
+				targetEvent   = event.getCurrentEvent(),
 				targetContext = arguments.event
 			);
 
