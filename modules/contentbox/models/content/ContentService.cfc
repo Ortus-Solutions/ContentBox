@@ -113,7 +113,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		variables.cacheBox
 			.getCache( variables.settingService.getSetting( "cb_content_cacheName" ) )
 			.clearByKeySnippet(
-				keySnippet = "cb-content-wrapper-#listChangeDelims( arguments.slug, "-", "/" )#",
+				keySnippet = "cb-content-wrapper-#getSite().getSlug()#-#listChangeDelims( arguments.slug, "-", "/" )#",
 				async      = arguments.async
 			);
 		return this;
