@@ -3,12 +3,18 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##featuredImagePanel">
+				<a
+					class="accordion-toggle collapsed block"
+					data-toggle="collapse"
+					data-parent="##accordion"
+					href="##featuredImagePanel">
 					<i class="fas fa-photo-video"></i> Featured Image
 				</a>
 			</h4>
 		</div>
-		<div id="featuredImagePanel" class="panel-collapse collapse">
+		<div
+			id="featuredImagePanel"
+			class="panel-collapse collapse">
 			<div class="panel-body">
 				<div class="form-group text-center">
 					<!--- Select and Cancel Buttons --->
@@ -19,7 +25,10 @@
 						Select Image
 					</a>
 					<!--- Featured Image Selection --->
-					<div class="<cfif !len( prc.oContent.getFeaturedImageURL() )>hide</cfif> form-group" id="featuredImageControls">
+					<div
+						class="<cfif !len( prc.oContent.getFeaturedImageURL() )>hide</cfif> form-group"
+						id="featuredImageControls"
+					>
 						#html.textField(
 							name 		= "featuredImage",
 							bind 		= prc.oContent,

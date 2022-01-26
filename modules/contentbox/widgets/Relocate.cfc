@@ -24,30 +24,30 @@ component extends="contentbox.models.ui.BaseWidget" {
 	 *
 	 * @page       The page to relocate to
 	 * @url        The full URL to relocate to
-	 * @ssl        Relocate using SSL or not, default is false.
+	 * @ssl        Relocate using SSL or not, default is to use what the user is on
 	 * @statusCode The status code, default is 302
 	 */
 	any function renderIt(
 		string page,
-		string URL,
+		string url,
 		boolean ssl        = getRequestContext().isSSL(),
 		numeric statusCode = "302"
 	){
 		var to = "";
 
-		if ( !isNull( arguments.page ) ) {
+		if ( !isNull( arguments.page ) && len( arguments.page ) ) {
 			to = variables.cb.linkPage( arguments.page );
 		}
-		if ( !isNull( arguments.url ) ) {
-			to = arguments.URL;
+		if ( !isNull( arguments.url ) && len( arguments.url ) ) {
+			to = arguments.url;
 		}
 
 		// relocate only if rendering a page on the front end.
 		if ( variables.cb.isEntryView() || variables.cb.isPageView() ) {
 			relocate(
-				URL        = to,
-				ssl        = arguments.ssl,
-				statusCode = arguments.statusCode
+				url       : to,
+				ssl       : arguments.ssl,
+				statusCode: arguments.statusCode
 			);
 		}
 		// Return empty content
