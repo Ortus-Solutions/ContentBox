@@ -44,7 +44,17 @@ component
 	 */
 	function init(){
 		appendToMemento( [ "url" ], "defaultIncludes" );
-		appendToMemento( [ "excerpt", "allowComments", "passwordProtection", "HTMLKeywords", "HTMLDescription", "HTMLTitle" ], "defaultExcludes" );
+		appendToMemento(
+			[
+				"excerpt",
+				"allowComments",
+				"passwordProtection",
+				"HTMLKeywords",
+				"HTMLDescription",
+				"HTMLTitle"
+			],
+			"defaultExcludes"
+		);
 
 		super.init();
 

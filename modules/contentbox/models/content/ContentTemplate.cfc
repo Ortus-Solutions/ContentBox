@@ -6,12 +6,12 @@
  * A content template for a base content item
  */
 component
-persistent         ="true"
-entityname         ="cbContentTemplate"
-table              ="cb_contentTemplate"
-extends            ="contentbox.models.BaseEntityMethods"
-cachename          ="cbContentTemplate"
-cacheuse           ="read-write"
+	persistent="true"
+	entityname="cbContentTemplate"
+	table     ="cb_contentTemplate"
+	extends   ="contentbox.models.BaseEntityMethods"
+	cachename ="cbContentTemplate"
+	cacheuse  ="read-write"
 {
 
 	/**
@@ -81,8 +81,8 @@ cacheuse           ="read-write"
 		length ="1000";
 
 	property
-		name="definition"
-		column="definition"
+		name   ="definition"
+		column ="definition"
 		notnull="true"
 		ormtype="text"
 		default="";
@@ -106,127 +106,50 @@ cacheuse           ="read-write"
 		fetch    ="join";
 
 	// The non-persistent schema of the JSON definition
-	property
-		name ="schema"
-		persistent="false";
+	property name="schema" persistent="false";
 
 
 	function init(){
 		variables.schema = {
-			"title" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"content" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"markup" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"description" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"excerpt" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"featuredImage" :{
-				"required" : false,
-				"type" : "string"
-			},
+			"title"                  : { "required" : false, "type" : "string" },
+			"content"                : { "required" : false, "type" : "string" },
+			"markup"                 : { "required" : false, "type" : "string" },
+			"description"            : { "required" : false, "type" : "string" },
+			"excerpt"                : { "required" : false, "type" : "string" },
+			"featuredImage"          : { "required" : false, "type" : "string" },
 			// SEO
-			"HTMLTitle" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"HTMLKeywords" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"HTMLDescription" : {
-				"required" : false,
-				"type" : "string"
-			},
+			"HTMLTitle"              : { "required" : false, "type" : "string" },
+			"HTMLKeywords"           : { "required" : false, "type" : "string" },
+			"HTMLDescription"        : { "required" : false, "type" : "string" },
 			// Modifiers
-			"parent" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"allowComments" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			"passwordProtection" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"SSLOnly" : {
-				"required" : false,
-				"type" : "boolean"
-			},
+			"parent"                 : { "required" : false, "type" : "string" },
+			"allowComments"          : { "required" : false, "type" : "boolean" },
+			"passwordProtection"     : { "required" : false, "type" : "string" },
+			"SSLOnly"                : { "required" : false, "type" : "boolean" },
 			// Caching
-			"cache" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			"cacheTimeout" : {
-				"required" : false,
-				"type" : "integer"
-			},
-			"cacheLastAccessTimeout" : {
-				"required" : false,
-				"type" : "integer"
-			},
+			"cache"                  : { "required" : false, "type" : "boolean" },
+			"cacheTimeout"           : { "required" : false, "type" : "integer" },
+			"cacheLastAccessTimeout" : { "required" : false, "type" : "integer" },
 			// Display Options
-			"layout" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"childLayout" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"showInMenu" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			"showInSearch" : {
-				"required" : false,
-				"type" : "boolean"
-			},
+			"layout"                 : { "required" : false, "type" : "string" },
+			"childLayout"            : { "required" : false, "type" : "string" },
+			"showInMenu"             : { "required" : false, "type" : "boolean" },
+			"showInSearch"           : { "required" : false, "type" : "boolean" },
 			// Collections
-			"customFields" : {
+			"customFields"           : {
 				"required" : false,
-				"type" : "array",
-				"schema" : {
-					"name" : {
-						"required" : true,
-						"type" : "string"
-					},
-					"type" : {
-						"required" : true,
-						"type" : "string"
-					},
-					"defaultValue" : {
-						"required" : true,
-						"type" : "string"
-					}
+				"type"     : "array",
+				"schema"   : {
+					"name"         : { "required" : true, "type" : "string" },
+					"type"         : { "required" : true, "type" : "string" },
+					"defaultValue" : { "required" : true, "type" : "string" }
 				}
 			},
 			"categories" : {
 				"required" : false,
-				"type" : "array",
-				"schema" : {
-					"slug" : {
-						"required" : true,
-						"type" : "string"
-					}
-				}
+				"type"     : "array",
+				"schema"   : { "slug" : { "required" : true, "type" : "string" } }
 			}
-
 		};
 
 		return this;
@@ -244,23 +167,25 @@ cacheuse           ="read-write"
 	};
 
 	this.constraints = {
-		"name" : { requred: true, size : "1..200" },
+		"name"       : { requred : true, size : "1..200" },
 		"definition" : { required : true, type : "string" },
-		"isPublic" : { required : true, type : "boolean" },
-		"site" : { required : true }
+		"isPublic"   : { required : true, type : "boolean" },
+		"site"       : { required : true }
 	};
 
 
 	/**
 	 * Overload getter for definition to deal with JSON conversion
+	 *
 	 * @overload
 	 */
 	function getDefinition(){
-		return deSerializeJSON( variables.definition );
+		return deserializeJSON( variables.definition );
 	}
 
 	/**
 	 * Overload setter for definition to deal with JSON conversion
+	 *
 	 * @overload
 	 */
 	function setDefinition( definition ){
@@ -270,7 +195,5 @@ cacheuse           ="read-write"
 			listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false
 		);
 	}
-
-
 
 }

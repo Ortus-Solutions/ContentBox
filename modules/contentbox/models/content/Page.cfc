@@ -40,6 +40,7 @@ component
 
 	/**
 	 * The layout in a theme that will be used to render the page out when viewing it from a mobile device
+	 *
 	 * @deprecated - This property will be removed in ContentBox v6
 	 */
 	property

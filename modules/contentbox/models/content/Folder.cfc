@@ -17,7 +17,6 @@ component
 	discriminatorValue="Folder"
 {
 
-
 	/**
 	 * Used when building automated menus
 	 */

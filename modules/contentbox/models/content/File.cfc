@@ -17,7 +17,6 @@ component
 	discriminatorValue="File"
 {
 
-
 	/**
 	 * Used when building automated menus
 	 */
