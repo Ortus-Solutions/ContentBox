@@ -218,29 +218,29 @@ cacheuse           ="read-write"
 			},
 			"categories" : {
 				"required" : false,
-				"type" : "array"
+				"type" : "array",
 				"schema" : {
 					"slug" : {
 						"required" : true,
 						"type" : "string"
 					}
 				}
-			},
+			}
 
-		}
+		};
 
 		return this;
 	}
 
 	this.memento = {
-		"defaultIncludes" : {
+		"defaultIncludes" : [
 			"contentTemplateID",
 			"contentType",
 			"name",
 			"description",
 			"definition",
 			"schema"
-		}
+		]
 	};
 
 	this.constraints = {
