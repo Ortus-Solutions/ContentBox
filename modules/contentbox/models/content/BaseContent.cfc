@@ -411,6 +411,13 @@ component
 		fetch    ="join"
 		lazy     ="true";
 
+	property
+		name     ="contentTemplate"
+		fieldtype="many-to-one"
+		cfc      ="contentbox.models.content.ContentTemplate"
+		fkcolumn ="FK_contentTemplateID"
+		lazy     ="true";
+
 	/**
 	 * --------------------------------------------------------------------------
 	 * CALCULATED FIELDS
