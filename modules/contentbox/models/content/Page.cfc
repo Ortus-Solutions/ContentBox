@@ -33,7 +33,7 @@ component
 
 	property
 		name   ="childLayout"
-		column ="layout"
+		column ="childLayout"
 		notnull="false"
 		length ="200"
 		default="";
