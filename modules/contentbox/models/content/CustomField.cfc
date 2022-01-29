@@ -41,6 +41,13 @@ component
 		ormtype="text"
 		length ="8000";
 
+	property
+		name   ="fieldType"
+		column ="fieldType"
+		ormtype="string"
+		length ="36"
+		default="string";
+
 	/* *********************************************************************
 	 **							RELATIONSHIPS
 	 ********************************************************************* */
