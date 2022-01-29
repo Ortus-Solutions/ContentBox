@@ -31,8 +31,16 @@ component
 		length ="200"
 		default="";
 
+	property
+		name   ="childLayout"
+		column ="layout"
+		notnull="false"
+		length ="200"
+		default="";
+
 	/**
 	 * The layout in a theme that will be used to render the page out when viewing it from a mobile device
+	 * @deprecated - This property will be removed in ContentBox v6
 	 */
 	property
 		name   ="mobileLayout"
