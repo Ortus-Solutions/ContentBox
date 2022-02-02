@@ -130,7 +130,7 @@ component extends="content" {
 				event.renderData(
 					type = rc.format,
 					data = prc.entries.map( function( thisEntry ){
-						return arguments.thisEntry.getMemento( profile: "response" )
+						return arguments.thisEntry.getMemento( profile = "response" )
 					} ),
 					xmlRootName = "entries"
 				);
