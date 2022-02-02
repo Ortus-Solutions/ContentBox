@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+
+  mssql:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    cap_add:
+      - SYS_PTRACE
+    environment:
+      SA_PASSWORD: "T35t1ng1234!"
+      ACCEPT_EULA: "Y"
+      # In production, an SQL Server license key would go here
+      MSSQL_PID: "Developer"
+    volumes:
+      # Mounted tmp directory for backup/restore
+      - ./build/docker/mssql/tmp:/tmp/mssql
+    ports:
+      - "1434:1433"
+
+  # mysql:
+  #   image: mariadb
+  #   environment:
+  #     MYSQL_DATABASE: contentbox
+  #     MYSQL_ROOT_PASSWORD: T35t1ng1234!
+  #   volumes:
+  #     - cbc-mysql-data:/var/lib/mysql
+  #     - ./workbench/docker/mysql/tmp:/tmp/mysql
+  #     - ./workbench/docker/mysql/init.db.sql:/docker-entrypoint-initdb.d/init.db.sql
+  #     - ./workbench/docker/mysql/conf.d:/etc/mysql/mariadb.conf.d/custom.cnf
+  #   ports:
+  #     - "3307:3306"
+
+  #App Server
+  app:
+    # We use the Adobe2018 image because it ensures we maintain backward compatibility to that version as we develop
+    image: ortussolutions/commandbox:adobe2018
+    environment:
+      cfconfig_adminPassword: T35t1ng1234!
+      PORT: 8080
+      SSL_PORT: 8443
+      HEALTHCHECK_URI: http://app/config/Routes.cfm
+      DB_HOST: mssql
+      DB_PORT: 1433
+      DB_DATABASE: contentbox
+      DB_USER: sa
+      DB_PASSWORD: T35t1ng1234!
+      ENVIRONMENT: development
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - .:/app:delegated
+      - ./build/docker/adobe/server.json:/app/server.json
+    expose:
+      - "8080"
+      - "8443"
+
+volumes:
+  mysql-data:

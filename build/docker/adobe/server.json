@@ -1,0 +1,28 @@
+{
+    "app":{
+        "cfengine":"adobe@2018"
+    },
+    "JVM":{
+        "heapSize":"1024"
+    },
+    "web":{
+        "directoryBrowsing": false,
+        "directoryListing": false,
+        "blockCFAdmin": false,
+        "blockFlashRemoting": true,
+        "blockSensitivePaths": false,
+        "rewrites": {
+            "enable": true
+        },
+        "http": {
+            "port": "80"
+        },
+        "ssl": {
+            "enable": true,
+            "port": "443"
+        }
+    },
+	"trayEnable" : false
+}
+
+
