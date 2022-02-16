@@ -173,7 +173,7 @@ component {
 	}
 
 	public void function onSessionStart(){
-		if ( structKeyExists( application, "cbBootstrap" ) ) {
+		if( !isNull( application.cbBootstrap ) ){
 			application.cbBootStrap.onSessionStart();
 		}
 	}
