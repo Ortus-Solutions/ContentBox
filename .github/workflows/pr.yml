@@ -21,6 +21,7 @@ jobs:
       fail-fast: true
       matrix:
         cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
+        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -60,9 +61,9 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start ${{ matrix.cfengine }} Server
+      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
         run: |
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
           # Install Adobe 2021 cfpm modules
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             box run-script install:2021
@@ -86,6 +87,7 @@ jobs:
         if: always()
         with:
           report_paths: 'tests/results/**/*.xml'
+          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
 
       - name: Failure debugging
         if: ${{ failure() }}
