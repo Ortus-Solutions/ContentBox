@@ -174,8 +174,7 @@ component
 		column ="passwordProtection"
 		notnull="false"
 		length ="100"
-		default=""
-		index  ="idx_published";
+		default="";
 
 	property
 		name   ="HTMLKeywords"
