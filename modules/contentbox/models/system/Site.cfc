@@ -484,7 +484,6 @@ component
 	/**
 	 * Get the site root URL as defined per the settings
 	 */
-	 */
 	String function getSiteRoot(){
 		var serverPort = getServerPort();
 		// Return the appropriate site Uri
