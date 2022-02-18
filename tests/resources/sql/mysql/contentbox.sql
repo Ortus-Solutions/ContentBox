@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.22)
 # Database: contentbox
-# Generation Time: 2022-02-18 20:07:54 +0000
+# Generation Time: 2022-02-18 20:12:42 +0000
 # ************************************************************
 
 USE `contentbox`;
@@ -903,39 +903,37 @@ CREATE TABLE `cb_page` (
   `order` int(11) DEFAULT '0',
   `showInMenu` bit(1) NOT NULL DEFAULT b'1',
   `excerpt` longtext,
-  `SSLOnly` bit(1) NOT NULL DEFAULT b'0',
   `contentID` char(36) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`contentID`),
   KEY `idx_showInMenu` (`showInMenu`),
-  KEY `idx_ssl` (`SSLOnly`),
   CONSTRAINT `fk_cb_page_contentID` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_page` WRITE;
 /*!40000 ALTER TABLE `cb_page` DISABLE KEYS */;
 
-INSERT INTO `cb_page` (`layout`, `mobileLayout`, `order`, `showInMenu`, `excerpt`, `SSLOnly`, `contentID`)
+INSERT INTO `cb_page` (`layout`, `mobileLayout`, `order`, `showInMenu`, `excerpt`, `contentID`)
 VALUES
-	('pages','',6,b'1','',b'0','779cd2de-a444-11eb-ab6f-0290cc502ae3'),
-	('-no-layout-','',3,b'1','',b'0','779cd432-a444-11eb-ab6f-0290cc502ae3'),
-	('pagesNoSidebar','',5,b'1','',b'0','779cd4dc-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',4,b'1','',b'0','779cd806-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779cd8b0-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779cd950-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',2,b'0','',b'0','779cd9fa-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',1,b'1','',b'0','779cdaa4-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',2,b'1','',b'0','779cdb4e-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',1,b'1','',b'0','779cdbee-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',2,b'1','',b'0','779cdc8e-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',6,b'1','',b'0','779cdd38-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',4,b'1','',b'0','779cddd8-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',8,b'1','',b'0','779cde82-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',1,b'1','',b'0','779cdf22-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779cdfc2-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce06c-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce10c-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce1ac-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce256-a444-11eb-ab6f-0290cc502ae3');
+	('pages','',6,b'1','','779cd2de-a444-11eb-ab6f-0290cc502ae3'),
+	('-no-layout-','',3,b'1','','779cd432-a444-11eb-ab6f-0290cc502ae3'),
+	('pagesNoSidebar','',5,b'1','','779cd4dc-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',4,b'1','','779cd806-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779cd8b0-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779cd950-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',2,b'0','','779cd9fa-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',1,b'1','','779cdaa4-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',2,b'1','','779cdb4e-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',1,b'1','','779cdbee-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',2,b'1','','779cdc8e-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',6,b'1','','779cdd38-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',4,b'1','','779cddd8-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',8,b'1','','779cde82-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',1,b'1','','779cdf22-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779cdfc2-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce06c-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce10c-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce1ac-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce256-a444-11eb-ab6f-0290cc502ae3');
 
 /*!40000 ALTER TABLE `cb_page` ENABLE KEYS */;
 UNLOCK TABLES;

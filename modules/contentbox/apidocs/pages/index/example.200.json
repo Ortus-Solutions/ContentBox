@@ -20,7 +20,6 @@
 				"email": "lmajano@ortussolutions.com"
 			},
 			"showInSearch": true,
-			"SSLOnly": true,
 			"featuredImage": "",
 			"numberOfComments": "0",
 			"isDeleted": false,
@@ -65,7 +64,6 @@
 				"email": "lmajano@ortussolutions.com"
 			},
 			"showInSearch": true,
-			"SSLOnly": false,
 			"featuredImage": "",
 			"numberOfComments": "0",
 			"isDeleted": false,
@@ -110,7 +108,6 @@
 				"email": "lmajano@ortussolutions.com"
 			},
 			"showInSearch": true,
-			"SSLOnly": false,
 			"featuredImage": "",
 			"numberOfComments": "0",
 			"isDeleted": false,

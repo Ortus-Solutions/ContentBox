@@ -112,11 +112,6 @@
 						<i class="fas fa-key text-orange" title="Password Protected Content"></i>
 					</cfif>
 
-					<!--- ssl protected --->
-					<cfif page.getSSLOnly()>
-						<i class="fas fa-shield-alt text-orange" title="SSL Enabled"></i>
-					</cfif>
-
 					<!--- Search Label --->
 					<cfif len( rc.searchContent ) or prc.isFiltering>
 						<div class="mt5" title="Root Path">
