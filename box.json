@@ -65,10 +65,11 @@
         "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\"' | run",
         "cfpm:install":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\" install ${1}' | run",
         "install:2021":"run-script cfpm:install zip,orm,mysql,postgresql,sqlserver,document,feed",
-		"contentbox:migrate:create" : "migrate create name=${1} migrationsDirectory=modules/contentbox/migrations",
-		"contentbox:migrate" : "migrate up migrationsDirectory=modules/contentbox/migrations",
-		"contentbox:migrate:up" : "run-script contentbox:migrate",
-		"contentbox:migrate:down" : "migrate down migrationsDirectory=modules/contentbox/migrations"
+		"contentbox:install":"cd modules/contentbox && install",
+        "contentbox:migrate:create":"migrate create name=${1} migrationsDirectory=modules/contentbox/migrations",
+        "contentbox:migrate":"migrate up migrationsDirectory=modules/contentbox/migrations",
+        "contentbox:migrate:up":"run-script contentbox:migrate",
+        "contentbox:migrate:down":"migrate down migrationsDirectory=modules/contentbox/migrations"
     },
     "cfmigrations":{
         "schema":"${DB_DATABASE}",
