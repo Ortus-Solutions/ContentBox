@@ -34,10 +34,6 @@
 		"commandbox-migrations":"*"
 	},
 	"devDependencies":{
-		"testbox":"*",
-		"cbdebugger":"^3.0.0",
-		"commandbox-cfformat":"*",
-		"commandbox-docbox":"*"
     },
     "installPaths":{
     },
@@ -58,6 +54,7 @@
 	"scripts" : {
 		"contentbox:migrate" : "migrate up migrationsDirectory=modules/contentbox/migrations",
 		"contentbox:migrate:up" : "run-script contentbox:migrate",
-		"contentbox:migrate:down" : "migrate down migrationsDirectory=modules/contentbox/migrations"
+		"contentbox:migrate:down" : "migrate down migrationsDirectory=modules/contentbox/migrations",
+        "install:2021":"!cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed"
 	}
 }
