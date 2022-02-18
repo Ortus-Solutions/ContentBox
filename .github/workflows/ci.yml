@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018" ]
+        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
         javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
@@ -28,7 +28,7 @@ jobs:
 
       - name: Setup Database and Fixtures
         run: |
-          sudo /etc/init.d/mysql start
+          sudo systemctl start mysql.service
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e 'CREATE DATABASE contentbox;'
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
@@ -38,12 +38,13 @@ jobs:
           distribution: "adopt"
           java-version: "11"
 
-      - name: Setup CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.0
 
       - name: Setup .env For Runner
         run: |
           touch .env
+          printf "ENVIRONMENT=development\n" >> .env
           printf "DB_HOST=127.0.0.1\n" >> .env
           printf "DB_DATABASE=contentbox\n" >> .env
           printf "DB_DRIVER=MySQL\n" >> .env
@@ -143,6 +144,9 @@ jobs:
           if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
             cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           fi
+          if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+            cat .engines/acf2021/WEB-INF/cfusion/logs/hibernatesql.log
+          fi
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
       - name: Upload Debugging Info To Artifacts
@@ -173,17 +177,8 @@ jobs:
           distribution: "adopt"
           java-version: "11"
 
-      - name: Cache CommandBox Dependencies
-        uses: actions/cache@v1
-        if: ${{ true }}
-        with:
-          path: ~/.CommandBox/artifacts
-          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
-          restore-keys: |
-            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
-
-      - name: Setup CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.0
         with:
           forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
@@ -192,7 +187,6 @@ jobs:
           box install --production
           box install commandbox-docbox
           cd modules/contentbox && box install --production
-
 
       - name: Setup Environment Variables For Build Process
         id: current_version

@@ -20,7 +20,6 @@
 				"email": "lmajano@ortussolutions.com"
 			},
 			"showInSearch": true,
-			"SSLOnly": true,
 			"featuredImage": "",
 			"numberOfComments": "0",
 			"isDeleted": false,
@@ -39,7 +38,6 @@
 			"categories": [],
 			"markup": "HTML",
 			"expireDate": "",
-			"cacheLayout": true,
 			"title": "About",
 			"numberOfChildren": "0",
 			"featuredImageURL": "",
@@ -66,7 +64,6 @@
 				"email": "lmajano@ortussolutions.com"
 			},
 			"showInSearch": true,
-			"SSLOnly": false,
 			"featuredImage": "",
 			"numberOfComments": "0",
 			"isDeleted": false,
@@ -85,7 +82,6 @@
 			"categories": [],
 			"markup": "HTML",
 			"expireDate": "",
-			"cacheLayout": true,
 			"title": "New",
 			"numberOfChildren": "0",
 			"featuredImageURL": "",
@@ -112,7 +108,6 @@
 				"email": "lmajano@ortussolutions.com"
 			},
 			"showInSearch": true,
-			"SSLOnly": false,
 			"featuredImage": "",
 			"numberOfComments": "0",
 			"isDeleted": false,
@@ -131,7 +126,6 @@
 			"categories": [],
 			"markup": "HTML",
 			"expireDate": "",
-			"cacheLayout": true,
 			"title": "Something",
 			"numberOfChildren": "0",
 			"featuredImageURL": "",

@@ -485,12 +485,26 @@ component
 	 * Get the site root URL as defined per the settings
 	 */
 	String function getSiteRoot(){
+		var serverPort = getServerPort();
 		// Return the appropriate site Uri
 		return "http"
 		& ( this.getIsSSL() ? "s" : "" ) // SSL or not
 		& "://"
 		& this.getDomain() // Site Domain
-		& ( listFind( "80,443", cgi.server_port ) ? "" : ":#cgi.server_port#" ); // The right port
+		& ( listFind( "80,443", serverPort ) ? "" : ":#serverPort#" ); // The right port
+	}
+
+	/**
+	 * Get the server port according to lookup order
+	 * 1. x-forwarded-port header
+	 * 2. cgi.server_port
+	 */
+	private function getServerPort(){
+		var headers = getHTTPRequestData( false ).headers;
+		if( structKeyExists( headers, "x-forwarded-port" ) && len( headers[ "x-forwarded-port" ] )  ){
+			return headers[ "x-forwarded-port" ];
+		}
+		return cgi.server_port;
 	}
 
 	/**

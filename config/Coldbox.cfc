@@ -76,7 +76,7 @@ component {
 		 *
 		 * Uncomment to use, but make sure your .env ENVIRONMENT key is also removed.
 		 */
-		environments = { development : "localhost,^127" };
+		environments = { development : "localhost" };
 
 		/**
 		 * --------------------------------------------------------------------------

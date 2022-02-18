@@ -174,8 +174,7 @@ component
 		column ="passwordProtection"
 		notnull="false"
 		length ="100"
-		default=""
-		index  ="idx_published";
+		default="";
 
 	property
 		name   ="HTMLKeywords"
@@ -205,14 +204,6 @@ component
 		ormtype="boolean"
 		default="true"
 		index  ="idx_cache";
-
-	property
-		name   ="cacheLayout"
-		column ="cacheLayout"
-		notnull="true"
-		ormtype="boolean"
-		default="true"
-		index  ="idx_cachelayout";
 
 	property
 		name   ="cacheTimeout"
@@ -452,7 +443,6 @@ component
 			"allowComments",
 			"cache",
 			"cacheLastAccessTimeout",
-			"cacheLayout",
 			"cacheTimeout",
 			"categoriesArray:categories",
 			"contentID",
@@ -528,7 +518,6 @@ component
 					"allowComments",
 					"cache",
 					"cacheLastAccessTimeout",
-					"cacheLayout",
 					"cacheTimeout",
 					"categoriesArray:categories",
 					"contentID",
@@ -612,7 +601,6 @@ component
 		variables.publishedDate          = now();
 		variables.allowComments          = true;
 		variables.cache                  = true;
-		variables.cacheLayout            = true;
 		variables.cacheTimeout           = 0;
 		variables.cacheLastAccessTimeout = 0;
 		variables.markup                 = "HTML";
@@ -1273,7 +1261,6 @@ component
 		variables.HTMLTitle              = arguments.original.getHTMLTitle();
 		variables.markup                 = arguments.original.getMarkup();
 		variables.cache                  = arguments.original.getCache();
-		variables.cacheLayout            = arguments.original.getCacheLayout();
 		variables.cacheTimeout           = arguments.original.getCacheTimeout();
 		variables.cacheLastAccessTimeout = arguments.original.getCacheLastAccessTimeout();
 		variables.showInSearch           = arguments.original.getShowInSearch();

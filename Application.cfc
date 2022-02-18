@@ -139,9 +139,9 @@ component {
 	public boolean function onRequestStart( string targetPage ){
 		// In case bootstrap or controller are missing, perform a manual restart
 		if (
-			!structKeyExists( application, "cbBootstrap" )
+			isNull( application.cbBootstrap )
 			||
-			!structKeyExists( application, "cbController" )
+			isNull( application.cbController )
 		) {
 			if( this._loadDynamicEnvironment ){
 				loadEnv( force : true );
@@ -151,7 +151,7 @@ component {
 
 		// Development Reinit + ORM Reloads
 		if (
-			structKeyExists( application, "cbController" )
+			!isNull( application.cbController )
 			&&
 			application.cbController.getSetting( "environment" ) == "development"
 			&&
@@ -173,7 +173,7 @@ component {
 	}
 
 	public void function onSessionStart(){
-		if ( structKeyExists( application, "cbBootstrap" ) ) {
+		if( !isNull( application.cbBootstrap ) ){
 			application.cbBootStrap.onSessionStart();
 		}
 	}

@@ -37,7 +37,6 @@ component
 		fkcolumn ="FK_contentID"
 		lazy     ="true"
 		fetch    ="join"
-		index    ="idx_contentCommentSubscription"
 		orderBy  ="Title ASC";
 
 	/* *********************************************************************

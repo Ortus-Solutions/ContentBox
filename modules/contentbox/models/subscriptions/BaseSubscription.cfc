@@ -84,7 +84,6 @@ component
 		fieldtype="many-to-one"
 		fkcolumn ="FK_subscriberID"
 		lazy     ="true"
-		index    ="idx_subscriber"
 		inverse  ="true"
 		orderBy  ="subscriberEmail";
 

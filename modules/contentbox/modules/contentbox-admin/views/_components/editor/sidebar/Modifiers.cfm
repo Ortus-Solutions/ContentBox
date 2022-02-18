@@ -96,23 +96,6 @@
 					</div>
 				</cfif>
 
-				<!--- SSL Only --->
-				<cfif structKeyExists( prc.oContent, "getSSLOnly" )>
-					<!--- SSL Only --->
-					<div class="form-group">
-						<label for="passwordProtection">
-							<i class="fas fa-user-shield"></i>
-							SSL Only:
-						</label>
-						#html.select(
-							name          : "sslOnly",
-							options       : "Yes,No",
-							selectedValue : yesNoFormat( prc.oContent.getSSLOnly() ),
-							class         : "form-control input-sm"
-						)#
-					</div>
-				</cfif>
-
 				<!--- Retrieval Order --->
 				<cfif structKeyExists( prc.oContent, "getOrder" )>
 					<div class="form-group">

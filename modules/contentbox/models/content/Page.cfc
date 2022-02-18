@@ -73,17 +73,6 @@ component
 		default=""
 		length ="8000";
 
-	/**
-	 * If true, it will force the page to be viewed in SSL. ContentBox will redirect with a 301
-	 */
-	property
-		name   ="SSLOnly"
-		column ="SSLOnly"
-		notnull="true"
-		ormtype="boolean"
-		default="false"
-		index  ="idx_ssl";
-
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
 	 ********************************************************************* */
@@ -98,7 +87,6 @@ component
 	this.constraints[ "mobileLayout" ] = { required : false, size : "1..200" };
 	this.constraints[ "order" ]        = { required : true, type : "numeric" };
 	this.constraints[ "showInMenu" ]   = { required : false, type : "boolean" };
-	this.constraints[ "SSLOnly" ]      = { required : false, type : "boolean" };
 
 	/* *********************************************************************
 	 **							CONSTRUCTOR
@@ -111,8 +99,7 @@ component
 				"layout",
 				"mobileLayout",
 				"order",
-				"showInMenu",
-				"SSLOnly"
+				"showInMenu"
 			],
 			"defaultIncludes"
 		);
@@ -130,7 +117,6 @@ component
 		variables.contentType     = "Page";
 		variables.order           = 0;
 		variables.showInMenu      = true;
-		variables.SSLOnly         = false;
 
 		// INHERITANCE LAYOUT STATIC
 		variables.LAYOUT_INHERITANCE_KEY = "-inherit-";
@@ -225,7 +211,6 @@ component
 		setLayout( arguments.original.getLayout() );
 		setMobileLayout( arguments.original.getMobileLayout() );
 		setShowInMenu( arguments.original.getShowInMenu() );
-		setSSLOnly( arguments.original.getSSLOnly() );
 		// do excerpts
 		if ( arguments.original.hasExcerpt() ) {
 			setExcerpt( arguments.original.getExcerpt() );

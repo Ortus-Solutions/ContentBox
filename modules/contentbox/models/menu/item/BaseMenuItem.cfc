@@ -34,24 +34,21 @@ component
 		type   ="date"
 		ormtype="timestamp"
 		notnull="true"
-		update ="false"
-		index  ="idx_BaseMenuItem_createDate";
+		update ="false";
 
 	property
 		name   ="modifiedDate"
 		column ="modifiedDate"
 		type   ="date"
 		ormtype="timestamp"
-		notnull="true"
-		index  ="idx_BaseMenuItem_modifiedDate";
+		notnull="true";
 
 	property
 		name   ="isDeleted"
 		column ="isDeleted"
 		ormtype="boolean"
 		notnull="true"
-		default="false"
-		index  ="idx_BaseMenuItem_deleted";
+		default="false";
 
 	/* *********************************************************************
 	 **                          PROPERTIES
@@ -72,8 +69,7 @@ component
 		notnull="true"
 		ormtype="string"
 		length ="200"
-		default=""
-		index  ="idx_menuitemtitle";
+		default="";
 
 	property
 		name   ="label"

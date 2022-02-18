@@ -166,7 +166,6 @@
 					"value": "luis majano"
 				}
 			],
-			"cacheLayout": true,
 			"linkedContent": [
 				{
 					"slug": "foot",
@@ -309,7 +308,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Closures cannot be declared outside of cfscript",
 			"site": {
@@ -375,7 +373,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "This is just awesome",
 			"site": {
@@ -436,7 +433,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Disk Queues",
 			"site": {
@@ -497,7 +493,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Couchbase Conference",
 			"site": {
@@ -593,7 +588,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Couchbase Details",
 			"site": {
@@ -654,7 +648,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Couchbase Infrastructure",
 			"site": {
@@ -883,7 +876,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Copy of Copy of Another Test",
 			"site": {
@@ -947,7 +939,6 @@
 			"markup": "html",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Copy of Another Test",
 			"site": {
@@ -1008,7 +999,6 @@
 			"markup": "html",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Copy of Updating an ORM entity",
 			"site": {
@@ -1084,7 +1074,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Updating an ORM entity",
 			"site": {
@@ -1145,7 +1134,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Test with an excerpt",
 			"site": {
@@ -1224,7 +1212,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Another Test",
 			"site": {
@@ -1285,7 +1272,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "An awesome blog entry",
 			"site": {
@@ -1346,7 +1332,6 @@
 			"markup": "html",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "ContentBox Modular CMS at the South Florida CFUG",
 			"site": {
@@ -1562,7 +1547,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [
 				{
 					"slug": "firefox-test",
@@ -1668,7 +1652,6 @@
 					"value": "4"
 				}
 			],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "My News",
 			"site": {
@@ -1729,7 +1712,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "blog-sidebar-top",
 			"site": {
@@ -1836,7 +1818,6 @@
 					"markup": "HTML",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "Small Footer",
 					"site": {
@@ -1966,7 +1947,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "footer",
 			"site": {
@@ -2132,7 +2112,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "support options",
 			"site": {
@@ -2280,7 +2259,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "FireFox Test",
 			"site": {
@@ -2356,7 +2334,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Lucee 4.5.2.018",
 			"site": {
@@ -2462,7 +2439,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Another test",
 			"site": {
@@ -2523,7 +2499,6 @@
 			"markup": "HTML",
 			"expireDate": "2018-02-01T00:00:00+00:00",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "My Expired Content Store",
 			"site": {
@@ -2731,7 +2706,6 @@
 			"markup": "html",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "support",
 			"site": {
@@ -2842,7 +2816,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "No Layout Test",
 			"site": {
@@ -2923,7 +2896,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [
 				{
 					"slug": "foot",
@@ -3002,7 +2974,6 @@
 					"markup": "HTML",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "child1",
 					"site": {
@@ -3067,7 +3038,6 @@
 					"markup": "HTML",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "child2",
 					"site": {
@@ -3147,7 +3117,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "node",
 			"site": {
@@ -3333,7 +3302,6 @@
 			"markup": "Markdown",
 			"expireDate": "2016-05-01T00:00:00+00:00",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "Test Markdown",
 			"site": {
@@ -3397,7 +3365,6 @@
 							"markup": "HTML",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "mini",
 							"site": {
@@ -3459,7 +3426,6 @@
 									"markup": "HTML",
 									"expireDate": "",
 									"customFields": [],
-									"cacheLayout": true,
 									"linkedContent": [],
 									"title": "servers",
 									"site": {
@@ -3519,7 +3485,6 @@
 									"markup": "HTML",
 									"expireDate": "",
 									"customFields": [],
-									"cacheLayout": true,
 									"linkedContent": [],
 									"title": "More Servers",
 									"site": {
@@ -3579,7 +3544,6 @@
 									"markup": "HTML",
 									"expireDate": "",
 									"customFields": [],
-									"cacheLayout": true,
 									"linkedContent": [],
 									"title": "support",
 									"site": {
@@ -3638,7 +3602,6 @@
 							"markup": "HTML",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "services",
 							"site": {
@@ -3702,7 +3665,6 @@
 					"markup": "HTML",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "coldbox",
 					"site": {
@@ -3764,7 +3726,6 @@
 							"markup": "html",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "mini",
 							"site": {
@@ -3826,7 +3787,6 @@
 									"markup": "html",
 									"expireDate": "",
 									"customFields": [],
-									"cacheLayout": true,
 									"linkedContent": [],
 									"title": "servers",
 									"site": {
@@ -3886,7 +3846,6 @@
 									"markup": "html",
 									"expireDate": "",
 									"customFields": [],
-									"cacheLayout": true,
 									"linkedContent": [],
 									"title": "More Servers",
 									"site": {
@@ -3946,7 +3905,6 @@
 									"markup": "html",
 									"expireDate": "",
 									"customFields": [],
-									"cacheLayout": true,
 									"linkedContent": [],
 									"title": "support",
 									"site": {
@@ -4005,7 +3963,6 @@
 							"markup": "html",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "services",
 							"site": {
@@ -4084,7 +4041,6 @@
 					"markup": "html",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "coldbox-new",
 					"site": {
@@ -4204,7 +4160,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "products",
 			"site": {
