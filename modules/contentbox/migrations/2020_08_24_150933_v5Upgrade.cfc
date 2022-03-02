@@ -97,8 +97,8 @@ component {
 				schema.alter( "cb_content", function( table ){
 					table.modifyColumn( "title", table.string( "title", 500 ) );
 					table.modifyColumn( "slug", table.string( "slug", 500 ) );
-					table.modifyColumn( "featuredImage", table.string( "featuredImage", 500 ) );
-					table.modifyColumn( "featuredImageURL", table.string( "featuredImageURL", 500 ) );
+					table.modifyColumn( "featuredImage", table.string( "featuredImage", 500 ).nullable() );
+					table.modifyColumn( "featuredImageURL", table.string( "featuredImageURL", 500 ).nullable() );
 					// Rebuild Indexes
 					table.index( [ "slug" ], "idx_slug" );
 					table.index( [ "slug", "isPublished" ], "idx_publishedSlug" );
@@ -307,7 +307,7 @@ component {
 					.string( "FK_siteID", 36 )
 					.references( "siteID" )
 					.onTable( "cb_site" )
-			)
+			);
 		} );
 
 		var allSettings = arguments.query
@@ -319,7 +319,6 @@ component {
 				results[ thisSetting.name ] = thisSetting.value;
 				return results;
 			}, {} );
-
 
 		var initialSiteIdentifier = uuidLib.randomUUID().toString();
 		arguments.query
@@ -338,11 +337,11 @@ component {
 				"keywords"           : allSettings.cb_site_keywords,
 				"tagline"            : allSettings.cb_site_tagline,
 				"domainRegex"        : "127\.0\.0\.1",
-				"isBlogEnabled"      : !allSettings.cb_site_disable_blog,
-				"isSitemapEnabled"   : allSettings.cb_site_sitemap,
-				"poweredByHeader"    : allSettings.cb_site_poweredby,
-				"adminBar"           : allSettings.cb_site_adminbar,
-				"isSSL"              : allSettings.cb_admin_ssl,
+				"isBlogEnabled"      : !allSettings.cb_site_disable_blog ? 0 : 1,
+				"isSitemapEnabled"   : allSettings.cb_site_sitemap ? 1 : 0,
+				"poweredByHeader"    : allSettings.cb_site_poweredby ? 1 : 0,
+				"adminBar"           : allSettings.cb_site_adminbar ? 1 : 0,
+				"isSSL"              : allSettings.cb_admin_ssl ? 1 : 0,
 				"activeTheme"        : allSettings.cb_site_theme,
 				"domain"             : "127.0.0.1",
 				"notificationEmails" : allSettings.cb_site_email
