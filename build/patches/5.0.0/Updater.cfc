@@ -28,7 +28,11 @@ component {
 	/**
 	 * Run the updater
 	 */
-	function run(){
+	function run( version ){
+		// Override the incoming version if needed
+		if( !isNull( arguments.version ) ){
+			variables.targetVersion = arguments.version;
+		}
 
 		print.blueLine( "This task will update your ContentBox 4 installation to a ContentBox 5 installation." )
 			.blueLine( "Please make a backup of your source and your database now. " )
