@@ -501,7 +501,7 @@ component
 	 */
 	private function getServerPort(){
 		var headers = getHTTPRequestData( false ).headers;
-		if( structKeyExists( headers, "x-forwarded-port" ) && len( headers[ "x-forwarded-port" ] )  ){
+		if ( structKeyExists( headers, "x-forwarded-port" ) && len( headers[ "x-forwarded-port" ] ) ) {
 			return headers[ "x-forwarded-port" ];
 		}
 		return cgi.server_port;
