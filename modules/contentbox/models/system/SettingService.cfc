@@ -21,6 +21,7 @@ component
 	property name="siteService" inject="siteService@contentbox";
 	property name="cachebox" inject="cachebox";
 	property name="moduleSettings" inject="coldbox:setting:modules";
+	property name="appName" inject="coldbox:setting:appName";
 	property name="contentboxSettings" inject="coldbox:moduleSettings:contentbox";
 	property name="log" inject="logbox:logger:{this}";
 
@@ -337,10 +338,10 @@ component
 	}
 
 	/**
-	 * Retrieve a multi-tenant settings cache key
+	 * The static key used for caching all the settings of this installation
 	 */
 	string function getSettingsCacheKey(){
-		return "cb-settings-#CGI.HTTP_HOST#";
+		return "cb-settings-container-#reReplace( variables.appName, "\s", "-", "all" )#";
 	}
 
 	/**
