@@ -15,7 +15,7 @@ component {
 				schema.alter( "cb_page", ( table ) => {
 					table.dropColumn( "SSLOnly" );
 				} );
-			}catch ( any e ) {
+			} catch ( any e ) {
 				transactionRollback();
 				systemOutput( e.stacktrace, true );
 				rethrow;
