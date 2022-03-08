@@ -108,14 +108,14 @@ component extends="baseHandler" {
 
 		var allRoles = roleService.getAll( rc.roleID );
 
-		for(var oRole in allRoles){
+		for ( var oRole in allRoles ) {
 			// Get requested role and remove permissions
 			oRole.clearPermissions();
-			
+
 			// finally delete
-			roleService.delete( oRole );	
+			roleService.delete( oRole );
 		}
-		
+
 		// announce event
 		announce( "cbadmin_postRoleRemove", { roleID : rc.roleID } );
 		// Message

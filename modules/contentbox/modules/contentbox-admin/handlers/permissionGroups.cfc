@@ -95,12 +95,12 @@ component extends="baseHandler" {
 
 		var allGroups = permissionGroupService.getAll( rc.permissionGroupID );
 
-		for(var oGroup in allGroups){
+		for ( var oGroup in allGroups ) {
 			// Get requested role and remove permissions and authors
 			oGroup.clearPermissions().clearAuthors();
-			
+
 			// finally delete
-			permissionGroupService.delete( oGroup );	
+			permissionGroupService.delete( oGroup );
 		}
 
 		// announce event
