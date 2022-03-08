@@ -10,17 +10,9 @@ component {
 
 	function up( schema, qb ){
 		// Remove the sslonly column from the `cb_page` table
-		transaction {
-			try {
-				schema.alter( "cb_page", ( table ) => {
-					table.dropColumn( "SSLOnly" );
-				} );
-			} catch ( any e ) {
-				transactionRollback();
-				systemOutput( e.stacktrace, true );
-				rethrow;
-			}
-		}
+		schema.alter( "cb_page", ( table ) => {
+			table.dropColumn( "SSLOnly" );
+		} );
 	}
 
 	function down( schema, qb ){
