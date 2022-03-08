@@ -33,7 +33,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			q.addParam(
 				name      = "permissionID",
 				value     = arguments.permissionID,
-				cfsqltype = "numeric"
+				cfsqltype = "varchar"
 			);
 			q.execute();
 			// delete user relationships
@@ -41,7 +41,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			q.addParam(
 				name      = "permissionID",
 				value     = arguments.permissionID,
-				cfsqltype = "numeric"
+				cfsqltype = "varchar"
+			);
+			q.execute();
+			// delete group permissions now
+			var q = new Query( sql = "delete from cb_groupPermissions where FK_permissionID = :permissionID" );
+			q.addParam(
+				name      = "permissionID",
+				value     = arguments.permissionID,
+				cfsqltype = "varchar"
 			);
 			q.execute();
 			// delete permission now
@@ -49,7 +57,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			q.addParam(
 				name      = "permissionID",
 				value     = arguments.permissionID,
-				cfsqltype = "numeric"
+				cfsqltype = "varchar"
 			);
 			q.execute();
 		}
