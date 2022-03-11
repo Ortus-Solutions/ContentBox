@@ -249,7 +249,7 @@ component singleton {
 
 		// Check if an issuer was passed
 		if ( !isNull( arguments.issuer ) ) {
-			bodyTokens.issuedBy    = arguments.issuer.getName();
+			bodyTokens.issuedBy    = arguments.issuer.getFullName();
 			bodyTokens.issuedEmail = arguments.issuer.getEmail();
 		}
 
