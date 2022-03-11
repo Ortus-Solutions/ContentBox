@@ -105,10 +105,17 @@ component extends="baseHandler" {
 	function remove( event, rc, prc ){
 		// announce event
 		announce( "cbadmin_preRoleRemove", { roleID : rc.roleID } );
-		// Get requested role and remove permissions
-		var oRole = roleService.get( rc.roleID ).clearPermissions();
-		// finally delete
-		roleService.delete( oRole );
+
+		var allRoles = roleService.getAll( rc.roleID );
+
+		for ( var oRole in allRoles ) {
+			// Get requested role and remove permissions
+			oRole.clearPermissions();
+
+			// finally delete
+			roleService.delete( oRole );
+		}
+
 		// announce event
 		announce( "cbadmin_postRoleRemove", { roleID : rc.roleID } );
 		// Message

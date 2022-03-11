@@ -92,13 +92,17 @@ component extends="baseHandler" {
 	function remove( event, rc, prc ){
 		// announce event
 		announce( "cbadmin_prePermissionGroupRemove", { permissionGroupID : rc.permissionGroupID } );
-		// Get requested role and remove permissions and authors
-		var oGroup = permissionGroupService
-			.get( id = rc.permissionGroupID )
-			.clearPermissions()
-			.clearAuthors();
-		// finally delete
-		permissionGroupService.delete( oGroup );
+
+		var allGroups = permissionGroupService.getAll( rc.permissionGroupID );
+
+		for ( var oGroup in allGroups ) {
+			// Get requested role and remove permissions and authors
+			oGroup.clearPermissions().clearAuthors();
+
+			// finally delete
+			permissionGroupService.delete( oGroup );
+		}
+
 		// announce event
 		announce( "cbadmin_postPermissionGroupRemove", { permissionGroupID : rc.permissionGroupID } );
 		// Message
