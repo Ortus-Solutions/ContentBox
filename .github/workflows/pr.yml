@@ -115,7 +115,6 @@ jobs:
           cmd: run-script format
 
       - name: Commit Format Changes
-        if: ${{ env.GITHUB_REPOSITORY == 'ortus-solutions/ContentBox' }}
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply cfformat changes
