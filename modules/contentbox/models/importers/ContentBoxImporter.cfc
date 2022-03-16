@@ -114,7 +114,7 @@ component accessors=true {
 				overwriteFiles = true
 			);
 			descriptorContents = fileRead( getTempDirectory() & "descriptor.json" );
-			descriptorContents = replaceNoCase( descriptorContents, "null,", "99,", "all" );
+			descriptorContents = replaceNoCase( descriptorContents, "null,", "0,", "all" );
 		}
 		return !arguments.asObject ? descriptorContents : deserializeJSON( descriptorContents );
 	}
