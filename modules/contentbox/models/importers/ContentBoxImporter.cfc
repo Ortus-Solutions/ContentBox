@@ -68,6 +68,10 @@ component accessors=true {
 			var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
 			var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
 
+			fileList = fileList.map( function( item ){
+				return item.reReplace( "(\\|\/)", "", "all" );
+			} );
+
 			// now set values
 			setFileNames( fileList );
 			setContentBoxPackagePath( arguments.importFile );
@@ -112,6 +116,7 @@ component accessors=true {
 				overwriteFiles = true
 			);
 			descriptorContents = fileRead( getTempDirectory() & "descriptor.json" );
+			descriptorContents = replaceNoCase( descriptorContents, "null,", "99,", "all" );
 		}
 		return !arguments.asObject ? descriptorContents : deserializeJSON( descriptorContents );
 	}
