@@ -105,6 +105,7 @@ jobs:
 
   format:
     name: Format
+    if: ${{ env.GITHUB_REPOSITORY == 'ortus-solutions/ContentBox' }}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout Repository
