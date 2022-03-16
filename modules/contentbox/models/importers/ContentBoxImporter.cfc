@@ -62,15 +62,13 @@ component accessors=true {
 	 */
 	public void function setup( required any importFile ){
 		try {
-			var files          = variables.zipUtil.list( zipFilePath = arguments.importFile );
+			var files    = variables.zipUtil.list( zipFilePath = arguments.importFile );
 			// convert files query to array
-			var fileList       = listToArray( valueList( files.entry ) );
+			var fileList = listToArray( valueList( files.entry ) ).map( function( item ){
+				return arguments.item.reReplace( "(\\|\/)", "", "all" );
+			} );
 			var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
 			var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
-
-			fileList = fileList.map( function( item ){
-				return item.reReplace( "(\\|\/)", "", "all" );
-			} );
 
 			// now set values
 			setFileNames( fileList );
