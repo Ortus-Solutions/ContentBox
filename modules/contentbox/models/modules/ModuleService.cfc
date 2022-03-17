@@ -75,7 +75,15 @@ component
 		variables.moduleWidgetCache           = {};
 		variables.moduleRegistry              = {};
 		variables.moduleConfigCache           = {};
-		variables.moduleMap                   = {};
+		/**
+		 * Stores all module information when loaded:
+		 * {
+		 * 		type : "The module type : core or custom",
+		 * 		path : The absolute path,
+		 * 		invocationPath : The invocation path
+		 * }
+		 */
+		variables.moduleMap = {};
 
 		return this;
 	}
@@ -307,10 +315,12 @@ component
 	ModuleService function deleteModule( required name ){
 		var moduleEntry = variables.moduleMap[ arguments.name ];
 
-		// Try to do an onDelete() callback.
-		var oConfig = createObject( "component", moduleEntry.invocationPath & ".#name#.ModuleConfig" );
-		if ( structKeyExists( oConfig, "onDelete" ) ) {
-			oConfig.onDelete();
+		// Try to do an onDelete() callback if it exists
+		if ( fileExists( moduleEntry.path & "/#arguments.name#/ModuleConfig.cfc" ) ) {
+			var oConfig = createObject( "component", moduleEntry.invocationPath & ".#arguments.name#.ModuleConfig" );
+			if ( structKeyExists( oConfig, "onDelete" ) ) {
+				oConfig.onDelete();
+			}
 		}
 
 		// Now delete it
