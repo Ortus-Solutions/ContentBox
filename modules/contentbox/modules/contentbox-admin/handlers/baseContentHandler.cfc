@@ -495,20 +495,16 @@ component extends="baseHandler" {
 		}
 
 		// get a clone
-		var clone = variables.ormService.new( {
-			title   : rc.title,
-			slug    : variables.HTMLHelper.slugify( rc.title ),
-			creator : prc.oCurrentAuthor,
-			site    : variables.siteService.get( rc.site )
-		} );
+		var clone = variables.ormService
+			.new( {
+				title   : rc.title,
+				slug    : variables.HTMLHelper.slugify( rc.title ),
+				creator : prc.oCurrentAuthor,
+				site    : variables.siteService.get( rc.site )
+			} )
+			.setParent( original.getParent() );
 
-		// attach to the original's parent.
-		if ( original.hasParent() ) {
-			clone.setParent( original.getParent() ).setSlug( original.getSlug() & "/" & clone.getSlug() );
-		}
-
-		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(
+		clone.clone(
 			author          : prc.oCurrentAuthor,
 			original        : original,
 			originalService : variables.ormService,
@@ -516,9 +512,6 @@ component extends="baseHandler" {
 			originalSlugRoot: original.getSlug(),
 			newSlugRoot     : clone.getSlug()
 		);
-
-		// clone this sucker now!
-		variables.ormService.save( clone );
 
 		// relocate
 		variables.cbMessageBox.info( "#variables.entity# Cloned!" );

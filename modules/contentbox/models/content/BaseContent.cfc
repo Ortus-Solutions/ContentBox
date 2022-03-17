@@ -607,6 +607,7 @@ component
 		variables.contentType            = "";
 		variables.showInSearch           = true;
 		variables.renderedContent        = "";
+		variables.children               = [];
 		return this;
 	}
 
@@ -1231,7 +1232,7 @@ component
 	}
 
 	/**
-	 * Prepare a content object for cloning. This processes several things:
+	 * Clones the object and stores it in the database
 	 *
 	 * - Wipe primary key, and descendant keys
 	 * - Prepare for cloning of entire hierarchies
@@ -1244,7 +1245,7 @@ component
 	 * @originalSlugRoot The original slug that will be replaced in all cloned content
 	 * @newSlugRoot      The new slug root that will be replaced in all cloned content
 	 */
-	BaseContent function prepareForClone(
+	BaseContent function clone(
 		required any author,
 		required any original,
 		required any originalService,
@@ -1252,100 +1253,105 @@ component
 		required any originalSlugRoot,
 		required any newSlugRoot
 	){
-		// Base Content Property cloning
-		variables.isPublished            = arguments.publish;
-		variables.createdDate            = now();
-		variables.modifiedDate           = variables.createdDate;
-		variables.HTMLKeywords           = arguments.original.getHTMLKeywords();
-		variables.HTMLDescription        = arguments.original.getHTMLDescription();
-		variables.HTMLTitle              = arguments.original.getHTMLTitle();
-		variables.markup                 = arguments.original.getMarkup();
-		variables.cache                  = arguments.original.getCache();
-		variables.cacheTimeout           = arguments.original.getCacheTimeout();
-		variables.cacheLastAccessTimeout = arguments.original.getCacheLastAccessTimeout();
-		variables.showInSearch           = arguments.original.getShowInSearch();
-		variables.featuredImage          = arguments.original.getFeaturedImage();
-		variables.featuredImageURL       = arguments.original.getFeaturedImageURL();
-		// remove all comments
-		variables.comments               = [];
-		// Are we publishing?
-		if ( arguments.publish ) {
-			variables.publishedDate = now();
-		}
-		// get latest content versioning
-		var latestContent = arguments.original.getActiveContent().getContent();
-		// Original slug updates on all content
-		latestContent     = reReplaceNoCase(
-			latestContent,
-			"page\:\[#arguments.originalSlugRoot#\/",
-			"page:[#arguments.newSlugRoot#/",
-			"all"
-		);
+		transaction {
+			// Base Content Property cloning
+			variables.isPublished            = arguments.publish;
+			variables.createdDate            = now();
+			variables.modifiedDate           = variables.createdDate;
+			variables.HTMLKeywords           = arguments.original.getHTMLKeywords();
+			variables.HTMLDescription        = arguments.original.getHTMLDescription();
+			variables.HTMLTitle              = arguments.original.getHTMLTitle();
+			variables.markup                 = arguments.original.getMarkup();
+			variables.cache                  = arguments.original.getCache();
+			variables.cacheTimeout           = arguments.original.getCacheTimeout();
+			variables.cacheLastAccessTimeout = arguments.original.getCacheLastAccessTimeout();
+			variables.showInSearch           = arguments.original.getShowInSearch();
+			variables.featuredImage          = arguments.original.getFeaturedImage();
+			variables.featuredImageURL       = arguments.original.getFeaturedImageURL();
+			variables.comments               = [];
+			variables.children               = [];
 
-		// reset versioning, and start with a new one
-		addNewContentVersion(
-			content  : latestContent,
-			changelog: "Content Cloned!",
-			author   : arguments.author
-		);
+			// Are we publishing?
+			if ( arguments.publish ) {
+				variables.publishedDate = now();
+			}
 
-		// safe clone custom fields
-		variables.customFields = arguments.original
-			.getCustomFields()
-			.map( function( thisField ){
-				return variables.customFieldService
-					.new( {
-						key   : arguments.thisField.getKey(),
-						value : arguments.thisField.getValue()
-					} )
-					.setRelatedContent( this );
-			} );
+			// get latest content versioning
+			var latestContent = arguments.original.getActiveContent().getContent();
+			// Original slug updates on all content
+			latestContent     = reReplaceNoCase(
+				latestContent,
+				"page\:\[#arguments.originalSlugRoot#\/",
+				"page:[#arguments.newSlugRoot#/",
+				"all"
+			);
 
-		// clone related content
-		arguments.original
-			.getRelatedContent()
-			.each( function( thisRelatedContent ){
-				addRelatedContent( arguments.thisRelatedContent );
-			} );
+			// reset versioning, and start with a new one
+			addNewContentVersion(
+				content  : latestContent,
+				changelog: "Content Cloned!",
+				author   : arguments.author
+			);
 
-		// clone categories
-		arguments.original
-			.getCategories()
-			.each( function( thisCategory ){
-				addCategories( variables.categoryService.getOrCreate( arguments.thisCategory, getSite() ) );
-			} );
-
-		// now clone children
-		if ( arguments.original.hasChild() ) {
-			arguments.original
-				.getChildren()
-				.each( function( thisChild ){
-					// Preapre new Child
-					var newChild = originalService
+			// safe clone custom fields
+			variables.customFields = arguments.original
+				.getCustomFields()
+				.map( function( thisField ){
+					return variables.customFieldService
 						.new( {
-							parent  : this,
-							creator : author,
-							title   : arguments.thisChild.getTitle(),
-							slug    : this.getSlug() & "/" & listLast( arguments.thisChild.getSlug(), "/" ),
-							site    : getSite()
+							key   : arguments.thisField.getKey(),
+							value : arguments.thisField.getValue()
 						} )
-						// now deep clone until no more child is left behind.
-						.prepareForClone(
+						.setRelatedContent( this );
+				} );
+
+			// clone related content
+			arguments.original
+				.getRelatedContent()
+				.each( function( thisRelatedContent ){
+					addRelatedContent( arguments.thisRelatedContent );
+				} );
+
+			// clone categories
+			arguments.original
+				.getCategories()
+				.each( function( thisCategory ){
+					addCategories( variables.categoryService.getOrCreate( arguments.thisCategory, getSite() ) );
+				} );
+
+			// now clone children
+			if ( arguments.original.hasChild() ) {
+				// Save the parent first to avoid cascade issues
+				arguments.originalService.save( this );
+				// Continue down to clone the original children and attach them
+				arguments.original
+					.getChildren()
+					.each( function( thisChild ){
+						// Clone the child
+						var newChild = originalService
+							.new( {
+								creator : author,
+								title   : arguments.thisChild.getTitle(),
+								slug    : listLast( arguments.thisChild.getSlug(), "/" ),
+								site    : getSite()
+							} )
+							.setParent( this );
+
+						// now deep clone until no more children are left behind.
+						newChild.clone(
 							author           = author,
 							original         = arguments.thisChild,
 							originalService  = originalService,
 							publish          = publish,
-							originalSlugRoot = originalSlugRoot,
-							newSlugRoot      = newSlugRoot
+							originalSlugRoot = arguments.thisChild.getSlug(),
+							newSlugRoot      = newChild.getSlug()
 						);
-
-					// now attach it to this piece of content
-					addChild( newChild );
-				} );
+					} );
+			} else {
+				arguments.originalService.save( this );
+			}
 		}
-
-		// evict original entity from hibernate cache, just in case
-		variables.contentService.evict( arguments.original );
+		// end of cloning transaction
 
 		return this;
 	}
@@ -1702,6 +1708,8 @@ component
 		} else {
 			// Welcome home papa!
 			variables.parent = arguments.parent;
+			// I am a ColdBox Daddy!
+			arguments.parent.addChild( this );
 		}
 
 		// Update slug according to parent hierarchy

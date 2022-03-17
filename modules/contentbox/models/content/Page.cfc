@@ -199,7 +199,7 @@ component
 	 * @originalSlugRoot The original slug that will be replaced in all cloned content
 	 * @newSlugRoot      The new slug root that will be replaced in all cloned content
 	 */
-	BaseContent function prepareForClone(
+	BaseContent function clone(
 		required any author,
 		required any original,
 		required any originalService,
@@ -216,7 +216,7 @@ component
 			setExcerpt( arguments.original.getExcerpt() );
 		}
 		// do core cloning
-		return super.prepareForClone( argumentCollection = arguments );
+		return super.clone( argumentCollection = arguments );
 	}
 
 	/**

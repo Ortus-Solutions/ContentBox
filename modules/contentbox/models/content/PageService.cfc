@@ -34,7 +34,7 @@ component extends="ContentService" singleton {
 			super.save( arguments.page );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
+			if ( !isNull( arguments.originalSlug ) AND len( arguments.originalSlug ) ) {
 				var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
 				for ( var thisPage in pagesInNeed ) {
 					thisPage.setSlug(
