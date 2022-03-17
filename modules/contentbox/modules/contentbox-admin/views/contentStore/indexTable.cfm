@@ -127,7 +127,12 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 							<!--- Clone Command --->
 							<li>
-								<a href="javascript:contentListHelper.openCloneDialog( '#content.getContentID()#', '#URLEncodedFormat( content.getTitle() )#' )">
+								<a
+									href="javascript:contentListHelper.openCloneDialog(
+										'#encodeForJavaScript( content.getContentID() )#',
+										'#encodeForJavaScript( content.getTitle() )#'
+									)"
+								>
 									<i class="far fa-clone fa-lg"></i> Clone
 								</a>
 							</li>

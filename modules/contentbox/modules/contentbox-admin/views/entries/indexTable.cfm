@@ -124,7 +124,12 @@
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li>
-							<a href="javascript:contentListHelper.openCloneDialog( '#entry.getContentID()#','#URLEncodedFormat(entry.getTitle())#')">
+							<a
+								href="javascript:contentListHelper.openCloneDialog(
+									'#encodeForJavascript( entry.getContentID() )#',
+									'#encodeForJavascript( entry.getTitle() )#'
+								)"
+							>
 								<i class="far fa-clone fa-lg"></i> Clone
 							</a>
 						</li>

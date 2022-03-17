@@ -186,8 +186,8 @@
 								<li class="mb5">
 									<a
 										href="javascript:contentListHelper.openCloneDialog(
-											'#page.getContentID()#',
-											'#URLEncodedFormat( page.getTitle() )#'
+											'#encodeForJavascript( page.getContentID() )#',
+											'#encodeForJavascript( page.getTitle() )#'
 										)"
 									>
 										<i class="far fa-clone fa fa-lg"></i> Clone
