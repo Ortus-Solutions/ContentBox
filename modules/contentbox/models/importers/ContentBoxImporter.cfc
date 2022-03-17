@@ -62,9 +62,11 @@ component accessors=true {
 	 */
 	public void function setup( required any importFile ){
 		try {
-			var files          = variables.zipUtil.list( zipFilePath = arguments.importFile );
+			var files    = variables.zipUtil.list( zipFilePath = arguments.importFile );
 			// convert files query to array
-			var fileList       = listToArray( valueList( files.entry ) );
+			var fileList = listToArray( valueList( files.entry ) ).map( function( item ){
+				return arguments.item.reReplace( "(\\|\/)", "", "all" );
+			} );
 			var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
 			var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
 
@@ -112,6 +114,7 @@ component accessors=true {
 				overwriteFiles = true
 			);
 			descriptorContents = fileRead( getTempDirectory() & "descriptor.json" );
+			descriptorContents = replaceNoCase( descriptorContents, "null,", "0,", "all" );
 		}
 		return !arguments.asObject ? descriptorContents : deserializeJSON( descriptorContents );
 	}
