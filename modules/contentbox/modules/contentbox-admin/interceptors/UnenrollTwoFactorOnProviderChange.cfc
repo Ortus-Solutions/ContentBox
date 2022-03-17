@@ -26,9 +26,7 @@ component extends="coldbox.system.Interceptor" {
 			return;
 		}
 		// Verify provider change?
-		if (
-			data.oldSettings.cb_security_2factorAuth_provider != data.newSettings.cb_security_2factorAuth_provider
-		) {
+		if ( data.oldSettings.cb_security_2factorAuth_provider != data.newSettings.cb_security_2factorAuth_provider ) {
 			queryExecute( "UPDATE cb_author SET is2FactorAuth = 0" );
 		}
 	}

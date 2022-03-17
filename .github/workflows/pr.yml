@@ -20,14 +20,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        cfengine: ["lucee@5", "adobe@2016", "adobe@2018"]
+        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
+        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Setup Database and Fixtures
         run: |
-          sudo /etc/init.d/mysql start
+          sudo systemctl start mysql.service
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e 'CREATE DATABASE contentbox;'
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
@@ -37,12 +38,13 @@ jobs:
           distribution: "adopt"
           java-version: "11"
 
-      - name: Setup CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.1
 
       - name: Setup .env For Runner
         run: |
           touch .env
+          printf "ENVIRONMENT=development\n" >> .env
           printf "DB_HOST=127.0.0.1\n" >> .env
           printf "DB_DATABASE=contentbox\n" >> .env
           printf "DB_DRIVER=MySQL\n" >> .env
@@ -52,17 +54,6 @@ jobs:
           printf "DB_BUNDLEVERSION=8.0.19\n" >> .env
           printf "DB_BUNDLENAME=com.mysql.cj\n" >> .env
 
-      - name: Add Hibernate Logging
-        if: "${{ matrix.cfengine != 'lucee@5' }}"
-        run: |
-          # Log4j Hibernate Debug
-          mkdir -p .engines/acf2016/WEB-INF/cfusion/lib/
-          mkdir -p .engines/acf2018/WEB-INF/cfusion/lib/
-          mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
-          cp build/resources/log4j.properties .engines/acf2016/WEB-INF/cfusion/lib/
-          cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
-          cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
-
       - name: Install Dependencies
         run: |
           # Site dependencies
@@ -70,9 +61,9 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start ${{ matrix.cfengine }} Server
+      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
         run: |
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --debug
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
           # Install Adobe 2021 cfpm modules
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             box run-script install:2021
@@ -96,7 +87,7 @@ jobs:
         if: always()
         with:
           report_paths: 'tests/results/**/*.xml'
-          summary: true
+          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
 
       - name: Failure debugging
         if: ${{ failure() }}
@@ -107,6 +98,9 @@ jobs:
           if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
             cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           fi
+          if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+            cat .engines/acf2021/WEB-INF/cfusion/logs/hibernatesql.log
+          fi
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
   format:
@@ -116,20 +110,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Setup Java
-        uses: actions/setup-java@v2
+      - uses: Ortus-Solutions/commandbox-action@v1.0.2
         with:
-          distribution: "adopt"
-          java-version: "11"
-
-      - name: Set Up CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
-
-      - name: Install CFFormat
-        run: box install commandbox-cfformat
-
-      - name: Run CFFormat
-        run: box run-script format
+          cmd: run-script format
 
       - name: Commit Format Changes
         uses: stefanzweifel/git-auto-commit-action@v4

@@ -26,16 +26,14 @@ component extends="coldbox.system.RestHandler" {
 	 * @return The max rows to return for pagination
 	 */
 	private numeric function getMaxRows( maxRows ){
-		var results = isNull( arguments.maxRows ) ? variables.settingService.getSetting(
-			"cb_paging_maxrows"
-		) : arguments.maxRows;
+		var results = isNull( arguments.maxRows ) ? variables.settingService.getSetting( "cb_paging_maxrows" ) : arguments.maxRows;
 		return val( results );
 	}
 
 	/**
 	 * Calculate the starting record offset for the incoming page and maxrows per page
 	 *
-	 * @page The page to pagination on
+	 * @page    The page to pagination on
 	 * @maxRows Max rows per page override or use global setting
 	 *
 	 * @return The page start offset

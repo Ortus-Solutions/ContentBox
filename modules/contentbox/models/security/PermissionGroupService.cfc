@@ -34,11 +34,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -47,10 +47,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message = "Cannot import file as the contents is not JSON",
-				type    = "InvalidImportFormat"
-			);
+			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -65,8 +62,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
 	 *
 	 * @return The console log of the import
 	 */
@@ -102,10 +99,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					// Create permissions that don't exist first
 					var allPermissions = [];
 					for ( var thisPermission in thisGroup.permissions ) {
-						var oPerm = variables.permissionService.findByPermission(
-							thisPermission.permission
-						);
-						oPerm = (
+						var oPerm = variables.permissionService.findByPermission( thisPermission.permission );
+						oPerm     = (
 							isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
 								target  = variables.permissionService.new(),
 								memento = thisPermission,
@@ -114,10 +109,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 						);
 						// save oPerm if new only
 						if ( !oPerm.isLoaded() ) {
-							variables.permissionService.save(
-								entity        = oPerm,
-								transactional = false
-							);
+							variables.permissionService.save( entity = oPerm, transactional = false );
 						}
 						// append to add.
 						arrayAppend( allPermissions, oPerm );
@@ -128,14 +120,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// if new or persisted with override then save.
 				if ( !oGroup.isLoaded() ) {
-					arguments.importLog.append(
-						"New permission group imported: #thisGroup.name#<br>"
-					);
+					arguments.importLog.append( "New permission group imported: #thisGroup.name#<br>" );
 					arrayAppend( allGroups, oGroup );
 				} else if ( oGroup.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted permission group overriden: #thisGroup.name#<br>"
-					);
+					arguments.importLog.append( "Persisted permission group overriden: #thisGroup.name#<br>" );
 					arrayAppend( allGroups, oGroup );
 				} else {
 					arguments.importLog.append( "Skipping permission group: #thisGroup.name#<br>" );

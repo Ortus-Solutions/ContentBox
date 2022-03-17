@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018" ]
+        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
         javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
@@ -28,7 +28,7 @@ jobs:
 
       - name: Setup Database and Fixtures
         run: |
-          sudo /etc/init.d/mysql start
+          sudo systemctl start mysql.service
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} -e 'CREATE DATABASE contentbox;'
           mysql -u${{ env.DB_USER }} -p${{ env.DB_PASSWORD }} < tests/resources/sql/mysql/contentbox.sql
 
@@ -38,12 +38,13 @@ jobs:
           distribution: "adopt"
           java-version: "11"
 
-      - name: Setup CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.1
 
       - name: Setup .env For Runner
         run: |
           touch .env
+          printf "ENVIRONMENT=development\n" >> .env
           printf "DB_HOST=127.0.0.1\n" >> .env
           printf "DB_DATABASE=contentbox\n" >> .env
           printf "DB_DRIVER=MySQL\n" >> .env
@@ -105,7 +106,7 @@ jobs:
 
       - name: Run Swagger Tests
         run: |
-          curl http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb > tests/results/contentbox-swagger.json
+          curl "http://127.0.0.1:8589/index.cfm/cbswagger?debugmode=false&debugpassword=cb" -o "tests/results/contentbox-swagger.json"
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -126,7 +127,7 @@ jobs:
         if: failure()
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: contentbox
+          SLACK_CHANNEL: coding
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_MESSAGE: 'ContentBox tests failed :cry:, check them out here: https://github.com/Ortus-Solutions/ContentBox/actions'
@@ -142,6 +143,9 @@ jobs:
           fi
           if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
             cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
+          fi
+          if [[ "{{ matrix.cfengine }}" == "adobe@2021" ]] ; then
+            cat .engines/acf2021/WEB-INF/cfusion/logs/hibernatesql.log
           fi
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
@@ -173,17 +177,8 @@ jobs:
           distribution: "adopt"
           java-version: "11"
 
-      - name: Cache CommandBox Dependencies
-        uses: actions/cache@v1
-        if: ${{ true }}
-        with:
-          path: ~/.CommandBox/artifacts
-          key: ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
-          restore-keys: |
-            ${{ runner.OS }}-commandbox-cache-${{ hashFiles( 'box.json' ) }}-${{ hashFiles( 'modules/contentbox/box.json' ) }}
-
-      - name: Setup CommandBox
-        uses: elpete/setup-commandbox@v1.0.0
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
           forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
 
@@ -191,6 +186,7 @@ jobs:
         run: |
           box install --production
           box install commandbox-docbox
+          cd modules/contentbox && box install --production
 
       - name: Setup Environment Variables For Build Process
         id: current_version
@@ -211,7 +207,8 @@ jobs:
       - name: Build Docs
         run: |
           # Normalize swagger doc results
-          cp tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
+          cp -v tests/results/contentbox-test-results-lucee@5/contentbox-swagger.json tests/results/
+          #ls -lR tests/results
           # Run Docs Build
           box run-script build:allDocs
 
@@ -266,7 +263,7 @@ jobs:
         if: ${{ always() }}
         uses: rtCamp/action-slack-notify@v2
         env:
-          SLACK_CHANNEL: contentbox
+          SLACK_CHANNEL: coding
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_MESSAGE: 'ContentBox Built with ${{ job.status }}!'

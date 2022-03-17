@@ -31,7 +31,7 @@ component accessors="true" extends="BaseRenderer" {
 	 *
 	 * @builder java.lang.StringBuilder that contains all the content to manipulate
 	 * @content The content object that requested translation
-	 * @event The ColdBox event
+	 * @event   The ColdBox event
 	 */
 	private function translateContent(
 		required builder,
@@ -75,10 +75,7 @@ component accessors="true" extends="BaseRenderer" {
 						bundle   = listLast( resource, "@" );
 						resource = listFirst( resource, "@" );
 					}
-					thisValue = variables.cbResourceService.getResource(
-						resource = resource,
-						bundle   = bundle
-					);
+					thisValue = variables.cbResourceService.getResource( resource = resource, bundle = bundle );
 				}
 				// Normal Setting
 				else {

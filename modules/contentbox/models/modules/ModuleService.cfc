@@ -75,7 +75,15 @@ component
 		variables.moduleWidgetCache           = {};
 		variables.moduleRegistry              = {};
 		variables.moduleConfigCache           = {};
-		variables.moduleMap                   = {};
+		/**
+		 * Stores all module information when loaded:
+		 * {
+		 * 		type : "The module type : core or custom",
+		 * 		path : The absolute path,
+		 * 		invocationPath : The invocation path
+		 * }
+		 */
+		variables.moduleMap = {};
 
 		return this;
 	}
@@ -100,7 +108,7 @@ component
 	/**
 	 * Populate module from Module Configuration CFC and returns the module
 	 *
-	 * @model The module object
+	 * @model  The module object
 	 * @config The config object to populate with
 	 *
 	 * @return The module populated
@@ -131,7 +139,7 @@ component
 	/**
 	 * Find modules in ContentBox using the active criteria or `any`
 	 *
-	 * @isActive The active criteria, true, false or any for all modules
+	 * @isActive   The active criteria, true, false or any for all modules
 	 * @moduleType The module type criteria
 	 *
 	 * @return struct:{ count:numeric, modules:array of objects }
@@ -187,10 +195,7 @@ component
 		var thisInvocationPath = variables[ arguments.type & "ModulesInvocationPath" ];
 
 		if ( fileExists( thisPath & "/#arguments.name#/ModuleConfig.cfc" ) ) {
-			var oConfig = createObject(
-				"component",
-				thisInvocationPath & ".#arguments.name#.ModuleConfig"
-			);
+			var oConfig = createObject( "component", thisInvocationPath & ".#arguments.name#.ModuleConfig" );
 			var oModule = new ( { name : arguments.name, moduleType : arguments.type } );
 
 			save( populateModule( oModule, oConfig ) );
@@ -226,10 +231,7 @@ component
 				try {
 					config.onDeactivate();
 				} catch ( Any e ) {
-					log.error(
-						"Error deactivating module: #arguments.name# with #e.message & e.detail#",
-						e
-					);
+					log.error( "Error deactivating module: #arguments.name# with #e.message & e.detail#", e );
 					// dont' throw. just log and continue deactivating modules.
 				}
 			}
@@ -313,13 +315,12 @@ component
 	ModuleService function deleteModule( required name ){
 		var moduleEntry = variables.moduleMap[ arguments.name ];
 
-		// Try to do an onDelete() callback.
-		var oConfig = createObject(
-			"component",
-			moduleEntry.invocationPath & ".#name#.ModuleConfig"
-		);
-		if ( structKeyExists( oConfig, "onDelete" ) ) {
-			oConfig.onDelete();
+		// Try to do an onDelete() callback if it exists
+		if ( fileExists( moduleEntry.path & "/#arguments.name#/ModuleConfig.cfc" ) ) {
+			var oConfig = createObject( "component", moduleEntry.invocationPath & ".#arguments.name#.ModuleConfig" );
+			if ( structKeyExists( oConfig, "onDelete" ) ) {
+				oConfig.onDelete();
+			}
 		}
 
 		// Now delete it
@@ -387,12 +388,7 @@ component
 			}
 
 			// If we get here, the module is loaded in the database now
-			if (
-				oModule.getIsActive() AND !structKeyExists(
-					variables.moduleRegistry,
-					arguments.name
-				)
-			) {
+			if ( oModule.getIsActive() AND !structKeyExists( variables.moduleRegistry, arguments.name ) ) {
 				// Register with ColdBox now
 				variables.coldboxModuleService.registerModule(
 					moduleName     = arguments.name,
@@ -468,9 +464,7 @@ component
 
 				// Deactivate it, not fond in registry, might be an orphaned record
 				if ( log.canWarn() ) {
-					log.warn(
-						"Orphaned module discovered: #thisModule.getName()#, deactiving it from the database"
-					);
+					log.warn( "Orphaned module discovered: #thisModule.getName()#, deactiving it from the database" );
 				}
 				deactivateModule( thisModule.getName() );
 				return false;
@@ -498,7 +492,7 @@ component
 			} );
 
 		// Force Reload all widgets
-		widgetService.getWidgets( reload = true );
+		variables.widgetService.getWidgets( reload = true );
 
 		return this;
 	}

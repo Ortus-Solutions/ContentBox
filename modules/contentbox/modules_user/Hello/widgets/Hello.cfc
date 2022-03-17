@@ -17,6 +17,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Give you a nice welcome in Spanish
+	 *
 	 * @titleLevel The H{level} to use, by default we use H2
 	 */
 	any function renderIt( string titleLevel = "2" ){

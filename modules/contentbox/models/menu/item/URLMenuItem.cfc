@@ -20,7 +20,7 @@ component
 	property
 		name      ="provider"
 		persistent="false"
-		inject    ="contentbox.models.menu.providers.URLProvider";
+		inject    ="provider:contentbox.models.menu.providers.URLProvider";
 
 	/* *********************************************************************
 	 **                          PROPERTIES

@@ -7,9 +7,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		// Widget Properties
 		setName( "Meta" );
 		setVersion( "1.0" );
-		setDescription(
-			"A cool basic widget that shows some ContentBox meta links anywhere you like."
-		);
+		setDescription( "A cool basic widget that shows some ContentBox meta links anywhere you like." );
 		setAuthor( "Ortus Solutions" );
 		setAuthorURL( "https://www.ortussolutions.com" );
 		setIcon( "info" );
@@ -18,8 +16,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Show the ContentBox Meta Links
-	 * @dropdown.hint Display as a dropdown or a list, default is list
-	 * @title.hint The title to show before the dropdown or list, defaults to H2
+	 *
+	 * @dropdown.hint   Display as a dropdown or a list, default is list
+	 * @title.hint      The title to show before the dropdown or list, defaults to H2
 	 * @titleLevel.hint The H{level} to use, by default we use H2
 	 */
 	any function renderIt(

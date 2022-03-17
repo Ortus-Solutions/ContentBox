@@ -36,9 +36,7 @@ component extends="tests.resources.BaseTest" {
 				var cDate = dateFormat( now(), "mm/dd/yyyy" );
 				model.setExpireDate( cDate );
 				model.addExpiredTime( "11", "00" );
-				expect( model.getExpireDate() ).toBe(
-					cDate & " " & timeFormat( "11:00", "hh:MM tt" )
-				);
+				expect( model.getExpireDate() ).toBe( cDate & " " & timeFormat( "11:00", "hh:MM tt" ) );
 			} );
 
 			it( "can add published date time combinations", function(){
@@ -51,9 +49,7 @@ component extends="tests.resources.BaseTest" {
 				var cDate = dateFormat( now(), "mm/dd/yyyy" );
 				model.setPublishedDate( cDate );
 				model.addPublishedTime( "11", "00" );
-				expect( model.getPublishedDate() ).toBe(
-					cDate & " " & timeFormat( "11:00", "hh:MM tt" )
-				);
+				expect( model.getPublishedDate() ).toBe( cDate & " " & timeFormat( "11:00", "hh:MM tt" ) );
 			} );
 		} );
 	}

@@ -26,12 +26,13 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Renders a published ContentStore object, if no default value is used, this throws an exception
 	 *
-	 * @slug The content store slug to render
+	 * @slug            The content store slug to render
 	 * @slug.optionsUDF getSlugList
-	 * @defaultValue The string to show if the contentstore snippet does not exist, else an exception is thrown
+	 * @defaultValue    The string to show if the contentstore snippet does not exist, else an exception is thrown
+	 *
+	 * @return The contentstore rendered content, empty if content has expired
 	 *
 	 * @throws InvalidContentStoreException
-	 * @return The contentstore rendered content, empty if content has expired
 	 */
 	any function renderIt( required string slug, string defaultValue ){
 		var content = variables.contentStoreService.findBySlug(
@@ -56,10 +57,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		}
 
 		// else throw
-		throw(
-			message = "The content slug '#arguments.slug#' does not exist",
-			type    = "InvalidContentStoreException"
-		);
+		throw( message = "The content slug '#arguments.slug#' does not exist", type = "InvalidContentStoreException" );
 	}
 
 	/**

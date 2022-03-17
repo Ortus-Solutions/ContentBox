@@ -21,7 +21,7 @@ component
 
 	property
 		name      ="markdown"
-		inject    ="Processor@cbmarkdown"
+		inject    ="provider:Processor@cbmarkdown"
 		persistent="false";
 
 	/* *********************************************************************

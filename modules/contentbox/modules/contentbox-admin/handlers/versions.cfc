@@ -49,8 +49,9 @@ component extends="baseHandler" {
 
 	/**
 	 * Pager Viewlet for version records
-	 * @contentID The contentID to iterate records on
-	 * @max The maximum records to show
+	 *
+	 * @contentID       The contentID to iterate records on
+	 * @max             The maximum records to show
 	 * @viewFullHistory View full history or partial paginated results
 	 */
 	function pager(
@@ -70,10 +71,7 @@ component extends="baseHandler" {
 		prc.versionsPager_content = contentService.get( arguments.contentID );
 
 		// Get the latest versions
-		var results = contentVersionService.findRelatedVersions(
-			contentID = arguments.contentID,
-			max       = arguments.max
-		);
+		var results                = contentVersionService.findRelatedVersions( contentID = arguments.contentID, max = arguments.max );
 		prc.versionsPager_count    = results.count;
 		prc.versionsPager_versions = results.versions;
 

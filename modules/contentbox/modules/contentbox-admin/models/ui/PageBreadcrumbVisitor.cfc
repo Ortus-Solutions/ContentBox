@@ -16,6 +16,7 @@ component singleton {
 
 	/**
 	 * Visit a page and build hierarchy list
+	 *
 	 * @page The page content object
 	 */
 	function visit( required page ){

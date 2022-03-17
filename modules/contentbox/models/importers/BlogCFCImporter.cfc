@@ -232,10 +232,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 				).execute().getResult();
 				var aCategories = [];
 				for ( var y = 1; y lte qCategories.recordcount; y++ ) {
-					arrayAppend(
-						aCategories,
-						categoryService.get( catMap[ qCategories.categoryId[ y ] ] )
-					);
+					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.categoryId[ y ] ] ) );
 				}
 				entry.setCategories( aCategories );
 				entitySave( entry );
@@ -324,11 +321,8 @@ component implements="contentbox.models.importers.ICBImporter" {
 	// find all images in a given entry and save them to the media manager
 	// ------------------------------------------------------------------------------------------------
 	private string function findImages( required string content ){
-		var images  = reMatchNoCase( "(?i)src=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content );
-		var images1 = reMatchNoCase(
-			"(?i)href=""[^>]*[^>](.*)(gif|jpg|png)""\1",
-			arguments.content
-		);
+		var images    = reMatchNoCase( "(?i)src=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content );
+		var images1   = reMatchNoCase( "(?i)href=""[^>]*[^>](.*)(gif|jpg|png)""\1", arguments.content );
 		var pattern   = createObject( "java", "java.util.regex.Pattern" );
 		var exp       = "(?<=\=\"" )([^""])+(?=\"" )";
 		var mediaPath = expandPath( settingService.getSetting( "cb_media_directoryRoot" ) );
@@ -355,11 +349,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 					httpService.setGetAsBinary( "yes" );
 					var result = httpService.send().getPrefix();
 					fileWrite( mediaPath & "\blogImages\" & fileName, result.fileContent );
-					arguments.content = replaceNoCase(
-						arguments.content,
-						urlObj,
-						newUrl & fileName
-					);
+					arguments.content = replaceNoCase( arguments.content, urlObj, newUrl & fileName );
 				}
 			}
 		}
@@ -379,11 +369,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 					httpService.setGetAsBinary( "yes" );
 					var result = httpService.send().getPrefix();
 					fileWrite( mediaPath & "\blogImages\" & fileName, result.fileContent );
-					arguments.content = replaceNoCase(
-						arguments.content,
-						urlObj,
-						newUrl & fileName
-					);
+					arguments.content = replaceNoCase( arguments.content, urlObj, newUrl & fileName );
 				}
 			}
 		}

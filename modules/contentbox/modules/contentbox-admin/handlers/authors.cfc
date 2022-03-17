@@ -54,6 +54,7 @@ component extends="baseHandler" {
 
 	/**
 	 * List system authors
+	 *
 	 * @return html
 	 */
 	function index( event, rc, prc ){
@@ -109,6 +110,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Build out system author's table + filters
+	 *
 	 * @return html
 	 */
 	function indexTable( event, rc, prc ){
@@ -198,6 +200,7 @@ component extends="baseHandler" {
 
 	/**
 	 * System username checks
+	 *
 	 * @return json
 	 */
 	function usernameCheck( event, rc, prc ){
@@ -215,6 +218,7 @@ component extends="baseHandler" {
 
 	/**
 	 * System email checks
+	 *
 	 * @return json
 	 */
 	function emailCheck( event, rc, prc ){
@@ -250,9 +254,7 @@ component extends="baseHandler" {
 			);
 			// announce event
 			announce( "cbadmin_onPasswordReset", { author : oAuthor } );
-			cbMessagebox.info(
-				"Author marked for password reset upon login and email notification sent!"
-			);
+			cbMessagebox.info( "Author marked for password reset upon login and email notification sent!" );
 		} else {
 			cbMessagebox.error( "Invalid Author Sent!" );
 		}
@@ -339,6 +341,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Author editor panel
+	 *
 	 * @return html
 	 */
 	function editor( event, rc, prc ){
@@ -413,6 +416,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Shortcut to author profile
+	 *
 	 * @return html
 	 */
 	function myprofile( event, rc, prc ){
@@ -479,24 +483,15 @@ component extends="baseHandler" {
 		// Store Preferences
 		oAuthor.setPreferences( allPreferences );
 		// announce event
-		announce(
-			"cbadmin_preAuthorPreferencesSave",
-			{ author : oAuthor, preferences : allPreferences }
-		);
+		announce( "cbadmin_preAuthorPreferencesSave", { author : oAuthor, preferences : allPreferences } );
 		// save Author
 		variables.authorService.save( oAuthor );
 		// announce event
-		announce(
-			"cbadmin_postAuthorPreferencesSave",
-			{ author : oAuthor, preferences : allPreferences }
-		);
+		announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : allPreferences } );
 		// message
 		cbMessagebox.setMessage( "info", "Author Preferences Saved!" );
 		// relocate
-		relocate(
-			event       = prc.xehAuthorEditor,
-			queryString = "authorID=#oAuthor.getAuthorID()###preferences"
-		);
+		relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
 	}
 
 	/**
@@ -505,40 +500,25 @@ component extends="baseHandler" {
 	function saveRawPreferences( event, rc, prc ){
 		var oAuthor = authorService.get( id = rc.authorID );
 		// Validate raw preferences
-		var vResult = validate(
-			target      = rc,
-			constraints = { preferences : { required : true, type : "json" } }
-		);
+		var vResult = validate( target = rc, constraints = { preferences : { required : true, type : "json" } } );
 		if ( !vResult.hasErrors() ) {
 			// store preferences
 			oAuthor.setPreferences( rc.preferences );
 			// announce event
-			announce(
-				"cbadmin_preAuthorPreferencesSave",
-				{ author : oAuthor, preferences : rc.preferences }
-			);
+			announce( "cbadmin_preAuthorPreferencesSave", { author : oAuthor, preferences : rc.preferences } );
 			// save Author
 			variables.authorService.save( oAuthor );
 			// announce event
-			announce(
-				"cbadmin_postAuthorPreferencesSave",
-				{ author : oAuthor, preferences : rc.preferences }
-			);
+			announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : rc.preferences } );
 			// message
 			cbMessagebox.setMessage( "info", "Author Preferences Saved!" );
 			// relocate
-			relocate(
-				event       = prc.xehAuthorEditor,
-				queryString = "authorID=#oAuthor.getAuthorID()###preferences"
-			);
+			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
 		} else {
 			// message
 			cbMessagebox.error( vResult.getAllErrors() );
 			// relocate
-			relocate(
-				event       = prc.xehAuthorEditor,
-				queryString = "authorID=#oAuthor.getAuthorID()###preferences"
-			);
+			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()###preferences" );
 		}
 	}
 
@@ -559,10 +539,7 @@ component extends="baseHandler" {
 		}
 
 		// validate it
-		var vResults = validate(
-			target   = oAuthor,
-			excludes = ( structKeyExists( rc, "password" ) ? "" : "password" )
-		);
+		var vResults = validate( target = oAuthor, excludes = ( structKeyExists( rc, "password" ) ? "" : "password" ) );
 		if ( !vResults.hasErrors() ) {
 			// announce event
 			announce(
@@ -583,10 +560,7 @@ component extends="baseHandler" {
 			relocate( prc.xehAuthors );
 		} else {
 			cbMessagebox.warn( vResults.getAllErrors() );
-			relocate(
-				event       = prc.xehAuthorEditor,
-				queryString = "authorID=#oAuthor.getAuthorID()#"
-			);
+			relocate( event = prc.xehAuthorEditor, queryString = "authorID=#oAuthor.getAuthorID()#" );
 		}
 	}
 
@@ -595,9 +569,7 @@ component extends="baseHandler" {
 	 */
 	function passwordChange( event, rc, prc ){
 		if ( prc.oCurrentAuthor.getAuthorID() != rc.authorID ) {
-			cbMessagebox.error(
-				"You cannot change passwords for other users. Please start a password reset instead."
-			);
+			cbMessagebox.error( "You cannot change passwords for other users. Please start a password reset instead." );
 			return relocate( event = prc.xehAuthorEditor, queryString = "authorID=#rc.authorID#" );
 		}
 		var oAuthor = authorService.get( id = rc.authorID );
@@ -608,10 +580,7 @@ component extends="baseHandler" {
 			oAuthor.setPassword( rc.password );
 			variables.authorService.save( author = oAuthor, passwordChange = true );
 			// announce event
-			announce(
-				"cbadmin_onAuthorPasswordChange",
-				{ author : oAuthor, password : rc.password }
-			);
+			announce( "cbadmin_onAuthorPasswordChange", { author : oAuthor, password : rc.password } );
 			// message
 			cbMessagebox.info( "Password Updated!" );
 		} else {
@@ -766,9 +735,7 @@ component extends="baseHandler" {
 				.map( function( id ){
 					return variables.authorService
 						.get( arguments.id )
-						.getMemento(
-							includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth"
-						);
+						.getMemento( includes: "permissions,permissionGroups,isPasswordReset,is2FactorAuth" );
 				} );
 		} else {
 			return variables.authorService.getAllForExport();
@@ -790,9 +757,7 @@ component extends="baseHandler" {
 				cbMessagebox.info( "Users imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
@@ -806,6 +771,7 @@ component extends="baseHandler" {
 
 	/**
 	 * List author preferences
+	 *
 	 * @return view
 	 */
 	private function listPreferences( event, rc, prc ){

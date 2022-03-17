@@ -28,7 +28,11 @@ component {
 	/**
 	 * Run the updater
 	 */
-	function run(){
+	function run( version ){
+		// Override the incoming version if needed
+		if( !isNull( arguments.version ) ){
+			variables.targetVersion = arguments.version;
+		}
 
 		print.blueLine( "This task will update your ContentBox 4 installation to a ContentBox 5 installation." )
 			.blueLine( "Please make a backup of your source and your database now. " )
@@ -67,7 +71,7 @@ component {
 
 		// Run Migrations
 		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
-		command( "migrate up" ).run();
+		command( "run-script contentbox:migrate:up" ).run();
 		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Update ColdBox

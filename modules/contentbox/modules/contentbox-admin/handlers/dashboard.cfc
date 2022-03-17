@@ -103,6 +103,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the latest currently logged in user drafts
+	 *
 	 * @return html
 	 */
 	function latestUserDrafts( event, rc, prc ){
@@ -138,6 +139,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the publish in the future content
+	 *
 	 * @return html
 	 */
 	function futurePublishedContent( event, rc, prc ){
@@ -151,6 +153,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the expired content report
+	 *
 	 * @return html
 	 */
 	function expiredContent( event, rc, prc ){
@@ -178,15 +181,13 @@ component extends="baseHandler" {
 			max        : prc.cbSettings.cb_dashboard_recentComments,
 			pagination : false
 		};
-		prc.commentsViewlet = runEvent(
-			event          = "contentbox-admin:comments.pager",
-			eventArguments = eArgs
-		);
+		prc.commentsViewlet = runEvent( event = "contentbox-admin:comments.pager", eventArguments = eArgs );
 		event.setView( view = "dashboard/latestComments", layout = "ajax" );
 	}
 
 	/**
 	 * Produce the latest system news
+	 *
 	 * @return html
 	 */
 	function latestNews( event, rc, prc ){
@@ -211,12 +212,11 @@ component extends="baseHandler" {
 
 	/**
 	 * Produce the latest system logins
+	 *
 	 * @return html
 	 */
 	function latestLogins( event, rc, prc ){
-		prc.lastLogins = loginTrackerService.getLastLogins(
-			max = prc.cbsettings.cb_security_blocktime
-		);
+		prc.lastLogins = loginTrackerService.getLastLogins( max = prc.cbsettings.cb_security_blocktime );
 		event.setView( view = "dashboard/latestLogins", layout = "ajax" );
 	}
 
@@ -224,6 +224,7 @@ component extends="baseHandler" {
 
 	/**
 	 * delete installer module
+	 *
 	 * @return JSON
 	 */
 	function deleteInstaller(){
@@ -297,9 +298,7 @@ component extends="baseHandler" {
 				event.renderData( type = "json", data = data );
 			} else {
 				// MessageBox
-				cbMessagebox.error(
-					"Error running admin reload module action: #e.message# #e.detail#"
-				);
+				cbMessagebox.error( "Error running admin reload module action: #e.message# #e.detail#" );
 				// relocate back to dashboard
 				relocate( prc.xehDashboard );
 			}

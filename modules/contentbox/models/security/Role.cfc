@@ -20,7 +20,7 @@ component
 
 	property
 		name      ="permissionService"
-		inject    ="permissionService@contentbox"
+		inject    ="provider:permissionService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -81,9 +81,7 @@ component
 		name   ="numberOfPermissions"
 		formula="select count(*) from cb_rolePermissions as rolePermissions where rolePermissions.FK_roleID=roleID";
 
-	property
-		name   ="numberOfAuthors"
-		formula="select count(*) from cb_author as author where author.FK_roleID=roleID";
+	property name="numberOfAuthors" formula="select count(*) from cb_author as author where author.FK_roleID=roleID";
 
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
@@ -133,6 +131,7 @@ component
 
 	/**
 	 * Check for permission
+	 *
 	 * @slug.hint The permission slug or list of slugs to validate the role has. If it's a list then they are ORed together
 	 */
 	boolean function checkPermission( required slug ){

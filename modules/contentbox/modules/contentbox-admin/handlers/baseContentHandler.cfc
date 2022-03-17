@@ -15,7 +15,6 @@ component extends="baseHandler" {
 
 	property name="authorService" inject="authorService@contentbox";
 	property name="themeService" inject="themeService@contentbox";
-	property name="CKHelper" inject="CKHelper@contentbox-ckeditor";
 	property name="HTMLHelper" inject="HTMLHelper@coldbox";
 	property name="categoryService" inject="categoryService@contentbox";
 	property name="customFieldService" inject="customFieldService@contentbox";
@@ -217,19 +216,14 @@ component extends="baseHandler" {
 
 		// check if id list has length
 		if ( len( rc.contentID ) ) {
-			variables.ormService.bulkPublishStatus(
-				contentID: rc.contentID,
-				status   : rc.contentStatus
-			);
+			variables.ormService.bulkPublishStatus( contentID: rc.contentID, status: rc.contentStatus );
 			// announce event
 			announce(
 				"cbadmin_on#variables.entity#StatusUpdate",
 				{ contentID : rc.contentID, status : rc.contentStatus }
 			);
 			// Message
-			variables.cbMessageBox.info(
-				"#listLen( rc.contentID )# content where set to '#rc.contentStatus#'"
-			);
+			variables.cbMessageBox.info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
 		} else {
 			variables.cbMessageBox.warn( "No content selected!" );
 		}
@@ -280,27 +274,20 @@ component extends="baseHandler" {
 			sortOrder: "slug asc",
 			siteID   : prc.oCurrentSite.getsiteID()
 		);
-		// CK Editor Helper
-		prc.ckHelper      = variables.CKHelper;
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
 		prc.defaultEditor = getUserDefaultEditor( prc.oCurrentAuthor );
 		// Check if the markup matches the choosen editor
-		if (
-			listFindNoCase( "markdown,json", prc.oContent.getMarkup() ) && prc.defaultEditor != "simplemde"
-		) {
+		if ( listFindNoCase( "markdown,json", prc.oContent.getMarkup() ) && prc.defaultEditor != "simplemde" ) {
 			prc.defaultEditor = "simplemde";
 		}
 		// Get the editor driver object
-		prc.oEditorDriver = variables.editorService.getEditor( prc.defaultEditor );
+		prc.oEditorDriver     = variables.editorService.getEditor( prc.defaultEditor );
 		// Get All registered markups so we can display them
-		prc.markups       = variables.editorService.getRegisteredMarkups();
+		prc.markups           = variables.editorService.getRegisteredMarkups();
 		// Get User's default markup
-		prc.defaultMarkup = prc.oCurrentAuthor.getPreference(
-			"markup",
-			variables.editorService.getDefaultMarkup()
-		);
+		prc.defaultMarkup     = prc.oCurrentAuthor.getPreference( "markup", variables.editorService.getDefaultMarkup() );
 		// get all authors
 		prc.authors           = variables.authorService.getAll( sortOrder = "lastName" );
 		// get related content
@@ -329,7 +316,7 @@ component extends="baseHandler" {
 	 * Save Content
 	 *
 	 * @adminPermission The admin permission to apply for publishing, eg: ENTRIES_ADMIN, PAGES_ADMIN
-	 * @relocateTo Where to relocate to when saving is done
+	 * @relocateTo      Where to relocate to when saving is done
 	 */
 	function save(
 		event,
@@ -476,10 +463,7 @@ component extends="baseHandler" {
 			// relocate
 			variables.cbMessageBox.info( "Page Saved!" );
 			if ( oContent.hasParent() ) {
-				relocate(
-					event       = arguments.relocateTo,
-					querystring = "parent=#oContent.getParent().getContentID()#"
-				);
+				relocate( event = arguments.relocateTo, querystring = "parent=#oContent.getParent().getContentID()#" );
 			} else {
 				relocate( event = arguments.relocateTo );
 			}
@@ -497,9 +481,7 @@ component extends="baseHandler" {
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
-			variables.cbMessageBox.warn(
-				"Can't clone the unclonable, meaning no contentID or title passed."
-			);
+			variables.cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			relocate( arguments.relocateTo );
 			return;
 		}
@@ -513,22 +495,16 @@ component extends="baseHandler" {
 		}
 
 		// get a clone
-		var clone = variables.ormService.new( {
-			title   : rc.title,
-			slug    : variables.HTMLHelper.slugify( rc.title ),
-			creator : prc.oCurrentAuthor,
-			site    : variables.siteService.get( rc.site )
-		} );
+		var clone = variables.ormService
+			.new( {
+				title   : rc.title,
+				slug    : variables.HTMLHelper.slugify( rc.title ),
+				creator : prc.oCurrentAuthor,
+				site    : variables.siteService.get( rc.site )
+			} )
+			.setParent( original.getParent() );
 
-		// attach to the original's parent.
-		if ( original.hasParent() ) {
-			clone
-				.setParent( original.getParent() )
-				.setSlug( original.getSlug() & "/" & clone.getSlug() );
-		}
-
-		// prepare descendants for cloning, might take a while if lots of children to copy.
-		clone.prepareForClone(
+		clone.clone(
 			author          : prc.oCurrentAuthor,
 			original        : original,
 			originalService : variables.ormService,
@@ -537,18 +513,12 @@ component extends="baseHandler" {
 			newSlugRoot     : clone.getSlug()
 		);
 
-		// clone this sucker now!
-		variables.ormService.save( clone );
-
 		// relocate
 		variables.cbMessageBox.info( "#variables.entity# Cloned!" );
 
 		// Relocate
 		if ( original.hasParent() ) {
-			relocate(
-				event       = arguments.relocateTo,
-				querystring = "parent=#original.getParent().getContentID()#"
-			);
+			relocate( event = arguments.relocateTo, querystring = "parent=#original.getParent().getContentID()#" );
 		} else {
 			relocate( event = arguments.relocateTo );
 		}
@@ -577,10 +547,7 @@ component extends="baseHandler" {
 		for ( var thisContentID in rc.contentID ) {
 			var oContent = variables.ormService.get( thisContentID );
 			if ( isNull( oContent ) ) {
-				arrayAppend(
-					messages,
-					"Invalid contentID sent: #thisContentID#, so skipped removal"
-				);
+				arrayAppend( messages, "Invalid contentID sent: #thisContentID#, so skipped removal" );
 			} else {
 				// GET id to be sent for announcing later
 				var contentID = oContent.getContentID();
@@ -666,9 +633,7 @@ component extends="baseHandler" {
 	 * @return json
 	 */
 	function export( event, rc, prc ){
-		return variables.ormService
-			.get( event.getValue( "contentID", 0 ) )
-			.getMemento( profile: "export" );
+		return variables.ormService.get( event.getValue( "contentID", 0 ) ).getMemento( profile: "export" );
 	}
 
 	/**
@@ -724,11 +689,11 @@ component extends="baseHandler" {
 	/**
 	 * Content pager viewlet. Used for embedding a table visualizer of content according to arguments
 	 *
-	 * @authorId The author to filter the viewlet on. By default we show all content by all authors
-	 * @parent Do we want to root the content at a specific parent not or not, by default we do not
-	 * @max The maximum number of records to show, default is using the settings maxrows
+	 * @authorId   The author to filter the viewlet on. By default we show all content by all authors
+	 * @parent     Do we want to root the content at a specific parent not or not, by default we do not
+	 * @max        The maximum number of records to show, default is using the settings maxrows
 	 * @pagination Show pagination caroussel or not, default is true
-	 * @latest Show the latest content ordering or by natural ordering
+	 * @latest     Show the latest content ordering or by natural ordering
 	 *
 	 * @return HTML
 	 */
@@ -765,10 +730,8 @@ component extends="baseHandler" {
 		prc.contentPager_id = createUUID();
 
 		// prepare paging object
-		prc.contentPager_oPaging = getInstance( "Paging@contentbox" );
-		prc.contentPager_paging  = prc.contentPager_oPaging.getBoundaries(
-			page: rc.contentPager_page
-		);
+		prc.contentPager_oPaging    = getInstance( "Paging@contentbox" );
+		prc.contentPager_paging     = prc.contentPager_oPaging.getBoundaries( page: rc.contentPager_page );
 		prc.contentPager_pagingLink = "javascript:pagerLink(@page@)";
 		prc.contentPager_pagination = arguments.pagination;
 
@@ -815,10 +778,7 @@ component extends="baseHandler" {
 	 */
 	private function getUserDefaultEditor( required author ){
 		// get user default editor
-		var userEditor = arguments.author.getPreference(
-			"editor",
-			editorService.getDefaultEditor()
-		);
+		var userEditor = arguments.author.getPreference( "editor", editorService.getDefaultEditor() );
 
 		// verify if editor exists
 		if ( editorService.hasEditor( userEditor ) ) {

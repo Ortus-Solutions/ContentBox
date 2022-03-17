@@ -1,5 +1,4 @@
 /**
- * @see https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
  *
  * This is our base handler for our API which is bassed off the cborm resources base handler.
  *
@@ -32,6 +31,8 @@
  *
  * That's it!  All resource methods: <code>index, create, show, update, delete</code> will be implemented for you.
  * You can create more actions or override them as needed.
+ *
+ * @see https://coldbox-orm.ortusbooks.com/orm-events/automatic-rest-crud
  */
 component extends="cborm.models.resources.BaseHandler" {
 
@@ -48,7 +49,7 @@ component extends="cborm.models.resources.BaseHandler" {
 	 * GET /api/v1/{resource}
 	 *
 	 * @criteria If you pass a criteria object, then we will use that instead of creating a new one
-	 * @results If you pass in a results struct, it must contain the following: { count:numeric, records: array of objects }
+	 * @results  If you pass in a results struct, it must contain the following: { count:numeric, records: array of objects }
 	 */
 	function index( event, rc, prc, criteria, struct results ){
 		param rc.page      = 1;
@@ -73,16 +74,11 @@ component extends="cborm.models.resources.BaseHandler" {
 		param rc.id             = 0;
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#pre#variables.entity#Show",
-			{}
-		);
+		announceInterception( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
 
 		// Get by id or slug
 		prc.oEntity = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id
-			)
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
 		// announce it
@@ -135,9 +131,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		// Population arguments
 		arguments.populate.memento = rc;
 		arguments.populate.model   = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id
-			)
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
 		// Validation Arguments
@@ -187,9 +181,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		param rc.id = 0;
 
 		prc.oEntity = (
-			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail(
-				rc.id
-			)
+			variables.useGetOrFail ? variables.ormService.getOrFail( rc.id ) : getByIdOrSlugOrFail( rc.id, prc )
 		);
 
 		// announce it
@@ -206,10 +198,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
-			"#variables.settings.resources.eventPrefix#post#variables.entity#Delete",
-			{ id : rc.id }
-		);
+		announceInterception( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
 
 		// Marshall it out
 		prc.response.addMessage( "#variables.entity# deleted!" );
@@ -218,18 +207,25 @@ component extends="cborm.models.resources.BaseHandler" {
 	/**
 	 * This utility tries to get the incoming resource by id or slug or fails
 	 *
-	 * @throws EntityNotFound
+	 * @id  The id/slug identifier to retrieve the entity
+	 * @prc The ColdBox PRC
 	 *
 	 * @return The found entity
+	 *
+	 * @throws EntityNotFound
 	 */
-	private function getByIdOrSlugOrFail( required id ){
-		var c       = newCriteria();
+	private function getByIdOrSlugOrFail( required id, required prc ){
+		var c       = variables.ormService.newCriteria();
 		var oEntity = c
 			.$or(
 				// note: id is a shortcut in Hibernate for the Primary Key
 				c.restrictions.isEq( "id", arguments.id ),
 				c.restrictions.isEq( "slug", arguments.id )
 			)
+			// If the site exists, seed it
+			.when( !isNull( prc.oCurrentSite ), function( c ){
+				c.isEq( "site", prc.oCurrentSite );
+			} )
 			.get();
 
 		if ( isNull( oEntity ) ) {
@@ -246,9 +242,9 @@ component extends="cborm.models.resources.BaseHandler" {
 	/**
 	 * This utility tries to get a site by id or slug
 	 *
-	 * @throws EntityNotFound
-	 *
 	 * @return The found site
+	 *
+	 * @throws EntityNotFound
 	 */
 	private function getSiteByIdOrSlugOrFail( required id ){
 		var c     = variables.siteService.newCriteria();

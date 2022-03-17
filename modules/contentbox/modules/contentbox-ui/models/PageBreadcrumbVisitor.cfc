@@ -19,7 +19,8 @@ component singleton {
 
 	/**
 	 * Visit and build out bread crumbs
-	 * @page The page object
+	 *
+	 * @page      The page object
 	 * @separator The separator to use, defaults to '>'
 	 */
 	function visit( required page, string separator = ">" ){
@@ -31,7 +32,7 @@ component singleton {
 
 		// check if page slug is home, to ignore it
 		if ( arguments.page.getSlug() NEQ CBHelper.getHomePage() ) {
-			bc &= "#arguments.separator# <a href=""#CBHelper.linkPage( arguments.page )#"">#arguments.page.getTitle()#</a>
+			bc &= "#( len( bc ) ? arguments.separator : "" )# <a href=""#CBHelper.linkPage( arguments.page )#"">#arguments.page.getTitle()#</a>
 ";
 		}
 

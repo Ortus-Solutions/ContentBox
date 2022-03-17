@@ -19,7 +19,7 @@ component
 	property
 		name      ="provider"
 		persistent="false"
-		inject    ="contentbox.models.menu.providers.SubMenuProvider";
+		inject    ="provider:contentbox.models.menu.providers.SubMenuProvider";
 
 	/* *********************************************************************
 	 **                          PROPERTIES
@@ -52,6 +52,7 @@ component
 
 	/**
 	 * Available precheck to determine display-ability of menu item
+	 *
 	 * @options.hint Additional arguments to be used in the method
 	 */
 	public boolean function canDisplay( required struct options = {} ){

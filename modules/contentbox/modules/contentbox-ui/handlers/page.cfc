@@ -20,11 +20,11 @@ component extends="content" {
 	/**
 	 * Pre handler for pages
 	 *
-	 * @event
-	 * @action
+	 * @event         
+	 * @action        
 	 * @eventArguments
-	 * @rc
-	 * @prc
+	 * @rc            
+	 * @prc           
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
@@ -34,8 +34,8 @@ component extends="content" {
 	 * Preview a page
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function preview( event, rc, prc ){
 		// Run parent preview
@@ -93,9 +93,9 @@ component extends="content" {
 	/**
 	 * Around page advice that provides caching and multi-output format
 	 *
-	 * @event
-	 * @rc
-	 * @prc
+	 * @event         
+	 * @rc            
+	 * @prc           
 	 * @eventArguments
 	 */
 	function aroundIndex( event, rc, prc, eventArguments ){
@@ -110,8 +110,8 @@ component extends="content" {
 	 * Present pages in the UI
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function index( event, rc, prc ){
 		// incoming params
@@ -146,14 +146,6 @@ component extends="content" {
 
 		// Check if loaded and also the ancestry is ok as per hiearchical URls
 		if ( prc.page.isLoaded() ) {
-			// Verify SSL?
-			if ( prc.page.getSSLOnly() and !event.isSSL() ) {
-				log.warn(
-					"Page requested: #incomingURL# without SSL and SSL required. Relocating..."
-				);
-				relocate( event = incomingURL, ssl = true );
-				return;
-			}
 			// Record hit
 			variables.pageService.updateHits( prc.page );
 			// Retrieve Comments
@@ -185,10 +177,7 @@ component extends="content" {
 			} else {
 				// set skin view
 				event
-					.setLayout(
-						name   = "#prc.cbTheme#/layouts/#thisLayout#",
-						module = prc.cbThemeRecord.module
-					)
+					.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
 					.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			}
 		} else {
@@ -206,10 +195,7 @@ component extends="content" {
 			);
 			// set skin not found
 			event
-				.setLayout(
-					name   = "#prc.cbTheme#/layouts/pages",
-					module = prc.cbThemeRecord.module
-				)
+				.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
 				.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
 				.setHTTPHeader( "404", "Page not found" );
 		}
@@ -219,8 +205,8 @@ component extends="content" {
 	 * Content search
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 *
 	 * @return HTML
 	 */
@@ -233,10 +219,8 @@ component extends="content" {
 
 		// prepare paging object
 		prc.oPaging          = getInstance( "paging@contentbox" );
-		prc.pagingBoundaries = prc.oPaging.getBoundaries(
-			pagingMaxRows: prc.cbSettings.cb_search_maxResults
-		);
-		prc.pagingLink = variables.CBHelper.linkContentSearch() & "/#urlEncodedFormat( rc.q )#/@page@";
+		prc.pagingBoundaries = prc.oPaging.getBoundaries( pagingMaxRows: prc.cbSettings.cb_search_maxResults );
+		prc.pagingLink       = variables.CBHelper.linkContentSearch() & "/#urlEncodedFormat( rc.q )#/@page@";
 
 		// get search results
 		if ( len( rc.q ) ) {
@@ -277,8 +261,8 @@ component extends="content" {
 	 * RSS Feeds
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function rss( event, rc, prc ){
 		// params
@@ -305,8 +289,8 @@ component extends="content" {
 	 * Comment Form Post
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function commentPost( event, rc, prc ){
 		// incoming params

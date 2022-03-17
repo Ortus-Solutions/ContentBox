@@ -39,13 +39,14 @@ component singleton {
 
 	/**
 	 * Create a divider
-	 * @paddingTop.hint Top padding
-	 * @paddingRight.hint Right padding
+	 *
+	 * @paddingTop.hint    Top padding
+	 * @paddingRight.hint  Right padding
 	 * @paddingBottom.hint Bottom padding
-	 * @paddingLeft.hint Left padding
-	 * @borderColor.hint Border color
-	 * @borderStyle.hint Border style
-	 * @borderWidth.hint Border width
+	 * @paddingLeft.hint   Left padding
+	 * @borderColor.hint   Border color
+	 * @borderStyle.hint   Border style
+	 * @borderWidth.hint   Border width
 	 */
 	public string function divider(
 		required numeric paddingTop    = 18,
@@ -84,9 +85,10 @@ return dividerContent;
 
 	/**
 	 * Create a heading
-	 * @content.hint Content for the heading
-	 * @level.hint The heading level
-	 * @color.hint Text color
+	 *
+	 * @content.hint  Content for the heading
+	 * @level.hint    The heading level
+	 * @color.hint    Text color
 	 * @fontSize.hint Heading font size
 	 */
 	public string function heading(
@@ -111,6 +113,7 @@ return text(
 
 	/**
 	 * Create a text area
+	 *
 	 * @content.hint Content for the text area
 	 * @callout.hint If true, will wrap content in a callout box
 	 */
@@ -153,6 +156,7 @@ return textContent;
 
 	/**
 	 * Create a button bar
+	 *
 	 * @buttons.hint Array of buttons to add to the button bar
 	 */
 	public string function buttonBar( required Array buttons ){

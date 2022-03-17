@@ -62,9 +62,11 @@ component accessors=true {
 	 */
 	public void function setup( required any importFile ){
 		try {
-			var files          = variables.zipUtil.list( zipFilePath = arguments.importFile );
+			var files    = variables.zipUtil.list( zipFilePath = arguments.importFile );
 			// convert files query to array
-			var fileList       = listToArray( valueList( files.entry ) );
+			var fileList = listToArray( valueList( files.entry ) ).map( function( item ){
+				return arguments.item.reReplace( "(\\|\/)", "", "all" );
+			} );
 			var contentBoxPath = variables.moduleSettings[ "contentbox" ].path;
 			var customPath     = variables.moduleSettings[ "contentbox-custom" ].path;
 
@@ -89,13 +91,10 @@ component accessors=true {
 			variables.filePathMappings = {
 				"Email Templates" : contentBoxPath & "/email_templates",
 				"Themes"          : customPath & "/_themes",
-				"Media Library"   : expandPath(
-					settingService.getSetting( "cb_media_directoryRoot" )
-				),
-				"Modules" : customPath & "/_modules",
-				"Widgets" : customPath & "/_widgets"
+				"Media Library"   : expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
+				"Modules"         : customPath & "/_modules",
+				"Widgets"         : customPath & "/_widgets"
 			};
-
 		} catch ( any e ) {
 			log.error( "Error processing ContentBox import package: #e.message# #e.detail#", e );
 		}
@@ -115,12 +114,14 @@ component accessors=true {
 				overwriteFiles = true
 			);
 			descriptorContents = fileRead( getTempDirectory() & "descriptor.json" );
+			descriptorContents = replaceNoCase( descriptorContents, "null,", "0,", "all" );
 		}
 		return !arguments.asObject ? descriptorContents : deserializeJSON( descriptorContents );
 	}
 
 	/**
 	 * Method which analyzes the uploaded package and determines whether or not the descriptor file documents what is being uploaded
+	 *
 	 * @importFile.hint The uploaded .cbox package
 	 */
 	public boolean function isValid(){
@@ -142,6 +143,7 @@ component accessors=true {
 
 	/**
 	 * Main method for processing import
+	 *
 	 * @overrideContent.hint Whether or not to override existing content with uploaded data (default=false)
 	 */
 	public string function execute( required boolean overrideContent = false ){
@@ -158,7 +160,7 @@ component accessors=true {
 		var descriptorContents = getDescriptorContents( true );
 
 		// prioritize keys
-		var priorityOrder      = structSort(
+		var priorityOrder = structSort(
 			descriptorContents.content,
 			"numeric",
 			"asc",
@@ -166,7 +168,7 @@ component accessors=true {
 		);
 
 		// Start import transaction
-		transaction{
+		transaction {
 			for ( key in priorityOrder ) {
 				var content  = descriptorContents.content[ key ];
 				var filePath = getTempDirectory() & content.filename;
@@ -193,7 +195,8 @@ component accessors=true {
 					importLog.append( "Finished extracting #content.name#...<br>" );
 				}
 			}
-		} // end governing import transaction
+		}
+		// end governing import transaction
 
 		var flattendImportLog = importLog.toString();
 		log.info( flattendImportLog );
@@ -202,6 +205,7 @@ component accessors=true {
 
 	/**
 	 * Determines if passed file name exists in zip collection
+	 *
 	 * @fileName.hint The file name to validate
 	 */
 	private boolean function hasFile( required string fileName ){

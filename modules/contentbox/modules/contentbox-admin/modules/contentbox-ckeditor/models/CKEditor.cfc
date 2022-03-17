@@ -26,9 +26,10 @@ component
 
 	/**
 	 * Constructor
-	 * @coldbox.inject coldbox
+	 *
+	 * @coldbox.inject        coldbox
 	 * @settingService.inject settingService@contentbox
-	 * @html.inject HTMLHelper@coldbox
+	 * @html.inject           HTMLHelper@coldbox
 	 */
 	function init(
 		required coldbox,
@@ -72,18 +73,12 @@ component
 		// prepare toolbar announcement on startup
 		var iData = {
 			toolbar        : deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_toolbar" ) ),
-			excerptToolbar : deserializeJSON(
-				settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" )
-			)
+			excerptToolbar : deserializeJSON( settingService.getSetting( "cb_editors_ckeditor_excerpt_toolbar" ) )
 		};
 		// Announce the editor toolbar is about to be processed
 		interceptorService.announce( "cbadmin_ckeditorToolbar", iData );
 		// Load extra plugins according to our version
-		var iData2 = {
-			extraPlugins : listToArray(
-				settingService.getSetting( "cb_editors_ckeditor_extraplugins" )
-			)
-		};
+		var iData2 = { extraPlugins : listToArray( settingService.getSetting( "cb_editors_ckeditor_extraplugins" ) ) };
 		// Announce extra plugins to see if user implements more.
 		interceptorService.announce( "cbadmin_ckeditorExtraPlugins", iData2 );
 		// Load extra configuration
@@ -106,14 +101,8 @@ component
 		var js = "";
 
 		// Load Assets, they are included with ContentBox
-		html.addAsset(
-			asset: "#variables.CKEDITOR_ROOT#/includes/ckeditor/ckeditor.js",
-			defer: true
-		);
-		html.addAsset(
-			asset: "#variables.CKEDITOR_ROOT#/includes/ckeditor/adapters/jquery.js",
-			defer: true
-		);
+		html.addAsset( asset: "#variables.CKEDITOR_ROOT#/includes/ckeditor/ckeditor.js", defer: true );
+		html.addAsset( asset: "#variables.CKEDITOR_ROOT#/includes/ckeditor/adapters/jquery.js", defer: true );
 
 		// cfformat-ignore-start
 		savecontent variable="js" {

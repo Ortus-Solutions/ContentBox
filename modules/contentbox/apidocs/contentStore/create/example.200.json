@@ -1,0 +1,74 @@
+{
+	"data": {
+		"numberOfVersions": "0",
+		"relatedContent": [],
+		"cache": true,
+		"renderedContent": "Content",
+		"createdDate": "2021-09-10T17:47:41+00:00",
+		"numberOfHits": "0",
+		"cacheTimeout": 0,
+		"isPublished": true,
+		"contentType": "ContentStore",
+		"HTMLTitle": "",
+		"modifiedDate": "2021-09-10T17:47:41+00:00",
+		"parent": {},
+		"description": "",
+		"lastEditor": {
+			"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+			"name": "Luis Majano",
+			"authorID": "ff8081817a3ffffe017a400155fb002f",
+			"email": "lmajano@ortussolutions.com"
+		},
+		"showInSearch": true,
+		"HTMLKeywords": "",
+		"featuredImage": "",
+		"numberOfComments": "0",
+		"isDeleted": false,
+		"creator": {
+			"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+			"name": "Luis Majano",
+			"authorID": "ff8081817a3ffffe017a400155fb002f",
+			"email": "lmajano@ortussolutions.com"
+		},
+		"HTMLDescription": "",
+		"slug": "slug",
+		"order": 0,
+		"contentID": "ff8081817bd0c176017bd0d281320002",
+		"siteID": "ff8081817a3ffffe017a40015861004c",
+		"publishedDate": "2021-09-10T17:47:41+00:00",
+		"categories": [],
+		"markup": "HTML",
+		"activeContent": {
+			"content": "Content",
+			"isActive": true,
+			"version": 1,
+			"createdDate": "2021-09-10T17:47:41+00:00",
+			"modifiedDate": "2021-09-10T17:47:41+00:00",
+			"changelog": "Creation from the ContentBox API",
+			"author": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"contentVersionID": "ff8081817bd0c176017bd0d281340003"
+		},
+		"expireDate": "",
+		"customFields": {},
+		"title": "Title",
+		"numberOfChildren": "0",
+		"linkedContent": [],
+		"featuredImageURL": "",
+		"allowComments": false,
+		"cacheLastAccessTimeout": 0
+	},
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 0,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 0
+	},
+	"messages": []
+}

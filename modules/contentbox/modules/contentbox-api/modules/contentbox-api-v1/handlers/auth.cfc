@@ -9,7 +9,9 @@ component extends="baseHandler" {
 	/**
 	 * Login to ContentBox and get your JWT Token
 	 *
-	 * @tags Authentication
+	 * @tags        Authentication
+	 * @requestBody contentbox/apidocs/auth/login/requestBody.json
+	 * @responses   contentbox/apidocs/auth/login/responses.json
 	 */
 	function login( event, rc, prc ){
 		param rc.username       = "";
@@ -28,9 +30,7 @@ component extends="baseHandler" {
 			var errorMessage = "Your user needs to reset their password before using the API Services";
 			prc.response
 				.setErrorMessage( errorMessage, event.STATUS.NOT_ALLOWED )
-				.addMessage(
-					"Please visit #variables.cb.linkAdminLogin()# in order to reset your password."
-				);
+				.addMessage( "Please visit #variables.cb.linkAdminLogin()# in order to reset your password." );
 			return;
 		}
 
@@ -47,9 +47,7 @@ component extends="baseHandler" {
 					ignoreDefaults = rc.ignoreDefaults
 				)
 			} )
-			.addMessage(
-				"Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes"
-			)
+			.addMessage( "Bearer token created and it expires in #jwtAuth().getSettings().jwt.expiration# minutes" )
 			.addMessage(
 				"Refresh token created and it expires in #jwtAuth().getSettings().jwt.refreshExpiration# minutes"
 			);
@@ -81,9 +79,7 @@ component extends="baseHandler" {
 				.setData( prc.newTokens )
 				.addMessage( "Tokens refreshed! The passed in refresh token has been invalidated" );
 		} catch ( RefreshTokensNotActive e ) {
-			return event
-				.getResponse()
-				.setErrorMessage( "Refresh Tokens Not Active", 404, "Disabled" );
+			return event.getResponse().setErrorMessage( "Refresh Tokens Not Active", 404, "Disabled" );
 		} catch ( TokenNotFoundException e ) {
 			return event
 				.getResponse()

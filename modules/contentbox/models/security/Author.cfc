@@ -21,12 +21,12 @@ component
 
 	property
 		name      ="authorService"
-		inject    ="authorService@contentbox"
+		inject    ="provider:authorService@contentbox"
 		persistent="false";
 
 	property
 		name      ="avatar"
-		inject    ="Avatar@contentbox"
+		inject    ="provider:Avatar@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -324,6 +324,7 @@ component
 
 	/**
 	 * Check for permission
+	 *
 	 * @slug The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
 	 */
 	boolean function checkPermission( required slug ){
@@ -349,6 +350,7 @@ component
 
 	/**
 	 * This utility function checks if a slug is in any permission group this user belongs to.
+	 *
 	 * @slug The slug to check
 	 */
 	boolean function checkGroupPermissions( required slug ){
@@ -410,6 +412,7 @@ component
 
 	/**
 	 * Override the setPermissions
+	 *
 	 * @permissions The permissions array to override
 	 */
 	Author function setPermissions( required array permissions ){
@@ -479,10 +482,7 @@ component
 		var lastLogin = getLastLogin();
 
 		if ( NOT isNull( lastLogin ) ) {
-			return dateFormat( lastLogin, arguments.dateFormat ) & " " & timeFormat(
-				lastLogin,
-				arguments.timeFormat
-			);
+			return dateFormat( lastLogin, arguments.dateFormat ) & " " & timeFormat( lastLogin, arguments.timeFormat );
 		}
 
 		return "Never Logged In";
@@ -492,14 +492,11 @@ component
 
 	/**
 	 * Store a preferences structure or JSON data in the user prefernces
+	 *
 	 * @preferences.hint A struct of data or a JSON packet to store
 	 */
 	Author function setPreferences( required any preferences ){
-		lock
-			name          ="user.#getAuthorID()#.preferences"
-			type          ="exclusive"
-			throwontimeout="true"
-			timeout       ="5" {
+		lock name="user.#getAuthorID()#.preferences" type="exclusive" throwontimeout="true" timeout="5" {
 			if ( isStruct( arguments.preferences ) ) {
 				arguments.preferences = serializeJSON( arguments.preferences );
 			}
@@ -513,14 +510,8 @@ component
 	 * Get all user preferences in inflated format
 	 */
 	struct function getAllPreferences(){
-		lock
-			name          ="user.#getAuthorID()#.preferences"
-			type          ="readonly"
-			throwontimeout="true"
-			timeout       ="5" {
-			return (
-				!isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structNew()
-			);
+		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5" {
+			return ( !isNull( preferences ) AND isJSON( preferences ) ? deserializeJSON( preferences ) : structNew() );
 		}
 	}
 
@@ -529,12 +520,8 @@ component
 	 */
 	any function getPreference( required name, defaultValue ){
 		// get preference
-		lock
-			name              ="user.#getAuthorID()#.preferences"
-			type              ="readonly"
-			throwontimeout    ="true"
-			timeout           ="5" {
-			var allPreferences= getAllPreferences();
+		lock name="user.#getAuthorID()#.preferences" type="readonly" throwontimeout="true" timeout="5" {
+			var allPreferences = getAllPreferences();
 			if ( structKeyExists( allPreferences, arguments.name ) ) {
 				return allPreferences[ arguments.name ];
 			}
@@ -599,9 +586,7 @@ component
 	 * @size The size of the avatar, defaults to 40
 	 */
 	string function getAvatarLink( numeric size = 40 ){
-		return (
-			isNull( getEmail() ) ? "" : variables.avatar.generateLink( getEmail(), arguments.size )
-		);
+		return ( isNull( getEmail() ) ? "" : variables.avatar.generateLink( getEmail(), arguments.size ) );
 	}
 
 	/**

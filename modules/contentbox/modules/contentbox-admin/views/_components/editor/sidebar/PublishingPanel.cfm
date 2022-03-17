@@ -1,4 +1,10 @@
 <cfoutput>
+	<cfscript>
+		// writeDump( var=[
+		// 	prc.oContent.getPublishedDate()
+		// ], top = 5 );
+		// abort;
+	</cfscript>
 <!--- Publishing Panel Component --->
 <div
 	id="publishingPanel"
@@ -39,7 +45,7 @@
 						#html.inputField(
 							size    = "9",
 							name    = "publishedDate",
-							value   = prc.oContent.getPublishedDateForEditor(),
+							value   = prc.oContent.getDisplayPublishedDate( dateFormat : "yyyy-mm-dd", showTime : false ),
 							class   = "form-control datepicker"
 						)#
 
@@ -48,15 +54,6 @@
 						</span>
 					</div>
 				</div>
-
-				<cfscript>
-					theTime     = "";
-					hour        = prc.ckHelper.ckHour( prc.oContent.getPublishedDateForEditor( showTime=true ) );
-					minute      = prc.ckHelper.ckMinute( prc.oContent.getPublishedDateForEditor( showTime=true ) );
-					if( len( hour ) && len( minute ) ) {
-						theTime = hour & ":" & minute;
-					}
-				</cfscript>
 
 				<div class="col-md-6">
 					<div
@@ -68,7 +65,7 @@
 						<input
 							type="text"
 							class="form-control inline"
-							value="#theTime#"
+							value="#prc.oContent.getPublishedDateTime()#"
 							name="publishedTime"
 						>
 						<span class="input-group-addon">
@@ -95,7 +92,7 @@
 						#html.inputField(
 							size    = "9",
 							name    = "expireDate",
-							value   = prc.oContent.getExpireDateForEditor(),
+							value   = prc.oContent.getDisplayExpireDate( dateFormat : "yyyy-mm-dd", showTime : false ),
 							class   = "form-control datepicker"
 						)#
 
@@ -105,18 +102,17 @@
 					</div>
 				</div>
 
-				<cfscript>
-					theTime = "";
-					hour = prc.ckHelper.ckHour( prc.oContent.getExpireDateForEditor(showTime=true) );
-					minute = prc.ckHelper.ckMinute( prc.oContent.getExpireDateForEditor(showTime=true) );
-					if( len( hour ) && len( minute ) ) {
-						theTime = hour & ":" & minute;
-					}
-				</cfscript>
-
 				<div class="col-md-6">
-					<div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-						<input type="text" class="form-control inline" value="#theTime#" name="expireTime">
+					<div
+						class="input-group clockpicker"
+						data-placement="left"
+						data-align="top"
+						data-autoclose="true">
+						<input
+							type="text"
+							class="form-control inline"
+							value="#prc.oContent.getExpireDateTime()#"
+							name="expireTime">
 						<span class="input-group-addon">
 							<span class="fas fa-history"></span>
 						</span>

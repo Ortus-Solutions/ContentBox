@@ -20,16 +20,17 @@ component {
 
 	/**
 	 * Main method for rendering bootstrap-themed file upload field
-	 * @name The name of the file field to create
-	 * @required Whether or not the field is required (validation)
-	 * @id The id to apply to the file field
-	 * @label If specified, will create a label element with the specified text for the file field
-	 * @columnWidth The number of columns that the field should occupy (bootstrap grid system)
-	 * @useRemoveButton Whether a "remove" button should be created
+	 *
+	 * @name             The name of the file field to create
+	 * @required         Whether or not the field is required (validation)
+	 * @id               The id to apply to the file field
+	 * @label            If specified, will create a label element with the specified text for the file field
+	 * @columnWidth      The number of columns that the field should occupy (bootstrap grid system)
+	 * @useRemoveButton  Whether a "remove" button should be created
 	 * @selectButtonText The text to use for the "select" button
 	 * @changeButtonText The text to use for the "change" button
 	 * @removeButtonText The text to use for the "remove" button
-	 * @accept The accept attribute of the file field
+	 * @accept           The accept attribute of the file field
 	 */
 	public string function renderIt(
 		required string name,

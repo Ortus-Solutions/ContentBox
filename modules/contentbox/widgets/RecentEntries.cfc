@@ -25,16 +25,16 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Show n recent entries with some cool orderings
 	 *
-	 * @max The number of recent entries to show. By default it shows 5
-	 * @title An optional title to display using an H2 tag.
-	 * @titleLevel The H{level} to use, by default we use H2
-	 * @category The list of categories to filter on
+	 * @max                      The number of recent entries to show. By default it shows 5
+	 * @title                    An optional title to display using an H2 tag.
+	 * @titleLevel               The H{level} to use, by default we use H2
+	 * @category                 The list of categories to filter on
 	 * @category.multiOptionsUDF getAllCategories
-	 * @searchTerm The search term to filter on
-	 * @searchTerm.label Search Term
-	 * @sortOrder How to order the results, defaults to publishedDate
-	 * @sortOrder.label Sort Order
-	 * @sortOrder.options Most Recent,Most Popular,Most Commented
+	 * @searchTerm               The search term to filter on
+	 * @searchTerm.label         Search Term
+	 * @sortOrder                How to order the results, defaults to publishedDate
+	 * @sortOrder.label          Sort Order
+	 * @sortOrder.options        Most Recent,Most Popular,Most Commented
 	 */
 	any function renderIt(
 		numeric max       = 5,

@@ -25,10 +25,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Get the maximum used order
 	 */
 	numeric function getMaxOrder(){
-		var q = executeQuery(
-			query   = "select max( sr.order ) from cbSecurityRule as sr",
-			asQuery = false
-		);
+		var q = executeQuery( query = "select max( sr.order ) from cbSecurityRule as sr", asQuery = false );
 		if ( arrayIsDefined( q, 1 ) ) {
 			return q[ 1 ];
 		}
@@ -107,11 +104,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -120,10 +117,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message = "Cannot import file as the contents is not JSON",
-				type    = "InvalidImportFormat"
-			);
+			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -138,8 +132,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
 	 *
 	 * @return The console log of the import
 	 */
@@ -181,19 +175,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// if new or persisted with override then save.
 				if ( !oRule.isLoaded() ) {
-					arguments.importLog.append(
-						"New security rule imported: #thisRule.toString()#<br>"
-					);
+					arguments.importLog.append( "New security rule imported: #thisRule.toString()#<br>" );
 					arrayAppend( allRules, oRule );
 				} else if ( oRule.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted security rule overriden: #thisRule.toString()#<br>"
-					);
+					arguments.importLog.append( "Persisted security rule overriden: #thisRule.toString()#<br>" );
 					arrayAppend( allRules, oRule );
 				} else {
-					arguments.importLog.append(
-						"Skipping persisted security rule: #thisRule.toString()#<br>"
-					);
+					arguments.importLog.append( "Skipping persisted security rule: #thisRule.toString()#<br>" );
 				}
 			}
 			// end import loop

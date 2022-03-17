@@ -21,10 +21,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * Show the blog categories
-	 * @dropdown.hint Display as a dropdown or a list, default is list
+	 *
+	 * @dropdown.hint     Display as a dropdown or a list, default is list
 	 * @emptyMessage.hint Message to show when no related content is found
-	 * @title.hint The title to show before the dropdown or list, defaults to H2
-	 * @titleLevel.hint The H{level} to use, by default we use H2
+	 * @title.hint        The title to show before the dropdown or list, defaults to H2
+	 * @titleLevel.hint   The H{level} to use, by default we use H2
 	 */
 	any function renderIt(
 		boolean dropdown    = false,
@@ -39,9 +40,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		saveContent variable="content" {
 			// title
 			if ( len( arguments.title ) ) {
-				writeOutput(
-					"<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>"
-				);
+				writeOutput( "<h#arguments.titleLevel#>#arguments.title#</h#arguments.titleLevel#>" );
 			}
 			if ( arrayLen( relatedContent ) ) {
 				// build type
@@ -53,9 +52,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 			} else {
 				writeOutput( "<p>#arguments.emptyMessage#</p>" );
 				if ( cb.isPreview() ) {
-					writeOutput(
-						"<small>NOTE: Related content may not appear in preview mode!</small>"
-					);
+					writeOutput( "<small>NOTE: Related content may not appear in preview mode!</small>" );
 				}
 			}
 		}

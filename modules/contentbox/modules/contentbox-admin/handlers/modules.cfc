@@ -48,9 +48,7 @@ component extends="baseHandler" {
 
 		// Check if route is discovered, basically if we get handler => contentbox-ui:page then it was not found
 		if ( routeResults.route.handler == "contentbox-ui:page" ) {
-			cbMessagebox.warn(
-				"No module where found with the incoming route: #encodeForHTML( routedURL )#"
-			);
+			variables.cbMessagebox.warn( "No module where found with the incoming route: #encodeForHTML( routedURL )#" );
 			return relocate( prc.xehModules );
 		}
 
@@ -99,11 +97,11 @@ component extends="baseHandler" {
 
 		// Rescan modules
 		if ( event.valueExists( "rescan" ) ) {
-			moduleService.startup();
+			variables.moduleService.startup();
 		}
 
 		// Get all modules
-		var modules      = moduleService.findModules();
+		var modules      = variables.moduleService.findModules();
 		prc.modules      = modules.modules;
 		prc.modulesCount = modules.count;
 
@@ -115,8 +113,8 @@ component extends="baseHandler" {
 	 * Activate a module
 	 */
 	function activate( event, rc, prc ){
-		moduleService.activateModule( rc.moduleName );
-		cbMessagebox.info( "Modules Activated, woohoo!" );
+		variables.moduleService.activateModule( rc.moduleName );
+		variables.cbMessagebox.info( "Modules Activated, woohoo!" );
 		relocate( prc.xehModules );
 	}
 
@@ -124,8 +122,8 @@ component extends="baseHandler" {
 	 * Deactivate a module
 	 */
 	function deactivate( event, rc, prc ){
-		moduleService.deactivateModule( rc.moduleName );
-		cbMessagebox.info( "Modules Deactivated!" );
+		variables.moduleService.deactivateModule( rc.moduleName );
+		variables.cbMessagebox.info( "Modules Deactivated!" );
 		relocate( prc.xehModules );
 	}
 
@@ -133,8 +131,8 @@ component extends="baseHandler" {
 	 * Reset all modules
 	 */
 	function reset( event, rc, prc ){
-		moduleService.resetModules();
-		cbMessagebox.info( "Modules Reset!" );
+		variables.moduleService.resetModules();
+		variables.cbMessagebox.info( "Modules Reset!" );
 		relocate( prc.xehModules );
 	}
 
@@ -142,8 +140,8 @@ component extends="baseHandler" {
 	 * Rescan all modules
 	 */
 	function rescan( event, rc, prc ){
-		moduleService.startup();
-		cbMessagebox.info( "Modules Rescaned and Revamped!" );
+		variables.moduleService.startup();
+		variables.cbMessagebox.info( "Modules Rescaned and Revamped!" );
 		relocate( prc.xehModules );
 	}
 
@@ -151,8 +149,8 @@ component extends="baseHandler" {
 	 * Remove a module
 	 */
 	function remove( event, rc, prc ){
-		moduleService.deleteModule( rc.moduleName );
-		cbMessagebox.info( "Module Removed Forever!" );
+		variables.moduleService.deleteModule( rc.moduleName );
+		variables.cbMessagebox.info( "Module Removed Forever!" );
 		relocate( prc.xehModules );
 	}
 

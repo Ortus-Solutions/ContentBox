@@ -65,13 +65,7 @@
 	</cffunction>
 
 	<!--- configure --->
-	<cffunction
-		name      ="configure"
-		output    ="false"
-		access    ="public"
-		returntype="ZipUtil"
-		hint      ="Configure for operation"
-	>
+	<cffunction name="configure" output="false" access="public" returntype="ZipUtil" hint="Configure for operation">
 		<cfscript>
 		// This plugin's properties
 		instance             = structNew();
@@ -108,12 +102,7 @@
 		hint      ="Add files to a new or an existing Zip file archive."
 	>
 		<!--- ************************************************************* --->
-		<cfargument
-			name    ="zipFilePath"
-			required="yes"
-			type    ="string"
-			hint    ="Pathname of the Zip file to add files."
-		>
+		<cfargument name="zipFilePath" required="yes" type="string" hint="Pathname of the Zip file to add files.">
 		<cfargument
 			name    ="files"
 			required="no"
@@ -149,13 +138,7 @@
 			default ="9"
 			hint    ="Compression level (0 through 9, 0=minimum, 9=maximum)."
 		>
-		<cfargument
-			name    ="savePaths"
-			required="no"
-			type    ="boolean"
-			default ="no"
-			hint    ="Save full path info."
-		>
+		<cfargument name="savePaths" required="no" type="boolean" default="no" hint="Save full path info.">
 		<!--- ************************************************************* --->
 		<cfscript>
 		/* Default variables */
@@ -197,26 +180,19 @@
 					entryFile = getFileFromPath( path );
 
 					// Remove drive letter from path
-					if (
-						arguments.savePaths EQ "yes" AND right(
-							listFirst( entryPath, instance.slash ),
-							1
-						) EQ ":"
-					)
+					if ( arguments.savePaths EQ "yes" AND right( listFirst( entryPath, instance.slash ), 1 ) EQ ":" )
 						entryPath = listDeleteAt( entryPath, 1, instance.slash );
 					// Remove directory from path
 					else if ( arguments.savePaths EQ "no" ) {
 						if ( structKeyExists( arguments, "directory" ) and arguments.directory neq "" )
 							entryPath = replaceNoCase( entryPath, arguments.directory, "", "ALL" );
-						else if ( structKeyExists( arguments, "files" ) and arguments.files neq "" )
-							entryPath = "";
+						else if ( structKeyExists( arguments, "files" ) and arguments.files neq "" ) entryPath = "";
 					}
 
 					// Remove slash at first
 					if ( len( entryPath ) GT 1 AND left( entryPath, 1 ) EQ instance.slash )
 						entryPath = right( entryPath, len( entryPath ) - 1 );
-					else if ( len( entryPath ) EQ 1 AND left( entryPath, 1 ) EQ instance.slash )
-						entryPath = "";
+					else if ( len( entryPath ) EQ 1 AND left( entryPath, 1 ) EQ instance.slash ) entryPath = "";
 
 					//  Skip if entry with the same name already exsits
 					try {
@@ -266,12 +242,7 @@
 		hint      ="Delete files from an existing Zip file archive."
 	>
 		<!--- ************************************************************* --->
-		<cfargument
-			name    ="zipFilePath"
-			required="yes"
-			type    ="string"
-			hint    ="Pathname of the Zip file to delete files from."
-		>
+		<cfargument name="zipFilePath" required="yes" type="string" hint="Pathname of the Zip file to delete files from.">
 		<cfargument
 			name    ="files"
 			required="yes"
@@ -373,12 +344,7 @@
 		hint      ="Extracts a specified Zip file into a specified directory."
 	>
 		<!--- ************************************************************* --->
-		<cfargument
-			name    ="zipFilePath"
-			required="yes"
-			type    ="string"
-			hint    ="Pathname of the Zip file to extract."
-		>
+		<cfargument name="zipFilePath" required="yes" type="string" hint="Pathname of the Zip file to extract.">
 		<cfargument
 			name    ="extractPath"
 			required="no"
@@ -399,13 +365,7 @@
 			default ="yes"
 			hint    ="Create folders using the pathinfo stored in the Zip file."
 		>
-		<cfargument
-			name    ="overwriteFiles"
-			required="no"
-			type    ="boolean"
-			default ="no"
-			hint    ="Overwrite existing files."
-		>
+		<cfargument name="overwriteFiles" required="no" type="boolean" default="no" hint="Overwrite existing files.">
 		<!--- ************************************************************* --->
 		<cfscript>
 		/* Default variables */
@@ -429,8 +389,7 @@
 		lastChr = right( arguments.extractPath, 1 );
 
 		/* Set an slash at the end of string */
-		if ( lastChr NEQ instance.slash )
-			arguments.extractPath = arguments.extractPath & instance.slash;
+		if ( lastChr NEQ instance.slash ) arguments.extractPath = arguments.extractPath & instance.slash;
 
 		try {
 			/* Open Zip file */
@@ -460,17 +419,17 @@
 					}
 
 					/* Set file path */
-					if ( arguments.useFolderNames EQ "yes" ){
+					if ( arguments.useFolderNames EQ "yes" ) {
 						filePath = arguments.extractPath & name;
-					} else{
+					} else {
 						filePath = arguments.extractPath & getFileFromPath( name );
 					}
 
 					// Zip Slip Validation
-					if (!getCanonicalPath( filePath ).startsWith( getCanonicalPath( arguments.extractPath ) ) ) {
+					if ( !getCanonicalPath( filePath ).startsWith( getCanonicalPath( arguments.extractPath ) ) ) {
 						throw(
-							type : "ArchiverException",
-							message : "Entry is outside of the target destination: #filepath#"
+							type   : "ArchiverException",
+							message: "Entry is outside of the target destination: #filepath#"
 						);
 					}
 
@@ -490,9 +449,7 @@
 							)
 						)
 						AND (
-							NOT fileExists( filePath ) OR (
-								fileExists( filePath ) AND arguments.overwriteFiles EQ "yes"
-							)
+							NOT fileExists( filePath ) OR ( fileExists( filePath ) AND arguments.overwriteFiles EQ "yes" )
 						)
 					) {
 						// Skip if entry contains special characters
@@ -543,12 +500,7 @@
 		hint      ="List the content of a specified Zip file."
 	>
 		<!--- ************************************************************* --->
-		<cfargument
-			name    ="zipFilePath"
-			required="yes"
-			type    ="string"
-			hint    ="Pathname of the Zip file to list the content."
-		>
+		<cfargument name="zipFilePath" required="yes" type="string" hint="Pathname of the Zip file to list the content.">
 		<!--- ************************************************************* --->
 		<cfscript>
 		/* Default variables */
@@ -585,8 +537,7 @@
 				qPacked = entry.getCompressedSize();
 				qCrc    = entry.getCrc();
 
-				if ( qSize GT 0 )
-					qRatio = round( evaluate( 100 - ( ( qPacked * 100 ) / qSize ) ) ) & "%";
+				if ( qSize GT 0 ) qRatio = round( evaluate( 100 - ( ( qPacked * 100 ) / qSize ) ) ) & "%";
 				else qRatio = "0%";
 
 				for ( i = 1; i LTE arrayLen( cols ); i = i + 1 )
@@ -616,12 +567,7 @@
 		hint      ="Create a new GZip file archive."
 	>
 		<!--- ************************************************************* --->
-		<cfargument
-			name    ="gzipFilePath"
-			required="yes"
-			type    ="string"
-			hint    ="Pathname of the GZip file to create."
-		>
+		<cfargument name="gzipFilePath" required="yes" type="string" hint="Pathname of the GZip file to create.">
 		<cfargument
 			name    ="filePath"
 			required="yes"
@@ -647,8 +593,7 @@
 		lastChr = right( arguments.gzipFilePath, 1 );
 
 		/* Set an slash at the end of string */
-		if ( lastChr NEQ instance.slash )
-			arguments.gzipFilePath = arguments.gzipFilePath & instance.slash;
+		if ( lastChr NEQ instance.slash ) arguments.gzipFilePath = arguments.gzipFilePath & instance.slash;
 
 		try {
 			/* Set output gzip file name */
@@ -689,12 +634,7 @@
 		hint      ="Extracts a specified GZip file into a specified directory."
 	>
 		<!--- ************************************************************* --->
-		<cfargument
-			name    ="gzipFilePath"
-			required="yes"
-			type    ="string"
-			hint    ="Pathname of the GZip file to extract."
-		>
+		<cfargument name="gzipFilePath" required="yes" type="string" hint="Pathname of the GZip file to extract.">
 		<cfargument
 			name    ="extractPath"
 			required="no"
@@ -719,8 +659,7 @@
 		lastChr = right( arguments.extractPath, 1 );
 
 		/* Set an slash at the end of string */
-		if ( lastChr NEQ instance.slash )
-			arguments.extractPath = arguments.extractPath & instance.slash;
+		if ( lastChr NEQ instance.slash ) arguments.extractPath = arguments.extractPath & instance.slash;
 
 		try {
 			/* Set output file name */
@@ -792,12 +731,7 @@
 		<cfset var path = "">
 		<cfset var subdir = "">
 
-		<cfdirectory
-			action   ="list"
-			name     ="dir"
-			directory="#pathFormat( arguments.directory )#"
-			filter   ="#arguments.filter#"
-		>
+		<cfdirectory action="list" name="dir" directory="#pathFormat( arguments.directory )#" filter="#arguments.filter#">
 
 		<cfscript>
 		/* Loop over directory query */
@@ -805,8 +739,7 @@
 			path = pathFormat( arguments.directory & instance.slash & dir.name[ i ] );
 
 			/* Add file to array */
-			if ( dir.type[ i ] eq "file" and dir.name[ i ] neq instance.filename )
-				arrayAppend( array, path );
+			if ( dir.type[ i ] eq "file" and dir.name[ i ] neq instance.filename ) arrayAppend( array, path );
 
 			/* Get files from sub directorys and add them to the array */
 			else if ( dir.type[ i ] EQ "dir" AND arguments.recurse EQ "yes" ) {

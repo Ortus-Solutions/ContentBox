@@ -19,7 +19,7 @@ component
 	property
 		name      ="provider"
 		persistent="false"
-		inject    ="contentbox.models.menu.providers.MediaProvider";
+		inject    ="provider:contentbox.models.menu.providers.MediaProvider";
 
 	/* *********************************************************************
 	 **                          PROPERTIES

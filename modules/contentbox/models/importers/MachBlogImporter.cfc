@@ -161,10 +161,7 @@ component implements="ICBImporter" {
 				).execute().getResult();
 				var aCategories = [];
 				for ( var y = 1; y lte qCategories.recordcount; y++ ) {
-					arrayAppend(
-						aCategories,
-						categoryService.get( catMap[ qCategories.category_id[ y ] ] )
-					);
+					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[ y ] ] ) );
 				}
 				entry.setCategories( aCategories );
 

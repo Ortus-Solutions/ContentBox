@@ -20,11 +20,11 @@ component
 	property
 		name      ="provider"
 		persistent="false"
-		inject    ="contentbox.models.menu.providers.ContentProvider";
+		inject    ="provider:contentbox.models.menu.providers.ContentProvider";
 	property
 		name      ="contentService"
 		persistent="false"
-		inject    ="id:contentService@contentbox";
+		inject    ="provider:contentService@contentbox";
 
 	/* *********************************************************************
 	 **                          PROPERTIES
@@ -73,6 +73,7 @@ component
 
 	/**
 	 * Available precheck to determine display-ability of menu item
+	 *
 	 * @options.hint Additional arguments to be used in the method
 	 */
 	public boolean function canDisplay( required struct options = {} ){

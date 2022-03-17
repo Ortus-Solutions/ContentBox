@@ -5,13 +5,12 @@
  * ---
  * CacheBox Configuration
  */
-component{
+component {
 
 	/**
-	* Configure CacheBox for ColdBox Application Operation
-	*/
+	 * Configure CacheBox for ColdBox Application Operation
+	 */
 	function configure(){
-
 		/**
 		 * --------------------------------------------------------------------------
 		 * CacheBox Configuration (https://cachebox.ortusbooks.com)
@@ -27,18 +26,17 @@ component{
 			 * All timeouts are in minutes
 			 */
 			defaultCache : {
-				objectDefaultTimeout           : 120, //two hours default
-				objectDefaultLastAccessTimeout : 30, //30 minutes idle time
+				objectDefaultTimeout           : 120, // two hours default
+				objectDefaultLastAccessTimeout : 30, // 30 minutes idle time
 				useLastAccessTimeouts          : true,
 				reapFrequency                  : 5,
 				freeMemoryPercentageThreshold  : 0,
 				evictionPolicy                 : "LRU",
 				evictCount                     : 5,
 				maxObjects                     : 5000,
-				objectStore                    : "ConcurrentStore", //guaranteed objects
+				objectStore                    : "ConcurrentStore", // guaranteed objects
 				coldboxEnabled                 : true
 			},
-
 			/**
 			 * --------------------------------------------------------------------------
 			 * Custom Cache Regions
@@ -65,7 +63,7 @@ component{
 						evictionPolicy                 : "LRU",
 						evictCount                     : 5,
 						maxObjects                     : 5000,
-						objectStore                    : "ConcurrentSoftReferenceStore" //memory sensitive
+						objectStore                    : "ConcurrentSoftReferenceStore" // memory sensitive
 					}
 				},
 				/**
@@ -75,7 +73,7 @@ component{
 				 * Sessions are managed by CacheBox and not CFML so we can distribute to any
 				 * cache provider.
 				 */
-				sessions : 	{
+				sessions : {
 					provider   : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
 					properties : {
 						objectDefaultTimeout           : 60,

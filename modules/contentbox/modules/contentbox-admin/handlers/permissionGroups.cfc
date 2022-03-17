@@ -14,11 +14,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event
-	 * @action
+	 * @event         
+	 * @action        
 	 * @eventArguments
-	 * @rc
-	 * @prc
+	 * @rc            
+	 * @prc           
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
@@ -71,10 +71,7 @@ component extends="baseHandler" {
 		var vResults = validate( oGroup );
 		if ( !vResults.hasErrors() ) {
 			// announce event
-			announce(
-				"cbadmin_prePermissionGroupSave",
-				{ group : oGroup, permissionGroupID : rc.permissionGroupID }
-			);
+			announce( "cbadmin_prePermissionGroupSave", { group : oGroup, permissionGroupID : rc.permissionGroupID } );
 			// save group
 			permissionGroupService.save( oGroup );
 			// announce event
@@ -95,18 +92,19 @@ component extends="baseHandler" {
 	function remove( event, rc, prc ){
 		// announce event
 		announce( "cbadmin_prePermissionGroupRemove", { permissionGroupID : rc.permissionGroupID } );
-		// Get requested role and remove permissions and authors
-		var oGroup = permissionGroupService
-			.get( id = rc.permissionGroupID )
-			.clearPermissions()
-			.clearAuthors();
-		// finally delete
-		permissionGroupService.delete( oGroup );
+
+		var allGroups = permissionGroupService.getAll( rc.permissionGroupID );
+
+		for ( var oGroup in allGroups ) {
+			// Get requested role and remove permissions and authors
+			oGroup.clearPermissions().clearAuthors();
+
+			// finally delete
+			permissionGroupService.delete( oGroup );
+		}
+
 		// announce event
-		announce(
-			"cbadmin_postPermissionGroupRemove",
-			{ permissionGroupID : rc.permissionGroupID }
-		);
+		announce( "cbadmin_postPermissionGroupRemove", { permissionGroupID : rc.permissionGroupID } );
 		// Message
 		cbMessagebox.setMessage( "info", "Permission Group Removed!" );
 		// relocate
@@ -122,12 +120,9 @@ component extends="baseHandler" {
 		// Get or fail
 		prc.oGroup                 = variables.permissionGroupService.get( rc.permissionGroupID );
 		// Load permissions
-		prc.aPermissions           = variables.permissionService.list(
-			sortOrder = "permission",
-			asQuery   = false
-		);
+		prc.aPermissions           = variables.permissionService.list( sortOrder = "permission", asQuery = false );
 		// Exit handlers
-		prc.xehGroupSave = "#prc.cbAdminEntryPoint#.permissionGroups.save";
+		prc.xehGroupSave           = "#prc.cbAdminEntryPoint#.permissionGroups.save";
 		// View
 		event.setView( "permissionGroups/editor" );
 	}
@@ -136,9 +131,7 @@ component extends="baseHandler" {
 	 * Export a permission group
 	 */
 	function export( event, rc, prc ){
-		return variables.permissionGroupService
-			.get( event.getValue( "permissionGroupID", 0 ) )
-			.getMemento();
+		return variables.permissionGroupService.get( event.getValue( "permissionGroupID", 0 ) ).getMemento();
 	}
 
 	/**
@@ -151,9 +144,7 @@ component extends="baseHandler" {
 			return rc.permissionGroupID
 				.listToArray()
 				.map( function( id ){
-					return variables.permissionGroupService
-						.get( arguments.id )
-						.getMemento( profile: "export" );
+					return variables.permissionGroupService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
 			return variables.permissionGroupService.getAllForExport();

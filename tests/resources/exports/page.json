@@ -50,7 +50,6 @@
 					"markup": "HTML",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "mini",
 					"site": {
@@ -112,7 +111,6 @@
 							"markup": "HTML",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "servers",
 							"site": {
@@ -172,7 +170,6 @@
 							"markup": "HTML",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "More Servers",
 							"site": {
@@ -232,7 +229,6 @@
 							"markup": "HTML",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "support",
 							"site": {
@@ -291,7 +287,6 @@
 					"markup": "HTML",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "services",
 					"site": {
@@ -355,7 +350,6 @@
 			"markup": "HTML",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "coldbox",
 			"site": {
@@ -417,7 +411,6 @@
 					"markup": "html",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "mini",
 					"site": {
@@ -479,7 +472,6 @@
 							"markup": "html",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "servers",
 							"site": {
@@ -539,7 +531,6 @@
 							"markup": "html",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "More Servers",
 							"site": {
@@ -599,7 +590,6 @@
 							"markup": "html",
 							"expireDate": "",
 							"customFields": [],
-							"cacheLayout": true,
 							"linkedContent": [],
 							"title": "support",
 							"site": {
@@ -658,7 +648,6 @@
 					"markup": "html",
 					"expireDate": "",
 					"customFields": [],
-					"cacheLayout": true,
 					"linkedContent": [],
 					"title": "services",
 					"site": {
@@ -737,7 +726,6 @@
 			"markup": "html",
 			"expireDate": "",
 			"customFields": [],
-			"cacheLayout": true,
 			"linkedContent": [],
 			"title": "coldbox-new",
 			"site": {
@@ -857,7 +845,6 @@
 	"markup": "HTML",
 	"expireDate": "",
 	"customFields": [],
-	"cacheLayout": true,
 	"linkedContent": [],
 	"title": "products",
 	"site": {

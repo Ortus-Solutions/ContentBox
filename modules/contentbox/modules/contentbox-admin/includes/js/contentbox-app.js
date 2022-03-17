@@ -1028,10 +1028,7 @@ const contentListHelper = ( () => {
 			$searchField.keyup(
 				_.debounce(
 					function(){
-						var $this = $( this );
-						var clearIt = ( $this.val().length > 0 ? false : true );
-						// ajax search
-						contentLoad( { search: $this.val() } );
+						contentLoad( { search: $( this ).val() } );
 					},
 					300
 				)
@@ -1073,7 +1070,7 @@ const contentListHelper = ( () => {
 			contentLoad( {
 				search      : $searchField.val(),
 				page        : page,
-				parent      : $parentID,
+				parent      : History.getState().data.parent || $parentID,
 				fAuthors    : $( "#fAuthors" ).val(),
 				fCategories : $( "#fCategories" ).val(),
 				fStatus     : $( "#fStatus" ).val(),
@@ -1222,6 +1219,7 @@ const contentListHelper = ( () => {
 	};
 
 } )();
+
 /**
  *********************************************************************************
  * Copyright since 2005 ColdBox Framework by Luis Majano and Ortus Solutions, Corp

@@ -91,9 +91,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 					password  : bcrypt.hashPassword( defaultPassword ),
 					isActive  : 1,
 					firstName : listFirst( q.name[ x ], " " ),
-					lastName  : trim(
-						replaceNoCase( q.name[ x ], listFirst( q.name[ x ], " " ), "" )
-					)
+					lastName  : trim( replaceNoCase( q.name[ x ], listFirst( q.name[ x ], " " ), "" ) )
 				};
 				var author = authorService.new( properties = props );
 				author.setRole( defaultRole );
@@ -273,10 +271,7 @@ component implements="contentbox.models.importers.ICBImporter" {
 				).execute().getResult();
 				var aCategories = [];
 				for ( var y = 1; y lte qCategories.recordcount; y++ ) {
-					arrayAppend(
-						aCategories,
-						categoryService.get( catMap[ qCategories.category_id[ y ] ] )
-					);
+					arrayAppend( aCategories, categoryService.get( catMap[ qCategories.category_id[ y ] ] ) );
 				}
 				entry.setCategories( aCategories );
 

@@ -21,7 +21,7 @@ component
 
 	property
 		name      ="commentSubscriptionService"
-		inject    ="commentSubscriptionService@contentbox"
+		inject    ="provider:commentSubscriptionService@contentbox"
 		persistent="false";
 
 	/* *********************************************************************
@@ -37,7 +37,6 @@ component
 		fkcolumn ="FK_contentID"
 		lazy     ="true"
 		fetch    ="join"
-		index    ="idx_contentCommentSubscription"
 		orderBy  ="Title ASC";
 
 	/* *********************************************************************

@@ -23,7 +23,7 @@ component extends="ContentService" singleton {
 	/**
 	 * Save a page and do necessary updates to the hierarchies if there is a slug change
 	 *
-	 * @page The page to save or update
+	 * @page         The page to save or update
 	 * @originalSlug If an original slug is passed, then we need to update hierarchy slugs.
 	 *
 	 * @return Saved page
@@ -34,7 +34,7 @@ component extends="ContentService" singleton {
 			super.save( arguments.page );
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
-			if ( structKeyExists( arguments, "originalSlug" ) AND len( arguments.originalSlug ) ) {
+			if ( !isNull( arguments.originalSlug ) AND len( arguments.originalSlug ) ) {
 				var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
 				for ( var thisPage in pagesInNeed ) {
 					thisPage.setSlug(
@@ -55,21 +55,21 @@ component extends="ContentService" singleton {
 	/**
 	 * Search for pages according to many filters
 	 *
-	 * @search The search term to search on
-	 * @isPublished Boolean bit to search if page is published or not, pass 'any' or not to ignore.
-	 * @author The authorID to filter on, pass 'all' to ignore filter
-	 * @parent The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	 * @creator The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
-	 * @category The categorie(s) to filter on. You can also pass 'all' or 'none'
-	 * @max The maximum records to return
-	 * @offset The offset on the pagination
-	 * @sortOrder Sorting of the results, defaults to page title asc
+	 * @search              The search term to search on
+	 * @isPublished         Boolean bit to search if page is published or not, pass 'any' or not to ignore.
+	 * @author              The authorID to filter on, pass 'all' to ignore filter
+	 * @parent              The parentID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @creator             The creatorID to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category            The categorie(s) to filter on. You can also pass 'all' or 'none'
+	 * @max                 The maximum records to return
+	 * @offset              The offset on the pagination
+	 * @sortOrder           Sorting of the results, defaults to page title asc
 	 * @searchActiveContent If true, it searches title and content on the page, else it just searches on title
-	 * @showInSearch If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
-	 * @siteID The site ID to filter on
-	 * @propertyList A list of properties to retrieve as a projection instead of array of objects
+	 * @showInSearch        If true, it makes sure content has been stored as searchable, defaults to false, which means it searches no matter what this bit says
+	 * @siteID              The site ID to filter on
+	 * @propertyList        A list of properties to retrieve as a projection instead of array of objects
 	 *
-	 * @returns struct = { pages, count }
+	 * @return struct = { pages, count }
 	 */
 	struct function search(
 		string search      = "",
@@ -165,8 +165,7 @@ component extends="ContentService" singleton {
 			// With categories
 			else {
 				// search the association
-				c.createAlias( "categories", "cats" )
-					.isIn( "cats.categoryID", [ arguments.category ] );
+				c.createAlias( "categories", "cats" ).isIn( "cats.categoryID", [ arguments.category ] );
 			}
 		}
 
@@ -204,18 +203,18 @@ component extends="ContentService" singleton {
 	/**
 	 * Find published pages using different filters and output formats.
 	 *
-	 * @max The maximum number of records to paginate
-	 * @offset The offset in the pagination
+	 * @max        The maximum number of records to paginate
+	 * @offset     The offset in the pagination
 	 * @searchTerm The search term to search
-	 * @category The category to filter the content on
-	 * @asQuery Return as query or array of objects, defaults to array of objects
-	 * @sortOrder how we need to sort the results
-	 * @parent The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
+	 * @category   The category to filter the content on
+	 * @asQuery    Return as query or array of objects, defaults to array of objects
+	 * @sortOrder  how we need to sort the results
+	 * @parent     The parentID or parent entity to filter on, don't pass or pass an empty value to ignore, defaults to 'all'
 	 * @slugPrefix If passed, this will do a hierarchical search according to this slug prefix. Remember that all hierarchical content's slug field contains its hierarchy: /products/awesome/product1. This prefix will be appended with a `/`
-	 * @siteID If passed, filter by site id
+	 * @siteID     If passed, filter by site id
 	 * @properties The list of properties to project on instead of giving you full object graphs
-	 * @authorID The authorID to filter on
-	 * @criteria The criteria object to use if passed, else we create a new one.
+	 * @authorID   The authorID to filter on
+	 * @criteria   The criteria object to use if passed, else we create a new one.
 	 * @showInMenu If passed, it limits the search to this content property
 	 * @slugSearch If passed, we will search for content items with this field as a full text search on slugs
 	 *

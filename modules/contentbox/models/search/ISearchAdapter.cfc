@@ -9,10 +9,13 @@ interface {
 
 	/**
 	 * Search content and return an standardized ContentBox Results object.
+	 *
 	 * @searchTerm The search term to search on
-	 * @max The max results to return if paging
-	 * @offset The offset to use in the search results if paging
-	 * @siteID The site id to search on if passed
+	 * @max        The max results to return if paging
+	 * @offset     The offset to use in the search results if paging
+	 * @siteID     The site id to search on if passed
+	 *
+	 * @return SearchResults object with the results
 	 */
 	contentbox.models.search.SearchResults function search(
 		required string searchTerm,
@@ -23,14 +26,19 @@ interface {
 
 	/**
 	 * If chosen to be implemented, it should refresh search indexes and collections
+	 *
+	 * @return Itself
 	 */
 	contentbox.models.search.ISearchAdapter function refresh();
 
 	/**
 	 * Render the search results according to the adapter and return HTML
+	 *
 	 * @searchTerm The search term to search on
-	 * @max The max results to return if paging
-	 * @offset The offset to use in the search results if paging
+	 * @max        The max results to return if paging
+	 * @offset     The offset to use in the search results if paging
+	 *
+	 * @return The search html
 	 */
 	any function renderSearch(
 		required string searchTerm,
@@ -40,10 +48,11 @@ interface {
 
 	/**
 	 * Render the search results according the passed in search results object
+	 *
 	 * @searchResults The search results object
+	 *
+	 * @return The search html
 	 */
-	any function renderSearchWithResults(
-		required contentbox.models.search.SearchResults searchResults
-	);
+	any function renderSearchWithResults( required contentbox.models.search.SearchResults searchResults );
 
 }

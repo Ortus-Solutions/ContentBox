@@ -72,10 +72,7 @@ component extends="content" {
 
 		// set skin view
 		event
-			.setLayout(
-				name   = "#prc.cbTheme#/layouts/#rc.layout#",
-				module = prc.cbThemeRecord.module
-			)
+			.setLayout( name = "#prc.cbTheme#/layouts/#rc.layout#", module = prc.cbThemeRecord.module )
 			.setView( view = "#prc.cbTheme#/views/entry", module = prc.cbThemeRecord.module );
 	}
 
@@ -97,11 +94,9 @@ component extends="content" {
 
 		// prepare paging object
 		prc.oPaging          = variables.paginator;
-		prc.pagingBoundaries = prc.oPaging.getBoundaries(
-			pagingMaxRows: prc.cbSettings.cb_paging_maxentries
-		);
-		prc.blogLink   = variables.CBHelper.linkBlog();
-		prc.pagingLink = prc.blogLink & "?page=@page@";
+		prc.pagingBoundaries = prc.oPaging.getBoundaries( pagingMaxRows: prc.cbSettings.cb_paging_maxentries );
+		prc.blogLink         = variables.CBHelper.linkBlog();
+		prc.pagingLink       = prc.blogLink & "?page=@page@";
 
 		// Search Paging Link Override?
 		if ( len( rc.q ) ) {
@@ -135,7 +130,7 @@ component extends="content" {
 				event.renderData(
 					type = rc.format,
 					data = prc.entries.map( function( thisEntry ){
-						return arguments.thisEntry.getMemento( profile: "response" )
+						return arguments.thisEntry.getMemento( profile = "response" )
 					} ),
 					xmlRootName = "entries"
 				);
@@ -144,14 +139,8 @@ component extends="content" {
 			default: {
 				// set skin view
 				event
-					.setLayout(
-						name   = "#prc.cbTheme#/layouts/blog",
-						module = prc.cbThemeRecord.module
-					)
-					.setView(
-						view   = "#prc.cbTheme#/views/index",
-						module = prc.cbThemeRecord.module
-					);
+					.setLayout( name = "#prc.cbTheme#/layouts/blog", module = prc.cbThemeRecord.module )
+					.setView( view = "#prc.cbTheme#/views/index", module = prc.cbThemeRecord.module );
 			}
 		}
 	}
@@ -175,10 +164,8 @@ component extends="content" {
 
 		// prepare paging object
 		prc.oPaging          = variables.paginator;
-		prc.pagingBoundaries = prc.oPaging.getBoundaries(
-			pagingMaxRows = prc.cbSettings.cb_paging_maxentries
-		);
-		prc.pagingLink = event.getCurrentRoutedURL() & "?page=@page@";
+		prc.pagingBoundaries = prc.oPaging.getBoundaries( pagingMaxRows = prc.cbSettings.cb_paging_maxentries );
+		prc.pagingLink       = event.getCurrentRoutedURL() & "?page=@page@";
 
 		// get published entries
 		var entryResults = variables.entryService.findPublishedEntriesByDate(
@@ -210,14 +197,8 @@ component extends="content" {
 			default: {
 				// set skin view
 				event
-					.setLayout(
-						name   = "#prc.cbTheme#/layouts/blog",
-						module = prc.cbThemeRecord.module
-					)
-					.setView(
-						view   = "#prc.cbTheme#/views/archives",
-						module = prc.cbThemeRecord.module
-					);
+					.setLayout( name = "#prc.cbTheme#/layouts/blog", module = prc.cbThemeRecord.module )
+					.setView( view = "#prc.cbTheme#/views/archives", module = prc.cbThemeRecord.module );
 			}
 		}
 	}
@@ -318,10 +299,7 @@ component extends="content" {
 		// incoming params
 		event.paramValue( "entrySlug", "" );
 		// Try to retrieve entry by slug
-		var thisEntry = variables.entryService.findBySlug(
-			slug  : rc.entrySlug,
-			siteID: prc.oCurrentSite.getsiteID()
-		);
+		var thisEntry = variables.entryService.findBySlug( slug: rc.entrySlug, siteID: prc.oCurrentSite.getsiteID() );
 		// If null, kick them out
 		if ( isNull( thisEntry ) ) {
 			relocate( prc.cbEntryPoint );

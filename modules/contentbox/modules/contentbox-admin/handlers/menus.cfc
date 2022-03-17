@@ -65,6 +65,7 @@ component extends="baseHandler" {
 
 	/**
 	 * slugify remotely
+	 *
 	 * @return plain
 	 */
 	function slugify( event, rc, prc ){
@@ -73,6 +74,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Verify if slug is unique
+	 *
 	 * @return json
 	 */
 	function slugUnique( event, rc, prc ){
@@ -82,10 +84,7 @@ component extends="baseHandler" {
 		var data = { "UNIQUE" : false };
 		// check slug if something is passed in
 		if ( len( rc.slug ) ) {
-			data[ "UNIQUE" ] = variables.menuService.isSlugUnique(
-				trim( rc.slug ),
-				trim( rc.menuID )
-			);
+			data[ "UNIQUE" ] = variables.menuService.isSlugUnique( trim( rc.slug ), trim( rc.menuID ) );
 		}
 		// render result
 		event.renderData( data = data, type = "json" );
@@ -124,6 +123,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Create a menu Item
+	 *
 	 * @return text
 	 */
 	function createMenuItem( event, rc, prc ){
@@ -143,6 +143,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Build out the index table for the async loaded menus
+	 *
 	 * @return html
 	 */
 	function menuTable( event, rc, prc ){
@@ -200,6 +201,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Preview the menu built
+	 *
 	 * @return text
 	 */
 	function preview( event, rc, prc ){
@@ -219,10 +221,7 @@ component extends="baseHandler" {
 		// populate items from form
 		oMenu.populateMenuItems( rawData = deserializeJSON( rc.menuItems ) );
 		// render data
-		event.renderData(
-			data = variables.cbHelper.buildProviderMenu( menu = oMenu ),
-			type = "text"
-		);
+		event.renderData( data = variables.cbHelper.buildProviderMenu( menu = oMenu ), type = "text" );
 	}
 
 	/**
@@ -268,6 +267,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Export a menu
+	 *
 	 * @return json,xml
 	 */
 	function export( event, rc, prc ){
@@ -307,9 +307,7 @@ component extends="baseHandler" {
 				cbMessagebox.info( "Menus imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";

@@ -40,9 +40,7 @@ component {
 	 */
 	function onLoad(){
 		var editorService = wirebox.getInstance( "EditorService@contentbox" );
-		editorService.registerEditor(
-			wirebox.getInstance( "MarkdownEditor@contentbox-markdowneditor" )
-		);
+		editorService.registerEditor( wirebox.getInstance( "MarkdownEditor@contentbox-markdowneditor" ) );
 	}
 
 	/**

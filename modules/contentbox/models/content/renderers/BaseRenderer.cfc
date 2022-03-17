@@ -19,8 +19,9 @@ component accessors="true" {
 
 	/**
 	 * Replace values of `indexOf` operations on the incoming string builder with a targeted replaceWith
-	 * @builder The Java string builder
-	 * @indexOf The string to search for
+	 *
+	 * @builder     The Java string builder
+	 * @indexOf     The string to search for
 	 * @replaceWith The string to replace with
 	 *
 	 * @return The string builder.

@@ -53,20 +53,14 @@ component singleton {
 		if ( !rc.cbcache and settingService.getSetting( "cb_media_provider_caching" ) ) {
 			// Set expiration for one year in advanced
 			event
-				.setHTTPHeader(
-					name  = "expires",
-					value = "#getHTTPTimeString( dateAdd( "yyyy", 1, now() ) )#"
-				)
+				.setHTTPHeader( name = "expires", value = "#getHTTPTimeString( dateAdd( "yyyy", 1, now() ) )#" )
 				.setHTTPHeader( name = "pragma", value = "cache" )
 				.setHTTPHeader( name = "cache-control", value = "public, max-age=2592000" );
 		} else {
 			event
 				.setHTTPHeader( name = "expires", value = "#getHTTPTimeString( now() )#" )
 				.setHTTPHeader( name = "pragma", value = "no-cache" )
-				.setHTTPHeader(
-					name  = "cache-control",
-					value = "no-cache, no-store, must-revalidate"
-				);
+				.setHTTPHeader( name = "cache-control", value = "no-cache, no-store, must-revalidate" );
 		}
 
 		// Deliver it baby!

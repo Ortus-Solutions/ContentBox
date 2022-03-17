@@ -30,14 +30,14 @@ component
 
 		prc.oCurrentSite    = rc.site = getSiteByIdOrSlugOrFail( rc.site );
 		prc.contentType     = event.getCurrentRouteMeta().contentType;
-		prc.oRelatedContent = variables.contentService.getByIdOrSlugOrFail( rc.contentIdOrSlug );
+		prc.oRelatedContent = variables.contentService.getByIdOrSlugOrFail( rc.contentIdOrSlug, prc );
 	}
 
 	/**
 	 * Display all versions for the requested contentype
 	 *
 	 * @tags Versions
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @x    -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function index( event, rc, prc ){
 		param rc.page       = 1;
@@ -70,7 +70,7 @@ component
 	 * Show a content version individually
 	 *
 	 * @tags Versions
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @x    -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "relatedContentSnapshot:relatedContent";
@@ -83,7 +83,7 @@ component
 	 * Delete a version from a specific content item
 	 *
 	 * @tags Versions
-	 * @x-contentbox-permissions VERSIONS_DELETE
+	 * @x    -contentbox-permissions VERSIONS_DELETE
 	 */
 	function delete( event, rc, prc ) secured="VERSIONS_DELETE"{
 		super.delete( argumentCollection = arguments );

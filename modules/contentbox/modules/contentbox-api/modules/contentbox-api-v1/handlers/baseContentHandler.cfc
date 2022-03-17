@@ -41,13 +41,14 @@ component extends="baseHandler" {
 	}
 
 	/***************************************************************************/
-	/** PRIVATE **/
+	/** PRIVATE HELPERS **/
 	/***************************************************************************/
 
 	/**
 	 * Shared method for create and update to be DRY
-	 * @populate Population arguments
-	 * @validate Validation arguments
+	 *
+	 * @populate   Population arguments
+	 * @validate   Validation arguments
 	 * @saveMethod The method to use for saving entities
 	 * @contenType The type used for permission checks
 	 */
@@ -78,14 +79,12 @@ component extends="baseHandler" {
 
 		// Verify content exists ONLY for new objects
 		if ( !len( rc.id ) && !len( rc.content ) ) {
-			arguments.event
-				.getResponse()
-				.setErrorMessage( "Content is required", arguments.event.STATUS.BAD_REQUEST );
+			arguments.event.getResponse().setErrorMessage( "Content is required", arguments.event.STATUS.BAD_REQUEST );
 			return;
 		}
 		// Setup Parent if sent!
 		if ( !isNull( rc.parent ) && len( rc.parent ) ) {
-			rc.parent = getByIdOrSlugOrFail( rc.parent );
+			rc.parent = getByIdOrSlugOrFail( rc.parent, prc );
 		}
 		// slugify the incoming title or slug
 		if ( !isNull( rc.slug ) && len( rc.slug ) ) {
@@ -97,11 +96,9 @@ component extends="baseHandler" {
 		}
 
 		// Population arguments
-		arguments.populate.memento = rc;
+		arguments.populate.memento          = rc;
 		// Check if creation or editing
-		arguments.populate.model   = (
-			!len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id )
-		);
+		arguments.populate.model            = ( !len( rc.id ) ? variables.ormService.new() : getByIdOrSlugOrFail( rc.id, prc ) );
 		arguments.populate.nullEmptyInclude = "parent";
 		arguments.populate.exclude          = "contentID,creator,categories,comments,customFields,contentVersions,children,commentSubscriptions";
 
@@ -112,9 +109,7 @@ component extends="baseHandler" {
 				.oCurrentAuthor()
 				.checkPermission( "#arguments.contentType#_ADMIN" )
 		) {
-			arguments.populate.model.setCreator(
-				variables.authorService.retrieveUserById( rc.creator )
-			);
+			arguments.populate.model.setCreator( variables.authorService.retrieveUserById( rc.creator ) );
 		}
 
 		// populate it
@@ -142,10 +137,7 @@ component extends="baseHandler" {
 				}
 				prc.oEntity.setCategories(
 					rc.categories.map( function( thisCategory ){
-						return variables.categoryService.getOrCreateBySlug(
-							arguments.thisCategory,
-							rc.site
-						);
+						return variables.categoryService.getOrCreateBySlug( arguments.thisCategory, rc.site );
 					} )
 				);
 			}

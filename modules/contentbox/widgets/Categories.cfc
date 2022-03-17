@@ -21,11 +21,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	/**
 	 * Show the blog categories
 	 *
-	 * @dropdown Display as a dropdown or a list, default is list
+	 * @dropdown      Display as a dropdown or a list, default is list
 	 * @showPostCount Show post counts or not, default is true
-	 * @title The title to show before the dropdown or list, defaults to H2
-	 * @titleLevel The H{level} to use, by default we use H2
-	 * @isPublic Get all public categories by default. False, get private, null or empty, get all
+	 * @title         The title to show before the dropdown or list, defaults to H2
+	 * @titleLevel    The H{level} to use, by default we use H2
+	 * @isPublic      Get all public categories by default. False, get private, null or empty, get all
 	 */
 	any function renderIt(
 		boolean dropdown      = false,

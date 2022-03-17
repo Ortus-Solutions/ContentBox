@@ -154,11 +154,9 @@ component accessors=true {
 				priority    : 1
 			},
 			"medialibrary" : {
-				fileName    : "medialibrary",
-				displayName : "Media Library",
-				directory   : expandPath(
-					variables.settingService.getSetting( "cb_media_directoryRoot" )
-				),
+				fileName     : "medialibrary",
+				displayName  : "Media Library",
+				directory    : expandPath( variables.settingService.getSetting( "cb_media_directoryRoot" ) ),
 				includeFiles : "*",
 				type         : "folder",
 				extension    : "",
@@ -215,17 +213,15 @@ component accessors=true {
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
 					exporter.setContent(
-						variables[ config.def.service ].getAllForExport(
-							variables.siteService.getCurrentWorkingSite()
-						)
+						variables[ config.def.service ].getAllForExport( variables.siteService.getCurrentWorkingSite() )
 					);
 					exporter.setPriority( config.def.priority );
 					break;
 					// add file exporter
 				case "file":
-					var includedFiles = !isBoolean( arguments.targets[ key ] ) && listLen(
-						arguments.targets[ key ]
-					) ? arguments.targets[ key ] : "*";
+					var includedFiles = !isBoolean( arguments.targets[ key ] ) && listLen( arguments.targets[ key ] ) ? arguments.targets[
+						key
+					] : "*";
 					var exporter = wirebox.getInstance( "fileExporter@contentbox" );
 					exporter.setFileName( config.def.fileName );
 					exporter.setDisplayName( config.def.displayName );
@@ -385,14 +381,14 @@ component accessors=true {
 	 * Creates descriptor structure
 	 */
 	private struct function buildDescriptor(){
-		var loggedInUser        = variables.securityService.getAuthorSession();
-		var descriptor             = {};
+		var loggedInUser = variables.securityService.getAuthorSession();
+		var descriptor   = {};
 
 		// set static descriptor values
 		descriptor[ "exportDate" ] = now();
 		descriptor[ "exportedBy" ] = "#loggedInUser.getFullName()# (#loggedInUser.getUsername()#)";
 		descriptor[ "content" ]    = {};
-		descriptor[ "site" ] = variables.siteService.getCurrentWorkingSite().getMemento();
+		descriptor[ "site" ]       = variables.siteService.getCurrentWorkingSite().getMemento();
 
 		// add dynamic content
 		for ( var exporter in variables.exporters ) {

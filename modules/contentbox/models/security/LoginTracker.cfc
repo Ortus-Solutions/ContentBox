@@ -52,20 +52,14 @@ component extends="coldbox.system.Interceptor" {
 		var aBlockUsernames = loginTrackerService.findAllByValue( realUsername );
 
 		prc.oBlockByIP       = ( arrayLen( aBlockIps ) ? aBlockIps[ 1 ] : loginTrackerService.new() );
-		prc.oBlockByUsername = (
-			arrayLen( aBlockUsernames ) ? aBlockUsernames[ 1 ] : loginTrackerService.new()
-		);
+		prc.oBlockByUsername = ( arrayLen( aBlockUsernames ) ? aBlockUsernames[ 1 ] : loginTrackerService.new() );
 
 		// do checks to prevent login
 		var isBlocked = false;
 		// which reason?
 		var byIP      = false;
 		// do checks by username and IP
-		if (
-			!isNull( prc.oBlockByUsername ) and loginTrackerService.isBlocked(
-				prc.oBlockByUsername
-			)
-		) {
+		if ( !isNull( prc.oBlockByUsername ) and loginTrackerService.isBlocked( prc.oBlockByUsername ) ) {
 			isBlocked = true;
 		}
 		if ( !isNull( prc.oBlockByIP ) and loginTrackerService.isBlocked( prc.oBlockByIP ) ) {

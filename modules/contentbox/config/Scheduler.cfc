@@ -35,9 +35,7 @@ component {
 						);
 
 						if ( commentExpirationDays > 0 ) {
-							log.info(
-								"Starting to expire comments on site: #arguments.thisSite.getSlug()#..."
-							);
+							log.info( "Starting to expire comments on site: #arguments.thisSite.getSlug()#..." );
 
 							// now we have the green light to find and kill any old, moderated comments
 							getInstance( "commentService@contentbox" ).deleteUnApproved(
@@ -76,7 +74,7 @@ component {
 	/**
 	 * Called whenever ANY task fails
 	 *
-	 * @task The task that got executed
+	 * @task      The task that got executed
 	 * @exception The ColdFusion exception object
 	 */
 	function onAnyTaskError( required task, required exception ){
@@ -89,7 +87,7 @@ component {
 	/**
 	 * Called whenever ANY task succeeds
 	 *
-	 * @task The task that got executed
+	 * @task   The task that got executed
 	 * @result The result (if any) that the task produced
 	 */
 	function onAnyTaskSuccess( required task, result ){
@@ -111,7 +109,7 @@ component {
 	/**
 	 * Called after ANY task runs
 	 *
-	 * @task The task that got executed
+	 * @task   The task that got executed
 	 * @result The result (if any) that the task produced
 	 */
 	function afterAnyTask( required task, result ){

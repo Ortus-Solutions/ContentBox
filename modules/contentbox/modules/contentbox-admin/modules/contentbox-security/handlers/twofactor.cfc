@@ -66,10 +66,7 @@ component extends="baseHandler" {
 		var authorData = flash.get( "authorData" );
 
 		// Verify the challenge code
-		var results = variables.twoFactorService.verifyChallenge(
-			code   = rc.twofactorcode,
-			author = prc.oAuthor
-		);
+		var results = variables.twoFactorService.verifyChallenge( code = rc.twofactorcode, author = prc.oAuthor );
 
 		// Check for errors
 		if ( results.error ) {
@@ -106,10 +103,7 @@ component extends="baseHandler" {
 				// Set in session, validations are now complete
 				variables.securityService.login( prc.oAuthor );
 				// announce event
-				announce(
-					"cbadmin_onLogin",
-					{ author : prc.oAuthor, securedURL : authorData.securedURL }
-				);
+				announce( "cbadmin_onLogin", { author : prc.oAuthor, securedURL : authorData.securedURL } );
 			}
 
 			// check if securedURL came in?

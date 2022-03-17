@@ -46,10 +46,7 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 				given( "invalid username and password", function(){
 					then( "I will receive a 401 invalid credentials exception ", function(){
-						var event = this.post(
-							"/cbapi/v1/login",
-							{ username : "invalid", password : "invalid" }
-						);
+						var event    = this.post( "/cbapi/v1/login", { username : "invalid", password : "invalid" } );
 						var response = event.getPrivateValue( "Response" );
 						expect( response.getError() ).toBeTrue();
 						expect( response.getStatusCode() ).toBe( 401 );
@@ -61,17 +58,11 @@ component extends="tests.resources.BaseApiTest" {
 				given( "a valid incoming jwt token and I issue a logout", function(){
 					then( "my token should become invalidated and I will be logged out", function(){
 						// Log in
-						var token = jwt.attempt(
-							variables.testAdminUsername,
-							variables.testAdminPassword
-						);
+						var token   = jwt.attempt( variables.testAdminUsername, variables.testAdminPassword );
 						var payload = jwt.decode( token.access_token );
 
 						// Now Logout
-						var event = post(
-							"/cbapi/v1/logout",
-							{ "x-auth-token" : token.access_token }
-						);
+						var event    = post( "/cbapi/v1/logout", { "x-auth-token" : token.access_token } );
 						var response = event.getPrivateValue( "Response" );
 						expect( response.getError() ).toBeFalse( response.getMessagesString() );
 						expect( response.getStatusCode() ).toBe( 200 );
@@ -93,16 +84,10 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an valid token", function(){
 					then( "I should get my information", function(){
 						// Log in
-						var tokens = jwt.attempt(
-							variables.testAdminUsername,
-							variables.testAdminPassword
-						);
+						var tokens  = jwt.attempt( variables.testAdminUsername, variables.testAdminPassword );
 						var payload = jwt.decode( tokens.access_token );
 						// Now Logout
-						var event   = GET(
-							"/cbapi/v1/whoami",
-							{ "x-auth-token" : tokens.access_token }
-						);
+						var event   = GET( "/cbapi/v1/whoami", { "x-auth-token" : tokens.access_token } );
 						expect( event.getResponse() ).toHaveStatus( 200 );
 						expect( event.getResponse().getData().authorID ).toBe( payload.sub );
 					} );
@@ -120,20 +105,14 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an valid email", function(){
 					then( "I should get a reminder sent", function(){
 						// Now Logout
-						var event = POST(
-							"/cbapi/v1/forgotPassword",
-							{ "email" : variables.testAdminUsername }
-						);
+						var event = POST( "/cbapi/v1/forgotPassword", { "email" : variables.testAdminUsername } );
 						expect( event.getResponse() ).toHaveStatus( 200 );
 					} );
 				} );
 				given( "an invalid email", function(){
 					then( "I should get an error", function(){
 						// Now Logout
-						var event = POST(
-							"/cbapi/v1/forgotPassword",
-							{ "email" : "bogus@bogus.com" }
-						);
+						var event = POST( "/cbapi/v1/forgotPassword", { "email" : "bogus@bogus.com" } );
 						expect( event.getResponse() ).toHaveStatus( 404 );
 					} );
 				} );
@@ -155,10 +134,7 @@ component extends="tests.resources.BaseApiTest" {
 				given( "an invalid token", function(){
 					then( "I should get an error", function(){
 						// Now Logout
-						var event = POST(
-							"/cbapi/v1/verifyPasswordReset",
-							{ "token" : "12312312sadfasd4" }
-						);
+						var event = POST( "/cbapi/v1/verifyPasswordReset", { "token" : "12312312sadfasd4" } );
 						expect( event.getResponse() ).toHaveStatus( 406 );
 						expect( event.getResponse().getData() ).toBeFalse();
 					} );
@@ -167,9 +143,7 @@ component extends="tests.resources.BaseApiTest" {
 
 			xstory( "I want to reset a user password", function(){
 				beforeEach( function( currentSpec ){
-					testResetUser = getInstance( "UserService" ).retrieveUserByUsername(
-						variables.testContractorEmail
-					);
+					testResetUser  = getInstance( "UserService" ).retrieveUserByUsername( variables.testContractorEmail );
 					testResetToken = securityService.generatePasswordResetToken( testResetUser );
 				} );
 
@@ -185,9 +159,7 @@ component extends="tests.resources.BaseApiTest" {
 							}
 						);
 						expect( event.getResponse() ).toHaveStatus( 200 );
-						expect( event.getResponse().getMessagesString() ).toInclude(
-							"Password reset completed"
-						);
+						expect( event.getResponse().getMessagesString() ).toInclude( "Password reset completed" );
 					} );
 				} );
 				given( "a valid token but incoming passwords don't match", function(){
@@ -202,18 +174,13 @@ component extends="tests.resources.BaseApiTest" {
 							}
 						);
 						expect( event.getResponse() ).toHaveStatus( 400 );
-						expect( event.getResponse().getMessagesString() ).toInclude(
-							"Passwords do not match"
-						);
+						expect( event.getResponse().getMessagesString() ).toInclude( "Passwords do not match" );
 					} );
 				} );
 				given( "an invalid token", function(){
 					then( "I should get an error", function(){
 						// Now Logout
-						var event = POST(
-							"/cbapi/v1/resetPassword",
-							{ "token" : "12312312sadfasd4" }
-						);
+						var event = POST( "/cbapi/v1/resetPassword", { "token" : "12312312sadfasd4" } );
 						expect( event.getResponse() ).toHaveStatus( 500 );
 					} );
 				} );

@@ -19,11 +19,6 @@ component
 	 **							DI
 	 ********************************************************************* */
 
-	property
-		name      ="interceptorService"
-		inject    ="coldbox:interceptorService"
-		persistent="false";
-
 	/* *********************************************************************
 	 **							PROPERTIES
 	 ********************************************************************* */
@@ -206,9 +201,7 @@ component
 				timeout       ="10" {
 				if ( NOT len( variables.renderedContent ) ) {
 					// else render content out, prepare builder
-					var builder = createObject( "java", "java.lang.StringBuilder" ).init(
-						variables.content
-					);
+					var builder = createObject( "java", "java.lang.StringBuilder" ).init( variables.content );
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
 						"cb_onContentRendering",

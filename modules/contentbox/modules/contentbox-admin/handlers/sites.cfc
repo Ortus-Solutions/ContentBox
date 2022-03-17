@@ -120,9 +120,7 @@ component extends="baseHandler" {
 	function export( event, rc, prc ){
 		// Set a high timeout for long exports
 		setting requestTimeout="9999";
-		return variables.siteService
-			.get( event.getValue( "siteID", 0 ) )
-			.getMemento( profile: "export" );
+		return variables.siteService.get( event.getValue( "siteID", 0 ) ).getMemento( profile: "export" );
 	}
 
 	/**
@@ -149,9 +147,7 @@ component extends="baseHandler" {
 				cbMessagebox.info( "Site(s) imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			rethrow;

@@ -28,7 +28,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get the total comment counts by content object
 	 *
-	 * @contentId The content id to filter on
+	 * @contentId  The content id to filter on
 	 * @isApproved If passed, use it to filter on
 	 */
 	numeric function getTotalCountByContent( string contentId = "", boolean isApproved ){
@@ -48,8 +48,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	numeric function getTotalCount( string siteID = "" ){
 		return newCriteria()
 			.when( len( arguments.siteID ), function( c ){
-				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteID", siteID );
+				c.joinTo( "relatedContent", "relatedContent" ).isEq( "relatedContent.site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -63,8 +62,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.isTrue( "isApproved" )
 			.when( len( arguments.siteID ), function( c ){
-				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteID", siteID );
+				c.joinTo( "relatedContent", "relatedContent" ).isEq( "relatedContent.site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -78,8 +76,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return newCriteria()
 			.isFalse( "isApproved" )
 			.when( len( arguments.siteID ), function( c ){
-				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteID", siteID );
+				c.joinTo( "relatedContent", "relatedContent" ).isEq( "relatedContent.site.siteID", siteID );
 			} )
 			.count();
 	}
@@ -87,12 +84,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Comment listing for UI of approved comments, returns struct of results=[comments,count]
 	 *
-	 * @contentID The content ID to filter on
+	 * @contentID   The content ID to filter on
 	 * @contentType The content type discriminator to filter on
-	 * @max The maximum number of records to return, 0 means all
-	 * @offset The offset in the paging, 0 means 0
-	 * @sortOrder Sort the comments asc or desc, by default it is desc
-	 * @siteID The site to filter on if needed
+	 * @max         The maximum number of records to return, 0 means all
+	 * @offset      The offset in the paging, 0 means 0
+	 * @sortOrder   Sort the comments asc or desc, by default it is desc
+	 * @siteID      The site to filter on if needed
 	 *
 	 * @return struct with { comments, count }
 	 */
@@ -118,8 +115,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			} )
 			// Site Filter
 			.when( len( arguments.siteID ), function( c ){
-				c.joinTo( "relatedContent", "relatedContent" )
-					.isEq( "relatedContent.site.siteID", siteID );
+				c.joinTo( "relatedContent", "relatedContent" ).isEq( "relatedContent.site.siteID", siteID );
 			} );
 
 		// run criteria query and projections count
@@ -159,10 +155,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Save a comment according to our rules and process it. Returns a structure of information
 	 * results = [moderated:boolean,messages:array]
 	 *
-	 * @comment The comment to try to save
+	 * @comment      The comment to try to save
 	 * @loggedInUser The current logged in user making the comment. If no logged in User, this is a non-persisted entity
-	 *
-	 * @result Return a struct of : { moderated:boolean, messages : array }
+	 * @result       Return a struct of : { moderated:boolean, messages : array }
 	 */
 	struct function saveComment( required comment, required loggedInUser ){
 		transaction {
@@ -238,9 +233,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			// don't send email if the comment author is also subscribed...
 			if ( subscriber.getSubscriberEmail() != commentAuthorEmail ) {
 				// get mail payload
-				bodyTokens[ "unsubscribeURL" ] = CBHelper.linkContentUnsubscribe(
-					subscription.getSubscriptionToken()
-				);
+				bodyTokens[ "unsubscribeURL" ] = CBHelper.linkContentUnsubscribe( subscription.getSubscriptionToken() );
 
 				// Send it baby!
 				var mail = variables.mailService.newMail(
@@ -275,7 +268,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Run moderation rules on an incoming comment and set of contentbox settings. If this method returns a false then the comment is moderated
 	 * and can continue to be saved. If returns false, then it is blocked and must NOT be saved.
-	 * @comment Comment to moderate check
+	 *
+	 * @comment  Comment to moderate check
 	 * @settings The contentbox settings to moderate against
 	 */
 	private boolean function runModerationRules( required comment, required settings ){
@@ -358,6 +352,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	/**
 	 * Check if the user has already a comment in the system
+	 *
 	 * @email The email address to check.
 	 */
 	private boolean function userHasPreviousAcceptedComment( required email ){
@@ -368,7 +363,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Send a notification email for comments
 	 *
-	 * @comment Comment to moderate check
+	 * @comment      Comment to moderate check
 	 * @siteSettings The contentbox site settings to moderate against
 	 */
 	private void function sendNotificationEmails( required comment, required siteSettings ){
@@ -394,18 +389,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// get mail payload
 		var bodyTokens             = inComment.getMemento();
 		bodyTokens[ "whoisURL" ]   = settings.cb_comments_whoisURL;
-		bodyTokens[ "commentURL" ] = CBHelper.linkComment(
-			comment = inComment,
-			ssl     = site.getIsSSL()
-		);
-		bodyTokens[ "deleteURL" ] = CBHelper.linkAdmin(
-			event = "comments.moderate",
-			ssl   = settings.cb_admin_ssl
-		) & "?commentID=#inComment.getCommentID()#";
-		bodyTokens[ "approveURL" ] = CBHelper.linkAdmin(
-			event = "comments.moderate",
-			ssl   = settings.cb_admin_ssl
-		) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens[ "commentURL" ] = CBHelper.linkComment( comment = inComment, ssl = site.getIsSSL() );
+		bodyTokens[ "deleteURL" ]  = CBHelper.linkAdmin( event = "comments.moderate", ssl = settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
+		bodyTokens[ "approveURL" ] = CBHelper.linkAdmin( event = "comments.moderate", ssl = settings.cb_admin_ssl ) & "?commentID=#inComment.getCommentID()#";
 		bodyTokens[ "contentURL" ] = CBHelper.linkContent(
 			content = inComment.getRelatedContent(),
 			ssl     = site.getIsSSL()
@@ -413,9 +399,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		bodyTokens[ "contentTitle" ] = inComment.getParentTitle();
 
 		// Moderation Email? Comment is moderated?
-		if (
-			inComment.getIsApproved() eq false AND arguments.siteSettings.cb_comments_moderation_notify
-		) {
+		if ( inComment.getIsApproved() eq false AND arguments.siteSettings.cb_comments_moderation_notify ) {
 			subject  = "New comment needs moderation on post: #bodyTokens.contentTitle#";
 			template = "comment_moderation";
 		} else {
@@ -455,13 +439,13 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * comment search returns struct with keys [comments,count]
 	 *
-	 * @search Search query
+	 * @search     Search query
 	 * @isApproved approved bit
-	 * @contentID matching content id
-	 * @max max records
-	 * @offset offset for pagination
-	 * @sortOrder The sort order, defaults to `createdDate DESC`
-	 * @siteID The site to filter on if needed
+	 * @contentID  matching content id
+	 * @max        max records
+	 * @offset     offset for pagination
+	 * @sortOrder  The sort order, defaults to `createdDate DESC`
+	 * @siteID     The site to filter on if needed
 	 *
 	 * @return struct with { comments, count }
 	 */
@@ -499,8 +483,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// Site Filter
 		if ( len( arguments.siteID ) ) {
-			c.joinTo( "relatedContent", "relatedContent" )
-				.isEq( "relatedContent.site.siteID", arguments.siteID );
+			c.joinTo( "relatedContent", "relatedContent" ).isEq( "relatedContent.site.siteID", arguments.siteID );
 		}
 
 		// run criteria query and projections count
@@ -519,7 +502,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Bulk Updates
 	 *
 	 * @commentID The list or array of ID's to bulk update
-	 * @status The status either 'approve' or 'moderate'
+	 * @status    The status either 'approve' or 'moderate'
 	 *
 	 * @return CommentService
 	 */

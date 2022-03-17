@@ -330,8 +330,10 @@ component {
 
 	/**
 	 * loadHelpFile - helper function for loading html help into a variable for modal
+	 *
 	 * @helpFileName - the name of the file to read and return
 	 * @helpFilePath - the relative directory for the help files. Defaulting to ./includes/help/ inside the theme.
+	 *
 	 * @return the contents of the file or empty string if the file does not exist
 	 */
 	function loadHelpFile( required string helpFileName, string helpFilePath = "includes/help/" ){

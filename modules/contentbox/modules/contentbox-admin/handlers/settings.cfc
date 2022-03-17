@@ -49,6 +49,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Email Testing of settings
+	 *
 	 * @return json
 	 */
 	function emailTest( event, rc, prc ){
@@ -113,6 +114,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Raw settings manager
+	 *
 	 * @return html
 	 */
 	function raw( event, rc, prc ){
@@ -140,6 +142,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Present the raw settings table
+	 *
 	 * @return html
 	 */
 	function rawtable( event, rc, prc ){
@@ -195,9 +198,7 @@ component extends="baseHandler" {
 			return rc.settingID
 				.listToArray()
 				.map( function( id ){
-					return variables.settingsService
-						.get( arguments.id )
-						.getMemento( profile: "export" );
+					return variables.settingsService.get( arguments.id ).getMemento( profile: "export" );
 				} );
 		} else {
 			return variables.settingsService.getAllForExport();
@@ -233,6 +234,7 @@ component extends="baseHandler" {
 
 	/**
 	 * WireBox mapping dump
+	 *
 	 * @return html
 	 */
 	function mappingDump( event, rc, prc ){
@@ -306,15 +308,13 @@ component extends="baseHandler" {
 	 */
 	function flushSingletons( event, rc, prc ){
 		wirebox.clearSingletons();
-		variables.cbMessagebox.setMessage(
-			"info",
-			"All singletons flushed and awaiting re-creation."
-		);
+		variables.cbMessagebox.setMessage( "info", "All singletons flushed and awaiting re-creation." );
 		relocate( event = prc.xehRawSettings, queryString = "##wirebox" );
 	}
 
 	/**
 	 * View settings cached data
+	 *
 	 * @return html
 	 */
 	function viewCached( event, rc, prc ){
@@ -329,6 +329,7 @@ component extends="baseHandler" {
 
 	/**
 	 * Display the auth logs manager
+	 *
 	 * @return html
 	 */
 	function authLogs( event, rc, prc ){
@@ -337,10 +338,7 @@ component extends="baseHandler" {
 
 		// Check if the feature is enabled
 		if ( prc.featureEnabled ) {
-			prc.logs = variables.loginTrackerService.getAll(
-				sortOrder = "attempts",
-				asQuery   = false
-			);
+			prc.logs = variables.loginTrackerService.getAll( sortOrder = "attempts", asQuery = false );
 		} else {
 			prc.featureEnabled = false;
 		}

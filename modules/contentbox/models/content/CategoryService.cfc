@@ -25,11 +25,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Category search with filters
 	 *
-	 * @search The search term for the name
-	 * @siteID The site id to filter on
-	 * @isPublic Filter on this public (true) / private (false) or all (null)
-	 * @max The max records
-	 * @offset The offset to use
+	 * @search    The search term for the name
+	 * @siteID    The site id to filter on
+	 * @isPublic  Filter on this public (true) / private (false) or all (null)
+	 * @max       The max records
+	 * @offset    The offset to use
 	 * @sortOrder The sort order
 	 *
 	 * @return struct of { count, categories }
@@ -74,7 +74,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * If it exists, it returns it, else it creates it and returns it.
 	 *
 	 * @category The target category object to check
-	 * @site The target site this category should be created in
+	 * @site     The target site this category should be created in
 	 *
 	 * @return The target site category
 	 */
@@ -106,7 +106,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * If it exists, it returns it, else it creates it and returns it.
 	 *
 	 * @category The target category slug to check
-	 * @site The target site this category should be created in
+	 * @site     The target site this category should be created in
 	 *
 	 * @return The target site category object
 	 */
@@ -151,9 +151,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 *
 	 * @category The category object
 	 *
-	 * @throws UniqueCategoryException
-	 *
 	 * @return The saved category
+	 *
+	 * @throws UniqueCategoryException
 	 */
 	function save( required category ){
 		return super.save( arguments.category );
@@ -162,9 +162,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Verify an incoming slug is unique or not
 	 *
-	 * @slug The slug to search for uniqueness
+	 * @slug       The slug to search for uniqueness
 	 * @categoryId Limit the search to the passed categoryId usually for updates
-	 * @siteID The site to filter on
+	 * @siteID     The site to filter on
 	 *
 	 * @return True if the slug is unique or false if it's already used
 	 */
@@ -188,8 +188,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Create categories via a comma delimited list and return the entities created
 	 *
 	 * @categories A list or array of categories to create
-	 * @site The site to attach them to, this must be a site object
-	 * @isPublic Create public or private categories
+	 * @site       The site to attach them to, this must be a site object
+	 * @isPublic   Create public or private categories
 	 */
 	array function createCategories(
 		required categories,
@@ -306,7 +306,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get an array of names of all categories in the system or by site
 	 *
-	 * @siteId The site to filter the names from
+	 * @siteId   The site to filter the names from
 	 * @isPublic If passed, show by this filter, else all categories
 	 */
 	array function getAllNames( string siteID = "", boolean isPublic ){
@@ -324,7 +324,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Get an array of slugs of all categories in the system
 	 *
-	 * @siteId The site to filter the names from
+	 * @siteId   The site to filter the names from
 	 * @isPublic If passed, show by this filter, else all categories
 	 */
 	array function getAllSlugs( string siteID = "", boolean isPublic ){
@@ -343,11 +343,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -356,10 +356,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message = "Cannot import file as the contents is not JSON",
-				type    = "InvalidImportFormat"
-			);
+			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -374,12 +371,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromData(
 		required importData,
@@ -417,14 +414,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					arguments.importLog.append( "New category imported: #thisCategory.slug#<br>" );
 					arrayAppend( allCategories, oCategory );
 				} else if ( oCategory.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted category overriden: #thisCategory.slug#<br>"
-					);
+					arguments.importLog.append( "Persisted category overriden: #thisCategory.slug#<br>" );
 					arrayAppend( allCategories, oCategory );
 				} else {
-					arguments.importLog.append(
-						"Skipping persisted category: #thisCategory.slug#<br>"
-					);
+					arguments.importLog.append( "Skipping persisted category: #thisCategory.slug#<br>" );
 				}
 			}
 			// end import loop

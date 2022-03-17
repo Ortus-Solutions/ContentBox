@@ -73,17 +73,6 @@ component
 		default=""
 		length ="8000";
 
-	/**
-	 * If true, it will force the page to be viewed in SSL. ContentBox will redirect with a 301
-	 */
-	property
-		name   ="SSLOnly"
-		column ="SSLOnly"
-		notnull="true"
-		ormtype="boolean"
-		default="false"
-		index  ="idx_ssl";
-
 	/* *********************************************************************
 	 **							NON PERSISTED PROPERTIES
 	 ********************************************************************* */
@@ -98,7 +87,6 @@ component
 	this.constraints[ "mobileLayout" ] = { required : false, size : "1..200" };
 	this.constraints[ "order" ]        = { required : true, type : "numeric" };
 	this.constraints[ "showInMenu" ]   = { required : false, type : "boolean" };
-	this.constraints[ "SSLOnly" ]      = { required : false, type : "boolean" };
 
 	/* *********************************************************************
 	 **							CONSTRUCTOR
@@ -111,8 +99,7 @@ component
 				"layout",
 				"mobileLayout",
 				"order",
-				"showInMenu",
-				"SSLOnly"
+				"showInMenu"
 			],
 			"defaultIncludes"
 		);
@@ -130,7 +117,6 @@ component
 		variables.contentType     = "Page";
 		variables.order           = 0;
 		variables.showInMenu      = true;
-		variables.SSLOnly         = false;
 
 		// INHERITANCE LAYOUT STATIC
 		variables.LAYOUT_INHERITANCE_KEY = "-inherit-";
@@ -152,16 +138,10 @@ component
 	any function renderExcerpt(){
 		// Check if we need to translate
 		if ( NOT len( variables.renderedExcerpt ) ) {
-			lock
-				name          ="contentbox.excerptrendering.#getContentID()#"
-				type          ="exclusive"
-				throwontimeout="true"
-				timeout       ="10" {
+			lock name="contentbox.excerptrendering.#getContentID()#" type="exclusive" throwontimeout="true" timeout="10" {
 				if ( NOT len( variables.renderedExcerpt ) ) {
 					// render excerpt out, prepare builder
-					var builder = createObject( "java", "java.lang.StringBuilder" ).init(
-						getExcerpt()
-					);
+					var builder = createObject( "java", "java.lang.StringBuilder" ).init( getExcerpt() );
 					// announce renderings with data, so content renderers can process them
 					variables.interceptorService.announce(
 						"cb_onContentRendering",
@@ -212,14 +192,14 @@ component
 	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	 *
-	 * @author The author doing the cloning
-	 * @original The original content object that will be cloned into this content object
-	 * @originalService The ContentBox content service object
-	 * @publish Publish pages or leave as drafts
+	 * @author           The author doing the cloning
+	 * @original         The original content object that will be cloned into this content object
+	 * @originalService  The ContentBox content service object
+	 * @publish          Publish pages or leave as drafts
 	 * @originalSlugRoot The original slug that will be replaced in all cloned content
-	 * @newSlugRoot The new slug root that will be replaced in all cloned content
+	 * @newSlugRoot      The new slug root that will be replaced in all cloned content
 	 */
-	BaseContent function prepareForClone(
+	BaseContent function clone(
 		required any author,
 		required any original,
 		required any originalService,
@@ -231,13 +211,12 @@ component
 		setLayout( arguments.original.getLayout() );
 		setMobileLayout( arguments.original.getMobileLayout() );
 		setShowInMenu( arguments.original.getShowInMenu() );
-		setSSLOnly( arguments.original.getSSLOnly() );
 		// do excerpts
 		if ( arguments.original.hasExcerpt() ) {
 			setExcerpt( arguments.original.getExcerpt() );
 		}
 		// do core cloning
-		return super.prepareForClone( argumentCollection = arguments );
+		return super.clone( argumentCollection = arguments );
 	}
 
 	/**

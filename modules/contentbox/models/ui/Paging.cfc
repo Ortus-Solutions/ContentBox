@@ -3,7 +3,6 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * @author Luis Majano
  *
  * COLDBOX SETTINGS
  * - `PagingMaxRows` : The maximum number of rows per page.
@@ -38,6 +37,8 @@
  * `FoundRows` = The total rows found in the recordset
  * `link` = The link to use for paging, including a placeholder for the page @page@
  * ex: index.cfm?event=users.list&page=@page@
+ *
+ * @author Luis Majano
  */
 component accessors="true" {
 
@@ -51,7 +52,7 @@ component accessors="true" {
 	/**
 	 * Constructor
 	 *
-	 * @settingService The ContentBox setting service
+	 * @settingService        The ContentBox setting service
 	 * @settingService.inject settingService@contentbox
 	 */
 	function init( required settingService ){
@@ -67,7 +68,7 @@ component accessors="true" {
 	 * Calculate the startrow and maxrow
 	 *
 	 * @pagingMaxRows You can override the paging max rows here
-	 * @page Which page to bound on, we look into the request context for a `page` if not passed.
+	 * @page          Which page to bound on, we look into the request context for a `page` if not passed.
 	 *
 	 * @return struct of { startrow:numeric, maxrow:numeric }
 	 */
@@ -87,11 +88,11 @@ component accessors="true" {
 	/**
 	 * Render the pagination tabs UI
 	 *
-	 * @foundRows The rows found in the collection to build the pagination for.
-	 * @link The link to use, you must place the `@page@` place holder so the link can be created correctly. ex: /data/page/@page@
+	 * @foundRows     The rows found in the collection to build the pagination for.
+	 * @link          The link to use, you must place the `@page@` place holder so the link can be created correctly. ex: /data/page/@page@
 	 * @pagingMaxRows You can override the paging max rows here
-	 * @asList Render the UI as a list of pagination or tabs
-	 * @page The page we are on, if not passed, we look into the request context for a `page` variable.
+	 * @asList        Render the UI as a list of pagination or tabs
+	 * @page          The page we are on, if not passed, we look into the request context for a `page` variable.
 	 */
 	function renderIt(
 		required numeric foundRows,

@@ -168,7 +168,7 @@ component
 	 * This function will encrypt an incoming target string using bcrypt and compare it with another bcrypt string
 	 *
 	 * @incoming Incoming string
-	 * @target Target check
+	 * @target   Target check
 	 *
 	 * @return true if they match
 	 */
@@ -203,7 +203,8 @@ component
 
 	/**
 	 * Save an author with extra pizazz!
-	 * @author The author object
+	 *
+	 * @author         The author object
 	 * @passwordChange Are we changing the password
 	 *
 	 * @return Author
@@ -212,9 +213,7 @@ component
 		// bcrypt password if new author
 		if ( !arguments.author.isLoaded() OR arguments.passwordChange ) {
 			// bcrypt the incoming password
-			arguments.author.setPassword(
-				variables.bcrypt.hashPassword( arguments.author.getPassword() )
-			);
+			arguments.author.setPassword( variables.bcrypt.hashPassword( arguments.author.getPassword() ) );
 		}
 
 		// save the author
@@ -224,15 +223,15 @@ component
 	/**
 	 * Author search by many criteria.
 	 *
-	 * @searchTerm		 	Search in firstname, lastname and email fields
-	 * @isActive  		 	Search with active bit
-	 * @role      		 	Apply a role filter
-	 * @max       		 	The max returned objects
-	 * @offset    		 	The offset for pagination
-	 * @asQuery   		 	Query or objects
-	 * @sortOrder 		 	The sort order to apply
-	 * @permissionGroups 	Single or list of permissiong groups to search on
-	 * @twoFactorAuth 		Two factor auth or any
+	 * @searchTerm       Search in firstname, lastname and email fields
+	 * @isActive         Search with active bit
+	 * @role             Apply a role filter
+	 * @max              The max returned objects
+	 * @offset           The offset for pagination
+	 * @asQuery          Query or objects
+	 * @sortOrder        The sort order to apply
+	 * @permissionGroups Single or list of permissiong groups to search on
+	 * @twoFactorAuth    Two factor auth or any
 	 *
 	 * @return {authors:array, count:numeric}
 	 */
@@ -277,10 +276,7 @@ component
 		// permission groups filter
 		if ( structKeyExists( arguments, "permissionGroups" ) AND arguments.permissionGroups NEQ "any" ) {
 			c.createAlias( "permissionGroups", "permissionGroups" )
-				.isIn(
-					"permissionGroups.permissionGroupID",
-					listToArray( arguments.permissionGroups )
-				);
+				.isIn( "permissionGroups.permissionGroupID", listToArray( arguments.permissionGroups ) );
 		}
 
 		// run criteria query and projections count
@@ -336,10 +332,7 @@ component
 			.get();
 
 		if ( isNull( oAuthor ) ) {
-			throw(
-				type    = "EntityNotFound",
-				message = "Author not found with id (#encodeForHTML( arguments.id )#)"
-			);
+			throw( type = "EntityNotFound", message = "Author not found with id (#encodeForHTML( arguments.id )#)" );
 		}
 		return oAuthor;
 	}
@@ -379,11 +372,11 @@ component
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *
 	 * @importFile The json file to import
-	 * @override Override content if found in the database, defaults to false
-	 *
-	 * @throws InvalidImportFormat
+	 * @override   Override content if found in the database, defaults to false
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws InvalidImportFormat
 	 */
 	string function importFromFile( required importFile, boolean override = false ){
 		var data      = fileRead( arguments.importFile );
@@ -392,10 +385,7 @@ component
 		);
 
 		if ( !isJSON( data ) ) {
-			throw(
-				message = "Cannot import file as the contents is not JSON",
-				type    = "InvalidImportFormat"
-			);
+			throw( message = "Cannot import file as the contents is not JSON", type = "InvalidImportFormat" );
 		}
 
 		// deserialize packet: Should be array of { settingID, name, value }
@@ -410,12 +400,12 @@ component
 	 * Import data from an array of structures or a single structure of data
 	 *
 	 * @importData A struct or array of data to import
-	 * @override Override content if found in the database, defaults to false
-	 * @importLog The import log buffer
-	 *
-	 * @throws RoleNotFoundException - Whenever you try to import an author with an invalid role
+	 * @override   Override content if found in the database, defaults to false
+	 * @importLog  The import log buffer
 	 *
 	 * @return The console log of the import
+	 *
+	 * @throws RoleNotFoundException - Whenever you try to import an author with an invalid role
 	 */
 	string function importFromData(
 		required importData,
@@ -449,10 +439,8 @@ component
 					// Create permissions that don't exist first
 					var allPermissions = [];
 					for ( var thisPermission in thisUser.permissions ) {
-						var oPerm = variables.permissionService.findByPermission(
-							thisPermission.permission
-						);
-						oPerm = (
+						var oPerm = variables.permissionService.findByPermission( thisPermission.permission );
+						oPerm     = (
 							isNull( oPerm ) ? getBeanPopulator().populateFromStruct(
 								target  = variables.permissionService.new(),
 								memento = thisPermission,
@@ -461,10 +449,7 @@ component
 						);
 						// save oPerm if new only
 						if ( !oPerm.isLoaded() ) {
-							variables.permissionService.save(
-								entity        = oPerm,
-								transactional = false
-							);
+							variables.permissionService.save( entity = oPerm, transactional = false );
 						}
 						// append to add.
 						arrayAppend( allPermissions, oPerm );
@@ -485,10 +470,7 @@ component
 					);
 					// save oGroup if new only
 					if ( !oGroup.isLoaded() ) {
-						variables.permissionGroupService.save(
-							entity        = oGroup,
-							transactional = false
-						);
+						variables.permissionGroupService.save( entity = oGroup, transactional = false );
 					}
 					// Add to author
 					oUser.addPermissionGroup( oGroup );
@@ -498,9 +480,7 @@ component
 				var oRole = variables.roleService.findByRole( thisUser.role.role );
 				if ( !isNull( oRole ) ) {
 					oUser.setRole( oRole );
-					arguments.importLog.append(
-						"User role found and linked: #thisUser.role.role#<br>"
-					);
+					arguments.importLog.append( "User role found and linked: #thisUser.role.role#<br>" );
 				} else {
 					throw(
 						message: "The role to import (#encodeForHTML( thisUser.role.role )#) does not exist in the system. Create it or import it first.",
@@ -513,9 +493,7 @@ component
 					arguments.importLog.append( "New user imported: #thisUser.username#<br>" );
 					arrayAppend( allUsers, oUser );
 				} else if ( oUser.isLoaded() and arguments.override ) {
-					arguments.importLog.append(
-						"Persisted user overriden: #thisUser.username#<br>"
-					);
+					arguments.importLog.append( "Persisted user overriden: #thisUser.username#<br>" );
 					arrayAppend( allUsers, oUser );
 				} else {
 					arguments.importLog.append( "Skipping persisted user: #thisUser.username#<br>" );
@@ -549,9 +527,7 @@ component
 		var token       = variables.securityService.generateResetToken( arguments.author );
 		var settings    = variables.settingService.getAllSettings();
 		var defaultSite = variables.siteService.getDefaultSite();
-		var adminUrl    = variables.requestService
-			.getContext()
-			.buildLink( to: "/cbadmin", ssl: settings.cb_admin_ssl );
+		var adminUrl    = variables.requestService.getContext().buildLink( to: "/cbadmin", ssl: settings.cb_admin_ssl );
 
 		// get mail payload
 		var bodyTokens = {

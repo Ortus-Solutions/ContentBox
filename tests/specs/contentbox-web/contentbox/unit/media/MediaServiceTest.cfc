@@ -4,72 +4,47 @@
  * www.ortussolutions.com/products/contentbox
  * ---
  */
-component extends="coldbox.system.testing.BaseModelTest" model="contentbox.models.media.MediaService" {
+component extends="tests.resources.BaseTest" {
 
-	this.unLoadColdBox = false;
+	function run( testResults, testBox ){
+		describe( "DB Search Adapter", function(){
+			beforeEach( function( currentSpec ){
+				setup();
+				service = getInstance( "MediaService@contentbox" ).init( getWireBox() );
+			} );
 
-	function setup(){
-		super.setup();
-		mockProvider = getMockBox()
-			.createMock( "contentbox.models.media.CFContentMediaProvider" )
-			.init();
-		mockWireBox.$( "getInstance", mockProvider );
+			it( "can register and get providers", function(){
+				var provider = service.getProvider( "CFContentMediaProvider" );
+				expect( provider ).toBeComponent();
+				assertEquals( "CFContentMediaProvider", provider.getName() );
+				assertEquals( "CF Content Media Provider", provider.getDisplayName() );
+			} );
 
-		model.init( mockWireBox );
-		mockSettings = getMockBox()
-			.createEmptyMock( "contentbox.models.system.SettingService" )
-			.$( "getSetting", "CFContentMediaProvider" );
-		model.$property( "settingService", "variables", mockSettings );
-	}
+			it( "can get the default provider", function(){
+				assertEquals( "CFContentMediaProvider", service.getDefaultProviderName() );
+			} );
 
-	function testGetProvider(){
-		var provider = model.getProvider( "CFContentMediaProvider" );
-		assertEquals( "CFContentMediaProvider", provider.getName() );
-		assertEquals( "CF Content Media Provider", provider.getDisplayName() );
-	}
+			it( "can unregister a provider", function(){
+				service.unregisterProvider( "CFContentMediaProvider" );
+				expect( service.getRegisteredProviders() ).notToInclude( "CFContentMediaProvider" );
+			} );
 
-	function testGetDefaultProviderName(){
-		assertEquals( "CFContentMediaProvider", model.getDefaultProviderName() );
-	}
+			it( "can get the registered providers map", function(){
+				var map = service.getRegisteredProvidersMap();
+				debug( map );
+				expect( map ).toBeArray().notToBeEmpty();
+			} );
 
+			it( "can get the path to the core media root", function(){
+				var path = service.getCoreMediaRoot();
+				expect( path ).toInclude( "/contentbox-custom/_content" );
+			} );
 
-	function testGetDefaultProvider(){
-		var provider = model.getDefaultProvider();
-		assertEquals( "CFContentMediaProvider", provider.getName() );
-		assertEquals( "CF Content Media Provider", provider.getDisplayName() );
-	}
-
-	function testRegisterProvider(){
-		model.setProviders( {} );
-		model.registerProvider( mockProvider );
-		expect( model.getDefaultProviderName() ).toBe( "CFContentMediaProvider" );
-	}
-
-	function testUnRegisterProvider(){
-		model.setProviders( {} );
-		model.registerProvider( mockProvider );
-		model.unRegisterProvider( "CFContentMediaProvider" );
-		expect( model.getProviders() ).toHaveLength( 0 );
-	}
-
-	function testGetRegisteredProviders(){
-		var providers = model.getRegisteredProviders();
-		assertTrue( arrayFind( providers, "CFContentMediaProvider" ) );
-	}
-
-	function testGetRegisteredProvidersMap(){
-		var providerPath = model.getRegisteredProvidersMap();
-		assertIsArray( providerPath );
-		assertIsStruct( providerPath[ 1 ] );
-	}
-
-	function testGetCoreMediaRoot(){
-		mockSettings = getMockBox()
-			.createEmptyMock( "contentbox.models.system.SettingService" )
-			.$( "getSetting", "/content" );
-		model.$property( "settingService", "variables", mockSettings );
-		var path = model.getCoreMediaRoot();
-		assertEquals( "/content", path );
+			it( "can get the absolute path to the core media root", function(){
+				var path = service.getCoreMediaRoot( true );
+				expect( directoryExists( path ) ).toBeTrue();
+			} );
+		} );
 	}
 
 }

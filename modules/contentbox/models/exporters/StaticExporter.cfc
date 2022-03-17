@@ -28,13 +28,14 @@ component accessors=true threadSafe singleton {
 
 	/**
 	 * Export static site with several exporting options.  The end result is the location of the generated site
+	 *
 	 * @exportDirectory The directory to export to, defaults to the temp site creation
-	 * @includeBlog Flag to include the blog or not in the static site export
-	 * @modifiedDate From when to export content, defaults to ALL
-	 * @event Request Context
-	 * @rc RC
-	 * @prc PRC
-	 * @site The site to export
+	 * @includeBlog     Flag to include the blog or not in the static site export
+	 * @modifiedDate    From when to export content, defaults to ALL
+	 * @event           Request Context
+	 * @rc              RC
+	 * @prc             PRC
+	 * @site            The site to export
 	 *
 	 * @return struct with keys: { exportLog:builder, exportDirectory, exportArchive }
 	 */
@@ -160,10 +161,7 @@ component accessors=true threadSafe singleton {
 		if ( arguments.includeBlog ) {
 			var aEntries   = variables.entryService.search( siteID: arguments.site.getSiteID() );
 			// Put all categories in prc for processing
-			prc.categories = variables.categoryService.search(
-				isPublic: true,
-				siteId  : arguments.site.getSiteId()
-			).categories;
+			prc.categories = variables.categoryService.search( isPublic: true, siteId: arguments.site.getSiteId() ).categories;
 			// Process all entries
 			for ( var thisEntry in aEntries.entries ) {
 				// put in scope for fake access
@@ -189,10 +187,7 @@ component accessors=true threadSafe singleton {
 		);
 
 		// Announce export
-		interceptorService.announce(
-			"cbadmin_postStaticSiteExport",
-			{ options : arguments, results : results }
-		);
+		interceptorService.announce( "cbadmin_postStaticSiteExport", { options : arguments, results : results } );
 
 		// Remove creation Folder now
 		directoryDelete( arguments.exportDirectory, true );
@@ -205,12 +200,12 @@ component accessors=true threadSafe singleton {
 	/**
 	 * Process a static entry export
 	 *
-	 * @content The content object
-	 * @event Request Context
-	 * @rc RC
-	 * @prc PRC
+	 * @content   The content object
+	 * @event     Request Context
+	 * @rc        RC
+	 * @prc       PRC
 	 * @exportDir The location of export
-	 * @settings All of the ContentBox Settings
+	 * @settings  All of the ContentBox Settings
 	 */
 	private function processStaticEntry(
 		required content,
@@ -260,22 +255,19 @@ component accessors=true threadSafe singleton {
 			directoryCreate( exportDir & "/" & arguments.content.getSlug() );
 		}
 		// Write it out
-		fileWrite(
-			arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html",
-			outputContent
-		);
+		fileWrite( arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html", outputContent );
 	};
 
 	/**
 	 * Process a static page export
 	 *
-	 * @content The content object
-	 * @isHome Is this the home page
-	 * @event Request Context
-	 * @rc RC
-	 * @prc PRC
+	 * @content   The content object
+	 * @isHome    Is this the home page
+	 * @event     Request Context
+	 * @rc        RC
+	 * @prc       PRC
 	 * @exportDir The location of export
-	 * @settings All of the ContentBox Settings
+	 * @settings  All of the ContentBox Settings
 	 */
 	private function processStaticPage(
 		required content,
@@ -335,10 +327,7 @@ component accessors=true threadSafe singleton {
 		if ( arguments.isHome ) {
 			fileWrite( arguments.exportDir & "/index.html", outputContent );
 		} else {
-			fileWrite(
-				arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html",
-				outputContent
-			);
+			fileWrite( arguments.exportDir & "/" & arguments.content.getSlug() & "/index.html", outputContent );
 		}
 
 		// Do we have children

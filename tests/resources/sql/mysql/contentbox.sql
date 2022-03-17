@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Ace SQL dump
-# Version 3028
+# Version 20025
 #
 # https://sequel-ace.com/
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: 127.0.0.1 (MySQL 5.7.22)
 # Database: contentbox
-# Generation Time: 2021-05-05 20:31:06 +0000
+# Generation Time: 2022-02-18 20:12:42 +0000
 # ************************************************************
 
 USE `contentbox`;
@@ -159,13 +159,13 @@ CREATE TABLE `cb_category` (
 LOCK TABLES `cb_category` WRITE;
 /*!40000 ALTER TABLE `cb_category` DISABLE KEYS */;
 
-INSERT INTO `cb_category` (`category`, `slug`, `createdDate`, `modifiedDate`, `isDeleted`, `categoryID`, `FK_siteID`, `isPublic` )
+INSERT INTO `cb_category` (`category`, `slug`, `createdDate`, `modifiedDate`, `isDeleted`, `categoryID`, `FK_siteID`, `isPublic`)
 VALUES
-	('ColdFusion','coldfusion','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a9660-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
-	('ContentBox','contentbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a97f0-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
-	('coldbox','coldbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a98cc-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'1'),
-	('News','news','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','A657752D-79AC-42CB-B7A9572AB7B329A1','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'0'),
-	('General','general','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','16B64400-E17B-477C-B0A0C59764CB85F8','1c81d376-a481-11eb-ab6f-0290cc502ae3', b'0');
+	('General','general','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','16B64400-E17B-477C-B0A0C59764CB85F8','1c81d376-a481-11eb-ab6f-0290cc502ae3',b'0'),
+	('ColdFusion','coldfusion','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a9660-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3',b'1'),
+	('ContentBox','contentbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a97f0-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3',b'1'),
+	('coldbox','coldbox','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','786a98cc-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3',b'1'),
+	('News','news','2016-05-03 16:23:25','2016-05-03 16:23:25',b'0','A657752D-79AC-42CB-B7A9572AB7B329A1','1c81d376-a481-11eb-ab6f-0290cc502ae3',b'0');
 
 /*!40000 ALTER TABLE `cb_category` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -260,7 +260,6 @@ CREATE TABLE `cb_content` (
   `HTMLKeywords` varchar(160) DEFAULT NULL,
   `HTMLDescription` varchar(160) DEFAULT NULL,
   `cache` bit(1) NOT NULL DEFAULT b'1',
-  `cacheLayout` bit(1) NOT NULL DEFAULT b'1',
   `cacheTimeout` int(11) DEFAULT '0',
   `cacheLastAccessTimeout` int(11) DEFAULT '0',
   `markup` varchar(100) NOT NULL DEFAULT 'HTML',
@@ -278,7 +277,6 @@ CREATE TABLE `cb_content` (
   UNIQUE KEY `id` (`contentID`),
   UNIQUE KEY `contentID` (`contentID`),
   KEY `idx_slug` (`slug`),
-  KEY `idx_cachelayout` (`cacheLayout`),
   KEY `idx_discriminator` (`contentType`),
   KEY `idx_cachetimeout` (`cacheTimeout`),
   KEY `idx_cache` (`cache`),
@@ -302,55 +300,55 @@ CREATE TABLE `cb_content` (
 LOCK TABLES `cb_content` WRITE;
 /*!40000 ALTER TABLE `cb_content` DISABLE KEYS */;
 
-INSERT INTO `cb_content` (`contentType`, `title`, `slug`, `createdDate`, `publishedDate`, `expireDate`, `isPublished`, `allowComments`, `passwordProtection`, `HTMLKeywords`, `HTMLDescription`, `cache`, `cacheLayout`, `cacheTimeout`, `cacheLastAccessTimeout`, `markup`, `showInSearch`, `featuredImage`, `featuredImageURL`, `modifiedDate`, `isDeleted`, `HTMLTitle`, `contentID`, `FK_authorID`, `FK_parentID`, `FK_siteID`)
+INSERT INTO `cb_content` (`contentType`, `title`, `slug`, `createdDate`, `publishedDate`, `expireDate`, `isPublished`, `allowComments`, `passwordProtection`, `HTMLKeywords`, `HTMLDescription`, `cache`, `cacheTimeout`, `cacheLastAccessTimeout`, `markup`, `showInSearch`, `featuredImage`, `featuredImageURL`, `modifiedDate`, `isDeleted`, `HTMLTitle`, `contentID`, `FK_authorID`, `FK_parentID`, `FK_siteID`)
 VALUES
-	('Entry','An awesome blog entry','an-awesome-blog-entry','2013-07-12 09:53:01','2013-07-20 16:05:46',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc2bc-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Another Test','another-test','2013-07-12 09:53:31','2013-07-20 16:39:53',NULL,b'0',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc4e2-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','ContentBox Modular CMS at the South Florida CFUG','contentbox-modular-cms-at-the-south-florida-cfug','2012-09-13 15:55:12','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'html',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc5e6-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Test with an excerpt','test-with-an-excerpt','2013-07-15 17:56:10','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc6b8-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Updating an ORM entity','updating-an-orm-entity','2013-07-19 18:45:08','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc76c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Copy of Updating an ORM entity','copy-of-updating-an-orm-entity','2013-07-20 16:10:43','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'html',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc820-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Copy of Another Test','copy-of-another-test','2013-07-20 16:12:16','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',b'1',0,0,'html',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc906-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Copy of Copy of Another Test','copy-of-copy-of-another-test','2013-07-20 16:12:23','2013-07-20 16:12:00',NULL,b'0',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc9ba-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Couchbase Infrastructure','couchbase-infrastructure','2013-07-26 16:53:43','2013-07-26 16:53:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cca64-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Couchbase Details','couchbase-details','2013-07-26 16:55:00','2013-10-11 10:31:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1','','','2021-02-19 10:54:25',b'0','','779ccb0e-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','First Content Store','first-content-store','2013-08-12 11:59:12','2013-08-12 12:02:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccbb8-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','My News','my-awesome-news','2013-08-14 18:14:43','2013-08-14 18:14:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccc62-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','blog-sidebar-top','blog-sidebar-top','2013-08-22 20:42:37','2013-08-22 20:42:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccd02-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','footer','foot','2013-08-22 20:43:59','2013-08-22 20:43:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2021-05-05 15:18:36',b'0',NULL,'779ccdac-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','support options','support-options-baby','2013-08-22 20:45:19','2013-08-22 20:45:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cce56-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','FireFox Test','firefox-test','2013-08-29 08:29:36','2013-08-29 08:29:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccef6-a444-11eb-ab6f-0290cc502ae3','77abe0a8-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Couchbase Conference','couchbase-conference','2013-09-13 16:54:52','2013-09-13 16:54:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccfa0-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Disk Queues','disk-queues','2013-09-13 16:55:05','2013-09-13 16:54:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd040-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','This is just awesome','this-is-just-awesome','2013-10-15 16:48:56','2013-10-15 16:48:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd0ea-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Closures cannot be declared outside of cfscript','closures-cannot-be-declared-outside-of-cfscript','2013-11-11 11:53:03','2013-11-11 11:52:00',NULL,b'1',b'1','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd18a-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Entry','Disk Queues ','disk-queues-77caf','2014-01-31 14:41:16','2014-01-31 14:41:00',NULL,b'1',b'1','','these are nice keywords','Disk Queues are amazing and they rock SEO',b'1',b'1',0,0,'HTML',b'1','','','2021-05-05 15:17:18',b'0','Disk Queues are amazing','779cd234-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','support','support','2013-07-20 15:38:47','2013-07-20 15:38:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-08-05 14:42:30',b'0',NULL,'779cd2de-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','Small Footer','foot/small-footer','2014-09-26 16:00:44','2014-09-26 16:00:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd388-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ccdac-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','No Layout Test','no-layout-test','2015-03-29 10:13:59','2015-03-29 10:13:00',NULL,b'1',b'0','test','','',b'1',b'1',0,0,'HTML',b'1','','','2016-08-05 14:42:30',b'0',NULL,'779cd432-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','No Sidebar','email-test','2015-09-16 10:33:56','2015-09-16 10:33:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-08-05 14:42:30',b'0',NULL,'779cd4dc-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','Lucee 4.5.2.018','lucee-452018','2016-01-14 11:44:58','2016-01-14 11:42:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd57c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','Another test','another-test-a161b','2016-01-14 11:45:35','2016-01-14 11:45:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-05 15:56:12',b'0',NULL,'779cd61c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','parent page','parent-page','2016-04-12 09:26:56','2016-04-12 09:26:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd6c6-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','child 1','parent-page/child-1','2016-04-12 09:27:06','2016-04-12 09:27:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd766-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cd6c6-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','node','node','2016-04-12 13:18:51','2016-04-12 13:18:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-08-05 14:42:30',b'0',NULL,'779cd806-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','child1','node/child1','2016-04-12 13:19:04','2016-04-12 13:18:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd8b0-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cd806-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','child2','node/child2','2016-04-12 13:19:10','2016-04-12 13:19:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd950-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cd806-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','Test Markdown','test-markdown','2016-05-05 11:12:23','2016-05-05 11:11:00','2016-05-01 00:00:00',b'0',b'0','','','',b'1',b'1',0,0,'Markdown',b'0','','','2016-08-05 14:42:24',b'0',NULL,'779cd9fa-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','products','products','2016-05-18 11:35:32','2017-06-13 17:08:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2017-06-13 17:08:36',b'0','','779cdaa4-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','coldbox','products/coldbox','2016-05-18 11:35:32','2013-07-11 11:23:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdb4e-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdaa4-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','mini','products/coldbox/mini','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdbee-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdb4e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','services','products/coldbox/services','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdc8e-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdb4e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','servers','products/coldbox/services/servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdd38-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdc8e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','More Servers','products/coldbox/services/more-servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cddd8-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdc8e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','support','products/coldbox/services/support','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cde82-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdc8e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','coldbox-new','products/coldbox-new','2016-05-18 11:35:32','2016-04-11 11:32:00',NULL,b'1',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdf22-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdaa4-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','mini','products/coldbox-new/mini','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdfc2-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdf22-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','services','products/coldbox-new/services','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce06c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdf22-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','servers','products/coldbox-new/services/servers','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce10c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ce06c-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','More Servers','products/coldbox-new/services/more-servers','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce1ac-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ce06c-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('Page','support','products/coldbox-new/services/support','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',b'1',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce256-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ce06c-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
-	('ContentStore','My Expired Content Store','my-expired-content-store','2018-03-20 09:48:13','2018-03-20 09:47:00','2018-02-01 00:00:00',b'1',b'0','','','',b'1',b'1',0,0,'HTML',b'1','','','2018-03-20 09:48:13',b'0','','779ce300-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3');
+	('Entry','An awesome blog entry','an-awesome-blog-entry','2013-07-12 09:53:01','2013-07-20 16:05:46',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc2bc-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Another Test','another-test','2013-07-12 09:53:31','2013-07-20 16:39:53',NULL,b'0',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc4e2-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','ContentBox Modular CMS at the South Florida CFUG','contentbox-modular-cms-at-the-south-florida-cfug','2012-09-13 15:55:12','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',0,0,'html',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc5e6-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Test with an excerpt','test-with-an-excerpt','2013-07-15 17:56:10','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc6b8-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Updating an ORM entity','updating-an-orm-entity','2013-07-19 18:45:08','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc76c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Copy of Updating an ORM entity','copy-of-updating-an-orm-entity','2013-07-20 16:10:43','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',0,0,'html',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc820-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Copy of Another Test','copy-of-another-test','2013-07-20 16:12:16','2013-07-20 16:39:39',NULL,b'1',b'1','','','',b'1',0,0,'html',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc906-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Copy of Copy of Another Test','copy-of-copy-of-another-test','2013-07-20 16:12:23','2013-07-20 16:12:00',NULL,b'0',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cc9ba-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Couchbase Infrastructure','couchbase-infrastructure','2013-07-26 16:53:43','2013-07-26 16:53:00',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cca64-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Couchbase Details','couchbase-details','2013-07-26 16:55:00','2013-10-11 10:31:00',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1','','','2021-02-19 10:54:25',b'0','','779ccb0e-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','First Content Store','first-content-store','2013-08-12 11:59:12','2013-08-12 12:02:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccbb8-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','My News','my-awesome-news','2013-08-14 18:14:43','2013-08-14 18:14:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccc62-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','blog-sidebar-top','blog-sidebar-top','2013-08-22 20:42:37','2013-08-22 20:42:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccd02-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','footer','foot','2013-08-22 20:43:59','2013-08-22 20:43:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2021-05-05 15:18:36',b'0',NULL,'779ccdac-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','support options','support-options-baby','2013-08-22 20:45:19','2013-08-22 20:45:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cce56-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','FireFox Test','firefox-test','2013-08-29 08:29:36','2013-08-29 08:29:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccef6-a444-11eb-ab6f-0290cc502ae3','77abe0a8-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Couchbase Conference','couchbase-conference','2013-09-13 16:54:52','2013-09-13 16:54:00',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779ccfa0-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Disk Queues','disk-queues','2013-09-13 16:55:05','2013-09-13 16:54:00',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd040-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','This is just awesome','this-is-just-awesome','2013-10-15 16:48:56','2013-10-15 16:48:00',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd0ea-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Closures cannot be declared outside of cfscript','closures-cannot-be-declared-outside-of-cfscript','2013-11-11 11:53:03','2013-11-11 11:52:00',NULL,b'1',b'1','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd18a-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Entry','Disk Queues ','disk-queues-77caf','2014-01-31 14:41:16','2014-01-31 14:41:00',NULL,b'1',b'1','','these are nice keywords','Disk Queues are amazing and they rock SEO',b'1',0,0,'HTML',b'1','','','2021-05-05 15:17:18',b'0','Disk Queues are amazing','779cd234-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','support','support','2013-07-20 15:38:47','2013-07-20 15:38:00',NULL,b'1',b'0','','','',b'1',0,0,'html',b'1','','','2016-08-05 14:42:30',b'0',NULL,'779cd2de-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','Small Footer','foot/small-footer','2014-09-26 16:00:44','2014-09-26 16:00:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-05-03 16:23:25',b'0',NULL,'779cd388-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ccdac-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','No Layout Test','no-layout-test','2015-03-29 10:13:59','2015-03-29 10:13:00',NULL,b'1',b'0','test','','',b'1',0,0,'HTML',b'1','','','2016-08-05 14:42:30',b'0',NULL,'779cd432-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','No Sidebar','email-test','2015-09-16 10:33:56','2015-09-16 10:33:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1',NULL,NULL,'2016-08-05 14:42:30',b'0',NULL,'779cd4dc-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','Lucee 4.5.2.018','lucee-452018','2016-01-14 11:44:58','2016-01-14 11:42:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd57c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','Another test','another-test-a161b','2016-01-14 11:45:35','2016-01-14 11:45:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-05 15:56:12',b'0',NULL,'779cd61c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','parent page','parent-page','2016-04-12 09:26:56','2016-04-12 09:26:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd6c6-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','child 1','parent-page/child-1','2016-04-12 09:27:06','2016-04-12 09:27:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd766-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cd6c6-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','node','node','2016-04-12 13:18:51','2016-04-12 13:18:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-08-05 14:42:30',b'0',NULL,'779cd806-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','child1','node/child1','2016-04-12 13:19:04','2016-04-12 13:18:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd8b0-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cd806-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','child2','node/child2','2016-04-12 13:19:10','2016-04-12 13:19:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-03 16:23:25',b'0',NULL,'779cd950-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cd806-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','Test Markdown','test-markdown','2016-05-05 11:12:23','2016-05-05 11:11:00','2016-05-01 00:00:00',b'0',b'0','','','',b'1',0,0,'Markdown',b'0','','','2016-08-05 14:42:24',b'0',NULL,'779cd9fa-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','products','products','2016-05-18 11:35:32','2017-06-13 17:08:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2017-06-13 17:08:36',b'0','','779cdaa4-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','coldbox','products/coldbox','2016-05-18 11:35:32','2013-07-11 11:23:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdb4e-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdaa4-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','mini','products/coldbox/mini','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdbee-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdb4e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','services','products/coldbox/services','2016-05-18 11:35:32','2015-09-22 10:53:23',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdc8e-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdb4e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','servers','products/coldbox/services/servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdd38-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdc8e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','More Servers','products/coldbox/services/more-servers','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cddd8-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdc8e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','support','products/coldbox/services/support','2016-05-18 11:35:32','2013-07-20 10:40:00',NULL,b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cde82-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdc8e-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','coldbox-new','products/coldbox-new','2016-05-18 11:35:32','2016-04-11 11:32:00',NULL,b'1',b'0','','','',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdf22-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdaa4-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','mini','products/coldbox-new/mini','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779cdfc2-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdf22-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','services','products/coldbox-new/services','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce06c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779cdf22-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','servers','products/coldbox-new/services/servers','2016-05-18 11:35:32','2013-08-22 10:23:03',NULL,b'0',b'0','','','',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce10c-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ce06c-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','More Servers','products/coldbox-new/services/more-servers','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce1ac-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ce06c-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('Page','support','products/coldbox-new/services/support','2016-05-18 11:35:32','2013-08-22 10:23:04',NULL,b'0',b'0','','','',b'1',0,0,'html',b'1','','','2016-05-18 11:35:32',b'0',NULL,'779ce256-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3','779ce06c-a444-11eb-ab6f-0290cc502ae3','1c81d376-a481-11eb-ab6f-0290cc502ae3'),
+	('ContentStore','My Expired Content Store','my-expired-content-store','2018-03-20 09:48:13','2018-03-20 09:47:00','2018-02-01 00:00:00',b'1',b'0','','','',b'1',0,0,'HTML',b'1','','','2018-03-20 09:48:13',b'0','','779ce300-a444-11eb-ab6f-0290cc502ae3','77abddba-a444-11eb-ab6f-0290cc502ae3',NULL,'1c81d376-a481-11eb-ab6f-0290cc502ae3');
 
 /*!40000 ALTER TABLE `cb_content` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -905,39 +903,37 @@ CREATE TABLE `cb_page` (
   `order` int(11) DEFAULT '0',
   `showInMenu` bit(1) NOT NULL DEFAULT b'1',
   `excerpt` longtext,
-  `SSLOnly` bit(1) NOT NULL DEFAULT b'0',
   `contentID` char(36) CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY (`contentID`),
   KEY `idx_showInMenu` (`showInMenu`),
-  KEY `idx_ssl` (`SSLOnly`),
   CONSTRAINT `fk_cb_page_contentID` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 LOCK TABLES `cb_page` WRITE;
 /*!40000 ALTER TABLE `cb_page` DISABLE KEYS */;
 
-INSERT INTO `cb_page` (`layout`, `mobileLayout`, `order`, `showInMenu`, `excerpt`, `SSLOnly`, `contentID`)
+INSERT INTO `cb_page` (`layout`, `mobileLayout`, `order`, `showInMenu`, `excerpt`, `contentID`)
 VALUES
-	('pages','',6,b'1','',b'0','779cd2de-a444-11eb-ab6f-0290cc502ae3'),
-	('-no-layout-','',3,b'1','',b'0','779cd432-a444-11eb-ab6f-0290cc502ae3'),
-	('pagesNoSidebar','',5,b'1','',b'0','779cd4dc-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',4,b'1','',b'0','779cd806-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779cd8b0-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779cd950-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',2,b'0','',b'0','779cd9fa-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',1,b'1','',b'0','779cdaa4-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',2,b'1','',b'0','779cdb4e-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',1,b'1','',b'0','779cdbee-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',2,b'1','',b'0','779cdc8e-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',6,b'1','',b'0','779cdd38-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',4,b'1','',b'0','779cddd8-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',8,b'1','',b'0','779cde82-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',1,b'1','',b'0','779cdf22-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779cdfc2-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce06c-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce10c-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce1ac-a444-11eb-ab6f-0290cc502ae3'),
-	('pages','',0,b'1','',b'0','779ce256-a444-11eb-ab6f-0290cc502ae3');
+	('pages','',6,b'1','','779cd2de-a444-11eb-ab6f-0290cc502ae3'),
+	('-no-layout-','',3,b'1','','779cd432-a444-11eb-ab6f-0290cc502ae3'),
+	('pagesNoSidebar','',5,b'1','','779cd4dc-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',4,b'1','','779cd806-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779cd8b0-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779cd950-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',2,b'0','','779cd9fa-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',1,b'1','','779cdaa4-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',2,b'1','','779cdb4e-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',1,b'1','','779cdbee-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',2,b'1','','779cdc8e-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',6,b'1','','779cdd38-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',4,b'1','','779cddd8-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',8,b'1','','779cde82-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',1,b'1','','779cdf22-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779cdfc2-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce06c-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce10c-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce1ac-a444-11eb-ab6f-0290cc502ae3'),
+	('pages','',0,b'1','','779ce256-a444-11eb-ab6f-0290cc502ae3');
 
 /*!40000 ALTER TABLE `cb_page` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1638,19 +1634,6 @@ VALUES
 
 /*!40000 ALTER TABLE `cb_subscriptions` ENABLE KEYS */;
 UNLOCK TABLES;
-
-
-# Dump of table cfmigrations
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `cfmigrations`;
-
-CREATE TABLE `cfmigrations` (
-  `name` varchar(190) COLLATE utf8mb4_bin NOT NULL,
-  `migration_ran` datetime NOT NULL,
-  PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
-
 
 
 

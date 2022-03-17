@@ -35,8 +35,9 @@ component
 	}
 	/**
 	 * Retrieves template for use in admin screens for this type of menu item provider
+	 *
 	 * @menuItem.hint The menu item object
-	 * @options.hint Additional arguments to be used in the method
+	 * @options.hint  Additional arguments to be used in the method
 	 */
 	public string function getAdminTemplate( required any menuItem, required struct options = {} ){
 		var rc           = requestService.getContext().getCollection();
@@ -58,8 +59,9 @@ component
 	}
 	/**
 	 * Retrieves template for use in rendering menu item on the site
+	 *
 	 * @menuItem.hint The menu item object
-	 * @options.hint Additional arguments to be used in the method
+	 * @options.hint  Additional arguments to be used in the method
 	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
 		var viewArgs = {

@@ -25,9 +25,9 @@ component accessors="true" singleton {
 	 * Search content and return an standardized ContentBox Results object.
 	 *
 	 * @searchTerm The search term to search on
-	 * @max The max results to return if paging
-	 * @offset The offset to use in the search results if paging
-	 * @siteID The site to filter on if passed
+	 * @max        The max results to return if paging
+	 * @offset     The offset to use in the search results if paging
+	 * @siteID     The site to filter on if passed
 	 *
 	 * @return contentbox.models.search.SearchResults Object
 	 */
@@ -102,29 +102,41 @@ component accessors="true" singleton {
 
 		// cfformat-ignore-start
 		savecontent variable="results" {
-			writeOutput(
-				"
-			<div class=""searchResults"">
-				<div class=""well well-sm searchResultsCount"">
-					Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
+
+			// Render out the results or error if the results had errors
+			if( arguments.searchResults.getError() ){
+				writeOutput( "
+					<div class='searchResults'>
+						<h2>Error Running Search</h2>
+						<p>
+							#arrayToList(
+								arguments.searchResults.getErrorMessages(),
+								"<br>"
+							)#
+						</p>
+					</div>
+				" );
+			} else {
+				writeOutput( "
+				<div class=""searchResults"">
+					<div class=""well well-sm searchResultsCount"">
+						Found <strong>#total#</strong> results in <strong>#arguments.searchResults.getSearchTime()#</strong>ms!
 				</div>
-			"
-			);
+				" );
+			}
 
+			// Render out the items
 			for ( var item in searchItems ) {
-				writeOutput(
-					"
-				<div class=""panel panel-default"">
-  					<div class=""panel-heading"">
-						<a href=""#cb.linkContent( item )#"" class=""panel-title"">#item.getTitle()#</a>
-					</div>
-					<div class=""panel-body"">
-						<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ) )#</p>
-						<cite><span class=""label label-primary"">#item.getContentType()#</span> : <a href=""#cb.linkContent( item )#"">#cb.linkContent( item )#</a></cite><br/>
-					</div>
-				"
-				);
-
+				writeOutput("
+					<div class=""panel panel-default"">
+						<div class=""panel-heading"">
+							<a href=""#cb.linkContent( item )#"" class=""panel-title"">#item.getTitle()#</a>
+						</div>
+						<div class=""panel-body"">
+							<p>#highlightSearchTerm( searchTerm, stripHTML( item.renderContent() ) )#</p>
+							<cite><span class=""label label-primary"">#item.getContentType()#</span> : <a href=""#cb.linkContent( item )#"">#cb.linkContent( item )#</a></cite><br/>
+						</div>
+				");
 
 				if ( item.hasCategories() ) {
 					writeOutput( "<div class=""panel-footer""><cite>Categories: " );
@@ -153,7 +165,8 @@ component accessors="true" singleton {
 
 	/**
 	 * Utility function to help you highlight search terms in content
-	 * @term The search term
+	 *
+	 * @term    The search term
 	 * @content The content searched
 	 */
 	private function highlightSearchTerm( required term, required content ){

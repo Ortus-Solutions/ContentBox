@@ -21,14 +21,15 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 
 	/**
 	 * This widget creates a simple ContentBox search form
-	 * @type.hint The type of search form: content or blog, default is content
-	 * @label.hint The label to use, defaults to 'Search for:'
-	 * @title.hint The title to show before the dropdown or list, defaults to H2
-	 * @titleLevel.hint The H{level} to use, by default we use H2
+	 *
+	 * @type.hint        The type of search form: content or blog, default is content
+	 * @label.hint       The label to use, defaults to 'Search for:'
+	 * @title.hint       The title to show before the dropdown or list, defaults to H2
+	 * @titleLevel.hint  The H{level} to use, by default we use H2
 	 * @placeholder.hint Add a placeholder to the query textfield
-	 * @querycss.hint The css classes of the textfield query
-	 * @buttoncss.hint The search button css classes
-	 * @formcss.hint The form css classes
+	 * @querycss.hint    The css classes of the textfield query
+	 * @buttoncss.hint   The search button css classes
+	 * @formcss.hint     The form css classes
 	 */
 	any function renderIt(
 		string type        = "content",

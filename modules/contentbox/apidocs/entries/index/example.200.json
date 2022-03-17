@@ -1,0 +1,53 @@
+{
+	"data": [
+		{
+			"excerpt": "",
+			"numberOfVersions": "1",
+			"cache": true,
+			"createdDate": "2021-06-24T21:51:11+00:00",
+			"numberOfHits": "2",
+			"cacheTimeout": 0,
+			"isPublished": true,
+			"contentType": "Entry",
+			"modifiedDate": "2021-06-24T21:51:11+00:00",
+			"parent": {},
+			"lastEditor": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"showInSearch": true,
+			"featuredImage": "",
+			"numberOfComments": "1",
+			"isDeleted": false,
+			"creator": {
+				"avatarLink": "//www.gravatar.com/avatar.php?gravatar_id=45328ad90038eed3577acaf74ec109fd&s=40&r=PG",
+				"name": "Luis Majano",
+				"authorID": "ff8081817a3ffffe017a400155fb002f",
+				"email": "lmajano@ortussolutions.com"
+			},
+			"slug": "my-first-entry",
+			"contentID": "ff8081817a3ffffe017a400165520082",
+			"siteID": "ff8081817a3ffffe017a40015861004c",
+			"publishedDate": "2021-06-24T21:51:11+00:00",
+			"categories": [],
+			"markup": "HTML",
+			"expireDate": "",
+			"title": "My first entry",
+			"numberOfChildren": "0",
+			"featuredImageURL": "",
+			"allowComments": true,
+			"cacheLastAccessTimeout": 0
+		}
+	],
+	"error": false,
+	"pagination": {
+		"totalPages": 1,
+		"maxRows": 25,
+		"offset": 0,
+		"page": 1,
+		"totalRecords": 1
+	},
+	"messages": []
+}
