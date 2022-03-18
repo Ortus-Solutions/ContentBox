@@ -114,33 +114,21 @@ component extends="content" {
 	 * @prc  
 	 */
 	function index( event, rc, prc ){
-		// incoming params
-		event.paramValue( "pageSlug", "" );
-		var incomingURL = "";
+		// Routing placeholder
+		event.paramValue( "pageUri", "" );
 
-		// Do we have an override page setup by the settings?
-		if ( !structKeyExists( prc, "pageOverride" ) ) {
-			// Try slug parsing for hiearchical URLs
-			incomingURL = reReplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" );
-		} else {
-			incomingURL = prc.pageOverride;
-		}
+		// Detect full page uri or override it via a prehandler check
+		rc.pageUri = isNull( prc.pageOverride ) ? reReplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" ) : prc.pageOverride;
 
-		// Entry point cleanup
+		// Cleanup the module entry point if any
 		if ( len( prc.cbEntryPoint ) ) {
-			incomingURL = replaceNoCase( incomingURL, prc.cbEntryPoint & "/", "" );
-		}
-
-		// get the author and do publish unpublished tests
-		var showUnpublished = false;
-		if ( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ) {
-			var showUnpublished = true;
+			rc.pageUri = replaceNoCase( rc.pageUri, prc.cbEntryPoint & "/", "" );
 		}
 
 		// Try to get the page using the incoming URI
 		prc.page = variables.pageService.findBySlug(
-			slug           : incomingURL,
-			showUnpublished: showUnpublished,
+			slug           : rc.pageUri,
+			showUnpublished: ( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ) ? true : false,
 			siteID         : prc.oCurrentSite.getsiteID()
 		);
 
@@ -151,7 +139,7 @@ component extends="content" {
 			// Retrieve Comments
 			// TODO: paging
 			if ( prc.page.getAllowComments() ) {
-				var commentResults = commentService.findAllApproved(
+				var commentResults = variables.commentService.findAllApproved(
 					contentID = prc.page.getContentID(),
 					sortOrder = "asc"
 				);
@@ -162,43 +150,46 @@ component extends="content" {
 				prc.commentsCount = 0;
 			}
 			// Detect Mobile Device
-			var isMobileDevice = mobileDetector.isMobile();
+			prc.isMobileDevice = variables.mobileDetector.isMobile();
 			// announce event
-			announce( "cbui_onPage", { page : prc.page, isMobile : isMobileDevice } );
+			announce( "cbui_onPage", { page : prc.page, isMobile : prc.isMobileDevice } );
 			// Use the mobile or standard layout
 			var thisLayout = (
-				isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance()
+				prc.isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance()
 			);
 			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
 			verifyPageLayout( thisLayout );
 			// Verify No Layout
 			if ( thisLayout eq "-no-layout-" ) {
 				return prc.page.renderContent();
-			} else {
-				// set skin view
-				event
-					.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
-					.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			}
-		} else {
-			// missing page
-			prc.missingPage      = incomingURL;
-			prc.missingRoutedURL = event.getCurrentRoutedURL();
-			// announce event
-			announce(
-				"cbui_onPageNotFound",
-				{
-					page        : prc.page,
-					missingPage : prc.missingPage,
-					routedURL   : prc.missingRoutedURL
-				}
-			);
-			// set skin not found
+			// set layout + view combo
 			event
-				.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
-				.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
-				.setHTTPHeader( "404", "Page not found" );
+				.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
+				.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
+			return;
 		}
+		// end if page was loaded
+
+		// missing page
+		prc.missingPage      = rc.pageUri;
+		prc.missingRoutedURL = event.getCurrentRoutedURL();
+
+		// announce event
+		announce(
+			"cbui_onPageNotFound",
+			{
+				page        : prc.page,
+				missingPage : prc.missingPage,
+				routedURL   : prc.missingRoutedURL
+			}
+		);
+
+		// Not Found layout + view
+		event
+			.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
+			.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
+			.setHTTPHeader( "404", "Page not found" );
 	}
 
 	/**
