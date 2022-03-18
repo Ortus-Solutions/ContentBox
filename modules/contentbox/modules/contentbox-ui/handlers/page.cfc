@@ -91,7 +91,7 @@ component extends="content" {
 	}
 
 	/**
-	 * Around page advice that provides caching and multi-output format
+	 * Around page advice that provides caching and multi-output format for page rendering
 	 *
 	 * @event         
 	 * @rc            
@@ -114,32 +114,22 @@ component extends="content" {
 	 * @prc  
 	 */
 	function index( event, rc, prc ){
-		// incoming params
 		event.paramValue( "pageSlug", "" );
-		var incomingURL = "";
 
-		// Do we have an override page setup by the settings?
-		if ( !structKeyExists( prc, "pageOverride" ) ) {
-			// Try slug parsing for hiearchical URLs
-			incomingURL = reReplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" );
-		} else {
-			incomingURL = prc.pageOverride;
-		}
+		// Detect the FULL incoming page URI, we can't use rc.pageSlug because this is just the route marker ':/pageSlug'
+		rc.pageSlug = isNull( prc.pageOverride ) ? reReplaceNoCase( event.getCurrentRoutedURL(), "\/$", "" ) : prc.pageOverride;
 
-		// Entry point cleanup
+		// ContentBox UI Module Entry point cleanup if any
 		if ( len( prc.cbEntryPoint ) ) {
-			incomingURL = replaceNoCase( incomingURL, prc.cbEntryPoint & "/", "" );
+			rc.pageSlug = replaceNoCase( rc.pageSlug, prc.cbEntryPoint & "/", "" );
 		}
 
 		// get the author and do publish unpublished tests
-		var showUnpublished = false;
-		if ( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ) {
-			var showUnpublished = true;
-		}
+		var showUnpublished = ( prc.oCurrentAuthor.isLoaded() AND prc.oCurrentAuthor.isLoggedIn() ) ? true : false;
 
-		// Try to get the page using the incoming URI
+		// Try to get the page using the incoming page URI
 		prc.page = variables.pageService.findBySlug(
-			slug           : incomingURL,
+			slug           : rc.pageSlug,
 			showUnpublished: showUnpublished,
 			siteID         : prc.oCurrentSite.getsiteID()
 		);
@@ -174,31 +164,70 @@ component extends="content" {
 			// Verify No Layout
 			if ( thisLayout eq "-no-layout-" ) {
 				return prc.page.renderContent();
-			} else {
-				// set skin view
-				event
-					.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
-					.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			}
-		} else {
-			// missing page
-			prc.missingPage      = incomingURL;
-			prc.missingRoutedURL = event.getCurrentRoutedURL();
-			// announce event
-			announce(
-				"cbui_onPageNotFound",
-				{
-					page        : prc.page,
-					missingPage : prc.missingPage,
-					routedURL   : prc.missingRoutedURL
-				}
-			);
-			// set skin not found
+			// set skin view
 			event
-				.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
-				.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
-				.setHTTPHeader( "404", "Page not found" );
+				.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
+				.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
+			return;
 		}
+
+		// Check for implicit static content rendering
+		var renderer   = variables.controller.getRenderer();
+		var staticView = locateStaticContent( rc.pageSlug, prc.oCurrentSite );
+		// We found it
+		switch ( staticView.type ) {
+			case "cfm": {
+				event
+					.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
+					.setView( view = staticView.view );
+				return;
+			}
+			case "md": {
+				return getInstance( "Processor@cbmarkdown" ).toHTML( fileRead( staticView.view ) );
+			}
+		}
+
+		// missing page
+		prc.missingPage      = rc.pageSlug;
+		prc.missingRoutedURL = event.getCurrentRoutedURL();
+		// announce event
+		announce(
+			"cbui_onPageNotFound",
+			{
+				page        : prc.page,
+				missingPage : prc.missingPage,
+				routedURL   : prc.missingRoutedURL
+			}
+		);
+		// set skin not found
+		event
+			.setLayout( name = "#prc.cbTheme#/layouts/pages", module = prc.cbThemeRecord.module )
+			.setView( view = "#prc.cbTheme#/views/notfound", module = prc.cbThemeRecord.module )
+			.setHTTPHeader( "404", "Page not found" );
+	}
+
+	/**
+	 *
+	 * @view The view to locate
+	 * @site The site we are on
+	 */
+	private function locateStaticContent( required view, required site ){
+		var siteViewsPath = expandPath(
+			"/#getSetting( "appMapping" )#/#getColdBoxSetting( "viewsConvention" )#/sites/#arguments.site.getSlug()#/#arguments.view#"
+		);
+
+		if ( fileExists( siteViewsPath & ".cfm" ) ) {
+			return {
+				type : "cfm",
+				view : "sites/#arguments.site.getSlug()#/#arguments.view#"
+			};
+		}
+		if ( fileExists( siteViewsPath & ".md" ) ) {
+			return { type : "md", view : siteViewsPath & ".md" };
+		}
+
+		return { type : "", view : "" };
 	}
 
 	/**
@@ -234,8 +263,7 @@ component extends="content" {
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
 			prc.searchResults        = getInstance( "SearchResults@contentbox" );
-			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>
-";
+			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
 
 		// set skin search
@@ -326,6 +354,8 @@ component extends="content" {
 	 * Verify if a chosen page layout exists or not.
 	 *
 	 * @layout The layout to verify
+	 *
+	 * @throws ContentBox.InvalidPageLayout When the requested layout doesn't exist on disk on the theme
 	 */
 	private function verifyPageLayout( required layout ){
 		var excluded = "-no-layout-";
