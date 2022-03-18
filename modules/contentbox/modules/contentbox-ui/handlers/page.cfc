@@ -157,9 +157,7 @@ component extends="content" {
 			var thisLayout = (
 				prc.isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance()
 			);
-			// Verify chosen page layout exists in theme, just in case they moved theme so we can produce a good error message
-			verifyPageLayout( thisLayout );
-			// Verify No Layout
+			// No layout, just render it out
 			if ( thisLayout eq "-no-layout-" ) {
 				return prc.page.renderContent();
 			}
@@ -225,8 +223,7 @@ component extends="content" {
 			prc.searchResultsContent = searchAdapter.renderSearchWithResults( prc.searchResults );
 		} else {
 			prc.searchResults        = getInstance( "SearchResults@contentbox" );
-			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>
-";
+			prc.searchResultsContent = "<div class='alert alert-info'>Please enter a search term to search on.</div>";
 		}
 
 		// set skin search
@@ -311,27 +308,6 @@ component extends="content" {
 	 */
 	private function getContentTypeService( contentType = "page" ){
 		return ( arguments.contentType == "page" ? variables.pageService : variables.contentService );
-	}
-
-	/**
-	 * Verify if a chosen page layout exists or not.
-	 *
-	 * @layout The layout to verify
-	 */
-	private function verifyPageLayout( required layout ){
-		var excluded = "-no-layout-";
-		// Verify exclusions
-		if ( listFindNoCase( excluded, arguments.layout ) ) {
-			return;
-		}
-		// Verify layout
-		if ( !fileExists( expandPath( CBHelper.themeRoot() & "/layouts/#arguments.layout#.cfm" ) ) ) {
-			throw(
-				message = "The layout of the page: '#arguments.layout#' does not exist in the current theme.",
-				detail  = "Please verify your page layout settings",
-				type    = "ContentBox.InvalidPageLayout"
-			);
-		}
 	}
 
 }
