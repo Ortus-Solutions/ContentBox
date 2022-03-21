@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ----
 
+## [5.1.1] => 2022-MAR-17
+
+### Fixed
+
+- Master artifact was stuck at `-snapshot` fix with master artifact
+
+### Improvements
+
+- [CONTENTBOX-1412](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1412) VerifyPageLayout\(\) on the page rendering touches the filesystem on each request, removing this as it is not needed
+- [CONTENTBOX-1368](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1368) rc.pageUri is only the first segment of the actual slug, now it contains the full hierarchical slug
+
+
+----
+
 ## [5.1.0] => 2022-MAR-17
 
 ### Fixed
