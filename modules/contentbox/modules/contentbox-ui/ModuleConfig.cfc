@@ -137,7 +137,7 @@ component {
 			},
 			// Catch All Page Routing
 			{
-				pattern : "/:pageSlug",
+				pattern : "/:pageUri",
 				handler : "page",
 				action  : "index"
 			},
