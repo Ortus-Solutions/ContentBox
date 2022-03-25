@@ -1,5 +1,5 @@
 /**
- * Update a v4 Installation to v5.0.0
+ * Update a v4 Installation to v5
  */
 component {
 
@@ -8,7 +8,7 @@ component {
 		variables.cwd = getCWD();
 		variables.tempFolder = variables.cwd & "__temp";
 
-		variables.targetVersion = "5.0.0";
+		variables.targetVersion = "5";
 
 		if( directoryExists( variables.tempFolder ) ){
 			directoryDelete( variables.tempFolder, true );
@@ -84,7 +84,7 @@ component {
 		// Update ContentBox
 		print.blueLine( "Uninstalling current version of the ContentBox module..." ).toConsole();
 		command( "uninstall contentbox" ).run();
-		print.blueLine( "Installing ContentBox v5.0.0" ).toConsole();
+		print.blueLine( "Installing ContentBox v#variables.targetVersion#" ).toConsole();
 		command( "install contentbox@#variables.targetVersion# --save" ).run();
 		print.greenLine( "√ ContentBox v5 Installed!" ).toConsole();
 
@@ -104,7 +104,7 @@ component {
 
 		// Final Comment
 		print.boldRedLine(
-			"√ Eureka!  You are now ready to startup your engines and run ContentBox v5.0.0!"
+			"√ Eureka!  You are now ready to startup your engines and run ContentBox v#variables.targetVersion#!"
 		)
 		.toConsole();
 	}
