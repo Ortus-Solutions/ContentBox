@@ -54,25 +54,12 @@ component {
 			return;
 		}
 
-		// install contentbox-site so we can copy over new assets and run our migrations
+		// Install ContentBox
 		print.blueLine( "Downloading ContentBox v#variables.targetVersion# assets to __temp folder..." ).toConsole();
 		command( "install contentbox-site@#variables.targetVersion#" )
 			.inWorkingDirectory( variables.tempFolder )
 			.run();
 		print.greenLine( "√ ContentBox assets downloaded!" ).toConsole();
-
-		// Copy over migration resources
-		print.blueLine( "Installing new ContentBox resources folder..." ).toConsole();
-		if( !directoryExists( variables.cwd & "resources" ) ){
-			directoryCreate( variables.cwd & "resources" );
-		};
-		copy( variables.tempFolder & "/resources", variables.cwd & "resources" );
-		print.greenLine( "√ ContentBox resources installed!" ).toConsole();
-
-		// Run Migrations
-		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
-		command( "run-script contentbox:migrate:up" ).run();
-		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Update ColdBox
 		print.blueLine( "Uninstalling current version of ColdBox..." ).toConsole();
@@ -97,10 +84,15 @@ component {
 		print.greenLine( "√ New ContentBox bin folder installed!" ).toConsole();
 
 		// Copy over new files
-		replaceNewFiles();
+		replaceNewSiteFiles();
 
 		// Remove temp folder
 		directoryDelete( variables.tempFolder, true );
+
+		// Run Migrations
+		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
+		command( "run-script contentbox:migrate:up" ).run();
+		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Final Comment
 		print.boldRedLine(
@@ -109,7 +101,7 @@ component {
 		.toConsole();
 	}
 
-	function replaceNewFiles(){
+	function replaceNewSiteFiles(){
 		print.blueLine( "Starting to deploy new files..." ).line().toConsole();
 
 		var files = [
