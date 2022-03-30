@@ -101,6 +101,12 @@ component accessors="true" singleton threadSafe {
 	 */
 	any function setting( required key, defaultValue ){
 		var prc = getPrivateRequestCollection();
+
+		// See if all the settings are loaded, else lazy load them
+		if( isNull( prc.cbSettings ) || structIsEmpty( prc.cbSettings ) ){
+			prc.cbSettings = variables.settingService.getAllSettings()
+		}
+
 		// return setting if it exists
 		if ( structKeyExists( prc.cbSettings, arguments.key ) ) {
 			return prc.cbSettings[ key ];
@@ -127,6 +133,11 @@ component accessors="true" singleton threadSafe {
 	 */
 	any function siteSetting( required key, defaultValue ){
 		var prc = getPrivateRequestCollection();
+
+		// See if all the settings are loaded, else lazy load them
+		if( isNull( prc.cbSiteSettings ) || structIsEmpty( prc.cbSiteSettings ) ){
+			prc.cbSiteSettings = variables.settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() )
+		}
 
 		// return setting if it exists
 		if ( structKeyExists( prc.cbSiteSettings, arguments.key ) ) {
@@ -298,14 +309,20 @@ component accessors="true" singleton threadSafe {
 	 */
 	function siteRoot( string siteID = "" ){
 		// Return the appropriate site Uri
-		return this.site( arguments.siteID ).getSiteRoot() & getPrivateRequestCollection().cbEntryPoint;
+		return this.site( arguments.siteID ).getSiteRoot() & getModuleConfig( "contentbox-ui" ).entryPoint;
 	}
 
 	/**
-	 * Get the site base html ref URL
+	 * Get the HTML base URL that is used for the HTML <base> tag. This also accounts for SSL or not.
+	 *
+	 * @siteID The site id to get the root from, by default we use the current site you are on
 	 */
-	function siteBaseURL(){
-		return getRequestContext().getHTMLBaseUrl();
+	function siteBaseURL( string siteID = "" ){
+		return reReplaceNoCase(
+			this.siteRoot( arguments.siteID ),
+			"index.cfm\/?",
+			""
+		);
 	}
 
 	/**
