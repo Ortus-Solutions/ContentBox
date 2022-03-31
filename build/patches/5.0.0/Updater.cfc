@@ -1,5 +1,5 @@
 /**
- * Update a v4 Installation to v5.0.0
+ * Update a v4 Installation to v5
  */
 component {
 
@@ -8,7 +8,7 @@ component {
 		variables.cwd = getCWD();
 		variables.tempFolder = variables.cwd & "__temp";
 
-		variables.targetVersion = "5.0.0";
+		variables.targetVersion = "5";
 
 		if( directoryExists( variables.tempFolder ) ){
 			directoryDelete( variables.tempFolder, true );
@@ -54,25 +54,12 @@ component {
 			return;
 		}
 
-		// install contentbox-site so we can copy over new assets and run our migrations
+		// Install ContentBox
 		print.blueLine( "Downloading ContentBox v#variables.targetVersion# assets to __temp folder..." ).toConsole();
 		command( "install contentbox-site@#variables.targetVersion#" )
 			.inWorkingDirectory( variables.tempFolder )
 			.run();
 		print.greenLine( "√ ContentBox assets downloaded!" ).toConsole();
-
-		// Copy over migration resources
-		print.blueLine( "Installing new ContentBox resources folder..." ).toConsole();
-		if( !directoryExists( variables.cwd & "resources" ) ){
-			directoryCreate( variables.cwd & "resources" );
-		};
-		copy( variables.tempFolder & "/resources", variables.cwd & "resources" );
-		print.greenLine( "√ ContentBox resources installed!" ).toConsole();
-
-		// Run Migrations
-		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
-		command( "run-script contentbox:migrate:up" ).run();
-		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
 
 		// Update ColdBox
 		print.blueLine( "Uninstalling current version of ColdBox..." ).toConsole();
@@ -84,7 +71,7 @@ component {
 		// Update ContentBox
 		print.blueLine( "Uninstalling current version of the ContentBox module..." ).toConsole();
 		command( "uninstall contentbox" ).run();
-		print.blueLine( "Installing ContentBox v5.0.0" ).toConsole();
+		print.blueLine( "Installing ContentBox v#variables.targetVersion#" ).toConsole();
 		command( "install contentbox@#variables.targetVersion# --save" ).run();
 		print.greenLine( "√ ContentBox v5 Installed!" ).toConsole();
 
@@ -97,19 +84,24 @@ component {
 		print.greenLine( "√ New ContentBox bin folder installed!" ).toConsole();
 
 		// Copy over new files
-		replaceNewFiles();
+		replaceNewSiteFiles();
 
 		// Remove temp folder
 		directoryDelete( variables.tempFolder, true );
 
+		// Run Migrations
+		print.blueLine( "Migrating your database to version: #variables.targetVersion#..." ).toConsole();
+		command( "run-script contentbox:migrate:up" ).run();
+		print.greenLine( "√ Database migrated! Let's do some code now." ).toConsole();
+
 		// Final Comment
 		print.boldRedLine(
-			"√ Eureka!  You are now ready to startup your engines and run ContentBox v5.0.0!"
+			"√ Eureka!  You are now ready to startup your engines and run ContentBox v#variables.targetVersion#!"
 		)
 		.toConsole();
 	}
 
-	function replaceNewFiles(){
+	function replaceNewSiteFiles(){
 		print.blueLine( "Starting to deploy new files..." ).line().toConsole();
 
 		var files = [

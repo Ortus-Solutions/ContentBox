@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ----
 
+## [5.1.2] => 2022-MAR-31
+
+### Fixed
+
+- [CONTENTBOX-1415](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1415) 5.x Updater was not running the right migrations
+- [CONTENTBOX-1414](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1414) Migration names cannot have a period or the migrations fail due to a CFC instantiation issue
+- [CONTENTBOX-1413](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1413) CBHelper siteBaseURL is not accounting for multi-site
+
+----
+
 ## [5.1.1] => 2022-MAR-17
 
 ### Fixed
@@ -17,7 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [CONTENTBOX-1412](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1412) VerifyPageLayout\(\) on the page rendering touches the filesystem on each request, removing this as it is not needed
 - [CONTENTBOX-1368](https://ortussolutions.atlassian.net/browse/CONTENTBOX-1368) rc.pageUri is only the first segment of the actual slug, now it contains the full hierarchical slug
-
 
 ----
 

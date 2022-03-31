@@ -24,6 +24,11 @@ component{
 	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
 
+	/**************************************
+	TESTING ENV
+	**************************************/
+	createObject( "java", "java.lang.System" ).setProperty( "ENVIRONMENT", "testing" );
+
 	// FILL OUT: THE LOCATION OF THE CONTENTBOX MODULE
 	rootPath = replacenocase( replacenocase( getDirectoryFromPath( getCurrentTemplatePath() ), "tests\", "" ), "tests/", "" );
 
