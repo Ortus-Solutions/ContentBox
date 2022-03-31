@@ -104,7 +104,7 @@ component accessors="true" singleton threadSafe {
 
 		// See if all the settings are loaded, else lazy load them
 		if( isNull( prc.cbSettings ) || structIsEmpty( prc.cbSettings ) ){
-			prc.cbSettings = variables.settingService.getAllSettings()
+			prc.cbSettings = variables.settingService.getAllSettings();
 		}
 
 		// return setting if it exists
