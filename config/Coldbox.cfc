@@ -444,6 +444,13 @@ component {
 	}
 
 	/**
+	 * Testing Mode.
+	 */
+	function testing(){
+		development();
+	}
+
+	/**
 	 * Development environment
 	 * ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
 	 */
