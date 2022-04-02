@@ -126,7 +126,21 @@
 	if( a == "out" ){
 		el.classList.add( "slide_out" );
 	}
-	
+	// Close the dropdown if the user clicks outside of it
+	window.onclick = function( e ) {
+		if ( !e.target.closest( '.cb-adminbar__dropdown-toggle' )
+			&& !e.target.closest( '.cb-adminbar__dropdown-menu' ) 
+			) {
+			var dropdowns = document.getElementsByClassName( "cb-adminbar__dropdown" );
+			var i;
+			for ( i = 0; i < dropdowns.length; i++ ) {
+				var openDropdown = dropdowns[i];
+				if ( openDropdown.classList.contains( 'active' ) ) {
+					openDropdown.classList.remove( 'active' );
+				}
+			}
+		}
+	};
 	function insertAdminBar(){
 		document.body.insertBefore(
 			document.getElementById( 'cb-adminbar' ),
