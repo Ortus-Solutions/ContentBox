@@ -20,7 +20,6 @@
     .cb-adminbar__toggle {
         background: ##333;
         border-radius: 0px 0px 5px 5px;
-        color: ##fff;
         padding: 8px;
         position: absolute;
         left: 0px;
@@ -39,16 +38,16 @@
     .cb-adminbar__content {
         display: flex;
     }
-    .cb-adminbar__menu {
-        display: flex;
-        list-style: none;
-        margin: 0px;
-    } 
     .cb-adminbar__brand {
         padding: 0.5rem;
         margin-left: 40px;
         cursor: pointer;
     }
+    .cb-adminbar__menu {
+        display: flex;
+        list-style: none;
+        margin: 0px;
+    } 
     .cb-adminbar__icon {
         display: inline-block;
         margin-right: 5px;
@@ -83,6 +82,7 @@
     }
     .cb-adminbar__dropdown-menu ul {
         border-top: 1px solid ##3f3f3f;
+        list-style: none;
         margin: 0px;
         margin-top: 10px;
         padding: 0px;
@@ -94,6 +94,8 @@
     }
     .cb-adminbar__dropdown-menu ul > li a:hover {
         background-color: ##222;
+        color: ##8fc73e;
+        text-decoration: none;
     }
     .cb-adminbar__dropdown.active .cb-adminbar__dropdown-menu {
         display: block;
