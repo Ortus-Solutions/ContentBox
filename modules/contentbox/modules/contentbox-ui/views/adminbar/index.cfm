@@ -12,13 +12,13 @@
 			<cfif !isNull( args.oContent )>
 				<nav id="cb-adminbar__actions" aria-label="Page Admin Menu">
 					<ul class="cb-adminbar__menu">
-						<li class="cb-adminbar__menu-item">
-							<button type="button" class="cb-adminbar-popover-trigger info">
+						<li class="cb-adminbar__menu-item cb-adminbar__dropdown">
+							<button type="button" class="cb-adminbar__dropdown-toggle info" onclick="toggleDropdown(event, this )">
 								<svg class="cb-adminbar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
 								<span class="menu-heading">Page Info</span>
 							</button>
 							<!--- Page Info --->
-							<div class="cb-adminbar-popover">
+							<div class="cb-adminbar__dropdown-menu">
 								<cfif !isNull( args.oContent )>
 									<span class="admin-bar-label publisher">
 										<strong>Published:</strong><br/> #args.oContent.getActiveContent().getDisplayCreatedDate()#
