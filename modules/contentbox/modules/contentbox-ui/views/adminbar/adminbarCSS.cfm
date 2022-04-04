@@ -110,7 +110,7 @@
         z-index: 1000;
         display: none;
     }
-    .cb-adminbar-popover img {
+    .publisher img {
         display: inline-block;
     }
     ##avatar {
