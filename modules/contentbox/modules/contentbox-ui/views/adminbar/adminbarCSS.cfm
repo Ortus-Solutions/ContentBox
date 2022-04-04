@@ -8,6 +8,7 @@
         font-size: .875rem;
         top: 0;
         left: 0;
+        padding-right: 10px;
         position: fixed;
         right: 0;
         transition: all 1s ease;
@@ -38,9 +39,6 @@
     .cb-adminbar__content {
         display: flex;
     }
-    ##cb-adminbar__actions{
-        flex-grow: 2;
-    }
     .cb-adminbar__menu {
         display: flex;
         list-style: none;
@@ -48,7 +46,7 @@
     } 
     .cb-adminbar__brand {
         padding: 0.5rem;
-        margin-left: 45px;
+        margin-left: 40px;
         cursor: pointer;
     }
     .cb-adminbar__icon {
@@ -63,14 +61,14 @@
     .cb-adminbar-popover-trigger, .cb-adminbar__dropdown-toggle {
         padding: 0.5rem
     }
-    .cb-adminbar-popover-trigger:hover + .cb-adminbar-popover{
+    .cb-adminbar-popover-trigger:hover + .cb-adminbar-popover, .cb-adminbar-popover-trigger:focus + .cb-adminbar-popover{
         display: block;
     }
-    .cb-adminbar__menu-item a, .cb-adminbar__menu-item button {
+    .cb-adminbar__menu-item a, .cb-adminbar__menu-item button, .cb-adminbar__brand {
         color: ##fff;
-        padding: 0.5rem;
         display: inline-block;
         line-height: 25px;
+        padding: 0.5rem;
     }
     
     .cb-adminbar__brand:hover, 
@@ -80,6 +78,8 @@
     .cb-adminbar__menu-item button:hover,
     .cb-adminbar__menu-item button:focus {
         background: ##222;
+        color: ##8fc73e;
+        text-decoration: none;
     }
     .cb-adminbar__dropdown-menu ul {
         border-top: 1px solid ##3f3f3f;
@@ -113,7 +113,6 @@
     }
     ##avatar {
         display: flex;
-        padding-right: 20px;
         align-items: center;
     }
     ##avatar .cb-adminbar__dropdown-menu {
@@ -158,9 +157,16 @@
           display: none;
         }
     }
-    
-    @media (max-width: 480px) {
-        .cb-adminbar__menu-item .edit, .cb-adminbar__menu-item .clear-cache{
+    @media ( min-width: 478px ) {
+        ##cb-adminbar__actions {
+            flex-grow: 2;
+        }
+    }
+    @media (max-width: 479px) {
+        .cb-adminbar__content {
+            justify-content: space-between;
+        }
+        ##cb-adminbar__actions {
               display: none;
         }
     }
@@ -174,4 +180,4 @@
     
     }
     </style>
-    </cfoutput>
+</cfoutput>
