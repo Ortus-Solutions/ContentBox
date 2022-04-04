@@ -2,7 +2,7 @@
 	<div id="cb-adminbar">	
 		<div class="cb-adminbar__content">
 			<a href="#cb.linkAdmin()#" target="_blank" class="cb-adminbar__brand">
-				<svg class="cb-adminbar__icon" id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 29.6">
+				<svg class="cb-adminbar__icon" id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 29.6" aria-label="Site Admin">
 					<path d="M25.6,5.3c-3.4-2.7-11.3-4.6-17.4,1.4C1.8,14.8,4.6,26.8,17,28c6.8-.2,10.1-3.1,10.1-3.1,.7-.1-8.9,9-20.8,1.9C.7,22.9-.7,16.9,.3,12,1.2,7.2,4.7,3.4,6.7,2.3c8.9-5.5,17.4,.3,18.9,3Z" style="fill:##8fc73e; fill-rule:evenodd;"/>
 					<path d="M21.7,4.7s5.3,1.6,5.8,9.3c.6,7.8-8.4,11.7-13.7,9.8-5.2-1.5-7.7-8.2-7.2-12.5-.5,.8-1.1,6.8,1.1,10.5,3,4.7,13.1,8.5,19.8,.7,5-6.2,1-14-.1-14.5-.6-1-4-3.1-5.7-3.3Z" style="fill:##8fc73e; fill-rule:evenodd;"/>
 					<path d="M9.1,10.4s5.5-5.8,11.3-1.3c5.4,5,1.3,11.3-.9,12.1-1.9,1.4-6,1.4-6,1.4,1.3,.6,9,1.5,11.3-5.7,1.8-7.1-4.4-11.1-7.8-11.2-4.7,0-7,2.4-8,4.7Z" style="fill:##8fc73e; fill-rule:evenodd;"/>
