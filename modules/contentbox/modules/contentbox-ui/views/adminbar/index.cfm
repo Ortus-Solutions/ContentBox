@@ -9,18 +9,19 @@
 				</svg>
 				<span class="menu-heading">&nbsp; #prc.oCurrentSite.getName()# Site</span>
 			</a>
-			<nav id="cb-adminbar__actions" aria-label="Page Admin Menu">
-				<ul class="cb-adminbar__menu">
-					<cfif !isNull( args.oContent )>
+			<cfif !isNull( args.oContent )>
+				<nav id="cb-adminbar__actions" aria-label="Page Admin Menu">
+					<ul class="cb-adminbar__menu">
 						<li class="cb-adminbar__menu-item">
-							<button type="button" class="cb-adminbar-popover-trigger">
+							<button type="button" class="cb-adminbar-popover-trigger info">
 								<svg class="cb-adminbar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-								Page Info
+								<span class="menu-heading">Page Info</span>
 							</button>
+							<!--- Page Info --->
 							<div class="cb-adminbar-popover">
 								<cfif !isNull( args.oContent )>
 									<span class="admin-bar-label publisher">
-										 <strong>Published:</strong><br/> #args.oContent.getActiveContent().getDisplayCreatedDate()#
+										<strong>Published:</strong><br/> #args.oContent.getActiveContent().getDisplayCreatedDate()#
 									</span><br/>
 									<span class="admin-bar-label publisher">
 										#getInstance( "Avatar@contentbox" ).renderAvatar(
@@ -52,8 +53,7 @@
 									</span><br/>
 								</cfif>
 							</div>
-						</li>	
-									
+						</li>						
 						<li class="cb-adminbar__menu-item">
 							<a href="#args.linkEdit#" class="edit" target="_blank">
 								<svg class="cb-adminbar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -97,9 +97,9 @@
 								</a>
 							</li>
 						</cfif>
-					</cfif>
-				</ul>
-			</nav>
+					</ul>
+				</nav>
+			</cfif>
 			<div id="avatar">
 				<div class="cb-adminbar__dropdown">
 					<button type="button" class="cb-adminbar__dropdown-toggle" onclick="toggleDropdown(event, this )">
@@ -120,9 +120,9 @@
 						</li>
 					</div>
 				</div>
-			</div>
+			</div> 
 		</div>
-		<!-- Toggle -->
+		<!--- Toggle --->
 		<button type="button" class="cb-adminbar__toggle" id="adminbar-toggle" onclick="toggleAdminBar()">
 			<svg class="svg-cheveron" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
 		</button>
