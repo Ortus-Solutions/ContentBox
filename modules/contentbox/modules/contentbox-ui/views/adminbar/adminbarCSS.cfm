@@ -148,7 +148,11 @@
         }
     } */
     
-    
+    @media ( max-width: 1023px) {
+        .cb-adminbar__menu-item .menu-heading {
+          display: none;
+        }
+    }
     @media (max-width: 768px) {
         .cb-adminbar__menu-item .custom_fields, .cb-adminbar__menu-item .seo, .cb-adminbar__menu-item .history{
           display: none;
