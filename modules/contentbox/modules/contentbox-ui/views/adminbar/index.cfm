@@ -7,6 +7,7 @@
 					<path d="M21.7,4.7s5.3,1.6,5.8,9.3c.6,7.8-8.4,11.7-13.7,9.8-5.2-1.5-7.7-8.2-7.2-12.5-.5,.8-1.1,6.8,1.1,10.5,3,4.7,13.1,8.5,19.8,.7,5-6.2,1-14-.1-14.5-.6-1-4-3.1-5.7-3.3Z" style="fill:##8fc73e; fill-rule:evenodd;"/>
 					<path d="M9.1,10.4s5.5-5.8,11.3-1.3c5.4,5,1.3,11.3-.9,12.1-1.9,1.4-6,1.4-6,1.4,1.3,.6,9,1.5,11.3-5.7,1.8-7.1-4.4-11.1-7.8-11.2-4.7,0-7,2.4-8,4.7Z" style="fill:##8fc73e; fill-rule:evenodd;"/>
 				</svg>
+				<span class="menu-heading">&nbsp; #prc.oCurrentSite.getName()# Site</span>
 			</a>
 			<nav id="cb-adminbar__actions" aria-label="Page Admin Menu">
 				<ul class="cb-adminbar__menu">
@@ -87,7 +88,6 @@
 				</ul>
 			</nav>
 			<div id="avatar">
-				<strong>#prc.oCurrentSite.getName()#</strong>
 				<div class="cb-adminbar__dropdown">
 					<button type="button" class="cb-adminbar__dropdown-toggle" onclick="toggleDropdown(event, this )">
 						#getInstance( "Avatar@contentbox" )
