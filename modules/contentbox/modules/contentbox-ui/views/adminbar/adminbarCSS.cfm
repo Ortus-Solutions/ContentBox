@@ -121,7 +121,7 @@
     }
     .cb-adminbar__dropdown-menu {
         position: absolute;
-        background: rgba(60,64,67,0.90);
+        background: rgba(34,34,34,0.90);
         -webkit-border-radius: 0px 0px 4px 4px;
         border-radius: 0px 0px 4px 4px;
         max-width: 250px;
