@@ -25,22 +25,19 @@
 							</button>
 							<!--- Page Info --->
 							<div id="cb-adminbar__info-dropdown" class="cb-adminbar__dropdown-menu">
-								<cfif !isNull( args.oContent )>
-									<span class="admin-bar-label publisher">
-										<strong>Published:</strong><br/> #args.oContent.getActiveContent().getDisplayCreatedDate()#
-									</span><br/>
-									<span class="admin-bar-label publisher">
-										#getInstance( "Avatar@contentbox" ).renderAvatar(
-											email	= args.oContent.getAuthorEmail(),
-											size	= "15",
-											class	= "img img-circle"
-										)#
-										#args.oContent.getAuthorName()#
-									</span><br/>
-								</cfif>
 								<cfif !args.oContent.getIsPublished()>
-									<span class="admin-bar-label-red">
+									<span class="cb-adminbar__badge bg-danger">
+										<svg class="cb-adminbar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path>
+										</svg>
 										<strong>Draft</strong>
+									</span></br>
+								<cfelse>
+									<span class="cb-adminbar__badge bg-success">
+										<svg class="cb-adminbar__icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+										</svg>
+										<strong>Published</strong>
 									</span></br>
 								</cfif>
 								<cfif args.oContent.isPublishedInFuture()>
@@ -48,6 +45,18 @@
 										<strong>Publishes on:</strong> <br/>#args.oContent.getDisplayPublishedDate()#
 									</span>
 								</cfif> 
+								<span class="admin-bar-label publisher">
+									<strong>Modified:</strong><br/> #args.oContent.getActiveContent().getDisplayCreatedDate()#
+								</span><br/>
+								<span class="admin-bar-label publisher">
+									#getInstance( "Avatar@contentbox" ).renderAvatar(
+										email	= args.oContent.getAuthorEmail(),
+										size	= "15",
+										class	= "img img-circle"
+									)#
+									#args.oContent.getAuthorName()#
+								</span><br/>
+								
 								<cfif args.oContent.getContentType() eq "Page">
 									<span class="admin-bar-label layout">
 										<strong>Layout:</strong> #args.oContent.getLayout()#

@@ -100,6 +100,23 @@
     .cb-adminbar__dropdown.active .cb-adminbar__dropdown-menu {
         display: block;
     }
+    .cb-adminbar__badge{
+        border-radius: 50rem;
+        float: right;
+        padding: 0.35em 0.65em;
+        font-size: .75em;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+    }
+    .cb-adminbar__badge.bg-success {
+        background-color: ##8fc73e;
+    }
+    .cb-adminbar__badge.bg-danger {
+        background-color: rgb(220, 53, 69);
+    }
     .cb-adminbar-popover, .cb-adminbar__dropdown-menu {
         position: absolute;
         background: rgba(60,64,67,0.90);
