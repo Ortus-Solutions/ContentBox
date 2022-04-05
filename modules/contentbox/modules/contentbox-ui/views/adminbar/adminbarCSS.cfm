@@ -57,11 +57,8 @@
         width: 20px;
         margin-right: 0px; 
     }
-    .cb-adminbar-popover-trigger, .cb-adminbar__dropdown-toggle {
+    .cb-adminbar__dropdown-toggle {
         padding: 0.5rem
-    }
-    .cb-adminbar-popover-trigger:hover + .cb-adminbar-popover, .cb-adminbar-popover-trigger:focus + .cb-adminbar-popover{
-        display: block;
     }
     .cb-adminbar__menu-item a, .cb-adminbar__menu-item button, .cb-adminbar__brand {
         color: ##fff;
@@ -113,11 +110,16 @@
     }
     .cb-adminbar__badge.bg-success {
         background-color: ##8fc73e;
+        color: ##000;
     }
     .cb-adminbar__badge.bg-danger {
         background-color: rgb(220, 53, 69);
     }
-    .cb-adminbar-popover, .cb-adminbar__dropdown-menu {
+    .cb-adminbar__badge.bg-warning {
+        background-color: rgb(255, 193, 7);
+        color: ##000;
+    }
+    .cb-adminbar__dropdown-menu {
         position: absolute;
         background: rgba(60,64,67,0.90);
         -webkit-border-radius: 4px;
