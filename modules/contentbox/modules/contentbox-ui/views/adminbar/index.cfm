@@ -159,7 +159,7 @@
 			</div> 
 		</div>
 		<!--- Toggle --->
-		<button type="button" class="cb-adminbar__toggle" id="adminbar-toggle" onclick="toggleAdminBar()">
+		<button aria-hidden="true" type="button" class="cb-adminbar__toggle" id="adminbar-toggle" onclick="toggleAdminBar()">
 			<svg class="svg-cheveron" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
 		</button>
 	</div>
