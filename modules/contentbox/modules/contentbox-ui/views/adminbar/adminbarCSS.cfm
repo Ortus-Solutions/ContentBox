@@ -139,8 +139,6 @@
     ##avatar .cb-adminbar__dropdown-menu {
         right: 20px;
     }
-    
-    
     .slide_out {
         transform: translateY( -100% );
     }
@@ -160,7 +158,6 @@
         transition: all 1s ease;
         -moz-transition: all 1s ease;
         -webkit-transition: all 1s ease;
-    
     }
     .cb-adminbar--justify-content {
         justify-content: space-between;
