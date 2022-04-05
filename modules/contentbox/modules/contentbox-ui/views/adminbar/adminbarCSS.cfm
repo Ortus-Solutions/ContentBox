@@ -151,8 +151,6 @@
         padding: 3px;
         margin-right: 5px;
     }
-    
-    /* responsive */
     .cb-adminbar__toggle .svg-cheveron {
         height: 20px;
         width: 20px;
@@ -163,6 +161,8 @@
     .cb-adminbar--justify-content {
         justify-content: space-between;
     }
+    
+    /* responsive */
     @media ( max-width: 1023px) {
         /* vissually hide menu heading*/
         .cb-adminbar__menu-item .menu-heading {
