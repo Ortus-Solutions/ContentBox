@@ -55,7 +55,7 @@
 									</cfif>
 								</cfif>
 								<cfif args.oContent.isPublishedInFuture()>
-									<span class="admin-bar-label-red">
+									<span class="admin-bar-label">
 										<strong>Publishes on:</strong> <br/>#args.oContent.getDisplayPublishedDate()#
 									</span>
 								</cfif> 

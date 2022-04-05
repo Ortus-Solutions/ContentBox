@@ -41,7 +41,6 @@
     .cb-adminbar__brand {
         padding: 0.5rem;
         margin-left: 40px;
-        cursor: pointer;
     }
     .cb-adminbar__menu {
         display: flex;
@@ -142,14 +141,6 @@
     }
     .slide_out {
         transform: translateY( -100% );
-    }
-    ##cb-adminbar .admin-bar-label-red{
-        padding: 3px;
-        margin-right: 5px;
-    }
-    ##cb-adminbar .admin-bar-label{
-        padding: 3px;
-        margin-right: 5px;
     }
     .cb-adminbar__toggle .svg-cheveron {
         height: 20px;
