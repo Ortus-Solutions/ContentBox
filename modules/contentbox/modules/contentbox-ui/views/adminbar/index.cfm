@@ -1,6 +1,11 @@
 <cfoutput>
-	<div id="cb-adminbar">	
-		<div class="cb-adminbar__content">
+	<div id="cb-adminbar">
+		<cfif !isNull( args.oContent )>	
+			<div class="cb-adminbar__content">
+		<cfelse>
+			<!--- evenly distributes children  --->
+			<div class="cb-adminbar__content cb-adminbar--justify-content">
+		</cfif>
 			<a href="#cb.linkAdmin()#" target="_blank" class="cb-adminbar__brand">
 				<svg class="cb-adminbar__icon" id="a" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 29.6" aria-label="Site Admin">
 					<path d="M25.6,5.3c-3.4-2.7-11.3-4.6-17.4,1.4C1.8,14.8,4.6,26.8,17,28c6.8-.2,10.1-3.1,10.1-3.1,.7-.1-8.9,9-20.8,1.9C.7,22.9-.7,16.9,.3,12,1.2,7.2,4.7,3.4,6.7,2.3c8.9-5.5,17.4,.3,18.9,3Z" style="fill:##8fc73e; fill-rule:evenodd;"/>
