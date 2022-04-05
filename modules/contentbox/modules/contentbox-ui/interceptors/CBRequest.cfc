@@ -116,14 +116,11 @@ component extends="coldbox.system.Interceptor" {
 			args   = {
 				oContent       : oContent ?: javacast( "null", "" ),
 				linkEdit       : linkEdit,
-				linkLogout	   : linkLogout,
+				linkLogout     : linkLogout,
 				oCurrentAuthor : prc.oCurrentAuthor
 			}
 		);
-		var adminBarCSS = renderView(
-			view   = "adminbar/adminbarCSS",
-			module = "contentbox-ui"
-		);
+		var adminBarCSS = renderView( view = "adminbar/adminbarCSS", module = "contentbox-ui" );
 		buffer.append( "#adminBar#" );
 
 		// Append adminbar styles to the html head

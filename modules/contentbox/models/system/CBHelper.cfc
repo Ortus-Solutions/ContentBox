@@ -103,7 +103,7 @@ component accessors="true" singleton threadSafe {
 		var prc = getPrivateRequestCollection();
 
 		// See if all the settings are loaded, else lazy load them
-		if( isNull( prc.cbSettings ) || structIsEmpty( prc.cbSettings ) ){
+		if ( isNull( prc.cbSettings ) || structIsEmpty( prc.cbSettings ) ) {
 			prc.cbSettings = variables.settingService.getAllSettings();
 		}
 
@@ -135,7 +135,7 @@ component accessors="true" singleton threadSafe {
 		var prc = getPrivateRequestCollection();
 
 		// See if all the settings are loaded, else lazy load them
-		if( isNull( prc.cbSiteSettings ) || structIsEmpty( prc.cbSiteSettings ) ){
+		if ( isNull( prc.cbSiteSettings ) || structIsEmpty( prc.cbSiteSettings ) ) {
 			prc.cbSiteSettings = variables.settingService.getAllSiteSettings( prc.oCurrentSite.getSlug() );
 		}
 
