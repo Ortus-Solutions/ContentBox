@@ -143,29 +143,26 @@
         transform: translateY( -100% );
     }
     ##cb-adminbar .admin-bar-label-red{
-        background-color: red;
         padding: 3px;
         margin-right: 5px;
-        border: 2px solid;
-        border-radius: 10px;
     }
     ##cb-adminbar .admin-bar-label{
-        /*background-color: ##3598db;*/
         padding: 3px;
         margin-right: 5px;
-        /*border: 2px solid;*/
-        border-radius: 10px;
     }
     
     /* responsive */
-    /* @media (max-width: 1400px) {} */
+    .cb-adminbar__toggle .svg-cheveron {
+        height: 20px;
+        width: 20px;
+        transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -webkit-transition: all 1s ease;
     
-    /* @media (max-width: 1200px) {
-        .admin-bar-label.layout, .admin-bar-label.comments, .admin-bar-label.hits, .admin-bar-label.publisher, .icon-info{
-            display: none;
-        }
-    } */
-    
+    }
+    .cb-adminbar--justify-content {
+        justify-content: space-between;
+    }
     @media ( max-width: 1023px) {
         .cb-adminbar__menu-item .menu-heading {
           display: none;
@@ -188,15 +185,6 @@
         ##cb-adminbar__actions {
               display: none;
         }
-    }
-    
-    .cb-adminbar__toggle .svg-cheveron {
-        height: 20px;
-        width: 20px;
-        transition: all 1s ease;
-        -moz-transition: all 1s ease;
-        -webkit-transition: all 1s ease;
-    
     }
     </style>
 </cfoutput>
