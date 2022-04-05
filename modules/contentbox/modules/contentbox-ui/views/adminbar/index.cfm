@@ -120,6 +120,7 @@
 					</ul>
 				</nav>
 			</cfif>
+			<!--- Avatar --->
 			<div id="avatar">
 				<div class="cb-adminbar__dropdown">
 					<button 
@@ -178,12 +179,18 @@
 			}
 		}
 	};
+	/**
+	 * Inserts the admin bar as the first element in the body.
+	 */
 	function insertAdminBar(){
 		document.body.insertBefore(
 			document.getElementById( 'cb-adminbar' ),
 			document.body.firstChild
 		);
 	}
+	/**
+	 * Toggles the dropdown menu.
+	 */
 	function toggleDropdown( event, element ) {
 		if( element.parentNode.classList.contains( 'active' ) ){
 			element.parentNode.classList.remove( 'active' );
@@ -193,6 +200,9 @@
 			element.setAttribute( 'aria-expanded', true );
 		}
 	}
+	/**
+	 * Toggles the admin bar.
+	 */
 	function toggleAdminBar(){
 		var el1 = document.getElementById( "cb-adminbar" );
 		var hasClass = el1.classList.contains('slide_out');
@@ -210,13 +220,22 @@
 			);
 		}
 	}
+	/**
+	 * Sets cookie.
+     * @param {String} cname - Cookie name.
+     * @param {String} cvalue - Cookie value.
+     * @param {String} exdays - Cookie active days.
+	 */
 	function setCookie( cname, cvalue, exdays ){
 		var d = new Date();
 		d.setTime( d.getTime() + ( exdays * 24 * 60 * 60 * 1000 ) );
 		var expires = "expires="+d.toUTCString();
 		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 	}
-	
+	/**
+	 * Gets cookie.
+     * @param {String} cname - Cookie name.
+	 */
 	function getCookie( cname ){
 		var name 	= cname + "=";
 		var ca 		= document.cookie.split( ';' );
