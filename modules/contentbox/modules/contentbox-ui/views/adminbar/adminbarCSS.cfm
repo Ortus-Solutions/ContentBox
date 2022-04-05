@@ -72,7 +72,8 @@
     .cb-adminbar__menu-item a:hover, 
     .cb-adminbar__menu-item a:focus,
     .cb-adminbar__menu-item button:hover,
-    .cb-adminbar__menu-item button:focus {
+    .cb-adminbar__menu-item button:focus,
+    .cb-adminbar__dropdown.active  .cb-adminbar__dropdown-toggle {
         background: ##222;
         color: ##8fc73e;
         text-decoration: none;
