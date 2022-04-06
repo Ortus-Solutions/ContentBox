@@ -639,29 +639,29 @@ function getToday( us ) {
  */
 function importContent(){
 	// local id's
-	var $importForm = $( "#importForm" );
+	var $importDialog = $( "#importDialog" );
 
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
 
 	// form validator button bar loader
-	$importForm.validate( {
+	$importDialog.validate( {
 		submitHandler : function( form ){
-			$importForm.find( "#importButtonBar" ).slideUp();
-			$importForm.find( "#importBarLoader" ).slideDown();
+			$importDialog.find( "#importButtonBar" ).slideUp();
+			$importDialog.find( "#importBarLoader" ).slideDown();
 			form.submit();
 		}
 	} );
 
 	// close button
-	$importForm.find( "#closeButton" ).click( function( e ){
+	$importDialog.find( "#closeButton" ).click( function( e ){
 		closeModal( $importDialog );
 		return false;
 	} );
 
 	// clone button
-	$importForm.find( "#importButton" ).click( function( e ){
-		$importForm.submit();
+	$importDialog.find( "#importButton" ).click( function( e ){
+		$importDialog.submit();
 	} );
 }
 
