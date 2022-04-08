@@ -11,8 +11,10 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	/**
 	 * Display all site settings
 	 *
-	 * @tags Sites
-	 * @x    -contentbox-permissions SITES_ADMIN
+	 * @tags                     Sites
+	 * @requestBody              contentbox/apidocs/sites/settings/requestBody.json
+	 * @responses                contentbox/apidocs/sites/settings/responses.json
+	 * @x-contentbox-permissions SITES_ADMIN
 	 */
 	function index( event, rc, prc ){
 		var siteSettings = variables.settingService.getSettingsContainer().sites;

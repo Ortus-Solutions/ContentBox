@@ -26,7 +26,9 @@ component extends="baseHandler" {
 	/**
 	 * Display all categories
 	 *
-	 * @tags Categories
+	 * @tags        Categories
+	 * @requestBody contentbox/apidocs/categories/index/requestBody.json
+	 * @responses   contentbox/apidocs/categories/index/responses.json
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -42,7 +44,9 @@ component extends="baseHandler" {
 	/**
 	 * Show a category using the id or slug
 	 *
-	 * @tags Categories
+	 * @tags        Categories
+	 * @requestBody contentbox/apidocs/categories/show/requestBody.json
+	 * @responses   contentbox/apidocs/categories/show/responses.json
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "NumberOfPublishedPages,numberOfPublishedContentStore,numberOfPublishedEntries";
@@ -54,8 +58,10 @@ component extends="baseHandler" {
 	/**
 	 * Create a category
 	 *
-	 * @tags Categories
-	 * @x    -contentbox-permissions CATEGORIES_ADMIN
+	 * @tags                     Categories
+	 * @requestBody              contentbox/apidocs/categories/create/requestBody.json
+	 * @responses                contentbox/apidocs/categories/create/responses.json
+	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
 	function create( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.create( argumentCollection = arguments );
@@ -64,8 +70,10 @@ component extends="baseHandler" {
 	/**
 	 * Update an existing category
 	 *
-	 * @tags Categories
-	 * @x    -contentbox-permissions CATEGORIES_ADMIN
+	 * @tags                     Categories
+	 * @requestBody              contentbox/apidocs/categories/update/requestBody.json
+	 * @responses                contentbox/apidocs/categories/update/responses.json
+	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
 	function update( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.update( argumentCollection = arguments );
@@ -74,8 +82,10 @@ component extends="baseHandler" {
 	/**
 	 * Delete a category using an id or slug
 	 *
-	 * @tags Categories
-	 * @x    -contentbox-permissions CATEGORIES_ADMIN
+	 * @tags                     Categories
+	 * @requestBody              contentbox/apidocs/categories/delete/requestBody.json
+	 * @responses                contentbox/apidocs/categories/delete/responses.json
+	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.delete( argumentCollection = arguments );
