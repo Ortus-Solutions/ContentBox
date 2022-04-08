@@ -123,10 +123,7 @@
 					"contentVersionID": "78078336-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"ColdFusion",
-				"ContentBox"
-			],
+			"categories": ["ColdFusion", "ContentBox"],
 			"commentSubscriptions": [
 				{
 					"createdDate": "2015-08-04T16:17:43+00:00",
@@ -868,10 +865,7 @@
 					"contentVersionID": "780769b4-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"ColdFusion",
-				"ContentBox"
-			],
+			"categories": ["ColdFusion", "ContentBox"],
 			"commentSubscriptions": [],
 			"markup": "HTML",
 			"expireDate": "",
@@ -931,10 +925,7 @@
 					"contentVersionID": "7807691e-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"ColdFusion",
-				"ContentBox"
-			],
+			"categories": ["ColdFusion", "ContentBox"],
 			"commentSubscriptions": [],
 			"markup": "html",
 			"expireDate": "",
@@ -1204,10 +1195,7 @@
 					"contentVersionID": "780764fa-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"ColdFusion",
-				"ContentBox"
-			],
+			"categories": ["ColdFusion", "ContentBox"],
 			"commentSubscriptions": [],
 			"markup": "HTML",
 			"expireDate": "",
@@ -1346,6 +1334,7 @@
 	],
 	"isActive": true,
 	"domain": "127.0.0.1",
+	"domainAliases": "[]",
 	"notifyOnContentStore": true,
 	"contentStore": [
 		{
@@ -1629,10 +1618,7 @@
 					"contentVersionID": "780773dc-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"ColdFusion",
-				"ContentBox"
-			],
+			"categories": ["ColdFusion", "ContentBox"],
 			"commentSubscriptions": [],
 			"markup": "HTML",
 			"expireDate": "",
@@ -1940,9 +1926,7 @@
 					"contentVersionID": "78077968-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"coldbox"
-			],
+			"categories": ["coldbox"],
 			"commentSubscriptions": [],
 			"markup": "HTML",
 			"expireDate": "",
@@ -2699,9 +2683,7 @@
 					"contentVersionID": "78078462-a444-11eb-ab6f-0290cc502ae3"
 				}
 			],
-			"categories": [
-				"coldbox"
-			],
+			"categories": ["coldbox"],
 			"commentSubscriptions": [],
 			"markup": "html",
 			"expireDate": "",

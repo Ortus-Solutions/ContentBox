@@ -147,6 +147,8 @@
 								to match.
 							</p>
 
+							<p>FIXME: Replace with an ALPINE list of Domains and Regex</p>
+
 							#html.textField(
 								name    		= "domainRegex",
 								bind    		= prc.site,

@@ -87,6 +87,11 @@ component
 		length ="255";
 
 	property
+		name   ="domainAliases"
+		column ="domainAliases"
+		ormtype="text";
+
+	property
 		name   ="tagline"
 		column ="tagline"
 		ormtype="string"
@@ -312,6 +317,7 @@ component
 			"description",
 			"domain",
 			"domainregex",
+			"domainAliases",
 			"homepage",
 			"isActive",
 			"isBlogEnabled",
@@ -369,6 +375,7 @@ component
 		"keywords"         : { required : false, size : "0..255" },
 		"domain"           : { required : true, size : "1..255" },
 		"domainRegex"      : { required : true, size : "1..255" },
+		// "domainAliases"    : { required : true, size : "2..10000", type : "json" },
 		"tagline"          : { required : false, size : "0..255" },
 		"homepage"         : { required : false, size : "0..255" },
 		"isBlogEnabled"    : { required : true, type : "boolean" },
@@ -481,18 +488,45 @@ component
 		return this;
 	}
 
+
 	/**
 	 * Get the site root URL as defined per the settings
 	 */
 	String function getSiteRoot(){
-		var serverPort = getServerPort();
-		// Return the appropriate site Uri
+		var serverPort = this.getServerPort();
+		var serverName = this.getDomain();
+		// Return the appropriate site alias Uri
+		if(
+			getDomainAliases()
+				.some( function( alias ){
+					if( isStruct( alias ) && alias.keyExists( "domainRegex" ) && reFindNoCase( alias.domainRegex, this.getServerName() ) ){
+						return true;
+					}
+				}
+			)
+		){
+			serverName = this.getServerName();
+		}
 		return "http"
 		& ( this.getIsSSL() ? "s" : "" ) // SSL or not
 		& "://"
-		& this.getDomain() // Site Domain
+		&  serverName // Whitelisted Site Domain/Alias to use for building the BaseHREF
 		& ( listFind( "80,443", serverPort ) ? "" : ":#serverPort#" ); // The right port
 	}
+
+	/**
+	 * Get the server host according to lookup order
+	 * 1. x-forwarded-host header
+	 * 2. cgi.server_host
+	 */
+	private function getServerName(){
+		var headers = getHTTPRequestData( false ).headers;
+		if ( structKeyExists( headers, "x-forwarded-host" ) && len( headers[ "x-forwarded-host" ] ) ) {
+			return headers[ "x-forwarded-host" ];
+		}
+		return cgi.server_name;
+	}
+
 
 	/**
 	 * Get the server port according to lookup order

@@ -20,6 +20,16 @@
 				"field": "domain"
 			}
 		],
+		"domainAliases": [
+			{
+				"message": "The 'domainAliases' value is required",
+				"validationData": true,
+				"errorMetadata": {},
+				"rejectedValue": "",
+				"validationType": "Required",
+				"field": "domainAliases"
+			}
+		],
 		"slug": [
 			{
 				"message": "The 'slug' value is required",
@@ -49,7 +59,5 @@
 		"page": 1,
 		"totalRecords": 0
 	},
-	"messages": [
-		"Validation exceptions occurred, please see the data"
-	]
+	"messages": ["Validation exceptions occurred, please see the data"]
 }

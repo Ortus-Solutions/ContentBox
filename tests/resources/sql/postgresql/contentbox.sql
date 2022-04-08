@@ -722,6 +722,7 @@ CREATE TABLE "contentbox"."cb_site" (
   "keywords" varchar(255) COLLATE "pg_catalog"."default",
   "domain" varchar(255) COLLATE "pg_catalog"."default",
   "domainregex" varchar(255) COLLATE "pg_catalog"."default",
+  "domainAliases" text COLLATE "pg_catalog"."default",
   "tagline" varchar(255) COLLATE "pg_catalog"."default",
   "homepage" varchar(255) COLLATE "pg_catalog"."default",
   "isblogenabled" bool NOT NULL DEFAULT true,

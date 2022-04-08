@@ -6,6 +6,7 @@
 		"domainregex": "domain\\.com",
 		"isActive": true,
 		"domain": "domain.com",
+		"domainAliases": "[]",
 		"notifyOnContentStore": true,
 		"createdDate": "2021-09-10T19:15:39+00:00",
 		"numberOfPages": "",
