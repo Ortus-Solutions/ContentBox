@@ -16,45 +16,42 @@ component extends="tests.resources.BaseTest" {
 			} );
 
 			it( "can be created", function(){
-				expect(	cbHelper ).toBeComponent();
+				expect( cbHelper ).toBeComponent();
 			} );
 
 			describe( "Site related methods", function(){
 				it( "can build the site root", function(){
 					expect( cbHelper.siteRoot() ).toInclude( "http://127.0.0.1" );
-				});
+				} );
 
 				it( "can build the site base url", function(){
-					expect( cbHelper.siteBaseUrl() )
-						.toInclude( "http://127.0.0.1" )
-						.notToInclude( "index.cfm" );
-				});
+					expect( cbHelper.siteBaseUrl() ).toInclude( "http://127.0.0.1" ).notToInclude( "index.cfm" );
+				} );
 
 				it( "can build the site name", function(){
 					expect( cbHelper.siteName() ).toInclude( "Default Site" );
-				});
+				} );
 
 				it( "can build the site tag line", function(){
 					expect( cbHelper.siteTagLine() ).notToBeEmpty();
-				});
+				} );
 
 				it( "can build the site description", function(){
 					expect( cbHelper.siteDescription() ).notToBeEmpty();
-				});
+				} );
 
 				it( "can build the site keywords", function(){
 					cbHelper.siteKeywords();
-				});
+				} );
 
 				it( "can build the site email", function(){
 					expect( cbHelper.siteEmail() ).notToBeEmpty();
-				});
+				} );
 
 				it( "can build the site outgoing email", function(){
 					expect( cbHelper.siteOutgoingEmail() ).notToBeEmpty();
-				});
-			});
-
+				} );
+			} );
 		} );
 	}
 
