@@ -18,10 +18,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Display all pages using different filters
 	 *
-	 * @tags                     Pages
-	 * @requestBody              contentbox/apidocs/pages/index/requestBody.json
-	 * @responses                contentbox/apidocs/pages/index/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags        Pages
+	 * @requestBody contentbox/apidocs/pages/index/requestBody.json
+	 * @responses   contentbox/apidocs/pages/index/responses.json
+	 * @x           -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function index( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.page       = 1;
@@ -70,10 +70,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Show an page using the id
 	 *
-	 * @tags                     Pages
-	 * @requestBody              contentbox/apidocs/pages/show/requestBody.json
-	 * @responses                contentbox/apidocs/pages/show/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags        Pages
+	 * @requestBody contentbox/apidocs/pages/show/requestBody.json
+	 * @responses   contentbox/apidocs/pages/show/responses.json
+	 * @x           -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function show( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -92,10 +92,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Create a page
 	 *
-	 * @tags                     Pages
-	 * @requestBody              contentbox/apidocs/pages/create/requestBody.json
-	 * @responses                contentbox/apidocs/pages/create/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags        Pages
+	 * @requestBody contentbox/apidocs/pages/create/requestBody.json
+	 * @responses   contentbox/apidocs/pages/create/responses.json
+	 * @x           -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function create( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// Supersize it
@@ -106,10 +106,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Update an existing page
 	 *
-	 * @tags                     Pages
-	 * @requestBody              contentbox/apidocs/pages/update/requestBody.json
-	 * @responses                contentbox/apidocs/pages/update/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
+	 * @tags        Pages
+	 * @requestBody contentbox/apidocs/pages/update/requestBody.json
+	 * @responses   contentbox/apidocs/pages/update/responses.json
+	 * @x           -contentbox-permissions PAGES_ADMIN,PAGES_EDITOR
 	 */
 	function update( event, rc, prc ) secured="PAGES_ADMIN,PAGES_EDITOR"{
 		// Supersize it
@@ -120,10 +120,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Delete a page using an id or slug
 	 *
-	 * @tags                     Pages
-	 * @requestBody              contentbox/apidocs/pages/delete/requestBody.json
-	 * @responses                contentbox/apidocs/pages/delete/responses.json
-	 * @x-contentbox-permissions PAGES_ADMIN
+	 * @tags        Pages
+	 * @requestBody contentbox/apidocs/pages/delete/requestBody.json
+	 * @responses   contentbox/apidocs/pages/delete/responses.json
+	 * @x           -contentbox-permissions PAGES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="PAGES_ADMIN"{
 		super.delete( argumentCollection = arguments );

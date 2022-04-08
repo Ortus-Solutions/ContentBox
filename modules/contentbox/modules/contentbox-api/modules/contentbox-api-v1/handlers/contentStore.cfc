@@ -18,10 +18,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Display all content store items using different filters
 	 *
-	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/index/requestBody.json
-	 * @responses                contentbox/apidocs/contentStore/index/responses.json
-	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @tags        ContentStore
+	 * @requestBody contentbox/apidocs/contentStore/index/requestBody.json
+	 * @responses   contentbox/apidocs/contentStore/index/responses.json
+	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function index( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// Paging + Mementifier
@@ -66,10 +66,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Show a content store item using the id
 	 *
-	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/show/requestBody.json
-	 * @responses                contentbox/apidocs/contentStore/show/responses.json
-	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @tags        ContentStore
+	 * @requestBody contentbox/apidocs/contentStore/show/requestBody.json
+	 * @responses   contentbox/apidocs/contentStore/show/responses.json
+	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function show( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		param rc.includes = arrayToList( [
@@ -88,10 +88,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Create a content store item
 	 *
-	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/create/requestBody.json
-	 * @responses                contentbox/apidocs/contentStore/create/responses.json
-	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @tags        ContentStore
+	 * @requestBody contentbox/apidocs/contentStore/create/requestBody.json
+	 * @responses   contentbox/apidocs/contentStore/create/responses.json
+	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function create( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		// Supersize it
@@ -102,10 +102,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Update an existing content store item
 	 *
-	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/update/requestBody.json
-	 * @responses                contentbox/apidocs/contentStore/update/responses.json
-	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
+	 * @tags        ContentStore
+	 * @requestBody contentbox/apidocs/contentStore/update/requestBody.json
+	 * @responses   contentbox/apidocs/contentStore/update/responses.json
+	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
 	function update( event, rc, prc ) secured="CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"{
 		arguments.contentType = "CONTENTSTORE";
@@ -115,10 +115,10 @@ component extends="baseContentHandler" {
 	/**
 	 * Delete a content store item using an id or slug
 	 *
-	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/delete/requestBody.json
-	 * @responses                contentbox/apidocs/contentStore/delete/responses.json
-	 * @x-contentbox-permissions CONTENTSTORE_ADMIN
+	 * @tags        ContentStore
+	 * @requestBody contentbox/apidocs/contentStore/delete/requestBody.json
+	 * @responses   contentbox/apidocs/contentStore/delete/responses.json
+	 * @x           -contentbox-permissions CONTENTSTORE_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="CONTENTSTORE_ADMIN"{
 		super.delete( argumentCollection = arguments );

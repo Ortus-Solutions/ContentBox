@@ -89,10 +89,10 @@ component extends="baseHandler" {
 	/**
 	 * Update an existing comment
 	 *
-	 * @tags                     Comments
-	 * @requestBody              contentbox/apidocs/comments/update/requestBody.json
-	 * @responses                contentbox/apidocs/comments/update/responses.json
-	 * @x-contentbox-permissions COMMENTS_ADMIN
+	 * @tags        Comments
+	 * @requestBody contentbox/apidocs/comments/update/requestBody.json
+	 * @responses   contentbox/apidocs/comments/update/responses.json
+	 * @x           -contentbox-permissions COMMENTS_ADMIN
 	 */
 	function update( event, rc, prc ) secured="COMMENTS_ADMIN"{
 		super.update( argumentCollection = arguments );
@@ -101,10 +101,10 @@ component extends="baseHandler" {
 	/**
 	 * Delete a comment
 	 *
-	 * @tags                     Comments
-	 * @requestBody              contentbox/apidocs/comments/delete/requestBody.json
-	 * @responses                contentbox/apidocs/comments/delete/responses.json
-	 * @x-contentbox-permissions COMMENTS_ADMIN
+	 * @tags        Comments
+	 * @requestBody contentbox/apidocs/comments/delete/requestBody.json
+	 * @responses   contentbox/apidocs/comments/delete/responses.json
+	 * @x           -contentbox-permissions COMMENTS_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="COMMENTS_ADMIN"{
 		super.delete( argumentCollection = arguments );
