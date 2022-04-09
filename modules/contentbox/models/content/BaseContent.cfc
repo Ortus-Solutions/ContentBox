@@ -493,7 +493,10 @@ component
 		],
 		neverInclude : [ "passwordProtection" ],
 		mappers      : {},
-		defaults     : { stats : {} },
+		defaults     : {
+			"stats" 		  : {},
+			"contentTemplate" : {}
+		},
 		profiles     : {
 			response : {
 				defaultIncludes : [
