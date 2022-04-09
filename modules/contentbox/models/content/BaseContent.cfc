@@ -735,6 +735,19 @@ component
 		return ( isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0 );
 	}
 
+
+	/**
+	* Getter overload to return either the assigned template or the global template for the site
+	*/
+	any function getContentTemplate(){
+		return !isNull( variables.contentTemplate )
+					? variables.contentTemplate
+					: getContentTemplateService().newCriteria()
+									.isEq( "site", getSite() )
+									.isEq( "isGlobal", javacast( "boolean", true ) )
+									.get();
+	}
+
 	/**
 	 * Add a new content version to the content object.  This does not persist the version.
 	 * It just makes sure that the content object receives a new active version and it
