@@ -170,10 +170,10 @@
 
 	var a         = getCookie( "adminbarstatus" );
 	var el        = document.getElementById( "cb-adminbar" );
-	var hasClass1 = el.classList.contains('slide_out');
+	var hasClass1 = el.classList.contains('cb-adminbar__slide-out');
 	
 	if( a == "out" ){
-		el.classList.add( "slide_out" );
+		el.classList.add( "cb-adminbar__slide-out" );
 	}
 	// Close the dropdown if the user clicks outside of it
 	window.onclick = function( e ) {
@@ -215,15 +215,15 @@
 	 */
 	function toggleAdminBar(){
 		var el1 = document.getElementById( "cb-adminbar" );
-		var hasClass = el1.classList.contains('slide_out');
+		var hasClass = el1.classList.contains('cb-adminbar__slide-out');
 
 		if( hasClass === false ){
 			setCookie( "adminbarstatus", "out", 7);
-			el1.classList.add( "slide_out" );
+			el1.classList.add( "cb-adminbar__slide-out" );
 		} else {
 			setTimeout(
 				function(){
-					el1.classList.remove( "slide_out" );
+					el1.classList.remove( "cb-adminbar__slide-out" );
 					setCookie( "adminbarstatus", "in", 7);
 				},
 				400

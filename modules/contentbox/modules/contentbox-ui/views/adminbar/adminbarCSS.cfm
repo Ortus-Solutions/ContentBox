@@ -28,11 +28,14 @@
         -moz-transition: transform 1s ease;
         -webkit-transition: transform 1s ease;
     }
-    .slide_out .cb-adminbar__toggle {
+    .cb-adminbar__slide-out {
+        transform: translateY( -100% );
+    }
+    .cb-adminbar__slide-out .cb-adminbar__toggle {
         box-shadow: 2px 2px 4px rgb(0 0 0 / 20%); 
         transform: translateY( 100% );
     }
-    .slide_out .cb-adminbar__toggle .svg-cheveron {
+    .cb-adminbar__slide-out .cb-adminbar__toggle .svg-cheveron {
         transform: rotate( 180deg );
     }
     .cb-adminbar__content {
@@ -138,9 +141,6 @@
     }
     ##avatar .cb-adminbar__dropdown-menu {
         right: 20px;
-    }
-    .slide_out {
-        transform: translateY( -100% );
     }
     .cb-adminbar__toggle .svg-cheveron {
         height: 20px;
