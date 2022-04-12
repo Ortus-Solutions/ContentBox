@@ -135,11 +135,11 @@
     .publisher img {
         display: inline-block;
     }
-    ##avatar {
+    ##cb-adminbar__avatar {
         display: flex;
         align-items: center;
     }
-    ##avatar .cb-adminbar__dropdown-menu {
+    ##cb-adminbar__avatar .cb-adminbar__dropdown-menu {
         right: 20px;
     }
     .cb-adminbar__toggle .svg-cheveron {

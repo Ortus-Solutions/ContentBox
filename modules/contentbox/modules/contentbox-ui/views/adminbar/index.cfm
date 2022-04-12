@@ -130,7 +130,7 @@
 				</nav>
 			</cfif>
 			<!--- Avatar --->
-			<div id="avatar">
+			<div id="cb-adminbar__avatar">
 				<div class="cb-adminbar__dropdown">
 					<button 
 						aria-expanded="false"
