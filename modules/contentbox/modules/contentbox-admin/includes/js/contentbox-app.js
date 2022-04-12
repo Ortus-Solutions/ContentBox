@@ -640,6 +640,7 @@ function getToday( us ) {
 function importContent(){
 	// local id's
 	var $importForm = $( "#importForm" );
+	var $importDialog = $( "#importDialog" );
 
 	// open modal for cloning options
 	openModal( $importDialog, 500, 350 );
