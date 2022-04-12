@@ -55,14 +55,14 @@
 									</cfif>
 								</cfif>
 								<cfif args.oContent.isPublishedInFuture()>
-									<span class="admin-bar-label">
+									<span class="cb-adminbar__info-item">
 										<strong>Publishes on:</strong> <br/>#args.oContent.getDisplayPublishedDate()#
 									</span>
 								</cfif> 
-								<span class="admin-bar-label publisher">
+								<span class="cb-adminbar__info-item">
 									<strong>Modified:</strong><br/> #args.oContent.getActiveContent().getDisplayCreatedDate()#
 								</span><br/>
-								<span class="admin-bar-label publisher">
+								<span class="cb-adminbar__info-item">
 									#getInstance( "Avatar@contentbox" ).renderAvatar(
 										email	= args.oContent.getAuthorEmail(),
 										size	= "15",
@@ -72,12 +72,12 @@
 								</span><br/>
 								
 								<cfif args.oContent.getContentType() eq "Page">
-									<span class="admin-bar-label layout">
+									<span class="cb-adminbar__info-item">
 										<strong>Layout:</strong> #args.oContent.getLayout()#
 									</span><br/>
 								</cfif>
 								<cfif args.oContent.getAllowComments()>
-									<span class="admin-bar-label comments">
+									<span class="cb-adminbar__info-item">
 										<strong>Comments:</strong> #args.oContent.getNumberOfComments()#
 									</span><br/>
 								</cfif>

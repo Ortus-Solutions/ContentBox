@@ -132,7 +132,7 @@
         z-index: 1000;
         display: none;
     }
-    .publisher img {
+    .cb-adminbar__info-item img {
         display: inline-block;
     }
     ##cb-adminbar__avatar {
