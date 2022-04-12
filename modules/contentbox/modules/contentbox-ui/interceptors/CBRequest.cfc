@@ -107,16 +107,14 @@ component extends="coldbox.system.Interceptor" {
 			}
 		}
 
-		var linkLogout = "#prc.cbAdminEntryPoint#/security/doLogout";
-
-		// Render the admin bar out
+		//Render the admin bar out
 		var adminBar = renderView(
 			view   = "adminbar/index",
 			module = "contentbox-ui",
 			args   = {
 				oContent       : oContent ?: javacast( "null", "" ),
 				linkEdit       : linkEdit,
-				linkLogout     : linkLogout,
+				linkLogout     : "#prc.cbAdminEntryPoint#/security/doLogout",
 				oCurrentAuthor : prc.oCurrentAuthor
 			}
 		);
