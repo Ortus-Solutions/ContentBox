@@ -118,11 +118,11 @@ component extends="coldbox.system.Interceptor" {
 				oCurrentAuthor : prc.oCurrentAuthor
 			}
 		);
-		var adminBarCSS = renderView( view = "adminbar/adminbarCSS", module = "contentbox-ui" );
+
 		buffer.append( "#adminBar#" );
 
 		// Append adminbar styles to the html head
-		cfhtmlhead( text = "#adminBarCSS#" );
+		cfhtmlhead( text = renderView( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
 	}
 
 	/**
