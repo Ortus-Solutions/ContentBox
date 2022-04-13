@@ -108,16 +108,21 @@ component extends="coldbox.system.Interceptor" {
 		}
 
 		// Render the admin bar out
-		var adminBar = renderView(
-			view   = "adminbar/index",
-			module = "contentbox-ui",
-			args   = {
-				oContent       : oContent ?: javacast( "null", "" ),
-				linkEdit       : linkEdit,
-				oCurrentAuthor : prc.oCurrentAuthor
-			}
+		buffer.append(
+			renderView(
+				view   = "adminbar/index",
+				module = "contentbox-ui",
+				args   = {
+					oContent       : oContent ?: javacast( "null", "" ),
+					linkEdit       : linkEdit,
+					linkLogout     : "#prc.cbAdminEntryPoint#/security/doLogout",
+					oCurrentAuthor : prc.oCurrentAuthor
+				}
+			)
 		);
-		cfhtmlhead( text = "#adminBar#" );
+
+		// Append adminbar styles to the html head
+		cfhtmlhead( text = renderView( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
 	}
 
 	/**
