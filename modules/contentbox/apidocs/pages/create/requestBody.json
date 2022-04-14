@@ -1,0 +1,35 @@
+{
+	"description": "Needed fields for a site page",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"slug",
+					"title",
+					"content"
+				],
+				"properties": {
+					"slug": {
+						"description": "The slug of the site page",
+						"type": "string"
+					},
+					"title": {
+						"description": "The title of the site page",
+						"type": "string"
+					},
+					"content": {
+						"description": "The content for the page",
+						"type": "string"
+					}
+				},
+				"example": {
+					"slug": "slug",
+					"title": "Page",
+					"content": "<p>Content<p>"
+				}
+			}
+		}
+	}
+}
