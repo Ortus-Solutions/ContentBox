@@ -147,46 +147,42 @@
 								to match.
 							</p>
 
-							<p>FIXME: Replace with an ALPINE list of Domains and Regex</p>
-
-							#html.textField(
-								name    		= "domainRegex",
-								bind    		= prc.site,
-								label   		= "*Domain Expressions:",
-								required		= "required",
-								size    		= "255",
-								title 			= "A domain name or regular expression that will be used to match the incoming domain with.",
-								class   		= "form-control",
-								wrapper 		= "div class=controls",
-								labelClass 		= "control-label",
-								groupWrapper 	= "div class=form-group",
-								placeholder 	= "mycoolsite\.com"
-							)#
-
-							<!--- Domain Name --->
-							<div class="form-group">
-								#html.label(
-									class   = "control-label",
-									field   = "domain",
-									content = "*Domain Base URL:"
-								)#
-
-								<p>
-									The domain base URL so we can construct URLs to this site.
-								</p>
-
-								<div class="input-group">
-									<span class="input-group-addon">https://</span>
-									<input
-										name="domain"
-										id="domain"
-										type="text"
-										class="form-control"
-										value="#prc.site.getDomain()#"
-										placeholder="mydomain.com"
-									>
-								</div>
-							</div>
+							<div x-data="handler()">
+								<input type="hidden" name="domainAliases" x-model="domainAliases">
+								<input type="hidden" name="domainRegex" x-model="fields[0].domainRegex">
+								<input type="hidden" name="domain" x-model="fields[0].domain">
+								<template x-for="(field, index) in fields" :key="index">
+								   <div class="row" style="padding:10px;" :class="{ 'bg-primary': index == 0 }">
+									  	<div x-show="index == 0" class="col-md-12">
+											<h4>Primary Domain</h4>
+										</div>
+										<div x-show="index == 1" class="col-md-12">
+											<h4>Domains Aliases</h4>
+										</div>
+										<div class="col-md-5" >
+										 <div class="form-group">
+											<label class="control-label" for="domainRegex">*Domain Expressions:</label>
+											<div class="controls"><input type="text" x-model="field.domainRegex" required="required" size="255" title="" class="form-control valid" placeholder="mycoolsite\.com" id="domainRegex" aria-required="true" data-original-title="A domain name or regular expression that will be used to match the incoming domain with." aria-invalid="false"></div>
+										 </div>
+									  </div>
+									  <div class="col-md-5">
+										 <div class="form-group">
+											<label class="control-label" for="domain">*Domain Base URL:</label>
+											<div class="input-group">
+											   <span class="input-group-addon">https://</span>
+											   <input type="text" class="form-control" x-model="field.domain" placeholder="mydomain.com">
+											</div>
+										 </div>
+									  </div>
+									  <div class="col-md-2" style="padding-top:25px">
+										 <button type="button" class="btn btn-danger btn-md btn-info"  :class="{ 'disabled': index == 0 }" @click="removeField( index )">&times;</button>
+										 <button type="button" class="btn btn-md btn-info" :class="{ 'disabled': index == 0 }" @click="moveUp( index )">&##8679;</button>
+										 <button type="button" class="btn btn-md btn-info" :class="{ 'disabled': index == fields.length-1 }" @click="moveDown( index )">&##8681;</button>
+									  </div>
+								   </div>
+								</template>
+								<button type="button" class="btn btn-info" @click="addNewField()">+ Add Domain Alias</button>
+							 </div>
 
 						#html.endFieldSet()#
 
