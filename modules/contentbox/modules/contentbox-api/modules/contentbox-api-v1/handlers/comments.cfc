@@ -33,8 +33,8 @@ component extends="baseHandler" {
 	/**
 	 * Display all comments for the requested content object
 	 *
-	 * @tags        Comments
-	 * @responses   contentbox/apidocs/comments/index/responses.json
+	 * @tags      Comments
+	 * @responses contentbox/apidocs/comments/index/responses.json
 	 */
 	function index( event, rc, prc ){
 		param rc.page       = 1;
@@ -63,8 +63,8 @@ component extends="baseHandler" {
 	/**
 	 * Show a comment using an ID
 	 *
-	 * @tags        Comments
-	 * @responses   contentbox/apidocs/comments/show/responses.json
+	 * @tags      Comments
+	 * @responses contentbox/apidocs/comments/show/responses.json
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "relatedContentSnapshot:relatedContent";

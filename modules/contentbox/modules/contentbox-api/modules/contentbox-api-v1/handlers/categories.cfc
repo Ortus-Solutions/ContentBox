@@ -43,8 +43,8 @@ component extends="baseHandler" {
 	/**
 	 * Show a category using the id or slug
 	 *
-	 * @tags        Categories
-	 * @responses   contentbox/apidocs/categories/show/responses.json
+	 * @tags      Categories
+	 * @responses contentbox/apidocs/categories/show/responses.json
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "NumberOfPublishedPages,numberOfPublishedContentStore,numberOfPublishedEntries";

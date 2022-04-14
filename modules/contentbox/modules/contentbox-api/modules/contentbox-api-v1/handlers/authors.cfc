@@ -40,7 +40,7 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 			searchTerm = rc.search,
 			isActive   = rc.isActive,
 			offset     = getPageOffset( rc.page ),
-			max    = getMaxRows(),
+			max        = getMaxRows(),
 			sortOrder  = rc.sortOrder
 		);
 
