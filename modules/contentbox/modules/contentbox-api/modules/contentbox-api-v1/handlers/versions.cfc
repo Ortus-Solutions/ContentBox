@@ -37,7 +37,6 @@ component
 	 * Display all versions for the requested contentype
 	 *
 	 * @tags                     Versions
-	 * @requestBody              contentbox/apidocs/versions/index/requestBody.json
 	 * @responses                contentbox/apidocs/versions/index/responses.json
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
@@ -72,7 +71,6 @@ component
 	 * Show a content version individually
 	 *
 	 * @tags                     Versions
-	 * @requestBody              contentbox/apidocs/versions/show/requestBody.json
 	 * @responses                contentbox/apidocs/versions/show/responses.json
 	 * @x-contentbox-permissions PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
@@ -87,7 +85,6 @@ component
 	 * Delete a version from a specific content item
 	 *
 	 * @tags                     Versions
-	 * @requestBody              contentbox/apidocs/versions/delete/requestBody.json
 	 * @responses                contentbox/apidocs/versions/delete/responses.json
 	 * @x-contentbox-permissions VERSIONS_DELETE
 	 */

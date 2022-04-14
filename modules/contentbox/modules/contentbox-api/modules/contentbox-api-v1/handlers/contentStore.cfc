@@ -19,7 +19,6 @@ component extends="baseContentHandler" {
 	 * Display all content store items using different filters
 	 *
 	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/index/requestBody.json
 	 * @responses                contentbox/apidocs/contentStore/index/responses.json
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
@@ -67,7 +66,6 @@ component extends="baseContentHandler" {
 	 * Show a content store item using the id
 	 *
 	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/show/requestBody.json
 	 * @responses                contentbox/apidocs/contentStore/show/responses.json
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
@@ -103,7 +101,6 @@ component extends="baseContentHandler" {
 	 * Update an existing content store item
 	 *
 	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/update/requestBody.json
 	 * @responses                contentbox/apidocs/contentStore/update/responses.json
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR
 	 */
@@ -116,7 +113,6 @@ component extends="baseContentHandler" {
 	 * Delete a content store item using an id or slug
 	 *
 	 * @tags                     ContentStore
-	 * @requestBody              contentbox/apidocs/contentStore/delete/requestBody.json
 	 * @responses                contentbox/apidocs/contentStore/delete/responses.json
 	 * @x-contentbox-permissions CONTENTSTORE_ADMIN
 	 */

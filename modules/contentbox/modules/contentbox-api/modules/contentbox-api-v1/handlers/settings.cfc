@@ -16,7 +16,6 @@ component extends="baseHandler" {
 	 * Display all system settings
 	 *
 	 * @tags                     Settings
-	 * @requestBody              contentbox/apidocs/settings/index/requestBody.json
 	 * @responses                contentbox/apidocs/settings/index/responses.json
 	 * @x-contentbox-permissions SYSTEM_RAW_SETTINGS
 	 */

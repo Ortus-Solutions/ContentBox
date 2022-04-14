@@ -20,7 +20,6 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * Display all authors according to query options
 	 *
 	 * @tags                     Authors
-	 * @requestBody              contentbox/apidocs/authors/index/requestBody.json
 	 * @responses                contentbox/apidocs/authors/index/responses.json
 	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
@@ -56,7 +55,6 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * Show an author using the id
 	 *
 	 * @tags                     Authors
-	 * @requestBody              contentbox/apidocs/authors/show/requestBody.json
 	 * @responses                contentbox/apidocs/authors/show/responses.json
 	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
@@ -92,7 +90,6 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * Update an existing author
 	 *
 	 * @tags                     Authors
-	 * @requestBody              contentbox/apidocs/authors/update/requestBody.json
 	 * @responses                contentbox/apidocs/authors/update/responses.json
 	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
@@ -112,7 +109,6 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * Delete an author using an id
 	 *
 	 * @tags                     Authors
-	 * @requestBody              contentbox/apidocs/authors/delete/requestBody.json
 	 * @responses                contentbox/apidocs/authors/delete/responses.json
 	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */

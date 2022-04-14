@@ -27,7 +27,6 @@ component extends="baseHandler" {
 	 * Display all categories
 	 *
 	 * @tags        Categories
-	 * @requestBody contentbox/apidocs/categories/index/requestBody.json
 	 * @responses   contentbox/apidocs/categories/index/responses.json
 	 */
 	function index( event, rc, prc ){
@@ -45,7 +44,6 @@ component extends="baseHandler" {
 	 * Show a category using the id or slug
 	 *
 	 * @tags        Categories
-	 * @requestBody contentbox/apidocs/categories/show/requestBody.json
 	 * @responses   contentbox/apidocs/categories/show/responses.json
 	 */
 	function show( event, rc, prc ){
@@ -71,7 +69,6 @@ component extends="baseHandler" {
 	 * Update an existing category
 	 *
 	 * @tags                     Categories
-	 * @requestBody              contentbox/apidocs/categories/update/requestBody.json
 	 * @responses                contentbox/apidocs/categories/update/responses.json
 	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
@@ -83,7 +80,6 @@ component extends="baseHandler" {
 	 * Delete a category using an id or slug
 	 *
 	 * @tags                     Categories
-	 * @requestBody              contentbox/apidocs/categories/delete/requestBody.json
 	 * @responses                contentbox/apidocs/categories/delete/responses.json
 	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */

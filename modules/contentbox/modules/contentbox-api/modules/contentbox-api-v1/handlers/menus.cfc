@@ -28,7 +28,6 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Display all menus
 	 *
 	 * @tags                     Menus
-	 * @requestBody              contentbox/apidocs/menus/index/requestBody.json
 	 * @responses                contentbox/apidocs/menus/index/responses.json
 	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
@@ -47,7 +46,6 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Show a category using the id
 	 *
 	 * @tags                     Menus
-	 * @requestBody              contentbox/apidocs/menus/show/requestBody.json
 	 * @responses                contentbox/apidocs/menus/show/responses.json
 	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
@@ -74,7 +72,6 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Update an existing menu
 	 *
 	 * @tags                     Menus
-	 * @requestBody              contentbox/apidocs/menus/update/requestBody.json
 	 * @responses                contentbox/apidocs/menus/update/responses.json
 	 * @x-contentbox-permissions MENUS_ADMIN
 	 */
@@ -86,7 +83,6 @@ component extends="baseHandler" secured="MENUS_ADMIN" {
 	 * Delete a menu using an id or slug
 	 *
 	 * @tags                     Menus
-	 * @requestBody              contentbox/apidocs/menus/delete/requestBody.json
 	 * @responses                contentbox/apidocs/menus/delete/responses.json
 	 * @x-contentbox-permissions MENUS_ADMIN
 	 */

@@ -17,7 +17,6 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	 * Display all sites
 	 *
 	 * @tags                     Sites
-	 * @requestBody              contentbox/apidocs/sites/index/requestBody.json
 	 * @responses                contentbox/apidocs/sites/index/responses.json
 	 * @x-contentbox-permissions SITES_ADMIN
 	 */
@@ -52,7 +51,6 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	 * Show a site using the id
 	 *
 	 * @tags                     Sites
-	 * @requestBody              contentbox/apidocs/sites/show/requestBody.json
 	 * @responses                contentbox/apidocs/sites/show/responses.json
 	 * @x-contentbox-permissions SITES_ADMIN
 	 */
@@ -77,7 +75,6 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	 * Update an existing site
 	 *
 	 * @tags                     Sites
-	 * @requestBody              contentbox/apidocs/sites/update/requestBody.json
 	 * @responses                contentbox/apidocs/sites/update/responses.json
 	 * @x-contentbox-permissions SITES_ADMIN
 	 */
@@ -91,7 +88,6 @@ component extends="baseHandler" secured="SITES_ADMIN" {
 	 * Delete a site using an id or slug
 	 *
 	 * @tags                     Sites
-	 * @requestBody              contentbox/apidocs/sites/delete/requestBody.json
 	 * @responses                contentbox/apidocs/sites/delete/responses.json
 	 * @x-contentbox-permissions SITES_ADMIN
 	 */

@@ -34,7 +34,6 @@ component extends="baseHandler" {
 	 * Display all comments for the requested content object
 	 *
 	 * @tags        Comments
-	 * @requestBody contentbox/apidocs/comments/index/requestBody.json
 	 * @responses   contentbox/apidocs/comments/index/responses.json
 	 */
 	function index( event, rc, prc ){
@@ -65,7 +64,6 @@ component extends="baseHandler" {
 	 * Show a comment using an ID
 	 *
 	 * @tags        Comments
-	 * @requestBody contentbox/apidocs/comments/show/requestBody.json
 	 * @responses   contentbox/apidocs/comments/show/responses.json
 	 */
 	function show( event, rc, prc ){
@@ -90,7 +88,6 @@ component extends="baseHandler" {
 	 * Update an existing comment
 	 *
 	 * @tags                     Comments
-	 * @requestBody              contentbox/apidocs/comments/update/requestBody.json
 	 * @responses                contentbox/apidocs/comments/update/responses.json
 	 * @x-contentbox-permissions COMMENTS_ADMIN
 	 */
@@ -102,7 +99,6 @@ component extends="baseHandler" {
 	 * Delete a comment
 	 *
 	 * @tags                     Comments
-	 * @requestBody              contentbox/apidocs/comments/delete/requestBody.json
 	 * @responses                contentbox/apidocs/comments/delete/responses.json
 	 * @x-contentbox-permissions COMMENTS_ADMIN
 	 */

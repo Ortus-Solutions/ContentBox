@@ -19,7 +19,6 @@ component extends="baseContentHandler" {
 	 * Display all entries using different filters
 	 *
 	 * @tags                     Entries
-	 * @requestBody              contentbox/apidocs/entries/index/requestBody.json
 	 * @responses                contentbox/apidocs/entries/index/responses.json
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
@@ -57,7 +56,6 @@ component extends="baseContentHandler" {
 	 * Show an entry using the id
 	 *
 	 * @tags                     Entries
-	 * @requestBody              contentbox/apidocs/entries/show/requestBody.json
 	 * @responses                contentbox/apidocs/entries/show/responses.json
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
@@ -93,7 +91,6 @@ component extends="baseContentHandler" {
 	 * Update an existing entry
 	 *
 	 * @tags                     Entries
-	 * @requestBody              contentbox/apidocs/entries/update/requestBody.json
 	 * @responses                contentbox/apidocs/entries/update/responses.json
 	 * @x-contentbox-permissions ENTRIES_ADMIN,ENTRIES_EDITOR
 	 */
@@ -107,7 +104,6 @@ component extends="baseContentHandler" {
 	 * Delete an entry using an id or slug
 	 *
 	 * @tags                     Entries
-	 * @requestBody              contentbox/apidocs/entries/delete/requestBody.json
 	 * @responses                contentbox/apidocs/entries/delete/responses.json
 	 * @x-contentbox-permissions ENTRIES_ADMIN
 	 */
