@@ -102,6 +102,7 @@ component extends="coldbox.system.Interceptor" {
 		prc.xehEntries               = "#prc.cbAdminEntryPoint#.entries";
 		prc.xehEntriesEditor         = "#prc.cbAdminEntryPoint#.entries.editor";
 		prc.xehCategories            = "#prc.cbAdminEntryPoint#.categories";
+		prc.xehTemplates             = "#prc.cbAdminEntryPoint#.contentTemplates";
 		// Content Tab
 		prc.xehPages                 = "#prc.cbAdminEntryPoint#.pages";
 		prc.xehPagesEditor           = "#prc.cbAdminEntryPoint#.pages.editor";

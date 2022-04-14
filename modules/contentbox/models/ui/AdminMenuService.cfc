@@ -331,6 +331,7 @@ component accessors="true" threadSafe singleton {
 		prc.xehEntries       = "#this.ADMIN_ENTRYPOINT#.entries";
 		prc.xehEntriesEditor = "#this.ADMIN_ENTRYPOINT#.entries.editor";
 		prc.xehCategories    = "#this.ADMIN_ENTRYPOINT#.categories";
+		prc.xehTemplates    = "#this.ADMIN_ENTRYPOINT#.contentTemplates";
 
 		// Content Tab
 		prc.xehPages        = "#this.ADMIN_ENTRYPOINT#.pages";
@@ -396,6 +397,13 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehCategories,
 				permissions = "CATEGORIES_ADMIN"
+			)
+			.addSubMenu(
+				name        = "Content Templates",
+				label       = "Content Templates",
+				href        = variables.buildLink,
+				href_to     = prc.xehTemplates,
+				permissions = "PAGES_ADMIN"
 			)
 			.addSubMenu(
 				name        = "contentStore",

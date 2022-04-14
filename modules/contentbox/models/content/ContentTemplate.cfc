@@ -14,6 +14,10 @@ cachename          ="cbContentTemplate"
 cacheuse           ="read-write"
 {
 
+	property
+		name      ="contentTemplateService"
+		inject    ="provider:ContentTemplateService@contentbox"
+		persistent="false";
 	/**
 	 * --------------------------------------------------------------------------
 	 * STUPID PROPERTIES DUE TO ACF BUG
@@ -71,7 +75,7 @@ cacheuse           ="read-write"
 		name   ="name"
 		column ="name"
 		notnull="true"
-		length ="500"
+		length ="225"
 		default="";
 
 	property
@@ -110,141 +114,72 @@ cacheuse           ="read-write"
 		name ="schema"
 		persistent="false";
 
+	property
+		name="assignedContentItems"
+		ormtype="integer"
+		default=0
+		formula="select count(*) from cb_content WHERE FK_contentTemplate = id or FK_childContentTemplate = id";
+
 
 	function init(){
 		variables.schema = {
-			"title" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"content" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"markup" : {
-				"required" : false,
-				"type" : "string"
+			"name" : {
+				"required"   : true,
+				"type"       : "string"
 			},
 			"description" : {
 				"required" : false,
 				"type" : "string"
 			},
-			"excerpt" : {
-				"required" : false,
+			"definition" : {
+				"required" : true,
 				"type" : "string"
 			},
-			"featuredImage" :{
-				"required" : false,
-				"type" : "string"
-			},
-			// SEO
-			"HTMLTitle" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"HTMLKeywords" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"HTMLDescription" : {
-				"required" : false,
-				"type" : "string"
-			},
-			// Modifiers
-			"parent" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"allowComments" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			"passwordProtection" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"SSLOnly" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			// Caching
-			"cache" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			"cacheTimeout" : {
-				"required" : false,
-				"type" : "integer"
-			},
-			"cacheLastAccessTimeout" : {
-				"required" : false,
-				"type" : "integer"
-			},
-			// Display Options
-			"layout" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"childLayout" : {
-				"required" : false,
-				"type" : "string"
-			},
-			"showInMenu" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			"showInSearch" : {
-				"required" : false,
-				"type" : "boolean"
-			},
-			// Collections
-			"customFields" : {
-				"required" : false,
-				"type" : "array",
-				"schema" : {
-					"name" : {
-						"required" : true,
-						"type" : "string"
-					},
-					"type" : {
-						"required" : true,
-						"type" : "string"
-					},
-					"defaultValue" : {
-						"required" : true,
-						"type" : "string"
-					}
-				}
-			},
-			"categories" : {
-				"required" : false,
-				"type" : "array",
-				"schema" : {
-					"slug" : {
-						"required" : true,
-						"type" : "string"
-					}
-				}
+			"site" : {
+				"required" : true
 			}
-
-		};
+		}
 
 		return this;
 	}
 
 	this.memento = {
-		"defaultIncludes" : [
+		"defaultIncludes" : {
 			"contentTemplateID",
 			"contentType",
 			"name",
 			"description",
 			"definition",
-			"schema"
-		]
+			"assignedContentItems"
+		},
+		profiles : {
+			export : {
+				defaultIncludes : [
+					"contentTemplateID",
+					"contentType",
+					"name",
+					"description",
+					"definition",
+					"schema",
+					"createdDate",
+					"modifiedDate",
+					"creator",
+					"site.id",
+					"site.slug"
+				],
+				defaultExcludes : [
+					"assignedContentItems"
+				]
+			}
+		}
 	};
 
 	this.constraints = {
-		"name" : { requred: true, size : "1..200" },
+		"name" : {
+			required     : true,
+			size         : "1..200",
+			"udf"        : ( value, target ) => target.isNameUniqueInSite( value )
+		},
 		"definition" : { required : true, type : "string" },
 		"isPublic" : { required : true, type : "boolean" },
 		"site" : { required : true }
@@ -271,6 +206,13 @@ cacheuse           ="read-write"
 		);
 	}
 
-
+	boolean function isNameUniqueInSite( value = variables.name ){
+		return !! getContentTemplateService()
+					.newCriteria()
+					.isEq( "site", getSite() )
+					.isNE( "contentTemplateID", variables.contentTemplateID )
+					.isEq( "name", arguments.value )
+					.count();
+	}
 
 }
