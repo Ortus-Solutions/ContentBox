@@ -307,16 +307,25 @@ component
 		// Try to discover using the requested full URL including host + path + query string for added flexibility
 		// Verify the site is valid, else continue search
 		var matchedSite = getAllFlat( isActive: true ).filter( function( thisSite ){
-			if( reFindNoCase( arguments.thisSite[ "domainRegex" ], event.getFullUrl() ) ){
+			if ( reFindNoCase( arguments.thisSite[ "domainRegex" ], event.getFullUrl() ) ) {
 				return true;
 			}
 
 			// If we haven't matched the site yet, look at the site Domain Aliases for a match
-			if( structKeyExists( arguments.thisSite, "domainAliases" )  && isJSON( arguments.thisSite[ "domainAliases" ] ) ){
+			if (
+				structKeyExists( arguments.thisSite, "domainAliases" ) && isJSON(
+					arguments.thisSite[ "domainAliases" ]
+				)
+			) {
 				var aDomainAliases = deserializeJSON( arguments.thisSite[ "domainAliases" ] );
-				return arraySome(aDomainAliases, function(alias) {
-					return ( isStruct( alias ) && structKeyExists( alias, "domainRegex" ) && reFindNoCase( alias.domainRegex, event.getFullUrl() ) );
-				});
+				return arraySome( aDomainAliases, function( alias ){
+					return (
+						isStruct( alias ) && structKeyExists( alias, "domainRegex" ) && reFindNoCase(
+							alias.domainRegex,
+							event.getFullUrl()
+						)
+					);
+				} );
 			}
 			return false;
 		} );

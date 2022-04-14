@@ -338,7 +338,7 @@ component {
 				"keywords"           : allSettings.cb_site_keywords,
 				"tagline"            : allSettings.cb_site_tagline,
 				"domainRegex"        : "127\.0\.0\.1",
-				"domainAliases"		 : "[]",
+				"domainAliases"      : "[]",
 				"isBlogEnabled"      : allSettings.cb_site_disable_blog ? 0 : 1,
 				"isSitemapEnabled"   : allSettings.cb_site_sitemap ? 1 : 0,
 				"poweredByHeader"    : allSettings.cb_site_poweredby ? 1 : 0,

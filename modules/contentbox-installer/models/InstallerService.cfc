@@ -94,7 +94,7 @@ component accessors="true" {
 			"keywords"           : arguments.setup.getSiteKeywords(),
 			"domain"             : "127.0.0.1",
 			"domainRegex"        : "127\.0\.0\.1",
-			"domainAliases"	     : "[]",
+			"domainAliases"      : "[]",
 			"tagline"            : arguments.setup.getSiteTagLine(),
 			"homepage"           : "cbBlog",
 			"isBlogEnabled"      : true,
