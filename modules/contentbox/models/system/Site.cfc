@@ -497,10 +497,12 @@ component
 		var serverName = this.getDomain();
 		// Return the appropriate site alias Uri
 		if(
-			getDomainAliases()
+			getDomainAliasesAsArray()
 				.some( function( alias ){
 					if( isStruct( alias ) && alias.keyExists( "domainRegex" ) && reFindNoCase( alias.domainRegex, this.getServerName() ) ){
 						return true;
+					} else {
+						return false;
 					}
 				}
 			)
@@ -512,6 +514,26 @@ component
 		& "://"
 		&  serverName // Whitelisted Site Domain/Alias to use for building the BaseHREF
 		& ( listFind( "80,443", serverPort ) ? "" : ":#serverPort#" ); // The right port
+	}
+
+	/**
+	 * Function ensures we pass back a valid array of Domain Aliases, or an empty array as a default.
+	 */
+	public function getDomainAliasesAsArray(){
+		if(
+			!isNull( getDomainAliases() ) &&
+			isJSON( getDomainAliases() )
+		){
+			var aDomainAliases = deserializeJSON( getDomainAliases() );
+			if( isArray( aDomainAliases ) ){
+				return aDomainAliases;
+			} else {
+				return [];
+			}
+		} else {
+			return [];
+		}
+
 	}
 
 	/**
