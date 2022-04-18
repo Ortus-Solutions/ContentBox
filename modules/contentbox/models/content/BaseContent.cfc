@@ -409,6 +409,13 @@ component
 		fkcolumn ="FK_contentTemplateID"
 		lazy     ="true";
 
+	property
+		name     ="childContentTemplate"
+		fieldtype="many-to-one"
+		cfc      ="contentbox.models.content.ContentTemplate"
+		fkcolumn ="FK_childContentTemplateID"
+		lazy     ="true";
+
 	/**
 	 * --------------------------------------------------------------------------
 	 * CALCULATED FIELDS

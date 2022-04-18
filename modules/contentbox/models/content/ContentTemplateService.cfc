@@ -9,11 +9,12 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	// Dependencies
 	property name="dateUtil" inject="DateUtil@contentbox";
+	property name="contentService" inject="ContentService@contentbox";
 
 	/**
 	 * Constructor
 	 */
-	TemplateService function init(){
+	ContentTemplateService function init(){
 		// init it
 		super.init( entityName = "cbContentTemplate", useQueryCaching = true );
 
@@ -93,10 +94,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @template.hint The template object
 	 */
 	array function removeTemplateAssignments( required template ){
-		var assginedContent = contentService
+		var assignedContent = contentService
 			.newCriteria()
-			.isEq( "contentTemplate", this )
-			.createAlias( "contentTemplate", "ct" )
+			.isEq( "contentTemplate", arguments.template )
 			.list();
 
 		assignedContent.each( function( contentItem ){
@@ -105,7 +105,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		var childrenAssignments = contentService
 								.newCriteria()
-								.isEq( "childContentTemplate", this )
+								.isEq( "childContentTemplate", arguments.template )
 								.list();
 
 		childrenAssignments.each( function( contentItem ){

@@ -54,7 +54,7 @@ cacheuse           ="read-write"
 	 */
 
 	property
-		name     ="contentTemplateID"
+		name     ="templateID"
 		column   ="templateID"
 		fieldtype="id"
 		generator="uuid"
@@ -89,7 +89,7 @@ cacheuse           ="read-write"
 		column="definition"
 		notnull="true"
 		ormtype="text"
-		default="";
+		default="{}";
 
 	// M20 -> creator loaded as a proxy and fetched immediately
 	property
@@ -97,7 +97,9 @@ cacheuse           ="read-write"
 		notnull  ="true"
 		cfc      ="contentbox.models.security.Author"
 		fieldtype="many-to-one"
-		fkcolumn ="FK_authorID";
+		fkcolumn ="FK_authorID"
+		insert 	 =true
+		update 	 =false;
 
 	// M20 -> site loaded as a proxy and fetched immediately
 	property
@@ -107,68 +109,102 @@ cacheuse           ="read-write"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_siteID"
 		lazy     ="true"
-		fetch    ="join";
+		fetch    ="join"
+		insert 	 =true
+		update 	 =false;
+
+
+	property
+		name="assignedContentItems"
+		ormtype="integer"
+		default=0
+		formula="select count(*) from cb_content cbc2 WHERE cbc2.FK_contentTemplateID=templateID or cbc2.FK_childContentTemplateID=templateID";
 
 	// The non-persistent schema of the JSON definition
 	property
 		name ="schema"
 		persistent="false";
 
-	property
-		name="assignedContentItems"
-		ormtype="integer"
-		default=0
-		formula="select count(*) from cb_content WHERE FK_contentTemplate = id or FK_childContentTemplate = id";
-
 
 	function init(){
+		variables.createdDate = now();
+		variables.modifiedDate = now();
 		variables.schema = {
-			"name" : {
-				"required"   : true,
-				"type"       : "string"
+			"title"                  : { "label" : "Title", "type" : "string" },
+			"content"                : { "label" : "Content", "type" : "text" },
+			"markup"                 : { "label" : "Markup", "type" : "markdown" },
+			"excerpt"                : { "label" : "Excerpt", "type" : "text" },
+			"featuredImage"          : { "label" : "Featured Image", "type" : "file" },
+			// SEO
+			"HTMLTitle"              : { "label" : "HTML Title", "type" : "string" },
+			"HTMLKeywords"           : { "label" : "HTML Keywords", "type" : "string" },
+			"HTMLDescription"        : { "label" : "HTML Description", "type" : "text" },
+			// Modifiers
+			"parent"                 : {
+				"label" : "Content Parent",
+				"type" : "typeahead",
+				"search" : "/cbapi/v1/sites/:siteId/pages",
+				"options" : "filteredParents",
+				"optionId" : "contentID",
+				"optionLabel" : "title"
 			},
-			"description" : {
-				"required" : false,
-				"type" : "string"
+			"allowComments"          : { "label" : "Comments Enabled", "type" : "boolean", "default" : true },
+			"passwordProtection"     : { "label" : "Access Password", "type" : "string" },
+			"SSLOnly"                : { "label" : "Force SSL", "type" : "boolean", "default" : false },
+			// Caching
+			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true },
+			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0 },
+			"cacheLastAccessTimeout" : { "label" : "Cache Last Access Timeout", "type" : "integer", "default" : 0 },
+			// Display Options
+			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts" },
+			"childLayout"            : { "label" : "Child Layout", "type" : "select", "options" : "availableLayouts" },
+			"showInMenu"             : { "label" : "Show In Menu", "type" : "boolean", "default" : true },
+			"showInSearch"           : { "label" : "Show In Search", "type" : "boolean", "default" : true },
+			// Collections
+			"customFields"           : {
+				"label" : "Custom Fields",
+				"type"     : "array",
+				"schema"   : {
+					"name"         : { "label" : "Field Name", "required" : true, "type" : "string" },
+					"defaultValue" : { "label" : "Default Value", "type" : "string" }
+				},
+				"presentation" : "input"
 			},
-			"definition" : {
-				"required" : true,
-				"type" : "string"
-			},
-			"site" : {
-				"required" : true
+			"categories" : {
+				"label" : "Assigned Categories",
+				"type" : "select",
+				"options" : "availableCategories",
+				"multiple" : true
 			}
-		}
+		};
 
 		return this;
 	}
 
 	this.memento = {
-		"defaultIncludes" : {
-			"contentTemplateID",
+		"defaultIncludes" : [
+			"templateID",
 			"contentType",
 			"name",
 			"description",
 			"definition",
 			"assignedContentItems"
-		},
+		],
 		profiles : {
 			export : {
 				defaultIncludes : [
-					"contentTemplateID",
+					"templateID",
 					"contentType",
 					"name",
 					"description",
 					"definition",
-					"schema",
 					"createdDate",
-					"modifiedDate",
-					"creator",
-					"site.id",
-					"site.slug"
+					"modifiedDate"
 				],
 				defaultExcludes : [
-					"assignedContentItems"
+					"assignedContentItems",
+					"site",
+					"creator"
 				]
 			}
 		}
@@ -180,8 +216,7 @@ cacheuse           ="read-write"
 			size         : "1..200",
 			"udf"        : ( value, target ) => target.isNameUniqueInSite( value )
 		},
-		"definition" : { required : true, type : "string" },
-		"isPublic" : { required : true, type : "boolean" },
+		"definition" : { required : true },
 		"site" : { required : true }
 	};
 
@@ -199,20 +234,27 @@ cacheuse           ="read-write"
 	 * @overload
 	 */
 	function setDefinition( definition ){
-		return serializeJSON(
-			arguments.definition,
-			false,
-			listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false
-		);
+		variables.definition = isSimpleValue( arguments.definition )
+								? arguments.definition
+								: serializeJSON(
+									arguments.definition,
+									false,
+									listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false
+								);
+		return this;
 	}
 
 	boolean function isNameUniqueInSite( value = variables.name ){
-		return !! getContentTemplateService()
+		var c = getContentTemplateService()
 					.newCriteria()
 					.isEq( "site", getSite() )
-					.isNE( "contentTemplateID", variables.contentTemplateID )
-					.isEq( "name", arguments.value )
-					.count();
+					.isEq( "name", arguments.value );
+
+		if( !isNull( variables.templateID ) ){
+			c.ne( "templateID", variables.templateID );
+		}
+
+		return !c.count();
 	}
 
 }

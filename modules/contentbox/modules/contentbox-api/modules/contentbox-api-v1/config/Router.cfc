@@ -49,7 +49,7 @@ component {
 		 */
 		resources(
 			resource: "contentTemplates",
-			pattern = "#siteprefix#/content-templates",
+			pattern = "/content-templates",
 			except  : except
 		);
 
