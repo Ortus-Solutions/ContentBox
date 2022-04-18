@@ -52,6 +52,8 @@ component implements="contentbox.model.updates.IUpdate"{
 			transaction{
 
 				log.info("About to beggin #version# patching");
+				// update mobile layout column
+				updateMobileLayout();
 				// update settings
 				updatePermissions();
 				// update AdminR Role
@@ -133,6 +135,27 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 		permissionService.saveAll(entities=allPerms,transactional=false);
+	}
+
+	private function updateMobileLayout(){
+		// Ensure column exists?
+		var colFound = false;
+		var cols = new dbInfo(datasource=getDatasource(), table="cb_page").columns();
+		for( var x=1; x lte cols.recordcount; x++ ){
+			if( cols[ "column_name"][x] eq "mobileLayout"){
+				colFound = true;
+			}
+		}
+		if( !colFound ){
+			var q = new Query(datasource=getDatasource());
+			q.setSQL( "ALTER TABLE cb_page ADD mobileLayout #getVarcharType()#(200) NULL;" );
+			q.execute();
+
+			log.info("Added column for page mobile layouts");
+		}
+		else{
+			log.info("Column for page mobile layouts already in DB, skipping.");
+		}
 	}
 
 	private function getVarcharType(){
