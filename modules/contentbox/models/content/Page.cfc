@@ -73,24 +73,16 @@ component
 	 **							CONSTRAINTS
 	 ********************************************************************* */
 
-	this.constraints[ "layout" ]       = { required : false, size : "1..200" };
-	this.constraints[ "order" ]        = { required : true, type : "numeric" };
-	this.constraints[ "showInMenu" ]   = { required : false, type : "boolean" };
+	this.constraints[ "layout" ]     = { required : false, size : "1..200" };
+	this.constraints[ "order" ]      = { required : true, type : "numeric" };
+	this.constraints[ "showInMenu" ] = { required : false, type : "boolean" };
 
 	/* *********************************************************************
 	 **							CONSTRUCTOR
 	 ********************************************************************* */
 
 	function init(){
-		appendToMemento(
-			[
-				"excerpt",
-				"layout",
-				"order",
-				"showInMenu"
-			],
-			"defaultIncludes"
-		);
+		appendToMemento( [ "excerpt", "layout", "order", "showInMenu" ], "defaultIncludes" );
 
 		super.init();
 
