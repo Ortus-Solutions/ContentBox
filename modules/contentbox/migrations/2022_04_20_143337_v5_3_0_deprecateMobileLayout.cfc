@@ -7,14 +7,14 @@
  */
 component {
 
-    include "helper.cfm";
+	include "helper.cfm";
 
 	function up( schema, qb ){
-		if( hasColumn( "cb_page", "mobileLayout" ) ){
-            // Remove the mobileLayout column from the `cb_page` table
-            schema.alter( "cb_page", ( table ) => {
-                table.dropColumn( "mobileLayout" );
-            } );
+		if ( hasColumn( "cb_page", "mobileLayout" ) ) {
+			// Remove the mobileLayout column from the `cb_page` table
+			schema.alter( "cb_page", ( table ) => {
+				table.dropColumn( "mobileLayout" );
+			} );
 		}
 	}
 
