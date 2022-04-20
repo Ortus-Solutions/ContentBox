@@ -1,5 +1,6 @@
 ﻿<cfoutput>
 <script>
+window.jwtTokens = #cb.toJSON( getInstance( "JWTService@cbsecurity" ).fromUser( prc.oCurrentAuthor ), false, false )#
 /**
  * Enclosure for custom editor startup
  */

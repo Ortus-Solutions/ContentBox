@@ -18,15 +18,15 @@
 				message : ""
 			},
 			activeSite      : "#cb.site().getId()#",
-			globalData      : #serializeJSON( prc.globalData, false, false )#,
-			authentication : #serializeJSON( prc.jwtTokens )#,
+			globalData      : #cb.toJSON( prc.globalData )#,
+			authentication  : #cb.toJSON( prc.jwtTokens )#,
 			errorMessages 	: "",
-			templateForm 		: {
-				site        : "#cb.site().getId()#",
-				name 	    : "",
-				description : "",
-				contentType : "",
-				definition  : {}
+			templateForm 	: {
+					site        : "#cb.site().getId()#",
+					name 	    : "",
+					description : "",
+					contentType : "",
+					definition  : {}
 			},
 			templateFields  : null,
 			selectedTemplates : [],
@@ -36,11 +36,13 @@
 				Object.keys( this.globalData.templateSchema )
 						.filter( key => this.globalData.templateSchema[ key ].options && !this.globalData[ this.globalData.templateSchema.options ] )
 						.forEach( key => this.globalData[ this.globalData.templateSchema.options ] = [] );
-
 				this.searchTemplates();
 			},
 			selectedFields(){
 				return Object.keys( this.templateForm.definition ).sort( ( a, b ) => Object.keys( this.templateFields ).indexOf( a ) - Object.keys( this.templateFields ).indexOf( b ) );
+			},
+			isSelectedField( key ){
+				return this.selectedFields().indexOf( key ) > -1;
 			},
 			fieldOptions( key ){
 				return this.globalData[ this.globalData.templateSchema[ key ].options ].map(
@@ -142,7 +144,6 @@
 					console.log( error );
 				} );
 			},
-
 			resetTemplateForm(){
 				return this.templateForm = {
 					templateID 	: "",

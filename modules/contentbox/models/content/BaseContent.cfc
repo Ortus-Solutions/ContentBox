@@ -39,6 +39,11 @@ component
 		persistent="false";
 
 	property
+		name      ="contentTemplateService"
+		inject    ="provider:ContentTemplateService@contentbox"
+		persistent="false";
+
+	property
 		name      ="customFieldService"
 		inject    ="provider:customFieldService@contentbox"
 		persistent="false";
@@ -745,14 +750,19 @@ component
 
 	/**
 	* Getter overload to return either the assigned template or the global template for the site
+	* @note The hierarchy for templates is local, parent assigned, and then any globals
 	*/
 	any function getContentTemplate(){
 		return !isNull( variables.contentTemplate )
 					? variables.contentTemplate
-					: getContentTemplateService().newCriteria()
-									.isEq( "site", getSite() )
-									.isEq( "isGlobal", javacast( "boolean", true ) )
-									.get();
+					: (
+						!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
+						? getParent().getChildContentTemplate()
+						: getContentTemplateService().newCriteria()
+														.isEq( "site", getSite() )
+														.isEq( "isGlobal", javacast( "boolean", true ) )
+														.get()
+					);
 	}
 
 	/**
@@ -1750,6 +1760,78 @@ component
 		}
 
 		return this;
+	}
+
+	/**
+	 * Apply any assigned content templates to this instance
+	 */
+	BaseContent function applyContentTemplate(){
+		var template = getContentTemplate();
+		if( !isNull( template ) ){
+			var definition = template.getDefintion();
+			for( var key in definition ){
+					var currentValue = invoke( this, "get" & key );
+					if( isNull( currentValue ) || isNumeric( currentVal ) || isBoolean( currentVal ) ){
+						invoke(
+							this,
+							"populate",
+							{
+								"memento" : {
+									"#key#" : definition[ key ].value
+								}
+							}
+						);
+					} else if( isArray( currentVal ) ){
+						switch( key ){
+							case "customFields":{
+								var existingFields = getCustomFieldsAsStruct().keyArray();
+								definition[ key ].each( function( item ){
+									if( !existingFields.contains( item.name ) ){
+										var thisField = customFieldService.new( properties = { "key" : item.name, "value" : item.defaultValue ?: "" } );
+										thisField.setRelatedContent( this );
+										addCustomField( thisField );
+									}
+								} );
+								break;
+							}
+							case "categories":{
+								if( hasCategories() ){
+									var existingCategories = getCategories().map( function( cat ){ return cat.getCategoryID(); } );
+									definition[ key ].value.append( existingCategories, true );
+								}
+								invoke(
+									this,
+									"populate",
+									{
+										"memento" : {
+											"#key#" : listToArray( listRemoveDuplicates( arrayToList( definition[ key ].value ) ) )
+										}
+									}
+								);
+							}
+							default : {
+								invoke(
+									this,
+									"populate",
+									{
+										"memento" : {
+											"#key#" : definition[ key ].value
+										}
+									}
+								);
+							}
+						}
+
+					} else if( !len( currentVal ) ){
+						invoke(
+							this,
+							"set" & key,
+							[ definition[ key ].value ]
+						);
+					}
+
+			}
+		}
 	}
 
 }

@@ -322,6 +322,7 @@
 																				class="hidden"
 																				type="checkbox"
 																				@click="addFieldToTemplate"
+																				:checked="isSelectedField( templateField.key )"
 																			/>
 																			<!-- path -->
 																			<div class="toggle-path bg-gray-200 w-16 h-9 rounded-full shadow-inner"></div>
@@ -411,9 +412,9 @@
 													<fieldset>
 														<legend x-text="definition.label"></legend>
 														<div class="col-xs-12">
-															<select class="form-control" x-model="templateForm.definition[ fieldKey ].value">
+															<select class="form-control" x-model="templateForm.definition[ fieldKey ].value" :multiple="fieldKey == 'categories' ? true : null">
 																<template x-for="(option) in fieldOptions( fieldKey )">
-																	<option value="option.id" x-text="option.label"></option>
+																	<option :value="option.id" x-text="option.label"></option>
 																</template>
 															</select>
 														</div>
@@ -436,8 +437,10 @@
 												</template>
 												<template x-if="definition.type == 'array'">
 													<fieldset>
-														<legend x-text="definition.label"></legend>
-														<button type="button" class="btn btn-success text-bold pull-right" @click="appendSchemaItem( fieldKey )"><i class="fa fa-plus"></i></button>
+														<legend>
+															<span x-text="definition.label"></span>
+															<button type="button" class="btn btn-success text-bold pull-right" @click="appendSchemaItem( fieldKey )"><i class="fa fa-plus"></i></button>
+														</legend>
 														<template x-if="fieldKey == 'customFields'">
 															<ul class="list-unstyled">
 																<template x-for="(field, index) in templateForm.definition[ fieldKey ].value">

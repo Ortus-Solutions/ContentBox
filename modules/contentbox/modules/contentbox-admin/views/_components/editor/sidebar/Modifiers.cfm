@@ -16,6 +16,26 @@
 
 		<div id="modifiers" class="panel-collapse collapse">
 			<div class="panel-body">
+				<div class="form-group">
+					<label for="parentContent" class="control-label">
+						<i class="fas fa-sitemap"></i>
+						Content Template:
+					</label>
+					<select
+						name="contentTemplate"
+						id="contentTemplate"
+						class="form-control input-sm"
+						onchange="applyContentTemplate"
+					>
+							<option value="null">- No Template -</option>
+							#html.options(
+								values        : prc.availableTemplates,
+								column        : "templateID",
+								nameColumn    : "name",
+								selectedValue : !isNull( prc.oContent.getContentTemplate() ) ? prc.oContent.getContentTemplate().getId() : javacast( "null", 0 )
+							)#
+					</select>
+				</div>
 
 				<cfif prc.oContent.getContentType() NEQ "Entry">
 					<!--- Parent --->

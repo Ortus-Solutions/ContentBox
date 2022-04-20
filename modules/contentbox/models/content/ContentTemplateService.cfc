@@ -118,6 +118,31 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	/**
+	 * Gets all of the available templates for a content type
+	 *
+	 */
+	array function getAvailableForContentType(
+		required string contentType,
+		required Site site,
+		string fields
+	){
+		if( isNull( arguments.site ) ){
+			arguments.site = getWirebox().getInstance( "cbHelper@ContentBox" ).site();
+		}
+		var c = newCriteria()
+				.isEq( "contentType", arguments.contentType )
+				.isEq( "site", arguments.site );
+
+		if( !isNull( arguments.fields ) ){
+			c.withProjections( property=arguments.fields )
+				.asStruct();
+		}
+
+		return c.list();
+
+	}
+
+	/**
 	 * Get all data prepared for export
 	 *
 	 * @site The site to export from

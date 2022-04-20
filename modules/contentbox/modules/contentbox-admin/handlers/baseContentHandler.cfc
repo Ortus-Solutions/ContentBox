@@ -20,6 +20,7 @@ component extends="baseHandler" {
 	property name="customFieldService" inject="customFieldService@contentbox";
 	property name="editorService" inject="editorService@contentbox";
 	property name="contentService" inject="contentService@contentbox";
+	property name="templateService" inject="ContentTemplateService@contentbox";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -272,8 +273,14 @@ component extends="baseHandler" {
 		// Get all content names for parent drop downs
 		prc.allContent = variables.ormService.getAllFlatContent(
 			sortOrder: "slug asc",
-			siteID   : prc.oCurrentSite.getsiteID()
+			siteID   : prc.oCurrentSite.getsiteID(),
+			contentType : prc.oContent.getContentType()
 		);
+		prc.availableTemplates = variables.templateService.getAvailableForContentType(
+																contentType=prc.oContent.getContentType(),
+																site=prc.oContent.getSite(),
+																fields="templateID,name"
+															);
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor

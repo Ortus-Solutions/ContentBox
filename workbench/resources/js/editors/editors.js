@@ -196,6 +196,9 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
 
+	// Editor alerts
+	window.alerts = [];
+
 	// counters
 	$( "#htmlKeywords" ).keyup( function(){
 		$( "#html_keywords_count" ).html( $( "#htmlKeywords" ).val().length );
@@ -493,4 +496,130 @@ function cancelFeaturedImage(){
 	$( "#featuredImageURL" ).val( "" );
 	$( "#featuredImagePreview" ).attr( "src", "" );
 	$( "#featuredImageControls" ).toggleClass( "hide" );
+}
+
+function onContentTemplateChange( e ){
+	let templateId = e.target.value;
+	if( !templateId || templateId == 'null' ) return;
+	// TODO: Replace this with a more elegant promise-based confirmation
+	if( confirm( "Changing the content template may add new custom fields and change values of this content item. Are you sure you want to do this?" ) ){
+		return applyContentTemplate( templateId, true );
+	}
+}
+
+applyContentTemplate( templateId ){
+	fetch(
+		`/cbapi/v1/content-templates/${templateId}`,
+		{
+			headers : {
+				"Authorization" : `Bearer ${window.authentication.access_token}`
+			}
+		}
+	).then( r => r.json() )
+	.then( response => Object.keys( response.definition ).forEach( key => applyContentTemplateToField( key, response.definition ) ) )
+	.catch( error => {
+		this.globalAlert.type = "danger";
+		this.globalAlert.message = error.toString();
+		console.log( error );
+	} );
+}
+
+function announceModifiedByTemplate(){
+	if( !window.alerts.some( alert => alert.type == 'template' ) ){
+		window.alerts.push(
+			{
+				"type" : "template",
+				"class" : "warning",
+				"message" : "This content item has been modified by changes to the assigned template. You will need to re-save or re-publish this item for the template changes to take effect."
+			}
+		);
+	}
+}
+
+function applyContentTemplateToField( fieldName, definition ){
+	var template = getContentTemplate();
+	if( definition.hasOwnProperty( fieldName ) ){
+		switch( fieldName ){
+			case "customFields":{
+				definition.customFields.forEach(
+					fieldDefinition => {
+						let isApplied = document.getElementsByClassName( 'customFieldKey' ).some( el => el.value == fieldDefinition.name );
+						var $templateNode;
+						if( !isApplied ){
+							$( "#addCustomFieldButton" ).click();
+							setTimeout( () => {
+								$templateNode = $( ".template", "#customFields" ).last();
+								$( "input.customFieldKey", $templateNode ).val( fieldDefinition.name );
+								if( fieldDefinition.defaultValue ){
+									$( "input.customFieldKey", $templateNode ).val( fieldDefinition.defaultValue )
+								}
+								announceModifiedByTemplate();
+							}, 100);
+						} else {
+							$templateNode = $( `input.customFieldKey[value='${fieldDefinition.name}']` ).closest( ".template" );
+							let $valueInput = $( "input.customFieldValue", $templateNode );
+							if( !$valueInput.val() && fieldDefinition.defaultValue ){
+								$valueInput.val( fieldDefinition.defaultValue );
+								announceModifiedByTemplate();
+							}
+						}
+						$templateNode.addClass( "template-required" );
+						$( ".dynamicRemove", $templateNode )
+							.attr( "disabled", true )
+							.tooltip( "This custom field may not be removed as it is part of the template definition" );
+					}
+				);
+				break;
+			}
+			default : {
+				var $templateField = $( `[name=${fieldName}]` );
+				if( $templateField.length ){
+					let nodeType = templateField[ 0 ].nodeType;
+					switch( nodeType ){
+						case "radio":
+						case "checkbox":{
+							$templateField.each(
+								$check => {
+									if(
+										$check.prop( "value" ) == definition[ fieldName ].value
+										&&
+										!$check.prop( "checked" )
+									){
+										$check.click();
+										announceModifiedByTemplate();
+									}
+								}
+							)
+						}
+						default:{
+							if( $templateField.hasAttr( "multiple" ) ){
+								$templateField.find( "option" ).each(
+									$option => {
+										$values = Array.isArray( definition[ fieldName ].value )
+													? definition[ fieldName ].value
+													: definition[ fieldName ].value.split( ',' );
+										if(
+											$values.indexOf( $option[ 0 ].value ) > -1
+											&&
+											!$option.hasAttr( "selected" )
+										){
+											$option.attr( "selected", true );
+											announceModifiedByTemplate();
+										}
+									}
+								);
+							} else if( !$templateField.val() && definition[ fieldName ].value ) {
+								$templateField.val( definition[ fieldName ].value );
+								announceModifiedByTemplate();
+							}
+
+						}
+					}
+				} else {
+					console.error( `A field matching the name of ${fieldName} could not be found in the rendered editor. This template field cannot be validated or applied.` );
+				}
+
+			}
+		}
+	}
 }

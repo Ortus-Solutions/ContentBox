@@ -18,6 +18,12 @@
 				<!--- MessageBox --->
 				#cbMessageBox().renderit()#
 
+				<div x-data="window">
+					<template x-for="alert in alerts">
+						<div :class="`alert alert-${alert.class} text=center`" x-text="alert.message"></div>
+					</template>
+				</div>
+
 				<!--- Hidden Values --->
 				#html.hiddenField( name="siteID", 		bind=prc.oContent )#
 				#html.hiddenField( name="contentID", 	bind=prc.oContent )#

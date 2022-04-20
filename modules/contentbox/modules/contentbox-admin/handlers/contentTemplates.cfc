@@ -11,7 +11,7 @@ component extends="baseHandler" {
 		prc.globalData 		 = {
 			"templateSchema" : templateService.new().getSchema(),
 			"availableLayouts" : listToArray( reReplaceNoCase( prc.themeRecord.layouts, "blog,?", "" ) ),
-			"availableCategories" : variables.categoryService.newCriteria().isEq( "site", prc.oCurrentSite ).withProjections( property="categoryID:id,category:name,slug:value,isPublic" ).asStruct().list()
+			"availableCategories" : variables.categoryService.newCriteria().isEq( "site", prc.oCurrentSite ).withProjections( property="categoryID:id,category:label,slug:value,isPublic" ).asStruct().list()
 		};
 	}
 

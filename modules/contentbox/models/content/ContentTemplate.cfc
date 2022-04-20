@@ -47,6 +47,13 @@ cacheuse           ="read-write"
 		notnull="true"
 		default="false";
 
+	property
+		name   ="isGlobal"
+		column ="isGlobal"
+		ormtype="boolean"
+		notnull="true"
+		default="false";
+
 	/**
 	 * --------------------------------------------------------------------------
 	 * PROPERTIES
@@ -217,7 +224,8 @@ cacheuse           ="read-write"
 			"udf"        : ( value, target ) => target.isNameUniqueInSite( value )
 		},
 		"definition" : { required : true },
-		"site" : { required : true }
+		"site" : { required : true },
+		"isGlobal" : ( value, target ) => target.isGlobalUniqueInSite( value )
 	};
 
 
@@ -249,6 +257,19 @@ cacheuse           ="read-write"
 					.newCriteria()
 					.isEq( "site", getSite() )
 					.isEq( "name", arguments.value );
+
+		if( !isNull( variables.templateID ) ){
+			c.ne( "templateID", variables.templateID );
+		}
+
+		return !c.count();
+	}
+
+	boolean function isGlobalUniqueInSite(){
+		var c = getContentTemplateService()
+					.newCriteria()
+					.isEq( "site", getSite() )
+					.isEq( "isGlobal", javacast( "boolean", true ) );
 
 		if( !isNull( variables.templateID ) ){
 			c.ne( "templateID", variables.templateID );
