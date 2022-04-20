@@ -8,11 +8,15 @@
  */
 component {
 
+	include "helper.cfm";
+
 	function up( schema, qb ){
-		// Remove the sslonly column from the `cb_page` table
-		schema.alter( "cb_page", ( table ) => {
-			table.dropColumn( "SSLOnly" );
-		} );
+		if( hasColumn( "cb_page", "SSLOnly" ) ){
+			// Remove the sslonly column from the `cb_page` table
+			schema.alter( "cb_page", ( table ) => {
+				table.dropColumn( "SSLOnly" );
+			} );
+		}
 	}
 
 	function down( schema, qb ){
