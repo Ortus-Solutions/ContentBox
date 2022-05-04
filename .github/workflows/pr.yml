@@ -112,6 +112,7 @@ jobs:
         with:
           version: 5.4.2
           install: commandbox-cfformat
+          warmup: true
 
       - name: Run formatting rules
         run: box run-script format
