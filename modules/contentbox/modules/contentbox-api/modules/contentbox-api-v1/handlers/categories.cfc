@@ -68,9 +68,9 @@ component extends="baseHandler" {
 	/**
 	 * Update an existing category
 	 *
-	 * @tags      Categories
-	 * @responses contentbox/apidocs/categories/update/responses.json
-	 * @x         -contentbox-permissions CATEGORIES_ADMIN
+	 * @tags                     Categories
+	 * @responses                contentbox/apidocs/categories/update/responses.json
+	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
 	function update( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.update( argumentCollection = arguments );
@@ -79,9 +79,9 @@ component extends="baseHandler" {
 	/**
 	 * Delete a category using an id or slug
 	 *
-	 * @tags      Categories
-	 * @responses contentbox/apidocs/categories/delete/responses.json
-	 * @x         -contentbox-permissions CATEGORIES_ADMIN
+	 * @tags                     Categories
+	 * @responses                contentbox/apidocs/categories/delete/responses.json
+	 * @x-contentbox-permissions CATEGORIES_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="CATEGORIES_ADMIN"{
 		super.delete( argumentCollection = arguments );
