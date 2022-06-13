@@ -1,0 +1,93 @@
+
+> contentbox-cms@1.0.0 dev
+> webpack --node-env development
+
+assets by path modules/contentbox/modules/contentbox-admin/includes/ 2.42 MiB
+  assets by path modules/contentbox/modules/contentbox-admin/includes/css/ 2.08 MiB
+    assets by path modules/contentbox/modules/contentbox-admin/includes/css/*.css 2.08 MiB 3 assets
+    assets by path modules/contentbox/modules/contentbox-admin/includes/css/*.js 6.72 KiB
+      asset modules/contentbox/modules/contentbox-admin/includes/css/filebrowser.js 2.26 KiB [emitted] (name: modules/contentbox/modules/contentbox-admin/includes/css/filebrowser)
+      + 2 assets
+  assets by path modules/contentbox/modules/contentbox-admin/includes/js/*.js 347 KiB
+    asset modules/contentbox/modules/contentbox-admin/includes/js/bootstrap.js 204 KiB [emitted] (name: modules/contentbox/modules/contentbox-admin/includes/js/bootstrap)
+    asset modules/contentbox/modules/contentbox-admin/includes/js/admin.js 84.9 KiB [emitted] (name: modules/contentbox/modules/contentbox-admin/includes/js/admin)
+    asset modules/contentbox/modules/contentbox-admin/includes/js/contentList.js 36.8 KiB [emitted] (name: modules/contentbox/modules/contentbox-admin/includes/js/contentList)
+    + 2 assets
+assets by path includes/ 6.06 MiB
+  asset includes/js/vendor.js 6.05 MiB [compared for emit] (name: includes/js/vendor) (id hint: defaultVendors)
+  asset includes/js/runtime.js 6.89 KiB [compared for emit] (name: includes/js/runtime)
+  asset includes/rev-manifest.json 1.69 KiB [emitted]
+orphan modules 2.46 MiB (javascript) 975 bytes (runtime) [orphan] 30 modules
+runtime modules 5.1 KiB 17 modules
+cacheable modules 2.29 MiB (javascript) 2.07 MiB (css/mini-extract)
+  modules by path ./node_modules/ 2.21 MiB
+    modules by path ./node_modules/jquery/dist/*.js 369 KiB
+      ./node_modules/jquery/dist/jquery.min.js 87.4 KiB [built] [code generated]
+      ./node_modules/jquery/dist/jquery.js 282 KiB [built] [code generated]
+    + 25 modules
+  modules by path ./modules/contentbox/modules/contentbox-admin/resources/assets/ 82.3 KiB (javascript) 2.07 MiB (css/mini-extract)
+    javascript modules 82.3 KiB 13 modules
+    css modules 2.07 MiB
+      css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[8].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].use[3]!./modules/contentbox/modules/contentbox-admin/resources/assets/sass/contentbox.scss 44.4 KiB [built] [code generated]
+      css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[8].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].use[3]!./modules/contentbox/modules/contentbox-admin/resources/assets/sass/filebrowser.scss 5.56 KiB [built] [code generated]
+      css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[8].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].use[3]!./modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss 2.02 MiB [built] [code generated]
+
+LOG from ./node_modules/sass-loader/dist/cjs.js sass-loader ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[8].use[1]!./node_modules/resolve-url-loader/index.js??ruleSet[1].rules[8].use[2]!./node_modules/sass-loader/dist/cjs.js??ruleSet[1].rules[8].use[3]!./modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss
+<w> Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+<w> 
+<w> Recommendation: math.div(30em, 14) or calc(30em / 14)
+<w> 
+<w> More info and automated migrator: https://sass-lang.com/d/slash-div
+<w> 
+<w> node_modules/font-awesome-sass/assets/stylesheets/font-awesome/_variables.scss 15:24  @import
+<w> node_modules/font-awesome-sass/assets/stylesheets/_font-awesome.scss 6:9              @import
+<w> modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss 19:9     root stylesheet
+<w> 
+<w> Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+<w> 
+<w> Recommendation: math.div(4em, 3) or calc(4em / 3)
+<w> 
+<w> More info and automated migrator: https://sass-lang.com/d/slash-div
+<w> 
+<w> node_modules/font-awesome-sass/assets/stylesheets/font-awesome/_larger.scss 6:15   @import
+<w> node_modules/font-awesome-sass/assets/stylesheets/_font-awesome.scss 10:9          @import
+<w> modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss 19:9  root stylesheet
+<w> 
+<w> Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+<w> 
+<w> Recommendation: math.div(3em, 4) or calc(3em / 4)
+<w> 
+<w> More info and automated migrator: https://sass-lang.com/d/slash-div
+<w> 
+<w> node_modules/font-awesome-sass/assets/stylesheets/font-awesome/_larger.scss 7:17   @import
+<w> node_modules/font-awesome-sass/assets/stylesheets/_font-awesome.scss 10:9          @import
+<w> modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss 19:9  root stylesheet
+<w> 
+<w> Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+<w> 
+<w> Recommendation: math.div(18em, 14) or calc(18em / 14)
+<w> 
+<w> More info and automated migrator: https://sass-lang.com/d/slash-div
+<w> 
+<w> node_modules/font-awesome-sass/assets/stylesheets/font-awesome/_fixed-width.scss 4:11  @import
+<w> node_modules/font-awesome-sass/assets/stylesheets/_font-awesome.scss 11:9              @import
+<w> modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss 19:9      root stylesheet
+<w> 
+<w> Deprecation Using / for division outside of calc() is deprecated and will be removed in Dart Sass 2.0.0.
+<w> 
+<w> Recommendation: math.div(2em, 14) or calc(2em / 14)
+<w> 
+<w> More info and automated migrator: https://sass-lang.com/d/slash-div
+<w> 
+<w> node_modules/font-awesome-sass/assets/stylesheets/font-awesome/_list.scss 14:9     @import
+<w> node_modules/font-awesome-sass/assets/stylesheets/_font-awesome.scss 12:9          @import
+<w> modules/contentbox/modules/contentbox-admin/resources/assets/sass/theme.scss 19:9  root stylesheet
+<w> 
+<w> 1 repetitive deprecation warnings omitted.
+<w> 
+<w> null
+
+WARNING in ./node_modules/moment/min/moment.min.js 1:14608-14630
+Module not found: Error: Can't resolve './locale' in '/Users/jonclausen/Sites/ortus/coldbox-modules/ContentBox/node_modules/moment/min'
+
+webpack 5.73.0 compiled with 1 warning in 3460 ms

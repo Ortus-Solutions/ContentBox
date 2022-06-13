@@ -1,0 +1,103 @@
+const fs = require('fs-extra');
+
+module.exports = function(mix) {
+
+	var nodePath = "../../../../node_modules/";
+
+	elixir.config.mergeConfig({
+        plugins: [
+            {
+                // Copy static files over for re-use in portal after emit
+                apply: (compiler) => {
+                  compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+                    fs.readJson( 'includes/rev-manifest.json', (err, manifest) => {
+                        if( err ){
+                            console.error( err );
+                            return;
+                        }
+                        fs.copySync( manifest[ 'includes/js/vendor.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/vendor.js' )
+                        fs.copySync( manifest[ 'includes/js/runtime.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/runtime.js' )
+                    } );
+                  });
+                }
+            }
+        ]
+    });
+
+	mix.js(
+		[
+			// HTML5 shim detection
+			"resources/assets/vendor/js/modernizr.min.js",
+			// AlpineJS : Will replace majority of js files below
+			nodePath + "alpinejs/dist/cdn.js",
+			// Jquery
+			nodePath + "jquery/dist/jquery.min.js",
+			// Moment: Used by the Editors JS: Refactor in the future to JavaScript API
+			nodePath + "moment/min/moment.min.js",
+			// For autosaving and js cookies on editors
+			nodePath + "jquery.cookie/jquery.cookie.js",
+			// Form validation
+			nodePath + "jquery-validation/dist/jquery.validate.min.js",
+			// Bootstrap js plugins
+			nodePath + "bootstrap-sass/assets/javascripts/bootstrap.min.js",
+			// String compression utility: Used by autosave features
+			nodePath + "lz-string/libs/lz-string.min.js",
+			// Global utility
+			nodePath + "lodash/lodash.js",
+			// Navigation History
+			nodePath + "history/umd/History.js",
+			// Date picker
+			nodePath + "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+			nodePath + "clockpicker/dist/bootstrap-clockpicker.min.js",
+			// Theme navigation
+			nodePath + "navgoco/src/jquery.navgoco.min.js",
+			// Theme navigation
+			nodePath + "switchery-npm/index.js",
+			// Charting Libraries
+			nodePath + "raphael/raphael.js",
+			nodePath + "morris.js/morris.min.js",
+			// Keyboard shortcuts
+			nodePath + "jwerty/jwerty.js",
+			// Data tables
+			nodePath + "datatables/media/js/jquery.dataTables.js",
+			nodePath + "datatables-bootstrap/js/dataTables.bootstrap.js",
+			// Table drag and drop
+			nodePath + "TableDnD/dist/jquery.tablednd.min.js",
+			// Toaster notifications
+			nodePath + "toastr/toastr.js",
+			// Drag & drop hierarchical list with mouse and touch compatibility
+			nodePath + "jquery-nestable/jquery.nestable.js",
+			// on/off Toggles
+			nodePath + "bootstrap-toggle/js/bootstrap-toggle.min.js",
+			// setting sliders
+			nodePath + "bootstrap-slider/dist/bootstrap-slider.js",
+			// MEDIAMANAGER: BootBox used by media manager
+			nodePath + "bootbox/dist/bootbox.min.js",
+			// MEDIAMANAGER:  FileDrop used by media manager
+			"resources/assets/vendor/js/jquery.filedrop.js",
+			// MEDIAMANAGER: Context Menu used by media manager
+			nodePath + "jquery-contextmenu/dist/jquery.contextMenu.min.js",
+			// MEDIAMANAGER: Jcropping editor
+			nodePath + "jcrop/dist/jcrop.js",
+			// Static Libraries
+			"resources/assets/vendor/js/jquery.validate.bootstrap.js",
+			// File Uploads components
+			"resources/assets/vendor/js/bootstrap-fileupload.js",
+			// Luis Majano's div and table filters
+			"resources/assets/vendor/js/jquery.uidivfilter.js",
+			"resources/assets/vendor/js/jquery.uitablefilter.js"
+    	],
+		{
+			name: "bootstrap",
+			entryDirectory: ""
+    	}
+	)
+	.js( "admin.js" )
+	.js( "app.js" )
+	.js( "filebrowser.js" )
+	.js( "contentList.js" )
+    .sass( "contentbox.scss" )
+    .sass( "filebrowser.scss" )
+    .sass( "theme.scss" );
+
+};

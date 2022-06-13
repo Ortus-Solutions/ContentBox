@@ -1,0 +1,110 @@
+.dashboard-tile {
+    background-color: #fff;
+    color: #555;
+    margin-bottom: 15px;
+    padding: 10px;
+   @include roundBorders(3px);
+}
+.dashboard-tile.tile-turquoise {
+    background-color: $primaryColor;
+    color: #fff;
+}
+.dashboard-tile.tile-red {
+    background-color: $dangerColor;
+    color: #fff;
+}
+.dashboard-tile.tile-blue {
+    background-color: $infoColor;
+    color: #fff;
+}
+.dashboard-tile.tile-purple {
+    background-color: #9a59b5;
+    color: #fff;
+}
+.dashboard-tile .header {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+.dashboard-tile .header .title {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 5px;
+    position: absolute;
+    text-transform: uppercase;
+    top: 7px;
+}
+.dashboard-tile .content {
+    padding: 10px;
+}
+.dashboard-tile.header .content {
+    padding: 10px 20px;
+    background: transparent;
+    padding-right: 10px;
+    display: inline-block;
+    position: relative;
+    z-index: 5;
+}
+.dashboard-tile.detail .icon {
+    bottom: 0px;
+    width: 80px;
+    padding-top: 10px;
+    position: absolute;
+    right: 10px;
+}
+.dashboard-tile.header .icon img {
+    opacity: 0.8;
+    display: block;
+    float: right;
+    height: 80px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    padding-top: 10px;
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    width: 80px;
+}
+.dashboard-tile.header {
+    position: relative;
+    overflow: hidden;
+}
+.dashboard-tile.detail {
+    position: relative;
+    overflow: hidden;
+}
+.dashboard-tile.detail .content {
+    background: transparent;
+    padding: 10px 10px 13px;
+    display: inline-block;
+    position: relative;
+    z-index: 5;
+}
+.dashboard-tile.detail .icon {
+    display: block;
+    float: right;
+    height: 80px;
+    margin-bottom: 10px;
+    padding-left: 15px;
+    padding-top: 10px;
+    width: 80px;
+    right: 40px;
+    bottom: 9px;
+}
+.dashboard-tile.detail .icon i {
+    color: rgba(0, 0, 0, 0.05);
+    font-size: 85px;
+    line-height: 65px;
+}
+.dashboard-tile .content p {
+    margin-bottom: 0;
+    padding:10px;
+    font-weight: 4 00;
+    font-size: 14px;
+    clear: both;
+}
+#main-content .dashboard-tile .content h1 {
+    margin: 0;
+    font-weight: 300;
+    font-size: 40px;
+    padding:8px;
+}

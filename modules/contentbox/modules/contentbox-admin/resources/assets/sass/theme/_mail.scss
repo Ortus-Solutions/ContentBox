@@ -1,0 +1,122 @@
+.mail-option ul li {
+    list-style:none;
+}
+#view-mail-wrapper header {
+    color:#a2a2a2;
+}
+#view-mail-wrapper header h2 {
+    border-bottom: 1px solid #ddd;
+    padding: 0 0 15px 0;
+}
+#view-mail-wrapper header p {
+    position: absolute;
+    right: 35px;
+    top: 48px;
+}
+#view-mail-wrapper .view-mail-header {
+    padding-top: 5px;
+}
+#view-mail-wrapper .view-mail-header img {
+    margin-right:10px;
+}
+#view-mail-wrapper .view-mail-reply {
+    margin-top: 12px;
+}
+#view-mail-wrapper .view-mail-body {
+    border-top: 1px solid #ddd;
+    padding-top:15px;
+    margin-top: 15px;
+}
+#view-mail-wrapper .view-mail-body p {
+    line-height: 1.8em;
+}
+#view-mail-wrapper .view-mail-body .panel-footer, #view-mail-wrapper .view-compose-body .panel-footer {
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    @include roundBorders(0);
+    padding: 15px 0;
+}
+#view-mail-wrapper .view-mail-body .panel-footer h5 {
+    display: inline-block;
+}
+#view-mail-wrapper .view-mail-body .panel-footer .attchments {
+    padding:0 8px;
+    text-transform:lowercase;
+}
+#view-mail-wrapper .view-mail-body .panel-footer button.pull-right {
+    margin: 0 0 0px 8px;
+}
+.send-options {
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    position: absolute;
+    right: 45px;
+    top: 22px;
+}
+.send-options a {
+    color: #979797;
+}
+#form-group-cc, #form-group-bcc {
+    display: none;
+}
+.compose-nav>li+li {
+    margin-left: 0;
+    margin-top: 0px;
+}
+.compose-nav li a, .compose-nav li a:visited {
+   @include roundBorders(0);
+    border-top: 1px solid #f2f3f6;
+    padding: 15px;
+    border-right: 3px solid rgba(0, 0, 0, 0);
+    color:#5D5F63;
+}
+.compose-nav>li.active>a, .compose-nav>li.active>a:hover, .compose-nav>li.active>a:focus {
+    background: #f9f9f9;
+    color: $primaryColor;
+    border-left: 3px solid $primaryColor;
+    margin-left:-3px;
+}
+.compose-nav>li>a:hover, .compose-nav>li>a:focus {
+    background: #f9f9f9;
+    color: $primaryColor;
+    border-left: 3px solid $primaryColor;
+    margin-left:-3px;
+}
+.mail-checkbox {
+    margin: 0 15px 0 8px;
+}
+.mail-option .btn-group .fa-refresh, .pag-left, .pag-right {
+    color:#fff;
+}
+.inbox-pag li {
+    float:left;
+    margin-left:5px;
+}
+.inbox-pag li span {
+    display: inline-block;
+    margin-top: 7px;
+    margin-right: 5px;
+}
+.compose-nav {
+    margin: 15px -15px 0 -15px;
+}
+.table-inbox span.title {
+    display: block;
+    font-weight: bold;
+}
+.table-inbox tr {
+    background:#f9f9f9
+}
+.table-inbox tr.unread {
+    background: #fff;
+}
+.table-inbox a, .table-inbox a:visited {
+    color:#5D5F63;
+}
+.table-inbox .unread a, .table-inbox .unread a:visited {
+    color:$primaryColor;
+}
+.table-inbox .fa-star {
+    color:$warningColor;
+}

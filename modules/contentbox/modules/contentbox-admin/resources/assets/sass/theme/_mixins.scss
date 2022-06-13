@@ -1,0 +1,18 @@
+ //Rounded Borders
+@mixin roundBorders($radius){
+    -webkit-border-radius:$radius;
+    -moz-border-radius:$radius;
+    -ms-border-radius:$radius;
+    -o-border-radius:$radius;
+    border-radius:$radius;
+}
+
+//Transitions
+@mixin transition ($prop: all, $time: 1s, $ease: linear) {
+    -webkit-transition: $prop $time $ease;
+    -moz-transition: $prop $time $ease;
+    -o-transition: $prop $time $ease;
+    -ms-transition: $prop $time $ease;
+    transition: $prop $time $ease;
+
+}

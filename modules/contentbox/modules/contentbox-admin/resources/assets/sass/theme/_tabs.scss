@@ -1,0 +1,76 @@
+.tab-wrapper {
+    margin-bottom: 20px;
+}
+.tab-wrapper .nav-tabs > li > a {
+    @include roundBorders(0);
+}
+.tab-wrapper .tab-content {
+    border: 1px solid #ddd;
+    border-top: 0;
+    padding: 10px 15px;
+}
+.tab-wrapper > .nav-tabs > li a {
+    color:#5D5F63;
+}
+.tab-wrapper > .nav-tabs > li.active > a {
+    border-top: 2px solid $primaryColor;
+    background-color: #ffffff;
+}
+.tab-wrapper.tab-left > .nav-tabs > li, .tab-wrapper.tab-right > .nav-tabs > li {
+    float: none;
+    min-width: 75px;
+}
+.tab-wrapper.tab-left > .nav-tabs > li > a, .tab-wrapper.tab-right > .nav-tabs > li > a {
+    border: 1px solid #ddd;
+}
+.tab-wrapper.tab-left > .nav-tabs > li.active > a, .tab-wrapper.tab-right > .nav-tabs > li.active > a {
+    border-top-color: #ddd !important;
+}
+.tab-wrapper.tab-left .tab-content, .tab-wrapper.tab-right .tab-content {
+    overflow: auto;
+    border-top: 1px solid #ddd;
+}
+.tab-wrapper.tab-left > .nav-tabs {
+    float: left;
+    margin-right: -3px;
+}
+.tab-wrapper.tab-left > .nav-tabs > li > a {
+    border-right: 0;
+}
+.tab-wrapper.tab-left > .nav-tabs > li.active > a {
+    border-left: 2px solid $primaryColor;
+}
+.tab-wrapper.tab-right > .nav-tabs {
+    float: right;
+    margin-left: -1px;
+}
+.tab-wrapper.tab-right > .nav-tabs > li > a {
+    border-left: 0;
+}
+.tab-wrapper.tab-right > .nav-tabs > li.active > a {
+    border-right: 2px solid $primaryColor;
+}
+.tab-wrapper.tab-bottom > .tab-content {
+    border-top: 1px solid #ddd;
+}
+.tab-wrapper.tab-bottom > .nav-tabs {
+    border-bottom: none;
+    margin-top: 0px;
+}
+.tab-wrapper.tab-bottom > .nav-tabs > li.active > a {
+    margin-top: -2px;
+    border-top-color: transparent !important;
+    border-bottom: 2px solid $primaryColor;
+}
+.tab-primary.tab-wrapper > .nav-tabs > li.active > a {
+    border-top-color: $primaryColor;
+}
+.tab-primary.tab-wrapper.tab-left > .nav-tabs > li.active {
+    border-left-color: $primaryColor;
+}
+.tab-primary.tab-wrapper.tab-right > .nav-tabs > li.active {
+    border-right-color: $primaryColor;
+}
+.tab-primary.tab-wrapper.tab-bottom > .nav-tabs > li.active > a {
+    border-bottom-color: $primaryColor;
+}

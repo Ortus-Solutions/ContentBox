@@ -1,0 +1,31 @@
+#cal {
+    background:#fff;
+    padding:20px;
+    @include roundBorders(0 3px 3px 0);
+}
+#events {
+    background: $primaryColor;
+    color: #fff;
+    height: 755px;
+    @include roundBorders(3px 0 0 3px);
+}
+#events h2 {
+    font-size: 3em;
+    font-weight: 300;
+}
+#events h3 {
+    font-size: 2em;
+    font-weight: 300;
+    padding: 0;
+    margin: 0 0 50px 0;
+}
+.external-event.ui-draggable {
+    margin:10px 0;
+    padding:5px;
+    background: #149e82;
+   @include roundBorders(3px);
+}
+.external-event.ui-draggable:hover {
+    cursor: move;
+}
+

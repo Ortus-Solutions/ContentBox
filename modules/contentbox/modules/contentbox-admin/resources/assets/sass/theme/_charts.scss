@@ -1,0 +1,20 @@
+/* ==========================================================================
+   FlotChart
+   ========================================================================== */
+ .chart-tooltip {
+   @include roundBorders(3px);
+    background-color: #233242 !important;
+    border:0px !important;
+    color: #ffffff;
+    padding: 10px 20px !important;
+    font-size: 13px;
+}
+
+/* ==========================================================================
+   Charts JS
+   ========================================================================== */
+ .canvas-container {
+    min-height: 300px;
+    max-height: 600px;
+    position: relative;
+}
