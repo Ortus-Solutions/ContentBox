@@ -18,6 +18,7 @@ module.exports = function(mix) {
                         fs.copySync( manifest[ 'includes/js/vendor.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/vendor.js' )
                         fs.copySync( manifest[ 'includes/js/runtime.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/runtime.js' )
                     } );
+					fs.copySync( 'includes/rev-manifest.json', 'modules/contentbox/modules/contentbox-admin/includes/rev-manifest.js' )
                   });
                 }
             }
@@ -31,15 +32,15 @@ module.exports = function(mix) {
 			// AlpineJS : Will replace majority of js files below
 			nodePath + "alpinejs/dist/cdn.js",
 			// Jquery
-			nodePath + "jquery/dist/jquery.min.js",
+			nodePath + "jquery/dist/jquery.js",
 			// Moment: Used by the Editors JS: Refactor in the future to JavaScript API
-			nodePath + "moment/min/moment.min.js",
+			nodePath + "moment/dist/moment.js",
 			// For autosaving and js cookies on editors
 			nodePath + "jquery.cookie/jquery.cookie.js",
 			// Form validation
-			nodePath + "jquery-validation/dist/jquery.validate.min.js",
+			nodePath + "jquery-validation/dist/jquery.validate.js",
 			// Bootstrap js plugins
-			nodePath + "bootstrap-sass/assets/javascripts/bootstrap.min.js",
+			nodePath + "bootstrap-sass/assets/javascripts/bootstrap.js",
 			// String compression utility: Used by autosave features
 			nodePath + "lz-string/libs/lz-string.min.js",
 			// Global utility
@@ -47,28 +48,28 @@ module.exports = function(mix) {
 			// Navigation History
 			nodePath + "history/umd/History.js",
 			// Date picker
-			nodePath + "bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
-			nodePath + "clockpicker/dist/bootstrap-clockpicker.min.js",
+			nodePath + "bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
+			nodePath + "clockpicker/dist/bootstrap-clockpicker.js",
 			// Theme navigation
-			nodePath + "navgoco/src/jquery.navgoco.min.js",
+			nodePath + "Navgoco/src/jquery.navgoco.js",
 			// Theme navigation
 			nodePath + "switchery-npm/index.js",
 			// Charting Libraries
 			nodePath + "raphael/raphael.js",
-			nodePath + "morris.js/morris.min.js",
+			nodePath + "morris.js/morris.js",
 			// Keyboard shortcuts
 			nodePath + "jwerty/jwerty.js",
 			// Data tables
 			nodePath + "datatables/media/js/jquery.dataTables.js",
 			nodePath + "datatables-bootstrap/js/dataTables.bootstrap.js",
 			// Table drag and drop
-			nodePath + "TableDnD/dist/jquery.tablednd.min.js",
+			nodePath + "tablednd/dist/jquery.tablednd.js",
 			// Toaster notifications
 			nodePath + "toastr/toastr.js",
 			// Drag & drop hierarchical list with mouse and touch compatibility
 			nodePath + "jquery-nestable/jquery.nestable.js",
 			// on/off Toggles
-			nodePath + "bootstrap-toggle/js/bootstrap-toggle.min.js",
+			nodePath + "bootstrap-toggle/js/bootstrap-toggle.js",
 			// setting sliders
 			nodePath + "bootstrap-slider/dist/bootstrap-slider.js",
 			// MEDIAMANAGER: BootBox used by media manager
@@ -76,7 +77,7 @@ module.exports = function(mix) {
 			// MEDIAMANAGER:  FileDrop used by media manager
 			"resources/assets/vendor/js/jquery.filedrop.js",
 			// MEDIAMANAGER: Context Menu used by media manager
-			nodePath + "jquery-contextmenu/dist/jquery.contextMenu.min.js",
+			nodePath + "jquery-contextmenu/dist/jquery.contextMenu.js",
 			// MEDIAMANAGER: Jcropping editor
 			nodePath + "jcrop/dist/jcrop.js",
 			// Static Libraries

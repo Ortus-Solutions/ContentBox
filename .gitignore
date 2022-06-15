@@ -37,7 +37,6 @@ workbench/app_modules
 modules/contentbox/modules/contentbox-admin/includes/js
 modules/contentbox/modules/contentbox-admin/includes/css
 modules/contentbox/modules/contentbox-admin/includes/fonts
-modules/contentbox/modules/contentbox-admin/includes/images
 modules/route-visualizer/**
 modules/cbdebugger
 
