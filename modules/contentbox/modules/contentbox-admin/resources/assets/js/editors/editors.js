@@ -1,52 +1,52 @@
 /**
  * Get widget selector URL
  */
-function getWidgetSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/widgets/editorselector"; }
+window.getWidgetSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/editorselector"; }
 
 /**
  * Get widget preview URL
  */
-function getWidgetPreviewURL(){ return $cbEditorConfig.adminEntryURL + "/widgets/preview"; }
+window.getWidgetPreviewURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/preview"; }
 
 /**
  * Get widget editor instance URL
  */
-function getWidgetEditorURL(){ return $cbEditorConfig.adminEntryURL + "/widgets/editinstance"; }
+window.getWidgetEditorURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/editinstance"; }
 
 /**
  * View widget instance
  */
-function getWidgetInstanceURL(){ return $cbEditorConfig.adminEntryURL + "/widgets/viewWidgetInstance"; }
+window.getWidgetInstanceURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/viewWidgetInstance"; }
 
 /**
  * Get page editor selector
  */
-function getPageSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/pages/editorselector"; }
+window.getPageSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/pages/editorselector"; }
 
 /**
  * Blog Editor selector
  */
-function getEntrySelectorURL(){ return $cbEditorConfig.isBlogDisabled ? "" : $cbEditorConfig.adminEntryURL + "/entries/editorselector"; }
+window.getEntrySelectorURL = function(){ return $cbEditorConfig.isBlogDisabled ? "" : $cbEditorConfig.adminEntryURL + "/entries/editorselector"; }
 
 /**
  * Get contentstore selector
  */
-function getContentStoreSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/contentStore/editorselector"; }
+window.getContentStoreSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/contentStore/editorselector"; }
 
 /**
  * Get content preview URL
  */
-function getPreviewSelectorURL(){ return $cbEditorConfig.adminEntryURL + "/content/preview"; }
+window.getPreviewSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/content/preview"; }
 
 /**
  * Get author editor preference
  */
-function getAuthorEditorPreferenceURL(){ return $cbEditorConfig.adminEntryURL + "/authors/changeEditor"; }
+window.getAuthorEditorPreferenceURL = function(){ return $cbEditorConfig.adminEntryURL + "/authors/changeEditor"; }
 
 /**
  * Get author save preference
  */
-function getAuthorSavePreferenceURL(){ return $cbEditorConfig.adminEntryURL + "/authors/saveSinglePreference"; }
+window.getAuthorSavePreferenceURL = function(){ return $cbEditorConfig.adminEntryURL + "/authors/saveSinglePreference"; }
 
 /**
  * Get a module URL link
@@ -54,7 +54,7 @@ function getAuthorSavePreferenceURL(){ return $cbEditorConfig.adminEntryURL + "/
  * @param  {string} event       The event to execute
  * @param  {string} queryString The query string to build
  */
-function getModuleURL( module, event, queryString ){
+window.getModuleURL = function( module, event, queryString ){
 	var returnURL = "";
 
 	$.ajax( {
@@ -76,7 +76,7 @@ function getModuleURL( module, event, queryString ){
  * @param  {numeric}   h        Window height
  * @return {[type]}            [description]
  */
-function loadAssetChooser( callback, w, h ){
+window.loadAssetChooser = function( callback, w, h ){
 	openRemoteModal(
 		$cbEditorConfig.adminEntryURL + "/ckFileBrowser/assetChooser?callback=" + callback,
 		{},
@@ -89,7 +89,7 @@ function loadAssetChooser( callback, w, h ){
  * Switch editors
  * @param  {string} editorType The editor to switch to
  */
-function switchEditor( editorType ){
+window.switchEditor = function( editorType ){
 	// Save work
 	if ( confirm( "Would you like to save your work before switching editors?" ) ){
 		$changelog.val( "Editor Change Quick Save" );
@@ -114,7 +114,7 @@ function switchEditor( editorType ){
  * @param saveURL The URL used for saving the content asynchronously
  * @param collapseNav Automatically collapse main navigation for better editing experience
  */
-function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
+window.setupEditors = function( theForm, withExcerpt, saveURL, collapseNav ){
 	// Setup global editor elements
 	$targetEditorForm   	= theForm;
 	$targetEditorSaveURL 	= saveURL;
@@ -223,7 +223,7 @@ function setupEditors( theForm, withExcerpt, saveURL, collapseNav ){
  * Checks if user wants to draft content that is published already
  * @return {boolean}
  */
-function shouldPublish(){
+window.shouldPublish = function(){
 	// Confirm if you really want to quick save if content is published already
 	if ( $contentID.val().length && $isPublished.val() == "true" ){
 		return confirm(
@@ -238,7 +238,7 @@ function shouldPublish(){
 /**
  * Quick save content
  */
-function quickSave(){
+window.quickSave = function(){
 	// Confirm if you really want to quick save if content is published already
 	if ( !shouldPublish() ){
 		return;
@@ -300,7 +300,7 @@ function quickSave(){
  * Quick Live Preview
  * @return {[type]} [description]
  */
-function previewContent(){
+window.previewContent = function(){
 	// Open the preview window for content
 	openRemoteModal(
 		getPreviewSelectorURL(),
@@ -322,7 +322,7 @@ function previewContent(){
 /**
  * Set the correct publish date to now
  */
-function publishNow(){
+window.publishNow = function(){
 	var fullDate = new Date();
 	$( "#publishedDate" ).val( getToday() );
 	$( "#publishedHour" ).val( fullDate.getHours() );
@@ -333,7 +333,7 @@ function publishNow(){
  * Switch markup type
  * @param  {string} markupType The markup type
  */
-function switchMarkup( markupType ){
+window.switchMarkup = function( markupType ){
 	$( "#markup" ).val( markupType );
 	$( "#markupLabel" ).html( markupType );
 }
@@ -341,7 +341,7 @@ function switchMarkup( markupType ){
 /**
  * Set that the form was submitted
  */
-function setWasSubmitted(){
+window.setWasSubmitted = function(){
 	$wasSubmitted = true;
 }
 
@@ -349,7 +349,7 @@ function setWasSubmitted(){
  * As for leave confirmation if content is dirty
  * @return {string} The confirmation message the browser will ask if set.
  */
-function askLeaveConfirmation(){
+window.askLeaveConfirmation = function(){
 	if ( checkIsDirty() && !$wasSubmitted ){
    		return "You have unsaved changes.";
    	}
@@ -359,7 +359,7 @@ function askLeaveConfirmation(){
  * Check if permalink is unique
  * @param  {string} linkToUse The link to check
  */
-function permalinkUniqueCheck( linkToUse ){
+window.permalinkUniqueCheck = function( linkToUse ){
 	linkToUse = linkToUse || $slug.val();
 	linkToUse = $.trim( linkToUse ); //slugify still appends a space at the end of the string, so trim here for check uniqueness
 	if ( !linkToUse.length ){ return; }
@@ -389,7 +389,7 @@ function permalinkUniqueCheck( linkToUse ){
  * Create a permalink
  * @param  {string} linkToUse [description]
  */
-function createPermalink( linkToUse ){
+window.createPermalink = function( linkToUse ){
 	var $title 		= $targetEditorForm.find( "#title" );
 	var linkToUse 	= linkToUse || $title.val();
 	if ( !linkToUse.length ){ return; }
@@ -410,7 +410,7 @@ function createPermalink( linkToUse ){
 /**
  * Toggle permalink
  */
-function togglePermalink(){
+window.togglePermalink = function(){
 	var toggle = $( "#togglePermalink" );
 	// Toggle lock icon on click..
 	toggle.hasClass( "fa fa-lock" ) ? toggle.attr( "class", "fa fa-unlock" ) : toggle.attr( "class", "fa fa-lock" );
@@ -422,7 +422,7 @@ function togglePermalink(){
  * Toggle draft mode or not
  * @return {boolean} Returns an indicator if we should publish or not
  */
-function toggleDraft(){
+window.toggleDraft = function(){
 	// Confirm if you really want to quick save if content is published already
 	if ( !shouldPublish() ){
 		return false;
@@ -439,7 +439,7 @@ function toggleDraft(){
  *
  * @param  {Boolean} isDraft draft mode or publish
  */
-function quickPublish( isDraft ){
+window.quickPublish = function( isDraft ){
 	if ( isDraft ){
 		// verify we can draft this content
 		if ( !toggleDraft() ){
@@ -464,7 +464,7 @@ function quickPublish( isDraft ){
 /**
  * Toggle the loader bar visibility
  */
-function toggleLoaderBar(){
+window.toggleLoaderBar = function(){
 	// Activate Loader
 	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
@@ -476,7 +476,7 @@ function toggleLoaderBar(){
  * @param  {string} fileURL  The file URL
  * @param  {string} fileType Directory or file
  */
-function featuredImageCallback( filePath, fileURL, fileType ){
+window.featuredImageCallback = function( filePath, fileURL, fileType ){
 	if ( $( "#featuredImage" ).val().length ){ cancelFeaturedImage(); }
 	$( "#featuredImageControls" ).toggleClass( "hide" );
 	$( "#featuredImage" ).val( filePath );
@@ -488,7 +488,7 @@ function featuredImageCallback( filePath, fileURL, fileType ){
 /**
  * Cancel featured image
  */
-function cancelFeaturedImage(){
+window.cancelFeaturedImage = function(){
 	$( "#featuredImage" ).val( "" );
 	$( "#featuredImageURL" ).val( "" );
 	$( "#featuredImagePreview" ).attr( "src", "" );

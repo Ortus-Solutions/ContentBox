@@ -1,15 +1,30 @@
-const jwerty = require( "jwerty" ).jwerty;
+import { createKeybindingsHandler } from "tinykeys"
 window.contentListHelper = require( "./contentList.js" ).default;
+require( "./filebrowser.js" );
+require( "./editors/editors.js" );
+require( "./editors/autosave.js" );
 // attache filedrop to jQuery
 fd.jQuery();
 
-document.addEventListener( "DOMContentLoaded", () => {
-	// GLOBAL STATIC
-	REGEX_LOWER = /[a-z]/,
+// GLOBAL STATIC
+const REGEX_LOWER = /[a-z]/,
 	REGEX_UPPER = /[A-Z]/,
 	REGEX_DIGIT = /[0-9]/,
 	REGEX_DIGITS = /[0-9].*[0-9]/,
 	REGEX_SPECIAL = /[^a-zA-Z0-9]/;
+
+// setup global variables
+const $confirmIt = $( "#confirmIt" );
+const $remoteModal = $( "#modal" );
+// Global Tool Tip Settings
+const toolTipSettings = {
+	animation : "slide",
+	delay     : { show: 100, hide: 100 }
+};
+
+
+
+document.addEventListener( "DOMContentLoaded", () => {
 
 	// If the sidebar preference is off, toggle it
 	if ( $( "body" ).attr( "data-showsidebar" ) == "no" ) {
@@ -20,19 +35,8 @@ document.addEventListener( "DOMContentLoaded", () => {
 		$( "#main-content-sidebar-trigger" ).fadeIn();
 	}
 
-	// setup global variables
-	$confirmIt = $( "#confirmIt" );
-	$remoteModal = $( "#modal" );
-
 	// Attach modal listeners
 	attachModalListeners();
-
-	// Global Tool Tip Settings
-	toolTipSettings = {
-		animation : "slide",
-		delay     : { show: 100, hide: 100 }
-	};
-
 	// Search Capabilities
 	activateContentSearch();
 	// activate confirmations
@@ -124,27 +128,28 @@ document.addEventListener( "DOMContentLoaded", () => {
 	} );
 
 	// Nav Search Shortcut
-	jwerty.key(
-		"ctrl+shift+s",
-		function() {
+	createKeybindingsHandler({
+		"Ctrl+Shift+S" : () => {
 			$( "#nav-search" ).focus();
 			return false;
 		}
-	);
+	});
 
 	// find all links with the key-binding data attribute
 	$( "[data-keybinding]" ).each( function() {
 		var boundItem = $( this );
-		jwerty.key( boundItem.data( "keybinding" ), function() {
-			// give precedence to onclick
-			if ( boundItem.attr( "onclick" ) ) {
-				// if onclick, call event
-				boundItem.click();
-			} else {
-				// otherwise, follow link
-				to( boundItem.attr( "href" ) );
+		createKeybindingsHandler({
+			[boundItem.data( "keybinding" )] : () => {
+				// give precedence to onclick
+				if ( boundItem.attr( "onclick" ) ) {
+					// if onclick, call event
+					boundItem.click();
+				} else {
+					// otherwise, follow link
+					to( boundItem.attr( "href" ) );
+				}
 			}
-		} );
+		});
 	} );
 
 	// Hide empty menu's due to permissions.
@@ -306,8 +311,8 @@ window.adminNotifier = function( type, message, delay ) {
 
 window.activateContentSearch = function() {
 	// local refs
-	$nav_search = $( "#nav-search" );
-	$nav_search_results = $( "#div-search-results" );
+	var $nav_search = $( "#nav-search" );
+	var $nav_search_results = $( "#div-search-results" );
 	// opacity
 	$nav_search.css( "opacity", "0.8" );
 	// focus effects

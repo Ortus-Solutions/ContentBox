@@ -7,6 +7,7 @@ module.exports = function(mix) {
 
 	elixir.config.mergeConfig({
 		module: {
+			// Globally exposed variables
 			rules: [
 				{
 					test: require.resolve("jquery"),
@@ -23,18 +24,20 @@ module.exports = function(mix) {
 			}
 		},
         plugins: [
+			// Variables only resolved/exposed globally within the compiled JS assets
 			new webpack.ProvidePlugin( {
 				$              : "jquery",
 				jquery         : "jquery",
 				"window.jQuery": "jquery",
 				"window.$": "jquery",
 				jQuery         :"jquery",
-				_              : "lodash"
+				_              : "lodash",
+				Raphael        : "Raphael"
 			} ),
             {
-                // Copy static files over for re-use in portal after emit
                 apply: (compiler) => {
                   compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
+					// Copy manifests and vendor compilations over to the admin theme includes directory
                     fs.readJson( 'includes/rev-manifest.json', (err, manifest) => {
                         if( err ){
                             console.error( err );
@@ -43,7 +46,10 @@ module.exports = function(mix) {
                         fs.copySync( manifest[ 'includes/js/vendor.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/vendor.js' )
                         fs.copySync( manifest[ 'includes/js/runtime.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/runtime.js' )
                     } );
-					fs.copySync( 'includes/rev-manifest.json', 'modules/contentbox/modules/contentbox-admin/includes/rev-manifest.json' )
+					fs.copySync( 'includes/rev-manifest.json', 'modules/contentbox/modules/contentbox-admin/includes/rev-manifest.json' );
+					// Clean up compiled root assets
+					// fs.rmdir( 'includes/js', { recursive : true } );
+					// fs.remove( 'includes/rev-manifest.json' );
                   });
                 }
             }
@@ -71,7 +77,7 @@ module.exports = function(mix) {
 			// Global utility
 			nodePath + "lodash/lodash.js",
 			// Navigation History
-			nodePath + "historyjs/scripts/uncompressed/history.adapter.jquery.js",
+			nodePath + "historyjs/scripts/bundled-uncompressed/html5/native.history.js",
 			// Date picker
 			nodePath + "bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
 			nodePath + "clockpicker/dist/bootstrap-clockpicker.js",
@@ -118,7 +124,6 @@ module.exports = function(mix) {
 	)
 	.js( "admin.js" )
 	.js( "app.js" )
-	.js( "filebrowser.js" )
     .sass( "contentbox.scss" )
     .sass( "filebrowser.scss" )
     .sass( "theme.scss" );

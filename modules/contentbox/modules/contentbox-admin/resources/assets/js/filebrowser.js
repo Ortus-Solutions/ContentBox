@@ -13,7 +13,7 @@
  * @param sURL
  * @param sType
  */
-function fbCKSelect( sPath, sURL, sType ){
+window.fbCKSelect = function( sPath, sURL, sType ){
 	/**
 	 * Get specific URL param
 	 * @param  {string} paramName Param Nam
@@ -36,7 +36,7 @@ function fbCKSelect( sPath, sURL, sType ){
 /**
  * Generic close callback
  */
-function fbGenericClose(){
+window.fbGenericClose = function(){
 	window.close();
 }
 /**
@@ -45,23 +45,23 @@ function fbGenericClose(){
  * @param rPath
  * @param type
  */
-function fbTestChoose( path, rPath, type ){
+window.fbTestChoose = function( path, rPath, type ){
 	alert( "Path: " + path + "\n URL: " + rPath + "\n Type: " + type );
 }
 /**
  * Cancel called
  * @return {[type]} [description]
  */
-function fbTestCancel(){
+window.fbTestCancel = function(){
 	alert( "Cancel Called" );
 }
 
-function fbUpload(){
+window.fbUpload = function(){
 	$( "#uploadBar" ).slideToggle();
 }
 
 /** Verifies which view is active */
-function fbVerifyActiveView() {
+window.fbVerifyActiveView = function() {
 	let identifier = "#" + $listType.val() + $listFolder.val();
 	$( identifier ).removeClass( "btn-more" ).addClass( "btn-default" );
 }

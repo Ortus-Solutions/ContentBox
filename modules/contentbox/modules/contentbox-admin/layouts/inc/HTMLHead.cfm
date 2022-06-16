@@ -66,8 +66,8 @@
 	<script defer src="#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/runtime.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
 	<script defer src="#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/vendor.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
 	<script defer src="#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/bootstrap.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/admin.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
 	<script defer src="#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/app.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
+	<script defer src="#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/admin.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
 
 </head>
 </cfoutput>

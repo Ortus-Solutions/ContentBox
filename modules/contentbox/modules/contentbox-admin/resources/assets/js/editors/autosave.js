@@ -6,7 +6,7 @@
  * @param  {object} options  The override options such as: storeMax, timeout
  * @return {object}          Returns the auto save closure
  */
-autoSave = function( editor, pageID, ddMenuID, options ){
+window.autoSave = function( editor, pageID, ddMenuID, options ){
 	// Verify local storage, else disable feature
 	if ( !Modernizr.localstorage ){
 		$( "#" + ddMenuID ).find( ".autoSaveBtn" )
