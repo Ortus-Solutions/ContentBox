@@ -9,9 +9,9 @@
 @import "globals";
 
 // External Libs
-$bootstrap-sass-asset-helper: false !default;
+$bootstrap-sass-asset-helper: false;
 // fix relative pack for webpack
-$icon-font-path: if($bootstrap-sass-asset-helper, "bootstrap/", "../../fonts/bootstrap/") !default;
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/bootstrap.scss";
 // fix relative pack for webpack
 $fa-sass-asset-helper: false !default;

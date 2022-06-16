@@ -1,3 +1,8 @@
+const jwerty = require( "jwerty" ).jwerty;
+window.contentListHelper = require( "./contentList.js" ).default;
+// attache filedrop to jQuery
+fd.jQuery();
+
 document.addEventListener( "DOMContentLoaded", () => {
 	// GLOBAL STATIC
 	REGEX_LOWER = /[a-z]/,
@@ -180,7 +185,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 /**
  * Activate the main sidebar state to open or closed
  */
-function activateNavbarState() {
+window.activateNavbarState = function() {
 	var container = $( "#container" );
 	// Bind listener to left toggle action
 	$( "#toggle-left" ).bind( "click", function( e ) {
@@ -204,7 +209,7 @@ function activateNavbarState() {
  * Check if the main right sidebar is open or not
  * @return {Boolean} open or not
  */
-function isMainSidebarOpen() {
+window.isMainSidebarOpen = function() {
 	var sidebar = $( "#main-content-sidebar" );
 	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block" ? true : false );
 }
@@ -212,7 +217,7 @@ function isMainSidebarOpen() {
  * Toggle the main sidebar to fully display the main slot of content.
  * main-content-slot (col) main-content-sidebar (col)
  */
-function toggleSidebar() {
+window.toggleSidebar = function(){
 	var sidebar 		= $( "#main-content-sidebar" );
 	var type 			= sidebar.css( "display" );
 	var sidebarState 	= false;
@@ -252,7 +257,7 @@ function toggleSidebar() {
  * @param  {string} action    Target action to execute
  * @param  {string} actionURL The posting executor
  */
-function adminAction( action, actionURL ) {
+window.adminAction = function( action, actionURL ) {
 	if ( action != "null" ) {
 		$( "#adminActionsIcon" ).addClass( "fa-spin textOrange" );
 		// Run Action Dispatch
@@ -272,7 +277,7 @@ function adminAction( action, actionURL ) {
  * @param message The message to display in the notifier
  * @param delay The delay of the message, defaults to 1500 ms
  */
-function adminNotifier( type, message, delay ) {
+window.adminNotifier = function( type, message, delay ) {
 	toastr.options = {
 		"closeButton"       : true,
 		"preventDuplicates" : true,
@@ -299,7 +304,7 @@ function adminNotifier( type, message, delay ) {
 
 }
 
-function activateContentSearch() {
+window.activateContentSearch = function() {
 	// local refs
 	$nav_search = $( "#nav-search" );
 	$nav_search_results = $( "#div-search-results" );
@@ -350,41 +355,41 @@ function activateContentSearch() {
 	} );
 }
 
-function closeSearchBox() {
+window.closeSearchBox = function() {
 	$( "#div-search-results" ).slideUp();
 	$( "#nav-search" ).val( "" );
 }
 
-function quickLinks( inURL ) {
+window.quickLinks = function( inURL ) {
 	if ( inURL != "null" ) {
 		window.location = inURL;
 	}
 }
 
-function activateTooltips() {
+window.activateTooltips = function() {
 	//Tooltip
 	$( "[title]" ).tooltip( toolTipSettings );
 }
 
-function hideAllTooltips() {
+window.hideAllTooltips = function(){
 	$( ".tooltip" ).hide();
 }
 
-function toggleFlickers() {
+window.toggleFlickers = function(){
 	$( ".flickerMessages" ).slideToggle();
 	$( ".flickers" ).fadeOut( 3000 );
 }
 /**
  * Close the remote loaded modal
  */
-function closeRemoteModal() {
+window.closeRemoteModal = function() {
 	$remoteModal.modal( "hide" );
 }
 /**
  * Reset a modal form according to the passed container
  * @param  {object} container The container
  */
-function resetContainerForms( container ) {
+window.resetContainerForms = function( container ) {
 	// Clears a form in the div element, usually to reset forms in dialogs.
 	var frm = container.find( "form" );
 	if ( frm.length ) {
@@ -395,7 +400,7 @@ function resetContainerForms( container ) {
  * Close a local modal window
  * @param div The jquery div object that represents the dialog.
  */
-function closeModal( div ) {
+window.closeModal = function( div ) {
 	div.modal( "hide" );
 }
 /**
@@ -404,7 +409,7 @@ function closeModal( div ) {
  * @param w The width of the modal
  * @param h The height of the modal
  */
-function openModal( div, w, h ) {
+window.openModal = function( div, w, h ) {
 	// Open the modal
 	div.modal();
 	// attach a listener to clear form when modal closes
@@ -421,7 +426,7 @@ function openModal( div, w, h ) {
  * @param delay Whether or not to delay loading of dialog until after dialog is created (useful for iframes)
  * @return
  */
-function openRemoteModal( url, params, w, h, delay ) {
+window.openRemoteModal = function( url, params, w, h, delay ) {
 	// if no URL, set warning and exit
 	if ( !url ) {
 		console.log( "URL needed" );
@@ -471,7 +476,7 @@ function openRemoteModal( url, params, w, h, delay ) {
  * @param {object} activeBtn The active button object
  * @param {numeric} w The width to use in pixels
  */
-function setPreviewSize( activeBtn, w ) {
+window.setPreviewSize = function( activeBtn, w ) {
 	var modalDialog = $remoteModal.find( ".modal-dialog" ),
 		frame = $( "#previewFrame" ).length ? $( "#previewFrame" ) : modalDialog,
 		orig = { "width": $remoteModal.data( "width" ) },
@@ -494,7 +499,7 @@ function setPreviewSize( activeBtn, w ) {
 /**
  * Attach modal listeners to global modals: Remote and ConfirmIt
  */
-function attachModalListeners() {
+window.attachModalListeners = function() {
 	// Remote show event: Usually we resize the window here.
 	$remoteModal.on( "show.bs.modal", function() {
 		var modal = $remoteModal;
@@ -529,7 +534,7 @@ function attachModalListeners() {
 /**
  * Activate fancy toggle checkboxes
  */
-function activateToggleCheckboxes() {
+window.activateToggleCheckboxes = function() {
 	// toggle checkboxes
 	$( "input[data-toggle=\"toggle\"]" ).change( function() {
 		var inputMatch = $( this ).data( "match" );
@@ -541,14 +546,14 @@ function activateToggleCheckboxes() {
 /**
  * Close confirmation modal
  */
-function closeConfirmations() {
+window.closeConfirmations = function() {
 	$confirmIt.modal( "hide" );
 }
 
 /**
  * Activate modal confirmation windows
  */
-function activateConfirmations() {
+window.activateConfirmations = function() {
 	// close button triggers for confirmation dialog
 	$confirmIt.find( "button" ).click( function( e ) {
 		if ( $( this ).attr( "data-action" ) === "confirm" ) {
@@ -579,7 +584,7 @@ function activateConfirmations() {
 	} );
 }
 
-function popup( url, w, h ) {
+window.popup = function( url, w, h )  {
 	var winWidth = 1000;
 	var winHeight = 750;
 	if ( w ) { minWidth = w; }
@@ -593,7 +598,7 @@ function popup( url, w, h ) {
  * @param link
  * @returns {Boolean}
  */
-function to( link ) {
+window.to = function( link ) {
 	window.location = link;
 	return false;
 }
@@ -602,7 +607,7 @@ function to( link ) {
  * @param checked
  * @param id
  */
-function checkAll( checked, id ) {
+window.checkAll = function( checked, id ) {
 	$( "input[name='" + id + "']" ).each( function() {
 		this.checked = checked;
 	} );
@@ -613,7 +618,7 @@ function checkAll( checked, id ) {
  * @param recordID
  * @returns
  */
-function checkByValue( id, recordID ) {
+window.checkByValue = function( id, recordID ) {
 	$( "input[name='" + id + "']" ).each( function() {
 		if ( this.value === recordID ) { this.checked = true; } else { this.checked = false; }
 	} );
@@ -622,7 +627,7 @@ function checkByValue( id, recordID ) {
  * Get today's date in us or rest of the world format
  * @param {boolean} us defaults to true
  */
-function getToday( us ) {
+window.getToday = function( us ) {
 	// default us to true
 	us = ( us == null ? true : us );
 	if ( us ) {
@@ -637,7 +642,7 @@ function getToday( us ) {
  * This function takes care of opening a generic configured import dialog and setup all
  * the events to submit it.
  */
-function importContent(){
+window.importContent = function(){
 	// local id's
 	var $importForm = $( "#importForm" );
 	var $importDialog = $( "#importDialog" );
@@ -669,7 +674,7 @@ function importContent(){
 /**
  * Toggle More info panels
  */
-function toggleMoreInfoPanel( contentId ){
+window.toggleMoreInfoPanel = function( contentId ){
 	$( "#moreInfo-" + contentId ).toggleClass( "hidden" );
 	$( "#moreInfoOpenButton-" + contentId ).toggleClass( "hidden" );
 	$( "#moreInfoCloseButton-" + contentId ).toggleClass( "hidden" );
@@ -680,7 +685,7 @@ function toggleMoreInfoPanel( contentId ){
  * This expects the following ID's to be in DOM: pw_rule_lower, upper, digit, symbol and count.
  * It also expects the passwordRules element to contain the min length data element
  */
-function passwordMeter( event ) {
+window.passwordMeter = function( event ) {
 	var value = $( this ).val();
 	//console.log( value );
 
@@ -718,7 +723,7 @@ function passwordMeter( event ) {
  * @param  {any} value The password value
  * @return {boolean} Password validates via our rules
  */
-function passwordValidator( value ) {
+window.passwordValidator = function( value ) {
 	var minLength = $( "#passwordRules" ).data( "min-length" );
 
 	var lower = REGEX_LOWER.test( value ),
@@ -746,7 +751,7 @@ function passwordValidator( value ) {
  * @param {*} dateTime The iso8601 date time object
  * @returns A local browser date time
  */
-function toLocalString( dateTime, options ){
+window.toLocalString = function( dateTime, options ){
 	return new Date( dateTime ).toLocaleString( undefined, options || getDefaultDateTimeOptions() );
 }
 
@@ -758,7 +763,7 @@ function toLocalString( dateTime, options ){
  * @param {*} dateTime The iso8601 date time object
  * @returns A local browser date time
  */
-function toLocaleDateString( dateTime, options ){
+window.toLocaleDateString = function( dateTime, options ){
 	return new Date( dateTime ).toLocaleDateString( undefined, options || getDefaultDateTimeOptions() );
 }
 
@@ -770,11 +775,11 @@ function toLocaleDateString( dateTime, options ){
  * @param {*} dateTime The iso8601 date time object
  * @returns A local browser date time
  */
-function toLocaleTimeString( dateTime, options ){
+window.toLocaleTimeString = function( dateTime, options ){
 	return new Date( dateTime ).toLocaleTimeString( undefined, options || getDefaultDateTimeOptions() );
 }
 
-function getDefaultDateTimeOptions(){
+window.getDefaultDateTimeOptions = function(){
 	return { dateStyle: "medium", timeStyle: "long" };
 }
 
@@ -782,6 +787,6 @@ function getDefaultDateTimeOptions(){
  * Scroll to a specific id hash
  * @param {*} hashName
  */
-function scrollToHash( hashName ) {
+window.scrollToHash = function( hashName ) {
 	location.hash = "#" + hashName;
 }

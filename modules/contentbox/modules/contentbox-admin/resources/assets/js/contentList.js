@@ -302,3 +302,5 @@ const contentListHelper = ( () => {
 	};
 
 } )();
+
+export default contentListHelper;
