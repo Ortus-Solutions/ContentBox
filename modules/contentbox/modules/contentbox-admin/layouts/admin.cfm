@@ -272,7 +272,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
-														<i class="fa fa-trash-alt"></i> Delete Installer
+														<i class="fa fa-trash"></i> Delete Installer
 													</a>
 												</li>
 											</ul>

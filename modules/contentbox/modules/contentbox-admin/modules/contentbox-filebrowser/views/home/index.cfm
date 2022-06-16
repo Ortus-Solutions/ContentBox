@@ -67,7 +67,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "delete@fb" )#"
 			>
-				<i class="fa fa-trash-alt"></i>
+				<i class="fa fa-trash"></i>
 			</a>
 			<a
 				onclick="javascript:fbUpload()"

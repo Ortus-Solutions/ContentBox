@@ -139,8 +139,8 @@
 							<a
 								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
-								data-title="<i class='fa fa-trash-alt'></i> Delete Entry?">
-								<i id="delete_#entry.getContentID()#" class="fa fa-trash-alt fa-lg" ></i> Delete
+								data-title="<i class='fa fa-trash'></i> Delete Entry?">
+								<i id="delete_#entry.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
 							</a>
 						</li>
 						</cfif>

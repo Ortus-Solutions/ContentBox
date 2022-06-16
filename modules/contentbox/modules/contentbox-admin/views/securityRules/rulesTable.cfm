@@ -97,8 +97,8 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li>
-								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash-alt'></i> Delete Rule?">
-									<i class="fa fa-trash-alt fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
+								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">
+									<i class="fa fa-trash fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
 								</a>
 							</li>
 							<!--- Edit Command --->

@@ -59,10 +59,10 @@
 													<a
 														href="javascript:contentListHelper.bulkRemove()"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash-alt'></i> Delete Selected Entries?"
+														data-title="<i class='fa fa-trash'></i> Delete Selected Entries?"
 														data-message="This will delete the entries, are you sure?"
 													>
-														<i class="fa fa-trash-alt fa-lg"></i> Delete selected
+														<i class="fa fa-trash fa-lg"></i> Delete selected
 													</a>
 												</li>
 												<li>

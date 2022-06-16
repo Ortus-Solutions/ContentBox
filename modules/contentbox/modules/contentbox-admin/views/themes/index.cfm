@@ -93,8 +93,8 @@
 										<!--- Delete Command --->
 										<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND thisTheme.name neq prc.activeTheme.name>
 											<a href="javascript:remove('#JSStringFormat(thisTheme.name)#')"
-											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-alt'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
-											   <i class="fa fa-trash-alt fa-lg"></i> Remove
+											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
+											   <i class="fa fa-trash fa-lg"></i> Remove
 											</a>
 										</cfif>
 									</div>

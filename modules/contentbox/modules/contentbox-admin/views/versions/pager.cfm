@@ -137,10 +137,10 @@
 								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"
 								title="Remove this version"
 								class="confirmIt ml5"
-								data-title="<i class='fa fa-trash-alt'></i> Remove Content Version"
+								data-title="<i class='fa fa-trash'></i> Remove Content Version"
 								data-message="Do you really want to remove this content version?"
 							>
-								<i class="fa fa-trash-alt fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
+								<i class="fa fa-trash fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
 							</a>
 						</cfif>
 					</cfif>

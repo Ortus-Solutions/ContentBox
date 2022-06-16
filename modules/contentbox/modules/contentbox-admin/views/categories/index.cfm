@@ -77,7 +77,7 @@
 													@click="deleteSelected()"
 													class="cursor-pointer"
 												>
-													<i class="fa fa-trash-alt fa-lg"></i> Delete Selected
+													<i class="fa fa-trash fa-lg"></i> Delete Selected
 												</a>
 											</li>
 											</cfif>
@@ -258,7 +258,7 @@
 															data-title="Delete Category?"
 															data-message="Delete the category and all of its associations"
 														>
-															<i class="fa fa-trash-alt fa-lg"></i> Delete
+															<i class="fa fa-trash fa-lg"></i> Delete
 														</a>
 													</li>
 												</ul>

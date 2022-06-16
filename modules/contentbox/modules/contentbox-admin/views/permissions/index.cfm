@@ -175,7 +175,7 @@
 														title="Delete Permission"
 														href="javascript:remove( '#permission.getPermissionID()#' );"
 														data-title="Delete Permission?">
-														<i id="delete_#permission.getPermissionID()#" class="fa fa-trash-alt fa-lg"></i> Delete
+														<i id="delete_#permission.getPermissionID()#" class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 									    	</ul>

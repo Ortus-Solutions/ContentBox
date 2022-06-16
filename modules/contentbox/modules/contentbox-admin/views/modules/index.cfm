@@ -121,9 +121,9 @@
 														class="confirmIt"
 														title="Delete Module"
 														href="javascript:remove( '#JSStringFormat(module.getName())#' )"
-														data-title="<i class='fa fa-trash-alt'></i> Delete #module.getName()#?"
+														data-title="<i class='fa fa-trash'></i> Delete #module.getName()#?"
 													>
-														<i class="fa fa-trash-alt fa-lg"></i> Delete
+														<i class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 											</cfif>

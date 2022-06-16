@@ -159,9 +159,9 @@
 												<li>
 													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash-alt'></i> Delete Group?"
+														data-title="<i class='fa fa-trash'></i> Delete Group?"
 													>
-														<i class="fa fa-trash-alt fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
+														<i class="fa fa-trash fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
 													</a>
 												</li>
 

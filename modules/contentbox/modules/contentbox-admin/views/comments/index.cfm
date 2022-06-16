@@ -72,7 +72,7 @@
 											</li>
 											<li>
 												<a href="javascript:removeAllSelected()" class="confirmIt">
-													<i class="fa fa-trash-alt"></i> Remove Selected
+													<i class="fa fa-trash"></i> Remove Selected
 												</a>
 											</li>
 											<li>
@@ -196,8 +196,8 @@
 													</a>
 												</li>
 												<li><!--- Delete Command --->
-													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-alt'></i> Delete Comment?">
-														<i id="delete_#comment.getCommentID()#" class="fa fa-trash-alt fa-lg"></i> Delete
+													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Comment?">
+														<i id="delete_#comment.getCommentID()#" class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 												<li>

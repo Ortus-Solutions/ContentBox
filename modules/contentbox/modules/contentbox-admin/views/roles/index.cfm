@@ -159,9 +159,9 @@
 													<li>
 														<a 	href="javascript:remove( '#role.getRoleId()#' )"
 															class="confirmIt"
-															data-title="<i class='fa fa-trash-alt'></i> Delete Role?"
+															data-title="<i class='fa fa-trash'></i> Delete Role?"
 														>
-															<i class="fa fa-trash-alt fa-lg" id="delete_#role.getRoleId()#"></i> Delete
+															<i class="fa fa-trash fa-lg" id="delete_#role.getRoleId()#"></i> Delete
 														</a>
 													</li>
 												</cfif>
