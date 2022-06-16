@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <div class="row">
     <div class="col-md-12">
-        <h1 class="h1"><i class="fab fa-html5 fa-lg"></i> Global HTML</h1>
+        <h1 class="h1"><i class="fa fa-html5 fa-lg"></i> Global HTML</h1>
     </div>
 </div>
 <div class="row">

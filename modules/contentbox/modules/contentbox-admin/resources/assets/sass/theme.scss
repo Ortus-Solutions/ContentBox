@@ -17,6 +17,16 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 $fa-sass-asset-helper: false !default;
 $fa-font-path: "../../fonts/font-awesome/";
 @import "~font-awesome-sass/assets/stylesheets/font-awesome.scss";
+$context-menu-icon-font-path: "../../../dist/font/";
+@import "~jquery-contextmenu/src/sass/jquery.contextMenu.scss";
+
+@import "~jquery-contextmenu/dist/jquery.contextMenu.css";
+
+@import "~bootstrap-toggle/css/bootstrap-toggle.css";
+
+// Static vendor files
+@import "../vendor/css/bootstrap-fileupload.css";
+@import "../vendor/css/date.css";
 
 // Variables, Mixins
 @import "theme/_variables.scss";

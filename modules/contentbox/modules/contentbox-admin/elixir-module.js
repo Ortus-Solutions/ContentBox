@@ -32,7 +32,8 @@ module.exports = function(mix) {
 				"window.$": "jquery",
 				jQuery         :"jquery",
 				_              : "lodash",
-				Raphael        : "Raphael"
+				Raphael        : "Raphael",
+				jwerty         : "jwerty"
 			} ),
             {
                 apply: (compiler) => {
@@ -101,14 +102,12 @@ module.exports = function(mix) {
 			nodePath + "bootstrap-toggle/js/bootstrap-toggle.js",
 			// setting sliders
 			nodePath + "bootstrap-slider/dist/bootstrap-slider.js",
-			// MEDIAMANAGER: BootBox used by media manager
-			nodePath + "bootbox/dist/bootbox.min.js",
-			// MEDIAMANAGER:  FileDrop used by media manager
-			nodePath + "filedrop/filedrop.js",
 			// MEDIAMANAGER: Context Menu used by media manager
 			nodePath + "jquery-contextmenu/dist/jquery.contextMenu.js",
 			// MEDIAMANAGER: Jcropping editor
 			nodePath + "jcrop/dist/jcrop.js",
+			// MEDIAMANAGER:  FileDrop used by media manager
+			"resources/assets/vendor/js/jquery.filedrop.js",
 			// Static Libraries
 			"resources/assets/vendor/js/jquery.validate.bootstrap.js",
 			// File Uploads components

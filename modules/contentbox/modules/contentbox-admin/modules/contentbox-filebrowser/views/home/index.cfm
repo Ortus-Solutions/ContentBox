@@ -242,7 +242,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 
 			<!--- Loader Bar --->
 			<div id="loaderBar" class="size14">
-				<i class="fa fa-circle-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
+				<i class="fa fa-circle-o-notch fa-spin"></i> #$r( "common.loading@cbcore" )#
 			</div>
 
 			<!--- Status Text --->

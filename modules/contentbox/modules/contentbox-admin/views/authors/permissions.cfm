@@ -34,7 +34,7 @@
 
 			<!--- Loader --->
 			<div class="loaders float-right text-center" id="groupsLoader">
-				<i class="fa fa-circle-notch fa-spin fa-lg"></i><br/>
+				<i class="fa fa-circle-o-notch fa-spin fa-lg"></i><br/>
 				<div class="text-center"><small>Please Wait...</small></div>
 			</div>
 
@@ -134,7 +134,7 @@
 
 			<!--- Loader --->
 			<div class="loaders float-right text-center" id="permissionLoader">
-				<i class="fa fa-circle-notch fa-spin fa-lg"></i><br/>
+				<i class="fa fa-circle-o-notch fa-spin fa-lg"></i><br/>
 				<div class="text-center"><small>Please Wait...</small></div>
 			</div>
 

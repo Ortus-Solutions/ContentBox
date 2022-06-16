@@ -67,7 +67,7 @@ function doExport(){
 function previewExport() {
 	var $previewButton = $( "##previewButton" );
 	var originalContent = $previewButton.html();
-	$previewButton.html( "<i class='fa fa-circle-notch fa-spin'></i> Building..." );
+	$previewButton.html( "<i class='fa fa-circle-o-notch fa-spin'></i> Building..." );
     $.post(
         '#event.buildLink( prc.xehPreviewExport )#',
         $( "##exporterForm" ).serialize(),

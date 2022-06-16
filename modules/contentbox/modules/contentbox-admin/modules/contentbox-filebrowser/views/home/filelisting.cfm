@@ -257,7 +257,6 @@
 ( () => {
 	// activate tooltips
 	$( '[data-toggle="tooltip"]' ).tooltip();
-
 	// Build out the context menus for files
     $.contextMenu({
         selector: '.files',

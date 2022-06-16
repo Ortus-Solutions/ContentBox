@@ -9,6 +9,7 @@ component extends="cbadmin.handlers.baseHandler" {
 
 	// DI
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
+	property name="html" inject="HTMLHelper@coldbox";
 
 	/**
 	 * Pre handler
@@ -535,14 +536,19 @@ component extends="cbadmin.handlers.baseHandler" {
 		}
 
 		// Load CSS and JS only if not in Ajax Mode or forced
-		if ( NOT event.isAjax() OR arguments.force ) {
+		if ( !event.isAjax() OR arguments.force ) {
 			// load parent assets if needed
 			if ( prc.fbSettings.loadJquery ) {
 				// Add Main Styles
 				var adminRoot = event.getModuleRoot( "contentbox-admin" );
-				addAsset( "#adminRoot#/includes/css/contentbox.min.css" );
-				addAsset( asset: "#adminRoot#/includes/js/contentbox-pre.min.js", defer: true );
-				addAsset( asset: "#adminRoot#/includes/js/contentbox-app.min.js", defer: true );
+				addAsset( "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/css/contentbox.css', manifestRoot="#adminRoot#/includes" ) );
+				addAsset( "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/css/theme.css', manifestRoot="#adminRoot#/includes" ) );
+				addAsset( asset: "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/runtime.js', manifestRoot="#adminRoot#/includes" ), defer: true );
+				addAsset( asset: "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/vendor.js', manifestRoot="#adminRoot#/includes" ), defer: true );
+				addAsset( asset: "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/bootstrap.js', manifestRoot="#adminRoot#/includes" ), defer: true );
+				addAsset( asset: "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/app.js', manifestRoot="#adminRoot#/includes" ), defer: true );
+				addAsset( asset: "/" & html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/admin.js', manifestRoot="#adminRoot#/includes" ), defer: true );
+
 			}
 
 			// LOAD Assets

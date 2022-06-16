@@ -77,7 +77,7 @@
                             </li>
                             <li>
 								<a href="##search_options" data-toggle="tab">
-									<i class="fab fa-searchengin fa-lg"></i> Search Options
+									<i class="fa fa-searchengin fa-lg"></i> Search Options
 								</a>
                             </li>
                             <li>

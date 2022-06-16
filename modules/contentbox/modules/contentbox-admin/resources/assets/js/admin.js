@@ -3,8 +3,8 @@ window.contentListHelper = require( "./contentList.js" ).default;
 require( "./filebrowser.js" );
 require( "./editors/editors.js" );
 require( "./editors/autosave.js" );
-// attache filedrop to jQuery
-fd.jQuery();
+
+window.bootbox = require( "bootbox" );
 
 // GLOBAL STATIC
 const REGEX_LOWER = /[a-z]/,

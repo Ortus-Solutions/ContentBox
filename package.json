@@ -23,7 +23,6 @@
         "eve": "^0.5.4",
         "expose-loader": "^4.0.0",
         "fastclick": "^0.6.12",
-        "filedrop": "^2.0.0",
         "font-awesome-sass": "^4.7.0",
         "fs-extra": "^10.1.0",
         "global": "^4.4.0",

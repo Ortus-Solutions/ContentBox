@@ -13,7 +13,7 @@
 					<i class="fa fa-link"></i> Insert #prc.contentType#
 					<!--- Loader --->
 					<span class="loaders" id="contentLoader">
-						<i class="fa fa-circle-notch fa-spin"></i>
+						<i class="fa fa-circle-o-notch fa-spin"></i>
 					</span>
 				</h3>
 			</div>
