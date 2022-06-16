@@ -33,10 +33,15 @@ tests/resources/dbs/.db/**
 **/app_modules/**
 workbench/app_modules
 
+# webpack working compilation assets
+includes/js
+includes/rev-manifest.json
+
 # Module Dependencies
 modules/contentbox/modules/contentbox-admin/includes/js
 modules/contentbox/modules/contentbox-admin/includes/css
 modules/contentbox/modules/contentbox-admin/includes/fonts
+modules/contentbox/modules/contentbox-admin/includes/rev-manifest.json
 modules/route-visualizer/**
 modules/cbdebugger
 
