@@ -7,7 +7,7 @@
                 <!--if dismissable-->
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title" id="diffTitle">
-                	<i class="fas fa-history fa-lg"></i>
+                	<i class="fa fa-history fa-lg"></i>
 					Comparing Version <strong>#prc.currentVersion#</strong> and <strong>#prc.oldVersion#</strong>
 					> #prc.currentContent.getRelatedContent().getTitle()#
 				</h4>

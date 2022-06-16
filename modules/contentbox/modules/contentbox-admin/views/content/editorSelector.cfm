@@ -10,7 +10,7 @@
 				</button>
 				<h3>
 					<!--- Title --->
-					<i class="fas fa-link"></i> Insert #prc.contentType#
+					<i class="fa fa-link"></i> Insert #prc.contentType#
 					<!--- Loader --->
 					<span class="loaders" id="contentLoader">
 						<i class="fa fa-circle-notch fa-spin"></i>
@@ -39,7 +39,7 @@
 								title="Clear Search"
 								onclick="clearSearch()"
 							>
-								<i class="far fa-times-circle fa-lg"></i>
+								<i class="fa fa-times-circle fa-lg"></i>
 							</span>
 						</div>
 					</div>

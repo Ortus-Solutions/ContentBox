@@ -125,7 +125,7 @@
 						href="##"
 						title="Page Actions"
 					>
-						<i class="fas fa-ellipsis-v fa-lg"></i>
+						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 
 					<ul class="dropdown-menu text-left pull-right">
@@ -137,7 +137,7 @@
 									href="#prc.CBHelper.linkContent( thisContent )#"
 									target="_blank"
 								>
-									<i class="far fa-eye fa-lg"></i> View
+									<i class="fa fa-eye fa-lg"></i> View
 								</a>
 							</li>
 						</cfif>
@@ -153,7 +153,7 @@
 							<a
 								href="#event.buildLink( targetEditor )#/contentID/#thisContent.getContentID()#"
 							>
-								<i class="fas fa-pen fa-lg"></i> Edit
+								<i class="fa fa-pen fa-lg"></i> Edit
 							</a>
 						</li>
 					</ul>

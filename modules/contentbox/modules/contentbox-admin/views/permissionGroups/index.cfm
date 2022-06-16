@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-users fa-lg"></i> Permission Groups (#arrayLen( prc.aGroups )#)
+        	<i class="fa fa-users fa-lg"></i> Permission Groups (#arrayLen( prc.aGroups )#)
         </h1>
     </div>
 </div>
@@ -58,17 +58,17 @@
 										</button>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-								    		<li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
+								    		<li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-														<i class="fas fa-file-export fa-lg"></i> Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -91,7 +91,7 @@
 
 					<!--- Info Bar --->
 					<div class="alert alert-warning">
-						<i class="fas fa-exclamation-circle fa-lg"></i>
+						<i class="fa fa-exclamation-circle fa-lg"></i>
 						Once you delete a permission group all assigned permissions and authors will be unassigned.
 					</div>
 
@@ -150,7 +150,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
-											<i class="fas fa-ellipsis-v fa-lg"></i>
+											<i class="fa fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
@@ -159,9 +159,9 @@
 												<li>
 													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )"
 														class="confirmIt"
-														data-title="<i class='far fa-trash-alt'></i> Delete Group?"
+														data-title="<i class='fa fa-trash-alt'></i> Delete Group?"
 													>
-														<i class="far fa-trash-alt fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
+														<i class="fa fa-trash-alt fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
 													</a>
 												</li>
 
@@ -170,7 +170,7 @@
 													<a
 														href="#event.buildLink( prc.xehGroupEditor & "/permissionGroupID/#group.getPermissionGroupId()#")#"
 											   		>
-											   			<i class="fas fa-pen fa-lg"></i> Edit
+											   			<i class="fa fa-pen fa-lg"></i> Edit
 											   		</a>
 											   	</li>
 
@@ -180,7 +180,7 @@
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
-															<i class="fas fa-file-export fa-lg"></i> Export
+															<i class="fa fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>

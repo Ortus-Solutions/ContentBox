@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-swatchbook fa-lg"></i> Installed Themes (#structCount( prc.themes )#)
+			<i class="fa fa-swatchbook fa-lg"></i> Installed Themes (#structCount( prc.themes )#)
 		</h1>
     </div>
 </div>
@@ -41,7 +41,7 @@
 									onclick="return to('#event.buildLink( prc.xehFlushRegistry )#')"
 									title="Rescan Themes directory and rebuild registry"
 								>
-									<i class="fas fa-recycle"></i> Rebuild Registry
+									<i class="fa fa-recycle"></i> Rebuild Registry
 								</button>
 							</div>
 						</cfif>
@@ -67,7 +67,7 @@
 							<tr>
 								<td>
 									<cfif prc.oCurrentSite.getActiveTheme() eq themeName>
-										<i class="fas fa-asterisk fa-lg text-orange" title="Active Theme"></i>
+										<i class="fa fa-asterisk fa-lg text-orange" title="Active Theme"></i>
 									</cfif>
 
 									<strong>#thisTheme.themeName#</strong>
@@ -83,7 +83,7 @@
 									<div class="btn-group">
 										<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ thisTheme.name>
 											<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#thisTheme.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
-												<i class="far fa-eye"></i> Preview
+												<i class="fa fa-eye"></i> Preview
 											</button>
 											<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#thisTheme.name#')">
 												<i class="fa fa-bolt"></i> Activate
@@ -93,8 +93,8 @@
 										<!--- Delete Command --->
 										<cfif prc.oCurrentAuthor.checkPermission( "THEME_ADMIN" ) AND thisTheme.name neq prc.activeTheme.name>
 											<a href="javascript:remove('#JSStringFormat(thisTheme.name)#')"
-											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='far fa-trash-alt'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
-											   <i class="far fa-trash-alt fa-lg"></i> Remove
+											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash-alt'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
+											   <i class="fa fa-trash-alt fa-lg"></i> Remove
 											</a>
 										</cfif>
 									</div>

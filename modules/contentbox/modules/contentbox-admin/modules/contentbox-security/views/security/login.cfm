@@ -51,7 +51,7 @@
 	                        	placeholder		= cb.r( "common.password@security" ),
 	                        	autocomplete	= "off"
 	                        )#
-	                        <i class="fas fa-key"></i>
+	                        <i class="fa fa-key"></i>
 	                    </div>
 
 	                </div>
@@ -85,7 +85,7 @@
 							href="#event.buildLink( prc.xehLostPassword )#"
 							class="help-block"
 						>
-							<i class="far fa-question-circle"></i>
+							<i class="fa fa-question-circle"></i>
 							#cb.r( "lostpassword@security" )#?
 						</a>
 					</div>

@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-			<i class="fas fa-bars fa-lg"></i> Menu Manager
+			<i class="fa fa-bars fa-lg"></i> Menu Manager
 			<span id="menusCountContainer"></span>
         </h1>
     </div>
@@ -48,25 +48,25 @@
                                         <ul class="dropdown-menu">
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
                                                 <li>
-                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="far fa-trash-alt"></i> Delete Selected</a>
+                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash-alt'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash-alt"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-                                                <li><a href="javascript:importContent()"><i class="fas fa-file-import fa-lg"></i> Import</a></li>
+                                                <li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehMenuExportAll )#' )">
-														<i class="fas fa-file-export fa-lg"></i> Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
-                                            <li><a href="javascript:contentShowAll()"><i class="fas fa-list"></i> Show All</a></li>
+                                            <li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
                                         </ul>
                                     </div>
                                 </cfif>

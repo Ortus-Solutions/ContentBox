@@ -1,7 +1,7 @@
 <cfoutput>
 #html.startForm( name="siteSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
-	<legend><i class="fas fa-globe fa-lg"></i> All Site Options</legend>
+	<legend><i class="fa fa-globe fa-lg"></i> All Site Options</legend>
 
 		<!--- Caching of Settings --->
 		<div class="form-group">
@@ -46,7 +46,7 @@
 
 	<!--- Site Maintenance --->
 	<fieldset>
-	<legend><i class="fas fa-hand-holding-medical fa-lg"></i> <strong>Maintenance</strong></legend>
+	<legend><i class="fa fa-hand-holding-medical fa-lg"></i> <strong>Maintenance</strong></legend>
 		<p>You can put your sites in maintenance mode if you are doing upgrades or anything funky!</p>
 		<!--- Site maintenance --->
 		<div class="form-group">

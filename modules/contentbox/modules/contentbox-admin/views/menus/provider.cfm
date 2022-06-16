@@ -102,13 +102,13 @@
 	</div>
 
 	<a class="dd3-expand btn" title="Edit Details">
-		<i class="fas fa-pen fa-lg"></i>
+		<i class="fa fa-pen fa-lg"></i>
 	</a>
 	<a 	class="dd3-delete btn btn-danger confirmIt"
 		data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."
 		data-title="Delete Menu Item"
 		title="Delete Menu Item + Descendants"
 		href="javascript:removeMenuItem( 'key_#args.menuItem.getMenuItemID()#' )">
-		<i class="far fa-trash-alt fa-lg"></i>
+		<i class="fa fa-trash-alt fa-lg"></i>
 	</a>
 </cfoutput>

@@ -8,7 +8,7 @@
 				&times;
 			</button>
 			<h3>
-				<i class="fas fa-sitemap"></i> Select Related Content
+				<i class="fa fa-sitemap"></i> Select Related Content
 			</h3>
 		</div>
 
@@ -33,7 +33,7 @@
 						title="Clear Search"
 						onclick="clearSearch()"
 					>
-						<i class="far fa-times-circle fa-lg"></i>
+						<i class="fa fa-times-circle fa-lg"></i>
 					</span>
 				</div>
 			</div>

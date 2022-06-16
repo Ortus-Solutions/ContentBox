@@ -33,7 +33,7 @@
 								class       	= "form-control pwcheck",
 								autocomplete	= "off"
 							)#
-							<i class="fas fa-key"></i>
+							<i class="fa fa-key"></i>
 						</div>
 					</div>
 
@@ -50,7 +50,7 @@
 								class       	= "form-control pwcheck",
 								autocomplete	= "off"
 							)#
-							<i class="fas fa-key"></i>
+							<i class="fa fa-key"></i>
 						</div>
 					</div>
 

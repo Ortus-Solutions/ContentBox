@@ -7,7 +7,7 @@
 
 				<div class="col-md-3">
 					<div class="size18">
-						<i class="far fa-eye fa-lg"></i>&nbsp;
+						<i class="fa fa-eye fa-lg"></i>&nbsp;
 						<span class="header-title">Responsive Previews</span>
 					</div>
 				</div>
@@ -21,7 +21,7 @@
 								onclick="setPreviewSize( this ); return false;"
 								class="btn btn-primary btn-sm"
 						>
-							<i class="fas fa-2x fa-desktop"></i>
+							<i class="fa fa-2x fa-desktop"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -29,7 +29,7 @@
 								onclick="setPreviewSize( this, 768 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fas fa-2x fa-tablet-alt"></i>
+							<i class="fa fa-2x fa-tablet-alt"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -37,7 +37,7 @@
 								onclick="setPreviewSize( this, 1024 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fas fa-2x fa-tablet-alt fa-rotate-90"></i>
+							<i class="fa fa-2x fa-tablet-alt fa-rotate-90"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -45,7 +45,7 @@
 								onclick="setPreviewSize( this, 375 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fas fa-2x fa-mobile-alt"></i>
+							<i class="fa fa-2x fa-mobile-alt"></i>
 						</button>
 						<button href="javascript:void( 0 )"
 								role="group"
@@ -53,7 +53,7 @@
 								onclick="setPreviewSize( this, 667 ); return false;"
 								class="btn btn-info btn-sm"
 						>
-							<i class="fas fa-2x fa-mobile-alt fa-rotate-90"></i>
+							<i class="fa fa-2x fa-mobile-alt fa-rotate-90"></i>
 						</button>
 					</div>
 				</div>

@@ -31,7 +31,7 @@
 				<br/>
 
 				<cfif len(comment.getAuthorURL())>
-					<i class="fas fa-globe"></i>
+					<i class="fa fa-globe"></i>
 					<a href="<cfif NOT findnocase( "http",comment.getAuthorURL())>http://</cfif>#comment.getAuthorURL()#" title="Open URL" target="_blank">
 						#left(comment.getAuthorURL(),25)#<cfif len(comment.getAuthorURL()) gt 25>...</cfif>
 					</a>
@@ -39,13 +39,13 @@
 				</cfif>
 
 				<div class="ml5 mt10">
-					<i class="far fa-calendar mr5"></i>
+					<i class="fa fa-calendar mr5"></i>
 					#comment.getDisplayCreatedDate()#
 				</div>
 
 				<cfif len( comment.getauthorIP() )>
 					<div class="ml5 mt10">
-						<i class="fas fa-laptop"></i>
+						<i class="fa fa-laptop"></i>
 						<a href="#prc.cbSettings.cb_comments_whoisURL#=#comment.getAuthorIP()#" title="Get IP Information" target="_blank">#comment.getauthorIP()#</a>
 					</div>
 				</cfif>
@@ -80,17 +80,17 @@
 
 				<div class="btn-group">
 					<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
+						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 					<ul class="dropdown-menu text-left pull-right">
 						<li><!--- Delete Command --->
-							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Comment?">
-								<i id="delete_#comment.getCommentID()#" class="far fa-trash-alt fa-lg"></i> Delete
+							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash-alt'></i> Delete Comment?">
+								<i id="delete_#comment.getCommentID()#" class="fa fa-trash-alt fa-lg"></i> Delete
 							</a>
 						</li>
 						<li>
 							<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
-								<i class="far fa-eye fa-lg"></i> View In Site
+								<i class="fa fa-eye fa-lg"></i> View In Site
 							</a>
 						</li>
 					</ul>

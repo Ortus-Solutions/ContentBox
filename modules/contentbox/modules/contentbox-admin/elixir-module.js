@@ -1,11 +1,36 @@
 const fs = require('fs-extra');
+const webpack = require("webpack");
 
 module.exports = function(mix) {
 
 	var nodePath = "../../../../node_modules/";
 
 	elixir.config.mergeConfig({
+		module: {
+			rules: [
+				{
+					test: require.resolve("jquery"),
+					loader: "expose-loader",
+					options: {
+					  exposes: ["$", "jQuery"],
+					},
+				}
+			]
+		},
+		resolve: {
+			alias: {
+			  jQuery : "jquery"
+			}
+		},
         plugins: [
+			new webpack.ProvidePlugin( {
+				$              : "jquery",
+				jquery         : "jquery",
+				"window.jQuery": "jquery",
+				"window.$": "jquery",
+				jQuery         :"jquery",
+				_              : "lodash"
+			} ),
             {
                 // Copy static files over for re-use in portal after emit
                 apply: (compiler) => {
@@ -18,7 +43,7 @@ module.exports = function(mix) {
                         fs.copySync( manifest[ 'includes/js/vendor.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/vendor.js' )
                         fs.copySync( manifest[ 'includes/js/runtime.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/runtime.js' )
                     } );
-					fs.copySync( 'includes/rev-manifest.json', 'modules/contentbox/modules/contentbox-admin/includes/rev-manifest.js' )
+					fs.copySync( 'includes/rev-manifest.json', 'modules/contentbox/modules/contentbox-admin/includes/rev-manifest.json' )
                   });
                 }
             }
@@ -46,7 +71,7 @@ module.exports = function(mix) {
 			// Global utility
 			nodePath + "lodash/lodash.js",
 			// Navigation History
-			nodePath + "history/umd/History.js",
+			nodePath + "historyjs/scripts/uncompressed/history.adapter.jquery.js",
 			// Date picker
 			nodePath + "bootstrap-datepicker/dist/js/bootstrap-datepicker.js",
 			nodePath + "clockpicker/dist/bootstrap-clockpicker.js",
@@ -57,8 +82,6 @@ module.exports = function(mix) {
 			// Charting Libraries
 			nodePath + "raphael/raphael.js",
 			nodePath + "morris.js/morris.js",
-			// Keyboard shortcuts
-			nodePath + "jwerty/jwerty.js",
 			// Data tables
 			nodePath + "datatables/media/js/jquery.dataTables.js",
 			nodePath + "datatables-bootstrap/js/dataTables.bootstrap.js",
@@ -75,7 +98,7 @@ module.exports = function(mix) {
 			// MEDIAMANAGER: BootBox used by media manager
 			nodePath + "bootbox/dist/bootbox.min.js",
 			// MEDIAMANAGER:  FileDrop used by media manager
-			"resources/assets/vendor/js/jquery.filedrop.js",
+			nodePath + "filedrop/filedrop.js",
 			// MEDIAMANAGER: Context Menu used by media manager
 			nodePath + "jquery-contextmenu/dist/jquery.contextMenu.js",
 			// MEDIAMANAGER: Jcropping editor
@@ -96,7 +119,6 @@ module.exports = function(mix) {
 	.js( "admin.js" )
 	.js( "app.js" )
 	.js( "filebrowser.js" )
-	.js( "contentList.js" )
     .sass( "contentbox.scss" )
     .sass( "filebrowser.scss" )
     .sass( "theme.scss" );

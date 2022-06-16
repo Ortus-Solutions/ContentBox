@@ -1,7 +1,7 @@
 <cfoutput>
 	#html.startForm( name="contentSettingsForm", action=prc.xehSaveSettings )#
     <fieldset>
-        <legend><i class="fas fa-boxes fa-lg"></i>  Content Options</legend>
+        <legend><i class="fa fa-archivees fa-lg"></i>  Content Options</legend>
 
         <!--- Content Max Versions --->
         <div class="form-group">
@@ -91,7 +91,7 @@
     </fieldset>
 
 	<fieldset>
-    	<legend><i class="far fa-chart-bar fa-lg"></i> Content Stats Tracking</legend>
+    	<legend><i class="fa fa-chart-bar fa-lg"></i> Content Stats Tracking</legend>
 
         <!--- Hit Count --->
         <div class="form-group">
@@ -152,7 +152,7 @@
     </fieldset>
 
     <fieldset>
-        <legend><i class="far fa-hdd fa-lg"></i>  Content Caching</legend>
+        <legend><i class="fa fa-hdd fa-lg"></i>  Content Caching</legend>
 
         <!--- Content Caching --->
         <div class="form-group">

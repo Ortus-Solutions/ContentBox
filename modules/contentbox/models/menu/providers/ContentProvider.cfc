@@ -29,7 +29,7 @@ component
 	public ContentProvider function init(){
 		setName( "Content" );
 		setType( "Content" );
-		setIconClass( "fas fa-box" );
+		setIconClass( "fa fa-archive" );
 		setEntityName( "cbContentMenuItem" );
 		setDescription( "A menu item based on existing pages or blog entries" );
 		return this;

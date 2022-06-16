@@ -104,7 +104,7 @@
     </div>
 </fieldset>
 <fieldset>
-    <legend><i class="far fa-hdd fa-lg"></i>  RSS Caching</legend>
+    <legend><i class="fa fa-hdd fa-lg"></i>  RSS Caching</legend>
 
     <!--- RSS Caching --->
     <div class="form-group">

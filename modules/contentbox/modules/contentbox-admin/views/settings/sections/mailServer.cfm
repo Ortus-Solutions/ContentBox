@@ -2,7 +2,7 @@
 #html.startForm( name="mailSettingsForm", action=prc.xehSaveSettings )#
 <!--- Mail Server Settings --->
 <fieldset>
-    <legend><i class="far fa-envelope-open fa-lg"></i> <strong>Mail Server</strong></legend>
+    <legend><i class="fa fa-envelope-open fa-lg"></i> <strong>Mail Server</strong></legend>
     <p>By default ContentBox will use the mail settings in your application server.  You can override those settings by completing
        the settings below</p>
     <!--- Mail Server --->

@@ -17,7 +17,7 @@
 		</button>
 		<!--- Remove All Custom Fields --->
 		<button id="removeCustomFieldsButton" class="btn btn-sm btn-danger" onclick="return cleanCustomFields()">
-			<i class="far fa-trash-alt fa-lg"></i> Remove All
+			<i class="fa fa-trash-alt fa-lg"></i> Remove All
 		</button>
 	</div>
 
@@ -44,7 +44,7 @@
 					value=cField.getValue()
 				)#
 
-				<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="far fa-trash-alt"></i></button>
+				<button class="btn btn-danger dynamicRemove" onclick="return false;"><i class="fa fa-trash-alt"></i></button>
 
 			</div>
 		</div>
@@ -70,7 +70,7 @@
 		)#
 
 		<button class="btn btn-danger dynamicRemove" onclick="return false;">
-			<i class="far fa-trash-alt"></i>
+			<i class="fa fa-trash-alt"></i>
 		</button>
 	</div>
 </div>

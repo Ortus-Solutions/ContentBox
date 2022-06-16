@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="far fa-hdd"></i> Content Store
+			<i class="fa fa-hdd"></i> Content Store
 			<span id="contentCountContainer"></span>
 		</h1>
 	</div>
@@ -63,43 +63,43 @@
 								    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:contentListHelper.bulkRemove()" class="confirmIt"
-													data-title="<i class='far fa-trash-alt fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+													data-title="<i class='fa fa-trash-alt fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
+														<i class="fa fa-trash-alt fa-lg"></i> Delete Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('draft')">
-														<i class="fas fa-ban fa-lg"></i> Draft Selected
+														<i class="fa fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('publish')">
-														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
+														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehContentExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehContentExportAll )#' )">
-														<i class="fas fa-file-export fa-lg"></i> Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
 											<li>
 												<a href="javascript:contentListHelper.contentShowAll()">
-													<i class="fas fa-list fa-lg"></i> Show All
+													<i class="fa fa-list fa-lg"></i> Show All
 												</a>
 											</li>
 								    	</ul>
@@ -127,7 +127,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">

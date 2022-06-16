@@ -68,7 +68,7 @@
 					data-placement="right"
 					title="Site Switcher"
 				>
-					<i class="fas fa-chevron-down cb-select-arrow"></i>
+					<i class="fa fa-chevron-down cb-select-arrow"></i>
 					<select
 						name="siteSwitcher"
 						id="siteSwitcher"
@@ -142,21 +142,21 @@
 									<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
-												<i class="far fa-file-alt fa-lg width25"></i> New Page
+												<i class="fa fa-file-alt fa-lg width25"></i> New Page
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
-												<i class="fas fa-blog fa-lg width25"></i> New Entry
+												<i class="fa fa-blog fa-lg width25"></i> New Entry
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-												<i class="far fa-hdd fa-lg width25"></i> New Content Store
+												<i class="fa fa-hdd fa-lg width25"></i> New Content Store
 											</a>
 										</li>
 									</cfif>
@@ -170,14 +170,14 @@
 									<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-												<i class="fas fa-photo-video fa-lg width25"></i> New Media
+												<i class="fa fa-photo-video fa-lg width25"></i> New Media
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
-												<i class="fas fa-list fa-lg width25"></i> New Menu
+												<i class="fa fa-list fa-lg width25"></i> New Menu
 											</a>
 										</li>
 									</cfif>
@@ -234,7 +234,7 @@
 								data-keybinding="ctrl+shift+e"
 								onclick="toggleSidebar()"
 							>
-							<i class="far fa-minus-square"></i> Sidebar
+							<i class="fa fa-minus-square"></i> Sidebar
 						</button>
 					</div>
 
@@ -272,7 +272,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
-														<i class="far fa-trash-alt"></i> Delete Installer
+														<i class="fa fa-trash-alt"></i> Delete Installer
 													</a>
 												</li>
 											</ul>

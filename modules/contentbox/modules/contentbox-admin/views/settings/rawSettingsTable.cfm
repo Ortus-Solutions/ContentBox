@@ -59,9 +59,9 @@
 
 			<td class="text-center">
 				<cfif setting.getIsCore()>
-					<i class="far fa-dot-circle text-success" title="Core Setting"></i>
+					<i class="fa fa-dot-circle text-success" title="Core Setting"></i>
 				<cfelse>
-					<i class="far fa-dot-circle text-danger"></i>
+					<i class="fa fa-dot-circle text-danger"></i>
 				</cfif>
 			</td>
 
@@ -71,7 +71,7 @@
 					<!--- Actions --->
 					<div class="btn-group btn-group-sm">
 						<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-							<i class="fas fa-ellipsis-v fa-lg"></i>
+							<i class="fa fa-ellipsis-v fa-lg"></i>
 						</a>
 						<ul class="dropdown-menu text-left pull-right">
 							<!--- Edit Command --->
@@ -86,13 +86,13 @@
 									)"
 									title="Edit Setting"
 								>
-									<i class="fas fa-pen fa-lg"></i> Edit
+									<i class="fa fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 							<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/settingID/#setting.getSettingID()#.json" target="_blank">
-										<i class="fas fa-file-export fa-lg"></i> Export
+										<i class="fa fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>
@@ -107,9 +107,9 @@
 										href="javascript:remove( '#setting.getsettingID()#' )"
 										title="Delete Setting"
 								</cfif>
-										data-title="<i class='far fa-trash-alt'></i> Delete Setting?"
+										data-title="<i class='fa fa-trash-alt'></i> Delete Setting?"
 									>
-										<i class="far fa-trash-alt fa-lg" id="delete_#setting.getsettingID()#"></i> Delete
+										<i class="fa fa-trash-alt fa-lg" id="delete_#setting.getsettingID()#"></i> Delete
 									</a>
 							</li>
 						</ul>

@@ -10,7 +10,7 @@
 			onclick="location.href='#event.buildLink( prc.xehContentList )#'"
 		</cfif>
 	>
-		<i class="fas fa-chevron-left"></i> Back
+		<i class="fa fa-chevron-left"></i> Back
 	</button>
 
 	<!--- Drop Actions --->
@@ -25,7 +25,7 @@
 		<ul class="dropdown-menu">
 			<li>
 				<a href="#prc.CBHelper.linkContent( prc.oContent )#" target="_blank">
-					<i class="far fa-eye fa-lg"></i> Open In Site
+					<i class="fa fa-eye fa-lg"></i> Open In Site
 				</a>
 			</li>
 		</ul>

@@ -16,13 +16,13 @@
 						href="#event.buildLink( prc.xehAuthors )#"
 						title="Back to listing"
 					>
-						<i class="fas fa-chevron-left"></i> Cancel
+						<i class="fa fa-chevron-left"></i> Cancel
 					</a>
 				</div>
 
 				<!--- Title --->
 				<div class="size16 p10">
-					<i class="fas fa-user"></i>
+					<i class="fa fa-user"></i>
 					Create New Author
 				</div>
 

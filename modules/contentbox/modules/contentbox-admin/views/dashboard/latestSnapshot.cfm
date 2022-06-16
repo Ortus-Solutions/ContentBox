@@ -3,7 +3,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
 		<h3 class="panel-title">
-			<i class="fas fa-flag-checkered fa-lg"></i> #$r( "dashboard.latestSnapshot.title@admin" )#
+			<i class="fa fa-flag-checkered fa-lg"></i> #$r( "dashboard.latestSnapshot.title@admin" )#
 		</h3>
 	</div>
 
@@ -12,7 +12,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##topcontent">
-                    <i class="fas fa-chart-pie fa-lg"></i> #$r( "dashboard.latestSnapshot.topHitsAndComments.head@admin" )#
+                    <i class="fa fa-chart-pie fa-lg"></i> #$r( "dashboard.latestSnapshot.topHitsAndComments.head@admin" )#
                 </a>
             </div>
             <div id="topcontent" class="panel-collapse collapse active in">
@@ -68,7 +68,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##discussion">
-                    <i class="far fa-comments fa-lg"></i> #$r( "dashboard.latestSnapshot.discussionCounts@admin" )#
+                    <i class="fa fa-comments fa-lg"></i> #$r( "dashboard.latestSnapshot.discussionCounts@admin" )#
                 </a>
             </div>
             <div id="discussion" class="panel-collapse collapse">
@@ -105,7 +105,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##content">
-                    <i class="fas fa-box fa-lg"></i> #$r( "dashboard.latestSnapshot.contentCounts@admin" )#
+                    <i class="fa fa-archive fa-lg"></i> #$r( "dashboard.latestSnapshot.contentCounts@admin" )#
                 </a>
             </div>
             <div id="content" class="panel-collapse collapse">
