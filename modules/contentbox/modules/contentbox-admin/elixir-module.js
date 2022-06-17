@@ -48,10 +48,13 @@ module.exports = function(mix) {
                         fs.copySync( manifest[ 'includes/js/runtime.js' ].substr(1), 'modules/contentbox/modules/contentbox-admin/includes/js/runtime.js' )
                     } );
 					fs.copySync( 'includes/rev-manifest.json', 'modules/contentbox/modules/contentbox-admin/includes/rev-manifest.json' );
-					// Clean up compiled root assets
-					// fs.rmdir( 'includes/js', { recursive : true } );
-					// fs.remove( 'includes/rev-manifest.json' );
-                  });
+
+					if( process.env.NODE_ENV != 'development' ){
+						// Clean up compiled root assets
+						fs.rmdir( 'includes/js', { recursive : true } );
+						fs.remove( 'includes/rev-manifest.json' );
+					}
+				  });
                 }
             }
         ]
