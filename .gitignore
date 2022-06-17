@@ -45,6 +45,9 @@ modules/contentbox/modules/contentbox-admin/includes/rev-manifest.json
 modules/contentbox/modules/contentbox-admin/modules/contentbox-filebrowser/includes/js
 modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes
 modules/contentbox/modules/contentbox-admin/modules/contentbox-markdowneditor/includes
+modules/contentbox/themes/default/includes/fonts
+modules/contentbox/themes/default/includes/css
+modules/contentbox/themes/default/includes/js
 modules/route-visualizer/**
 modules/cbdebugger
 
