@@ -35,22 +35,6 @@
 					</select>
 				</div>
 
-				<!--- MOBILE LAYOUT --->
-				<div class="form-group">
-					<label for="layout" class="control-label">
-						<i class="fas fa-mobile-alt"></i>
-						Mobile Layout:
-					</label>
-					<select name="mobileLayout" id="mobileLayout" class="form-control input-sm">
-						<option value="" <cfif prc.oContent.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
-						<option value="-inherit-" <cfif prc.oContent.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
-						#html.options(
-							values=prc.availableLayouts,
-							selectedValue=prc.oContent.getMobileLayout()
-						)#
-					</select>
-				</div>
-
 				<!--- SHOW IN MENU BUILDERS --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
