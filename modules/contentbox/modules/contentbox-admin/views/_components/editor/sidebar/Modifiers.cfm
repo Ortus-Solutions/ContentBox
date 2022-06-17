@@ -9,7 +9,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##modifiers">
-					<i class="fas fa-toolbox"></i> Modifiers
+					<i class="fa fa-toolbox"></i> Modifiers
 				</a>
 			</h4>
 		</div>
@@ -41,7 +41,7 @@
 					<!--- Parent --->
 					<div class="form-group">
 						<label for="parentContent" class="control-label">
-							<i class="fas fa-sitemap"></i>
+							<i class="fa fa-sitemap"></i>
 							Parent:
 						</label>
 						<select
@@ -93,7 +93,7 @@
 				<cfif prc.cbSiteSettings.cb_comments_enabled and prc.oContent.commentsAllowed()>
 					<div class="form-group">
 						<label for="allowComments" class="control-label">
-							<i class="far fa-comments"></i>
+							<i class="fa fa-comments"></i>
 							Allow Comments:
 						</label>
 						#html.select(
@@ -109,7 +109,7 @@
 				<cfif !prc.oContent.isContentStore()>
 					<div class="form-group">
 						<label for="passwordProtection">
-							<i class="fas fa-key"></i> Password Protection:
+							<i class="fa fa-key"></i> Password Protection:
 						</label>
 						#html.textfield(
 							name      : "passwordProtection",
@@ -135,7 +135,6 @@
 							title       = "The ordering index",
 							class       = "form-control",
 							size        = "5",
-							maxlength   = "2",
 							min         = "0",
 							max         = "2000"
 						)#

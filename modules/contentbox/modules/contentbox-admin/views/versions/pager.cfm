@@ -19,7 +19,7 @@
 				onclick="return versionsPagerDiff();"
 				title="Compare the two selected versions below"
 			>
-				<i class="far fa-object-ungroup"></i> Compare
+				<i class="fa fa-object-ungroup"></i> Compare
 			</button>
 		</cfif>
 		<cfif prc.versionsPager_viewFullHistory>
@@ -28,7 +28,7 @@
 				title="Go to the history visualizer"
 				onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"
 			>
-				<i class="fas fa-history"></i> Full History
+				<i class="fa fa-history"></i> Full History
 			</button>
 		</cfif>
 	</div>
@@ -86,9 +86,9 @@
 				<!--- Status --->
 				<td class="text-center">
 					<cfif thisVersion.getIsActive()>
-						<i class="far fa-dot-circle fa-lg text-red" title="Active Version"></i>
+						<i class="fa fa-dot-circle fa-lg text-red" title="Active Version"></i>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg text-muted" title="Past Version"></i>
+						<i class="fa fa-dot-circle fa-lg text-muted" title="Past Version"></i>
 					</cfif>
 				</td>
 
@@ -127,7 +127,7 @@
 								class="confirmIt"
 								data-message="Do you really want to rollback to this version?"
 							>
-								<i class="fas fa-recycle fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i>
+								<i class="fa fa-recycle fa-lg" id="version_rollback_#thisVersion.getContentVersionID()#"></i>
 							</a>
 						</cfif>
 
@@ -137,10 +137,10 @@
 								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"
 								title="Remove this version"
 								class="confirmIt ml5"
-								data-title="<i class='far fa-trash-alt'></i> Remove Content Version"
+								data-title="<i class='fa fa-trash'></i> Remove Content Version"
 								data-message="Do you really want to remove this content version?"
 							>
-								<i class="far fa-trash-alt fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
+								<i class="fa fa-trash fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
 							</a>
 						</cfif>
 					</cfif>

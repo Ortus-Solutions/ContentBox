@@ -3,7 +3,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4><i class="far fa-comments"></i> Comment Editor</h4>
+            <h4><i class="fa fa-comments"></i> Comment Editor</h4>
         </div>
         #html.startForm( name="commentEditForm",action=prc.xehCommentsave,class="form-vertical" )#
             <div class="modal-body">

@@ -45,7 +45,7 @@
 	<!--- Auto Save Operations --->
 	<div class="btn-group btn-group-sm" id="contentAutoSave">
 		<a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
-			<i class="far fa-save"></i>
+			<i class="fa fa-save"></i>
 			Auto Saved
 			<span class="caret"></span>
 		</a>
@@ -57,7 +57,7 @@
 	<!--- Preview Panel --->
 	<div class="pull-right">
 		<a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-			<i class="far fa-eye fa-lg"></i>
+			<i class="fa fa-eye fa-lg"></i>
 		</a>
 	</div>
 </div>

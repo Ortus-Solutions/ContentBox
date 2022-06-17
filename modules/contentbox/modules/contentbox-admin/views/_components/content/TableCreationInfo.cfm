@@ -6,8 +6,8 @@
 		onclick="toggleMoreInfoPanel( '#args.content.getContentId()#' ); return false"
 		title="Click for More Info"
 	>
-		<i id="moreInfoOpenButton-#args.content.getContentId()#" class="fas fa-ellipsis-h"></i>
-		<i id="moreInfoCloseButton-#args.content.getContentId()#" class="far fa-times-circle hidden"></i>
+		<i id="moreInfoOpenButton-#args.content.getContentId()#" class="fa fa-ellipsis-h"></i>
+		<i id="moreInfoCloseButton-#args.content.getContentId()#" class="fa fa-times-circle hidden"></i>
 	</button>
 
 	<!--- More Panel --->
@@ -38,7 +38,7 @@
 			class="mt10 mb5 ml5"
 			title="Created Date"
 		>
-			<i class="fas fa-calendar mr5"></i> #args.content.getDisplayCreatedDate()#
+			<i class="fa fa-calendar mr5"></i> #args.content.getDisplayCreatedDate()#
 		</div>
 
 		<!--- Categories --->
@@ -46,7 +46,7 @@
 			<div class="mt10 mb5">
 				<div class="text-muted">
 					<span title="Categories">
-						<i class="fas fa-tags"></i> #args.content.getCategoriesList()#
+						<i class="fa fa-tags"></i> #args.content.getCategoriesList()#
 					</span>
 				</div>
 			</div>
@@ -56,7 +56,7 @@
 		<div class="mt5">
 			<div class="text-muted">
 				<span title="Slug">
-					<i class="fas fa-sitemap mr5"></i>
+					<i class="fa fa-sitemap mr5"></i>
 					<span class="label label-success">#args.content.getSlug()#</span>
 				</span>
 			</div>
@@ -66,7 +66,7 @@
 		<cfif args.showDescription && len( args.content.getDescription() )>
 			<div class="mt10 mb5 ml5">
 				<div class="text-muted">
-					<i class="fas fa-info-circle mr5"></i> #args.content.getDescription()#
+					<i class="fa fa-info-circle mr5"></i> #args.content.getDescription()#
 				</div>
 			</div>
 		</cfif>

@@ -56,19 +56,19 @@
 														data-title="Delete Selected Categories?"
 														data-message="This will delete the categories and associations, are you sure?"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+														<i class="fa fa-trash fa-lg"></i> Delete Selected
 													</a>
 												</li>
 
 												<li class="mb5">
 													<a href="javascript:contentListHelper.bulkChangeStatus( 'draft' )">
-														<i class="fas fa-ban fa-lg"></i> Draft Selected
+														<i class="fa fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 
 												<li class="mb5">
 													<a href="javascript:contentListHelper.bulkChangeStatus( 'publish' )">
-														<i class="fas fa-satellite-dish fa-lg"></i> Publish Selected
+														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 											</cfif>
@@ -76,7 +76,7 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 								    			<li class="mb5">
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 								    			</li>
 											</cfif>
@@ -84,25 +84,25 @@
 											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="mb5">
 													<a href="#event.buildLink( prc.xehPageExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehPageExportAll )#' )">
-														<i class="fas fa-file-export fa-lg"></i> Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.resetBulkHits()">
-													<i class="fas fa-recycle fa-lg"></i> Reset Hits Selected
+													<i class="fa fa-recycle fa-lg"></i> Reset Hits Selected
 												</a>
 											</li>
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.contentShowAll()">
-													<i class="fas fa-list"></i> Show All
+													<i class="fa fa-list"></i> Show All
 												</a>
 											</li>
 								    	</ul>
@@ -132,7 +132,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading">
-				<h3 class="panel-title"><i class="fas fa-filter"></i> Filters</h3>
+				<h3 class="panel-title"><i class="fa fa-filter"></i> Filters</h3>
 			</div>
 			<div class="panel-body">
 				<div id="filterBox">
@@ -194,12 +194,12 @@
 		</div>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fab fa-medrt"></i> Help Tips</h3>
+		        <h3 class="panel-title"><i class="fa fa-medrt"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="far fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="far fa-lightbulb fa-lg"></i> Cloning does not copy comments or version history</li>
+					<li><i class="fa fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb fa-lg"></i> Cloning does not copy comments or version history</li>
 				</ul>
 		    </div>
 		</div>

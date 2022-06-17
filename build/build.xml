@@ -99,8 +99,8 @@
       	<copy todir="${dir.build}/module" encoding="UTF-8">
       		<fileset dir="modules/contentbox">
       			<exclude name="modules/contentbox-deps/modules/**" />
-				<exclude name="**/bower_components/**" />
-				<exclude name="**/app_modules/**" />
+      			<exclude name="modules/contentbox/modules/contentbox-admin/resources/**" />
+      			<exclude name="modules/contentbox/themes/default/resources/**" />
       			<exclude name="**/node_modules/**" />
       		</fileset>
       		<fileset file="readme.md" />

@@ -43,10 +43,4 @@ document.addEventListener( "DOMContentLoaded", () => {
 	);
 } );
 </script>
-<!--- Load Editor Assets Now --->
-<cfif getSetting( "environment" ) eq "development">
-	<script src="#prc.cbroot#/includes/js/contentbox-editors.js"></script>
-<cfelse>
-	<script src="#prc.cbroot#/includes/js/contentbox-editors.min.js"></script>
-</cfif>
 </cfoutput>

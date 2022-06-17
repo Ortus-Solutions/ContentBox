@@ -1,7 +1,7 @@
 <cfoutput>
 #html.startForm( name="editorSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
-	<legend><i class="fas fa-pen fa-lg"></i> Editor Options</legend>
+	<legend><i class="fa fa-pen fa-lg"></i> Editor Options</legend>
 
 		<!--- Default Editor --->
 		<div class="form-group">

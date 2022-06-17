@@ -292,7 +292,7 @@ component
 			{
 				name : 'cbSave',
 				action : function(){ quickSave(); },
-				className : 'far fa-save',
+				className : 'fa fa-save',
 				title : 'ContentBox Quick Save'
 			},
 			{
@@ -328,13 +328,13 @@ component
 			{
 				name : 'cbContentStore',
 				action : function(){ $insertCBContentStore( '#arguments.editor#' ); },
-				className : 'far fa-hdd',
+				className : 'fa fa-hdd',
 				title : 'Insert ContentBox Content Store Item'
 			},
 			{
 				name : 'cbEntryLink',
 				action : function(){ $insertCBEntryLink( '#arguments.editor#' ); },
-				className : 'fas fa-blog',
+				className : 'fa fa-blog',
 				title : 'Insert ContentBox Entry Link'
 			},
 			{

@@ -216,7 +216,7 @@ component accessors="true" threadSafe singleton {
 		).addHeaderSubMenu(
 				name    = "myprofile",
 				title   = "ctrl+shift+A",
-				label   = "<i class='far fa-id-badge fa-lg width20'></i> My Profile",
+				label   = "<i class='fa fa-id-badge fa-lg width20'></i> My Profile",
 				href    = variables.buildLink,
 				href_to = xehMyProfile,
 				data    = { keybinding : "ctrl+shift+a" }
@@ -376,13 +376,13 @@ component accessors="true" threadSafe singleton {
 		// Dashboard
 		addTopMenu(
 			name    = this.DASHBOARD,
-			label   = "<i class='fas fa-tv'></i> Dashboard",
+			label   = "<i class='fa fa-tv'></i> Dashboard",
 			href    = variables.buildLink,
 			href_to = prc.xehDashboard
 		);
 
 		// Content
-		addTopMenu( name = this.CONTENT, label = "<i class='fas fa-box'></i> Content" )
+		addTopMenu( name = this.CONTENT, label = "<i class='fa fa-archive'></i> Content" )
 			.addSubMenu(
 				topMenu     = this.CONTENT,
 				name        = "Blog",

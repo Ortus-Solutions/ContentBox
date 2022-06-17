@@ -9,6 +9,7 @@ component extends="cbadmin.handlers.baseHandler" {
 
 	// DI
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
+	property name="html" inject="HTMLHelper@coldbox";
 
 	/**
 	 * Pre handler
@@ -535,23 +536,30 @@ component extends="cbadmin.handlers.baseHandler" {
 		}
 
 		// Load CSS and JS only if not in Ajax Mode or forced
-		if ( NOT event.isAjax() OR arguments.force ) {
+		if ( !event.isAjax() OR arguments.force ) {
 			// load parent assets if needed
 			if ( prc.fbSettings.loadJquery ) {
 				// Add Main Styles
 				var adminRoot = event.getModuleRoot( "contentbox-admin" );
-				addAsset( "#adminRoot#/includes/css/contentbox.min.css" );
-				addAsset( asset: "#adminRoot#/includes/js/contentbox-pre.min.js", defer: true );
-				addAsset( asset: "#adminRoot#/includes/js/contentbox-app.min.js", defer: true );
+				// we can't use HTML helper here because the elixirPath function won't find the files we need
+				var manifest  = deserializeJSON( fileRead( expandPath( "#adminRoot#/includes/rev-manifest.json" ) ) );
+				addAsset( asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/css/contentbox.css" ] );
+				addAsset( asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/css/theme.css" ] );
+				addAsset( asset: adminRoot & "/includes/js/runtime.js", defer: true );
+				addAsset( asset: adminRoot & "/includes/js/vendor.js", defer: true );
+				addAsset(
+					asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/js/bootstrap.js" ],
+					defer: true
+				);
+				addAsset(
+					asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/js/app.js" ],
+					defer: true
+				);
+				addAsset(
+					asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/js/admin.js" ],
+					defer: true
+				);
 			}
-
-			// LOAD Assets
-			// injector:css//
-			// addAsset( "#prc.fbModRoot#/includes/css/f00ee02d.fb.min.css" );
-			// endinjector//
-			// injector:js//
-			// addAsset( asset: "#prc.fbModRoot#/includes/js/92610417.fb.min.js", defer: true );
-			// endinjector//
 		}
 	}
 

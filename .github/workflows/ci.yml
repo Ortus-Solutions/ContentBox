@@ -40,6 +40,8 @@ jobs:
 
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
+        with:
+          version: 5.4.2
 
       - name: Setup .env For Runner
         run: |
@@ -181,12 +183,21 @@ jobs:
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
           forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
+          version: 5.4.2
 
       - name: Install Build Dependencies
         run: |
           box install --production
           box install commandbox-docbox
           cd modules/contentbox && box install --production
+
+      - name: Compile Release Static assets
+        run: |
+          npm install && npm run prod
+          rm -rf node_modules
+          cd modules/contentbox/themes/default
+          npm install && npm run prod
+          rm -rf node_modules
 
       - name: Setup Environment Variables For Build Process
         id: current_version

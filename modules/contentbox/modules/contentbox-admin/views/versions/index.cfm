@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-history"></i> History
+			<i class="fa fa-history"></i> History
 		</h1>
     </div>
 </div>
@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="size16 p10">
-					<i class="fas fa-box"></i> #prc.content.getTitle()#
+					<i class="fa fa-archive"></i> #prc.content.getTitle()#
 				</div>
 			</div>
 
@@ -47,7 +47,7 @@
 
 		    <div class="panel-heading">
 		        <h3 class="panel-title">
-		        	<i class="fas fa-info-circle"></i> Details
+		        	<i class="fa fa-info-circle"></i> Details
 		        </h3>
 			</div>
 
@@ -114,7 +114,7 @@
 							onclick="to( '#event.buildLink( prc.xehBackTrack )#' );return false;"
 						</cfif>
 					>
-						<i class="fas fa-chevron-left"></i> Back
+						<i class="fa fa-chevron-left"></i> Back
 					</button>
 					<cfif len( prc.xehOpenContent )>
 						<button
@@ -122,7 +122,7 @@
 							title="View in Site"
 							onclick="window.open( '#prc.xehOpenContent#' );return false;"
 						>
-							<i class="far fa-eye"></i> Open
+							<i class="fa fa-eye"></i> Open
 						</button>
 					</cfif>
 				</div>
@@ -139,8 +139,8 @@
 
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
-					<li><i class="far fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
-					<li><i class="far fa-lightbulb fa-lg"></i> Rollback will create a new version with the rollbacked content.</li>
+					<li><i class="fa fa-lightbulb fa-lg"></i> Right click on a row to activate quick look!</li>
+					<li><i class="fa fa-lightbulb fa-lg"></i> Rollback will create a new version with the rollbacked content.</li>
 				</ul>
 		    </div>
 		</div>

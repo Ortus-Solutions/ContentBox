@@ -28,7 +28,7 @@ component
 	public SubMenuProvider function init(){
 		setName( "SubMenu" );
 		setType( "SubMenu" );
-		setIconClass( "fas fa-bars" );
+		setIconClass( "fa fa-bars" );
 		setEntityName( "cbSubMenuItem" );
 		setDescription( "A menu item which encapsulates another menu" );
 		return this;

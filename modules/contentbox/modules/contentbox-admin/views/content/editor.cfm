@@ -40,7 +40,7 @@
 							<!--- Main Editor --->
 							<li role="presentation" class="active">
 								<a href="##editor" aria-controls="editor" role="tab" data-toggle="tab">
-									<i class="fas fa-pen"></i> #prc.oContent.getContentType()#
+									<i class="fa fa-pen"></i> #prc.oContent.getContentType()#
 								</a>
 							</li>
 
@@ -48,7 +48,7 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
 								<li role="presentation">
 									<a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
-										<i class="fas fa-microchip"></i> Custom Fields
+										<i class="fa fa-microchip"></i> Custom Fields
 									</a>
 								</li>
 							</cfif>
@@ -72,7 +72,7 @@
 								<cfif prc.oContent.commentsAllowed()>
 									<li role="presentation">
 										<a href="##comments" aria-controls="comments" role="tab" data-toggle="tab">
-											<i class="far fa-comments"></i> Comments
+											<i class="fa fa-comments"></i> Comments
 										</a>
 									</li>
 								</cfif>

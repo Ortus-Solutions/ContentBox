@@ -5,12 +5,14 @@ install
 
 # Install all ContentBox dependencies
 cd modules/contentbox && install
-cd ../../workbench
+cd ../../
 
 # Install NPM dependencies
 echo "==> Install Node Dependencies"
-!npm install -g grunt-cli yarn
+!npm install
+echo "====> Finished installing all NPM dependencies, go rock ContentBox Development!"
 
-# Install Yarn deps
-!yarn install
-echo "====> Finished installing all dependencies, go rock ContentBox Development!"
+echo "==> Install Node Dependencies for Default Theme"
+cd modules/contentbox/themes/default
+!npm install
+echo "====> Finished installing Default theme NPM dependencies, go rock ContentBox Development!"

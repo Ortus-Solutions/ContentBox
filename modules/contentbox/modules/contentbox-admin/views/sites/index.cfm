@@ -52,7 +52,7 @@
 										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a href="javascript:importContent()">
-													<i class="fas fa-file-import fa-lg"></i> Import
+													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 										</cfif>
@@ -62,7 +62,7 @@
 													href="#event.buildLink( prc.xehExportAll )#.json"
 													target="_blank"
 												>
-													<i class="fas fa-file-export fa-lg"></i>
+													<i class="fa fa-file-export fa-lg"></i>
 													Export All
 												</a>
 											</li>
@@ -136,27 +136,27 @@
 								<td>
 									<!--- Blog Enabled --->
 									<i
-										class="fas fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
+										class="fa fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
 										title="Blog"></i>
 
 									<!--- SiteMap Enabled --->
 									<i
-										class="fas fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
+										class="fa fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
 										title="Sitemap"></i>
 
 									<!--- PoweredBy --->
 									<i
-										class="fas fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
+										class="fa fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
 										title="Powered By Header"></i>
 
 									<!--- AdminBar --->
 									<i
-										class="fas fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
+										class="fa fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
 										title="Admin Bar"></i>
 
 									<!--- SSL --->
 									<i
-										class="fas fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
+										class="fa fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
 										title="SSL"></i>
 
 								</td>
@@ -164,7 +164,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fas fa-ellipsis-v fa-lg"></i>
+											<i class="fa fa-ellipsis-v fa-lg"></i>
 										</a>
 										<ul class="dropdown-menu text-left pull-right">
 
@@ -174,9 +174,9 @@
 													<a
 														href="javascript:remove( '#site.getsiteID()#' )"
 														class="confirmIt"
-														data-title="<i class='far fa-trash-alt'></i> Delete Site?"
+														data-title="<i class='fa fa-trash'></i> Delete Site?"
 													>
-														<i class="far fa-trash-alt fa-lg" id="delete_#site.getsiteID()#"></i> Delete
+														<i class="fa fa-trash fa-lg" id="delete_#site.getsiteID()#"></i> Delete
 													</a>
 												</li>
 											</cfif>
@@ -184,7 +184,7 @@
 											<!--- Edit Command --->
 											<li>
 												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteID/#site.getsiteID()#' )#">
-													<i class="fas fa-pen fa-lg"></i> Edit
+													<i class="fa fa-pen fa-lg"></i> Edit
 												</a>
 											</li>
 
@@ -195,7 +195,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.json"
 														target="_blank"
 													>
-														<i class="fas fa-file-export fa-lg"></i> Export
+														<i class="fa fa-file-export fa-lg"></i> Export
 													</a>
 												</li>
 											</cfif>
@@ -203,7 +203,7 @@
 											<!--- Open site --->
 											<li>
 												<a href="#site.getSiteRoot()#" target="_blank">
-													<i class="fas fa-external-link-alt fa-lg"></i>Open site
+													<i class="fa fa-external-link-alt fa-lg"></i>Open site
 												</a>
 											</li>
 

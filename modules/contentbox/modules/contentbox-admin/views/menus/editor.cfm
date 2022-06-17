@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-            <i class="fas fa-bars fa-lg"></i> Menu Designer
+            <i class="fa fa-bars fa-lg"></i> Menu Designer
         </h1>
     </div>
 </div>
@@ -22,7 +22,7 @@
             <div class="panel-heading">
                 <div class="p11 size16">
                     <div class="actions">
-                        <a class="btn btn-sm btn-info text-white" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fas fa-chevron-left"></i> Back</a>
+                        <a class="btn btn-sm btn-info text-white" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-chevron-left"></i> Back</a>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fas fa-recycle"></i></a></h3>
+                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fa fa-recycle"></i></a></h3>
                         <p>Here's an instant preview of your menu.</p>
                         <div id="preview-panel" class="well well-sm">No Preview Available</div>
                     </div>
@@ -81,7 +81,7 @@
         <div class="panel panel-primary">
             <div class="panel-heading">
 				<h3 class="panel-title">
-					<i class="fas fa-bars fa-lg"></i> Menu Data
+					<i class="fa fa-bars fa-lg"></i> Menu Data
 				</h3>
             </div>
             <div class="panel-body">
@@ -184,7 +184,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h3><i class="far fa-eye"></i> Menu Preview</h3>
+                <h3><i class="fa fa-eye"></i> Menu Preview</h3>
             </div>
             <div class="modal-body"></div>
         </div>
