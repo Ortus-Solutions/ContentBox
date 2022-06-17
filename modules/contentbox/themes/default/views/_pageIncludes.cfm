@@ -33,7 +33,7 @@
 
 
 <!-- injector:css -->
-<link rel="stylesheet" href="#cb.themeRoot()#/#html.elixirPath( fileName='includes/css/theme.css', manifestRoot='#cb.themeRoot()#/includes' )#">
+<link rel="stylesheet" href="#cb.themeRoot()#/#html.elixirPath( fileName='css/theme.css', manifestRoot='#cb.themeRoot()#/includes' )#">
 <!-- endinjector -->
 
 <!--- Swatch Skin - Overrides Defaults --->
@@ -49,6 +49,6 @@
 <!--- 					JAVASCRIPT														--->
 <!--- ********************************************************************************* --->
 <!-- injector:js -->
-<script src="#cb.themeRoot()#/#html.elixirPath( fileName='includes/css/theme.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
+<script src="#cb.themeRoot()#/#html.elixirPath( fileName='css/theme.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
 <!-- endinjector -->
 </cfoutput>
