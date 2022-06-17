@@ -36,15 +36,15 @@
     <!--- ********************************************************************* --->
     <!---                           CSS                                           --->
     <!--- ********************************************************************* --->
-	<link rel="stylesheet" href="#html.elixirPath( fileName='css/contentbox.css', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#">
-	<link rel="stylesheet" href="#html.elixirPath( fileName='css/theme.css', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#">
+	<link rel="stylesheet" href="#cbadminElixirPath( fileName='css/contentbox.css' )#">
+	<link rel="stylesheet" href="#cbadminElixirPath( fileName='css/theme.css' )#">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->
     <cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
-        <cfset addAsset( html.elixirPath( fileName='css/#css#.css', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" ) )>
+        <cfset addAsset( cbadminElixirPath( fileName='css/#css#.css' ) )>
     </cfloop>
     <cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
         <cfset addAsset( "#css#" )>
@@ -65,9 +65,9 @@
     <!--- ********************************************************************* --->
 	<script defer src="#prc.cbroot#/includes/js/runtime.js"></script>
 	<script defer src="#prc.cbroot#/includes/js/vendor.js"></script>
-	<script defer src="#html.elixirPath( fileName='js/bootstrap.js', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="#html.elixirPath( fileName='js/app.js', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="#html.elixirPath( fileName='js/admin.js', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#"></script>
+	<script defer src="#cbadminElixirPath( fileName='js/bootstrap.js' )#"></script>
+	<script defer src="#cbadminElixirPath( fileName='js/app.js' )#"></script>
+	<script defer src="#cbadminElixirPath( fileName='js/admin.js' )#"></script>
 
 </head>
 </cfoutput>
