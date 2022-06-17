@@ -48,6 +48,9 @@ modules/contentbox/modules/contentbox-admin/modules/contentbox-markdowneditor/in
 modules/contentbox/themes/default/includes/fonts
 modules/contentbox/themes/default/includes/css
 modules/contentbox/themes/default/includes/js
+modules/contentbox/themes/default/includes/bootswatch
+modules/contentbox/themes/default/includes/rev-manifest.json
+modules/contentbox/themes/default/node_modules
 modules/route-visualizer/**
 modules/cbdebugger
 
