@@ -10,11 +10,11 @@ component {
 
 	function up( schema, qb ){
 		// Remove the sslonly column from the `cb_page` table
-		try{
+		try {
 			schema.alter( "cb_page", ( table ) => {
 				table.dropColumn( "SSLOnly" );
 			} );
-		} catch( any e ){
+		} catch ( any e ) {
 			// If this query errors, then the schema was created by a version greater than 5.0
 		}
 	}
