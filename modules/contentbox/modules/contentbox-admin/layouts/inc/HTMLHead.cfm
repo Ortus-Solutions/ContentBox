@@ -36,15 +36,15 @@
     <!--- ********************************************************************* --->
     <!---                           CSS                                           --->
     <!--- ********************************************************************* --->
-	<link rel="stylesheet" href="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/css/contentbox.css', manifestRoot="#prc.cbroot#/includes" )#">
-	<link rel="stylesheet" href="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/css/theme.css', manifestRoot="#prc.cbroot#/includes" )#">
+	<link rel="stylesheet" href="#html.elixirPath( fileName='css/contentbox.css', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#">
+	<link rel="stylesheet" href="#html.elixirPath( fileName='css/theme.css', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->
     <cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
-        <cfset addAsset( elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/css/#css#.css', manifestRoot="#prc.cbroot#/includes" ) )>
+        <cfset addAsset( html.elixirPath( fileName='css/#css#.css', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" ) )>
     </cfloop>
     <cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
         <cfset addAsset( "#css#" )>
@@ -63,11 +63,11 @@
     <!--- ********************************************************************* --->
     <!---                            JS LIBRARIES                				--->
     <!--- ********************************************************************* --->
-	<script defer src="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/runtime.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/vendor.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/bootstrap.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/app.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
-	<script defer src="/#html.elixirPath( fileName='modules/contentbox/modules/contentbox-admin/includes/js/admin.js', manifestRoot="#prc.cbroot#/includes" )#"></script>
+	<script defer src="#prc.cbroot#/includes/js/runtime.js"></script>
+	<script defer src="#prc.cbroot#/includes/js/vendor.js"></script>
+	<script defer src="#html.elixirPath( fileName='js/bootstrap.js', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#"></script>
+	<script defer src="#html.elixirPath( fileName='js/app.js', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#"></script>
+	<script defer src="#html.elixirPath( fileName='js/admin.js', useModuleRoot=true, manifestRoot="#prc.cbroot#/includes" )#"></script>
 
 </head>
 </cfoutput>
