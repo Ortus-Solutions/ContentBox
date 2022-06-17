@@ -58,6 +58,14 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
+      - name: Test Compiliation of Release Assets
+        run: |
+          npm install && npm run prod
+          rm -rf node_modules
+          cd modules/contentbox/themes/default
+          npm install && npm run prod
+          rm -rf node_modules
+
       - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
         run: |
           box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
