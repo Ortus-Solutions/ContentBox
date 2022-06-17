@@ -4,7 +4,7 @@
     "description": "ContentBox CMS assets",
     "private": "true",
     "devDependencies": {
-        "coldbox-elixir": "^4.0.0",
+        "coldbox-elixir": "^4.0.1",
         "eslint": "^8.17.0",
         "eslint-config-prettier": "^8.5.0",
         "prettier-eslint": "^15.0.1"
@@ -59,7 +59,7 @@
         "dev": "webpack --node-env development",
         "watch": "npm run dev -- --watch",
         "prod": "webpack --node-env production",
-		"build-dev" : "webpack --node-env development && cd modules/contentbox/themes/default && webpack --node-env development",
-		"build-prod" : "webpack --node-env production && cd modules/contentbox/themes/default && webpack --node-env production"
+        "build-dev": "webpack --node-env development && cd modules/contentbox/themes/default && webpack --node-env development",
+        "build-prod": "webpack --node-env production && cd modules/contentbox/themes/default && webpack --node-env production"
     }
 }
