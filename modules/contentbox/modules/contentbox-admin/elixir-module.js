@@ -126,8 +126,6 @@ module.exports = function(mix) {
     )
     .js( "admin.js" )
     .js( "app.js" )
-    .sass( "contentbox.scss" )
-    .sass( "filebrowser.scss" )
-    .sass( "theme.scss" );
+    .sass( "contentbox.scss" );
 
 };
