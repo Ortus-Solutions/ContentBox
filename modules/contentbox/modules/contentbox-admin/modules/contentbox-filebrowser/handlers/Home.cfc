@@ -544,7 +544,6 @@ component extends="cbadmin.handlers.baseHandler" {
 				// we can't use HTML helper here because the elixirPath function won't find the files we need
 				var manifest  = deserializeJSON( fileRead( expandPath( "#adminRoot#/includes/rev-manifest.json" ) ) );
 				addAsset( asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/css/contentbox.css" ] );
-				addAsset( asset: manifest[ "modules/contentbox/modules/contentbox-admin/includes/css/theme.css" ] );
 				addAsset( asset: adminRoot & "/includes/js/runtime.js", defer: true );
 				addAsset( asset: adminRoot & "/includes/js/vendor.js", defer: true );
 				addAsset(
