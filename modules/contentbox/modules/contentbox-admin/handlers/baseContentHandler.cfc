@@ -269,11 +269,13 @@ component extends="baseHandler" {
 				eventArguments = { contentID : rc.contentID }
 			);
 		}
-		// Get all content names for parent drop downs
+		// Get all content names for parent drop downs excluding yourself and your children
 		prc.allContent = variables.ormService.getAllFlatContent(
 			sortOrder: "slug asc",
 			siteID   : prc.oCurrentSite.getsiteID()
-		);
+		).filter( function( item ) {
+			return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+		} );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor

@@ -31,11 +31,6 @@
 						>
 							<option value="null">- No Parent -</option>
 
-							<!--- Remove the current slug and its children from the options --->
-							<cfset prc.allContent = prc.allContent.filter( function( item ) {
-								return left( item.findKey( "slug" )[ 1 ].value, prc.oContent.getSlug().len() ) != prc.oContent.getSlug()
-							} )>
-
 							#html.options(
 								values        : prc.allContent,
 								column        : "contentID",
