@@ -36,7 +36,7 @@ workbench/app_modules
 
 # webpack working compilation assets
 includes/js
-includes/rev-manifest.json
+**/rev-manifest.json
 
 # Module Dependencies
 modules/contentbox/modules/contentbox-admin/includes/js
