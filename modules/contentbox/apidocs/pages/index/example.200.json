@@ -1,7 +1,6 @@
 {
 	"data": [
 		{
-			"mobileLayout": "",
 			"excerpt": "",
 			"numberOfVersions": "4",
 			"cache": true,
@@ -45,7 +44,6 @@
 			"cacheLastAccessTimeout": 0
 		},
 		{
-			"mobileLayout": "",
 			"excerpt": "",
 			"numberOfVersions": "1",
 			"cache": true,
@@ -89,7 +87,6 @@
 			"cacheLastAccessTimeout": 0
 		},
 		{
-			"mobileLayout": "",
 			"excerpt": "",
 			"numberOfVersions": "6",
 			"cache": true,

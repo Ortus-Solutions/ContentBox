@@ -32,16 +32,6 @@ component
 		default="";
 
 	/**
-	 * The layout in a theme that will be used to render the page out when viewing it from a mobile device
-	 */
-	property
-		name   ="mobileLayout"
-		column ="mobileLayout"
-		notnull="false"
-		length ="200"
-		default="";
-
-	/**
 	 * The ordering numeric sequence
 	 */
 	property
@@ -83,26 +73,16 @@ component
 	 **							CONSTRAINTS
 	 ********************************************************************* */
 
-	this.constraints[ "layout" ]       = { required : false, size : "1..200" };
-	this.constraints[ "mobileLayout" ] = { required : false, size : "1..200" };
-	this.constraints[ "order" ]        = { required : true, type : "numeric" };
-	this.constraints[ "showInMenu" ]   = { required : false, type : "boolean" };
+	this.constraints[ "layout" ]     = { required : false, size : "1..200" };
+	this.constraints[ "order" ]      = { required : true, type : "numeric" };
+	this.constraints[ "showInMenu" ] = { required : false, type : "boolean" };
 
 	/* *********************************************************************
 	 **							CONSTRUCTOR
 	 ********************************************************************* */
 
 	function init(){
-		appendToMemento(
-			[
-				"excerpt",
-				"layout",
-				"mobileLayout",
-				"order",
-				"showInMenu"
-			],
-			"defaultIncludes"
-		);
+		appendToMemento( [ "excerpt", "layout", "order", "showInMenu" ], "defaultIncludes" );
 
 		super.init();
 
@@ -113,7 +93,6 @@ component
 		variables.allowComments   = false;
 		variables.createdDate     = now();
 		variables.layout          = "pages";
-		variables.mobileLayout    = "";
 		variables.contentType     = "Page";
 		variables.order           = 0;
 		variables.showInMenu      = true;
@@ -177,19 +156,6 @@ component
 	}
 
 	/**
-	 * Get mobile layout with layout inheritance, if none found return normal saved layout
-	 */
-	function getMobileLayoutWithInheritance(){
-		var thisLayout = ( isNull( variables.mobileLayout ) ? "" : variables.mobileLayout );
-		// check for inheritance and parent?
-		if ( thisLayout eq variables.LAYOUT_INHERITANCE_KEY AND hasParent() ) {
-			return getParent().getMobileLayoutWithInheritance();
-		}
-		// Is the mobile layout none, then return the normal layout
-		return ( !len( thisLayout ) ? getLayoutWithInheritance() : thisLayout );
-	}
-
-	/**
 	 * Wipe primary key, and descendant keys, and prepare for cloning of entire hierarchies
 	 *
 	 * @author           The author doing the cloning
@@ -209,7 +175,6 @@ component
 	){
 		// Do page property cloning
 		setLayout( arguments.original.getLayout() );
-		setMobileLayout( arguments.original.getMobileLayout() );
 		setShowInMenu( arguments.original.getShowInMenu() );
 		// do excerpts
 		if ( arguments.original.hasExcerpt() ) {
