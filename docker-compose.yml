@@ -45,6 +45,7 @@ services:
       DB_USER: sa
       DB_PASSWORD: T35t1ng1234!
       ENVIRONMENT: development
+      BOX_SERVER_RUNWAR_ARGS: "[--resource-manager-file-system-watcher false]"
     ports:
       - "80:8080"
       - "443:8443"

@@ -18,7 +18,7 @@
 			<div class="panel-body">
 				<div class="form-group">
 					<label for="parentContent" class="control-label">
-						<i class="fas fa-sitemap"></i>
+						<i class="fa fa-sitemap"></i>
 						Content Template:
 					</label>
 					<select
@@ -28,12 +28,11 @@
 						onchange="applyContentTemplate"
 					>
 							<option value="null">- No Template -</option>
-							#html.options(
-								values        : prc.availableTemplates,
-								column        : "templateID",
-								nameColumn    : "name",
-								selectedValue : !isNull( prc.oContent.getContentTemplate() ) ? prc.oContent.getContentTemplate().getId() : javacast( "null", 0 )
-							)#
+							<cfloop array="#prc.availableTemplates#" item="template" index="i">
+								<option value="#template[ "templateId" ]#"<cfif !isNull( prc.oContent.getContentTemplate() ) && prc.oContent.getContentTemplate().getId() == template[ "templateId" ]> selected</cfif>>
+									#template[ "name" ]#
+								</option>
+							</cfloop>
 					</select>
 				</div>
 

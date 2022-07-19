@@ -225,7 +225,7 @@ cacheuse           ="read-write"
 		},
 		"definition" : { required : true },
 		"site" : { required : true },
-		"isGlobal" : ( value, target ) => target.isGlobalUniqueInSite( value )
+		"isGlobal" : { required: true, "udf" : ( value, target ) => target.isGlobalUniqueInSite( value ) }
 	};
 
 

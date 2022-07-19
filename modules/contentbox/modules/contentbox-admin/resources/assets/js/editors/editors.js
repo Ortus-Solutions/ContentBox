@@ -498,7 +498,7 @@ window.cancelFeaturedImage = function(){
 	$( "#featuredImageControls" ).toggleClass( "hide" );
 }
 
-function onContentTemplateChange( e ){
+window.onContentTemplateChange = function( e ){
 	let templateId = e.target.value;
 	if( !templateId || templateId == 'null' ) return;
 	// TODO: Replace this with a more elegant promise-based confirmation
@@ -507,7 +507,7 @@ function onContentTemplateChange( e ){
 	}
 }
 
-applyContentTemplate( templateId ){
+window.applyContentTemplate = function( templateId ){
 	fetch(
 		`/cbapi/v1/content-templates/${templateId}`,
 		{
@@ -524,7 +524,7 @@ applyContentTemplate( templateId ){
 	} );
 }
 
-function announceModifiedByTemplate(){
+window.announceModifiedByTemplate = function(){
 	if( !window.alerts.some( alert => alert.type == 'template' ) ){
 		window.alerts.push(
 			{
@@ -536,7 +536,7 @@ function announceModifiedByTemplate(){
 	}
 }
 
-function applyContentTemplateToField( fieldName, definition ){
+window.applyContentTemplateToField = function( fieldName, definition ){
 	var template = getContentTemplate();
 	if( definition.hasOwnProperty( fieldName ) ){
 		switch( fieldName ){

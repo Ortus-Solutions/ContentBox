@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h1 class="h1">
-					<i class="fas fa-tags"></i> Content Templates (<span x-text="pagination.totalRecords"></span>)
+					<i class="fa fa-tags"></i> Content Templates (<span x-text="pagination.totalRecords"></span>)
 				</h1>
 			</div>
 		</div>
@@ -72,7 +72,7 @@
 														@click="importContent()"
 														class="cursor-pointer"
 													>
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 												</cfif>
@@ -81,7 +81,7 @@
 												<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-															<i class="fas fa-file-export fa-lg"></i> Export All
+															<i class="fa fa-file-export fa-lg"></i> Export All
 														</a>
 													</li>
 													<li>
@@ -89,7 +89,7 @@
 															@click="exportSelected()"
 															class="cursor-pointer"
 														>
-															<i class="fas fa-file-export fa-lg"></i> Export Selected
+															<i class="fa fa-file-export fa-lg"></i> Export Selected
 														</a>
 													</li>
 												</cfif>
@@ -116,7 +116,7 @@
 					<div class="panel-body">
 						<!--- Loader --->
 						<div class="text-center m20" x-show="isLoading">
-							<i class="fas fa-spinner fa-spin fa-lg"></i><br/>
+							<i class="fa fa-spinner fa-spin fa-lg"></i><br/>
 						</div>
 
 						<!--- Table --->
@@ -187,7 +187,7 @@
 														class="btn btn-default btn-more dropdown-toggle"
 														data-toggle="dropdown"
 														href="##">
-														<i class="fas fa-ellipsis-v fa-lg"></i>
+														<i class="fa fa-ellipsis-v fa-lg"></i>
 													</a>
 													<ul class="dropdown-menu text-left pull-right">
 														<!--- Edit --->
@@ -197,7 +197,7 @@
 																class="cursor-pointer"
 																title="Edit"
 															>
-																<i class="fas fa-pen fa-lg"></i> Edit
+																<i class="fa fa-pen fa-lg"></i> Edit
 															</a>
 														</li>
 
@@ -208,7 +208,7 @@
 																	:href="`#event.buildLink( prc.xehExport )#/templateID/${template.templateID}.json`"
 																	target="_blank"
 																>
-																	<i class="fas fa-file-export fa-lg"></i> Export
+																	<i class="fa fa-file-export fa-lg"></i> Export
 																</a>
 															</li>
 														</cfif>
