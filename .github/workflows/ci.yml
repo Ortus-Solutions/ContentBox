@@ -194,10 +194,11 @@ jobs:
       - name: Compile Release Static assets
         run: |
           npm install && npm run prod
-          rm -rf node_modules
           cd modules/contentbox/themes/default
           npm install && npm run prod
+          cd $GITHUB_WORKSPACE
           rm -rf node_modules
+          rm -rf modules/contetnbox/themes/default/node_modules
 
       - name: Setup Environment Variables For Build Process
         id: current_version
