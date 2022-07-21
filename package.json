@@ -7,9 +7,7 @@
         "coldbox-elixir": "^4.0.1",
         "eslint": "^8.17.0",
         "eslint-config-prettier": "^8.5.0",
-        "prettier-eslint": "^15.0.1"
-    },
-    "dependencies": {
+        "prettier-eslint": "^15.0.1",
         "alpinejs": "^3.10.2",
         "animate.css": "^3.5.2",
         "bootbox": "^5.5.3",
