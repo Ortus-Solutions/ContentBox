@@ -88,6 +88,8 @@ jobs:
 
       - name: Test Compiliation of Release Assets
         run: |
+          node -v
+          npm -v
           npm install && npm run prod
           cd modules/contentbox/themes/default
           npm install && npm run prod
