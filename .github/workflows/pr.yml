@@ -58,14 +58,14 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
+      - name:  Install Node 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
       # Focal ships with node 16.x so we need to update to 18
       - name: Test Compiliation of Release Assets
         run: |
-          sudo apt update
-          sudo apt install -y curl
-          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-          source ~/.bashrc
-          nvm install v18.0.0
           node -v
           npm -v
           npm install && npm run prod
