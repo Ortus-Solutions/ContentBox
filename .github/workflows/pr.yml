@@ -62,7 +62,7 @@ jobs:
       - name: Install Node v18
         run: |
           sudo apt update
-          apt uninstall -y nodejs
+          apt remove -y nodejs
           sudo apt install -y curl
           curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
           sudo apt install -y nodejs
@@ -76,7 +76,7 @@ jobs:
           npm install && npm run prod
           cd $GITHUB_WORKSPACE
           rm -rf node_modules
-          rm -rf modules/contetnbox/themes/default/node_modules
+          rm -rf modules/contentbox/themes/default/node_modules
 
       - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
         run: |
