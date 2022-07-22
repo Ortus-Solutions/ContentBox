@@ -62,7 +62,7 @@ jobs:
       - name: Install Node v18
         run: |
           sudo apt update
-          apt remove -y nodejs
+          sudo apt remove -y nodejs
           sudo apt install -y curl
           curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
           sudo apt install -y nodejs
