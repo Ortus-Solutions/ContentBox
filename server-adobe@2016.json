@@ -5,7 +5,8 @@
     },
     "name":"contentbox-adobe2016",
     "JVM":{
-        "heapSize":"1024"
+        "heapSize":"1024",
+		"args": "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -XX:+UseG1GC"
     },
     "web":{
         "directoryBrowsing":true,
