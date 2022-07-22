@@ -62,11 +62,10 @@ jobs:
       - name: Test Compiliation of Release Assets
         run: |
           sudo apt update
-          sudo apt remove -y nodejs
           sudo apt install -y curl
-          curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-          sudo apt install -y nodejs
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
           source ~/.bashrc
+          nvm install v18.0.0
           node -v
           npm -v
           npm install && npm run prod
