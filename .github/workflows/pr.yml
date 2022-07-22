@@ -59,16 +59,13 @@ jobs:
           cd modules/contentbox && box install
 
       # Focal ships with node 16.x so we need to update to 18
-      - name: Install Node v18
+      - name: Test Compiliation of Release Assets
         run: |
           sudo apt update
           sudo apt remove -y nodejs
           sudo apt install -y curl
           curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
           sudo apt install -y nodejs
-
-      - name: Test Compiliation of Release Assets
-        run: |
           node -v
           npm -v
           npm install && npm run prod
