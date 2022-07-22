@@ -16,7 +16,6 @@ jobs:
       fail-fast: true
       matrix:
         cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
-        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -36,7 +35,7 @@ jobs:
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
-          version: 5.4.2
+          version: 5.5.2
 
       - name: Setup .env For Runner
         run: |
@@ -58,12 +57,12 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
+      # Focal ships with node 16.x so we need to update to 18
       - name:  Install Node 18
         uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      # Focal ships with node 16.x so we need to update to 18
       - name: Test Compiliation of Release Assets
         run: |
           node -v
@@ -75,9 +74,9 @@ jobs:
           rm -rf node_modules
           rm -rf modules/contentbox/themes/default/node_modules
 
-      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
+      - name: Start ${{ matrix.cfengine }} Server
         run: |
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --noSaveSettings --debug
           # Install Adobe 2021 cfpm modules
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             box run-script install:2021
@@ -101,7 +100,7 @@ jobs:
         if: always()
         with:
           report_paths: 'tests/results/**/*.xml'
-          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
+          check_name: "${{ matrix.cfengine }} Test Results"
 
       - name: Failure debugging
         if: ${{ failure() }}
