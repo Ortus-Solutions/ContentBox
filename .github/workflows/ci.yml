@@ -21,7 +21,6 @@ jobs:
       fail-fast: false
       matrix:
         cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
-        javaVersion: [ "openjdk8", "openjdk11" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -83,10 +82,10 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
+      - name: Start ${{ matrix.cfengine }} Server
         run: |
           # Startup the Server
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --noSaveSettings --debug
           # Install Adobe 2021 cfpm modules
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             box run-script install:2021
@@ -115,7 +114,7 @@ jobs:
         if: always()
         with:
           files: tests/results/**/*.xml
-          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
+          check_name: "${{ matrix.cfengine }} Test Results"
 
       - name: Upload Test Results Artifacts
         if: always()
@@ -133,7 +132,7 @@ jobs:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_MESSAGE: 'ContentBox tests failed :cry:, check them out here: https://github.com/Ortus-Solutions/ContentBox/actions'
-          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }}/${{ matrix.javaVersion }} failed
+          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }} failed
           SLACK_USERNAME: CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
@@ -155,7 +154,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Failure Debugging Info - ${{ matrix.cfengine }} - ${{ matrix.javaVersion }}
+          name: Failure Debugging Info - ${{ matrix.cfengine }}
           path: |
             .engines/**/logs/*
             .engines/**/WEB-INF/cfusion/logs/*
