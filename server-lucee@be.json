@@ -1,0 +1,29 @@
+{
+    "app":{
+        "cfengine":"lucee@5.3.10.6-SNAPSHOT",
+        "serverHomeDirectory":".engines/lucee-be"
+    },
+    "name":"contentbox-lucee-be",
+    "JVM":{
+        "heapSize":"1024"
+    },
+    "web":{
+        "directoryBrowsing":true,
+        "rewrites":{
+            "enable":true
+        },
+        "http":{
+            "port":"8589"
+        }
+    },
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
+    "trayOptions":[
+        {
+            "label":"Open ContentBox Admin",
+            "action":"openbrowser",
+            "url":"/cbadmin",
+            "disabled":false,
+            "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
+        }
+    ]
+}
