@@ -30,6 +30,7 @@
 							class="form-control input-sm"
 						>
 							<option value="null">- No Parent -</option>
+
 							#html.options(
 								values        : prc.allContent,
 								column        : "contentID",
@@ -115,7 +116,6 @@
 							title       = "The ordering index",
 							class       = "form-control",
 							size        = "5",
-							maxlength   = "2",
 							min         = "0",
 							max         = "2000"
 						)#

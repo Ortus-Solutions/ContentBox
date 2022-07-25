@@ -153,10 +153,8 @@ component extends="content" {
 			prc.isMobileDevice = variables.mobileDetector.isMobile();
 			// announce event
 			announce( "cbui_onPage", { page : prc.page, isMobile : prc.isMobileDevice } );
-			// Use the mobile or standard layout
-			var thisLayout = (
-				prc.isMobileDevice ? prc.page.getMobileLayoutWithInheritance() : prc.page.getLayoutWithInheritance()
-			);
+			// Get the layout
+			var thisLayout = prc.page.getLayoutWithInheritance();
 			// No layout, just render it out
 			if ( thisLayout eq "-no-layout-" ) {
 				return prc.page.renderContent();
