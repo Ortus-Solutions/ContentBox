@@ -2,7 +2,7 @@
  * This is the Base Integration Test CFC
  * Place any helpers or traits for all integration tests here.
  */
-component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" autowire=true{
+component extends="coldbox.system.testing.BaseTestCase" appMapping="/root"{
 
 	// Load on first test
 	this.loadColdBox   = true;
@@ -15,13 +15,7 @@ component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" autow
 	function beforeAll(){
 		// Clear everything out at the beginning of all tests
 		ormClearSession();
-
 		super.beforeAll();
-
-		// Wire up the test object with dependencies
-		//if( this.loadColdBox && structKeyExists( application, "wirebox" ) ){
-		//	getWireBox().autowire( this );
-		//}
 	}
 
 	/**
