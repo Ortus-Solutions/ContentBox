@@ -2,7 +2,7 @@
  * This is the Base Integration Test CFC
  * Place any helpers or traits for all integration tests here.
  */
-component extends="coldbox.system.testing.BaseTestCase" appMapping="/root"{
+component extends="coldbox.system.testing.BaseTestCase" appMapping="/root" {
 
 	// Load on first test
 	this.loadColdBox   = true;
