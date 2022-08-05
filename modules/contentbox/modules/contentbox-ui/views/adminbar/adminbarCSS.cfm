@@ -5,6 +5,7 @@
         background: ##333;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         color: white;
+        font-family: 'Open Sans', "Helvetica Neue", Arial, sans-serif;
         font-size: .875rem;
         top: 0;
         left: 0;
