@@ -14,7 +14,7 @@ component {
 	include template="./_MigrationUtils.cfm";
 
 	function up( schema, qb ){
-		if ( schema.hasColumn( "cb_content", "cacheLayout" ) ) {
+		if ( hasColumn( "cb_content", "cacheLayout" ) ) {
 			schema.alter( "cb_content", ( table ) => {
 				table.dropColumn( "cacheLayout" );
 			} );

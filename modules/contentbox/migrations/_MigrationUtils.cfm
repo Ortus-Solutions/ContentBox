@@ -14,6 +14,31 @@ function getUUID(){
 }
 
 /**
+ * Verify if a table has a column or not
+ *
+ * @targetTable The table to check
+ * @targetcolumn The column to check
+ */
+boolean function hasColumn( targetTable, targetColumn ){
+	// Check for column created
+	cfdbinfo(
+		name  = "local.qSettingColumns",
+		type  = "columns",
+		table = arguments.targetTable
+	);
+
+	if (
+		qSettingColumns.filter( ( thisRow ) => {
+			// systemOutput( thisRow, true );
+			return thisRow.column_name == targetColumn
+		} ).recordCount > 0
+	) {
+		return true;
+	}
+	return false;
+}
+
+/**
  * Generate a list of indexes from the database
  *
  * @schemaName     The name of database

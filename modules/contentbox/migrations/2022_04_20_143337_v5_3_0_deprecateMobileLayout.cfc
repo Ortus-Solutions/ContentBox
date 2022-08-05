@@ -14,7 +14,7 @@ component {
 	include template="./_MigrationUtils.cfm";
 
 	function up( schema, qb ){
-		if ( schema.hasColumn( "cb_page", "mobileLayout" ) ) {
+		if ( hasColumn( "cb_page", "mobileLayout" ) ) {
 			// Remove the mobileLayout column from the `cb_page` table
 			schema.alter( "cb_page", ( table ) => {
 				table.dropColumn( "mobileLayout" );

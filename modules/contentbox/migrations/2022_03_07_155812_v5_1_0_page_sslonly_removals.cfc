@@ -15,7 +15,7 @@ component {
 	include template="./_MigrationUtils.cfm";
 
 	function up( schema, qb ){
-		if ( schema.hasColumn( "cb_page", "SSLOnly" ) ) {
+		if ( hasColumn( "cb_page", "SSLOnly" ) ) {
 			schema.alter( "cb_page", ( table ) => {
 				table.dropColumn( "SSLOnly" );
 			} );
