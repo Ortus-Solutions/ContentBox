@@ -4,7 +4,7 @@
 		"content": {
 			"application/json": {
 				"schema": {
-					"$ref" : "../../_schemas/app-response.json"
+					"$ref": "../../_schemas/app-response.json"
 				},
 				"example": {
 					"$ref": "example.200.json"
@@ -21,7 +21,7 @@
 					"$ref": "../../_schemas/app-invalid.json"
 				},
 				"schema": {
-					"$ref" : "../../_schemas/app-response.json"
+					"$ref": "../../_schemas/app-response.json"
 				}
 			}
 		}
@@ -35,7 +35,7 @@
 					"$ref": "example.404.json"
 				},
 				"schema": {
-					"$ref" : "../../_schemas/app-response.json"
+					"$ref": "../../_schemas/app-response.json"
 				}
 			}
 		}

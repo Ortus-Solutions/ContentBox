@@ -9,7 +9,7 @@
 			"publishedDate": "June, 24 2021 00:00:00 +0000",
 			"isPublished": true,
 			"contentType": "Page",
-			"expireDate": null,
+			"expireDate": { "nullable": true },
 			"modifiedDate": "August, 03 2021 15:12:33 +0000",
 			"title": "About"
 		},

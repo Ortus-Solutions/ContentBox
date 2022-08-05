@@ -107,9 +107,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - uses: Ortus-Solutions/commandbox-action@v1.0.2
+      - name: Setup CommandBox CLI
+        uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
-          cmd: run-script format
+          version: 5.4.2
+          install: commandbox-cfformat
+          warmup: true
+
+      - name: Run formatting rules
+        run: box run-script format
 
       - name: Commit Format Changes
         uses: stefanzweifel/git-auto-commit-action@v4
