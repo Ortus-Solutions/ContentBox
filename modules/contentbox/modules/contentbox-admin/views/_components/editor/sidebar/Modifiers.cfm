@@ -45,7 +45,7 @@
 				</cfif>
 
 				<!--- Creator --->
-				<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+				<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,ENTRIES_ADMIN,PAGES_ADMIN" )>
 					<div class="form-group">
 						<label for="creatorID" class="control-label">
 							<i class="fa fa-user"></i>
