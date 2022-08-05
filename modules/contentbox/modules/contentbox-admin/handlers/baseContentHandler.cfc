@@ -423,7 +423,7 @@ component extends="baseHandler" {
 		// Create new categories?
 		var categories = [];
 		if ( len( trim( rc.newCategories ) ) ) {
-			categories = variables.categoryService.createCategories( trim( rc.newCategories ) );
+			categories = variables.categoryService.createCategories( trim( rc.newCategories ), prc.oCurrentSite );
 		}
 		// Inflate sent categories from collection
 		categories.addAll( variables.categoryService.inflateCategories( rc ) );
