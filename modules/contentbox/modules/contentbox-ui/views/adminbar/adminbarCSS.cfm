@@ -60,6 +60,8 @@
         margin-right: 0px; 
     }
     .cb-adminbar__dropdown-toggle {
+        background-color: transparent;
+        border: none;
         padding: 0.5rem
     }
     .cb-adminbar__menu-item a, .cb-adminbar__menu-item button, .cb-adminbar__brand {
@@ -143,6 +145,7 @@
         right: 20px;
     }
     .cb-adminbar__toggle .svg-cheveron {
+        color: ##fff;
         height: 20px;
         width: 20px;
         transition: all 1s ease;
