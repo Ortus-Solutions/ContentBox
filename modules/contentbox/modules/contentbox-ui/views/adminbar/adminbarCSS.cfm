@@ -5,6 +5,7 @@
         background: ##333;
         box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         color: white;
+        font-family: 'Open Sans', "Helvetica Neue", Arial, sans-serif;
         font-size: .875rem;
         top: 0;
         left: 0;
@@ -60,6 +61,8 @@
         margin-right: 0px; 
     }
     .cb-adminbar__dropdown-toggle {
+        background-color: transparent;
+        border: none;
         padding: 0.5rem
     }
     .cb-adminbar__menu-item a, .cb-adminbar__menu-item button, .cb-adminbar__brand {
@@ -143,6 +146,7 @@
         right: 20px;
     }
     .cb-adminbar__toggle .svg-cheveron {
+        color: ##fff;
         height: 20px;
         width: 20px;
         transition: all 1s ease;
