@@ -269,11 +269,12 @@ component extends="baseHandler" {
 				eventArguments = { contentID : rc.contentID }
 			);
 		}
-		// Get all content names for parent drop downs
-		prc.allContent = variables.ormService.getAllFlatContent(
-			sortOrder: "slug asc",
-			siteID   : prc.oCurrentSite.getsiteID()
-		);
+		// Get all content names for parent drop downs excluding yourself and your children
+		prc.allContent = variables.ormService
+			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
+			.filter( function( item ){
+				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+			} );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
@@ -313,9 +314,9 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Save Content
+	 * Save Content Abstraction
 	 *
-	 * @adminPermission The admin permission to apply for publishing, eg: ENTRIES_ADMIN, PAGES_ADMIN
+	 * @adminPermission The admin permission(s) to verify in order to allow for publishing content.
 	 * @relocateTo      Where to relocate to when saving is done
 	 */
 	function save(
@@ -422,7 +423,7 @@ component extends="baseHandler" {
 		// Create new categories?
 		var categories = [];
 		if ( len( trim( rc.newCategories ) ) ) {
-			categories = variables.categoryService.createCategories( trim( rc.newCategories ) );
+			categories = variables.categoryService.createCategories( trim( rc.newCategories ), prc.oCurrentSite );
 		}
 		// Inflate sent categories from collection
 		categories.addAll( variables.categoryService.inflateCategories( rc ) );

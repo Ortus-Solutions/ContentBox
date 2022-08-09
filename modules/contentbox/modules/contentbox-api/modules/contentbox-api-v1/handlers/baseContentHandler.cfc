@@ -91,7 +91,7 @@ component extends="baseHandler" {
 			rc.slug = variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) );
 		}
 		// Verify permission for publishing, else save as draft
-		if ( !prc.oCurrentAuthor.checkPermission( "#arguments.contentType#_ADMIN" ) ) {
+		if ( !prc.oCurrentAuthor.checkPermission( "#arguments.contentType#_ADMIN,#arguments.contentType#_EDITOR" ) ) {
 			rc.isPublished = "false";
 		}
 

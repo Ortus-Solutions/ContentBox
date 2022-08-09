@@ -1,0 +1,47 @@
+{
+	"description": "Needed fields for a site",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"domainRegex",
+					"domain",
+					"slug",
+					"name",
+					"activeTheme"
+				],
+				"properties": {
+					"domainRegex": {
+						"description": "The regular expression domain",
+						"type": "string"
+					},
+					"domain": {
+						"description": "The unique domain",
+						"type": "string"
+					},
+					"slug": {
+						"description": "The slug of the site",
+						"type": "string"
+					},
+					"name": {
+						"description": "A unique site name",
+						"type": "string"
+					},
+					"activeTheme": {
+						"description": "The exact name of a valid theme",
+						"type": "string"
+					}
+				},
+				"example": {
+					"domainRegex": "127\\.0\\.0\\.1",
+					"domain": "127.0.0.1",
+					"slug": "slug",
+					"name": "Site",
+					"activeTheme": "default"
+				}
+			}
+		}
+	}
+}

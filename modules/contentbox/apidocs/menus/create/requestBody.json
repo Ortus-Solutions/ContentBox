@@ -1,0 +1,29 @@
+{
+	"description": "Needed fields for a site menu",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"slug",
+					"title"
+				],
+				"properties": {
+					"slug": {
+						"description": "The slug of the site menu",
+						"type": "string"
+					},
+					"title": {
+						"description": "The title of the site menu",
+						"type": "string"
+					}
+				},
+				"example": {
+					"slug": "slug",
+					"title": "Menu"
+				}
+			}
+		}
+	}
+}

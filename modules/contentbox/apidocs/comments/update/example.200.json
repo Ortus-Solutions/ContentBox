@@ -8,7 +8,7 @@
 			"publishedDate": "June, 24 2021 21:51:14 +0000",
 			"isPublished": true,
 			"contentType": "Entry",
-			"expireDate": null,
+			"expireDate": { "nullable": true },
 			"modifiedDate": "June, 24 2021 21:51:14 +0000",
 			"title": "My first entry"
 		},

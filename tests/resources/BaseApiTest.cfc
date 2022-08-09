@@ -1,9 +1,13 @@
-component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
+component
+	extends   ="tests.resources.BaseTest"
+	appMapping="/root"
+	autowire  =true
+{
 
 	// DI
 	property name="securityService" inject="securityService@contentbox";
-	property name="cbsecure"        inject="CBSecurity@cbsecurity";
-	property name="jwt"             inject="JWTService@cbsecurity";
+	property name="cbsecure" inject="CBSecurity@cbsecurity";
+	property name="jwt" inject="JWTService@cbsecurity";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -13,9 +17,9 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 	 */
 	variables.bCryptHashOfPasswordTest = "$2a$12$FE2J7ZLWaI2rSqejAu/84uLy7qlSufQsDsSE1lNNKyA05GG30gr8C";
 	variables.testPassword             = "test";
-	variables.testAdminUsername = "lmajano";
-	variables.testAdminPassword = "lmajano";
-	variables.testAdminEmail = "lmajano@gmail.com";
+	variables.testAdminUsername        = "lmajano";
+	variables.testAdminPassword        = "lmajano";
+	variables.testAdminEmail           = "lmajano@gmail.com";
 
 	function beforeAll(){
 		super.beforeAll();
@@ -30,7 +34,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 
 		// Add Custom Matchers: REMOVE once we fix the issue in the ColdBox matchers.
 		addMatchers( {
-			toHaveStatus : function( expectation, args = {} ) {
+			toHaveStatus : function( expectation, args = {} ){
 				// handle both positional and named arguments
 				param args.statusCode = "";
 				if ( structKeyExists( args, 1 ) ) {
@@ -53,7 +57,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 				return true;
 			},
 			// Verifies invalid cbValidation data
-			toHaveInvalidData : function( expectation, args = {} ) {
+			toHaveInvalidData : function( expectation, args = {} ){
 				param args.field = "";
 				if ( structKeyExists( args, 1 ) ) {
 					args.field = args[ 1 ];
@@ -84,10 +88,9 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 				}
 				// We have a field to check and it has data
 				if (
-					!structKeyExists(
-						expectation.actual.getData(),
+					!structKeyExists( expectation.actual.getData(), args.field ) || expectation.actual.getData()[
 						args.field
-					) || expectation.actual.getData()[ args.field ].isEmpty()
+					].isEmpty()
 				) {
 					expectation.message = "#args.message#. The requested field [#args.field#] does not have any invalid data.";
 					debug( expectation.actual.getMemento() );
@@ -98,7 +101,9 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 					try {
 						expect(
 							expectation.actual.getData()[ args.field ]
-								.map( function( item ) { return item.message; } )
+								.map( function( item ){
+									return item.message;
+								} )
 								.toList()
 						).toInclude( args.error );
 					} catch ( any e ) {
@@ -123,10 +128,7 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 		super.setup();
 
 		if ( !isNull( request.testUserData ) ) {
-			getRequestContext().setValue(
-				"x-auth-token",
-				request.testUserData.token
-			);
+			getRequestContext().setValue( "x-auth-token", request.testUserData.token );
 		}
 
 		return;
@@ -140,13 +142,17 @@ component extends="tests.resources.BaseTest" appMapping="/root" autowire=true{
 	 * @return struct of { user:logged in user, token: their token}
 	 */
 	struct function loginUser( username = variables.testAdminUsername ){
-		var oUser = variables.securityService.authenticate( username : arguments.username, password : variables.testAdminPassword, logThemIn : true);
+		var oUser = variables.securityService.authenticate(
+			username : arguments.username,
+			password : variables.testAdminPassword,
+			logThemIn: true
+		);
 		var tokens = variables.jwt.fromUser( oUser );
 
 		// Setup request data
 		request.testUserData = {
-			"token" : tokens.access_token,
-			"user"  : oUser,
+			"token"         : tokens.access_token,
+			"user"          : oUser,
 			"refresh_token" : tokens.refresh_token
 		};
 

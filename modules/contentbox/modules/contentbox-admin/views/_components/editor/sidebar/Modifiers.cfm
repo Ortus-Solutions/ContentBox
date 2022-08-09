@@ -17,29 +17,35 @@
 		<div id="modifiers" class="panel-collapse collapse">
 			<div class="panel-body">
 
-				<!--- Parent --->
-				<div class="form-group">
-					<label for="parentContent" class="control-label">
-						<i class="fas fa-sitemap"></i>
-						Parent:
-					</label>
-					<select
-						name="parentContent"
-						id="parentContent"
-						class="form-control input-sm"
-					>
-						<option value="null">- No Parent -</option>
-						#html.options(
-							values        : prc.allContent,
-							column        : "contentID",
-							nameColumn    : "slug",
-							selectedValue : prc.parentcontentID
-						)#
-					</select>
-				</div>
+				<cfif prc.oContent.getContentType() NEQ "Entry">
+					<!--- Parent --->
+					<div class="form-group">
+						<label for="parentContent" class="control-label">
+							<i class="fas fa-sitemap"></i>
+							Parent:
+						</label>
+						<select
+							name="parentContent"
+							id="parentContent"
+							class="form-control input-sm"
+						>
+							<option value="null">- No Parent -</option>
+
+							#html.options(
+								values        : prc.allContent,
+								column        : "contentID",
+								nameColumn    : "slug",
+								selectedValue : prc.parentcontentID
+							)#
+						</select>
+					</div>
+				<cfelse>
+					<!--- Set to NULL in case this is an entry that accidentally had a parent  --->
+					#html.hiddenField( name="parentContent", value="null" )#
+				</cfif>
 
 				<!--- Creator --->
-				<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+				<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,ENTRIES_ADMIN,PAGES_ADMIN" )>
 					<div class="form-group">
 						<label for="creatorID" class="control-label">
 							<i class="fa fa-user"></i>
@@ -110,7 +116,6 @@
 							title       = "The ordering index",
 							class       = "form-control",
 							size        = "5",
-							maxlength   = "2",
 							min         = "0",
 							max         = "2000"
 						)#

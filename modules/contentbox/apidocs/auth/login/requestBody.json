@@ -6,12 +6,12 @@
             "schema": {
                 "type": "object",
                 "required": [
-                    "email",
+                    "username",
                     "password"
                 ],
                 "properties": {
-                    "email": {
-                        "description": "The email to use for login in",
+                    "username": {
+                        "description": "The username to use for login in",
                         "type": "string"
                     },
                     "password": {
@@ -20,7 +20,7 @@
                     }
                 },
                 "example": {
-                    "email": "user@email.org",
+                    "username": "username",
                     "password": "test"
                 }
             }

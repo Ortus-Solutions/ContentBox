@@ -4,7 +4,7 @@
  * www.ortussolutions.com/products/contentbox
  * ---
  */
-component extends="tests.resources.BaseTest" {
+component extends="tests.resources.BaseTest" autowire="true" {
 
 	property name="categoryService" inject="categoryService@contentbox";
 

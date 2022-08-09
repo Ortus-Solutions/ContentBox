@@ -26,7 +26,7 @@
 	// Info Panels
 	contentListHelper.activateInfoPanels();
 
-	<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 	// Drag and drop hierarchies
 	$content.tableDnD( {
 		dragHandle  : ".dragHandle",
