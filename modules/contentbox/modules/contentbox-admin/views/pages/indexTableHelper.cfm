@@ -27,7 +27,7 @@
 	// Info Panels
 	contentListHelper.activateInfoPanels();
 
-	<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 	// Drag and drop hierarchies
 	$pages.tableDnD( {
 		dragHandle : ".dragHandle",

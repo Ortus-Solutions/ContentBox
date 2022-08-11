@@ -7,12 +7,20 @@
  */
 component {
 
+	// DI
+	property name="migrationService" inject="MigrationService@cfmigrations";
+
+	// Include Utils
+	include template="./_MigrationUtils.cfm";
+
 	function up( schema, qb ){
-		if ( schema.hasColumn( "cb_page", "mobileLayout" ) ) {
+		if ( hasColumn( "cb_page", "mobileLayout" ) ) {
 			// Remove the mobileLayout column from the `cb_page` table
 			schema.alter( "cb_page", ( table ) => {
 				table.dropColumn( "mobileLayout" );
 			} );
+		} else {
+			systemOutput( "- skipping 'mobileLayout' removal, cb_page doesn't have the column", true );
 		}
 	}
 

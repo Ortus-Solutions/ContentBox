@@ -314,9 +314,9 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Save Content
+	 * Save Content Abstraction
 	 *
-	 * @adminPermission The admin permission to apply for publishing, eg: ENTRIES_ADMIN, PAGES_ADMIN
+	 * @adminPermission The admin permission(s) to verify in order to allow for publishing content.
 	 * @relocateTo      Where to relocate to when saving is done
 	 */
 	function save(
@@ -423,7 +423,7 @@ component extends="baseHandler" {
 		// Create new categories?
 		var categories = [];
 		if ( len( trim( rc.newCategories ) ) ) {
-			categories = variables.categoryService.createCategories( trim( rc.newCategories ) );
+			categories = variables.categoryService.createCategories( trim( rc.newCategories ), prc.oCurrentSite );
 		}
 		// Inflate sent categories from collection
 		categories.addAll( variables.categoryService.inflateCategories( rc ) );

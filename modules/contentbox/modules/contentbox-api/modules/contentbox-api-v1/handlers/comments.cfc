@@ -33,7 +33,8 @@ component extends="baseHandler" {
 	/**
 	 * Display all comments for the requested content object
 	 *
-	 * @tags Comments
+	 * @tags      Comments
+	 * @responses contentbox/apidocs/comments/index/responses.json
 	 */
 	function index( event, rc, prc ){
 		param rc.page       = 1;
@@ -62,7 +63,8 @@ component extends="baseHandler" {
 	/**
 	 * Show a comment using an ID
 	 *
-	 * @tags Comments
+	 * @tags      Comments
+	 * @responses contentbox/apidocs/comments/show/responses.json
 	 */
 	function show( event, rc, prc ){
 		param rc.includes = "relatedContentSnapshot:relatedContent";
@@ -74,7 +76,9 @@ component extends="baseHandler" {
 	/**
 	 * Create a new comment
 	 *
-	 * @tags Comments
+	 * @tags        Comments
+	 * @requestBody contentbox/apidocs/comments/create/requestBody.json
+	 * @responses   contentbox/apidocs/comments/create/responses.json
 	 */
 	function create( event, rc, prc ){
 		super.create( argumentCollection = arguments );
@@ -83,8 +87,9 @@ component extends="baseHandler" {
 	/**
 	 * Update an existing comment
 	 *
-	 * @tags Comments
-	 * @x    -contentbox-permissions COMMENTS_ADMIN
+	 * @tags                     Comments
+	 * @responses                contentbox/apidocs/comments/update/responses.json
+	 * @x-contentbox-permissions COMMENTS_ADMIN
 	 */
 	function update( event, rc, prc ) secured="COMMENTS_ADMIN"{
 		super.update( argumentCollection = arguments );
@@ -93,8 +98,9 @@ component extends="baseHandler" {
 	/**
 	 * Delete a comment
 	 *
-	 * @tags Comments
-	 * @x    -contentbox-permissions COMMENTS_ADMIN
+	 * @tags                     Comments
+	 * @responses                contentbox/apidocs/comments/delete/responses.json
+	 * @x-contentbox-permissions COMMENTS_ADMIN
 	 */
 	function delete( event, rc, prc ) secured="COMMENTS_ADMIN"{
 		super.delete( argumentCollection = arguments );

@@ -1,0 +1,47 @@
+{
+	"description": "Needed fields for an author",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"lastName",
+					"firstName",
+					"username",
+					"email",
+					"role"
+				],
+				"properties": {
+					"lastName": {
+						"description": "The last name of the user",
+						"type": "string"
+					},
+					"firstName": {
+						"description": "The first name of the user",
+						"type": "string"
+					},
+					"username": {
+						"description": "The username to use for login in",
+						"type": "string"
+					},
+					"email": {
+						"description": "A valid and unique email",
+						"type": "string"
+					},
+					"role": {
+						"description": "A valid role identifier",
+						"type": "string"
+					}
+				},
+				"example": {
+					"lastName": "Last Name",
+					"firstName": "First Name",
+					"username": "username",
+					"email": "email@domain.com",
+					"role": "fedcba9876543210fedcba9876543210"
+				}
+			}
+		}
+	}
+}

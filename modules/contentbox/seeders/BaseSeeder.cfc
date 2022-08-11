@@ -1,4 +1,4 @@
-component abstract {
+component{
 
 	// DI
 	property name="packageService" inject="PackageService";
