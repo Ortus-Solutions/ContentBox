@@ -15,14 +15,14 @@
 							href="#event.buildLink( prc.xehSitesManager )#"
 							title="Back to listing"
 						>
-							<i class="fas fa-chevron-left"></i> Cancel
+							<i class="fa fa-chevron-left"></i> Cancel
 						</a>
 					</div>
 
 					<!--- Title --->
 					<div class="size16 p10 flex gap-x-2">
 
-						<i class="fas fa-globe"></i>
+						<i class="fa fa-globe"></i>
 
 						<span>
 							#prc.site.isLoaded() ? prc.site.getSlug() : 'Create Site'#

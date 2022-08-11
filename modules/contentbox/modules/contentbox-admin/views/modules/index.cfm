@@ -40,14 +40,14 @@
 								title="Deactivate + Rescan"
 								class="btn btn-primary text-white"
 							>
-								<i class="far fa-hdd"></i> Reset
+								<i class="fa fa-hdd"></i> Reset
 							</a>
 							<a
 								href="#event.buildLink( prc.xehModuleRescan )#"
 								title="Scans For New Modules"
 								class="btn btn-primary text-white"
 							>
-								<i class="fas fa-recycle"></i> Rescan
+								<i class="fa fa-recycle"></i> Rescan
 							</a>
 						</div>
 					</div>
@@ -91,7 +91,7 @@
 								<td class="text-center">
 									<div class="btn-group">
 										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fas fa-ellipsis-v fa-lg"></i>
+											<i class="fa fa-ellipsis-v fa-lg"></i>
 										</a>
 										<ul class="dropdown-menu text-left pull-right">
 											<!--- Check if active --->
@@ -121,9 +121,9 @@
 														class="confirmIt"
 														title="Delete Module"
 														href="javascript:remove( '#JSStringFormat(module.getName())#' )"
-														data-title="<i class='far fa-trash-alt'></i> Delete #module.getName()#?"
+														data-title="<i class='fa fa-trash'></i> Delete #module.getName()#?"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete
+														<i class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 											</cfif>

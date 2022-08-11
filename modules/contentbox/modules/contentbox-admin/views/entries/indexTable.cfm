@@ -74,7 +74,7 @@
 
 				<!--- password protect --->
 				<cfif entry.isPasswordProtected()>
-					<i class="fas fa-key text-orange" title="Password Protected Content"></i>
+					<i class="fa fa-key text-orange" title="Password Protected Content"></i>
 				</cfif>
 
 				<!--- Content Info --->
@@ -118,7 +118,7 @@
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
+						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
@@ -130,7 +130,7 @@
 									'#encodeForJavascript( entry.getTitle() )#'
 								)"
 							>
-								<i class="far fa-clone fa-lg"></i> Clone
+								<i class="fa fa-clone fa-lg"></i> Clone
 							</a>
 						</li>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
@@ -139,15 +139,15 @@
 							<a
 								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
-								data-title="<i class='far fa-trash-alt'></i> Delete Entry?">
-								<i id="delete_#entry.getContentID()#" class="far fa-trash-alt fa-lg" ></i> Delete
+								data-title="<i class='fa fa-trash'></i> Delete Entry?">
+								<i id="delete_#entry.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
 							</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehEntryEditor )#/contentID/#entry.getContentID()#">
-								<i class="fas fa-pen fa-lg"></i> Edit
+								<i class="fa fa-pen fa-lg"></i> Edit
 							</a>
 						</li>
 						</cfif>
@@ -157,20 +157,20 @@
 							<a
 								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.json"
 								target="_blank">
-								<i class="fas fa-file-export fa-lg"></i> Export
+								<i class="fa fa-file-export fa-lg"></i> Export
 							</a>
 						</li>
 						</cfif>
 						<!--- History Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#entry.getContentID()#">
-								<i class="fas fa-history fa-lg"></i> History
+								<i class="fa fa-history fa-lg"></i> History
 							</a>
 						</li>
 						<!-- Reset hits -->
 						<li>
 							<a href="javascript:contentListHelper.resetHits( '#entry.getContentID()#' )">
-								<i class="fas fa-recycle fa-lg"></i> Reset Hits
+								<i class="fa fa-recycle fa-lg"></i> Reset Hits
 							</a>
 						</li>
 						<!--- View in Site --->
@@ -178,7 +178,7 @@
 							<a
 								href="#prc.CBHelper.linkEntry( entry )#"
 								target="_blank">
-								<i class="far fa-eye fa-lg"></i> Open In Site
+								<i class="fa fa-eye fa-lg"></i> Open In Site
 							</a>
 						</li>
 			    	</ul>

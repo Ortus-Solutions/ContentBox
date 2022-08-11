@@ -36,14 +36,14 @@
     <!--- ********************************************************************* --->
     <!---                           CSS                                           --->
     <!--- ********************************************************************* --->
-	<link rel="stylesheet" href="#prc.cbroot#/includes/css/contentbox.min.css">
+	<link rel="stylesheet" href="#cbadminElixirPath( fileName='css/contentbox.css' )#">
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 
     <!--- ********************************************************************* --->
     <!---                           A-LA-CARTE                                  --->
     <!--- ********************************************************************* --->
     <cfloop list="#event.getValue( "cssAppendList", "", true )#" index="css">
-        <cfset addAsset( "#prc.cbroot#/includes/css/#css#.css" )>
+        <cfset addAsset( cbadminElixirPath( fileName='css/#css#.css' ) )>
     </cfloop>
     <cfloop list="#event.getValue( "cssFullAppendList", "", true )#" index="css">
         <cfset addAsset( "#css#" )>
@@ -62,12 +62,11 @@
     <!--- ********************************************************************* --->
     <!---                            JS LIBRARIES                				--->
     <!--- ********************************************************************* --->
-    <cfif getSetting( "environment" ) eq "development">
-        <script defer src="#prc.cbroot#/includes/js/contentbox-pre.js"></script>
-        <script defer src="#prc.cbroot#/includes/js/contentbox-app.js"></script>
-    <cfelse>
-        <script defer src="#prc.cbroot#/includes/js/contentbox-pre.min.js"></script>
-        <script defer src="#prc.cbroot#/includes/js/contentbox-app.min.js"></script>
-    </cfif>
+	<script defer src="#prc.cbroot#/includes/js/runtime.js"></script>
+	<script defer src="#prc.cbroot#/includes/js/vendor.js"></script>
+	<script defer src="#cbadminElixirPath( fileName='js/bootstrap.js' )#"></script>
+	<script defer src="#cbadminElixirPath( fileName='js/app.js' )#"></script>
+	<script defer src="#cbadminElixirPath( fileName='js/admin.js' )#"></script>
+
 </head>
 </cfoutput>

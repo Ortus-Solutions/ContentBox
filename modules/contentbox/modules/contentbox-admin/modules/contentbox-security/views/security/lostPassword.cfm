@@ -32,7 +32,7 @@
                             	placeholder  = cb.r( "common.email@security" ),
                             	autocomplete = "off"
                             )#
-                            <i class="fas fa-envelope"></i>
+                            <i class="fa fa-envelope"></i>
                         </div>
                     </div>
 
@@ -50,7 +50,7 @@
                 #announce( "cbadmin_afterLostPasswordForm" )#
 
                 <a href="#event.buildLink( prc.xehLogin )#" class="">
-               		<i class="fas fa-chevron-left"></i> #cb.r( "backtologin@security" )#
+               		<i class="fa fa-chevron-left"></i> #cb.r( "backtologin@security" )#
                	</a>
 
                 #announce( "cbadmin_afterBackToLogin" )#

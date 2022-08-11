@@ -4,7 +4,7 @@
 <!--- ********************************************************************************* --->
 <!--- 					META TAGS														--->
 <!--- ********************************************************************************* --->
-<meta charset="utf-8" /> 
+<meta charset="utf-8" />
 <meta name="generator" 	 	content="ContentBox powered by ColdBox" />
 <meta name="robots" 	 	content="index,follow" />
 <meta name="viewport" 		content="width=device-width, initial-scale=1">
@@ -13,9 +13,6 @@
 
 #cb.getOpenGraphMeta()#
 
-<!--- Base HREF for SES enabled URLs --->
-<base href="#cb.siteBaseURL()#" />
-
 <!--- ********************************************************************************* --->
 <!--- 					RSS DISCOVERY													--->
 <!--- ********************************************************************************* --->
@@ -23,7 +20,7 @@
 	<link rel="alternate" type="application/rss+xml" title="Recent Blog Updates" href="#cb.linkRSS()#" />
 	<link rel="alternate" type="application/rss+xml" title="Recent Blog Comment Updates" href="#cb.linkRSS(comments=true)#" />
 	<link rel="alternate" type="application/rss+xml" title="Recent Page Updates" href="#cb.linkPageRSS()#" />
-	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />	
+	<link rel="alternate" type="application/rss+xml" title="Recent Page Comment Updates" href="#cb.linkPageRSS(comments=true)#" />
 	<link rel="alternate" type="application/rss+xml" title="Recent Content Updates" href="#cb.linkSiteRSS()#" />
 	<link rel="alternate" type="application/rss+xml" title="Recent Content Comment Updates" href="#cb.linkSiteRSS(comments=true)#" />
 	<cfif cb.isEntryView()>
@@ -35,24 +32,23 @@
 <!--- 					CSS 															--->
 <!--- ********************************************************************************* --->
 
-<!--- Swatch and Skin --->
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/bootstrap.min.css?v=1" />
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/bootstrap/swatches/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/skin.css?v=1" />
-
 <!-- injector:css -->
-<link rel="stylesheet" href="#cb.themeRoot()#/includes/css/218c7e65.theme.min.css">
+<link rel="stylesheet" href="#cb.themeRoot()#/#html.elixirPath( fileName='includes/css/theme.css', manifestRoot='#cb.themeRoot()#/includes' )#">
 <!-- endinjector -->
+
+<!--- Swatch Skin - Overrides Defaults --->
+<link rel="stylesheet" href="#cb.themeRoot()#/includes/bootswatch/#lcase( cb.themeSetting( 'cbBootswatchTheme', 'green' ))#/bootstrap.min.css?v=1" />
 
 <cfif len( cb.themeSetting( 'cssStyleOverrides' ) )>
 <style>
 	#cb.themeSetting( 'cssStyleOverrides' )#
-</style>	
+</style>
 </cfif>
 
 <!--- ********************************************************************************* --->
 <!--- 					JAVASCRIPT														--->
 <!--- ********************************************************************************* --->
 <!-- injector:js -->
-<script src="#cb.themeRoot()#/includes/js/ae19f5c3.theme.min.js"></script>
+<script src="#cb.themeRoot()#/#html.elixirPath( fileName='includes/css/theme.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
 <!-- endinjector -->
 </cfoutput>

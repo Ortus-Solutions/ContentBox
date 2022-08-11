@@ -14,13 +14,13 @@
 							href="#event.buildLink( prc.xehRoles )#"
 							title="Back to listing"
 						>
-							<i class="fas fa-chevron-left"></i> Cancel
+							<i class="fa fa-chevron-left"></i> Cancel
 						</a>
 					</div>
 
 					<!--- Panel Title --->
 					<div class="size16 p10">
-						<i class="fas fa-user-shield"></i>
+						<i class="fa fa-user-shield"></i>
 						<cfif prc.oRole.isLoaded()>
 							Update
 						<cfelse>
@@ -94,7 +94,7 @@
 									title="Clear Search"
 									onclick="clearFilter()"
 								>
-									<i class="far fa-times-circle fa-lg"></i>
+									<i class="fa fa-times-circle fa-lg"></i>
 								</span>
 							</div>
 						</div>

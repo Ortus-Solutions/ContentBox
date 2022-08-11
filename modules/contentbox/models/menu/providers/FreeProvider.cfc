@@ -21,7 +21,7 @@ component
 	public FreeProvider function init(){
 		setName( "Free" );
 		setType( "Free" );
-		setIconClass( "far fa-eye" );
+		setIconClass( "fa fa-eye" );
 		setEntityName( "cbFreeMenuItem" );
 		setDescription( "A menu item which creates a free-text menu item" );
 		return this;

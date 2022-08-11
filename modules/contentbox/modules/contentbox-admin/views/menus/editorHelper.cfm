@@ -35,7 +35,7 @@
 		var toggle = $( '##toggleSlug' ),
 			$slug = $( '##slug' );
 		// Toggle lock icon on click..
-		toggle.hasClass( 'fas fa-key' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fas fa-key' );
+		toggle.hasClass( 'fa fa-key' ) ? toggle.attr( 'class', 'fa fa-unlock' ) : toggle.attr( 'class', 'fa fa-key' );
 		//disable input field
 		$slug.prop( "disabled", !$slug.prop( 'disabled' ) );
 	}

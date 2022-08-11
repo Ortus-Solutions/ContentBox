@@ -4,7 +4,7 @@
 	<!--- Installer Heading --->
 	<div class="panel-heading">
 		<h3 class="panel-title">
-			<i class="far fa-lightbulb"></i> #cb.r( "labels.wizard@installer" )#
+			<i class="fa fa-lightbulb"></i> #cb.r( "labels.wizard@installer" )#
 		</h3>
 	</div>
 

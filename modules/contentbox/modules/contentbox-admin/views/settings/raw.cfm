@@ -32,7 +32,7 @@
                             <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
                         </li>
                         <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="far fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
+                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li>
                             <a href="##_events" data-toggle="tab"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
@@ -102,30 +102,30 @@
 													<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
 															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-																<i class="fas fa-file-export fa-lg"></i> Export All
+																<i class="fa fa-file-export fa-lg"></i> Export All
 															</a>
 														</li>
 														<li>
 															<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-																<i class="fas fa-file-export fa-lg"></i> Export Selected
+																<i class="fa fa-file-export fa-lg"></i> Export Selected
 															</a>
 														</li>
 													</cfif>
 													<li>
 														<a href="javascript:flushSettingsCache()">
-															<i class="fas fa-recycle fa-lg"></i> Flush Settings Cache
+															<i class="fa fa-recycle fa-lg"></i> Flush Settings Cache
 														</a>
 													</li>
                                                     <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
 														<li>
 															<a href="javascript:importContent()">
-																<i class="fas fa-file-import fa-lg"></i> Import
+																<i class="fa fa-file-import fa-lg"></i> Import
 															</a>
 														</li>
                                                     </cfif>
 													<li>
 														<a href="javascript:openRemoteModal('#event.buildLink( prc.xehViewCached )#');">
-															<i class="far fa-hdd fa-lg"></i> View Cached Settings
+															<i class="fa fa-hdd fa-lg"></i> View Cached Settings
 														</a>
 													</li>
                                                 </ul>
@@ -146,7 +146,7 @@
                                                 </button>
                                                 <ul class="dropdown-menu">
 													<li>
-														<a href="javascript:viewAllSettings()"><i class="fas fa-microchip"></i> View All</a>
+														<a href="javascript:viewAllSettings()"><i class="fa fa-microchip"></i> View All</a>
 													</li>
                                                 </ul>
                                             </div>
@@ -166,7 +166,7 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 											<h4 class="modal-title">
-												<i class="fas fa-pen fa-lg"></i> Setting Editor
+												<i class="fa fa-pen fa-lg"></i> Setting Editor
 											</h4>
                                         </div>
                                         <div class="modal-body">

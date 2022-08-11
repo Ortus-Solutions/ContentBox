@@ -8,7 +8,7 @@
 				&times;
 			</button>
 			<h3>
-				<i class="fas fa-sitemap"></i> Select Related Content
+				<i class="fa fa-sitemap"></i> Select Related Content
 			</h3>
 		</div>
 
@@ -33,14 +33,14 @@
 						title="Clear Search"
 						onclick="clearSearch()"
 					>
-						<i class="far fa-times-circle fa-lg"></i>
+						<i class="fa fa-times-circle fa-lg"></i>
 					</span>
 				</div>
 			</div>
 
 			<!--- Loader --->
             <div class="loaders float-right" id="relatedContentLoader">
-                <i class="fa fa-circle-notch fa-spin fa-lg"></i>
+                <i class="fa fa-circle-o-notch fa-spin fa-lg"></i>
             </div>
 
             <!--- Render tables out --->

@@ -15,13 +15,13 @@
 						href="#event.buildLink( prc.xehSecurityRules )#"
 						title="Back to listing"
 					>
-						<i class="fas fa-chevron-left"></i> Cancel
+						<i class="fa fa-chevron-left"></i> Cancel
 					</a>
 				</div>
 
 				<!--- Panel Title --->
 				<div class="size16 p10">
-					<i class="fas fa-passport"></i>
+					<i class="fa fa-passport"></i>
 					<cfif prc.rule.isLoaded()>
 						Update
 					<cfelse>

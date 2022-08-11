@@ -24,7 +24,7 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^6.0.0",
+        "coldbox":"^6.8",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
         "commandbox-migrations":"*"

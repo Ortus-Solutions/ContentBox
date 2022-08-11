@@ -9,7 +9,7 @@
 				data-toggle="collapse"
 				data-parent="##accordion"
 				href="##relatedcontent">
-				<i class="fas fa-sitemap"></i> Related Content
+				<i class="fa fa-sitemap"></i> Related Content
 			</a>
 		</h4>
 	</div>
@@ -32,9 +32,9 @@
 								<cfif content.getContentType() eq "Page">
 									<i class="fa fa-file icon-small" title="Page"></i>
 								<cfelseif content.getContentType() eq "Entry">
-									<i class="fas fa-blog icon-small" title="Entry"></i>
+									<i class="fa fa-blog icon-small" title="Entry"></i>
 								<cfelseif content.getContentType() eq "ContentStore">
-									<i class="far fa-hdd icon-small" title="ContentStore"></i>
+									<i class="fa fa-hdd icon-small" title="ContentStore"></i>
 								</cfif>
 							</td>
 							<td class="#publishedClass#">#content.getTitle()#</td>
@@ -134,10 +134,10 @@
 					icon = '<i class="fa fa-file icon-small" title="Page"></i>';
 					break;
 				case 'Entry':
-					icon = '<i class="fas fa-blog icon-small" title="Entry"></i>';
+					icon = '<i class="fa fa-blog icon-small" title="Entry"></i>';
 					break;
 				case 'ContentStore':
-					icon = '<i class="far fa-hdd icon-small" title="ContentStore"></i>';
+					icon = '<i class="fa fa-hdd icon-small" title="ContentStore"></i>';
 					break;
 			}
 			return icon;

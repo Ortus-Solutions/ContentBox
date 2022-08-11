@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-key fa-lg"></i>
+        	<i class="fa fa-key fa-lg"></i>
 			Permissions (#arrayLen( prc.permissions )#)
         </h1>
     </div>
@@ -56,19 +56,19 @@
 								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    			<li>
 													<a href="javascript:importContent()">
-														<i class="fas fa-file-import fa-lg"></i> Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fas fa-file-export fa-lg"></i> Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-														<i class="fas fa-file-export fa-lg"></i> Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -143,7 +143,7 @@
 												data-toggle="dropdown"
 												href="##"
 												title="Actions">
-												<i class="fas fa-ellipsis-v fa-lg"></i>
+												<i class="fa fa-ellipsis-v fa-lg"></i>
 											</a>
 									    	<ul class="dropdown-menu text-left pull-right">
 									    		<!--- Edit Command --->
@@ -156,7 +156,7 @@
 															'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#'
 															)"
 														title="Edit #permission.getPermission()#">
-														<i class="fas fa-pen fa-lg"></i> Edit
+														<i class="fa fa-pen fa-lg"></i> Edit
 													</a>
 												</li>
 												<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
@@ -164,7 +164,7 @@
 														<a
 															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
 															target="_blank">
-															<i class="fas fa-file-export fa-lg"></i> Export
+															<i class="fa fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>
@@ -175,7 +175,7 @@
 														title="Delete Permission"
 														href="javascript:remove( '#permission.getPermissionID()#' );"
 														data-title="Delete Permission?">
-														<i id="delete_#permission.getPermissionID()#" class="far fa-trash-alt fa-lg"></i> Delete
+														<i id="delete_#permission.getPermissionID()#" class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 									    	</ul>
@@ -198,7 +198,7 @@
 		    <div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4><i class="fas fa-key"></i> Permission Editor</h4>
+					<h4><i class="fa fa-key"></i> Permission Editor</h4>
 				</div>
 				<!--- Create/Edit form --->
 				#html.startForm(

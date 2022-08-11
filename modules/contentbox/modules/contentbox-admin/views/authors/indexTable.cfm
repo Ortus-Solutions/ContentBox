@@ -72,7 +72,7 @@
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="User Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
+						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
@@ -82,9 +82,9 @@
 									<a 	title="Delete Author"
 										href="javascript:removeAuthor( '#author.getAuthorID()#' )"
 										class="confirmIt"
-										data-title="<i class='far fa-trash-alt'></i> Delete Author?"
+										data-title="<i class='fa fa-trash'></i> Delete Author?"
 									>
-										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Delete
+										<i id="delete_#author.getAuthorID()#" class="fa fa-trash fa-lg"></i> Delete
 									</a>
 								</li>
 							<cfelse>
@@ -93,7 +93,7 @@
 										href="javascript:alert('Can\'t delete yourself buddy!')"
 										class="text-red"
 									>
-										<i id="delete_#author.getAuthorID()#" class="far fa-trash-alt fa-lg"></i> Can't Delete
+										<i id="delete_#author.getAuthorID()#" class="fa fa-trash fa-lg"></i> Can't Delete
 									</a>
 								</li>
 							</cfif>
@@ -101,7 +101,7 @@
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">
-									<i class="fas fa-pen fa-lg"></i> Edit
+									<i class="fa fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 
@@ -109,13 +109,13 @@
 							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export
+									<i class="fa fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 							<li>
 								<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#author.getAuthorID()#"
 									title="Email User a password reset token and link to reset password.">
-									<i class="fas fa-key fa-lg"></i> Reset Password
+									<i class="fa fa-key fa-lg"></i> Reset Password
 								</a>
 							</li>
 							</cfif>
