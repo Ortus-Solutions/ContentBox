@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
+        cfengine: [ "lucee@5", "adobe@2018", "adobe@2021" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -105,9 +105,6 @@ jobs:
       - name: Failure debugging
         if: ${{ failure() }}
         run: |
-          if [[ "{{ matrix.cfengine }}" == "adobe@2016" ]] ; then
-            cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
           if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
             cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           fi

@@ -20,7 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
+        cfengine: [ "lucee@5", "adobe@2018", "adobe@2021" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -59,10 +59,8 @@ jobs:
         if: "${{ matrix.cfengine != 'lucee@5' }}"
         run: |
           # Log4j Hibernate Debug
-          mkdir -p .engines/acf2016/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2018/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
-          cp build/resources/log4j.properties .engines/acf2016/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
 
@@ -139,9 +137,6 @@ jobs:
       - name: Failure Debugging Info
         if: ${{ failure() }}
         run: |
-          if [[ "{{ matrix.cfengine }}" == "adobe@2016" ]] ; then
-            cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
           if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
             cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           fi

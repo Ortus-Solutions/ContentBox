@@ -19,8 +19,8 @@ git:
 env:
   matrix:
     - ENGINE=lucee@5
-    - ENGINE=adobe@2016
     - ENGINE=adobe@2018
+    - ENGINE=adobe@2021
 
 services:
   - mysql
@@ -59,9 +59,7 @@ before_script:
   - printf "DB_BUNDLEVERSION=8.0.19\n" >> $TRAVIS_BUILD_DIR/.env
   - printf "DB_BUNDLENAME=com.mysql.cj\n" >> $TRAVIS_BUILD_DIR/.env
   # Log4j Hibernate Debug
-  - mkdir -p $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/lib/
   - mkdir -p $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
-  - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/lib/
   - cp $TRAVIS_BUILD_DIR/build/resources/log4j.properties $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/lib/
   # Startup testing engine
   - box server start serverConfigFile="server-${ENGINE}.json" --debug
@@ -87,7 +85,6 @@ script:
 after_failure:
   - cd $TRAVIS_BUILD_DIR
   - cat $TRAVIS_BUILD_DIR/tests/results/results.txt
-  - cat $TRAVIS_BUILD_DIR/.engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
   - cat $TRAVIS_BUILD_DIR/.engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
   - box server log serverConfigFile="server-${ENGINE}.json"
 
