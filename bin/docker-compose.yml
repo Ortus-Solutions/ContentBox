@@ -31,17 +31,22 @@ services:
       - contentbox_db
       - contentbox_cache
     platform: linux/x86_64 # Needed for Mac's on the M1 chip
-    image: ortussolutions/commandbox:lucee5-3.2.1
+    image: ortussolutions/commandbox:lucee5
     # Environment Variables
     environment:
       # Admin passowrd
       CFCONFIG_ADMINPASSWORD: contentbox
       DB_HOST: contentbox_db
-      DB_PORT: 4306
+      DB_DATABASE: contentbox
+      DB_DRIVER: MySQL
+      DB_PORT: 3306
+      DB_USER: root
       DB_PASSWORD: contentbox
       DB_CLASS: com.mysql.cj.jdbc.Driver
       DB_BUNDLEVERSION: 8.0.19
       DB_BUNDLENAME: com.mysql.cj
+      DB_CONNECTIONSTRING: jdbc:mysql://contentbox_db:3306/contentbox?characterEncoding=UTF-8&serverTimezone=UTC&maxReconnects=3
+      ORM_DIALECT: org.hibernate.dialect.MySQL5InnoDBDialect
     # Ports
     ports:
       - "8080:8080"
