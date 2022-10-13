@@ -29,6 +29,10 @@ component extends="ContentService" singleton {
 	 * @return Saved entry
 	 */
 	function save( required any entry, string originalSlug = "" ){
+		// Only create relocations for slug changes to published entries
+		if ( entry.getIsPublished() && !isNull( arguments.originalSlug ) AND len( arguments.originalSlug ) ) {
+			addRelocation( arguments.entry, arguments.originalSlug );
+		}
 		return super.save( arguments.entry );
 	}
 

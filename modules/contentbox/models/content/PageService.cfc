@@ -35,8 +35,10 @@ component extends="ContentService" singleton {
 
 			// Update all affected child pages if any on slug updates, much like nested set updates its nodes, we update our slugs
 			if ( !isNull( arguments.originalSlug ) AND len( arguments.originalSlug ) ) {
+				addRelocation( arguments.page, arguments.originalSlug );
 				var pagesInNeed = newCriteria().like( "slug", "#arguments.originalSlug#/%" ).list();
 				for ( var thisPage in pagesInNeed ) {
+					addRelocation( thisPage, thisPage.getSlug() );
 					thisPage.setSlug(
 						replaceNoCase(
 							thisPage.getSlug(),
