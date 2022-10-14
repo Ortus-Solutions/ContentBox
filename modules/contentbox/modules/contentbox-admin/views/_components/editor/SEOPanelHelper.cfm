@@ -53,7 +53,6 @@
 			saveRelocation(){
 				this.isSaving = true;
 				var self = this;
-				console.log( this.formData.slug );
 				fetch(
 						`${this.baseUrl}`,
 						{
@@ -80,7 +79,6 @@
 						self.isSaving = false;
 						self.globalAlert.type = "danger";
 						self.globalAlert.message = error.toString();
-						console.log( error );
 					} );
 			},
 			deleteRelocation( id ){
