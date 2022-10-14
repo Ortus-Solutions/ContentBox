@@ -175,6 +175,9 @@
       		</fileset>
         </copy>
 
+		<!-- Ensure the migrations config is part of the installer -->
+		<copy file=".cfmigrations.json" toFile="${dir.build}/installer/.cfmigrations.json" overwrite="true"  encoding="UTF-8"/>
+
         <!-- Copy installer module source -->
       	<copy todir="${dir.build}/installer-module" encoding="UTF-8">
       		<fileset dir="modules/contentbox-installer">
