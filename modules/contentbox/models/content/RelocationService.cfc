@@ -36,6 +36,52 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return this;
 	}
 
+	/**
+	 * Relocation search with filters
+	 *
+	 * @search    The search term for the name
+	 * @siteID    The site id to filter on
+	 * @isPublic  Filter on this public (true) / private (false) or all (null)
+	 * @max       The max records
+	 * @offset    The offset to use
+	 * @sortOrder The sort order
+	 *
+	 * @return struct of { count, categories }
+	 */
+	struct function search(
+		search = "",
+		siteID = "",
+		boolean isPublic,
+		max       = 0,
+		offset    = 0,
+		sortOrder = "slug asc"
+	){
+		var results = { "count" : 0, "relocations" : [] };
+		var c       = newCriteria()
+			// Search Criteria
+			.when( len( arguments.search ), function( c ){
+				c.like( "slug", "%#search#%" );
+			} )
+			// Site Filter
+			.when( len( arguments.siteID ), function( c ){
+				c.isEq( "site.siteID", siteID );
+			} )
+			// Content ID filter
+			.when( !isNull( arguments.contentID ), function( c ){
+				c.isEq( "relatedContent.contentID", arguments.contentID );
+			} );
+
+		// run criteria query and projections count
+		results.count      = c.count( "relocationID" );
+		results.relocations = c.list(
+			offset   : arguments.offset,
+			max      : arguments.max,
+			sortOrder: arguments.sortOrder
+		);
+
+		return results;
+	}
+
 	Relocation function createContentRelocation(
 		required BaseContent contentItem,
 		required string originalSlug
