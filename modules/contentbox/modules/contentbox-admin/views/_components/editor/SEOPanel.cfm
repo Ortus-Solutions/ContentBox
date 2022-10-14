@@ -61,7 +61,7 @@
 					<template x-for="(item,index) in relocations">
 						<tr :key="item.relocationID">
 							<td><code x-text="'/' + item.slug"></code></td>
-							<td x-text="item.createdDate"></td>
+							<td x-text="new Date( item.createdDate ).toLocaleDateString()"></td>
 							<td><a @click="deleteRelocation( item.relocationID )" data-toggle="tooltip" title="Delete this redirect"><i :class="!item.isProcessing ? 'fa fa-trash text-muted' : 'fa fa-spin fa-spinner text-muted'"></i></a></td>
 						</tr>
 					</template>
