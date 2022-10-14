@@ -2563,4 +2563,18 @@ component accessors="true" singleton threadSafe {
 		return b.toString();
 	}
 
+	/**
+	 * Convenience method to ensure valid JSON, when prefixing is enabled
+	 *
+	 * @obj   any  the object to be serialized
+	 */
+	string function toJSON( any obj ){
+		return serializeJSON(
+			obj,
+			false,
+			listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false
+		);
+	}
+
+
 }
