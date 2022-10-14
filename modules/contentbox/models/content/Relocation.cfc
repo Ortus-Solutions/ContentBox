@@ -55,9 +55,9 @@ component
 	// O2O -> Content
 	property
 		name     ="relatedContent"
-		notnull  ="true"
+		notnull  ="false"
 		cfc      ="contentbox.models.content.BaseContent"
-		fieldtype="one-to-one"
+		fieldtype="many-to-one"
 		fkcolumn ="FK_contentID"
 		lazy     ="false"
 		fetch    ="select";
@@ -70,7 +70,9 @@ component
 
 	this.memento = {
 		defaultIncludes : [
-			"relocationId",
+			"relocationID",
+			"createdDate",
+			"modifiedDate",
 			"slug",
 			"target",
 			"relatedContent"
@@ -84,6 +86,12 @@ component
 			validator : "UniqueSiteFieldValidator@contentbox"
 		}
 	};
+
+	// overload method to clean any leading or trailing slashes
+	function setSlug( value ){
+		variables.slug = arrayToList( listToArray( arguments.value, "/" ), "/" );
+		return this;
+	}
 
 
 }
