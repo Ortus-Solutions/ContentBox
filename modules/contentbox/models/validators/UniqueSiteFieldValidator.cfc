@@ -13,7 +13,7 @@ component accessors="true" singleton {
 	/**
 	 * Constructor
 	 */
-	UniqueValidator function init(){
+	UniqueSiteFieldValidator function init(){
 		variables.name       = "UniqueSiteField";
 		variables.ORMService = new cborm.models.BaseORMService();
 		return this;
@@ -51,7 +51,7 @@ component accessors="true" singleton {
 		var identityValue = invoke( arguments.target, "get#identityField#" );
 
 		// create criteria for uniqueness
-		var c = ORMService.newCriteria( entityName )isEq( "site", arguments.target.getSite() ).isEq( field, arguments.targetValue );
+		var c = ORMService.newCriteria( entityName ).isEq( "site", arguments.target.getSite() ).isEq( field, arguments.targetValue );
 
 		// validate with ID? then add to restrictions
 		if ( !isNull( identityValue ) ) {
