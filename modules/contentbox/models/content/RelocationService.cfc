@@ -46,7 +46,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @offset    The offset to use
 	 * @sortOrder The sort order
 	 *
-	 * @return struct of { count, categories }
+	 * @return struct of { count, relocations }
 	 */
 	struct function search(
 		search = "",
