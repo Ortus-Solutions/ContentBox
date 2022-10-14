@@ -107,7 +107,6 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	 * @param  {object} event The JS event object
 	 */
 	var onTimer = function( event ){
-		console.log( "Running autosave" );
 		if ( savingActive ) {
 		  startTimer( event );
 		} else {
