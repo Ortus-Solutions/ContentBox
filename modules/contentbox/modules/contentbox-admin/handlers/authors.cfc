@@ -468,26 +468,29 @@ component extends="baseHandler" {
 	}
 
 	/**
-	 * Save user preferences
+	 * Save user preferences from the built UI from them
 	 */
 	function savePreferences( event, rc, prc ){
-		var oAuthor        = authorService.get( id = rc.authorID );
-		var allPreferences = {};
+		var oAuthor        = variables.authorService.get( id = rc.authorID );
+		// Get only the UI form preferences that are prefixed to be saved
+		var newPreferences = rc
+			.filter( function( key, value ){
+				return reFindNoCase( "^preference\.", arguments.key );
+			} )
+			// Clean them up
+			.reduce( function( result, key, value ){
+				result[ listLast( arguments.key, "." ) ] = arguments.value;
+				return result;
+			}, {} );
 
-		// iterate rc keys that start with "preference."
-		for ( var key in rc ) {
-			if ( reFindNoCase( "^preference\.", key ) ) {
-				allPreferences[ listLast( key, "." ) ] = rc[ key ];
-			}
-		}
 		// Store Preferences
-		oAuthor.setPreferences( allPreferences );
+		oAuthor.setPreferences( oAuthor.getAllPreferences().append( newPreferences, true ) );
 		// announce event
-		announce( "cbadmin_preAuthorPreferencesSave", { author : oAuthor, preferences : allPreferences } );
+		announce( "cbadmin_preAuthorPreferencesSave", { author : oAuthor, preferences : newPreferences } );
 		// save Author
 		variables.authorService.save( oAuthor );
 		// announce event
-		announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : allPreferences } );
+		announce( "cbadmin_postAuthorPreferencesSave", { author : oAuthor, preferences : newPreferences } );
 		// message
 		cbMessagebox.setMessage( "info", "Author Preferences Saved!" );
 		// relocate

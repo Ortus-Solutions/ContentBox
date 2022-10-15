@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-file-export fa-lg"></i> ContentBox Export
+			<i class="fa fa-file-export fa-lg"></i> ContentBox Export
 		</h1>
 	</div>
 </div>
@@ -93,7 +93,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-blog fa-lg"></i> Entries</h4>
+								<h4><i class="fa fa-blog fa-lg"></i> Entries</h4>
 								<small class="muted">Export blog entries with comments</small>
 							</div>
 							<div class="col-md-9">
@@ -109,7 +109,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-tags fa-lg"></i> Categories</h4>
+								<h4><i class="fa fa-tags fa-lg"></i> Categories</h4>
 								<small class="muted">Export categories</small>
 							</div>
 							<div class="col-md-9">
@@ -125,7 +125,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="far fa-hdd fa-lg"></i> Content Store</h4>
+								<h4><i class="fa fa-hdd fa-lg"></i> Content Store</h4>
 								<small class="muted">Export the Content Store</small>
 							</div>
 							<div class="col-md-9">
@@ -141,7 +141,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-bars fa-lg"></i> Menus</h4>
+								<h4><i class="fa fa-bars fa-lg"></i> Menus</h4>
 								<small class="muted">Export menus</small>
 							</div>
 							<div class="col-md-9">
@@ -173,7 +173,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-key fa-lg"></i> Permissions</h4>
+								<h4><i class="fa fa-key fa-lg"></i> Permissions</h4>
 								<small class="muted">Export all author permissions</small>
 							</div>
 							<div class="col-md-9">
@@ -189,7 +189,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-user-shield fa-lg"></i> Roles</h4>
+								<h4><i class="fa fa-user-shield fa-lg"></i> Roles</h4>
 								<small class="muted">Export all author roles</small>
 							</div>
 							<div class="col-md-9">
@@ -205,7 +205,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-passport fa-lg"></i> Security Rules</h4>
+								<h4><i class="fa fa-passport fa-lg"></i> Security Rules</h4>
 								<small class="muted">Export configured site security rules</small>
 							</div>
 							<div class="col-md-9">
@@ -237,7 +237,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fas fa-photo-video fa-lg"></i> Media Library</h4>
+								<h4><i class="fa fa-photo-video fa-lg"></i> Media Library</h4>
 								<small class="muted">Export all Media Library content</small>
 							</div>
 							<div class="col-md-9">
@@ -253,7 +253,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="far fa-envelope-open fa-lg"></i> Email Templates</h4>
+								<h4><i class="fa fa-envelope-open fa-lg"></i> Email Templates</h4>
 								<small class="muted">Export all Email Templates</small>
 							</div>
 							<div class="col-md-9">
@@ -454,7 +454,7 @@
 							class   = "btn btn-danger btn-lg"
 							onclick = "doExport()"
 						>
-							<i class='far fa-play-circle' id='export-icon'></i> Start Export
+							<i class='fa fa-play-circle' id='export-icon'></i> Start Export
 						</button>
 					</div>
 
@@ -478,7 +478,7 @@
 				<div class="panel-heading">
 					<!--- Title --->
 					<div class="size16 p10">
-						<i class="fas fa-cloud-download-alt"></i> Static Site Generator
+						<i class="fa fa-cloud-download-alt"></i> Static Site Generator
 					</div>
 				</div>
 
@@ -495,7 +495,7 @@
 					<div class="actionBar" id="siteGeneratorBar">
 						#html.button(
 							type    = "button",
-							value   = "<i class='far fa-play-circle' id='export-icon'></i> Start Generation",
+							value   = "<i class='fa fa-play-circle' id='export-icon'></i> Start Generation",
 							class   = "btn btn-danger btn-lg",
 							onclick = "doSiteExport()"
 						)#
@@ -526,7 +526,7 @@
 
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4><i class="fas fa-search"></i> Export Preview</h4>
+				<h4><i class="fa fa-search"></i> Export Preview</h4>
 			</div>
 
 			<div class="modal-body" id="previewBody"></div>

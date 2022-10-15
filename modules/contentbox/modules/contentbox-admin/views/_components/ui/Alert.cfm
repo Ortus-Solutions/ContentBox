@@ -44,7 +44,7 @@
 		<i
 			@click="alertClose()"
 			title="Close Alert"
-			class="far fa-times-circle cursor-pointer float-right text-2xl"
+			class="fa fa-times-circle cursor-pointer float-right text-2xl"
 			x-show="alertCloseButton"
 		></i>
 		<cfif len( args.messageModel )>

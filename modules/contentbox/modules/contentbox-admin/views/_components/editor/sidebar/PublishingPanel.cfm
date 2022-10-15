@@ -69,7 +69,7 @@
 							name="publishedTime"
 						>
 						<span class="input-group-addon">
-							<span class="fas fa-history"></span>
+							<span class="fa fa-history"></span>
 						</span>
 					</div>
 				</div>
@@ -114,7 +114,7 @@
 							value="#prc.oContent.getExpireDateTime()#"
 							name="expireTime">
 						<span class="input-group-addon">
-							<span class="fas fa-history"></span>
+							<span class="fa fa-history"></span>
 						</span>
 					</div>
 				</div>

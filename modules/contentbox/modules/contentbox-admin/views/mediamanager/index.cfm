@@ -3,7 +3,7 @@
 
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-photo-video"></i> Media Manager
+			<i class="fa fa-photo-video"></i> Media Manager
 		</h1>
 	</div>
 

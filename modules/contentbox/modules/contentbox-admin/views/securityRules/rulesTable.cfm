@@ -41,13 +41,13 @@
 
 				<cfif rule.getUseSSL()>
 					<span class="label label-danger">
-						<i class="fas fa-key"></i> SSL
+						<i class="fa fa-key"></i> SSL
 					</span>
 				</cfif>
 
 				<div class="mt10">
 					<span title="Securelist">
-						<i class="fas fa-lock"></i>
+						<i class="fa fa-lock"></i>
 						<code>#rule.getSecureList()#</code>
 					</span>
 				</div>
@@ -55,7 +55,7 @@
 				<cfif len( rule.getWhiteList() )>
 					<div class="mt10">
 						<span title="Whitelist">
-							<i class="fas fa-unlock text-green"></i>
+							<i class="fa fa-unlock text-green"></i>
 							<code>#rule.getWhiteList()#</code>
 						</span>
 					</div>
@@ -63,7 +63,7 @@
 
 				<div class="mt10">
 					<span title="Redirect Link">
-						<i class="fas fa-external-link-alt"></i>
+						<i class="fa fa-external-link-alt"></i>
 						<code>#rule.getRedirect()#</code>
 					</span>
 				</div>
@@ -91,26 +91,26 @@
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-						<i class="fas fa-ellipsis-v fa-lg"></i>
+						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
 						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li>
-								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='far fa-trash-alt'></i> Delete Rule?">
-									<i class="far fa-trash-alt fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
+								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">
+									<i class="fa fa-trash fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
 								</a>
 							</li>
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehEditorRule )#/ruleID/#rule.getRuleID()#" title="Edit Rule">
-									<i class="fas fa-pen fa-lg"></i> Edit
+									<i class="fa fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 							<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/ruleID/#rule.getRuleID()#.json" target="_blank">
-									<i class="fas fa-file-export fa-lg"></i> Export
+									<i class="fa fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 						</cfif>

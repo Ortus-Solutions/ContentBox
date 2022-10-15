@@ -16,19 +16,19 @@
 					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-sms btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fas fa-sliders-h"></i> Actions
+								<i class="fa fa-sliders-h"></i> Actions
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										<i class="fas fa-file-export fa-lg"></i> Export
+										<i class="fa fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 								<li>
 									<a href="#event.buildLink( prc.xehPasswordReset )#/authorID/#prc.author.getAuthorID()#/editing/true"
 										title="Issue a password reset for the user upon next login.">
-										<i class="fas fa-key"></i> Reset Password
+										<i class="fa fa-key"></i> Reset Password
 									</a>
 								</li>
 							</ul>
@@ -47,7 +47,7 @@
 							<cfelse>
 								href="#event.buildLink( prc.xehDashboard )#">
 							</cfif>
-							<i class="fas fa-chevron-left fa-2x"></i>
+							<i class="fa fa-chevron-left fa-2x"></i>
 						</a>
 					</span>
 
@@ -78,37 +78,37 @@
 
                     	<li class="active">
 							<a href="##details" data-toggle="tab">
-								<i class="far fa-eye fa-lg"></i> Details
+								<i class="fa fa-eye fa-lg"></i> Details
 							</a>
                     	</li>
 						<li>
 							<a href="##change-password" data-toggle="tab">
-								<i class="fas fa-key fa-lg"></i> Password
+								<i class="fa fa-key fa-lg"></i> Password
 							</a>
 						</li>
 						<li>
 							<a href="##twofactor"  data-toggle="tab">
-								<i class="fas fa-mobile-alt fa-lg fa-lg"></i> Two Factor
+								<i class="fa fa-mobile-alt fa-lg fa-lg"></i> Two Factor
 							</a>
 						</li>
 						<li>
 							<a href="##preferences" data-toggle="tab">
-								<i class="fas fa-briefcase fa-lg"></i> Preferences</a>
+								<i class="fa fa-briefcase fa-lg"></i> Preferences</a>
 						</li>
 						<li>
 							<a href="##permissions" onclick="loadPermissions();" data-toggle="tab">
-								<i class="fas fa-user-shield fa-lg"></i> Permissions
+								<i class="fa fa-user-shield fa-lg"></i> Permissions
 							</a>
 						</li>
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 						<li>
 							<a href="##latestEdits" data-toggle="tab">
-								<i class="fas fa-history fa-lg"></i> Latest Edits
+								<i class="fa fa-history fa-lg"></i> Latest Edits
 							</a>
 						</li>
 						<li>
 							<a href="##latestDrafts" data-toggle="tab">
-								<i class="fas fa-pencil-ruler fa-lg"></i> Latest Drafts
+								<i class="fa fa-pencil-ruler fa-lg"></i> Latest Drafts
 							</a>
 						</li>
 						</cfif>

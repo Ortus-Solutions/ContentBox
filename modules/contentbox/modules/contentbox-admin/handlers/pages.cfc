@@ -84,7 +84,7 @@ component extends="baseContentHandler" {
 	 * Save a page
 	 */
 	function save( event, rc, prc ){
-		arguments.adminPermission = "PAGES_ADMIN";
+		arguments.adminPermission = "PAGES_ADMIN,PAGES_EDITOR";
 		arguments.relocateTo      = prc.xehPages;
 		super.save( argumentCollection = arguments );
 	}

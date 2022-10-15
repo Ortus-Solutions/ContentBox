@@ -91,7 +91,7 @@
 							<i class="fa fa-plus-square"></i>
 						</a>
 					<cfelse>
-						<i class="far fa-dot-circle-thin"></i>
+						<i class="fa fa-dot-circle-thin"></i>
 					</cfif>
 
 					<!--- Title --->
@@ -109,7 +109,7 @@
 
 					<!--- password protected --->
 					<cfif page.isPasswordProtected()>
-						<i class="fas fa-key text-orange" title="Password Protected Content"></i>
+						<i class="fa fa-key text-orange" title="Password Protected Content"></i>
 					</cfif>
 
 					<!--- Search Label --->
@@ -137,10 +137,10 @@
 
 				<td class="text-center">
 					<cfif page.getShowInMenu()>
-						<i class="far fa-dot-circle fa-lg text-green"></i>
+						<i class="fa fa-dot-circle fa-lg text-green"></i>
 						<span class="hidden">yes</span>
 					<cfelse>
-						<i class="far fa-dot-circle fa-lg text-gray"></i>
+						<i class="fa fa-dot-circle fa-lg text-gray"></i>
 						<span class="hidden">no</span>
 					</cfif>
 				</td>
@@ -166,7 +166,7 @@
 						title="Click and drag to change menu order"
 						style="padding:5px 15px"
 					>
-						<i class="fas fa-sort fa-lg"></i>
+						<i class="fa fa-sort fa-lg"></i>
 					</a>
 
 					<!--- Page Actions --->
@@ -177,7 +177,7 @@
 							href="##"
 							title="Page Actions"
 						>
-							<i class="fas fa-ellipsis-v fa-lg"></i>
+							<i class="fa fa-ellipsis-v fa-lg"></i>
 						</a>
 
 						<ul class="dropdown-menu text-left pull-right">
@@ -190,7 +190,7 @@
 											'#encodeForJavascript( page.getTitle() )#'
 										)"
 									>
-										<i class="far fa-clone fa fa-lg"></i> Clone
+										<i class="fa fa-clone fa fa-lg"></i> Clone
 									</a>
 								</li>
 
@@ -199,7 +199,7 @@
 									<a
 										href="#event.buildLink( prc.xehPageEditor )#/parentID/#page.getContentID()#"
 									>
-										<i class="fas fa-sitemap fa-lg"></i> Create Child
+										<i class="fa fa-sitemap fa-lg"></i> Create Child
 									</a>
 								</li>
 
@@ -209,12 +209,12 @@
 										<a
 											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
 											class="confirmIt"
-											data-title="<i class='far fa-trash-alt'></i> Delete Page?"
+											data-title="<i class='fa fa-trash'></i> Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
 										>
 											<i
 												id="delete_#page.getContentID()#"
-												class="far fa-trash-alt fa-lg"></i> Delete
+												class="fa fa-trash fa-lg"></i> Delete
 										</a>
 									</li>
 								</cfif>
@@ -224,7 +224,7 @@
 									<a
 										href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 									>
-										<i class="fas fa-pen fa-lg"></i> Edit
+										<i class="fa fa-pen fa-lg"></i> Edit
 									</a>
 								</li>
 							</cfif>
@@ -236,7 +236,7 @@
 										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
 										target="_blank"
 									>
-										<i class="fas fa-file-export fa-lg"></i> Export
+										<i class="fa fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>
@@ -247,7 +247,7 @@
 								<a
 									href="#event.buildLink( prc.xehContentHistory )#/contentID/#page.getContentID()#"
 								>
-									<i class="fas fa-history fa-lg"></i> History
+									<i class="fa fa-history fa-lg"></i> History
 								</a>
 							</li>
 
@@ -256,7 +256,7 @@
 								<a
 									href="javascript:contentListHelper.resetHits( '#page.getContentID()#' )"
 								>
-									<i class="fas fa-recycle fa-lg"></i> Reset Hits
+									<i class="fa fa-recycle fa-lg"></i> Reset Hits
 								</a>
 							</li>
 
@@ -266,7 +266,7 @@
 									href="#prc.cbHelper.linkPage( page )#"
 									target="_blank"
 								>
-									<i class="far fa-eye fa-lg"></i> Open In Site
+									<i class="fa fa-eye fa-lg"></i> Open In Site
 								</a>
 							</li>
 				    	</ul>

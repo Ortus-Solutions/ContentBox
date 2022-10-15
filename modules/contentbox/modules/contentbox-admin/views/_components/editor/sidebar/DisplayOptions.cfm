@@ -9,7 +9,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##displayoptions">
-				<i class="fas fa-photo-video"></i> Display Options
+				<i class="fa fa-photo-video"></i> Display Options
 				</a>
 			</h4>
 		</div>
@@ -20,7 +20,7 @@
 				<!--- PAGE LAYOUT --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
-						<i class="fas fa-columns"></i>
+						<i class="fa fa-columns"></i>
 						Layout:
 					</label>
 					<select name="layout" id="layout" class="form-control input-sm">
@@ -35,26 +35,10 @@
 					</select>
 				</div>
 
-				<!--- MOBILE LAYOUT --->
-				<div class="form-group">
-					<label for="layout" class="control-label">
-						<i class="fas fa-mobile-alt"></i>
-						Mobile Layout:
-					</label>
-					<select name="mobileLayout" id="mobileLayout" class="form-control input-sm">
-						<option value="" <cfif prc.oContent.getMobileLayout() eq "">selected="selected"</cfif>>-None-</option>
-						<option value="-inherit-" <cfif prc.oContent.getMobileLayout() eq "-inherit-">selected="selected"</cfif>>-inherit-</option>
-						#html.options(
-							values=prc.availableLayouts,
-							selectedValue=prc.oContent.getMobileLayout()
-						)#
-					</select>
-				</div>
-
 				<!--- SHOW IN MENU BUILDERS --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
-						<i class="fas fa-bars"></i>
+						<i class="fa fa-bars"></i>
 						Show in Menus:
 					</label>
 					#html.select(
@@ -68,7 +52,7 @@
 				<!--- SHOW IN SEARCH --->
 				<div class="form-group">
 					<label for="layout" class="control-label">
-						<i class="fas fa-search"></i>
+						<i class="fa fa-search"></i>
 						Show in Search:
 					</label>
 					#html.select(

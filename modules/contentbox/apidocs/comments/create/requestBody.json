@@ -1,0 +1,53 @@
+{
+	"description": "Needed fields for a site content comment",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"content",
+					"related content",
+					"authorIP",
+					"authorURL",
+					"authorEmail",
+					"author"
+				],
+				"properties": {
+					"content": {
+						"description": "The content of the comment",
+						"type": "string"
+					},
+					"related content": {
+						"description": "The related content of the comment",
+						"type": "string"
+					},
+					"authorIP": {
+						"description": "The IP address of the author",
+						"type": "string"
+					},
+					"authorURL": {
+						"description": "The website of the author",
+						"type": "string"
+					},
+					"authorEmail": {
+						"description": "The email of the author",
+						"type": "string"
+					},
+					"author": {
+						"description": "The name of the author",
+						"type": "string"
+					}
+				},
+				"example": {
+					"content": "Comment",
+					"related content": "<p>Related content comment</p>",
+					"authorIP": "127.0.0.1",
+					"authorURL": "www.website.com",
+					"authorEmail": "author@domain.com",
+					"author": "Author Name"
+				}
+			}
+		}
+	}
+}

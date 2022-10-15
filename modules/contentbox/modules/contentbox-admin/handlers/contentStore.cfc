@@ -81,7 +81,7 @@ component extends="baseContentHandler" {
 	 * Save a new content store item
 	 */
 	function save( event, rc, prc ){
-		arguments.adminPermission = "CONTENTSTORE_ADMIN";
+		arguments.adminPermission = "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR";
 		arguments.relocateTo      = prc.xehContentStore;
 		super.save( argumentCollection = arguments );
 	}
@@ -90,8 +90,7 @@ component extends="baseContentHandler" {
 	 * Clone a content store item
 	 */
 	function clone( event, rc, prc ){
-		arguments.adminPermission = "CONTENTSTORE_ADMIN";
-		arguments.relocateTo      = prc.xehContentStore;
+		arguments.relocateTo = prc.xehContentStore;
 		super.clone( argumentCollection = arguments );
 	}
 

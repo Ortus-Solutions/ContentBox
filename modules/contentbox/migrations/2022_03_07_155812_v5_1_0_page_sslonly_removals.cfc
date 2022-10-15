@@ -8,11 +8,20 @@
  */
 component {
 
+	// DI
+	property name="migrationService" inject="MigrationService@cfmigrations";
+
+	// Include Utils
+	include template="./_MigrationUtils.cfm";
+
 	function up( schema, qb ){
-		// Remove the sslonly column from the `cb_page` table
-		schema.alter( "cb_page", ( table ) => {
-			table.dropColumn( "SSLOnly" );
-		} );
+		if ( hasColumn( "cb_page", "SSLOnly" ) ) {
+			schema.alter( "cb_page", ( table ) => {
+				table.dropColumn( "SSLOnly" );
+			} );
+		} else {
+			systemOutput( "- skipping 'sslonly' removal, cb_page doesn't have the column", true );
+		}
 	}
 
 	function down( schema, qb ){

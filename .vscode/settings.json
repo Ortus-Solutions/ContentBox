@@ -11,6 +11,11 @@
 			"isPhysicalDirectoryPath" :false
 		},
 		{
+			"logicalPath": "/cborm",
+			"directoryPath": "./modules/cborm",
+			"isPhysicalDirectoryPath" :false
+		},
+		{
 			"logicalPath": "/testbox",
 			"directoryPath": "./testbox",
 			"isPhysicalDirectoryPath" :false

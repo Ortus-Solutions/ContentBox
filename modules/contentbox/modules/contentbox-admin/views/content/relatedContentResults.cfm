@@ -73,7 +73,7 @@
 							)"
 							title="Select"
 						>
-                            <i class="far fa-check-circle fa-lg"></i>
+                            <i class="fa fa-check-circle fa-lg"></i>
                         </button>
                     </div>
                 </td>

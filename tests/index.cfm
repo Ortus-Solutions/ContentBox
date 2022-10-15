@@ -93,7 +93,7 @@
 						<cfif url.path neq "/">
 							<a href="index.cfm?path=#URLEncodedFormat( backPath )#">
 								<button type="button" class="btn btn-secondary btn-sm my-1">
-									<i class="fas fa-angle-double-left"></i> Back
+									<i class="fa fa-angle-double-left"></i> Back
 								</button>
 							</a>
 							<br>
@@ -107,7 +107,7 @@
 
 							<cfset dirPath = URLEncodedFormat( ( url.path neq '/' ? '#url.path#/' : '/' ) & qResults.name )>
 							<cfif qResults.type eq "Dir">
-								<a class="btn btn-secondary btn-sm my-1" href="index.cfm?path=#dirPath#"><i class="fas fa-plus"></i> #qResults.name#</a><br/>
+								<a class="btn btn-secondary btn-sm my-1" href="index.cfm?path=#dirPath#"><i class="fa fa-plus"></i> #qResults.name#</a><br/>
 							<cfelseif listLast( qresults.name, ".") eq "cfm">
 								<a class="btn btn-primary btn-sm my-1" href="#executePath & qResults.name#" <cfif !url.cpu>target="_blank"</cfif>>#qResults.name#</a><br/>
 							<cfelseif listLast( qresults.name, ".") eq "cfc" and qresults.name neq "Application.cfc">

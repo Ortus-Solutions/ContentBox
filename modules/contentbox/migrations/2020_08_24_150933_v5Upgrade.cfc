@@ -3,7 +3,11 @@
  */
 component {
 
+	// DI
 	property name="migrationService" inject="MigrationService@cfmigrations";
+
+	// Include Utils
+	include template="./_MigrationUtils.cfm";
 
 	variables.today      = now();
 	variables.siteTables = [
@@ -18,25 +22,6 @@ component {
 			description : "Ability to manage sites"
 		}
 	];
-
-	private boolean function hasColumn( targetTable, targetColumn ){
-		// Check for column created
-		cfdbinfo(
-			name  = "local.qSettingColumns",
-			type  = "columns",
-			table = arguments.targetTable
-		);
-
-		if (
-			qSettingColumns.filter( ( thisRow ) => {
-				// systemOutput( thisRow, true );
-				return thisRow.column_name == targetColumn
-			} ).recordCount > 0
-		) {
-			return true;
-		}
-		return false;
-	}
 
 	private function isContentBox4(){
 		try {
@@ -138,8 +123,8 @@ component {
 		// Remove permissions
 		arguments.query
 			.newQuery()
-			.from( "cb_permissions" )
-			.where( "name", "SITES_ADMIN" )
+			.from( "cb_permission" )
+			.where( "permission", "SITES_ADMIN" )
 			.delete();
 	}
 

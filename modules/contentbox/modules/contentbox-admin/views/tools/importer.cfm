@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-md-12">
 		<h1 class="h1">
-			<i class="fas fa-file-import fa-lg"></i> Import Tools
+			<i class="fa fa-file-import fa-lg"></i> Import Tools
 		</h1>
 	</div>
 </div>
@@ -211,7 +211,7 @@ so please verify your application logs for information.
 						#html.button(
 							type    = "submit",
 							id      = "import_button",
-							value   = "<i class='far fa-play-circle'></i> Start Import",
+							value   = "<i class='fa fa-play-circle'></i> Start Import",
 							class   = "btn btn-danger btn-lg"
 						)#
 					</div>

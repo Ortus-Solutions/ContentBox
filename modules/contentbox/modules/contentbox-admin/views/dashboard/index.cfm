@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-tv"></i> #prc.cbSettings.cb_dashboard_welcome_title#
+        	<i class="fa fa-tv"></i> #prc.cbSettings.cb_dashboard_welcome_title#
         </h1>
     </div>
 </div>
@@ -45,14 +45,14 @@
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<li>
 						<a href="##contentReports" data-toggle="tab">
-							<i class="fas fa-box"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+							<i class="fa fa-archive"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 						</a>
 					</li>
 				</cfif>
 				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<li>
 						<a href="##latestComments" data-toggle="tab">
-							<i class="far fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
+							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
 						</a>
 					</li>
 				</cfif>
@@ -73,16 +73,52 @@
 				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<div class="tab-pane" id="contentReports">
 						<div class="m5" id="latestSystemEdits">
-							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<i class="fa fa-history"></i> Latest Edits
+									</h3>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+								</div>
+							</div>
 						</div>
 						<div class="m5" id="futurePublished">
-							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<i class="fa fa-space-shuttle"></i> Future Published Content
+									</h3>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+								</div>
+							</div>
 						</div>
 						<div class="m5" id="expiredContent">
-							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<i class="fa fa-file-archive" aria-hidden="true"></i> Expired Content
+									</h3>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+								</div>
+							</div>
 						</div>
 						<div class="m5" id="latestUserDrafts">
-							<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h3 class="panel-title">
+										<i class="fa fa-pencil-ruler"></i> My Latest Drafts
+									</h3>
+								</div>
+								<div class="panel-body text-center">
+									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+								</div>
+							</div>
 						</div>
 					</div>
 				</cfif>
@@ -91,14 +127,14 @@
 				<!--- ****************************************************************************************** --->
 				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
 					<div class="tab-pane" id="latestComments">
-						<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+						<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
 					</div>
 				</cfif>
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST NEWS TAB --->
 				<!--- ****************************************************************************************** --->
 				<div class="tab-pane" id="latestNews">
-					<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+					<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
 				</div>
 				<!--- cbadmin Event --->
 				#announce( "cbadmin_postDashboardTabContent" )#
@@ -115,7 +151,16 @@
 		<!---Latest Snapshot --->
 		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
-				<i class="fas fa-spin fa-circle-notch fa-lg fa-2x"></i>
+				<div class="panel panel-primary">
+					<div class="panel-heading">
+						<h3 class="panel-title">
+							<i class="fa fa-flag-checkered fa-lg"></i> Data Snapshots
+						</h3>
+					</div>
+					<div class="panel-body text-center">
+						<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+					</div>
+				</div>
 			</div>
 		</cfif>
 
@@ -124,12 +169,14 @@
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
 					<h3 class="panel-title">
-						<i class="fas fa-users fa-lg"></i> #$r( "dashboard.index.latestLogins@admin" )#
+						<i class="fa fa-users fa-lg"></i> #$r( "dashboard.index.latestLogins@admin" )#
 					</h3>
 			    </div>
 			    <div class="panel-body">
 					<div id="latestLogins">
-						<i class="fas fa-spin fa-circle-notch fa-lg -2x"></i>
+						<div class="text-center">
+							<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+						</div>
 					</div>
 			    </div>
 			</div>
@@ -139,7 +186,7 @@
 		<div class="panel panel-primary">
 		    <div class="panel-heading">
 				<h3 class="panel-title">
-					<i class="fab fa-medrt fa-lg"></i> #$r( "dashboard.index.needHelp@admin" )#
+					<i class="fa fa-medrt fa-lg"></i> #$r( "dashboard.index.needHelp@admin" )#
 				</h3>
 		    </div>
 		    <div class="panel-body">

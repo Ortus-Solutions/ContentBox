@@ -5,7 +5,7 @@
 		<div class="panel-heading">
 			<h4 class="panel-title">
 				<a class="accordion-toggle collapsed block" data-toggle="collapse" data-parent="##accordion" href="##cachesettings">
-					<i class="fas fa-database"></i> Cache Settings
+					<i class="fa fa-database"></i> Cache Settings
 				</a>
 			</h4>
 		</div>
@@ -15,7 +15,7 @@
 
 				<div class="form-group">
 					<label for="cache">
-						<i class="fas fa-file-code"></i> Cache Content Output:
+						<i class="fa fa-file-code"></i> Cache Content Output:
 					</label>
 					#html.select(
 						name          : "cache",
@@ -27,7 +27,7 @@
 
 				<div class="form-group">
 					<label for="cache">
-						<i class="fas fa-stopwatch"></i> Cache Timeout (0=Use Global Setting)
+						<i class="fa fa-stopwatch"></i> Cache Timeout (0=Use Global Setting)
 					</label>
 					#html.inputField(
 						type      : "numeric",
@@ -42,7 +42,7 @@
 
 				<div class="form-group">
 					<label for="cache">
-						<i class="fas fa-flushed"></i> Idle Timeout (0=Use Global Setting)
+						<i class="fa fa-flushed"></i> Idle Timeout (0=Use Global Setting)
 					</label>
 					#html.inputField(
 						type      : "numeric",

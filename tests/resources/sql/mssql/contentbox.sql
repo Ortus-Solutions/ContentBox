@@ -219,7 +219,6 @@ CREATE TABLE cb_module (
 GO
 CREATE TABLE cb_page (
 	layout nvarchar(200) DEFAULT (NULL),
-	mobileLayout nvarchar(200) DEFAULT (NULL),
 	"order" int DEFAULT ((0)),
 	showInMenu binary(1) DEFAULT (0x01) NOT NULL,
 	excerpt nvarchar(max),
@@ -2010,45 +2009,45 @@ INSERT INTO cb_menuitem(menuType, title, label, data, active, mediaPath, content
 GO
 INSERT INTO cb_module(name, title, version, entryPoint, author, webURL, forgeBoxSlug, description, isActive, createdDate, modifiedDate, isDeleted, moduleType, moduleID) VALUES (N'Hello', N'HelloContentBox', N'1.0', N'HelloContentBox', N'Ortus Solutions, Corp', N'http://www.ortussolutions.com', N'', N'This is an awesome hello world module', 0x00, '2016-07-15 12:09:34', '2016-07-15 12:09:34', 0x00, N'core', N'77b59b34-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 6, 0x01, N'', 0x00, N'779cd2de-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 6, 0x01, N'', 0x00, N'779cd2de-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'-no-layout-', N'', 3, 0x01, N'', 0x00, N'779cd432-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'-no-layout-', 3, 0x01, N'', 0x00, N'779cd432-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pagesNoSidebar', N'', 5, 0x01, N'', 0x00, N'779cd4dc-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pagesNoSidebar', 5, 0x01, N'', 0x00, N'779cd4dc-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 4, 0x01, N'', 0x00, N'779cd806-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 4, 0x01, N'', 0x00, N'779cd806-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779cd8b0-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779cd8b0-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779cd950-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779cd950-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 2, 0x00, N'', 0x00, N'779cd9fa-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 2, 0x00, N'', 0x00, N'779cd9fa-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 1, 0x01, N'', 0x00, N'779cdaa4-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 1, 0x01, N'', 0x00, N'779cdaa4-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 2, 0x01, N'', 0x00, N'779cdb4e-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 2, 0x01, N'', 0x00, N'779cdb4e-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 1, 0x01, N'', 0x00, N'779cdbee-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 1, 0x01, N'', 0x00, N'779cdbee-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 2, 0x01, N'', 0x00, N'779cdc8e-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 2, 0x01, N'', 0x00, N'779cdc8e-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 6, 0x01, N'', 0x00, N'779cdd38-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 6, 0x01, N'', 0x00, N'779cdd38-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 4, 0x01, N'', 0x00, N'779cddd8-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 4, 0x01, N'', 0x00, N'779cddd8-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 8, 0x01, N'', 0x00, N'779cde82-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 8, 0x01, N'', 0x00, N'779cde82-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 1, 0x01, N'', 0x00, N'779cdf22-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 1, 0x01, N'', 0x00, N'779cdf22-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779cdfc2-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779cdfc2-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779ce06c-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779ce06c-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779ce10c-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779ce10c-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779ce1ac-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779ce1ac-a444-11eb-ab6f-0290cc502ae3')
 GO
-INSERT INTO cb_page(layout, mobileLayout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', N'', 0, 0x01, N'', 0x00, N'779ce256-a444-11eb-ab6f-0290cc502ae3')
+INSERT INTO cb_page(layout, "order", showInMenu, excerpt, SSLOnly, contentID) VALUES (N'pages', 0, 0x01, N'', 0x00, N'779ce256-a444-11eb-ab6f-0290cc502ae3')
 GO
 INSERT INTO cb_permission(permission, description, createdDate, modifiedDate, isDeleted, permissionID) VALUES (N'PAGES_ADMIN', N'Ability to manage content pages, default is view only', '2016-05-03 16:23:26', '2016-05-03 16:23:26', 0x00, N'785d71f6-a444-11eb-ab6f-0290cc502ae3')
 GO
@@ -2946,5 +2945,3 @@ ALTER TABLE cb_subscriptions
 	ADD FOREIGN KEY (FK_subscriberID)
 	REFERENCES cb_subscribers (subscriberID)
 GO
-
-

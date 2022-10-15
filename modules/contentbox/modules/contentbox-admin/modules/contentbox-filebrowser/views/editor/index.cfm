@@ -6,7 +6,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				<h4>
 					<span id="widget-title-bar">
-						<i class="fas fa-image fa-lg"></i> Image editor
+						<i class="fa fa-image fa-lg"></i> Image editor
 					</span>
 				</h4>
 			</div>
@@ -45,19 +45,19 @@
 
                                     <li role="presentation" class="active">
                                         <a href="##crop" aria-controls="crop" role="tab" data-toggle="tab">
-                                            <i class="fas fa-crop"></i> Crop
+                                            <i class="fa fa-crop"></i> Crop
                                         </a>
                                     </li>
 
                                     <li role="presentation">
                                         <a href="##resize" aria-controls="seo" role="tab" data-toggle="tab">
-                                            <i class="fas fa-expand-arrows-alt"></i> Resize
+                                            <i class="fa fa-expand-arrows-alt"></i> Resize
                                         </a>
                                     </li>
 
                                     <li role="presentation">
                                         <a href="##transform" aria-controls="history" role="tab" data-toggle="tab">
-                                            <i class="fas fa-pen"></i> Transform
+                                            <i class="fa fa-pen"></i> Transform
                                         </a>
                                     </li>
 
@@ -195,7 +195,7 @@
 													id="rotate_right"
 													value="90"
 												>
-													<i class="fas fa-redo"></i> Rotate right
+													<i class="fa fa-redo"></i> Rotate right
 												</button>
 
 												<button
@@ -204,7 +204,7 @@
 													id="rotate_left"
 													value="270"
 												>
-													<i class="fas fa-undo"></i> Rotate left
+													<i class="fa fa-undo"></i> Rotate left
 												</button>
 
 												<button
@@ -213,7 +213,7 @@
 													id="flip_left"
 													value="vertical"
 												>
-													<i class="fas fa-arrows-alt-v"></i> Flip vertical
+													<i class="fa fa-arrows-alt-v"></i> Flip vertical
 												</button>
 
 												<button
@@ -222,7 +222,7 @@
 													id="flip_right"
 													value="horizontal"
 													>
-													<i class="fas fa-arrows-alt-h"></i> Flip horizontal
+													<i class="fa fa-arrows-alt-h"></i> Flip horizontal
 												</button>
 
 												<button
@@ -231,7 +231,7 @@
 													id="flip_diagonal"
 													value="diagonal"
 												>
-													<i class="fas fa-arrows-alt"></i> Flip diagonal
+													<i class="fa fa-arrows-alt"></i> Flip diagonal
 												</button>
 
 												<button
@@ -240,7 +240,7 @@
 													id="flip_antidiagonal"
 													value="antidiagonal"
 												>
-													<i class="fas fa-arrows-alt"></i> Flip antidiagonal
+													<i class="fa fa-arrows-alt"></i> Flip antidiagonal
 												</button>
 
 

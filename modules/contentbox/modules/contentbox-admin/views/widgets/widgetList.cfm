@@ -21,7 +21,7 @@
 					title="Clear Search"
 					onclick="clearFilter()"
 				>
-					<i class="far fa-times-circle fa-lg"></i>
+					<i class="fa fa-times-circle fa-lg"></i>
 				</span>
 			</div>
 		</div>
@@ -147,7 +147,7 @@
 													<cfif prc.widgets.widgettype eq "custom">
 														<!--- Delete Command --->
 														<a title="Delete Widget" data-container="body"  href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
-															<i class="far fa-trash-alt fa-lg"></i>
+															<i class="fa fa-trash fa-lg"></i>
 														</a>
 													</cfif>
 												</cfif>

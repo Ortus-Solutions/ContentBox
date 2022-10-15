@@ -27,7 +27,7 @@
                         <ul class="nav nav-tabs">
                             <li class="active">
 								<a href="##site_options" data-toggle="tab">
-									<i class="fas fa-globe fa-lg"></i> All Sites
+									<i class="fa fa-globe fa-lg"></i> All Sites
 								</a>
 							</li>
                             <li>
@@ -37,7 +37,7 @@
                             </li>
                             <li>
 								<a href="##security_options" data-toggle="tab">
-									<i class="fas fa-key fa-lg"></i> Security
+									<i class="fa fa-key fa-lg"></i> Security
 								</a>
                             </li>
                             <li>
@@ -47,37 +47,37 @@
                             </li>
                             <li>
 								<a href="##content_options" data-toggle="tab">
-									<i class="fas fa-boxes fa-lg"></i> Content
+									<i class="fa fa-archivees fa-lg"></i> Content
 								</a>
                             </li>
                             <li>
 								<a href="##editor_options" data-toggle="tab">
-									<i class="fas fa-pen fa-lg"></i> Editor Options
+									<i class="fa fa-pen fa-lg"></i> Editor Options
 								</a>
                             </li>
                             <li>
 								<a href="##mediamanager" data-toggle="tab">
-									<i class="fas fa-photo-video fa-lg"></i> Media Manager
+									<i class="fa fa-photo-video fa-lg"></i> Media Manager
 								</a>
                             </li>
                             <li>
 								<a href="##gravatars" data-toggle="tab">
-									<i class="fas fa-portrait fa-lg"></i> Gravatars
+									<i class="fa fa-portrait fa-lg"></i> Gravatars
 								</a>
                             </li>
                             <li>
 								<a href="##notifications" data-toggle="tab">
-									<i class="far fa-bell fa-lg"></i> Notifications
+									<i class="fa fa-bell fa-lg"></i> Notifications
 								</a>
                             </li>
                             <li>
 								<a href="##email_server" data-toggle="tab">
-									<i class="far fa-envelope-open fa-lg"></i> Mail Server
+									<i class="fa fa-envelope-open fa-lg"></i> Mail Server
 								</a>
                             </li>
                             <li>
 								<a href="##search_options" data-toggle="tab">
-									<i class="fab fa-searchengin fa-lg"></i> Search Options
+									<i class="fa fa-searchengin fa-lg"></i> Search Options
 								</a>
                             </li>
                             <li>

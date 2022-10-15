@@ -60,7 +60,7 @@ component implements="contentbox.model.updates.IUpdate"{
 				updateAdmin();
 				// update Editor Role
 				updateEditor();
-				
+
 				log.info("Finalized #version# patching");
 			}
 		}
@@ -87,7 +87,7 @@ component implements="contentbox.model.updates.IUpdate"{
 			rethrow;
 		}
 	}
-	
+
 	function updateAdmin(){
 		var oRole = roleService.findWhere({role="Administrator"});
 		// Add in new permissions
@@ -101,7 +101,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	function updateEditor(){
 		var oRole = roleService.findWhere({role="Editor"});
 		// Add in new permissions
@@ -115,7 +115,7 @@ component implements="contentbox.model.updates.IUpdate"{
 
 		return oRole;
 	}
-	
+
 	function updatePermissions(){
 		var perms = {
 			"EDITORS_DISPLAY_OPTIONS" = "Ability to view the content display options panel",
@@ -150,17 +150,17 @@ component implements="contentbox.model.updates.IUpdate"{
 			var q = new Query(datasource=getDatasource());
 			q.setSQL( "ALTER TABLE cb_page ADD mobileLayout #getVarcharType()#(200) NULL;" );
 			q.execute();
-			
+
 			log.info("Added column for page mobile layouts");
 		}
 		else{
 			log.info("Column for page mobile layouts already in DB, skipping.");
 		}
 	}
-	
+
 	private function getVarcharType(){
 		var dbType = getDatabaseType();
-		
+
 		switch( dbType ){
 			case "PostgreSQL" : {
 				return "varchar";
@@ -179,11 +179,11 @@ component implements="contentbox.model.updates.IUpdate"{
 			}
 		}
 	}
-	
+
 	private function getDatabaseType(){
 		return new dbinfo(datasource=getDatasource()).version().database_productName;
 	}
-	
+
 	private function getDatasource(){
 		return new coldbox.system.orm.hibernate.util.ORMUtilFactory().getORMUtil().getDefaultDatasource();
 	}

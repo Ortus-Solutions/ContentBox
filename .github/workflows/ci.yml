@@ -20,8 +20,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cfengine: [ "lucee@5", "adobe@2016", "adobe@2018", "adobe@2021" ]
-        javaVersion: [ "openjdk8", "openjdk11" ]
+        cfengine: [ "lucee@5", "adobe@2018", "adobe@2021" ]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -40,6 +39,8 @@ jobs:
 
       - name: Setup CommandBox CLI
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
+        with:
+          version: 5.6.1
 
       - name: Setup .env For Runner
         run: |
@@ -58,10 +59,8 @@ jobs:
         if: "${{ matrix.cfengine != 'lucee@5' }}"
         run: |
           # Log4j Hibernate Debug
-          mkdir -p .engines/acf2016/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2018/WEB-INF/cfusion/lib/
           mkdir -p .engines/acf2021/WEB-INF/cfusion/lib/
-          cp build/resources/log4j.properties .engines/acf2016/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2018/WEB-INF/cfusion/lib/
           cp build/resources/log4j.properties .engines/acf2021/WEB-INF/cfusion/lib/
 
@@ -81,10 +80,10 @@ jobs:
           # ContentBox dependencies
           cd modules/contentbox && box install
 
-      - name: Start ${{ matrix.cfengine }}/${{ matrix.javaVersion }} Server
+      - name: Start ${{ matrix.cfengine }} Server
         run: |
           # Startup the Server
-          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" javaVersion=${{ matrix.javaVersion }} --noSaveSettings --debug
+          box server start serverConfigFile="server-${{ matrix.cfengine }}.json" --noSaveSettings --debug
           # Install Adobe 2021 cfpm modules
           if [[ "${{ matrix.cfengine }}" == "adobe@2021" ]] ; then
             box run-script install:2021
@@ -113,7 +112,7 @@ jobs:
         if: always()
         with:
           files: tests/results/**/*.xml
-          check_name: "${{ matrix.cfengine }}/${{ matrix.javaVersion }} Test Results"
+          check_name: "${{ matrix.cfengine }} Test Results"
 
       - name: Upload Test Results Artifacts
         if: always()
@@ -131,16 +130,13 @@ jobs:
           SLACK_COLOR: ${{ job.status }} # or a specific color like 'green' or '#ff00ff'
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_MESSAGE: 'ContentBox tests failed :cry:, check them out here: https://github.com/Ortus-Solutions/ContentBox/actions'
-          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }}/${{ matrix.javaVersion }} failed
+          SLACK_TITLE: ContentBox Tests For ${{ matrix.cfengine }} failed
           SLACK_USERNAME: CI
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: Failure Debugging Info
         if: ${{ failure() }}
         run: |
-          if [[ "{{ matrix.cfengine }}" == "adobe@2016" ]] ; then
-            cat .engines/acf2016/WEB-INF/cfusion/logs/hibernatesql.log
-          fi
           if [[ "{{ matrix.cfengine }}" == "adobe@2018" ]] ; then
             cat .engines/acf2018/WEB-INF/cfusion/logs/hibernatesql.log
           fi
@@ -153,7 +149,7 @@ jobs:
         if: ${{ failure() }}
         uses: actions/upload-artifact@v2
         with:
-          name: Failure Debugging Info - ${{ matrix.cfengine }} - ${{ matrix.javaVersion }}
+          name: Failure Debugging Info - ${{ matrix.cfengine }}
           path: |
             .engines/**/logs/*
             .engines/**/WEB-INF/cfusion/logs/*
@@ -181,12 +177,39 @@ jobs:
         uses: Ortus-Solutions/setup-commandbox@v2.0.1
         with:
           forgeboxAPIKey: ${{ secrets.FORGEBOX_API_TOKEN }}
+          version: 5.5.2
 
       - name: Install Build Dependencies
         run: |
           box install --production
           box install commandbox-docbox
           cd modules/contentbox && box install --production
+
+      # Focal ships with node 16.x so we need to update to 18
+      - name:  Install Node 18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Compile Release Assets
+        run: |
+          node -v
+          npm -v
+          npm install && npm run prod
+          cd modules/contentbox/themes/default
+          npm install && npm run prod
+          cd $GITHUB_WORKSPACE
+          rm -rf node_modules
+          rm -rf modules/contentbox/themes/default/node_modules
+
+      - name: Compile Release Static assets
+        run: |
+          npm install && npm run prod
+          cd modules/contentbox/themes/default
+          npm install && npm run prod
+          cd $GITHUB_WORKSPACE
+          rm -rf node_modules
+          rm -rf modules/contetnbox/themes/default/node_modules
 
       - name: Setup Environment Variables For Build Process
         id: current_version

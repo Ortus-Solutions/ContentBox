@@ -6,7 +6,7 @@
 
             <div class="panel-heading">
                 <h3 class="panel-title p5">
-                   <i class="fas fa-user-shield fa-lg"></i> Two-Factor Authentication
+                   <i class="fa fa-user-shield fa-lg"></i> Two-Factor Authentication
                 </h3>
             </div>
 
@@ -36,7 +36,7 @@
 	                        	class			= "form-control",
 	                        	autocomplete	= "off"
 	                        )#
-	                        <i class="fas fa-key"></i>
+	                        <i class="fa fa-key"></i>
 	                    </div>
 	                </div>
 
@@ -60,7 +60,7 @@
 	                </div>
 
 	                <a href="#event.buildLink( prc.xehResend )#">
-               			<i class="fas fa-redo"></i> #cb.r( "twofactor.resendcode@security" )#
+               			<i class="fa fa-redo"></i> #cb.r( "twofactor.resendcode@security" )#
                		</a>
 
 	                <!--- Event --->

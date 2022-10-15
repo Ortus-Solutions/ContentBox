@@ -1,0 +1,29 @@
+{
+	"description": "Needed fields for a site category",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"slug",
+					"category"
+				],
+				"properties": {
+					"slug": {
+						"description": "The slug of the site category",
+						"type": "string"
+					},
+					"category": {
+						"description": "The name of the site category",
+						"type": "string"
+					}
+				},
+				"example": {
+					"slug": "slug",
+					"category": "Category"
+				}
+			}
+		}
+	}
+}

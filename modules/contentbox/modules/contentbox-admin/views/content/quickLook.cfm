@@ -36,7 +36,7 @@
 
 				<!--- Left Title --->
 				<div class="size20">
-					<i class="far fa-eye"></i>
+					<i class="fa fa-eye"></i>
 
 					<!--- Content Title --->
 					#prc.content.getTitle()#
@@ -44,7 +44,7 @@
 					<!--- External Link --->
 					<cfif prc.content.getContentType() neq "contentstore">
 						<a href="#prc.cbHelper.linkContent( prc.content )#" title="Open in Site" target="_blank" class="size14">
-							<i class="fas fa-external-link-alt"></i>
+							<i class="fa fa-external-link-alt"></i>
 						</a>
 					</cfif>
 				</div>
@@ -60,7 +60,7 @@
 							href="#event.buildLink( '#prc.cbAdminEntryPoint#.versions.index' )#/contentID/#prc.content.getContentId()#"
 							class="btn btn-default btn-sm"
 						>
-							<i class="fas fa-history"></i> View History
+							<i class="fa fa-history"></i> View History
 						</a>
 					</div>
 
@@ -107,13 +107,13 @@
 					<!--- Changelog --->
 					<cfif len( prc.content.getActiveContent().getChangelog() )>
 						<div class="mt10 ml5" title="Commit Changelog">
-							<i class="fas fa-sticky-note fa-lg mr5"></i> #prc.content.getActiveContent().getChangelog()#
+							<i class="fa fa-sticky-note fa-lg mr5"></i> #prc.content.getActiveContent().getChangelog()#
 						</div>
 					</cfif>
 
 					<!--- Categories --->
 					<div class="mt10 ml5" title="Categories">
-						<i class="fas fa-tags fa-lg"></i> #prc.content.getCategoriesList()#
+						<i class="fa fa-tags fa-lg"></i> #prc.content.getCategoriesList()#
 					</div>
 				</div>
 
@@ -145,7 +145,7 @@
 
 			<!--- Button Bar --->
 			<div class="modal-footer">
-				<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
+				<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 					<a
 						class="btn btn-info"
 						href="#event.buildLink( prc.xehContentEditor )#/contentID/#prc.content.getContentID()#"

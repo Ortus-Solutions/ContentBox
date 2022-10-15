@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fas fa-passport fa-lg"></i>
+        	<i class="fa fa-passport fa-lg"></i>
 			Security Rules
 			<span id="rulesCountContainer"></span>
 		</h1>
@@ -81,14 +81,14 @@
 												data-title="Really Apply Rules?"
 												data-message="Please be aware that you could be locked out of application if your rules are not correct."
 											>
-												<i class="fas fa-bolt fa-lg"></i> Apply Rules
+												<i class="fa fa-bolt fa-lg"></i> Apply Rules
 											</a>
 										</li>
 										</cfif>
 										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a href="javascript:importContent()">
-													<i class="fas fa-file-import fa-lg"></i> Import
+													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 										</cfif>
@@ -98,12 +98,12 @@
 													href="#event.buildLink ( prc.xehExportAll )#.json"
 													target="_blank"
 												>
-													<i class="fas fa-file-export fa-lg"></i> Export All
+													<i class="fa fa-file-export fa-lg"></i> Export All
 												</a>
 											</li>
 											<li>
 												<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-													<i class="fas fa-file-export fa-lg"></i> Export Selected
+													<i class="fa fa-file-export fa-lg"></i> Export Selected
 												</a>
 											</li>
 										</cfif>
@@ -111,11 +111,11 @@
 										<li>
 											<a
 												href="#event.buildLink( prc.xehResetRules )#"
-												data-title="<i class='fas fa-recycle'></i> Really Reset All Rules?"
+												data-title="<i class='fa fa-recycle'></i> Really Reset All Rules?"
 												class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults."
 											>
-												<i class="fas fa-eraser"></i> Reset Rules
+												<i class="fa fa-eraser"></i> Reset Rules
 											</a>
 										</li>
 										</cfif>
