@@ -89,7 +89,8 @@ component
 	property
 		name   ="domainAliases"
 		column ="domainAliases"
-		ormtype="text";
+		ormtype="text"
+		default="[]";
 
 	property
 		name   ="tagline"
@@ -375,7 +376,7 @@ component
 		"keywords"         : { required : false, size : "0..255" },
 		"domain"           : { required : true, size : "1..255" },
 		"domainRegex"      : { required : true, size : "1..255" },
-		// "domainAliases"    : { required : true, size : "2..10000", type : "json" },
+		"domainAliases"    : { required : true, type : "array" },
 		"tagline"          : { required : false, size : "0..255" },
 		"homepage"         : { required : false, size : "0..255" },
 		"isBlogEnabled"    : { required : true, type : "boolean" },
@@ -406,6 +407,19 @@ component
 		// Incorporate all includes to the export profile
 		this.memento.profiles.export.defaultIncludes.append( this.memento.defaultIncludes, true );
 
+		return this;
+	}
+
+	/**
+	 * Overload to setter to ensure JSON in the property
+	 */
+	public function getDomainAliases(){
+		param variables.domainAliases = "[]";
+		return deserializeJSON( variables.domainAliases );
+	}
+
+	public function setDomainAliases( any aliases=[] ){
+		variables.domainAliases = isSimpleValue( arguments.aliases ) ? arguments.aliases : serializeJSON( arguments.aliases );
 		return this;
 	}
 
@@ -497,7 +511,7 @@ component
 		var serverName = this.getDomain();
 		// Return the appropriate site alias Uri
 		if (
-			getDomainAliasesAsArray().some( function( alias ){
+			getDomainAliases().some( function( alias ){
 				if (
 					isStruct( alias ) && alias.keyExists( "domainRegex" ) && reFindNoCase(
 						alias.domainRegex,
@@ -517,25 +531,6 @@ component
 		& "://"
 		& serverName // Whitelisted Site Domain/Alias to use for building the BaseHREF
 		& ( listFind( "80,443", serverPort ) ? "" : ":#serverPort#" ); // The right port
-	}
-
-	/**
-	 * Function ensures we pass back a valid array of Domain Aliases, or an empty array as a default.
-	 */
-	public function getDomainAliasesAsArray(){
-		if (
-			!isNull( getDomainAliases() ) &&
-			isJSON( getDomainAliases() )
-		) {
-			var aDomainAliases = deserializeJSON( getDomainAliases() );
-			if ( isArray( aDomainAliases ) ) {
-				return aDomainAliases;
-			} else {
-				return [];
-			}
-		} else {
-			return [];
-		}
 	}
 
 	/**

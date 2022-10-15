@@ -6,7 +6,7 @@ var aFields = [
 		"domain": "#prc.site.getDomain()#",
 		"domainRegex": "#replace( prc.site.getDomainRegex(), "\", "\\", "all" )#"
 	},
-	... #serializeJSON( prc.site.getDomainAliasesAsArray() )#
+	... #serializeJSON( prc.site.getDomainAliases() )#
 ];
 console.log( aFields );
 document.addEventListener( "DOMContentLoaded", () => {
