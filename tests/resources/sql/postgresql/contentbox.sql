@@ -421,7 +421,6 @@ DROP TABLE IF EXISTS "contentbox"."cb_page";
 CREATE TABLE "contentbox"."cb_page" (
   "contentid" varchar(255) COLLATE "pg_catalog"."default" NOT NULL,
   "layout" varchar(200) COLLATE "pg_catalog"."default",
-  "mobilelayout" varchar(200) COLLATE "pg_catalog"."default",
   "order" int4,
   "showinmenu" bool NOT NULL DEFAULT true,
   "excerpt" text COLLATE "pg_catalog"."default",

@@ -32,7 +32,7 @@ module.exports = function(mix) {
                 "window.$": "jquery",
                 jQuery         :"jquery",
                 _              : "lodash",
-                Raphael        : "Raphael",
+                Raphael        : "raphael",
                 jwerty         : "jwerty"
             } ),
             {

@@ -1,6 +1,6 @@
 {
     "name":"ContentBox Tester Site",
-    "version":"5.3.0",
+    "version":"6.0.0-beta",
     "author":"Ortus Solutions <info@ortussolutions.com>",
     "shortDescription":"A tester site for developing the ContentBox Modular CMS",
     "type":"cms",
@@ -24,7 +24,7 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"^6.0.0",
+        "coldbox":"^6.8",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
         "commandbox-migrations":"*"
@@ -51,15 +51,13 @@
         "dbseed:mysql":"task run contentbox/modules/seeders/MSSQL.cfc",
         "dbseed:mssal":"task run contentbox/modules/seeders/SeedMySQL.cfc",
         "dbseed:postgres":"task run contentbox/modules/seeders/SeedPostgreSQL.cfc",
-        "format":"cfformat run config,modules/**/*.cfc,tests/specs/**/*.cfc --overwrite",
-        "format:watch":"cfformat watch config,modules/**/*.cfc,tests/specs/**/*.cfc ./.cfformat.json",
-        "format:check":"cfformat check config,modules/**/*.cfc,tests/specs/**/*.cfc",
+        "format":"cfformat run config,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc --overwrite",
+        "format:watch":"cfformat watch config,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc ./.cfformat.json",
+        "format:check":"cfformat check config,modules_app/**/*.cfc,modules/contentbox/**/*.cfc,tests/**/*.cfc",
         "start:lucee":"server start serverConfigFile='server-lucee@5.json' --force --debug",
-        "start:2016":"server start serverConfigFile='server-adobe@2016.json' --force --debug",
         "start:2018":"server start serverConfigFile='server-adobe@2018.json' --force --debug",
         "start:2021":"server start serverConfigFile='server-adobe@2021.json' --force --debug",
         "log:lucee":"server log serverConfigFile=server-lucee@5.json --follow",
-        "log:2016":"server log serverConfigFile=server-adobe@2016.json --follow",
         "log:2018":"server log serverConfigFile=server-adobe@2018.json --follow",
         "log:2021":"server log serverConfigFile=server-adobe@2021.json --follow",
         "cfpm":"echo '\".engines/acf2021/WEB-INF/cfusion/bin/cfpm.sh\"' | run",

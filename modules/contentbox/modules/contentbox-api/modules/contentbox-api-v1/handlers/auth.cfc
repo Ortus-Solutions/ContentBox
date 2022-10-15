@@ -56,7 +56,8 @@ component extends="baseHandler" {
 	/**
 	 * Logout from ContentBox, you must pass in your JWT Token else we don't know who you are :)
 	 *
-	 * @tags Authentication
+	 * @tags      Authentication
+	 * @responses contentbox/apidocs/auth/logout/responses.json
 	 */
 	function logout( event, rc, prc ){
 		jwtAuth().logout();
@@ -67,7 +68,8 @@ component extends="baseHandler" {
 	/**
 	 * Refresh your access token, you must pass in your JWT Refresh token
 	 *
-	 * @tags Authentication
+	 * @tags      Authentication
+	 * @responses contentbox/apidocs/auth/refreshToken/responses.json
 	 */
 	function refreshToken( event, rc, prc ){
 		try {
@@ -95,7 +97,8 @@ component extends="baseHandler" {
 	/**
 	 * If logged in, you will be able to see your user information.
 	 *
-	 * @tags Authentication
+	 * @tags      Authentication
+	 * @responses contentbox/apidocs/echo/whoami/responses.json
 	 */
 	function whoami( event, rc, prc ) secure{
 		param rc.includes       = "permissions,permissionGroups,role.permissions";

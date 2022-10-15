@@ -19,8 +19,9 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	/**
 	 * Display all authors according to query options
 	 *
-	 * @tags Authors
-	 * @x    -contentbox-permissions AUTHOR_ADMIN
+	 * @tags                     Authors
+	 * @responses                contentbox/apidocs/authors/index/responses.json
+	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
 	function index( event, rc, prc ){
 		// Criterias and Filters
@@ -53,8 +54,9 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	/**
 	 * Show an author using the id
 	 *
-	 * @tags Authors
-	 * @x    -contentbox-permissions AUTHOR_ADMIN
+	 * @tags                     Authors
+	 * @responses                contentbox/apidocs/authors/show/responses.json
+	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
 	function show( event, rc, prc ){
 		param rc.includes       = "permissions,permissionGroups,role.permissions";
@@ -68,8 +70,10 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	/**
 	 * Create an author in ContentBox
 	 *
-	 * @tags Authors
-	 * @x    -contentbox-permissions AUTHOR_ADMIN
+	 * @tags        Authors
+	 * @requestBody contentbox/apidocs/authors/create/requestBody.json
+	 * @responses   contentbox/apidocs/authors/create/responses.json
+	 * @x           -contentbox-permissions AUTHOR_ADMIN
 	 */
 	function create( event, rc, prc ){
 		// Default set variables for the author
@@ -85,8 +89,9 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	/**
 	 * Update an existing author
 	 *
-	 * @tags Authors
-	 * @x    -contentbox-permissions AUTHOR_ADMIN
+	 * @tags                     Authors
+	 * @responses                contentbox/apidocs/authors/update/responses.json
+	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
 	function update( event, rc, prc ){
 		// Memento output
@@ -103,8 +108,9 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	/**
 	 * Delete an author using an id
 	 *
-	 * @tags Authors
-	 * @x    -contentbox-permissions AUTHOR_ADMIN
+	 * @tags                     Authors
+	 * @responses                contentbox/apidocs/authors/delete/responses.json
+	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
 	function delete( event, rc, prc ){
 		super.delete( argumentCollection = arguments );

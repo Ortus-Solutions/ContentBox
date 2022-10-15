@@ -1,0 +1,35 @@
+{
+	"description": "Needed fields for a site entry",
+	"required": true,
+	"content": {
+		"application/json": {
+			"schema": {
+				"type": "object",
+				"required": [
+					"slug",
+					"title",
+					"content"
+				],
+				"properties": {
+					"slug": {
+						"description": "The slug of the site entry",
+						"type": "string"
+					},
+					"title": {
+						"description": "The title of the site entry",
+						"type": "string"
+					},
+					"content": {
+						"description": "The content for the entry",
+						"type": "string"
+					}
+				},
+				"example": {
+					"slug": "slug",
+					"title": "Entry",
+					"content": "<p>Content<p>"
+				}
+			}
+		}
+	}
+}

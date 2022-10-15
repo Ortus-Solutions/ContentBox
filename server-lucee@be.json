@@ -1,9 +1,9 @@
 {
     "app":{
-        "cfengine":"adobe@2016",
-        "serverHomeDirectory":".engines/acf2016"
+        "cfengine":"lucee@5.3.10.6-SNAPSHOT",
+        "serverHomeDirectory":".engines/lucee-be"
     },
-    "name":"contentbox-adobe2016",
+    "name":"contentbox-lucee-be",
     "JVM":{
         "heapSize":"1024"
     },

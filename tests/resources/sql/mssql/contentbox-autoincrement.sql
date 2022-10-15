@@ -1365,7 +1365,6 @@ GO
 CREATE TABLE [dbo].[cb_page] (
   [contentID] int NOT NULL,
   [layout] varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
-  [mobileLayout] varchar(200) COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
   [order] int NULL,
   [showInMenu] tinyint NOT NULL,
   [excerpt] text COLLATE SQL_Latin1_General_CP1_CI_AS NULL,
@@ -3902,4 +3901,3 @@ GO
 -- ----------------------------
 ALTER TABLE [dbo].[cb_subscriptions] ADD CONSTRAINT [FKE92A1716F2A66EE4] FOREIGN KEY ([FK_subscriberID]) REFERENCES [cb_subscribers] ([subscriberID]) ON DELETE NO ACTION ON UPDATE NO ACTION
 GO
-

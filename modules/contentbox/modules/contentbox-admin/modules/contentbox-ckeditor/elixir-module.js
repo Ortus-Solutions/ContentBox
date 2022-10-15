@@ -14,7 +14,10 @@ module.exports = function(mix) {
 
     var destination = "modules/contentbox/modules/contentbox-admin/modules/contentbox-ckeditor/includes/ckeditor";
 
-    fs.rmdirSync( destination, { recursive :true } );
+	if( fs.existsSync( destination ) ){
+		fs.rmdirSync( destination, { recursive :true } );
+	}
+	fs.ensureDirSync( destination );
 
     moduleDeps.forEach( src => fs.copySync( src, `${destination}/${src.split( '/' ).pop()}`, { overwrite : true } ) );
 

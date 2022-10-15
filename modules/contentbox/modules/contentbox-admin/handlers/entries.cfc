@@ -87,7 +87,7 @@ component extends="baseContentHandler" {
 	 * Save an entry
 	 */
 	function save( event, rc, prc ){
-		arguments.adminPermission = "ENTRIES_ADMIN";
+		arguments.adminPermission = "ENTRIES_ADMIN,ENTRIES_EDITOR";
 		arguments.relocateTo      = prc.xehEntries;
 		super.save( argumentCollection = arguments );
 	}
