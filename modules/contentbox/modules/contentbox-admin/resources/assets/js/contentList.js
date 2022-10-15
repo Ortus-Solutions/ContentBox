@@ -12,6 +12,7 @@ const contentListHelper = ( () => {
 	var $bulkStatusURL   = "";
 	var $cloneDialog	 = "";
 	var $parentID 		 = "";
+	var $isSearching     = false;
 
 	/**
 	 * Load content into the setup properties. We define it here, so the references can be compiled on the returned exposed functions
@@ -45,7 +46,9 @@ const contentListHelper = ( () => {
 		// Add dynamic search key name
 		args[ $searchName ] = criteria.search;
 		// load content
+		$isSearching=true;
 		$tableContainer.load( $tableURL, args, function(){
+			$isSearching=false;
 			$tableContainer.css( "opacity", 1 );
 			$( this ).fadeIn( "fast" );
 		} );
@@ -101,6 +104,7 @@ const contentListHelper = ( () => {
 			$bulkStatusURL  = settings.bulkStatusURL;
 			$cloneDialog	= settings.cloneDialog;
 			$parentID 		= settings.parentID;
+			$isSearching    = false;
 
 			// Create history Listener
 			History.Adapter.bind( window, "statechange", function(){
@@ -111,7 +115,9 @@ const contentListHelper = ( () => {
 			$searchField.keyup(
 				_.debounce(
 					function(){
-						contentLoad( { search: $( this ).val() } );
+						if( !$isSearching ){
+							contentLoad( { search: $( this ).val() } );
+						}
 					},
 					300
 				)

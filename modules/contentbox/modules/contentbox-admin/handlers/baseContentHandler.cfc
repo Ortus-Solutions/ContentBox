@@ -123,16 +123,17 @@ component extends="baseHandler" {
 
 		// search content with filters and all
 		var contentResults = variables.ormService.search(
-			search     : rc.searchContent,
-			isPublished: rc.fStatus,
-			category   : rc.fCategories,
-			author     : rc.fAuthors,
-			creator    : rc.fCreators,
-			parent     : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
-			sortOrder  : variables.defaultOrdering,
-			siteID     : prc.oCurrentSite.getsiteID(),
-			offset     : prc.paging.startRow - 1,
-			max        : prc.cbSettings.cb_paging_maxrows
+			search     			: rc.searchContent,
+			isPublished			: rc.fStatus,
+			category   			: rc.fCategories,
+			author     			: rc.fAuthors,
+			creator    			: rc.fCreators,
+			parent     			: ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
+			sortOrder  			: variables.defaultOrdering,
+			siteID     			: prc.oCurrentSite.getsiteID(),
+			offset     			: prc.paging.startRow - 1,
+			max        			: prc.cbSettings.cb_paging_maxrows,
+			searchActiveContent : false
 		);
 		prc.content      = contentResults[ variables.entityPlural ];
 		prc.contentCount = contentResults.count;
