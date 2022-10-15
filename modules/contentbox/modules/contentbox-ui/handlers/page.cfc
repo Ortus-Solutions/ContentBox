@@ -9,6 +9,7 @@ component extends="content" {
 
 	// DI
 	property name="pageService" inject="pageService@contentbox";
+	property name="relocationService" inject="RelocationService@contentbox";
 	property name="searchService" inject="SearchService@contentbox";
 	property name="securityService" inject="securityService@contentbox";
 	property name="mobileDetector" inject="mobileDetector@contentbox";
@@ -167,6 +168,14 @@ component extends="content" {
 				.setLayout( name = "#prc.cbTheme#/layouts/#thisLayout#", module = prc.cbThemeRecord.module )
 				.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			return;
+		} else {
+			var relocation = variables.relocationService.newCriteria().isEq( "site", variables.CBHelper.site() ).isEq( "slug", rc.pageUri ).get();
+			if( !isNull( relocation ) ){
+				relocate(
+				 	URI = '/' & ( !isNull( relocation.getRelatedContent() ) ? relocation.getRelatedContent().getSlug() : relocation.getTarget() ),
+					statusCode = 301
+				);
+			}
 		}
 		// end if page was loaded
 

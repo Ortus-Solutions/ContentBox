@@ -9,6 +9,7 @@ component extends="content" {
 
 	// DI
 	property name="entryService" inject="id:entryService@contentbox";
+	property name="relocationService" inject="RelocationService@contentbox";
 	property name="paginator" inject="Paging@contentbox";
 
 	// Pre Handler Exceptions
@@ -251,6 +252,13 @@ component extends="content" {
 				.setLayout( name = "#prc.cbTheme#/layouts/blog", module = prc.cbThemeRecord.module )
 				.setView( view = "#prc.cbTheme#/views/entry", module = prc.cbThemeRecord.module );
 		} else {
+			var relocation = variables.relocationService.newCriteria().isEq( "site", variables.CBHelper.site() ).isEq( "slug", rc.entrySlug ).get();
+			if( !isNull( relocation ) ){
+				relocate(
+					URL = variables.CBHelper.linkBlog() & "/" & ( !isNull( relocation.getRelatedContent() ) ? relocation.getRelatedContent().getSlug() : relocation.getTarget() ),
+					statusCode = 301
+				);
+			}
 			// announce event
 			announce( "cbui_onEntryNotFound", { entry : prc.entry, entrySlug : rc.entrySlug } );
 			// missing page

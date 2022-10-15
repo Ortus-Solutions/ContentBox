@@ -77,6 +77,15 @@ component {
 		);
 
 		/**
+		 * Relocations Handler Routing
+		 */
+		resources(
+			resource: "relocations",
+			pattern = "#siteprefix#/relocations",
+			except  : except
+		);
+
+		/**
 		 * --------------------------------------------------------------------------
 		 * ContentStore Routing
 		 * --------------------------------------------------------------------------

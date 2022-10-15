@@ -1,0 +1,18 @@
+{
+    "contentbox": {
+        "manager": "cfmigrations.models.QBMigrationManager",
+        "migrationsDirectory": "modules/contentbox/migrations/",
+        "properties": {
+            "defaultGrammar": "AutoDiscover@qb",
+            "migrationsTable": "cfmigrations",
+            "connectionInfo": {
+                "password": "${DB_PASSWORD}",
+                "connectionString": "${DB_CONNECTIONSTRING}",
+                "class": "${DB_CLASS}",
+                "username": "${DB_USER}",
+                "bundleName": "${DB_BUNDLENAME}",
+                "bundleVersion": "${DB_BUNDLEVERSION}"
+            }
+        }
+    }
+}
