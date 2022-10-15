@@ -418,8 +418,10 @@ component
 		return deserializeJSON( variables.domainAliases );
 	}
 
-	public function setDomainAliases( any aliases=[] ){
-		variables.domainAliases = isSimpleValue( arguments.aliases ) ? arguments.aliases : serializeJSON( arguments.aliases );
+	public function setDomainAliases( any aliases = [] ){
+		variables.domainAliases = isSimpleValue( arguments.aliases ) ? arguments.aliases : serializeJSON(
+			arguments.aliases
+		);
 		return this;
 	}
 
