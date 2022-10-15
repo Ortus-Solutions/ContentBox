@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -1310,6 +1310,8 @@ component
 			variables.showInSearch           = arguments.original.getShowInSearch();
 			variables.featuredImage          = arguments.original.getFeaturedImage();
 			variables.featuredImageURL       = arguments.original.getFeaturedImageURL();
+			variables.contentTemplate        = arguments.original.getContentTemplate();
+			variables.childContentTemplate   = arguments.original.getChildContentTemplate();
 			variables.comments               = [];
 			variables.children               = [];
 
@@ -1394,6 +1396,7 @@ component
 			}
 		}
 		// end of cloning transaction
+		variables.contentService.evict( arguments.original );
 
 		return this;
 	}
