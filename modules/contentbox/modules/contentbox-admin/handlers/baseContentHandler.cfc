@@ -273,16 +273,20 @@ component extends="baseHandler" {
 		}
 		// Get all content names for parent drop downs excluding yourself and your children
 		prc.allContent = variables.ormService
-			sortOrder: "slug asc",
-			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
-			.filter( function( item ){
-				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
-         });
+									.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
+									.filter(
+										function( item ){
+											return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+										}
+									);
+	    // Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
 																contentType=prc.oContent.getContentType(),
 																site=prc.oContent.getSite(),
 																fields="templateID,name"
 															);
+		// Provide JWT Tokens for communicating with the API
+		prc.jwtTokens = getInstance( "JWTService@cbsecurity" ).fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
