@@ -1,4 +1,5 @@
-import { createKeybindingsHandler } from "tinykeys"
+import { createKeybindingsHandler } from "tinykeys";
+import toastr from "toastr";
 window.contentListHelper = require( "./contentList.js" ).default;
 require( "./filebrowser.js" );
 require( "./editors/editors.js" );

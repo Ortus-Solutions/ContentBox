@@ -17,7 +17,7 @@
 				<!--- STATUS --->
 				<tr>
                     <th class="col-md-4">Status:</th>
-                    <td class="col-md-8">
+                    <td class="col-md-8" id="publish-info">
 						<!--- Status --->
 						<cfif prc.oContent.isExpired()>
 							<span class="p5 label label-danger">
