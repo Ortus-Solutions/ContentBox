@@ -1,3 +1,5 @@
+const { template } = require("lodash");
+
 /**
  * Get widget selector URL
  */
@@ -190,9 +192,6 @@ window.setupEditors = function( theForm, withExcerpt, saveURL, collapseNav ){
 
 	// Editor dirty checks
 	window.onbeforeunload = askLeaveConfirmation;
-
-	// Editor alerts
-	window.alerts = [];
 
 	// counters
 	$( "#htmlKeywords" ).keyup( function(){
@@ -510,73 +509,91 @@ window.onContentTemplateChange = function( e ){
 }
 
 window.applyContentTemplate = function( templateId ){
-	fetch(
-		`/cbapi/v1/content-templates/${templateId}`,
-		{
-			headers : {
-				"Authorization" : `Bearer ${window.authentication.access_token}`
+	if( templateId instanceof Event  ){
+		templateId = templateId.currentTarget.value;
+	}
+	if( templateId != 'null' ){
+		fetch(
+			`/cbapi/v1/content-templates/${templateId}`,
+			{
+				headers : {
+					"Authorization" : `Bearer ${window.authentication.access_token}`
+				}
 			}
-		}
-	).then( r => r.json() )
-	.then( response => Object.keys( response.definition ).forEach( key => applyContentTemplateToField( key, response.definition ) ) )
-	.catch( error => {
-		this.globalAlert.type = "danger";
-		this.globalAlert.message = error.toString();
-		console.log( error );
-	} );
+		).then( r => r.json() )
+		.then( response => {
+			$( '.template-highlight-info' ).removeClass( "hidden" );
+			window.assignedTemplate = response.data;
+			Object.keys( response.data.definition ).forEach( key => applyContentTemplateToField( key, response.data.definition ) )
+		} )
+		.catch( error => {
+			$dispatch(
+				"add-alert",
+				{
+					"type" : "api",
+					"class" : "danger",
+					"message" : error.toString()
+				}
+			);
+
+			throw error;
+		} );
+	} else {
+		$( '.template-highlight-info' ).addClass( "hidden" );
+		$( '.template-restricted' ).removeClass( 'template-restricted' );
+		$( '.template-defined' ).removeClass( 'template-defined' );
+	}
+
 }
 
 window.announceModifiedByTemplate = function(){
-	if( !window.alerts.some( alert => alert.type == 'template' ) ){
-		window.alerts.push(
+	if( document.getElementById( "contentID" ).value && !window.alerts.some( alert => alert.type == 'template' ) ){
+		$dispatch(
+			"add-alert",
 			{
 				"type" : "template",
 				"class" : "warning",
-				"message" : "This content item has been modified by changes to the assigned template. You will need to re-save or re-publish this item for the template changes to take effect."
+				"message" :  "This content item has been modified by changes to the assigned template. You will need to re-save or re-publish this item for the template changes to take effect."
 			}
 		);
 	}
 }
 
 window.applyContentTemplateToField = function( fieldName, definition ){
-	var template = getContentTemplate();
+	console.log( definition );
 	if( definition.hasOwnProperty( fieldName ) ){
 		switch( fieldName ){
 			case "customFields":{
-				definition.customFields.forEach(
+				definition.customFields.value.forEach(
 					fieldDefinition => {
-						let isApplied = document.getElementsByClassName( 'customFieldKey' ).some( el => el.value == fieldDefinition.name );
+						let customFields = document.getElementById( 'customFields' );
+						let isApplied = !!( customFields.getElementsByClassName( 'customFieldKey' ).length && Array.from( customFields.getElementsByClassName( 'customFieldKey' ) ).some( el => el.value == fieldDefinition.name ) );
 						var $templateNode;
 						if( !isApplied ){
-							$( "#addCustomFieldButton" ).click();
-							setTimeout( () => {
-								$templateNode = $( ".template", "#customFields" ).last();
-								$( "input.customFieldKey", $templateNode ).val( fieldDefinition.name );
-								if( fieldDefinition.defaultValue ){
-									$( "input.customFieldKey", $templateNode ).val( fieldDefinition.defaultValue )
-								}
-								announceModifiedByTemplate();
-							}, 100);
+							$dispatch( "add-custom-field", { "key" : fieldDefinition.name, "value" : fieldDefinition.defaultValue } );
+							console.log( "custom field created: " + fieldName );
+							announceModifiedByTemplate();
 						} else {
-							$templateNode = $( `input.customFieldKey[value='${fieldDefinition.name}']` ).closest( ".template" );
-							let $valueInput = $( "input.customFieldValue", $templateNode );
-							if( !$valueInput.val() && fieldDefinition.defaultValue ){
-								$valueInput.val( fieldDefinition.defaultValue );
+							let nodeIndex = Array.from( customFields.getElementsByClassName( 'customFieldKey' ) ).findIndex( option => option.value == fieldDefinition.name );
+							let valueOption = customFields.getElementsByClassName( 'customFieldValue' )[ nodeIndex ];
+							if( !valueOption.value && fieldDefinition.defaultValue ){
+								valueOption.value = fieldDefinition.defaultValue;
+								console.log( "exisiting custom field modified: " + fieldName );
 								announceModifiedByTemplate();
 							}
 						}
-						$templateNode.addClass( "template-required" );
-						$( ".dynamicRemove", $templateNode )
-							.attr( "disabled", true )
-							.tooltip( "This custom field may not be removed as it is part of the template definition" );
 					}
 				);
+				break;
+			}
+			case "categories" : {
+				definition.categories.value.forEach( cat => $( `[value=${cat}]`, '#categoriesChecks' ).attr( 'checked', 'checked' ).attr( "readonly", "readonly" ).parent().addClass( "template-defined" ).addClass( 'template-restricted' ) );
 				break;
 			}
 			default : {
 				var $templateField = $( `[name=${fieldName}]` );
 				if( $templateField.length ){
-					let nodeType = templateField[ 0 ].nodeType;
+					let nodeType = $templateField[ 0 ].nodeType;
 					switch( nodeType ){
 						case "radio":
 						case "checkbox":{
@@ -584,41 +601,58 @@ window.applyContentTemplateToField = function( fieldName, definition ){
 								$check => {
 									if(
 										$check.prop( "value" ) == definition[ fieldName ].value
-										&&
-										!$check.prop( "checked" )
 									){
-										$check.click();
-										announceModifiedByTemplate();
+										if( !$check.prop( "checked" ) ){
+											$check.click();
+											console.log( "checkbox modified: " + fieldName );
+											announceModifiedByTemplate();
+										}
+										$check.attr( "readonly", "readonly" ).parent().addClass( "template-restricted" ).addClass( "template-defined");
 									}
 								}
 							)
 						}
 						default:{
-							if( $templateField.hasAttr( "multiple" ) ){
-								$templateField.find( "option" ).each(
-									$option => {
+							if( $templateField[ 0 ].localName == 'select' ){
+								if( typeof( definition[ fieldName ].value ) == 'boolean' ){
+									definition[ fieldName ].value = definition[ fieldName ].value ? "Yes" : "No";
+								}
+								$options = $( "option", $templateField );
+								$options.each(
+									index => {
+										let $option = $( $options[ index ] );
 										$values = Array.isArray( definition[ fieldName ].value )
 													? definition[ fieldName ].value
 													: definition[ fieldName ].value.split( ',' );
 										if(
-											$values.indexOf( $option[ 0 ].value ) > -1
+											$values.indexOf( $option.val() ) > -1
 											&&
-											!$option.hasAttr( "selected" )
+											!$option.attr( "selected" )
 										){
 											$option.attr( "selected", true );
+											console.log( "select modified: " + fieldName );
 											announceModifiedByTemplate();
 										}
 									}
 								);
+								if( !$templateField.attr( 'multiple' ) ){
+									$templateField.attr( 'readonly', 'readonly' ).addClass( "template-restricted" );
+								}
+								$templateField.parent().addClass( 'template-defined' );
 							} else if( !$templateField.val() && definition[ fieldName ].value ) {
-								$templateField.val( definition[ fieldName ].value );
+								if( fieldName == "content" || fieldName == "excerpt" ){
+									setEditorContent( fieldName, definition[ fieldName ].value );
+								} else {
+									$templateField.val( definition[ fieldName ].value );
+								}
+								$templateField.parent().addClass( 'template-defined' );
 								announceModifiedByTemplate();
 							}
 
 						}
 					}
 				} else {
-					console.error( `A field matching the name of ${fieldName} could not be found in the rendered editor. This template field cannot be validated or applied.` );
+					console.warn( `A field matching the name of ${fieldName} could not be found in the rendered editor. This template field cannot be validated or applied.` );
 				}
 
 			}

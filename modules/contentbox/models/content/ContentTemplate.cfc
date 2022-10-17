@@ -137,15 +137,16 @@ cacheuse           ="read-write"
 		variables.createdDate = now();
 		variables.modifiedDate = now();
 		variables.schema = {
-			"title"                  : { "label" : "Title", "type" : "string" },
-			"content"                : { "label" : "Content", "type" : "text" },
-			"markup"                 : { "label" : "Markup", "type" : "markdown" },
-			"excerpt"                : { "label" : "Excerpt", "type" : "text" },
-			"featuredImage"          : { "label" : "Featured Image", "type" : "file" },
+			"title"                  : { "label" : "Title", "type" : "string", "sortOrder" : 1 },
+			"content"                : { "label" : "Content", "type" : "text", "sortOrder" : 2 },
+			"markup"                 : { "label" : "Markup", "type" : "markdown", "sortOrder" : 3 },
+			"description"            : { "label" : "Description", "type" : "text", "excludeTypes" : [ "Page", "Entry" ], "sortOrder" : 4 },
+			"excerpt"                : { "label" : "Excerpt", "type" : "text", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 5 },
+			"featuredImage"          : { "label" : "Featured Image", "type" : "file", "sortOrder" : 6 },
 			// SEO
-			"HTMLTitle"              : { "label" : "HTML Title", "type" : "string" },
-			"HTMLKeywords"           : { "label" : "HTML Keywords", "type" : "string" },
-			"HTMLDescription"        : { "label" : "HTML Description", "type" : "text" },
+			"HTMLTitle"              : { "label" : "HTML Title", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 7 },
+			"HTMLKeywords"           : { "label" : "HTML Keywords", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 8 },
+			"HTMLDescription"        : { "label" : "HTML Description", "type" : "text", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 9 },
 			// Modifiers
 			"parent"                 : {
 				"label" : "Content Parent",
@@ -153,20 +154,21 @@ cacheuse           ="read-write"
 				"search" : "/cbapi/v1/sites/:siteId/pages",
 				"options" : "filteredParents",
 				"optionId" : "contentID",
-				"optionLabel" : "title"
+				"optionLabel" : "title",
+				"excludeTypes" : [ "Entry" ],
+				"sortOrder" : 10
 			},
-			"allowComments"          : { "label" : "Comments Enabled", "type" : "boolean", "default" : true },
-			"passwordProtection"     : { "label" : "Access Password", "type" : "string" },
-			"SSLOnly"                : { "label" : "Force SSL", "type" : "boolean", "default" : false },
+			"allowComments"          : { "label" : "Comments Enabled", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 11 },
+			"passwordProtection"     : { "label" : "Access Password", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 12 },
 			// Caching
-			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true },
-			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0 },
-			"cacheLastAccessTimeout" : { "label" : "Cache Last Access Timeout", "type" : "integer", "default" : 0 },
+			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true, "sortOrder" : 14 },
+			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0, "sortOrder" : 15 },
+			"cacheLastAccessTimeout" : { "label" : "Cache Last Access Timeout", "type" : "integer", "default" : 0, "sortOrder" : 16 },
 			// Display Options
-			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts" },
-			"childLayout"            : { "label" : "Child Layout", "type" : "select", "options" : "availableLayouts" },
-			"showInMenu"             : { "label" : "Show In Menu", "type" : "boolean", "default" : true },
-			"showInSearch"           : { "label" : "Show In Search", "type" : "boolean", "default" : true },
+			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 17 },
+			"childLayout"            : { "label" : "Child Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 18 },
+			"showInMenu"             : { "label" : "Show In Menu", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 19 },
+			"showInSearch"           : { "label" : "Show In Search", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 20 },
 			// Collections
 			"customFields"           : {
 				"label" : "Custom Fields",
@@ -175,13 +177,15 @@ cacheuse           ="read-write"
 					"name"         : { "label" : "Field Name", "required" : true, "type" : "string" },
 					"defaultValue" : { "label" : "Default Value", "type" : "string" }
 				},
-				"presentation" : "input"
+				"presentation" : "input",
+				"sortOrder" : 21
 			},
 			"categories" : {
 				"label" : "Assigned Categories",
 				"type" : "select",
 				"options" : "availableCategories",
-				"multiple" : true
+				"multiple" : true,
+				"sortOrder" : 22
 			}
 		};
 

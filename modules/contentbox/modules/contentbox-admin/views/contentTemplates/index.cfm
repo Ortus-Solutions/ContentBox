@@ -175,7 +175,7 @@
 
 										<td x-text="template.creator.fullName"></td>
 
-										<td x-text="moment( template.modifiedDate ).format( 'MMM Do, yyyy' )"></td>
+										<td x-text="new Date( template.modifiedDate ).toLocaleDateString()"></td>
 
 										<!--- Actions --->
 										<td class="text-center">
@@ -245,12 +245,12 @@
 						<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
 							<form x-show="isEditorOpen" x-cloak method="post" @submit.prevent="saveTemplate()">
 								<div>
-										<h3 x-show="!templateForm.templateID">Create Template</h3>
-										<h3 x-show="templateForm.templateID">Editing : <span x-text="templateForm.template"></span></h3>
 										<button
 											class="close"
 											aria-label="Close"
-											@click.prevent="closeEditor">✖</button>
+											@click.prevent="closeEditor"><i class="fa fa-close"></i></button>
+										<h3 x-show="!templateForm.templateID">Create Template</h3>
+										<h3 x-show="templateForm.templateID">Editing : <span x-text="templateForm.template"></span></h3>
 
 									<div class="template-fields">
 
@@ -267,6 +267,16 @@
 											id="templateID"
 											name="templateID"
 											x-model="templateForm.templateID">
+
+
+										<div class="form-group">
+											<label field="template">Content Type</label>
+											<select class="form-control" x-model="templateForm.contentType">
+												<template x-for="(option) in availableTypes">
+													<option :value="option" x-text="option"></option>
+												</template>
+											</select>
+										</div>
 
 										<!--- Template --->
 										<div class="form-group">
@@ -308,7 +318,7 @@
 											<div class="form-group">
 												<label class="text-muted"><small>Select the fields you wish to define in this template.</small></label>
 												<ul class="list-inline">
-													<template x-for="(templateField, index) in templateFields" :key="templateField.key">
+													<template x-for="(templateField, index) in availableFields()" :key="templateField.key">
 														<li class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
 															<toggle>
 																<div>

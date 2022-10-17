@@ -23,9 +23,10 @@ component extends="baseContentHandler" {
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
 		// exit Handlers
-		prc.xehPages      = "#prc.cbAdminEntryPoint#.pages.index";
-		prc.xehPageEditor = "#prc.cbAdminEntryPoint#.pages.editor";
-		prc.xehPageRemove = "#prc.cbAdminEntryPoint#.pages.remove";
+		prc.xehPages      	= "#prc.cbAdminEntryPoint#.pages.index";
+		prc.xehPageEditor 	= "#prc.cbAdminEntryPoint#.pages.editor";
+		prc.xehPageRemove 	= "#prc.cbAdminEntryPoint#.pages.remove";
+		prc.xehTemplates 	= "#prc.cbAdminEntryPoint#.ContentTemplates.index";
 	}
 
 	/**

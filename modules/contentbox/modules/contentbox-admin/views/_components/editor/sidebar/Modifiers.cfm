@@ -21,19 +21,31 @@
 						<i class="fa fa-sitemap"></i>
 						Content Template:
 					</label>
-					<select
-						name="contentTemplate"
-						id="contentTemplate"
-						class="form-control input-sm"
-						onchange="applyContentTemplate"
-					>
-							<option value="null">- No Template -</option>
-							<cfloop array="#prc.availableTemplates#" item="template" index="i">
-								<option value="#template[ "templateId" ]#"<cfif !isNull( prc.oContent.getContentTemplate() ) && prc.oContent.getContentTemplate().getId() == template[ "templateId" ]> selected</cfif>>
-									#template[ "name" ]#
-								</option>
-							</cfloop>
-					</select>
+					<cfif prc.availableTemplates.len()>
+						<select
+							name="contentTemplate"
+							id="contentTemplate"
+							class="form-control input-sm"
+							@change="applyContentTemplate"
+						>
+								<option value="null">- No Template -</option>
+								<cfloop array="#prc.availableTemplates#" item="template" index="i">
+									<option value="#template[ "templateID" ]#"<cfif !isNull( prc.oContent.getContentTemplate() ) && prc.oContent.getContentTemplate().getTemplateID() == template[ "templateID" ]> selected</cfif>>
+										#template[ "name" ]#
+									</option>
+								</cfloop>
+						</select>
+						<p class="text-muted text-center hidden template-highlight-info">
+							<span style="width: 10px;height:10px; display:inline-block; margin-right: 10px; border: 1px ##efefef solid" class="template-defined"></span> <small>Template defined fields are shown with this background color.</small>
+						</p>
+					<cfelse>
+						<p class="text-muted text-center">
+							No Content Templates are Currently Available
+							<br/><br/>
+							<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehTemplates & "##create-" & prc.oContent.getContentType() )#" target="_blank"><i class="fa fa-plus"></i> Create Template</a>
+						</p>
+					</cfif>
+
 				</div>
 
 				<cfif prc.oContent.getContentType() NEQ "Entry">

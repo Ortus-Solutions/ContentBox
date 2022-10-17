@@ -11,14 +11,14 @@
 		role        = "form"
 	)#
 
-		<div class="row">
+		<div class="row" x-data="window">
 
 			<!--- Content Editor --->
 			<div class="col-md-8" id="main-content-slot">
-				<!--- MessageBox --->
-				#cbMessageBox().renderit()#
 
-				<div x-data="window">
+				<div class="messages" x-data="alertsModel()" @add-alert.window="addAlert">
+					<!--- MessageBox --->
+					#cbMessageBox().renderit()#
 					<template x-for="alert in alerts">
 						<div :class="`alert alert-${alert.class} text=center`" x-text="alert.message"></div>
 					</template>

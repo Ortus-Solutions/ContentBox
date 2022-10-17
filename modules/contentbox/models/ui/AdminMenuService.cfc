@@ -384,6 +384,13 @@ component accessors="true" threadSafe singleton {
 		// Content
 		addTopMenu( name = this.CONTENT, label = "<i class='fa fa-archive'></i> Content" )
 			.addSubMenu(
+				name        = "Pages",
+				label       = "Pages",
+				href        = variables.buildLink,
+				href_to     = prc.xehPages,
+				permissions = "PAGES_ADMIN,PAGES_EDITOR"
+			)
+			.addSubMenu(
 				topMenu     = this.CONTENT,
 				name        = "Blog",
 				label       = "Blog",
@@ -392,11 +399,11 @@ component accessors="true" threadSafe singleton {
 				permissions = "ENTRIES_ADMIN,ENTRIES_EDITOR"
 			)
 			.addSubMenu(
-				name        = "Categories",
-				label       = "Categories",
+				name        = "contentStore",
+				label       = "Content Store",
 				href        = variables.buildLink,
-				href_to     = prc.xehCategories,
-				permissions = "CATEGORIES_ADMIN"
+				href_to     = prc.xehContentStore,
+				permissions = "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"
 			)
 			.addSubMenu(
 				name        = "Content Templates",
@@ -406,11 +413,11 @@ component accessors="true" threadSafe singleton {
 				permissions = "PAGES_ADMIN"
 			)
 			.addSubMenu(
-				name        = "contentStore",
-				label       = "Content Store",
+				name        = "Categories",
+				label       = "Categories",
 				href        = variables.buildLink,
-				href_to     = prc.xehContentStore,
-				permissions = "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"
+				href_to     = prc.xehCategories,
+				permissions = "CATEGORIES_ADMIN"
 			)
 			.addSubMenu(
 				name        = "mediaManager",
@@ -425,13 +432,6 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehMenuManager,
 				permissions = "MENUS_ADMIN"
-			)
-			.addSubMenu(
-				name        = "Pages",
-				label       = "Sitemap",
-				href        = variables.buildLink,
-				href_to     = prc.xehPages,
-				permissions = "PAGES_ADMIN,PAGES_EDITOR"
 			);
 
 		// Comments

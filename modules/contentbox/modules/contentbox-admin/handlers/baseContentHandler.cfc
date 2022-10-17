@@ -66,6 +66,13 @@ component extends="baseHandler" {
 		// get all authors
 		prc.authors = variables.authorService.getAll( sortOrder = "lastName" );
 
+	    // Get all available content templates
+		prc.availableTemplates = variables.templateService.getAvailableForContentType(
+																contentType=variables.ormService.new().getContentType(),
+																site=prc.oCurrentSite,
+																fields="templateID,name"
+															);
+
 		// get all categories
 		prc.categories = variables.categoryService.list(
 			criteria  = { "site" : prc.oCurrentSite },
@@ -270,6 +277,14 @@ component extends="baseHandler" {
 				event          = "contentbox-admin:versions.pager",
 				eventArguments = { contentID : rc.contentID }
 			);
+		} else {
+			prc.oContent.setSite( prc.oCurrentSite );
+			if( rc.keyExists( "contentTemplate" ) && len( rc.contentTemplate ) ){
+				prc.oContent.setContentTemplate( variables.templateService.get( rc.contentTemplate ) );
+			} else if( rc.keyExists( "parentId" ) && len( rc.parentId ) ){
+				// The UI will pick this up and handle the assignment
+				prc.oContent.setParent( variables.ormService.get( rc.parentId ) );
+			}
 		}
 		// Get all content names for parent drop downs excluding yourself and your children
 		prc.allContent = variables.ormService
@@ -282,7 +297,7 @@ component extends="baseHandler" {
 	    // Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
 																contentType=prc.oContent.getContentType(),
-																site=prc.oContent.getSite(),
+																site=prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
 																fields="templateID,name"
 															);
 		// Provide JWT Tokens for communicating with the API
@@ -382,9 +397,12 @@ component extends="baseHandler" {
 		// get new/persisted page and populate it with incoming data.
 		var oContent     = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		populateModel( model: oContent, exclude = "contentID,siteID" )
-			.addJoinedPublishedtime( rc.publishedTime )
-			.addJoinedExpiredTime( rc.expireTime );
+		variables.ormService.populate(
+				target  = oContent,
+				memento = rc,
+				exclude = "contentID,siteID"
+			).addJoinedPublishedtime( rc.publishedTime )
+				.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT oContent.isLoaded() );
 
 		// Attach creator if new page

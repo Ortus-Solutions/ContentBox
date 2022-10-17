@@ -23,7 +23,7 @@
     opacity: 0.7;
     filter: alpha(opacity=70);
     }
-   
+
 }
 
 /* Default Buttons*/
@@ -33,43 +33,43 @@
     outline:none!important;
 }
 
-a.btn-default:hover, 
+a.btn-default:hover,
 a.btn-default:active {
     color: #ffffff;
     background-color: $defaultColorHover;
     border-color: $defaultColorHover;
 }
 
-.btn-default:hover, 
-.btn-default:focus, 
-.btn-default:active, 
-.btn-default.active, 
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
 .open .dropdown-toggle.btn-default {
     color: #ffffff;
     background-color: $defaultColorHover;
     border-color: $defaultColorHover;
 }
 
-.btn-default:active, 
-.btn-default.active, 
+.btn-default:active,
+.btn-default.active,
 .open .dropdown-toggle.btn-default {
     background: $defaultColor;
     border-color: $defaultColor;
 }
 
-.btn-default.disabled, .btn-default[disabled], 
-fieldset[disabled] .btn-default, 
-.btn-default.disabled:hover, 
-.btn-default[disabled]:hover, 
-fieldset[disabled] .btn-default:hover, 
-.btn-default.disabled:focus, 
-.btn-default[disabled]:focus, 
+.btn-default.disabled, .btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
 fieldset[disabled] .btn-default:focus,
 .btn-default.disabled:active,
-.btn-default[disabled]:active, 
-fieldset[disabled] .btn-default:active, 
-.btn-default.disabled.active, 
-.btn-default[disabled].active, 
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
     background-color: $defaultColor;
     border-color: $defaultColor;
@@ -86,37 +86,37 @@ a.btn-primary:hover, a.btn-primary:active {
     border-color: $primaryColorHover;
 }
 
-.btn-primary:hover, 
-.btn-primary:focus, 
-.btn-primary:active, 
-.btn-primary.active, 
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
 .open .dropdown-toggle.btn-primary {
     color: #ffffff;
     background-color: $primaryColorHover;
     border-color: $primaryColorHover;
 }
 
-.btn-primary:active, 
-.btn-primary.active, 
+.btn-primary:active,
+.btn-primary.active,
 .open .dropdown-toggle.btn-primary {
     background: $primaryColor;
     border-color: $primaryColor;
 }
 
-.btn-primary.disabled, 
+.btn-primary.disabled,
 .btn-primary[disabled],
-fieldset[disabled] .btn-primary, 
-.btn-primary.disabled:hover, 
-.btn-primary[disabled]:hover, 
+fieldset[disabled] .btn-primary,
+.btn-primary.disabled:hover,
+.btn-primary[disabled]:hover,
 fieldset[disabled] .btn-primary:hover,
-.btn-primary.disabled:focus, 
-.btn-primary[disabled]:focus, 
+.btn-primary.disabled:focus,
+.btn-primary[disabled]:focus,
 fieldset[disabled] .btn-primary:focus,
- .btn-primary.disabled:active, 
+ .btn-primary.disabled:active,
  .btn-primary[disabled]:active,
 fieldset[disabled] .btn-primary:active,
  .btn-primary.disabled.active,
-  .btn-primary[disabled].active, 
+  .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
     background-color: $primaryColor;
     border-color: $primaryColor;
@@ -140,9 +140,9 @@ a.btn-info:active {
 }
 
 .btn-info:hover,
-.btn-info:focus, 
+.btn-info:focus,
 .btn-info:active,
-.btn-info.active, 
+.btn-info.active,
 .open .dropdown-toggle.btn-info {
     color: #ffffff;
     background-color: $infoColorHover;
@@ -157,18 +157,18 @@ a.btn-info:active {
 }
 
 .btn-info.disabled,
-.btn-info[disabled], 
+.btn-info[disabled],
 fieldset[disabled] .btn-info,
 .btn-info.disabled:hover,
-.btn-info[disabled]:hover, 
+.btn-info[disabled]:hover,
 fieldset[disabled] .btn-info:hover,
-.btn-info.disabled:focus, 
-.btn-info[disabled]:focus, 
+.btn-info.disabled:focus,
+.btn-info[disabled]:focus,
 fieldset[disabled] .btn-info:focus,
-.btn-info.disabled:active, 
-.btn-info[disabled]:active, 
+.btn-info.disabled:active,
+.btn-info[disabled]:active,
 fieldset[disabled] .btn-info:active,
-.btn-info.disabled.active, 
+.btn-info.disabled.active,
 .btn-info[disabled].active,
 fieldset[disabled] .btn-info.active {
     background-color: $infoColor;
@@ -180,18 +180,18 @@ fieldset[disabled] .btn-info.active {
     background-color: $dangerColor;
 }
 
-.btn-danger:hover, 
+.btn-danger:hover,
 .btn-danger:focus,
-.btn-danger:active, 
-.btn-danger.active, 
+.btn-danger:active,
+.btn-danger.active,
 .open .dropdown-toggle.btn-danger {
     color: #ffffff;
     background-color: $dangerColorHover;
     border-color: $dangerColorHover;
 }
 
-.btn-danger:active, 
-.btn-danger.active, 
+.btn-danger:active,
+.btn-danger.active,
 .open .dropdown-toggle.btn-danger {
     background: $dangerColorHover;
     border-color: $dangerColorHover;
@@ -199,18 +199,18 @@ fieldset[disabled] .btn-info.active {
 
 .btn-danger.disabled,
 .btn-danger[disabled],
-fieldset[disabled] .btn-danger, 
+fieldset[disabled] .btn-danger,
 .btn-danger.disabled:hover,
-.btn-danger[disabled]:hover, 
+.btn-danger[disabled]:hover,
 fieldset[disabled] .btn-danger:hover,
-.btn-danger.disabled:focus, 
+.btn-danger.disabled:focus,
 .btn-danger[disabled]:focus,
 fieldset[disabled] .btn-danger:focus,
 .btn-danger.disabled:active,
-.btn-danger[disabled]:active, 
+.btn-danger[disabled]:active,
 fieldset[disabled] .btn-danger:active,
-.btn-danger.disabled.active, 
-.btn-danger[disabled].active, 
+.btn-danger.disabled.active,
+.btn-danger[disabled].active,
 fieldset[disabled] .btn-danger.active {
     background-color: $dangerColor;
     border-color: $dangerColor;
@@ -221,33 +221,33 @@ fieldset[disabled] .btn-danger.active {
     background-color: $successColor;
 }
 
-.btn-success:hover, 
-.btn-success:focus, 
-.btn-success:active, 
-.btn-success.active, 
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
 .open .dropdown-toggle.btn-success {
     color: #ffffff;
     background-color: $successColorHover;
     border-color: $successColorHover;
 }
 
-.btn-success:active, 
-.btn-success.active, 
+.btn-success:active,
+.btn-success.active,
 .open .dropdown-toggle.btn-success {
     background: $successColor;
     border-color: $successColor;
 }
 
-.btn-success.disabled, 
-.btn-success[disabled], 
+.btn-success.disabled,
+.btn-success[disabled],
 fieldset[disabled] .btn-success,
-.btn-success.disabled:hover, 
-.btn-success[disabled]:hover, 
+.btn-success.disabled:hover,
+.btn-success[disabled]:hover,
 fieldset[disabled] .btn-success:hover,
 .btn-success.disabled:focus,
 .btn-success[disabled]:focus,
 fieldset[disabled] .btn-success:focus,
-.btn-success.disabled:active, 
+.btn-success.disabled:active,
 .btn-success[disabled]:active,
 fieldset[disabled] .btn-success:active,
 .btn-success.disabled.active,
@@ -262,10 +262,10 @@ fieldset[disabled] .btn-success:active,
     background-color: $warningColor;
 }
 
-.btn-warning:hover, 
+.btn-warning:hover,
 .btn-warning:focus,
 .btn-warning:active,
-.btn-warning.active, 
+.btn-warning.active,
 .open .dropdown-toggle.btn-warning {
     color: #ffffff;
     background-color: $warningColor;
@@ -282,17 +282,17 @@ fieldset[disabled] .btn-success:active,
 .btn-warning.disabled,
 .btn-warning[disabled],
 fieldset[disabled] .btn-warning,
-.btn-warning.disabled:hover, 
+.btn-warning.disabled:hover,
 .btn-warning[disabled]:hover,
 fieldset[disabled] .btn-warning:hover,
-.btn-warning.disabled:focus, 
+.btn-warning.disabled:focus,
 .btn-warning[disabled]:focus,
 fieldset[disabled] .btn-warning:focus,
 .btn-warning.disabled:active,
-.btn-warning[disabled]:active, 
+.btn-warning[disabled]:active,
 fieldset[disabled] .btn-warning:active,
-.btn-warning.disabled.active, 
-.btn-warning[disabled].active, 
+.btn-warning.disabled.active,
+.btn-warning[disabled].active,
 fieldset[disabled] .btn-warning.active {
     background-color: $warningColor;
     border-color: $warningColor;
@@ -315,7 +315,7 @@ fieldset[disabled] .btn-warning.active {
     -moz-box-shadow: 0px 6px 0px #A6AAAC;
     box-shadow: 0px 6px 0px #A6AAAC;
 }
-.btn-default.btn-3d:hover, 
+.btn-default.btn-3d:hover,
 .btn-default.btn-3d:focus {
     background-color: $defaultColor;
 }
@@ -489,13 +489,16 @@ fieldset[disabled] .btn-warning.active {
 }
 .dropdown-menu>li {
     font-size: 13px;
+	&.dropdown-header {
+		color: $primaryColor;
+		padding-left: 10px;
+	}
 }
 .dropdown-menu>li>a {
     color:#797979;
     @include roundBorders(3px);
 }
 .dropdown-menu .divider {
-    background-color: rgba(255, 255, 255, 0.05);
 }
 .btn-default + .dropdown-menu>li>a:hover, .btn-default + .dropdown-menu>li>a:focus {
     text-decoration: none;

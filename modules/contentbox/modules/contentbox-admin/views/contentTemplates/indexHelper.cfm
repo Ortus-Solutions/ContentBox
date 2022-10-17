@@ -26,20 +26,49 @@
 					name 	    : "",
 					description : "",
 					contentType : "",
-					definition  : {}
+					definition  : {},
+					contentType : "Page"
 			},
+			availableTypes  : [
+				"Page",
+				"Entry",
+				"ContentStore"
+			],
 			templateFields  : null,
 			selectedTemplates : [],
 			init(){
 				var self = this;
-				this.templateFields = Object.keys( this.globalData.templateSchema ).map( templateKey => ( { "key" : templateKey, "label" : this.globalData.templateSchema[ templateKey ].label } ) );
+				this.templateFields = Object.keys( this.globalData.templateSchema )
+										.map( templateKey => (
+											{
+												"key" : templateKey,
+												"label" : this.globalData.templateSchema[ templateKey ].label,
+												"excludeTypes" : this.globalData.templateSchema[ templateKey ].excludeTypes,
+												"sortOrder" :  this.globalData.templateSchema[ templateKey ].sortOrder || Object.keys( this.globalData.templateSchema ).length
+											}
+										) );
+				this.templateFields.sort( ( a, b ) => a.sortOrder - b.sortOrder );
 				Object.keys( this.globalData.templateSchema )
 						.filter( key => this.globalData.templateSchema[ key ].options && !this.globalData[ this.globalData.templateSchema.options ] )
 						.forEach( key => this.globalData[ this.globalData.templateSchema.options ] = [] );
 				this.searchTemplates();
+				let hashAction = window.location.hash ? window.location.hash.substring( 1, 7 ) : "";
+				if( hashAction == 'create' ){
+					var hashParts = window.location.hash.split( '-' );
+					var self = this;
+					this.$nextTick( () => {
+						self.editTemplate();
+						if( hashParts.length > 1 ){
+							self.$nextTick( () => self.templateForm.contentType = hashParts[ hashParts.length - 1 ] );
+						}
+					} );
+				}
+			},
+			availableFields(){
+				return this.templateFields ? this.templateFields.filter( field => !field.excludeTypes || field.excludeTypes.indexOf( this.templateForm.contentType ) == -1 ) : [];
 			},
 			selectedFields(){
-				return Object.keys( this.templateForm.definition ).sort( ( a, b ) => Object.keys( this.templateFields ).indexOf( a ) - Object.keys( this.templateFields ).indexOf( b ) );
+				return Object.keys( this.templateForm.definition ).sort( ( a, b ) =>  this.globalData.templateSchema[ a ].sortOrder - this.globalData.templateSchema[ b ].sortOrder );
 			},
 			isSelectedField( key ){
 				return this.selectedFields().indexOf( key ) > -1;
@@ -75,11 +104,9 @@
 			},
 			selectedDefinitions(){
 				var self = this;
-				console.log( Object.keys( this.templateForm.definition )
-								.sort( ( a, b ) => Object.keys( this.templateFields ).indexOf( a ) - Object.keys( this.templateFields ).indexOf( b ) )
-								.reduce( (acc, key) => { acc[ key ] = self.globalData.templateSchema[ key ]; return acc; }, {} ) );
+				console.log( )
 				return Object.keys( this.templateForm.definition )
-								.sort( ( a, b ) => Object.keys( this.templateFields ).indexOf( a ) - Object.keys( this.templateFields ).indexOf( b ) )
+								.sort( ( a, b ) => self.globalData.templateSchema[ a ].sortOrder - self.globalData.templateSchema[ b ].sortOrder )
 								.reduce( (acc, key) => { acc[ key ] = self.globalData.templateSchema[ key ]; return acc; }, {} );
 			},
 			addFieldToTemplate( e ){

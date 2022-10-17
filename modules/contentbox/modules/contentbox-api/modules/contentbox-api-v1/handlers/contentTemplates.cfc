@@ -35,6 +35,15 @@ component extends="baseHandler" {
 		param rc.sortOrder = "name";
 		// Build up a search criteria and let the base execute it
 		arguments.criteria = variables.ormService.newCriteria().isEq( "site", prc.oCurrentSite );
+		arguments.criteria.when(
+			rc.keyExists( "search" ) && len( rc.search ),
+			function( c ){
+				c.or(
+					c.restrictions.like( "name","%#search#%" ),
+					c.restrictions.like( "description","%#search#%" )
+				);
+			}
+		);
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
