@@ -1155,7 +1155,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteID = "",
+		string siteID      = "",
 		string contentType = ""
 	){
 		var c = newCriteria();
@@ -1181,7 +1181,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			c.isEq( "site.siteID", arguments.siteID );
 		}
 
-		if( len( arguments.contentType ) ){
+		if ( len( arguments.contentType ) ) {
 			c.isEq( "contentType", arguments.contentType );
 		}
 
@@ -1201,11 +1201,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.list( sortOrder = arguments.sortOrder );
 	}
 
-	function addRelocation(
-		required BaseContent contentItem,
-		required string originalSlug
-	){
-		variables.relocationService.createContentRelocation( argumentCollection=arguments );
+	function addRelocation( required BaseContent contentItem, required string originalSlug ){
+		variables.relocationService.createContentRelocation( argumentCollection = arguments );
 	}
 
 	/********************************************* PRIVATE *********************************************/

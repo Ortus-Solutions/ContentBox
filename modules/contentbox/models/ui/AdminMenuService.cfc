@@ -331,7 +331,7 @@ component accessors="true" threadSafe singleton {
 		prc.xehEntries       = "#this.ADMIN_ENTRYPOINT#.entries";
 		prc.xehEntriesEditor = "#this.ADMIN_ENTRYPOINT#.entries.editor";
 		prc.xehCategories    = "#this.ADMIN_ENTRYPOINT#.categories";
-		prc.xehTemplates    = "#this.ADMIN_ENTRYPOINT#.contentTemplates";
+		prc.xehTemplates     = "#this.ADMIN_ENTRYPOINT#.contentTemplates";
 
 		// Content Tab
 		prc.xehPages        = "#this.ADMIN_ENTRYPOINT#.pages";

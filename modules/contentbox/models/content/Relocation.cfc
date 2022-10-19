@@ -35,15 +35,15 @@ component
 
 	/** An optional manual target - may be used if no content is assigned **/
 	property
-		name="target"
+		name   ="target"
 		notnull="false"
-		length="500"
+		length ="500"
 		default="";
 
 	/* *********************************************************************
 	 **							RELATIONSHIPS
 	 ********************************************************************* */
-	 property
+	property
 		name     ="site"
 		notnull  ="true"
 		cfc      ="contentbox.models.system.Site"
@@ -92,6 +92,5 @@ component
 		variables.slug = arrayToList( listToArray( arguments.value, "/" ), "/" );
 		return this;
 	}
-
 
 }

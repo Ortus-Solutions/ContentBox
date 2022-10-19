@@ -66,12 +66,12 @@ component extends="baseHandler" {
 		// get all authors
 		prc.authors = variables.authorService.getAll( sortOrder = "lastName" );
 
-	    // Get all available content templates
+		// Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
-																contentType=variables.ormService.new().getContentType(),
-																site=prc.oCurrentSite,
-																fields="templateID,name"
-															);
+			contentType = variables.ormService.new().getContentType(),
+			site        = prc.oCurrentSite,
+			fields      = "templateID,name"
+		);
 
 		// get all categories
 		prc.categories = variables.categoryService.list(
@@ -130,17 +130,17 @@ component extends="baseHandler" {
 
 		// search content with filters and all
 		var contentResults = variables.ormService.search(
-			search     			: rc.searchContent,
-			isPublished			: rc.fStatus,
-			category   			: rc.fCategories,
-			author     			: rc.fAuthors,
-			creator    			: rc.fCreators,
-			parent     			: ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
-			sortOrder  			: variables.defaultOrdering,
-			siteID     			: prc.oCurrentSite.getsiteID(),
-			offset     			: prc.paging.startRow - 1,
-			max        			: prc.cbSettings.cb_paging_maxrows,
-			searchActiveContent : false
+			search             : rc.searchContent,
+			isPublished        : rc.fStatus,
+			category           : rc.fCategories,
+			author             : rc.fAuthors,
+			creator            : rc.fCreators,
+			parent             : ( !isNull( rc.parent ) ? rc.parent : javacast( "null", "" ) ),
+			sortOrder          : variables.defaultOrdering,
+			siteID             : prc.oCurrentSite.getsiteID(),
+			offset             : prc.paging.startRow - 1,
+			max                : prc.cbSettings.cb_paging_maxrows,
+			searchActiveContent: false
 		);
 		prc.content      = contentResults[ variables.entityPlural ];
 		prc.contentCount = contentResults.count;
@@ -279,29 +279,27 @@ component extends="baseHandler" {
 			);
 		} else {
 			prc.oContent.setSite( prc.oCurrentSite );
-			if( rc.keyExists( "contentTemplate" ) && len( rc.contentTemplate ) ){
+			if ( rc.keyExists( "contentTemplate" ) && len( rc.contentTemplate ) ) {
 				prc.oContent.setContentTemplate( variables.templateService.get( rc.contentTemplate ) );
-			} else if( rc.keyExists( "parentId" ) && len( rc.parentId ) ){
+			} else if ( rc.keyExists( "parentId" ) && len( rc.parentId ) ) {
 				// The UI will pick this up and handle the assignment
 				prc.oContent.setParent( variables.ormService.get( rc.parentId ) );
 			}
 		}
 		// Get all content names for parent drop downs excluding yourself and your children
 		prc.allContent = variables.ormService
-									.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
-									.filter(
-										function( item ){
-											return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
-										}
-									);
-	    // Get all available content templates
+			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
+			.filter( function( item ){
+				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+			} );
+		// Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
-																contentType=prc.oContent.getContentType(),
-																site=prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
-																fields="templateID,name"
-															);
+			contentType = prc.oContent.getContentType(),
+			site        = prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
+			fields      = "templateID,name"
+		);
 		// Provide JWT Tokens for communicating with the API
-		prc.jwtTokens = getInstance( "JWTService@cbsecurity" ).fromUser( prc.oCurrentAuthor );
+		prc.jwtTokens     = getInstance( "JWTService@cbsecurity" ).fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
@@ -398,12 +396,14 @@ component extends="baseHandler" {
 		// get new/persisted page and populate it with incoming data.
 		var oContent     = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		variables.ormService.populate(
+		variables.ormService
+			.populate(
 				target  = oContent,
 				memento = rc,
 				exclude = "contentID,siteID"
-			).addJoinedPublishedtime( rc.publishedTime )
-				.addJoinedExpiredTime( rc.expireTime );
+			)
+			.addJoinedPublishedtime( rc.publishedTime )
+			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT oContent.isLoaded() );
 
 		// Attach creator if new page
@@ -465,7 +465,7 @@ component extends="baseHandler" {
 		// Inflate Related Content into the page
 		oContent.inflateRelatedContent( rc.relatedContentIDs );
 		// If directed to create a template from the content item, do this now and assign it
-		if( rc.saveAsTemplate ){
+		if ( rc.saveAsTemplate ) {
 			var template = templateService.newFromContentItem( oContent );
 			templateService.save( template )
 			oContent.setContentTemplate( template );

@@ -505,10 +505,7 @@ component
 		],
 		neverInclude : [ "passwordProtection" ],
 		mappers      : {},
-		defaults     : {
-			"stats" 		  : {},
-			"contentTemplate" : {}
-		},
+		defaults     : { "stats" : {}, "contentTemplate" : {} },
 		profiles     : {
 			response : {
 				defaultIncludes : [
@@ -749,21 +746,23 @@ component
 
 
 	/**
-	* Getter overload to return either the assigned template or the global template for the site
-	* @note The hierarchy for templates is local, parent assigned, and then any globals
-	*/
+	 * Getter overload to return either the assigned template or the global template for the site
+	 *
+	 * @note The hierarchy for templates is local, parent assigned, and then any globals
+	 */
 	any function getContentTemplate(){
 		return !isNull( variables.contentTemplate )
-					? variables.contentTemplate
-					: (
-						!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
-						? getParent().getChildContentTemplate()
-						: getContentTemplateService().newCriteria()
-														.isEq( "contentType", getContentType() )
-														.isEq( "site", getSite() )
-														.isEq( "isGlobal", javacast( "boolean", true ) )
-														.get()
-					);
+		 ? variables.contentTemplate
+		 : (
+			!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
+			 ? getParent().getChildContentTemplate()
+			 : getContentTemplateService()
+				.newCriteria()
+				.isEq( "contentType", getContentType() )
+				.isEq( "site", getSite() )
+				.isEq( "isGlobal", javacast( "boolean", true ) )
+				.get()
+		);
 	}
 
 	/**
@@ -1771,69 +1770,61 @@ component
 	 */
 	BaseContent function applyContentTemplate(){
 		var template = getContentTemplate();
-		if( !isNull( template ) ){
+		if ( !isNull( template ) ) {
 			var definition = template.getDefintion();
-			for( var key in definition ){
-					var currentValue = invoke( this, "get" & key );
-					if( isNull( currentValue ) || isNumeric( currentVal ) || isBoolean( currentVal ) ){
-						invoke(
-							this,
-							"populate",
-							{
-								"memento" : {
-									"#key#" : definition[ key ].value
+			for ( var key in definition ) {
+				var currentValue = invoke( this, "get" & key );
+				if ( isNull( currentValue ) || isNumeric( currentVal ) || isBoolean( currentVal ) ) {
+					invoke(
+						this,
+						"populate",
+						{ "memento" : { "#key#" : definition[ key ].value } }
+					);
+				} else if ( isArray( currentVal ) ) {
+					switch ( key ) {
+						case "customFields": {
+							var existingFields = getCustomFieldsAsStruct().keyArray();
+							definition[ key ].each( function( item ){
+								if ( !existingFields.contains( item.name ) ) {
+									var thisField = customFieldService.new(
+										properties = { "key" : item.name, "value" : item.defaultValue ?: "" }
+									);
+									thisField.setRelatedContent( this );
+									addCustomField( thisField );
 								}
-							}
-						);
-					} else if( isArray( currentVal ) ){
-						switch( key ){
-							case "customFields":{
-								var existingFields = getCustomFieldsAsStruct().keyArray();
-								definition[ key ].each( function( item ){
-									if( !existingFields.contains( item.name ) ){
-										var thisField = customFieldService.new( properties = { "key" : item.name, "value" : item.defaultValue ?: "" } );
-										thisField.setRelatedContent( this );
-										addCustomField( thisField );
-									}
-								} );
-								break;
-							}
-							case "categories":{
-								if( hasCategories() ){
-									var existingCategories = getCategories().map( function( cat ){ return cat.getCategoryID(); } );
-									definition[ key ].value.append( existingCategories, true );
-								}
-								invoke(
-									this,
-									"populate",
-									{
-										"memento" : {
-											"#key#" : listToArray( listRemoveDuplicates( arrayToList( definition[ key ].value ) ) )
-										}
-									}
-								);
-							}
-							default : {
-								invoke(
-									this,
-									"populate",
-									{
-										"memento" : {
-											"#key#" : definition[ key ].value
-										}
-									}
-								);
-							}
+							} );
+							break;
 						}
-
-					} else if( !len( currentVal ) ){
-						invoke(
-							this,
-							"set" & key,
-							[ definition[ key ].value ]
-						);
+						case "categories": {
+							if ( hasCategories() ) {
+								var existingCategories = getCategories().map( function( cat ){
+									return cat.getCategoryID();
+								} );
+								definition[ key ].value.append( existingCategories, true );
+							}
+							invoke(
+								this,
+								"populate",
+								{
+									"memento" : {
+										"#key#" : listToArray(
+											listRemoveDuplicates( arrayToList( definition[ key ].value ) )
+										)
+									}
+								}
+							);
+						}
+						default: {
+							invoke(
+								this,
+								"populate",
+								{ "memento" : { "#key#" : definition[ key ].value } }
+							);
+						}
 					}
-
+				} else if ( !len( currentVal ) ) {
+					invoke( this, "set" & key, [ definition[ key ].value ] );
+				}
 			}
 		}
 	}

@@ -27,27 +27,26 @@ component extends="tests.resources.BaseTest" autowire="true" {
 			} );
 
 			it( "will remove leading and trailing slashes from new relocation slugs", function(){
-				model.setSlug( '/unittest/' );
+				model.setSlug( "/unittest/" );
 				expect( model.getSlug() ).toBe( "unittest" );
 			} );
 
-			it ( "Can search for a relocation by siteId", function(){
+			it( "Can search for a relocation by siteId", function(){
 				var defaultSite = siteService.findBySlug( "default" );
-				var response =  relocationService.search( siteID=defaultSite.getSiteId() );
+				var response    = relocationService.search( siteID = defaultSite.getSiteId() );
 				expect( response ).toHaveKey( "relocations" );
 				expect( response.relocations ).toBeArray();
 				response.relocations.each( function( r ){
-					expect( r.getSite().getSiteID()  ).toBe( defaultSite.getSiteId() );
+					expect( r.getSite().getSiteID() ).toBe( defaultSite.getSiteId() );
 				} );
 			} );
 
-			it ( "Can search for a relocation by a partial value of the slug", function(){
+			it( "Can search for a relocation by a partial value of the slug", function(){
 				var defaultSite = siteService.findBySlug( "default" );
-				var response =  relocationService.search( search="unittest" );
+				var response    = relocationService.search( search = "unittest" );
 				expect( response ).toHaveKey( "relocations" );
 				expect( response.relocations ).toBeArray();
 			} );
-
 		} );
 	}
 

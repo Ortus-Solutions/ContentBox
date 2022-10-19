@@ -34,8 +34,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * @return struct of { count, templates }
 	 */
 	struct function search(
-		search = "",
-		siteID = "",
+		search    = "",
+		siteID    = "",
 		max       = 0,
 		offset    = 0,
 		sortOrder = "name asc"
@@ -48,14 +48,11 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			} )
 			// Search Criteria
 			.when( len( arguments.search ), function( c ){
-				c.or(
-					c.restrictions.like( "name","%#search#%" ),
-					c.restrictions.like( "description","%#search#%" )
-				);
+				c.or( c.restrictions.like( "name", "%#search#%" ), c.restrictions.like( "description", "%#search#%" ) );
 			} );
 
 		// run criteria query and projections count
-		results.count      = c.count( "contentTemplateID" );
+		results.count     = c.count( "contentTemplateID" );
 		results.templates = c.list(
 			offset   : arguments.offset,
 			max      : arguments.max,
@@ -104,9 +101,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		} );
 
 		var childrenAssignments = contentService
-								.newCriteria()
-								.isEq( "childContentTemplate", arguments.template )
-								.list();
+			.newCriteria()
+			.isEq( "childContentTemplate", arguments.template )
+			.list();
 
 		childrenAssignments.each( function( contentItem ){
 			contentItem.setChildContentTemplate( javacast( "null", 0 ) );
@@ -126,20 +123,16 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		required Site site,
 		string fields
 	){
-		if( isNull( arguments.site ) ){
+		if ( isNull( arguments.site ) ) {
 			arguments.site = getWirebox().getInstance( "cbHelper@ContentBox" ).site();
 		}
-		var c = newCriteria()
-				.isEq( "contentType", arguments.contentType )
-				.isEq( "site", arguments.site );
+		var c = newCriteria().isEq( "contentType", arguments.contentType ).isEq( "site", arguments.site );
 
-		if( !isNull( arguments.fields ) ){
-			c.withProjections( property=arguments.fields )
-				.asStruct();
+		if ( !isNull( arguments.fields ) ) {
+			c.withProjections( property = arguments.fields ).asStruct();
 		}
 
 		return c.list();
-
 	}
 
 	/**
@@ -154,46 +147,65 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	}
 
 	ContentTemplate function newFromContentItem( required BaseContent contentItem ){
-		var newTemplate = new(
+		var newTemplate = new (
 			properties = {
-				"site" : arguments.contentItem.getSite(),
-				"name" : arguments.contentItem.getTitle(),
+				"site"        : arguments.contentItem.getSite(),
+				"name"        : arguments.contentItem.getTitle(),
 				"contentType" : arguments.contentItem.getContentType(),
 				"description" : "Template automatically created from " & arguments.contentItem.getContentType() & " " & arguments.contentItem.getTitle(),
-				"creator" : arguments.contentItem.getCreator()
+				"creator"     : arguments.contentItem.getCreator()
 			}
 		);
-		var schema = newTemplate.getSchema();
-		var templateProperties = schema.keyArray().filter( function( key ){ return !schema[ key ].keyExists( "excludeTypes" ) || !schema[ key ].excludeTypes.contains( contentItem.getContentType() ) } );
+		var schema             = newTemplate.getSchema();
+		var templateProperties = schema
+			.keyArray()
+			.filter( function( key ){
+				return !schema[ key ].keyExists( "excludeTypes" ) || !schema[ key ].excludeTypes.contains(
+					contentItem.getContentType()
+				)
+			} );
 
 		var definition = templateProperties.reduce( function( acc, key ){
-			switch( key ){
-				case "customFields":{
-					if( arrayLen( contentItem.getCustomFields() ) ){
+			switch ( key ) {
+				case "customFields": {
+					if ( arrayLen( contentItem.getCustomFields() ) ) {
 						acc[ key ] = { "value" : [] };
-						contentItem.getCustomFields().each( function( field ){ acc[ key ].value.append( { "name" : field.getKey(), "defaultValue" : field.getValue()  } ); } );
+						contentItem
+							.getCustomFields()
+							.each( function( field ){
+								acc[ key ].value.append( {
+									"name"         : field.getKey(),
+									"defaultValue" : field.getValue()
+								} );
+							} );
 					}
 					break;
 				}
-				case "categories" : {
-					if( arrayLen( contentItem.getCategories() ) ){
-						acc[ key ] = { "value" : contentItem.getCategories().map( function( cat ){ return cat.getCategoryID(); } ) };
+				case "categories": {
+					if ( arrayLen( contentItem.getCategories() ) ) {
+						acc[ key ] = {
+							"value" : contentItem
+								.getCategories()
+								.map( function( cat ){
+									return cat.getCategoryID();
+								} )
+						};
 					}
 					break;
 				}
-				case "parent":{
-					if( !isNull( contentItem.getParent() ) ){
+				case "parent": {
+					if ( !isNull( contentItem.getParent() ) ) {
 						acc[ key ] = { "value" : contentItem.getParent.getContentID() };
 					}
 					break;
 				}
-				default:{
-					var val = invoke( contentItem, "get" & key  );
-					if( !isNull( val ) && isSimpleValue( val ) && len( val ) ){
+				default: {
+					var val = invoke( contentItem, "get" & key );
+					if ( !isNull( val ) && isSimpleValue( val ) && len( val ) ) {
 						acc[ key ] = { "value" : val };
-						if( !isNumeric( acc[ key ].value ) && isBoolean( acc[ key ].value ) ) acc[ key ].value = javacast( "boolean", true );
+						if ( !isNumeric( acc[ key ].value ) && isBoolean( acc[ key ].value ) )
+							acc[ key ].value = javacast( "boolean", true );
 					}
-
 				}
 			}
 			return acc;
@@ -247,7 +259,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		importLog
 	){
 		var allTemplates = [];
-		var siteService   = getWireBox().getInstance( "siteService@contentbox" );
+		var siteService  = getWireBox().getInstance( "siteService@contentbox" );
 
 		// if struct, inflate into an array
 		if ( isStruct( arguments.importData ) ) {
@@ -259,8 +271,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			for ( var thisTemplate in arguments.importData ) {
 				var assignedSite = siteService.getBySlugOrFail( thisTemplate.site.slug );
 				// Get new or persisted
-				var oTemplate = this.findBySiteAndName( site=assignedSite, name=thisTemplate.site.name );
-				oTemplate     = ( isNull( oTemplate ) ? new() : oTemplate );
+				var oTemplate    = this.findBySiteAndName( site = assignedSite, name = thisTemplate.site.name );
+				oTemplate        = ( isNull( oTemplate ) ? new () : oTemplate );
 
 				// populate content from data
 				getBeanPopulator().populateFromStruct(

@@ -38,9 +38,7 @@ component accessors="true" singleton {
 	){
 		// return true if no data to check, type needs a data element to be checked.
 		if (
-			isNull( arguments.targetValue ) || (
-				isSimpleValue( arguments.targetValue ) && !len( arguments.targetValue )
-			)
+			isNull( arguments.targetValue ) || ( isSimpleValue( arguments.targetValue ) && !len( arguments.targetValue ) )
 		) {
 			return true;
 		}
@@ -51,7 +49,10 @@ component accessors="true" singleton {
 		var identityValue = invoke( arguments.target, "get#identityField#" );
 
 		// create criteria for uniqueness
-		var c = ORMService.newCriteria( entityName ).isEq( "site", arguments.target.getSite() ).isEq( field, arguments.targetValue );
+		var c = ORMService
+			.newCriteria( entityName )
+			.isEq( "site", arguments.target.getSite() )
+			.isEq( field, arguments.targetValue );
 
 		// validate with ID? then add to restrictions
 		if ( !isNull( identityValue ) ) {
