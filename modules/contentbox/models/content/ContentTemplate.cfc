@@ -158,17 +158,6 @@ cacheuse           ="read-write"
 				"excludeTypes" : [ "Entry" ],
 				"sortOrder" : 10
 			},
-			"allowComments"          : { "label" : "Comments Enabled", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 11 },
-			"passwordProtection"     : { "label" : "Access Password", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 12 },
-			// Caching
-			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true, "sortOrder" : 14 },
-			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0, "sortOrder" : 15 },
-			"cacheLastAccessTimeout" : { "label" : "Cache Last Access Timeout", "type" : "integer", "default" : 0, "sortOrder" : 16 },
-			// Display Options
-			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 17 },
-			"childLayout"            : { "label" : "Child Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 18 },
-			"showInMenu"             : { "label" : "Show In Menu", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 19 },
-			"showInSearch"           : { "label" : "Show In Search", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 20 },
 			// Collections
 			"customFields"           : {
 				"label" : "Custom Fields",
@@ -178,15 +167,28 @@ cacheuse           ="read-write"
 					"defaultValue" : { "label" : "Default Value", "type" : "string" }
 				},
 				"presentation" : "input",
-				"sortOrder" : 21
+				"sortOrder" : 11
 			},
 			"categories" : {
 				"label" : "Assigned Categories",
 				"type" : "select",
 				"options" : "availableCategories",
 				"multiple" : true,
-				"sortOrder" : 22
-			}
+				"sortOrder" : 12
+			},
+			// Layout options
+			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 13 },
+			"childLayout"            : { "label" : "Child Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 14 },
+
+			// Caching
+			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true, "sortOrder" : 15 },
+			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0, "sortOrder" : 16 },
+			"cacheLastAccessTimeout" : { "label" : "Cache Last Access Timeout", "type" : "integer", "default" : 0, "sortOrder" : 17 },
+			"passwordProtection"     : { "label" : "Access Password", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 18 },
+			"allowComments"          : { "label" : "Comments Enabled", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 19 },
+			// Display Options
+			"showInMenu"             : { "label" : "Show In Menu", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 20 },
+			"showInSearch"           : { "label" : "Show In Search", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 21 }
 		};
 
 		return this;
@@ -197,6 +199,7 @@ cacheuse           ="read-write"
 			"templateID",
 			"contentType",
 			"name",
+			"isGlobal",
 			"description",
 			"definition",
 			"assignedContentItems"
@@ -229,7 +232,7 @@ cacheuse           ="read-write"
 		},
 		"definition" : { required : true },
 		"site" : { required : true },
-		"isGlobal" : { required: true, "udf" : ( value, target ) => target.isGlobalUniqueInSite( value ) }
+		"isGlobal" : { required: true, "udf" : ( value, target ) => target.isGlobalUniqueInSite( value ), "udfMessage" : "A site may only have one global template per content type.  If you wish to make this template global, please deactivate the existing global template." }
 	};
 
 
@@ -270,9 +273,13 @@ cacheuse           ="read-write"
 	}
 
 	boolean function isGlobalUniqueInSite(){
+
+		if( !variables.isGlobal ) return true;
+
 		var c = getContentTemplateService()
 					.newCriteria()
 					.isEq( "site", getSite() )
+					.isEq( "contentType", getContentType() )
 					.isEq( "isGlobal", javacast( "boolean", true ) );
 
 		if( !isNull( variables.templateID ) ){

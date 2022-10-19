@@ -369,6 +369,7 @@ component extends="baseHandler" {
 			.paramValue( "publishedDate", now() )
 			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
 			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
+			.paramValue( "saveAsTemplate", false )
 			.paramValue(
 				"publishedTime",
 				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
@@ -463,6 +464,12 @@ component extends="baseHandler" {
 		oContent.inflateCustomFields( rc.customFieldsCount, rc );
 		// Inflate Related Content into the page
 		oContent.inflateRelatedContent( rc.relatedContentIDs );
+		// If directed to create a template from the content item, do this now and assign it
+		if( rc.saveAsTemplate ){
+			var template = templateService.newFromContentItem( oContent );
+			templateService.save( template )
+			oContent.setContentTemplate( template );
+		}
 		// announce event
 		announce(
 			"cbadmin_pre#variables.Entity#Save",

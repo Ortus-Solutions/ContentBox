@@ -153,6 +153,55 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		} );
 	}
 
+	ContentTemplate function newFromContentItem( required BaseContent contentItem ){
+		var newTemplate = new(
+			properties = {
+				"site" : arguments.contentItem.getSite(),
+				"name" : arguments.contentItem.getTitle(),
+				"contentType" : arguments.contentItem.getContentType(),
+				"description" : "Template automatically created from " & arguments.contentItem.getContentType() & " " & arguments.contentItem.getTitle(),
+				"creator" : arguments.contentItem.getCreator()
+			}
+		);
+		var schema = newTemplate.getSchema();
+		var templateProperties = schema.keyArray().filter( function( key ){ return !schema[ key ].keyExists( "excludeTypes" ) || !schema[ key ].excludeTypes.contains( contentItem.getContentType() ) } );
+
+		var definition = templateProperties.reduce( function( acc, key ){
+			switch( key ){
+				case "customFields":{
+					if( arrayLen( contentItem.getCustomFields() ) ){
+						acc[ key ] = { "value" : [] };
+						contentItem.getCustomFields().each( function( field ){ acc[ key ].value.append( { "name" : field.getKey(), "defaultValue" : field.getValue()  } ); } );
+					}
+					break;
+				}
+				case "categories" : {
+					if( arrayLen( contentItem.getCategories() ) ){
+						acc[ key ] = { "value" : contentItem.getCategories().map( function( cat ){ return cat.getCategoryID(); } ) };
+					}
+					break;
+				}
+				case "parent":{
+					if( !isNull( contentItem.getParent() ) ){
+						acc[ key ] = { "value" : contentItem.getParent.getContentID() };
+					}
+					break;
+				}
+				default:{
+					var val = invoke( contentItem, "get" & key  );
+					if( !isNull( val ) && isSimpleValue( val ) && len( val ) ){
+						acc[ key ] = { "value" : val };
+						if( !isNumeric( acc[ key ].value ) && isBoolean( acc[ key ].value ) ) acc[ key ].value = javacast( "boolean", true );
+					}
+
+				}
+			}
+			return acc;
+		}, {} );
+		newTemplate.setDefinition( definition );
+		return newTemplate;
+	};
+
 	/**
 	 * Import data from a ContentBox JSON file. Returns the import log
 	 *

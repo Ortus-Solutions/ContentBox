@@ -385,7 +385,7 @@ component accessors="true" threadSafe singleton {
 		addTopMenu( name = this.CONTENT, label = "<i class='fa fa-archive'></i> Content" )
 			.addSubMenu(
 				name        = "Pages",
-				label       = "Pages",
+				label       = "Sitemap",
 				href        = variables.buildLink,
 				href_to     = prc.xehPages,
 				permissions = "PAGES_ADMIN,PAGES_EDITOR"

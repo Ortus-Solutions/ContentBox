@@ -508,6 +508,11 @@ window.onContentTemplateChange = function( e ){
 	}
 }
 
+window.saveAsContentTemplate = function(){
+	$( '[name=saveAsTemplate]' ).val( true );
+	quickPublish( true );
+}
+
 window.applyContentTemplate = function( templateId ){
 	if( templateId instanceof Event  ){
 		templateId = templateId.currentTarget.value;

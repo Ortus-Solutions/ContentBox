@@ -43,6 +43,11 @@ component extends="baseHandler" {
 					c.restrictions.like( "description","%#search#%" )
 				);
 			}
+		).when(
+			find( "creator", rc.sortOrder ),
+			function( c ){
+				c.createAlias( "creator", "creator" )
+			}
 		);
 
 		// Delegate it!

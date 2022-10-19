@@ -29,6 +29,7 @@
 				#html.hiddenField( name="contentID", 	bind=prc.oContent )#
 				#html.hiddenField( name="contentType", 	bind=prc.oContent )#
 				#html.hiddenField( name="isPublished", 	bind=prc.oContent )#
+				#html.hiddenField( name="saveAsTemplate", value="false" )#
 				#html.hiddenField( name="sluggerURL", 	value=event.buildLink( prc.xehSlugify ) )#
 
 				<div class="panel panel-default">

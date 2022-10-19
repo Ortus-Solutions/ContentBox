@@ -9,6 +9,9 @@
 			baseAPIUrl 		: "/cbapi/v1/content-templates",
 			baseURL         : window.location.pathname,
 			searchQuery 	: "",
+			searchOptions   : {
+				sortOrder : "contentType ASC, name ASC"
+			},
 			isPublicFilter 	: "",
 			isLoading 		: false,
 			isEditorOpen 	: false,
@@ -21,7 +24,7 @@
 			globalData      : #cb.toJSON( prc.globalData )#,
 			authentication  : #cb.toJSON( prc.jwtTokens )#,
 			errorMessages 	: "",
-			templateForm 	: {
+			formTemplate 	: {
 					site        : "#cb.site().getId()#",
 					name 	    : "",
 					description : "",
@@ -34,10 +37,12 @@
 				"Entry",
 				"ContentStore"
 			],
+			templateForm : null,
 			templateFields  : null,
 			selectedTemplates : [],
 			init(){
 				var self = this;
+				this.templateForm = this.resetTemplateForm();
 				this.templateFields = Object.keys( this.globalData.templateSchema )
 										.map( templateKey => (
 											{
@@ -137,6 +142,7 @@
 			},
 			closeEditor(){
 				this.isEditorOpen = false;
+				window.scrollTo( 0, 0 );
 				this.resetTemplateForm();
 			},
 			editTemplate( cat ){
@@ -159,36 +165,95 @@
 				.then( ( response ) => {
 					this.isSubmitting = false;
 					if( response.error ){
-						this.errorMessages = response.messages.join( "<br>" )
+						var errors = response.messages;
+						if( errors.length && errors[ 0 ].indexOf( "Validation" ) > -1 ){
+							Object.entries( response.data )
+										.map( validation => validation[ 1 ] )
+										.reduce(
+											( acc, messages ) => {
+												messages.forEach( m => acc.push( m.message ) );
+												return acc;
+											},
+										[] ).forEach( m => errors.push( m ) );
+
+						}
+						this.errorMessages = errors.join( "<br>" );
+						window.scrollTo( 0, 0 );
 					} else {
 						this.searchTemplates();
 						this.closeEditor();
 					}
 				})
 				.catch( error => {
+					this.isSubmitting = false;
 					this.globalAlert.type = "danger";
 					this.globalAlert.message = error.toString();
 					console.log( error );
 				} );
 			},
-			resetTemplateForm(){
-				return this.templateForm = {
-					templateID 	: "",
-					contentType : "Page",
-					name        : "",
-					description : "",
-					definition  : {}
-				};
+			duplicateTemplate( template ){
+				if( confirm( "Are you sure you wish to duplicate this template?" ) ){
+					var templateIndex = this.templates.findIndex( item => item.templateID == template.templateID );
+					var clone = { ...template };
+					delete clone.templateID;
+					delete clone.creator;
+					delete clone.modifiedDate;
+					delete clone.createdDate;
+					clone.name = 'Copy of ' + clone.name;
+					fetch( this.baseAPIUrl + '?includes=creator,creator.fullName,modifiedDate',
+					{
+						method 	: 'POST',
+						body 	: JSON.stringify( clone ),
+						headers : {
+							"Authorization" : `Bearer ${this.authentication.access_token}`
+						}
+					})
+					.then( r => r.json() )
+					.then( ( response ) => {
+						this.isSubmitting = false;
+						if( response.error ){
+							this.errorMessages = response.messages.join( "<br>" )
+						} else {
+							this.templates.splice( templateIndex + 1, 0, response.data );
+						}
+					})
+					.catch( error => {
+						this.globalAlert.type = "danger";
+						this.globalAlert.message = error.toString();
+						console.log( error );
+					} );
+				}
 			},
-
+			resetTemplateForm(){
+				return { ...this.formTemplate };
+			},
+			sortBy( field, direction ){
+				if( !direction ) direction = 'ASC';
+				this.searchOptions.sortOrder = `${field} ${direction}`;
+				this.searchTemplates();
+			},
+			resetSearchOptions(){
+				this.searchQuery = "";
+				this.searchOptions = {
+					sortOrder : "contentType ASC, name ASC"
+				}
+				this.searchTemplates();
+			},
 			searchTemplates(){
 				this.isLoading = true;
-				fetch( `${this.baseAPIUrl}?includes=creator,creator.fullName,modifiedDate&search=${this.searchQuery}` )
+				fetch(
+					this.baseAPIUrl + '?' + new URLSearchParams({
+						...this.searchOptions,
+						includes : "creator,creator.fullName,modifiedDate",
+						search : this.searchQuery
+					})
+					)
 					.then( r => r.json() )
 					.then( ( response ) => {
 						this.templates = response.data;
 						this.pagination = response.pagination;
 						this.isLoading = false;
+						window.scrollTo( 0, 0 );
 					})
 					.catch( error => {
 						this.globalAlert.type = "danger";
@@ -212,7 +277,7 @@
 								this.templates.splice( index, 1 );
 								this.globalAlert.type = "info";
 								this.globalAlert.message = response.messages.join( "<br>" );
-								this.searchTemplates();
+								this.templates.splice( index, 1 );
 							} else {
 								this.globalAlert.type = "danger";
 								this.globalAlert.message = response.messages.join( "<br>" );
@@ -228,7 +293,11 @@
 
 			deleteSelected(){
 				if( this.selectedTemplates.length ){
-					this.deleteTemplate( this.selectedTemplates );
+					this.selectedTemplates.forEach(
+						(item, index ) => {
+							this.deleteTemplate( item );
+						}
+					)
 				} else {
 					alert( "Please select something to delete!" );
 				}
