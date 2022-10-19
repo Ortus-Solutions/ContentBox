@@ -42,7 +42,7 @@
 			selectedTemplates : [],
 			init(){
 				var self = this;
-				this.templateForm = this.resetTemplateForm();
+				this.templateForm = this.newTemplateForm();
 				this.templateFields = Object.keys( this.globalData.templateSchema )
 										.map( templateKey => (
 											{
@@ -69,17 +69,26 @@
 					} );
 				}
 			},
+			availableTemplates(){
+				return this.templates.filter( item => item.contentType == this.templateForm.contentType ).map( item => ( { id : item.templateID, label : item.name } ) );
+			},
 			availableFields(){
 				return this.templateFields ? this.templateFields.filter( field => !field.excludeTypes || field.excludeTypes.indexOf( this.templateForm.contentType ) == -1 ) : [];
 			},
 			selectedFields(){
-				return Object.keys( this.templateForm.definition ).sort( ( a, b ) =>  this.globalData.templateSchema[ a ].sortOrder - this.globalData.templateSchema[ b ].sortOrder );
+				return Object.keys( this.templateForm.definition ).filter( key => this.globalData.templateSchema[ key ] ).sort( ( a, b ) =>  this.globalData.templateSchema[ a ].sortOrder - this.globalData.templateSchema[ b ].sortOrder );
 			},
 			isSelectedField( key ){
 				return this.selectedFields().indexOf( key ) > -1;
 			},
 			fieldOptions( key ){
-				return this.globalData[ this.globalData.templateSchema[ key ].options ].map(
+				let options = this.globalData[ this.globalData.templateSchema[ key ].options ];
+				if( !options ){
+					options = typeof this[ this.globalData.templateSchema[ key ].options ] === "function"
+								? this[ this.globalData.templateSchema[ key ].options ]()
+								: this[ this.globalData.templateSchema[ key ].options ]
+				}
+				return options.map(
 					item => ( {
 							id : item.id || item,
 							label : item.label || item
@@ -111,6 +120,7 @@
 				var self = this;
 				console.log( )
 				return Object.keys( this.templateForm.definition )
+								.filter( key => self.globalData.templateSchema[ key ] )
 								.sort( ( a, b ) => self.globalData.templateSchema[ a ].sortOrder - self.globalData.templateSchema[ b ].sortOrder )
 								.reduce( (acc, key) => { acc[ key ] = self.globalData.templateSchema[ key ]; return acc; }, {} );
 			},
@@ -143,10 +153,10 @@
 			closeEditor(){
 				this.isEditorOpen = false;
 				window.scrollTo( 0, 0 );
-				this.resetTemplateForm();
+				this.templateForm = this.newTemplateForm();
 			},
 			editTemplate( cat ){
-				this.templateForm = cat || this.resetTemplateForm();
+				this.templateForm = cat || this.newTemplateForm();
 				this.isEditorOpen = true;
 			},
 			saveTemplate() {
@@ -224,7 +234,7 @@
 					} );
 				}
 			},
-			resetTemplateForm(){
+			newTemplateForm(){
 				return { ...this.formTemplate };
 			},
 			sortBy( field, direction ){
@@ -264,7 +274,12 @@
 
 			deleteTemplate( templateID, index ){
 				this.globalAlert.message = "";
-				if( confirm( "Are you sure?" ) ){
+				let template = this.templates[ index ];
+				let confirmationMessage = `Are you sure you wish to delete the template "${template.name}"?`;
+				if( template.assignedContentItems ){
+					confirmationMessage += ' All content items assigned to this template will be detached.';
+				}
+				if( confirm( confirmationMessage ) ){
 					fetch( `${this.baseAPIUrl}/${templateID}`, {
 						method : "DELETE",
 						headers : {
@@ -277,7 +292,6 @@
 								this.templates.splice( index, 1 );
 								this.globalAlert.type = "info";
 								this.globalAlert.message = response.messages.join( "<br>" );
-								this.templates.splice( index, 1 );
 							} else {
 								this.globalAlert.type = "danger";
 								this.globalAlert.message = response.messages.join( "<br>" );
@@ -295,7 +309,7 @@
 				if( this.selectedTemplates.length ){
 					this.selectedTemplates.forEach(
 						(item, index ) => {
-							this.deleteTemplate( item );
+							this.deleteTemplate( item, this.templates.findIndex( t => t.templateID == item ) );
 						}
 					)
 				} else {

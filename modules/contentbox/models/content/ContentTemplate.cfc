@@ -176,10 +176,9 @@ cacheuse           ="read-write"
 				"multiple" : true,
 				"sortOrder" : 12
 			},
+			"childContentTemplate"    : { "label" : "Child Template", "type" : "select", "options" : "availableTemplates", "excludeTypes" : [ "Entry" ], "sortOrder" : 13 },
 			// Layout options
-			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 13 },
-			"childLayout"            : { "label" : "Child Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 14 },
-
+			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 14 },
 			// Caching
 			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true, "sortOrder" : 15 },
 			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0, "sortOrder" : 16 },

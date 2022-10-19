@@ -285,7 +285,7 @@
 													<label field="template">Content Type</label>
 													<select class="form-control" x-model="templateForm.contentType">
 														<template x-for="(option) in availableTypes">
-															<option :value="option" x-text="option"></option>
+															<option :value="option" :selected="templateForm.contentType == option" x-text="option"></option>
 														</template>
 													</select>
 												</div>
@@ -464,7 +464,7 @@
 															<div class="col-xs-12">
 																<select class="form-control" x-model="templateForm.definition[ fieldKey ].value" :multiple="fieldKey == 'categories' ? true : null">
 																	<template x-for="(option) in fieldOptions( fieldKey )">
-																		<option :value="option.id" :selected="templateForm.definition[ fieldKey ].value.indexOf( option.id ) > -1" x-text="option.label"></option>
+																		<option :value="option.id" :selected="templateForm.definition[ fieldKey ].value && templateForm.definition[ fieldKey ].value.indexOf( option.id ) > -1" x-text="option.label"></option>
 																	</template>
 																</select>
 															</div>

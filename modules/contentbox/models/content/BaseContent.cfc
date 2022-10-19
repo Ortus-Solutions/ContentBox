@@ -759,6 +759,7 @@ component
 						!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
 						? getParent().getChildContentTemplate()
 						: getContentTemplateService().newCriteria()
+														.isEq( "contentType", getContentType() )
 														.isEq( "site", getSite() )
 														.isEq( "isGlobal", javacast( "boolean", true ) )
 														.get()
