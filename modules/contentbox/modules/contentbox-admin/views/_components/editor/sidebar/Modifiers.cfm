@@ -17,8 +17,8 @@
 		<div id="modifiers" class="panel-collapse collapse">
 			<div class="panel-body">
 				<div class="form-group">
-					<label for="parentContent" class="control-label">
-						<i class="fa fa-sitemap"></i>
+					<label for="contentTemplate" class="control-label">
+						<i class="fa fa-map"></i>
 						Content Template:
 					</label>
 					<cfif prc.availableTemplates.len()>
@@ -49,6 +49,34 @@
 				</div>
 
 				<cfif prc.oContent.getContentType() NEQ "Entry">
+
+					<div class="form-group">
+						<label for="childContentTemplate" class="control-label">
+							<i class="fa fa-map"></i>
+							Child Content Template:
+						</label>
+						<cfif prc.availableTemplates.len()>
+							<select
+								name="childContentTemplate"
+								id="childContentTemplate"
+								class="form-control input-sm"
+							>
+									<option value="null">- No Template -</option>
+									<cfloop array="#prc.availableTemplates#" item="template" index="i">
+										<option value="#template[ "templateID" ]#"<cfif !isNull( prc.oContent.getChildContentTemplate() ) && prc.oContent.getChildContentTemplate().getTemplateID() == template[ "templateID" ]> selected</cfif>>
+											#template[ "name" ]#
+										</option>
+									</cfloop>
+							</select>
+						<cfelse>
+							<p class="text-muted text-center">
+								No Content Templates are Currently Available
+								<br/><br/>
+								<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehTemplates & "##create-" & prc.oContent.getContentType() )#" target="_blank"><i class="fa fa-plus"></i> Create Template</a>
+							</p>
+						</cfif>
+
+					</div>
 					<!--- Parent --->
 					<div class="form-group">
 						<label for="parentContent" class="control-label">
