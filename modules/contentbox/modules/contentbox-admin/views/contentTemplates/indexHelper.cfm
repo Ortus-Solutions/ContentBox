@@ -95,6 +95,9 @@
 						} )
 				);
 			},
+			hasGlobalTemplateForType( type ){
+				return this.templates.some( t => t.isGlobal && t.contentType == type );
+			},
 			typeaheadOptionSearch( e ){
 				var key = e.target.name;
 				var searchTerm = e.target.value;
@@ -118,7 +121,6 @@
 			},
 			selectedDefinitions(){
 				var self = this;
-				console.log( )
 				return Object.keys( this.templateForm.definition )
 								.filter( key => self.globalData.templateSchema[ key ] )
 								.sort( ( a, b ) => self.globalData.templateSchema[ a ].sortOrder - self.globalData.templateSchema[ b ].sortOrder )
@@ -202,37 +204,42 @@
 				} );
 			},
 			duplicateTemplate( template ){
-				if( confirm( "Are you sure you wish to duplicate this template?" ) ){
-					var templateIndex = this.templates.findIndex( item => item.templateID == template.templateID );
-					var clone = { ...template };
-					delete clone.templateID;
-					delete clone.creator;
-					delete clone.modifiedDate;
-					delete clone.createdDate;
-					clone.name = 'Copy of ' + clone.name;
-					fetch( this.baseAPIUrl + '?includes=creator,creator.fullName,modifiedDate',
-					{
-						method 	: 'POST',
-						body 	: JSON.stringify( clone ),
-						headers : {
-							"Authorization" : `Bearer ${this.authentication.access_token}`
-						}
-					})
-					.then( r => r.json() )
-					.then( ( response ) => {
-						this.isSubmitting = false;
-						if( response.error ){
-							this.errorMessages = response.messages.join( "<br>" )
-						} else {
-							this.templates.splice( templateIndex + 1, 0, response.data );
-						}
-					})
-					.catch( error => {
-						this.globalAlert.type = "danger";
-						this.globalAlert.message = error.toString();
-						console.log( error );
-					} );
-				}
+				var self = this;
+				this.$confirm( "Are you sure you wish to duplicate this template?" ).then(
+					function(){
+						var templateIndex = self.templates.findIndex( item => item.templateID == template.templateID );
+						var clone = { ...template };
+						delete clone.templateID;
+						delete clone.creator;
+						delete clone.modifiedDate;
+						delete clone.createdDate;
+						delete clone.isGlobal;
+						delete clone.assignedContentItems;
+						clone.name = 'Copy of ' + clone.name;
+						fetch( self.baseAPIUrl + '?includes=creator,creator.fullName,modifiedDate',
+						{
+							method 	: 'POST',
+							body 	: JSON.stringify( clone ),
+							headers : {
+								"Authorization" : `Bearer ${self.authentication.access_token}`
+							}
+						})
+						.then( r => r.json() )
+						.then( ( response ) => {
+							self.isSubmitting = false;
+							if( response.error ){
+								self.errorMessages = response.messages.join( "<br>" )
+							} else {
+								self.templates.splice( templateIndex + 1, 0, response.data );
+							}
+						})
+						.catch( error => {
+							self.globalAlert.type = "danger";
+							self.globalAlert.message = error.toString();
+							console.log( error );
+						} );
+					}
+				)
 			},
 			newTemplateForm(){
 				return { ...this.formTemplate };
@@ -271,7 +278,90 @@
 						console.log( error );
 					} );
 			},
+			toggleGlobal( template ){
+				if( template.isGlobal ){
+					var templateIndex = self.templates.findIndex( t => t.templateID == template.templateID );
+					fetch( `${self.baseAPIUrl}/${template.templateID}`, {
+						method : "PATCH",
+						headers : {
+							"Authorization" : `Bearer ${self.authentication.access_token}`
+						},
+						body : JSON.stringify( { isGlobal : false } )
+					}).then( r => r.json() )
+					.then( ( response ) => {
+						if( response.error ){
+							self.displayAPIResponseErrors( response );
+						} else {
+							self.templates[ templateIndex ].isGlobal = false;
+						}
+					})
+					.catch( error => {
+						self.globalAlert.type = "danger";
+						self.globalAlert.message = error.toString();
+						console.log( error );
+					} );
+				} else {
+					this.assignAsGlobal( template )
+				}
+			},
+			assignAsGlobal( template ){
+				var globalIndex = this.templates.findIndex( t => t.contentType == template.contentType && t.isGlobal );
+				var templateIndex = this.templates.findIndex( t => t.templateID == template.templateID );
+				if( globalIndex > -1 ){
+					var confirmationMessage = `Template ${this.templates[ globalIndex ].name} is already assigned as the global template for content type ${template.contentType}. Are you sure you wish to change this?`;
+				} else {
+					var confirmationMessage = `Assigning this template as the global template will apply this template to all new content items with a type of ${template.contentType}. Are you sure you wish to do this?`;
+				}
 
+				var self = this;
+
+				var assign = () => {
+					fetch( `${self.baseAPIUrl}/${template.templateID}`, {
+						method : "PATCH",
+						headers : {
+							"Authorization" : `Bearer ${self.authentication.access_token}`
+						},
+						body : JSON.stringify( { isGlobal : true } )
+					}).then( r => r.json() )
+					.then( ( response ) => {
+						if( response.error ){
+							self.displayAPIResponseErrors( response );
+						} else {
+							self.templates[ templateIndex ].isGlobal = true;
+						}
+					})
+					.catch( error => {
+						self.globalAlert.type = "danger";
+						self.globalAlert.message = error.toString();
+						console.log( error );
+					} );
+
+				};
+
+				this.$confirm( confirmationMessage, { acceptText : 'Yes, proceed.' } )
+					.then( () => {
+						if( globalIndex > -1 ){
+							fetch( `${self.baseAPIUrl}/${self.templates[ globalIndex ].templateID}`, {
+								method : "PATCH",
+								headers : {
+									"Authorization" : `Bearer ${self.authentication.access_token}`
+								},
+								body : JSON.stringify( { isGlobal : false } )
+							}).then( r => r.json() )
+							  .then( response => {
+								if( response.error ){
+									self.displayAPIResponseErrors( response );
+								} else {
+									self.templates[ globalIndex ].isGlobal=false;
+									assign();
+								}
+							  })
+						} else {
+							assign();
+						}
+					} );
+
+			},
 			deleteTemplate( templateID, index ){
 				this.globalAlert.message = "";
 				let template = this.templates[ index ];
@@ -279,32 +369,48 @@
 				if( template.assignedContentItems ){
 					confirmationMessage += ' All content items assigned to this template will be detached.';
 				}
-				if( confirm( confirmationMessage ) ){
-					fetch( `${this.baseAPIUrl}/${templateID}`, {
+				var self = this;
+				this.$confirm( confirmationMessage, { acceptText : "Yes, Delete" } ).then( () => {
+					fetch( `${self.baseAPIUrl}/${templateID}`, {
 						method : "DELETE",
 						headers : {
-							"Authorization" : `Bearer ${this.authentication.access_token}`
+							"Authorization" : `Bearer ${self.authentication.access_token}`
 						}
 					})
 						.then( r => r.json() )
 						.then( ( response ) => {
 							if( !response.error ){
-								this.templates.splice( index, 1 );
-								this.globalAlert.type = "info";
-								this.globalAlert.message = response.messages.join( "<br>" );
+								self.templates.splice( index, 1 );
+								self.globalAlert.type = "info";
+								self.globalAlert.message = response.messages.join( "<br>" );
 							} else {
-								this.globalAlert.type = "danger";
-								this.globalAlert.message = response.messages.join( "<br>" );
+								self.globalAlert.type = "danger";
+								self.globalAlert.message = response.messages.join( "<br>" );
 							}
 						})
 						.catch( error => {
-							this.globalAlert.type = "danger";
-							this.globalAlert.message = error.toString();
+							self.globalAlert.type = "danger";
+							self.globalAlert.message = error.toString();
 							console.log( error );
 						} );
-				}
+				})
 			},
+			displayAPIResponseErrors( response ){
+				var errors = response.messages;
+				if( errors.length && errors[ 0 ].indexOf( "Validation" ) > -1 ){
+					Object.entries( response.data )
+								.map( validation => validation[ 1 ] )
+								.reduce(
+									( acc, messages ) => {
+										messages.forEach( m => acc.push( m.message ) );
+										return acc;
+									},
+								[] ).forEach( m => errors.push( m ) );
 
+				}
+				this.errorMessages = errors.join( "<br>" );
+				window.scrollTo( 0, 0 );
+			},
 			deleteSelected(){
 				if( this.selectedTemplates.length ){
 					this.selectedTemplates.forEach(

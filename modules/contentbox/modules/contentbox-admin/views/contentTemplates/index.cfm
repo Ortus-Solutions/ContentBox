@@ -177,7 +177,7 @@
 												</a>
 											</td>
 
-											<td x-text="template.contentType"></td>
+											<td x-tooltip="the content type of this template" x-text="template.contentType"></td>
 
 											<td x-text="template.description"></td>
 
@@ -187,7 +187,13 @@
 
 											<td x-text="new Date( template.modifiedDate ).toLocaleDateString()"></td>
 											<td>
-												<i x-show="template.isGlobal" class="fa fa-check text-success"></i>
+												<a
+													@click="toggleGlobal( template )"
+													:class="template.isGlobal ? 'text-primary' : 'text-muted'"
+													x-tooltip="template.isGlobal ? 'This template is assigned as a a global template. Global templates are applied to all new items with the specified content type. Click to unset.' : `Click to set this template as the global template for the content type ${template.contentType}`"
+												>
+													<i class="fa fa-globe fa-2x"></i>
+												</a>
 											</td>
 											<!--- Actions --->
 											<td class="text-center">
@@ -289,32 +295,34 @@
 														</template>
 													</select>
 												</div>
-												<div class="form-group col-sm-4">
-													<label>Is Global Template</label>
-													<toggle>
-														<div style="margin-top:5px">
-															<label class="flex items-center cursor-pointer">
-																<!-- toggle -->
-																<div class="relative">
-																	<!--- Input --->
-																	<input
-																		id="isGlobal"
-																		name="isGlobal"
-																		class="hidden"
-																		type="checkbox"
-																		:checked="!!templateForm.isGlobal"
-																		@click="templateForm.isGlobal = !templateForm.isGlobal"
-																	/>
-																	<!-- path -->
-																	<div class="toggle-path bg-gray-200 w-16 h-9 rounded-full shadow-inner"></div>
-																	<!-- circle -->
-																	<div class="toggle-circle absolute w-7 h-7 bg-white rounded-full shadow inset-y-0 left-0"></div>
-																</div>
-															</label>
-															<span class="text-warning" x-show="templateForm.isGlobal" x-cloak><small><em>Warning:</em> Any content items which are not assigned a template will automatically have this template applied.</small></span>
-														</div>
-													</toggle>
-												</div>
+												<template x-if="templateForm.isGlobal || !hasGlobalTemplateForType( templateForm.contentType )">
+													<div class="form-group col-sm-4">
+														<label>Is Global Template</label>
+														<toggle>
+															<div style="margin-top:5px">
+																<label class="flex items-center cursor-pointer">
+																	<!-- toggle -->
+																	<div class="relative">
+																		<!--- Input --->
+																		<input
+																			id="isGlobal"
+																			name="isGlobal"
+																			class="hidden"
+																			type="checkbox"
+																			:checked="!!templateForm.isGlobal"
+																			@click="templateForm.isGlobal = !templateForm.isGlobal"
+																		/>
+																		<!-- path -->
+																		<div class="toggle-path bg-gray-200 w-16 h-9 rounded-full shadow-inner"></div>
+																		<!-- circle -->
+																		<div class="toggle-circle absolute w-7 h-7 bg-white rounded-full shadow inset-y-0 left-0"></div>
+																	</div>
+																</label>
+																<span class="text-warning" x-show="templateForm.isGlobal" x-cloak><small><em>Warning:</em> Any content items which are not assigned a template will automatically have this template applied.</small></span>
+															</div>
+														</toggle>
+													</div>
+												</template>
 
 												<!--- Template --->
 												<div class="form-group col-sm-12">

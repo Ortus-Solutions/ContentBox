@@ -220,6 +220,9 @@ cacheuse           ="read-write"
 					"creator"
 				]
 			}
+		},
+		mappers : {
+			"assignedContentItems" : function( target, value ){ return javacast( "int", arguments.target ) }
 		}
 	};
 
