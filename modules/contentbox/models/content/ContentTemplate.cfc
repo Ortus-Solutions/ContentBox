@@ -6,12 +6,12 @@
  * A content template for a base content item
  */
 component
-persistent         ="true"
-entityname         ="cbContentTemplate"
-table              ="cb_contentTemplate"
-extends            ="contentbox.models.BaseEntityMethods"
-cachename          ="cbContentTemplate"
-cacheuse           ="read-write"
+	persistent="true"
+	entityname="cbContentTemplate"
+	table     ="cb_contentTemplate"
+	extends   ="contentbox.models.BaseEntityMethods"
+	cachename ="cbContentTemplate"
+	cacheuse  ="read-write"
 {
 
 	property
@@ -92,8 +92,8 @@ cacheuse           ="read-write"
 		length ="1000";
 
 	property
-		name="definition"
-		column="definition"
+		name   ="definition"
+		column ="definition"
 		notnull="true"
 		ormtype="text"
 		default="{}";
@@ -105,8 +105,8 @@ cacheuse           ="read-write"
 		cfc      ="contentbox.models.security.Author"
 		fieldtype="many-to-one"
 		fkcolumn ="FK_authorID"
-		insert 	 =true
-		update 	 =false;
+		insert   =true
+		update   =false;
 
 	// M20 -> site loaded as a proxy and fetched immediately
 	property
@@ -117,77 +117,158 @@ cacheuse           ="read-write"
 		fkcolumn ="FK_siteID"
 		lazy     ="true"
 		fetch    ="join"
-		insert 	 =true
-		update 	 =false;
+		insert   =true
+		update   =false;
 
 
 	property
-		name="assignedContentItems"
+		name   ="assignedContentItems"
 		ormtype="integer"
 		default=0
 		formula="select count(*) from cb_content cbc2 WHERE cbc2.FK_contentTemplateID=templateID or cbc2.FK_childContentTemplateID=templateID";
 
 	// The non-persistent schema of the JSON definition
-	property
-		name ="schema"
-		persistent="false";
+	property name="schema" persistent="false";
 
 
 	function init(){
-		variables.createdDate = now();
+		variables.createdDate  = now();
 		variables.modifiedDate = now();
-		variables.schema = {
-			"title"                  : { "label" : "Title", "type" : "string", "sortOrder" : 1 },
-			"content"                : { "label" : "Content", "type" : "text", "sortOrder" : 2 },
-			"markup"                 : { "label" : "Markup", "type" : "markdown", "sortOrder" : 3 },
-			"description"            : { "label" : "Description", "type" : "text", "excludeTypes" : [ "Page", "Entry" ], "sortOrder" : 4 },
-			"excerpt"                : { "label" : "Excerpt", "type" : "text", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 5 },
-			"featuredImage"          : { "label" : "Featured Image", "type" : "file", "sortOrder" : 6 },
+		variables.schema       = {
+			"title"       : { "label" : "Title", "type" : "string", "sortOrder" : 1 },
+			"content"     : { "label" : "Content", "type" : "text", "sortOrder" : 2 },
+			"markup"      : { "label" : "Markup", "type" : "markdown", "sortOrder" : 3 },
+			"description" : {
+				"label"        : "Description",
+				"type"         : "text",
+				"excludeTypes" : [ "Page", "Entry" ],
+				"sortOrder"    : 4
+			},
+			"excerpt" : {
+				"label"        : "Excerpt",
+				"type"         : "text",
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 5
+			},
+			"featuredImage" : {
+				"label"     : "Featured Image",
+				"type"      : "file",
+				"sortOrder" : 6
+			},
 			// SEO
-			"HTMLTitle"              : { "label" : "HTML Title", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 7 },
-			"HTMLKeywords"           : { "label" : "HTML Keywords", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 8 },
-			"HTMLDescription"        : { "label" : "HTML Description", "type" : "text", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 9 },
+			"HTMLTitle" : {
+				"label"        : "HTML Title",
+				"type"         : "string",
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 7
+			},
+			"HTMLKeywords" : {
+				"label"        : "HTML Keywords",
+				"type"         : "string",
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 8
+			},
+			"HTMLDescription" : {
+				"label"        : "HTML Description",
+				"type"         : "text",
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 9
+			},
 			// Modifiers
-			"parent"                 : {
-				"label" : "Content Parent",
-				"type" : "typeahead",
-				"search" : "/cbapi/v1/sites/:siteId/pages",
-				"options" : "filteredParents",
-				"optionId" : "contentID",
-				"optionLabel" : "title",
+			"parent" : {
+				"label"        : "Content Parent",
+				"type"         : "typeahead",
+				"search"       : "/cbapi/v1/sites/:siteId/pages",
+				"options"      : "filteredParents",
+				"optionId"     : "contentID",
+				"optionLabel"  : "title",
 				"excludeTypes" : [ "Entry" ],
-				"sortOrder" : 10
+				"sortOrder"    : 10
 			},
 			// Collections
-			"customFields"           : {
-				"label" : "Custom Fields",
-				"type"     : "array",
-				"schema"   : {
-					"name"         : { "label" : "Field Name", "required" : true, "type" : "string" },
+			"customFields" : {
+				"label"  : "Custom Fields",
+				"type"   : "array",
+				"schema" : {
+					"name" : {
+						"label"    : "Field Name",
+						"required" : true,
+						"type"     : "string"
+					},
 					"defaultValue" : { "label" : "Default Value", "type" : "string" }
 				},
 				"presentation" : "input",
-				"sortOrder" : 11
+				"sortOrder"    : 11
 			},
 			"categories" : {
-				"label" : "Assigned Categories",
-				"type" : "select",
-				"options" : "availableCategories",
-				"multiple" : true,
+				"label"     : "Assigned Categories",
+				"type"      : "select",
+				"options"   : "availableCategories",
+				"multiple"  : true,
 				"sortOrder" : 12
 			},
-			"childContentTemplate"    : { "label" : "Child Template", "type" : "select", "options" : "availableTemplates", "excludeTypes" : [ "Entry" ], "sortOrder" : 13 },
+			"childContentTemplate" : {
+				"label"        : "Child Template",
+				"type"         : "select",
+				"options"      : "availableTemplates",
+				"excludeTypes" : [ "Entry" ],
+				"sortOrder"    : 13
+			},
 			// Layout options
-			"layout"                 : { "label" : "Layout", "type" : "select", "options" : "availableLayouts", "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 14 },
+			"layout" : {
+				"label"        : "Layout",
+				"type"         : "select",
+				"options"      : "availableLayouts",
+				"excludeTypes" : [ "ContentStore", "Entry" ],
+				"sortOrder"    : 14
+			},
 			// Caching
-			"cache"                  : { "label" : "Cache Enabled", "type" : "boolean", "default" : true, "sortOrder" : 15 },
-			"cacheTimeout"           : { "label" : "Cache Timeout", "type" : "integer", "default" : 0, "sortOrder" : 16 },
-			"cacheLastAccessTimeout" : { "label" : "Cache Last Access Timeout", "type" : "integer", "default" : 0, "sortOrder" : 17 },
-			"passwordProtection"     : { "label" : "Access Password", "type" : "string", "excludeTypes" : [ "ContentStore" ], "sortOrder" : 18 },
-			"allowComments"          : { "label" : "Comments Enabled", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 19 },
+			"cache" : {
+				"label"     : "Cache Enabled",
+				"type"      : "boolean",
+				"default"   : true,
+				"sortOrder" : 15
+			},
+			"cacheTimeout" : {
+				"label"     : "Cache Timeout",
+				"type"      : "integer",
+				"default"   : 0,
+				"sortOrder" : 16
+			},
+			"cacheLastAccessTimeout" : {
+				"label"     : "Cache Last Access Timeout",
+				"type"      : "integer",
+				"default"   : 0,
+				"sortOrder" : 17
+			},
+			"passwordProtection" : {
+				"label"        : "Access Password",
+				"type"         : "string",
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 18
+			},
+			"allowComments" : {
+				"label"        : "Comments Enabled",
+				"type"         : "boolean",
+				"default"      : true,
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 19
+			},
 			// Display Options
-			"showInMenu"             : { "label" : "Show In Menu", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore", "Entry" ], "sortOrder" : 20 },
-			"showInSearch"           : { "label" : "Show In Search", "type" : "boolean", "default" : true, "excludeTypes" : [ "ContentStore" ], "sortOrder" : 21 }
+			"showInMenu" : {
+				"label"        : "Show In Menu",
+				"type"         : "boolean",
+				"default"      : true,
+				"excludeTypes" : [ "ContentStore", "Entry" ],
+				"sortOrder"    : 20
+			},
+			"showInSearch" : {
+				"label"        : "Show In Search",
+				"type"         : "boolean",
+				"default"      : true,
+				"excludeTypes" : [ "ContentStore" ],
+				"sortOrder"    : 21
+			}
 		};
 
 		return this;
@@ -214,11 +295,7 @@ cacheuse           ="read-write"
 					"createdDate",
 					"modifiedDate"
 				],
-				defaultExcludes : [
-					"assignedContentItems",
-					"site",
-					"creator"
-				]
+				defaultExcludes : [ "assignedContentItems", "site", "creator" ]
 			}
 		},
 		mappers : {
@@ -228,46 +305,52 @@ cacheuse           ="read-write"
 
 	this.constraints = {
 		"name" : {
-			required     : true,
-			size         : "1..200",
-			"udf"        : ( value, target ) => target.isNameUniqueInSite( value )
+			required : true,
+			size     : "1..200",
+			"udf"    : ( value, target ) => target.isNameUniqueInSite( value )
 		},
 		"definition" : { required : true },
-		"site" : { required : true },
-		"isGlobal" : { required: true, "udf" : ( value, target ) => target.isGlobalUniqueInSite( value ), "udfMessage" : "A site may only have one global template per content type.  If you wish to make this template global, please deactivate the existing global template." }
+		"site"       : { required : true },
+		"isGlobal"   : {
+			required     : true,
+			"udf"        : ( value, target ) => target.isGlobalUniqueInSite( value ),
+			"udfMessage" : "A site may only have one global template per content type.  If you wish to make this template global, please deactivate the existing global template."
+		}
 	};
 
 
 	/**
 	 * Overload getter for definition to deal with JSON conversion
+	 *
 	 * @overload
 	 */
 	function getDefinition(){
-		return deSerializeJSON( variables.definition );
+		return deserializeJSON( variables.definition );
 	}
 
 	/**
 	 * Overload setter for definition to deal with JSON conversion
+	 *
 	 * @overload
 	 */
 	function setDefinition( definition ){
 		variables.definition = isSimpleValue( arguments.definition )
-								? arguments.definition
-								: serializeJSON(
-									arguments.definition,
-									false,
-									listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false
-								);
+		 ? arguments.definition
+		 : serializeJSON(
+			arguments.definition,
+			false,
+			listFindNoCase( "Lucee", server.coldfusion.productname ) ? "utf-8" : false
+		);
 		return this;
 	}
 
 	boolean function isNameUniqueInSite( value = variables.name ){
 		var c = getContentTemplateService()
-					.newCriteria()
-					.isEq( "site", getSite() )
-					.isEq( "name", arguments.value );
+			.newCriteria()
+			.isEq( "site", getSite() )
+			.isEq( "name", arguments.value );
 
-		if( !isNull( variables.templateID ) ){
+		if ( !isNull( variables.templateID ) ) {
 			c.ne( "templateID", variables.templateID );
 		}
 
@@ -275,16 +358,15 @@ cacheuse           ="read-write"
 	}
 
 	boolean function isGlobalUniqueInSite(){
-
-		if( !variables.isGlobal ) return true;
+		if ( !variables.isGlobal ) return true;
 
 		var c = getContentTemplateService()
-					.newCriteria()
-					.isEq( "site", getSite() )
-					.isEq( "contentType", getContentType() )
-					.isEq( "isGlobal", javacast( "boolean", true ) );
+			.newCriteria()
+			.isEq( "site", getSite() )
+			.isEq( "contentType", getContentType() )
+			.isEq( "isGlobal", javacast( "boolean", true ) );
 
-		if( !isNull( variables.templateID ) ){
+		if ( !isNull( variables.templateID ) ) {
 			c.ne( "templateID", variables.templateID );
 		}
 

@@ -1,8 +1,8 @@
 component {
 
-    function up( schema, qb ) {
-		if( schema.hasTable( "cb_relocations" ) ){
-			schema.alter( "cb_relocations", function( table ) {
+	function up( schema, qb ){
+		if ( schema.hasTable( "cb_relocations" ) ) {
+			schema.alter( "cb_relocations", function( table ){
 				table.unique( [ "slug", "FK_siteID" ] );
 			} );
 		} else {
@@ -18,10 +18,9 @@ component {
 				table.unique( [ "slug", "FK_siteID" ] );
 			} );
 		}
-    }
+	}
 
-    function down( schema, qb ) {
-
-    }
+	function down( schema, qb ){
+	}
 
 }

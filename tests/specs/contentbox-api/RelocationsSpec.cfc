@@ -11,13 +11,13 @@ component extends="tests.resources.BaseApiTest" {
 	function beforeAll(){
 		super.beforeAll();
 		// Log in admin
-		variables.loggedInData = loginUser();
-		variables.testSite = getDefaultSite();
+		variables.loggedInData   = loginUser();
+		variables.testSite       = getDefaultSite();
 		variables.testRelocation = variables.relocationService.new(
 			properties = {
-				"slug" : createUUID(),
+				"slug"   : createUUID(),
 				"target" : createUUID(),
-				"site" : testSite
+				"site"   : testSite
 			}
 		);
 		variables.RelocationService.save( testRelocation );
@@ -27,8 +27,8 @@ component extends="tests.resources.BaseApiTest" {
 	 * executes after all suites+specs in the run() method
 	 */
 	function afterAll(){
-		if( variables.keyExists( "testRelocation" ) ){
-			variables.relocationService.deleteWhere( slug=testRelocation.getSlug() );
+		if ( variables.keyExists( "testRelocation" ) ) {
+			variables.relocationService.deleteWhere( slug = testRelocation.getSlug() );
 		}
 		super.afterAll();
 	}
