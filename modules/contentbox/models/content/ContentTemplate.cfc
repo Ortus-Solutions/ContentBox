@@ -299,7 +299,9 @@ component
 			}
 		},
 		mappers : {
-			"assignedContentItems" : function( target, value ){ return javacast( "int", arguments.target ) }
+			"assignedContentItems" : function( target, value ){
+				return javacast( "int", arguments.target )
+			}
 		}
 	};
 
