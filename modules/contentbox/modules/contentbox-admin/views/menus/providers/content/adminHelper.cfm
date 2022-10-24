@@ -4,7 +4,17 @@
         var hidden = null;
         var label = null;
         var typeIcon = null;
+
+        if( !!document.getElementsByClassName( "select-content") ) {
+            handleOnClick();
+        };
         document.addEventListener( "DOMContentLoaded", () => {
+           handleOnClick();
+        } );
+        /**
+         * Handles the click on the element, with the class "select-content"
+         */
+        function handleOnClick(){
             $( '.select-content' ).on( 'click', function() {
                 input = $( this ).siblings( 'input[name^=contentTitle]' );
                 hidden= $( this ).siblings( 'input[name^=contentSlug]' );
@@ -13,7 +23,7 @@
                 var baseURL = '#event.buildLink( args.xehContentSelector )#';
                 openRemoteModal( baseURL, {contentType:'Page,Entry'}, 900, 600 );
             } );
-        } );
+        }
         function chooseRelatedContent( id, title, type, slug ) {
             closeRemoteModal();
             input.val( title );
