@@ -1,4 +1,4 @@
-component implements="contentbox.models.updates.IUpdate" {
+component {
 
 	property name="log" inject="logbox:logger:{this}";
 
