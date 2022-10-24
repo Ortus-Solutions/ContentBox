@@ -1639,7 +1639,7 @@ DROP TABLE IF EXISTS `cb_contentTemplate`;
 
 
 CREATE TABLE `cb_contentTemplate2` (
-  `templateID` varchar(36) NOT NULL,
+  `templateID` char(36) NOT NULL,
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit NOT NULL DEFAULT 0,
@@ -1648,8 +1648,8 @@ CREATE TABLE `cb_contentTemplate2` (
   `name` varchar(225) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `definition` longtext NOT NULL,
-  `FK_authorID` varchar(36) NOT NULL,
-  `FK_siteID` varchar(36) NOT NULL,
+  `FK_authorID` char(36) NOT NULL,
+  `FK_siteID` char(36) NOT NULL,
   PRIMARY KEY (`templateID`),
   KEY `idx_authorID` (`FK_authorID`),
   KEY `idx_siteID` (`FK_siteID`),
