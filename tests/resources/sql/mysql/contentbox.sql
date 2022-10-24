@@ -10,7 +10,7 @@
 # Generation Time: 2022-02-18 20:12:42 +0000
 # ************************************************************
 
-USE `contentbox`;
+USE `contentbox_testing`;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -1636,28 +1636,33 @@ UNLOCK TABLES;
 
 
 DROP TABLE IF EXISTS `cb_contentTemplate`;
-
-
-CREATE TABLE `cb_contentTemplate2` (
-  `templateID` char(36) NOT NULL,
+CREATE TABLE `cb_contentTemplate` (
+  `templateID` char(36) CHARACTER SET utf8 NOT NULL,
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
-  `isDeleted` bit NOT NULL DEFAULT 0,
-  `isGlobal` bit NOT NULL DEFAULT 0,
+  `isDeleted` bit(1) NOT NULL,
+  `isGlobal` bit(1) NOT NULL,
   `contentType` varchar(50) DEFAULT NULL,
   `name` varchar(225) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `definition` longtext NOT NULL,
-  `FK_authorID` char(36) NOT NULL,
+  `FK_authorID` char(36) CHARACTER SET utf8 NOT NULL,
   `FK_siteID` char(36) NOT NULL,
   PRIMARY KEY (`templateID`),
-  KEY `idx_authorID` (`FK_authorID`),
-  KEY `idx_siteID` (`FK_siteID`),
+  KEY `FKDC43A033AA6AC0EA` (`FK_authorID`),
+  KEY `FKDC43A033988947A2` (`FK_siteID`),
   KEY `idx_templateContentType` (`contentType`),
-  CONSTRAINT `fk_cb_contentTemplate_siteID` FOREIGN KEY (`FK_siteID`) REFERENCES `cb_site` (`siteID`),
-  CONSTRAINT `fk_cb_contentTemplate_authorID` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`)
+  CONSTRAINT `FK5mi1odosgnbuau2gh3b87u5f4` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
+  CONSTRAINT `FKDC43A033988947A2` FOREIGN KEY (`FK_siteID`) REFERENCES `cb_site` (`siteID`),
+  CONSTRAINT `FKDC43A033AA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
+  CONSTRAINT `FKljvcfnipuvmuig30e4wcugg9p` FOREIGN KEY (`FK_siteID`) REFERENCES `cb_site` (`siteID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+ALTER TABLE `cb_content`
+ADD COLUMN `FK_contentTemplateID` char(36) CHARACTER SET utf8 NULL AFTER `FK_siteID`,
+ADD COLUMN `FK_childContentTemplateID` char(36) CHARACTER SET utf8 NULL AFTER `FK_contentTemplateID`,
+ADD CONSTRAINT `fk_cb_content_FK_contentTemplateID` FOREIGN KEY (`FK_contentTemplateID`) REFERENCES `cb_contentTemplate` (`templateID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+ADD CONSTRAINT `fk_cb_content_FK_childContentTemplateID` FOREIGN KEY (`FK_childContentTemplateID`) REFERENCES `cb_contentTemplate` (`templateID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
