@@ -1196,11 +1196,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.list( sortOrder = arguments.sortOrder );
 	}
 
-	function addRelocation(
-		required BaseContent contentItem,
-		required string originalSlug
-	){
-		variables.relocationService.createContentRelocation( argumentCollection=arguments );
+	function addRelocation( required BaseContent contentItem, required string originalSlug ){
+		variables.relocationService.createContentRelocation( argumentCollection = arguments );
 	}
 
 	/********************************************* PRIVATE *********************************************/

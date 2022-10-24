@@ -2,7 +2,7 @@
  * RESTFul CRUD for Site relocations
  * An incoming site identifier is required
  */
-component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR"{
+component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR" {
 
 	// DI
 	property name="ormService" inject="RelocationService@contentbox";
@@ -32,18 +32,19 @@ component extends="baseHandler" secured="PAGES_ADMIN,PAGES_EDITOR"{
 	function index( event, rc, prc ){
 		// Criterias and Filters
 		param rc.sortOrder = "slug";
-		param rc.search = "";
+		param rc.search    = "";
 
 		// Build up a search criteria and let the base execute it
 		arguments.criteria = newCriteria().isEq( "site", prc.oCurrentSite );
 		// Search Criteria
-		arguments.criteria.when( len( rc.search ), function( c ){
-			c.like( "slug", "%#search#%" );
-		} )
-		// Content ID filter
-		.when( !isNull( rc.contentID ), function( c ){
-			c.isEq( "relatedContent.contentID", rc.contentID );
-		} );
+		arguments.criteria
+			.when( len( rc.search ), function( c ){
+				c.like( "slug", "%#search#%" );
+			} )
+			// Content ID filter
+			.when( !isNull( rc.contentID ), function( c ){
+				c.isEq( "relatedContent.contentID", rc.contentID );
+			} );
 
 		// Delegate it!
 		super.index( argumentCollection = arguments );
