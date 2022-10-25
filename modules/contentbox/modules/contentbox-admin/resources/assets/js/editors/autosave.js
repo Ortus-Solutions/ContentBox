@@ -9,15 +9,17 @@
 import { decompressFromUTF16, compressToUTF16 } from "lz-string";
 import moment from "moment";
 
+const autoSavePrefix = 'autosave_';
+
 window.resetAutoSave = function(){
 	if ( !Modernizr.localstorage ) return;
-	var saveStoreKey 	= "autosave_" + window.location;
+	var saveStoreKey 	= autoSavePrefix + window.location;
 	var saved = localStorage.getItem( saveStoreKey );
 	if( saved ){
-		saved = JSON.parse( saved );
-		saved.forEach( ( entry, index ) => {
-			localStorage.removeItem( entry );
-		} );
+		JSON.parse( saved )
+			.forEach( ( entry, index ) => {
+				localStorage.removeItem( entry );
+			} );
 		localStorage.setItem( saveStoreKey, "[]" );
 	}
 
@@ -37,7 +39,7 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	var opts 			= $.extend( {}, defaults, options || {} );
 	var editorID 		= editor.attr( "id" );
 	// Retrieve the actual editor driver implementation using ContentBox JS Interface Method
-	var saveStoreKey 	= "autosave_" + window.location;
+	var saveStoreKey 	= autoSavePrefix + window.location;
 	var timer 			= 0, savingActive = false;
 
 	// Setup SavesStore
