@@ -16,10 +16,10 @@ window.resetAutoSave = function(){
 	var saveStoreKey 	= autoSavePrefix + window.location;
 	var saved = localStorage.getItem( saveStoreKey );
 	if( saved ){
-		saved = JSON.parse( saved );
-		saved.forEach( ( entry, index ) => {
-			localStorage.removeItem( entry );
-		} );
+		JSON.parse( saved )
+			.forEach( ( entry, index ) => {
+				localStorage.removeItem( entry );
+			} );
 		localStorage.setItem( saveStoreKey, "[]" );
 	}
 
