@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -171,7 +171,7 @@ component extends="content" {
 		} else {
 			var relocation = variables.relocationService
 				.newCriteria()
-				.isEq( "site", variables.CBHelper.site() )
+				.isEq( "site", prc.oCurrentSite )
 				.isEq( "slug", rc.pageUri )
 				.get();
 			if ( !isNull( relocation ) ) {
