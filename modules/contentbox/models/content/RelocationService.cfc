@@ -85,8 +85,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Creates a content-assigned relocation
 	 *
-	 * @contentItem 	the content item to associate to this relocation
-	 * @originalSlug	the slug which will be relocated
+	 * @contentItem  the content item to associate to this relocation
+	 * @originalSlug the slug which will be relocated
 	 */
 	Relocation function createContentRelocation( required BaseContent contentItem, required string originalSlug ){
 		var site       = arguments.contentItem.getSite();
@@ -112,8 +112,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Creates a target ( no content assigned ) relocation for global site relocations
 	 *
-	 * @slug 	The URI to be checked
-	 * @target 	The target to relocate the URI to
+	 * @slug   The URI to be checked
+	 * @target The target to relocate the URI to
 	 */
 	Relocation function createTargetRelocation( required string slug, required string target ){
 		var site       = variables.cbHelper.site();
@@ -139,9 +139,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Returns a relocation by slug, contentType, and site
 	 *
-	 * @slug  		the URI value to test
+	 * @slug        the URI value to test
 	 * @contentType the content type to restrict
-	 * @site 		the site to restrict the search to
+	 * @site        the site to restrict the search to
 	 */
 	any function getRelocationBySlug(
 		required string slug,
