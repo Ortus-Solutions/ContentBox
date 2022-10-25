@@ -73,7 +73,7 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	 * @tags        Authors
 	 * @requestBody contentbox/apidocs/authors/create/requestBody.json
 	 * @responses   contentbox/apidocs/authors/create/responses.json
-	 * @x           -contentbox-permissions AUTHOR_ADMIN
+	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
 	function create( event, rc, prc ){
 		// Default set variables for the author
