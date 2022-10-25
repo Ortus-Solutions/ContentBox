@@ -118,7 +118,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 				}
 			);
 		} else {
-			relocation.setTarget( arguments.target );
+			relocation.setTarget( arguments.target )
+						.setRelatedContent( nullValue() );
 		}
 		save( relocation );
 		return relocation;
