@@ -126,18 +126,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 	any function getRelocationBySlug(
 		required string slug,
-		string contentType = 'Page',
+		string contentType = "Page",
 		Site site
 	){
 		param arguments.site = variables.CBHelper.site();
 
 		return newCriteria()
-				.createAlias( "relatedContent", "c" )
-				.isEq( "c.contentType", arguments.contentType )
-				.isEq( "site", arguments.site )
-				.isEq( "slug", arguments.slug )
-				.get();
-
+			.createAlias( "relatedContent", "c" )
+			.isEq( "c.contentType", arguments.contentType )
+			.isEq( "site", arguments.site )
+			.isEq( "slug", arguments.slug )
+			.get();
 	}
 
 }

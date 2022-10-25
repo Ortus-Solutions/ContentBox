@@ -21,11 +21,11 @@ component extends="content" {
 	/**
 	 * Pre handler for pages
 	 *
-	 * @event
-	 * @action
+	 * @event         
+	 * @action        
 	 * @eventArguments
-	 * @rc
-	 * @prc
+	 * @rc            
+	 * @prc           
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		super.preHandler( argumentCollection = arguments );
@@ -35,8 +35,8 @@ component extends="content" {
 	 * Preview a page
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function preview( event, rc, prc ){
 		// Run parent preview
@@ -94,9 +94,9 @@ component extends="content" {
 	/**
 	 * Around page advice that provides caching and multi-output format
 	 *
-	 * @event
-	 * @rc
-	 * @prc
+	 * @event         
+	 * @rc            
+	 * @prc           
 	 * @eventArguments
 	 */
 	function aroundIndex( event, rc, prc, eventArguments ){
@@ -111,8 +111,8 @@ component extends="content" {
 	 * Present pages in the UI
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function index( event, rc, prc ){
 		// Routing placeholder
@@ -167,9 +167,9 @@ component extends="content" {
 			return;
 		} else {
 			var relocation = variables.relocationService.getRelocationBySlug(
-															slug=rc.pageUri,
-															site=prc.oCurrentSite
-														);
+				slug = rc.pageUri,
+				site = prc.oCurrentSite
+			);
 			if ( !isNull( relocation ) ) {
 				relocate(
 					URI = "/" & (
@@ -206,8 +206,8 @@ component extends="content" {
 	 * Content search
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 *
 	 * @return HTML
 	 */
@@ -261,8 +261,8 @@ component extends="content" {
 	 * RSS Feeds
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function rss( event, rc, prc ){
 		// params
@@ -289,8 +289,8 @@ component extends="content" {
 	 * Comment Form Post
 	 *
 	 * @event
-	 * @rc
-	 * @prc
+	 * @rc   
+	 * @prc  
 	 */
 	function commentPost( event, rc, prc ){
 		// incoming params
