@@ -44,9 +44,8 @@ component accessors="true" singleton {
 		}
 
 		// process entity setups.
-		var entityName    = ORMService.getEntityGivenName( arguments.target );
-		var identityField = ORMService.getKey( entityName );
-		var identityValue = invoke( arguments.target, "get#identityField#" );
+		var entityName    = arguments.target.getEntityName();
+		var identityValue = arguments.target.getId();
 
 		// create criteria for uniqueness
 		var c = ORMService
@@ -55,7 +54,7 @@ component accessors="true" singleton {
 			.isEq( field, arguments.targetValue );
 
 		// validate with ID? then add to restrictions
-		if ( !isNull( identityValue ) ) {
+		if ( len( identityValue ) ) {
 			c.ne( identityField, identityValue );
 		}
 
