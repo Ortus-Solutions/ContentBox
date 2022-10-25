@@ -45,6 +45,7 @@ component accessors="true" singleton {
 
 		// process entity setups.
 		var entityName    = arguments.target.getEntityName();
+		var identityField = variables.ormService.getKey( arguments.target );
 		var identityValue = arguments.target.getId();
 
 		// create criteria for uniqueness
