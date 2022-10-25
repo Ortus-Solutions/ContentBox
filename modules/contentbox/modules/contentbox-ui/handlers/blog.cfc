@@ -252,7 +252,7 @@ component extends="content" {
 				.setLayout( name = "#prc.cbTheme#/layouts/blog", module = prc.cbThemeRecord.module )
 				.setView( view = "#prc.cbTheme#/views/entry", module = prc.cbThemeRecord.module );
 		} else {
-			var relocation = variables.relocationService.newCriteria().isEq( "site", variables.CBHelper.site() ).isEq( "slug", rc.entrySlug ).get();
+			var relocation = variables.relocationService.newCriteria().isEq( "site", prc.oCurrentSite ).isEq( "slug", rc.entrySlug ).get();
 			if( !isNull( relocation ) ){
 				relocate(
 					URL = variables.CBHelper.linkBlog() & "/" & ( !isNull( relocation.getRelatedContent() ) ? relocation.getRelatedContent().getSlug() : relocation.getTarget() ),

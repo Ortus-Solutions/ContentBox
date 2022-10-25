@@ -166,7 +166,7 @@ component extends="content" {
 				.setView( view = "#prc.cbTheme#/views/page", module = prc.cbThemeRecord.module );
 			return;
 		} else {
-			var relocation = variables.relocationService.newCriteria().isEq( "site", variables.CBHelper.site() ).isEq( "slug", rc.pageUri ).get();
+			var relocation = variables.relocationService.newCriteria().isEq( "site", prc.oCurrentSite ).isEq( "slug", rc.pageUri ).get();
 			if( !isNull( relocation ) ){
 				relocate(
 				 	URI = '/' & ( !isNull( relocation.getRelatedContent() ) ? relocation.getRelatedContent().getSlug() : relocation.getTarget() ),
