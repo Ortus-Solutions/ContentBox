@@ -70,9 +70,9 @@ component extends="baseHandler" secured="AUTHOR_ADMIN" {
 	/**
 	 * Create an author in ContentBox
 	 *
-	 * @tags        Authors
-	 * @requestBody contentbox/apidocs/authors/create/requestBody.json
-	 * @responses   contentbox/apidocs/authors/create/responses.json
+	 * @tags                     Authors
+	 * @requestBody              contentbox/apidocs/authors/create/requestBody.json
+	 * @responses                contentbox/apidocs/authors/create/responses.json
 	 * @x-contentbox-permissions AUTHOR_ADMIN
 	 */
 	function create( event, rc, prc ){

@@ -72,7 +72,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			} );
 
 		// run criteria query and projections count
-		results.count      = c.count( "relocationID" );
+		results.count       = c.count( "relocationID" );
 		results.relocations = c.list(
 			offset   : arguments.offset,
 			max      : arguments.max,
@@ -82,18 +82,20 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return results;
 	}
 
-	Relocation function createContentRelocation(
-		required BaseContent contentItem,
-		required string originalSlug
-	){
-		var site = arguments.contentItem.getSite();
-		var relocation = newCriteria().isEq( "site", site ).isEq( "slug", arguments.originalSlug ).get();
-		if( isNull( relocation ) ){
-			relocation =  new( properties={
-				"slug" : arguments.originalSlug,
-				"relatedContent" : arguments.contentItem,
-				"site" : site
-			} );
+	Relocation function createContentRelocation( required BaseContent contentItem, required string originalSlug ){
+		var site       = arguments.contentItem.getSite();
+		var relocation = newCriteria()
+			.isEq( "site", site )
+			.isEq( "slug", arguments.originalSlug )
+			.get();
+		if ( isNull( relocation ) ) {
+			relocation = new (
+				properties = {
+					"slug"           : arguments.originalSlug,
+					"relatedContent" : arguments.contentItem,
+					"site"           : site
+				}
+			);
 		} else {
 			relocation.setRelatedContent( arguments.contentItem ).setTarget( javacast( "null", 0 ) );
 		}
@@ -101,22 +103,25 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return relocation;
 	}
 
-	Relocation function createTargetRelocation(
-		required string slug,
-		required string target
-	){
-		var site = variables.cbHelper.site();
-		var relocation = newCriteria().isEq( "site", site ).isEq( "slug", arguments.originalSlug ).get();
-		if( isNull( relocation ) ){
-			relocation =  new( properties={
-				"slug" : arguments.slug,
-				"target" : arguments.target,
-				"site" : site
-			} );
+	Relocation function createTargetRelocation( required string slug, required string target ){
+		var site       = variables.cbHelper.site();
+		var relocation = newCriteria()
+			.isEq( "site", site )
+			.isEq( "slug", arguments.originalSlug )
+			.get();
+		if ( isNull( relocation ) ) {
+			relocation = new (
+				properties = {
+					"slug"   : arguments.slug,
+					"target" : arguments.target,
+					"site"   : site
+				}
+			);
 		} else {
 			relocation.setTarget( arguments.target );
 		}
 		save( relocation );
 		return relocation;
 	}
+
 }
