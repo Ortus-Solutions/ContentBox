@@ -1201,8 +1201,15 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.list( sortOrder = arguments.sortOrder );
 	}
 
+	/**
+	 * Adds a relocation for a content item
+	 *
+	 * @contentItem  the target to relocate to
+	 * @originalSlug the URI from which to redirect
+	 */
 	function addRelocation( required BaseContent contentItem, required string originalSlug ){
 		variables.relocationService.createContentRelocation( argumentCollection = arguments );
+		return this;
 	}
 
 	/********************************************* PRIVATE *********************************************/
