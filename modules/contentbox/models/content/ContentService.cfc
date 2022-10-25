@@ -1199,8 +1199,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Adds a relocation for a content item
 	 *
-	 * @contentItem 	the target to relocate to
-	 * @originalSlug 	the URI from which to redirect
+	 * @contentItem  the target to relocate to
+	 * @originalSlug the URI from which to redirect
 	 */
 	function addRelocation( required BaseContent contentItem, required string originalSlug ){
 		variables.relocationService.createContentRelocation( argumentCollection = arguments );
