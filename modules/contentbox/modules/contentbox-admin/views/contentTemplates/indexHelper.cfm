@@ -21,8 +21,8 @@
 				message : ""
 			},
 			activeSite      : "#cb.site().getId()#",
-			globalData      : #cb.toJSON( prc.globalData )#,
-			authentication  : #cb.toJSON( prc.jwtTokens )#,
+			globalData      : #toJSON( prc.globalData )#,
+			authentication  : #toJSON( prc.jwtTokens )#,
 			errorMessages 	: "",
 			formTemplate 	: {
 					site        : "#cb.site().getId()#",

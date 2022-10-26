@@ -6,7 +6,7 @@ function customFieldsModel(){
 		init(){
 			window.addCustomField = this.addCustomField;
 		},
-		customFields : #cb.toJSON( prc.oContent.getCustomFields().map( ( field ) => arguments.field.getMemento() ) )#,
+		customFields : #toJSON( prc.oContent.getCustomFields().map( ( field ) => arguments.field.getMemento() ) )#,
 		customFieldTemplate : { "key" : "", "value" : "", "relatedContent" : "#prc.oContent.getContentID()#" },
 		addCustomField( key, value ){
 			// Alpine events

@@ -1,7 +1,7 @@
 ﻿<cfoutput>
 <script>
-window.authentication = #cb.toJSON( prc.jwtTokens )#
-window.assignedTemplate = #( !isNull( prc.oContent.getContentTemplate() ) ? cb.toJSON( prc.oContent.getContentTemplate().getMemento() ) : javacast( "boolean", false ) )#
+window.authentication = #toJSON( prc.jwtTokens )#
+window.assignedTemplate = #( !isNull( prc.oContent.getContentTemplate() ) ? toJSON( prc.oContent.getContentTemplate().getMemento() ) : javacast( "boolean", false ) )#
 
 // Editor alerts model
 function alertsModel(){
