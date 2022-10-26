@@ -16,7 +16,7 @@
 				"relatedContent" : "#prc.oContent.getContentID()#",
 				"site" : "#prc.oContent.getSite().getSiteID()#"
 			},
-			authentication  : #cb.toJSON( prc.jwtTokens )#,
+			authentication  : #toJson( prc.jwtTokens )#,
 			init(){
 				this.fetchContentRelocations();
 			},
