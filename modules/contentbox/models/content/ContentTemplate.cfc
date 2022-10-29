@@ -349,7 +349,7 @@ component
 	/**
 	 * Determines whether a template with a given name is unique within a site
 	 *
-	 * @value  The name to test for uniqueness
+	 * @value The name to test for uniqueness
 	 */
 	boolean function isNameUniqueInSite( value = variables.name ){
 		var c = getContentTemplateService()
