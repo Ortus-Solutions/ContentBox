@@ -6,6 +6,25 @@
  * @param  {object} options  The override options such as: storeMax, timeout
  * @return {object}          Returns the auto save closure
  */
+import { decompressFromUTF16, compressToUTF16 } from "lz-string";
+import moment from "moment";
+
+const autoSavePrefix = 'autosave_';
+
+window.resetAutoSave = function(){
+	if ( !Modernizr.localstorage ) return;
+	var saveStoreKey 	= autoSavePrefix + window.location;
+	var saved = localStorage.getItem( saveStoreKey );
+	if( saved ){
+		JSON.parse( saved )
+			.forEach( ( entry, index ) => {
+				localStorage.removeItem( entry );
+			} );
+		localStorage.setItem( saveStoreKey, "[]" );
+	}
+
+}
+
 window.autoSave = function( editor, pageID, ddMenuID, options ){
 	// Verify local storage, else disable feature
 	if ( !Modernizr.localstorage ){
@@ -20,7 +39,7 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	var opts 			= $.extend( {}, defaults, options || {} );
 	var editorID 		= editor.attr( "id" );
 	// Retrieve the actual editor driver implementation using ContentBox JS Interface Method
-	var saveStoreKey 	= "autosave_" + window.location + "_" + editorID;
+	var saveStoreKey 	= autoSavePrefix + window.location;
 	var timer 			= 0, savingActive = false;
 
 	// Setup SavesStore
@@ -96,7 +115,7 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 			savingActive = true;
 			var autoSaveKey = editorID + "_" + Date.now();
 			// Store it
-			localStorage.setItem( autoSaveKey, LZString.compressToUTF16( getEditorContent() ) );
+			localStorage.setItem( autoSaveKey, compressToUTF16( getEditorContent() ) );
 			// Add to items
 			addToStore( autoSaveKey );
 			// mark as done
@@ -110,7 +129,7 @@ window.autoSave = function( editor, pageID, ddMenuID, options ){
 	 */
 	var loadContent = function( contentID ){
 		var content = localStorage.getItem( contentID );
-		setEditorContent( "content", LZString.decompressFromUTF16( content ) );
+		setEditorContent( "content", decompressFromUTF16( content ) );
 		if ( timer ){ clearTimeout( timer ); }
 	};
 

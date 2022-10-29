@@ -90,11 +90,6 @@ window.loadAssetChooser = function( callback, w, h ){
  * @param  {string} editorType The editor to switch to
  */
 window.switchEditor = function( editorType ){
-	// Save work
-	if ( confirm( "Would you like to save your work before switching editors?" ) ){
-		$changelog.val( "Editor Change Quick Save" );
-		quickSave();
-	}
 	// Call change user editor preference
 	$.ajax( {
 		url    	: getAuthorEditorPreferenceURL(),
@@ -246,6 +241,8 @@ window.quickSave = function(){
 
 	// Draft it
 	$isPublished.val( "false" );
+	// Make sure our status pill is correct
+	$( "td#publish-info" ).html( '<span class="p5 label label-default">Draft</span>' );
 
 	// Commit Changelog default it to quick save if not set
 	if ( !$changelog.val().length ){
@@ -278,6 +275,8 @@ window.quickSave = function(){
 		$targetEditorSaveURL,
 		$targetEditorForm.serialize(),
 		function( data ){
+			// Clear out old auto-saves
+			resetAutoSave();
 			// Save new id
 			$contentID.val( data.CONTENTID );
 			// finalize
@@ -456,6 +455,9 @@ window.quickPublish = function( isDraft ){
 	if ( $cbEditorConfig.changelogMandatory && !isMainSidebarOpen() ){
 		toggleSidebar();
 	}
+
+	// Clear out old auto-saves
+	resetAutoSave();
 
 	// submit form
 	$targetEditorForm.submit();
