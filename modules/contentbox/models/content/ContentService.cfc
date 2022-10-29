@@ -24,6 +24,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	property name="dateUtil" inject="DateUtil@contentbox";
 	property name="commentSubscriptionService" inject="CommentSubscriptionService@contentbox";
 	property name="subscriberService" inject="subscriberService@contentbox";
+	property name="relocationService" inject="RelocationService@contentbox";
 	property name="asyncManager" inject="coldbox:asyncManager";
 
 	/**
@@ -1193,6 +1194,17 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			.withProjections( property = "contentID,title,slug,createdDate,modifiedDate,featuredImageURL" )
 			.asStruct()
 			.list( sortOrder = arguments.sortOrder );
+	}
+
+	/**
+	 * Adds a relocation for a content item
+	 *
+	 * @contentItem  the target to relocate to
+	 * @originalSlug the URI from which to redirect
+	 */
+	function addRelocation( required BaseContent contentItem, required string originalSlug ){
+		variables.relocationService.createContentRelocation( argumentCollection = arguments );
+		return this;
 	}
 
 	/********************************************* PRIVATE *********************************************/

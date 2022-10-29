@@ -276,6 +276,8 @@ component extends="baseHandler" {
 			.filter( function( item ){
 				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
 			} );
+		// Provide JWT Tokens for communicating with the API
+		prc.jwtTokens     = getInstance( "JWTService@cbsecurity" ).fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
