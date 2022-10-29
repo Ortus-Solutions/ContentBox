@@ -86,9 +86,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		return true;
 	}
 
-	/*
+	/**
 	 * Remove all content associations from a template and returns all the content objects it was removed from
-	 * @template.hint The template object
+	 *
+	 * @template The template object
 	 */
 	array function removeTemplateAssignments( required template ){
 		var assignedContent = contentService
@@ -117,6 +118,9 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	/**
 	 * Gets all of the available templates for a content type
 	 *
+	 * @contentType the content type designation
+	 * @site        The site entity
+	 * @fields      Any projection list fields to return
 	 */
 	array function getAvailableForContentType(
 		required string contentType,

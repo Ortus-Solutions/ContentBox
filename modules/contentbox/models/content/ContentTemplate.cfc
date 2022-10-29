@@ -346,6 +346,11 @@ component
 		return this;
 	}
 
+	/**
+	 * Determines whether a template with a given name is unique within a site
+	 *
+	 * @value  The name to test for uniqueness
+	 */
 	boolean function isNameUniqueInSite( value = variables.name ){
 		var c = getContentTemplateService()
 			.newCriteria()
@@ -359,6 +364,9 @@ component
 		return !c.count();
 	}
 
+	/**
+	 * UDF validation method to test for global uniqueness of a Content Template
+	 */
 	boolean function isGlobalUniqueInSite(){
 		if ( !variables.isGlobal ) return true;
 
