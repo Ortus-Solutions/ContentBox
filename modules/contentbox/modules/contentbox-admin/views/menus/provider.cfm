@@ -1,10 +1,10 @@
 <cfoutput>
-	<a class="dd-handle dd3-handle btn" title="Drag to reorder">
-		<i class="fa fa-crosshairs fa-lg"></i>
-	</a>
 	<cfset menuItemID = structKeyExists( args, "menuItemID" ) ? args.menuItemID : args.menuItem.getId()>
 
 	<cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
+	<div role="button" class="dd-handle dd3-handle btn" title="Drag to reorder">
+		<i class="fa fa-crosshairs fa-lg"></i>
+	</div>
 
 	<a class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#">
 		<i class="#args.provider.getIconClass()#"></i>
