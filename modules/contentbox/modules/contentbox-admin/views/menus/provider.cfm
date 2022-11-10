@@ -1,17 +1,19 @@
 <cfoutput>
 	<cfset menuItemID = structKeyExists( args, "menuItemID" ) ? args.menuItemID : args.menuItem.getId()>
 
-	<cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
 	<div role="button" class="dd-handle dd3-handle btn" title="Drag to reorder">
 		<i class="fa fa-crosshairs fa-lg"></i>
 	</div>
+	<div class="dd3-actions">
+		<cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
 
 		<button type="button" class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#">
 			<i class="#args.provider.getIconClass()#"></i>
 		</button>
 
-	<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
-		#args.menuItem.getLabel()#
+		<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
+			#args.menuItem.getLabel()#
+		</div>
 		<button type="button" class="dd3-expand btn btn-default" title="Edit Details" @click="toggleSandbox( '#menuItemID#' )">
 			<i class="fa fa-pencil fa-lg"></i>
 		</button>
@@ -23,8 +25,8 @@
 			<i class="fa fa-trash fa-lg"></i>
 		</button>
 	</div>
-
-	<div class="dd3-extracontent" style="display:none;">
+		
+	<div class="dd3-extracontent" x-show="$store.menusStore.editingMenus.indexOf( '#menuItemID#' ) > -1">
 		<!--- id --->
 		<cfset label = "label-#getTickCount()#">
 		#html.hiddenField( name="menuItemID", bind=args.menuItem, id="" )#
@@ -111,5 +113,4 @@
 		</cfif>
 		<!---end provider thing--->
 	</div>
-
 </cfoutput>
