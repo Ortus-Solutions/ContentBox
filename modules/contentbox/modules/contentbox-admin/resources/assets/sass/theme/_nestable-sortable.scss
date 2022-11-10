@@ -96,6 +96,8 @@
     background-position: 0 0, 30px 30px;
 }
 .dd-dragel {
+    -webkit-box-shadow: 2px 4px 6px 0 rgba( 0, 0, 0, .1 );
+    box-shadow: 2px 4px 6px rgba( 0, 0, 0, .1 );
     position: absolute;
     pointer-events: none;
     z-index: 9999;
@@ -103,7 +105,61 @@
 .dd-dragel > .dd-item .dd-handle {
     margin-top: 0;
 }
-.dd-dragel .dd-handle {
-    -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
-    box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, .1);
+.dd3-item {
+    border-left: 1px solid #e3e3e3;
+    border-right: 1px solid #e3e3e3;
+    border-bottom: 1px solid #e3e3e3;
+}
+.dd3-item:first-child {
+    border-top: 1px solid #e3e3e3;
+}
+.dd3-item:nth-child( odd ) {
+    background-color: #fff;
+}
+.dd3-item:nth-child( even ) {
+    background-color: #f7f7f7;
+}
+.dd3-handle { 
+    color:#646464;
+    position: absolute; 
+    margin: 0; 
+    left: 0; 
+    top: 0; 
+    cursor: grab; 
+    width: 30px; 
+    white-space: nowrap; 
+    overflow: hidden;
+    border: none;
+    padding: 6px 12px;
+    background-color: transparent;
+
+    &:hover {
+        background-color: transparent;
+    }
+}
+.dd3-actions {
+    align-items: center;
+    display: flex;
+    justify-content: stretch;
+    margin-left: 30px;
+
+    button {
+        border-radius: 0;
+        margin:0px;
+    }
+}
+.btn.dd3-expand, .btn.dd3-delete {
+    border-left: 1px solid #e3e3e3;
+    color:#646464;
+    &:hover,&:focus {
+        background-color: #e3e3e3;
+    }
+}
+.dd3-content {
+    flex-grow: 2;
+    padding: 0 8px;
+}
+.dd3-extracontent {
+    border-top: 1px dashed rgb( 227, 227, 227 );
+    padding: 15px;
 }
