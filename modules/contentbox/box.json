@@ -26,7 +26,7 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "cborm":"^3.0.0",
+        "cborm":"^4.1.0",
         "cbjavaloader":"^2.0.0",
         "cbmailservices":"^1.5.0",
         "cbsecurity":"^2.0.0",
