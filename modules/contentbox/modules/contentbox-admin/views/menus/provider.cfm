@@ -2,6 +2,7 @@
 	<a class="dd-handle dd3-handle btn" title="Drag to reorder">
 		<i class="fa fa-crosshairs fa-lg"></i>
 	</a>
+	<cfset menuItemID = structKeyExists( args, "menuItemID" ) ? args.menuItemID : args.menuItem.getId()>
 
 	<cfset btnCls = !args.menuItem.getActive() ? "btn-danger" : "btn-primary">
 
