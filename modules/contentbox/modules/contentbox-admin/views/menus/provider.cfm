@@ -6,12 +6,22 @@
 		<i class="fa fa-crosshairs fa-lg"></i>
 	</div>
 
-	<a class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#">
-		<i class="#args.provider.getIconClass()#"></i>
-	</a>
+		<button type="button" class="dd3-type btn #btnCls#" title="#args.provider.getDescription()#">
+			<i class="#args.provider.getIconClass()#"></i>
+		</button>
 
 	<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
 		#args.menuItem.getLabel()#
+		<button type="button" class="dd3-expand btn btn-default" title="Edit Details" @click="toggleSandbox( '#menuItemID#' )">
+			<i class="fa fa-pencil fa-lg"></i>
+		</button>
+		<button class="dd3-delete btn btn-danger confirmIt"
+			data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."
+			data-title="Delete Menu Item"
+			title="Delete Menu Item + Descendants"
+			href="javascript:removeMenuItem( 'key_#args.menuItem.getMenuItemID()#' )">
+			<i class="fa fa-trash fa-lg"></i>
+		</button>
 	</div>
 
 	<div class="dd3-extracontent" style="display:none;">
@@ -102,14 +112,4 @@
 		<!---end provider thing--->
 	</div>
 
-	<a class="dd3-expand btn" title="Edit Details">
-		<i class="fa fa-pen fa-lg"></i>
-	</a>
-	<a 	class="dd3-delete btn btn-danger confirmIt"
-		data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."
-		data-title="Delete Menu Item"
-		title="Delete Menu Item + Descendants"
-		href="javascript:removeMenuItem( 'key_#args.menuItem.getMenuItemID()#' )">
-		<i class="fa fa-trash fa-lg"></i>
-	</a>
 </cfoutput>
