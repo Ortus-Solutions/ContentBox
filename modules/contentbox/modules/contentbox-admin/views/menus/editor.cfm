@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="panel-body">
+            <div class="panel-body" x-data="menuCrud()">
 
                 #cbMessageBox().renderit()#
 
@@ -41,12 +41,12 @@
                     </cfloop>
 
                     <div class="btn-group pull-right" role="group">
-                        <a class="btn btn-sm btn-primary" data-action="collapse-all">
+                        <button class="btn btn-sm btn-primary" type="button" @click="collapseAll()">
                             <span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span>
-                        </a>
-                        <a class="btn btn-sm btn-primary" data-action="expand-all" style="margin-right:4px;">
+                        </button>
+                        <button class="btn btn-sm btn-primary" type="button" @click="expandAll()" style="margin-right:4px;">
                             <span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span>
-                        </a>
+                        </button>
                     </div>
                 </menu>
 
@@ -58,9 +58,9 @@
                             Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                         </div>
                         <div id="placeholder-message" class="alert alert-info">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
-                        <div class="designer well well-sm">
+                        <div class="designer well well-sm" >
                             <div class="dd" id="nestable">
-                                <ol class="dd-list">
+                                <ol class="dd-list" x-ref="menuList">
                                     #prc.menuItems#
                                 </ol>
                             </div>
@@ -80,9 +80,9 @@
     <div class="col-md-3">
         <div class="panel panel-primary">
             <div class="panel-heading">
-				<h3 class="panel-title">
-					<i class="fa fa-bars fa-lg"></i> Menu Data
-				</h3>
+                <h3 class="panel-title">
+                    <i class="fa fa-bars fa-lg"></i> Menu Data
+                </h3>
             </div>
             <div class="panel-body">
                 <!--- id --->
@@ -175,7 +175,7 @@
                 </a>
             </li>
         </cfloop>
-  </ul>
+    </ul>
 </div>
 
 <!--- PREVIEW DIALOG --->

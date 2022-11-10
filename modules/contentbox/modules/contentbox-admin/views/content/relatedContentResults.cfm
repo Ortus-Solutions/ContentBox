@@ -72,6 +72,7 @@
 								'#encodeForJavaScript( content.getSlug() )#'
 							)"
 							title="Select"
+							type="button"
 						>
                             <i class="fa fa-check-circle fa-lg"></i>
                         </button>

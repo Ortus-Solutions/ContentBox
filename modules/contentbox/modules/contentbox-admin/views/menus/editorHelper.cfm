@@ -1,4 +1,4 @@
- <cfoutput>
+<cfoutput>
 <script>
 	/**
 	 * Remove a menu item
@@ -87,11 +87,10 @@
 	 * @param {HTMLElement} el The DOM element of the label field
 	 */
 	function updateLabel( el ) {
-		var me = $( el ),
-			titleDiv = me.closest( '.dd3-extracontent' ).prev( '.dd3-content' ),
-			value = me.val() != '' ? me.val() : '<i class="emptytext">Please enter a label</i>';
+		var titleDiv = el.closest( '.dd3-extracontent' ).previousElementSibling.querySelector( '.dd3-content' ),
+			value = el.value != '' ? el.value : '<i class="emptytext">Please enter a label</i>';
 		// toggle
-		$( titleDiv ).html( value );
+		titleDiv.innerHTML = value;
 	}
 	/**
 	 * Adds menu item into the tree
@@ -115,7 +114,8 @@
 		}
 		$( content ).appendTo( $outer ).each(function() {
 			var extra = $( this ).find( '.dd3-extracontent' );
-			extra.toggle( 300 );
+			var itemId = $( this ).data("id");
+			Alpine.store( "menusStore" ).openEditor( itemId );
 			extra.find( 'input[name^=label]' ).focus();
 			var element = $( this );
 			var index = $.find('.dd-item').length;
@@ -174,8 +174,8 @@
 		// stupid jQuery validator...can't handle duped names. let's fix that
 		$nestable .find( ':input' ).each(function(){
 			$fld = $( this );
-			// if we've already transformed, just skip
-			if( $fld.attr( 'data-original-name' ) === undefined ) {
+			// if we've already transformed or if element is a button, just skip
+			if( $fld.attr( 'data-original-name' ) === undefined && !$fld.is( "button" ) ) {
 				$fld.attr( 'data-original-name', $fld.attr( 'name' ) );
 				$fld.attr( 'name', $fld.attr( 'name' ) + '-' + i );
 			}
@@ -286,15 +286,6 @@
 		$( '##preview-button' ).on( 'click', function() {
 			previewMenu();
 		} );
-		// setup expand listeners
-		$( '##nestable' ).on('click', '.dd3-expand', function() {
-			var me = $( this ),
-				li = me.closest( 'li' ),
-				prev = me.prev( '.dd3-extracontent' );
-
-			// toggle
-			prev.slideToggle( 200 );
-		} );
 		// add input listeners to update label field
 		$( '##nestable' ).on('keyup change focus blur', 'input[name^=label]', function() {
 			updateLabel( this );
@@ -315,18 +306,6 @@
 				}
 			} )
 		} );
-		// toggle buttons
-		$( 'a[data-action]' ).on( 'click', function() {
-			var $button = $( this );
-			switch( $button.data( 'action' ) ) {
-				case 'expand-all':
-					$( '.dd' ).nestable( 'expandAll' );
-					break;
-				case 'collapse-all':
-					$( '.dd' ).nestable( 'collapseAll' );
-					break;
-			}
-		} )
 		// Activate blur slugify on titles
 
 		// set up live event for title, do nothing if slug is locked..
@@ -346,5 +325,60 @@
 		previewMenu();
 		togglePlaceholderMessage();
 	} );
+	function menuCrud(){
+		return {
+			init(){ 
+				Alpine.store( 'menusStore', {
+					editingMenus : [],
+					/**
+					 * Closes a menu item editor
+					 * @param {Number} idx the menu item index position in the menu
+					 */
+					closeEditor( idx ){
+						this.editingMenus.splice( idx, 1 );
+					},
+					/**
+					 * Opens a menu item editor
+					 * @param {String} id the menu item id
+					 */
+					openEditor( id ) {
+						this.editingMenus.push( id );
+					},
+					/**
+					 * Toggles a menu item editor
+					 * @param {String} id the menu item id
+					 */
+					toggleEditor( id ){
+						let idx = this.editingMenus.indexOf( id );
+						if( idx > -1 ) {
+							this.closeEditor( idx );
+						} else {
+							this.openEditor( id );
+						}
+					}
+				} );
+				this.menusStore = this.$store.menusStore;
+			},
+
+			//methods
+
+			/**
+			 * Collapses all editors
+			 */
+			collapseAll(){
+				Alpine.store( "menusStore" ).editingMenus = [];
+			},
+			/**
+			 * Expands all editors
+			 */
+			expandAll(){
+				var collection = this.$refs.menuList.getElementsByClassName( 'dd-item' );
+				for ( var i = 0; i < collection.length; i++) {
+					Alpine.store( "menusStore" ).toggleEditor( collection[ i ].dataset.id );
+				}
+			}
+		};
+	}
 </script>
 </cfoutput>
+	
