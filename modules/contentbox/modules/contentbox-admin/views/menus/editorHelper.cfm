@@ -1,4 +1,4 @@
- <cfoutput>
+<cfoutput>
 <script>
 	/**
 	 * Remove a menu item
@@ -87,11 +87,10 @@
 	 * @param {HTMLElement} el The DOM element of the label field
 	 */
 	function updateLabel( el ) {
-		var me = $( el ),
-			titleDiv = me.closest( '.dd3-extracontent' ).prev( '.dd3-content' ),
-			value = me.val() != '' ? me.val() : '<i class="emptytext">Please enter a label</i>';
+		var titleDiv = el.closest( '.dd3-extracontent' ).previousElementSibling.querySelector( '.dd3-content' ),
+			value = el.value != '' ? el.value : '<i class="emptytext">Please enter a label</i>';
 		// toggle
-		$( titleDiv ).html( value );
+		titleDiv.innerHTML = value;
 	}
 	/**
 	 * Adds menu item into the tree
@@ -175,8 +174,8 @@
 		// stupid jQuery validator...can't handle duped names. let's fix that
 		$nestable .find( ':input' ).each(function(){
 			$fld = $( this );
-			// if we've already transformed, just skip
-			if( $fld.attr( 'data-original-name' ) === undefined ) {
+			// if we've already transformed or if element is a button, just skip
+			if( $fld.attr( 'data-original-name' ) === undefined && !$fld.is( "button" ) ) {
 				$fld.attr( 'data-original-name', $fld.attr( 'name' ) );
 				$fld.attr( 'name', $fld.attr( 'name' ) + '-' + i );
 			}
