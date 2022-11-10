@@ -136,7 +136,7 @@ component extends="baseHandler" {
 		// set new or persisted id in args
 		args.menuItemID = !isNull( args.menuItem.getMenuItemID() ) ? args.menuItem.getMenuItemID() : "new-#createUUID()#";
 
-		var str         = "<li class=""dd-item dd3-item"" data-id=""#args.menuItemID#"" :key=""#args.menuItemID#"">";
+		var str             = "<li class=""dd-item dd3-item"" data-id=""#args.menuItemID#"" :key=""#args.menuItemID#"">";
 		savecontent variable="menuString" {
 			writeOutput( renderView( view = "menus/provider", args = args ) );
 		};
