@@ -74,7 +74,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		param rc.id             = 0;
 
 		// announce it
-		announceInterception( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
+		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Show", {} );
 
 		// Get by id or slug
 		prc.oEntity = (
@@ -82,7 +82,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
+		announce(
 			"#variables.settings.resources.eventPrefix#post#variables.entity#Show",
 			{ entity : prc.oEntity }
 		);
@@ -141,7 +141,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		prc.oEntity = validateOrFail( argumentCollection = arguments.validate );
 
 		// announce it
-		announceInterception(
+		announce(
 			"#variables.settings.resources.eventPrefix#pre#variables.entity#Update",
 			{ entity : prc.oEntity }
 		);
@@ -154,7 +154,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
+		announce(
 			"#variables.settings.resources.eventPrefix#post#variables.entity#Update",
 			{ entity : prc.oEntity }
 		);
@@ -185,7 +185,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception(
+		announce(
 			"#variables.settings.resources.eventPrefix#pre#variables.entity#Delete",
 			{ entity : prc.oEntity }
 		);
@@ -198,7 +198,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announceInterception( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
+		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Delete", { id : rc.id } );
 
 		// Marshall it out
 		prc.response.addMessage( "#variables.entity# deleted!" );

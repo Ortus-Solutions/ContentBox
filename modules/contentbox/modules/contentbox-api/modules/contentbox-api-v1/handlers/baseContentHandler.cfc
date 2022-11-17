@@ -159,7 +159,7 @@ component extends="baseHandler" {
 			}
 
 			// announce it
-			announceInterception(
+			announce(
 				"#variables.settings.resources.eventPrefix#pre#variables.entity##len( rc.id ) ? "Update" : "Save"#",
 				{ entity : prc.oEntity, originalSlug : originalSlug }
 			);
@@ -172,7 +172,7 @@ component extends="baseHandler" {
 			);
 
 			// announce it
-			announceInterception(
+			announce(
 				"#variables.settings.resources.eventPrefix#post#variables.entity##len( rc.id ) ? "Update" : "Save"#",
 				{ entity : prc.oEntity, originalSlug : originalSlug }
 			);

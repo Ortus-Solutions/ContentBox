@@ -290,7 +290,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 </div> <!--- end panel FileBrowser --->
 
 <!--- Image modal preview --->
-#announceInterception( "fb_preQuickViewBar" )#
+#announce( "fb_preQuickViewBar" )#
 <div
 	id="modalPreview"
 	class="modal fade"
@@ -315,7 +315,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 		</div>
 	</div>
 </div>
-#announceInterception( "fb_postQuickViewBar" )#
+#announce( "fb_postQuickViewBar" )#
 
 <!--- Hidden upload iframe --->
 <iframe name="upload-iframe" id="upload-iframe" style="display: none"></iframe>
