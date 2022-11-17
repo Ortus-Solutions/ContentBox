@@ -26,13 +26,13 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "cborm":"be",
+        "cborm":"^4.0.0",
         "cbjavaloader":"^2.0.0",
-        "cbmailservices":"^1.5.0",
-        "cbsecurity":"^2.0.0",
+        "cbmailservices":"^2.0.0",
+        "cbsecurity":"be",
         "cbfeeds":"^1.3.0",
         "cbmessagebox":"^4.0.0",
-        "cbantisamy":"^1.3.1",
+        "cbantisamy":"^2.0.0",
         "bcrypt":"^3.0.0",
         "cbmarkdown":"^3.4.0",
         "cbSwagger":"^2.3.0+131",

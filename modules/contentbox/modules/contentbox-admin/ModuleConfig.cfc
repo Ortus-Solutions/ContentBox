@@ -31,14 +31,16 @@ component {
 		settings = {
 			// Security for the admin: Rules are loaded by the core contentbox module as it impacts the entire set of modules
 			cbsecurity : {
-				// The global invalid authentication event or URI or URL to go if an invalid authentication occurs
-				"invalidAuthenticationEvent"  : "cbadmin/security/login",
-				// Default Auhtentication Action: override or redirect when a user has not logged in
-				"defaultAuthenticationAction" : "redirect",
-				// The global invalid authorization event or URI or URL to go if an invalid authorization occurs
-				"invalidAuthorizationEvent"   : "cbadmin",
-				// Default Authorization Action: override or redirect when a user does not have enough permissions to access something
-				"defaultAuthorizationAction"  : "redirect"
+				firewall : {
+					// The global invalid authentication event or URI or URL to go if an invalid authentication occurs
+					"invalidAuthenticationEvent"  : "cbadmin/security/login",
+					// Default Auhtentication Action: override or redirect when a user has not logged in
+					"defaultAuthenticationAction" : "redirect",
+					// The global invalid authorization event or URI or URL to go if an invalid authorization occurs
+					"invalidAuthorizationEvent"   : "cbadmin",
+					// Default Authorization Action: override or redirect when a user does not have enough permissions to access something
+					"defaultAuthorizationAction"  : "redirect"
+				}
 			}
 		};
 

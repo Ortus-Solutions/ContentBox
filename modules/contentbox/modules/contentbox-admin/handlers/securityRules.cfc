@@ -40,7 +40,8 @@ component extends="baseHandler" {
 	// Reset Rules
 	function reset( event, rc, prc ){
 		ruleService.resetRules();
-		securityInterceptor.loadRules();
+		securityInterceptor.configure();
+		securityInterceptor.afterAspectsLoad( argumentCollection = arguments );
 		// announce event
 		announce( "cbadmin_onResetSecurityRules" );
 		cbMessagebox.info( "Security Rules Re-created and Re-applied!" );
@@ -49,7 +50,8 @@ component extends="baseHandler" {
 
 	// Apply the security rules
 	function apply( event, rc, prc ){
-		securityInterceptor.loadRules();
+		securityInterceptor.configure();
+		securityInterceptor.afterAspectsLoad( argumentCollection = arguments );
 		cbMessagebox.info( "Security Rules Applied!" );
 		relocate( prc.xehsecurityRules );
 	}
