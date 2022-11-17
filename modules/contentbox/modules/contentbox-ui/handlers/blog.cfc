@@ -101,13 +101,13 @@ component extends="content" {
 
 		// Search Paging Link Override?
 		if ( len( rc.q ) ) {
-			rc.q           = variables.antiSamy.clean( rc.q );
+			rc.q           = encodeForHTML( rc.q );
 			prc.pagingLink = prc.blogLink & "/search/#rc.q#/@page@?";
 		}
 
 		// Category Filter Link Override
 		if ( len( rc.category ) ) {
-			rc.category    = variables.antiSamy.clean( rc.category );
+			rc.category    = encodeForHTML( rc.category );
 			prc.pagingLink = prc.blogLink & "/category/#rc.category#/@page@?";
 		}
 

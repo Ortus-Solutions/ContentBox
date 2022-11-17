@@ -8,7 +8,6 @@
 component extends="baseHandler" {
 
 	// DI
-	property name="antiSamy" inject="antisamy@cbantisamy";
 	property name="markdown" inject="Processor@cbmarkdown";
 
 	// Method Security
@@ -31,10 +30,10 @@ component extends="baseHandler" {
 		prc.xehDoLogin      = "#prc.cbAdminEntryPoint#.security.doLogin";
 		prc.xehLostPassword = "#prc.cbAdminEntryPoint#.security.lostPassword";
 		// remember me
-		prc.rememberMe      = variables.antiSamy.htmlSanitizer( variables.securityService.getRememberMe() );
+		prc.rememberMe      = encodeForHTML( variables.securityService.getRememberMe() );
 		// secured URL from security interceptor
 		arguments.event.paramValue( "_securedURL", "" );
-		rc._securedURL = variables.antiSamy.htmlSanitizer( rc._securedURL );
+		rc._securedURL = encodeForHTML( rc._securedURL );
 		// Markdown Processing of sign in text
 		prc.signInText = variables.markdown.toHTML( prc.cbSettings.cb_security_login_signin_text );
 		// view
@@ -50,13 +49,6 @@ component extends="baseHandler" {
 			.paramValue( "rememberMe", 0 )
 			.paramValue( "_securedURL", "" )
 			.paramValue( "_csrftoken", "" );
-
-		// Sanitize
-		rc.username    = variables.antiSamy.htmlSanitizer( rc.username );
-		rc.password    = variables.antiSamy.htmlSanitizer( rc.password );
-		rc.rememberMe  = variables.antiSamy.htmlSanitizer( rc.rememberMe );
-		rc._securedURL = variables.antiSamy.htmlSanitizer( rc._securedURL );
-		rc._csrftoken  = variables.antiSamy.htmlSanitizer( rc._csrftoken );
 
 		// announce event
 		announce( "cbadmin_preLogin" );
@@ -181,10 +173,6 @@ component extends="baseHandler" {
 		// Param email
 		event.paramValue( "email", "" ).paramValue( "_csrftoken", "" );
 
-		// Sanitize
-		rc.email      = antiSamy.htmlSanitizer( rc.email );
-		rc._csrftoken = antiSamy.htmlSanitizer( rc._csrftoken );
-
 		if ( !csrfVerify( rc._csrftoken ) ) {
 			messagebox.warning( cb.r( "messages.invalid_token@security" ) );
 
@@ -228,9 +216,6 @@ component extends="baseHandler" {
 	function verifyReset( event, rc, prc ){
 		event.paramValue( "token", "" );
 
-		// Sanitize
-		rc.token = variables.antiSamy.htmlSanitizer( rc.token );
-
 		// Validate Token
 		var results = variables.securityService.validateResetToken( trim( rc.token ) );
 		if ( results.error ) {
@@ -255,12 +240,6 @@ component extends="baseHandler" {
 			.paramValue( "password", "" )
 			.paramValue( "password_confirmation", "" )
 			.paramValue( "_csrftoken", "" );
-
-		// Sanitize
-		rc.token                 = antiSamy.htmlSanitizer( rc.token );
-		rc.password              = antiSamy.htmlSanitizer( rc.password );
-		rc.password_confirmation = antiSamy.htmlSanitizer( rc.password_confirmation );
-		rc._csrftoken            = antiSamy.htmlSanitizer( rc._csrftoken );
 
 		// Validate CSRF
 		if ( !csrfVerify( rc._csrftoken ) ) {

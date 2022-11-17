@@ -15,7 +15,6 @@ component {
 	property name="CBHelper" inject="id:CBHelper@contentbox";
 	property name="rssService" inject="id:rssService@contentbox";
 	property name="themeService" inject="id:themeService@contentbox";
-	property name="antiSamy" inject="antisamy@cbantisamy";
 	property name="messagebox" inject="id:messagebox@cbMessageBox";
 	property name="dataMarshaller" inject="DataMarshaller@coldbox";
 	property name="markdown" inject="Processor@cbmarkdown";
@@ -372,10 +371,10 @@ component {
 		}
 
 		// Trim values & XSS Cleanup of fields
-		rc.author      = left( antiSamy.htmlSanitizer( trim( rc.author ) ), 100 );
-		rc.authorEmail = left( antiSamy.htmlSanitizer( trim( rc.authorEmail ) ), 255 );
-		rc.authorURL   = left( antiSamy.htmlSanitizer( trim( rc.authorURL ) ), 255 );
-		rc.content     = antiSamy.htmlSanitizer( xmlFormat( trim( rc.content ) ) );
+		rc.author      = left( encodeForHTML( trim( rc.author ) ), 100 );
+		rc.authorEmail = left( encodeForHTML( trim( rc.authorEmail ) ), 255 );
+		rc.authorURL   = left( encodeForHTML( trim( rc.authorURL ) ), 255 );
+		rc.content     = encodeForHTML( trim( rc.content ) );
 
 		// Validate incoming data
 		var commentErrors = [];
