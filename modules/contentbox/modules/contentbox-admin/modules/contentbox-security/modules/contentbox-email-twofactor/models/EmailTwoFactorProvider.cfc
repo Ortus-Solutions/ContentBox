@@ -156,7 +156,7 @@ component
 			// Check for errors
 			if ( mailResults.error ) {
 				results.error    = true;
-				results.messages = arrayToList( mailResults.errorArray );
+				results.messages = arrayToList( mailResults.messages );
 			} else {
 				results.messages = "Validation code sent!";
 			}
