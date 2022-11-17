@@ -151,7 +151,7 @@ component
 			);
 
 			// send it out
-			var mailResults = variables.mailService.send( mail );
+			var mailResults = variables.mailService.send( mail ).getResults();
 
 			// Check for errors
 			if ( mailResults.error ) {

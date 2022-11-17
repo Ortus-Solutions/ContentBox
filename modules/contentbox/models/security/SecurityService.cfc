@@ -282,7 +282,7 @@ component singleton {
 		);
 
 		// send it out
-		return mailService.send( mail );
+		return mailService.send( mail ).getResults();
 	}
 
 	/**

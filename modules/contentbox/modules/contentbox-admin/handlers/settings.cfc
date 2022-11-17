@@ -66,7 +66,7 @@ component extends="baseHandler" {
 			body     = "Test Email From ContentBox"
 		);
 		// send it out
-		var results = mailService.send( mail );
+		var results = mailService.send( mail ).getResults();
 
 		event.renderData( data = results, type = "json" );
 	}

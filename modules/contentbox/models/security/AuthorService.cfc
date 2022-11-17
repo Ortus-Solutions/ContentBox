@@ -565,7 +565,7 @@ component
 		);
 
 		// send it out
-		return variables.mailService.send( mail );
+		return variables.mailService.send( mail ).getResults();
 	}
 
 }
