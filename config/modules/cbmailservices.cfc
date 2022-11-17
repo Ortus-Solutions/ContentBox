@@ -1,0 +1,37 @@
+component {
+
+	function configure(){
+		/**
+		 * --------------------------------------------------------------------------
+		 * ColdBox MailServices
+		 * --------------------------------------------------------------------------
+		 * configurations https://coldbox-mailservices.ortusbooks.com/essentials/configuration
+		 */
+		return {
+			// The default token Marker Symbol
+			tokenMarker     : "@",
+			// Default protocol to use, it must be defined in the mailers configuration
+			defaultProtocol : "default",
+			// Here you can register one or many mailers by name
+			mailers         : {
+				"default" : {
+					class : "CFMail"
+				},
+				"files" : {
+					class:"File",
+					properties : {
+						filePath : "/cbapp/config/logs/mail"
+					}
+				}
+			},
+			// The defaults for all mail config payloads and protocols
+			defaults        : {
+				from : "info@ortussolutions.com",
+				cc : "sales@ortussolutions.com"
+			},
+			//Whether the scheduled task is running or not
+			runQueueTask	: true
+		};
+	}
+
+}

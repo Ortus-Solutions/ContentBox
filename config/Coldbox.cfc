@@ -176,11 +176,8 @@ component {
 			}
 		};
 
-		// Mail settings for writing to log files instead of sending mail on dev.
-		mailsettings.protocol = {
-			class      : "cbmailservices.models.protocols.FileProtocol",
-			properties : { filePath : "/cbapp/config/logs/mail" }
-		};
+		// Mail Services
+		variables.moduleSettings.cbmailServices.defaultProtocol = "files";
 
 		// Debugger Settings
 		variables.modulesettings.cbdebugger = {
