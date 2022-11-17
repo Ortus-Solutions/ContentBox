@@ -30,7 +30,7 @@ component extends="tests.resources.BaseTest" {
 			it( "can send challenges", function(){
 				var results = provider.sendChallenge( mockUser );
 				debug( results );
-				expect( results.error ).toBeFalse();
+				expect( results.error ).toBeFalse( results.toString() );
 			} );
 		} );
 	}
