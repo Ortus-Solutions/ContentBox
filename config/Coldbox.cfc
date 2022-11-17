@@ -176,9 +176,6 @@ component {
 			}
 		};
 
-		// Mail Services
-		variables.moduleSettings.cbmailServices.defaultProtocol = "files";
-
 		// Debugger Settings
 		variables.modulesettings.cbdebugger = {
 			// This flag enables/disables the tracking of request data to our storage facilities

@@ -11,7 +11,7 @@ component {
 			// The default token Marker Symbol
 			tokenMarker     : "@",
 			// Default protocol to use, it must be defined in the mailers configuration
-			defaultProtocol : "default",
+			defaultProtocol : "files",
 			// Here you can register one or many mailers by name
 			mailers         : {
 				"default" : {
@@ -26,8 +26,7 @@ component {
 			},
 			// The defaults for all mail config payloads and protocols
 			defaults        : {
-				from : "info@ortussolutions.com",
-				cc : "sales@ortussolutions.com"
+				//from : "",
 			},
 			//Whether the scheduled task is running or not
 			runQueueTask	: true
