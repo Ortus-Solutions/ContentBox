@@ -91,7 +91,7 @@
 				</cfif>
 
 				<!--- Content Info --->
-				#renderView(
+				#view(
 					view : "_components/content/TableCreationInfo",
 					args : { content : content, showDescription : true },
 					prepostExempt : true
@@ -100,7 +100,7 @@
 			</td>
 
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableStatus",
 					args : { content : content },
 					prepostExempt : true

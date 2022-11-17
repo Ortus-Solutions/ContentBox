@@ -765,7 +765,7 @@ component extends="baseHandler" {
 		prc.contentPager_securityPrefix = variables.securityPrefix;
 
 		// view pager
-		return renderView( view = "content/pager", module = "contentbox-admin" );
+		return view( view = "content/pager", module = "contentbox-admin" );
 	}
 
 

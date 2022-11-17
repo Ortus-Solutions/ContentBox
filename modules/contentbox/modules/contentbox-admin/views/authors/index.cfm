@@ -195,7 +195,7 @@
 </div>
 
 <cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+	#view(
 		view = "_tags/dialog/import",
 		args = {
 			title 		: "Import Users",

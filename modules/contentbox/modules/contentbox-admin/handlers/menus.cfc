@@ -138,7 +138,7 @@ component extends="baseHandler" {
 
 		var str             = "<li class=""dd-item dd3-item"" data-id=""#args.menuItemID#"" :key=""#args.menuItemID#"">";
 		savecontent variable="menuString" {
-			writeOutput( renderView( view = "menus/provider", args = args ) );
+			writeOutput( view( view = "menus/provider", args = args ) );
 		};
 		str &= menuString & "</li>";
 		event.renderData( data = str, type = "text" );

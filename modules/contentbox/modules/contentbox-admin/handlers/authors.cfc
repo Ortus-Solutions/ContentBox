@@ -783,7 +783,7 @@ component extends="baseHandler" {
 		// Get All registered markups so we can display them
 		prc.markups = editorService.getRegisteredMarkups();
 		// render out view
-		return renderView( view = "authors/listPreferences", module = "contentbox-admin" );
+		return view( view = "authors/listPreferences", module = "contentbox-admin" );
 	}
 
 }

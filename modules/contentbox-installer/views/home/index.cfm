@@ -67,28 +67,28 @@
                     <!--- Step 1 : Admin Setup--->
                     <!--- ****************************************************************************** --->
                     <div class="tab-pane" id="step1">
-                        #renderView( view="home/steps/step1", prePostExempt = true )#
+                        #view( view="home/steps/step1", prePostExempt = true )#
                     </div>
 
                     <!--- ****************************************************************************** --->
                     <!--- Step 2 : Site Setup--->
                     <!--- ****************************************************************************** --->
                     <div class="tab-pane" id="step2">
-                        #renderView( view="home/steps/step2", prePostExempt = true )#
+                        #view( view="home/steps/step2", prePostExempt = true )#
                     </div>
 
                     <!--- ****************************************************************************** --->
                     <!--- Step 3 : Email Setup--->
                     <!--- ****************************************************************************** --->
                     <div class="tab-pane" id="step3">
-                        #renderView( view="home/steps/step3", prePostExempt = true )#
+                        #view( view="home/steps/step3", prePostExempt = true )#
                     </div>
 
                     <!--- ****************************************************************************** --->
                     <!--- Step 4 : Site URL Rewrites --->
                     <!--- ****************************************************************************** --->
                     <div class="tab-pane" id="step4">
-                        #renderView( view="home/steps/step4", prePostExempt = true )#
+                        #view( view="home/steps/step4", prePostExempt = true )#
                     </div>
 
                     <!---Error Bar --->

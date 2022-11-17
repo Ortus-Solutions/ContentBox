@@ -51,7 +51,7 @@ component
 		}
 		var menus    = criteria.list( sortOrder = "title ASC" );
 		var viewArgs = { menus : menus, existingSlug : existingSlug };
-		return variables.renderer.renderView(
+		return variables.renderer.view(
 			view   = "menus/providers/submenu/admin",
 			module = "contentbox-admin",
 			args   = viewArgs
@@ -69,7 +69,7 @@ component
 			data      : arguments.menuItem.getMemento(),
 			slugCache : arguments.options.slugCache
 		};
-		return variables.renderer.renderExternalView(
+		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/submenu/display",
 			module = "contentbox",
 			args   = viewArgs

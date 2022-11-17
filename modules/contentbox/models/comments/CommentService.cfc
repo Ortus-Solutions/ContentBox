@@ -252,7 +252,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 				// generate content for email from template
 				mail.setBody(
-					variables.renderer.renderLayout(
+					variables.renderer.layout(
 						view   = "/contentbox/email_templates/comment_notification",
 						layout = "/contentbox/email_templates/layouts/email",
 						args   = { gravatarEmail : commentAuthorEmail }
@@ -421,7 +421,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 
 		// generate content for email from template
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/#template#",
 				layout = "/contentbox/email_templates/layouts/email",
 				args   = { gravatarEmail : inComment.getAuthorEmail() }

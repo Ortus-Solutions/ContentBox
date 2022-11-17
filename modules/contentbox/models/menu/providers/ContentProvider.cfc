@@ -59,7 +59,7 @@ component
 			title              : title,
 			slug               : slug
 		};
-		return variables.renderer.renderView(
+		return variables.renderer.view(
 			view   = "menus/providers/content/admin",
 			module = "contentbox-admin",
 			args   = viewArgs
@@ -79,7 +79,7 @@ component
 			contentLink : CBHelper.linkContent( content = content ),
 			data        : arguments.menuItem.getMemento()
 		};
-		return variables.renderer.renderExternalView(
+		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/content/display",
 			module = "contentbox",
 			args   = viewArgs

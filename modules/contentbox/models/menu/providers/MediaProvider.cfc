@@ -43,7 +43,7 @@ component
 			menuItem         : arguments.menuItem,
 			xehMediaSelector : "#requestService.getContext().buildLink( to = "cbadmin.menus.filebrowser" )#"
 		};
-		return variables.renderer.renderView(
+		return variables.renderer.view(
 			view   = "menus/providers/media/admin",
 			module = "contentbox-admin",
 			args   = viewArgs
@@ -57,7 +57,7 @@ component
 	 */
 	public string function getDisplayTemplate( required any menuItem, required struct options = {} ){
 		var viewArgs = { menuItem : arguments.menuItem };
-		return variables.renderer.renderExternalView(
+		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/media/display",
 			module = "contentbox",
 			args   = viewArgs

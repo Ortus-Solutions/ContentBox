@@ -46,7 +46,7 @@
 
 					<!--- Render tables out --->
 					<div id="contentContainer">
-						#renderView(
+						#view(
 							view 			= "content/editorSelectorEntries",
 							prePostExempt 	= true
 						)#

@@ -397,7 +397,7 @@
 
 <!---only show if user has rights to categories admin and tool import--->
 <cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+	#view(
 		view 	= "_tags/dialog/import",
 		args 	= {
 			title 		= "Import Categories",

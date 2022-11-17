@@ -208,7 +208,7 @@
 
 <!--- Clone Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
-	#renderView(
+	#view(
 		view 			= "_tags/dialog/clone",
 		args 			= {
 			title        : "Page Cloning",
@@ -224,7 +224,7 @@
 
 <!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {
 			title       : "Import Pages",

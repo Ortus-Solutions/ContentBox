@@ -275,7 +275,7 @@ component singleton {
 		}
 
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/#emailTemplate#",
 				layout = "/contentbox/email_templates/layouts/email"
 			)
@@ -379,9 +379,9 @@ component singleton {
 			useTLS     = settings.cb_site_mail_tls,
 			useSSL     = settings.cb_site_mail_ssl
 		);
-		// ,body=renderer.$get().renderExternalView(view="/contentbox/email_templates/password_reminder" )
+		// ,body=renderer.$get().externalView(view="/contentbox/email_templates/password_reminder" )
 		mail.setBody(
-			renderer.renderLayout(
+			renderer.layout(
 				view   = "/contentbox/email_templates/password_reset",
 				layout = "/contentbox/email_templates/layouts/email"
 			)

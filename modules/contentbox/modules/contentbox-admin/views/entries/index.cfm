@@ -218,7 +218,7 @@
 
 <!--- Clone Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
-	#renderView(
+	#view(
 		view = "_tags/dialog/clone",
 		args = {
 			title        : "Blog Entry Cloning",
@@ -234,7 +234,7 @@
 
 <!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+	#view(
 		view = "_tags/dialog/import",
 		args = {
 			title       : "Import Blog Entries",

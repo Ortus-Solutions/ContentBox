@@ -19,7 +19,7 @@
 		    </div>
 			<div class="panel-body">
 				<!--- Need Help --->
-				#renderView( view="_tags/needhelp", prePostExempt = true )#
+				#view( view="_tags/needhelp", prePostExempt = true )#
 
 				<h2>#$r( "dashboard.about.help.links@admin" )#</h2>
 				<ul>

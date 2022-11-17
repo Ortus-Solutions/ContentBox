@@ -26,7 +26,7 @@
 			<!--- cbadmin event --->
 			#announce( "cbadmin_beforeLoginContent" )#
 			<!--- Main Content --->
-			#renderView()#
+			#view()#
 			<!--- cbadmin event --->
 			#announce( "cbadmin_afterLoginContent" )#
 		</section>

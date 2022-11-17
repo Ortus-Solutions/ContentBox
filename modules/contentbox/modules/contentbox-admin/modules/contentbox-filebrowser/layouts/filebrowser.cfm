@@ -13,6 +13,6 @@
 	<!--- JQuery --->
 	<cfset addAsset( "#prc.fbModRoot#/includes/javascript/jquery.min.js" )>
 </head>
-<body>#renderView()#</body>
+<body>#view()#</body>
 </html>
 </cfoutput>

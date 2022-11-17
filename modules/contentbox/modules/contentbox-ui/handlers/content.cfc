@@ -255,7 +255,7 @@ component {
 
 		// generate content only if content is not set, else means handler generated content.
 		if ( isNull( data.content ) ) {
-			data.content = renderLayout(
+			data.content = layout(
 				layout = "#prc.cbTheme#/layouts/#themeService.getThemePrintLayout(
 					format = rc.format,
 					layout = listLast( event.getCurrentLayout(), "/" )

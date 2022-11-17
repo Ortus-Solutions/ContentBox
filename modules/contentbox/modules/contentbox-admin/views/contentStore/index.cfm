@@ -191,7 +191,7 @@
 </div>
 <!--- Clone Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
-	#renderView(
+	#view(
 		view 			= "_tags/dialog/clone",
 		args 			= {
 			title        : "Content Store Cloning",
@@ -207,7 +207,7 @@
 
 <!--- Import Dialog --->
 <cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {
 			title       : "Import Content",

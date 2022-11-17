@@ -226,7 +226,7 @@ component accessors=true threadSafe singleton {
 			view   = "#arguments.prc.cbTheme#/views/entry",
 			module = arguments.prc.cbThemeRecord.module
 		);
-		outputContent = renderer.renderLayout(
+		outputContent = renderer.layout(
 			layout = "#arguments.prc.cbTheme#/layouts/blog",
 			module = arguments.prc.cbThemeRecord.module
 		);
@@ -293,7 +293,7 @@ component accessors=true threadSafe singleton {
 				view   = "#arguments.prc.cbTheme#/views/page",
 				module = arguments.prc.cbThemeRecord.module
 			);
-			outputContent = renderer.renderLayout(
+			outputContent = renderer.layout(
 				layout = "#arguments.prc.cbTheme#/layouts/#thisLayout#",
 				module = arguments.prc.cbThemeRecord.module
 			);

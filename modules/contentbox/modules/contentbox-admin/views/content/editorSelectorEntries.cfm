@@ -44,7 +44,7 @@
 			</td>
 
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableStatus",
 					args : { content : thisContent },
 					prepostExempt : true

@@ -90,7 +90,7 @@
 
 <!--- Import --->
 <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-    #renderView(
+    #view(
 		view 			= "_tags/dialog/import",
 		args 			= {
             title       : "Import Menus",

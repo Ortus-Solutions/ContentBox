@@ -21,7 +21,7 @@ component extends="coldbox.system.EventHandler" {
 		prc.fileType     = listLast( rc.imageName, "." );
 
 		if ( event.isAjax() ) {
-			event.renderData( data = renderView( view = "editor/index", layout = "ajax" ) );
+			event.renderData( data = view( view = "editor/index", layout = "ajax" ) );
 		} else {
 			event.setView( view = "editor/index", layout = "ajax" );
 		}
@@ -46,7 +46,7 @@ component extends="coldbox.system.EventHandler" {
 		}
 
 		if ( event.isAjax() ) {
-			event.renderData( data = renderView( view = "editor/info", layout = "ajax" ) );
+			event.renderData( data = view( view = "editor/info", layout = "ajax" ) );
 		} else {
 			event.setView( view = "editor/info", layout = "ajax" );
 		}

@@ -274,7 +274,7 @@ component
 				var args            = { menuItem : item, provider : item.getProvider() };
 				savecontent variable="providerContent" {
 					writeOutput(
-						variables.renderer.renderView(
+						variables.renderer.view(
 							view   = "menus/provider",
 							module = "contentbox-admin",
 							args   = args
