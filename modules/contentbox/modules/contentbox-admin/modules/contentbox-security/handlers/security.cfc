@@ -30,10 +30,10 @@ component extends="baseHandler" {
 		prc.xehDoLogin      = "#prc.cbAdminEntryPoint#.security.doLogin";
 		prc.xehLostPassword = "#prc.cbAdminEntryPoint#.security.lostPassword";
 		// remember me
-		prc.rememberMe      = encodeForHTML( variables.securityService.getRememberMe() );
+		prc.rememberMe      = variables.securityService.getRememberMe();
 		// secured URL from security interceptor
 		arguments.event.paramValue( "_securedURL", "" );
-		rc._securedURL = encodeForHTML( rc._securedURL );
+		rc._securedURL = rc._securedURL;
 		// Markdown Processing of sign in text
 		prc.signInText = variables.markdown.toHTML( prc.cbSettings.cb_security_login_signin_text );
 		// view
