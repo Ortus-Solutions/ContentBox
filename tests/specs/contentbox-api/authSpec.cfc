@@ -88,7 +88,7 @@ component extends="tests.resources.BaseApiTest" {
 						var payload = jwt.decode( tokens.access_token );
 						// Now Logout
 						var event   = GET( "/cbapi/v1/whoami", { "x-auth-token" : tokens.access_token } );
-						expect( event.getResponse() ).toHaveStatus( 200 );
+						expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMemento().toString() );
 						expect( event.getResponse().getData().authorID ).toBe( payload.sub );
 					} );
 				} );
@@ -96,7 +96,7 @@ component extends="tests.resources.BaseApiTest" {
 					then( "I should get an error", function(){
 						// Now Logout
 						var event = GET( "/cbapi/v1/whoami", { "x-auth-token" : "123" } );
-						expect( event.getResponse() ).toHaveStatus( 401 );
+						expect( event.getResponse() ).toHaveStatus( 401, event.getResponse().getMemento().toString() );
 					} );
 				} );
 			} );
