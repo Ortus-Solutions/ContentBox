@@ -80,7 +80,7 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} );
 
-			story( "I want to be able to know who I am by passing my token", function(){
+			xstory( "I want to be able to know who I am by passing my token", function(){
 				given( "an valid token", function(){
 					then( "I should get my information", function(){
 						// Log in
