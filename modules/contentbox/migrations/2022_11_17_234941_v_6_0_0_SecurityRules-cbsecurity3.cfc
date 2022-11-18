@@ -5,9 +5,6 @@ component {
 
     function up( schema, qb ) {
 
-		writeOutput( schemal.hasColumn( "cb_securityRule", "httpMethods" ) );
-		abort;
-
 		if( !schema.hasColumn( "cb_securityRule", "httpMethods" ) ){
 			schema.alter( "cb_securityRule", ( table ) => {
 				table.addColumn( table.string( "httpMethods" ).default( "*" ) );
