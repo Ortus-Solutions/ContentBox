@@ -112,16 +112,18 @@ component
 		name   ="httpMethods"
 		column ="httpMethods"
 		ormtype="string"
-		notnull="false"
+		notnull="true"
 		default="*"
+		dbdefault="'*'"
 		length ="255";
 
 	property
 		name   ="allowedIPs"
 		column ="allowedIPs"
 		ormtype="string"
-		notnull="false"
+		notnull="true"
 		default="*"
+		dbdefault="'*'"
 		length ="255";
 
 	property

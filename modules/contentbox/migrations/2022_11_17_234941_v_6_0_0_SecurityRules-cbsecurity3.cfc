@@ -4,10 +4,16 @@
 component {
 
     function up( schema, qb ) {
-        schema.alter( "cb_securityRule", ( table ) => {
-			table.addColumn( table.string( "httpMethods" ).default( "*" ) );
-			table.addColumn( table.string( "allowedIPs" ).default( "*" ) );
-		} );
+
+		writeOutput( schemal.hasColumn( "cb_securityRule", "httpMethods" ) );
+		abort;
+
+		if( !schema.hasColumn( "cb_securityRule", "httpMethods" ) ){
+			schema.alter( "cb_securityRule", ( table ) => {
+				table.addColumn( table.string( "httpMethods" ).default( "*" ) );
+				table.addColumn( table.string( "allowedIPs" ).default( "*" ) );
+			} );
+		}
     }
 
     function down( schema, qb ) {
