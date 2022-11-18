@@ -14,11 +14,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event         
-	 * @action        
+	 * @event
+	 * @action
 	 * @eventArguments
-	 * @rc            
-	 * @prc           
+	 * @rc
+	 * @prc
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
@@ -77,10 +77,10 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postPermissionGroupSave", { group : oGroup } );
 			// messagebox
-			cbMessagebox.setMessage( "info", "Permission Group saved!" );
+			cbMessageBox().setMessage( "info", "Permission Group saved!" );
 		} else {
 			// messagebox
-			cbMessagebox.warning( vResults.getAllErrors() );
+			cbMessageBox().warning( vResults.getAllErrors() );
 		}
 		// relocate
 		relocate( prc.xehPermissionGroups );
@@ -106,7 +106,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postPermissionGroupRemove", { permissionGroupID : rc.permissionGroupID } );
 		// Message
-		cbMessagebox.setMessage( "info", "Permission Group Removed!" );
+		cbMessageBox().setMessage( "info", "Permission Group Removed!" );
 		// relocate
 		relocate( prc.xehPermissionGroups );
 	}
@@ -163,17 +163,17 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Permission Groups imported sucessfully!" );
+				cbMessageBox().info( "Permission Groups imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
+				cbMessageBox().error(
 					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehPermissionGroups );
 	}

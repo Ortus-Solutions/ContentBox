@@ -53,12 +53,12 @@ component extends="baseHandler" {
 				var badDateRegex        = " -\d{4}$";
 				prc.contents.exportDate = reReplace( prc.contents.exportDate, badDateRegex, "" );
 			} else {
-				cbMessagebox.warn(
+				cbMessageBox().warn(
 					"Sorry, the imported ContentBox package was not valid. Please verify you have the right file and try again."
 				);
 			}
 		} else {
-			cbMessagebox.error(
+			cbMessageBox().error(
 				"Sorry, there was a problem verifying your ContentBox import package. Please try again."
 			);
 		}
@@ -78,15 +78,15 @@ component extends="baseHandler" {
 				importer.setup( importFile = rc.CBUpload );
 				// already validated, so just process the import
 				var importLog = importer.execute( overrideContent = rc.overwrite );
-				cbMessagebox.info( "ContentBox package imported sucessfully! Please check out your ContentBox now!" );
+				cbMessageBox().info( "ContentBox package imported sucessfully! Please check out your ContentBox now!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The ContentBox package is invalid. Please try again." );
+				cbMessageBox().error( "The ContentBox package is invalid. Please try again." );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehToolsImport );
 	}
@@ -106,7 +106,7 @@ component extends="baseHandler" {
 
 		// validate
 		if ( !len( rc.dsn ) or !len( rc.defaultPassword ) ) {
-			cbMessagebox.warn( "Please fill out all required fields." );
+			cbMessageBox().warn( "Please fill out all required fields." );
 			relocate( prc.xehToolsImport );
 		}
 
@@ -114,9 +114,9 @@ component extends="baseHandler" {
 			// get importer
 			var importer = getInstance( "#rc.importer#Importer@contentbox" );
 			importer.execute( argumentCollection = rc );
-			cbMessagebox.info( "Content imported successfully! Please check out your ContentBox now!" );
+			cbMessageBox().info( "Content imported successfully! Please check out your ContentBox now!" );
 		} catch ( any e ) {
-			cbMessagebox.error( "Error importing from datasource: #e.message# #e.detail#" );
+			cbMessageBox().error( "Error importing from datasource: #e.message# #e.detail#" );
 		}
 
 		relocate( prc.xehToolsImport );

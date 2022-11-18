@@ -196,7 +196,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postMenuSave", { menu : oMenu, originalSlug : originalSlug } );
 		// messagebox
-		cbMessagebox.setMessage( "info", "Menu saved!" );
+		cbMessageBox().setMessage( "info", "Menu saved!" );
 		// relocate
 		var targetEvent = ( len( rc.saveEvent ) ? rc.saveEvent & "/menuID/#rc.menuID#" : prc.xehMenus );
 		relocate( targetEvent );
@@ -236,7 +236,7 @@ component extends="baseHandler" {
 
 		// verify if contentID sent
 		if ( !len( rc.menuID ) ) {
-			cbMessagebox.warn( "No menus sent to delete!" );
+			cbMessageBox().warn( "No menus sent to delete!" );
 			relocate( event = prc.xehMenus );
 		}
 
@@ -264,7 +264,7 @@ component extends="baseHandler" {
 		}
 
 		// messagebox
-		cbMessagebox.info( messages );
+		cbMessageBox().info( messages );
 		relocate( prc.xehMenus );
 	}
 
@@ -307,15 +307,15 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				cbMessagebox.info( "Menus imported sucessfully!" );
+				cbMessageBox().info( "Menus imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 
 		relocate( prc.xehMenus );

@@ -52,7 +52,7 @@ component extends="baseHandler" {
 	// Remove
 	function remove( event, rc, prc ){
 		widgetService.removeWidget( rc.widgetFile );
-		cbMessagebox.info( "Widget Removed Forever!" );
+		cbMessageBox().info( "Widget Removed Forever!" );
 		relocate( prc.xehWidgets );
 	}
 
