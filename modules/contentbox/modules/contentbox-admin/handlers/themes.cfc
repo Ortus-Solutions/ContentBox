@@ -68,7 +68,7 @@ component extends="baseHandler" {
 
 		// Validate results
 		if ( vResults.hasErrors() ) {
-			variables.cbMessagebox.error( vResults.getAllErrors() );
+			cbMessageBox().error( vResults.getAllErrors() );
 			return index( argumentCollection = arguments );
 		}
 
@@ -78,7 +78,7 @@ component extends="baseHandler" {
 		// Results validated, save settings
 		variables.themeService.saveThemeSettings( name = rc.themeName, settings = rc );
 		variables.settingservice.flushSettingsCache();
-		variables.cbMessagebox.info( message = "Theme settings saved!" );
+		cbMessageBox().info( message = "Theme settings saved!" );
 
 		// Announce event
 		announce( "cbadmin_postThemeSettingsSave", { name : rc.themeName } );
@@ -96,7 +96,7 @@ component extends="baseHandler" {
 		// clear caches
 		variables.contentService.clearAllCaches();
 		// messages
-		variables.cbMessagebox.info( "#rc.themeName# Activated!" );
+		cbMessageBox().info( "#rc.themeName# Activated!" );
 		// Relocate
 		relocate( prc.xehThemes );
 	}
@@ -106,7 +106,7 @@ component extends="baseHandler" {
 	 */
 	function rebuildRegistry( event, rc, prc ){
 		variables.themeService.buildThemeRegistry();
-		variables.cbMessagebox.info( "Themes re-scanned and registered!" );
+		cbMessageBox().info( "Themes re-scanned and registered!" );
 		relocate( prc.xehThemes );
 	}
 
@@ -115,9 +115,9 @@ component extends="baseHandler" {
 	 */
 	function remove( event, rc, prc ){
 		if ( variables.themeService.removeTheme( rc.themeName ) ) {
-			variables.cbMessagebox.info( "Theme Removed Forever!" );
+			cbMessageBox().info( "Theme Removed Forever!" );
 		} else {
-			variables.cbMessagebox.error( "Error removing theme, please check your logs for more information!" );
+			cbMessageBox().error( "Error removing theme, please check your logs for more information!" );
 		}
 		relocate( prc.xehThemes );
 	}

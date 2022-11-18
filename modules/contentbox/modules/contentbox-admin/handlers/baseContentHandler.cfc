@@ -224,9 +224,9 @@ component extends="baseHandler" {
 				{ contentID : rc.contentID, status : rc.contentStatus }
 			);
 			// Message
-			variables.cbMessageBox.info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
+			cbMessageBox().info( "#listLen( rc.contentID )# content where set to '#rc.contentStatus#'" );
 		} else {
-			variables.cbMessageBox.warn( "No content selected!" );
+			cbMessageBox().warn( "No content selected!" );
 		}
 
 		// relocate back
@@ -395,7 +395,7 @@ component extends="baseHandler" {
 		// Validate Page And Incoming Data
 		var vResults = validate( oContent );
 		if ( vResults.hasErrors() ) {
-			variables.cbMessageBox.warn( vResults.getAllErrors() );
+			cbMessageBox().warn( vResults.getAllErrors() );
 			editor( argumentCollection = arguments );
 			return;
 		}
@@ -465,7 +465,7 @@ component extends="baseHandler" {
 			event.renderData( type = "json", data = rData );
 		} else {
 			// relocate
-			variables.cbMessageBox.info( "Page Saved!" );
+			cbMessageBox().info( "Page Saved!" );
 			if ( oContent.hasParent() ) {
 				relocate( event = arguments.relocateTo, querystring = "parent=#oContent.getParent().getContentID()#" );
 			} else {
@@ -485,7 +485,7 @@ component extends="baseHandler" {
 
 		// validation
 		if ( !event.valueExists( "title" ) OR !event.valueExists( "contentID" ) ) {
-			variables.cbMessageBox.warn( "Can't clone the unclonable, meaning no contentID or title passed." );
+			cbMessageBox().warn( "Can't clone the unclonable, meaning no contentID or title passed." );
 			relocate( arguments.relocateTo );
 			return;
 		}
@@ -518,7 +518,7 @@ component extends="baseHandler" {
 		);
 
 		// relocate
-		variables.cbMessageBox.info( "#variables.entity# Cloned!" );
+		cbMessageBox().info( "#variables.entity# Cloned!" );
 
 		// Relocate
 		if ( original.hasParent() ) {
@@ -539,7 +539,7 @@ component extends="baseHandler" {
 
 		// verify if contentID sent is valid
 		if ( !len( rc.contentID ) ) {
-			variables.cbMessageBox.warn( "No content sent to delete!" );
+			cbMessageBox().warn( "No content sent to delete!" );
 			relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
 		}
 
@@ -571,7 +571,7 @@ component extends="baseHandler" {
 		}
 
 		// messagebox
-		variables.cbMessageBox.info( messages );
+		cbMessageBox().info( messages );
 		// relocate
 		relocate( event = arguments.relocateTo, queryString = "parent=#rc.parent#" );
 	}
@@ -674,17 +674,17 @@ component extends="baseHandler" {
 					importFile = rc.importFile,
 					override   = rc.overrideContent
 				);
-				variables.cbMessageBox.info( "Content imported sucessfully!" );
+				cbMessageBox().info( "Content imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				variables.cbMessageBox.error(
+				cbMessageBox().error(
 					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			variables.cbMessageBox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 
 		relocate( arguments.relocateTo );
