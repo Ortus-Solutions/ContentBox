@@ -17,11 +17,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event         
-	 * @action        
+	 * @event
+	 * @action
 	 * @eventArguments
-	 * @rc            
-	 * @prc           
+	 * @rc
+	 * @prc
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab selection
@@ -32,8 +32,8 @@ component extends="baseHandler" {
 	 * Main display of comments
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function index( event, rc, prc ){
 		// params
@@ -95,8 +95,8 @@ component extends="baseHandler" {
 	 * Submit a status udpate on a comment
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function doStatusUpdate( event, rc, prc ){
 		// param values
@@ -111,11 +111,11 @@ component extends="baseHandler" {
 			announce( "cbadmin_onCommentStatusUpdate", { commentID : rc.commentID, status : rc.commentStatus } );
 			// Message
 			data.messages = "#listLen( rc.commentID )# Comment(s) #rc.commentStatus#d";
-			cbMessagebox.info( data.messages );
+			cbMessageBox().info( data.messages );
 		} else {
 			data.messages = "No comments selected!";
 			data.error    = true;
-			cbMessagebox.warn( data.messages );
+			cbMessageBox().warn( data.messages );
 		}
 
 		// If ajax call, return as ajax
@@ -131,8 +131,8 @@ component extends="baseHandler" {
 	 * Show the comment editor
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function editor( event, rc, prc ){
 		// get new or persisted
@@ -147,14 +147,14 @@ component extends="baseHandler" {
 	 * Show the comment moderator
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function moderate( event, rc, prc ){
 		// get new or persisted
 		rc.comment = commentService.get( event.getValue( "commentID", 0 ) );
 		if ( isNull( rc.Comment ) ) {
-			cbMessagebox.error( "The commentID #rc.commentID# is invalid." );
+			cbMessageBox().error( "The commentID #rc.commentID# is invalid." );
 			relocate( prc.xehComments );
 			return;
 		}
@@ -169,8 +169,8 @@ component extends="baseHandler" {
 	 * Comment quick look
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 *
 	 * @return HTML
 	 */
@@ -185,8 +185,8 @@ component extends="baseHandler" {
 	 * Save a comment
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function save( event, rc, prc ){
 		// populate and get comment
@@ -198,7 +198,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postCommentSave", { comment : oComment } );
 		// notice
-		cbMessagebox.info( "Comment Saved!" );
+		cbMessageBox().info( "Comment Saved!" );
 		// relocate
 		relocate( prc.xehComments );
 	}
@@ -207,8 +207,8 @@ component extends="baseHandler" {
 	 * Remove all Moderated comments
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 *
 	 * @return JSON or relocation
 	 */
@@ -222,7 +222,7 @@ component extends="baseHandler" {
 		announce( "cbadmin_postCommentRemoveAllModerated" );
 		// message
 		data.messages = "Moderated Comment(s) Removed!";
-		cbMessagebox.info( data.messages );
+		cbMessageBox().info( data.messages );
 		// If ajax call, return as ajax
 		if ( event.isAjax() ) {
 			event.renderData( data = data, type = "json" );
@@ -236,8 +236,8 @@ component extends="baseHandler" {
 	 * Remove comments from the database
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 *
 	 * @return JSON or relocation
 	 */
@@ -271,7 +271,7 @@ component extends="baseHandler" {
 		if ( !len( rc.commentID ) ) {
 			arrayAppend( data.messages, "No comments selected!" );
 			data.error = true;
-			cbMessagebox.warn( data.messages );
+			cbMessageBox().warn( data.messages );
 		}
 
 		// If ajax call, return as ajax json
@@ -286,9 +286,9 @@ component extends="baseHandler" {
 	/**
 	 * Comment Pager
 	 *
-	 * @event     
-	 * @rc        
-	 * @prc       
+	 * @event
+	 * @rc
+	 * @prc
 	 * @contentID  The content ID to filter the comments on, defaults to all
 	 * @max        Max number of comments to show, shows the global default
 	 * @pagination Turn pagination on or off
@@ -349,15 +349,15 @@ component extends="baseHandler" {
 		prc.commentPager_contentID = arguments.contentID;
 
 		// view pager
-		return renderView( view = "comments/pager", module = "contentbox-admin" );
+		return view( view = "comments/pager", module = "contentbox-admin" );
 	}
 
 	/**
 	 * Show comment settings panel
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function settings( event, rc, prc ){
 		rc.xehSaveSettings       = "#prc.cbAdminEntryPoint#.comments.saveSettings";
@@ -381,7 +381,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postCommentSettingsSave" );
 		// relocate back to editor
-		cbMessagebox.info( "All comment settings updated!" );
+		cbMessageBox().info( "All comment settings updated!" );
 		relocate( prc.xehCommentsettings );
 	}
 

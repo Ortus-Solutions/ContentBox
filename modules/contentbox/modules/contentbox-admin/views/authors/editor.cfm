@@ -120,26 +120,26 @@
                     <!--- Tab Content --->
                     <div class="tab-content">
                     	<!--- Author Details --->
-                    	#renderView( view="authors/editor/details", prePostExempt=true )#
+                    	#view( view="authors/editor/details", prePostExempt=true )#
 
 						<!--- Change Password --->
-						#renderView( view="authors/editor/password", prePostExempt=true )#
+						#view( view="authors/editor/password", prePostExempt=true )#
 
 						<!--- Two Factor--->
-                    	#renderView( view="authors/editor/twoFactor", prePostExempt=true )#
+                    	#view( view="authors/editor/twoFactor", prePostExempt=true )#
 
 						<!--- Preferences --->
-						#renderView( view="authors/editor/preferences", prePostExempt=true )#
+						#view( view="authors/editor/preferences", prePostExempt=true )#
 
 						<!--- Permissions --->
-						#renderView( view="authors/editor/permissions", prePostExempt=true )#
+						#view( view="authors/editor/permissions", prePostExempt=true )#
 
 						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<!--- Latest Edits --->
-							#renderView( view="authors/editor/edits", prePostExempt=true )#
+							#view( view="authors/editor/edits", prePostExempt=true )#
 
 							<!--- Latest Drafts --->
-							#renderView( view="authors/editor/drafts", prePostExempt=true )#
+							#view( view="authors/editor/drafts", prePostExempt=true )#
 						</cfif>
 
 						<!--- cbadmin Event --->
@@ -155,6 +155,6 @@
     <!--- SIDEBAR --->
     <!--- ****************************************************************************** --->
 
-    #renderView( view="authors/editor/sidebar", prePostExempt=true )#
+    #view( view="authors/editor/sidebar", prePostExempt=true )#
 </div>
 </cfoutput>

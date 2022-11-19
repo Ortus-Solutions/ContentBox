@@ -34,7 +34,7 @@
 		        <h3 class="panel-title"><i class="fa fa-medrt"></i> Need Help?</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderview(view="_tags/needhelp", module="contentbox-admin" )#
+		    	#view(view="_tags/needhelp", module="contentbox-admin" )#
 		    </div>
 		</div>
 	</div>

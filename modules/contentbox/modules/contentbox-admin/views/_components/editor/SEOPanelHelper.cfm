@@ -1,3 +1,8 @@
+<cfscript>
+	if( !prc.oContent.isLoaded() ){
+		prc.oContent.setSite( cb.site() );
+	}
+</cfscript>
 <cfoutput>
 <script type="application/javascript">
 	"use strict";
@@ -21,6 +26,7 @@
 				this.fetchContentRelocations();
 			},
 			fetchContentRelocations(){
+				if( !this.contentId ) return;
 				fetch(
 					`${this.baseUrl}?contentID=${this.contentId}`,
 					{

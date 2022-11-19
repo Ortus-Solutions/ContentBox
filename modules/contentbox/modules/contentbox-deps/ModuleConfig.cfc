@@ -24,7 +24,6 @@ component {
 		"cbsecurity",
 		"cbfeeds",
 		"cbmessagebox",
-		"cbantisamy",
 		"bcrypt",
 		"cbmarkdown"
 	];

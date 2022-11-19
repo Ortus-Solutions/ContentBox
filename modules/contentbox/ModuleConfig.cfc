@@ -38,9 +38,17 @@ component {
 			// cbSecurity settings
 			"cbSecurity"   : {
 				// Load the security rules for ContentBox from our db model
-				"rules"            : "model",
-				"rulesModel"       : "securityRuleService@contentbox",
-				"rulesModelMethod" : "getSecurityRules"
+				"firewall" : {
+					"rules" : {
+						"provider" : {
+							"source" : "model",
+							"properties" : {
+								"model" : "securityRuleService@contentbox",
+								"method" : "getSecurityRules"
+							}
+						}
+					}
+				}
 			},
 			// Array of mixins to inject into all content objects
 			"contentHelpers" : [],

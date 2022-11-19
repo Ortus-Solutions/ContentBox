@@ -122,26 +122,26 @@ component {
 		switch ( rc.format ) {
 			case "xml": {
 				return {
-					data        : renderView( view = "sitemap_xml", module = "contentbox-sitemap" ),
+					data        : view( view = "sitemap_xml", module = "contentbox-sitemap" ),
 					contentType : "application/xml"
 				};
 			}
 			case "json": {
 				return {
-					data        : renderView( view = "sitemap_json", module = "contentbox-sitemap" ),
+					data        : view( view = "sitemap_json", module = "contentbox-sitemap" ),
 					contentType : "application/json"
 				};
 			}
 			case "txt": {
 				return {
-					data        : renderView( view = "sitemap_txt", module = "contentbox-sitemap" ),
+					data        : view( view = "sitemap_txt", module = "contentbox-sitemap" ),
 					contentType : "text/plain"
 				};
 			}
 			default: {
 				event.setView( "sitemap_html" );
 				return {
-					data : renderLayout(
+					data : layout(
 						module     = event.getCurrentLayoutModule(),
 						viewModule = event.getCurrentViewModule()
 					),

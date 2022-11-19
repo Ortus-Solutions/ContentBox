@@ -109,7 +109,7 @@ component extends="coldbox.system.Interceptor" {
 
 		// Render the admin bar out
 		buffer.append(
-			renderView(
+			view(
 				view   = "adminbar/index",
 				module = "contentbox-ui",
 				args   = {
@@ -122,7 +122,7 @@ component extends="coldbox.system.Interceptor" {
 		);
 
 		// Append adminbar styles to the html head
-		cfhtmlhead( text = renderView( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
+		cfhtmlhead( text = view( view = "adminbar/adminbarCSS", module = "contentbox-ui" ) );
 	}
 
 	/**

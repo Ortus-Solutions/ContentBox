@@ -322,7 +322,7 @@
     </div>
 </div>
 
-#renderView(
+#view(
 	view = "_tags/dialog/import",
 	args = {
         title       : "Import Settings",

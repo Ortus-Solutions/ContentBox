@@ -25,7 +25,7 @@
 					#html.hiddenField( name="widgetFile" )#
 
 					<!--- widgets --->
-					#renderView(
+					#view(
 						view 			= "widgets/widgetList",
 						args 			= { mode : "edit", cols : 2 },
 						prePostExempt 	= true

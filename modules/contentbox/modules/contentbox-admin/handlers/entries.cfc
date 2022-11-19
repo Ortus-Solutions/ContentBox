@@ -28,7 +28,7 @@ component extends="baseContentHandler" {
 		prc.xehEntryRemove = "#prc.cbAdminEntryPoint#.entries.remove";
 		// Verify if blog is disabled?
 		if ( !prc.oCurrentSite.getIsBlogEnabled() ) {
-			cbMessageBox.warn(
+			cbMessageBox().warn(
 				"The blog has been currently disabled. You can activate it again in your ContentBox settings panel"
 			);
 			relocate( prc.xehDashboard );

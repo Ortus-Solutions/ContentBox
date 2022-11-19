@@ -88,7 +88,7 @@ component extends="baseHandler" {
 		prc.xehVersionDiff      = "#prc.cbAdminEntryPoint#.versions.diff";
 
 		// render out widget
-		return renderView( view = "versions/pager", module = "contentbox-admin" );
+		return view( view = "versions/pager", module = "contentbox-admin" );
 	}
 
 	/**

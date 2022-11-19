@@ -137,7 +137,7 @@
 		    <div class="panel-body">
 				#html.hiddenField( name="ruleID" )#
 				<div id="rulesTable">
-					#renderView( view = "securityRules/rulesTable", prePostExempt = true )#
+					#view( view = "securityRules/rulesTable", prePostExempt = true )#
 				</div>
 			</div>
 		</div>
@@ -147,7 +147,7 @@
 </div>
 
 <cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
-	#renderView(
+	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {
 			title       : "Import Security Rules",

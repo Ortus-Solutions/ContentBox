@@ -144,19 +144,19 @@ component
 			);
 
 			mail.setBody(
-				variables.renderer.renderLayout(
+				variables.renderer.layout(
 					layout = "/contentbox/email_templates/layouts/email",
 					view   = "/contentbox-email-twofactor/emails/verification"
 				)
 			);
 
 			// send it out
-			var mailResults = variables.mailService.send( mail );
+			var mailResults = variables.mailService.send( mail ).getResults();
 
 			// Check for errors
 			if ( mailResults.error ) {
 				results.error    = true;
-				results.messages = arrayToList( mailResults.errorArray );
+				results.messages = arrayToList( mailResults.messages );
 			} else {
 				results.messages = "Validation code sent!";
 			}

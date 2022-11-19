@@ -79,7 +79,7 @@ component {
 	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
 	 * So Make sure you select one.
 	 */
-	request.$coldboxUtil = new coldbox.system.core.util.Util();
+	request.$systemHelper = new coldbox.system.core.delegates.Env();
 	if( this._loadDynamicEnvironment ){
 		loadEnv();
 	}
@@ -99,13 +99,13 @@ component {
 			"modules_app"
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
-		dialect 				: request.$coldboxUtil.getSystemSetting( "ORM_DIALECT", "" ),
+		dialect 				: request.$systemHelper.getSystemSetting( "ORM_DIALECT", "" ),
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate              	: "update",
-		secondarycacheenabled 	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
-		cacheprovider         	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
-		logSQL                	: request.$coldboxUtil.getSystemSetting( "ORM_LOGSQL", false ),
-		sqlScript				: request.$coldboxUtil.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
+		secondarycacheenabled 	: request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
+		cacheprovider         	: request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
+		logSQL                	: request.$systemHelper.getSystemSetting( "ORM_LOGSQL", false ),
+		sqlScript				: request.$systemHelper.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
 		flushAtRequestEnd     	: false,
 		autoManageSession     	: false,

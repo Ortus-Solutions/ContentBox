@@ -44,7 +44,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postGlobalHTMLSave" );
 		// relocate back to editor
-		cbMessagebox.info( "All Global HTML updated! Yeeehaww!" );
+		cbMessageBox().info( "All Global HTML updated! Yeeehaww!" );
 		// relocate
 		relocate( prc.xehGlobalHTML );
 	}

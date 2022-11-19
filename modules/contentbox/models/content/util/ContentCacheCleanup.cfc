@@ -4,7 +4,6 @@
 component extends="coldbox.system.Interceptor" {
 
 	// DI Injections
-	property name="cachebox" inject="cachebox";
 	property name="settingService" inject="settingService@contentbox";
 	property name="commentService" inject="commentService@contentbox";
 	property name="contentService" inject="contentService@contentbox";

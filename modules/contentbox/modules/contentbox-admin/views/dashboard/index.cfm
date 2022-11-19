@@ -190,7 +190,7 @@
 				</h3>
 		    </div>
 		    <div class="panel-body">
-		    	#renderview( view = "_tags/needhelp", prePostExempt = true )#
+		    	#view( view = "_tags/needhelp", prePostExempt = true )#
 		    </div>
 		</div>
 		<!--- Event --->

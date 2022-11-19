@@ -96,7 +96,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane active" id="site_options">
-                                #renderView( view = "settings/sections/siteOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/siteOptions", prePostExempt = true )#
 							</div>
 
                             <!--- ********************************************************************* --->
@@ -104,7 +104,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="dashboard_options">
-                                #renderView( view = "settings/sections/adminOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/adminOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -112,7 +112,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="security_options">
-                                #renderView( view = "settings/sections/securityOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/securityOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -120,7 +120,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="login_options">
-                                #renderView( view = "settings/sections/loginOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/loginOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -128,7 +128,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="content_options">
-                                #renderView( view = "settings/sections/contentOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/contentOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -136,7 +136,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="editor_options">
-                                #renderView( view = "settings/sections/editorOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/editorOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -144,7 +144,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="mediamanager">
-                                #renderView( view = "settings/sections/mediaManager", prePostExempt = true )#
+                                #view( view = "settings/sections/mediaManager", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -152,7 +152,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="gravatars">
-                                #renderView( view = "settings/sections/gravatars", prePostExempt = true )#
+                                #view( view = "settings/sections/gravatars", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -160,7 +160,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="notifications">
-                                #renderView( view = "settings/sections/notifications", prePostExempt = true )#
+                                #view( view = "settings/sections/notifications", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -168,7 +168,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="email_server">
-                                #renderView( view = "settings/sections/mailServer", prePostExempt = true )#
+                                #view( view = "settings/sections/mailServer", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -176,7 +176,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="search_options">
-                                #renderView( view = "settings/sections/searchOptions", prePostExempt = true )#
+                                #view( view = "settings/sections/searchOptions", prePostExempt = true )#
                             </div>
 
                             <!--- ********************************************************************* --->
@@ -184,7 +184,7 @@
                             <!--- ********************************************************************* --->
 
                             <div class="tab-pane" id="rss_options">
-								#renderView( view = "settings/sections/rss", prePostExempt = true )#
+								#view( view = "settings/sections/rss", prePostExempt = true )#
                             </div>
 
                             <!--- cbadmin Event --->

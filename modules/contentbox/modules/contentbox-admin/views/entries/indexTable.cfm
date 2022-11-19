@@ -78,7 +78,7 @@
 				</cfif>
 
 				<!--- Content Info --->
-				#renderView(
+				#view(
 					view : "_components/content/TableCreationInfo",
 					args : { content : entry },
 					prepostExempt : true
@@ -87,7 +87,7 @@
 
 			<!--- Status --->
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableStatus",
 					args : { content : entry },
 					prepostExempt : true
@@ -96,7 +96,7 @@
 
 			<!--- Show in Search --->
 			<td class="text-center">
-				#renderView(
+				#view(
 					view : "_components/content/TableSearchStatus",
 					args : { content : entry },
 					prepostExempt : true

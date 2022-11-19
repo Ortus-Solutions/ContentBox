@@ -48,7 +48,7 @@ component
 			menuItem : arguments.menuItem,
 			data     : arguments.menuItem.getMemento()
 		};
-		return variables.renderer.renderExternalView(
+		return variables.renderer.externalView(
 			view   = "/contentbox/models/menu/views/free/display",
 			module = "contentbox",
 			args   = viewArgs

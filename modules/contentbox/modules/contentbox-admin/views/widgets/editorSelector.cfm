@@ -7,7 +7,7 @@
         </div>
         <div class="modal-body">
             <div class="widget-detail" id="widget-detail" style="display:none;"></div>
-            #renderView(
+            #view(
                 view    		= "widgets/widgetList",
 				args    		= { mode = "insert", cols = 3 },
 				prePostExempt 	= true

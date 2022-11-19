@@ -10,7 +10,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:mediamanager\\..*",
@@ -23,7 +25,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:versions\\.(remove)",
@@ -36,7 +40,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:versions\\.(rollback)",
@@ -49,7 +55,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$",
@@ -62,7 +70,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:tools\\.(importer|doImport)",
@@ -75,7 +85,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:(settings|permissions|roles|securityRules)\\..*",
@@ -88,7 +100,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:settings\\.save",
@@ -101,7 +115,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)",
@@ -114,7 +130,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)",
@@ -127,7 +145,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)",
@@ -140,7 +160,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:permissions\\.(remove|save)",
@@ -153,7 +175,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:dashboard\\.reload",
@@ -166,7 +190,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:pages\\.(changeOrder|remove)",
@@ -179,7 +205,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)",
@@ -192,7 +220,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:entries\\.(quickPost|remove)",
@@ -205,7 +235,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:contentStore\\.(editor|remove|save)",
@@ -218,7 +250,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)",
@@ -231,7 +265,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:categories\\.(remove|save)",
@@ -244,7 +280,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)",
@@ -257,7 +295,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:.*",
@@ -270,7 +310,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-filebrowser:.*",
@@ -283,7 +325,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$",
@@ -296,7 +340,9 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     },
     {
         "securelist": "^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$",
@@ -309,6 +355,8 @@
 		"action" : "redirect",
 		"module" : "contentbox",
 		"overrideEvent" : "",
-        "useSSL": false
+        "useSSL": false,
+		"httpMethods" : "*",
+		"allowedIPs" : "*"
     }
 ]

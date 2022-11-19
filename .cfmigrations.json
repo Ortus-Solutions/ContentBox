@@ -14,5 +14,22 @@
                 "bundleVersion": "${DB_BUNDLEVERSION}"
             }
         }
+    },
+	"default": {
+        "manager": "cfmigrations.models.QBMigrationManager",
+        "migrationsDirectory": "resources/database/migrations/",
+		"seedsDirectory": "resources/database/seeds/",
+        "properties": {
+            "defaultGrammar": "AutoDiscover@qb",
+            "migrationsTable": "cfmigrations_app",
+            "connectionInfo": {
+                "password": "${DB_PASSWORD}",
+                "connectionString": "${DB_CONNECTIONSTRING}",
+                "class": "${DB_CLASS}",
+                "username": "${DB_USER}",
+                "bundleName": "${DB_BUNDLENAME}",
+                "bundleVersion": "${DB_BUNDLEVERSION}"
+            }
+        }
     }
 }

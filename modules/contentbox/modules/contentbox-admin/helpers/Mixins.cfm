@@ -1,6 +1,6 @@
 <cfscript>
 	function cbAdminComponent( required component, struct args = {} ){
-		return renderView(
+		return view(
 			view 			: "_components/#arguments.component#",
 			args 			: arguments.args,
 			prePostExempt 	: true

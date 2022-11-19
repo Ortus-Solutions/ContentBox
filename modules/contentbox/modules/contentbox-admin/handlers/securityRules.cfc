@@ -40,17 +40,19 @@ component extends="baseHandler" {
 	// Reset Rules
 	function reset( event, rc, prc ){
 		ruleService.resetRules();
-		securityInterceptor.loadRules();
+		securityInterceptor.configure();
+		securityInterceptor.afterAspectsLoad( argumentCollection = arguments );
 		// announce event
 		announce( "cbadmin_onResetSecurityRules" );
-		cbMessagebox.info( "Security Rules Re-created and Re-applied!" );
+		cbMessageBox().info( "Security Rules Re-created and Re-applied!" );
 		relocate( prc.xehsecurityRules );
 	}
 
 	// Apply the security rules
 	function apply( event, rc, prc ){
-		securityInterceptor.loadRules();
-		cbMessagebox.info( "Security Rules Applied!" );
+		securityInterceptor.configure();
+		securityInterceptor.afterAspectsLoad( argumentCollection = arguments );
+		cbMessageBox().info( "Security Rules Applied!" );
 		relocate( prc.xehsecurityRules );
 	}
 
@@ -125,10 +127,10 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postSecurityRulesSave", { rule : prc.rule } );
 			// Message + Relocate
-			cbMessagebox.info( "Security Rule saved! Isn't that awesome!" );
+			cbMessageBox().info( "Security Rule saved! Isn't that awesome!" );
 			relocate( prc.xehsecurityRules );
 		} else {
-			cbMessagebox.warn( vResults.getAllErrors() );
+			cbMessageBox().warn( vResults.getAllErrors() );
 			return editor( argumentCollection = arguments );
 		}
 	}
@@ -144,9 +146,9 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postSecurityRulesRemove", { ruleID : rc.ruleID } );
 			// message
-			cbMessagebox.info( "Security Rule Removed!" );
+			cbMessageBox().info( "Security Rule Removed!" );
 		} else {
-			cbMessagebox.warn( "No ID selected!" );
+			cbMessageBox().warn( "No ID selected!" );
 		}
 		relocate( event = prc.xehsecurityRules );
 	}
@@ -178,15 +180,15 @@ component extends="baseHandler" {
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
 				var importLog = ruleService.importFromFile( importFile = rc.importFile, override = rc.overrideContent );
-				cbMessagebox.info( "Rules imported sucessfully!" );
+				cbMessageBox().info( "Rules imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error( "The import file is invalid: #rc.importFile# cannot continue with import" );
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehSecurityRules );
 	}

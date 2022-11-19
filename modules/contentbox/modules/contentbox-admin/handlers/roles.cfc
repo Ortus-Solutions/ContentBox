@@ -14,11 +14,11 @@ component extends="baseHandler" {
 	/**
 	 * Pre handler
 	 *
-	 * @event         
-	 * @action        
+	 * @event
+	 * @action
 	 * @eventArguments
-	 * @rc            
-	 * @prc           
+	 * @rc
+	 * @prc
 	 */
 	function preHandler( event, action, eventArguments, rc, prc ){
 		// Tab control
@@ -29,8 +29,8 @@ component extends="baseHandler" {
 	 * Manage roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function index( event, rc, prc ){
 		// exit Handlers
@@ -54,8 +54,8 @@ component extends="baseHandler" {
 	 * Save Roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function save( event, rc, prc ){
 		// Inflate the right Permissions according to toggle pattern: permissions_id_toggle
@@ -85,12 +85,12 @@ component extends="baseHandler" {
 			// announce event
 			announce( "cbadmin_postRoleSave", { role : prc.oRole } );
 			// messagebox
-			cbMessagebox.setMessage( "info", "Role saved!" );
+			cbMessageBox().setMessage( "info", "Role saved!" );
 			// relocate
 			relocate( prc.xehroles );
 		} else {
 			// messagebox
-			cbMessagebox.warning( vResults.getAllErrors() );
+			cbMessageBox().warning( vResults.getAllErrors() );
 			return editor( argumentCollection = arguments );
 		}
 	}
@@ -99,8 +99,8 @@ component extends="baseHandler" {
 	 * Remove Roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function remove( event, rc, prc ){
 		// announce event
@@ -119,7 +119,7 @@ component extends="baseHandler" {
 		// announce event
 		announce( "cbadmin_postRoleRemove", { roleID : rc.roleID } );
 		// Message
-		cbMessagebox.setMessage( "info", "Role Removed!" );
+		cbMessageBox().setMessage( "info", "Role Removed!" );
 		// relocate
 		relocate( prc.xehroles );
 	}
@@ -145,8 +145,8 @@ component extends="baseHandler" {
 	 * Export a role
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function export( event, rc, prc ){
 		return variables.roleService.get( event.getValue( "roleID", 0 ) ).getMemento( includes = "permissions" );
@@ -156,8 +156,8 @@ component extends="baseHandler" {
 	 * Export all roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function exportAll( event, rc, prc ){
 		param rc.roleID = "";
@@ -177,8 +177,8 @@ component extends="baseHandler" {
 	 * Import roles
 	 *
 	 * @event
-	 * @rc   
-	 * @prc  
+	 * @rc
+	 * @prc
 	 */
 	function importAll( event, rc, prc ){
 		event.paramValue( "importFile", "" );
@@ -186,17 +186,17 @@ component extends="baseHandler" {
 		try {
 			if ( len( rc.importFile ) and fileExists( rc.importFile ) ) {
 				var importLog = roleService.importFromFile( importFile = rc.importFile, override = rc.overrideContent );
-				cbMessagebox.info( "Roles imported sucessfully!" );
+				cbMessageBox().info( "Roles imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessagebox.error(
+				cbMessageBox().error(
 					"The import file is invalid: #encodeForHTML( rc.importFile )# cannot continue with import"
 				);
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stackTrace#";
 			log.error( errorMessage, e );
-			cbMessagebox.error( errorMessage );
+			cbMessageBox().error( errorMessage );
 		}
 		relocate( prc.xehRoles );
 	}

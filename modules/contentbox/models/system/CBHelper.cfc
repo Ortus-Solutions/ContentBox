@@ -1829,7 +1829,7 @@ component accessors="true" singleton threadSafe {
 		var entries = getCurrentEntries();
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = entries,
 				collectionAs = arguments.collectionAs,
@@ -1852,7 +1852,7 @@ component accessors="true" singleton threadSafe {
 		var entries = [ getCurrentEntry() ];
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = entries,
 				collectionAs = arguments.collectionAs,
@@ -1877,7 +1877,7 @@ component accessors="true" singleton threadSafe {
 		var categories = getCurrentCategories( argumentCollection = arguments );
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = categories,
 				collectionAs = arguments.collectionAs,
@@ -1900,7 +1900,7 @@ component accessors="true" singleton threadSafe {
 		var relatedContent = getCurrentRelatedContent();
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = relatedContent,
 				collectionAs = arguments.collectionAs,
@@ -1941,7 +1941,7 @@ component accessors="true" singleton threadSafe {
 		var comments = getCurrentComments();
 		return controller
 			.getRenderer()
-			.renderView(
+			.view(
 				view         = "#themeName()#/templates/#arguments.template#",
 				collection   = comments,
 				collectionAs = arguments.collectionAs,
@@ -1977,7 +1977,7 @@ component accessors="true" singleton threadSafe {
 
 	/**
 	 * QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
-	 * theme you are using. All the arguments are the same as `renderView()'s` methods
+	 * theme you are using. All the arguments are the same as `view()'s` methods
 	 *
 	 * @view                   The view in the theme to render
 	 * @cache                  Cache the output or not
@@ -2012,12 +2012,12 @@ component accessors="true" singleton threadSafe {
 	){
 		arguments.view   = "#themeName()#/views/#arguments.view#";
 		arguments.module = themeRecord().module;
-		return controller.getRenderer().renderView( argumentCollection = arguments );
+		return controller.getRenderer().view( argumentCollection = arguments );
 	}
 
 	/**
 	 * QuickLayout is a proxy to ColdBox's renderLayout method with the addition of prefixing the location of the layout according to the
-	 * layout theme you are using. All the arguments are the same as renderLayout()'s methods
+	 * layout theme you are using. All the arguments are the same as layout()'s methods
 	 *
 	 * @layout        The layout to render out
 	 * @view          The view to render within this layout
@@ -2035,7 +2035,7 @@ component accessors="true" singleton threadSafe {
 		boolean prePostExempt = false
 	){
 		arguments.layout = "#themeName()#/layouts/#arguments.layout#";
-		return controller.getRenderer().renderLayout( argumentCollection = arguments );
+		return controller.getRenderer().layout( argumentCollection = arguments );
 	}
 
 	/**
@@ -2048,12 +2048,12 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().renderView().
+	 * Render the incoming event's main view, basically a proxy to ColdBox's controller.getRenderer().view().
 	 *
 	 * @args
 	 */
 	function mainView( struct args = structNew() ){
-		return controller.getRenderer().renderView( view = "", args = arguments.args );
+		return controller.getRenderer().view( view = "", args = arguments.args );
 	}
 
 	/************************************** MENUS *********************************************/

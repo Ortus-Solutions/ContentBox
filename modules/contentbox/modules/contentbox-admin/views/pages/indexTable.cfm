@@ -120,7 +120,7 @@
 					</cfif>
 
 					<!--- Content Info --->
-					#renderView(
+					#view(
 						view : "_components/content/TableCreationInfo",
 						args : { content : page },
 						prepostExempt : true
@@ -128,7 +128,7 @@
 				</td>
 
 				<td class="text-center">
-					#renderView(
+					#view(
 						view : "_components/content/TableStatus",
 						args : { content : page },
 						prepostExempt : true
@@ -146,7 +146,7 @@
 				</td>
 
 				<td class="text-center">
-					#renderView(
+					#view(
 						view : "_components/content/TableSearchStatus",
 						args : { content : page },
 						prepostExempt : true

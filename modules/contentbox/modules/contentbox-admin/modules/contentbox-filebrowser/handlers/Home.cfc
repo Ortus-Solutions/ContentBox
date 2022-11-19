@@ -91,7 +91,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		// set view or render widget?
 		prc.widget            = arguments.widget;
 		if ( arguments.widget ) {
-			return renderView( view = "home/index", module = prc.fbModuleName );
+			return view( view = "home/index", module = prc.fbModuleName );
 		} else {
 			event.setView( view = "home/index", noLayout = event.isAjax() );
 		}
@@ -183,7 +183,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		var iData = { directory : prc.fbCurrentRoot, listing : prc.fbqListing };
 		announce( "fb_postDirectoryRead", iData );
 
-		return renderView( view = "home/filelisting" );
+		return view( view = "home/filelisting" );
 	}
 
 	/**
