@@ -368,6 +368,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if ( arguments.content.hasLinkedContent() ) {
 				arguments.content.removeAllLinkedContent();
 			}
+			variables.relocationService.deleteWhere( relatedContent=arguments.content );
 			if ( arguments.content.hasChild() ) {
 				var aItemsToDelete = [];
 				for ( var thisChild in arguments.content.getChildren() ) {
