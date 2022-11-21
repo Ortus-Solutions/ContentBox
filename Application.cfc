@@ -6,6 +6,7 @@
  * Application Bootstrap
  */
 component {
+
 	/**
 	 * --------------------------------------------------------------------------
 	 * NON COMMANDBOX INSTALLS
@@ -28,7 +29,7 @@ component {
 	this.setDomainCookies  = true;
 	this.scriptProtect     = false;
 	this.secureJSON        = false;
-	this.timezone 			= "UTC";
+	this.timezone          = "UTC";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -36,7 +37,7 @@ component {
 	 * --------------------------------------------------------------------------
 	 */
 
-	 // buffer the output of a tag/function body to output in case of a exception
+	// buffer the output of a tag/function body to output in case of a exception
 	this.bufferOutput                   = true;
 	// Activate Gzip Compression
 	this.compression                    = false;
@@ -51,11 +52,11 @@ component {
 	 * --------------------------------------------------------------------------
 	 * Modify only if you need to, else default them.
 	 */
-	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
-	COLDBOX_APP_MAPPING   	= "";
-	COLDBOX_CONFIG_FILE   	= "";
-	COLDBOX_APP_KEY       	= "";
-	COLDBOX_FAIL_FAST 		= true;
+	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
+	COLDBOX_APP_MAPPING   = "";
+	COLDBOX_CONFIG_FILE   = "";
+	COLDBOX_APP_KEY       = "";
+	COLDBOX_FAIL_FAST     = true;
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -80,7 +81,7 @@ component {
 	 * So Make sure you select one.
 	 */
 	request.$systemHelper = new coldbox.system.core.delegates.Env();
-	if( this._loadDynamicEnvironment ){
+	if ( this._loadDynamicEnvironment ) {
 		loadEnv();
 	}
 	// THE CONTENTBOX DATASOURCE NAME
@@ -99,23 +100,23 @@ component {
 			"modules_app"
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
-		dialect 				: request.$systemHelper.getSystemSetting( "ORM_DIALECT", "" ),
+		dialect              : request.$systemHelper.getSystemSetting( "ORM_DIALECT", "" ),
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate              	: "update",
-		secondarycacheenabled 	: request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
-		cacheprovider         	: request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
-		logSQL                	: request.$systemHelper.getSystemSetting( "ORM_LOGSQL", false ),
-		sqlScript				: request.$systemHelper.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
+		dbcreate             : "update",
+		secondarycacheenabled: request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
+		cacheprovider        : request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
+		logSQL               : request.$systemHelper.getSystemSetting( "ORM_LOGSQL", false ),
+		sqlScript            : request.$systemHelper.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		flushAtRequestEnd     	: false,
-		autoManageSession     	: false,
+		flushAtRequestEnd    : false,
+		autoManageSession    : false,
 		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK DO NOT CHANGE
-		eventHandling         	: true,
-		eventHandler          	: "cborm.models.EventHandler",
+		eventHandling        : true,
+		eventHandler         : "cborm.models.EventHandler",
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
-		skipCFCWithError      	: true,
+		skipCFCWithError     : true,
 		// TURN ON FOR Debugging if ORM mappings are not working.
-		savemapping 			: false
+		savemapping          : false
 	};
 	// cfformat-ignore-end
 
@@ -143,8 +144,8 @@ component {
 			||
 			isNull( application.cbController )
 		) {
-			if( this._loadDynamicEnvironment ){
-				loadEnv( force : true );
+			if ( this._loadDynamicEnvironment ) {
+				loadEnv( force: true );
 			}
 			reinitApplication();
 		}
@@ -157,8 +158,8 @@ component {
 			&&
 			application.cbBootstrap.isFWReinit()
 		) {
-			if( this._loadDynamicEnvironment ){
-				loadEnv( force : true );
+			if ( this._loadDynamicEnvironment ) {
+				loadEnv( force: true );
 			}
 			if ( structKeyExists( server, "lucee" ) ) {
 				pagePoolClear();
@@ -173,7 +174,7 @@ component {
 	}
 
 	public void function onSessionStart(){
-		if( !isNull( application.cbBootstrap ) ){
+		if ( !isNull( application.cbBootstrap ) ) {
 			application.cbBootStrap.onSessionStart();
 		}
 	}
@@ -197,34 +198,30 @@ component {
 	/**
 	 * This method is only called if you are in a NON CommandBox install.
 	 */
-	private void function loadEnv( boolean force = false){
+	private void function loadEnv( boolean force = false ){
 		var javaSystem = createObject( "java", "java.lang.System" );
-		var value = javaSystem.getProperty( "contentbox_runtime_env" );
+		var value      = javaSystem.getProperty( "contentbox_runtime_env" );
 		// If not loaded, lock and load.
 		if ( isNull( value ) || arguments.force ) {
-			lock
-				name="contentbox_runtime_env"
-				timeout="15"
-				throwOnTimeout="true"
-				type="exclusive"
-			{
+			lock name="contentbox_runtime_env" timeout="15" throwOnTimeout="true" type="exclusive" {
 				// Double lock
-				if( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) || arguments.force ){
+				if ( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) || arguments.force ) {
 					// Load .env file
 					var props = createObject( "java", "java.util.Properties" ).init();
-					props.load(
-						createObject( "java", "java.io.FileInputStream" ).init( expandPath( "/.env" ) )
-					);
+					props.load( createObject( "java", "java.io.FileInputStream" ).init( expandPath( "/.env" ) ) );
 					// Iterate and add
 					var availableProps = props.propertyNames();
-					while( availableProps.hasNext() ){
+					while ( availableProps.hasNext() ) {
 						var propName = availableProps.next();
-						javaSystem.setProperty( propName,  props.getProperty( propName ) );
+						javaSystem.setProperty( propName, props.getProperty( propName ) );
 					}
 					javaSystem.setProperty( "contentbox_runtime_env", true );
-				} // end double lock
-			} // end lock
-		} // end lock check
+				}
+				// end double lock
+			}
+			// end lock
+		}
+		// end lock check
 	}
 
 }
