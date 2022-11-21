@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Ace SQL dump
-# Version 20025
+# Version 20039
 #
 # https://sequel-ace.com/
 # https://github.com/Sequel-Ace/Sequel-Ace
 #
 # Host: 127.0.0.1 (MySQL 5.7.22)
 # Database: contentbox
-# Generation Time: 2022-02-18 20:12:42 +0000
+# Generation Time: 2022-11-21 18:38:50 +0000
 # ************************************************************
 
 USE `contentbox`;
@@ -41,8 +41,8 @@ CREATE TABLE `cb_author` (
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `isPasswordReset` bit(1) NOT NULL DEFAULT b'0',
   `is2FactorAuth` bit(1) NOT NULL DEFAULT b'0',
-  `authorID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_roleID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `authorID` varchar(36) NOT NULL,
+  `FK_roleID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`authorID`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `id` (`authorID`),
@@ -79,8 +79,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_authorPermissionGroups`;
 
 CREATE TABLE `cb_authorPermissionGroups` (
-  `FK_permissionGroupID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_authorID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `FK_permissionGroupID` varchar(36) DEFAULT NULL,
+  `FK_authorID` varchar(36) DEFAULT NULL,
   KEY `fk_cb_authorPermissionGroups_FK_permissionGroupID` (`FK_permissionGroupID`),
   KEY `fk_cb_authorPermissionGroups_FK_authorID` (`FK_authorID`),
   CONSTRAINT `fk_cb_authorPermissionGroups_FK_authorID` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -106,8 +106,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_authorPermissions`;
 
 CREATE TABLE `cb_authorPermissions` (
-  `FK_permissionID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_authorID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `FK_permissionID` varchar(36) DEFAULT NULL,
+  `FK_authorID` varchar(36) DEFAULT NULL,
   KEY `fk_cb_authorPermissions_FK_permissionID` (`FK_permissionID`),
   KEY `fk_cb_authorPermissions_FK_authorID` (`FK_authorID`),
   CONSTRAINT `fk_cb_authorPermissions_FK_authorID` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -141,7 +141,7 @@ CREATE TABLE `cb_category` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `categoryID` char(36) CHARACTER SET utf8 NOT NULL,
+  `categoryID` varchar(36) NOT NULL,
   `FK_siteID` varchar(36) NOT NULL DEFAULT '',
   `isPublic` bit(1) NOT NULL,
   PRIMARY KEY (`categoryID`),
@@ -186,8 +186,8 @@ CREATE TABLE `cb_comment` (
   `isApproved` bit(1) NOT NULL DEFAULT b'0',
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `commentID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `commentID` varchar(36) NOT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`commentID`),
   UNIQUE KEY `id` (`commentID`),
   UNIQUE KEY `commentID` (`commentID`),
@@ -221,8 +221,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_commentSubscriptions`;
 
 CREATE TABLE `cb_commentSubscriptions` (
-  `subscriptionID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `subscriptionID` varchar(36) NOT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`subscriptionID`),
   KEY `fk_cb_commentSubscriptions_FK_contentID` (`FK_contentID`),
   CONSTRAINT `fk_cb_commentSubscriptions_FK_contentID` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -269,9 +269,9 @@ CREATE TABLE `cb_content` (
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `HTMLTitle` varchar(255) DEFAULT NULL,
-  `contentID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_authorID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_parentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `contentID` varchar(36) NOT NULL,
+  `FK_authorID` varchar(36) DEFAULT NULL,
+  `FK_parentID` varchar(36) DEFAULT NULL,
   `FK_siteID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`contentID`),
   UNIQUE KEY `id` (`contentID`),
@@ -360,8 +360,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_contentCategories`;
 
 CREATE TABLE `cb_contentCategories` (
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_categoryID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
+  `FK_categoryID` varchar(36) DEFAULT NULL,
   KEY `fk_cb_contentCategories_FK_contentID` (`FK_contentID`),
   KEY `fk_cb_contentCategories_FK_categoryID` (`FK_categoryID`),
   CONSTRAINT `fk_cb_contentCategories_FK_categoryID` FOREIGN KEY (`FK_categoryID`) REFERENCES `cb_category` (`categoryID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -398,7 +398,7 @@ DROP TABLE IF EXISTS `cb_contentStore`;
 CREATE TABLE `cb_contentStore` (
   `description` longtext,
   `order` int(11) DEFAULT '0',
-  `contentID` char(36) CHARACTER SET utf8 NOT NULL,
+  `contentID` varchar(36) NOT NULL,
   PRIMARY KEY (`contentID`),
   CONSTRAINT `fk_cb_contentStore_contentID` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -436,9 +436,9 @@ CREATE TABLE `cb_contentVersion` (
   `isActive` bit(1) NOT NULL DEFAULT b'1',
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `contentVersionID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_authorID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `contentVersionID` varchar(36) NOT NULL,
+  `FK_authorID` varchar(36) DEFAULT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`contentVersionID`),
   UNIQUE KEY `id` (`contentVersionID`),
   UNIQUE KEY `contentVersionID` (`contentVersionID`),
@@ -599,8 +599,8 @@ CREATE TABLE `cb_customfield` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `customFieldID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `customFieldID` varchar(36) NOT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`customFieldID`),
   UNIQUE KEY `id` (`customFieldID`),
   UNIQUE KEY `customFieldID` (`customFieldID`),
@@ -631,7 +631,7 @@ DROP TABLE IF EXISTS `cb_entry`;
 
 CREATE TABLE `cb_entry` (
   `excerpt` longtext,
-  `contentID` char(36) CHARACTER SET utf8 NOT NULL,
+  `contentID` varchar(36) NOT NULL,
   PRIMARY KEY (`contentID`),
   CONSTRAINT `fk_cb_entry_contentID` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -667,8 +667,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_groupPermissions`;
 
 CREATE TABLE `cb_groupPermissions` (
-  `FK_permissionGroupID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_permissionID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `FK_permissionGroupID` varchar(36) DEFAULT NULL,
+  `FK_permissionID` varchar(36) DEFAULT NULL,
   KEY `fk_cb_groupPermissions_FK_permissionGroupID` (`FK_permissionGroupID`),
   KEY `fk_cb_groupPermissions_FK_permissionID` (`FK_permissionID`),
   CONSTRAINT `fk_cb_groupPermissions_FK_permissionGroupID` FOREIGN KEY (`FK_permissionGroupID`) REFERENCES `cb_permissionGroup` (`permissionGroupID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -736,7 +736,7 @@ CREATE TABLE `cb_loginAttempts` (
   `lastLoginSuccessIP` varchar(100) DEFAULT '',
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `loginAttemptsID` char(36) CHARACTER SET utf8 NOT NULL,
+  `loginAttemptsID` varchar(36) NOT NULL,
   PRIMARY KEY (`loginAttemptsID`),
   UNIQUE KEY `id` (`loginAttemptsID`),
   UNIQUE KEY `loginAttemptsID` (`loginAttemptsID`),
@@ -774,7 +774,7 @@ CREATE TABLE `cb_menu` (
   `listClass` varchar(160) DEFAULT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `menuID` char(36) CHARACTER SET utf8 NOT NULL,
+  `menuID` varchar(36) NOT NULL,
   `FK_siteID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`menuID`),
   UNIQUE KEY `id` (`menuID`),
@@ -820,9 +820,9 @@ CREATE TABLE `cb_menuItem` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `menuItemID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_menuID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_parentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `menuItemID` varchar(36) NOT NULL,
+  `FK_menuID` varchar(36) DEFAULT NULL,
+  `FK_parentID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`menuItemID`),
   UNIQUE KEY `id` (`menuItemID`),
   UNIQUE KEY `menuItemID` (`menuItemID`),
@@ -869,7 +869,7 @@ CREATE TABLE `cb_module` (
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `moduleType` varchar(255) DEFAULT 'core',
-  `moduleID` char(36) CHARACTER SET utf8 NOT NULL,
+  `moduleID` varchar(36) NOT NULL,
   PRIMARY KEY (`moduleID`),
   UNIQUE KEY `id` (`moduleID`),
   UNIQUE KEY `moduleID` (`moduleID`),
@@ -902,7 +902,7 @@ CREATE TABLE `cb_page` (
   `order` int(11) DEFAULT '0',
   `showInMenu` bit(1) NOT NULL DEFAULT b'1',
   `excerpt` longtext,
-  `contentID` char(36) CHARACTER SET utf8 NOT NULL,
+  `contentID` varchar(36) NOT NULL,
   PRIMARY KEY (`contentID`),
   KEY `idx_showInMenu` (`showInMenu`),
   CONSTRAINT `fk_cb_page_contentID` FOREIGN KEY (`contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -949,7 +949,7 @@ CREATE TABLE `cb_permission` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `permissionID` char(36) CHARACTER SET utf8 NOT NULL,
+  `permissionID` varchar(36) NOT NULL,
   PRIMARY KEY (`permissionID`),
   UNIQUE KEY `permission` (`permission`),
   UNIQUE KEY `id` (`permissionID`),
@@ -968,7 +968,7 @@ VALUES
 	('WIDGET_ADMIN','Ability to manage widgets, default is view only','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d73f4-a444-11eb-ab6f-0290cc502ae3'),
 	('TOOLS_IMPORT','Ability to import data into ContentBox','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7480-a444-11eb-ab6f-0290cc502ae3'),
 	('GLOBALHTML_ADMIN','Ability to manage the system\'s global HTML content used on layouts','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d74f8-a444-11eb-ab6f-0290cc502ae3'),
-	('PAGES_EDITOR','Ability to manage content pages but not publish pages','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7570-a444-11eb-ab6f-0290cc502ae3'),
+	('PAGES_EDITOR','Ability to create, edit and publish pages','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7570-a444-11eb-ab6f-0290cc502ae3'),
 	('SYSTEM_TAB','Access to the ContentBox System tools','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d761a-a444-11eb-ab6f-0290cc502ae3'),
 	('SYSTEM_UPDATES','Ability to view and apply ContentBox updates','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d769c-a444-11eb-ab6f-0290cc502ae3'),
 	('CONTENTBOX_ADMIN','Access to the enter the ContentBox administrator console','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d770a-a444-11eb-ab6f-0290cc502ae3'),
@@ -991,12 +991,12 @@ VALUES
 	('EDITORS_CACHING','Ability to view the content caching panel','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7e76-a444-11eb-ab6f-0290cc502ae3'),
 	('ROLES_ADMIN','Ability to manage roles, default is view only','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7eee-a444-11eb-ab6f-0290cc502ae3'),
 	('SYSTEM_SAVE_CONFIGURATION','Ability to update global configuration data','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7f5c-a444-11eb-ab6f-0290cc502ae3'),
-	('ENTRIES_EDITOR','Ability to manage blog entries but not publish entries','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7fca-a444-11eb-ab6f-0290cc502ae3'),
+	('ENTRIES_EDITOR','Ability to create, edit and publish blog entries','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d7fca-a444-11eb-ab6f-0290cc502ae3'),
 	('VERSIONS_DELETE','Ability to delete past content versions','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d8038-a444-11eb-ab6f-0290cc502ae3'),
 	('SECURITYRULES_ADMIN','Ability to manage the system\'s security rules, default is view only','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d80a6-a444-11eb-ab6f-0290cc502ae3'),
 	('TOOLS_EXPORT','Ability to export data from ContentBox','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d8114-a444-11eb-ab6f-0290cc502ae3'),
 	('CONTENTSTORE_ADMIN','Ability to manage the content store, default is view only','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d8182-a444-11eb-ab6f-0290cc502ae3'),
-	('CONTENTSTORE_EDITOR','Ability to manage content store elements but not publish them','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d81f0-a444-11eb-ab6f-0290cc502ae3'),
+	('CONTENTSTORE_EDITOR','Ability to create, edit and publish content store elements','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d81f0-a444-11eb-ab6f-0290cc502ae3'),
 	('MEDIAMANAGER_LIBRARY_SWITCHER','Ability to switch media manager libraries for management','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d825e-a444-11eb-ab6f-0290cc502ae3'),
 	('EDITORS_CUSTOM_FIELDS','Ability to manage custom fields in any content editors','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d82cc-a444-11eb-ab6f-0290cc502ae3'),
 	('GLOBAL_SEARCH','Ability to do global searches in the ContentBox Admin','2016-05-03 16:23:26','2016-05-03 16:23:26',b'0','785d8344-a444-11eb-ab6f-0290cc502ae3'),
@@ -1023,7 +1023,7 @@ CREATE TABLE `cb_permissionGroup` (
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
   `name` varchar(255) NOT NULL,
   `description` longtext,
-  `permissionGroupID` char(36) CHARACTER SET utf8 NOT NULL,
+  `permissionGroupID` varchar(36) NOT NULL,
   PRIMARY KEY (`permissionGroupID`),
   UNIQUE KEY `name` (`name`),
   UNIQUE KEY `id` (`permissionGroupID`),
@@ -1050,8 +1050,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_relatedContent`;
 
 CREATE TABLE `cb_relatedContent` (
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_relatedContentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
+  `FK_relatedContentID` varchar(36) DEFAULT NULL,
   KEY `fk_cb_relatedContent_FK_contentID` (`FK_contentID`),
   KEY `fk_cb_relatedContent_FK_relatedContentID` (`FK_relatedContentID`),
   CONSTRAINT `fk_cb_relatedContent_FK_contentID` FOREIGN KEY (`FK_contentID`) REFERENCES `cb_content` (`contentID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1071,6 +1071,26 @@ VALUES
 UNLOCK TABLES;
 
 
+# Dump of table cb_relocations
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `cb_relocations`;
+
+CREATE TABLE `cb_relocations` (
+  `relocationID` varchar(36) NOT NULL,
+  `createdDate` datetime NOT NULL,
+  `modifiedDate` datetime NOT NULL,
+  `isDeleted` tinyint(1) NOT NULL DEFAULT '0',
+  `slug` varchar(500) NOT NULL,
+  `target` varchar(500) DEFAULT NULL,
+  `FK_siteID` varchar(36) NOT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
+  PRIMARY KEY (`relocationID`),
+  UNIQUE KEY `unq_cb_relocations_slug_FK_siteID` (`slug`,`FK_siteID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
 # Dump of table cb_role
 # ------------------------------------------------------------
 
@@ -1082,7 +1102,7 @@ CREATE TABLE `cb_role` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `roleID` char(36) CHARACTER SET utf8 NOT NULL,
+  `roleID` varchar(36) NOT NULL,
   PRIMARY KEY (`roleID`),
   UNIQUE KEY `role` (`role`),
   UNIQUE KEY `id` (`roleID`),
@@ -1111,8 +1131,8 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_rolePermissions`;
 
 CREATE TABLE `cb_rolePermissions` (
-  `FK_permissionID` char(36) CHARACTER SET utf8 DEFAULT NULL,
-  `FK_roleID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `FK_permissionID` varchar(36) DEFAULT NULL,
+  `FK_roleID` varchar(36) DEFAULT NULL,
   KEY `fk_cb_rolePermissions_FK_permissionID` (`FK_permissionID`),
   KEY `fk_cb_rolePermissions_FK_roleID` (`FK_roleID`),
   CONSTRAINT `fk_cb_rolePermissions_FK_permissionID` FOREIGN KEY (`FK_permissionID`) REFERENCES `cb_permission` (`permissionID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -1248,7 +1268,9 @@ CREATE TABLE `cb_securityRule` (
   `overrideEvent` longtext NOT NULL,
   `action` varchar(50) DEFAULT 'redirect',
   `module` longtext,
-  `ruleID` char(36) CHARACTER SET utf8 NOT NULL,
+  `ruleID` varchar(36) NOT NULL,
+  `httpMethods` varchar(255) NOT NULL DEFAULT '*',
+  `allowedIPs` varchar(255) NOT NULL DEFAULT '*',
   PRIMARY KEY (`ruleID`),
   UNIQUE KEY `id` (`ruleID`),
   UNIQUE KEY `ruleID` (`ruleID`),
@@ -1258,32 +1280,32 @@ CREATE TABLE `cb_securityRule` (
 LOCK TABLES `cb_securityRule` WRITE;
 /*!40000 ALTER TABLE `cb_securityRule` DISABLE KEYS */;
 
-INSERT INTO `cb_securityRule` (`whitelist`, `securelist`, `roles`, `permissions`, `redirect`, `useSSL`, `order`, `match`, `createdDate`, `modifiedDate`, `isDeleted`, `message`, `messageType`, `overrideEvent`, `action`, `module`, `ruleID`)
+INSERT INTO `cb_securityRule` (`whitelist`, `securelist`, `roles`, `permissions`, `redirect`, `useSSL`, `order`, `match`, `createdDate`, `modifiedDate`, `isDeleted`, `message`, `messageType`, `overrideEvent`, `action`, `module`, `ruleID`, `httpMethods`, `allowedIPs`)
 VALUES
-	('','^contentbox-admin:modules\\..*','','MODULES_ADMIN','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f0882a-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:mediamanager\\..*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08a00-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:versions\\.(remove)','','VERSIONS_DELETE','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08ad2-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:versions\\.(rollback)','','VERSIONS_ROLLBACK','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08b72-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$','','WIDGET_ADMIN','cbadmin/security/login',b'0',2,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08c4e-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:tools\\.(importer|doImport)','','TOOLS_IMPORT','cbadmin/security/login',b'0',3,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08cee-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:(settings|permissions|roles|securityRules)\\..*','','SYSTEM_TAB','cbadmin/security/login',b'0',4,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08d84-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:settings\\.save','','SYSTEM_SAVE_CONFIGURATION','cbadmin/security/login',b'0',5,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08e10-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)','','SYSTEM_RAW_SETTINGS','cbadmin/security/login',b'0',6,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08ea6-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)','','SECURITYRULES_ADMIN','cbadmin/security/login',b'0',7,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08f3c-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)','','ROLES_ADMIN','cbadmin/security/login',b'0',8,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08fc8-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:permissions\\.(remove|save)','','PERMISSIONS_ADMIN','cbadmin/security/login',b'0',9,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09054-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:dashboard\\.reload','','RELOAD_MODULES','cbadmin/security/login',b'0',10,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f090e0-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:pages\\.(changeOrder|remove)','','PAGES_ADMIN','cbadmin/security/login',b'0',11,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f0916c-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)','','THEME_ADMIN','cbadmin/security/login',b'0',12,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f091f8-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:entries\\.(quickPost|remove)','','ENTRIES_ADMIN','cbadmin/security/login',b'0',13,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09284-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:contentStore\\.(editor|remove|save)','','CONTENTSTORE_ADMIN','cbadmin/security/login',b'0',14,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09310-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)','','COMMENTS_ADMIN','cbadmin/security/login',b'0',15,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f093a6-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:categories\\.(remove|save)','','CATEGORIES_ADMIN','cbadmin/security/login',b'0',16,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09432-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)','','AUTHOR_ADMIN','cbadmin/security/login',b'0',17,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f094be-a444-11eb-ab6f-0290cc502ae3'),
-	('^contentbox-admin:security\\.','^contentbox-admin:.*','','CONTENTBOX_ADMIN','cbadmin/security/login',b'0',18,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f0954a-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-filebrowser:.*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',19,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f095d6-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$','','TOOLS_IMPORT','cbadmin/security/login',b'0',20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09662-a444-11eb-ab6f-0290cc502ae3'),
-	('','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$','','TOOLS_EXPORT','cbadmin/security/login',b'0',20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f096f8-a444-11eb-ab6f-0290cc502ae3');
+	('','^contentbox-admin:modules\\..*','','MODULES_ADMIN','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f0882a-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:mediamanager\\..*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08a00-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:versions\\.(remove)','','VERSIONS_DELETE','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08ad2-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:versions\\.(rollback)','','VERSIONS_ROLLBACK','cbadmin/security/login',b'0',1,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08b72-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:widgets\\.(remove|upload|edit|save|create|doCreate)$','','WIDGET_ADMIN','cbadmin/security/login',b'0',2,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08c4e-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:tools\\.(importer|doImport)','','TOOLS_IMPORT','cbadmin/security/login',b'0',3,'event','2017-07-06 12:14:21','2017-07-06 12:14:21',b'0','','info','','redirect','contentbox','77f08cee-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:(settings|permissions|roles|securityRules)\\..*','','SYSTEM_TAB','cbadmin/security/login',b'0',4,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08d84-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:settings\\.save','','SYSTEM_SAVE_CONFIGURATION','cbadmin/security/login',b'0',5,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08e10-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:settings\\.(raw|saveRaw|flushCache|flushSingletons|mappingDump|viewCached|remove)','','SYSTEM_RAW_SETTINGS','cbadmin/security/login',b'0',6,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08ea6-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:securityRules\\.(remove|save|changeOrder|apply)','','SECURITYRULES_ADMIN','cbadmin/security/login',b'0',7,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08f3c-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:roles\\.(remove|removePermission|save|savePermission)','','ROLES_ADMIN','cbadmin/security/login',b'0',8,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f08fc8-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:permissions\\.(remove|save)','','PERMISSIONS_ADMIN','cbadmin/security/login',b'0',9,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09054-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:dashboard\\.reload','','RELOAD_MODULES','cbadmin/security/login',b'0',10,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f090e0-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:pages\\.(changeOrder|remove)','','PAGES_ADMIN','cbadmin/security/login',b'0',11,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f0916c-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:themes\\.(remove|upload|rebuildRegistry|activate)','','THEME_ADMIN','cbadmin/security/login',b'0',12,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f091f8-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:entries\\.(quickPost|remove)','','ENTRIES_ADMIN','cbadmin/security/login',b'0',13,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09284-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:contentStore\\.(editor|remove|save)','','CONTENTSTORE_ADMIN','cbadmin/security/login',b'0',14,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09310-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:comments\\.(doStatusUpdate|editor|moderate|remove|save|saveSettings)','','COMMENTS_ADMIN','cbadmin/security/login',b'0',15,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f093a6-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:categories\\.(remove|save)','','CATEGORIES_ADMIN','cbadmin/security/login',b'0',16,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09432-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:authors\\.(remove|removePermission|savePermission|doPasswordReset|new|doNew)','','AUTHOR_ADMIN','cbadmin/security/login',b'0',17,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f094be-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('^contentbox-admin:security\\.','^contentbox-admin:.*','','CONTENTBOX_ADMIN','cbadmin/security/login',b'0',18,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f0954a-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-filebrowser:.*','','MEDIAMANAGER_ADMIN','cbadmin/security/login',b'0',19,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f095d6-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.importAll$','','TOOLS_IMPORT','cbadmin/security/login',b'0',20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f09662-a444-11eb-ab6f-0290cc502ae3','*','*'),
+	('','^contentbox-admin:(authors|categories|permissions|roles|settings|pages|entries|contentStore|securityrules)\\.(export|exportAll)$','','TOOLS_EXPORT','cbadmin/security/login',b'0',20,'event','2017-07-06 12:14:22','2017-07-06 12:14:22',b'0','','info','','redirect','contentbox','77f096f8-a444-11eb-ab6f-0290cc502ae3','*','*');
 
 /*!40000 ALTER TABLE `cb_securityRule` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -1301,7 +1323,7 @@ CREATE TABLE `cb_setting` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `settingID` char(36) CHARACTER SET utf8 NOT NULL,
+  `settingID` varchar(36) NOT NULL,
   `FK_siteID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`settingID`),
   UNIQUE KEY `id` (`settingID`),
@@ -1533,8 +1555,8 @@ CREATE TABLE `cb_stats` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `statsID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_contentID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `statsID` varchar(36) NOT NULL,
+  `FK_contentID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`statsID`),
   UNIQUE KEY `id` (`statsID`),
   UNIQUE KEY `statsID` (`statsID`),
@@ -1577,7 +1599,7 @@ CREATE TABLE `cb_subscribers` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `subscriberID` char(36) CHARACTER SET utf8 NOT NULL,
+  `subscriberID` varchar(36) NOT NULL,
   PRIMARY KEY (`subscriberID`),
   UNIQUE KEY `id` (`subscriberID`),
   UNIQUE KEY `subscriberID` (`subscriberID`),
@@ -1610,8 +1632,8 @@ CREATE TABLE `cb_subscriptions` (
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL DEFAULT b'0',
-  `subscriptionID` char(36) CHARACTER SET utf8 NOT NULL,
-  `FK_subscriberID` char(36) CHARACTER SET utf8 DEFAULT NULL,
+  `subscriptionID` varchar(36) NOT NULL,
+  `FK_subscriberID` varchar(36) DEFAULT NULL,
   PRIMARY KEY (`subscriptionID`),
   UNIQUE KEY `id` (`subscriptionID`),
   UNIQUE KEY `subscriptionID` (`subscriptionID`),
@@ -1632,6 +1654,35 @@ VALUES
 	('CB8797B8A3C80D045D232DA79C9E6FD9','Comment','2016-05-12 12:34:18','2016-05-12 12:34:18',b'0','77e37b80-a444-11eb-ab6f-0290cc502ae3','78205bf4-a444-11eb-ab6f-0290cc502ae3');
 
 /*!40000 ALTER TABLE `cb_subscriptions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table cfmigrations
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `cfmigrations`;
+
+CREATE TABLE `cfmigrations` (
+  `name` varchar(190) NOT NULL,
+  `migration_ran` datetime NOT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+LOCK TABLES `cfmigrations` WRITE;
+/*!40000 ALTER TABLE `cfmigrations` DISABLE KEYS */;
+
+INSERT INTO `cfmigrations` (`name`, `migration_ran`)
+VALUES
+	('2020_08_24_150933_v5Upgrade','2022-11-21 19:38:19'),
+	('2022_03_07_155812_v5_1_0_page_sslonly_removals','2022-11-21 19:38:19'),
+	('2022_04_20_143337_v5_3_0_deprecateMobileLayout','2022-11-21 19:38:19'),
+	('2022_05_27_133613_v_5_3_0_CONTENTBOX-1437-Drop-cacheLayout-Column','2022-11-21 19:38:19'),
+	('2022_08_05_153052_v_5_3_0_EditorsCanPublishNow','2022-11-21 19:38:19'),
+	('2022_10_13_133204_v_6_0_0-CONTENTBOX-1296-Unique-Site-Slug-Relocation','2022-11-21 19:38:19'),
+	('2022_10_14_173737_v_6_0_0_CONTENTBOX-1429-Slow-Admin-Search','2022-11-21 19:38:19'),
+	('2022_11_17_234941_v_6_0_0_SecurityRules-cbsecurity3','2022-11-21 19:38:19');
+
+/*!40000 ALTER TABLE `cfmigrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
