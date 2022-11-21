@@ -1976,7 +1976,7 @@ component accessors="true" singleton threadSafe {
 	}
 
 	/**
-	 * QuickView is a proxy to ColdBox's renderview method with the addition of prefixing the location of the view according to the
+	 * QuickView is a proxy to ColdBox's view method with the addition of prefixing the location of the view according to the
 	 * theme you are using. All the arguments are the same as `view()'s` methods
 	 *
 	 * @view                   The view in the theme to render
