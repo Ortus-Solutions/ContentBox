@@ -76,7 +76,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 * Truncate the entire auth logs
 	 */
 	LoginTrackerService function truncate(){
-		new Query( sql = "TRUNCATE TABLE cb_loginAttempts" ).execute();
+		queryExecute( "TRUNCATE TABLE cb_loginAttempts" );
 		return this;
 	}
 
