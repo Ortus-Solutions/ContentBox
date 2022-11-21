@@ -135,7 +135,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// Validation Arguments
-		arguments.validate.target = populateModel( argumentCollection = arguments.populate );
+		arguments.validate.target = populate( argumentCollection = arguments.populate );
 
 		// Validate
 		prc.oEntity = validateOrFail( argumentCollection = arguments.validate );

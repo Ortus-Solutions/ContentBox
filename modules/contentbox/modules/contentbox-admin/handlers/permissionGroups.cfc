@@ -61,7 +61,7 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		var oGroup = populateModel(
+		var oGroup = populate(
 			model               : permissionGroupService.get( rc.permissionGroupID ),
 			composeRelationships: true,
 			exclude             : "permissionGroupID"

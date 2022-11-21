@@ -69,7 +69,7 @@ component extends="baseHandler" {
 			}, [] );
 
 		// populate and get
-		prc.oRole = populateModel(
+		prc.oRole = populate(
 			model               : roleService.get( rc.roleID ),
 			composeRelationships: true,
 			exclude             : "roleID"

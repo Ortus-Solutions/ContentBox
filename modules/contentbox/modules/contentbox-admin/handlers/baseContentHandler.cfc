@@ -373,7 +373,7 @@ component extends="baseHandler" {
 		// get new/persisted page and populate it with incoming data.
 		var oContent     = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		populateModel( model: oContent, exclude = "contentID,siteID" )
+		populate( model: oContent, exclude = "contentID,siteID" )
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT oContent.isLoaded() );

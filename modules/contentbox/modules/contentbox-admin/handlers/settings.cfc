@@ -252,7 +252,7 @@ component extends="baseHandler" {
 		event.paramValue( "page", 1 ).paramValue( "isCore", false );
 
 		// populate and get setting
-		var setting = populateModel(
+		var setting = populate(
 			model               : settingsService.get( rc.settingID ),
 			composeRelationships: true,
 			nullEmptyInclude    : "site",

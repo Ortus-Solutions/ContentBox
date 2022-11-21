@@ -190,7 +190,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get comment
-		var oComment = populateModel( model: commentService.get( id = rc.commentID ), exclude: "commentID" );
+		var oComment = populate( model: commentService.get( id = rc.commentID ), exclude: "commentID" );
 		// announce event
 		announce( "cbadmin_preCommentSave", { comment : oComment, commentID : rc.commentID } );
 		// save comment
