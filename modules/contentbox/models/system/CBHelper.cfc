@@ -2400,16 +2400,9 @@ component accessors="true" singleton threadSafe {
 
 			if ( !len( arguments.excludes ) OR !listFindNoCase( arguments.excludes, pageResults.content[ x ][ "title" ] ) ) {
 				// Do we need to nest?
-				try {
-					var doNesting = (
-						arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][ "numberOfChildren" ] > 0
-					);
-				} catch ( any e ) {
-					writeDump( var = callStackGet() );
-					writeDump( var = pageResults, top = 5 );
-					writeDump( var = e );
-					abort;
-				}
+				var doNesting = (
+					arguments.currentLevel lt arguments.levels AND pageResults.content[ x ][ "numberOfChildren" ] > 0
+				);
 				// Is element active (or one of its decendants)
 				var isElementActive         = currentPageID eq pageResults.content[ x ][ "contentID" ];
 				var isElementActiveAncestor = (
