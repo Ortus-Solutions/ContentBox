@@ -131,7 +131,7 @@ component
 	function init(){
 		variables.permissions    = [];
 		variables.authors        = [];
-		variables.permissionList = "";
+		variables.permissionList = [];
 		super.init();
 
 		return this;
@@ -140,34 +140,32 @@ component
 	/**
 	 * Check for permission
 	 *
-	 * @slug The permission slug or list of slugs to validate the role has. If it's a list then they are ORed together
+	 * @permission One or a list of permissions to verify
 	 */
-	boolean function checkPermission( required slug ){
-		// cache list
-		if ( !len( variables.permissionList ) AND hasPermission() ) {
-			var q                    = entityToQuery( getPermissions() );
-			variables.permissionList = valueList( q.permission );
+	boolean function checkPermission( required permission ){
+		// cache deconstructed permissions in case it's called many times during a request.
+		if ( !arrayLen( variables.permissionList ) AND hasPermission() ) {
+			variables.permissionList = arrayReduce(
+				getPermissions(),
+				( result, item ) => {
+					return result.append( item.getPermission() );
+				},
+				[]
+			);
 		}
 
-		// Do verification checks
-		var aList   = listToArray( arguments.slug );
-		var isFound = false;
-
-		for ( var thisPerm in aList ) {
-			if ( listFindNoCase( variables.permissionList, trim( thisPerm ) ) ) {
-				isFound = true;
-				break;
-			}
-		}
-
-		return isFound;
+		// verify
+		return arrayWrap( arguments.permission )
+			.filter( ( item ) => variables.permissionList.findNoCase( arguments.item ) )
+			.len();
 	}
 
 	/**
 	 * Clear all permissions
 	 */
 	PermissionGroup function clearPermissions(){
-		variables.permissions = [];
+		variables.permissions    = [];
+		variables.permissionList = [];
 		return this;
 	}
 

@@ -230,4 +230,15 @@ component {
 		return this;
 	}
 
+	/**
+	 * convert one or a list of permissions to an array, if it's an array we don't touch it
+	 *
+	 * @items One, a list or an array
+	 *
+	 * @return An array
+	 */
+	private array function arrayWrap( required items ){
+		return isArray( arguments.items ) ? arguments.items : listToArray( arguments.items );
+	}
+
 }
