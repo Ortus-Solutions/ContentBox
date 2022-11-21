@@ -27,7 +27,7 @@
         "coldbox":"be",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
-        "commandbox-migrations":"^3.2.3"
+        "commandbox-migrations":"^4.0.0"
     },
     "devDependencies":{
         "testbox":"*",
