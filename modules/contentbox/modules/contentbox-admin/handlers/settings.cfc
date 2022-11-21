@@ -220,9 +220,7 @@ component extends="baseHandler" {
 				cbMessageBox().info( "Settings imported sucessfully!" );
 				flash.put( "importLog", importLog );
 			} else {
-				cbMessageBox().error(
-					"The import file is invalid: #rc.importFile# cannot continue with import"
-				);
+				cbMessageBox().error( "The import file is invalid: #rc.importFile# cannot continue with import" );
 			}
 		} catch ( any e ) {
 			var errorMessage = "Error importing file: #e.message# #e.detail# #e.stacktrace#";

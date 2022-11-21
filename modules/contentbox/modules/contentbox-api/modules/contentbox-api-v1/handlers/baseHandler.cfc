@@ -82,10 +82,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announce(
-			"#variables.settings.resources.eventPrefix#post#variables.entity#Show",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Show", { entity : prc.oEntity } );
 
 		// Marshall it
 		prc.response.setData(
@@ -141,10 +138,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		prc.oEntity = validateOrFail( argumentCollection = arguments.validate );
 
 		// announce it
-		announce(
-			"#variables.settings.resources.eventPrefix#pre#variables.entity#Update",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Update", { entity : prc.oEntity } );
 
 		// Save it
 		invoke(
@@ -154,10 +148,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announce(
-			"#variables.settings.resources.eventPrefix#post#variables.entity#Update",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#post#variables.entity#Update", { entity : prc.oEntity } );
 
 		// Marshall it out
 		prc.response.setData(
@@ -185,10 +176,7 @@ component extends="cborm.models.resources.BaseHandler" {
 		);
 
 		// announce it
-		announce(
-			"#variables.settings.resources.eventPrefix#pre#variables.entity#Delete",
-			{ entity : prc.oEntity }
-		);
+		announce( "#variables.settings.resources.eventPrefix#pre#variables.entity#Delete", { entity : prc.oEntity } );
 
 		// Delete it
 		invoke(
