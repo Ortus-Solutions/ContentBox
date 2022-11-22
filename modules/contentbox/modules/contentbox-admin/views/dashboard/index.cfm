@@ -19,7 +19,7 @@
 		#announce( "cbadmin_preDashboardContent" )#
 
 		<!--- Installer Checks --->
-		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) and prc.installerCheck>
+		<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_TAB" ) and prc.installerCheck>
 			<div class="alert alert-danger" id="installerCheck">
 				<button
 					type="button"
@@ -42,14 +42,14 @@
 
 		<div class="tab-wrapper tab-primary">
 			<ul class="nav nav-tabs" id="dashboardTabs">
-				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<li>
 						<a href="##contentReports" data-toggle="tab">
 							<i class="fa fa-archive"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 						</a>
 					</li>
 				</cfif>
-				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 					<li>
 						<a href="##latestComments" data-toggle="tab">
 							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
@@ -70,7 +70,7 @@
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
 				<!--- ****************************************************************************************** --->
-				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<div class="tab-pane" id="contentReports">
 						<div class="m5" id="latestSystemEdits">
 							<div class="panel panel-default">
@@ -125,7 +125,7 @@
 				<!--- ****************************************************************************************** --->
 				<!--- LATEST COMMENTS --->
 				<!--- ****************************************************************************************** --->
-				<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 					<div class="tab-pane" id="latestComments">
 						<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
 					</div>
@@ -149,7 +149,7 @@
 		#announce( "cbadmin_preDashboardSideBar" )#
 
 		<!---Latest Snapshot --->
-		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
+		<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 			<div id="latestSnapshot">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -165,7 +165,7 @@
 		</cfif>
 
 		<!--- Latest Logins --->
-		<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
+		<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_AUTH_LOGS" )>
 			<div class="panel panel-primary">
 			    <div class="panel-heading">
 					<h3 class="panel-title">

@@ -53,7 +53,7 @@
 
 						<!---Bulk Actions --->
 						<div class="col-md-6 col-xs-8">
-							<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 								<div class="text-right">
 									<div class="btn-group">
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
@@ -177,7 +177,7 @@
 								</td>
 
 								<td class="text-center">
-									<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
 											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>

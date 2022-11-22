@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CATEGORIES" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_CATEGORIES" )>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">

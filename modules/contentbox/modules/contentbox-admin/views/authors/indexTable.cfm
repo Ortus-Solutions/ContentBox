@@ -38,7 +38,7 @@
 
 				<!--- Display Link if Admin Or yourself --->
 				<div>
-					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
+					<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 						<a href="#event.buildLink(prc.xehAuthorEditor)#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">#author.getFullName()#</a>
 					<cfelse>
 						#author.getFullName()#
@@ -75,7 +75,7 @@
 						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
+						<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) OR prc.oCurrentAuthor.getAuthorID() eq author.getAuthorID()>
 							<!--- Delete Command --->
 							<cfif prc.oCurrentAuthor.getAuthorID() neq author.getAuthorID()>
 								<li>
@@ -106,7 +106,7 @@
 							</li>
 
 							<!--- Export --->
-							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
 									<i class="fa fa-file-export fa-lg"></i> Export

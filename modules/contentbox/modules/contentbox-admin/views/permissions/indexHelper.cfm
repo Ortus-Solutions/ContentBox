@@ -24,7 +24,7 @@ document.addEventListener( "DOMContentLoaded", () => {
             300
         )
 	);
-	<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 	// form id
 	$permissionEditor = $( "##permissionEditor" );
 	// form validator
@@ -35,7 +35,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	} );
 	</cfif>
 } );
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 function edit(permissionID,permission,description){
 	openModal( $( "##permissionEditorContainer" ), 500, 200 );
 	$permissionEditor.find( "##permissionID" ).val( permissionID );

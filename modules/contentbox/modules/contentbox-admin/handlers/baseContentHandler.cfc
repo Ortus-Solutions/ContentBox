@@ -277,7 +277,7 @@ component extends="baseHandler" {
 				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
 			} );
 		// Provide JWT Tokens for communicating with the API
-		prc.jwtTokens     = getInstance( "JWTService@cbsecurity" ).fromUser( prc.oCurrentAuthor );
+		prc.jwtTokens     = jwtAuth().fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
 		prc.editors       = variables.editorService.getRegisteredEditorsMap();
 		// Get User's default editor
@@ -366,7 +366,7 @@ component extends="baseHandler" {
 		);
 
 		// Verify permission for publishing, else save as draft
-		if ( !prc.oCurrentAuthor.checkPermission( arguments.adminPermission ) ) {
+		if ( !prc.oCurrentAuthor.hasPermission( arguments.adminPermission ) ) {
 			rc.isPublished = "false";
 		}
 
@@ -385,7 +385,7 @@ component extends="baseHandler" {
 		// Override creator if persisted?
 		else if (
 			!isNew and
-			prc.oCurrentAuthor.checkPermission( arguments.adminPermission ) and
+			prc.oCurrentAuthor.hasPermission( arguments.adminPermission ) and
 			len( rc.creatorID ) and
 			oContent.getCreator().getAuthorID() NEQ rc.creatorID
 		) {

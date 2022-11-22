@@ -458,8 +458,6 @@ component accessors="true" singleton threadSafe {
 		prc.cbthemeRoot    = prc.cbThemeRecord.includePath;
 		// Place widgets root location
 		prc.cbWidgetRoot   = prc.cbRoot & "/widgets";
-		// Place current logged in Author if any
-		prc.oCurrentAuthor = variables.securityService.getAuthorSession();
 
 		// announce event
 		this.event( "cbui_preRequest" );

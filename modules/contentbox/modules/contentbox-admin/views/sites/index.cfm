@@ -41,7 +41,7 @@
 						</div>
 
 						<div class="col-md-6 col-xs-8">
-							<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "SITES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 							<div class="text-right">
 								<!---Global --->
 								<div class="btn-group">
@@ -49,14 +49,14 @@
 										Bulk Actions <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
-										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SITES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a href="javascript:importContent()">
 													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 										</cfif>
-										<cfif prc.oCurrentAuthor.checkPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SITES_ADMIN,TOOLS_EXPORT" )>
 											<li>
 												<a
 													href="#event.buildLink( prc.xehExportAll )#.json"
@@ -189,7 +189,7 @@
 											</li>
 
 											<!--- Export --->
-											<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 												<li>
 													<a
 														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.json"
@@ -221,7 +221,7 @@
 </div>
 
 <!--- Sites Import --->
-<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_IMPORT" )>
 	#view(
 		view = "_tags/dialog/import",
 		args = {

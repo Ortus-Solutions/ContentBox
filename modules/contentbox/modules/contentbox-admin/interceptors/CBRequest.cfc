@@ -51,8 +51,6 @@ component extends="coldbox.system.Interceptor" {
 		} else {
 			prc.cbEntryPoint = "";
 		}
-		// Place user in prc
-		prc.oCurrentAuthor   = variables.securityService.getAuthorSession();
 		// Place all sites in prc for usage by the UI switcher
 		prc.allSites         = variables.siteService.getAllFlat( isActive: true );
 		// Get the current working site object on PRC

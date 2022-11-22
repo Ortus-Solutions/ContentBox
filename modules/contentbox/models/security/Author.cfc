@@ -171,7 +171,6 @@ component
 	// M2M -> A-la-carte Author Permissions
 	property
 		name             ="permissions"
-		singularName     ="permission"
 		fieldtype        ="many-to-many"
 		cascade          ="save-update"
 		type             ="array"
@@ -323,13 +322,13 @@ component
 	}
 
 	/**
-	 * Check for permission
+	 * Verify if the author has one or more of the passed in permissions
 	 *
-	 * @permission One or a list of permissions to verify
+	 * @permission One or a list of permissions to check for access
 	 */
-	boolean function checkPermission( required permission ){
+	boolean function hasPermission( required permission ){
 		// cache deconstructed permissions in case it's called many times during a request.
-		if ( !arrayLen( variables.permissionList ) AND hasPermission() ) {
+		if ( !arrayLen( variables.permissionList ) AND hasPermissions() ) {
 			variables.permissionList = arrayReduce(
 				getPermissions(),
 				( result, item ) => {
@@ -341,7 +340,7 @@ component
 
 		// checks via role, then group permissions and then local permissions
 		if (
-			( hasRole() && getRole().checkPermission( arguments.permission ) )
+			( hasRole() && getRole().hasPermission( arguments.permission ) )
 			OR
 			checkGroupPermissions( arguments.permission )
 			OR
@@ -366,7 +365,7 @@ component
 
 		// iterate and check, break if found, short-circuit approach.
 		for ( var thisGroup in variables.permissionGroups ) {
-			if ( thisGroup.checkPermission( arguments.slug ) ) {
+			if ( thisGroup.hasPermission( arguments.slug ) ) {
 				return true;
 			}
 		}
@@ -389,7 +388,7 @@ component
 	 * Remove all permissions
 	 */
 	Author function clearPermissions(){
-		if ( hasPermission() ) {
+		if ( hasPermissions() ) {
 			variables.permissions.clear();
 		} else {
 			variables.permissions = [];
@@ -416,7 +415,7 @@ component
 	 * @permissions The permissions array to override
 	 */
 	Author function setPermissions( required array permissions ){
-		if ( hasPermission() ) {
+		if ( hasPermissions() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
 		} else {

@@ -54,13 +54,13 @@
 
 						<div class="col-md-6">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:contentListHelper.bulkRemove()" class="confirmIt"
 													data-title="<i class='fa fa-trash fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
@@ -78,14 +78,14 @@
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
 														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehContentExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -190,7 +190,7 @@
 	</div>
 </div>
 <!--- Clone Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 	#view(
 		view 			= "_tags/dialog/clone",
 		args 			= {
@@ -206,7 +206,7 @@
 </cfif>
 
 <!--- Import Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {

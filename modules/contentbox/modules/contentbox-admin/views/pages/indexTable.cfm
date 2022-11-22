@@ -95,7 +95,7 @@
 					</cfif>
 
 					<!--- Title --->
-					<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+					<cfif prc.oCurrentAuthor.hasPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 						<a
 							href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 							title="Edit #page.getTitle()#"
@@ -181,7 +181,7 @@
 						</a>
 
 						<ul class="dropdown-menu text-left pull-right">
-							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 								<!--- Clone Command --->
 								<li class="mb5">
 									<a
@@ -204,7 +204,7 @@
 								</li>
 
 								<!--- Delete Command --->
-								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
 									<li class="mb5">
 										<a
 											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
@@ -229,7 +229,7 @@
 								</li>
 							</cfif>
 
-							<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 								<!--- Export --->
 								<li class="mb5">
 									<a

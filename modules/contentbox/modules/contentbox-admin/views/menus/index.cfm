@@ -40,21 +40,21 @@
 
                         <div class="col-md-6 col-xs-8">
                             <div class="text-right">
-                                <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+                                <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
                                     <div class="btn-group">
                                         <button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
                                             Bulk Actions <span class="caret"></span>
 										</button>
                                         <ul class="dropdown-menu">
-                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
+                                            <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                                 <li>
                                                     <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash"></i> Delete Selected</a>
                                                 </li>
                                             </cfif>
-                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
+                                            <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
                                                 <li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
                                             </cfif>
-                                            <cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
+                                            <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -89,7 +89,7 @@
 </div>
 
 <!--- Import --->
-<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
     #view(
 		view 			= "_tags/dialog/import",
 		args 			= {

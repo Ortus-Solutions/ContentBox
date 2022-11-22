@@ -13,7 +13,7 @@
 					#announce( "cbadmin_onAuthorEditorActions" )#
 
 					<!--- Export But --->
-					<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+					<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 						<div class="btn-group" role="group">
 							<button type="button" class="btn btn-sms btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fa fa-sliders-h"></i> Actions
@@ -42,7 +42,7 @@
 						<a
 							title="Back"
 							class="btn btn-sm btn-back mt5"
-							<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 								href="#event.buildLink( prc.xehAuthors )#">
 							<cfelse>
 								href="#event.buildLink( prc.xehDashboard )#">
@@ -100,7 +100,7 @@
 								<i class="fa fa-user-shield fa-lg"></i> Permissions
 							</a>
 						</li>
-						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 						<li>
 							<a href="##latestEdits" data-toggle="tab">
 								<i class="fa fa-history fa-lg"></i> Latest Edits
@@ -134,7 +134,7 @@
 						<!--- Permissions --->
 						#view( view="authors/editor/permissions", prePostExempt=true )#
 
-						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<!--- Latest Edits --->
 							#view( view="authors/editor/edits", prePostExempt=true )#
 

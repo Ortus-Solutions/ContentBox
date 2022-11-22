@@ -2,7 +2,7 @@
 <!--- Custom Javascript --->
 <script>
 document.addEventListener( "DOMContentLoaded", () => {
-	<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 		// Load My Latest Drafts
 		$( "##latestSystemEdits" ).load( '#event.buildLink( prc.xehLatestSystemEdits )#' );
 		// Load Future Published Content
@@ -16,17 +16,17 @@ document.addEventListener( "DOMContentLoaded", () => {
 	 // Load news
 	$( "##latestNews" ).load( '#event.buildLink( prc.xehLatestNews )#' );
 
-	<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 		// Load comments
 		$( "##latestComments" ).load( '#event.buildLink( prc.xehLatestComments )#' );
 	</cfif>
 
-	<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR,COMMENTS_ADMIN" )>
 		// Load snapshots
 		$( "##latestSnapshot" ).load( '#event.buildLink( prc.xehLatestSnapshot )#' );
 	</cfif>
 
-	<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_AUTH_LOGS" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_AUTH_LOGS" )>
 		// Load latest logsin
 		$( "##latestLogins" ).load( '#event.buildLink( prc.xehLatestLogins )#' );
 	</cfif>
@@ -35,7 +35,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	$( "##dashboardTabs a:first" ).tab( 'show' )
 } );
 <!--- If Admin, show Module Cleanups --->
-<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" )>
+<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_TAB" )>
 function deleteInstaller(){
 	deleteModule( '#event.buildLink( prc.xehDeleteInstaller )#', "installerCheck" );
 }

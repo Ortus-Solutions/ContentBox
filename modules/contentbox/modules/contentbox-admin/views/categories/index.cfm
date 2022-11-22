@@ -65,13 +65,13 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
 										<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 											<li>
 												<a
 													@click="deleteSelected()"
@@ -82,7 +82,7 @@
 											</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a
 													@click="importContent()"
@@ -94,7 +94,7 @@
 											</cfif>
 
 											<!--- Export All + Selected --->
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -114,7 +114,7 @@
 								</cfif>
 
 								<!--- Create Category --->
-								<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 									<button
 										type="button"
 										@click.prevent="editCategory()"
@@ -218,7 +218,7 @@
 									<!--- Actions --->
 									<td class="text-center">
 										<div class="btn-group">
-											<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 
 											<div class="btn-group btn-group-sm">
 												<a
@@ -240,7 +240,7 @@
 													</li>
 
 													<!--- Export --->
-													<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+													<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 														<li>
 															<a
 																:href="`#event.buildLink( prc.xehExport )#/categoryID/${category.categoryID}.json`"
@@ -279,7 +279,7 @@
 	<!--- **************************************************************************** --->
 	<!--- CATEGORY EDITOR MODAL UI --->
 	<!--- **************************************************************************** --->
-	<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN" )>
 		<div class="alpine-overlay" x-show="isEditorOpen" x-cloak></div>
 		<div
 			class="alpine-modal"
@@ -396,7 +396,7 @@
 </div>
 
 <!---only show if user has rights to categories admin and tool import--->
-<cfif prc.oCurrentAuthor.checkPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view 	= "_tags/dialog/import",
 		args 	= {

@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_FEATURED_IMAGE" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_FEATURED_IMAGE" )>
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">

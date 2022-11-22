@@ -17,7 +17,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 			}
 		} );
 } );
-<cfif prc.oCurrentAuthor.checkPermission( "COMMENTS_ADMIN" )>
+<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 function commentPagerChangeStatus( status, recordID ){
 	// update icon
 	$( "##status_"+ recordID)

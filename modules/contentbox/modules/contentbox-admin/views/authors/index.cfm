@@ -41,7 +41,7 @@
 
 							<!--- Actions Bar --->
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
 
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
@@ -50,7 +50,7 @@
 
 								    	<ul class="dropdown-menu">
 
-								    		<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
 														<i class="fa fa-file-import fa-lg"></i> Import
@@ -58,7 +58,7 @@
 												</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -89,7 +89,7 @@
 								    </div>
 								</cfif>
 
-								<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 									<button
 										class="btn btn-primary"
 										onclick="return to('#event.buildLink( prc.xehAuthorCreate )#')"
@@ -194,7 +194,7 @@
 	</div>
 </div>
 
-<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view = "_tags/dialog/import",
 		args = {

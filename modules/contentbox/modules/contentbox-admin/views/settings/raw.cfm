@@ -99,7 +99,7 @@
 												</a>
 
                                                 <ul class="dropdown-menu">
-													<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+													<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
 															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 																<i class="fa fa-file-export fa-lg"></i> Export All
@@ -116,7 +116,7 @@
 															<i class="fa fa-recycle fa-lg"></i> Flush Settings Cache
 														</a>
 													</li>
-                                                    <cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
+                                                    <cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
 														<li>
 															<a href="javascript:importContent()">
 																<i class="fa fa-file-import fa-lg"></i> Import

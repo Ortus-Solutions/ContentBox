@@ -79,7 +79,7 @@
 				</cfif>
 
 				<!--- Title --->
-				<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 					<a
 						href="#event.buildLink( prc.xehContentStoreEditor )#/contentID/#content.getContentID()#"
 						title="Edit content"
@@ -124,7 +124,7 @@
 						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
+			    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 							<!--- Clone Command --->
 							<li>
 								<a
@@ -142,7 +142,7 @@
 									<i class="fa fa-sitemap fa-lg"></i> Create Child
 								</a>
 							</li>
-							<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
 									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='fa fa-trash fa-lg'></i> Delete Content?">
@@ -157,7 +157,7 @@
 								</a>
 							</li>
 						</cfif>
-						<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">

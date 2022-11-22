@@ -30,7 +30,6 @@ component extends="tests.resources.BaseApiTest" {
 			beforeEach( function( currentSpec ){
 				// Setup as a new ColdBox request for this suite, VERY IMPORTANT. ELSE EVERYTHING LOOKS LIKE THE SAME REQUEST.
 				setup();
-				getCache( "template" ).clearAll();
 			} );
 
 			story( "I want to view a content item by id or slug", function(){
@@ -130,7 +129,7 @@ component extends="tests.resources.BaseApiTest" {
 								}
 							);
 							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
-							debug( event.getResponse().getData() );
+							//debug( event.getResponse().getData() );
 							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
 							expect( event.getResponse().getData().categories ).toBeArray().notToBeEmpty();
@@ -157,7 +156,7 @@ component extends="tests.resources.BaseApiTest" {
 					then( "it should display an error message", function(){
 						var event = this.post( "cbapi/v1/sites/default/contentStore", { slug : "A nice site" } );
 						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
-						debug( event.getResponse().getMemento() );
+						//debug( event.getResponse().getMemento() );
 
 						expect( event.getResponse().getMessages() ).toInclude( "content is required" );
 					} );
@@ -178,6 +177,7 @@ component extends="tests.resources.BaseApiTest" {
 			story( "I want to edit a content store item", function(){
 				given( "a valid id/slug and valid data", function(){
 					then( "then it should update a content item", function(){
+						getCache( "template" ).clearAll();
 						withRollback( function(){
 							var event = this.put(
 								"/cbapi/v1/sites/default/contentstore/foot",

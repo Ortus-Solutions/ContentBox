@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_CUSTOM_FIELDS" )>
 <p>
 	You can add as many name-value pairs of custom fields (metadata) to this #args.fieldType# that can later be used by your layout themes, widgets, events, etc via
 	the CB Helper:

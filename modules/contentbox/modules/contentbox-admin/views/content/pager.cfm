@@ -96,7 +96,7 @@
 							<i class="fa fa-ellipsis-v fa-lg"></i>
 						</a>
 				    	<ul class="dropdown-menu text-left pull-right">
-				    		<cfif prc.oCurrentAuthor.checkPermission( "#prc.contentPager_securityPrefix#_EDITOR,#prc.contentPager_securityPrefix#_ADMIN" )>
+				    		<cfif prc.oCurrentAuthor.hasPermission( "#prc.contentPager_securityPrefix#_EDITOR,#prc.contentPager_securityPrefix#_ADMIN" )>
 								<!--- Edit Command --->
 								<li>
 									<a href="#event.buildLink( prc.xehContentPagerEditor )#/contentID/#thisContent.getContentID()#">

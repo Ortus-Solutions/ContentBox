@@ -46,7 +46,7 @@
 						</div>
 
 						<div class="col-md-6 col-xs-8">
-							<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 								<div class="text-right">
 									<!---Global --->
 									<div class="btn-group">
@@ -54,14 +54,14 @@
 											Bulk Actions <span class="caret"></span>
 										</button>
 										<ul class="dropdown-menu">
-											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
 														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -121,7 +121,7 @@
 										value="#role.getRoleID()#" />
 								</td>
 								<td>
-									<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN" )>
 										<a
 											href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getRoleId()#")#"
 											title="Edit #role.getName()#"
@@ -152,7 +152,7 @@
 											<i class="fa fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
-											<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 
 												<!--- Delete Command --->
 												<cfif role.getNumberOfAuthors() eq 0>
@@ -176,7 +176,7 @@
 											   	</li>
 
 												<!--- Export --->
-												<cfif prc.oCurrentAuthor.checkPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
+												<cfif prc.oCurrentAuthor.hasPermission( "ROLES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a
 															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.json"
@@ -200,7 +200,7 @@
     </div>
 </div>
 <!--- Import --->
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view			= "_tags/dialog/import",
 		args			= {

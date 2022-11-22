@@ -61,7 +61,6 @@ component
 	// M2M -> Permissions
 	property
 		name             ="permissions"
-		singularName     ="permission"
 		fieldtype        ="many-to-many"
 		type             ="array"
 		lazy             ="true"
@@ -130,13 +129,13 @@ component
 	}
 
 	/**
-	 * Check for permission
+	 * Verify if the role has one or more of the passed in permissions
 	 *
 	 * @permission One or a list of permissions to verify
 	 */
-	boolean function checkPermission( required permission ){
+	boolean function hasPermission( required permission ){
 		// cache deconstructed permissions in case it's called many times during a request.
-		if ( !arrayLen( variables.permissionList ) AND hasPermission() ) {
+		if ( !arrayLen( variables.permissionList ) AND hasPermissions() ) {
 			variables.permissionList = arrayReduce(
 				getPermissions(),
 				( result, item ) => {
@@ -164,7 +163,7 @@ component
 	 * Override the setPermissions
 	 */
 	Role function setPermissions( required array permissions ){
-		if ( hasPermission() ) {
+		if ( hasPermissions() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
 		} else {

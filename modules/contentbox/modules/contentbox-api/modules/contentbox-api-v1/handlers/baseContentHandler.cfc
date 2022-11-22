@@ -91,7 +91,7 @@ component extends="baseHandler" {
 			rc.slug = variables.HTMLHelper.slugify( listLast( rc.slug, "/" ) );
 		}
 		// Verify permission for publishing, else save as draft
-		if ( !prc.oCurrentAuthor.checkPermission( "#arguments.contentType#_ADMIN,#arguments.contentType#_EDITOR" ) ) {
+		if ( !prc.oCurrentAuthor.hasPermission( "#arguments.contentType#_ADMIN,#arguments.contentType#_EDITOR" ) ) {
 			rc.isPublished = "false";
 		}
 
@@ -107,7 +107,7 @@ component extends="baseHandler" {
 		if (
 			arguments.populate.model.isLoaded() && !isNull( rc.creator ) && len( rc.creator ) && prc
 				.oCurrentAuthor()
-				.checkPermission( "#arguments.contentType#_ADMIN" )
+				.hasPermission( "#arguments.contentType#_ADMIN" )
 		) {
 			arguments.populate.model.setCreator( variables.authorService.retrieveUserById( rc.creator ) );
 		}
