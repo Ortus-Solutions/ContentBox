@@ -114,7 +114,7 @@ component extends="baseHandler" {
 
 		// populate it
 		var originalSlug          = arguments.populate.model.getSlug();
-		arguments.validate.target = populate( argumentCollection = arguments.populate );
+		arguments.validate.target = this.populate( argumentCollection = arguments.populate );
 
 		// Start save transaction procedures
 		transaction {
