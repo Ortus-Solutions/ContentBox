@@ -31,7 +31,7 @@
     },
     "devDependencies":{
         "testbox":"*",
-        "cbdebugger":"^3.0.0",
+        "cbdebugger":"^4.0.0",
         "commandbox-cfformat":"*",
         "commandbox-docbox":"*",
         "route-visualizer":"^1.4.0+24"
