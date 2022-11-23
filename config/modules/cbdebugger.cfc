@@ -85,7 +85,6 @@ component {
 	}
 
 	function development( settings ){
-
 	}
 
 }

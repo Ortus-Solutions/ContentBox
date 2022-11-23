@@ -52,7 +52,7 @@ component {
 	this.mappings[ "/testbox" ]    = rootPath & "testbox";
 	this.mappings[ "/contentbox" ] = rootPath & "modules/contentbox";
 	// Modular ORM Dependencies
-	this.mappings[ "/cborm" ]      		= this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
+	this.mappings[ "/cborm" ]      = this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
 
 	/**
 	 * --------------------------------------------------------------------------

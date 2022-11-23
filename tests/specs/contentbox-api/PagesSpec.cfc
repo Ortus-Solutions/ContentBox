@@ -136,7 +136,7 @@ component extends="tests.resources.BaseApiTest" {
 								}
 							);
 							expect( event.getResponse() ).toHaveStatus( 200, event.getResponse().getMessagesString() );
-							//debug( event.getResponse().getData() );
+							// debug( event.getResponse().getData() );
 							expect( event.getResponse().getData().contentID ).notToBeEmpty();
 							expect( event.getResponse().getData().slug ).toBe( "bddtest" );
 							expect( event.getResponse().getData().excerpt ).toInclude( "bdd" );
@@ -166,7 +166,7 @@ component extends="tests.resources.BaseApiTest" {
 					then( "it should display an error message", function(){
 						var event = this.post( "cbapi/v1/sites/default/pages", { slug : "A nice site" } );
 						expect( event.getResponse() ).toHaveStatus( 400, event.getResponse().getMessagesString() );
-						//debug( event.getResponse().getMemento() );
+						// debug( event.getResponse().getMemento() );
 
 						expect( event.getResponse().getMessages() ).toInclude( "content is required" );
 					} );

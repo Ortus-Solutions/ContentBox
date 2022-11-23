@@ -6,7 +6,11 @@
  * This is our security validator that works with CBSecurity in order to validate
  * rules and annotations.
  */
-component singleton threadsafe extends="cbsecurity.models.validators.CBAuthValidator"{
+component
+	singleton
+	threadsafe
+	extends="cbsecurity.models.validators.CBAuthValidator"
+{
 
 	// Dependencies
 	property name="securityService" inject="securityService@contentbox";
@@ -24,7 +28,11 @@ component singleton threadsafe extends="cbsecurity.models.validators.CBAuthValid
 	 * @return { allow:boolean, type:string(authentication|authorization), messages:string }
 	 */
 	struct function ruleValidator( required rule, required controller ){
-		return validateSecurity( rule: arguments.rule, securedValue : arguments.rule.permissions, controller: arguments.controller );
+		return validateSecurity(
+			rule        : arguments.rule,
+			securedValue: arguments.rule.permissions,
+			controller  : arguments.controller
+		);
 	}
 
 	/**
@@ -45,17 +53,17 @@ component singleton threadsafe extends="cbsecurity.models.validators.CBAuthValid
 	/**
 	 * Validates if a user can access an event. Called via the cbSecurity module.
 	 *
-	 * @rule       The security rule being tested for
+	 * @rule         The security rule being tested for
 	 * @securedValue The annotation secured value or the rule.permissions
-	 * @controller The ColdBox controller calling the validation
+	 * @controller   The ColdBox controller calling the validation
 	 *
 	 * @return Validation struct of: { allow:boolean, type:(authentication|authorization), messages }
 	 */
-	struct function validateSecurity( struct rule, securedValue="", any controller ){
+	struct function validateSecurity( struct rule, securedValue = "", any controller ){
 		var results = super.validateSecurity( arguments.securedValue );
 
 		// If we are allowing, then continue to test the ContentBox roles
-		if( results.allow ){
+		if ( results.allow ) {
 			// Get the currently logged in user, if any
 			var oAuthor = variables.securityService.getAuthorSession();
 
@@ -63,8 +71,8 @@ component singleton threadsafe extends="cbsecurity.models.validators.CBAuthValid
 			if ( !isNull( arguments.rule ) && len( arguments.rule.roles ) ) {
 				results.allow = false;
 				results.type  = "authorization";
-				for( var thisRole in arguments.rule.roles.listToArray() ){
-					if( oAuthor.getRoleName() eq thisRole ){
+				for ( var thisRole in arguments.rule.roles.listToArray() ) {
+					if ( oAuthor.getRoleName() eq thisRole ) {
 						results.allow = true;
 						break;
 					}
