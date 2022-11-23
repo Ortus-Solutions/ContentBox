@@ -1689,7 +1689,7 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `cb_contentTemplate`;
 
 CREATE TABLE `cb_contentTemplate` (
-  `templateID` varchar(36) CHARACTER SET utf8 NOT NULL,
+  `templateID` varchar(36) NOT NULL,
   `createdDate` datetime NOT NULL,
   `modifiedDate` datetime NOT NULL,
   `isDeleted` bit(1) NOT NULL,
@@ -1698,7 +1698,7 @@ CREATE TABLE `cb_contentTemplate` (
   `name` varchar(225) NOT NULL,
   `description` varchar(1000) DEFAULT NULL,
   `definition` longtext NOT NULL,
-  `FK_authorID` varchar(36) CHARACTER SET utf8 NOT NULL,
+  `FK_authorID` varchar(36) NOT NULL,
   `FK_siteID` varchar(36) NOT NULL,
   PRIMARY KEY (`templateID`),
   KEY `FKDC43A033AA6AC0EA` (`FK_authorID`),
@@ -1711,8 +1711,8 @@ CREATE TABLE `cb_contentTemplate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 ALTER TABLE `cb_content`
-ADD COLUMN `FK_contentTemplateID` varchar(36) CHARACTER SET utf8 NULL AFTER `FK_siteID`,
-ADD COLUMN `FK_childContentTemplateID` varchar(36) CHARACTER SET utf8 NULL AFTER `FK_contentTemplateID`,
+ADD COLUMN `FK_contentTemplateID` varchar(36) NULL AFTER `FK_siteID`,
+ADD COLUMN `FK_childContentTemplateID` varchar(36) NULL AFTER `FK_contentTemplateID`,
 ADD CONSTRAINT `fk_cb_content_FK_contentTemplateID` FOREIGN KEY (`FK_contentTemplateID`) REFERENCES `cb_contentTemplate` (`templateID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
 ADD CONSTRAINT `fk_cb_content_FK_childContentTemplateID` FOREIGN KEY (`FK_childContentTemplateID`) REFERENCES `cb_contentTemplate` (`templateID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
