@@ -77,20 +77,19 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			try {
 				// try to match a bot? or ignored bots?
 				if ( variables.settingService.getSetting( "cb_content_hit_ignore_bots" ) OR !isUserAgentABot() ) {
-
 					queryExecute(
 						"UPDATE cb_stats
 							SET hits = hits + 1,
 							modifiedDate = :modifiedDate
-							WHERE FK_contentID = :contentId"
-						,
+							WHERE FK_contentID = :contentId",
 						{
-							modifiedDate : { value : createODBCDateTime( now() ), cfsqltype : "timestamp" },
+							modifiedDate : {
+								value     : createODBCDateTime( now() ),
+								cfsqltype : "timestamp"
+							},
 							contentId : arguments.content.getContentId()
 						},
-						{
-							result : "local.qResults"
-						}
+						{ result : "local.qResults" }
 					);
 
 					// if no record, means, new record, so insert
