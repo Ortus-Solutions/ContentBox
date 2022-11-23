@@ -186,7 +186,7 @@ component extends="baseHandler" {
 		var oMenu        = variables.menuService.get( rc.menuID );
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
-		populateModel( model = oMenu, exclude = "menuID,menuItems" );
+		populate( model = oMenu, exclude = "menuID,menuItems" );
 		writeDump( var = deserializeJSON( rc.menuItems ) );
 		oMenu.populateMenuItems( deserializeJSON( rc.menuItems ) );
 		// announce event
@@ -220,7 +220,7 @@ component extends="baseHandler" {
 		var oMenu        = menuService.new();
 		var originalSlug = oMenu.getSlug();
 		// populate and get menu
-		populateModel( model = oMenu, exclude = "menuID,menuItems" );
+		populate( model = oMenu, exclude = "menuID,menuItems" );
 		// populate items from form
 		oMenu.populateMenuItems( rawData = deserializeJSON( rc.menuItems ) );
 		// render data

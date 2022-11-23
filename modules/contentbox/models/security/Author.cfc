@@ -171,7 +171,6 @@ component
 	// M2M -> A-la-carte Author Permissions
 	property
 		name             ="permissions"
-		singularName     ="permission"
 		fieldtype        ="many-to-many"
 		cascade          ="save-update"
 		type             ="array"
@@ -279,7 +278,7 @@ component
 	 * Constructor
 	 */
 	function init(){
-		variables.permissionList   = "";
+		variables.permissionList   = [];
 		variables.loggedIn         = false;
 		variables.isActive         = true;
 		variables.permissionGroups = [];
@@ -323,24 +322,29 @@ component
 	}
 
 	/**
-	 * Check for permission
+	 * Verify if the author has one or more of the passed in permissions
 	 *
-	 * @slug The permission slug or list of slugs to validate the user has. If it's a list then they are ORed together
+	 * @permission One or a list of permissions to check for access
 	 */
-	boolean function checkPermission( required slug ){
-		// cache permission list
-		if ( !len( permissionList ) AND hasPermission() ) {
-			var q          = entityToQuery( getPermissions() );
-			permissionList = valueList( q.permission );
+	boolean function hasPermission( required permission ){
+		// cache deconstructed permissions in case it's called many times during a request.
+		if ( !arrayLen( variables.permissionList ) AND hasPermissions() ) {
+			variables.permissionList = arrayReduce(
+				getPermissions(),
+				( result, item ) => {
+					return result.append( item.getPermission() );
+				},
+				[]
+			);
 		}
 
 		// checks via role, then group permissions and then local permissions
 		if (
-			( hasRole() && getRole().checkPermission( arguments.slug ) )
+			( hasRole() && getRole().hasPermission( arguments.permission ) )
 			OR
-			checkGroupPermissions( arguments.slug )
+			checkGroupPermissions( arguments.permission )
 			OR
-			inPermissionList( arguments.slug )
+			inPermissionList( arguments.permission )
 		) {
 			return true;
 		}
@@ -361,7 +365,7 @@ component
 
 		// iterate and check, break if found, short-circuit approach.
 		for ( var thisGroup in variables.permissionGroups ) {
-			if ( thisGroup.checkPermission( arguments.slug ) ) {
+			if ( thisGroup.hasPermission( arguments.slug ) ) {
 				return true;
 			}
 		}
@@ -370,31 +374,26 @@ component
 	}
 
 	/**
-	 * Verify that a passed in list of perms the user can use
+	 * Verify the incoming permission is assigned in this user
+	 *
+	 * @permission A list or array of permission to check
 	 */
-	public function inPermissionList( required list ){
-		var aList   = listToArray( arguments.list );
-		var isFound = false;
-
-		for ( var thisPerm in aList ) {
-			if ( listFindNoCase( permissionList, trim( thisPerm ) ) ) {
-				isFound = true;
-				break;
-			}
-		}
-
-		return isFound;
+	public function inPermissionList( required permission ){
+		return arrayWrap( arguments.permission )
+			.filter( ( item ) => variables.permissionList.findNoCase( arguments.item ) )
+			.len();
 	}
 
 	/**
 	 * Remove all permissions
 	 */
 	Author function clearPermissions(){
-		if ( hasPermission() ) {
+		if ( hasPermissions() ) {
 			variables.permissions.clear();
 		} else {
 			variables.permissions = [];
 		}
+		variables.permissionList = [];
 		return this;
 	}
 
@@ -416,7 +415,7 @@ component
 	 * @permissions The permissions array to override
 	 */
 	Author function setPermissions( required array permissions ){
-		if ( hasPermission() ) {
+		if ( hasPermissions() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
 		} else {
@@ -430,11 +429,11 @@ component
 	 */
 	string function getPermissionGroupsList( delimiter = "," ){
 		if ( hasPermissionGroup() ) {
-			var aGroups = [];
-			for ( var thisGroup in variables.permissionGroups ) {
-				arrayAppend( aGroups, thisGroup.getName() );
-			}
-			return arrayToList( aGroups, arguments.delimiter );
+			return arrayReduce(
+				variables.permissionGroups,
+				( result, item ) => result.append( item.getName() ),
+				[]
+			).toList( arguments.delimiter );
 		}
 		return "";
 	}

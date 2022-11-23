@@ -60,7 +60,7 @@
 			<td>
 
 				<!--- Title --->
-				<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 					<a
 						href="#event.buildLink( prc.xehEntriesEditor )#/contentID/#entry.getContentID()#"
 						title="Edit"
@@ -121,7 +121,7 @@
 						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-			    		<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
+			    		<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->
 						<li>
 							<a
@@ -133,7 +133,7 @@
 								<i class="fa fa-clone fa-lg"></i> Clone
 							</a>
 						</li>
-						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN" )>
 						<!--- Delete Command --->
 						<li>
 							<a
@@ -151,7 +151,7 @@
 							</a>
 						</li>
 						</cfif>
-						<cfif prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,TOOLS_EXPORT" )>
 						<!--- Export --->
 						<li>
 							<a

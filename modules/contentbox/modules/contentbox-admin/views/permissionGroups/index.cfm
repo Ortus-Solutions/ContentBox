@@ -50,17 +50,17 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<!---Global --->
 									<div class="btn-group">
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    		<li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -122,7 +122,7 @@
 										value="#group.getPermissionGroupID()#" />
 								</td>
 								<td>
-									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 									<a
 										href="#event.buildLink( prc.xehGroupEditor & "/permissionGroupID/#group.getPermissionGroupId()#")#"
 										title="Edit #group.getName()#"
@@ -153,7 +153,7 @@
 											<i class="fa fa-ellipsis-v fa-lg"></i>
 										</a>
 								    	<ul class="dropdown-menu text-left pull-right">
-											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 
 												<!--- Delete Command --->
 												<li>
@@ -175,7 +175,7 @@
 											   	</li>
 
 												<!--- Export --->
-												<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
+												<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
@@ -201,7 +201,7 @@
 </div>
 
 <!--- Import Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view = "_tags/dialog/import",
 		args = {

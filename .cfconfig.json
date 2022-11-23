@@ -4,7 +4,7 @@
 	"componentCacheEnabled":false,
 	"saveClassFiles":false,
 	"robustExceptionEnabled":true,
-	"debuggingEnabled" : true,
+	"debuggingEnabled" : false,
 	"adminPassword" : "contentbox",
 	"requestTimeout": "0,0,10,0",
 	"thistimezone":"UTC",

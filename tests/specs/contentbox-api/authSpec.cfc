@@ -80,13 +80,11 @@ component extends="tests.resources.BaseApiTest" {
 				} );
 			} );
 
-			xstory( "I want to be able to know who I am by passing my token", function(){
+			story( "I want to be able to know who I am by passing my token", function(){
 				given( "an valid token", function(){
 					then( "I should get my information", function(){
-						// Log in
 						var tokens  = jwt.attempt( variables.testAdminUsername, variables.testAdminPassword );
 						var payload = jwt.decode( tokens.access_token );
-						// Now Logout
 						var event   = GET( "/cbapi/v1/whoami", { "x-auth-token" : tokens.access_token } );
 						expect( event.getResponse() ).toHaveStatus(
 							200,

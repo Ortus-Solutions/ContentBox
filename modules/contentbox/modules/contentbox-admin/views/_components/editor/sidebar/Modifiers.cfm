@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_MODIFIERS" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_MODIFIERS" )>
 	<div class="panel panel-default">
 
 		<div class="panel-heading">
@@ -104,7 +104,7 @@
 				</cfif>
 
 				<!--- Creator --->
-				<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,ENTRIES_ADMIN,PAGES_ADMIN" )>
+				<cfif prc.oContent.isLoaded() and prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,ENTRIES_ADMIN,PAGES_ADMIN" )>
 					<div class="form-group">
 						<label for="creatorID" class="control-label">
 							<i class="fa fa-user"></i>

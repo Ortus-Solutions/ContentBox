@@ -5,7 +5,7 @@
 	<!--- Show/Remove Roles Form--->
 	#html.startForm( name="permissionRolesForm", class="form-vertical" )#
 	#html.startFieldset( legend="Role Permissions" )#
-		<cfif !prc.author.getRole().hasPermission()>
+		<cfif !prc.author.getRole().hasPermissions()>
 			<small>No permissions assigned!</small>
 		<cfelse>
 			<p>Below are the currently inherited permissions from the user's role: <span class="label label-info">#prc.author.getRole().getRole()#</span>.
@@ -29,7 +29,7 @@
 	<!--- Add Permission Groups Form--->
 	#html.startForm( name="groupsForm", class="form-vertical" )#
 	#html.startFieldset( legend="Permission Groups" )#
-	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 			#html.hiddenField( name="authorID", bind=prc.author )#
 
 			<!--- Loader --->
@@ -95,7 +95,7 @@
 		<cfloop array="#prc.author.getPermissionGroups()#" index="group">
 			<div class="mt20">
 				<!--- Remove --->
-				<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 					<a 	href="javascript:removePermissionGroup( '#group.getPermissionGroupID()#' )"
 						onclick="return confirm( 'Are you sure?' )"
 						title="Remove Permission Group"
@@ -129,7 +129,7 @@
 	<!--- Add Permission Form--->
 	#html.startForm( name="permissionForm", class="form-vertical" )#
 	#html.startFieldset( legend="A-la-Carte Permissions" )#
-	<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 			#html.hiddenField( name="authorID", bind=prc.author )#
 
 			<!--- Loader --->
@@ -148,7 +148,7 @@
 						<cfset noPerms = true>
 
 						<cfloop array="#prc.aPermissions#" index="thisPerm">
-							<cfif !prc.author.checkPermission( thisPerm.getPermission() )>
+							<cfif !prc.author.hasPermission( thisPerm.getPermission() )>
 								<cfset noperms = false>
 								<option value="#thisPerm.getPermissionID()#">#thisPerm.getPermission()#</option>
 							</cfif>
@@ -165,7 +165,7 @@
 						<button
 							type="button"
 							class="btn btn-primary btn-block p11"
-							onclick="addPermission();return false;"
+							onclick="addPermissions();return false;"
 						>
 							Add Permission
 						</button>
@@ -189,7 +189,7 @@
 
 	<!--- Show/Remove Form--->
 	#html.startForm( name="alacartePermissions", class="form-vertical" )#
-		<cfif !prc.author.hasPermission()>
+		<cfif !prc.author.hasPermissions()>
 			<div class="alert alert-info">No permissions assigned!</div>
 		<cfelse>
 			<p>Below are the currently assigned a-la-carte permissions. You can optionally remove permissions by clicking on the remove button (<i class="fa fa-dot-circle fa-lg text-red"></i>).</p>
@@ -198,7 +198,7 @@
 		<cfloop array="#prc.author.getPermissions()#" index="perm">
 		<div>
 			<!--- Assigned --->
-			<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+			<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 				<!--- Remove --->
 				<a href="javascript:removePermission('#perm.getPermissionID()#')" onclick="return confirm('Are you sure?')" title="Remove Permission"><i class="fa fa-dot-circle fa-lg text-red"></i></a>
 			</cfif>

@@ -65,7 +65,7 @@
 					</div>
 
 					<div class="col-md-6 col-xs-8">
-						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN,TOOLS_EXPORT,TOOLS_IMPORT" )>
 							<div class="text-right">
 								<!---Global --->
 								<div class="btn-group">
@@ -73,7 +73,7 @@
 										Bulk Actions <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
-										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 										<li>
 											<a
 												href="#event.buildLink( prc.xehApplyRules )#"
@@ -85,14 +85,14 @@
 											</a>
 										</li>
 										</cfif>
-										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a href="javascript:importContent()">
 													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 										</cfif>
-										<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 											<li>
 												<a
 													href="#event.buildLink ( prc.xehExportAll )#.json"
@@ -107,7 +107,7 @@
 												</a>
 											</li>
 										</cfif>
-										<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+										<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 										<li>
 											<a
 												href="#event.buildLink( prc.xehResetRules )#"
@@ -146,7 +146,7 @@
 	</div>
 </div>
 
-<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {

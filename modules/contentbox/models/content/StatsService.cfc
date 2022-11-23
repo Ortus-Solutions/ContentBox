@@ -77,14 +77,24 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			try {
 				// try to match a bot? or ignored bots?
 				if ( variables.settingService.getSetting( "cb_content_hit_ignore_bots" ) OR !isUserAgentABot() ) {
-					var q = new Query(
-						sql = "UPDATE cb_stats
+
+					queryExecute(
+						"UPDATE cb_stats
 							SET hits = hits + 1,
-							modifiedDate = #createODBCDateTime( now() )#
-							WHERE FK_contentID = '#arguments.content.getContentId()#'"
-					).execute();
+							modifiedDate = :modifiedDate
+							WHERE FK_contentID = :contentId"
+						,
+						{
+							modifiedDate : { value : createODBCDateTime( now() ), cfsqltype : "timestamp" },
+							contentId : arguments.content.getContentId()
+						},
+						{
+							result : "local.qResults"
+						}
+					);
+
 					// if no record, means, new record, so insert
-					if ( q.getPrefix().RECORDCOUNT eq 0 ) {
+					if ( qResults.recordcount eq 0 ) {
 						save( this.new( { hits : 1, relatedContent : arguments.content } ) );
 					}
 				}
@@ -93,8 +103,6 @@ component extends="cborm.models.VirtualEntityService" singleton {
 					"Error hit tracking contentID: #arguments.content.getContentId()#. #e.message# #e.detail#",
 					e
 				);
-				writeDump( var = e );
-				abort;
 			}
 		}
 

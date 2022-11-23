@@ -46,7 +46,7 @@
 							</li>
 
 							<!--- Custom Fields --->
-							<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_CUSTOM_FIELDS" )>
+							<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_CUSTOM_FIELDS" )>
 								<li role="presentation">
 									<a href="##custom_fields" aria-controls="custom_fields" role="tab" data-toggle="tab">
 										<i class="fa fa-microchip"></i> Custom Fields
@@ -55,7 +55,7 @@
 							</cfif>
 
 							<!--- SEO Panel --->
-							<cfif !prc.oContent.isContentStore() and prc.oCurrentAuthor.checkPermission( "EDITORS_HTML_ATTRIBUTES" )>
+							<cfif !prc.oContent.isContentStore() and prc.oCurrentAuthor.hasPermission( "EDITORS_HTML_ATTRIBUTES" )>
                                 <li role="presentation">
                                     <a href="##seo" aria-controls="seo" role="tab" data-toggle="tab">
                                         <i class="fa fa-cloud"></i> SEO

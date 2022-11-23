@@ -40,10 +40,11 @@
  *
  * @author Luis Majano
  */
-component accessors="true" {
+component accessors="true" singleton threadsafe {
 
 	// DI
 	property name="controller" inject="coldbox";
+	property name="settingService" inject="settingService@contentbox";
 
 	// Properties
 	property name="pagingMaxRows";
@@ -51,17 +52,15 @@ component accessors="true" {
 
 	/**
 	 * Constructor
-	 *
-	 * @settingService        The ContentBox setting service
-	 * @settingService.inject settingService@contentbox
 	 */
-	function init( required settingService ){
-		// Setup Paging Properties
-		setPagingMaxRows( arguments.settingService.getSetting( "cb_paging_maxrows" ) );
-		setPagingBandGap( arguments.settingService.getSetting( "cb_paging_bandgap" ) );
-
-		// Return instance
+	function init(){
 		return this;
+	}
+
+	function onDIComplete(){
+		// Setup Paging Properties
+		setPagingMaxRows( variables.settingService.getSetting( "cb_paging_maxrows" ) );
+		setPagingBandGap( variables.settingService.getSetting( "cb_paging_bandgap" ) );
 	}
 
 	/**
@@ -101,7 +100,7 @@ component accessors="true" {
 		boolean asList = false,
 		numeric page
 	){
-		var event        = getController().getRequestService().getContext();
+		var event        = variables.controller.getRequestService().getContext();
 		var currentPage  = isNull( arguments.page ) ? event.getValue( "page", 1 ) : arguments.page;
 		var pagingTabsUI = "";
 		var maxRows      = !isNull( arguments.pagingMaxRows ) ? arguments.pagingMaxRows : getPagingMaxRows();
@@ -117,7 +116,7 @@ component accessors="true" {
 			var totalPages = ceiling( arguments.foundRows / maxRows );
 
 			if ( currentPage gt totalPages ) {
-				getController().relocate( url: replace( theLink, "@page@", totalPages ) );
+				variables.controller.relocate( url: replace( theLink, "@page@", totalPages ) );
 			}
 
 			savecontent variable="pagingTabsUI" {

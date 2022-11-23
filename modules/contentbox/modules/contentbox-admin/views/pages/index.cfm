@@ -43,13 +43,13 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
 								    	<button class="btn dropdown-toggle btn-info btn-sm" data-toggle="dropdown">
 											<i class="fa fa-gears"></i> Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
 								    			<li class="mb5">
 								    				<a href="javascript:contentListHelper.bulkRemove()"
 								    					class="confirmIt"
@@ -73,7 +73,7 @@
 												</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 								    			<li class="mb5">
 													<a href="javascript:importContent()">
 														<i class="fa fa-file-import fa-lg"></i> Import
@@ -81,7 +81,7 @@
 								    			</li>
 											</cfif>
 
-											<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="mb5">
 													<a href="#event.buildLink( prc.xehPageExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -229,7 +229,7 @@
 </div>
 
 <!--- Clone Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PAGES_EDITOR,PAGES_ADMIN" )>
 	#view(
 		view 			= "_tags/dialog/clone",
 		args 			= {
@@ -245,7 +245,7 @@
 </cfif>
 
 <!--- Import Dialog --->
-<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view 			= "_tags/dialog/import",
 		args 			= {

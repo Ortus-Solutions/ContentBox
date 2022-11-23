@@ -5,8 +5,8 @@
 	$permissionForm = $( "##permissionForm" );
 	$groupsForm 	= $( "##groupsForm" );
 } )();
-<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
-function addPermission(){
+<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
+function addPermissions(){
 	// loader
 	$( "##permissionLoader" ).slideDown();
 	// Assign it

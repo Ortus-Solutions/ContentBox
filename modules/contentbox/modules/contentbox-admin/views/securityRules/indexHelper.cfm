@@ -26,7 +26,7 @@ document.addEventListener( "DOMContentLoaded", () => {
         )
 	);
 
-	<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+	<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 	$ruleForm.find( "##rules" ).tableDnD( {
 		onDragClass : "selected",
 		onDragStart : function( table, row ){
@@ -62,7 +62,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 	</cfif>
 } );
 
-<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 function remove(recordID){
 	if( recordID != null ){
 		$( "##delete_" + recordID )

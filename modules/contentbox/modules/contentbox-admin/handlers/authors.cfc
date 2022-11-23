@@ -40,7 +40,7 @@ component extends="baseHandler" {
 			var oAuthor = authorService.get( rc.authorID );
 			// Validate credentials only if you are an admin or you are yourself.
 			if (
-				!prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )
+				!prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )
 				AND
 				oAuthor.getAuthorID() NEQ prc.oCurrentAuthor.getAuthorID()
 			) {
@@ -304,7 +304,7 @@ component extends="baseHandler" {
 		} );
 
 		// get and populate author
-		populateModel(
+		populate(
 			model                = oAuthor,
 			composeRelationships = true,
 			exclude              = "authorID,preference"
@@ -532,12 +532,12 @@ component extends="baseHandler" {
 		// Get new or persisted user
 		var oAuthor = authorService.get( id = rc.authorID );
 		// get and populate author
-		populateModel( model: oAuthor, exclude: "authorID" );
+		populate( model: oAuthor, exclude: "authorID" );
 		// Tag new or updated user
 		var newAuthor = ( NOT oAuthor.isLoaded() );
 
 		// role assignment if permission allows it
-		if ( prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" ) ) {
+		if ( prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" ) ) {
 			oAuthor.setRole( roleService.get( rc.roleID ) );
 		}
 
@@ -649,8 +649,8 @@ component extends="baseHandler" {
 		var oPermission = permissionService.get( rc.permissionID );
 
 		// Assign it
-		if ( !oAuthor.hasPermission( oPermission ) ) {
-			oAuthor.addPermission( oPermission );
+		if ( !oAuthor.hasPermissions( oPermission ) ) {
+			oAuthor.addPermissions( oPermission );
 			// Save it
 			variables.authorService.save( oAuthor );
 		}
@@ -668,7 +668,7 @@ component extends="baseHandler" {
 		var oPermission = permissionService.get( rc.permissionID );
 
 		// Remove it
-		oAuthor.removePermission( oPermission );
+		oAuthor.removePermissions( oPermission );
 		// Save it
 		variables.authorService.save( oAuthor );
 		// Saved

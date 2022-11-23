@@ -119,7 +119,7 @@
 					</cfif>
 
 					<cfif not thisVersion.getIsActive()>
-						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_ROLLBACK" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "VERSIONS_ROLLBACK" )>
 							<!--- ROLLBACK BUTTON --->
 							<a
 								href="javascript:versionsPagerRollback('#thisVersion.getContentVersionID()#')"
@@ -131,7 +131,7 @@
 							</a>
 						</cfif>
 
-						<cfif prc.oCurrentAuthor.checkPermission( "VERSIONS_DELETE" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "VERSIONS_DELETE" )>
 							<!--- DELETE VERSION --->
 							<a
 								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"

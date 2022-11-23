@@ -48,7 +48,7 @@ component singleton {
 	}
 
 	/**
-	 * Alias to getAuthorSession() created to satisfy JWT Service
+	 * Alias to getAuthorSession() created to satisfy JWT Services
 	 */
 	function getUser(){
 		return this.getAuthorSession();
@@ -96,7 +96,8 @@ component singleton {
 	 * Verifies if a user is logged in or not. Required for JWT Services
 	 */
 	boolean function isLoggedIn(){
-		return this.getAuthorSession().isLoggedIn();
+		var oAuthor = this.getAuthorSession();
+		return oAuthor.isLoaded() && oAuthor.isLoggedIn();
 	}
 
 	/**

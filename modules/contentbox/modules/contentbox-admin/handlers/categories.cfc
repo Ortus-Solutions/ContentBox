@@ -86,7 +86,7 @@ component extends="baseHandler" {
 		}
 
 		// Pop/Get/Set
-		var oCategory = populateModel( model: variables.categoryService.get( rc.categoryID ), exclude: "categoryID" ).setSite(
+		var oCategory = populate( model: variables.categoryService.get( rc.categoryID ), exclude: "categoryID" ).setSite(
 			prc.oCurrentSite
 		);
 

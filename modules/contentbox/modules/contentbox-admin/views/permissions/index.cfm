@@ -47,20 +47,20 @@
 
 						<div class="col-md-6 col-xs-8">
 							<div class="text-right">
-								<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+								<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
 								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
-								    		<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+								    		<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 								    			<li>
 													<a href="javascript:importContent()">
 														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
-											<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
+											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
 														<i class="fa fa-file-export fa-lg"></i> Export All
@@ -111,7 +111,7 @@
 										value="#permission.getpermissionID()#" />
 								</td>
 								<td>
-									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<a href="javascript:edit(
 										'#permission.getPermissionID()#',
 										'#HTMLEditFormat( jsstringFormat(permission.getPermission()) )#',
@@ -136,7 +136,7 @@
 								</td>
 
 								<td class="text-center">
-									<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 										<div class="btn-group">
 											<a
 												class="btn btn-sm btn-default btn-more dropdown-toggle"
@@ -159,7 +159,7 @@
 														<i class="fa fa-pen fa-lg"></i> Edit
 													</a>
 												</li>
-												<cfif prc.oCurrentAuthor.checkPermission( "TOOLS_EXPORT" )>
+												<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 													<li>
 														<a
 															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
@@ -191,7 +191,7 @@
 		#html.endForm()#
     </div>
 </div>
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN" )>
 	<!--- Permissions Editor --->
 	<div id="permissionEditorContainer" class="modal fade" tabindex="-1" role="dialog">
 		<div class="modal-dialog">
@@ -249,7 +249,7 @@
 		</div>
 	</div>
 </cfif>
-<cfif prc.oCurrentAuthor.checkPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
+<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
 	#view(
 		view 		= "_tags/dialog/import",
 		args 		= {

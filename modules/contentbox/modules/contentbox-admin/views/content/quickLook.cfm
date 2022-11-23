@@ -145,7 +145,7 @@
 
 			<!--- Button Bar --->
 			<div class="modal-footer">
-				<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 					<a
 						class="btn btn-info"
 						href="#event.buildLink( prc.xehContentEditor )#/contentID/#prc.content.getContentID()#"

@@ -1,5 +1,5 @@
 <cfoutput>
-<cfif prc.oCurrentAuthor.checkPermission( "EDITORS_DISPLAY_OPTIONS" )>
+<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_DISPLAY_OPTIONS" )>
 	<div class="panel panel-default">
 
 		<div class="panel-heading">

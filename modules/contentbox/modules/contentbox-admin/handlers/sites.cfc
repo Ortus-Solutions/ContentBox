@@ -69,7 +69,7 @@ component extends="baseHandler" {
 	 */
 	function save( event, rc, prc ){
 		// populate and get content
-		prc.site     = populateModel( model: variables.siteService.get( rc.siteID ), exclude: "siteID" );
+		prc.site     = populate( model: variables.siteService.get( rc.siteID ), exclude: "siteID" );
 		// validate it
 		var vResults = validate( prc.site );
 		if ( !vResults.hasErrors() ) {

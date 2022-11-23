@@ -184,13 +184,8 @@ component accessors="true" threadSafe singleton {
 	 */
 	function createAttributeList( required struct attributes ){
 		var attributeList = "";
-		try {
-			for ( var key in arguments.attributes ) {
-				attributeList &= "#key#=""#attributes[ key ]#""";
-			}
-		} catch ( any e ) {
-			writeDump( var = arguments );
-			abort;
+		for ( var key in arguments.attributes ) {
+			attributeList &= "#key#=""#attributes[ key ]#""";
 		}
 		return attributeList;
 	}

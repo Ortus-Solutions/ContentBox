@@ -29,7 +29,7 @@ component {
 	function preHandler( event, rc, prc, action, eventArguments ){
 		// Maintenance Mode?
 		if ( prc.cbSettings.cb_site_maintenance ) {
-			if ( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.checkPermission( "MAINTENANCE_MODE_VIEWER" ) ) {
+			if ( prc.oCurrentAuthor.isLoggedIn() && prc.oCurrentAuthor.hasPermission( "MAINTENANCE_MODE_VIEWER" ) ) {
 				addAsset( "#prc.cbRoot#/includes/js/maintenance.js" );
 			} else {
 				event.overrideEvent( "contentbox-ui:page.maintenance" );
@@ -433,7 +433,7 @@ component {
 		required prc
 	){
 		// Get new comment to persist
-		var comment = populateModel( model: commentService.new(), exclude: "commentID" );
+		var comment = populate( model: commentService.new(), exclude: "commentID" );
 		// relate it to content
 		comment.setRelatedContent( arguments.thisContent );
 		// save it

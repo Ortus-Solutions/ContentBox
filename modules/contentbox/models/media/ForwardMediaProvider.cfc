@@ -63,7 +63,6 @@ component
 		var realPath = mediaService.getCoreMediaRoot() & "/" & arguments.mediaPath;
 		// relocate to it
 		getPageContext().forward( realPath );
-		abort;
 		// abort so CF does not choke.
 		abort;
 	}

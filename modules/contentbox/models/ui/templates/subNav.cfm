@@ -1,6 +1,6 @@
 <cfoutput>
     <cfset local.topMenu = local.thisMenu>
-    <cfif !len( local.topMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.topMenu.permissions )>
+    <cfif !len( local.topMenu.permissions ) OR prc.oCurrentAuthor.hasPermission( local.topMenu.permissions )>
 
         <li #buildLIAttributes( event, local.topMenu )#>
             <cfset itemDefaults = { "class" = "dropdown-toggle" }>
@@ -15,7 +15,7 @@
 
                     <cfloop array="#local.topMenu.submenu#" index="local.thisSubMenu">
                         <!--- Security --->
-                        <cfif !len( local.thisSubMenu.permissions ) OR prc.oCurrentAuthor.checkPermission( local.thisSubMenu.permissions )>
+                        <cfif !len( local.thisSubMenu.permissions ) OR prc.oCurrentAuthor.hasPermission( local.thisSubMenu.permissions )>
 
                             <li #buildLIAttributes( event, local.thisSubMenu )#>
                                 <cfset itemDefaults = {}>

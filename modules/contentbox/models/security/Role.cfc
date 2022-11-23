@@ -61,7 +61,6 @@ component
 	// M2M -> Permissions
 	property
 		name             ="permissions"
-		singularName     ="permission"
 		fieldtype        ="many-to-many"
 		type             ="array"
 		lazy             ="true"
@@ -116,7 +115,7 @@ component
 	// Constructor
 	function init(){
 		variables.permissions    = [];
-		variables.permissionList = "";
+		variables.permissionList = [];
 		super.init();
 
 		return this;
@@ -130,36 +129,33 @@ component
 	}
 
 	/**
-	 * Check for permission
+	 * Verify if the role has one or more of the passed in permissions
 	 *
-	 * @slug.hint The permission slug or list of slugs to validate the role has. If it's a list then they are ORed together
+	 * @permission One or a list of permissions to verify
 	 */
-	boolean function checkPermission( required slug ){
-		// cache list
-		if ( !len( permissionList ) AND hasPermission() ) {
-			var q          = entityToQuery( getPermissions() );
-			permissionList = valueList( q.permission );
+	boolean function hasPermission( required permission ){
+		// cache deconstructed permissions in case it's called many times during a request.
+		if ( !arrayLen( variables.permissionList ) AND hasPermissions() ) {
+			variables.permissionList = arrayReduce(
+				getPermissions(),
+				( result, item ) => {
+					return result.append( item.getPermission() );
+				},
+				[]
+			);
 		}
-
-		// Do verification checks
-		var aList   = listToArray( arguments.slug );
-		var isFound = false;
-
-		for ( var thisPerm in aList ) {
-			if ( listFindNoCase( permissionList, trim( thisPerm ) ) ) {
-				isFound = true;
-				break;
-			}
-		}
-
-		return isFound;
+		// verify
+		return arrayWrap( arguments.permission )
+			.filter( ( item ) => variables.permissionList.findNoCase( arguments.item ) )
+			.len();
 	}
 
 	/**
 	 * Clear all permissions
 	 */
 	Role function clearPermissions(){
-		permissions = [];
+		variables.permissions    = [];
+		variables.permissionList = [];
 		return this;
 	}
 
@@ -167,7 +163,7 @@ component
 	 * Override the setPermissions
 	 */
 	Role function setPermissions( required array permissions ){
-		if ( hasPermission() ) {
+		if ( hasPermissions() ) {
 			variables.permissions.clear();
 			variables.permissions.addAll( arguments.permissions );
 		} else {

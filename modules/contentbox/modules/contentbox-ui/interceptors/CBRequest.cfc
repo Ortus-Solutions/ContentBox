@@ -72,7 +72,7 @@ component extends="coldbox.system.Interceptor" {
 			!prc.oCurrentAuthor.isLoggedIn()
 			||
 			// Permissions
-			!prc.oCurrentAuthor.checkPermission(
+			!prc.oCurrentAuthor.hasPermission(
 				"CONTENTBOX_ADMIN,PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR"
 			)
 		) {

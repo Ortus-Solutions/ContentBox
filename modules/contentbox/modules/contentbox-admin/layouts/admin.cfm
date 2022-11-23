@@ -88,7 +88,7 @@
 				</span>
 
 				<!---Search --->
-				<cfif prc.oCurrentAuthor.checkPermission( "GLOBAL_SEARCH" )>
+				<cfif prc.oCurrentAuthor.hasPermission( "GLOBAL_SEARCH" )>
 				<span
 					class="navbar-search hidden-sm hidden-xs"
 					id="div-search"
@@ -129,7 +129,7 @@
 						</li>
 
 						<!--- New Quick Links --->
-						<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,PAGES_EDITOR,ENTRIES_ADMIN,ENTRIES_EDITOR,AUTHOR_ADMIN,MEDIAMANAGER_ADMIN" )>
 							<li class="dropdown settings" title="Create New..." data-name="create-new" data-placement="right auto">
 								<button
 									data-toggle="dropdown"
@@ -139,42 +139,42 @@
 									<i class="fa fa-plus"></i>
 								</button>
 								<ul class="dropdown-menu">
-									<cfif prc.oCurrentAuthor.checkPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
 												<i class="fa fa-file-alt fa-lg width25"></i> New Page
 											</a>
 										</li>
 									</cfif>
-									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.checkPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
+									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
 												<i class="fa fa-blog fa-lg width25"></i> New Entry
 											</a>
 										</li>
 									</cfif>
-									<cfif prc.oCurrentAuthor.checkPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
 												<i class="fa fa-hdd fa-lg width25"></i> New Content Store
 											</a>
 										</li>
 									</cfif>
-									<cfif prc.oCurrentAuthor.checkPermission( "AUTHOR_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
 												<i class="fa fa-user fa-lg width25"></i> New User
 											</a>
 										</li>
 									</cfif>
-									<cfif prc.oCurrentAuthor.checkPermission( "MEDIAMANAGER_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "MEDIAMANAGER_ADMIN" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
 												<i class="fa fa-photo-video fa-lg width25"></i> New Media
 											</a>
 										</li>
 									</cfif>
-									<cfif prc.oCurrentAuthor.checkPermission( "MENUS_ADMIN" )>
+									<cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
 										<li class="mb10">
 											<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
 												<i class="fa fa-list fa-lg width25"></i> New Menu
@@ -259,7 +259,7 @@
 				<div class="sidebar-heading"><i class="fa fa-bullhorn"></i> Notifications</div>
 					<div class="sidebar-title">system</div>
 					<div class="list-contacts">
-						<cfif prc.oCurrentAuthor.checkPermission( "SYSTEM_TAB" ) AND prc.installerCheck>
+						<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_TAB" ) AND prc.installerCheck>
 							<div class="list-item">
 								<div class="list-item-image">
 									<i class="fa fa-warning img-circle"></i>

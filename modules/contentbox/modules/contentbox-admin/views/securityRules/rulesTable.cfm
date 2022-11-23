@@ -94,7 +94,7 @@
 						<i class="fa fa-ellipsis-v fa-lg"></i>
 					</a>
 			    	<ul class="dropdown-menu text-left pull-right">
-						<cfif prc.oCurrentAuthor.checkPermission( "SECURITYRULES_ADMIN" )>
+						<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li>
 								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">

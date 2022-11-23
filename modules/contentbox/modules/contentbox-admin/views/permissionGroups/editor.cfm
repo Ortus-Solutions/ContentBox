@@ -113,7 +113,7 @@
 									#html.checkbox(
 										name    = "permissions_#thisPerm.getPermissionId()#_toggle",
 										data	= { toggle: 'toggle', match: 'permissions_#thisPerm.getPermissionId()#' },
-										checked	= prc.oGroup.hasPermission( thisPerm )
+										checked	= prc.oGroup.hasPermissions( thisPerm )
 									)#
 									#html.hiddenField(
 										id 		= "permissions_" & thisPerm.getPermissionId()

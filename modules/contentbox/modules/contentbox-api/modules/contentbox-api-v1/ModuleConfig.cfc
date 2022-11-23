@@ -46,7 +46,7 @@ component {
 						}
 					],
 					// The validator is an object that will validate rules and annotations and provide feedback on either authentication or authorization issues.
-					"validator" : "JwtSecurityValidator@contentbox"
+					"validator" : "JwtAuthValidator@cbSecurity"
 				}
 			}
 		};
