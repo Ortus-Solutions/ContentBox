@@ -274,8 +274,9 @@ component extends="baseHandler" {
 		prc.allContent = variables.ormService
 			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
 			.filter( function( item ){
-				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+				return prc.oContent.isLoaded() ? !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] ) : true;
 			} );
+
 		// Provide JWT Tokens for communicating with the API
 		prc.jwtTokens     = jwtAuth().fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
