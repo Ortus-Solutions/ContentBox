@@ -6,8 +6,9 @@
 	 */
 	function $getBackPath( inPath ){
 		arguments.inPath = replace( arguments.inPath, "\", "/", "all" );
-		var lFolder = listLast( arguments.inPath, "/" );
-		return URLEncodedFormat( left( arguments.inPath, len( arguments.inPath ) - len( lFolder ) ) );
+		var backPath = listToArray( arguments.inPath, "/" );
+		backPath.deleteAt( backPath.len() );
+		return URLEncodedFormat( backPath.toList( "/" ) );
 	}
 	function $getUrlRelativeToPath( required basePath, required filePath, encodeURL=false ){
 		var URLOut = "";
