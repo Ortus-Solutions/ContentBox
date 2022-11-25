@@ -35,7 +35,8 @@
         "bcrypt":"^3.0.0",
         "cbmarkdown":"^3.4.0",
         "cbSwagger":"^2.3.0+131",
-        "jsonprettyprint":"^1.4.0"
+        "jsonprettyprint":"^1.4.0",
+		"cbfs" : "be"
     },
     "installPaths":{
         "cborm":"modules/contentbox-deps/modules/cborm/",
@@ -47,7 +48,8 @@
         "BCrypt":"modules/contentbox-deps/modules/BCrypt/",
         "cbmarkdown":"modules/contentbox-deps/modules/cbmarkdown/",
         "cbSwagger":"modules/contentbox-deps/modules/cbSwagger/",
-        "jsonprettyprint":"modules/contentbox-deps/modules/jsonprettyprint/"
+        "jsonprettyprint":"modules/contentbox-deps/modules/jsonprettyprint/",
+        "cbfs":"modules/contentbox-deps/modules/cbfs/"
     },
     "devDependencies":{},
     "scripts":{}
