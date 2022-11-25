@@ -152,7 +152,7 @@ component {
 		// Load Environment Overrides Now, they take precedence
 		settingService.loadEnvironmentOverrides();
 
-		var diskService = getInstance( "cbfs" );
+		var diskService = wirebox.getInstance( "cbfs" );
 
 		if( !diskService.has( "contentbox" ) ){
 			diskService.register(
