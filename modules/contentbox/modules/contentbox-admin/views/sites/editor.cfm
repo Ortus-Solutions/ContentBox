@@ -259,6 +259,36 @@
 								</div>
 							</div>
 
+							<!-- CBFS Disks -->
+							<div class="form-group">
+								<label class="control-label" for="activeTheme">
+									Media Storage Disk:
+								</label>
+
+								<p>
+									Choose the Media Storage Disk to use for this site
+								</p>
+
+								<div class="controls">
+									<select
+										name="mediaDisk"
+										id="mediaDisk"
+										class="form-control"
+									>
+									<cfloop array="#prc.registeredDisks#" item="disk">
+										<option
+											value="#disk#"
+											<cfif prc.site.getMediaDisk() eq disk>
+												selected="selected"
+											</cfif>
+										>
+											#disk#
+										</option>
+									</cfloop>
+									</select>
+								</div>
+							</div>
+
 							<!--- Blog Enabled --->
 							<div class="form-group">
 								#html.label(

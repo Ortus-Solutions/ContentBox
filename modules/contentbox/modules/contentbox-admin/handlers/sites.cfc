@@ -57,6 +57,8 @@ component extends="baseHandler" {
 			propertyList = "contentID,slug,title"
 		).pages;
 
+		prc.registeredDisks = cbfs().getDisks().keyArray().filter( ( name ) => name != "default" && name != "temp" );
+
 		// exit handlers
 		prc.xehSiteSave = "#prc.cbAdminEntryPoint#.sites.save";
 
