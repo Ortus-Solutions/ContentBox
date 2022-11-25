@@ -4,6 +4,7 @@ component accessors="true" singleton{
 	property name="mediaService" inject="mediaService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
 	property name="cbfs" inject="cbfs";
+	property name="templateCache" inject="cachebox:template";
 	/**
 	 * The internal name of the provider
 	 */
@@ -25,10 +26,15 @@ component accessors="true" singleton{
 	 * @mediaPath.hint the media path to verify if it exists
 	 */
 	public boolean function mediaExists( required mediaPath ){
-		var cbfsParts = listToArray( arguments.mediaPath, ":" );
-		return cbfsParts.len() > 1
-				? cbfs.get( cbfsParts[ 1 ] ).exists( cbfsParts[ 2 ] )
-				: fileExists( getRealMediaPath( arguments.mediaPath ) );
+		return templateCache.getOrSet(
+			"provider_item_exists_#hash( mediaPath )#",
+			function(){
+				var cbfsParts = listToArray( arguments.mediaPath, ":" );
+				return cbfsParts.len() > 1
+						? cbfs.get( cbfsParts[ 1 ] ).exists( cbfsParts[ 2 ] )
+						: fileExists( getRealMediaPath( arguments.mediaPath ) );
+			}
+		);
 	}
 
 	/************************************** Package Utility Methods *********************************************/
