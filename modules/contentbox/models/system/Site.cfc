@@ -181,6 +181,14 @@ component
 		notnull="true"
 		default="true";
 
+	property
+		name   ="mediaDisk"
+		column ="mediaDisk"
+		ormtype="string"
+		notnull="false"
+		default=""
+		length ="50";
+
 	/* *********************************************************************
 	 **							RELATIONSHIPS
 	 ********************************************************************* */
