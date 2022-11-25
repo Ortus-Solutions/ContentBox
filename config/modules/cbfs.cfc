@@ -15,7 +15,7 @@ component {
 				// Your default application storage
 				"contentbox" : {
 					provider   : "Local",
-					properties : { path : "#controller.getAppRootPath()#/modules_app/contentbox-custom/_content" }
+					properties : { path : "#controller.getAppRootPath()#modules_app/contentbox-custom/_content" }
 				}
 			}
 		};

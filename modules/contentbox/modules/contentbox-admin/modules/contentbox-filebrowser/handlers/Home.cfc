@@ -10,6 +10,7 @@ component extends="cbadmin.handlers.baseHandler" {
 	// DI
 	property name="cookieStorage" inject="cookieStorage@cbStorages";
 	property name="html" inject="HTMLHelper@coldbox";
+	property name="cb" inject="CBHelper@contentbox";
 
 	/**
 	 * Pre handler
@@ -27,6 +28,9 @@ component extends="cbadmin.handlers.baseHandler" {
 		prc.fbModEntryPoint = getModuleConfig( prc.fbModuleName ).entrypoint;
 		// Duplicate the settings so we can do overrides a-la-carte
 		prc.fbSettings      = duplicate( getModuleSettings( prc.fbModuleName ) );
+
+		prc.activeDisk = cbfs().get( variables.cb.site().getMediaDisk() ?: "contentbox" );
+
 		// Merge Flash Settings if they exist
 		if ( structKeyExists( flash.get( "fileBrowser", {} ), "settings" ) ) {
 			mergeSettings( prc.fbSettings, flash.get( "fileBrowser" ).settings );
@@ -104,6 +108,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		// params
 		event.paramValue( "path", "" );
 		event.paramValue( "filterType", "" );
+		event.paramValue( "verbose", true );
 
 		// Detect sorting changes
 		detectPreferences( event, rc, prc );
@@ -119,7 +124,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		rc.path = cleanIncomingPath( urlDecode( trim( rc.path ) ) );
 		// Check if the incoming path does not exist so we default to the configuration directory root.
 		if ( !len( rc.path ) ) {
-			prc.fbCurrentRoot = cleanIncomingPath( prc.fbSettings.directoryRoot );
+			prc.fbCurrentRoot = "";
 		} else {
 			prc.fbCurrentRoot = rc.path;
 		}
@@ -127,12 +132,6 @@ component extends="cbadmin.handlers.baseHandler" {
 		prc.fbwebRootPath     = cleanIncomingPath( prc.fbwebRootPath );
 		// Do a safe current root for JS
 		prc.fbSafeCurrentRoot = urlEncodedFormat( prc.fbCurrentRoot );
-
-		// traversal testing
-		if ( NOT isTraversalSecure( prc, prc.fbCurrentRoot ) ) {
-			getInstance( "messagebox@cbMessagebox" ).warn( $r( "messages.traversal@fb" ) );
-			return "Invalid Path";
-		}
 
 		// Get storage preferences
 		prc.fbPreferences = getPreferences();
@@ -145,56 +144,49 @@ component extends="cbadmin.handlers.baseHandler" {
 		}
 
 		// get directory listing.
-		prc.fbqListing = directoryList(
-			prc.fbCurrentRoot,
-			false,
-			"query",
-			prc.fbSettings.extensionFilter,
-			"#prc.fbPreferences.sorting#"
-		);
+		prc.fbListing = prc.activeDisk
+							.contents(
+								directory = prc.fbCurrentRoot,
+								filter = prc.fbSettings.extensionFilter,
+								sort = prc.fbPreferences.sorting,
+								recurse  = false,
+								type     = "all",
+								absolute = "false"
+							).map( ( file ) => rc.verbose ? prc.activeDisk.info( file ) : file );
 
-		if (
-			structKeyExists( prc.fbPreferences, "listFolder" ) AND prc.fbPreferences.listFolder eq "dir" and structKeyExists(
-				rc,
-				"sorting"
-			)
-		) {
-			if ( prc.fbPreferences.sorting eq "lastmodified" ) {
-				prc.fbPreferences.sorting = "datelastmodified";
-			}
-			var fileListQuery = new Query(
-				dbType = "query",
-				qry    = prc.fbqListing,
-				sql    = "select * from qry where type=:dir order by #prc.fbPreferences.sorting#"
-			);
+		// if (
+		// 	structKeyExists( prc.fbPreferences, "listFolder" ) AND prc.fbPreferences.listFolder eq "dir" and structKeyExists(
+		// 		rc,
+		// 		"sorting"
+		// 	)
+		// ) {
+		// 	if ( prc.fbPreferences.sorting eq "lastmodified" ) {
+		// 		prc.fbPreferences.sorting = "datelastmodified";
+		// 	}
+		// 	var fileListQuery = new Query(
+		// 		dbType = "query",
+		// 		qry    = prc.fbListing,
+		// 		sql    = "select * from qry where type=:dir order by #prc.fbPreferences.sorting#"
+		// 	);
 
-			fileListQuery.addParam(
-				name      = "dir",
-				value     = "dir",
-				cfsqltype = "cf_sql_varchar"
-			);
+		// 	fileListQuery.addParam(
+		// 		name      = "dir",
+		// 		value     = "dir",
+		// 		cfsqltype = "cf_sql_varchar"
+		// 	);
 
-			prc.fbqListing = fileListQuery.execute().getresult();
+		// 	prc.fbListing = fileListQuery.execute().getresult();
 
-			if ( prc.fbPreferences.sorting eq "datelastmodified" ) {
-				prc.fbPreferences.sorting = "lastmodified";
-			}
-		}
-		var iData = { directory : prc.fbCurrentRoot, listing : prc.fbqListing };
+		// 	if ( prc.fbPreferences.sorting eq "datelastmodified" ) {
+		// 		prc.fbPreferences.sorting = "lastmodified";
+		// 	}
+		// }
+
+		var iData = { directory : prc.fbCurrentRoot, listing : prc.fbListing };
+
 		announce( "fb_postDirectoryRead", iData );
 
 		return view( view = "home/filelisting" );
-	}
-
-	/**
-	 * Determines if this is a safe path call or a traversal security exception
-	 */
-	private boolean function isTraversalSecure( required prc, required targetPath ){
-		// Do some cleanup just in case in the incoming root.
-		if ( prc.fbSettings.traversalSecurity AND NOT findNoCase( prc.fbSettings.directoryRoot, arguments.targetPath ) ) {
-			return false;
-		}
-		return true;
 	}
 
 	/**
@@ -221,14 +213,6 @@ component extends="cbadmin.handlers.baseHandler" {
 		if ( !len( rc.path ) OR !len( rc.dName ) ) {
 			data.errors   = true;
 			data.messages = $r( "messages.invalid_path_name@fb" );
-			event.renderData( data = data, type = "json" );
-			return;
-		}
-
-		// Traversal Security
-		if ( NOT isTraversalSecure( prc, rc.path ) ) {
-			data.errors   = true;
-			data.messages = $r( "messages.traversal_security@fb" );
 			event.renderData( data = data, type = "json" );
 			return;
 		}
@@ -279,13 +263,6 @@ component extends="cbadmin.handlers.baseHandler" {
 		}
 		rc.pathsArray = listToArray( rc.path, "||" );
 		for ( var thisFile in rc.pathsArray ) {
-			// Traversal Security
-			if ( NOT isTraversalSecure( prc, thisFile ) ) {
-				data.errors   = true;
-				data.messages = $r( "messages.traversal_security@fb" );
-				event.renderData( data = data, type = "json" );
-				return;
-			}
 
 			// removal
 			try {
@@ -293,11 +270,14 @@ component extends="cbadmin.handlers.baseHandler" {
 				var iData = { path : thisFile };
 				announce( "fb_preFileRemoval", iData );
 
-				if ( fileExists( thisFile ) ) {
-					fileDelete( thisFile );
-				} else if ( directoryExists( thisFile ) ) {
-					directoryDelete( thisFile, true );
+				prc.activeDisk.exists( thisFile )
+
+				if ( prc.activeDisk.isFile( thisFile ) ) {
+					prc.activeDisk.delete( thisFile );
+				} else {
+					prc.activeDisk.deleteDirectory( thisFile, true );
 				}
+
 				data.errors   = false;
 				data.messages = $r( resource = "messages.removed@fb", values = "#thisFile#" );
 
@@ -340,24 +320,10 @@ component extends="cbadmin.handlers.baseHandler" {
 		if ( arrayLen( rc.pathsArray ) > 1 ) {
 			cfzip( action = "zip", file = "#getTempDirectory()#\download.zip" ) {
 				for ( var thisFile in rc.pathsArray ) {
-					// Traversal Security
-					if ( NOT isTraversalSecure( prc, thisFile ) ) {
-						data.errors   = true;
-						data.messages = $r( "messages.traversal_security@fb" );
-						event.renderData( data = data, type = "json" );
-						return;
-					}
-					cfzipParam( source = thisFile );
+					cfzipParam( content = prc.activeDisk.getAsBinary( thisFile ), entryPath=thisFile );
 				}
 			}
 			rc.path = "#getTempDirectory()#\download.zip";
-		} else {
-			if ( NOT isTraversalSecure( prc, rc.path ) ) {
-				data.errors   = true;
-				data.messages = $r( "messages.traversal_security@fb" );
-				event.renderData( data = data, type = "json" );
-				return;
-			}
 		}
 
 		// download
@@ -368,7 +334,10 @@ component extends="cbadmin.handlers.baseHandler" {
 			announce( "fb_preFileDownload", iData );
 
 			// Serve the file
-			event.sendFile( file = rc.path );
+			event.sendFile(
+				file = rc.pathsArray.len() > 1 ? rc.path : prc.activeDisk.getAsBinary( rc.path ),
+				extension=listLast( rc.path, "." )
+			);
 
 			data.errors   = false;
 			data.messages = $r( resource = "messages.downloaded@fb", values = "#rc.path#" );
@@ -402,23 +371,15 @@ component extends="cbadmin.handlers.baseHandler" {
 			return;
 		}
 
-		// Traversal Security
-		if ( NOT isTraversalSecure( prc, rc.path ) ) {
-			data.errors   = true;
-			data.messages = $r( "messages.traversal_security@fb" );
-			event.renderData( data = data, type = "json" );
-			return;
-		}
-
 		// rename
 		try {
 			// Announce it
 			var iData = { original : rc.path, newName : rc.name };
 			announce( "fb_preFileRename", iData );
-			if ( fileExists( rc.path ) ) {
-				fileMove( rc.path, getDirectoryFromPath( rc.path ) & rc.name );
-			} else if ( directoryExists( rc.path ) ) {
-				directoryRename( rc.path, rc.name );
+			if ( prc.activeDisk.isFile( rc.path ) ) {
+				prc.activeDisk.move( rc.path, getDirectoryFromPath( rc.path ) & rc.name );
+			} else {
+				prc.activeDisk.moveDirectory( rc.path, rc.name );
 			}
 			data.errors   = false;
 			data.messages = $r( resource = "messages.renamed@fb", values = "#rc.path#" );
@@ -446,15 +407,6 @@ component extends="cbadmin.handlers.baseHandler" {
 		// clean incoming path for destination directory
 		rc.path = cleanIncomingPath( urlDecode( trim( rc.path ) ) );
 
-		// traversal test
-		if ( NOT isTraversalSecure( prc, rc.path ) ) {
-			data.errors   = true;
-			data.messages = $r( "messages.traversal_security@fb" );
-			log.error( data.messages, rc );
-			event.renderData( data = data, type = "json" );
-			return;
-		}
-
 		// Verify credentials else return invalid
 		if ( !prc.fbSettings.allowUploads ) {
 			data.errors   = false;
@@ -468,12 +420,21 @@ component extends="cbadmin.handlers.baseHandler" {
 			// Announce it
 			var iData = { fileField : "FILEDATA", path : rc.path };
 			announce( "fb_preFileUpload", iData );
-			iData.results = fileUpload(
-				rc.path,
+
+			// We have to perform this in two separate actions until https://github.com/coldbox-modules/cbfs/issues/21 is implemented
+			var upload = fileUpload(
+				getTempDirectory() & "/" & listLast( rc.path, "/\" ),
 				"FILEDATA",
 				prc.fbSettings.acceptMimeTypes,
 				"overwrite"
 			);
+
+			iData.results = prc.activeDisk.create(
+									path = rc.path & "/" & upload.clientfile,
+									contents = fileReadBinary( upload.serverDirectory & "/" & upload.serverFile ),
+									overwrite = true
+								).info( rc.path );
+
 			// debug log file
 			if ( log.canDebug() ) {
 				log.debug( "File Uploaded!", iData.results );
@@ -484,6 +445,7 @@ component extends="cbadmin.handlers.baseHandler" {
 
 			// Announce it
 			announce( "fb_postFileUpload", iData );
+
 		} catch ( Any e ) {
 			data.errors   = true;
 			data.messages = $r( resource = "messages.error_uploading@fb", values = "#e.message# #e.detail#" );
@@ -514,7 +476,8 @@ component extends="cbadmin.handlers.baseHandler" {
 		// Do some cleanup just in case on incoming path
 		inPath = reReplace( inPath, "(/|\\){1,}$", "", "all" );
 		inPath = reReplace( inPath, "\\", "/", "all" );
-		return inPath;
+		// clean any leading slashes
+		return arrayToList( listToArray( inPath, "/" ), "/" );
 	}
 
 	/**
