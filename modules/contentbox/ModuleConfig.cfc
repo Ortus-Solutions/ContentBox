@@ -151,6 +151,17 @@ component {
 		settingService.loadConfigOverrides();
 		// Load Environment Overrides Now, they take precedence
 		settingService.loadEnvironmentOverrides();
+
+		var diskService = getInstance( "cbfs" );
+
+		if( !diskService.has( "contentbox" ) ){
+			diskService.register(
+				"contentbox",
+				"Local",
+				{ path : expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ) }
+			);
+		}
+
 		// Startup the ContentBox modules, if any
 		wirebox.getInstance( "moduleService@contentbox" ).startup();
 	}
