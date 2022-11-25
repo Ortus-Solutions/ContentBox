@@ -29,10 +29,10 @@ component accessors="true" singleton{
 		return templateCache.getOrSet(
 			"provider_item_exists_#hash( mediaPath )#",
 			function(){
-				var cbfsParts = listToArray( arguments.mediaPath, ":" );
+				var cbfsParts = listToArray( mediaPath, ":" );
 				return cbfsParts.len() > 1
 						? cbfs.get( cbfsParts[ 1 ] ).exists( cbfsParts[ 2 ] )
-						: fileExists( getRealMediaPath( arguments.mediaPath ) );
+						: fileExists( getRealMediaPath( mediaPath ) );
 			}
 		);
 	}

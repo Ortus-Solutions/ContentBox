@@ -725,7 +725,7 @@ component
 	*/
 	function getFeaturedImageURL(){
 		var featured = getFeaturedImage();
-		return len( featured ) ?
+		return !isNull( featured ) && len( featured ) ?
 			(
 				find( ":", featured )
 					? '/_media/' & featured
