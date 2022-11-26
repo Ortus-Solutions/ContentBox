@@ -1,4 +1,4 @@
-component accessors="true" singleton{
+component accessors="true" singleton {
 
 	// Dependecnies
 	property name="mediaService" inject="mediaService@contentbox";
@@ -26,24 +26,20 @@ component accessors="true" singleton{
 	 * @mediaPath.hint the media path to verify if it exists
 	 */
 	public boolean function mediaExists( required mediaPath ){
-		return templateCache.getOrSet(
-			"provider_item_exists_#hash( mediaPath )#",
-			function(){
-				var cbfsParts = listToArray( mediaPath, ":" );
-				return cbfsParts.len() > 1
-						? cbfs.get( cbfsParts[ 1 ] ).exists( cbfsParts[ 2 ] )
-						: fileExists( getRealMediaPath( mediaPath ) );
-			}
-		);
+		return templateCache.getOrSet( "provider_item_exists_#hash( mediaPath )#", function(){
+			var cbfsParts = listToArray( mediaPath, ":" );
+			return cbfsParts.len() > 1
+			 ? cbfs.get( cbfsParts[ 1 ] ).exists( cbfsParts[ 2 ] )
+			 : fileExists( getRealMediaPath( mediaPath ) );
+		} );
 	}
 
 	/************************************** Package Utility Methods *********************************************/
 	package function getPublicURL( required mediaPath ){
 		var cbfsParts = listToArray( arguments.mediaPath, ":" );
 		return cbfsParts.len() > 1
-				? cbfs.get( cbfsParts[ 1 ] ).uri( cbfsParts[ 2 ] )
-				: mediaService.getCoreMediaRoot() & "/" & arguments.mediaPath;
-
+		 ? cbfs.get( cbfsParts[ 1 ] ).uri( cbfsParts[ 2 ] )
+		 : mediaService.getCoreMediaRoot() & "/" & arguments.mediaPath;
 	}
 
 	package function getRealMediaPath( required mediaPath ){

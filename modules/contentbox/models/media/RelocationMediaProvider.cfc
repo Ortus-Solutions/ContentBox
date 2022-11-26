@@ -5,17 +5,13 @@
  * ---
  * Deliver file via pagecontext forward
  */
-component
-	accessors ="true"
-	extends="BaseProvider"
-	singleton
-{
+component accessors="true" extends="BaseProvider" singleton {
 
 	/**
 	 * Constructor
 	 */
 	any function init(){
-		variables.name = "RelocationMediaProvider";
+		variables.name        = "RelocationMediaProvider";
 		variables.displayName = "Relocation Media Provider";
 		variables.description = "This provider will relocate to the real physical location in the server for the media path requested. Use only
 		if the media root is web accessible, so double check your media root.";
@@ -33,7 +29,6 @@ component
 			addToken   = false,
 			statusCode = "302"
 		);
-
 	}
 
 }

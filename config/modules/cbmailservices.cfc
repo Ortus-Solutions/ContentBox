@@ -14,22 +14,18 @@ component {
 			defaultProtocol : "files",
 			// Here you can register one or many mailers by name
 			mailers         : {
-				"default" : {
-					class : "CFMail"
-				},
-				"files" : {
-					class:"File",
-					properties : {
-						filePath : "/cbapp/config/logs/mail"
-					}
+				"default" : { class : "CFMail" },
+				"files"   : {
+					class      : "File",
+					properties : { filePath : "/cbapp/config/logs/mail" }
 				}
 			},
 			// The defaults for all mail config payloads and protocols
-			defaults        : {
-				//from : "",
+			defaults : {
+				 // from : "",
 			},
-			//Whether the scheduled task is running or not
-			runQueueTask	: true
+			// Whether the scheduled task is running or not
+			runQueueTask : true
 		};
 	}
 

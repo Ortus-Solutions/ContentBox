@@ -109,22 +109,22 @@ component
 		length ="500";
 
 	property
-		name   ="httpMethods"
-		column ="httpMethods"
-		ormtype="string"
-		notnull="true"
-		default="*"
+		name     ="httpMethods"
+		column   ="httpMethods"
+		ormtype  ="string"
+		notnull  ="true"
+		default  ="*"
 		dbdefault="'*'"
-		length ="255";
+		length   ="255";
 
 	property
-		name   ="allowedIPs"
-		column ="allowedIPs"
-		ormtype="string"
-		notnull="true"
-		default="*"
+		name     ="allowedIPs"
+		column   ="allowedIPs"
+		ormtype  ="string"
+		notnull  ="true"
+		default  ="*"
 		dbdefault="'*'"
-		length ="255";
+		length   ="255";
 
 	property
 		name   ="order"
@@ -214,8 +214,8 @@ component
 		variables.messageType   = "info";
 		variables.overrideEvent = "";
 		variables.module        = "";
-		variables.httpMethods = "*";
-		variables.allowedIPs = "*";
+		variables.httpMethods   = "*";
+		variables.allowedIPs    = "*";
 
 		super.init();
 

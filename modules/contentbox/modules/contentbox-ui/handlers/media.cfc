@@ -24,16 +24,17 @@ component singleton {
 		// Get the requested media path
 		var replacePath = ( len( prc.cbEntryPoint ) ? "#prc.cbEntryPoint#/" : "" ) & event.getCurrentRoute();
 
-		prc.mediaPath  = reReplace(
+		prc.mediaPath = reReplace(
 			trim(
 				replaceNoCase(
 					urlDecode( event.getCurrentRoutedURL() ),
 					replacePath,
 					""
 				)
-
-			)
-		, "\/$", "" );
+			),
+			"\/$",
+			""
+		);
 
 		// Determine if ColdBox is doing a format extension detection?
 		if ( structKeyExists( rc, "format" ) && len( rc.format ) ) {

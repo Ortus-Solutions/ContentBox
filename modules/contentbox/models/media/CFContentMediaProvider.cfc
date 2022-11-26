@@ -5,11 +5,7 @@
  * ---
  * Deliver file via cfcontent
  */
-component
-	accessors ="true"
-	extends="BaseProvider"
-	singleton
-{
+component accessors="true" extends="BaseProvider" singleton {
 
 	property name="requestService" inject="coldbox:requestService";
 
@@ -17,7 +13,7 @@ component
 	 * Constructor
 	 */
 	any function init(){
-		variables.name = "CFContentMediaProvider";
+		variables.name        = "CFContentMediaProvider";
 		variables.displayName = "CF Content Media Provider";
 		variables.description = "This provider uses the ColdFusion cfcontent tag to deliver and stream files securely to the user.";
 		return this;
@@ -30,23 +26,22 @@ component
 	 */
 	any function deliverMedia( required mediaPath ){
 		var cbfsParts = listToArray( arguments.mediaPath, ":" );
-		var context = variables.requestService.getContext();
-		if( cbfsParts.len() > 1 ){
-			var disk = cbfs.get( cbfsParts[ 1 ] );
-			var file = disk.getAsBinary( cbfsParts[ 2 ] );
+		var context   = variables.requestService.getContext();
+		if ( cbfsParts.len() > 1 ) {
+			var disk     = cbfs.get( cbfsParts[ 1 ] );
+			var file     = disk.getAsBinary( cbfsParts[ 2 ] );
 			var mimeType = disk.mimeType( cbfsParts[ 2 ] );
 		} else {
-			var file = getRealMediaPath( arguments.mediaPath );
+			var file     = getRealMediaPath( arguments.mediaPath );
 			var mimeType = fileGetMimeType( file );
 		}
 
 		context.sendFile(
-			file = file,
+			file        = file,
 			disposition = "inline",
-			mimeType = mimeType,
-			extension = listLast( arguments.mediaPath, "." )
+			mimeType    = mimeType,
+			extension   = listLast( arguments.mediaPath, "." )
 		);
-
 	}
 
 }
