@@ -145,14 +145,15 @@ component extends="cbadmin.handlers.baseHandler" {
 
 		// get directory listing.
 		prc.fbListing = prc.activeDisk
-							.contents(
-								directory = prc.fbCurrentRoot,
-								filter = prc.fbSettings.extensionFilter,
-								sort = prc.fbPreferences.sorting,
-								recurse  = false,
-								type     = prc.fbPreferences.listFolder == "dir" ? "dir" : "all",
-								absolute = "false"
-							).map( ( file ) => rc.verbose ? prc.activeDisk.info( file ) : file );
+			.contents(
+				directory = prc.fbCurrentRoot,
+				filter    = prc.fbSettings.extensionFilter,
+				sort      = prc.fbPreferences.sorting,
+				recurse   = false,
+				type      = prc.fbPreferences.listFolder == "dir" ? "dir" : "all",
+				absolute  = "false"
+			)
+			.map( ( file ) => rc.verbose ? prc.activeDisk.info( file ) : file );
 
 		var iData = { directory : prc.fbCurrentRoot, listing : prc.fbListing };
 
@@ -235,7 +236,6 @@ component extends="cbadmin.handlers.baseHandler" {
 		}
 		rc.pathsArray = listToArray( rc.path, "||" );
 		for ( var thisFile in rc.pathsArray ) {
-
 			// removal
 			try {
 				// Announce it
@@ -292,7 +292,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		if ( arrayLen( rc.pathsArray ) > 1 ) {
 			cfzip( action = "zip", file = "#getTempDirectory()#\download.zip" ) {
 				for ( var thisFile in rc.pathsArray ) {
-					cfzipParam( content = prc.activeDisk.getAsBinary( thisFile ), entryPath=thisFile );
+					cfzipParam( content = prc.activeDisk.getAsBinary( thisFile ), entryPath = thisFile );
 				}
 			}
 			rc.path = "#getTempDirectory()#\download.zip";
@@ -307,8 +307,8 @@ component extends="cbadmin.handlers.baseHandler" {
 
 			// Serve the file
 			event.sendFile(
-				file = rc.pathsArray.len() > 1 ? rc.path : prc.activeDisk.getAsBinary( rc.path ),
-				extension=listLast( rc.path, "." )
+				file      = rc.pathsArray.len() > 1 ? rc.path : prc.activeDisk.getAsBinary( rc.path ),
+				extension = listLast( rc.path, "." )
 			);
 
 			data.errors   = false;
@@ -401,11 +401,13 @@ component extends="cbadmin.handlers.baseHandler" {
 				"overwrite"
 			);
 
-			iData.results = prc.activeDisk.create(
-									path = rc.path & "/" & upload.clientfile,
-									contents = fileReadBinary( upload.serverDirectory & "/" & upload.serverFile ),
-									overwrite = true
-								).info( rc.path );
+			iData.results = prc.activeDisk
+				.create(
+					path      = rc.path & "/" & upload.clientfile,
+					contents  = fileReadBinary( upload.serverDirectory & "/" & upload.serverFile ),
+					overwrite = true
+				)
+				.info( rc.path );
 
 			// debug log file
 			if ( log.canDebug() ) {
@@ -417,7 +419,6 @@ component extends="cbadmin.handlers.baseHandler" {
 
 			// Announce it
 			announce( "fb_postFileUpload", iData );
-
 		} catch ( Any e ) {
 			data.errors   = true;
 			data.messages = $r( resource = "messages.error_uploading@fb", values = "#e.message# #e.detail#" );
