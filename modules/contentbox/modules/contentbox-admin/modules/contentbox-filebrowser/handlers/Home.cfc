@@ -150,37 +150,9 @@ component extends="cbadmin.handlers.baseHandler" {
 								filter = prc.fbSettings.extensionFilter,
 								sort = prc.fbPreferences.sorting,
 								recurse  = false,
-								type     = "all",
+								type     = prc.fbPreferences.listFolder == "dir" ? "dir" : "all",
 								absolute = "false"
 							).map( ( file ) => rc.verbose ? prc.activeDisk.info( file ) : file );
-
-		// if (
-		// 	structKeyExists( prc.fbPreferences, "listFolder" ) AND prc.fbPreferences.listFolder eq "dir" and structKeyExists(
-		// 		rc,
-		// 		"sorting"
-		// 	)
-		// ) {
-		// 	if ( prc.fbPreferences.sorting eq "lastmodified" ) {
-		// 		prc.fbPreferences.sorting = "datelastmodified";
-		// 	}
-		// 	var fileListQuery = new Query(
-		// 		dbType = "query",
-		// 		qry    = prc.fbListing,
-		// 		sql    = "select * from qry where type=:dir order by #prc.fbPreferences.sorting#"
-		// 	);
-
-		// 	fileListQuery.addParam(
-		// 		name      = "dir",
-		// 		value     = "dir",
-		// 		cfsqltype = "cf_sql_varchar"
-		// 	);
-
-		// 	prc.fbListing = fileListQuery.execute().getresult();
-
-		// 	if ( prc.fbPreferences.sorting eq "datelastmodified" ) {
-		// 		prc.fbPreferences.sorting = "lastmodified";
-		// 	}
-		// }
 
 		var iData = { directory : prc.fbCurrentRoot, listing : prc.fbListing };
 
