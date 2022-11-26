@@ -29,7 +29,8 @@
 	function $getURLMediaPath( required fbDirRoot, required filePath ){
 		var URLOut = replaceNoCase( arguments.filePath, arguments.fbDirRoot, "", "all" );
 		if( len( URLOut ) ){
-			URLOut = prc.fbSettings.mediaPath & URLOut;
+			// set our drive prefix and trim leading slashes on the path
+			URLOut = prc.fbSettings.mediaPath & "/" & prc.activeDisk.getName() & ":" & listToArray( URLOut, "/" ).toList( "/" );
 		}
 		return URLOut;
 	}
