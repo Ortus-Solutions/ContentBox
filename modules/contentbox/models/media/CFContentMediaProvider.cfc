@@ -29,14 +29,22 @@ component
 	 * @mediaPath.hint the media path to deliver back to the user
 	 */
 	any function deliverMedia( required mediaPath ){
-		var cbfsParts = listToArray( arguments.mediaPath );
+		var cbfsParts = listToArray( arguments.mediaPath, ":" );
 		var context = variables.requestService.getContext();
+		if( cbfsParts.len() > 1 ){
+			var disk = cbfs.get( cbfsParts[ 1 ] );
+			var file = disk.getAsBinary( cbfsParts[ 2 ] );
+			var mimeType = disk.mimeType( cbfsParts[ 2 ] );
+		} else {
+			var file = getRealMediaPath( arguments.mediaPath );
+			var mimeType = fileGetMimeType( file );
+		}
 
 		context.sendFile(
-			file = cbfsParts.len() > 1
-					? cbfs.get( cbfsParts[ 1 ] ).getAsBinary( arguments.mediaPath )
-					: getRealMediaPath( arguments.mediaPath ),
-			disposition = "inline"
+			file = file,
+			disposition = "inline",
+			mimeType = mimeType,
+			extension = listLast( arguments.mediaPath, "." )
 		);
 
 	}
