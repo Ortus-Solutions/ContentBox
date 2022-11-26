@@ -6,6 +6,7 @@ require( "./editors/editors.js" );
 require( "./editors/autosave.js" );
 
 window.bootbox = require( "bootbox" );
+require( "jquery-jcrop" );
 
 // GLOBAL STATIC
 const REGEX_LOWER = /[a-z]/,
