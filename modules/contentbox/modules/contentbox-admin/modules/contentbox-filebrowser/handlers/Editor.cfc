@@ -2,6 +2,7 @@
  * Image Editor
  */
 component extends="coldbox.system.EventHandler" {
+
 	property name="cb" inject="CBHelper@contentbox";
 
 	/**
@@ -128,7 +129,7 @@ component extends="coldbox.system.EventHandler" {
 			} else {
 				// read the image and create a ColdFusion image object
 				// read the image and create a ColdFusion image object --->
-				var path = findNoCase( "http", rc.imgPath ) ? rc.imgPath : prc.activeDisk.uri( rc.imgPath );
+				var path        = findNoCase( "http", rc.imgPath ) ? rc.imgPath : prc.activeDisk.uri( rc.imgPath );
 				var sourceImage = imageRead( path );
 			}
 
@@ -155,7 +156,7 @@ component extends="coldbox.system.EventHandler" {
 		if ( len( rc.imgPath ) ) {
 			if ( rc.imgEdited ) {
 				// read from in memory
-				if( !findNoCase( "http", rc.imgPath ) ){
+				if ( !findNoCase( "http", rc.imgPath ) ) {
 					rc.imgPath = event.getHTMLBaseURL() & listToArray( rc.imgPath, "/" ).toList( "/" )
 				}
 				if ( server.keyExists( "lucee" ) ) {
@@ -193,26 +194,26 @@ component extends="coldbox.system.EventHandler" {
 		var ext = "." & listLast( rc.imgPath, "." );
 
 		if ( len( rc.imgLoc ) ) {
-			if( !findNoCase( "http", rc.imgLoc ) ){
+			if ( !findNoCase( "http", rc.imgLoc ) ) {
 				rc.imgLoc = event.getHTMLBaseURL() & listToArray( rc.imgLoc, "/" ).toList( "/" )
 			}
 			var sourceImage = fileReadBinary( rc.imgLoc );
 			if ( rc.overwrite AND !len( rc.saveAs ) ) {
 				prc.activeDisk.create(
-					path = rc.imgPath,
-					contents = sourceImage,
+					path      = rc.imgPath,
+					contents  = sourceImage,
 					overwrite = rc.overwrite
 				);
 			} else if ( len( rc.saveAs ) ) {
 				prc.activeDisk.create(
-					path = rc.saveAs,
-					contents = sourceImage,
+					path      = rc.saveAs,
+					contents  = sourceImage,
 					overwrite = rc.overwrite
 				);
 			} else {
 				prc.activeDisk.create(
-					path = getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName,
-					contents = sourceImage,
+					path      = getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName,
+					contents  = sourceImage,
 					overwrite = rc.overwrite
 				);
 			}
@@ -236,4 +237,5 @@ component extends="coldbox.system.EventHandler" {
 			encodeForURL( arguments.imgName )
 		);
 	}
+
 }

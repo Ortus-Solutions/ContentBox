@@ -1,20 +1,20 @@
-component{
+component {
 
 	function configure(){
 		return {
 			// This flag enables/disables the tracking of request data to our storage facilities
 			// To disable all tracking, turn this master key off
-			enabled        : getSystemSetting( "CBDEBUGGER_ENABLED", false ),
+			enabled          : getSystemSetting( "CBDEBUGGER_ENABLED", false ),
 			// This setting controls if you will activate the debugger for visualizations ONLY
 			// The debugger will still track requests even in non debug mode.
-			debugMode      : true,
+			debugMode        : true,
 			// The URL password to use to activate it on demand
-			debugPassword  : "cb",
+			debugPassword    : "cb",
 			// This flag enables/disables the end of request debugger panel docked to the bottem of the page.
 			// If you disable i, then the only way to visualize the debugger is via the `/cbdebugger` endpoint
 			requestPanelDock : false,
 			// Request Tracker Options
-			requestTracker : {
+			requestTracker   : {
 				storage                      : "memory",
 				cacheName                    : "template",
 				trackDebuggerEvents          : false,
@@ -85,6 +85,6 @@ component{
 	}
 
 	function development( settings ){
-
 	}
+
 }

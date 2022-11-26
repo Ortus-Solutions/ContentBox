@@ -141,10 +141,7 @@ component {
 			default: {
 				event.setView( "sitemap_html" );
 				return {
-					data : layout(
-						module     = event.getCurrentLayoutModule(),
-						viewModule = event.getCurrentViewModule()
-					),
+					data        : layout( module = event.getCurrentLayoutModule(), viewModule = event.getCurrentViewModule() ),
 					contentType : "text/html"
 				};
 			}

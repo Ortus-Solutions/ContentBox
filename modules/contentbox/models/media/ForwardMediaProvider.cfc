@@ -5,17 +5,13 @@
  * ---
  * Deliver file via pagecontext forward
  */
-component
-	accessors ="true"
-	extends="BaseProvider"
-	singleton
-{
+component accessors="true" extends="BaseProvider" singleton {
 
 	/**
 	 * Constructor
 	 */
 	any function init(){
-		variables.name = "ForwardMediaProvider";
+		variables.name        = "ForwardMediaProvider";
 		variables.displayName = "Forward Media Provider";
 		variables.description = "This provider will forward to the real physical location in the server for the media path requested via the internal servlet
 		page context, so no real media path URL will be shown to the user. Use only if the media root is web accessible and a relative web root path, so double check your media root.";

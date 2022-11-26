@@ -41,9 +41,9 @@ component {
 				"firewall" : {
 					"rules" : {
 						"provider" : {
-							"source" : "model",
+							"source"     : "model",
 							"properties" : {
-								"model" : "securityRuleService@contentbox",
+								"model"  : "securityRuleService@contentbox",
 								"method" : "getSecurityRules"
 							}
 						}
@@ -154,7 +154,7 @@ component {
 
 		var diskService = wirebox.getInstance( "cbfs" );
 
-		if( !diskService.has( "contentbox" ) ){
+		if ( !diskService.has( "contentbox" ) ) {
 			diskService.register(
 				"contentbox",
 				"Local",

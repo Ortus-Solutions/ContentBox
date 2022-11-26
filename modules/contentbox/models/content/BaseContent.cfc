@@ -59,8 +59,8 @@ component
 		persistent="false";
 
 	property
-		name="mediaService"
-		inject="provider:MediaService@contentbox"
+		name      ="mediaService"
+		inject    ="provider:MediaService@contentbox"
 		persistent="false";
 
 	/**
@@ -721,18 +721,21 @@ component
 	}
 
 	/**
-	* Returns the URL of the featured image
-	*/
+	 * Returns the URL of the featured image
+	 */
 	function getFeaturedImageURL(){
 		var featured = getFeaturedImage();
-		return !isNull( featured ) && len( featured ) ?
-			(
-				find( ":", featured )
-					? '/_media/' & featured
-					// legacy column values without disk annoations
-					: replaceNoCase( featured, mediaService.getCoreMediaRoot(), "/media" )
+		return !isNull( featured ) && len( featured ) ? (
+			find( ":", featured )
+			 ? "/_media/" & featured
+			// legacy column values without disk annoations
+			 : replaceNoCase(
+				featured,
+				mediaService.getCoreMediaRoot(),
+				"/media"
 			)
-			: "";
+		)
+		 : "";
 	}
 
 	/**
