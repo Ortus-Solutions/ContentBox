@@ -9,7 +9,7 @@
 <div
 	id="publishingPanel"
 	x-data="{
-		isPublished : #prc.oContent.getIsPublished() ? true : false#,
+		isPublished : #( prc.oContent.isLoaded() && prc.oContent.getIsPublished() ? 'true' : 'false' )#,
 		publishingPanelOpen : false,
 		togglePublishingPanel(){
 			this.publishingPanelOpen = !this.publishingPanelOpen
@@ -163,16 +163,6 @@
 		x-transition
 	>
 		<div class="btn-group">
-			<!--- QUICK SAVE --->
-			<button
-				type="button"
-				class="btn"
-				:class="isPublished ? 'btn-default' : 'btn-info'"
-				onclick="quickSave()"
-				title="Save as draft and continue editing"
-			>
-				Save As Draft
-			</button>
 			<!--- QUICK SAVE OPTIONS --->
 			<button
 				type="button"
@@ -183,12 +173,25 @@
 				aria-expanded="false"
 				title="Save Options"
 			>
-				<span class="caret"></span>
+				Save
+				&nbsp;&nbsp;<span class="caret"></span>
 				<span class="sr-only">Toggle Dropdown</span>
 			</button>
 			<ul class="dropdown-menu">
 				<li>
-					<a href="javascript:quickPublish( true )">Save and Close</a>
+					<a
+						onclick="quickSave()"
+						title="Save as draft and continue editing"
+					>Save as Draft</a>
+				</li>
+				<li>
+					<a href="javascript:quickPublish( true )">Save Draft and Close</a>
+				</li>
+				<li>
+					<a
+						onclick="saveAsContentTemplate()"
+						title="Save content in its current state as a new template"
+					>Save as New Template</a>
 				</li>
 			</ul>
 		</div>

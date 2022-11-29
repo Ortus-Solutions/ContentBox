@@ -326,6 +326,7 @@ component accessors="true" threadSafe singleton {
 		prc.xehEntries       = "#this.ADMIN_ENTRYPOINT#.entries";
 		prc.xehEntriesEditor = "#this.ADMIN_ENTRYPOINT#.entries.editor";
 		prc.xehCategories    = "#this.ADMIN_ENTRYPOINT#.categories";
+		prc.xehTemplates     = "#this.ADMIN_ENTRYPOINT#.contentTemplates";
 
 		// Content Tab
 		prc.xehPages        = "#this.ADMIN_ENTRYPOINT#.pages";
@@ -378,6 +379,13 @@ component accessors="true" threadSafe singleton {
 		// Content
 		addTopMenu( name = this.CONTENT, label = "<i class='fa fa-archive'></i> Content" )
 			.addSubMenu(
+				name        = "Pages",
+				label       = "Sitemap",
+				href        = variables.buildLink,
+				href_to     = prc.xehPages,
+				permissions = "PAGES_ADMIN,PAGES_EDITOR"
+			)
+			.addSubMenu(
 				topMenu     = this.CONTENT,
 				name        = "Blog",
 				label       = "Blog",
@@ -386,18 +394,25 @@ component accessors="true" threadSafe singleton {
 				permissions = "ENTRIES_ADMIN,ENTRIES_EDITOR"
 			)
 			.addSubMenu(
-				name        = "Categories",
-				label       = "Categories",
-				href        = variables.buildLink,
-				href_to     = prc.xehCategories,
-				permissions = "CATEGORIES_ADMIN"
-			)
-			.addSubMenu(
 				name        = "contentStore",
 				label       = "Content Store",
 				href        = variables.buildLink,
 				href_to     = prc.xehContentStore,
 				permissions = "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR"
+			)
+			.addSubMenu(
+				name        = "Content Templates",
+				label       = "Content Templates",
+				href        = variables.buildLink,
+				href_to     = prc.xehTemplates,
+				permissions = "PAGES_ADMIN"
+			)
+			.addSubMenu(
+				name        = "Categories",
+				label       = "Categories",
+				href        = variables.buildLink,
+				href_to     = prc.xehCategories,
+				permissions = "CATEGORIES_ADMIN"
 			)
 			.addSubMenu(
 				name        = "mediaManager",
@@ -412,13 +427,6 @@ component accessors="true" threadSafe singleton {
 				href        = variables.buildLink,
 				href_to     = prc.xehMenuManager,
 				permissions = "MENUS_ADMIN"
-			)
-			.addSubMenu(
-				name        = "Pages",
-				label       = "Sitemap",
-				href        = variables.buildLink,
-				href_to     = prc.xehPages,
-				permissions = "PAGES_ADMIN,PAGES_EDITOR"
 			);
 
 		// Comments

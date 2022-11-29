@@ -4,6 +4,8 @@ window.contentListHelper = require( "./contentList.js" ).default;
 require( "./filebrowser.js" );
 require( "./editors/editors.js" );
 require( "./editors/autosave.js" );
+require ( "@alpinejs/ui" );
+require ( "@alpinejs/focus" );
 
 window.bootbox = require( "bootbox" );
 

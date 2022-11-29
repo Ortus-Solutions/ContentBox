@@ -27,6 +27,7 @@ $context-menu-icon-font-path: "../../../dist/font/";
 // Static vendor files
 @import "../vendor/css/bootstrap-fileupload.css";
 @import "../vendor/css/date.css";
+@import "~tippy.js/dist/tippy.css";
 
 // Variables, Mixins
 @import "theme/_variables.scss";

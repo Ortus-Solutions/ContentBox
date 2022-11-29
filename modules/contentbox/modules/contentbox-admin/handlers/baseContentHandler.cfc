@@ -20,6 +20,7 @@ component extends="baseHandler" {
 	property name="customFieldService" inject="customFieldService@contentbox";
 	property name="editorService" inject="editorService@contentbox";
 	property name="contentService" inject="contentService@contentbox";
+	property name="templateService" inject="ContentTemplateService@contentbox";
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -64,6 +65,13 @@ component extends="baseHandler" {
 
 		// get all authors
 		prc.authors = variables.authorService.getAll( sortOrder = "lastName" );
+
+		// Get all available content templates
+		prc.availableTemplates = variables.templateService.getAvailableForContentType(
+			contentType = variables.ormService.new().getContentType(),
+			site        = prc.oCurrentSite,
+			fields      = "templateID,name"
+		);
 
 		// get all categories
 		prc.categories = variables.categoryService.list(
@@ -269,13 +277,31 @@ component extends="baseHandler" {
 				event          = "contentbox-admin:versions.pager",
 				eventArguments = { contentID : rc.contentID }
 			);
+		} else {
+			prc.oContent.setSite( prc.oCurrentSite );
+			if ( rc.keyExists( "contentTemplate" ) && len( rc.contentTemplate ) ) {
+				prc.oContent.setContentTemplate( variables.templateService.get( rc.contentTemplate ) );
+			} else if ( rc.keyExists( "parentId" ) && len( rc.parentId ) ) {
+				// The UI will pick this up and handle the assignment
+				prc.oContent.setParent( variables.ormService.get( rc.parentId ) );
+			}
 		}
 		// Get all content names for parent drop downs excluding yourself and your children
 		prc.allContent = variables.ormService
 			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
 			.filter( function( item ){
-				return prc.oContent.isLoaded() ? !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] ) : true;
+				return prc.oContent.isLoaded() ? !reFindNoCase(
+					"#prc.oContent.getSlug()#\/?",
+					arguments.item[ "slug" ]
+				) : true;
 			} );
+
+		// Get all available content templates
+		prc.availableTemplates = variables.templateService.getAvailableForContentType(
+			contentType = prc.oContent.getContentType(),
+			site        = prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
+			fields      = "templateID,name"
+		);
 
 		// Provide JWT Tokens for communicating with the API
 		prc.jwtTokens     = jwtAuth().fromUser( prc.oCurrentAuthor );
@@ -346,6 +372,7 @@ component extends="baseHandler" {
 			.paramValue( "publishedDate", now() )
 			.paramValue( "publishedHour", timeFormat( rc.publishedDate, "HH" ) )
 			.paramValue( "publishedMinute", timeFormat( rc.publishedDate, "mm" ) )
+			.paramValue( "saveAsTemplate", false )
 			.paramValue(
 				"publishedTime",
 				event.getValue( "publishedHour" ) & ":" & event.getValue( "publishedMinute" )
@@ -374,7 +401,12 @@ component extends="baseHandler" {
 		// get new/persisted page and populate it with incoming data.
 		var oContent     = variables.ormService.get( rc.contentID );
 		var originalSlug = oContent.getSlug();
-		populate( model: oContent, exclude = "contentID,siteID" )
+		variables.ormService
+			.populate(
+				target  = oContent,
+				memento = rc,
+				exclude = "contentID,siteID"
+			)
 			.addJoinedPublishedtime( rc.publishedTime )
 			.addJoinedExpiredTime( rc.expireTime );
 		var isNew = ( NOT oContent.isLoaded() );
@@ -437,6 +469,12 @@ component extends="baseHandler" {
 		oContent.inflateCustomFields( rc.customFieldsCount, rc );
 		// Inflate Related Content into the page
 		oContent.inflateRelatedContent( rc.relatedContentIDs );
+		// If directed to create a template from the content item, do this now and assign it
+		if ( rc.saveAsTemplate ) {
+			var template = templateService.newFromContentItem( oContent );
+			templateService.save( template )
+			oContent.setContentTemplate( template );
+		}
 		// announce event
 		announce(
 			"cbadmin_pre#variables.Entity#Save",

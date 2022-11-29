@@ -41,9 +41,9 @@ component {
 				"firewall" : {
 					"rules" : {
 						"provider" : {
-							"source" : "model",
+							"source"     : "model",
 							"properties" : {
-								"model" : "securityRuleService@contentbox",
+								"model"  : "securityRuleService@contentbox",
 								"method" : "getSecurityRules"
 							}
 						}

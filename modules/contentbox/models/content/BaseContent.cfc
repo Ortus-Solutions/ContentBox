@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -36,6 +36,11 @@ component
 	property
 		name      ="contentVersionService"
 		inject    ="provider:contentVersionService@contentbox"
+		persistent="false";
+
+	property
+		name      ="contentTemplateService"
+		inject    ="provider:ContentTemplateService@contentbox"
 		persistent="false";
 
 	property
@@ -402,6 +407,20 @@ component
 		fetch    ="join"
 		lazy     ="true";
 
+	property
+		name     ="contentTemplate"
+		fieldtype="many-to-one"
+		cfc      ="contentbox.models.content.ContentTemplate"
+		fkcolumn ="FK_contentTemplateID"
+		lazy     ="true";
+
+	property
+		name     ="childContentTemplate"
+		fieldtype="many-to-one"
+		cfc      ="contentbox.models.content.ContentTemplate"
+		fkcolumn ="FK_childContentTemplateID"
+		lazy     ="true";
+
 	/**
 	 * --------------------------------------------------------------------------
 	 * CALCULATED FIELDS
@@ -476,6 +495,7 @@ component
 			"comments",
 			"commentSubscriptions",
 			"contentVersions",
+			"contentTemplate",
 			"customFields",
 			"linkedContent",
 			"parent",
@@ -485,7 +505,7 @@ component
 		],
 		neverInclude : [ "passwordProtection" ],
 		mappers      : {},
-		defaults     : { stats : {} },
+		defaults     : { "stats" : {}, "contentTemplate" : {} },
 		profiles     : {
 			response : {
 				defaultIncludes : [
@@ -523,6 +543,7 @@ component
 					"contentID",
 					"contentType",
 					"createdDate",
+					"contentTemplate",
 					"creatorSnapshot:creator",
 					"expireDate",
 					"featuredImage",
@@ -721,6 +742,27 @@ component
 	 */
 	numeric function getNumberOfActiveVersions(){
 		return ( isLoaded() ? variables.contentVersionService.getNumberOfVersions( getContentId(), true ) : 0 );
+	}
+
+
+	/**
+	 * Getter overload to return either the assigned template or the global template for the site
+	 *
+	 * @note The hierarchy for templates is local, parent assigned, and then any globals
+	 */
+	any function getContentTemplate(){
+		return !isNull( variables.contentTemplate )
+		 ? variables.contentTemplate
+		 : (
+			!isNull( getParent() ) && !isNull( getParent().getChildContentTemplate() )
+			 ? getParent().getChildContentTemplate()
+			 : getContentTemplateService()
+				.newCriteria()
+				.isEq( "contentType", getContentType() )
+				.isEq( "site", getSite() )
+				.isEq( "isGlobal", javacast( "boolean", true ) )
+				.get()
+		);
 	}
 
 	/**
@@ -1268,6 +1310,8 @@ component
 			variables.showInSearch           = arguments.original.getShowInSearch();
 			variables.featuredImage          = arguments.original.getFeaturedImage();
 			variables.featuredImageURL       = arguments.original.getFeaturedImageURL();
+			variables.contentTemplate        = arguments.original.getContentTemplate();
+			variables.childContentTemplate   = arguments.original.getChildContentTemplate();
 			variables.comments               = [];
 			variables.children               = [];
 
@@ -1352,6 +1396,7 @@ component
 			}
 		}
 		// end of cloning transaction
+		variables.contentService.evict( arguments.original );
 
 		return this;
 	}
@@ -1718,6 +1763,70 @@ component
 		}
 
 		return this;
+	}
+
+	/**
+	 * Apply any assigned content templates to this instance
+	 */
+	BaseContent function applyContentTemplate(){
+		var template = getContentTemplate();
+		if ( !isNull( template ) ) {
+			var definition = template.getDefintion();
+			for ( var key in definition ) {
+				var currentValue = invoke( this, "get" & key );
+				if ( isNull( currentValue ) || isNumeric( currentVal ) || isBoolean( currentVal ) ) {
+					invoke(
+						this,
+						"populate",
+						{ "memento" : { "#key#" : definition[ key ].value } }
+					);
+				} else if ( isArray( currentVal ) ) {
+					switch ( key ) {
+						case "customFields": {
+							var existingFields = getCustomFieldsAsStruct().keyArray();
+							definition[ key ].each( function( item ){
+								if ( !existingFields.contains( item.name ) ) {
+									var thisField = customFieldService.new(
+										properties = { "key" : item.name, "value" : item.defaultValue ?: "" }
+									);
+									thisField.setRelatedContent( this );
+									addCustomField( thisField );
+								}
+							} );
+							break;
+						}
+						case "categories": {
+							if ( hasCategories() ) {
+								var existingCategories = getCategories().map( function( cat ){
+									return cat.getCategoryID();
+								} );
+								definition[ key ].value.append( existingCategories, true );
+							}
+							invoke(
+								this,
+								"populate",
+								{
+									"memento" : {
+										"#key#" : listToArray(
+											listRemoveDuplicates( arrayToList( definition[ key ].value ) )
+										)
+									}
+								}
+							);
+						}
+						default: {
+							invoke(
+								this,
+								"populate",
+								{ "memento" : { "#key#" : definition[ key ].value } }
+							);
+						}
+					}
+				} else if ( !len( currentVal ) ) {
+					invoke( this, "set" & key, [ definition[ key ].value ] );
+				}
+			}
+		}
 	}
 
 }

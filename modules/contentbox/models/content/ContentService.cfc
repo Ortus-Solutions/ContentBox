@@ -368,7 +368,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 			if ( arguments.content.hasLinkedContent() ) {
 				arguments.content.removeAllLinkedContent();
 			}
-			variables.relocationService.deleteWhere( relatedContent=arguments.content );
+			variables.relocationService.deleteWhere( relatedContent = arguments.content );
 			if ( arguments.content.hasChild() ) {
 				var aItemsToDelete = [];
 				for ( var thisChild in arguments.content.getChildren() ) {
@@ -1156,7 +1156,8 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		sortOrder = "title asc",
 		boolean isPublished,
 		boolean showInSearch,
-		string siteID = ""
+		string siteID      = "",
+		string contentType = ""
 	){
 		var c = newCriteria();
 
@@ -1179,6 +1180,10 @@ component extends="cborm.models.VirtualEntityService" singleton {
 		// Site Filter
 		if ( len( arguments.siteID ) ) {
 			c.isEq( "site.siteID", arguments.siteID );
+		}
+
+		if ( len( arguments.contentType ) ) {
+			c.isEq( "contentType", arguments.contentType );
 		}
 
 		// Show in Search

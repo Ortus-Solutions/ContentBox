@@ -20,7 +20,8 @@ module.exports = function(mix) {
         },
         resolve: {
             alias: {
-              jQuery : "jquery"
+              jQuery : "jquery",
+              Popper : "@popperjs/core"
             }
         },
         plugins: [
@@ -33,7 +34,8 @@ module.exports = function(mix) {
                 jQuery         :"jquery",
                 _              : "lodash",
                 Raphael        : "raphael",
-                jwerty         : "jwerty"
+                jwerty         : "jwerty",
+                Popper         : "@popperjs/core"
             } ),
             {
                 apply: (compiler) => {

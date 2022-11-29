@@ -16,8 +16,67 @@
 
 		<div id="modifiers" class="panel-collapse collapse">
 			<div class="panel-body">
+				<div class="form-group">
+					<label for="contentTemplate" class="control-label">
+						<i class="fa fa-map"></i>
+						Content Template:
+					</label>
+					<cfif prc.availableTemplates.len()>
+						<select
+							name="contentTemplate"
+							id="contentTemplate"
+							class="form-control input-sm"
+							@change="applyContentTemplate"
+						>
+								<option value="null">- No Template -</option>
+								<cfloop array="#prc.availableTemplates#" item="template" index="i">
+									<option value="#template[ "templateID" ]#"<cfif !isNull( prc.oContent.getContentTemplate() ) && prc.oContent.getContentTemplate().getTemplateID() == template[ "templateID" ]> selected</cfif>>
+										#template[ "name" ]#
+									</option>
+								</cfloop>
+						</select>
+						<p class="text-muted text-center hidden template-highlight-info">
+							<span style="width: 10px;height:10px; display:inline-block; margin-right: 10px; border: 1px ##efefef solid" class="template-defined"></span> <small>Template defined fields are shown with this background color.</small>
+						</p>
+					<cfelse>
+						<p class="text-muted text-center">
+							No Content Templates are Currently Available
+							<br/><br/>
+							<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehTemplates & "##create-" & prc.oContent.getContentType() )#" target="_blank"><i class="fa fa-plus"></i> Create Template</a>
+						</p>
+					</cfif>
+
+				</div>
 
 				<cfif prc.oContent.getContentType() NEQ "Entry">
+
+					<div class="form-group">
+						<label for="childContentTemplate" class="control-label">
+							<i class="fa fa-map"></i>
+							Child Content Template:
+						</label>
+						<cfif prc.availableTemplates.len()>
+							<select
+								name="childContentTemplate"
+								id="childContentTemplate"
+								class="form-control input-sm"
+							>
+									<option value="null">- No Template -</option>
+									<cfloop array="#prc.availableTemplates#" item="template" index="i">
+										<option value="#template[ "templateID" ]#"<cfif !isNull( prc.oContent.getChildContentTemplate() ) && prc.oContent.getChildContentTemplate().getTemplateID() == template[ "templateID" ]> selected</cfif>>
+											#template[ "name" ]#
+										</option>
+									</cfloop>
+							</select>
+						<cfelse>
+							<p class="text-muted text-center">
+								No Content Templates are Currently Available
+								<br/><br/>
+								<a class="btn btn-primary btn-sm" href="#event.buildLink( prc.xehTemplates & "##create-" & prc.oContent.getContentType() )#" target="_blank"><i class="fa fa-plus"></i> Create Template</a>
+							</p>
+						</cfif>
+
+					</div>
 					<!--- Parent --->
 					<div class="form-group">
 						<label for="parentContent" class="control-label">
