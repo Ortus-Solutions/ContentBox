@@ -290,14 +290,16 @@ component extends="baseHandler" {
 		prc.allContent = variables.ormService
 			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
 			.filter( function( item ){
-				return !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] );
+				return prc.oContent.isLoaded() ? !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] ) : true;
 			} );
+
 		// Get all available content templates
 		prc.availableTemplates = variables.templateService.getAvailableForContentType(
 			contentType = prc.oContent.getContentType(),
 			site        = prc.oContent.isLoaded() ? prc.oContent.getSite() : prc.oCurrentSite,
 			fields      = "templateID,name"
 		);
+
 		// Provide JWT Tokens for communicating with the API
 		prc.jwtTokens     = jwtAuth().fromUser( prc.oCurrentAuthor );
 		// Get All registered editors so we can display them
