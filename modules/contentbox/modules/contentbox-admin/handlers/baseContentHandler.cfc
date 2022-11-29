@@ -290,7 +290,10 @@ component extends="baseHandler" {
 		prc.allContent = variables.ormService
 			.getAllFlatContent( sortOrder: "slug asc", siteID: prc.oCurrentSite.getsiteID() )
 			.filter( function( item ){
-				return prc.oContent.isLoaded() ? !reFindNoCase( "#prc.oContent.getSlug()#\/?", arguments.item[ "slug" ] ) : true;
+				return prc.oContent.isLoaded() ? !reFindNoCase(
+					"#prc.oContent.getSlug()#\/?",
+					arguments.item[ "slug" ]
+				) : true;
 			} );
 
 		// Get all available content templates
