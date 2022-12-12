@@ -41,7 +41,9 @@ component accessors="true" extends="BaseProvider" singleton {
 		response.setContentType( createObject( "java", "java.net.URLConnection" ).guessContentTypeFromName( listLast( publicURL, "/" ) ) );
 
 		if( connection.getResponseCode() > 399 ){
-			response.flushBuffer()
+			response.flushBuffer();
+			inputStream.close();
+			connection.disconnect();
 			abort;
 		}
 
