@@ -122,7 +122,7 @@
 			<cfif NOT reFindNoCase( prc.fbNameFilter, item.name )><cfcontinue></cfif>
 
 			<!--- ID Name of the div --->
-			<cfset validIDName = encodeForHTMLAttribute( replace( item.name, ".", "_" ) ) >
+			<cfset validIDName = encodeForHTMLAttribute( reReplace( item.name, "[^0-9A-Za-z]", "-", "all" ) ) >
 
 			<!--- URL used for selection --->
 			<cfset plainURL = prc.fbCurrentRoot & "/" & item.name>
@@ -344,6 +344,7 @@
 		}else{
 			$selectedItemID.val( $sItem.attr( "id" ) );
 		}
+
 		// save selection
 		if( $selectedItem.val() != '' ){
 			var selectedFiles = $selectedItem.val();

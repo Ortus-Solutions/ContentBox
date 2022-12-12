@@ -104,11 +104,13 @@ function fbUrl(){
 	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
 	// get ID
 	var thisID 		= $selectedItemID.val();
+
 	var target 		= $( "##"+thisID);
+
 	// prompt the URL
 	bootbox.prompt( { 	title: 'URL:',
 						inputType: "text",
-						value: "#event.buildLink( '' )#" + target.attr( "data-relurl" ).substring(1),
+						value: "#event.buildLink( '' )#" + target.attr( "data-relUrl" ).substring(1),
 						callback: function(result){}
 	});
 
