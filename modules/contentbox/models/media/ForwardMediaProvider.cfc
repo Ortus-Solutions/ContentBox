@@ -34,7 +34,13 @@ component accessors="true" extends="BaseProvider" singleton {
 
 		var outputStream = response.getOutputStream();
 
-		var inputStream = connection.getInputStream();
+		try{
+			var inputStream = connection.getInputStream();
+		} catch( any e ){
+			connection.disconnect();
+			rethrow;
+		}
+
 
 		response.setStatus( connection.getResponseCode(), connection.getResponseMessage() );
 
@@ -43,7 +49,6 @@ component accessors="true" extends="BaseProvider" singleton {
 		if( connection.getResponseCode() > 399 ){
 			response.flushBuffer();
 			inputStream.close();
-			connection.disconnect();
 			abort;
 		}
 
