@@ -28,20 +28,18 @@ component accessors="true" extends="BaseProvider" singleton {
 		var cbfsParts = listToArray( arguments.mediaPath, ":" );
 		var context   = variables.requestService.getContext();
 		if ( cbfsParts.len() > 1 ) {
-			var disk     = cbfs.get( cbfsParts[ 1 ] );
-			var file     = disk.getAsBinary( cbfsParts[ 2 ] );
-			var mimeType = disk.mimeType( cbfsParts[ 2 ] );
+			return cbfs.get( cbfsParts[ 1 ] ).download();
 		} else {
 			var file     = getRealMediaPath( arguments.mediaPath );
 			var mimeType = fileGetMimeType( file );
-		}
+			context.sendFile(
+				file        = file,
+				disposition = "inline",
+				mimeType    = mimeType,
+				extension   = listLast( arguments.mediaPath, "." )
+			);
 
-		context.sendFile(
-			file        = file,
-			disposition = "inline",
-			mimeType    = mimeType,
-			extension   = listLast( arguments.mediaPath, "." )
-		);
+		}
 	}
 
 }

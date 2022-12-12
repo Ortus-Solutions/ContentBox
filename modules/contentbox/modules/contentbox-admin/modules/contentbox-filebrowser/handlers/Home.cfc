@@ -292,7 +292,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		if ( arrayLen( rc.pathsArray ) > 1 ) {
 			cfzip( action = "zip", file = "#getTempDirectory()#\download.zip" ) {
 				for ( var thisFile in rc.pathsArray ) {
-					cfzipParam( content = prc.activeDisk.getAsBinary( thisFile ), entryPath = thisFile );
+					cfzipParam( content = prc.activeDisk.get( thisFile ), entryPath = thisFile );
 				}
 			}
 			rc.path = "#getTempDirectory()#\download.zip";
@@ -307,7 +307,7 @@ component extends="cbadmin.handlers.baseHandler" {
 
 			// Serve the file
 			event.sendFile(
-				file      = rc.pathsArray.len() > 1 ? rc.path : prc.activeDisk.getAsBinary( rc.path ),
+				file      = rc.pathsArray.len() > 1 ? rc.path : prc.activeDisk.get( rc.path ),
 				extension = listLast( rc.path, "." )
 			);
 
@@ -402,12 +402,14 @@ component extends="cbadmin.handlers.baseHandler" {
 			);
 
 			iData.results = prc.activeDisk
-				.create(
-					path      = rc.path & "/" & upload.clientfile,
-					contents  = fileReadBinary( upload.serverDirectory & "/" & upload.serverFile ),
-					overwrite = true
-				)
-				.info( rc.path );
+								.createFromFile(
+									source  = upload.serverDirectory & "/" & upload.serverFile,
+									directory = rc.path,
+									name = upload.clientfile,
+									overwrite = true,
+									deleteSource = true
+								)
+								.info( rc.path );
 
 			// debug log file
 			if ( log.canDebug() ) {

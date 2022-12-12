@@ -38,7 +38,7 @@ component accessors="true" singleton {
 	package function getPublicURL( required mediaPath ){
 		var cbfsParts = listToArray( arguments.mediaPath, ":" );
 		return cbfsParts.len() > 1
-		 ? cbfs.get( cbfsParts[ 1 ] ).uri( cbfsParts[ 2 ] )
+		 ? cbfs.get( cbfsParts[ 1 ] ).url( cbfsParts[ 2 ] )
 		 : mediaService.getCoreMediaRoot() & "/" & arguments.mediaPath;
 	}
 
