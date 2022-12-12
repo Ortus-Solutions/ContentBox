@@ -402,14 +402,14 @@ component extends="cbadmin.handlers.baseHandler" {
 			);
 
 			iData.results = prc.activeDisk
-								.createFromFile(
-									source  = upload.serverDirectory & "/" & upload.serverFile,
-									directory = rc.path,
-									name = upload.clientfile,
-									overwrite = true,
-									deleteSource = true
-								)
-								.info( rc.path );
+				.createFromFile(
+					source       = upload.serverDirectory & "/" & upload.serverFile,
+					directory    = rc.path,
+					name         = upload.clientfile,
+					overwrite    = true,
+					deleteSource = true
+				)
+				.info( rc.path );
 
 			// debug log file
 			if ( log.canDebug() ) {

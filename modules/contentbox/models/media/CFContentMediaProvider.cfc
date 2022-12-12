@@ -38,7 +38,6 @@ component accessors="true" extends="BaseProvider" singleton {
 				mimeType    = mimeType,
 				extension   = listLast( arguments.mediaPath, "." )
 			);
-
 		}
 	}
 
