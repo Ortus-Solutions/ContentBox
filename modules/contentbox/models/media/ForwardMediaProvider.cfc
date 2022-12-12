@@ -33,9 +33,9 @@ component accessors="true" extends="BaseProvider" singleton {
 
 		var outputStream = response.getOutputStream();
 
-		try{
+		try {
 			var inputStream = connection.getInputStream();
-		} catch( any e ){
+		} catch ( any e ) {
 			connection.disconnect();
 			rethrow;
 		}
