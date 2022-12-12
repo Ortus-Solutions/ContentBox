@@ -119,6 +119,9 @@ var app = function() {
 	};
 }();
 
+require( "./alpine/tooltip" );
+require( "./alpine/confirm" );
+
 document.addEventListener( "DOMContentLoaded", () => {
 	app.init();
 	// Collapsed nav if <=768 by default

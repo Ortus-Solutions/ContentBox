@@ -50,7 +50,7 @@
 							<div class="text-right">
 								<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-info btn-sm" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
@@ -110,11 +110,35 @@
 								    	</ul>
 								    </div>
 								</cfif>
-								<a
-									class="btn btn-primary text-white"
-									href="#event.buildLink( prc.xehEntryEditor )#">
-									Create Entry
-								</a>
+								<div class="btn-group">
+									<button class="btn dropdown-toggle btn-primary btn-sm" data-toggle="dropdown">
+										<i class="fa fa-plus"></i> New <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu list-unstyled">
+										<cfif prc.availableTemplates.len()>
+											<li class="dropdown-header"><i class="fa fa-map-o"></i> From Template:</li>
+											<cfloop array="#prc.availableTemplates#" item="template">
+												<li class="mb-5">
+													<a
+														href="#event.buildLink( prc.xehEntryEditor & "?contentTemplate=" & #encodeForHTMLAttribute( template[ "templateID" ] )# )#"
+													><small><i class="fa fa-plus"></i> #template[ "name" ]#</small></a>
+												</li>
+											</cfloop>
+											<li role="separator" class="divider"></li>
+
+										</cfif>
+											<li class="mb-5">
+												<a
+													href="#event.buildLink( prc.xehEntryEditor )#"
+												>
+												<i class="fa fa-plus"></i> Blank Entry
+												</a>
+											</li>
+										<li class="mb-5">
+											<a href="#event.buildLink( prc.xehTemplates & "##create-Entry" )#"><i class="fa fa-map-o"></i> New Template</a>
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>

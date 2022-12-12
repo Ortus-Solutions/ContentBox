@@ -1683,9 +1683,38 @@ VALUES
 	('2022_11_17_234941_v_6_0_0_SecurityRules-cbsecurity3','2022-11-21 19:38:19');
 
 /*!40000 ALTER TABLE `cfmigrations` ENABLE KEYS */;
+
 UNLOCK TABLES;
 
+DROP TABLE IF EXISTS `cb_contentTemplate`;
 
+CREATE TABLE `cb_contentTemplate` (
+  `templateID` varchar(36) NOT NULL,
+  `createdDate` datetime NOT NULL,
+  `modifiedDate` datetime NOT NULL,
+  `isDeleted` bit(1) NOT NULL,
+  `isGlobal` bit(1) NOT NULL,
+  `contentType` varchar(50) DEFAULT NULL,
+  `name` varchar(225) NOT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `definition` longtext NOT NULL,
+  `FK_authorID` varchar(36) NOT NULL,
+  `FK_siteID` varchar(36) NOT NULL,
+  PRIMARY KEY (`templateID`),
+  KEY `FKDC43A033AA6AC0EA` (`FK_authorID`),
+  KEY `FKDC43A033988947A2` (`FK_siteID`),
+  KEY `idx_templateContentType` (`contentType`),
+  CONSTRAINT `FK5mi1odosgnbuau2gh3b87u5f4` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
+  CONSTRAINT `FKDC43A033988947A2` FOREIGN KEY (`FK_siteID`) REFERENCES `cb_site` (`siteID`),
+  CONSTRAINT `FKDC43A033AA6AC0EA` FOREIGN KEY (`FK_authorID`) REFERENCES `cb_author` (`authorID`),
+  CONSTRAINT `FKljvcfnipuvmuig30e4wcugg9p` FOREIGN KEY (`FK_siteID`) REFERENCES `cb_site` (`siteID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `cb_content`
+ADD COLUMN `FK_contentTemplateID` varchar(36) NULL AFTER `FK_siteID`,
+ADD COLUMN `FK_childContentTemplateID` varchar(36) NULL AFTER `FK_contentTemplateID`,
+ADD CONSTRAINT `fk_cb_content_FK_contentTemplateID` FOREIGN KEY (`FK_contentTemplateID`) REFERENCES `cb_contentTemplate` (`templateID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+ADD CONSTRAINT `fk_cb_content_FK_childContentTemplateID` FOREIGN KEY (`FK_childContentTemplateID`) REFERENCES `cb_contentTemplate` (`templateID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

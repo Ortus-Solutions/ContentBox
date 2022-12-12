@@ -7,7 +7,7 @@ component {
 			enabled          : getSystemSetting( "CBDEBUGGER_ENABLED", false ),
 			// This setting controls if you will activate the debugger for visualizations ONLY
 			// The debugger will still track requests even in non debug mode.
-			debugMode        : true,
+			debugMode        : false,
 			// The URL password to use to activate it on demand
 			debugPassword    : "cb",
 			// This flag enables/disables the end of request debugger panel docked to the bottem of the page.
@@ -15,7 +15,7 @@ component {
 			requestPanelDock : false,
 			// Request Tracker Options
 			requestTracker   : {
-				storage                      : "memory",
+				storage                      : "cachebox",
 				cacheName                    : "template",
 				trackDebuggerEvents          : false,
 				// Expand by default the tracker panel or not

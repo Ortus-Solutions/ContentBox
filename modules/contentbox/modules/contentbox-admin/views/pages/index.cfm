@@ -45,8 +45,8 @@
 							<div class="text-right">
 								<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
-											Bulk Actions <span class="caret"></span>
+								    	<button class="btn dropdown-toggle btn-info btn-sm" data-toggle="dropdown">
+											<i class="fa fa-gears"></i> Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
@@ -107,12 +107,34 @@
 											</li>
 								    	</ul>
 								    </div>
-									<a
-										class="btn btn-primary text-white"
-										href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
-									>
-										Create Page
-									</a>
+									<div class="btn-group">
+										<button class="btn dropdown-toggle btn-primary btn-sm" data-toggle="dropdown">
+											<i class="fa fa-plus"></i> New <span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu list-unstyled">
+											<cfif prc.availableTemplates.len()>
+												<li class="dropdown-header"><i class="fa fa-map-o"></i> From Template:</li>
+												<cfloop array="#prc.availableTemplates#" item="template">
+													<li class="mb-5">
+														<a
+															href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) & "?contentTemplate=" & #encodeForHTMLAttribute( template[ "templateID" ] )# )#"
+														><small><i class="fa fa-plus"></i> #template[ "name" ]#</small></a>
+													</li>
+												</cfloop>
+												<li role="separator" class="divider"></li>
+											</cfif>
+												<li class="mb-5">
+													<a
+														href="#event.buildLink( prc.xehPageEditor & "/parentId/" & encodeForHTMLAttribute( rc.parent ) )#"
+													>
+													<i class="fa fa-plus"></i> Empty Page
+													</a>
+												</li>
+											<li class="mb-5">
+												<a href="#event.buildLink( prc.xehTemplates & "##create" )#"><i class="fa fa-map-o"></i> New Template</a>
+											</li>
+										</ul>
+									</div>
 								</cfif>
 							</div>
 						</div>

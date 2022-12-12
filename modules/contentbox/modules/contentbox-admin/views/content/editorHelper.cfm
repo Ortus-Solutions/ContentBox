@@ -1,5 +1,23 @@
 ﻿<cfoutput>
 <script>
+window.authentication = #toJSON( prc.jwtTokens )#
+window.assignedTemplate = #( !isNull( prc.oContent.getContentTemplate() ) ? toJSON( prc.oContent.getContentTemplate().getMemento() ) : javacast( "boolean", false ) )#
+
+// Editor alerts model
+function alertsModel(){
+	return {
+		init(){
+			$nextTick( () => window.alerts = this.alerts ) },
+		alerts : [],
+		removeAlert : index => this.alerts.splice( index, 1 ),
+		addAlert( alert ){
+			if( alert instanceof CustomEvent ){
+				alert = alert.detail
+			}
+			this.alerts.push( alert );
+		}
+	}
+}
 /**
  * Enclosure for custom editor startup
  */
@@ -40,6 +58,9 @@ document.addEventListener( "DOMContentLoaded", () => {
 		</cfif>
 		'#event.buildLink( prc.xehContentSave )#'
 	);
+	if( document.getElementById( 'contentTemplate' ).value !== 'null' ){
+		applyContentTemplate( document.getElementById( 'contentTemplate' ).value );
+	}
 } );
 </script>
 </cfoutput>

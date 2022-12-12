@@ -65,6 +65,7 @@ component extends="content" {
 			}
 		}
 
+
 		// set skin view
 		switch ( rc.layout ) {
 			case "-no-layout-": {

@@ -26,6 +26,7 @@ component extends="baseContentHandler" {
 		prc.xehPages      = "#prc.cbAdminEntryPoint#.pages.index";
 		prc.xehPageEditor = "#prc.cbAdminEntryPoint#.pages.editor";
 		prc.xehPageRemove = "#prc.cbAdminEntryPoint#.pages.remove";
+		prc.xehTemplates  = "#prc.cbAdminEntryPoint#.ContentTemplates.index";
 	}
 
 	/**

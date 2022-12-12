@@ -2,7 +2,7 @@
 <div>
 	<div class="form-group">
 		#html.textfield(
-			name      = "htmlTitle",
+			name      = "HTMLTitle",
 			label     = "Title: (Leave blank to use the page name)",
 			bind      = prc.oContent,
 			class     = "form-control",
@@ -15,7 +15,7 @@
 			Keywords: (<span id='html_keywords_count'>0</span>/160 characters left)
 		</label>
 		#html.textArea(
-			name        = "htmlKeywords",
+			name        = "HTMLKeywords",
 			bind        = prc.oContent,
 			class       = "form-control",
 			maxlength   = "160",
@@ -28,7 +28,7 @@
 			Description: (<span id='html_description_count'>0</span>/160 characters left)
 		</label>
 		#html.textArea(
-			name        = "htmlDescription",
+			name        = "HTMLDescription",
 			bind        = prc.oContent,
 			class       = "form-control",
 			maxlength   = "160",

@@ -11,18 +11,25 @@
 		role        = "form"
 	)#
 
-		<div class="row">
+		<div class="row" x-data="window">
 
 			<!--- Content Editor --->
 			<div class="col-md-8" id="main-content-slot">
-				<!--- MessageBox --->
-				#cbMessageBox().renderit()#
+
+				<div class="messages" x-data="alertsModel()" @add-alert.window="addAlert">
+					<!--- MessageBox --->
+					#cbMessageBox().renderit()#
+					<template x-for="alert in alerts">
+						<div :class="`alert alert-${alert.class} text=center`" x-text="alert.message"></div>
+					</template>
+				</div>
 
 				<!--- Hidden Values --->
 				#html.hiddenField( name="siteID", 		bind=prc.oContent )#
 				#html.hiddenField( name="contentID", 	bind=prc.oContent )#
 				#html.hiddenField( name="contentType", 	bind=prc.oContent )#
 				#html.hiddenField( name="isPublished", 	bind=prc.oContent )#
+				#html.hiddenField( name="saveAsTemplate", value="false" )#
 				#html.hiddenField( name="sluggerURL", 	value=event.buildLink( prc.xehSlugify ) )#
 
 				<div class="panel panel-default">
