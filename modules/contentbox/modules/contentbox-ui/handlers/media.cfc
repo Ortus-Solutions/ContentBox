@@ -15,6 +15,8 @@ component singleton {
 	 * Deliver Media
 	 */
 	function index( event, rc, prc ){
+		// Set to render so there is no attempt to find a view
+		event.noRender();
 		// Param cache purge
 		event.paramValue( "cbcache", "false" );
 		if ( !isBoolean( rc.cbcache ) ) {

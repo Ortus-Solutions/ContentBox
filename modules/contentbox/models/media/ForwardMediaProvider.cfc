@@ -76,8 +76,6 @@ component accessors="true" extends="BaseProvider" singleton {
 			if ( !isNull( inputStream ) ) inputStream.close();
 			if ( !isNull( connection ) ) connection.disconnect();
 			response.flushBuffer();
-			// abort so CF does not choke.
-			abort;
 		}
 	}
 
