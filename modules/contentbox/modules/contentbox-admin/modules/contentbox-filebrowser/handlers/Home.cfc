@@ -191,6 +191,7 @@ component extends="cbadmin.handlers.baseHandler" {
 	 */
 	private boolean function isTraversalSecure( required prc, required targetPath ){
 		// Do some cleanup just in case in the incoming root.
+		prc.fbSettings.directoryRoot = cleanIncomingPath(prc.fbSettings.directoryRoot);
 		if ( prc.fbSettings.traversalSecurity AND NOT findNoCase( prc.fbSettings.directoryRoot, arguments.targetPath ) ) {
 			return false;
 		}
