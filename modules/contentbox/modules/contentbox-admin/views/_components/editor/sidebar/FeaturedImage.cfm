@@ -29,22 +29,16 @@
 						class="<cfif !len( prc.oContent.getFeaturedImage() )>hide</cfif> form-group"
 						id="featuredImageControls"
 					>
-						#html.textField(
-							name 		= "featuredImage",
-							bind 		= prc.oContent,
-							class 		= "form-control",
-							readonly 	= true,
-							title 		= "The actual image path to deliver"
-						)#
 						#html.hiddenField(
-							name = "featuredImageURL",
-							bind = prc.oContent
+							name 		= "featuredImage",
+							bind 		= prc.oContent
 						)#
 
 						<!--- Image Preview --->
 						<div class="m10">
 							<cfif len( prc.oContent.getFeaturedImage() )>
 								<img id="featuredImagePreview" src="#prc.oContent.getFeaturedImageURL()#" class="img-thumbnail" height="75">
+								<p class="text-muted"><small>#prc.oContent.getFeaturedImageURL()#</small></p>
 							<cfelse>
 								<img id="featuredImagePreview" class="img-thumbnail" height="75">
 							</cfif>
