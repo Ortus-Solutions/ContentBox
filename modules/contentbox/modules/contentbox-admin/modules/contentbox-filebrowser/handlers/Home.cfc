@@ -307,12 +307,9 @@ component extends="cbadmin.handlers.baseHandler" {
 			var iData = { path : rc.path };
 			announce( "fb_preFileDownload", iData );
 
-			if( rc.pathsArray.len() > 1 ){
+			if ( rc.pathsArray.len() > 1 ) {
 				// Serve the file
-				event.sendFile(
-					file      = rc.path,
-					extension = listLast( rc.path, "." )
-				);
+				event.sendFile( file = rc.path, extension = listLast( rc.path, "." ) );
 			} else {
 				prc.activeDisk.download( rc.path );
 			}

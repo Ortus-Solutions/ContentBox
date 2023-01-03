@@ -16,13 +16,14 @@ component {
 				"contentbox" : {
 					provider   : "Local",
 					properties : {
-						path : "#controller.getAppRootPath()#modules_app/contentbox-custom/_content",
-						diskUrl: function(){
-							return application.wirebox.getInstance( "CBHelper@contentBox" )
-									.site()
-									.getSiteRoot()
-									&
-									"/modules_app/contentbox-custom/_content/"
+						path    : "#controller.getAppRootPath()#modules_app/contentbox-custom/_content",
+						diskUrl : function(){
+							return application.wirebox
+								.getInstance( "CBHelper@contentBox" )
+								.site()
+								.getSiteRoot()
+							&
+							"/modules_app/contentbox-custom/_content/"
 						}
 					}
 				}
