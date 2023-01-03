@@ -484,7 +484,7 @@ window.featuredImageCallback = function( filePath, fileURL, fileType ){
 	if ( $( "#featuredImage" ).val().length ){ cancelFeaturedImage(); }
 	$( "#featuredImageControls" ).toggleClass( "hide" );
 	$( "#featuredImage" ).val( filePath );
-	$( "#featuredImageURL" ).val( fileURL );
+	$( "#featuredImageURL" ).text( fileURL );
 	$( "#featuredImagePreview" ).attr( "src", fileURL );
 	closeRemoteModal();
 }

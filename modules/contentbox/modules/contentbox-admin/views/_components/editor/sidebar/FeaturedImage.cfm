@@ -38,7 +38,7 @@
 						<div class="m10">
 							<cfif len( prc.oContent.getFeaturedImage() )>
 								<img id="featuredImagePreview" src="#prc.oContent.getFeaturedImageURL()#" class="img-thumbnail" height="75">
-								<p class="text-muted"><small>#prc.oContent.getFeaturedImageURL()#</small></p>
+								<p class="text-muted" id="featuredImageURL"><small>#prc.oContent.getFeaturedImageURL()#</small></p>
 							<cfelse>
 								<img id="featuredImagePreview" class="img-thumbnail" height="75">
 							</cfif>
