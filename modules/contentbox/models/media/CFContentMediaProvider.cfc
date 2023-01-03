@@ -28,7 +28,7 @@ component accessors="true" extends="BaseProvider" singleton {
 		var cbfsParts = listToArray( arguments.mediaPath, ":" );
 		var context   = variables.requestService.getContext();
 		if ( cbfsParts.len() > 1 ) {
-			return cbfs.get( cbfsParts[ 1 ] ).download();
+			return variables.cbfs.get( cbfsParts[ 1 ] ).download( cbfsParts[ 2 ] );
 		} else {
 			var file     = getRealMediaPath( arguments.mediaPath );
 			var mimeType = fileGetMimeType( file );
