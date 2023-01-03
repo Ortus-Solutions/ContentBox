@@ -36,7 +36,7 @@
         "cbmarkdown":"^3.4.0",
         "cbSwagger":"^2.3.0+131",
         "jsonprettyprint":"^1.4.0",
-		"cbfs" : "^1.0.1"
+		"cbfs" : "^1.0.2"
     },
     "installPaths":{
         "cborm":"modules/contentbox-deps/modules/cborm/",
