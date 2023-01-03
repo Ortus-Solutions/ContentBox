@@ -49,6 +49,8 @@
 <!--- 					JAVASCRIPT														--->
 <!--- ********************************************************************************* --->
 <!-- injector:js -->
-<script src="#cb.themeRoot()#/#html.elixirPath( fileName='includes/css/theme.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
+<script src="#cb.themeRoot()#/#html.elixirPath( fileName='includes/js/runtime.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
+<script src="#cb.themeRoot()#/#html.elixirPath( fileName='includes/js/vendor.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
+<script src="#cb.themeRoot()#/#html.elixirPath( fileName='includes/js/theme.js', manifestRoot='#cb.themeRoot()#/includes' )#"></script>
 <!-- endinjector -->
 </cfoutput>

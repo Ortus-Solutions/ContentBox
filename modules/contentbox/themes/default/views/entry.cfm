@@ -171,8 +171,5 @@
 			toggleCommentForm();
 		</cfif>
 	});
-	function toggleCommentForm(){
-		$( "##commentForm" ).slideToggle();
-	}
 </script>
 </cfoutput>
