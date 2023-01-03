@@ -159,13 +159,14 @@ component {
 				"contentbox",
 				"Local",
 				{
-					path : expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
-					diskUrl :  function(){
-						return variables.wirebox.getInstance( "CBHelper@contentBox" )
-								.site()
-								.getSiteRoot()
-								&
-								"/modules_app/contentbox-custom/_content"
+					path    : expandPath( settingService.getSetting( "cb_media_directoryRoot" ) ),
+					diskUrl : function(){
+						return variables.wirebox
+							.getInstance( "CBHelper@contentBox" )
+							.site()
+							.getSiteRoot()
+						&
+						"/modules_app/contentbox-custom/_content"
 					}
 				}
 			);
