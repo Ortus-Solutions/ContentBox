@@ -21,7 +21,7 @@ component extends="coldbox.system.EventHandler" {
 			.paramValue( "imageSrc", "" )
 			.paramValue( "imageName", "" );
 
-		var thisImage    = imageRead( prc.activeDisk.uri( rc.imagepath ) );
+		var thisImage    = imageRead( prc.activeDisk.url( rc.imagepath ) );
 		var info         = imageInfo( thisImage );
 		prc.width        = info.width;
 		prc.height       = info.height;
@@ -45,11 +45,11 @@ component extends="coldbox.system.EventHandler" {
 			.paramValue( "fileSrc", "" )
 			.paramValue( "fileName", "" );
 
-		if ( !isImageFile( prc.activeDisk.uri( rc.filePath ) ) ) {
+		if ( !isImageFile( prc.activeDisk.url( rc.filePath ) ) ) {
 			prc.fileInfo = prc.activeDisk.info( rc.filePath );
 		} else {
 			prc.fileInfo    = prc.activeDisk.info( rc.filePath );
-			prc.imgInfo     = imageInfo( imageRead( prc.activeDisk.uri( rc.filePath ) ) );
+			prc.imgInfo     = imageInfo( imageRead( prc.activeDisk.url( rc.filePath ) ) );
 			prc.fileRelPath = rc.fileSrc;
 			prc.fileSrc     = event.buildLink( "" ) & rc.fileSrc;
 		}
@@ -129,7 +129,7 @@ component extends="coldbox.system.EventHandler" {
 			} else {
 				// read the image and create a ColdFusion image object
 				// read the image and create a ColdFusion image object --->
-				var path        = findNoCase( "http", rc.imgPath ) ? rc.imgPath : prc.activeDisk.uri( rc.imgPath );
+				var path        = findNoCase( "http", rc.imgPath ) ? rc.imgPath : prc.activeDisk.url( rc.imgPath );
 				var sourceImage = imageRead( path );
 			}
 
