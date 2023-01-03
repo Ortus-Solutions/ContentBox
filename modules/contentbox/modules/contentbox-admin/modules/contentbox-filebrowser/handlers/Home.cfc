@@ -280,7 +280,9 @@ component extends="cbadmin.handlers.baseHandler" {
 			event.renderData( data = data, type = "json" );
 			return;
 		}
+
 		rc.path = cleanIncomingPath( urlDecode( trim( rc.path ) ) );
+
 		if ( !len( rc.path ) ) {
 			data.errors   = true;
 			data.messages = $r( "messages.invalid_path@fb" );
@@ -305,11 +307,16 @@ component extends="cbadmin.handlers.baseHandler" {
 			var iData = { path : rc.path };
 			announce( "fb_preFileDownload", iData );
 
-			// Serve the file
-			event.sendFile(
-				file      = rc.pathsArray.len() > 1 ? rc.path : prc.activeDisk.get( rc.path ),
-				extension = listLast( rc.path, "." )
-			);
+			if( rc.pathsArray.len() > 1 ){
+				// Serve the file
+				event.sendFile(
+					file      = rc.path,
+					extension = listLast( rc.path, "." )
+				);
+			} else {
+				prc.activeDisk.download( rc.path );
+			}
+
 
 			data.errors   = false;
 			data.messages = $r( resource = "messages.downloaded@fb", values = "#rc.path#" );
