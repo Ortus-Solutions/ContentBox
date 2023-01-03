@@ -6,6 +6,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ----------------------------------------------------------------------->
 <cfoutput>
 <script>
+
 function noMultiSelectAction(){
 	if( fbSelectHistory.length != 1 ){ alert( '#$r( "jsmessages.no_multi_select@fb" )#' ); return true; }
 }
@@ -236,7 +237,7 @@ function fbDownload(){
 <!--- CallBack --->
 <cfif len( rc.callback )>
 function fbChoose(){
-	var sPath = $selectedItem.val();
+	var sPath =  "#prc.activeDisk.getName()#:" + $selectedItem.val();
 	var sURL = $selectedItemURL.val();
 	var sType = $selectedItemType.val();
 	#encodeForJavaScript( rc.callback )#( sPath,sURL,sType );

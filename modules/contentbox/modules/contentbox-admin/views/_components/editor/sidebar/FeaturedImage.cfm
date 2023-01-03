@@ -26,7 +26,7 @@
 					</a>
 					<!--- Featured Image Selection --->
 					<div
-						class="<cfif !len( prc.oContent.getFeaturedImageURL() )>hide</cfif> form-group"
+						class="<cfif !len( prc.oContent.getFeaturedImage() )>hide</cfif> form-group"
 						id="featuredImageControls"
 					>
 						#html.textField(
@@ -43,7 +43,7 @@
 
 						<!--- Image Preview --->
 						<div class="m10">
-							<cfif len( prc.oContent.getFeaturedImageURL() )>
+							<cfif len( prc.oContent.getFeaturedImage() )>
 								<img id="featuredImagePreview" src="#prc.oContent.getFeaturedImageURL()#" class="img-thumbnail" height="75">
 							<cfelse>
 								<img id="featuredImagePreview" class="img-thumbnail" height="75">
