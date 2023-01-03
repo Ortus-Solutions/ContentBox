@@ -769,7 +769,7 @@ component
 		var featured = getFeaturedImage();
 		return !isNull( featured ) && len( featured ) ? (
 			find( ":", featured )
-			 ? "/_media/" & featured
+			 ? "/__media/" & featured
 			// legacy column values without disk annoations
 			 : replaceNoCase(
 				featured,

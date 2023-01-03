@@ -39,7 +39,7 @@ component accessors="true" singleton {
 		var cbfsParts = listToArray( arguments.mediaPath, ":" );
 		return cbfsParts.len() > 1
 		 ? cbfs.get( cbfsParts[ 1 ] ).url( cbfsParts[ 2 ] )
-		 : mediaService.getCoreMediaRoot() & "/" & arguments.mediaPath;
+		 : cbfs.get( "contentbox" ).url( arguments.mediaPath );
 	}
 
 	package function getRealMediaPath( required mediaPath ){
