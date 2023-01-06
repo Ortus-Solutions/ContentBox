@@ -6,6 +6,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 ----------------------------------------------------------------------->
 <cfoutput>
 <script>
+
 function noMultiSelectAction(){
 	if( fbSelectHistory.length != 1 ){ alert( '#$r( "jsmessages.no_multi_select@fb" )#' ); return true; }
 }
@@ -104,11 +105,13 @@ function fbUrl(){
 	if( !sPath.length ){ alert( '#$r( "jsmessages.select@fb" )#' ); return; }
 	// get ID
 	var thisID 		= $selectedItemID.val();
+
 	var target 		= $( "##"+thisID);
+
 	// prompt the URL
 	bootbox.prompt( { 	title: 'URL:',
 						inputType: "text",
-						value: "#event.buildLink( '' )#" + target.attr( "data-relurl" ).substring(1),
+						value: "#event.buildLink( '' )#" + target.attr( "data-relUrl" ).substring(1),
 						callback: function(result){}
 	});
 
@@ -234,7 +237,7 @@ function fbDownload(){
 <!--- CallBack --->
 <cfif len( rc.callback )>
 function fbChoose(){
-	var sPath = $selectedItem.val();
+	var sPath =  "#prc.activeDisk.getName()#:" + $selectedItem.val();
 	var sURL = $selectedItemURL.val();
 	var sType = $selectedItemType.val();
 	#encodeForJavaScript( rc.callback )#( sPath,sURL,sType );

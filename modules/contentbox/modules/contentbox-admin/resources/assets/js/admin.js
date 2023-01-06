@@ -8,6 +8,7 @@ require ( "@alpinejs/ui" );
 require ( "@alpinejs/focus" );
 
 window.bootbox = require( "bootbox" );
+require( "jquery-jcrop" );
 
 // GLOBAL STATIC
 const REGEX_LOWER = /[a-z]/,

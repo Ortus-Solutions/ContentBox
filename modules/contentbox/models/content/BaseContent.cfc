@@ -63,6 +63,11 @@ component
 		inject    ="provider:settingService@contentbox"
 		persistent="false";
 
+	property
+		name      ="mediaService"
+		inject    ="provider:MediaService@contentbox"
+		persistent="false";
+
 	/**
 	 * --------------------------------------------------------------------------
 	 * NON PERSISTED PROPERTIES
@@ -244,13 +249,6 @@ component
 	property
 		name   ="featuredImage"
 		column ="featuredImage"
-		notnull="false"
-		default=""
-		length ="500";
-
-	property
-		name   ="featuredImageURL"
-		column ="featuredImageURL"
 		notnull="false"
 		default=""
 		length ="500";
@@ -547,7 +545,6 @@ component
 					"creatorSnapshot:creator",
 					"expireDate",
 					"featuredImage",
-					"featuredImageURL",
 					"HTMLDescription",
 					"HTMLKeywords",
 					"HTMLTitle",
@@ -577,6 +574,7 @@ component
 					"linkedContent",
 					"parent",
 					"relatedContent",
+					"featuredImageURL",
 					"site"
 				]
 			}
@@ -588,7 +586,6 @@ component
 		"cacheTimeout"           : { required : false, type : "numeric" },
 		"expireDate"             : { required : false, type : "date" },
 		"featuredImage"          : { required : false, size : "1..255" },
-		"featuredImageURL"       : { required : false, size : "1..255" },
 		"HTMLDescription"        : { required : false, size : "1..160" },
 		"HTMLKeywords"           : { required : false, size : "1..160" },
 		"markup"                 : { required : true, size : "1..100" },
@@ -763,6 +760,24 @@ component
 				.isEq( "isGlobal", javacast( "boolean", true ) )
 				.get()
 		);
+	}
+
+	/**
+	 * Returns the URL of the featured image
+	 */
+	function getFeaturedImageURL(){
+		var featured = getFeaturedImage();
+		return !isNull( featured ) && len( featured ) ? (
+			find( ":", featured )
+			 ? "/__media/" & featured
+			// legacy column values without disk annoations
+			 : replaceNoCase(
+				featured,
+				mediaService.getCoreMediaRoot(),
+				"/media"
+			)
+		)
+		 : "";
 	}
 
 	/**

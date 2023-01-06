@@ -65,7 +65,7 @@ component accessors="true" singleton {
 	/**
 	 * Get the default system media provider object
 	 *
-	 * @return contentbox.models.media.IMediaProvider
+	 * @return contentbox.models.media.BaseProvider
 	 */
 	function getDefaultProvider(){
 		return getProvider( getDefaultProviderName() );
@@ -76,7 +76,7 @@ component accessors="true" singleton {
 	 *
 	 * @name The provider to get,that must be registered
 	 *
-	 * @return contentbox.models.media.IMediaProvider
+	 * @return contentbox.models.media.BaseProvider
 	 */
 	function getProvider( required name ){
 		return variables.providers[ arguments.name ];
@@ -87,7 +87,7 @@ component accessors="true" singleton {
 	 *
 	 * @provider The provider object to register
 	 */
-	MediaService function registerProvider( required contentbox.models.media.IMediaProvider provider ){
+	MediaService function registerProvider( required contentbox.models.media.BaseProvider provider ){
 		variables.providers[ arguments.provider.getName() ] = arguments.provider;
 		return this;
 	}

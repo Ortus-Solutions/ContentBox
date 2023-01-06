@@ -11,7 +11,8 @@
     "web":{
         "directoryBrowsing":true,
         "rewrites":{
-            "enable":"true"
+            "enable":"true",
+			"config": "./urlrewrite.xml"
         },
         "http":{
             "port":"8589"

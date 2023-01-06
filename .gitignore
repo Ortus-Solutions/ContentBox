@@ -58,6 +58,12 @@ modules/cbdebugger
 # ContentBox Dependency Modules
 modules/contentbox/modules/contentbox-deps/modules/*
 
+# Local Filebrowser Testing
+modules_app/contentbox-custom/_content
+!modules_app/contentbox-custom/_content/ContentBox*
+!modules_app/contentbox-custom/_content/space-ninja200.png
+!modules_app/contentbox-custom/_content/media_goes_here.txt
+
 # Testing Dependencies
 modules/contentbox/themes/_test/**
 testbox/*

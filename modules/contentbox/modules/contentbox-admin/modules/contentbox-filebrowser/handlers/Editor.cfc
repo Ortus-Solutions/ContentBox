@@ -3,6 +3,15 @@
  */
 component extends="coldbox.system.EventHandler" {
 
+	property name="cb" inject="CBHelper@contentbox";
+
+	/**
+	 * Pre handler
+	 */
+	function preHandler( event, currentAction, rc, prc ){
+		prc.activeDisk = cbfs().get( variables.cb.site().getMediaDisk() ?: "contentbox" );
+	}
+
 	/**
 	 * Index
 	 */
@@ -12,7 +21,7 @@ component extends="coldbox.system.EventHandler" {
 			.paramValue( "imageSrc", "" )
 			.paramValue( "imageName", "" );
 
-		var thisImage    = imageRead( rc.imagepath );
+		var thisImage    = imageRead( prc.activeDisk.url( rc.imagepath ) );
 		var info         = imageInfo( thisImage );
 		prc.width        = info.width;
 		prc.height       = info.height;
@@ -36,11 +45,11 @@ component extends="coldbox.system.EventHandler" {
 			.paramValue( "fileSrc", "" )
 			.paramValue( "fileName", "" );
 
-		if ( !isImageFile( rc.filePath ) ) {
-			prc.fileInfo = getFileInfo( rc.filePath );
+		if ( !isImageFile( prc.activeDisk.url( rc.filePath ) ) ) {
+			prc.fileInfo = prc.activeDisk.info( rc.filePath );
 		} else {
-			prc.fileInfo    = getFileInfo( rc.filePath );
-			prc.imgInfo     = imageInfo( imageRead( rc.filePath ) );
+			prc.fileInfo    = prc.activeDisk.info( rc.filePath );
+			prc.imgInfo     = imageInfo( imageRead( prc.activeDisk.url( rc.filePath ) ) );
 			prc.fileRelPath = rc.fileSrc;
 			prc.fileSrc     = event.buildLink( "" ) & rc.fileSrc;
 		}
@@ -120,7 +129,8 @@ component extends="coldbox.system.EventHandler" {
 			} else {
 				// read the image and create a ColdFusion image object
 				// read the image and create a ColdFusion image object --->
-				var sourceImage = imageNew( sanitizeUrl( rc.imgName, rc.imgPath ) );
+				var path        = findNoCase( "http", rc.imgPath ) ? rc.imgPath : prc.activeDisk.url( rc.imgPath );
+				var sourceImage = imageRead( path );
 			}
 
 			// crop the image using the supplied coords from the url request
@@ -146,6 +156,9 @@ component extends="coldbox.system.EventHandler" {
 		if ( len( rc.imgPath ) ) {
 			if ( rc.imgEdited ) {
 				// read from in memory
+				if ( !findNoCase( "http", rc.imgPath ) ) {
+					rc.imgPath = event.getHTMLBaseURL() & listToArray( rc.imgPath, "/" ).toList( "/" )
+				}
 				if ( server.keyExists( "lucee" ) ) {
 					var sourceImage = imageRead( rc.imgPath & "&type=" & rc.type );
 				} else {
@@ -181,23 +194,27 @@ component extends="coldbox.system.EventHandler" {
 		var ext = "." & listLast( rc.imgPath, "." );
 
 		if ( len( rc.imgLoc ) ) {
-			var sourceImage = imageRead( rc.imgLoc );
-			var path        = rc.filebrowser.settings.directoryRoot & imgName;
-
+			if ( !findNoCase( "http", rc.imgLoc ) ) {
+				rc.imgLoc = event.getHTMLBaseURL() & listToArray( rc.imgLoc, "/" ).toList( "/" )
+			}
+			var sourceImage = fileReadBinary( rc.imgLoc );
 			if ( rc.overwrite AND !len( rc.saveAs ) ) {
-				imageWrite( sourceImage, rc.imgPath, 1, rc.overwrite );
+				prc.activeDisk.create(
+					path      = rc.imgPath,
+					contents  = sourceImage,
+					overwrite = rc.overwrite
+				);
 			} else if ( len( rc.saveAs ) ) {
-				imageWrite(
-					sourceImage,
-					getDirectoryFromPath( rc.imgPath ) & rc.saveAs & ext,
-					1,
-					rc.overwrite
+				prc.activeDisk.create(
+					path      = rc.saveAs,
+					contents  = sourceImage,
+					overwrite = rc.overwrite
 				);
 			} else {
-				imageWrite(
-					sourceImage,
-					getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName,
-					1
+				prc.activeDisk.create(
+					path      = getDirectoryFromPath( rc.imgPath ) & "_edited_" & rc.imgName,
+					contents  = sourceImage,
+					overwrite = rc.overwrite
 				);
 			}
 		}

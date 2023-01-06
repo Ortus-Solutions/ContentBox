@@ -15,6 +15,8 @@ component singleton {
 	 * Deliver Media
 	 */
 	function index( event, rc, prc ){
+		// Set to render so there is no attempt to find a view
+		event.noRender();
 		// Param cache purge
 		event.paramValue( "cbcache", "false" );
 		if ( !isBoolean( rc.cbcache ) ) {
@@ -23,14 +25,18 @@ component singleton {
 
 		// Get the requested media path
 		var replacePath = ( len( prc.cbEntryPoint ) ? "#prc.cbEntryPoint#/" : "" ) & event.getCurrentRoute();
-		prc.mediaPath   = trim(
-			replaceNoCase(
-				urlDecode( event.getCurrentRoutedURL() ),
-				replacePath,
-				""
-			)
+
+		prc.mediaPath = reReplace(
+			trim(
+				replaceNoCase(
+					urlDecode( event.getCurrentRoutedURL() ),
+					replacePath,
+					""
+				)
+			),
+			"\/$",
+			""
 		);
-		prc.mediaPath = reReplace( prc.mediaPath, "\/$", "" );
 
 		// Determine if ColdBox is doing a format extension detection?
 		if ( structKeyExists( rc, "format" ) && len( rc.format ) ) {
