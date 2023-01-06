@@ -97,7 +97,9 @@ component {
 			// The ContentBox Core Entities
 			"modules/contentbox/models",
 			// Custom Module Entities
-			"modules_app"
+			"modules_app",
+			// Custom Module User Entities
+			"modules/contentbox/modules_user"
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
 		dialect              : request.$systemHelper.getSystemSetting( "ORM_DIALECT", "" ),
