@@ -186,7 +186,7 @@ component
 		column ="mediaDisk"
 		ormtype="string"
 		notnull="false"
-		default=""
+		default="contentbox"
 		length ="50";
 
 	/* *********************************************************************
