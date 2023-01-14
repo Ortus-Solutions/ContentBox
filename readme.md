@@ -90,6 +90,17 @@ You can also tail the logs for each server:
 * `run-script log:2021` - ACF 2021
 * `run-script log:lucee` - Lucee 5
 
+### Environment Variables
+
+Be sure to setup your environment variables by copying the file .env.template to .env.
+
+### JavaScript Assets
+
+You will need to run the following command to ensure that JavaScript assets are compiled for development.
+
+```bash
+npm run build-dev
+```
 
 ### Test Suites
 
