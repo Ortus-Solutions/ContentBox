@@ -84,12 +84,6 @@ You can then go ahead and start an embedded server according to which engine you
 * `run-script start:2021` - ACF 2021
 * `run-script start:lucee` - Lucee 5
 
-You can also stop any server:
-
-* `run-script stop:2018` - ACF 2018
-* `run-script stop:2021` - ACF 2021
-* `run-script stop:lucee` - Lucee 5
-
 You can also tail the logs for each server:
 
 * `run-script log:2018` - ACF 2018
