@@ -70,7 +70,7 @@ component {
 			// Custom Module Entities
 			rootPath & "modules_app"
 		],
-		dialect               : "org.hibernate.dialect.MySQL5InnoDBDialect", // MySQL Dialect
+		dialect               : "org.hibernate.dialect.MySQL8Dialect", // MySQL Dialect
 		dbcreate              : "update",
 		secondarycacheenabled : false,
 		cacheprovider         : "ehCache",
