@@ -6,13 +6,13 @@
     "name":"contentbox-lucee5",
     "JVM":{
         "heapSize":"1024",
-		"args": "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -XX:+UseG1GC"
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -XX:+UseG1GC"
     },
     "web":{
         "directoryBrowsing":true,
         "rewrites":{
             "enable":"true",
-			"config": "./urlrewrite.xml"
+            "config":"./urlrewrite.xml"
         },
         "http":{
             "port":"8589"

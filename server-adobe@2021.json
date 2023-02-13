@@ -30,5 +30,8 @@
     ],
     "scripts":{
         "onServerInstall":"cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed,mail,debugger"
+    },
+    "cfconfig":{
+        "file":".cfconfig.json"
     }
 }

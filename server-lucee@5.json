@@ -12,7 +12,7 @@
         "directoryBrowsing":true,
         "rewrites":{
             "enable":true,
-			"config": "./urlrewrite.xml"
+            "config":"./urlrewrite.xml"
         },
         "http":{
             "port":"8589"
@@ -27,5 +27,8 @@
             "disabled":false,
             "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
-    ]
+    ],
+    "cfconfig":{
+        "file":".cfconfig.json"
+    }
 }

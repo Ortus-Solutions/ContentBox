@@ -26,5 +26,8 @@
             "disabled":false,
             "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
         }
-    ]
+    ],
+    "cfconfig":{
+        "file":".cfconfig.json"
+    }
 }
