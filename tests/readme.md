@@ -23,12 +23,12 @@ instructions on how to get the test suites to run in your development environmen
 We leverage **CommandBox** to build ColdBox and its libraries.  You can download it from our main website here: http://www.ortussolutions.com/products/commandbox.
 
 ### Install Dependencies
-Once CommandBox is install go into the root of the project and type: `box install`. This will download all required dependencies and test dependencies for you.
+Once CommandBox is installed go into the root of the project and type: `box install`. This will download all required dependencies and test dependencies for you.
 
 ### Startup Test Server
 Startup the test server via the following command: `box server start`. This will startup a server that you can use for development, hacking and testing. 
 
-> **Note:** The server will start in a specific port, make sure you take note of it.
+> **Note:** The server will start in a specific port (currently `8589`), make sure you take note of it.
 
 ### Create Testing Datasource
 

@@ -2,17 +2,18 @@
 
 Hola amigo! I'm really excited that you are interested in contributing to ContentBox CMS. Before submitting your contribution, please make sure to take a moment and read through the following guidelines:
 
-- [Code Of Conduct](#code-of-conduct)
-- [Bug Reporting](#bug-reporting)
-- [Support Questions](#support-questions)
-- [Pull Request Guidelines](#pull-request-guidelines)
-- [Security Vulnerabilities](#security-vulnerabilities)
-- [Development Setup](#development-setup)
-	- [Language Compatiblity](#language-compatiblity)
-- [Coding Styles & Formatting](#coding-styles--formatting)
-- [CFC Docs With DocBox](#cfc-docs-with-docbox)
-- [Financial Contributions](#financial-contributions)
-- [Contributors](#contributors)
+* [ContentBox CMS Contributing Guide](#contentbox-cms-contributing-guide)
+  * [Code Of Conduct](#code-of-conduct)
+  * [Bug Reporting](#bug-reporting)
+  * [Support Questions](#support-questions)
+  * [Pull Request Guidelines](#pull-request-guidelines)
+  * [Security Vulnerabilities](#security-vulnerabilities)
+  * [Development Setup](#development-setup)
+    * [Language Compatiblity](#language-compatiblity)
+  * [Coding Styles \& Formatting](#coding-styles--formatting)
+  * [CFC Docs With DocBox](#cfc-docs-with-docbox)
+  * [Financial Contributions](#financial-contributions)
+  * [Contributors](#contributors)
 
 ## Code Of Conduct
 
@@ -58,7 +59,7 @@ If you discover a security vulnerability, please send an email to the developmen
 
 ## Development Setup
 
-We have added all the necessary information for you to develop on ContentBox in our [readme collaboration area](../readme.md) and also in our [UI Developer Docs](../workbench/Developer.md) so you can setup for UI development.
+We have added all the necessary information for you to develop on ContentBox in our [readme collaboration area](readme.md) and also in our [UI Developer Docs](workbench/Developer.md) so you can setup for UI development.
 
 ### Language Compatiblity
 
