@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ContentBox - A Modular Content Platform
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
@@ -70,7 +70,7 @@ component {
 			// Custom Module Entities
 			rootPath & "modules_app"
 		],
-		dialect               : "org.hibernate.dialect.MySQL8Dialect", // MySQL Dialect
+		dialect               : "MySQL",
 		dbcreate              : "update",
 		secondarycacheenabled : false,
 		cacheprovider         : "ehCache",
