@@ -19,21 +19,13 @@ jobs:
       fail-fast: false
       matrix:
         cfengine:  [ "lucee@5", "adobe@2018", "adobe@2021" ]
-        coldboxVersion: [ "^6.0.0" ]
+        coldboxVersion: [ "be" ]
         experimental: [ false ]
         include:
           - cfengine: "adobe@2023"
-            coldboxVersion: "^6.0.0"
+            coldboxVersion: "be"
             experimental: true
-          - coldboxVersion: "be"
-            cfengine: "lucee@5"
-            experimental: true
-          - coldboxVersion: "be"
-            cfengine: "adobe@2018"
-            experimental: true
-          - coldboxVersion: "be"
-            cfengine: "adobe@2021"
-            experimental: true
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
