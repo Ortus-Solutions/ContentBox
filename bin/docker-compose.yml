@@ -31,7 +31,7 @@ services:
       - contentbox_db
       - contentbox_cache
     platform: linux/x86_64 # Needed for Mac's on the M1 chip
-    image: ortussolutions/commandbox:lucee5
+    image: ortussolutions/commandbox
     # Environment Variables
     environment:
       # Admin passowrd
@@ -51,6 +51,8 @@ services:
     ports:
       - "8080:8080"
       - "8443:8443"
+    healthcheck:
+      disable: true
     # Data & Overrides
     volumes:
       - ../:/app

@@ -128,7 +128,7 @@ component {
 		];
 
 		// Manual Mappings
-		binder.map( "customFieldService@contentbox" ).toDSL( "entityService:cbCustomField" );
+		// binder.map( "customFieldService@contentbox" ).toDSL( "entityService:cbCustomField" );
 		binder.map( "SystemUtil@contentbox" ).to( "coldbox.system.core.util.Util" );
 	}
 
@@ -152,7 +152,7 @@ component {
 		// Load Environment Overrides Now, they take precedence
 		settingService.loadEnvironmentOverrides();
 
-		var diskService = wirebox.getInstance( "cbfs" );
+		var diskService = wirebox.getInstance( "DiskService@cbfs" );
 
 		if ( !diskService.has( "contentbox" ) ) {
 			diskService.register(

@@ -25,7 +25,9 @@ component {
 		"cbfeeds",
 		"cbmessagebox",
 		"bcrypt",
-		"cbmarkdown"
+		"cbmarkdown",
+		"jsonprettyprint",
+		"cbfs"
 	];
 
 	/**

@@ -3,7 +3,7 @@ component accessors="true" singleton {
 	// Dependecnies
 	property name="mediaService" inject="mediaService@contentbox";
 	property name="log" inject="logbox:logger:{this}";
-	property name="cbfs" inject="cbfs";
+	property name="cbfs" inject="DiskService@cbfs";
 	property name="templateCache" inject="cachebox:template";
 	/**
 	 * The internal name of the provider
