@@ -1,0 +1,34 @@
+{
+    "app":{
+        "cfengine":"adobe@2023.0.0-beta.1",
+        "serverHomeDirectory":".engines/acf2023"
+    },
+    "name":"contentbox-adobe2023",
+    "JVM":{
+        "heapSize":"1024",
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -XX:+UseG1GC"
+    },
+    "web":{
+        "directoryBrowsing":true,
+        "rewrites":{
+            "enable":true,
+			"config": "./urlrewrite.xml"
+        },
+        "http":{
+            "port":"8589"
+        }
+    },
+    "trayicon":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png",
+    "trayOptions":[
+        {
+            "label":"Open ContentBox Admin",
+            "action":"openbrowser",
+            "url":"/cbadmin",
+            "disabled":false,
+            "image":"modules_app/contentbox-custom/_content/ContentBoxIcon300.png"
+        }
+    ],
+    "scripts":{
+        "onServerInstall":"cfpm install zip,orm,mysql,postgresql,sqlserver,document,feed,mail,debugger"
+    }
+}
