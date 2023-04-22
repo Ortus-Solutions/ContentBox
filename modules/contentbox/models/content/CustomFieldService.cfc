@@ -12,7 +12,7 @@ component extends="cborm.models.VirtualEntityService" singleton {
 	 */
 	CustomFieldService function init(){
 		// init it
-		super.init( entityName = "cbContentVersion" );
+		super.init( entityName = "cbCustomField" );
 
 		return this;
 	}
