@@ -29,7 +29,7 @@
         "cborm":"^4.0.0",
         "cbjavaloader":"^2.0.0",
         "cbmailservices":"^2.0.0",
-        "cbsecurity":"be",
+        "cbsecurity":"^3.0.0",
         "cbfeeds":"^1.3.0",
         "cbmessagebox":"^4.0.0",
         "bcrypt":"^3.0.0",

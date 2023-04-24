@@ -12,7 +12,7 @@
         "directoryBrowsing":true,
         "rewrites":{
             "enable":true,
-			"config": "./urlrewrite.xml"
+            "config":"./urlrewrite.xml"
         },
         "http":{
             "port":"8589"
