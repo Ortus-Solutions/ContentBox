@@ -30,7 +30,7 @@
         "cbjavaloader":"^2.0.0",
         "cbmailservices":"^2.0.0",
         "cbsecurity":"^3.0.0",
-        "cbfeeds":"^1.3.0",
+        "cbfeeds":"^2.0.0",
         "cbmessagebox":"^4.0.0",
         "bcrypt":"^3.0.0",
         "cbmarkdown":"^3.4.0",
