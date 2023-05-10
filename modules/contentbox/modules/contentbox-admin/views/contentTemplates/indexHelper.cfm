@@ -263,7 +263,13 @@
 						...this.searchOptions,
 						includes : "creator,creator.fullName,modifiedDate",
 						search : this.searchQuery
-					})
+					}),
+					{
+						method : "GET",
+						headers : {
+							"Authorization" : `Bearer ${this.authentication.access_token}`
+						}
+					}
 					)
 					.then( r => r.json() )
 					.then( ( response ) => {
