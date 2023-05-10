@@ -17,7 +17,7 @@ component {
 				"default" : { class : "CFMail" },
 				"files"   : {
 					class      : "File",
-					properties : { filePath : "/cbapp/config/logs/mail" }
+					properties : { filePath : "config/logs/mail" }
 				}
 			},
 			// The defaults for all mail config payloads and protocols
