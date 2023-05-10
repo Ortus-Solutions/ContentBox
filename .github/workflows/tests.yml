@@ -99,14 +99,12 @@ jobs:
       - name: Run Web App Tests
         run: |
           mkdir tests/results/web
-          box package set testbox.runner="http://127.0.0.1:8589/tests/runner.cfm"
-          box testbox run --verbose outputFile=tests/results/web/test-results outputFormats=json,antjunit
+          box testbox run --verbose runner=default outputFile=tests/results/web/test-results outputFormats=json,antjunit
 
       - name: Run API Tests
         run: |
           mkdir tests/results/api
-          box package set testbox.runner="http://127.0.0.1:8589/tests/runner-api.cfm"
-          box testbox run --verbose outputFile=tests/results/api/test-results outputFormats=json,antjunit
+          box testbox run --verbose runner=api outputFile=tests/results/api/test-results outputFormats=json,antjunit
 
       - name: Run Swagger Tests
         run: |
@@ -128,7 +126,7 @@ jobs:
             tests/results/**/*
 
       - name: Slack Notification
-        if: failure()
+        if: ${{ failure() && !startsWith( 'pull_request', github.event_name ) }}
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_CHANNEL: coding
@@ -151,10 +149,10 @@ jobs:
           box server log serverConfigFile="server-${{ matrix.cfengine }}.json"
 
       - name: Upload Debugging Info To Artifacts
-        if: ${{ failure() }}
+        if: ${{ failure() && !startsWith( 'pull_request', github.event_name ) }}
         uses: actions/upload-artifact@v2
         with:
           name: Failure Debugging Info - ${{ matrix.cfengine }}
           path: |
-            .engines/**/logs/*
-            .engines/**/WEB-INF/cfusion/logs/*
+            .engine/**/logs/*
+            .engine/**/WEB-INF/cfusion/logs/*
