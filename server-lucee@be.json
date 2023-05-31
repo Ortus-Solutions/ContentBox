@@ -1,6 +1,6 @@
 {
     "app":{
-        "cfengine":"lucee@5.3.10.6-SNAPSHOT",
+        "cfengine":"lucee@6-SNAPSHOT",
         "serverHomeDirectory":".engines/lucee-be"
     },
     "name":"contentbox-lucee-be",
