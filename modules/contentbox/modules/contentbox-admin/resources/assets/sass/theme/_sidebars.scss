@@ -95,6 +95,35 @@
 .nav-dropdown.open>a:after {
 	content: "\f078";
 }
+ .sidebar-left:hover .sidebar-left-toggle,
+ .sidebar-left .sidebar-left-toggle:focus { 
+    opacity: 1;
+ }
+.sidebar-left .sidebar-left-toggle {
+    background-color: #fff;
+    border-radius: 50%;
+    border: 1px solid $cb-semantic-color-border;
+    box-shadow: $cb-base-box-shadow;
+    min-height: 30px;
+    min-width: 30px;
+    opacity:0;
+    padding: 0px;
+    position: absolute;
+    right: -15px;
+    top: 15px;
+    z-index: 1;
+
+    svg {
+        width: 20px
+    }
+}
+ .sidebar-left .sidebar-left-toggle:hover,
+ .sidebar-left .sidebar-left-toggle:active {
+    background: $cb-semantic-color-primary;
+}
+.sidebar-left .sidebar-left-toggle:hover svg {
+    stroke:#fff;
+}
 .sidebar-left a {
     color: #8f939e
 }
