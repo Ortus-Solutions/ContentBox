@@ -47,7 +47,7 @@
 
 				<!-- Site Switcher -->
 				<span
-					class="form-inline ml10"
+					class="form-inline ml10 mt10"
 					id="div-siteswitcher"
 					data-toggle="tooltip"
 					data-placement="right"
@@ -75,7 +75,7 @@
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.hasPermission( "GLOBAL_SEARCH" )>
 				<span
-					class="navbar-search hidden-sm hidden-xs"
+					class="navbar-search mt10 hidden-sm hidden-xs"
 					id="div-search"
 					title="Press 'Ctrl + Shift + S' to focus"
 					data-toggle="tooltip"
