@@ -45,21 +45,6 @@
 					</a>
 				</div>
 
-				<!-- Toggle Navigation Button -->
-				<div class="toggle-navigation toggle-left">
-					<a
-						onclick="null"
-						class="btn btn-default options toggle"
-						id="toggle-left"
-						data-toggle="tooltip"
-						data-placement="right"
-						title="Toggle Navigation (ctrl+shift+n)"
-						data-keybinding="ctrl+shift+n"
-					>
-						<i class="fa fa-bars"></i>
-					</a>
-				</div>
-
 				<!-- Site Switcher -->
 				<span
 					class="form-inline ml10"
@@ -210,6 +195,17 @@
 			<!---                               MAIN NAVBAR					                                      --->
 			<!--- ************************************************************************************************--->
 			<nav class="sidebar sidebar-left" id="main-navbar">
+				<!-- Toggle Navigation Button -->
+				<button
+					class="btn options toggle sidebar-left-toggle"
+					id="toggle-left"
+					data-toggle="tooltip"
+					data-placement="right"
+					title="Toggle Navigation (ctrl+shift+n)"
+					data-keybinding="ctrl+shift+n"
+				>
+					#cbAdminComponent( "ui/Icon", { name : "Bars3" } )#
+				</button>
 				<!--- Main Generated Menu --->
 				#prc.adminMenuService.generateMenu()#
 			</nav>
