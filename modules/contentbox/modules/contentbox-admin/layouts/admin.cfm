@@ -45,24 +45,9 @@
 					</a>
 				</div>
 
-				<!-- Toggle Navigation Button -->
-				<div class="toggle-navigation toggle-left">
-					<a
-						onclick="null"
-						class="btn btn-default options toggle"
-						id="toggle-left"
-						data-toggle="tooltip"
-						data-placement="right"
-						title="Toggle Navigation (ctrl+shift+n)"
-						data-keybinding="ctrl+shift+n"
-					>
-						<i class="fa fa-bars"></i>
-					</a>
-				</div>
-
 				<!-- Site Switcher -->
 				<span
-					class="form-inline ml10"
+					class="form-inline ml10 mt10"
 					id="div-siteswitcher"
 					data-toggle="tooltip"
 					data-placement="right"
@@ -90,7 +75,7 @@
 				<!---Search --->
 				<cfif prc.oCurrentAuthor.hasPermission( "GLOBAL_SEARCH" )>
 				<span
-					class="navbar-search hidden-sm hidden-xs"
+					class="navbar-search mt10 hidden-sm hidden-xs"
 					id="div-search"
 					title="Press 'Ctrl + Shift + S' to focus"
 					data-toggle="tooltip"
@@ -210,6 +195,17 @@
 			<!---                               MAIN NAVBAR					                                      --->
 			<!--- ************************************************************************************************--->
 			<nav class="sidebar sidebar-left" id="main-navbar">
+				<!-- Toggle Navigation Button -->
+				<button
+					class="btn options toggle sidebar-left-toggle"
+					id="toggle-left"
+					data-toggle="tooltip"
+					data-placement="right"
+					title="Toggle Navigation (ctrl+shift+n)"
+					data-keybinding="ctrl+shift+n"
+				>
+					#cbAdminComponent( "ui/Icon", { name : "Bars3" } )#
+				</button>
 				<!--- Main Generated Menu --->
 				#prc.adminMenuService.generateMenu()#
 			</nav>
