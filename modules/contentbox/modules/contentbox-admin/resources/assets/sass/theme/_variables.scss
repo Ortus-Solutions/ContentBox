@@ -1,17 +1,40 @@
 $cb-base-color-green-kelly-20: #36571a;
 $cb-base-color-green-kelly-40: #6bb231;
+$cb-base-color-green-kelly-95: #f2fbec;
 $cb-base-color-blue-green-40: #2d7c99;
+$cb-base-color-grey-30: #555454;
+$cb-base-color-grey-40: #717070;
 $cb-base-color-grey-80: #d1d1d1;
+$cb-base-color-grey-90: #e8e8e8;
 $cb-base-color-white: #ffffff;
 
 $cb-base-box-shadow:  rgba(9, 30, 66, 0.08) 0px 0px 0px 1px, rgba(9, 30, 66, 0.08) 0px 2px 4px 1px;
 
+$cb-base-radius-0: 0rem;
+
 $cb-semantic-color-primary: $cb-base-color-green-kelly-20;
+$cb-semantic-color-primary-light: $cb-base-color-green-kelly-95;
+
 $cb-semantic-color-border: $cb-base-color-grey-80;
+$cb-semantic-color-font-base: $cb-base-color-grey-30;
 $cb-semantic-color-link: $cb-base-color-blue-green-40;
 
 $cb-component-card-bg-color: $cb-base-color-white;
-$cb-component-card-border-color : $cb-semantic-color-border;
+$cb-component-card-border-color: $cb-semantic-color-border;
+
+$cb-component-panel-border-radius: $cb-base-radius-0;
+$cb-component-panel-heading-radius: $cb-base-radius-0;
+
+$cb-component-panel-heading-bg-default: $cb-base-color-grey-90;
+$cb-component-panel-heading-bg-default-collapsed: $cb-base-color-grey-90;
+$cb-component-panel-heading-bg-primary: $cb-semantic-color-primary-light;
+$cb-component-panel-heading-bg-primary-collapsed: $cb-base-color-white;
+
+$cb-component-panel-heading-text-onDefault: $cb-semantic-color-font-base;
+$cb-component-panel-heading-text-onPrimary: $cb-semantic-color-font-base;
+
+
+$cb-component-panel-heading-text-transform: none;
 
    //Colors
    //$defaultColor:#bdc3c7; //grey
