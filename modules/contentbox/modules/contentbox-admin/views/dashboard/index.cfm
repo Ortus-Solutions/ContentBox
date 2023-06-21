@@ -73,7 +73,7 @@
 				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 					<div class="tab-pane" id="contentReports">
 						<div class="m5" id="latestSystemEdits">
-							<div class="panel panel-default">
+							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title">
 										<i class="fa fa-history"></i> Latest Edits
@@ -85,7 +85,7 @@
 							</div>
 						</div>
 						<div class="m5" id="futurePublished">
-							<div class="panel panel-default">
+							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title">
 										<i class="fa fa-space-shuttle"></i> Future Published Content
@@ -97,7 +97,7 @@
 							</div>
 						</div>
 						<div class="m5" id="expiredContent">
-							<div class="panel panel-default">
+							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title">
 										<i class="fa fa-file-archive" aria-hidden="true"></i> Expired Content
@@ -109,7 +109,7 @@
 							</div>
 						</div>
 						<div class="m5" id="latestUserDrafts">
-							<div class="panel panel-default">
+							<div class="panel panel-primary">
 								<div class="panel-heading">
 									<h3 class="panel-title">
 										<i class="fa fa-pencil-ruler"></i> My Latest Drafts
