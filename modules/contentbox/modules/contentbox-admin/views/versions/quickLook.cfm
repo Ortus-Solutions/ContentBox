@@ -16,15 +16,15 @@
 
 		<div class="modal-body">
 
-			<div>
+			<div class="tabs">
 
 				<!--- Nav Tabs --->
 				<ul class="nav nav-tabs" role="tablist">
-					<li role="presentation" class="active">
-						<a href="##preview" aria-controls="preview" role="tab" data-toggle="tab">Preview</a>
+					<li role="presentation" class="nav-item active">
+						<a href="##preview" aria-controls="preview" role="tab" data-toggle="tab" class="nav-link">Preview</a>
 					</li>
-					<li role="presentation">
-						<a href="##code" aria-controls="code" role="tab" data-toggle="tab">Code</a>
+					<li role="presentation" class="nav-item">
+						<a href="##code" aria-controls="code" role="tab" data-toggle="tab" class="nav-link">Code</a>
 					</li>
 				</ul>
 

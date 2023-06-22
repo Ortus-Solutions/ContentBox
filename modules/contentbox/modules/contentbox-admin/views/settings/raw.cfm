@@ -24,18 +24,18 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
-				<div class="tab-wrapper tab-primary">
+				<div class="tabs">
 
                     <!-- Tabs -->
-                    <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="##raw" data-toggle="tab"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
+                    <ul class="nav nav-tabs mb10">
+                        <li class="nav-item active">
+                            <a href="##raw" data-toggle="tab" class="nav-link"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs">Raw Settings</span></a>
                         </li>
-                        <li>
-                            <a href="##cachebox" data-toggle="tab"><i class="fa fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
+                        <li class="nav-item">
+                            <a href="##cachebox" data-toggle="tab" class="nav-link"><i class="fa fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
-                        <li>
-                            <a href="##_events" data-toggle="tab"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
+                        <li class="nav-item">
+                            <a href="##_events" data-toggle="tab" class="nav-link"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
 					<!-- End Tabs -->

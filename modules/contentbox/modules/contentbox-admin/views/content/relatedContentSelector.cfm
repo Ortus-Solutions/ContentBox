@@ -44,15 +44,15 @@
             </div>
 
             <!--- Render tables out --->
-            <div id="contentContainer" class="tab-wrapper tab-top tab-primary">
+            <div id="contentContainer" class="tabs">
 
 				<ul class="nav nav-tabs" id="contentTypes">
                     <!---loop over content types--->
                     <cfset types = listToArray( rc.contentType )>
                     <cfloop from="1" to="#arrayLen( types )#" index="i">
                         <cfset ct = types[ i ]>
-                        <li <cfif i eq 1> class="active"</cfif>>
-							<a href="###ct#" data-toggle="tab">
+                        <li <cfif i eq 1> class="nav-item active"<cfelse>class="nav-item"</cfif>>
+							<a href="###ct#" data-toggle="tab" class="nav-link">
 								<i class="#getContentTypeIconCls( ct )#" title="#ct#"></i> #ct#
 							</a>
                         </li>

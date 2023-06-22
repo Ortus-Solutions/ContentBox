@@ -40,104 +40,108 @@
 			</div>
 		</cfif>
 
-		<div class="tab-wrapper tab-primary">
-			<ul class="nav nav-tabs" id="dashboardTabs">
-				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-					<li>
-						<a href="##contentReports" data-toggle="tab">
-							<i class="fa fa-archive"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
-						</a>
-					</li>
-				</cfif>
-				<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
-					<li>
-						<a href="##latestComments" data-toggle="tab">
-							<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
-						</a>
-					</li>
-				</cfif>
-				<li>
-					<a href="##latestNews" data-toggle="tab">
-						<i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span>
-					</a>
-				</li>
-				<!--- cbadmin Event --->
-				#announce( "cbadmin_onDashboardTabNav" )#
-			</ul>
-			<div class="tab-content">
-				<!--- cbadmin Event --->
-				#announce( "cbadmin_preDashboardTabContent" )#
-				<!--- ****************************************************************************************** --->
-				<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
-				<!--- ****************************************************************************************** --->
-				<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-					<div class="tab-pane" id="contentReports">
-						<div class="m5" id="latestSystemEdits">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title">
-										<i class="fa fa-history"></i> Latest Edits
-									</h3>
+		<div class="panel">
+			<div class="panel-body">
+				<div class="tabs">
+					<ul class="nav nav-tabs" id="dashboardTabs">
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<li class="nav-item">
+								<a href="##contentReports" data-toggle="tab" class="nav-link">
+									<i class="fa fa-archive"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+								</a>
+							</li>
+						</cfif>
+						<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
+							<li class="nav-item">
+								<a href="##latestComments" data-toggle="tab" class="nav-link">
+									<i class="fa fa-comments"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head2@admin" )#</span>
+								</a>
+							</li>
+						</cfif>
+						<li class="nav-item">
+							<a href="##latestNews" data-toggle="tab" class="nav-link">
+								<i class="fa fa-rss"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head3@admin" )#</span>
+							</a>
+						</li>
+						<!--- cbadmin Event --->
+						#announce( "cbadmin_onDashboardTabNav" )#
+					</ul>
+					<div class="tab-content">
+						<!--- cbadmin Event --->
+						#announce( "cbadmin_preDashboardTabContent" )#
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST SYSTEM EDITS + LATEST MY DRAFTS --->
+						<!--- ****************************************************************************************** --->
+						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
+							<div class="tab-pane" id="contentReports">
+								<div class="m5" id="latestSystemEdits">
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												<i class="fa fa-history"></i> Latest Edits
+											</h3>
+										</div>
+										<div class="panel-body text-center">
+											<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+										</div>
+									</div>
 								</div>
-								<div class="panel-body text-center">
-									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+								<div class="m5" id="futurePublished">
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												<i class="fa fa-space-shuttle"></i> Future Published Content
+											</h3>
+										</div>
+										<div class="panel-body text-center">
+											<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+										</div>
+									</div>
+								</div>
+								<div class="m5" id="expiredContent">
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												<i class="fa fa-file-archive" aria-hidden="true"></i> Expired Content
+											</h3>
+										</div>
+										<div class="panel-body text-center">
+											<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+										</div>
+									</div>
+								</div>
+								<div class="m5" id="latestUserDrafts">
+									<div class="panel panel-primary">
+										<div class="panel-heading">
+											<h3 class="panel-title">
+												<i class="fa fa-pencil-ruler"></i> My Latest Drafts
+											</h3>
+										</div>
+										<div class="panel-body text-center">
+											<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
+										</div>
+									</div>
 								</div>
 							</div>
-						</div>
-						<div class="m5" id="futurePublished">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title">
-										<i class="fa fa-space-shuttle"></i> Future Published Content
-									</h3>
-								</div>
-								<div class="panel-body text-center">
-									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
-								</div>
+						</cfif>
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST COMMENTS --->
+						<!--- ****************************************************************************************** --->
+						<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
+							<div class="tab-pane" id="latestComments">
+								<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
 							</div>
+						</cfif>
+						<!--- ****************************************************************************************** --->
+						<!--- LATEST NEWS TAB --->
+						<!--- ****************************************************************************************** --->
+						<div class="tab-pane" id="latestNews">
+							<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
 						</div>
-						<div class="m5" id="expiredContent">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title">
-										<i class="fa fa-file-archive" aria-hidden="true"></i> Expired Content
-									</h3>
-								</div>
-								<div class="panel-body text-center">
-									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
-								</div>
-							</div>
-						</div>
-						<div class="m5" id="latestUserDrafts">
-							<div class="panel panel-primary">
-								<div class="panel-heading">
-									<h3 class="panel-title">
-										<i class="fa fa-pencil-ruler"></i> My Latest Drafts
-									</h3>
-								</div>
-								<div class="panel-body text-center">
-									<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
-								</div>
-							</div>
-						</div>
+						<!--- cbadmin Event --->
+						#announce( "cbadmin_postDashboardTabContent" )#
 					</div>
-				</cfif>
-				<!--- ****************************************************************************************** --->
-				<!--- LATEST COMMENTS --->
-				<!--- ****************************************************************************************** --->
-				<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
-					<div class="tab-pane" id="latestComments">
-						<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
-					</div>
-				</cfif>
-				<!--- ****************************************************************************************** --->
-				<!--- LATEST NEWS TAB --->
-				<!--- ****************************************************************************************** --->
-				<div class="tab-pane" id="latestNews">
-					<i class="fa fa-spin fa-circle-o-notch fa-lg fa-2x text-muted"></i>
 				</div>
-				<!--- cbadmin Event --->
-				#announce( "cbadmin_postDashboardTabContent" )#
 			</div>
 		</div>
 

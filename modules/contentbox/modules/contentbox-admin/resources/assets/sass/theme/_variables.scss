@@ -12,8 +12,14 @@ $cb-base-box-shadow:  rgba(9, 30, 66, 0.08) 0px 0px 0px 1px, rgba(9, 30, 66, 0.0
 
 $cb-base-radius-0: 0rem;
 
+$cb-base-spacer-sm: 1rem;
+$cb-base-spacer-md: 1.5rem;
+$cb-base-spacer-lg: 2rem;
+
 $cb-semantic-color-primary: $cb-base-color-green-kelly-20;
 $cb-semantic-color-primary-light: $cb-base-color-green-kelly-95;
+
+$cb-semantic-color-fill-primary: $cb-base-color-green-kelly-40;
 
 $cb-semantic-color-border: $cb-base-color-grey-80;
 $cb-semantic-color-font-base: $cb-base-color-grey-30;
@@ -24,18 +30,18 @@ $cb-component-card-border-color: $cb-semantic-color-border;
 
 $cb-component-panel-border-radius: $cb-base-radius-0;
 $cb-component-panel-heading-radius: $cb-base-radius-0;
-
 $cb-component-panel-heading-bg-default: $cb-base-color-grey-90;
 $cb-component-panel-heading-bg-default-collapsed: $cb-base-color-grey-90;
 $cb-component-panel-heading-bg-primary: $cb-semantic-color-primary-light;
 $cb-component-panel-heading-bg-primary-collapsed: $cb-base-color-white;
-
 $cb-component-panel-heading-text-onDefault: $cb-semantic-color-font-base;
 $cb-component-panel-heading-text-onPrimary: $cb-semantic-color-font-base;
-
-
 $cb-component-panel-heading-text-transform: none;
 
+$cb-component-tabs-border-radius: $cb-base-radius-0;
+$cb-component-tabs-link-color-active: $cb-semantic-color-font-base;
+$cb-component-tabs-link-border-color-active: $cb-semantic-color-fill-primary;
+   
    //Colors
    //$defaultColor:#bdc3c7; //grey
    $defaultColor: #a4a8aa;
