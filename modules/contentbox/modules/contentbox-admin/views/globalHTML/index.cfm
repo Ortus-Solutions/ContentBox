@@ -20,20 +20,20 @@
 				</p>
 
                 <!-- Vertical Nav -->
-                <div class="tab-wrapper tab-primary">
+                <div class="tabs">
                     <!-- Tabs -->
                     <ul class="nav nav-tabs">
-                        <li class="active">
-                            <a href="##global" data-toggle="tab"><i class="fa fa-globe fa-lg"></i> <span class="hidden-xs">Global Layout</span></a>
+                        <li class="nav-item active">
+                            <a href="##global" data-toggle="tab" class="nav-link"><i class="fa fa-globe fa-lg"></i> <span class="hidden-xs">Global Layout</span></a>
                         </li>
-                        <li>
-                            <a href="##entry" data-toggle="tab"><i class="fa fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
+                        <li class="nav-item">
+                            <a href="##entry" data-toggle="tab" class="nav-link"><i class="fa fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
                         </li>
-                        <li>
-                            <a href="##comments" data-toggle="tab"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
+                        <li class="nav-item">
+                            <a href="##comments" data-toggle="tab" class="nav-link"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
                         </li>
-                        <li>
-                            <a href="##pages" data-toggle="tab"><i class="fa fa-file-alt fa-lg"></i> <span class="hidden-xs">Pages</span></a>
+                        <li class="nav-item">
+                            <a href="##pages" data-toggle="tab" class="nav-link"><i class="fa fa-file-alt fa-lg"></i> <span class="hidden-xs">Pages</span></a>
                         </li>
 					</ul>
 

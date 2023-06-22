@@ -22,66 +22,66 @@
                 <div class="panel-body">
 
                     <!--- Vertical Nav --->
-                    <div class="tab-wrapper tab-left tab-primary">
+                    <div class="tabs tabs-left">
                         <!--- Tabs --->
                         <ul class="nav nav-tabs">
-                            <li class="active">
-								<a href="##site_options" data-toggle="tab">
+                            <li class="nav-item active">
+								<a href="##site_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-globe fa-lg"></i> All Sites
 								</a>
 							</li>
-                            <li>
-								<a href="##dashboard_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##dashboard_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-desktop fa-lg"></i> Administrator
 								</a>
                             </li>
-                            <li>
-								<a href="##security_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##security_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-key fa-lg"></i> Security
 								</a>
                             </li>
-                            <li>
-								<a href="##login_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##login_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-sign-in fa-lg"></i> Login
 								</a>
                             </li>
-                            <li>
-								<a href="##content_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##content_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-archivees fa-lg"></i> Content
 								</a>
                             </li>
-                            <li>
-								<a href="##editor_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##editor_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-pen fa-lg"></i> Editor Options
 								</a>
                             </li>
-                            <li>
-								<a href="##mediamanager" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##mediamanager" data-toggle="tab" class="nav-link">
 									<i class="fa fa-photo-video fa-lg"></i> Media Manager
 								</a>
                             </li>
-                            <li>
-								<a href="##gravatars" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##gravatars" data-toggle="tab" class="nav-link">
 									<i class="fa fa-portrait fa-lg"></i> Gravatars
 								</a>
                             </li>
-                            <li>
-								<a href="##notifications" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##notifications" data-toggle="tab" class="nav-link">
 									<i class="fa fa-bell fa-lg"></i> Notifications
 								</a>
                             </li>
-                            <li>
-								<a href="##email_server" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##email_server" data-toggle="tab" class="nav-link">
 									<i class="fa fa-envelope-open fa-lg"></i> Mail Server
 								</a>
                             </li>
-                            <li>
-								<a href="##search_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##search_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-searchengin fa-lg"></i> Search Options
 								</a>
                             </li>
-                            <li>
-								<a href="##rss_options" data-toggle="tab">
+                            <li class="nav-item">
+								<a href="##rss_options" data-toggle="tab" class="nav-link">
 									<i class="fa fa-rss fa-lg"></i> RSS
 								</a>
                             </li>

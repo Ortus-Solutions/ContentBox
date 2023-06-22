@@ -17,11 +17,11 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- Vertical Nav -->
-                <div class="tab-wrapper tab-primary">
+                <div class="tabs">
                     <!-- Tabs -->
                     <ul class="nav nav-tabs" id="contentTypes">
-                        <li class="active">
-                            <a href="##CommentSubscriptions" data-toggle="tab"><i class="fa fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
+                        <li class="nav-item active">
+                            <a href="##CommentSubscriptions" data-toggle="tab" class="nav-link"><i class="fa fa-blog icon-small" title="Comment Subscriptions"></i> Comment Subscriptions</a>
                         </li>
                     </ul>
                     <!-- End Tabs -->

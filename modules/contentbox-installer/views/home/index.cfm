@@ -16,31 +16,31 @@
             novalidate 	= "novalidate",
             class 		= "form-vertical"
         )#
-            <div class="tab-wrapper tab-primary">
+            <div class="tabs">
                 <!--- Tabs --->
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
-					<li class="active">
+					<li class="nav-item active">
 						<a href="##introduction" class="current" data-toggle="tab">
 							#cb.r( "tab.intro@installer" )#
 						</a>
 					</li>
-					<li>
-						<a href="##step1" data-toggle="tab">
+					<li class="nav-item">
+						<a href="##step1" data-toggle="tab" class="nav-link">
 							1: #cb.r( "tab.admin@installer" )#
 						</a>
 					</li>
-					<li>
-						<a href="##step2" data-toggle="tab">
+					<li class="nav-item">
+						<a href="##step2" data-toggle="tab" class="nav-link">
 							2: #cb.r( "tab.site@installer" )#
 						</a>
 					</li>
-					<li>
-						<a href="##step3" data-toggle="tab">
+					<li class="nav-item">
+						<a href="##step3" data-toggle="tab" class="nav-link">
 							3: #cb.r( "tab.email@installer" )#
 						</a>
 					</li>
-					<li>
-						<a href="##step4" data-toggle="tab">
+					<li class="nav-item">
+						<a href="##step4" data-toggle="tab" class="nav-link">
 							4: #cb.r( "tab.rewrites@installer" )#
 						</a>
 					</li>

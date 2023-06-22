@@ -71,43 +71,43 @@
             	#cbMessageBox().renderit()#
 
             	<!--- Vertical Nav --->
-                <div class="tab-wrapper tab-left tab-primary">
+                <div class="tabs tabs-left">
 
                     <!--- Documentation Navigation Bar --->
                     <ul class="nav nav-tabs">
 
-                    	<li class="active">
-							<a href="##details" data-toggle="tab">
+                    	<li class="nav-item active">
+							<a href="##details" data-toggle="tab" class="nav-link">
 								<i class="fa fa-eye fa-lg"></i> Details
 							</a>
                     	</li>
-						<li>
-							<a href="##change-password" data-toggle="tab">
+						<li class="nav-item">
+							<a href="##change-password" data-toggle="tab" class="nav-link">
 								<i class="fa fa-key fa-lg"></i> Password
 							</a>
 						</li>
-						<li>
-							<a href="##twofactor"  data-toggle="tab">
+						<li class="nav-item">
+							<a href="##twofactor"  data-toggle="tab" class="nav-link">
 								<i class="fa fa-mobile-alt fa-lg fa-lg"></i> Two Factor
 							</a>
 						</li>
-						<li>
-							<a href="##preferences" data-toggle="tab">
+						<li class="nav-item">
+							<a href="##preferences" data-toggle="tab" class="nav-link">
 								<i class="fa fa-briefcase fa-lg"></i> Preferences</a>
 						</li>
-						<li>
-							<a href="##permissions" onclick="loadPermissions();" data-toggle="tab">
+						<li class="nav-item">
+							<a href="##permissions" onclick="loadPermissions();" data-toggle="tab" class="nav-link">
 								<i class="fa fa-user-shield fa-lg"></i> Permissions
 							</a>
 						</li>
 						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-						<li>
-							<a href="##latestEdits" data-toggle="tab">
+						<li class="nav-item">
+							<a href="##latestEdits" data-toggle="tab" class="nav-link">
 								<i class="fa fa-history fa-lg"></i> Latest Edits
 							</a>
 						</li>
-						<li>
-							<a href="##latestDrafts" data-toggle="tab">
+						<li class="nav-item">
+							<a href="##latestDrafts" data-toggle="tab" class="nav-link">
 								<i class="fa fa-pencil-ruler fa-lg"></i> Latest Drafts
 							</a>
 						</li>
