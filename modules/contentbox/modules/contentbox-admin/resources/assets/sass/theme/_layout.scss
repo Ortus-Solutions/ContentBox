@@ -1,0 +1,22 @@
+.layout-wrapper {
+    display: grid;
+    grid-template-areas: "header header" "sidebar main";
+    grid-template-columns: 10px 5fr;
+    grid-template-rows: max-content auto;
+    gap: 0px 1.5rem;
+    height: 100%;
+    position: relative;
+
+    @include breakpoint( lg ) {
+        grid-template-columns: $cb-base-sidebar-width 5fr;
+        -webkit-transition: all 0.3s ease-in-out;
+        -moz-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        -ms-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+
+        &.sidebar-mini {
+            grid-template-columns: $cb-base-sidebarmini-width 5fr;
+        }
+    }
+}
