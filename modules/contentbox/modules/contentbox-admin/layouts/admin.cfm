@@ -213,7 +213,7 @@
 			<!--- ************************************************************************************************--->
 			<!---                               MAIN CONTENT					                                  --->
 			<!--- ************************************************************************************************--->
-			<section class="main-content-wrapper" id="main-content-wrapper">
+			<main class="main-content-wrapper" id="main-content-wrapper">
 				<section id="main-content">
 					<!--- cbadmin event --->
 					#announce( "cbadmin_beforeContent" )#
@@ -239,7 +239,7 @@
 					<!--- cbadmin event --->
 					#announce( "cbadmin_afterContent" )#
 				</section>
-			</section>
+			</main>
 
 			<!--- ************************************************************************************************--->
 			<!---                               FOOTER						                                      --->
