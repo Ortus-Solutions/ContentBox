@@ -25,7 +25,7 @@ var app = function() {
 		$( "#toggle-left" ).bind( "click", function( e ) {
 			$( "body" ).removeClass( "off-canvas-open" );
 			var bodyEl = $( "#container" );
-			( $( window ).width() > 767 ) ? $( bodyEl ).toggleClass( "sidebar-mini" ): $( bodyEl ).toggleClass( "sidebar-opened" );
+			( $( window ).width() > 1023 ) ? $( bodyEl ).toggleClass( "sidebar-mini" ): $( bodyEl ).toggleClass( "sidebar-opened" );
 		} );
 	};
 
@@ -124,10 +124,13 @@ require( "./alpine/confirm" );
 
 document.addEventListener( "DOMContentLoaded", () => {
 	app.init();
-	// Collapsed nav if <=768 by default
+	// Collapsed nav if <=1024 by default
 	var bodyEl = $( "#container" );
-	if ( $( window ).width() <= 768 && !$( bodyEl ).hasClass( "sidebar-mini" ) ){
+	if ( $( window ).width() <= 1024 && !$( bodyEl ).hasClass( "sidebar-mini" ) ){
 		$( "body" ).removeClass( "off-canvas-open" );
-		$( bodyEl ).toggleClass( "sidebar-mini" );
 	}
+} );
+
+addEventListener( "resize", ( event ) => {
+	if ( $( window ).width() <= 1024 ) $( "#container" ).removeClass( "sidebar-mini" );
 } );
