@@ -14,7 +14,6 @@
 				<a
 					href="#( isCustomFunction( local.topMenu.href ) ? local.topMenu.href( local.topMenu, event ) : local.topMenu.href )#"
 					class="<cfif arrayLen( local.topMenu.subMenu )>dropdown-toggle</cfif>"
-					<cfif arrayLen( local.topMenu.subMenu )>data-toggle="dropdown"</cfif>
 					<cfif len( local.topMenu.title )>title="#local.topMenu.title#"</cfif>
 					<cfif len( local.topMenu.target )>target="#local.topMenu.target#"</cfif>
 					<cfif structKeyExists( local.topMenu, "data" ) && structCount( local.topMenu.data )>#parseADataAttributes( local.topMenu.data )#</cfif>
