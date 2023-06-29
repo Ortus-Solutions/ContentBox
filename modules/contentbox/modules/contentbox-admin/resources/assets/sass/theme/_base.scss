@@ -1,14 +1,21 @@
-
+html{
+	font-size: $cb-base-size-font-base;
+    scroll-behavior: smooth;
+}
+ 
  body {
-    color:#5D5F63;
-    background:#F0F1F6;
-    font-family:'Open Sans', sans-serif;
-    padding:0px;
+    color:$cb-semantic-color-font-base;
+    background: #F1F2F7;
+    font-family: 'Source Sans Pro',Arial,sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    letter-spacing: 0.5px;
     margin:0px;
+    padding:0px;
     text-rendering:optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     position: relative;
-     height: 100%;
+    height: 100%;
 }
 a:link, a:visited {
     text-decoration: none;

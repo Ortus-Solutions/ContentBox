@@ -9,19 +9,8 @@
 
 
 /******************** MAIN HTML ELEMENTS ****************************/
-
-html{
-	scroll-behavior: smooth;
-}
-
 body{
 	position: inherit;
-	font-family: 'Source Sans Pro',Arial,sans-serif;
-	letter-spacing: 0.5px;
-	font-size: 14px;
-	font-weight: 400;
-	color: black;
-	background: #F1F2F7;
 }
 
 p{
@@ -148,21 +137,6 @@ p{
 
 #simple-container{
 	padding-top:10px;
-}
-
-/******************** SIDEBAR ****************************/
-/** Sidebar Mini */
-.sidebar-mini{
-	.nav > li.nav-dropdown-open a,  .nav > li:hover a{
-		color: white;
-	}
-
-	.nav-sub > li > a, .nav-sub > li > a:active{
-		color: white !important;
-	}
-	.nav-sub > li > a:hover{
-		color: #32a644 !important;
-	}
 }
 /******************** BREADCRUMBS ****************************/
 

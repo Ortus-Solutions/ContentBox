@@ -1,42 +1,59 @@
 $cb-base-color-green-kelly-20: #36571a;
-$cb-base-color-green-kelly-40: #6bb231;
+$cb-base-color-green-kelly-40: #6DBE46;
 $cb-base-color-green-kelly-95: #f2fbec;
-$cb-base-color-blue-green-40: #2d7c99;
+
+$cb-base-color-teal-20: #1a5457;
+$cb-base-color-teal-30: #24767B;
+$cb-base-color-teal-50: #45c6cd;
+$cb-base-color-teal-90: #d9f4f6;
+
 $cb-base-color-grey-30: #555454;
 $cb-base-color-grey-40: #717070;
 $cb-base-color-grey-80: #d1d1d1;
 $cb-base-color-grey-90: #e8e8e8;
+$cb-base-color-grey-95: #f2f2f2;
 $cb-base-color-white: #ffffff;
 
 $cb-base-box-shadow:  rgba(9, 30, 66, 0.08) 0px 0px 0px 1px, rgba(9, 30, 66, 0.08) 0px 2px 4px 1px;
 
 $cb-base-radius-0: 0rem;
 
-$cb-base-spacer-sm: 1rem;
-$cb-base-spacer-md: 1.5rem;
-$cb-base-spacer-lg: 2rem;
+$cb-base-spacer-xs: .25rem;
+$cb-base-spacer-sm: .5rem;
+$cb-base-spacer-md: 1rem;
+$cb-base-spacer-lg: 1.5rem;
+
+$cb-base-size-font-base: 1rem; // Assumes the browser default, typically `16px`
+$cb-base-size-font-sm: $cb-base-size-font-base * .875;
+$cb-base-size-font-lg: $cb-base-size-font-base * 1.25;
 
 $cb-base-sidebar-width: 240px;
 $cb-base-sidebarmini-width: 50px;
 
+$cb-semantic-color-neutral-weak: $cb-base-color-grey-95;
 $cb-semantic-color-primary: $cb-base-color-green-kelly-20;
-$cb-semantic-color-primary-light: $cb-base-color-green-kelly-95;
+$cb-semantic-color-primary-weak: $cb-base-color-green-kelly-95;
+$cb-semantic-color-tertiary: $cb-base-color-teal-30;
+$cb-semantic-color-tertiary-weak: $cb-base-color-teal-90;
 
 $cb-semantic-color-fill-primary: $cb-base-color-green-kelly-40;
+$cb-semantic-color-fill-tertiary: $cb-base-color-teal-50;
 
 $cb-semantic-color-border: $cb-base-color-grey-80;
 $cb-semantic-color-font-base: $cb-base-color-grey-30;
-$cb-semantic-color-link: $cb-base-color-blue-green-40;
+$cb-semantic-color-link: $cb-base-color-teal-30;
 
-$cb-component-card-bg-color: $cb-base-color-white;
+$cb-semantic-surface-color: $cb-base-color-white; 
+
+$cb-component-card-bg-color: $cb-semantic-surface-color;
 $cb-component-card-border-color: $cb-semantic-color-border;
 
 $cb-component-panel-border-radius: $cb-base-radius-0;
 $cb-component-panel-heading-radius: $cb-base-radius-0;
 $cb-component-panel-heading-bg-default: $cb-base-color-grey-90;
 $cb-component-panel-heading-bg-default-collapsed: $cb-base-color-grey-90;
-$cb-component-panel-heading-bg-primary: $cb-semantic-color-primary-light;
-$cb-component-panel-heading-bg-primary-collapsed: $cb-base-color-white;
+$cb-component-panel-heading-bg-primary: $cb-semantic-color-primary-weak;
+$cb-component-panel-heading-bg-primary-collapsed: $cb-semantic-surface-color;
 $cb-component-panel-heading-text-onDefault: $cb-semantic-color-font-base;
 $cb-component-panel-heading-text-onPrimary: $cb-semantic-color-font-base;
 $cb-component-panel-heading-text-transform: none;
@@ -45,6 +62,12 @@ $cb-component-tabs-border-radius: $cb-base-radius-0;
 $cb-component-tabs-link-color-active: $cb-semantic-color-font-base;
 $cb-component-tabs-link-border-color-active: $cb-semantic-color-fill-primary;
    
+$cb-component-sidebar-color-bg: $cb-semantic-surface-color;
+$cb-component-sidebar-subnav-color-bg: transparent;
+$cb-component-sidebar-link-color: $cb-semantic-color-link;
+$cb-component-sidebar-link-color-hover: $cb-semantic-color-font-base;
+$cb-component-sidebar-link-color-active: $cb-semantic-color-font-base;
+
    //Colors
    //$defaultColor:#bdc3c7; //grey
    $defaultColor: #a4a8aa;
