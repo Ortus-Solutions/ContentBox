@@ -481,25 +481,30 @@ fieldset[disabled] .btn-warning.active {
    Button Menu
    ========================================================================== */
  .dropdown-menu {
-    background-color:#F6F6F6;
+    background-color:#FFF;
     border-color:$defaultColorHover;
     -webkit-box-shadow:none;
     box-shadow: none;
-    padding: 6px;
+    padding: $cb-base-spacer-sm;
 }
 .dropdown-menu>li {
-    font-size: 13px;
-	&.dropdown-header {
+    &.dropdown-header {
 		color: $primaryColor;
 		padding-left: 10px;
 	}
+    > a {
+        @include roundBorders(0);
+		padding: ( $cb-base-spacer-sm / 2 ) $cb-base-spacer-sm;
+		
+        &:hover, &:focus, &:active {
+            background-color: $cb-component-dropdown-item-color-hover;
+        }
+        i {
+			margin-right: $cb-base-spacer-sm;
+		}
+	}
 }
-.dropdown-menu>li>a {
-    color:#797979;
-    @include roundBorders(3px);
-}
-.dropdown-menu .divider {
-}
+
 .btn-default + .dropdown-menu>li>a:hover, .btn-default + .dropdown-menu>li>a:focus {
     text-decoration: none;
     background-color: $defaultColor;

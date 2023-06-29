@@ -43,74 +43,6 @@ p{
 	padding: 10px 0px 0px 0px;
 }
 
-/******************** HEADER ELEMENTS ****************************/
-
-/** Header */
-#header{
-
-	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
-
-	.brand{
-		background-color: white!important;
-		width: 130px !important;
-	}
-	.logo{
-		padding: 15px 0 0 0px !important;
-		background: none !important;
-	}
-	.user-nav {
-		padding-right: 15px;
-	}
-	a.btn-default{
-		vertical-align: middle;
-	}
-	.btn-default{
-		min-height: 35px;
-		min-width: 35px;
-	}
-	a.btn-default:hover, .btn-default:hover{
-		box-shadow: 0 0 2px 0px #1ABC9C !important;
-		border-color: #1ABC9C;
-	}
-	.btn-default:hover > i {
-		color: black !important;
-	}
-	.user-nav ul li{
-		margin: 0px 5px;
-	}
-	/* close gap between li's */
-	.user-nav ul li.dropdown.settings .dropdown-menu {
-		width: 230px;
-		left: -80px;
-	}
-	.user-nav ul li.dropdown.settings {
-		line-height: 39px;
-		margin: 0px 5px;
-		padding: 0px;
-		a{
-			font-size: 14px !important;
-		}
-	}
-	.user-nav ul li.dropdown.settings .dropdown-menu:after {
-		left: 43%;
-	}
-	.user-nav ul li.dropdown.settings .dropdown-menu:before {
-		left: 43%;
-	}
-	#div-siteswitcher{
-		display: inline-block;
-	}
-	#siteSwitcher{
-		padding-top: 8px;
-		padding-bottom: 5px;
-	}
-	#header-profile-slot{
-		margin-top: -10px;
-	}
-}
-.header-default {
-	grid-area: header;
-}
 /******************** LOGIN WRAPPERS ****************************/
 
 #login-wrapper{
@@ -239,8 +171,8 @@ a.btn.btn-danger:visited {
 	color: #444242 !important;
 	background-color: transparent !important;
 }
-.btn-more:hover{
-	background-color: rgb(199, 199, 199) !important;
+.btn-more:hover, .btn-more:focus {
+	background-color: rgb(199, 199, 199, 0.5) !important;
 }
 .btn-back{
 	color: #c4c4c4 !important;
@@ -249,25 +181,6 @@ a.btn.btn-danger:visited {
 .btn-back:hover{
 	color: #444242 !important;
 	background-color: rgb(199, 199, 199) !important;
-}
-
-/******************** DROPDOWN MENUS ****************************/
-
-.dropdown-menu{
-	border-radius: 10px;
-	background-color: white;
-	padding: 9px;
-	li > a{
-		color: #0a1d30;
-		padding: 5px 10px;
-		i{
-			margin-right: 5px;
-		}
-	}
-	li > a:hover, li > a:active {
-		color: #0a1d30 !important;
-		background-color: #8ad3f0 !important;
-	}
 }
 
 /******************** PANELS ****************************/
