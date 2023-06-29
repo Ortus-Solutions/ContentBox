@@ -231,7 +231,7 @@ component accessors="true" threadSafe singleton {
 			label       = "<i class=""fa fa-cog""></i>",
 			class       = "dropdown settings",
 			itemType    = "button",
-			itemClass   = "btn btn-default btn-more options toggle",
+			itemClass   = "btn btn-more options toggle",
 			permissions = "RELOAD_MODULES",
 			data        = { placement : "right" },
 			title       = "Admin Actions"
