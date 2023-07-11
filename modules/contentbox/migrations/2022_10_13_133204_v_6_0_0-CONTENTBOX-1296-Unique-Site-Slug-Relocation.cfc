@@ -1,5 +1,8 @@
 component {
 
+	// Include Utils
+	include template="./_MigrationUtils.cfm";
+
 	function up( schema, qb ){
 		if ( schema.hasTable( "cb_relocations" ) ) {
 			schema.alter( "cb_relocations", function( table ){
