@@ -53,6 +53,8 @@ $cb-semantic-color-link-hover: $cb-base-color-teal-10;
 
 $cb-semantic-surface-color: $cb-base-color-white; 
 
+$cb-component-dropdown-item-color-hover: $cb-semantic-color-primary-weak;
+
 $cb-component-card-bg-color: $cb-semantic-surface-color;
 $cb-component-card-border-color: $cb-semantic-color-border;
 
@@ -76,7 +78,7 @@ $cb-component-sidebar-link-color: $cb-semantic-color-link;
 $cb-component-sidebar-link-color-hover: $cb-semantic-color-font-base;
 $cb-component-sidebar-link-color-active: $cb-semantic-color-font-base;
 
-$cb-component-dropdown-item-color-hover: $cb-semantic-color-primary-weak;
+
    //Colors
    //$defaultColor:#bdc3c7; //grey
    $defaultColor: #a4a8aa;
