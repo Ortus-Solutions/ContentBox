@@ -504,28 +504,3 @@ fieldset[disabled] .btn-warning.active {
 		}
 	}
 }
-
-.btn-default + .dropdown-menu>li>a:hover, .btn-default + .dropdown-menu>li>a:focus {
-    text-decoration: none;
-    background-color: $defaultColor;
-    color:#fff;
-}
-.btn-primary + .dropdown-menu>li>a:hover, .btn-primary + .dropdown-menu>li>a:focus {
-    text-decoration: none;
-    color:#fff;
-}
-.btn-info + .dropdown-menu>li>a:hover, .btn-info + .dropdown-menu>li>a:focus {
-    text-decoration: none;
-    background-color: #2C81BA;
-    color:#fff;
-}
-.btn-warning + .dropdown-menu>li>a:hover, .btn-warning + .dropdown-menu>li>a:focus {
-    text-decoration: none;
-    background-color: $warningColorHover;
-    color:#fff;
-}
-.btn-danger + .dropdown-menu>li>a:hover, .btn-danger + .dropdown-menu>li>a:focus {
-    text-decoration: none;
-    background-color: #c1392b;
-    color:#fff;
-}
