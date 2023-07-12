@@ -189,6 +189,10 @@ component {
 		return application.cbBootstrap.onMissingTemplate( argumentCollection = arguments );
 	}
 
+	public void function onApplicationEnd( struct appScope ){
+		arguments.appScope.cbBootstrap.onApplicationEnd( arguments.appScope );
+	}
+
 	/**
 	 * Application Reinitialization
 	 **/
