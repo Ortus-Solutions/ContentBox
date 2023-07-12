@@ -1,3 +1,7 @@
+/**
+ * CONTENTBOX-1296: Relocations table should have a unique constraint on slug and siteID
+ * https://ortussolutions.atlassian.net/browse/CONTENTBOX-1296
+ */
 component {
 
 	// Include Utils

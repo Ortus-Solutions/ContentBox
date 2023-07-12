@@ -1,3 +1,7 @@
+/**
+ * CONTENTBOX-1452- Add mediaDisk column to cb_site table
+ * https://ortussolutions.atlassian.net/browse/CONTENTBOX-1452
+ */
 component {
 
 	// Include Utils

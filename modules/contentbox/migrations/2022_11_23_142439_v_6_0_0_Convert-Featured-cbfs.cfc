@@ -1,3 +1,7 @@
+/**
+ * CONTENTBOX-1452: Remove featuredImageURL column from cb_content
+ * https://ortussolutions.atlassian.net/browse/CONTENTBOX-1452
+ */
 component {
 
 	function up( schema, qb ){
@@ -23,9 +27,12 @@ component {
 				}
 			} );
 
-		schema.alter( "cb_content", function( table ){
-			table.dropColumn( "featuredImageURL" );
-		} );
+		if ( hasColumn( "cb_content", "featuredImageURL" ) ) {
+			schema.alter( "cb_content", function( table ){
+				table.dropColumn( "featuredImageURL" );
+			} );
+		}
+
 	}
 
 	function down( schema, qb ){
