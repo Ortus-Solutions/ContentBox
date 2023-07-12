@@ -1,0 +1,14 @@
+@mixin buttonFilled( $bg: #fff, $fg: #000, $focusAccent: #00bfff ) {
+    background-color: $bg;
+    border : 1px solid transparent;
+    color: $fg;
+
+    &:hover, &:focus, &:active {
+        background-color: darken( desaturate( $bg, 0.5 ), 10 );
+        border-color: transparent;
+        color: $fg;
+    }
+    &:focus {
+        border-color : $focusAccent;
+    }
+}
