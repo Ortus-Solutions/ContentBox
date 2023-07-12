@@ -9,7 +9,7 @@ component {
 	function up( schema, qb ){
 		if ( !hasColumn( "cb_securityRule", "httpMethods" ) ) {
 			schema.alter( "cb_securityRule", ( table ) => {
-				table.addColumn( table.string( "allowedIPs" ).default( "*" ) );
+				table.addColumn( table.string( "httpMethods" ).default( "*" ) );
 			} );
 		}
 
