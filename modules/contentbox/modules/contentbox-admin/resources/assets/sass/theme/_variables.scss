@@ -18,7 +18,8 @@ $cb-base-color-grey-90: #e8e8e8;
 $cb-base-color-grey-95: #f2f2f2;
 $cb-base-color-white: #ffffff;
 
-$cb-base-box-shadow:  rgba(9, 30, 66, 0.08) 0px 0px 0px 1px, rgba(9, 30, 66, 0.08) 0px 2px 4px 1px;
+$cb-base-shadow-sm: 0px 3px 1px -2px rgb(  0 0 0 / 0.2 ), 0px 2px 2px 0px rgb(  0 0 0  / 0.14 ), 0px 1px 5px 0px rgb(  0 0 0 / 0.12 );
+$cb-base-shadow-md:  0px 2px 4px -1px rgb( 0 0 0 / 0.2), 0px 4px 5px 0px rgb(  0 0 0 / 0.14), 0px 1px 10px 0px rgb(  0 0 0 / 0.12 );
 
 $cb-base-radius-0: 0rem;
 
