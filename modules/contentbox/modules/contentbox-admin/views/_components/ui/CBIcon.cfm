@@ -1,8 +1,10 @@
 <cfoutput>
     <!--- Icon name --->
-    <cfparam name="args.name" 	default="info">
+    <cfparam name="args.name"    default="info">
+    <!--- Icon size: sm,md,lg --->
+    <cfparam name="args.size"    default="md">
 
-    <cbicon class="flex justify-center">
+    <cbicon class="cbicon cbicon-#args.size#">
         <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">      
             <cfswitch expression=#args.name#>
                 <cfcase value="ArrowLeftCircle">
