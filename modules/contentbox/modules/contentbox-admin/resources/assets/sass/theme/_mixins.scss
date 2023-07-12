@@ -1,4 +1,7 @@
- //Rounded Borders
+@import "mixins/_breakpoints.scss";
+@import "mixins/_buttons.scss";
+
+//Rounded Borders
 @mixin roundBorders($radius){
     -webkit-border-radius:$radius;
     -moz-border-radius:$radius;
