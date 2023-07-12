@@ -4,6 +4,9 @@
  */
 component {
 
+	// Include Utils
+	include template="./_MigrationUtils.cfm";
+
 	function up( schema, qb ){
 		var mediaRoot = qb
 			.newQuery()
