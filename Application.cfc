@@ -3,7 +3,7 @@
  * Copyright since 2012 by Ortus Solutions, Corp
  * www.ortussolutions.com/products/contentbox
  * ---
- * Application Bootstrap
+ * ContentBox Application Bootstrap
  */
 component {
 
@@ -12,10 +12,16 @@ component {
 	 * NON COMMANDBOX INSTALLS
 	 * --------------------------------------------------------------------------
 	 * If you are NOT using CommandBox as your server, then set the variable to true
-	 * and ContentBox will load the `.env` environment file that is needed for operation.
+	 * and ContentBox will load the `.env` environment file defined by cbEnvFile.
+	 *
+	 * MAKE SURE THIS FILE IS NOT WEB ACCESSIBLE!
 	 * Without this, your NON CommandBox ContentBox install will fail.
 	 */
-	this._loadDynamicEnvironment = false;
+	this.cbLoadDynamicEnvironment = false;
+	this.cbEnvFile = expandPath( "/.env" );
+	if ( this.cbLoadDynamicEnvironment ) {
+		loadEnv();
+	}
 
 	/**
 	 * --------------------------------------------------------------------------
@@ -54,6 +60,7 @@ component {
 	 */
 	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING   = "";
+	COLDBOX_WEB_MAPPING	= "";
 	COLDBOX_CONFIG_FILE   = "";
 	COLDBOX_APP_KEY       = "";
 	COLDBOX_FAIL_FAST     = true;
@@ -62,8 +69,8 @@ component {
 	 * --------------------------------------------------------------------------
 	 * Location Mappings
 	 * --------------------------------------------------------------------------
-	 * - cbApp : Quick reference to root application
-	 * - coldbox : Where ColdBox library is installed
+	 * - cbApp : Quick reference to this application root
+	 * - coldbox : Where ColdBox is installed
 	 * - contentbox : Where the ContentBox module root is installed
 	 * - cborm : Where the cborm library is installed: Needed for ORM Event Handling.
 	 */
@@ -80,10 +87,7 @@ component {
 	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
 	 * So Make sure you select one.
 	 */
-	request.$systemHelper = new coldbox.system.core.delegates.Env();
-	if ( this._loadDynamicEnvironment ) {
-		loadEnv();
-	}
+	request.cbSystemHelper = new coldbox.system.core.delegates.Env();
 	// THE CONTENTBOX DATASOURCE NAME
 	this.datasource  = "contentbox";
 	// ORM SETTINGS
@@ -102,13 +106,13 @@ component {
 			"modules/contentbox/modules_user"
 		],
 		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
-		dialect              : request.$systemHelper.getSystemSetting( "ORM_DIALECT", "" ),
+		dialect              : request.cbSystemHelper.getSystemSetting( "ORM_DIALECT", "" ),
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate             : "update",
-		secondarycacheenabled: request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
-		cacheprovider        : request.$systemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
-		logSQL               : request.$systemHelper.getSystemSetting( "ORM_LOGSQL", false ),
-		sqlScript            : request.$systemHelper.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
+		secondarycacheenabled: request.cbSystemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
+		cacheprovider        : request.cbSystemHelper.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
+		logSQL               : request.cbSystemHelper.getSystemSetting( "ORM_LOGSQL", false ),
+		sqlScript            : request.cbSystemHelper.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
 		flushAtRequestEnd    : false,
 		autoManageSession    : false,
@@ -122,10 +126,11 @@ component {
 	};
 	// cfformat-ignore-end
 
-	/************************************** METHODS *********************************************/
+	/*****************************************************************************************************/
+	/************************************** CF APP LISTENERS *********************************************/
+	/*****************************************************************************************************/
 
-	// application start
-	public boolean function onApplicationStart(){
+	boolean function onApplicationStart(){
 		// Set a high timeout for any orm updates
 		setting requestTimeout ="300";
 		application.cbBootstrap= new coldbox.system.Bootstrap(
@@ -138,15 +143,14 @@ component {
 		return true;
 	}
 
-	// request start
-	public boolean function onRequestStart( string targetPage ){
+	boolean function onRequestStart( string targetPage ){
 		// In case bootstrap or controller are missing, perform a manual restart
 		if (
 			isNull( application.cbBootstrap )
 			||
 			isNull( application.cbController )
 		) {
-			if ( this._loadDynamicEnvironment ) {
+			if ( this.cbLoadDynamicEnvironment ) {
 				loadEnv( force: true );
 			}
 			reinitApplication();
@@ -160,7 +164,7 @@ component {
 			&&
 			application.cbBootstrap.isFWReinit()
 		) {
-			if ( this._loadDynamicEnvironment ) {
+			if ( this.cbLoadDynamicEnvironment ) {
 				loadEnv( force: true );
 			}
 			if ( structKeyExists( server, "lucee" ) ) {
@@ -175,34 +179,37 @@ component {
 		return true;
 	}
 
-	public void function onSessionStart(){
+	function onSessionStart(){
 		if ( !isNull( application.cbBootstrap ) ) {
 			application.cbBootStrap.onSessionStart();
 		}
 	}
 
-	public void function onSessionEnd( struct sessionScope, struct appScope ){
+	function onSessionEnd( struct sessionScope, struct appScope ){
 		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection = arguments );
 	}
 
-	public boolean function onMissingTemplate( template ){
+	boolean function onMissingTemplate( template ){
 		return application.cbBootstrap.onMissingTemplate( argumentCollection = arguments );
 	}
 
-	public void function onApplicationEnd( struct appScope ){
+	function onApplicationEnd( struct appScope ){
 		arguments.appScope.cbBootstrap.onApplicationEnd( arguments.appScope );
 	}
+
+	/*****************************************************************************************************/
+	/************************************** APP HELPERS **************************************************/
+	/*****************************************************************************************************/
 
 	/**
 	 * Application Reinitialization
 	 **/
 	private void function reinitApplication(){
-		// Run onAppStart
 		onApplicationStart();
 	}
 
 	/**
-	 * This method is only called if you are in a NON CommandBox install.
+	 * This method is only called if you are in a NON CommandBox install to load the environment variables
 	 */
 	private void function loadEnv( boolean force = false ){
 		var javaSystem = createObject( "java", "java.lang.System" );
@@ -214,7 +221,7 @@ component {
 				if ( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) || arguments.force ) {
 					// Load .env file
 					var props = createObject( "java", "java.util.Properties" ).init();
-					props.load( createObject( "java", "java.io.FileInputStream" ).init( expandPath( "/.env" ) ) );
+					props.load( createObject( "java", "java.io.FileInputStream" ).init( this.cbEnvFile ) );
 					// Iterate and add
 					var availableProps = props.propertyNames();
 					while ( availableProps.hasNext() ) {
