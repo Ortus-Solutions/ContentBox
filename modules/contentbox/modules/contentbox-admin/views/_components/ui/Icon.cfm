@@ -1,6 +1,7 @@
 <cfoutput>
     <!--- Icon name --->
     <cfparam name="args.name" 	 default="info">
+    <!--- Icon Size --->
     <cfparam name="args.size"    default="md">
 
     <cbicon class="cbicon cbicon-#args.size#">
