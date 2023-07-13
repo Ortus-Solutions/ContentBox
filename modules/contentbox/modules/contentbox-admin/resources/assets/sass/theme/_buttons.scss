@@ -4,7 +4,6 @@
     font-size: $cb-component-button-font-size;
     @include roundBorders( $cb-component-button-size-border-radius );
     padding: $cb-component-button-space-padding-y $cb-component-button-space-padding-x;
-    margin-bottom:5px;
     -webkit-font-smoothing: subpixel-antialiased;
     -webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
     transition: border .25s linear, color .25s linear, background-color .25s linear, box-shadow 0.2s ease-in-out 0s;
