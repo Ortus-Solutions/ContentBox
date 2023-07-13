@@ -18,7 +18,7 @@ component {
 	 * Without this, your NON CommandBox ContentBox install will fail.
 	 */
 	this.cbLoadDynamicEnvironment = false;
-	this.cbEnvFile = expandPath( "/.env" );
+	this.cbEnvFile                = expandPath( "/.env" );
 	if ( this.cbLoadDynamicEnvironment ) {
 		loadEnv();
 	}
@@ -60,7 +60,7 @@ component {
 	 */
 	COLDBOX_APP_ROOT_PATH = getDirectoryFromPath( getCurrentTemplatePath() );
 	COLDBOX_APP_MAPPING   = "";
-	COLDBOX_WEB_MAPPING	= "";
+	COLDBOX_WEB_MAPPING   = "";
 	COLDBOX_CONFIG_FILE   = "";
 	COLDBOX_APP_KEY       = "";
 	COLDBOX_FAIL_FAST     = true;
@@ -89,11 +89,11 @@ component {
 	 */
 	request.cbSystemHelper = new coldbox.system.core.delegates.Env();
 	// THE CONTENTBOX DATASOURCE NAME
-	this.datasource  = "contentbox";
+	this.datasource        = "contentbox";
 	// ORM SETTINGS
-	this.ormEnabled  = true;
+	this.ormEnabled        = true;
 	// cfformat-ignore-start
-	this.ormSettings = {
+	this.ormSettings       = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation           : [
 			// If you create your own app entities
