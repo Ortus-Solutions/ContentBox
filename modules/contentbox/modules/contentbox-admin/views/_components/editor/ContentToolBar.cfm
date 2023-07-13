@@ -1,5 +1,5 @@
 <cfoutput>
-<div id="contentToolBar">
+<div id="contentToolBar" class="mb10">
 
 	<!--- editor selector --->
 	<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_EDITOR_SELECTOR" )>
