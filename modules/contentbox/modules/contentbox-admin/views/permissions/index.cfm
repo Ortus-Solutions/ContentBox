@@ -143,7 +143,7 @@
 												data-toggle="dropdown"
 												title="Actions"
 											>
-												#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+												#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
 												<span class="visually-hidden">Actions</span>
 											</button>
 									    	<ul class="dropdown-menu text-left pull-right">

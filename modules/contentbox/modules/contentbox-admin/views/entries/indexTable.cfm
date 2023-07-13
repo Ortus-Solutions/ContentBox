@@ -118,7 +118,7 @@
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Entry Actions">
-						#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+						#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
 						<span class="visually-hidden">Entry Actions</span>
 					</button>
 			    	<ul class="dropdown-menu text-left pull-right">

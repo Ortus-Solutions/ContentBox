@@ -114,13 +114,13 @@
 					class="dragHandle btn btn-icon btn-sm float-left"
 					title="Click and drag to change retrieval order"
 				>
-					#cbAdminComponent( "ui/CBIcon", { name : "ChevronUpDown" } )#
+					#cbAdminComponent( "ui/Icon", { name : "ChevronUpDown" } )#
 				</a>
 
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
 			    	<button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Content Actions">
-						#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+						#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
 						<span class="visually-hidden">Content Actions</span>
 					</button>
 			    	<ul class="dropdown-menu text-left pull-right">

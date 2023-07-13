@@ -40,7 +40,7 @@
 								title="Deactivate + Rescan"
 								class="btn btn-default"
 							>
-								#cbAdminComponent( "ui/CBIcon", { name : "ArrowUturnLeft" } )#
+								#cbAdminComponent( "ui/Icon", { name : "ArrowUturnLeft" } )#
 								Reset
 							</a>
 							<a
@@ -92,7 +92,7 @@
 								<td class="text-center">
 									<div class="btn-group">
 										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Module Actions">
-											#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
 											<span class="visually-hidden">Module Actions</span>
 										</button>
 										<ul class="dropdown-menu text-left pull-right">

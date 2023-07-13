@@ -5,7 +5,7 @@
 		<div class="pull-right mt10">
 	    	<button class="btn btn-primary"
 	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#encodeForJavaScript( prc.activeTheme.name )#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
-					#cbAdminComponent( "ui/CBIcon", { name : "Eye" } )# 
+					#cbAdminComponent( "ui/Icon", { name : "Eye" } )# 
 					Preview
 			</button>
 		</div>

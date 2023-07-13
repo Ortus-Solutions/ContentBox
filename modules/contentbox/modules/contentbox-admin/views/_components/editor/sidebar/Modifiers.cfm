@@ -43,7 +43,7 @@
 							No Content Templates are Currently Available
 							<br/><br/>
 							<a class="btn btn-secondary btn-sm" href="#event.buildLink( prc.xehTemplates & "##create-" & prc.oContent.getContentType() )#" target="_blank">
-								#cbAdminComponent( "ui/CBIcon", { name : "PlusSmall", size : "sm" } )#
+								#cbAdminComponent( "ui/Icon", { name : "PlusSmall", size : "sm" } )#
 								 Create Template</a>
 						</p>
 					</cfif>
@@ -75,7 +75,7 @@
 								No Content Templates are Currently Available
 								<br/><br/>
 								<a class="btn btn-secondary btn-sm" href="#event.buildLink( prc.xehTemplates & "##create-" & prc.oContent.getContentType() )#" target="_blank">
-									#cbAdminComponent( "ui/CBIcon", { name : "PlusSmall", size : "sm" } )#
+									#cbAdminComponent( "ui/Icon", { name : "PlusSmall", size : "sm" } )#
 									Create Template
 								</a>
 							</p>

@@ -9,7 +9,7 @@
 			onclick="location.href='#event.buildLink( prc.xehContentList )#'"
 		</cfif>
 	>
-		#cbAdminComponent( "ui/CBIcon", { name : "ArrowLeftCircle" } )#
+		#cbAdminComponent( "ui/Icon", { name : "ArrowLeftCircle" } )#
 		Back
 	</button>
 	
@@ -21,9 +21,9 @@
 				data-toggle="dropdown"
 				title="Quick Actions"
 			>
-				#cbAdminComponent( "ui/CBIcon", { name : "EllipsisHorizontalCircle" } )#
+				#cbAdminComponent( "ui/Icon", { name : "EllipsisHorizontalCircle" } )#
 				Actions 
-				#cbAdminComponent( "ui/CBIcon", { name : "ChevronDown", size : "sm" } )#
+				#cbAdminComponent( "ui/Icon", { name : "ChevronDown", size : "sm" } )#
 		
 			</button>
 			<ul class="dropdown-menu">

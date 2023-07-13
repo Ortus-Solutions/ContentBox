@@ -33,7 +33,7 @@
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
                         <button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Menu Actions">
-                            #cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+                            #cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
                             <span class="visually-hidden">Menu Actions</span>
                         </button>
                         <ul class="dropdown-menu text-left pull-right">

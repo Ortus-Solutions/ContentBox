@@ -17,7 +17,7 @@
 	<div id="relatedcontent" class="panel-collapse collapse">
 		<div class="panel-body">
 			<button class="btn btn-sm btn-secondary" type="button" id="add-related-content">
-				#cbAdminComponent( "ui/CBIcon", { name : "PlusSmall", size : "sm" } )#
+				#cbAdminComponent( "ui/Icon", { name : "PlusSmall", size : "sm" } )#
 				Add related content
 			</button>
 

@@ -165,7 +165,7 @@
 						class="dragHandle btn btn-icon btn-sm"
 						title="Click and drag to change menu order"
 					>
-						#cbAdminComponent( "ui/CBIcon", { name : "ChevronUpDown" } )#
+						#cbAdminComponent( "ui/Icon", { name : "ChevronUpDown" } )#
 					</a>
 
 					<!--- Page Actions --->
@@ -175,7 +175,7 @@
 							data-toggle="dropdown"
 							title="Page Actions"
 						>
-							#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+							#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
 							<span class="visually-hidden">Page Actions</span>
 						</button>
 

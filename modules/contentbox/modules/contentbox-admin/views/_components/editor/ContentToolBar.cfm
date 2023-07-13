@@ -57,7 +57,7 @@
 	<!--- Preview Panel --->
 	<div class="pull-right">
 		<button onclick="previewContent()" class="btn btn-link btn-sm" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p" type="button">
-			#cbAdminComponent( "ui/CBIcon", { name : "Eye", size : "sm" } )#
+			#cbAdminComponent( "ui/Icon", { name : "Eye", size : "sm" } )#
 			Preview
 		</button>
 	</div>
