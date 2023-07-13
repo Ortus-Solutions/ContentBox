@@ -4,9 +4,9 @@
  */
 component {
 
-    function up( schema, qb ) {
+	function up( schema, qb ){
 		// Content Templates
-        arguments.schema.create( "cb_contentTemplate", ( table ) => {
+		arguments.schema.create( "cb_contentTemplate", ( table ) => {
 			// Columns
 			table.string( "templateID", 36 ).primaryKey();
 			table.dateTime( "createdDate" );
@@ -21,8 +21,14 @@ component {
 			// Relationships
 			table.string( "FK_authorID", 36 );
 			table.string( "FK_siteID", 36 ).nullable();
-			table.foreignKey( "FK_authorID" ).references( "authorID" ).onTable( "cb_author" );
-			table.foreignKey( "FK_siteID" ).references( "siteID" ).onTable( "cb_site" );
+			table
+				.foreignKey( "FK_authorID" )
+				.references( "authorID" )
+				.onTable( "cb_author" );
+			table
+				.foreignKey( "FK_siteID" )
+				.references( "siteID" )
+				.onTable( "cb_site" );
 
 			// Indexes
 			table.index( [ "contentType" ], "idx_contentType" );
@@ -32,13 +38,18 @@ component {
 		schema.alter( "cb_content", ( table ) => {
 			table.addColumn( table.string( "FK_contentTemplateID", 36 ) );
 			table.addColumn( table.string( "FK_childContentTemplateID", 36 ) );
-			table.foreignKey( "FK_contentTemplateID" ).references( "templateID" ).onTable( "cb_contentTemplate" );
-			table.foreignKey( "FK_childContentTemplateID" ).references( "templateID" ).onTable( "cb_contentTemplate" );
+			table
+				.foreignKey( "FK_contentTemplateID" )
+				.references( "templateID" )
+				.onTable( "cb_contentTemplate" );
+			table
+				.foreignKey( "FK_childContentTemplateID" )
+				.references( "templateID" )
+				.onTable( "cb_contentTemplate" );
 		} );
-    }
+	}
 
-    function down( schema, qb ) {
-
-    }
+	function down( schema, qb ){
+	}
 
 }
