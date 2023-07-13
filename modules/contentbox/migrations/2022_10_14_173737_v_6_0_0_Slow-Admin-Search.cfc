@@ -1,3 +1,7 @@
+/**
+ * CONTENTBOX-1429: Add index to cb_contentVersion table
+ * https://ortussolutions.atlassian.net/browse/CONTENTBOX-1429
+ */
 component {
 
 	function up( schema, qb ){

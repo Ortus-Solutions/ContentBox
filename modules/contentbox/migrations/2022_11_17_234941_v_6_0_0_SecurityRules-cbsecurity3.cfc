@@ -3,10 +3,18 @@
  */
 component {
 
+	// Include Utils
+	include template="./_MigrationUtils.cfm";
+
 	function up( schema, qb ){
-		if ( !schema.hasColumn( "cb_securityRule", "httpMethods" ) ) {
+		if ( !hasColumn( "cb_securityRule", "httpMethods" ) ) {
 			schema.alter( "cb_securityRule", ( table ) => {
 				table.addColumn( table.string( "httpMethods" ).default( "*" ) );
+			} );
+		}
+
+		if ( !hasColumn( "cb_securityRule", "allowedIPs" ) ) {
+			schema.alter( "cb_securityRule", ( table ) => {
 				table.addColumn( table.string( "allowedIPs" ).default( "*" ) );
 			} );
 		}

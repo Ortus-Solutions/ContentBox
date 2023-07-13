@@ -24,13 +24,13 @@
         "Curt Gratz <gratz@computerknowhow.com>"
     ],
     "dependencies":{
-        "coldbox":"be",
+        "coldbox":"^7.0.0+7",
         "commandbox-dotenv":"*",
         "commandbox-cfconfig":"*",
         "commandbox-migrations":"^4.0.0"
     },
     "devDependencies":{
-        "testbox":"*",
+        "testbox":"^5.0.0+1",
         "cbdebugger":"^4.0.0",
         "commandbox-cfformat":"*",
         "commandbox-docbox":"*",
