@@ -56,9 +56,10 @@
 
 	<!--- Preview Panel --->
 	<div class="pull-right">
-		<a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-			<i class="fa fa-eye fa-lg"></i>
-		</a>
+		<button onclick="previewContent()" class="btn btn-link btn-sm" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p" type="button">
+			#cbAdminComponent( "ui/CBIcon", { name : "Eye", size : "sm" } )#
+			Preview
+		</button>
 	</div>
 </div>
 </cfoutput>
