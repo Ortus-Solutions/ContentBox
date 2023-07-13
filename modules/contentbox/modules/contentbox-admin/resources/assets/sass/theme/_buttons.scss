@@ -60,6 +60,20 @@
     @extend .btn-tinted-primary;
 }
 
+.btn-icon, a.btn-icon {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 32px;
+    width: 32px;
+    padding: 0px;
+}
+
+// override
+.btn-group-sm > .btn.btn-icon {
+    padding: 0px;
+}
+
 .btn-info {
     color: #ffffff;
     background-color: $infoColor;
