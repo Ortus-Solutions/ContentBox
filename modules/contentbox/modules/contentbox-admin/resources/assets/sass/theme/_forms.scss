@@ -93,3 +93,22 @@ label.valid {
 		margin-bottom:10px;
 	}
 }
+.controls {
+    > .toggle.btn-default {
+        border-color: $cb-semantic-color-neutral-weak;
+    }
+    .btn-default.toggle-off {
+        background-color: $cb-semantic-color-neutral-weak;
+        border-color: transparent;
+    }
+    .btn-default.toggle-on {
+        background-color: $cb-semantic-color-primary;
+    }
+    .btn-default.toggle-handle {
+        background-color: #fff;
+        border-color: transparent;
+        box-shadow: $cb-base-shadow-sm;
+        width: 35%;
+    }
+}
+
