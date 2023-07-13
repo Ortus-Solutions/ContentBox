@@ -56,7 +56,7 @@
 							<div class="text-right">
 								<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info btn-sm" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-default btn-sm" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">

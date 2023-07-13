@@ -56,7 +56,7 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 								<div class="text-right">
 									<div class="btn-group">
-								    	<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+								    	<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 											Bulk Actions <span class="caret"></span>
 										</button>
 								    	<ul class="dropdown-menu">
