@@ -145,7 +145,7 @@
 			<button
 				type="button"
 				id="publishButton"
-				class="btn btn-success"
+				class="btn btn-primary"
 				onclick="quickPublish()"
 			>
 				Go!
