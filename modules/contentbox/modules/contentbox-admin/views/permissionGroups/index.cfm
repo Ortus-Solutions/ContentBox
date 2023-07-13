@@ -149,9 +149,10 @@
 								<td class="text-center">
 									<!--- Actions --->
 									<div class="btn-group">
-								    	<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Group Actions">
-											<i class="fa fa-ellipsis-v fa-lg"></i>
-										</a>
+								    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Group Actions">
+											#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+											<span class="visually-hidden">Group Actions</span>
+										</button>
 								    	<ul class="dropdown-menu text-left pull-right">
 											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 

@@ -111,18 +111,18 @@
 				<!--- Drag Handle --->
 				<a 	href="##"
 					onclick="return false;"
-					class="dragHandle btn btn-default btn-sm"
+					class="dragHandle btn btn-icon btn-sm float-left"
 					title="Click and drag to change retrieval order"
-					style="padding:5px 15px"
 				>
-					<i class="fa fa-sort fa-lg"></i>
+					#cbAdminComponent( "ui/CBIcon", { name : "ChevronUpDown" } )#
 				</a>
 
 				<!--- content Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Content Actions">
-						<i class="fa fa-ellipsis-v fa-lg"></i>
-					</a>
+			    	<button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Content Actions">
+						#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+						<span class="visually-hidden">Content Actions</span>
+					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_EDITOR,CONTENTSTORE_ADMIN" )>
 							<!--- Clone Command --->

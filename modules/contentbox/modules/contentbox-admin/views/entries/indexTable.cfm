@@ -117,9 +117,10 @@
 			<td class="text-center">
 				<!--- Entry Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Entry Actions">
-						<i class="fa fa-ellipsis-v fa-lg"></i>
-					</a>
+			    	<button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Entry Actions">
+						#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+						<span class="visually-hidden">Entry Actions</span>
+					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
 			    		<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_EDITOR,ENTRIES_ADMIN" )>
 						<!--- Clone Command --->

@@ -201,12 +201,13 @@
 													<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
 
 													<div class="btn-group btn-group-sm">
-														<a
-															class="btn btn-default btn-more dropdown-toggle"
+														<button
+															class="btn btn-icon btn-more dropdown-toggle"
 															data-toggle="dropdown"
-															href="##">
-															<i class="fa fa-ellipsis-v fa-lg"></i>
-														</a>
+														>
+															#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+															<span class="visually-hidden">Template Actions</span>
+														</button>
 														<ul class="dropdown-menu text-left pull-right">
 															<!--- Edit --->
 															<li>

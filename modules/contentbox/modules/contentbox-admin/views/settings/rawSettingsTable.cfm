@@ -70,9 +70,10 @@
 
 					<!--- Actions --->
 					<div class="btn-group btn-group-sm">
-						<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-							<i class="fa fa-ellipsis-v fa-lg"></i>
-						</a>
+						<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Setting Actions">
+							#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+							<span class="visually-hidden">Setting Actions</span>
+						</button>
 						<ul class="dropdown-menu text-left pull-right">
 							<!--- Edit Command --->
 							<li>

@@ -176,18 +176,19 @@
 									</div>
 								</td>
 
-								<td class="text-center">
+								<td class="text-center flex">
 									<cfif prc.oCurrentAuthor.hasPermission( "COMMENTS_ADMIN" )>
 										<!--- Approve/Unapprove --->
 										<cfif !comment.getIsApproved()>
-											<a class="btn btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
+											<a class="btn btn-icon btn-sm btn-primary" href="javascript:changeStatus('approve','#comment.getCommentID()#')" title="Approve"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-up fa-lg"></i></a>
 										<cfelse>
-											<a class="btn btn-sm btn-default" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
+											<a class="btn btn-icon btn-sm btn-default" href="javascript:changeStatus('moderate','#comment.getCommentID()#')" title="Unapprove"><i id="status_#comment.getCommentID()#" class="fa fa-thumbs-down fa-lg"></i></a>
 										</cfif>
 										<div class="btn-group">
-											<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
-												<i class="fa fa-ellipsis-v fa-lg"></i>
-											</a>
+											<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Actions">
+												#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+												<span class="visually-hidden">Actions</span>
+											</button>
 									    	<ul class="dropdown-menu text-left pull-right">
 									    		<!--- Edit Command --->
 												<li>

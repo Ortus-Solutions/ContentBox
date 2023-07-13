@@ -90,9 +90,10 @@
 
 								<td class="text-center">
 									<div class="btn-group">
-										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fa fa-ellipsis-v fa-lg"></i>
-										</a>
+										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Module Actions">
+											#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+											<span class="visually-hidden">Module Actions</span>
+										</button>
 										<ul class="dropdown-menu text-left pull-right">
 											<!--- Check if active --->
 											<cfif module.getIsActive()>

@@ -90,9 +90,10 @@
 			<td class="text-center">
 				<!--- Actions --->
 				<div class="btn-group btn-group-sm">
-			    	<a class="btn btn-sm btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-						<i class="fa fa-ellipsis-v fa-lg"></i>
-					</a>
+			    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Rule Actions">
+						#cbAdminComponent( "ui/CBIcon", { name : "EllipsisVertical" } )#
+						<span class="visually-hidden">Rule Actions</span>
+					</button>
 			    	<ul class="dropdown-menu text-left pull-right">
 						<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
