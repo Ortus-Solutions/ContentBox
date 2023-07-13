@@ -38,9 +38,10 @@
 							<a
 								href="#event.buildLink( prc.xehModuleReset )#"
 								title="Deactivate + Rescan"
-								class="btn btn-primary text-white"
+								class="btn btn-default"
 							>
-								<i class="fa fa-hdd"></i> Reset
+								#cbAdminComponent( "ui/CBIcon", { name : "ArrowUturnLeft" } )#
+								Reset
 							</a>
 							<a
 								href="#event.buildLink( prc.xehModuleRescan )#"

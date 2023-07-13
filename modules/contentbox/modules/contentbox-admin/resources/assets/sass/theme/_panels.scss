@@ -32,10 +32,6 @@
 .panel-default>.panel-heading {
     border-color: #eff2f7;
 	background: $cb-component-panel-heading-bg-default;
-
-	&, a {
-		color:#555;
-	}
 }
 .panel-default .actions i {
     font-size: 1em;
