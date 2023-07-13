@@ -8,8 +8,8 @@ Hola amigo! I'm really excited that you are interested in contributing to Conten
 - [Pull Request Guidelines](#pull-request-guidelines)
 - [Security Vulnerabilities](#security-vulnerabilities)
 - [Development Setup](#development-setup)
-	- [Language Compatiblity](#language-compatiblity)
-- [Coding Styles & Formatting](#coding-styles--formatting)
+- [Language Compatiblity](#language-compatiblity)
+- [Coding Styles \& Formatting](#coding-styles--formatting)
 - [CFC Docs With DocBox](#cfc-docs-with-docbox)
 - [Financial Contributions](#financial-contributions)
 - [Contributors](#contributors)
@@ -58,9 +58,9 @@ If you discover a security vulnerability, please send an email to the developmen
 
 ## Development Setup
 
-We have added all the necessary information for you to develop on ContentBox in our [readme collaboration area](../readme.md) and also in our [UI Developer Docs](../workbench/Developer.md) so you can setup for UI development.
+We have added all the necessary information for you to develop on ContentBox in our [readme collaboration area](readme.md) and also in our [UI Developer Docs](workbench/Developer.md) so you can setup for UI development.
 
-### Language Compatiblity
+## Language Compatiblity
 
 Please make sure your code runs on the following CFML Engines:
 
