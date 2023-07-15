@@ -46,15 +46,6 @@
                             </button>
                         </cfloop>
                     </div>
-
-                    <div class="btn-group pull-right" role="group">
-                        <button class="btn btn-sm btn-primary" type="button" @click="collapseAll()">
-                            <span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span>
-                        </button>
-                        <button class="btn btn-sm btn-primary" type="button" @click="expandAll()" style="margin-right:4px;">
-                            <span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span>
-                        </button>
-                    </div>
                 </menu>
 
                 <div class="row">
@@ -65,6 +56,21 @@
                             Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                         </div>
                         <div id="placeholder-message" class="alert alert-info">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
+                        
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-link" type="button" @click="collapseAll()">
+                                <span style="display:inline-block;" title="Collapse All">
+                                    #cbAdminComponent( "ui/Icon", { name : "ChevronDoubleRight", size: "sm" } )# 
+                                    Collapse All
+                                </span>
+                            </button>
+                            <button class="btn btn-sm btn-link" type="button" @click="expandAll()">
+                                <span style="display:inline-block;" title="Expand All">
+                                    #cbAdminComponent( "ui/Icon", { name : "ChevronDoubleDown", size: "sm" } )# 
+                                    Expand All</span>
+                            </button>
+                        </div>
+
                         <div class="designer well well-sm" >
                             <div class="dd" id="nestable">
                                 <ol class="dd-list" x-ref="menuList">
