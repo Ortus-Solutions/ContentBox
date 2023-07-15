@@ -40,7 +40,6 @@
             for ( var i = 0; i < collection.length; i++) {
                 collection[i].onclick = function() {
                     input = getNextSibling( this, 'input[name^=media-]' ); //getNextSibling() in content adminHelper
-                    console.log( input );
                     hidden = getNextSibling( this, 'input[name^=mediaPath]' )
                     label = this.closest( '.dd3-extracontent' ).querySelector( 'input[name^=label]' );
                     typeIcon = this.closest( '.dd3-item' ).querySelector( '.dd3-type' );
