@@ -17,15 +17,13 @@
 <div class="row">
 
     <div class="col-md-9">
-
+        <div class="actions">
+            <a class="btn btn-link" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;">
+                #cbAdminComponent( "ui/Icon", { name : "ArrowLeftCircle" } )#
+                Back
+            </a>
+        </div>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="p11 size16">
-                    <div class="actions">
-                        <a class="btn btn-sm btn-info text-white" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-chevron-left"></i> Back</a>
-                    </div>
-                </div>
-            </div>
             <div class="panel-body" x-data="menuCrud()">
 
                 #cbMessageBox().renderit()#
@@ -175,8 +173,8 @@
                 )#
                 <div class="actionBar">
                     <input type="hidden" name="saveEvent" id="saveEvent" value="#prc.xehMenuEditor#" />
-                    <a class="btn btn-primary"  id="submitSave">Save</a>
-                    <a class="btn btn-danger"   id="submitMenu">Save + Close</a>
+                    <a class="btn btn-default"  id="submitSave">Save</a>
+                    <a class="btn btn-primary"   id="submitMenu">Save + Close</a>
                 </div>
             </div>
         </div>
