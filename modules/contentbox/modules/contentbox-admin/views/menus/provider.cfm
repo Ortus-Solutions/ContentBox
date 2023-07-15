@@ -14,7 +14,7 @@
 		<div class="dd3-content double" data-toggle="context" data-target="##context-menu">
 			#args.menuItem.getLabel()#
 		</div>
-		<button type="button" class="dd3-expand btn btn-default" title="Edit Details" @click="toggleSandbox( '#menuItemID#' )">
+		<button type="button" class="dd3-expand btn btn-default" title="Edit Details" @click="$store.menusStore.toggleEditor( '#menuItemID#' )">
 			<i class="fa fa-pencil fa-lg"></i>
 		</button>
 		<button class="dd3-delete btn btn-danger confirmIt"
