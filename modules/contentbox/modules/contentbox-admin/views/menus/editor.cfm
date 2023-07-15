@@ -39,7 +39,7 @@
                             >
                                 <span title="#prc.providers[ provider ].getDescription()#">
                                     <i class="#prc.providers[ provider].getIconClass()#"></i> 
-                                    #provider#
+                                    <span class="d-md-none d-lg-inline">#provider#</span>
                                 </span>
                             </button>
                         </cfloop>
