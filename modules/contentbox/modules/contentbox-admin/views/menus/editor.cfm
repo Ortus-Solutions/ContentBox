@@ -80,8 +80,14 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fa fa-recycle"></i></a></h3>
+                        <h3>Preview</h3>
                         <p>Here's an instant preview of your menu.</p>
+                        <div class="text-right">
+                            <button class="btn btn-sm btn-link" id="preview-button">
+                                #cbAdminComponent( "ui/Icon", { name : "ArrowPath", size: "sm" } )# 
+                                Refresh
+                            </button>
+                        </div>
                         <div id="preview-panel" class="well well-sm">No Preview Available</div>
                     </div>
                 </div>
