@@ -32,13 +32,20 @@
 
                 <menu class="well well-sm">
                     <p>Click any of the options below to insert a new menu item of that type.</p>
-                    <cfloop collection="#prc.providers#" item="provider">
-                        <div class="btn-group" role="group">
-                            <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider ].getDescription()#">
-                                <i class="#prc.providers[ provider].getIconClass()#"></i> #provider#
-                            </a>
-                        </div>
-                    </cfloop>
+                    <div class="btn-group" role="group">
+                        <cfloop collection="#prc.providers#" item="provider">
+                            <button 
+                                type="button" 
+                                class="btn provider btn-primary" 
+                                data-provider="#provider#" 
+                            >
+                                <span title="#prc.providers[ provider ].getDescription()#">
+                                    <i class="#prc.providers[ provider].getIconClass()#"></i> 
+                                    #provider#
+                                </span>
+                            </button>
+                        </cfloop>
+                    </div>
 
                     <div class="btn-group pull-right" role="group">
                         <button class="btn btn-sm btn-primary" type="button" @click="collapseAll()">
