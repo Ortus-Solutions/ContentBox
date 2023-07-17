@@ -119,14 +119,14 @@
 			<td class="text-center">
 				<!--- Page Actions --->
 				<div class="btn-group btn-group-sm">
-					<a
-						class="btn btn-default btn-more dropdown-toggle"
+					<button
+						class="btn btn-icon btn-more dropdown-toggle"
 						data-toggle="dropdown"
-						href="##"
 						title="Page Actions"
 					>
-						<i class="fa fa-ellipsis-v fa-lg"></i>
-					</a>
+						#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+						<span class="visually-hidden">Page Actions</span>
+					</button>
 
 					<ul class="dropdown-menu text-left pull-right">
 

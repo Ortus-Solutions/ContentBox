@@ -1,4 +1,7 @@
- //Rounded Borders
+@import "mixins/_breakpoints.scss";
+@import "mixins/_buttons.scss";
+
+//Rounded Borders
 @mixin roundBorders($radius){
     -webkit-border-radius:$radius;
     -moz-border-radius:$radius;
@@ -16,35 +19,3 @@
     transition: $prop $time $ease;
 
 }
-
-//Breakpoints
-@mixin breakpoint($class) {
-    @if $class==xs {
-      @media (max-width: 639px) {
-        @content;
-      }
-    }
-    @else if $class==sm {
-        @media (min-width: 640px) {
-          @content;
-        }
-    }
-    @else if $class==md {
-      @media (min-width: 768px) {
-        @content;
-      }
-    }
-    @else if $class==lg {
-      @media (min-width: 1024px) {
-        @content;
-      }
-    }
-    @else if $class==xl {
-        @media (min-width: 1280px) {
-          @content;
-        }
-      }
-    @else {
-      @warn "Breakpoint mixin supports: xs, sm, md, lg";
-    }
-  }

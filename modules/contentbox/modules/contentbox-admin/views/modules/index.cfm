@@ -38,9 +38,10 @@
 							<a
 								href="#event.buildLink( prc.xehModuleReset )#"
 								title="Deactivate + Rescan"
-								class="btn btn-primary text-white"
+								class="btn btn-default"
 							>
-								<i class="fa fa-hdd"></i> Reset
+								#cbAdminComponent( "ui/Icon", { name : "ArrowUturnLeft" } )#
+								Reset
 							</a>
 							<a
 								href="#event.buildLink( prc.xehModuleRescan )#"
@@ -90,9 +91,10 @@
 
 								<td class="text-center">
 									<div class="btn-group">
-										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fa fa-ellipsis-v fa-lg"></i>
-										</a>
+										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Module Actions">
+											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+											<span class="visually-hidden">Module Actions</span>
+										</button>
 										<ul class="dropdown-menu text-left pull-right">
 											<!--- Check if active --->
 											<cfif module.getIsActive()>

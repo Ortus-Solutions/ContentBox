@@ -17,15 +17,13 @@ html{
     position: relative;
     height: 100%;
 }
-a:link, a:visited {
-    text-decoration: none;
-    outline:none;
-    color:$primaryColor;
+a:link, a:visited  {
+    outline: none;
+    color: $cb-semantic-color-link;
 }
-a:hover, a:active {
-    outline:none;
-    text-decoration: none;
-    color:#16a086;
+a:hover, a:focus, a:active {
+    outline: none;
+    color: $cb-semantic-color-link-hover;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family:'Source Sans Pro', Arial, sans-serif;

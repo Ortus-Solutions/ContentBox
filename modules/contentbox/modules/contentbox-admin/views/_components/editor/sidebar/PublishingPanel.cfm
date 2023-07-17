@@ -145,7 +145,7 @@
 			<button
 				type="button"
 				id="publishButton"
-				class="btn btn-success"
+				class="btn btn-primary"
 				onclick="quickPublish()"
 			>
 				Go!
@@ -167,7 +167,7 @@
 			<button
 				type="button"
 				class="btn dropdown-toggle"
-				:class="isPublished ? 'btn-default' : 'btn-info'"
+				:class="isPublished ? 'btn-default' : 'btn-secondary'"
 				data-toggle="dropdown"
 				aria-haspopup="true"
 				aria-expanded="false"
@@ -197,7 +197,7 @@
 		</div>
 
 		<button
-			class="btn btn-success"
+			class="btn btn-primary"
 			type="button"
 			title="Open Publishing Details"
 			@click="togglePublishingPanel"

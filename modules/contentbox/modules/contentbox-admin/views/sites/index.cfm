@@ -45,7 +45,7 @@
 							<div class="text-right">
 								<!---Global --->
 								<div class="btn-group">
-									<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+									<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 										Bulk Actions <span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu">
@@ -163,9 +163,10 @@
 								<td class="text-center">
 									<!--- Actions --->
 									<div class="btn-group">
-										<a class="btn btn-sm btn-info btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Site Actions">
-											<i class="fa fa-ellipsis-v fa-lg"></i>
-										</a>
+										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Site Actions">
+											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+											<span class="visually-hidden">Site Actions</span>
+										</button>
 										<ul class="dropdown-menu text-left pull-right">
 
 											<!--- Delete Command --->

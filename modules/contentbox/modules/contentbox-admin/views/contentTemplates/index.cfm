@@ -57,7 +57,7 @@
 								<div class="text-right">
 									<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_IMPORT,TOOLS_EXPORT" )>
 										<div class="btn-group">
-											<button class="btn dropdown-toggle btn-info" data-toggle="dropdown">
+											<button class="btn dropdown-toggle btn-default" data-toggle="dropdown">
 												Bulk Actions <span class="caret"></span>
 											</button>
 											<ul class="dropdown-menu">
@@ -201,12 +201,13 @@
 													<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
 
 													<div class="btn-group btn-group-sm">
-														<a
-															class="btn btn-default btn-more dropdown-toggle"
+														<button
+															class="btn btn-icon btn-more dropdown-toggle"
 															data-toggle="dropdown"
-															href="##">
-															<i class="fa fa-ellipsis-v fa-lg"></i>
-														</a>
+														>
+															#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+															<span class="visually-hidden">Template Actions</span>
+														</button>
 														<ul class="dropdown-menu text-left pull-right">
 															<!--- Edit --->
 															<li>

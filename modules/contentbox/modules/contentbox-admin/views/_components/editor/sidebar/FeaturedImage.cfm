@@ -18,12 +18,13 @@
 			<div class="panel-body">
 				<div class="form-group text-center">
 					<!--- Select and Cancel Buttons --->
-					<a
+					<button
 						class="btn btn-primary"
-						href="javascript:loadAssetChooser( 'featuredImageCallback' )"
+						onclick="loadAssetChooser( 'featuredImageCallback' )"
+						type="button"
 					>
 						Select Image
-					</a>
+					</button>
 					<!--- Featured Image Selection --->
 					<div
 						class="<cfif !len( prc.oContent.getFeaturedImage() )>hide</cfif> form-group"

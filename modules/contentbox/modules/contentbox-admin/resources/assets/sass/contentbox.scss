@@ -16,10 +16,6 @@ body{
 p{
 	margin: 10px 0px !important;
 }
-
-.table > thead > tr {
-	color: #999595;
-}
 .table > thead > tr > th {
 	border-bottom: 0px solid #ddd;
 }
@@ -55,18 +51,6 @@ p{
 }
 
 /******************** MAIN CONTENT Wrappers ****************************/
-
-.main-content-wrapper {
-	grid-area: main;
-	#main-content {
-		padding: 20px;
-		background-color: #F1F2F7 !important;
-		.h1 {
-			padding: 0px 10px 20px 10px;
-		}
-	}
-}
-
 #simple-container{
 	padding-top:10px;
 }
@@ -165,8 +149,7 @@ a.btn.btn-danger:visited {
 /******************** BUTTONS ****************************/
 
 .btn-toggle.radio {padding-left:30px;}
-.btn{ border-radius: 5px; }
-.btn-group .btn{ border-radius: 5px; }
+
 .btn-more{
 	color: #444242 !important;
 	background-color: transparent !important;
@@ -1110,6 +1093,17 @@ table.diff {
 
 [x-cloak] { display: none !important; }
 
+.visually-hidden {
+	position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect( 0, 0, 0, 0 ) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
 /**============================== MEDIA QUERIES ==============================**/
 
 @media all and (max-width: 437px) {

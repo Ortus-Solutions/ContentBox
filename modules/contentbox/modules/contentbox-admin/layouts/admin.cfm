@@ -216,7 +216,7 @@
 						--->
 					</ul>
 				</div>
-
+				
 			</header>
 
 			<!--- ************************************************************************************************--->
@@ -253,7 +253,7 @@
 						style="display: none;"
 					>
 						<button type="button"
-								class="btn btn-primary btn-sm"
+								class="btn btn-link btn-sm"
 								title="Toggle Right Sidebar (ctrl+shift+e)"
 								data-keybinding="ctrl+shift+e"
 								onclick="toggleSidebar()"

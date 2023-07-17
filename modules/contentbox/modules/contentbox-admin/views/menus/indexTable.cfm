@@ -32,9 +32,10 @@
                 <td class="text-center">#arrayLen( menu.getMenuItems() )#</td>
                 <td class="text-center">
                     <div class="btn-group btn-group-sm">
-                        <a class="btn btn-default btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Menu Actions">
-                            <i class="fa fa-ellipsis-v fa-lg"></i>
-                        </a>
+                        <button class="btn btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Menu Actions">
+                            #cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+                            <span class="visually-hidden">Menu Actions</span>
+                        </button>
                         <ul class="dropdown-menu text-left pull-right">
                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                 <!--- Delete Command --->

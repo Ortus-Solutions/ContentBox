@@ -45,7 +45,7 @@
         display: inline-block;
     }
     .btn-more {
-        background: #F6F6F6;
+        background: transparent;
         min-height: 35px;
 		    min-width: 35px;
         padding: 3px 9px;
@@ -96,12 +96,7 @@
                 }
               }
               .dropdown-menu {
-                @include roundBorders(0);
                 border-color: #e7e8ec;
-                -webkit-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-                -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-                -o-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-                box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
                 left: -80px;
                 width: fit-content;
               }

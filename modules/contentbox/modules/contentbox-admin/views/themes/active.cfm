@@ -3,9 +3,10 @@
     <div class="col-md-12">
 
 		<div class="pull-right mt10">
-	    	<button class="btn btn-success"
+	    	<button class="btn btn-primary"
 	    			onclick="popup( '#event.buildLink( prc.xehPreview )#/l/#encodeForJavaScript( prc.activeTheme.name )#/h/#hash( prc.oCurrentAuthor.getAuthorID() )#');return false;">
-				<i class="fa fa-eye fa-lg"></i> Preview
+					#cbAdminComponent( "ui/Icon", { name : "Eye" } )# 
+					Preview
 			</button>
 		</div>
 

@@ -35,7 +35,6 @@ component {
 				table.dropColumn( "featuredImageURL" );
 			} );
 		}
-
 	}
 
 	function down( schema, qb ){

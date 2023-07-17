@@ -1,10 +1,10 @@
 <cfoutput>
-<div id="contentToolBar">
+<div id="contentToolBar" class="mb10">
 
 	<!--- editor selector --->
 	<cfif prc.oCurrentAuthor.hasPermission( "EDITORS_EDITOR_SELECTOR" )>
 		<div class="btn-group btn-group-sm">
-			<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+			<a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
 				<i class="fa fa-keyboard-o"></i>
 				Editor
 				<span class="caret"></span>
@@ -28,7 +28,7 @@
 	)#
 
 	<div class="btn-group btn-group-sm">
-		<a class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
+		<a class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" href="##">
 			<i class="fa fa-code"></i>
 			Markup : <span id="markupLabel">#prc.oContent.isLoaded() ? prc.oContent.getMarkup() : prc.defaultMarkup#</span>
 			<span class="caret"></span>
@@ -44,7 +44,7 @@
 
 	<!--- Auto Save Operations --->
 	<div class="btn-group btn-group-sm" id="contentAutoSave">
-		<a class="btn btn-info btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
+		<a class="btn btn-secondary btn-sm dropdown-toggle autoSaveBtn" data-toggle="dropdown" href="##">
 			<i class="fa fa-save"></i>
 			Auto Saved
 			<span class="caret"></span>
@@ -56,9 +56,10 @@
 
 	<!--- Preview Panel --->
 	<div class="pull-right">
-		<a href="javascript:previewContent()" class="btn btn-sm btn-info" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p">
-			<i class="fa fa-eye fa-lg"></i>
-		</a>
+		<button onclick="previewContent()" class="btn btn-link btn-sm" title="Quick Preview (ctrl+p)" data-keybinding="ctrl+p" type="button">
+			#cbAdminComponent( "ui/Icon", { name : "Eye", size : "sm" } )#
+			Preview
+		</button>
 	</div>
 </div>
 </cfoutput>
