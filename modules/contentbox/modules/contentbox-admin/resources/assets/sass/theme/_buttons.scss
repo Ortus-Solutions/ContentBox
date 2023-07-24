@@ -69,11 +69,16 @@
     padding: 0px;
 }
 
-// override
+// override in toggle/switch
 .btn-group-sm > .btn.btn-icon {
     padding: 0px;
 }
-
+// menu manager specific style
+.btn-group > .btn.provider > span {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
 .btn-info {
     color: #ffffff;
     background-color: $infoColor;

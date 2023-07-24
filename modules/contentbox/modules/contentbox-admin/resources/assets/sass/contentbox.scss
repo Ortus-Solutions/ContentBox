@@ -1092,7 +1092,19 @@ table.diff {
 }
 
 [x-cloak] { display: none !important; }
-
+.d-none {
+	display: none;
+}
+.d-md-none {
+	@include breakpoint( md ) {
+		display: none;
+	}
+}
+.d-lg-inline{
+	@include breakpoint( lg ) {
+		display: inline;
+	}
+}
 .visually-hidden {
 	position: absolute !important;
     width: 1px !important;

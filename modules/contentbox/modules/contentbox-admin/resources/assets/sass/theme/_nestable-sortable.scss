@@ -121,6 +121,7 @@
 }
 .dd3-handle { 
     color:#646464;
+    height:100%;
     position: absolute; 
     margin: 0; 
     left: 0; 
@@ -130,7 +131,7 @@
     white-space: nowrap; 
     overflow: hidden;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 6px;
     background-color: transparent;
 
     &:hover {
@@ -144,6 +145,7 @@
     margin-left: 30px;
 
     button {
+        background: transparent;
         border-radius: 0;
         margin:0px;
     }

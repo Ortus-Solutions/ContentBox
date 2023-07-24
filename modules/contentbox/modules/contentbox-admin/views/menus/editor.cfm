@@ -17,36 +17,32 @@
 <div class="row">
 
     <div class="col-md-9">
-
+        <div class="actions">
+            <a class="btn btn-link" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;">
+                #cbAdminComponent( "ui/Icon", { name : "ArrowLeftCircle" } )#
+                Back
+            </a>
+        </div>
         <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="p11 size16">
-                    <div class="actions">
-                        <a class="btn btn-sm btn-info text-white" onclick="window.location.href='#event.buildLink( prc.xehMenus )#';return false;"><i class="fa fa-chevron-left"></i> Back</a>
-                    </div>
-                </div>
-            </div>
             <div class="panel-body" x-data="menuCrud()">
 
                 #cbMessageBox().renderit()#
 
                 <menu class="well well-sm">
                     <p>Click any of the options below to insert a new menu item of that type.</p>
-                    <cfloop collection="#prc.providers#" item="provider">
-                        <div class="btn-group" role="group">
-                            <a class="btn btn-sm provider btn-info" data-provider="#provider#" title="#prc.providers[ provider ].getDescription()#">
-                                <i class="#prc.providers[ provider].getIconClass()#"></i> #provider#
-                            </a>
-                        </div>
-                    </cfloop>
-
-                    <div class="btn-group pull-right" role="group">
-                        <button class="btn btn-sm btn-primary" type="button" @click="collapseAll()">
-                            <span style="display:inline-block;" title="Collapse All"><i class="fa fa-minus"></i> Collapse All</span>
-                        </button>
-                        <button class="btn btn-sm btn-primary" type="button" @click="expandAll()" style="margin-right:4px;">
-                            <span style="display:inline-block;" title="Expand All"><i class="fa fa-plus"></i> Expand All</span>
-                        </button>
+                    <div class="btn-group" role="group">
+                        <cfloop collection="#prc.providers#" item="provider">
+                            <button 
+                                type="button" 
+                                class="btn provider btn-primary" 
+                                data-provider="#provider#" 
+                            >
+                                <span title="#prc.providers[ provider ].getDescription()#">
+                                    <i class="#prc.providers[ provider].getIconClass()#"></i> 
+                                    <span class="d-none d-lg-inline">#provider#</span>
+                                </span>
+                            </button>
+                        </cfloop>
                     </div>
                 </menu>
 
@@ -58,6 +54,21 @@
                             Uh oh, looks like one (or more) of your menu items is incomplete. Please complete all items and then try again.
                         </div>
                         <div id="placeholder-message" class="alert alert-info">You haven't added any menu items yet. Click on one of the menu types above to get started.</div>
+                        
+                        <div class="btn-group" role="group">
+                            <button class="btn btn-sm btn-link" type="button" @click="collapseAll()">
+                                <span style="display:inline-block;" title="Collapse All">
+                                    #cbAdminComponent( "ui/Icon", { name : "ChevronDoubleRight", size: "sm" } )# 
+                                    Collapse All
+                                </span>
+                            </button>
+                            <button class="btn btn-sm btn-link" type="button" @click="expandAll()">
+                                <span style="display:inline-block;" title="Expand All">
+                                    #cbAdminComponent( "ui/Icon", { name : "ChevronDoubleDown", size: "sm" } )# 
+                                    Expand All</span>
+                            </button>
+                        </div>
+
                         <div class="designer well well-sm" >
                             <div class="dd" id="nestable">
                                 <ol class="dd-list" x-ref="menuList">
@@ -67,8 +78,14 @@
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <h3>Preview <a class="btn btn-sm btn-primary" id="preview-button"><i class="fa fa-recycle"></i></a></h3>
+                        <h3>Preview</h3>
                         <p>Here's an instant preview of your menu.</p>
+                        <div class="text-right">
+                            <button class="btn btn-sm btn-link" id="preview-button">
+                                #cbAdminComponent( "ui/Icon", { name : "ArrowPath", size: "sm" } )# 
+                                Refresh
+                            </button>
+                        </div>
                         <div id="preview-panel" class="well well-sm">No Preview Available</div>
                     </div>
                 </div>
@@ -156,8 +173,8 @@
                 )#
                 <div class="actionBar">
                     <input type="hidden" name="saveEvent" id="saveEvent" value="#prc.xehMenuEditor#" />
-                    <a class="btn btn-primary"  id="submitSave">Save</a>
-                    <a class="btn btn-danger"   id="submitMenu">Save + Close</a>
+                    <a class="btn btn-default"  id="submitSave">Save</a>
+                    <a class="btn btn-primary"   id="submitMenu">Save + Close</a>
                 </div>
             </div>
         </div>

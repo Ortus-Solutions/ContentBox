@@ -27,7 +27,7 @@ component
 	public MediaProvider function init(){
 		setName( "Media" );
 		setType( "Media" );
-		setIconClass( "fa fa-photo-video" );
+		setIconClass( "fa fa-photo" );
 		setEntityName( "cbMediaMenuItem" );
 		setDescription( "A menu item to a media item" );
 		return this;
