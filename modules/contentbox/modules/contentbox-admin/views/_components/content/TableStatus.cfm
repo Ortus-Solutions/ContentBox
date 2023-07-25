@@ -12,10 +12,9 @@
 		></i>
 		<span class="hidden">published in future</span>
 	<cfelseif args.content.isContentPublished()>
-		<i
-			class="fa fa-satellite-dish fa-lg text-green"
-			title="Published #args.content.getDisplayPublishedDate()#"
-		></i>
+		<span class="text-green" title="Published #args.content.getDisplayPublishedDate()#">
+			#cbAdminComponent( "ui/Icon", { name : "SatelliteDish" } )#
+		</span>
 		<span class="hidden">published</span>
 	<cfelse>
 		<i

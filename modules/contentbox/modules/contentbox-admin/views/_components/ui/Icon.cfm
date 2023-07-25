@@ -91,6 +91,13 @@
                     <line stroke-linecap="round" stroke-linejoin="round" x1="11.27" y1="19.27" x2="18.47" y2="19.27"/>
                     <line stroke-linecap="round" stroke-linejoin="round" x1="14.87" y1="18.27" x2="14.87" y2=".88"/>
                 </cfcase>
+                <cfcase value="SatelliteDish">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.09,3.86c.25-.02.5-.04.75-.04,4.4,0,7.97,3.57,7.97,7.97,0,.3-.02.6-.05.89"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.61.92c.33-.03.66-.05.99-.05,5.82,0,10.53,4.72,10.53,10.53,0,.4-.02.79-.06,1.17"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m13.5,18.27c-1.31.94-2.92,1.5-4.65,1.5-4.4,0-7.97-3.57-7.97-7.97,0-1.4.36-2.72,1-3.87l11.62,10.35Z"/>
+                    <circle stroke-linecap="round" stroke-linejoin="round" cx="10.22" cy="10.17" r="1.27"/>
+                    <line stroke-linecap="round" stroke-linejoin="round" x1="7.69" y1="13.1" x2="9.53" y2="11.26"/>
+                </cfcase>
                 <cfcase value="Server">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z"></path>
                 </cfcase>

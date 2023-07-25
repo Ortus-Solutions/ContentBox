@@ -74,7 +74,7 @@
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('publish')">
-														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
+														#cbAdminComponent( "ui/Icon", { name : "SatelliteDish" } )# Publish Selected
 													</a>
 												</li>
 											</cfif>
