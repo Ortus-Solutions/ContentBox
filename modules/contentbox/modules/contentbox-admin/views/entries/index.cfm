@@ -62,7 +62,7 @@
 														data-title="<i class='fa fa-trash'></i> Delete Selected Entries?"
 														data-message="This will delete the entries, are you sure?"
 													>
-														<i class="fa fa-trash fa-lg"></i> Delete selected
+														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete selected
 													</a>
 												</li>
 												<li>

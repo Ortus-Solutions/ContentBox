@@ -56,7 +56,7 @@
 														data-title="Delete Selected Categories?"
 														data-message="This will delete the categories and associations, are you sure?"
 													>
-														<i class="fa fa-trash fa-lg"></i> Delete Selected
+														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
 													</a>
 												</li>
 
