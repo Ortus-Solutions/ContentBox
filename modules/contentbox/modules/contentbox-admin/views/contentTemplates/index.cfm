@@ -67,7 +67,7 @@
 														@click="deleteSelected()"
 														class="cursor-pointer"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
 													</a>
 												</li>
 												</cfif>
