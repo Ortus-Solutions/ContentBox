@@ -69,7 +69,7 @@
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('draft')">
-														<i class="fa fa-ban fa-lg"></i> Draft Selected
+														#cbAdminComponent( "ui/Icon", { name : "ClockDashedHalf" } )# Draft Selected
 													</a>
 												</li>
 												<li>

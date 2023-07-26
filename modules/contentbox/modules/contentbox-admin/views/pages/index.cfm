@@ -62,7 +62,7 @@
 
 												<li class="mb5">
 													<a href="javascript:contentListHelper.bulkChangeStatus( 'draft' )">
-														<i class="fa fa-ban fa-lg"></i> Draft Selected
+														#cbAdminComponent( "ui/Icon", { name : "ClockDashedHalf" } )# Draft Selected
 													</a>
 												</li>
 
@@ -96,7 +96,7 @@
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.resetBulkHits()">
-													<i class="fa fa-recycle fa-lg"></i> Reset Hits Selected
+													#cbAdminComponent( "ui/Icon", { name : "ArrowPath" } )# Reset Hits Selected
 												</a>
 											</li>
 
