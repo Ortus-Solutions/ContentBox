@@ -179,7 +179,7 @@
 							<a
 								href="#prc.CBHelper.linkEntry( entry )#"
 								target="_blank">
-								<i class="fa fa-eye fa-lg"></i> Open In Site
+								#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Open In Site
 							</a>
 						</li>
 			    	</ul>
