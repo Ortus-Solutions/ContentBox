@@ -162,7 +162,10 @@
 														class="confirmIt"
 														data-title="<i class='fa fa-trash'></i> Delete Group?"
 													>
-														<i class="fa fa-trash fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
+														<span id="delete_#group.getPermissionGroupID()#">
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+														</span>
+														Delete
 													</a>
 												</li>
 

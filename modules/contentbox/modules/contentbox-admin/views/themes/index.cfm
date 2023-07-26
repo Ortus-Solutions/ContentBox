@@ -94,7 +94,7 @@
 										<cfif prc.oCurrentAuthor.hasPermission( "THEME_ADMIN" ) AND thisTheme.name neq prc.activeTheme.name>
 											<a href="javascript:remove('#JSStringFormat(thisTheme.name)#')"
 											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
-											   <i class="fa fa-trash fa-lg"></i> Remove
+											   #cbAdminComponent( "ui/Icon", { name : "Trash" } )# Remove
 											</a>
 										</cfif>
 									</div>

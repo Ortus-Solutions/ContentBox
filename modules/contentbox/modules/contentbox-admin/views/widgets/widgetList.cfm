@@ -147,7 +147,7 @@
 													<cfif prc.widgets.widgettype eq "custom">
 														<!--- Delete Command --->
 														<a title="Delete Widget" data-container="body"  href="javascript:remove('#JSStringFormat(widgetName)#')" class="confirmIt btn btn-sm btn-danger" data-title="Delete #widgetName#?">
-															<i class="fa fa-trash fa-lg"></i>
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
 														</a>
 													</cfif>
 												</cfif>

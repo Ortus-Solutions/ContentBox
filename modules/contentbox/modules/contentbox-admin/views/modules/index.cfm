@@ -125,7 +125,7 @@
 														href="javascript:remove( '#JSStringFormat(module.getName())#' )"
 														data-title="<i class='fa fa-trash'></i> Delete #module.getName()#?"
 													>
-														<i class="fa fa-trash fa-lg"></i> Delete
+														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 													</a>
 												</li>
 											</cfif>

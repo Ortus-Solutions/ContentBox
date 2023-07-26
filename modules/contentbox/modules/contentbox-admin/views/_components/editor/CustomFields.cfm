@@ -15,7 +15,7 @@
 		</button>
 		<!--- Remove All Custom Fields --->
 		<button type="button" id="removeCustomFieldsButton" class="btn btn-sm btn-danger" @click="cleanCustomFields">
-			<i class="fa fa-trash fa-lg"></i> Remove All
+			#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Remove All
 		</button>
 	</div>
 

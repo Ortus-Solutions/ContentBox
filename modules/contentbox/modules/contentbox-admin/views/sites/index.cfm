@@ -177,7 +177,10 @@
 														class="confirmIt"
 														data-title="<i class='fa fa-trash'></i> Delete Site?"
 													>
-														<i class="fa fa-trash fa-lg" id="delete_#site.getsiteID()#"></i> Delete
+														<span id="delete_#site.getsiteID()#">
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+														</span> 
+														Delete
 													</a>
 												</li>
 											</cfif>

@@ -110,7 +110,10 @@
 								</cfif>
 										data-title="<i class='fa fa-trash'></i> Delete Setting?"
 									>
-										<i class="fa fa-trash fa-lg" id="delete_#setting.getsettingID()#"></i> Delete
+										<span id="delete_#setting.getsettingID()#">
+											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+										</span> 
+										Delete
 									</a>
 							</li>
 						</ul>

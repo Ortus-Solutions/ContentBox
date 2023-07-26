@@ -40,7 +40,12 @@
                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                 <!--- Delete Command --->
                                 <li>
-                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="fa fa-trash fa-lg" id="delete_#menu.getMenuID()#"></i> Delete</a>
+                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?">
+                                        <span id="delete_#menu.getMenuID()#">
+                                            #cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+                                        </span>
+                                        Delete
+                                    </a>
                                 </li>
                                 <!--- Edit Command --->
                                 <li>

@@ -99,7 +99,10 @@
 							<!--- Delete Command --->
 							<li>
 								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">
-									<i class="fa fa-trash fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
+									<span id="delete_#rule.getRuleID()#">
+										#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+									</span> 
+									Delete
 								</a>
 							</li>
 							<!--- Edit Command --->

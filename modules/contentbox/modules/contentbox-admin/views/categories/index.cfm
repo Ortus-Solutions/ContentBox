@@ -77,7 +77,7 @@
 													@click="deleteSelected()"
 													class="cursor-pointer"
 												>
-													<i class="fa fa-trash fa-lg"></i> Delete Selected
+													#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
 												</a>
 											</li>
 											</cfif>
@@ -260,7 +260,7 @@
 															data-title="Delete Category?"
 															data-message="Delete the category and all of its associations"
 														>
-															<i class="fa fa-trash fa-lg"></i> Delete
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 														</a>
 													</li>
 												</ul>

@@ -162,7 +162,10 @@
 															class="confirmIt"
 															data-title="<i class='fa fa-trash'></i> Delete Role?"
 														>
-															<i class="fa fa-trash fa-lg" id="delete_#role.getRoleId()#"></i> Delete
+															<span id="delete_#role.getRoleId()#">
+																#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+															</span> 
+															Delete
 														</a>
 													</li>
 												</cfif>

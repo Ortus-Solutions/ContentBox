@@ -140,7 +140,9 @@
 								data-title="<i class='fa fa-trash'></i> Remove Content Version"
 								data-message="Do you really want to remove this content version?"
 							>
-								<i class="fa fa-trash fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
+								<span id="version_delete_#thisVersion.getContentVersionID()#">
+									#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+								</span>
 							</a>
 						</cfif>
 					</cfif>
