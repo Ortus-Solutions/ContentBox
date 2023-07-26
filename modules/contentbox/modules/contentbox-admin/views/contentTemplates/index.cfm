@@ -87,7 +87,7 @@
 												<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-															<i class="fa fa-file-export fa-lg"></i> Export All
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 														</a>
 													</li>
 													<li>
@@ -95,7 +95,7 @@
 															@click="exportSelected()"
 															class="cursor-pointer"
 														>
-															<i class="fa fa-file-export fa-lg"></i> Export Selected
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 														</a>
 													</li>
 												</cfif>

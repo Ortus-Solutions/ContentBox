@@ -57,12 +57,12 @@
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehMenuExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 													</a>
 												</li>
 											</cfif>
