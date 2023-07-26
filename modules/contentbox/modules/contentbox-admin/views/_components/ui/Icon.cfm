@@ -122,6 +122,9 @@
                     <line stroke-linecap="round" stroke-linejoin="round" x1="11.27" y1="19.27" x2="18.47" y2="19.27"/>
                     <line stroke-linecap="round" stroke-linejoin="round" x1="14.87" y1="18.27" x2="14.87" y2=".88"/>
                 </cfcase>
+                <cfcase value="Reset">
+                    <path class="cls-1" d="m7.55,5.51l-4.94-.08C4.42,2.87,7.41,1.2,10.78,1.2c5.52,0,10,4.48,10,10s-4.48,10-10,10h0c-4.82,0-8.82-3.42-9.76-7.96m1.6-7.81L3.71.73"/>
+                </cfcase>
                 <cfcase value="SignalCircle">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.63,9.9c1.94.05,3.4,1.66,3.25,3.6m-3.03-6.6c3.6.09,6.31,3.08,6.04,6.68M9.08,3.89c5.27.14,9.22,4.51,8.83,9.76"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="m20.85,10.97c0,5.52-4.48,10-10,10S.85,16.49.85,10.97,5.32.97,10.85.97s10,4.48,10,10Zm-13.39,2.51c-.7,0-1.27.57-1.27,1.27s.57,1.27,1.27,1.27,1.27-.57,1.27-1.27-.57-1.27-1.27-1.27Zm-2.53,4.19l1.84-1.84"/>

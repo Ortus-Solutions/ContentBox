@@ -111,11 +111,11 @@
 										<li>
 											<a
 												href="#event.buildLink( prc.xehResetRules )#"
-												data-title="<i class='fa fa-recycle'></i> Really Reset All Rules?"
+												data-title="Really Reset All Rules?"
 												class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults."
 											>
-												<i class="fa fa-eraser"></i> Reset Rules
+												#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Rules
 											</a>
 										</li>
 										</cfif>

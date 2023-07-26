@@ -174,7 +174,7 @@
 						<!-- Reset hits -->
 						<li>
 							<a href="javascript:contentListHelper.resetHits( '#entry.getContentID()#' )">
-								<i class="fa fa-recycle fa-lg"></i> Reset Hits
+								#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Hits
 							</a>
 						</li>
 						<!--- View in Site --->

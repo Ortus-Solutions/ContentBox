@@ -96,7 +96,7 @@
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.resetBulkHits()">
-													#cbAdminComponent( "ui/Icon", { name : "ArrowPath" } )# Reset Hits Selected
+													#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Hits Selected
 												</a>
 											</li>
 
