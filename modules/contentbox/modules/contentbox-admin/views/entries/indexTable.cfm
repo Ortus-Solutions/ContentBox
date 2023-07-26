@@ -131,7 +131,7 @@
 									'#encodeForJavascript( entry.getTitle() )#'
 								)"
 							>
-								<i class="fa fa-clone fa-lg"></i> Clone
+								#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
 							</a>
 						</li>
 						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN" )>

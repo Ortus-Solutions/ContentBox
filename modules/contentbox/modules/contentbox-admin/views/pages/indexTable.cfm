@@ -189,7 +189,7 @@
 											'#encodeForJavascript( page.getTitle() )#'
 										)"
 									>
-										<i class="fa fa-clone fa fa-lg"></i> Clone
+										#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
 									</a>
 								</li>
 

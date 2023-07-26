@@ -225,7 +225,7 @@
 																	@click="duplicateTemplate( template )"
 																	title="Duplicate"
 																>
-																	<i class="fa fa-clone fa-sm"></i> Duplicate
+																	#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Duplicate
 																</a>
 															</li>
 

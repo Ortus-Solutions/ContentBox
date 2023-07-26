@@ -133,7 +133,7 @@
 										'#encodeForJavaScript( content.getTitle() )#'
 									)"
 								>
-									<i class="fa fa-clone fa-lg"></i> Clone
+									#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
 								</a>
 							</li>
 							<!--- Create Child --->
