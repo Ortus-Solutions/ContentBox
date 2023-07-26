@@ -63,7 +63,7 @@
 								    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:contentListHelper.bulkRemove()" class="confirmIt"
-													data-title="<i class='fa fa-trash fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
+													data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?">
 														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
 													</a>
 												</li>

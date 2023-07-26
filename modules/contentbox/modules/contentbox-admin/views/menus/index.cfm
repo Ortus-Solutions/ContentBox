@@ -48,7 +48,7 @@
                                         <ul class="dropdown-menu">
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                                 <li>
-                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?">
+                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="Delete Selected Menu?" data-message="This will delete the menu, are you sure?">
                                                         #cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
                                                     </a>
                                                 </li>

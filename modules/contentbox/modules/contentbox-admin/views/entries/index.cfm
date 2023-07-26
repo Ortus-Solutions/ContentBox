@@ -59,7 +59,7 @@
 													<a
 														href="javascript:contentListHelper.bulkRemove()"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash'></i> Delete Selected Entries?"
+														data-title="Delete Selected Entries?"
 														data-message="This will delete the entries, are you sure?"
 													>
 														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete selected
