@@ -135,30 +135,40 @@
 								</td>
 								<td>
 									<!--- Blog Enabled --->
-									<i
-										class="fa fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
-										title="Blog"></i>
-
+									<span 
+										class="mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#" 
+										title="Blog"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "ChatBubbleBottomCenterText" } )#
+									</span>
 									<!--- SiteMap Enabled --->
-									<i
-										class="fa fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
-										title="Sitemap"></i>
-
+									<span 
+										class="mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#" 
+										title="Sitemap"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "SiteMap" } )#
+									</span>
 									<!--- PoweredBy --->
-									<i
-										class="fa fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
-										title="Powered By Header"></i>
-
+									<span 
+										class="mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#" 
+										title="Powered By Header"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "TowerBroadcast" } )#
+									</span>
 									<!--- AdminBar --->
-									<i
-										class="fa fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
-										title="Admin Bar"></i>
-
+									<span 
+										class="mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#" 
+										title="Admin Bar"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "Window" } )#
+									</span>
 									<!--- SSL --->
-									<i
-										class="fa fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
-										title="SSL"></i>
-
+									<span 
+										class="mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#" 
+										title="Admin Bar"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "LockClosed" } )#
+									</span>
 								</td>
 								<td class="text-center">
 									<!--- Actions --->
