@@ -247,7 +247,7 @@
 								<a
 									href="#event.buildLink( prc.xehContentHistory )#/contentID/#page.getContentID()#"
 								>
-									<i class="fa fa-history fa-lg"></i> History
+									#cbAdminComponent( "ui/Icon", { name : "History" } )# History
 								</a>
 							</li>
 

@@ -107,7 +107,7 @@
 							<!--- History Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentPagerHistory )#/contentID/#thisContent.getContentID()#">
-									<i class="fa fa-history fa-lg"></i> History
+									#cbAdminComponent( "ui/Icon", { name : "History" } )# History
 								</a>
 							</li>
 							<!--- View in Site --->

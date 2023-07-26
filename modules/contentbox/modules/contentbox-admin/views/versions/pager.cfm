@@ -28,7 +28,7 @@
 				title="Go to the history visualizer"
 				onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"
 			>
-				<i class="fa fa-history"></i> Full History
+				#cbAdminComponent( "ui/Icon", { name : "History", size: "sm" } )# Full History
 			</button>
 		</cfif>
 	</div>
