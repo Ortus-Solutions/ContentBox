@@ -62,7 +62,7 @@
                             </li>
                             <li class="nav-item">
 								<a href="##gravatars" data-toggle="tab" class="nav-link">
-									<i class="fa fa-portrait fa-lg"></i> Gravatars
+									#cbAdminComponent( "ui/Icon", { name : "UserCircle" } )# Gravatars
 								</a>
                             </li>
                             <li class="nav-item">
