@@ -102,7 +102,7 @@
 
 											<li class="mb5">
 												<a href="javascript:contentListHelper.contentShowAll()">
-													<i class="fa fa-list"></i> Show All
+													#cbAdminComponent( "ui/Icon", { name : "ListBullet" } )# Show All
 												</a>
 											</li>
 								    	</ul>

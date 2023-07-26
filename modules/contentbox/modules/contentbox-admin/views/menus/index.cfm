@@ -66,7 +66,11 @@
 													</a>
 												</li>
 											</cfif>
-                                            <li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
+                                            <li>
+                                                <a href="javascript:contentShowAll()">
+                                                    #cbAdminComponent( "ui/Icon", { name : "ListBullet" } )# Show All
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </cfif>
