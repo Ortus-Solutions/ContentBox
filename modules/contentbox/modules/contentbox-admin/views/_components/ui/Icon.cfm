@@ -52,6 +52,20 @@
                 <cfcase value="ChevronUpDown">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
                 </cfcase>
+                <cfcase value="ClockArrowPath">
+                    <polyline stroke-linecap="round" stroke-linejoin="round" points="17.47 11.2 10.8 11.2 10.8 16.2"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m10.8,21.2c-5.52,0-10-4.48-10-10,0-5.52,4.48-10,10-10,3.37,0,6.36,1.67,8.17,4.23l-4.94.08m6.77,5.69M17.87.73l1.1,4.7"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.66,13.46c-.26,1.1-.7,2.17-1.33,3.16m-2.58,2.75c-.74.54-1.55.98-2.38,1.3"/>
+                </cfcase>
+                <cfcase value="ClockWarning">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m15.75,15.14v2.18m-5.31,1.96c-.49.87.12,1.96,1.11,1.96h8.4c.99,0,1.61-1.09,1.11-1.96l-4.2-7.41c-.49-.87-1.73-.87-2.23,0,0,0-4.2,7.41-4.2,7.41m5.31-.22h0s0,0,0,0h0Z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m6.5,11h4.5s0-6,0-6m-1.59,14.86c-4.21-.75-7.41-4.43-7.41-8.86,0-4.97,4.03-9,9-9s9,4.03,9,9c0,1.55-.39,3.01-1.09,4.29m-8.65,4.68c-.29-.02-.57-.06-.86-.11m9.5-4.57"/>
+                </cfcase>
+                <cfcase value="ClockDashedHalf">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.06.73c5.64,0,10.21,4.57,10.21,10.21s-4.57,10.21-10.21,10.21M11.06.73c5.64,0,10.21,4.57,10.21,10.21M.85,10.94"/>
+                    <polyline stroke-linecap="round" stroke-linejoin="round" points="11.06 4.13 11.06 10.94 16.16 10.94"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m3.83,3.73c.78-.78,1.69-1.44,2.7-1.94M.96,9.41c.17-1.16.54-2.26,1.08-3.26m0,9.58c-.42-.79-.74-1.65-.94-2.54m5.43,6.91c-.94-.47-1.79-1.07-2.54-1.79"/>
+                </cfcase>
                 <cfcase value="Document">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
                 </cfcase>
@@ -106,6 +120,10 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="m13.5,18.27c-1.31.94-2.92,1.5-4.65,1.5-4.4,0-7.97-3.57-7.97-7.97,0-1.4.36-2.72,1-3.87l11.62,10.35Z"/>
                     <circle stroke-linecap="round" stroke-linejoin="round" cx="10.22" cy="10.17" r="1.27"/>
                     <line stroke-linecap="round" stroke-linejoin="round" x1="7.69" y1="13.1" x2="9.53" y2="11.26"/>
+                </cfcase>
+                <cfcase value="SignalCircle">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.63,9.9c1.94.05,3.4,1.66,3.25,3.6m-3.03-6.6c3.6.09,6.31,3.08,6.04,6.68M9.08,3.89c5.27.14,9.22,4.51,8.83,9.76"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m20.85,10.97c0,5.52-4.48,10-10,10S.85,16.49.85,10.97,5.32.97,10.85.97s10,4.48,10,10Zm-13.39,2.51c-.7,0-1.27.57-1.27,1.27s.57,1.27,1.27,1.27,1.27-.57,1.27-1.27-.57-1.27-1.27-1.27Zm-2.53,4.19l1.84-1.84"/>
                 </cfcase>
                 <cfcase value="Server">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 17.25v-.228a4.5 4.5 0 00-.12-1.03l-2.268-9.64a3.375 3.375 0 00-3.285-2.602H7.923a3.375 3.375 0 00-3.285 2.602l-2.268 9.64a4.5 4.5 0 00-.12 1.03v.228m19.5 0a3 3 0 01-3 3H5.25a3 3 0 01-3-3m19.5 0a3 3 0 00-3-3H5.25a3 3 0 00-3 3m16.5 0h.008v.008h-.008v-.008zm-3 0h.008v.008h-.008v-.008z"></path>
