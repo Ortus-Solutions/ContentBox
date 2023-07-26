@@ -183,7 +183,7 @@
 															href="#event.buildLink( prc.xehExport )#/roleID/#role.getRoleID()#.json"
 															target="_blank"
 														>
-															<i class="fa fa-file-export fa-lg"></i> Export
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 														</a>
 													</li>
 												</cfif>

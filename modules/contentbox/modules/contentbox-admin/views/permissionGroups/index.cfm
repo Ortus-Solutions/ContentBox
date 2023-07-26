@@ -181,7 +181,7 @@
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
-															<i class="fa fa-file-export fa-lg"></i> Export
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 														</a>
 													</li>
 												</cfif>

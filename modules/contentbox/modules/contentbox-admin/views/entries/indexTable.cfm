@@ -158,7 +158,7 @@
 							<a
 								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.json"
 								target="_blank">
-								<i class="fa fa-file-export fa-lg"></i> Export
+								#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 							</a>
 						</li>
 						</cfif>

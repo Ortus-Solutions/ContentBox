@@ -22,7 +22,7 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										<i class="fa fa-file-export fa-lg"></i> Export
+										#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 									</a>
 								</li>
 								<li>

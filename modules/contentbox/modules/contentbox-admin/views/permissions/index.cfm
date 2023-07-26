@@ -165,7 +165,7 @@
 														<a
 															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
 															target="_blank">
-															<i class="fa fa-file-export fa-lg"></i> Export
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 														</a>
 													</li>
 												</cfif>
