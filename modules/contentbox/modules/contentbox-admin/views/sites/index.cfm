@@ -217,7 +217,7 @@
 											<!--- Open site --->
 											<li>
 												<a href="#site.getSiteRoot()#" target="_blank">
-													<i class="fa fa-external-link-alt fa-lg"></i>Open site
+													#cbAdminComponent( "ui/Icon", { name : "WindowArrow" } )# Open site
 												</a>
 											</li>
 
