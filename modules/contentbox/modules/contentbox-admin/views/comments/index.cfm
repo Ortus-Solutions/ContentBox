@@ -203,7 +203,7 @@
 												</li>
 												<li>
 													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
-														<i class="fa fa-eye fa-lg"></i> View In Site
+														#cbAdminComponent( "ui/Icon", { name : "Eye" } )# View In Site
 													</a>
 												</li>
 									    	</ul>

@@ -114,7 +114,7 @@
 							<cfif thisContent.getContentType() neq "contentStore">
 								<li>
 									<a href="#prc.CBHelper.linkContent( thisContent )#" target="_blank">
-										<i class="fa fa-eye fa-lg"></i> View In Site
+										#cbAdminComponent( "ui/Icon", { name : "Eye" } )# View In Site
 									</a>
 								</li>
 							</cfif>

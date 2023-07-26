@@ -122,7 +122,7 @@
 							title="View in Site"
 							onclick="window.open( '#prc.xehOpenContent#' );return false;"
 						>
-							<i class="fa fa-eye"></i> Open
+							#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Open
 						</button>
 					</cfif>
 				</div>

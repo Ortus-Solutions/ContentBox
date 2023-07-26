@@ -23,7 +23,7 @@
 				<!--- Comment Details --->
 				<fieldset>
 
-					<legend><i class="fa fa-eye fa-lg"></i> Details</legend>
+					<legend>#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Details</legend>
 
 						<div class="form-group pull-right">
 							#getInstance( "Avatar@contentbox" ).renderAvatar(
