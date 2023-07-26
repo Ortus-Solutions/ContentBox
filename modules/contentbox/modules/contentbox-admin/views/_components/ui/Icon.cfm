@@ -54,6 +54,10 @@
                 <cfcase value="ChevronUpDown">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 15L12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"></path>
                 </cfcase>
+                <cfcase value="CircleO">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m10.95,21.33C5.28,21.33.67,16.72.67,11.05S5.28.76,10.95.76s10.28,4.61,10.28,10.28-4.61,10.28-10.28,10.28Zm0-19.59C5.82,1.74,1.65,5.91,1.65,11.05s4.18,9.31,9.31,9.31,9.31-4.18,9.31-9.31S16.09,1.74,10.95,1.74Z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m10.95,4.43c3.66,0,6.62,2.96,6.62,6.62s-2.96,6.62-6.62,6.62-6.62-2.96-6.62-6.62,2.96-6.62,6.62-6.62Z"/>
+                </cfcase>
                 <cfcase value="ClockArrowPath">
                     <polyline stroke-linecap="round" stroke-linejoin="round" points="17.47 11.2 10.8 11.2 10.8 16.2"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="m10.8,21.2c-5.52,0-10-4.48-10-10,0-5.52,4.48-10,10-10,3.37,0,6.36,1.67,8.17,4.23l-4.94.08m6.77,5.69M17.87.73l1.1,4.7"/>

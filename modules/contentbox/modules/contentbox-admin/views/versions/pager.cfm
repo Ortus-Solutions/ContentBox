@@ -86,9 +86,13 @@
 				<!--- Status --->
 				<td class="text-center">
 					<cfif thisVersion.getIsActive()>
-						<i class="fa fa-dot-circle fa-lg text-red" title="Active Version"></i>
+						<span title="Active Version">
+							#cbAdminComponent( "ui/Icon", { name : "CircleO", class : "text-red" } )#
+						</span>
 					<cfelse>
-						<i class="fa fa-dot-circle fa-lg text-muted" title="Past Version"></i>
+						<span title="Past Version">
+							#cbAdminComponent( "ui/Icon", { name : "CircleO", class : "text-muted" } )#
+						</span>
 					</cfif>
 				</td>
 
