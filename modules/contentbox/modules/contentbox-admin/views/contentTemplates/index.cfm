@@ -236,7 +236,7 @@
 																	data-title="Delete Template?"
 																	data-message="Delete the template and all of its associations"
 																>
-																	<i class="fa fa-trash fa-sm"></i> Delete
+																	#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 																</a>
 															</li>
 														</ul>
@@ -513,7 +513,9 @@
 																				<input class="form-control" :name="'cf_defaultValue_'+index" type="text" x-model="templateForm.definition[ fieldKey ].value[ index].defaultValue"/>
 																			</div>
 																			<div class="col-xs-1 pt5">
-																				<button type="button" class="mt20 btn btn-danger text-bold" @click="removeSchemaItem( fieldKey, index )"><i class="fa fa-trash"></i></button>
+																				<button type="button" class="mt20 btn btn-danger text-bold" @click="removeSchemaItem( fieldKey, index )">
+																					#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+																				</button>
 																			</div>
 																		</li>
 																	</template>

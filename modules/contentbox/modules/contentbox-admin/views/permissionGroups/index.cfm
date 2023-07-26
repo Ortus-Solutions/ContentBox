@@ -160,7 +160,7 @@
 												<li>
 													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash'></i> Delete Group?"
+														data-title="Delete Group?"
 													>
 														<span id="delete_#group.getPermissionGroupID()#">
 															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#

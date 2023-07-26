@@ -176,7 +176,10 @@
 														title="Delete Permission"
 														href="javascript:remove( '#permission.getPermissionID()#' );"
 														data-title="Delete Permission?">
-														<i id="delete_#permission.getPermissionID()#" class="fa fa-trash fa-lg"></i> Delete
+														<span id="delete_#permission.getPermissionID()#" >
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+														</span> 
+														Delete
 													</a>
 												</li>
 									    	</ul>

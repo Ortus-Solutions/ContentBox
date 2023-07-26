@@ -137,7 +137,7 @@
 								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"
 								title="Remove this version"
 								class="confirmIt ml5"
-								data-title="<i class='fa fa-trash'></i> Remove Content Version"
+								data-title="Remove Content Version"
 								data-message="Do you really want to remove this content version?"
 							>
 								<span id="version_delete_#thisVersion.getContentVersionID()#">

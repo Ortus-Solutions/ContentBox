@@ -208,12 +208,13 @@
 										<a
 											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
 											class="confirmIt"
-											data-title="<i class='fa fa-trash'></i> Delete Page?"
+											data-title="Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
 										>
-											<i
-												id="delete_#page.getContentID()#"
-												class="fa fa-trash fa-lg"></i> Delete
+											<span id="delete_#page.getContentID()#">
+												#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+											</span> 
+											Delete
 										</a>
 									</li>
 								</cfif>

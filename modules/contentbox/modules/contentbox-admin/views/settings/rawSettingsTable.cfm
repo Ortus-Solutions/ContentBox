@@ -108,7 +108,7 @@
 										href="javascript:remove( '#setting.getsettingID()#' )"
 										title="Delete Setting"
 								</cfif>
-										data-title="<i class='fa fa-trash'></i> Delete Setting?"
+										data-title="Delete Setting?"
 									>
 										<span id="delete_#setting.getsettingID()#">
 											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#

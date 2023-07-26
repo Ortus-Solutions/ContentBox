@@ -43,7 +43,9 @@
 					x-model="field.value"
 				/>
 
-				<button type="button" class="btn btn-danger dynamicRemove" onclick="removeCustomField( field )" :disabled="isTemplatedField( field ) ? true : null"><i class="fa fa-trash"></i></button>
+				<button type="button" class="btn btn-danger dynamicRemove" onclick="removeCustomField( field )" :disabled="isTemplatedField( field ) ? true : null">
+					#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+				</button>
 
 			</div>
 		</div>

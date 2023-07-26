@@ -175,7 +175,7 @@
 													<a
 														href="javascript:remove( '#site.getsiteID()#' )"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash'></i> Delete Site?"
+														data-title="Delete Site?"
 													>
 														<span id="delete_#site.getsiteID()#">
 															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#

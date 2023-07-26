@@ -145,8 +145,11 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
-									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='fa fa-trash fa-lg'></i> Delete Content?">
-										<i id="delete_#content.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
+									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="Delete Content?">
+										<span id="delete_#content.getContentID()#">
+											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+										</span> 
+										Delete
 									</a>
 								</li>
 							</cfif>

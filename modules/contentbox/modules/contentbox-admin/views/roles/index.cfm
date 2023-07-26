@@ -160,7 +160,7 @@
 													<li>
 														<a 	href="javascript:remove( '#role.getRoleId()#' )"
 															class="confirmIt"
-															data-title="<i class='fa fa-trash'></i> Delete Role?"
+															data-title="Delete Role?"
 														>
 															<span id="delete_#role.getRoleId()#">
 																#cbAdminComponent( "ui/Icon", { name : "Trash" } )#

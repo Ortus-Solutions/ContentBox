@@ -140,8 +140,11 @@
 							<a
 								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
-								data-title="<i class='fa fa-trash'></i> Delete Entry?">
-								<i id="delete_#entry.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
+								data-title="Delete Entry?">
+								<span id="delete_#entry.getContentID()#" >
+									#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+								</span> 
+								Delete
 							</a>
 						</li>
 						</cfif>

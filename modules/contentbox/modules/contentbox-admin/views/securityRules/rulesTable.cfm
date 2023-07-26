@@ -98,7 +98,7 @@
 						<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li>
-								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">
+								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?">
 									<span id="delete_#rule.getRuleID()#">
 										#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
 									</span> 

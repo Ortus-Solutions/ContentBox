@@ -123,7 +123,7 @@
 														class="confirmIt"
 														title="Delete Module"
 														href="javascript:remove( '#JSStringFormat(module.getName())#' )"
-														data-title="<i class='fa fa-trash'></i> Delete #module.getName()#?"
+														data-title="Delete #module.getName()#?"
 													>
 														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 													</a>

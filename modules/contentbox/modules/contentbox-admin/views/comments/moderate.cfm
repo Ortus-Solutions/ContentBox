@@ -96,7 +96,7 @@
 							type="submit"
 							class="btn btn-danger btn-lg"
 							onclick="removeComment()">
-							<i class="fa fa-trash"></i> Delete
+							#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 						</button>
 						<button
 							type="submit"
