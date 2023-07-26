@@ -172,7 +172,7 @@
 													<a
 														href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getRoleId()#")#"
 											   		>
-											   			<i class="fa fa-pen fa-lg"></i> Edit
+													   #cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 											   		</a>
 											   	</li>
 

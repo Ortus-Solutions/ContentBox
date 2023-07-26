@@ -223,7 +223,7 @@
 									<a
 										href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 									>
-										<i class="fa fa-pen fa-lg"></i> Edit
+										#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 									</a>
 								</li>
 							</cfif>

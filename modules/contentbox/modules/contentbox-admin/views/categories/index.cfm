@@ -237,7 +237,7 @@
 															class="cursor-pointer"
 															title="Edit"
 														>
-															<i class="fa fa-pen fa-lg"></i> Edit
+															#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 														</a>
 													</li>
 

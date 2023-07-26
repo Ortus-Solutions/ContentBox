@@ -193,7 +193,7 @@
 									    		<!--- Edit Command --->
 												<li>
 													<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment">
-														<i class="fa fa-pen fa-lg"></i> Edit
+														#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 													</a>
 												</li>
 												<li><!--- Delete Command --->

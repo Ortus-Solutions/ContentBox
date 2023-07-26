@@ -44,13 +44,15 @@
                                 </li>
                                 <!--- Edit Command --->
                                 <li>
-                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fa fa-pen fa-lg"></i> Edit</a>
+                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#">
+                                        #cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
+                                    </a>
                                 </li>
                                 <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
                                     <li>
 										<a href="#event.buildLink( prc.xehMenuExport )#/menuID/#menu.getMenuID()#.json" target="_blank">
-											<i class="fa fa-file-export fa-lg"></i> Export
+											#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 										</a>
 									</li>
                                 </cfif>

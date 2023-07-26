@@ -157,7 +157,7 @@
 															'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#'
 															)"
 														title="Edit #permission.getPermission()#">
-														<i class="fa fa-pen fa-lg"></i> Edit
+														#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 													</a>
 												</li>
 												<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>

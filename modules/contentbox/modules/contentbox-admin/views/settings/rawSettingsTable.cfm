@@ -87,13 +87,13 @@
 									)"
 									title="Edit Setting"
 								>
-									<i class="fa fa-pen fa-lg"></i> Edit
+									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 								</a>
 							</li>
 							<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/settingID/#setting.getSettingID()#.json" target="_blank">
-										<i class="fa fa-file-export fa-lg"></i> Export
+										#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 									</a>
 								</li>
 							</cfif>

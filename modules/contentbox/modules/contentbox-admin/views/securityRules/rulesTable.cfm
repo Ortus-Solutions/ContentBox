@@ -105,13 +105,13 @@
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehEditorRule )#/ruleID/#rule.getRuleID()#" title="Edit Rule">
-									<i class="fa fa-pen fa-lg"></i> Edit
+									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 								</a>
 							</li>
 							<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/ruleID/#rule.getRuleID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 								</a>
 							</li>
 						</cfif>

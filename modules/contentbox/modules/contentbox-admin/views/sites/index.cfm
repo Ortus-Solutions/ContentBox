@@ -185,7 +185,7 @@
 											<!--- Edit Command --->
 											<li>
 												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteID/#site.getsiteID()#' )#">
-													<i class="fa fa-pen fa-lg"></i> Edit
+													#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 												</a>
 											</li>
 
