@@ -114,13 +114,6 @@
                     <line stroke-linecap="round" stroke-linejoin="round" x1="11.27" y1="19.27" x2="18.47" y2="19.27"/>
                     <line stroke-linecap="round" stroke-linejoin="round" x1="14.87" y1="18.27" x2="14.87" y2=".88"/>
                 </cfcase>
-                <cfcase value="SatelliteDish">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.09,3.86c.25-.02.5-.04.75-.04,4.4,0,7.97,3.57,7.97,7.97,0,.3-.02.6-.05.89"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.61.92c.33-.03.66-.05.99-.05,5.82,0,10.53,4.72,10.53,10.53,0,.4-.02.79-.06,1.17"/>
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m13.5,18.27c-1.31.94-2.92,1.5-4.65,1.5-4.4,0-7.97-3.57-7.97-7.97,0-1.4.36-2.72,1-3.87l11.62,10.35Z"/>
-                    <circle stroke-linecap="round" stroke-linejoin="round" cx="10.22" cy="10.17" r="1.27"/>
-                    <line stroke-linecap="round" stroke-linejoin="round" x1="7.69" y1="13.1" x2="9.53" y2="11.26"/>
-                </cfcase>
                 <cfcase value="SignalCircle">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.63,9.9c1.94.05,3.4,1.66,3.25,3.6m-3.03-6.6c3.6.09,6.31,3.08,6.04,6.68M9.08,3.89c5.27.14,9.22,4.51,8.83,9.76"/>
                     <path stroke-linecap="round" stroke-linejoin="round" d="m20.85,10.97c0,5.52-4.48,10-10,10S.85,16.49.85,10.97,5.32.97,10.85.97s10,4.48,10,10Zm-13.39,2.51c-.7,0-1.27.57-1.27,1.27s.57,1.27,1.27,1.27,1.27-.57,1.27-1.27-.57-1.27-1.27-1.27Zm-2.53,4.19l1.84-1.84"/>
