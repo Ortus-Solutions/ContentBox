@@ -52,7 +52,7 @@
                                                 </li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-                                                <li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
+                                                <li><a href="javascript:importContent()">#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import</a></li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li>

@@ -78,7 +78,7 @@
 														@click="importContent()"
 														class="cursor-pointer"
 													>
-														<i class="fa fa-file-import fa-lg"></i> Import
+														#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
 													</a>
 												</li>
 												</cfif>
