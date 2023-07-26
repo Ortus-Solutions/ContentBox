@@ -40,7 +40,7 @@
 								title="Deactivate + Rescan"
 								class="btn btn-default"
 							>
-								#cbAdminComponent( "ui/Icon", { name : "ArrowUturnLeft" } )#
+								#cbAdminComponent( "ui/Icon", { name : "Reset" } )#
 								Reset
 							</a>
 							<a
