@@ -107,7 +107,7 @@
 				)#
 			</td>
 
-			<td class="text-center">
+			<td class="text-center flex">
 				<!--- Drag Handle --->
 				<a 	href="##"
 					onclick="return false;"

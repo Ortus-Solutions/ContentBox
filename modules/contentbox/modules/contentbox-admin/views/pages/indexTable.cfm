@@ -157,7 +157,7 @@
 					<span class="badge badge-info">#page.getNumberOfHits()#</span>
 				</td>
 
-				<td class="text-center">
+				<td class="text-center flex">
 					<!--- Drag Handle --->
 					<a
 						href="##"
