@@ -78,7 +78,7 @@
 
                     	<li class="nav-item active">
 							<a href="##details" data-toggle="tab" class="nav-link">
-								<i class="fa fa-eye fa-lg"></i> Details
+								#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Details
 							</a>
                     	</li>
 						<li class="nav-item">
