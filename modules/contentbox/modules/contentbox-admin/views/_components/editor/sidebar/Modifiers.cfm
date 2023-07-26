@@ -9,7 +9,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##modifiers">
-					<i class="fa fa-toolbox"></i> Modifiers
+					#cbAdminComponent( "ui/Icon", { name : "Tools" } )# Modifiers
 				</a>
 			</h4>
 		</div>
