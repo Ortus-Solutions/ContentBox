@@ -3,8 +3,10 @@
     <cfparam name="args.name" 	 default="info">
     <!--- Icon Size --->
     <cfparam name="args.size"    default="md">
+    <!--- Icon Class --->
+    <cfparam name="args.class"   default="">
 
-    <icon class="cbicon cbicon-#args.size#">
+    <icon class="cbicon cbicon-#args.size# #args.class#">
         <svg fill="none" stroke="currentColor" stroke-width="1.75" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">      
             <cfswitch expression=#args.name#>
                 <cfcase value="ArchiveBox">
