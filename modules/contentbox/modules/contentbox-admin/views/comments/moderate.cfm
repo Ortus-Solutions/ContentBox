@@ -40,7 +40,7 @@
 
 						<!--- Content Object --->
 						<div class="form-group">
-							<i class="fa fa-archive"></i>
+							#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )#
 							Created on <strong>#rc.comment.getRelatedContent().getTitle()#</strong>
 							<a
 								href="#prc.CBHelper.linkComment( comment )#"

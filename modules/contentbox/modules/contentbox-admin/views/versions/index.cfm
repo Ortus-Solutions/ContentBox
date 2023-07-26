@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="size16 p10">
-					<i class="fa fa-archive"></i> #prc.content.getTitle()#
+					#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# #prc.content.getTitle()#
 				</div>
 			</div>
 

@@ -47,7 +47,7 @@
 						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<li class="nav-item">
 								<a href="##contentReports" data-toggle="tab" class="nav-link">
-									<i class="fa fa-archive"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+									#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 								</a>
 							</li>
 						</cfif>
