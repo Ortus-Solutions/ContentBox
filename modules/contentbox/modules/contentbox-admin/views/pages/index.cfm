@@ -68,7 +68,7 @@
 
 												<li class="mb5">
 													<a href="javascript:contentListHelper.bulkChangeStatus( 'publish' )">
-														#cbAdminComponent( "ui/Icon", { name : "SatelliteDish" } )# Publish Selected
+														#cbAdminComponent( "ui/Icon", { name : "SignalCircle" } )# Publish Selected
 													</a>
 												</li>
 											</cfif>
