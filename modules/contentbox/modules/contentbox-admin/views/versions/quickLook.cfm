@@ -5,7 +5,7 @@
 		<div class="modal-header">
 		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		    <h3>
-		    	<i class="fa fa-eye fa-lg"></i>
+		    	#cbAdminComponent( "ui/Icon", { name : "Eye" } )#
 		    	Version: <span class="label label-info">#prc.contentVersion.getVersion()#</span>
 		    	Active:
 		    	<span class="label # prc.contentVersion.getIsActive() ? 'label-success' : 'label-danger'#">

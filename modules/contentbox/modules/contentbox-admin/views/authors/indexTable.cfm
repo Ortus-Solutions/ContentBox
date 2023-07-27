@@ -83,9 +83,12 @@
 									<a 	title="Delete Author"
 										href="javascript:removeAuthor( '#author.getAuthorID()#' )"
 										class="confirmIt"
-										data-title="<i class='fa fa-trash'></i> Delete Author?"
+										data-title="Delete Author?"
 									>
-										<i id="delete_#author.getAuthorID()#" class="fa fa-trash fa-lg"></i> Delete
+										<span id="delete_#author.getAuthorID()#">
+											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+										</span> 
+										Delete
 									</a>
 								</li>
 							<cfelse>
@@ -94,7 +97,10 @@
 										href="javascript:alert('Can\'t delete yourself buddy!')"
 										class="text-red"
 									>
-										<i id="delete_#author.getAuthorID()#" class="fa fa-trash fa-lg"></i> Can't Delete
+										<span id="delete_#author.getAuthorID()#">
+											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+										</span> 
+										Can't Delete
 									</a>
 								</li>
 							</cfif>
@@ -102,7 +108,7 @@
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehAuthorEditor )#/authorID/#author.getAuthorID()#" title="Edit #author.getFullName()#">
-									<i class="fa fa-pen fa-lg"></i> Edit
+									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 								</a>
 							</li>
 
@@ -110,7 +116,7 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 								</a>
 							</li>
 							<li>

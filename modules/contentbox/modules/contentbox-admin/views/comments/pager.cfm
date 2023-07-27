@@ -84,13 +84,16 @@
 					</a>
 					<ul class="dropdown-menu text-left pull-right">
 						<li><!--- Delete Command --->
-							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Comment?">
-								<i id="delete_#comment.getCommentID()#" class="fa fa-trash fa-lg"></i> Delete
+							<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?">
+								<span id="delete_#comment.getCommentID()#">
+									#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+								</span> 
+								Delete
 							</a>
 						</li>
 						<li>
 							<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
-								<i class="fa fa-eye fa-lg"></i> View In Site
+								#cbAdminComponent( "ui/Icon", { name : "Eye" } )# View In Site
 							</a>
 						</li>
 					</ul>

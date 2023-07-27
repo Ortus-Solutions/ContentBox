@@ -88,7 +88,7 @@
 										<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN,TOOLS_IMPORT" )>
 											<li>
 												<a href="javascript:importContent()">
-													<i class="fa fa-file-import fa-lg"></i> Import
+													#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
 												</a>
 											</li>
 										</cfif>
@@ -98,12 +98,12 @@
 													href="#event.buildLink ( prc.xehExportAll )#.json"
 													target="_blank"
 												>
-													<i class="fa fa-file-export fa-lg"></i> Export All
+												#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )#</i> Export All
 												</a>
 											</li>
 											<li>
 												<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-													<i class="fa fa-file-export fa-lg"></i> Export Selected
+													#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 												</a>
 											</li>
 										</cfif>
@@ -111,11 +111,11 @@
 										<li>
 											<a
 												href="#event.buildLink( prc.xehResetRules )#"
-												data-title="<i class='fa fa-recycle'></i> Really Reset All Rules?"
+												data-title="Really Reset All Rules?"
 												class="confirmIt"
 												data-message="We will remove all rules and re-create them to ContentBox factory defaults."
 											>
-												<i class="fa fa-eraser"></i> Reset Rules
+												#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Rules
 											</a>
 										</li>
 										</cfif>

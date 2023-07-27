@@ -107,7 +107,7 @@
 				)#
 			</td>
 
-			<td class="text-center">
+			<td class="text-center flex">
 				<!--- Drag Handle --->
 				<a 	href="##"
 					onclick="return false;"
@@ -133,7 +133,7 @@
 										'#encodeForJavaScript( content.getTitle() )#'
 									)"
 								>
-									<i class="fa fa-clone fa-lg"></i> Clone
+									#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
 								</a>
 							</li>
 							<!--- Create Child --->
@@ -145,15 +145,18 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
-									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='fa fa-trash fa-lg'></i> Delete Content?">
-										<i id="delete_#content.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
+									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="Delete Content?">
+										<span id="delete_#content.getContentID()#">
+											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+										</span> 
+										Delete
 									</a>
 								</li>
 							</cfif>
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentEditor )#/contentID/#content.getContentID()#">
-									<i class="fa fa-pen fa-lg"></i> Edit
+									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 								</a>
 							</li>
 						</cfif>
@@ -161,14 +164,14 @@
 						<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 								</a>
 							</li>
 						</cfif>
 						<!--- History Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#content.getContentID()#">
-								<i class="fa fa-history fa-lg"></i> History
+								#cbAdminComponent( "ui/Icon", { name : "History" } )# History
 							</a>
 						</li>
 			    	</ul>

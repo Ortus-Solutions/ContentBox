@@ -135,30 +135,40 @@
 								</td>
 								<td>
 									<!--- Blog Enabled --->
-									<i
-										class="fa fa-blog fa-lg mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#"
-										title="Blog"></i>
-
+									<span 
+										class="mr5 #site.getIsBlogEnabled() ? 'text-green' : 'text-gray'#" 
+										title="Blog"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "ChatBubbleBottomCenterText" } )#
+									</span>
 									<!--- SiteMap Enabled --->
-									<i
-										class="fa fa-sitemap fa-lg mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#"
-										title="Sitemap"></i>
-
+									<span 
+										class="mr5 #site.getIsSitemapEnabled() ? 'text-green' : 'text-gray'#" 
+										title="Sitemap"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "SiteMap" } )#
+									</span>
 									<!--- PoweredBy --->
-									<i
-										class="fa fa-broadcast-tower fa-lg mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#"
-										title="Powered By Header"></i>
-
+									<span 
+										class="mr5 #site.getPoweredByHeader() ? 'text-green' : 'text-gray'#" 
+										title="Powered By Header"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "TowerBroadcast" } )#
+									</span>
 									<!--- AdminBar --->
-									<i
-										class="fa fa-laptop-house fa-lg mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#"
-										title="Admin Bar"></i>
-
+									<span 
+										class="mr5 #site.getAdminBar() ? 'text-green' : 'text-gray'#" 
+										title="Admin Bar"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "Window" } )#
+									</span>
 									<!--- SSL --->
-									<i
-										class="fa fa-lock fa-lg mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#"
-										title="SSL"></i>
-
+									<span 
+										class="mr5 #site.getIsSSL() ? 'text-green' : 'text-gray'#" 
+										title="Admin Bar"
+									>
+										#cbAdminComponent( "ui/Icon", { name : "LockClosed" } )#
+									</span>
 								</td>
 								<td class="text-center">
 									<!--- Actions --->
@@ -175,9 +185,12 @@
 													<a
 														href="javascript:remove( '#site.getsiteID()#' )"
 														class="confirmIt"
-														data-title="<i class='fa fa-trash'></i> Delete Site?"
+														data-title="Delete Site?"
 													>
-														<i class="fa fa-trash fa-lg" id="delete_#site.getsiteID()#"></i> Delete
+														<span id="delete_#site.getsiteID()#">
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+														</span> 
+														Delete
 													</a>
 												</li>
 											</cfif>
@@ -185,7 +198,7 @@
 											<!--- Edit Command --->
 											<li>
 												<a href="#event.buildLink( '#prc.xehSiteEditor#/siteID/#site.getsiteID()#' )#">
-													<i class="fa fa-pen fa-lg"></i> Edit
+													#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 												</a>
 											</li>
 
@@ -196,7 +209,7 @@
 														href="#event.buildLink( prc.xehExport )#/siteID/#site.getsiteID()#.json"
 														target="_blank"
 													>
-														<i class="fa fa-file-export fa-lg"></i> Export
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 													</a>
 												</li>
 											</cfif>
@@ -204,7 +217,7 @@
 											<!--- Open site --->
 											<li>
 												<a href="#site.getSiteRoot()#" target="_blank">
-													<i class="fa fa-external-link-alt fa-lg"></i>Open site
+													#cbAdminComponent( "ui/Icon", { name : "WindowArrow" } )# Open site
 												</a>
 											</li>
 

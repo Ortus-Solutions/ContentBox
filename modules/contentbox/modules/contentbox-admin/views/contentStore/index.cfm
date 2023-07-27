@@ -63,43 +63,43 @@
 								    		<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 												<li>
 													<a href="javascript:contentListHelper.bulkRemove()" class="confirmIt"
-													data-title="<i class='fa fa-trash fa-lg'></i> Delete Selected Content?" data-message="This will delete the content, are you sure?">
-														<i class="fa fa-trash fa-lg"></i> Delete Selected
+													data-title="Delete Selected Content?" data-message="This will delete the content, are you sure?">
+														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('draft')">
-														<i class="fa fa-ban fa-lg"></i> Draft Selected
+														#cbAdminComponent( "ui/Icon", { name : "ClockDashedHalf" } )# Draft Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('publish')">
-														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
+														#cbAdminComponent( "ui/Icon", { name : "SignalCircle" } )# Publish Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fa fa-file-import fa-lg"></i> Import
+														#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehContentExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehContentExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 													</a>
 												</li>
 											</cfif>
 											<li>
 												<a href="javascript:contentListHelper.contentShowAll()">
-													<i class="fa fa-list fa-lg"></i> Show All
+													#cbAdminComponent( "ui/Icon", { name : "ListBullet" } )# Show All
 												</a>
 											</li>
 								    	</ul>

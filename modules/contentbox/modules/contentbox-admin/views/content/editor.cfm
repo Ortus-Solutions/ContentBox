@@ -66,7 +66,7 @@
 							<cfif prc.oContent.isLoaded()>
 								<li role="presentation" class="nav-item">
 									<a href="##history" aria-controls="history" role="tab" data-toggle="tab" class="nav-link">
-										<i class="fa fa-history"></i> History
+										#cbAdminComponent( "ui/Icon", { name : "History" } )# History
 									</a>
 								</li>
 								<cfif prc.oContent.commentsAllowed()>

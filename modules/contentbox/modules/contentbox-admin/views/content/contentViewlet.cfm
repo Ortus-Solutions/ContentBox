@@ -137,7 +137,7 @@
 									href="#prc.CBHelper.linkContent( thisContent )#"
 									target="_blank"
 								>
-									<i class="fa fa-eye fa-lg"></i> View
+									#cbAdminComponent( "ui/Icon", { name : "Eye" } )# View
 								</a>
 							</li>
 						</cfif>
@@ -153,7 +153,7 @@
 							<a
 								href="#event.buildLink( targetEditor )#/contentID/#thisContent.getContentID()#"
 							>
-								<i class="fa fa-pen fa-lg"></i> Edit
+								#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 							</a>
 						</li>
 					</ul>

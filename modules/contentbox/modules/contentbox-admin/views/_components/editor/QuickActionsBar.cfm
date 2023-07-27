@@ -29,7 +29,7 @@
 			<ul class="dropdown-menu">
 				<li>
 					<a href="#prc.CBHelper.linkContent( prc.oContent )#" target="_blank">
-						<i class="fa fa-eye fa-lg"></i> Open In Site
+						#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Open In Site
 					</a>
 				</li>
 			</ul>

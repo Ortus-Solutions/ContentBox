@@ -131,7 +131,7 @@
 									'#encodeForJavascript( entry.getTitle() )#'
 								)"
 							>
-								<i class="fa fa-clone fa-lg"></i> Clone
+								#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
 							</a>
 						</li>
 						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN" )>
@@ -140,15 +140,18 @@
 							<a
 								href="javascript:contentListHelper.remove( '#entry.getContentID()#' )"
 								class="confirmIt"
-								data-title="<i class='fa fa-trash'></i> Delete Entry?">
-								<i id="delete_#entry.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
+								data-title="Delete Entry?">
+								<span id="delete_#entry.getContentID()#" >
+									#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+								</span> 
+								Delete
 							</a>
 						</li>
 						</cfif>
 						<!--- Edit Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehEntryEditor )#/contentID/#entry.getContentID()#">
-								<i class="fa fa-pen fa-lg"></i> Edit
+								#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 							</a>
 						</li>
 						</cfif>
@@ -158,20 +161,20 @@
 							<a
 								href="#event.buildLink( prc.xehEntryExport )#/contentID/#entry.getContentID()#.json"
 								target="_blank">
-								<i class="fa fa-file-export fa-lg"></i> Export
+								#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 							</a>
 						</li>
 						</cfif>
 						<!--- History Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#entry.getContentID()#">
-								<i class="fa fa-history fa-lg"></i> History
+								#cbAdminComponent( "ui/Icon", { name : "History" } )# History
 							</a>
 						</li>
 						<!-- Reset hits -->
 						<li>
 							<a href="javascript:contentListHelper.resetHits( '#entry.getContentID()#' )">
-								<i class="fa fa-recycle fa-lg"></i> Reset Hits
+								#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Hits
 							</a>
 						</li>
 						<!--- View in Site --->
@@ -179,7 +182,7 @@
 							<a
 								href="#prc.CBHelper.linkEntry( entry )#"
 								target="_blank">
-								<i class="fa fa-eye fa-lg"></i> Open In Site
+								#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Open In Site
 							</a>
 						</li>
 			    	</ul>

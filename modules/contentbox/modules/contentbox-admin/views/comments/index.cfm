@@ -72,7 +72,7 @@
 											</li>
 											<li>
 												<a href="javascript:removeAllSelected()" class="confirmIt">
-													<i class="fa fa-trash"></i> Remove Selected
+													#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Remove Selected
 												</a>
 											</li>
 											<li>
@@ -193,17 +193,20 @@
 									    		<!--- Edit Command --->
 												<li>
 													<a href="javascript:openRemoteModal('#event.buildLink(prc.xehCommentEditor)#',{commentID:'#comment.getCommentID()#'} );" title="Edit Comment">
-														<i class="fa fa-pen fa-lg"></i> Edit
+														#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 													</a>
 												</li>
 												<li><!--- Delete Command --->
-													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Comment?">
-														<i id="delete_#comment.getCommentID()#" class="fa fa-trash fa-lg"></i> Delete
+													<a title="Delete Comment Permanently" href="javascript:remove('#comment.getCommentID()#')" class="confirmIt" data-title="Delete Comment?">
+														<span id="delete_#comment.getCommentID()#">
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+														</span> 
+														Delete
 													</a>
 												</li>
 												<li>
 													<a href="#prc.CBHelper.linkComment(comment)#" title="View Comment In Site" target="_blank">
-														<i class="fa fa-eye fa-lg"></i> View In Site
+														#cbAdminComponent( "ui/Icon", { name : "Eye" } )# View In Site
 													</a>
 												</li>
 									    	</ul>

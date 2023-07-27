@@ -29,7 +29,7 @@
 				</div>
 
 				<div class="size16 p10">
-					<i class="fa fa-archive"></i> #prc.content.getTitle()#
+					#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# #prc.content.getTitle()#
 				</div>
 			</div>
 
@@ -122,7 +122,7 @@
 							title="View in Site"
 							onclick="window.open( '#prc.xehOpenContent#' );return false;"
 						>
-							<i class="fa fa-eye"></i> Open
+							#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Open
 						</button>
 					</cfif>
 				</div>

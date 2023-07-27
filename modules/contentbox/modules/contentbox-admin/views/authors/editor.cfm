@@ -22,7 +22,7 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										<i class="fa fa-file-export fa-lg"></i> Export
+										#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 									</a>
 								</li>
 								<li>
@@ -78,7 +78,7 @@
 
                     	<li class="nav-item active">
 							<a href="##details" data-toggle="tab" class="nav-link">
-								<i class="fa fa-eye fa-lg"></i> Details
+								#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Details
 							</a>
                     	</li>
 						<li class="nav-item">

@@ -98,20 +98,23 @@
 						<cfif prc.oCurrentAuthor.hasPermission( "SECURITYRULES_ADMIN" )>
 							<!--- Delete Command --->
 							<li>
-								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Rule?">
-									<i class="fa fa-trash fa-lg" id="delete_#rule.getRuleID()#"></i> Delete
+								<a title="Delete Rule Permanently" href="javascript:remove('#rule.getRuleID()#')" class="confirmIt" data-title="Delete Rule?">
+									<span id="delete_#rule.getRuleID()#">
+										#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+									</span> 
+									Delete
 								</a>
 							</li>
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehEditorRule )#/ruleID/#rule.getRuleID()#" title="Edit Rule">
-									<i class="fa fa-pen fa-lg"></i> Edit
+									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 								</a>
 							</li>
 							<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/ruleID/#rule.getRuleID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 								</a>
 							</li>
 						</cfif>

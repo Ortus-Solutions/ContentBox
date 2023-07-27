@@ -28,7 +28,7 @@
 				title="Go to the history visualizer"
 				onclick="return accesskey=to('#event.buildLink(prc.xehVersionHistory)#/contentID/#prc.versionsPager_contentID#');"
 			>
-				<i class="fa fa-history"></i> Full History
+				#cbAdminComponent( "ui/Icon", { name : "History", size: "sm" } )# Full History
 			</button>
 		</cfif>
 	</div>
@@ -86,9 +86,13 @@
 				<!--- Status --->
 				<td class="text-center">
 					<cfif thisVersion.getIsActive()>
-						<i class="fa fa-dot-circle fa-lg text-red" title="Active Version"></i>
+						<span title="Active Version">
+							#cbAdminComponent( "ui/Icon", { name : "CircleO", class : "text-red" } )#
+						</span>
 					<cfelse>
-						<i class="fa fa-dot-circle fa-lg text-muted" title="Past Version"></i>
+						<span title="Past Version">
+							#cbAdminComponent( "ui/Icon", { name : "CircleO", class : "text-muted" } )#
+						</span>
 					</cfif>
 				</td>
 
@@ -137,10 +141,12 @@
 								href="javascript:versionsPagerRemove('#thisVersion.getContentVersionID()#')"
 								title="Remove this version"
 								class="confirmIt ml5"
-								data-title="<i class='fa fa-trash'></i> Remove Content Version"
+								data-title="Remove Content Version"
 								data-message="Do you really want to remove this content version?"
 							>
-								<i class="fa fa-trash fa-lg" id="version_delete_#thisVersion.getContentVersionID()#"></i>
+								<span id="version_delete_#thisVersion.getContentVersionID()#">
+									#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+								</span>
 							</a>
 						</cfif>
 					</cfif>

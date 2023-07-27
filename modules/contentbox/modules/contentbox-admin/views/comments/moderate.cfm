@@ -23,7 +23,7 @@
 				<!--- Comment Details --->
 				<fieldset>
 
-					<legend><i class="fa fa-eye fa-lg"></i> Details</legend>
+					<legend>#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Details</legend>
 
 						<div class="form-group pull-right">
 							#getInstance( "Avatar@contentbox" ).renderAvatar(
@@ -40,7 +40,7 @@
 
 						<!--- Content Object --->
 						<div class="form-group">
-							<i class="fa fa-archive"></i>
+							#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )#
 							Created on <strong>#rc.comment.getRelatedContent().getTitle()#</strong>
 							<a
 								href="#prc.CBHelper.linkComment( comment )#"
@@ -96,7 +96,7 @@
 							type="submit"
 							class="btn btn-danger btn-lg"
 							onclick="removeComment()">
-							<i class="fa fa-trash"></i> Delete
+							#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 						</button>
 						<button
 							type="submit"

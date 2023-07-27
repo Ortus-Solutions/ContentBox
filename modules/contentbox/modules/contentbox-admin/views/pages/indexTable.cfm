@@ -157,7 +157,7 @@
 					<span class="badge badge-info">#page.getNumberOfHits()#</span>
 				</td>
 
-				<td class="text-center">
+				<td class="text-center flex">
 					<!--- Drag Handle --->
 					<a
 						href="##"
@@ -189,7 +189,7 @@
 											'#encodeForJavascript( page.getTitle() )#'
 										)"
 									>
-										<i class="fa fa-clone fa fa-lg"></i> Clone
+										#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
 									</a>
 								</li>
 
@@ -208,12 +208,13 @@
 										<a
 											href="javascript:contentListHelper.remove( '#page.getContentID()#' )"
 											class="confirmIt"
-											data-title="<i class='fa fa-trash'></i> Delete Page?"
+											data-title="Delete Page?"
 											data-message="This will delete the page and all of its sub-pages, are you sure?"
 										>
-											<i
-												id="delete_#page.getContentID()#"
-												class="fa fa-trash fa-lg"></i> Delete
+											<span id="delete_#page.getContentID()#">
+												#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+											</span> 
+											Delete
 										</a>
 									</li>
 								</cfif>
@@ -223,7 +224,7 @@
 									<a
 										href="#event.buildLink( prc.xehPageEditor )#/contentID/#page.getContentID()#"
 									>
-										<i class="fa fa-pen fa-lg"></i> Edit
+										#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 									</a>
 								</li>
 							</cfif>
@@ -235,7 +236,7 @@
 										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
 										target="_blank"
 									>
-										<i class="fa fa-file-export fa-lg"></i> Export
+										#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 									</a>
 								</li>
 							</cfif>
@@ -246,7 +247,7 @@
 								<a
 									href="#event.buildLink( prc.xehContentHistory )#/contentID/#page.getContentID()#"
 								>
-									<i class="fa fa-history fa-lg"></i> History
+									#cbAdminComponent( "ui/Icon", { name : "History" } )# History
 								</a>
 							</li>
 
@@ -255,7 +256,7 @@
 								<a
 									href="javascript:contentListHelper.resetHits( '#page.getContentID()#' )"
 								>
-									<i class="fa fa-recycle fa-lg"></i> Reset Hits
+									#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Hits
 								</a>
 							</li>
 
@@ -265,7 +266,7 @@
 									href="#prc.cbHelper.linkPage( page )#"
 									target="_blank"
 								>
-									<i class="fa fa-eye fa-lg"></i> Open In Site
+									#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Open In Site
 								</a>
 							</li>
 				    	</ul>

@@ -53,7 +53,7 @@
 								    		<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														<i class="fa fa-file-import fa-lg"></i> Import
+														#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
 													</a>
 												</li>
 											</cfif>
@@ -61,11 +61,11 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 													</a>
 													<li>
 														<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-															<i class="fa fa-file-export fa-lg"></i> Export Selected
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 														</a>
 													</li>
 												</li>
@@ -82,7 +82,7 @@
 
 											<li>
 												<a href="javascript:contentShowAll()">
-													<i class="fa fa-list fa-lg"></i> Show All
+													#cbAdminComponent( "ui/Icon", { name : "ListBullet" } )# Show All
 												</a>
 											</li>
 								    	</ul>

@@ -67,7 +67,7 @@
 														@click="deleteSelected()"
 														class="cursor-pointer"
 													>
-														<i class="far fa-trash-alt fa-lg"></i> Delete Selected
+														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
 													</a>
 												</li>
 												</cfif>
@@ -78,7 +78,7 @@
 														@click="importContent()"
 														class="cursor-pointer"
 													>
-														<i class="fa fa-file-import fa-lg"></i> Import
+														#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
 													</a>
 												</li>
 												</cfif>
@@ -87,7 +87,7 @@
 												<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 													<li>
 														<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-															<i class="fa fa-file-export fa-lg"></i> Export All
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 														</a>
 													</li>
 													<li>
@@ -95,7 +95,7 @@
 															@click="exportSelected()"
 															class="cursor-pointer"
 														>
-															<i class="fa fa-file-export fa-lg"></i> Export Selected
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 														</a>
 													</li>
 												</cfif>
@@ -225,7 +225,7 @@
 																	@click="duplicateTemplate( template )"
 																	title="Duplicate"
 																>
-																	<i class="fa fa-clone fa-sm"></i> Duplicate
+																	#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Duplicate
 																</a>
 															</li>
 
@@ -236,7 +236,7 @@
 																	data-title="Delete Template?"
 																	data-message="Delete the template and all of its associations"
 																>
-																	<i class="fa fa-trash fa-sm"></i> Delete
+																	#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
 																</a>
 															</li>
 														</ul>
@@ -513,7 +513,9 @@
 																				<input class="form-control" :name="'cf_defaultValue_'+index" type="text" x-model="templateForm.definition[ fieldKey ].value[ index].defaultValue"/>
 																			</div>
 																			<div class="col-xs-1 pt5">
-																				<button type="button" class="mt20 btn btn-danger text-bold" @click="removeSchemaItem( fieldKey, index )"><i class="fa fa-trash"></i></button>
+																				<button type="button" class="mt20 btn btn-danger text-bold" @click="removeSchemaItem( fieldKey, index )">
+																					#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+																				</button>
 																			</div>
 																		</li>
 																	</template>

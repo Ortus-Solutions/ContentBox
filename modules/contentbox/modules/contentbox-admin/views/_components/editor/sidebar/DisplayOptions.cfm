@@ -9,7 +9,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##displayoptions">
-				<i class="fa fa-photo-video"></i> Display Options
+					#cbAdminComponent( "ui/Icon", { name : "TvGear" } )# Display Options
 				</a>
 			</h4>
 		</div>

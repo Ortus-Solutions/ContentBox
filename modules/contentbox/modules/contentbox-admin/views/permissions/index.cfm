@@ -63,12 +63,12 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -157,7 +157,7 @@
 															'#HTMLEditFormat( jsstringFormat(permission.getDescription()) )#'
 															)"
 														title="Edit #permission.getPermission()#">
-														<i class="fa fa-pen fa-lg"></i> Edit
+														#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
 													</a>
 												</li>
 												<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
@@ -165,7 +165,7 @@
 														<a
 															href="#event.buildLink( prc.xehExport )#/permissionID/#permission.getPermissionID()#.json"
 															target="_blank">
-															<i class="fa fa-file-export fa-lg"></i> Export
+															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
 														</a>
 													</li>
 												</cfif>
@@ -176,7 +176,10 @@
 														title="Delete Permission"
 														href="javascript:remove( '#permission.getPermissionID()#' );"
 														data-title="Delete Permission?">
-														<i id="delete_#permission.getPermissionID()#" class="fa fa-trash fa-lg"></i> Delete
+														<span id="delete_#permission.getPermissionID()#" >
+															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+														</span> 
+														Delete
 													</a>
 												</li>
 									    	</ul>

@@ -27,13 +27,13 @@
                             <a href="##global" data-toggle="tab" class="nav-link"><i class="fa fa-globe fa-lg"></i> <span class="hidden-xs">Global Layout</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="##entry" data-toggle="tab" class="nav-link"><i class="fa fa-blog fa-lg"></i> <span class="hidden-xs">Blog Entries</span></a>
+                            <a href="##entry" data-toggle="tab" class="nav-link">#cbAdminComponent( "ui/Icon", { name : "ChatBubbleBottomCenterText" } )# <span class="hidden-xs">Blog Entries</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="##comments" data-toggle="tab" class="nav-link"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="##pages" data-toggle="tab" class="nav-link"><i class="fa fa-file-alt fa-lg"></i> <span class="hidden-xs">Pages</span></a>
+                            <a href="##pages" data-toggle="tab" class="nav-link">#cbAdminComponent( "ui/Icon", { name : "Document" } )#> <span class="hidden-xs">Pages</span></a>
                         </li>
 					</ul>
 

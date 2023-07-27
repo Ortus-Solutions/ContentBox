@@ -48,25 +48,31 @@
                                         <ul class="dropdown-menu">
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                                 <li>
-                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="<i class='fa fa-trash'></i> Delete Selected Menu?" data-message="This will delete the menu, are you sure?"><i class="fa fa-trash"></i> Delete Selected</a>
+                                                    <a href="javascript:bulkRemove()" class="confirmIt" data-title="Delete Selected Menu?" data-message="This will delete the menu, are you sure?">
+                                                        #cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
+                                                    </a>
                                                 </li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_IMPORT" )>
-                                                <li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
+                                                <li><a href="javascript:importContent()">#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import</a></li>
                                             </cfif>
                                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink (to=prc.xehMenuExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehMenuExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
 													</a>
 												</li>
 											</cfif>
-                                            <li><a href="javascript:contentShowAll()"><i class="fa fa-list"></i> Show All</a></li>
+                                            <li>
+                                                <a href="javascript:contentShowAll()">
+                                                    #cbAdminComponent( "ui/Icon", { name : "ListBullet" } )# Show All
+                                                </a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </cfif>

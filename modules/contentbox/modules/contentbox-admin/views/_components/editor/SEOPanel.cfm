@@ -63,7 +63,22 @@
 							<tr :key="item.relocationID">
 								<td><code x-text="'/' + item.slug"></code></td>
 								<td x-text="new Date( item.createdDate ).toLocaleDateString()"></td>
-								<td><a @click="deleteRelocation( item.relocationID )" data-toggle="tooltip" title="Delete this redirect"><i :class="!item.isProcessing ? 'fa fa-trash text-muted' : 'fa fa-spin fa-spinner text-muted'"></i></a></td>
+								<td>
+									<button 
+										type="button"
+										class="btn btn-icon"
+										@click="deleteRelocation( item.relocationID )" 
+										data-toggle="tooltip" 
+										title="Delete this redirect"
+									>	
+										<template x-if="!item.isProcessing" >
+											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+										</template>
+										<template x-if="item.isProcessing" >
+											#cbAdminComponent( "ui/Icon", { name : "ArrowPath", class : "fa-spin" } )#
+										</template>
+									</button>
+								</td>
 							</tr>
 						</template>
 						<template x-if="!relocations.length">

@@ -28,7 +28,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "refresh@fb" )# #prc.fbPreferences.listFolder#"
 			>
-				<i class="fa fa-recycle fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "ArrowPath" } )#
 			</a>
 			<a
 				href="javascript:fbDrilldown()"
@@ -37,7 +37,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "home@fb" )#"
 			>
-				<i class="fa fa-home fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "Home" } )#
 			</a>
 		</div>
 
@@ -49,7 +49,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "newFolder@fb" )#"
 			>
-				<i class="fa fa-folder-plus fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "FolderPlus" } )#
 			</a>
 			<a
 				onclick="javascript:fbRename()"
@@ -58,7 +58,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "rename@fb" )#"
 			>
-				<i class="fa fa-terminal fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "Rename" } )#
 			</a>
 			<a
 				onclick="javascript:fbDelete()"
@@ -67,7 +67,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "delete@fb" )#"
 			>
-				<i class="fa fa-trash"></i>
+				#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
 			</a>
 			<a
 				onclick="javascript:fbUpload()"
@@ -76,7 +76,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "upload@fb" )#"
 			>
-				<i class="fa fa-upload fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "ArrowUpTray" } )#
 			</a>
 			<a
 				onclick="javascript:fbDownload()"
@@ -85,7 +85,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "download@fb" )#"
 			>
-				<i class="fa fa-download fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "ArrowDownTray" } )#
 			</a>
 			<a
 				onclick="javascript:fbQuickView()"
@@ -94,7 +94,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "quickview@fb" )#"
 			>
-				<i class="fa fa-camera fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "Eye" } )#
 			</a>
 		</div>
 
@@ -108,7 +108,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "filelisting@fb" )#"
 			>
-				<i class="fa fa-list fa-lg-ul"></i>
+				#cbAdminComponent( "ui/Icon", { name : "ListBullet" } )#
 			</a>
 			<a
 				id="gridall"
@@ -118,7 +118,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "gridlisting@fb" )#"
 			>
-				<i class="fa fa-th fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "Squares2x2" } )#
 			</a>
 		</div>
 
@@ -133,7 +133,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "directorylistview@fb" )#"
 			>
-				<i class="fa fa-align-justify fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "FolderList" } )#
 			</a>
 			<a
 				id="griddir"
@@ -143,7 +143,7 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 				data-container="body"
 				title="#$r( "directorygridview@fb" )#"
 			>
-				<i class="fa fa-folder fa-lg"></i>
+				#cbAdminComponent( "ui/Icon", { name : "Folder" } )#
 			</a>
 		</div>
 

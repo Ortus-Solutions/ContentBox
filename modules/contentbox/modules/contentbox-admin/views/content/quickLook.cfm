@@ -36,7 +36,7 @@
 
 				<!--- Left Title --->
 				<div class="size20">
-					<i class="fa fa-eye"></i>
+					#cbAdminComponent( "ui/Icon", { name : "Eye" } )#
 
 					<!--- Content Title --->
 					#prc.content.getTitle()#

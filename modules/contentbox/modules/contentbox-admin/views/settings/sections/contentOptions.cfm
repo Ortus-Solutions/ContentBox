@@ -1,7 +1,7 @@
 <cfoutput>
 	#html.startForm( name="contentSettingsForm", action=prc.xehSaveSettings )#
     <fieldset>
-        <legend><i class="fa fa-archivees fa-lg"></i>  Content Options</legend>
+        <legend>#cbAdminComponent( "ui/Icon", { name : "ArchiveBox", size : "lg" } )#  Content Options</legend>
 
         <!--- Content Max Versions --->
         <div class="form-group">
