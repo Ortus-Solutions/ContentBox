@@ -29,7 +29,7 @@
 			<div class="panel-heading">
 				<!--- Title --->
 				<div class="size16 p10">
-					#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# Box Archives + Database Imports
+					<i class="fa fa-archive"></i> Box Archives + Database Imports
  				</div>
 			</div>
 
@@ -87,7 +87,7 @@
 					</p>
 					<fieldset>
 						<legend>
-							#cbAdminComponent( "ui/Icon", { name : "ArchiveBox", size : "lg" } )# Import ContentBox Package
+							<i class="fa fa-archive fa-lg"></i> Import ContentBox Package
 						</legend>
 						<div class="row-fluid">
 							<div class="form-group">

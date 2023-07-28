@@ -28,7 +28,7 @@
 				<div class="panel-heading">
 					<!--- Title --->
 					<div class="size16 p10">
-						#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# Box Archives
+						<i class="fa fa-archive"></i> Box Archives
 					</div>
 				</div>
 

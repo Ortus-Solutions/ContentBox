@@ -59,51 +59,51 @@
 													<a
 														href="javascript:contentListHelper.bulkRemove()"
 														class="confirmIt"
-														data-title="Delete Selected Entries?"
+														data-title="<i class='fa fa-trash'></i> Delete Selected Entries?"
 														data-message="This will delete the entries, are you sure?"
 													>
-														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete selected
+														<i class="fa fa-trash fa-lg"></i> Delete selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('draft')">
-														#cbAdminComponent( "ui/Icon", { name : "ClockDashedHalf" } )# Draft Selected
+														<i class="fa fa-ban fa-lg"></i> Draft Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_IMPORT" )>
 												<li>
 													<a href="javascript:importContent()">
-														#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
+														<i class="fa fa-file-import fa-lg"></i> Import
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehEntryExportAll )#.json" target="_blank">
-														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehEntryExportAll )#' )">
-														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN" )>
 												<li>
 													<a href="javascript:contentListHelper.bulkChangeStatus('publish')">
-														#cbAdminComponent( "ui/Icon", { name : "SignalCircle" } )# Publish Selected
+														<i class="fa fa-satellite-dish fa-lg"></i> Publish Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.resetBulkHits()">
-														#cbAdminComponent( "ui/Icon", { name : "Reset" } )# Reset Hits Selected
+														<i class="fa fa-recycle fa-lg"></i> Reset Hits Selected
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.contentShowAll()">
-														#cbAdminComponent( "ui/Icon", { name : "ListBullet" } )# Show All
+														<i class="fa fa-list fa-lg"></i> Show All
 													</a>
 												</li>
 											</cfif>

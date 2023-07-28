@@ -58,17 +58,17 @@
 										</button>
 								    	<ul class="dropdown-menu">
 								    		<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_IMPORT" )>
-								    		<li><a href="javascript:importContent()">#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import</a></li>
+								    		<li><a href="javascript:importContent()"><i class="fa fa-file-import fa-lg"></i> Import</a></li>
 											</cfif>
 											<cfif prc.oCurrentAuthor.hasPermission( "PERMISSIONS_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -160,12 +160,9 @@
 												<li>
 													<a 	href="javascript:remove( '#group.getPermissionGroupID()#' )"
 														class="confirmIt"
-														data-title="Delete Group?"
+														data-title="<i class='fa fa-trash'></i> Delete Group?"
 													>
-														<span id="delete_#group.getPermissionGroupID()#">
-															#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
-														</span>
-														Delete
+														<i class="fa fa-trash fa-lg" id="delete_#group.getPermissionGroupID()#"></i> Delete
 													</a>
 												</li>
 
@@ -174,7 +171,7 @@
 													<a
 														href="#event.buildLink( prc.xehGroupEditor & "/permissionGroupID/#group.getPermissionGroupId()#")#"
 											   		>
-													   #cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
+											   			<i class="fa fa-pen fa-lg"></i> Edit
 											   		</a>
 											   	</li>
 
@@ -184,7 +181,7 @@
 														<a 	href="#event.buildLink( prc.xehExport )#/permissionGroupID/#group.getPermissionGroupID()#.json"
 															target="_blank"
 														>
-															#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
+															<i class="fa fa-file-export fa-lg"></i> Export
 														</a>
 													</li>
 												</cfif>

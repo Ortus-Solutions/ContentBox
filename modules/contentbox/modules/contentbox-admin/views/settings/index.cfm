@@ -47,7 +47,7 @@
                             </li>
                             <li class="nav-item">
 								<a href="##content_options" data-toggle="tab" class="nav-link">
-									#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# Content
+									<i class="fa fa-archivees fa-lg"></i> Content
 								</a>
                             </li>
                             <li class="nav-item">
@@ -62,7 +62,7 @@
                             </li>
                             <li class="nav-item">
 								<a href="##gravatars" data-toggle="tab" class="nav-link">
-									#cbAdminComponent( "ui/Icon", { name : "UserCircle" } )# Gravatars
+									<i class="fa fa-portrait fa-lg"></i> Gravatars
 								</a>
                             </li>
                             <li class="nav-item">

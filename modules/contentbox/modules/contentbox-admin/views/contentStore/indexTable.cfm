@@ -133,7 +133,7 @@
 										'#encodeForJavaScript( content.getTitle() )#'
 									)"
 								>
-									#cbAdminComponent( "ui/Icon", { name : "Square2Stack" } )# Clone
+									<i class="fa fa-clone fa-lg"></i> Clone
 								</a>
 							</li>
 							<!--- Create Child --->
@@ -145,18 +145,15 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN" )>
 								<!--- Delete Command --->
 								<li>
-									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="Delete Content?">
-										<span id="delete_#content.getContentID()#">
-											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
-										</span> 
-										Delete
+									<a href="javascript:contentListHelper.remove( '#content.getContentID()#' )" class="confirmIt" data-title="<i class='fa fa-trash fa-lg'></i> Delete Content?">
+										<i id="delete_#content.getContentID()#" class="fa fa-trash fa-lg" ></i> Delete
 									</a>
 								</li>
 							</cfif>
 							<!--- Edit Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentEditor )#/contentID/#content.getContentID()#">
-									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
+									<i class="fa fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 						</cfif>
@@ -164,14 +161,14 @@
 						<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentExport )#/contentID/#content.getContentID()#.json" target="_blank">
-									#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
+									<i class="fa fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 						</cfif>
 						<!--- History Command --->
 						<li>
 							<a href="#event.buildLink( prc.xehContentHistory )#/contentID/#content.getContentID()#">
-								#cbAdminComponent( "ui/Icon", { name : "History" } )# History
+								<i class="fa fa-history fa-lg"></i> History
 							</a>
 						</li>
 			    	</ul>

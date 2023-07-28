@@ -58,24 +58,24 @@
 				<!--- Info Columns --->
 				<td class="text-center">
 					<cfif thisContent.isExpired()>
-						<span class="text-red" title="Page has expired on ( (#thisContent.getDisplayExpireDate()#))">
-							#cbAdminComponent( "ui/Icon", { name : "ClockWarning" } )#
-						</span>
+						<i
+							class="fa fa-history fa-lg text-red"
+							title="Page has expired on ( (#thisContent.getDisplayExpireDate()#))"></i>
 						<span class="hidden">expired</span>
 					<cfelseif thisContent.isPublishedInFuture()>
-							<span class="text-blue" title="Page Publishes in the future (#thisContent.getDisplayPublishedDate()#)">
-								#cbAdminComponent( "ui/Icon", { name : "ClockArrowPath" } )#
-							</span>
+						<i
+							class="fa fa-space-shuttle fa-lg text-blue"
+							title="Page Publishes in the future (#thisContent.getDisplayPublishedDate()#)"></i>
 						<span class="hidden">published in future</span>
 					<cfelseif thisContent.isContentPublished()>
-						<span class="text-green" title="Page Published">
-							#cbAdminComponent( "ui/Icon", { name : "SignalCircle" } )#
-						</span>
-						<span class="hidden">published</span>
+						<i
+							class="fa fa-dot-circle fa-lg text-green"
+							title="Page Published"></i>
+						<span class="hidden">published in future</span>
 					<cfelse>
-						<span class="text-gray" title="Page Draft">
-							#cbAdminComponent( "ui/Icon", { name : "ClockDashedHalf" } )#
-						</span>
+						<i
+							class="fa fa-dot-circle fa-lg text-red"
+							title="Page Draft"></i>
 						<span class="hidden">draft</span>
 					</cfif>
 				</td>
@@ -100,21 +100,21 @@
 								<!--- Edit Command --->
 								<li>
 									<a href="#event.buildLink( prc.xehContentPagerEditor )#/contentID/#thisContent.getContentID()#">
-										#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
+										<i class="fa fa-pen fa-lg"></i> Edit
 									</a>
 								</li>
 							</cfif>
 							<!--- History Command --->
 							<li>
 								<a href="#event.buildLink( prc.xehContentPagerHistory )#/contentID/#thisContent.getContentID()#">
-									#cbAdminComponent( "ui/Icon", { name : "History" } )# History
+									<i class="fa fa-history fa-lg"></i> History
 								</a>
 							</li>
 							<!--- View in Site --->
 							<cfif thisContent.getContentType() neq "contentStore">
 								<li>
 									<a href="#prc.CBHelper.linkContent( thisContent )#" target="_blank">
-										#cbAdminComponent( "ui/Icon", { name : "Eye" } )# View In Site
+										<i class="fa fa-eye fa-lg"></i> View In Site
 									</a>
 								</li>
 							</cfif>

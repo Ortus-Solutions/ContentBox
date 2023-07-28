@@ -25,17 +25,11 @@
 							<tr id="content_#content.getContentID()#" class="related-content" title="#publishedTitle#">
 								<td width="14" class="center #publishedClass#">
 									<cfif content.getContentType() eq "Page">
-										<span title="Page">
-											#cbAdminComponent( "ui/Icon", { name : "Document" } )#
-										</span>
+										<i class="fa fa-file-alt icon-small" title="Page"></i>
 									<cfelseif content.getContentType() eq "Entry">
-										<span title="Entry">
-											#cbAdminComponent( "ui/Icon", { name : "ChatBubbleBottomCenterText" } )#
-										</span>
+										<i class="fa fa-blog icon-small" title="Entry"></i>
 									<cfelseif content.getContentType() eq "ContentStore">
-										<span title="ContentStore">
-											#cbAdminComponent( "ui/Icon", { name : "Server" } )#
-										</span>
+										<i class="fa fa-hdd icon-small" title="ContentStore"></i>
 									</cfif>
 								</td>
 								<td class="#publishedClass#">#content.getTitle()#</td>

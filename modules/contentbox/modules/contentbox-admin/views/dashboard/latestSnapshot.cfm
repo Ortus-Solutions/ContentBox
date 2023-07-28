@@ -105,7 +105,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="accordion-toggle block" data-toggle="collapse" data-parent="##accordion" href="##content">
-                    #cbAdminComponent( "ui/Icon", { name : "ArchiveBox", size : "sm" } )# #$r( "dashboard.latestSnapshot.contentCounts@admin" )#
+                    <i class="fa fa-archive fa-lg"></i> #$r( "dashboard.latestSnapshot.contentCounts@admin" )#
                 </a>
             </div>
             <div id="content" class="panel-collapse collapse">

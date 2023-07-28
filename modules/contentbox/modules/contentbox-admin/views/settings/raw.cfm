@@ -102,12 +102,12 @@
 													<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
 															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-																#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
+																<i class="fa fa-file-export fa-lg"></i> Export All
 															</a>
 														</li>
 														<li>
 															<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-																#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
+																<i class="fa fa-file-export fa-lg"></i> Export Selected
 															</a>
 														</li>
 													</cfif>
@@ -119,7 +119,7 @@
                                                     <cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
 														<li>
 															<a href="javascript:importContent()">
-																#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
+																<i class="fa fa-file-import fa-lg"></i> Import
 															</a>
 														</li>
                                                     </cfif>

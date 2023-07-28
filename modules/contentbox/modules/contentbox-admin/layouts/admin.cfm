@@ -154,42 +154,42 @@
 									<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 										<li>
 											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
-												#cbAdminComponent( "ui/Icon", { name : "Document" } )# New Page
+												<i class="fa fa-file-alt fa-lg width25"></i> New Page
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 										<li>
 											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
-												#cbAdminComponent( "ui/Icon", { name : "ChatBubbleBottomCenterText" } )# New Entry
+												<i class="fa fa-blog fa-lg width25"></i> New Entry
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
-										<li >
+										<li>
 											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
-												#cbAdminComponent( "ui/Icon", { name : "Server" } )# New Content Store
+												<i class="fa fa-hdd fa-lg width25"></i> New Content Store
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 										<li>
 											<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
-												#cbAdminComponent( "ui/Icon", { name : "User" } )# New User
+												<i class="fa fa-user fa-lg width25"></i> New User
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "MEDIAMANAGER_ADMIN" )>
 										<li>
 											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-												#cbAdminComponent( "ui/Icon", { name : "Photo" } )# New Media
+												<i class="fa fa-photo-video fa-lg width25"></i> New Media
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
 										<li>
 											<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
-												#cbAdminComponent( "ui/Icon", { name : "Bars3" } )# New Menu
+												<i class="fa fa-list fa-lg width25"></i> New Menu
 											</a>
 										</li>
 									</cfif>
@@ -296,7 +296,7 @@
 											<ul class="dropdown-menu dropdown-menu-right" role="menu">
 												<li role="presentation">
 													<a role="menuitem" href="javascript:void(0);" tabindex="-1" onclick="deleteInstaller()">
-														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Installer
+														<i class="fa fa-trash"></i> Delete Installer
 													</a>
 												</li>
 											</ul>

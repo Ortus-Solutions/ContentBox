@@ -22,7 +22,7 @@
 			data-title="Delete Menu Item"
 			title="Delete Menu Item + Descendants"
 			href="javascript:removeMenuItem( 'key_#args.menuItem.getMenuItemID()#' )">
-			#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
+			<i class="fa fa-trash fa-lg"></i>
 		</button>
 	</div>
 		

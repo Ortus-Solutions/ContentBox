@@ -87,13 +87,13 @@
 									)"
 									title="Edit Setting"
 								>
-									#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
+									<i class="fa fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 							<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/settingID/#setting.getSettingID()#.json" target="_blank">
-										#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
+										<i class="fa fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>
@@ -108,12 +108,9 @@
 										href="javascript:remove( '#setting.getsettingID()#' )"
 										title="Delete Setting"
 								</cfif>
-										data-title="Delete Setting?"
+										data-title="<i class='fa fa-trash'></i> Delete Setting?"
 									>
-										<span id="delete_#setting.getsettingID()#">
-											#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
-										</span> 
-										Delete
+										<i class="fa fa-trash fa-lg" id="delete_#setting.getsettingID()#"></i> Delete
 									</a>
 							</li>
 						</ul>

@@ -8,7 +8,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##featuredImagePanel">
-					#cbAdminComponent( "ui/Icon", { name : "Photo" } )# Featured Image
+					<i class="fa fa-photo-video"></i> Featured Image
 				</a>
 			</h4>
 		</div>

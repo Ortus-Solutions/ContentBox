@@ -1,7 +1,7 @@
 <cfoutput>
 #html.startForm( name="gravatarsSettingsForm", action=prc.xehSaveSettings )#
 <fieldset>
-    <legend>#cbAdminComponent( "ui/Icon", { name : "UserCircle", size: "lg" } )# Gravatars</legend>
+    <legend><i class="fa fa-portrait fa-lg"></i> Gravatars</legend>
     <p>An avatar is an image that follows you from site to site appearing beside your name when you comment on avatar enabled sites.(<a href="http://www.gravatar.com/" target="_blank">http://www.gravatar.com/</a>)</p>
 
     <!--- Gravatars  --->
