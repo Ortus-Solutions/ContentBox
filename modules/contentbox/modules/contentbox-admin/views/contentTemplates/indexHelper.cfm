@@ -4,7 +4,7 @@
 	function templatesCrud(){
 		return {
 			// Properties
-			templates 		: null,
+			templates 		: [],
 			pagination  	: { maxRows : 0, offset : 0, page : 1, totalPages : 1, totalRecords : 0 },
 			baseAPIUrl 		: "/cbapi/v1/content-templates",
 			baseURL         : window.location.pathname,
