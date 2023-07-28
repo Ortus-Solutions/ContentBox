@@ -33,7 +33,7 @@
                             <a href="##comments" data-toggle="tab" class="nav-link"><i class="fa fa-comments fa-lg"></i> <span class="hidden-xs">Comments</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="##pages" data-toggle="tab" class="nav-link">#cbAdminComponent( "ui/Icon", { name : "Document" } )#> <span class="hidden-xs">Pages</span></a>
+                            <a href="##pages" data-toggle="tab" class="nav-link">#cbAdminComponent( "ui/Icon", { name : "Document" } )# <span class="hidden-xs">Pages</span></a>
                         </li>
 					</ul>
 
