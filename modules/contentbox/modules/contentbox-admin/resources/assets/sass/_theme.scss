@@ -16,7 +16,8 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 // fix relative pack for webpack
 $fa-sass-asset-helper: false !default;
 $fa-font-path: "../../fonts/font-awesome/";
-@import "~font-awesome-sass/assets/stylesheets/font-awesome.scss";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
+
 $context-menu-icon-font-path: "../../../dist/font/";
 @import "~jquery-contextmenu/src/sass/jquery.contextMenu.scss";
 
@@ -33,6 +34,7 @@ $context-menu-icon-font-path: "../../../dist/font/";
 @import "theme/_variables.scss";
 @import "theme/_mixins.scss";
 @import "theme/_base.scss";
+@import "theme/_fonts.scss";
 @import "theme/_badges.scss";
 @import "theme/_backgrounds.scss";
 @import "theme/_breadcrumbs.scss";
