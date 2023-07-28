@@ -15,7 +15,7 @@
 			#args.menuItem.getLabel()#
 		</div>
 		<button type="button" class="dd3-expand btn btn-default" title="Edit Details" @click="$store.menusStore.toggleEditor( '#menuItemID#' )">
-			<i class="fa fa-pencil fa-lg"></i>
+			<i class="fas fa-pencil fa-lg"></i>
 		</button>
 		<button class="dd3-delete btn btn-danger confirmIt"
 			data-message="Are you sure you want to remove this menu item and all its descendants? <br> Please note that changes are not final until you save the menu."

@@ -171,7 +171,7 @@
 													<a
 														href="#event.buildLink( prc.xehGroupEditor & "/permissionGroupID/#group.getPermissionGroupId()#")#"
 											   		>
-											   			<i class="fa fa-pen fa-lg"></i> Edit
+											   			<i class="fas fa-pen fa-lg"></i> Edit
 											   		</a>
 											   	</li>
 

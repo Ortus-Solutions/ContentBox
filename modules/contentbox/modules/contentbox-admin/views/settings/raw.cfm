@@ -35,7 +35,7 @@
                             <a href="##cachebox" data-toggle="tab" class="nav-link"><i class="fa fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="##_events" data-toggle="tab" class="nav-link"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
+                            <a href="##_events" data-toggle="tab" class="nav-link"><i class="fas fa-broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
 					<!-- End Tabs -->
@@ -166,7 +166,7 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 											<h4 class="modal-title">
-												<i class="fa fa-pen fa-lg"></i> Setting Editor
+												<i class="fas fa-pen fa-lg"></i> Setting Editor
 											</h4>
                                         </div>
                                         <div class="modal-body">

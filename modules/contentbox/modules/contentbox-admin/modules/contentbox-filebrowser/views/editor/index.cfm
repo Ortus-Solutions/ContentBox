@@ -58,7 +58,7 @@
 
                                         <li role="presentation" class="nav-item">
                                             <a href="##transform" aria-controls="history" role="tab" data-toggle="tab" class="nav-link">
-                                                <i class="fa fa-pen"></i> Transform
+                                                <i class="fas fa-pen"></i> Transform
                                             </a>
                                         </li>
 

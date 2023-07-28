@@ -76,7 +76,7 @@
 </fieldset>
 
 <fieldset>
-    <legend><i class="fa fa-user-shield fa-lg"></i>  Login Options</legend>
+    <legend><i class="fas fa-user-shield fa-lg"></i>  Login Options</legend>
 
 	<!--- Signout URL --->
     <div class="form-group">

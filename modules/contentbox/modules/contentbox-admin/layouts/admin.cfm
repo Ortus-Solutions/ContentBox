@@ -182,7 +182,7 @@
 									<cfif prc.oCurrentAuthor.hasPermission( "MEDIAMANAGER_ADMIN" )>
 										<li>
 											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
-												<i class="fa fa-photo-video fa-lg width25"></i> New Media
+												<i class="fas fa-photo-video fa-lg width25"></i> New Media
 											</a>
 										</li>
 									</cfif>

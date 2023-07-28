@@ -87,7 +87,7 @@
 									)"
 									title="Edit Setting"
 								>
-									<i class="fa fa-pen fa-lg"></i> Edit
+									<i class="fas fa-pen fa-lg"></i> Edit
 								</a>
 							</li>
 							<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>

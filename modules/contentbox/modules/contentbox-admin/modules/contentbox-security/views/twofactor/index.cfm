@@ -6,7 +6,7 @@
 
             <div class="panel-heading">
                 <h3 class="panel-title p5">
-                   <i class="fa fa-user-shield fa-lg"></i> Two-Factor Authentication
+                   <i class="fas fa-user-shield fa-lg"></i> Two-Factor Authentication
                 </h3>
             </div>
 

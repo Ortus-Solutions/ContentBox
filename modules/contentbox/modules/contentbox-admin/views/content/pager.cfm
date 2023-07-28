@@ -100,7 +100,7 @@
 								<!--- Edit Command --->
 								<li>
 									<a href="#event.buildLink( prc.xehContentPagerEditor )#/contentID/#thisContent.getContentID()#">
-										<i class="fa fa-pen fa-lg"></i> Edit
+										<i class="fas fa-pen fa-lg"></i> Edit
 									</a>
 								</li>
 							</cfif>

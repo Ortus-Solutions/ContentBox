@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-md-12">
         <h1 class="h1">
-        	<i class="fa fa-user-shield fa-lg"></i> Roles (#arrayLen( prc.roles )#)
+        	<i class="fas fa-user-shield fa-lg"></i> Roles (#arrayLen( prc.roles )#)
         </h1>
     </div>
 </div>
@@ -172,7 +172,7 @@
 													<a
 														href="#event.buildLink( prc.xehRoleEditor & "/roleId/#role.getRoleId()#")#"
 											   		>
-											   			<i class="fa fa-pen fa-lg"></i> Edit
+											   			<i class="fas fa-pen fa-lg"></i> Edit
 											   		</a>
 											   	</li>
 

@@ -9,7 +9,7 @@
 					data-toggle="collapse"
 					data-parent="##accordion"
 					href="##displayoptions">
-				<i class="fa fa-photo-video"></i> Display Options
+				<i class="fas fa-photo-video"></i> Display Options
 				</a>
 			</h4>
 		</div>
