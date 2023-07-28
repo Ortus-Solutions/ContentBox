@@ -9,13 +9,13 @@
 import { decompressFromUTF16, compressToUTF16 } from "lz-string";
 import moment from "moment";
 
-const autoSavePrefix = 'autosave_';
+const autoSavePrefix = "autosave_";
 
 window.resetAutoSave = function(){
 	if ( !Modernizr.localstorage ) return;
 	var saveStoreKey 	= autoSavePrefix + window.location;
 	var saved = localStorage.getItem( saveStoreKey );
-	if( saved ){
+	if ( saved ){
 		JSON.parse( saved )
 			.forEach( ( entry, index ) => {
 				localStorage.removeItem( entry );
@@ -23,7 +23,7 @@ window.resetAutoSave = function(){
 		localStorage.setItem( saveStoreKey, "[]" );
 	}
 
-}
+};
 
 window.autoSave = function( editor, pageID, ddMenuID, options ){
 	// Verify local storage, else disable feature

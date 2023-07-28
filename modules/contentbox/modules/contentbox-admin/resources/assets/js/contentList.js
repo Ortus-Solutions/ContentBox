@@ -115,7 +115,7 @@ const contentListHelper = ( () => {
 			$searchField.keyup(
 				_.debounce(
 					function(){
-						if( !$isSearching ){
+						if ( !$isSearching ){
 							contentLoad( { search: $( this ).val() } );
 						}
 					},

@@ -1,15 +1,15 @@
 // Magic: $confirm
 
-Alpine.magic("confirm", (el) => (message, options) => {
-	return new Promise((resolve, reject) => {
+Alpine.magic( "confirm", ( el ) => ( message, options ) => {
+	return new Promise( ( resolve, reject ) => {
 		const modalOptions = {
-			id: "modal-confirm",
-			className: "modal",
-			acceptText: "Accept",
-			cancelText: "Cancel",
+			id         : "modal-confirm",
+			className  : "modal",
+			acceptText : "Accept",
+			cancelText : "Cancel",
 		};
-		if (options) Object.assign(modalOptions, options);
-		const modalElem = document.createElement("div");
+		if ( options ) Object.assign( modalOptions, options );
+		const modalElem = document.createElement( "div" );
 		modalElem.id = modalOptions.id;
 		modalElem.className = modalOptions.className;
 		modalElem.innerHTML = `
@@ -30,16 +30,16 @@ Alpine.magic("confirm", (el) => (message, options) => {
 		  </div>
 		`;
 
-		$("body").append(modalElem);
-		var myModal = $(modalElem).modal("show");
+		$( "body" ).append( modalElem );
+		let myModal = $( modalElem ).modal( "show" );
 
-		$("#modal-btn-cancel,#modal-btn-accept", myModal).on(
+		$( "#modal-btn-cancel,#modal-btn-accept", myModal ).on(
 			"click",
-			function (e) {
-				myModal.modal("hide");
-				$(modalElem).remove();
+			function( e ) {
+				myModal.modal( "hide" );
+				$( modalElem ).remove();
 				return e.target.id == "modal-btn-accept" ? resolve() : false;
 			}
 		);
-	});
-});
+	} );
+} );
