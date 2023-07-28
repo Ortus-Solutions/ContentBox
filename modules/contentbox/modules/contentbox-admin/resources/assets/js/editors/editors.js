@@ -1,54 +1,54 @@
-const { template } = require("lodash");
+const { template } = require( "lodash" );
 
 /**
  * Get widget selector URL
  */
-window.getWidgetSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/editorselector"; }
+window.getWidgetSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/editorselector"; };
 
 /**
  * Get widget preview URL
  */
-window.getWidgetPreviewURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/preview"; }
+window.getWidgetPreviewURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/preview"; };
 
 /**
  * Get widget editor instance URL
  */
-window.getWidgetEditorURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/editinstance"; }
+window.getWidgetEditorURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/editinstance"; };
 
 /**
  * View widget instance
  */
-window.getWidgetInstanceURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/viewWidgetInstance"; }
+window.getWidgetInstanceURL = function(){ return $cbEditorConfig.adminEntryURL + "/widgets/viewWidgetInstance"; };
 
 /**
  * Get page editor selector
  */
-window.getPageSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/pages/editorselector"; }
+window.getPageSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/pages/editorselector"; };
 
 /**
  * Blog Editor selector
  */
-window.getEntrySelectorURL = function(){ return $cbEditorConfig.isBlogDisabled ? "" : $cbEditorConfig.adminEntryURL + "/entries/editorselector"; }
+window.getEntrySelectorURL = function(){ return $cbEditorConfig.isBlogDisabled ? "" : $cbEditorConfig.adminEntryURL + "/entries/editorselector"; };
 
 /**
  * Get contentstore selector
  */
-window.getContentStoreSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/contentStore/editorselector"; }
+window.getContentStoreSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/contentStore/editorselector"; };
 
 /**
  * Get content preview URL
  */
-window.getPreviewSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/content/preview"; }
+window.getPreviewSelectorURL = function(){ return $cbEditorConfig.adminEntryURL + "/content/preview"; };
 
 /**
  * Get author editor preference
  */
-window.getAuthorEditorPreferenceURL = function(){ return $cbEditorConfig.adminEntryURL + "/authors/changeEditor"; }
+window.getAuthorEditorPreferenceURL = function(){ return $cbEditorConfig.adminEntryURL + "/authors/changeEditor"; };
 
 /**
  * Get author save preference
  */
-window.getAuthorSavePreferenceURL = function(){ return $cbEditorConfig.adminEntryURL + "/authors/saveSinglePreference"; }
+window.getAuthorSavePreferenceURL = function(){ return $cbEditorConfig.adminEntryURL + "/authors/saveSinglePreference"; };
 
 /**
  * Get a module URL link
@@ -69,7 +69,7 @@ window.getModuleURL = function( module, event, queryString ){
 	} );
 
 	return $.trim( returnURL );
-}
+};
 
 /**
  * Load the asset chooser from the media manager
@@ -85,7 +85,7 @@ window.loadAssetChooser = function( callback, w, h ){
 		w || "75%",
 		h
 	);
-}
+};
 
 /**
  * Switch editors
@@ -101,7 +101,7 @@ window.switchEditor = function( editorType ){
 			location.reload();
 		}
 	} );
-}
+};
 
 /**
  * Setup the editors.
@@ -214,7 +214,7 @@ window.setupEditors = function( theForm, withExcerpt, saveURL, collapseNav ){
 		$( "body" ).removeClass( "off-canvas-open" );
 		$( bodyEl ).toggleClass( "sidebar-mini" );
 	}
-}
+};
 
 /**
  * Checks if user wants to draft content that is published already
@@ -230,7 +230,7 @@ window.shouldPublish = function(){
 		);
 	}
 	return true;
-}
+};
 
 /**
  * Quick save content
@@ -244,7 +244,7 @@ window.quickSave = function(){
 	// Draft it
 	$isPublished.val( "false" );
 	// Make sure our status pill is correct
-	$( "td#publish-info" ).html( '<span class="p5 label label-default">Draft</span>' );
+	$( "td#publish-info" ).html( "<span class=\"p5 label label-default\">Draft</span>" );
 
 	// Commit Changelog default it to quick save if not set
 	if ( !$changelog.val().length ){
@@ -295,7 +295,7 @@ window.quickSave = function(){
 		},
 		"json"
 	);
-}
+};
 
 /**
  * Quick Live Preview
@@ -318,7 +318,7 @@ window.previewContent = function(){
 		$( window ).height() - 200,
 		true
 	);
-}
+};
 
 /**
  * Set the correct publish date to now
@@ -328,7 +328,7 @@ window.publishNow = function(){
 	$( "#publishedDate" ).val( getToday() );
 	$( "#publishedHour" ).val( fullDate.getHours() );
 	$( "#publishedMinute" ).val( fullDate.getMinutes() );
-}
+};
 
 /**
  * Switch markup type
@@ -337,14 +337,14 @@ window.publishNow = function(){
 window.switchMarkup = function( markupType ){
 	$( "#markup" ).val( markupType );
 	$( "#markupLabel" ).html( markupType );
-}
+};
 
 /**
  * Set that the form was submitted
  */
 window.setWasSubmitted = function(){
 	$wasSubmitted = true;
-}
+};
 
 /**
  * As for leave confirmation if content is dirty
@@ -354,7 +354,7 @@ window.askLeaveConfirmation = function(){
 	if ( checkIsDirty() && !$wasSubmitted ){
    		return "You have unsaved changes.";
    	}
-}
+};
 
 /**
  * Check if permalink is unique
@@ -384,7 +384,7 @@ window.permalinkUniqueCheck = function( linkToUse ){
 			}
 		}
 	);
-}
+};
 
 /**
  * Create a permalink
@@ -406,7 +406,7 @@ window.createPermalink = function( linkToUse ){
 			togglePermalink();
 		}
 	);
-}
+};
 
 /**
  * Toggle permalink
@@ -417,7 +417,7 @@ window.togglePermalink = function(){
 	toggle.hasClass( "fa fa-lock" ) ? toggle.attr( "class", "fa fa-unlock" ) : toggle.attr( "class", "fa fa-lock" );
 	//disable input field
 	$slug.prop( "disabled", !$slug.prop( "disabled" ) );
-}
+};
 
 /**
  * Toggle draft mode or not
@@ -433,7 +433,7 @@ window.toggleDraft = function(){
 	// record we are submitting
 	setWasSubmitted();
 	return true;
-}
+};
 
 /**
  * Quick publish
@@ -463,7 +463,7 @@ window.quickPublish = function( isDraft ){
 
 	// submit form
 	$targetEditorForm.submit();
-}
+};
 
 /**
  * Toggle the loader bar visibility
@@ -472,7 +472,7 @@ window.toggleLoaderBar = function(){
 	// Activate Loader
 	$uploaderBarStatus.html( "Saving..." );
 	$uploaderBarLoader.slideToggle();
-}
+};
 
 /**
  * Featured image callback
@@ -487,7 +487,7 @@ window.featuredImageCallback = function( filePath, fileURL, fileType ){
 	$( "#featuredImageURL" ).text( fileURL );
 	$( "#featuredImagePreview" ).attr( "src", fileURL );
 	closeRemoteModal();
-}
+};
 
 /**
  * Cancel featured image
@@ -497,170 +497,166 @@ window.cancelFeaturedImage = function(){
 	$( "#featuredImageURL" ).val( "" );
 	$( "#featuredImagePreview" ).attr( "src", "" );
 	$( "#featuredImageControls" ).toggleClass( "hide" );
-}
+};
 
 window.onContentTemplateChange = function( e ){
 	let templateId = e.target.value;
-	if( !templateId || templateId == 'null' ) return;
+	if ( !templateId || templateId == "null" ) return;
 	// TODO: Replace this with a more elegant promise-based confirmation
-	if( confirm( "Changing the content template may add new custom fields and change values of this content item. Are you sure you want to do this?" ) ){
+	if ( confirm( "Changing the content template may add new custom fields and change values of this content item. Are you sure you want to do this?" ) ){
 		return applyContentTemplate( templateId, true );
 	}
-}
+};
 
 window.saveAsContentTemplate = function(){
-	$( '[name=saveAsTemplate]' ).val( true );
+	$( "[name=saveAsTemplate]" ).val( true );
 	quickPublish( true );
-}
+};
 
 window.applyContentTemplate = function( templateId ){
-	if( templateId instanceof Event  ){
+	if ( templateId instanceof Event  ){
 		templateId = templateId.currentTarget.value;
 	}
-	if( templateId != 'null' ){
+	if ( templateId != "null" ){
 		fetch(
 			`/cbapi/v1/content-templates/${templateId}`,
-			{
-				headers : {
-					"Authorization" : `Bearer ${window.authentication.access_token}`
-				}
-			}
+			{ headers: { "Authorization": `Bearer ${window.authentication.access_token}` } }
 		).then( r => r.json() )
-		.then( response => {
-			$( '.template-highlight-info' ).removeClass( "hidden" );
-			window.assignedTemplate = response.data;
-			Object.keys( response.data.definition ).forEach( key => applyContentTemplateToField( key, response.data.definition ) )
-		} )
-		.catch( error => {
-			$dispatch(
-				"add-alert",
-				{
-					"type" : "api",
-					"class" : "danger",
-					"message" : error.toString()
-				}
-			);
+			.then( response => {
+				$( ".template-highlight-info" ).removeClass( "hidden" );
+				window.assignedTemplate = response.data;
+				Object.keys( response.data.definition ).forEach( key => applyContentTemplateToField( key, response.data.definition ) );
+			} )
+			.catch( error => {
+				$dispatch(
+					"add-alert",
+					{
+						"type"    : "api",
+						"class"   : "danger",
+						"message" : error.toString()
+					}
+				);
 
-			throw error;
-		} );
+				throw error;
+			} );
 	} else {
-		$( '.template-highlight-info' ).addClass( "hidden" );
-		$( '.template-restricted' ).removeClass( 'template-restricted' );
-		$( '.template-defined' ).removeClass( 'template-defined' );
+		$( ".template-highlight-info" ).addClass( "hidden" );
+		$( ".template-restricted" ).removeClass( "template-restricted" );
+		$( ".template-defined" ).removeClass( "template-defined" );
 	}
 
-}
+};
 
 window.announceModifiedByTemplate = function(){
-	if( document.getElementById( "contentID" ).value && !window.alerts.some( alert => alert.type == 'template' ) ){
+	if ( document.getElementById( "contentID" ).value && !window.alerts.some( alert => alert.type == "template" ) ){
 		$dispatch(
 			"add-alert",
 			{
-				"type" : "template",
-				"class" : "warning",
-				"message" :  "This content item has been modified by changes to the assigned template. You will need to re-save or re-publish this item for the template changes to take effect."
+				"type"    : "template",
+				"class"   : "warning",
+				"message" : "This content item has been modified by changes to the assigned template. You will need to re-save or re-publish this item for the template changes to take effect."
 			}
 		);
 	}
-}
+};
 
 window.applyContentTemplateToField = function( fieldName, definition ){
 	console.log( definition );
-	if( definition.hasOwnProperty( fieldName ) ){
-		switch( fieldName ){
-			case "customFields":{
-				definition.customFields.value.forEach(
-					fieldDefinition => {
-						let customFields = document.getElementById( 'customFields' );
-						let isApplied = !!( customFields.getElementsByClassName( 'customFieldKey' ).length && Array.from( customFields.getElementsByClassName( 'customFieldKey' ) ).some( el => el.value == fieldDefinition.name ) );
-						var $templateNode;
-						if( !isApplied ){
-							$dispatch( "add-custom-field", { "key" : fieldDefinition.name, "value" : fieldDefinition.defaultValue } );
-							console.log( "custom field created: " + fieldName );
+	if ( definition.hasOwnProperty( fieldName ) ){
+		switch ( fieldName ){
+		case "customFields":{
+			definition.customFields.value.forEach(
+				fieldDefinition => {
+					let customFields = document.getElementById( "customFields" );
+					let isApplied = !!( customFields.getElementsByClassName( "customFieldKey" ).length && Array.from( customFields.getElementsByClassName( "customFieldKey" ) ).some( el => el.value == fieldDefinition.name ) );
+					var $templateNode;
+					if ( !isApplied ){
+						$dispatch( "add-custom-field", { "key": fieldDefinition.name, "value": fieldDefinition.defaultValue } );
+						console.log( "custom field created: " + fieldName );
+						announceModifiedByTemplate();
+					} else {
+						let nodeIndex = Array.from( customFields.getElementsByClassName( "customFieldKey" ) ).findIndex( option => option.value == fieldDefinition.name );
+						let valueOption = customFields.getElementsByClassName( "customFieldValue" )[ nodeIndex ];
+						if ( !valueOption.value && fieldDefinition.defaultValue ){
+							valueOption.value = fieldDefinition.defaultValue;
+							console.log( "exisiting custom field modified: " + fieldName );
 							announceModifiedByTemplate();
-						} else {
-							let nodeIndex = Array.from( customFields.getElementsByClassName( 'customFieldKey' ) ).findIndex( option => option.value == fieldDefinition.name );
-							let valueOption = customFields.getElementsByClassName( 'customFieldValue' )[ nodeIndex ];
-							if( !valueOption.value && fieldDefinition.defaultValue ){
-								valueOption.value = fieldDefinition.defaultValue;
-								console.log( "exisiting custom field modified: " + fieldName );
-								announceModifiedByTemplate();
-							}
 						}
 					}
-				);
-				break;
-			}
-			case "categories" : {
-				definition.categories.value.forEach( cat => $( `[value=${cat}]`, '#categoriesChecks' ).attr( 'checked', 'checked' ).attr( "readonly", "readonly" ).parent().addClass( "template-defined" ).addClass( 'template-restricted' ) );
-				break;
-			}
-			default : {
-				var $templateField = $( `[name=${fieldName}]` );
-				if( $templateField.length ){
-					let nodeType = $templateField[ 0 ].nodeType;
-					switch( nodeType ){
-						case "radio":
-						case "checkbox":{
-							$templateField.each(
-								$check => {
-									if(
-										$check.prop( "value" ) == definition[ fieldName ].value
-									){
-										if( !$check.prop( "checked" ) ){
-											$check.click();
-											console.log( "checkbox modified: " + fieldName );
-											announceModifiedByTemplate();
-										}
-										$check.attr( "readonly", "readonly" ).parent().addClass( "template-restricted" ).addClass( "template-defined");
-									}
+				}
+			);
+			break;
+		}
+		case "categories" : {
+			definition.categories.value.forEach( cat => $( `[value=${cat}]`, "#categoriesChecks" ).attr( "checked", "checked" ).attr( "readonly", "readonly" ).parent().addClass( "template-defined" ).addClass( "template-restricted" ) );
+			break;
+		}
+		default : {
+			var $templateField = $( `[name=${fieldName}]` );
+			if ( $templateField.length ){
+				let nodeType = $templateField[ 0 ].nodeType;
+				switch ( nodeType ){
+				case "radio":
+				case "checkbox":{
+					$templateField.each(
+						$check => {
+							if (
+								$check.prop( "value" ) == definition[ fieldName ].value
+							){
+								if ( !$check.prop( "checked" ) ){
+									$check.click();
+									console.log( "checkbox modified: " + fieldName );
+									announceModifiedByTemplate();
 								}
-							)
+								$check.attr( "readonly", "readonly" ).parent().addClass( "template-restricted" ).addClass( "template-defined" );
+							}
 						}
-						default:{
-							if( $templateField[ 0 ].localName == 'select' ){
-								if( typeof( definition[ fieldName ].value ) == 'boolean' ){
-									definition[ fieldName ].value = definition[ fieldName ].value ? "Yes" : "No";
-								}
-								$options = $( "option", $templateField );
-								$options.each(
-									index => {
-										let $option = $( $options[ index ] );
-										$values = Array.isArray( definition[ fieldName ].value )
-													? definition[ fieldName ].value
-													: definition[ fieldName ].value.split( ',' );
-										if(
-											$values.indexOf( $option.val() ) > -1
+					);
+				}
+				default:{
+					if ( $templateField[ 0 ].localName == "select" ){
+						if ( typeof( definition[ fieldName ].value ) == "boolean" ){
+							definition[ fieldName ].value = definition[ fieldName ].value ? "Yes" : "No";
+						}
+						$options = $( "option", $templateField );
+						$options.each(
+							index => {
+								let $option = $( $options[ index ] );
+								$values = Array.isArray( definition[ fieldName ].value )
+									? definition[ fieldName ].value
+									: definition[ fieldName ].value.split( "," );
+								if (
+									$values.indexOf( $option.val() ) > -1
 											&&
 											!$option.attr( "selected" )
-										){
-											$option.attr( "selected", true );
-											console.log( "select modified: " + fieldName );
-											announceModifiedByTemplate();
-										}
-									}
-								);
-								if( !$templateField.attr( 'multiple' ) ){
-									$templateField.attr( 'readonly', 'readonly' ).addClass( "template-restricted" );
+								){
+									$option.attr( "selected", true );
+									console.log( "select modified: " + fieldName );
+									announceModifiedByTemplate();
 								}
-								$templateField.parent().addClass( 'template-defined' );
-							} else if( !$templateField.val() && definition[ fieldName ].value ) {
-								if( fieldName == "content" || fieldName == "excerpt" ){
-									setEditorContent( fieldName, definition[ fieldName ].value );
-								} else {
-									$templateField.val( definition[ fieldName ].value );
-								}
-								$templateField.parent().addClass( 'template-defined' );
-								announceModifiedByTemplate();
 							}
-
+						);
+						if ( !$templateField.attr( "multiple" ) ){
+							$templateField.attr( "readonly", "readonly" ).addClass( "template-restricted" );
 						}
+						$templateField.parent().addClass( "template-defined" );
+					} else if ( !$templateField.val() && definition[ fieldName ].value ) {
+						if ( fieldName == "content" || fieldName == "excerpt" ){
+							setEditorContent( fieldName, definition[ fieldName ].value );
+						} else {
+							$templateField.val( definition[ fieldName ].value );
+						}
+						$templateField.parent().addClass( "template-defined" );
+						announceModifiedByTemplate();
 					}
-				} else {
-					console.warn( `A field matching the name of ${fieldName} could not be found in the rendered editor. This template field cannot be validated or applied.` );
-				}
 
+				}
+				}
+			} else {
+				console.warn( `A field matching the name of ${fieldName} could not be found in the rendered editor. This template field cannot be validated or applied.` );
 			}
+
+		}
 		}
 	}
-}
+};

@@ -132,17 +132,17 @@ document.addEventListener( "DOMContentLoaded", () => {
 	} );
 
 	// Nav Search Shortcut
-	createKeybindingsHandler({
+	createKeybindingsHandler( {
 		"Ctrl+Shift+S" : () => {
 			$( "#nav-search" ).focus();
 			return false;
 		}
-	});
+	} );
 
 	// find all links with the key-binding data attribute
 	$( "[data-keybinding]" ).each( function() {
 		var boundItem = $( this );
-		createKeybindingsHandler({
+		createKeybindingsHandler( {
 			[boundItem.data( "keybinding" )] : () => {
 				// give precedence to onclick
 				if ( boundItem.attr( "onclick" ) ) {
@@ -153,7 +153,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 					to( boundItem.attr( "href" ) );
 				}
 			}
-		});
+		} );
 	} );
 
 	// Hide empty menu's due to permissions.
@@ -213,7 +213,7 @@ window.activateNavbarState = function() {
 		}
 
 	} );
-}
+};
 /**
  * Check if the main right sidebar is open or not
  * @return {Boolean} open or not
@@ -221,7 +221,7 @@ window.activateNavbarState = function() {
 window.isMainSidebarOpen = function() {
 	var sidebar = $( "#main-content-sidebar" );
 	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block" ? true : false );
-}
+};
 /**
  * Toggle the main sidebar to fully display the main slot of content.
  * main-content-slot (col) main-content-sidebar (col)
@@ -260,7 +260,7 @@ window.toggleSidebar = function(){
 		data 	: { value: sidebarState, preference: "sidebarstate" },
 		async	: true
 	} );
-}
+};
 /**
  * Run an admin action async
  * @param  {string} action    Target action to execute
@@ -279,7 +279,7 @@ window.adminAction = function( action, actionURL ) {
 			$( "#adminActionsIcon" ).removeClass( "fa-spin textOrange" );
 		} );
 	}
-}
+};
 /**
  * Send an admin notifier popup for a few seconds
  * @param type The type to send: Defaults to warn, available are warning, info, error, success
@@ -311,7 +311,7 @@ window.adminNotifier = function( type, message, delay ) {
 	}
 	}
 
-}
+};
 
 window.activateContentSearch = function() {
 	// local refs
@@ -362,38 +362,38 @@ window.activateContentSearch = function() {
 			closeSearchBox();
 		}
 	} );
-}
+};
 
 window.closeSearchBox = function() {
 	$( "#div-search-results" ).slideUp();
 	$( "#nav-search" ).val( "" );
-}
+};
 
 window.quickLinks = function( inURL ) {
 	if ( inURL != "null" ) {
 		window.location = inURL;
 	}
-}
+};
 
 window.activateTooltips = function() {
 	//Tooltip
 	$( "[title]" ).tooltip( toolTipSettings );
-}
+};
 
 window.hideAllTooltips = function(){
 	$( ".tooltip" ).hide();
-}
+};
 
 window.toggleFlickers = function(){
 	$( ".flickerMessages" ).slideToggle();
 	$( ".flickers" ).fadeOut( 3000 );
-}
+};
 /**
  * Close the remote loaded modal
  */
 window.closeRemoteModal = function() {
 	$remoteModal.modal( "hide" );
-}
+};
 /**
  * Reset a modal form according to the passed container
  * @param  {object} container The container
@@ -404,14 +404,14 @@ window.resetContainerForms = function( container ) {
 	if ( frm.length ) {
 		$( frm[0] ).clearForm();
 	}
-}
+};
 /**
  * Close a local modal window
  * @param div The jquery div object that represents the dialog.
  */
 window.closeModal = function( div ) {
 	div.modal( "hide" );
-}
+};
 /**
  * Open a new local modal window based on a div container
  * @param div The jquery object of the div to extract the HTML from.
@@ -425,7 +425,7 @@ window.openModal = function( div, w, h ) {
 	$( div ).on( "hidden.bs.modal", function() {
 		resetContainerForms( $( this ) );
 	} );
-}
+};
 /**
  * Open a new remote modal window Ajax style.
  * @param url The URL ajax destination
@@ -478,7 +478,7 @@ window.openRemoteModal = function( url, params, w, h, delay ) {
 		} );
 	}
 	return;
-}
+};
 
 /**
  * Resize the modal content preview window
@@ -504,7 +504,7 @@ window.setPreviewSize = function( activeBtn, w ) {
 
 	// resize it now.
 	modalDialog.animate( modalSize, 500 );
-}
+};
 /**
  * Attach modal listeners to global modals: Remote and ConfirmIt
  */
@@ -538,7 +538,7 @@ window.attachModalListeners = function() {
 		// reset container forms
 		resetContainerForms( modal );
 	} );
-}
+};
 
 /**
  * Activate fancy toggle checkboxes
@@ -550,14 +550,14 @@ window.activateToggleCheckboxes = function() {
 		$( "#" + inputMatch ).val( $( this ).prop( "checked" ) );
 		//console.log( $( this ).prop( 'checked' ) + " input match :" + inputMatch );
 	} );
-}
+};
 
 /**
  * Close confirmation modal
  */
 window.closeConfirmations = function() {
 	$confirmIt.modal( "hide" );
-}
+};
 
 /**
  * Activate modal confirmation windows
@@ -591,7 +591,7 @@ window.activateConfirmations = function() {
 		// prevent default action
 		e.preventDefault();
 	} );
-}
+};
 
 window.popup = function( url, w, h )  {
 	var winWidth = 1000;
@@ -601,7 +601,7 @@ window.popup = function( url, w, h )  {
 	var xPosition = ( screen.width / 2 ) - ( winWidth / 2 );
 	var yPosition = ( screen.height / 2 ) - ( winHeight / 2 );
 	window.open( url, "layoutPreview", "resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width=" + winWidth + ",height=" + winHeight + ",left=" + xPosition + ",top=" + yPosition + ",screenX=" + xPosition + ",screenY=" + yPosition );
-}
+};
 /**
  * Relocation shorcuts
  * @param link
@@ -610,7 +610,7 @@ window.popup = function( url, w, h )  {
 window.to = function( link ) {
 	window.location = link;
 	return false;
-}
+};
 /**
  * Check all checkboxes utility function
  * @param checked
@@ -620,7 +620,7 @@ window.checkAll = function( checked, id ) {
 	$( "input[name='" + id + "']" ).each( function() {
 		this.checked = checked;
 	} );
-}
+};
 /**
  * Check all checkboxes by value
  * @param id
@@ -631,7 +631,7 @@ window.checkByValue = function( id, recordID ) {
 	$( "input[name='" + id + "']" ).each( function() {
 		if ( this.value === recordID ) { this.checked = true; } else { this.checked = false; }
 	} );
-}
+};
 /**
  * Get today's date in us or rest of the world format
  * @param {boolean} us defaults to true
@@ -644,7 +644,7 @@ window.getToday = function( us ) {
 	} else {
 		return moment().format( "DD-MM-YYYY" );
 	}
-}
+};
 
 /**
  * Import Content Dialog Forms.
@@ -678,7 +678,7 @@ window.importContent = function(){
 	$importForm.find( "#importButton" ).click( function( e ){
 		$importForm.submit();
 	} );
-}
+};
 
 /**
  * Toggle More info panels
@@ -687,7 +687,7 @@ window.toggleMoreInfoPanel = function( contentId ){
 	$( "#moreInfo-" + contentId ).toggleClass( "hidden" );
 	$( "#moreInfoOpenButton-" + contentId ).toggleClass( "hidden" );
 	$( "#moreInfoCloseButton-" + contentId ).toggleClass( "hidden" );
-}
+};
 
 /**
  * Password meter event closure used to monitor password changes for the meter rules to activate.
@@ -725,7 +725,7 @@ window.passwordMeter = function( event ) {
 			$( "#pw_rule_" + key ).removeClass( "badge-success" );
 		}
 	}
-}
+};
 
 /**
  * Used by our form validator to validate password fields according to default rules
@@ -750,7 +750,7 @@ window.passwordValidator = function( value ) {
         special // has special chars
         &&
         value.length >= minLength; // at least characters
-}
+};
 
 /**
  * Convert an iso8601 to local browser date time
@@ -762,7 +762,7 @@ window.passwordValidator = function( value ) {
  */
 window.toLocalString = function( dateTime, options ){
 	return new Date( dateTime ).toLocaleString( undefined, options || getDefaultDateTimeOptions() );
-}
+};
 
 /**
  * Convert an iso8601 to local browser date object
@@ -774,7 +774,7 @@ window.toLocalString = function( dateTime, options ){
  */
 window.toLocaleDateString = function( dateTime, options ){
 	return new Date( dateTime ).toLocaleDateString( undefined, options || getDefaultDateTimeOptions() );
-}
+};
 
 /**
  * Convert an iso8601 to local browser time object
@@ -786,11 +786,11 @@ window.toLocaleDateString = function( dateTime, options ){
  */
 window.toLocaleTimeString = function( dateTime, options ){
 	return new Date( dateTime ).toLocaleTimeString( undefined, options || getDefaultDateTimeOptions() );
-}
+};
 
 window.getDefaultDateTimeOptions = function(){
 	return { dateStyle: "medium", timeStyle: "long" };
-}
+};
 
 /**
  * Scroll to a specific id hash
@@ -798,4 +798,4 @@ window.getDefaultDateTimeOptions = function(){
  */
 window.scrollToHash = function( hashName ) {
 	location.hash = "#" + hashName;
-}
+};

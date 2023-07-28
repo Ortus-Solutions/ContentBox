@@ -85,6 +85,13 @@ function setupWidgetListing(){
 
 		toggleWidgetCount( widgetCount );
 	});
+
+	// Setup global usage: yuck, can't wait to move to alpine
+	// This is used by the widget previews to know where to load the editors from
+	$cbEditorConfig = {
+		adminEntryPoint 	: "#prc.cbAdminEntryPoint#",
+		adminEntryURL		: "#event.buildLink( prc.cbAdminEntryPoint )#"
+	};
 }
 
 function resetTabs(){
@@ -111,22 +118,15 @@ function clearFilter(){
 }
 
 <cfif args.mode eq "edit">
-	function getWidgetPreviewURL(){
-		return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.preview" )#';
-	}
-	function getWidgetInstanceURL(){
-		return '#event.buildLink( prc.cbAdminEntryPoint & ".widgets.viewWidgetInstance" )#';
-	}
 	function testWidgetCode( name, type ){
 		// Test it
 		$widgetEditorForm = $( "##widgetEditForm" );
-		var attributes = {
+		return openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', {
 			modal       : true,
 			mode        : 'Test',
 			widgetName  : name,
 			widgetType  : type
-		};
-		return openRemoteModal( '#event.buildLink( prc.xehWidgetTest )#', attributes );
+		} );
 	}
 </cfif>
 </script>

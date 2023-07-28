@@ -1,12 +1,12 @@
 {
     "app":{
-        "cfengine":"lucee@5.3.8+206",
+        "cfengine":"lucee@5.4",
         "serverHomeDirectory":".engines/lucee5"
     },
     "name":"contentbox-lucee5",
     "JVM":{
         "heapSize":"1024",
-        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -XX:+UseG1GC"
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -Dlucee-extensions=D062D72F-F8A2-46F0-8CBC91325B2F067B"
     },
     "web":{
         "directoryBrowsing":true,

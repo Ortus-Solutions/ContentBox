@@ -36,8 +36,8 @@ component {
 
 		// Relationship between Content Templates and Content
 		schema.alter( "cb_content", ( table ) => {
-			table.addColumn( table.string( "FK_contentTemplateID", 36 ) );
-			table.addColumn( table.string( "FK_childContentTemplateID", 36 ) );
+			table.addColumn( table.string( "FK_contentTemplateID", 36 ).nullable() );
+			table.addColumn( table.string( "FK_childContentTemplateID", 36 ).nullable() );
 			table
 				.foreignKey( "FK_contentTemplateID" )
 				.references( "templateID" )

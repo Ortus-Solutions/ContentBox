@@ -32,13 +32,13 @@ window.fbCKSelect = function( sPath, sURL, sType ){
 	var funcNum = getURLParam( "CKEditorFuncNum" );
 	window.opener.CKEDITOR.tools.callFunction( funcNum, sURL );
 	window.close();
-}
+};
 /**
  * Generic close callback
  */
 window.fbGenericClose = function(){
 	window.close();
-}
+};
 /**
  * Testing select calback
  * @param path
@@ -47,21 +47,21 @@ window.fbGenericClose = function(){
  */
 window.fbTestChoose = function( path, rPath, type ){
 	alert( "Path: " + path + "\n URL: " + rPath + "\n Type: " + type );
-}
+};
 /**
  * Cancel called
  * @return {[type]} [description]
  */
 window.fbTestCancel = function(){
 	alert( "Cancel Called" );
-}
+};
 
 window.fbUpload = function(){
 	$( "#uploadBar" ).slideToggle();
-}
+};
 
 /** Verifies which view is active */
 window.fbVerifyActiveView = function() {
 	let identifier = "#" + $listType.val() + $listFolder.val();
 	$( identifier ).removeClass( "btn-more" ).addClass( "btn-default" );
-}
+};
