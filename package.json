@@ -6,6 +6,7 @@
 	"devDependencies": {
 		"@alpinejs/focus": "^3.10.4",
 		"@alpinejs/ui": "^3.10.4-beta.5",
+		"@fortawesome/fontawesome-free": "^5.15.4",
 		"@popperjs/core": "^2.11.6",
 		"alpinejs": "^3.10.4",
 		"animate.css": "^3.5.2",
@@ -23,7 +24,6 @@
 		"eve": "^0.5.4",
 		"expose-loader": "^4.0.0",
 		"fastclick": "^0.6.12",
-		"font-awesome-sass": "^4.7.0",
 		"fs-extra": "^10.1.0",
 		"global": "^4.4.0",
 		"historyjs": "^1.8.0-b2",

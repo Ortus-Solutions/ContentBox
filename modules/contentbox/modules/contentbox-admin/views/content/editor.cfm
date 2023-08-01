@@ -40,7 +40,7 @@
 							<!--- Main Editor --->
 							<li role="presentation" class="nav-item active">
 								<a href="##editor" aria-controls="editor" role="tab" data-toggle="tab" class="nav-link">
-									<i class="fa fa-pen"></i> #prc.oContent.getContentType()#
+									<i class="fas fa-pen"></i> #prc.oContent.getContentType()#
 								</a>
 							</li>
 
@@ -66,7 +66,7 @@
 							<cfif prc.oContent.isLoaded()>
 								<li role="presentation" class="nav-item">
 									<a href="##history" aria-controls="history" role="tab" data-toggle="tab" class="nav-link">
-										#cbAdminComponent( "ui/Icon", { name : "History" } )# History
+										<i class="fa fa-history"></i> History
 									</a>
 								</li>
 								<cfif prc.oContent.commentsAllowed()>

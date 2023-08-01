@@ -40,7 +40,7 @@
 								title="Deactivate + Rescan"
 								class="btn btn-default"
 							>
-								#cbAdminComponent( "ui/Icon", { name : "Reset" } )#
+								#cbAdminComponent( "ui/Icon", { name : "ArrowUturnLeft" } )#
 								Reset
 							</a>
 							<a
@@ -123,9 +123,9 @@
 														class="confirmIt"
 														title="Delete Module"
 														href="javascript:remove( '#JSStringFormat(module.getName())#' )"
-														data-title="Delete #module.getName()#?"
+														data-title="<i class='fa fa-trash'></i> Delete #module.getName()#?"
 													>
-														#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
+														<i class="fa fa-trash fa-lg"></i> Delete
 													</a>
 												</li>
 											</cfif>

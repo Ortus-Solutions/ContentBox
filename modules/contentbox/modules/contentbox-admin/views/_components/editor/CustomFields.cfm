@@ -15,7 +15,7 @@
 		</button>
 		<!--- Remove All Custom Fields --->
 		<button type="button" id="removeCustomFieldsButton" class="btn btn-sm btn-danger" @click="cleanCustomFields">
-			#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Remove All
+			<i class="fa fa-trash fa-lg"></i> Remove All
 		</button>
 	</div>
 
@@ -43,9 +43,7 @@
 					x-model="field.value"
 				/>
 
-				<button type="button" class="btn btn-danger dynamicRemove" onclick="removeCustomField( field )" :disabled="isTemplatedField( field ) ? true : null">
-					#cbAdminComponent( "ui/Icon", { name : "Trash" } )#
-				</button>
+				<button type="button" class="btn btn-danger dynamicRemove" onclick="removeCustomField( field )" :disabled="isTemplatedField( field ) ? true : null"><i class="fa fa-trash"></i></button>
 
 			</div>
 		</div>

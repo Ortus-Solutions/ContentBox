@@ -22,7 +22,7 @@
 							<ul class="dropdown-menu">
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/authorID/#prc.author.getAuthorID()#.json" target="_blank">
-										#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
+										<i class="fa fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 								<li>
@@ -78,7 +78,7 @@
 
                     	<li class="nav-item active">
 							<a href="##details" data-toggle="tab" class="nav-link">
-								#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Details
+								<i class="fa fa-eye fa-lg"></i> Details
 							</a>
                     	</li>
 						<li class="nav-item">
@@ -88,7 +88,7 @@
 						</li>
 						<li class="nav-item">
 							<a href="##twofactor"  data-toggle="tab" class="nav-link">
-								<i class="fa fa-mobile-alt fa-lg fa-lg"></i> Two Factor
+								<i class="fas fa-mobile-alt fa-lg fa-lg"></i> Two Factor
 							</a>
 						</li>
 						<li class="nav-item">
@@ -97,7 +97,7 @@
 						</li>
 						<li class="nav-item">
 							<a href="##permissions" onclick="loadPermissions();" data-toggle="tab" class="nav-link">
-								<i class="fa fa-user-shield fa-lg"></i> Permissions
+								<i class="fas fa-user-shield fa-lg"></i> Permissions
 							</a>
 						</li>
 						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
@@ -108,7 +108,7 @@
 						</li>
 						<li class="nav-item">
 							<a href="##latestDrafts" data-toggle="tab" class="nav-link">
-								<i class="fa fa-pencil-ruler fa-lg"></i> Latest Drafts
+								<i class="fas fa-pencil-ruler fa-lg"></i> Latest Drafts
 							</a>
 						</li>
 						</cfif>

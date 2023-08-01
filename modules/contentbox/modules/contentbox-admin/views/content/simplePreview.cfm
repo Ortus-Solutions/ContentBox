@@ -9,7 +9,7 @@
 				<tr>
 					<td width="30%">
 						<h3>
-							#cbAdminComponent( "ui/Icon", { name : "Eye" } )#&nbsp;
+							<i class="fa fa-eye fa-lg"></i>&nbsp;
 							<span class="header-title">Responsive Previews</span>
 						</h3>
 					</td>

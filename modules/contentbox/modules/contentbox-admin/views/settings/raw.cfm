@@ -35,7 +35,7 @@
                             <a href="##cachebox" data-toggle="tab" class="nav-link"><i class="fa fa-hdd fa-lg"></i> <span class="hidden-xs">CacheBox</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="##_events" data-toggle="tab" class="nav-link"><i class="fas broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
+                            <a href="##_events" data-toggle="tab" class="nav-link"><i class="fas fa-broadcast-tower fa-lg"></i> <span class="hidden-xs">Events</span></a>
                         </li>
                     </ul>
 					<!-- End Tabs -->
@@ -102,12 +102,12 @@
 													<cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_EXPORT" )>
 														<li>
 															<a href="#event.buildLink( prc.xehExportAll )#.json" target="_blank">
-																#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
+																<i class="fa fa-file-export fa-lg"></i> Export All
 															</a>
 														</li>
 														<li>
 															<a href="javascript:exportSelected( '#event.buildLink( prc.xehExportAll )#' )">
-																#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
+																<i class="fa fa-file-export fa-lg"></i> Export Selected
 															</a>
 														</li>
 													</cfif>
@@ -119,7 +119,7 @@
                                                     <cfif prc.oCurrentAuthor.hasPermission( "SYSTEM_RAW_SETTINGS,TOOLS_IMPORT" )>
 														<li>
 															<a href="javascript:importContent()">
-																#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
+																<i class="fa fa-file-import fa-lg"></i> Import
 															</a>
 														</li>
                                                     </cfif>
@@ -166,7 +166,7 @@
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 											<h4 class="modal-title">
-												<i class="fa fa-pen fa-lg"></i> Setting Editor
+												<i class="fas fa-pen fa-lg"></i> Setting Editor
 											</h4>
                                         </div>
                                         <div class="modal-body">

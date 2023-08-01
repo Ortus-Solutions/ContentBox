@@ -83,7 +83,7 @@
 									<div class="btn-group">
 										<cfif prc.oCurrentAuthor.hasPermission( "THEME_ADMIN" ) AND prc.activeTheme.name NEQ thisTheme.name>
 											<button class="btn btn-success btn-sm" onclick="popup('#event.buildLink(prc.xehPreview)#/l/#thisTheme.name#/h/#hash(prc.oCurrentAuthor.getAuthorID())#');return false;">
-												#cbAdminComponent( "ui/Icon", { name : "Eye" } )# Preview
+												<i class="fa fa-eye"></i> Preview
 											</button>
 											<button class="btn btn-primary btn-sm" onclick="return to('#event.buildLink(prc.xehActivate)#?themeName=#thisTheme.name#')">
 												<i class="fa fa-bolt"></i> Activate
@@ -93,8 +93,8 @@
 										<!--- Delete Command --->
 										<cfif prc.oCurrentAuthor.hasPermission( "THEME_ADMIN" ) AND thisTheme.name neq prc.activeTheme.name>
 											<a href="javascript:remove('#JSStringFormat(thisTheme.name)#')"
-											   class="confirmIt btn btn-sm btn-danger" data-title="Delete Theme?" data-message="This will permanently remove all theme associated files!">
-											   #cbAdminComponent( "ui/Icon", { name : "Trash" } )# Remove
+											   class="confirmIt btn btn-sm btn-danger" data-title="<i class='fa fa-trash'></i> Delete Theme?" data-message="This will permanently remove all theme associated files!">
+											   <i class="fa fa-trash fa-lg"></i> Remove
 											</a>
 										</cfif>
 									</div>

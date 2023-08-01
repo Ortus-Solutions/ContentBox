@@ -7,7 +7,7 @@
 
 				<div class="col-md-3">
 					<div class="size18">
-						#cbAdminComponent( "ui/Icon", { name : "Eye" } )#&nbsp;
+						<i class="fa fa-eye fa-lg"></i>&nbsp;
 						<span class="header-title">Responsive Previews</span>
 					</div>
 				</div>

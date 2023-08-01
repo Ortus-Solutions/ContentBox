@@ -40,24 +40,17 @@
                             <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
                                 <!--- Delete Command --->
                                 <li>
-                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?">
-                                        <span id="delete_#menu.getMenuID()#">
-                                            #cbAdminComponent( "ui/Icon", { name : "Trash" } )#
-                                        </span>
-                                        Delete
-                                    </a>
+                                    <a title="Delete Menu" href="javascript:remove('#menu.getmenuID()#', 'menuID')" class="confirmIt" data-title="Delete Menu?"><i class="fa fa-trash fa-lg" id="delete_#menu.getMenuID()#"></i> Delete</a>
                                 </li>
                                 <!--- Edit Command --->
                                 <li>
-                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#">
-                                        #cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
-                                    </a>
+                                    <a title="Edit Menu" href="#event.buildLink( prc.xehMenuEditor )#/menuID/#menu.getMenuID()#"><i class="fas fa-pen fa-lg"></i> Edit</a>
                                 </li>
                                 <cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN,TOOLS_EXPORT" )>
                                     <!--- Export --->
                                     <li>
 										<a href="#event.buildLink( prc.xehMenuExport )#/menuID/#menu.getMenuID()#.json" target="_blank">
-											#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
+											<i class="fa fa-file-export fa-lg"></i> Export
 										</a>
 									</li>
                                 </cfif>

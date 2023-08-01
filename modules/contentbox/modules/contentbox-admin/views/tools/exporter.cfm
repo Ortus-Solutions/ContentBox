@@ -28,7 +28,7 @@
 				<div class="panel-heading">
 					<!--- Title --->
 					<div class="size16 p10">
-						#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# Box Archives
+						<i class="fa fa-archive"></i> Box Archives
 					</div>
 				</div>
 
@@ -189,7 +189,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-user-shield fa-lg"></i> Roles</h4>
+								<h4><i class="fas fa-user-shield fa-lg"></i> Roles</h4>
 								<small class="muted">Export all author roles</small>
 							</div>
 							<div class="col-md-9">
@@ -237,7 +237,7 @@
 
 						<div class="row">
 							<div class="col-md-3">
-								<h4><i class="fa fa-photo-video fa-lg"></i> Media Library</h4>
+								<h4><i class="fas fa-photo-video fa-lg"></i> Media Library</h4>
 								<small class="muted">Export all Media Library content</small>
 							</div>
 							<div class="col-md-9">

@@ -47,7 +47,7 @@
 						<cfif prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR,PAGES_ADMIN,PAGES_EDITOR,CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 							<li class="nav-item">
 								<a href="##contentReports" data-toggle="tab" class="nav-link">
-									#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
+									<i class="fa fa-archive"></i> <span class="hidden-xs">#$r( "dashboard.index.nav-tabs.head1@admin" )#</span>
 								</a>
 							</li>
 						</cfif>
@@ -114,7 +114,7 @@
 									<div class="panel panel-primary">
 										<div class="panel-heading">
 											<h3 class="panel-title">
-												<i class="fa fa-pencil-ruler"></i> My Latest Drafts
+												<i class="fas fa-pencil-ruler"></i> My Latest Drafts
 											</h3>
 										</div>
 										<div class="panel-body text-center">

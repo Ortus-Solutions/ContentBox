@@ -77,7 +77,7 @@
 													@click="deleteSelected()"
 													class="cursor-pointer"
 												>
-													#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete Selected
+													<i class="fa fa-trash fa-lg"></i> Delete Selected
 												</a>
 											</li>
 											</cfif>
@@ -88,7 +88,7 @@
 													@click="importContent()"
 													class="cursor-pointer"
 												>
-													#cbAdminComponent( "ui/Icon", { name : "ArrowLeftOnRectangle" } )# Import
+													<i class="fa fa-file-import fa-lg"></i> Import
 												</a>
 											</li>
 											</cfif>
@@ -97,7 +97,7 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-														#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export All
+														<i class="fa fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
@@ -105,7 +105,7 @@
 														@click="exportSelected()"
 														class="cursor-pointer"
 													>
-													#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export Selected
+														<i class="fa fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -237,7 +237,7 @@
 															class="cursor-pointer"
 															title="Edit"
 														>
-															#cbAdminComponent( "ui/Icon", { name : "PencilSquare" } )# Edit
+															<i class="fas fa-pen fa-lg"></i> Edit
 														</a>
 													</li>
 
@@ -248,7 +248,7 @@
 																:href="`#event.buildLink( prc.xehExport )#/categoryID/${category.categoryID}.json`"
 																target="_blank"
 															>
-																#cbAdminComponent( "ui/Icon", { name : "ArrowRightOnRectangle" } )# Export
+																<i class="fa fa-file-export fa-lg"></i> Export
 															</a>
 														</li>
 													</cfif>
@@ -260,7 +260,7 @@
 															data-title="Delete Category?"
 															data-message="Delete the category and all of its associations"
 														>
-															#cbAdminComponent( "ui/Icon", { name : "Trash" } )# Delete
+															<i class="fa fa-trash fa-lg"></i> Delete
 														</a>
 													</li>
 												</ul>

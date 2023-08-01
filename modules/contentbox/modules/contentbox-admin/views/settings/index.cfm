@@ -47,22 +47,22 @@
                             </li>
                             <li class="nav-item">
 								<a href="##content_options" data-toggle="tab" class="nav-link">
-									#cbAdminComponent( "ui/Icon", { name : "ArchiveBox" } )# Content
+									<i class="fa fa-archive fa-lg"></i> Content
 								</a>
                             </li>
                             <li class="nav-item">
 								<a href="##editor_options" data-toggle="tab" class="nav-link">
-									<i class="fa fa-pen fa-lg"></i> Editor Options
+									<i class="fas fa-pen fa-lg"></i> Editor Options
 								</a>
                             </li>
                             <li class="nav-item">
 								<a href="##mediamanager" data-toggle="tab" class="nav-link">
-									<i class="fa fa-photo-video fa-lg"></i> Media Manager
+									<i class="fas fa-photo-video fa-lg"></i> Media Manager
 								</a>
                             </li>
                             <li class="nav-item">
 								<a href="##gravatars" data-toggle="tab" class="nav-link">
-									#cbAdminComponent( "ui/Icon", { name : "UserCircle" } )# Gravatars
+									<i class="fas fa-portrait fa-lg"></i> Gravatars
 								</a>
                             </li>
                             <li class="nav-item">
@@ -77,7 +77,7 @@
                             </li>
                             <li class="nav-item">
 								<a href="##search_options" data-toggle="tab" class="nav-link">
-									<i class="fa fa-searchengin fa-lg"></i> Search Options
+									<i class="fa fa-search fa-lg"></i> Search Options
 								</a>
                             </li>
                             <li class="nav-item">

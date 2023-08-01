@@ -20,7 +20,7 @@
 
 					<!--- Panel Title --->
 					<div class="size16 p10">
-						<i class="fa fa-user-shield"></i>
+						<i class="fas fa-user-shield"></i>
 						<cfif prc.oRole.isLoaded()>
 							Update
 						<cfelse>
