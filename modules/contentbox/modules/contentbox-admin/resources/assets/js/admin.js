@@ -1,14 +1,15 @@
-import { createKeybindingsHandler } from "tinykeys";
+import tinyKeys from "tinykeys";
 import toastr from "toastr";
-window.contentListHelper = require( "./contentList.js" ).default;
+
 require( "./filebrowser.js" );
 require( "./editors/editors.js" );
 require( "./editors/autosave.js" );
 require ( "@alpinejs/ui" );
 require ( "@alpinejs/focus" );
-
-window.bootbox = require( "bootbox" );
 require( "jquery-jcrop" );
+
+window.contentListHelper = require( "./contentList.js" ).default;
+window.bootbox = require( "bootbox" );
 
 // GLOBAL STATIC
 const REGEX_LOWER = /[a-z]/,
@@ -130,8 +131,8 @@ document.addEventListener( "DOMContentLoaded", () => {
 	} );
 
 	// Nav Search Shortcut
-	createKeybindingsHandler( {
-		"Ctrl+Shift+S" : () => {
+	tinyKeys( window, {
+		[ "Control+K" ] : () => {
 			$( "#nav-search" ).focus();
 			return false;
 		}
@@ -140,8 +141,8 @@ document.addEventListener( "DOMContentLoaded", () => {
 	// find all links with the key-binding data attribute
 	$( "[data-keybinding]" ).each( function() {
 		var boundItem = $( this );
-		createKeybindingsHandler( {
-			[boundItem.data( "keybinding" )] : () => {
+		tinyKeys( window, {
+			[ boundItem.data( "keybinding" ) ] : () => {
 				// give precedence to onclick
 				if ( boundItem.attr( "onclick" ) ) {
 					// if onclick, call event
@@ -212,6 +213,7 @@ window.activateNavbarState = function() {
 
 	} );
 };
+
 /**
  * Check if the main right sidebar is open or not
  * @return {Boolean} open or not
@@ -220,6 +222,7 @@ window.isMainSidebarOpen = function() {
 	var sidebar = $( "#main-content-sidebar" );
 	return ( sidebar.attr( "id" ) !== undefined && sidebar.css( "display" ) === "block" ? true : false );
 };
+
 /**
  * Toggle the main sidebar to fully display the main slot of content.
  * main-content-slot (col) main-content-sidebar (col)
@@ -259,6 +262,7 @@ window.toggleSidebar = function(){
 		async	: true
 	} );
 };
+
 /**
  * Run an admin action async
  * @param  {string} action    Target action to execute
@@ -278,6 +282,7 @@ window.adminAction = function( action, actionURL ) {
 		} );
 	}
 };
+
 /**
  * Send an admin notifier popup for a few seconds
  * @param type The type to send: Defaults to warn, available are warning, info, error, success
@@ -386,12 +391,14 @@ window.toggleFlickers = function(){
 	$( ".flickerMessages" ).slideToggle();
 	$( ".flickers" ).fadeOut( 3000 );
 };
+
 /**
  * Close the remote loaded modal
  */
 window.closeRemoteModal = function() {
 	$remoteModal.modal( "hide" );
 };
+
 /**
  * Reset a modal form according to the passed container
  * @param  {object} container The container
@@ -403,6 +410,7 @@ window.resetContainerForms = function( container ) {
 		$( frm[0] ).clearForm();
 	}
 };
+
 /**
  * Close a local modal window
  * @param div The jquery div object that represents the dialog.
@@ -410,6 +418,7 @@ window.resetContainerForms = function( container ) {
 window.closeModal = function( div ) {
 	div.modal( "hide" );
 };
+
 /**
  * Open a new local modal window based on a div container
  * @param div The jquery object of the div to extract the HTML from.
@@ -424,6 +433,7 @@ window.openModal = function( div, w, h ) {
 		resetContainerForms( $( this ) );
 	} );
 };
+
 /**
  * Open a new remote modal window Ajax style.
  * @param url The URL ajax destination
@@ -503,6 +513,7 @@ window.setPreviewSize = function( activeBtn, w ) {
 	// resize it now.
 	modalDialog.animate( modalSize, 500 );
 };
+
 /**
  * Attach modal listeners to global modals: Remote and ConfirmIt
  */
@@ -600,6 +611,7 @@ window.popup = function( url, w, h )  {
 	var yPosition = ( screen.height / 2 ) - ( winHeight / 2 );
 	window.open( url, "layoutPreview", "resizable=yes,status=yes,location=no,menubar=no,toolbar=no,scrollbars=yes,width=" + winWidth + ",height=" + winHeight + ",left=" + xPosition + ",top=" + yPosition + ",screenX=" + xPosition + ",screenY=" + yPosition );
 };
+
 /**
  * Relocation shorcuts
  * @param link
@@ -609,6 +621,7 @@ window.to = function( link ) {
 	window.location = link;
 	return false;
 };
+
 /**
  * Check all checkboxes utility function
  * @param checked
@@ -619,6 +632,7 @@ window.checkAll = function( checked, id ) {
 		this.checked = checked;
 	} );
 };
+
 /**
  * Check all checkboxes by value
  * @param id
@@ -630,6 +644,7 @@ window.checkByValue = function( id, recordID ) {
 		if ( this.value === recordID ) { this.checked = true; } else { this.checked = false; }
 	} );
 };
+
 /**
  * Get today's date in us or rest of the world format
  * @param {boolean} us defaults to true

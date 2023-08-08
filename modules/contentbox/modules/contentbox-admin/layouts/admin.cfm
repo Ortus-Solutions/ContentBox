@@ -35,10 +35,10 @@
 					<!--Branding-->
 					<div class="brand">
 						<a
-							data-keybinding="ctrl+shift+d"
+							data-keybinding="Control+Shift+d"
 							href="#event.buildLink( prc.xehDashboard )#"
 							class="logo"
-							title="Dashboard ctrl+shift+d"
+							title="Dashboard Control+Shift+d"
 							data-placement="left auto"
 						>
 							<svg id="cbLogo" data-name="CB Logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 355.25 60" aria-labelledby="cbLogoTitle">
@@ -103,7 +103,7 @@
 					<span
 						class="navbar-search mt10 hidden-sm hidden-xs"
 						id="div-search"
-						title="Press 'Ctrl + Shift + S' to focus"
+						title="Press 'Control+K' to focus"
 						data-toggle="tooltip"
 						data-placement="left"
 					>
@@ -116,7 +116,7 @@
 							id="nav-search-url">
 						<input
 							type="text"
-							placeholder="Global Search"
+							placeholder="Global Search (Ctrl+K)"
 							name="nav-search"
 							id="nav-search"
 							autocomplete="off"
@@ -153,42 +153,42 @@
 								<ul class="dropdown-menu">
 									<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,PAGES_EDITOR" )>
 										<li>
-											<a data-keybinding="ctrl+shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="ctrl+shift+p">
+											<a data-keybinding="Control+Shift+p" href="#event.buildLink( prc.xehPagesEditor )#" title="Control+Shift+p">
 												<i class="fa fa-file-alt fa-lg width25"></i> New Page
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentSite.getIsBlogEnabled() AND prc.oCurrentAuthor.hasPermission( "ENTRIES_ADMIN,ENTRIES_EDITOR" )>
 										<li>
-											<a data-keybinding="ctrl+shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="ctrl+shift+b">
+											<a data-keybinding="Control+Shift+b" href="#event.buildLink( prc.xehEntriesEditor )#" title="Control+Shift+b">
 												<i class="fa fa-blog fa-lg width25"></i> New Entry
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "CONTENTSTORE_ADMIN,CONTENTSTORE_EDITOR" )>
 										<li>
-											<a data-keybinding="ctrl+shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="ctrl+shift+t">
+											<a data-keybinding="Control+Shift+t" href="#event.buildLink( prc.xehContentStoreEditor )#" title="Control+Shift+t">
 												<i class="fa fa-hdd fa-lg width25"></i> New Content Store
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN" )>
 										<li>
-											<a data-keybinding="ctrl+shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="ctrl+shift+a">
+											<a data-keybinding="Control+Shift+a" href="#event.buildLink( prc.xehAuthorNew )#" title="Control+Shift+a">
 												<i class="fa fa-user fa-lg width25"></i> New User
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "MEDIAMANAGER_ADMIN" )>
 										<li>
-											<a data-keybinding="ctrl+shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="ctrl+shift+m">
+											<a data-keybinding="Control+Shift+m" href="#event.buildLink( prc.xehMediaManager )#" title="Control+Shift+m">
 												<i class="fas fa-photo-video fa-lg width25"></i> New Media
 											</a>
 										</li>
 									</cfif>
 									<cfif prc.oCurrentAuthor.hasPermission( "MENUS_ADMIN" )>
 										<li>
-											<a data-keybinding="ctrl+shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="ctrl+shift+v">
+											<a data-keybinding="Control+Shift+v" href="#event.buildLink( prc.xehMenuManager )#" title="Control+Shift+v">
 												<i class="fa fa-list fa-lg width25"></i> New Menu
 											</a>
 										</li>
@@ -216,7 +216,7 @@
 						--->
 					</ul>
 				</div>
-				
+
 			</header>
 
 			<!--- ************************************************************************************************--->
@@ -229,8 +229,8 @@
 					id="toggle-left"
 					data-toggle="tooltip"
 					data-placement="right"
-					title="Toggle Navigation (ctrl+shift+n)"
-					data-keybinding="ctrl+shift+n"
+					title="Toggle Navigation (Control+Shift+n)"
+					data-keybinding="Control+Shift+n"
 				>
 					#cbAdminComponent( "ui/Icon", { name : "Bars3" } )#
 				</button>
@@ -254,8 +254,8 @@
 					>
 						<button type="button"
 								class="btn btn-link btn-sm"
-								title="Toggle Right Sidebar (ctrl+shift+e)"
-								data-keybinding="ctrl+shift+e"
+								title="Toggle Right Sidebar (Control+Shift+e)"
+								data-keybinding="Control+Shift+e"
 								onclick="toggleSidebar()"
 							>
 							<i class="fa fa-minus-square"></i> Sidebar
