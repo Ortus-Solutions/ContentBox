@@ -1,12 +1,12 @@
 {
     "app":{
-        "cfengine":"adobe@2023.0.0-beta.1",
+        "cfengine":"adobe@2023",
         "serverHomeDirectory":".engines/acf2023"
     },
     "name":"contentbox-adobe2023",
     "JVM":{
         "heapSize":"1024",
-        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -XX:+UseG1GC"
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
     },
     "web":{
         "directoryBrowsing":true,
