@@ -5,7 +5,7 @@
     },
     "name":"contentbox-lucee-be",
     "JVM":{
-        "args" : "-Dlucee-extensions=D062D72F-F8A2-46F0-8CBC91325B2F067B",
+        "args" : "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false -Dlucee-extensions=D062D72F-F8A2-46F0-8CBC91325B2F067B",
         "heapSize":"1024"
     },
     "web":{
