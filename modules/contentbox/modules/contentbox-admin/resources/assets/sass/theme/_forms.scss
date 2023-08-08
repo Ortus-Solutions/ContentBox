@@ -94,6 +94,10 @@ label.valid {
 	}
 }
 .controls {
+	.toggle.btn {
+		min-width: 75px;
+		min-height: 43px;
+	}
     > .toggle.btn-default {
         border-color: $cb-semantic-color-neutral-weak;
     }
@@ -111,4 +115,3 @@ label.valid {
         width: 35%;
     }
 }
-
