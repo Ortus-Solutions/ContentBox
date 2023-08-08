@@ -5,30 +5,26 @@
  *
 */
 
-// ContentBox global variables
-@import "globals";
-
-// External Libs
+/**
+ * Bootstrap
+ */
 $bootstrap-sass-asset-helper: false;
 // fix relative pack for webpack
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-@import "~bootstrap-sass/assets/stylesheets/bootstrap.scss";
+@import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+
+/**
+ *  Font Awesome
+ */
 // fix relative pack for webpack
 $fa-sass-asset-helper: false !default;
+// end fix
 $fa-font-path: "../../fonts/font-awesome/";
 @import "~@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
-$context-menu-icon-font-path: "../../../dist/font/";
-@import "~jquery-contextmenu/src/sass/jquery.contextMenu.scss";
-
-@import "~jquery-contextmenu/dist/jquery.contextMenu.css";
-
-@import "~bootstrap-toggle/css/bootstrap-toggle.css";
-
-// Static vendor files
-@import "../vendor/css/bootstrap-fileupload.css";
-@import "../vendor/css/date.css";
-@import "~tippy.js/dist/tippy.css";
+/**
+ *  Theme Imports
+ */
 
 // Variables, Mixins
 @import "theme/_variables.scss";
@@ -65,6 +61,3 @@ $context-menu-icon-font-path: "../../../dist/font/";
 @import "theme/_switch.scss";
 @import "theme/_media-queries.scss";
 @import "theme/_widget-container.scss";
-
-// Post-Theme External Libs
-@import "~toastr/toastr.scss";

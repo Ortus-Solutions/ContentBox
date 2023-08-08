@@ -1,4 +1,8 @@
-@import "../vendor/css/bootstrap-fileupload.css";
+// External Components
+@import "~jquery-contextmenu/dist/jquery.contextMenu.css";
+@import "~jcrop/dist/jcrop.css";
+
+// Custom Components
 #FileBrowser #container{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
    	font-size: 11px;

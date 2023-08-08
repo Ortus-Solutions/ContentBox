@@ -26,8 +26,6 @@ const toolTipSettings = {
 	delay     : { show: 100, hide: 100 }
 };
 
-
-
 document.addEventListener( "DOMContentLoaded", () => {
 
 	// If the sidebar preference is off, toggle it

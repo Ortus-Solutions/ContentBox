@@ -1,9 +1,35 @@
+// Globals + Theme
 @import "globals";
-
 @import "theme";
 
-// Filebrowser theme
+/**============================== App Plugins ==============================**/
+
+// FileBrowser
 @import "filebrowser";
+// Alpine Tippy Tooltips
+@import "~tippy.js/dist/tippy.css";
+// Bootstrap Datatables
+@import "~datatables-bootstrap/css/dataTables.bootstrap.css";
+// Bootstrap Datepicker
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
+// Click Picker
+@import "~clockpicker/dist/bootstrap-clockpicker.css";
+// Bootstrap Toggles
+@import "~bootstrap-toggle/css/bootstrap-toggle.css";
+// Bootstrap Sliders
+@import "~bootstrap-slider/dist/css/bootstrap-slider.css";
+// Morris Charts
+@import "~morris.js/morris.css";
+// Animations
+@import "~animate.css/animate.css";
+// Switchery
+@import "~switchery-npm/index.css";
+// FileUpload Styles
+@import "../vendor/css/bootstrap-fileupload.css";
+// Calendar/Date Editor Styles
+@import "../vendor/css/date.css";
+// Post-Theme External Libs
+@import "~toastr/toastr.scss";
 
 /**============================== THEME OVERRIDES ==============================**/
 
