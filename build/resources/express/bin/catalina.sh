@@ -319,7 +319,7 @@ JDK_JAVA_OPTIONS="$JDK_JAVA_OPTIONS --add-opens=java.rmi/sun.rmi.transport=ALL-U
 export JDK_JAVA_OPTIONS
 
 #CONTENTBOX ADDITIONS
-CATALINA_OPTS="-Xmx512m -Xmx512m -Dlucee-extensions=6DD4728A-AB0C-4F67-9DCE1A91A8ACD114"
+CATALINA_OPTS="-Xmx512m -Xmx512m -Dlucee-extensions=6DD4728A-AB0C-4F67-9DCE1A91A8ACD114,D062D72F-F8A2-46F0-8CBC91325B2F067B"
 
 # ----- Execute The Requested Command -----------------------------------------
 

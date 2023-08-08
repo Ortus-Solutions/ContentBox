@@ -215,7 +215,7 @@ rem Do this here so custom URL handles (specifically 'war:...') can be used in t
 set "JAVA_OPTS=%JAVA_OPTS% -Djava.protocol.handler.pkgs=org.apache.catalina.webresources"
 
 rem CONTENTBOX ADDITIONS
-set CATALINA_OPTS=-Xmx512m -Xmx512m -Dlucee-extensions=6DD4728A-AB0C-4F67-9DCE1A91A8ACD114
+set CATALINA_OPTS=-Xmx512m -Xmx512m -Dlucee-extensions=6DD4728A-AB0C-4F67-9DCE1A91A8ACD114,D062D72F-F8A2-46F0-8CBC91325B2F067B
 
 if not "%CATALINA_LOGGING_CONFIG%" == "" goto noJuliConfig
 set CATALINA_LOGGING_CONFIG=-Dnop
