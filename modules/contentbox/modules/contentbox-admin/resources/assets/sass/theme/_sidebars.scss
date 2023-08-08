@@ -7,7 +7,7 @@
     width: $cb-base-sidebar-width;
     @include transition(all, .1s, ease-in-out);
     z-index: 999;
-    
+
     @include breakpoint( lg ) {
         left: auto;
     }
@@ -27,7 +27,7 @@
             list-style: none;
             padding: 0;
             background: $cb-component-sidebar-subnav-color-bg;
-            
+
             li {
                 position: relative;
                 &::before {
@@ -41,7 +41,7 @@
                     position: absolute;
                     top: $cb-base-spacer-md;
                     width: $cb-base-spacer-sm;
-                } 
+                }
                 &:hover, &.active, &:focus {
                     &::before {
                         background-color: $cb-semantic-color-fill-primary;
@@ -73,7 +73,7 @@
                     >li>a {
                         padding-left: $cb-base-spacer-sm * 9;
                     }
-                
+
                     .nav-sub {
                         li:before {
                             left: $cb-base-spacer-lg + ( $cb-base-spacer-md * 4 );
@@ -88,7 +88,7 @@
     }
     .nav-pills {
         margin-left: 0;
-    
+
         > li > a {
             border-radius: 0;
             padding: $cb-base-spacer-sm;
@@ -102,7 +102,7 @@
 		width: $cb-base-sidebarmini-width;
 
         &:hover, &:focus-within {
-            opacity: 100%; 
+            opacity: 100%;
         }
         @include breakpoint( lg ) {
             left: auto;
@@ -206,7 +206,7 @@
 }
 /******************** SIDEBAR LEFT TOGGLE ****************************/
 .sidebar-left:hover .sidebar-left-toggle,
-.sidebar-left .sidebar-left-toggle:focus { 
+.sidebar-left .sidebar-left-toggle:focus {
     opacity: 1;
 }
 .sidebar-left .sidebar-left-toggle {
@@ -221,7 +221,7 @@
     position: absolute;
     right: -20px;
     top: 15px;
-    z-index: 1;
+    z-index: 20;
 
     @include breakpoint( lg ) {
         opacity:0;
@@ -283,7 +283,7 @@
                             left: 50px;
                             margin-top: 0;
                             position: absolute;
-        
+
                             >li {
                                 &:before {
                                     left: $cb-base-spacer-sm;
@@ -315,15 +315,15 @@
                                             padding-left: $cb-base-spacer-sm * 9;
                                         }
                                     }
-                                } 
+                                }
                             }
                         }
                     }
                     a {
                         .badge, .label {
                             display: none
-                        }  
-                    } 
+                        }
+                    }
                     > a {
                         padding: 10px 9px;
                         white-space: nowrap;
@@ -343,7 +343,7 @@
                             z-index: 10;
                         }
                     }
-                    &.nav-dropdown-open a, 
+                    &.nav-dropdown-open a,
                     &:hover a {
                         display: block;
                         overflow: visible;
