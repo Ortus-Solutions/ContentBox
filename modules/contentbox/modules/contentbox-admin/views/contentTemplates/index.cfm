@@ -260,7 +260,7 @@
 							</table>
 						</template>
 						<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
-							<template x-if="isEditorOpen">
+							<template x-if="isEditorOpen" x-cloak>
 								<form x-cloak method="post" @submit.prevent="saveTemplate()">
 									<div>
 											<button
