@@ -58,7 +58,7 @@ document.addEventListener( "DOMContentLoaded", () => {
 		</cfif>
 		'#event.buildLink( prc.xehContentSave )#'
 	);
-	if( document.getElementById( 'contentTemplate' ).value !== 'null' ){
+	if( document.getElementById( 'contentTemplate' ) && document.getElementById( 'contentTemplate' ).value !== 'null' ){
 		applyContentTemplate( document.getElementById( 'contentTemplate' ).value );
 	}
 } );
