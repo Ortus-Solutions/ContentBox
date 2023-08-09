@@ -46,7 +46,7 @@
 											@input.debounce="searchTemplates()"
 										>
 										<div class="input-group-addon">
-											<button type="button" class="btn-link" title="Reset Search Options" @click="resetSearchOptions"><i class="fa fa-undo"></i></button>
+											<button type="button" class="btn-link" title="Reset Search Options" @click="resetSearchOptions"><i @click="resetSearchOptions" class="fa fa-undo"></i></button>
 										</div>
 
 									</div>
