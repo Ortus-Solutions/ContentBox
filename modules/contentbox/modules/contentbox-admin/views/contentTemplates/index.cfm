@@ -6,7 +6,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h1 class="h1">
-					<i class="fa fa-tags"></i> Content Templates (<span x-text="pagination.totalRecords"></span>)
+					<i class="fa fa-tags"></i> Content Templates (<span x-text="templates.length"></span>)
 				</h1>
 			</div>
 		</div>
@@ -46,7 +46,7 @@
 											@input.debounce="searchTemplates()"
 										>
 										<div class="input-group-addon">
-											<button type="button" class="btn-link" title="Reset Search Options" @click="resetSearchOptions"><i class="fa fa-undo"></i></button>
+											<button type="button" class="btn-link" title="Reset Search Options" @click="resetSearchOptions"><i @click="resetSearchOptions" class="fa fa-undo"></i></button>
 										</div>
 
 									</div>
@@ -260,7 +260,7 @@
 							</table>
 						</template>
 						<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN" )>
-							<template x-if="isEditorOpen">
+							<template x-if="isEditorOpen" x-cloak>
 								<form x-cloak method="post" @submit.prevent="saveTemplate()">
 									<div>
 											<button

@@ -129,7 +129,7 @@
 			addFieldToTemplate( e ){
 				var key = e.target.name;
 				var checked = e.target.checked;
-				if( checked && this.selectedFields().indexOf( key ) == -1 ){
+				if( checked && !this.selectedFields().includes( key ) ){
 					var fieldValue = typeof this.globalData.templateSchema[ key ].default !== 'undefined'
 									? this.globalData.templateSchema[ key ].default
 									: (
