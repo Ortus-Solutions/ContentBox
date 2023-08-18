@@ -248,11 +248,6 @@ www.coldbox.org | www.luismajano.com | www.ortussolutions.com
 			<!--- Status Text --->
 			<div id="statusText"></div>
 
-			<!--- Download IFrame --->
-			<cfif prc.fbSettings.allowDownload>
-				<iframe id="downloadIFrame" src="" style="display:none; visibility:hidden;"></iframe>
-			</cfif>
-
 			<!--- Selected Item & Type --->
 			<input type="hidden" name="selectedItem" id="selectedItem" value="">
 			<input type="hidden" name="selectedItemURL" id="selectedItemURL" value="">

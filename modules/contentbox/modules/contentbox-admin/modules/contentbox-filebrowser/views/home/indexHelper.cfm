@@ -229,7 +229,16 @@ function fbDownload(){
 		alert( '#$r( "jsmessages.downloadFolder@fb" )#' ); return;
 	}
 	// Trigger the download
-	$( "##downloadIFrame" ).attr( "src","#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent(sPath) );
+	sPath.forEach( file => {
+		var link = document.createElement('a');
+		link.href = "#event.buildLink( prc.xehFBDownload )#?path="+ encodeURIComponent(file);
+		link.download = file.split( "/" ).pop();
+		link._target = "blank";
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	} );
+
 }
 </cfif>
 
