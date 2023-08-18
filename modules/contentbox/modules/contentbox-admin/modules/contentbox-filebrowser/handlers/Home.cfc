@@ -183,7 +183,7 @@ component extends="cbadmin.handlers.baseHandler" {
 		// clean incoming path and names
 		rc.path  = cleanIncomingPath( urlDecode( trim( rc.path ) ) );
 		rc.dName = urlDecode( trim( rc.dName ) );
-		if ( !len( rc.path ) OR !len( rc.dName ) ) {
+		if ( !len( rc.dName ) ) {
 			data.errors   = true;
 			data.messages = $r( "messages.invalid_path_name@fb" );
 			event.renderData( data = data, type = "json" );
@@ -195,10 +195,9 @@ component extends="cbadmin.handlers.baseHandler" {
 			// Announce it
 			var iData = { path : rc.path, directoryName : rc.dName };
 			announce( "fb_preFolderCreation", iData );
-			directoryCreate( rc.path & "/" & rc.dName );
+			prc.activeDisk.createDirectory( rc.path & "/" & rc.dName );
 			data.errors   = false;
 			data.messages = $r( resource = "messages.folder_created@fb", values = "#rc.path#/#rc.dName#" );
-
 			// Announce it
 			announce( "fb_postFolderCreation", iData );
 		} catch ( Any e ) {
