@@ -27,7 +27,11 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 * @defaultValue.hint The string to show if the page does not exist
 	 */
 	any function renderIt( required string slug, string defaultValue ){
-		var page = pageService.findWhere( { slug : arguments.slug } );
+		var page = pageService.findBySlug(
+			slug = arguments.slug,
+			includeUnpublished = false,
+			siteId = getSite().getSiteId()
+		);
 
 		if ( !isNull( page ) ) {
 			return page.renderContent();
@@ -39,7 +43,7 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 		}
 
 		throw(
-			message = "The content slug '#arguments.slug#' does not exist",
+			message = "The content slug '#arguments.slug#' does not exist or is not published",
 			type    = "PageIncludeWidget.InvalidPageSlug"
 		);
 	}
