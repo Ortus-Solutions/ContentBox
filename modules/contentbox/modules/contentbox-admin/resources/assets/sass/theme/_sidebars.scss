@@ -2,7 +2,7 @@
 .sidebar {
     background :$cb-component-sidebar-color-bg;
     min-height: 100%;
-    left: -($cb-base-sidebar-width) + 10px;
+    left: -($cb-base-sidebar-width);
     position: absolute;
     width: $cb-base-sidebar-width;
     @include transition(all, .1s, ease-in-out);
