@@ -56,6 +56,10 @@
                     >a {
                         color: $cb-semantic-color-font-base;
                         font-weight: bold;
+                        
+                        &:hover, &:focus {
+                            color: $cb-component-sidebar-link-color-hover;
+                        }
                     }
                 }
             }
