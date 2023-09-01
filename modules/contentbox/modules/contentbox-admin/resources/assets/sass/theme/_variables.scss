@@ -1,15 +1,29 @@
-$cb-base-color-green-kelly-20: #36571a;
-$cb-base-color-green-kelly-40: #6DBE46;
-$cb-base-color-green-kelly-80: #cdecb4;
-$cb-base-color-green-kelly-90: #e6f6d9;
-$cb-base-color-green-kelly-95: #f2fbec; 
+$cb-base-color-green-kelly-95: #ecf8e4;
+$cb-base-color-green-kelly-80: #97d669;
+$cb-base-color-green-kelly-65: #6DBE46;
+$cb-base-color-green-kelly-50: #548f27;
+$cb-base-color-green-kelly-40: #467821;
+$cb-base-color-green-kelly-30: #39611b;
+$cb-base-color-green-kelly-10: #1f350f;
 
-$cb-base-color-teal-10: #0d2a2b;
-$cb-base-color-teal-20: #1a5457;
-$cb-base-color-teal-30: #24767B;
-$cb-base-color-teal-50: #45c6cd;
-$cb-base-color-teal-90: #d9f4f6;
-$cb-base-color-teal-95: #ecfafb; 
+$cb-base-color-midnight-green-95: #eff5f7;
+$cb-base-color-midnight-green-80: #acc9d3;
+$cb-base-color-midnight-green-60: #6a9eb1;
+$cb-base-color-midnight-green-50: #4a89a0;
+$cb-base-color-midnight-green-40: #29758e;
+$cb-base-color-midnight-green-30: #085e7c;
+$cb-base-color-midnight-green-10: #043445;
+
+$cb-base-color-blue-grey-95: #f2f4f6;
+$cb-base-color-blue-grey-90: #d8dde3;
+$cb-base-color-blue-grey-80: #bdc6cf;
+$cb-base-color-blue-grey-70: #a3afbc;
+$cb-base-color-blue-grey-60: #8999aa;
+$cb-base-color-blue-grey-50: #708397;
+$cb-base-color-blue-grey-40: #586e86;
+$cb-base-color-blue-grey-30: #405974;
+$cb-base-color-blue-grey-20: #284563;
+$cb-base-color-blue-grey-10: #1a314a;
 
 $cb-base-color-grey-30: #555454;
 $cb-base-color-grey-40: #717070;
@@ -38,25 +52,37 @@ $cb-base-sidebar-width: 240px;
 $cb-base-sidebarmini-width: 50px;
 
 $cb-semantic-color-neutral-weak: $cb-base-color-grey-90;
-$cb-semantic-color-primary: $cb-base-color-green-kelly-20;
-$cb-semantic-color-primary-light: $cb-base-color-green-kelly-80;
-$cb-semantic-color-primary-weak: $cb-base-color-green-kelly-90;
-$cb-semantic-color-tertiary: $cb-base-color-teal-30;
-$cb-semantic-color-tertiary-weak: $cb-base-color-teal-90;
 
-$cb-semantic-color-fill-primary: $cb-base-color-green-kelly-40;
-$cb-semantic-color-fill-tertiary: $cb-base-color-teal-50;
+$cb-semantic-color-tertiary: $cb-base-color-green-kelly-40;
+$cb-semantic-color-tertiary-light: $cb-base-color-green-kelly-80;
+$cb-semantic-color-tertiary-strong: $cb-base-color-green-kelly-10;
+$cb-semantic-color-tertiary-weak: $cb-base-color-green-kelly-95;
+
+$cb-semantic-color-primary: $cb-base-color-midnight-green-30;
+$cb-semantic-color-primary-light: $cb-base-color-midnight-green-80;
+$cb-semantic-color-primary-strong: $cb-base-color-midnight-green-10;
+$cb-semantic-color-primary-weak: $cb-base-color-midnight-green-95;
+
+$cb-semantic-color-on-tertiary: $cb-base-color-green-kelly-95;
+$cb-semantic-color-on-primary: $cb-base-color-midnight-green-95;
+
+$cb-semantic-color-fill-tertiary: $cb-base-color-green-kelly-65;
+$cb-semantic-color-fill-primary: $cb-base-color-midnight-green-50;
+
+$cb-semantic-brand-color-primary: $cb-base-color-green-kelly-65;
 
 $cb-semantic-color-border: $cb-base-color-grey-80;
 $cb-semantic-color-font-base: $cb-base-color-grey-30;
-$cb-semantic-color-link: $cb-base-color-teal-30;
-$cb-semantic-color-link-hover: $cb-base-color-teal-10;
+$cb-semantic-color-link: $cb-base-color-midnight-green-40;
+$cb-semantic-color-link-hover: $cb-base-color-midnight-green-10;
 
+$cb-semantic-background-color: $cb-base-color-blue-grey-95;
+$cb-semantic-accent-color: $cb-semantic-color-fill-tertiary;
 $cb-semantic-surface-color: $cb-base-color-white; 
 
 $cb-component-button-color-filled-bg-primary: $cb-semantic-color-primary;
 $cb-component-button-color-filled-text-primary: $cb-base-color-white;
-$cb-component-button-color-tinted-bg-primary: $cb-semantic-color-primary-light;
+$cb-component-button-color-tinted-bg-primary: $cb-semantic-color-primary-weak;
 $cb-component-button-color-tinted-text-primary: $cb-semantic-color-primary;
 $cb-component-button-color-outlined-text-primary: $cb-semantic-color-primary;
 $cb-component-button-color-outlined-border-primary: $cb-semantic-color-primary;
@@ -82,20 +108,22 @@ $cb-component-panel-heading-text-transform: none;
 
 $cb-component-tabs-border-radius: $cb-base-radius-no;
 $cb-component-tabs-link-color-active: $cb-semantic-color-font-base;
-$cb-component-tabs-link-border-color-active: $cb-semantic-color-fill-primary;
+$cb-component-tabs-link-border-color-active: $cb-semantic-accent-color;
    
 $cb-component-sidebar-color-bg: $cb-semantic-surface-color;
-$cb-component-sidebar-subnav-color-bg: transparent;
-$cb-component-sidebar-link-color: $cb-semantic-color-link;
-$cb-component-sidebar-link-color-hover: $cb-semantic-color-font-base;
-$cb-component-sidebar-link-color-active: $cb-semantic-color-font-base;
+$cb-component-sidebar-subnav-color-bg: $cb-semantic-background-color;
+$cb-component-sidebar-link-color: $cb-semantic-color-font-base;
+$cb-component-sidebar-link-color-hover: $cb-semantic-color-on-primary;
+$cb-component-sidebar-link-color-bg-hover: $cb-semantic-color-primary-strong;
+$cb-component-sidebar-link-color-bg-active: $cb-semantic-color-primary-strong;
+$cb-component-sidebar-link-color-active: $cb-semantic-color-on-primary;
 
 
    //Colors
    //$defaultColor:#bdc3c7; //grey
    $defaultColor: #a4a8aa;
    $defaultColorHover:lighten($defaultColor,5%); //light grey
-   $primaryColor:#1ABC9C; //turquoise (main app color)
+   $primaryColor: $cb-semantic-color-primary; //turquoise (main app color)
    $primaryColorHover:lighten($primaryColor,5%); //light turquoise (main app hover color)
    $primaryColorLight:lighten($primaryColor,30%); //light turquoise (main app hover color)
    $successColor:#2dcc70; //green
