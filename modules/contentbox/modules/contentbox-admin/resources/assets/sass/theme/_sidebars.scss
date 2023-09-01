@@ -20,7 +20,7 @@
             margin-right: $cb-base-spacer-sm;
         }
         .nav-dropdown > .nav-sub {
-            background-color: $cb-semantic-surface-color;
+            background-color: $cb-component-sidebar-subnav-color-bg;;
             display: none;
         }
         .nav-sub {
@@ -31,7 +31,7 @@
             li {
                 position: relative;
                 &::before {
-                    background-color: $cb-semantic-color-neutral-weak;
+                    background-color: $cb-semantic-color-border;
                     border-radius: 50%;
                     content: "";
                     color: #ddd;
@@ -44,7 +44,7 @@
                 }
                 &:hover, &.active, &:focus {
                     &::before {
-                        background-color: $cb-semantic-color-fill-primary;
+                        background-color: $cb-semantic-accent-color;
                     }
                 }
                 >a {
@@ -122,9 +122,9 @@
     text-transform: uppercase;
 }
 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus, .sidebar .nav>li>a:focus {
-    color: $cb-semantic-color-font-base;
-    border-left: solid 4px $cb-semantic-color-primary-weak;
-    background-color: $cb-semantic-color-primary-weak;
+    color: $cb-component-sidebar-link-color-active;
+    border-left: solid 4px $cb-component-sidebar-link-color-bg-active;
+    background-color: $cb-component-sidebar-link-color-bg-active;
 }
 .nav-dropdown {
     > a:after {
@@ -146,6 +146,7 @@
 /******************** SIDEBAR LEFT ****************************/
 .sidebar-left{
 	border-right: 1px solid $cb-semantic-color-border;
+    box-shadow: $cb-base-shadow-sm;
 	grid-area: sidebar;
     padding-right: 10px;
 
@@ -166,7 +167,7 @@
 		> li{
             &:hover {
                 > a {
-                    background-color: $cb-semantic-color-primary-weak;
+                    background-color: $cb-component-sidebar-link-color-bg-hover;
                     color: $cb-component-sidebar-link-color-hover;
                 }
             }
@@ -175,13 +176,13 @@
                 padding-left: $cb-base-spacer-md;
 
                 &:hover, &:focus {
-                    background-color: $cb-semantic-color-primary-weak;
+                    background-color: $cb-component-sidebar-link-color-bg-hover;
                     color: $cb-component-sidebar-link-color-hover;
                 }
 			}
             &.active > a {
-                background-color: $cb-semantic-color-tertiary-weak;
-                border-left: solid 4px $cb-semantic-color-fill-primary;
+                background-color: $cb-component-sidebar-link-color-bg-active;
+                border-left: solid 4px $cb-semantic-accent-color;
 		        color: $cb-component-sidebar-link-color-active;
                 font-weight: bold;
             }
@@ -211,7 +212,7 @@
 }
 .sidebar-left .sidebar-left-toggle {
     background-color: #fff;
-    border-radius: 50%;
+    border-radius: 0px;
     border: 1px solid $cb-semantic-color-border;
     box-shadow: $cb-base-shadow-sm;
     min-height: 30px;
@@ -219,13 +220,12 @@
     opacity:1;
     padding: 0px;
     position: absolute;
-    right: -20px;
-    top: 15px;
-    z-index: 20;
+    right: -30px;
+    top: 0;
+    z-index: 0;
 
     @include breakpoint( lg ) {
-        opacity:0;
-        right: -15px;
+        right: -30px;
     };
     @media( pointer: coarse ) {
         opacity:1;
