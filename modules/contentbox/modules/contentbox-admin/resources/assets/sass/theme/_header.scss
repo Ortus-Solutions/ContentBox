@@ -18,7 +18,7 @@
           fill: #343434;
         }
         .cb-swirl, .cb-text-box {
-          fill: $cb-semantic-color-fill-primary;
+          fill: $cb-semantic-brand-color-primary;
         }
         .cb-text-content {
           fill: #272727;
@@ -44,6 +44,17 @@
         margin: 23px 0 0 20px;
         display: inline-block;
     }
+    .sidebar-left-toggle {
+      background-color: #fff;
+      border: none;
+      box-shadow: none;
+      margin-left: $cb-base-spacer-sm;
+      padding: 0px;
+
+      @media( pointer: coarse ) {
+          opacity:1;
+      }
+  }
     .btn-more {
         background: transparent;
         min-height: 35px;

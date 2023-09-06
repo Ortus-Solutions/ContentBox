@@ -28,9 +28,9 @@ component extends="contentbox.models.ui.BaseWidget" singleton {
 	 */
 	any function renderIt( required string slug, string defaultValue ){
 		var page = pageService.findBySlug(
-			slug = arguments.slug,
+			slug               = arguments.slug,
 			includeUnpublished = false,
-			siteId = getSite().getSiteId()
+			siteId             = getSite().getSiteId()
 		);
 
 		if ( !isNull( page ) ) {

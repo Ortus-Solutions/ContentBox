@@ -1,11 +1,11 @@
 ﻿<cfoutput>
 <div>
     <div class="col-md-4" id="login-wrapper">
-		<div class="panel panel-primary animated fadeInDown">
+		<div class="panel animated fadeInDown">
 
             <div class="panel-heading">
-                <h3 class="panel-title p5">
-                   <i class="fa fa-key"></i> Login
+                <h3 class="text-center">
+                   Login
                 </h3>
 			</div>
 
@@ -39,7 +39,7 @@
 	                        	placeholder		= cb.r( "common.username@security" ),
 	                        	autocomplete	= "off"
 	                        )#
-	                        <i class="fa fa-user"></i>
+	                        <i class="fa fa-user" aria-hidden="true"></i>
 	                    </div>
 	                </div>
 	                <div class="form-group">
@@ -51,10 +51,21 @@
 	                        	placeholder		= cb.r( "common.password@security" ),
 	                        	autocomplete	= "off"
 	                        )#
-	                        <i class="fa fa-key"></i>
+	                        <i class="fa fa-key" aria-hidden="true"></i>
 	                    </div>
 
 	                </div>
+
+					<div class="text-right text-sm">
+						<a
+							href="#event.buildLink( prc.xehLostPassword )#"
+							class="help-block"
+						>
+							<i class="fa fa-question-circle"></i>
+							#cb.r( "lostpassword@security" )#?
+						</a>
+					</div>
+
 	                <div class="form-group">
 	                	<div class="col-md-12 controls">
 							<label class="checkbox">
@@ -73,21 +84,11 @@
 					</div>
 
 	                <div class="form-group">
-	                   <div class="col-md-12 text-center">
-	                   		<button type="submit" class="btn btn-primary btn-lg">
+	                   <div class="col-md-offset-3 col-md-6 text-center">
+	                   		<button type="submit" class="btn btn-primary btn-lg btn-block">
 	                   			#cb.r( "common.login@security" )#
 	                   		</button>
 	                    </div>
-					</div>
-
-					<div class="text-right">
-						<a
-							href="#event.buildLink( prc.xehLostPassword )#"
-							class="help-block"
-						>
-							<i class="fa fa-question-circle"></i>
-							#cb.r( "lostpassword@security" )#?
-						</a>
 					</div>
 
 	                <!--- Event --->

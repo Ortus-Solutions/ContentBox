@@ -8,7 +8,7 @@
     grid-area: main;
     margin-right: 0;
   @include transition(all, .3s,  ease-in-out);
-    background: #f1f2f7;
+    background: transparent;
     min-height: 1000px;
         & #main-content {
         border-top:solid thin #e7e8ec;

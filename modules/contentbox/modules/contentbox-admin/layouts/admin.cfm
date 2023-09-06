@@ -31,7 +31,18 @@
 			<!---                               TOP HEADER					                                      --->
 			<!--- ************************************************************************************************--->
 			<header id="header" class="header-default">
-				<div>
+				<div class="flex">
+					<!-- Toggle Navigation Button -->
+					<button
+						class="btn options toggle btn-more sidebar-left-toggle"
+						id="toggle-left"
+						data-toggle="tooltip"
+						data-placement="right"
+						title="Toggle Navigation (Control+Shift+n)"
+						data-keybinding="Control+Shift+n"
+					>
+						#cbAdminComponent( "ui/Icon", { name : "Bars3" } )#
+					</button>
 					<!--Branding-->
 					<div class="brand">
 						<a
@@ -223,17 +234,6 @@
 			<!---                               MAIN NAVBAR					                                      --->
 			<!--- ************************************************************************************************--->
 			<nav class="sidebar sidebar-left" id="main-navbar">
-				<!-- Toggle Navigation Button -->
-				<button
-					class="btn options toggle sidebar-left-toggle"
-					id="toggle-left"
-					data-toggle="tooltip"
-					data-placement="right"
-					title="Toggle Navigation (Control+Shift+n)"
-					data-keybinding="Control+Shift+n"
-				>
-					#cbAdminComponent( "ui/Icon", { name : "Bars3" } )#
-				</button>
 				<!--- Main Generated Menu --->
 				#prc.adminMenuService.generateMenu()#
 			</nav>
