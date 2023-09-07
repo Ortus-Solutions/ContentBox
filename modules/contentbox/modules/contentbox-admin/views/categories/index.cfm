@@ -226,7 +226,7 @@
 													data-toggle="dropdown"
 													title="Category Actions"
 												>
-													#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+													<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 													<span class="visually-hidden">Category Actions</span>
 												</button>
 												<ul class="dropdown-menu text-left pull-right">

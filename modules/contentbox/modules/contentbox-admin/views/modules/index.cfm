@@ -92,7 +92,7 @@
 								<td class="text-center">
 									<div class="btn-group">
 										<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" title="Module Actions">
-											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 											<span class="visually-hidden">Module Actions</span>
 										</button>
 										<ul class="dropdown-menu text-left pull-right">

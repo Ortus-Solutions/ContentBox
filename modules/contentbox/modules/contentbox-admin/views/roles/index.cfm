@@ -149,7 +149,7 @@
 									<!--- Actions --->
 									<div class="btn-group">
 								    	<button class="btn btn-sm btn-icon btn-more dropdown-toggle" data-toggle="dropdown" href="##" title="Role Actions">
-											#cbAdminComponent( "ui/Icon", { name : "EllipsisVertical" } )#
+											<i class="fa fa-ellipsis-v fa-lg" aria-hidden="true"></i>
 											<span class="visually-hidden">Role Actions</span>
 										</button>
 								    	<ul class="dropdown-menu text-left pull-right">
