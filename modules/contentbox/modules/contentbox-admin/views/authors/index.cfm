@@ -31,7 +31,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "userSearch",
-									class 		= "form-control rounded quicksearch",
+									class 		= "form-control quicksearch",
 									placeholder	= "Quick Search"
 								)#
 							</div>

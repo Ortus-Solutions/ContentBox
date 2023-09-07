@@ -39,7 +39,7 @@
 							<div class="form-group m0 mr5">
 								<input
 									name="categorySearch"
-									class="form-control rounded quicksearch"
+									class="form-control quicksearch"
 									placeholder="Quick Search"
 									x-model="searchQuery"
 									@input.debounce="searchCategories()"

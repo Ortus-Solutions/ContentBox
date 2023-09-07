@@ -62,7 +62,7 @@
                                         <div class="form-group m0 mr5">
                                             #html.textField(
                                                 name        = "settingSearch",
-                                                class       = "form-control rounded quicksearch",
+                                                class       = "form-control quicksearch",
                                                 placeholder = "Quick Search",
                                                 value       = event.getValue( "search", "" )
                                             )#

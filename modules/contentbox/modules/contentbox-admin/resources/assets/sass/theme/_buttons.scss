@@ -330,13 +330,13 @@ fieldset[disabled] .btn-warning.active {
     padding: 5px 10px;
     font-size: 12px;
     line-height: 1.5;
-   @include roundBorders(16px);
+   @include roundBorders($cb-radius-xs);
 }
 .btn-xs {
     padding: 1px 5px;
     font-size: 12px;
     line-height: 1.5;
-   @include roundBorders(16px);
+   @include roundBorders($cb-radius-xs);
 }
 
 

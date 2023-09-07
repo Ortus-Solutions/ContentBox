@@ -5,7 +5,7 @@
     overflow: visible !important; /* Rewrites Bootstrap */
 }
 .panel>.panel-heading {
-	border-radius: $cb-component-panel-heading-radius;
+	border-radius: $cb-component-panel-heading-radius $cb-component-panel-heading-radius 0 0;
     font-size: 13px;
     font-weight: 400;
     text-transform: $cb-component-panel-heading-text-transform;

@@ -139,7 +139,10 @@ label{
 	font-weight: 600;
 }
 
-
+/******************** LABELS ****************************/
+.label {
+	@include roundBorders($cb-radius-md);
+}
 /******************** LINKS ****************************/
 
 a.btn.btn-danger:link,

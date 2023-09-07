@@ -11,7 +11,7 @@
     -webkit-box-shadow: none !important;
     -moz-box-shadow: none !important;
     box-shadow: none !important;
-     @include roundBorders(3px);
+     @include roundBorders($cb-radius-xs);
      @include transition(all, .2s, linear);
 }
 .form-control:focus {
