@@ -114,7 +114,7 @@
 					class="dragHandle btn btn-icon btn-sm float-left"
 					title="Click and drag to change retrieval order"
 				>
-					#cbAdminComponent( "ui/Icon", { name : "ChevronUpDown" } )#
+					<i class="fa fa-sort" aria-hidden="true"></i>
 				</a>
 
 				<!--- content Actions --->
