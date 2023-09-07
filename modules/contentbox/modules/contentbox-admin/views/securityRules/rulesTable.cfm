@@ -111,7 +111,7 @@
 							<!--- Export --->
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/ruleID/#rule.getRuleID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 						</cfif>

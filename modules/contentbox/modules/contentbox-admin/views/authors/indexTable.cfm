@@ -110,7 +110,7 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "AUTHOR_ADMIN,TOOLS_EXPORT" )>
 							<li>
 								<a href="#event.buildLink( prc.xehExport )#/authorID/#author.getAuthorID()#.json" target="_blank">
-									<i class="fa fa-file-export fa-lg"></i> Export
+									<i class="fas fa-file-export fa-lg"></i> Export
 								</a>
 							</li>
 							<li>

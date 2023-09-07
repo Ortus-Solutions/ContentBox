@@ -84,12 +84,12 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "PAGES_ADMIN,TOOLS_EXPORT" )>
 												<li class="mb5">
 													<a href="#event.buildLink( prc.xehPageExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
 													<a href="javascript:contentListHelper.exportSelected( '#event.buildLink( prc.xehPageExportAll )#' )">
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>

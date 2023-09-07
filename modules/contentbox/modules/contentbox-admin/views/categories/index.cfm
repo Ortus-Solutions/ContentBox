@@ -97,7 +97,7 @@
 											<cfif prc.oCurrentAuthor.hasPermission( "CATEGORIES_ADMIN,TOOLS_EXPORT" )>
 												<li>
 													<a href="#event.buildLink ( prc.xehExportAll )#.json" target="_blank">
-														<i class="fa fa-file-export fa-lg"></i> Export All
+														<i class="fas fa-file-export fa-lg"></i> Export All
 													</a>
 												</li>
 												<li>
@@ -105,7 +105,7 @@
 														@click="exportSelected()"
 														class="cursor-pointer"
 													>
-														<i class="fa fa-file-export fa-lg"></i> Export Selected
+														<i class="fas fa-file-export fa-lg"></i> Export Selected
 													</a>
 												</li>
 											</cfif>
@@ -248,7 +248,7 @@
 																:href="`#event.buildLink( prc.xehExport )#/categoryID/${category.categoryID}.json`"
 																target="_blank"
 															>
-																<i class="fa fa-file-export fa-lg"></i> Export
+																<i class="fas fa-file-export fa-lg"></i> Export
 															</a>
 														</li>
 													</cfif>

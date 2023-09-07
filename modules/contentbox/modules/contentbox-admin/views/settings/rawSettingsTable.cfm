@@ -93,7 +93,7 @@
 							<cfif prc.oCurrentAuthor.hasPermission( "TOOLS_EXPORT" )>
 								<li>
 									<a href="#event.buildLink( prc.xehExport )#/settingID/#setting.getSettingID()#.json" target="_blank">
-										<i class="fa fa-file-export fa-lg"></i> Export
+										<i class="fas fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>

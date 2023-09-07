@@ -235,7 +235,7 @@
 										href="#event.buildLink( prc.xehPageExport )#/contentID/#page.getContentID()#.json"
 										target="_blank"
 									>
-										<i class="fa fa-file-export fa-lg"></i> Export
+										<i class="fas fa-file-export fa-lg"></i> Export
 									</a>
 								</li>
 							</cfif>
