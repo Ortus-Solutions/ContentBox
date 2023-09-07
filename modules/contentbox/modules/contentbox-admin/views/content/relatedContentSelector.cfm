@@ -20,7 +20,7 @@
 				<div class="input-group input-group-sm">
 					<input
 						type="text"
-						class="form-control rounded"
+						class="form-control"
 						placeholder="Quick Filter"
 						aria-describedby="sizing-addon3"
 						name="contentSearch"

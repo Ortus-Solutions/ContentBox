@@ -45,7 +45,7 @@
 							<div class="form-group form-inline no-margin">
 								#html.textField(
 									name 		= "commentSearch",
-									class		= "form-control rounded quicksearch",
+									class		= "form-control quicksearch",
 									placeholder = "Quick Filter"
 								)#
 							</div>

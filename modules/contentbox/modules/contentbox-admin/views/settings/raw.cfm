@@ -264,7 +264,7 @@
                                         #html.textField(
                                             name        = "eventFilter",
                                             size        = "30",
-                                            class       = "form-control rounded",
+                                            class       = "form-control",
 											placeholder = "Quick Filter"
                                         )#
                                     </div>

@@ -58,7 +58,7 @@
 						<div class="form-group form-inline no-margin">
 							#html.textField(
 								name        = "ruleFilter",
-								class       = "form-control rounded quicksearch",
+								class       = "form-control quicksearch",
 								placeholder = "Quick Filter"
 							)#
 						</div>
