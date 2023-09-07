@@ -216,7 +216,7 @@
 		</div>
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-		        <h3 class="panel-title"><i class="fa fa-medrt"></i> Help Tips</h3>
+		        <h3 class="panel-title"><i class="fa fas fa-life-ring"></i> Help Tips</h3>
 		    </div>
 		    <div class="panel-body">
 		    	<ul class="tipList list-unstyled">
