@@ -44,7 +44,7 @@
                 }
                 &:hover, &.active, &:focus {
                     &::before {
-                        background-color: $cb-accent-color;
+                        background-color: $cb-color-tertiary-accent;
                     }
                 }
                 >a {
@@ -186,7 +186,7 @@
 			}
             &.active > a {
                 background-color: $cb-component-sidebar-link-color-bg-active;
-                border-left: solid 4px $cb-accent-color;
+                border-left: solid 4px $cb-color-tertiary-accent;
 		        color: $cb-component-sidebar-link-color-active;
                 font-weight: bold;
             }

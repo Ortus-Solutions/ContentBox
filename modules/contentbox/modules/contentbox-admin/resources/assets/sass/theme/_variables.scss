@@ -16,6 +16,14 @@ $cb-color-midnight-green-40: #29758e;
 $cb-color-midnight-green-30: #085e7c;
 $cb-color-midnight-green-10: #043445;
 
+$cb-color-blue-95: #eaf6fd;
+$cb-color-blue-80: #8dcdf3;
+$cb-color-blue-60: #229fe7;
+$cb-color-blue-50: #1687c9;
+$cb-color-blue-40: #1272a9;
+$cb-color-blue-30: #0f5b88;
+$cb-color-blue-10: #08334d;
+
 $cb-color-blue-grey-95: #f2f4f6;
 $cb-color-blue-grey-90: #d8dde3;
 $cb-color-blue-grey-80: #bdc6cf;
@@ -58,19 +66,24 @@ $cb-shadow-md:  0px 2px 4px -1px rgb( 0 0 0 / 0.2), 0px 4px 5px 0px rgb(  0 0 0 
 $cb-sidebar-width: 240px;
 $cb-sidebarmini-width: 50px;
 
-/******************** Core Color Aliases ****************************/
+/******************** Semantic Color  ****************************/
 
 $cb-color-primary: $cb-color-midnight-green-30;
 $cb-color-primary-muted: $cb-color-midnight-green-95;
 $cb-color-primary-weak: $cb-color-midnight-green-80;
 $cb-color-primary-strong: $cb-color-midnight-green-10;
+$cb-color-primary-accent: $cb-color-green-kelly-65;
 
 $cb-color-tertiary: $cb-color-green-kelly-40;
-$cb-color-primary-weak: $cb-color-green-kelly-80;
+$cb-color-tertiary-weak: $cb-color-green-kelly-80;
 $cb-color-tertiary-strong: $cb-color-green-kelly-10;
 $cb-color-tertiary-muted: $cb-color-green-kelly-95;
+$cb-color-tertiary-accent: $cb-color-green-kelly-65;
 
 $cb-color-neutral-weak: $cb-color-grey-90;
+
+$cb-color-info-accent: $cb-color-blue-50;
+$cb-color-succes-accent: $cb-color-green-kelly-65;
 
 $cb-color-on-tertiary: $cb-color-green-kelly-95;
 $cb-color-on-primary: $cb-color-midnight-green-95;
@@ -86,7 +99,6 @@ $cb-color-link: $cb-color-midnight-green-40;
 $cb-color-link-hover: $cb-color-midnight-green-10;
 
 $cb-background-color: $cb-color-blue-grey-95;
-$cb-accent-color: $cb-color-fill-tertiary;
 $cb-surface-color: $cb-color-white; 
 
 $cb-component-button-color-filled-bg-primary: $cb-color-primary;
@@ -117,7 +129,7 @@ $cb-component-panel-heading-text-transform: none;
 
 $cb-component-tabs-border-radius: $cb-radius-no;
 $cb-component-tabs-link-color-active: $cb-color-font-base;
-$cb-component-tabs-link-border-color-active: $cb-accent-color;
+$cb-component-tabs-link-border-color-active: $cb-color-tertiary-accent;
    
 $cb-component-sidebar-color-bg: $cb-surface-color;
 $cb-component-sidebar-subnav-color-bg: $cb-background-color;
@@ -135,13 +147,12 @@ $cb-component-sidebar-link-color-active: $cb-color-on-primary;
    $primaryColor: $cb-color-primary; //turquoise (main app color)
    $primaryColorHover:lighten($primaryColor,5%); //light turquoise (main app hover color)
    $primaryColorLight:lighten($primaryColor,30%); //light turquoise (main app hover color)
-   $successColor:#2dcc70; //green
+   $successColor:$cb-color-succes-accent; //green
    $successColorHover:lighten($successColor,5%); //light green
    $warningColor:#f1c40f; //yellow
    $warningColorHover:lighten($warningColor,5%); //light yellow
    $warningBackgroundColor:lighten($warningColor,40%); //very light yellow
-   //$infoColor:#3598db; //blue
-   $infoColor:#3566db; //blue
+   $infoColor:$cb-color-info-accent; //blue
    $infoColorHover:lighten($infoColor,5%); //light blue
    $dangerColor:#e84c3d; //red
    $dangerColorHover:lighten($dangerColor,5%); //light red

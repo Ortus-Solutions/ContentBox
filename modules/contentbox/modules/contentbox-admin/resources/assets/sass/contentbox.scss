@@ -104,8 +104,8 @@ p{
 	color: black;
 }
 .form-control:focus{
-	box-shadow: 0 0 2px 0px $cb-accent-color !important;
-	border-color: $cb-accent-color;
+	box-shadow: 0 0 2px 0px $cb-color-tertiary-accent !important;
+	border-color: $cb-color-tertiary-accent;
 }
 
 .quicksearch{
