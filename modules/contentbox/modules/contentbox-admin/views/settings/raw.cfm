@@ -92,7 +92,7 @@
 
 											<div class="btn-group">
 
-												<a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="##">
+												<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="##">
                                                     <i class="fa fa-spinner fa-spin fa-lg hidden" id="specialActionsLoader"></i>
                                                     Special Actions
                                                     <span class="caret"></span>
