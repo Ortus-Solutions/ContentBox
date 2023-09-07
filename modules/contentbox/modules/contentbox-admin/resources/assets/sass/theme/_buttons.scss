@@ -21,14 +21,14 @@
     @include buttonFilled( 
         $cb-component-button-color-filled-bg-primary, 
         $cb-component-button-color-filled-text-primary,
-        $cb-semantic-color-fill-primary
+        $cb-color-fill-primary
     );
 }
 .btn-tinted-primary {
     @include buttonFilled( 
         $cb-component-button-color-tinted-bg-primary, 
         $cb-component-button-color-tinted-text-primary,
-        $cb-semantic-color-fill-primary
+        $cb-color-fill-primary
     );
 }
 .btn-outlined-primary {
@@ -43,7 +43,7 @@
     }
 }
 .btn-link {
-    color: $cb-semantic-color-link;
+    color: $cb-color-link;
     
     &:hover, &:focus, &:active, &.active {
         box-shadow: none;

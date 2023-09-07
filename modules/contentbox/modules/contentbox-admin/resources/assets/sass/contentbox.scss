@@ -104,8 +104,8 @@ p{
 	color: black;
 }
 .form-control:focus{
-	box-shadow: 0 0 2px 0px $cb-semantic-accent-color !important;
-	border-color: $cb-semantic-accent-color;
+	box-shadow: 0 0 2px 0px $cb-accent-color !important;
+	border-color: $cb-accent-color;
 }
 
 .quicksearch{
@@ -339,7 +339,7 @@ input:checked ~ .toggle-path {
 }
 .close:hover {
 	font-weight: 900;
-	color: $cb-semantic-color-link-hover;
+	color: $cb-color-link-hover;
 }
 
 .alpine-modal {

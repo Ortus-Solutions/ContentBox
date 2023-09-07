@@ -4,8 +4,8 @@ html{
 }
  
  body {
-    color:$cb-semantic-color-font-base;
-    background: $cb-semantic-background-color;
+    color:$cb-color-font-base;
+    background: $cb-background-color;
     font-family: 'Source Sans Pro',Arial,sans-serif;
     font-size: 1rem;
     font-weight: 400;
@@ -19,11 +19,11 @@ html{
 }
 a:link, a:visited  {
     outline: none;
-    color: $cb-semantic-color-link;
+    color: $cb-color-link;
 }
 a:hover, a:focus, a:active {
     outline: none;
-    color: $cb-semantic-color-link-hover;
+    color: $cb-color-link-hover;
 }
 h1, h2, h3, h4, h5, h6 {
     font-family:'Source Sans Pro', Arial, sans-serif;

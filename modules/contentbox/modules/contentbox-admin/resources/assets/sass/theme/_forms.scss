@@ -99,14 +99,14 @@ label.valid {
 		min-height: 43px;
 	}
     > .toggle.btn-default {
-        border-color: $cb-semantic-color-neutral-weak;
+        border-color: $cb-color-neutral-weak;
     }
     .btn-default.toggle-off {
-        background-color: $cb-semantic-color-neutral-weak;
+        background-color: $cb-color-neutral-weak;
         border-color: transparent;
     }
     .btn-default.toggle-on {
-        background-color: $cb-semantic-color-primary;
+        background-color: $cb-color-primary;
     }
     .btn-default.toggle-handle {
         background-color: #fff;

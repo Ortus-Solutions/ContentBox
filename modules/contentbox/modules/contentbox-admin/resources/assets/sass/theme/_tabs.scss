@@ -4,17 +4,17 @@
         display: flex;
        
         .nav-tabs {
-            border-left: 1px solid $cb-semantic-color-border;
+            border-left: 1px solid $cb-color-border;
             display: flex;
             flex-direction: column;
             margin-bottom:0px;
 
             .nav-item > .nav-link {
-                border-bottom: 1px solid $cb-semantic-color-border;
+                border-bottom: 1px solid $cb-color-border;
                 border-left: 4px solid transparent;
 
                 &:hover, &:focus {
-                    border-color: $cb-semantic-color-border; 
+                    border-color: $cb-color-border; 
                     border-width: 0px 0px 1px 4px;
                 }
                 &.flex {
@@ -22,14 +22,14 @@
                 }
             }
             .nav-item:first-child > .nav-link {
-                border-top: 1px solid $cb-semantic-color-border;
+                border-top: 1px solid $cb-color-border;
 
                 &:hover, &:focus {
-                    border-top: 1px solid $cb-semantic-color-border; 
+                    border-top: 1px solid $cb-color-border; 
                 }
             }
             .nav-item.active > .nav-link {
-                border-top: 1px solid $cb-semantic-color-border;
+                border-top: 1px solid $cb-color-border;
                 border-left: 4px solid $cb-component-tabs-link-border-color-active;
                 margin-right: -1px;
                 
@@ -40,12 +40,12 @@
             }
             .nav-item:first-child.active > .nav-link {
                  &:hover, &:focus {
-                    border-top: 1px solid $cb-semantic-color-border; 
+                    border-top: 1px solid $cb-color-border; 
                 }
             }
         }
         .tab-content {
-            border-left: 1px solid $cb-semantic-color-border;
+            border-left: 1px solid $cb-color-border;
             padding: $cb-spacer-md;
             flex-grow: 2;
         }
@@ -58,12 +58,12 @@
     border-radius: $cb-component-tabs-border-radius;
     border-width: 0;
     border-bottom: 4px solid transparent;
-    color: $cb-semantic-color-link;
+    color: $cb-color-link;
     
     &:hover, &:focus {
         isolation: isolate;
         background-color: inherit;
-        border-bottom-color: $cb-semantic-color-border;
+        border-bottom-color: $cb-color-border;
         border-left: none;
         color: $cb-component-tabs-link-color-active;
     }

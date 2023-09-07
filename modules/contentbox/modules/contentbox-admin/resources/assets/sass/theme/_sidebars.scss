@@ -31,7 +31,7 @@
             li {
                 position: relative;
                 &::before {
-                    background-color: $cb-semantic-color-border;
+                    background-color: $cb-color-border;
                     border-radius: 50%;
                     content: "";
                     color: #ddd;
@@ -44,7 +44,7 @@
                 }
                 &:hover, &.active, &:focus {
                     &::before {
-                        background-color: $cb-semantic-accent-color;
+                        background-color: $cb-accent-color;
                     }
                 }
                 >a {
@@ -54,7 +54,7 @@
                 }
                 &.active {
                     >a {
-                        color: $cb-semantic-color-font-base;
+                        color: $cb-color-font-base;
                         font-weight: bold;
                         
                         &:hover, &:focus {
@@ -149,7 +149,7 @@
 }
 /******************** SIDEBAR LEFT ****************************/
 .sidebar-left{
-	border-right: 1px solid $cb-semantic-color-border;
+	border-right: 1px solid $cb-color-border;
     box-shadow: $cb-shadow-sm;
 	grid-area: sidebar;
     padding-right: 10px;
@@ -186,7 +186,7 @@
 			}
             &.active > a {
                 background-color: $cb-component-sidebar-link-color-bg-active;
-                border-left: solid 4px $cb-semantic-accent-color;
+                border-left: solid 4px $cb-accent-color;
 		        color: $cb-component-sidebar-link-color-active;
                 font-weight: bold;
             }
@@ -217,7 +217,7 @@
 .sidebar-left .sidebar-left-toggle {
     background-color: #fff;
     border-radius: 0px;
-    border: 1px solid $cb-semantic-color-border;
+    border: 1px solid $cb-color-border;
     box-shadow: $cb-shadow-sm;
     min-height: 30px;
     min-width: 30px;
@@ -240,7 +240,7 @@
 }
 .sidebar-left .sidebar-left-toggle:hover,
 .sidebar-left .sidebar-left-toggle:active {
-    background: $cb-semantic-color-primary;
+    background: $cb-color-primary;
 }
 .sidebar-left .sidebar-left-toggle:hover svg {
     stroke:#fff;

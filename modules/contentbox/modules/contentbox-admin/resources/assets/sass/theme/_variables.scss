@@ -1,4 +1,4 @@
-/******************** Color Palette ****************************/
+/******************** Core Color Palette ****************************/
 
 $cb-color-green-kelly-95: #ecf8e4;
 $cb-color-green-kelly-80: #97d669;
@@ -35,7 +35,7 @@ $cb-color-grey-95: #f2f2f2;
 
 $cb-color-white: #ffffff;
 
-/******************** Size ****************************/
+/******************** Core Size ****************************/
 
 $cb-spacer-xs: .25rem;
 $cb-spacer-sm: .5rem;
@@ -58,81 +58,81 @@ $cb-shadow-md:  0px 2px 4px -1px rgb( 0 0 0 / 0.2), 0px 4px 5px 0px rgb(  0 0 0 
 $cb-sidebar-width: 240px;
 $cb-sidebarmini-width: 50px;
 
-/******************** Color Aliases ****************************/
+/******************** Core Color Aliases ****************************/
 
-$cb-semantic-color-primary: $cb-color-midnight-green-30;
-$cb-semantic-color-primary-muted: $cb-color-midnight-green-95;
-$cb-semantic-color-primary-weak: $cb-color-midnight-green-80;
-$cb-semantic-color-primary-strong: $cb-color-midnight-green-10;
+$cb-color-primary: $cb-color-midnight-green-30;
+$cb-color-primary-muted: $cb-color-midnight-green-95;
+$cb-color-primary-weak: $cb-color-midnight-green-80;
+$cb-color-primary-strong: $cb-color-midnight-green-10;
 
-$cb-semantic-color-tertiary: $cb-color-green-kelly-40;
-$cb-semantic-color-primary-weak: $cb-color-green-kelly-80;
-$cb-semantic-color-tertiary-strong: $cb-color-green-kelly-10;
-$cb-semantic-color-tertiary-muted: $cb-color-green-kelly-95;
+$cb-color-tertiary: $cb-color-green-kelly-40;
+$cb-color-primary-weak: $cb-color-green-kelly-80;
+$cb-color-tertiary-strong: $cb-color-green-kelly-10;
+$cb-color-tertiary-muted: $cb-color-green-kelly-95;
 
-$cb-semantic-color-neutral-weak: $cb-color-grey-90;
+$cb-color-neutral-weak: $cb-color-grey-90;
 
-$cb-semantic-color-on-tertiary: $cb-color-green-kelly-95;
-$cb-semantic-color-on-primary: $cb-color-midnight-green-95;
+$cb-color-on-tertiary: $cb-color-green-kelly-95;
+$cb-color-on-primary: $cb-color-midnight-green-95;
 
-$cb-semantic-color-fill-tertiary: $cb-color-green-kelly-65;
-$cb-semantic-color-fill-primary: $cb-color-midnight-green-50;
+$cb-color-fill-tertiary: $cb-color-green-kelly-65;
+$cb-color-fill-primary: $cb-color-midnight-green-50;
 
-$cb-semantic-brand-color-primary: $cb-color-green-kelly-65;
+$cb-brand-color-primary: $cb-color-green-kelly-65;
 
-$cb-semantic-color-border: $cb-color-grey-80;
-$cb-semantic-color-font-base: $cb-color-grey-30;
-$cb-semantic-color-link: $cb-color-midnight-green-40;
-$cb-semantic-color-link-hover: $cb-color-midnight-green-10;
+$cb-color-border: $cb-color-grey-80;
+$cb-color-font-base: $cb-color-grey-30;
+$cb-color-link: $cb-color-midnight-green-40;
+$cb-color-link-hover: $cb-color-midnight-green-10;
 
-$cb-semantic-background-color: $cb-color-blue-grey-95;
-$cb-semantic-accent-color: $cb-semantic-color-fill-tertiary;
-$cb-semantic-surface-color: $cb-color-white; 
+$cb-background-color: $cb-color-blue-grey-95;
+$cb-accent-color: $cb-color-fill-tertiary;
+$cb-surface-color: $cb-color-white; 
 
-$cb-component-button-color-filled-bg-primary: $cb-semantic-color-primary;
+$cb-component-button-color-filled-bg-primary: $cb-color-primary;
 $cb-component-button-color-filled-text-primary: $cb-color-white;
-$cb-component-button-color-tinted-bg-primary: $cb-semantic-color-primary-muted;
-$cb-component-button-color-tinted-text-primary: $cb-semantic-color-primary;
-$cb-component-button-color-outlined-text-primary: $cb-semantic-color-primary;
-$cb-component-button-color-outlined-border-primary: $cb-semantic-color-primary;
+$cb-component-button-color-tinted-bg-primary: $cb-color-primary-muted;
+$cb-component-button-color-tinted-text-primary: $cb-color-primary;
+$cb-component-button-color-outlined-text-primary: $cb-color-primary;
+$cb-component-button-color-outlined-border-primary: $cb-color-primary;
 
 $cb-component-button-font-size: $cb-size-font-base;
 $cb-component-button-size-border-radius: $cb-radius-xs;
 $cb-component-button-space-padding-x: $cb-spacer-md;
 $cb-component-button-space-padding-y: $cb-spacer-sm;
-$cb-component-dropdown-item-color-hover: $cb-semantic-color-primary-muted;
+$cb-component-dropdown-item-color-hover: $cb-color-primary-muted;
 
-$cb-component-card-bg-color: $cb-semantic-surface-color;
-$cb-component-card-border-color: $cb-semantic-color-border;
+$cb-component-card-bg-color: $cb-surface-color;
+$cb-component-card-border-color: $cb-color-border;
 
 $cb-component-panel-border-radius: $cb-radius-xs;
 $cb-component-panel-heading-radius: $cb-radius-xs;
 $cb-component-panel-heading-bg-default: $cb-color-grey-90;
 $cb-component-panel-heading-bg-default-collapsed: $cb-color-grey-90;
-$cb-component-panel-heading-bg-primary: $cb-semantic-color-primary-muted;
-$cb-component-panel-heading-bg-primary-collapsed: $cb-semantic-surface-color;
-$cb-component-panel-heading-text-onDefault: $cb-semantic-color-font-base;
-$cb-component-panel-heading-text-onPrimary: $cb-semantic-color-font-base;
+$cb-component-panel-heading-bg-primary: $cb-color-primary-muted;
+$cb-component-panel-heading-bg-primary-collapsed: $cb-surface-color;
+$cb-component-panel-heading-text-onDefault: $cb-color-font-base;
+$cb-component-panel-heading-text-onPrimary: $cb-color-font-base;
 $cb-component-panel-heading-text-transform: none;
 
 $cb-component-tabs-border-radius: $cb-radius-no;
-$cb-component-tabs-link-color-active: $cb-semantic-color-font-base;
-$cb-component-tabs-link-border-color-active: $cb-semantic-accent-color;
+$cb-component-tabs-link-color-active: $cb-color-font-base;
+$cb-component-tabs-link-border-color-active: $cb-accent-color;
    
-$cb-component-sidebar-color-bg: $cb-semantic-surface-color;
-$cb-component-sidebar-subnav-color-bg: $cb-semantic-background-color;
-$cb-component-sidebar-link-color: $cb-semantic-color-font-base;
-$cb-component-sidebar-link-color-hover: $cb-semantic-color-on-primary;
-$cb-component-sidebar-link-color-bg-hover: $cb-semantic-color-primary-strong;
-$cb-component-sidebar-link-color-bg-active: $cb-semantic-color-primary-strong;
-$cb-component-sidebar-link-color-active: $cb-semantic-color-on-primary;
+$cb-component-sidebar-color-bg: $cb-surface-color;
+$cb-component-sidebar-subnav-color-bg: $cb-background-color;
+$cb-component-sidebar-link-color: $cb-color-font-base;
+$cb-component-sidebar-link-color-hover: $cb-color-on-primary;
+$cb-component-sidebar-link-color-bg-hover: $cb-color-primary-strong;
+$cb-component-sidebar-link-color-bg-active: $cb-color-primary-strong;
+$cb-component-sidebar-link-color-active: $cb-color-on-primary;
 
 
    //Colors
    //$defaultColor:#bdc3c7; //grey
    $defaultColor: #a4a8aa;
    $defaultColorHover:lighten($defaultColor,5%); //light grey
-   $primaryColor: $cb-semantic-color-primary; //turquoise (main app color)
+   $primaryColor: $cb-color-primary; //turquoise (main app color)
    $primaryColorHover:lighten($primaryColor,5%); //light turquoise (main app hover color)
    $primaryColorLight:lighten($primaryColor,30%); //light turquoise (main app hover color)
    $successColor:#2dcc70; //green
