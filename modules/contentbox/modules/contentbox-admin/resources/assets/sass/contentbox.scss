@@ -45,7 +45,9 @@ p{
 .table > thead > tr > th {
 	border-bottom: 0px solid #ddd;
 }
-
+.table.dataTable thead > tr > th.sorting_disabled {
+	padding-right: 8px;
+}
 .breakCellWords{
 	max-width: 1px;
 	word-wrap: break-word;
