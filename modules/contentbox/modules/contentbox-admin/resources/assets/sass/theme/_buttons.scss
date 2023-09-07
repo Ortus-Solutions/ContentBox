@@ -10,7 +10,7 @@
     
     &:hover, &:focus, &:active, &.active {
         outline: none;
-        box-shadow: $cb-base-shadow-sm;
+        box-shadow: $cb-shadow-sm;
     }
     &.disabled, &[disabled], fieldset[disabled] .btn {
         opacity: 0.7;
@@ -350,7 +350,7 @@ fieldset[disabled] .btn-warning.active {
     -moz-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
     -o-box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-    padding: $cb-base-spacer-sm;
+    padding: $cb-spacer-sm;
 }
 .dropdown-menu>li {
     &.dropdown-header {
@@ -359,13 +359,13 @@ fieldset[disabled] .btn-warning.active {
 	}
     > a {
         @include roundBorders(0);
-		padding: ( $cb-base-spacer-sm / 2 ) $cb-base-spacer-sm;
+		padding: ( $cb-spacer-sm / 2 ) $cb-spacer-sm;
 		
         &:hover, &:focus, &:active {
             background-color: $cb-component-dropdown-item-color-hover;
         }
         i {
-			margin-right: $cb-base-spacer-sm;
+			margin-right: $cb-spacer-sm;
 		}
 	}
 }

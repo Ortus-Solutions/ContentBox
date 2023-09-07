@@ -46,12 +46,12 @@
         }
         .tab-content {
             border-left: 1px solid $cb-semantic-color-border;
-            padding: $cb-base-spacer-md;
+            padding: $cb-spacer-md;
             flex-grow: 2;
         }
     }
     .nav-tabs {
-        margin-bottom: $cb-base-spacer-lg;
+        margin-bottom: $cb-spacer-lg;
     }
 }
 .nav-tabs > .nav-item > .nav-link {

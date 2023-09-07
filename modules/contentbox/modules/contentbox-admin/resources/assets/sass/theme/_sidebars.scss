@@ -2,9 +2,9 @@
 .sidebar {
     background :$cb-component-sidebar-color-bg;
     min-height: 100%;
-    left: -($cb-base-sidebar-width);
+    left: -($cb-sidebar-width);
     position: absolute;
-    width: $cb-base-sidebar-width;
+    width: $cb-sidebar-width;
     @include transition(all, .1s, ease-in-out);
     z-index: 999;
 
@@ -17,7 +17,7 @@
             text-decoration: none;
         }
         i {
-            margin-right: $cb-base-spacer-sm;
+            margin-right: $cb-spacer-sm;
         }
         .nav-dropdown > .nav-sub {
             background-color: $cb-component-sidebar-subnav-color-bg;;
@@ -36,11 +36,11 @@
                     content: "";
                     color: #ddd;
                     display: block;
-                    height: $cb-base-spacer-sm;
-                    left: $cb-base-spacer-lg;
+                    height: $cb-spacer-sm;
+                    left: $cb-spacer-lg;
                     position: absolute;
-                    top: $cb-base-spacer-md;
-                    width: $cb-base-spacer-sm;
+                    top: $cb-spacer-md;
+                    width: $cb-spacer-sm;
                 }
                 &:hover, &.active, &:focus {
                     &::before {
@@ -48,8 +48,8 @@
                     }
                 }
                 >a {
-                    font-size: $cb-base-size-font-sm;
-                    padding: $cb-base-spacer-sm $cb-base-spacer-sm $cb-base-spacer-sm ( $cb-base-spacer-sm * 5 );
+                    font-size: $cb-size-font-sm;
+                    padding: $cb-spacer-sm $cb-spacer-sm $cb-spacer-sm ( $cb-spacer-sm * 5 );
                     display: block;
                 }
                 &.active {
@@ -65,25 +65,25 @@
             }
             .nav-sub {
                 li:before {
-                    left:$cb-base-spacer-lg +  $cb-base-spacer-md;
+                    left:$cb-spacer-lg +  $cb-spacer-md;
                 }
                 >li>a {
-                    padding-left: $cb-base-spacer-sm * 7 ;
+                    padding-left: $cb-spacer-sm * 7 ;
                 }
                 .nav-sub {
                     li:before {
-                        left: $cb-base-spacer-lg + ( $cb-base-spacer-md * 2 );
+                        left: $cb-spacer-lg + ( $cb-spacer-md * 2 );
                     }
                     >li>a {
-                        padding-left: $cb-base-spacer-sm * 9;
+                        padding-left: $cb-spacer-sm * 9;
                     }
 
                     .nav-sub {
                         li:before {
-                            left: $cb-base-spacer-lg + ( $cb-base-spacer-md * 4 );
+                            left: $cb-spacer-lg + ( $cb-spacer-md * 4 );
                         }
                         >li>a {
-                            padding-left: $cb-base-spacer-sm * 11;
+                            padding-left: $cb-spacer-sm * 11;
                         }
                     }
                 }
@@ -95,7 +95,7 @@
 
         > li > a {
             border-radius: 0;
-            padding: $cb-base-spacer-sm;
+            padding: $cb-spacer-sm;
         }
     }
 }
@@ -103,7 +103,7 @@
     .sidebar {
         left: -40px;
         opacity: 40%;
-		width: $cb-base-sidebarmini-width;
+		width: $cb-sidebarmini-width;
 
         &:hover, &:focus-within {
             opacity: 100%;
@@ -136,7 +136,7 @@
         float: right;
         content: "\f054";
         font-family: "Font Awesome 5 Free";
-        font-size: $cb-base-size-font-sm;
+        font-size: $cb-size-font-sm;
         height: auto;
         text-shadow: none;
     }
@@ -150,7 +150,7 @@
 /******************** SIDEBAR LEFT ****************************/
 .sidebar-left{
 	border-right: 1px solid $cb-semantic-color-border;
-    box-shadow: $cb-base-shadow-sm;
+    box-shadow: $cb-shadow-sm;
 	grid-area: sidebar;
     padding-right: 10px;
 
@@ -177,7 +177,7 @@
             }
 			a {
 				border-left: 4px solid transparent;
-                padding-left: $cb-base-spacer-md;
+                padding-left: $cb-spacer-md;
 
                 &:hover, &:focus {
                     background-color: $cb-component-sidebar-link-color-bg-hover;
@@ -218,7 +218,7 @@
     background-color: #fff;
     border-radius: 0px;
     border: 1px solid $cb-semantic-color-border;
-    box-shadow: $cb-base-shadow-sm;
+    box-shadow: $cb-shadow-sm;
     min-height: 30px;
     min-width: 30px;
     opacity:1;
@@ -260,7 +260,7 @@
     }
     .sidebar-mini {
         .sidebar {
-            width: $cb-base-sidebarmini-width;
+            width: $cb-sidebarmini-width;
             @include transition(all, .1s, ease-in-out);
 
             .nav {
@@ -290,33 +290,33 @@
 
                             >li {
                                 &:before {
-                                    left: $cb-base-spacer-sm;
+                                    left: $cb-spacer-sm;
                                 }
                                 > a {
-                                    padding-left:  $cb-base-spacer-sm * 3;
+                                    padding-left:  $cb-spacer-sm * 3;
                                 }
                             }
                             .nav-sub {
                                 li:before {
-                                    left:$cb-base-spacer-sm +  $cb-base-spacer-md;
+                                    left:$cb-spacer-sm +  $cb-spacer-md;
                                 }
                                 >li>a {
-                                    padding-left: $cb-base-spacer-sm * 5 ;
+                                    padding-left: $cb-spacer-sm * 5 ;
                                 }
                                 .nav-sub {
                                     li:before {
-                                        left: $cb-base-spacer-sm + ( $cb-base-spacer-md * 2 );
+                                        left: $cb-spacer-sm + ( $cb-spacer-md * 2 );
                                     }
                                     >li>a {
-                                        padding-left: $cb-base-spacer-sm * 7;
+                                        padding-left: $cb-spacer-sm * 7;
                                     }
 
                                     .nav-sub {
                                         li:before {
-                                            left: $cb-base-spacer-sm + ( $cb-base-spacer-md * 4 );
+                                            left: $cb-spacer-sm + ( $cb-spacer-md * 4 );
                                         }
                                         >li>a {
-                                            padding-left: $cb-base-spacer-sm * 9;
+                                            padding-left: $cb-spacer-sm * 9;
                                         }
                                     }
                                 }
@@ -339,7 +339,7 @@
                         }
                     }
                     &.nav-dropdown-open, &:hover {
-                        width: $cb-base-sidebar-width;
+                        width: $cb-sidebar-width;
                         z-index: 10;
 
                         >.nav-sub {

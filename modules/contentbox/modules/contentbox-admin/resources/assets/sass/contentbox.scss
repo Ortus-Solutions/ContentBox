@@ -99,15 +99,13 @@ p{
 /******************** FORM CONTROLS ****************************/
 
 .form-control{
-	border-radius: 5px;
-	font-size: 13px !important;
 	background-color: #fff;
 	border-color: #d2d6dc;
 	color: black;
 }
 .form-control:focus{
-	box-shadow: 0 0 2px 0px #1ABC9C !important;
-	border-color: #1ABC9C;
+	box-shadow: 0 0 2px 0px $cb-semantic-accent-color !important;
+	border-color: $cb-semantic-accent-color;
 }
 
 .quicksearch{
@@ -341,7 +339,7 @@ input:checked ~ .toggle-path {
 }
 .close:hover {
 	font-weight: 900;
-	color: #1ABC9C;
+	color: $cb-semantic-color-link-hover;
 }
 
 .alpine-modal {
