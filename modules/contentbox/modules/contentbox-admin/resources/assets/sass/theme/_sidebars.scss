@@ -1,6 +1,6 @@
 /* Sidebar */
 .sidebar {
-    background :$cb-component-sidebar-color-bg;
+    background :$cb-sidebar-color-bg;
     min-height: 100%;
     left: -($cb-sidebar-width);
     position: absolute;
@@ -20,13 +20,13 @@
             margin-right: $cb-spacer-sm;
         }
         .nav-dropdown > .nav-sub {
-            background-color: $cb-component-sidebar-subnav-color-bg;;
+            background-color: $cb-sidebar-subnav-color-bg;;
             display: none;
         }
         .nav-sub {
             list-style: none;
             padding: 0;
-            background: $cb-component-sidebar-subnav-color-bg;
+            background: $cb-sidebar-subnav-color-bg;
 
             li {
                 position: relative;
@@ -58,7 +58,7 @@
                         font-weight: bold;
                         
                         &:hover, &:focus {
-                            color: $cb-component-sidebar-link-color-hover;
+                            color: $cb-sidebar-link-color-hover;
                         }
                     }
                 }
@@ -126,9 +126,9 @@
     text-transform: uppercase;
 }
 .nav .open>a, .nav .open>a:hover, .nav .open>a:focus, .sidebar .nav>li>a:focus {
-    color: $cb-component-sidebar-link-color-active;
-    border-left: solid 4px $cb-component-sidebar-link-color-bg-active;
-    background-color: $cb-component-sidebar-link-color-bg-active;
+    color: $cb-sidebar-link-color-active;
+    border-left: solid 4px $cb-sidebar-link-color-bg-active;
+    background-color: $cb-sidebar-link-color-bg-active;
 }
 .nav-dropdown {
     > a:after {
@@ -158,10 +158,10 @@
         padding-right: 0px;
     };
 	a, a:active {
-		color: $cb-component-sidebar-link-color;
+		color: $cb-sidebar-link-color;
 
         &:hover, &:focus {
-            color: $cb-component-sidebar-link-color-hover;
+            color: $cb-sidebar-link-color-hover;
         }
 	}
 	li > .nav-sub > li > a {
@@ -171,8 +171,8 @@
 		> li{
             &:hover {
                 > a {
-                    background-color: $cb-component-sidebar-link-color-bg-hover;
-                    color: $cb-component-sidebar-link-color-hover;
+                    background-color: $cb-sidebar-link-color-bg-hover;
+                    color: $cb-sidebar-link-color-hover;
                 }
             }
 			a {
@@ -180,14 +180,14 @@
                 padding-left: $cb-spacer-md;
 
                 &:hover, &:focus {
-                    background-color: $cb-component-sidebar-link-color-bg-hover;
-                    color: $cb-component-sidebar-link-color-hover;
+                    background-color: $cb-sidebar-link-color-bg-hover;
+                    color: $cb-sidebar-link-color-hover;
                 }
 			}
             &.active > a {
-                background-color: $cb-component-sidebar-link-color-bg-active;
+                background-color: $cb-sidebar-link-color-bg-active;
                 border-left: solid 4px $cb-color-tertiary-accent;
-		        color: $cb-component-sidebar-link-color-active;
+		        color: $cb-sidebar-link-color-active;
                 font-weight: bold;
             }
 		}
@@ -407,7 +407,7 @@
 
 .sidebarRight {
     width: 240px;
-    background: $cb-component-sidebar-color-bg;
+    background: $cb-sidebar-color-bg;
     position: fixed;
     top: 0px;
     right: 0;

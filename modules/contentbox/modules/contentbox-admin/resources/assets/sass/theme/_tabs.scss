@@ -30,7 +30,7 @@
             }
             .nav-item.active > .nav-link {
                 border-top: 1px solid $cb-color-border;
-                border-left: 4px solid $cb-component-tabs-link-border-color-active;
+                border-left: 4px solid $cb-tabs-link-border-color-active;
                 margin-right: -1px;
                 
                 &:hover, &:focus {
@@ -55,7 +55,7 @@
     }
 }
 .nav-tabs > .nav-item > .nav-link {
-    border-radius: $cb-component-tabs-border-radius;
+    border-radius: $cb-tabs-border-radius;
     border-width: 0;
     border-bottom: 4px solid transparent;
     color: $cb-color-link;
@@ -65,12 +65,12 @@
         background-color: inherit;
         border-bottom-color: $cb-color-border;
         border-left: none;
-        color: $cb-component-tabs-link-color-active;
+        color: $cb-tabs-link-color-active;
     }
 }
 .nav-tabs > .nav-item.active > .nav-link {
-    border-color: $cb-component-tabs-link-border-color-active;
-    color: $cb-component-tabs-link-color-active;
+    border-color: $cb-tabs-link-border-color-active;
+    color: $cb-tabs-link-color-active;
     font-weight: bold;
 
     &:hover, &:focus {
@@ -120,7 +120,7 @@
     border-radius: 0rem;
 }
 .tab-wrapper.tab-left > .nav-tabs > li.active > a {
-    border-left: 4px solid $cb-component-tabs-link-border-color-active;
+    border-left: 4px solid $cb-tabs-link-border-color-active;
 }
 .tab-wrapper.tab-right > .nav-tabs {
     float: right;
@@ -130,7 +130,7 @@
     border-left: 0;
 }
 .tab-wrapper.tab-right > .nav-tabs > li.active > a {
-    border-right: 2px solid $cb-component-tabs-link-border-color-active;
+    border-right: 2px solid $cb-tabs-link-border-color-active;
 }
 .tab-wrapper.tab-bottom > .tab-content {
     border-top: 1px solid #ddd;
@@ -148,7 +148,7 @@
     border-top-color: $primaryColor;
 }
 .tab-primary.tab-wrapper.tab-left > .nav-tabs > li.active {
-    border-left-color: $cb-component-tabs-link-border-color-active;
+    border-left-color: $cb-tabs-link-border-color-active;
 }
 .tab-primary.tab-wrapper.tab-right > .nav-tabs > li.active {
     border-right-color: $primaryColor;
